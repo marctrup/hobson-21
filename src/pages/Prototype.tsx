@@ -224,7 +224,7 @@ const PROPERTIES: Property[] = [
 
 type Urgency = "now" | "week" | "watch";
 type TriggerType = "review" | "break" | "compliance" | "notice" | "expiry";
-type ApprovalState = "pending" | "approved" | "deferred" | "dismissed";
+type ApprovalState = "pending" | "in_progress" | "approved" | "deferred" | "dismissed";
 type AnchorLevel = "unit" | "property";
 
 type ActionCard = {
@@ -778,6 +778,30 @@ const Prototype: React.FC = () => {
   const [actionToast, setActionToast] = useState<string | null>(null);
   const [showDocuments, setShowDocuments] = useState(false);
   const [carriedCardId, setCarriedCardId] = useState<string | null>(null);
+  const [performingCardId, setPerformingCardId] = useState<string | null>(null);
+
+  const performCard = (id: string) => {
+    setPerformingCardId(id);
+    setExpandedCardId(null);
+    setActionCards((arr) => arr.map((x) => x.id === id ? { ...x, approvalState: "in_progress" } : x));
+  };
+  const cancelPerform = () => {
+    if (performingCardId) {
+      setActionCards((arr) => arr.map((x) => x.id === performingCardId ? { ...x, approvalState: "pending" } : x));
+    }
+    setPerformingCardId(null);
+  };
+  const completePerform = (summary: string) => {
+    if (performingCardId) {
+      const card = actionCards.find((x) => x.id === performingCardId);
+      setActionCards((arr) => arr.map((x) => x.id === performingCardId ? { ...x, approvalState: "approved" } : x));
+      if (card) {
+        setActionToast(`Done — ${card.title} · ${summary}`);
+        window.setTimeout(() => setActionToast(null), 4500);
+      }
+    }
+    setPerformingCardId(null);
+  };
   const chatBodyRef = useRef<HTMLDivElement | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
   const searchRef = useRef<HTMLInputElement | null>(null);
@@ -1412,6 +1436,7 @@ const Prototype: React.FC = () => {
                           setActionCards((arr) => arr.map((x) => x.id === c.id ? { ...x, approvalState: "dismissed" } : x));
                           setExpandedCardId(null);
                         }}
+                        onPerform={() => performCard(c.id)}
                       />
                       </div>
                     ))}
@@ -1475,6 +1500,7 @@ const Prototype: React.FC = () => {
                 setActionCards((arr) => arr.map((x) => x.id === id ? { ...x, approvalState: "dismissed" } : x));
                 setExpandedCardId(null);
               }}
+              onPerform={performCard}
             />
           )}
 
@@ -1507,6 +1533,7 @@ const Prototype: React.FC = () => {
                 setActionCards((arr) => arr.map((x) => x.id === id ? { ...x, approvalState: "dismissed" } : x));
                 setExpandedCardId(null);
               }}
+              onPerform={performCard}
             />
           )}
 
@@ -1702,6 +1729,18 @@ const Prototype: React.FC = () => {
             onNavigateProperty={(pid) => { setShowDocuments(false); goProperty(pid); }}
           />
         )}
+        {performingCardId && (() => {
+          const card = actionCards.find((c) => c.id === performingCardId);
+          if (!card) return null;
+          return (
+            <PerformWorkspace
+              card={card}
+              onCancel={cancelPerform}
+              onComplete={completePerform}
+              reducedMotion={reduced}
+            />
+          );
+        })()}
       </main>
     </div>
   );
@@ -2375,6 +2414,7 @@ function PropertyContent({
   onApprove,
   onDefer,
   onDismiss,
+  onPerform,
 }: {
   property: Property;
   propertyActionCards?: ActionCard[];
@@ -2386,6 +2426,7 @@ function PropertyContent({
   onApprove?: (id: string) => void;
   onDefer?: (id: string) => void;
   onDismiss?: (id: string) => void;
+  onPerform?: (id: string) => void;
 }) {
   void onPreviewQuestion;
   const [filter, setFilter] = useState("");
@@ -2511,6 +2552,7 @@ function PropertyContent({
           onApprove={(id) => onApprove && onApprove(id)}
           onDefer={(id) => onDefer && onDefer(id)}
           onDismiss={(id) => onDismiss && onDismiss(id)}
+          onPerform={onPerform ? (id) => onPerform(id) : undefined}
         />
       )}
 
@@ -3198,6 +3240,7 @@ function PortfolioBriefing({
   onApprove,
   onDefer,
   onDismiss,
+  onPerform,
 }: {
   cards: ActionCard[];
   choice: null | "all" | "urgent" | "browse";
@@ -3210,6 +3253,7 @@ function PortfolioBriefing({
   onApprove: (id: string) => void;
   onDefer: (id: string) => void;
   onDismiss: (id: string) => void;
+  onPerform?: (id: string) => void;
 }) {
   const pending = cards.filter((c) => c.approvalState === "pending");
   const urgent = pending.filter((c) => c.urgency === "now");
@@ -3347,6 +3391,7 @@ function PortfolioBriefing({
               onApprove={() => onApprove(c.id)}
               onDefer={() => onDefer(c.id)}
               onDismiss={() => onDismiss(c.id)}
+              onPerform={onPerform ? () => onPerform(c.id) : undefined}
             />
           ))}
         </div>
@@ -3382,6 +3427,7 @@ function PropertyActions({
   onApprove,
   onDefer,
   onDismiss,
+  onPerform,
 }: {
   cards: ActionCard[];
   propertyName: string;
@@ -3392,6 +3438,7 @@ function PropertyActions({
   onApprove: (id: string) => void;
   onDefer: (id: string) => void;
   onDismiss: (id: string) => void;
+  onPerform?: (id: string) => void;
 }) {
   const sortCarried = (arr: ActionCard[]) =>
     carriedCardId
@@ -3422,6 +3469,7 @@ function PropertyActions({
                 onApprove={() => onApprove(c.id)}
                 onDefer={() => onDefer(c.id)}
                 onDismiss={() => onDismiss(c.id)}
+                onPerform={onPerform ? () => onPerform(c.id) : undefined}
               />
             </div>
           ))}
@@ -3430,6 +3478,412 @@ function PropertyActions({
     </section>
   );
 }
+
+const PERFORMABLE_CARD_IDS = new Set<string>(["act-stanley-f8-review"]);
+
+/* ---------------- Perform workspace (PA-004) ---------------- */
+
+type PerformBeat = {
+  id: string;
+  stepKey: string;            // which progress-rail step this beat belongs to
+  text: string;               // narration line
+  detail?: React.ReactNode;   // optional rendered block (summary, draft preview)
+  flag?: string;              // amber honesty flag
+  gate?: {
+    label: string;
+    options: { label: string; kind: "approve" | "skip" | "defer" | "cancel" | "modify" | "continue"; nextBeatIdx?: number | "complete" | "exit" }[];
+  };
+};
+
+const PA004_STEPS: { key: string; label: string }[] = [
+  { key: "identify", label: "Identify" },
+  { key: "gather", label: "Gather" },
+  { key: "summary", label: "Review summary" },
+  { key: "actions", label: "Recommended actions" },
+  { key: "record", label: "Record" },
+];
+
+function PA004Summary() {
+  return (
+    <div className="rounded-lg border border-slate-200 bg-white p-3 space-y-2.5 text-[12.5px] text-slate-700">
+      <div>
+        <div className="text-[10px] uppercase tracking-wide text-slate-400 font-semibold mb-0.5">Current Position</div>
+        <p>Flat 8, Stanley House · current rent £48,000 p.a. · tenancy ongoing.</p>
+      </div>
+      <div>
+        <div className="text-[10px] uppercase tracking-wide text-slate-400 font-semibold mb-0.5">Review Mechanism</div>
+        <p>Open Market Rent review, dated March 2027 (confirmed from lease).</p>
+      </div>
+      <div>
+        <div className="text-[10px] uppercase tracking-wide text-slate-400 font-semibold mb-0.5">Notice Requirements</div>
+        <p className="text-amber-800"><span aria-hidden>⚠ </span>Trigger notice period unclear in the lease — <em>flagged for human eye</em>. Default working assumption: not less than 3 months before review date.</p>
+      </div>
+      <div>
+        <div className="text-[10px] uppercase tracking-wide text-slate-400 font-semibold mb-0.5">Previous Review History</div>
+        <p>No prior review on file for this tenancy (initial term).</p>
+      </div>
+      <div>
+        <div className="text-[10px] uppercase tracking-wide text-slate-400 font-semibold mb-0.5">Supporting Information Required</div>
+        <p>Open market comparable evidence — to be sourced. Surveyor instruction to be prepared.</p>
+      </div>
+    </div>
+  );
+}
+
+function PreparedPreview({ title, body }: { title: string; body: string }) {
+  return (
+    <div className="rounded-lg border border-emerald-200 bg-emerald-50/60 p-2.5 text-[12px] text-slate-700">
+      <div className="text-[10px] uppercase tracking-wide text-emerald-800 font-semibold mb-1">Prepared — {title}</div>
+      <p className="whitespace-pre-wrap leading-relaxed">{body}</p>
+      <div className="mt-1 text-[10.5px] text-slate-500 italic">Draft preview · placeholder content for prototype.</div>
+    </div>
+  );
+}
+
+function buildPA004Beats(): PerformBeat[] {
+  // Indexed linearly; gates jump by index to keep authoring simple.
+  return [
+    {
+      id: "b1",
+      stepKey: "identify",
+      text: "A rent review is coming up on Flat 8 — about 180 days out (March 2027). Want me to prepare it?",
+      gate: {
+        label: "How would you like to proceed?",
+        options: [
+          { label: "Prepare review summary", kind: "approve", nextBeatIdx: 1 },
+          { label: "Defer", kind: "defer", nextBeatIdx: "exit" },
+          { label: "Cancel", kind: "cancel", nextBeatIdx: "exit" },
+        ],
+      },
+    },
+    { id: "b2", stepKey: "gather", text: "Pulling review details — review basis is Open Market Rent, dated March 2027." },
+    { id: "b3", stepKey: "gather", text: "Current rent confirmed: £48,000 per annum (Flat 8)." },
+    { id: "b4", stepKey: "gather", text: "Tenancy history: no prior review on file — this is the first scheduled review." },
+    {
+      id: "b5",
+      stepKey: "gather",
+      text: "Notice requirements: I can't confirm the precise trigger window from the lease wording.",
+      flag: "Flagging notice period as unclear — needs your eye.",
+    },
+    { id: "b6", stepKey: "gather", text: "Parties confirmed: landlord and current tenant on file." },
+    { id: "b7", stepKey: "gather", text: "Open market basis — comparable evidence will need to be sourced before any figure is proposed." },
+    {
+      id: "b8",
+      stepKey: "summary",
+      text: "Here's the assembled summary. Take a look.",
+      detail: <PA004Summary />,
+      gate: {
+        label: "Review the summary",
+        options: [
+          { label: "Looks right, continue", kind: "continue", nextBeatIdx: 8 },
+          { label: "Modify", kind: "modify", nextBeatIdx: 8 },
+          { label: "Defer", kind: "defer", nextBeatIdx: "exit" },
+        ],
+      },
+    },
+    {
+      id: "b9",
+      stepKey: "actions",
+      text: "Recommended next: prepare surveyor instructions to obtain open-market evidence.",
+      gate: {
+        label: "Prepare surveyor instructions?",
+        options: [
+          { label: "Approve", kind: "approve", nextBeatIdx: 9 },
+          { label: "Skip", kind: "skip", nextBeatIdx: 10 },
+        ],
+      },
+    },
+    {
+      id: "b9b",
+      stepKey: "actions",
+      text: "Drafted.",
+      detail: <PreparedPreview title="Surveyor instructions" body={"To: [Usual surveyor]\nSubject: Open market rent advice — Flat 8, Stanley House\n\nWe have a rent review falling due in March 2027. Please advise on open market evidence and a suggested range, with comparables for the last 12 months."} />,
+      gate: {
+        label: "Continue",
+        options: [{ label: "Continue", kind: "continue", nextBeatIdx: 10 }],
+      },
+    },
+    {
+      id: "b10",
+      stepKey: "actions",
+      text: "Next: gather comparable evidence (last 12 months, like-for-like).",
+      gate: {
+        label: "Gather comparable evidence?",
+        options: [
+          { label: "Approve", kind: "approve", nextBeatIdx: 11 },
+          { label: "Skip", kind: "skip", nextBeatIdx: 12 },
+        ],
+      },
+    },
+    {
+      id: "b10b",
+      stepKey: "actions",
+      text: "Comparable search prepared — request queued for the surveyor and our market data source.",
+      detail: <PreparedPreview title="Comparable evidence request" body={"Scope: Marylebone NW8, residential lets, 1-bed flats, last 12 months.\nDeliverable: shortlist of 5–8 comparables with rent, term, condition notes."} />,
+      gate: {
+        label: "Continue",
+        options: [{ label: "Continue", kind: "continue", nextBeatIdx: 12 }],
+      },
+    },
+    {
+      id: "b11",
+      stepKey: "actions",
+      text: "Next: prepare the review notice ready to serve once the window opens.",
+      gate: {
+        label: "Prepare review notice?",
+        options: [
+          { label: "Approve", kind: "approve", nextBeatIdx: 13 },
+          { label: "Skip", kind: "skip", nextBeatIdx: 14 },
+        ],
+      },
+    },
+    {
+      id: "b11b",
+      stepKey: "actions",
+      text: "Draft notice prepared — held for service date.",
+      detail: <PreparedPreview title="Review notice (draft)" body={"NOTICE OF RENT REVIEW\nProperty: Flat 8, Stanley House\nReview date: March 2027\nBasis: Open Market Rent (per lease)\n\nStatus: held — not yet served. Awaiting confirmed notice window."} />,
+      gate: {
+        label: "Continue",
+        options: [{ label: "Continue", kind: "continue", nextBeatIdx: 14 }],
+      },
+    },
+    {
+      id: "b12",
+      stepKey: "actions",
+      text: "Last one: create a review task with the review date and your next checkpoint.",
+      gate: {
+        label: "Create a review task?",
+        options: [
+          { label: "Approve", kind: "approve", nextBeatIdx: 15 },
+          { label: "Skip", kind: "skip", nextBeatIdx: 16 },
+        ],
+      },
+    },
+    {
+      id: "b12b",
+      stepKey: "actions",
+      text: "Task created.",
+      detail: <PreparedPreview title="Review task" body={"Title: Flat 8 rent review — checkpoint\nDue: 6 weeks before March 2027 review date\nOwner: you\nLinked: this action, surveyor instruction, draft notice."} />,
+      gate: {
+        label: "Continue",
+        options: [{ label: "Continue", kind: "continue", nextBeatIdx: 16 }],
+      },
+    },
+    {
+      id: "b13",
+      stepKey: "record",
+      text: "All set. I'll record what we did and update the card.",
+      gate: {
+        label: "Record and finish",
+        options: [{ label: "Record & close", kind: "continue", nextBeatIdx: "complete" }],
+      },
+    },
+  ];
+}
+
+function PerformWorkspace({
+  card,
+  onCancel,
+  onComplete,
+  reducedMotion,
+}: {
+  card: ActionCard;
+  onCancel: () => void;
+  onComplete: (summary: string) => void;
+  reducedMotion: boolean;
+}) {
+  const beats = useMemo(() => buildPA004Beats(), []);
+  const [revealed, setRevealed] = useState<number>(0); // beats revealed (1-based count)
+  const [streamingText, setStreamingText] = useState<string>("");
+  const [streamingActive, setStreamingActive] = useState(false);
+  const [approvedActions, setApprovedActions] = useState<string[]>([]);
+  const [completed, setCompleted] = useState<string[]>([]); // step keys completed
+  const scrollerRef = useRef<HTMLDivElement | null>(null);
+
+  // Stream a beat's text into view
+  useEffect(() => {
+    if (revealed >= beats.length) return;
+    const beat = beats[revealed];
+    if (reducedMotion) {
+      setStreamingText(beat.text);
+      setStreamingActive(false);
+      return;
+    }
+    setStreamingActive(true);
+    setStreamingText("");
+    const words = beat.text.split(" ");
+    let i = 0;
+    let cancelled = false;
+    const step = () => {
+      if (cancelled) return;
+      i += 1;
+      setStreamingText(words.slice(0, i).join(" "));
+      if (i < words.length) setTimeout(step, 32 + Math.random() * 28);
+      else setStreamingActive(false);
+    };
+    const t = setTimeout(step, 120);
+    return () => { cancelled = true; clearTimeout(t); };
+  }, [revealed, beats, reducedMotion]);
+
+  useEffect(() => {
+    const el = scrollerRef.current;
+    if (el) el.scrollTop = el.scrollHeight;
+  }, [revealed, streamingText]);
+
+  const currentBeat = beats[revealed];
+  const previousBeats = beats.slice(0, revealed);
+
+  const advance = (jumpTo: number | "complete" | "exit" | undefined, gateLabel: string, kind: string) => {
+    // Track approved sub-actions for audit
+    if (kind === "approve") setApprovedActions((a) => [...a, gateLabel]);
+    // Mark current step as completed when we leave it
+    const cur = beats[revealed];
+    if (cur) setCompleted((c) => Array.from(new Set([...c, cur.stepKey])));
+
+    if (jumpTo === "complete") {
+      const summary = approvedActions.length + (kind === "approve" ? 1 : 0) > 0
+        ? `summary prepared · ${[...approvedActions, ...(kind === "approve" ? [gateLabel] : [])].length} actions approved · recorded ${new Date().toLocaleDateString("en-GB")}`
+        : `summary prepared · recorded ${new Date().toLocaleDateString("en-GB")}`;
+      onComplete(summary);
+      return;
+    }
+    if (jumpTo === "exit") { onCancel(); return; }
+    if (typeof jumpTo === "number") setRevealed(jumpTo);
+    else setRevealed((r) => Math.min(r + 1, beats.length));
+  };
+
+  const currentStepIdx = PA004_STEPS.findIndex((s) => s.key === currentBeat?.stepKey);
+
+  return (
+    <div className="absolute inset-0 z-[600] bg-white flex flex-col animate-fade-in">
+      {/* Header */}
+      <header className="border-b border-slate-200 px-5 py-3 flex items-start justify-between gap-3">
+        <div className="min-w-0">
+          <div className="text-[10px] uppercase tracking-wide text-slate-400 font-semibold">Performing action</div>
+          <h2 className="text-[15px] font-semibold text-slate-900 leading-tight truncate">Rent review · {card.unitLabel ?? "Flat 8"}, {card.propertyName}</h2>
+          <div className="text-[12px] text-slate-500 mt-0.5">Due: March 2027 (≈180 days)</div>
+        </div>
+        <button
+          onClick={onCancel}
+          className="text-xs px-3 py-1.5 rounded-full border border-slate-200 text-slate-600 hover:bg-slate-50 transition focus:outline-none focus:ring-2 focus:ring-slate-300 inline-flex items-center gap-1"
+        >
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+          Back to map
+        </button>
+      </header>
+
+      {/* Progress rail */}
+      <nav aria-label="Progress" className="px-5 py-2.5 border-b border-slate-100 bg-slate-50">
+        <ol className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[11px]">
+          {PA004_STEPS.map((s, i) => {
+            const isDone = completed.includes(s.key);
+            const isCurrent = currentBeat?.stepKey === s.key;
+            return (
+              <li key={s.key} className="flex items-center gap-2">
+                <span
+                  aria-current={isCurrent ? "step" : undefined}
+                  className={`inline-flex items-center gap-1.5 px-2 py-1 rounded-full border ${
+                    isDone
+                      ? "bg-emerald-50 border-emerald-200 text-emerald-800"
+                      : isCurrent
+                      ? "bg-[#7C3AED] border-[#7C3AED] text-white"
+                      : "bg-white border-slate-200 text-slate-500"
+                  }`}
+                >
+                  <span aria-hidden className="w-4 h-4 rounded-full grid place-items-center text-[10px] font-bold">
+                    {isDone ? "✓" : i + 1}
+                  </span>
+                  {s.label}
+                </span>
+                {i < PA004_STEPS.length - 1 && <span aria-hidden className="text-slate-300">→</span>}
+              </li>
+            );
+          })}
+        </ol>
+      </nav>
+
+      {/* Beats scroller */}
+      <div ref={scrollerRef} className="flex-1 overflow-auto px-5 py-4 space-y-3 bg-white">
+        {previousBeats.map((b) => (
+          <BeatBubble key={b.id} beat={b} done />
+        ))}
+        {currentBeat && (
+          <BeatBubble
+            beat={currentBeat}
+            streamingText={streamingActive ? streamingText : currentBeat.text}
+            streaming={streamingActive}
+            done={false}
+          />
+        )}
+      </div>
+
+      {/* Gate */}
+      {currentBeat && !streamingActive && (
+        <footer className="border-t border-slate-200 px-5 py-3 bg-white">
+          {currentBeat.gate ? (
+            <div className="space-y-2">
+              <div className="text-[11px] uppercase tracking-wide text-slate-500 font-semibold">{currentBeat.gate.label}</div>
+              <div className="flex flex-wrap gap-1.5">
+                {currentBeat.gate.options.map((opt, idx) => {
+                  const primary = opt.kind === "approve" || opt.kind === "continue";
+                  const cls = primary
+                    ? "bg-[#7C3AED] text-white hover:bg-[#6D28D9] focus:ring-[#7C3AED]"
+                    : opt.kind === "cancel"
+                    ? "text-slate-500 hover:text-slate-700 hover:bg-slate-50 border border-transparent focus:ring-slate-300"
+                    : "text-slate-700 border border-slate-200 hover:bg-slate-50 focus:ring-slate-300";
+                  return (
+                    <button
+                      key={opt.label + idx}
+                      autoFocus={idx === 0}
+                      onClick={() => advance(opt.nextBeatIdx, opt.label, opt.kind)}
+                      className={`text-xs px-3 py-1.5 rounded-full transition focus:outline-none focus:ring-2 ${cls}`}
+                    >
+                      {opt.label}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          ) : (
+            <div className="flex justify-end">
+              <button
+                autoFocus
+                onClick={() => advance(undefined, "continue", "continue")}
+                className="text-xs px-3 py-1.5 rounded-full bg-[#7C3AED] text-white hover:bg-[#6D28D9] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]"
+              >
+                Continue
+              </button>
+            </div>
+          )}
+        </footer>
+      )}
+    </div>
+  );
+}
+
+function BeatBubble({ beat, streamingText, streaming, done }: { beat: PerformBeat; streamingText?: string; streaming?: boolean; done: boolean }) {
+  const text = streamingText ?? beat.text;
+  return (
+    <div className={`flex items-start gap-2 ${done ? "opacity-80" : ""}`}>
+      <OwlAvatar state={streaming ? "talking" : "default"} />
+      <div className="flex-1 min-w-0 space-y-1.5">
+        <div className="inline-block max-w-[640px] bg-[#EDE9FE] text-[#1F2330] text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-bl-md">
+          {text}
+          {streaming && <span className="inline-block w-1.5 h-3.5 ml-0.5 bg-[#7C3AED] align-middle animate-pulse" />}
+        </div>
+        {!streaming && beat.flag && (
+          <div className="inline-flex items-start gap-1.5 max-w-[640px] text-[12px] text-amber-900 bg-amber-50 border border-amber-200 px-2.5 py-1.5 rounded-lg">
+            <span aria-hidden>⚠</span>
+            <span>{beat.flag}</span>
+          </div>
+        )}
+        {!streaming && beat.detail && <div className="max-w-[640px]">{beat.detail}</div>}
+      </div>
+    </div>
+  );
+}
+
+
 
 function ActionCardItem({
   card,
@@ -3443,6 +3897,7 @@ function ActionCardItem({
   onDefer,
   onDismiss,
   onManageAtProperty,
+  onPerform,
 }: {
   card: ActionCard;
   level: "portfolio" | "property" | "unit";
@@ -3455,6 +3910,7 @@ function ActionCardItem({
   onDefer: () => void;
   onDismiss: () => void;
   onManageAtProperty?: () => void;
+  onPerform?: () => void;
 }) {
   const isInferred = card.confidence === "inferred";
   // Property-anchored shown inside a unit = read-only context
@@ -3536,6 +3992,15 @@ function ActionCardItem({
               className="text-xs px-3 py-1.5 rounded-full text-slate-600 border border-slate-200 hover:bg-slate-50 transition focus:outline-none focus:ring-2 focus:ring-slate-300"
             >
               Flag for review
+            </button>
+          )}
+          {!isInferred && onPerform && PERFORMABLE_CARD_IDS.has(card.id) && (
+            <button
+              onClick={onPerform}
+              className="text-xs px-3 py-1.5 rounded-full bg-emerald-600 text-white hover:bg-emerald-700 transition focus:outline-none focus:ring-2 focus:ring-emerald-500 inline-flex items-center gap-1"
+            >
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden><polygon points="6 4 20 12 6 20 6 4" /></svg>
+              Perform
             </button>
           )}
           {!isInferred && onOpenUnit && (
