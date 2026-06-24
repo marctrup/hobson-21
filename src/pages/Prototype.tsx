@@ -1312,18 +1312,23 @@ const Prototype: React.FC = () => {
                 onManageAtProperty={() => goProperty(selectedPropertyId)}
               />
               {(() => {
-                const unitOwnCards = selectActionsForScope(actionCards, {
+                const unitOwnCardsRaw = selectActionsForScope(actionCards, {
                   level: "unit",
                   propertyId: selectedPropertyId,
                   unitId: selectedUnit.id,
                 }).filter((c) => c.anchorLevel === "unit" && c.approvalState === "pending");
-                if (unitOwnCards.length === 0) return null;
+                if (unitOwnCardsRaw.length === 0) return null;
+                // Carried card surfaces first
+                const unitOwnCards = carriedCardId
+                  ? [...unitOwnCardsRaw].sort((a, b) => (a.id === carriedCardId ? -1 : b.id === carriedCardId ? 1 : 0))
+                  : unitOwnCardsRaw;
                 return (
                   <section aria-label={`Actions for ${selectedUnit.label}`} className="space-y-2">
                     <div className="text-[11px] uppercase tracking-wide text-slate-500 font-semibold">
                       On this unit's desk · {unitOwnCards.length}
                     </div>
                     {unitOwnCards.map((c) => (
+                      <div key={c.id} className={c.id === carriedCardId ? "rounded-xl ring-2 ring-[#7C3AED]/50 ring-offset-2 ring-offset-white" : ""}>
                       <ActionCardItem
                         key={c.id}
                         card={c}
