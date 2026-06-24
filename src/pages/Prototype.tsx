@@ -394,9 +394,9 @@ const BEATS: Beat[] = [
   {
     owl: "default",
     lines: [
-      "Two things are easily confused, and the distinction underpins everything I do.",
-      "Your assets — your properties and the units within them — are what I come to understand. Your documents are how I learn of them; they are my reading.",
-      "I am careful never to mistake the document for the thing it describes. I read in order to understand.",
+      "There is a distinction that underpins everything I do, so allow me to be clear about it.",
+      "Your assets — your properties and the units within them — are what I seek to understand. Your documents are how I come to understand them.",
+      "The lease is not the tenancy; it is the record of it. I read the documents in order to understand the real estate that lies behind them.",
     ],
     prefill: "How, then, do you see my portfolio?",
     mapAction: "none",
