@@ -385,7 +385,7 @@ const BEATS: Beat[] = [
     owl: "talking",
     lines: [
       `Good morning, ${FIRST_NAME}. I am Hobson — a colleague entrusted with helping you look after your portfolio.`,
-      "The portfolio is yours, and so are the decisions; that will always be so. My role is to carry the work that surrounds those decisions, so that nothing of importance is overlooked — and to become more useful to you with each passing day.",
+      
       "If I may, I should like to explain how I work.",
     ],
     prefill: "Please do",
