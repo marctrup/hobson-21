@@ -1548,10 +1548,14 @@ const Prototype: React.FC = () => {
         {/* Composer */}
         <div className="px-5 pt-2 pb-4 border-t border-slate-100 bg-white">
           {view === "onboarding" && chipVisible && (
-            <div className="mb-1.5 flex items-center justify-end gap-1 text-[11px] text-slate-500">
-              Tap to send <span aria-hidden>↓</span>
+            <div className="mb-2 flex items-center justify-end gap-2">
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#7C3AED] text-white text-[11px] font-semibold shadow-sm animate-[pulse_1.6s_ease-in-out_infinite]">
+                Press send to continue
+                <span aria-hidden className="animate-bounce">↓</span>
+              </span>
             </div>
           )}
+
           {view === "portfolio" && portfolioMode === "first" && !chipVisible && messages.length > 0 && !portfolioChip && !showPropertyList && !showUnitPicker && (
             <div className="mb-2 flex flex-col items-end gap-1.5">
               <span className="text-[11px] text-slate-500 flex items-center gap-1">
@@ -1612,7 +1616,9 @@ const Prototype: React.FC = () => {
                   }
                 }}
                 className={`flex items-center gap-2 px-4 py-2.5 rounded-full border bg-white focus-within:border-[#7C3AED] focus-within:ring-2 focus-within:ring-[#7C3AED]/20 transition ${
-                  (view === "onboarding" && chipVisible) || (isRentFlat2Question(input) && !typing)
+                  (view === "onboarding" && chipVisible)
+                    ? "border-[#7C3AED] ring-2 ring-[#7C3AED]/40 bg-[#F5F3FF] shadow-[0_0_0_4px_rgba(124,58,237,0.12)] animate-[pulse_1.6s_ease-in-out_infinite]"
+                    : (isRentFlat2Question(input) && !typing)
                     ? "border-[#7C3AED] ring-2 ring-[#7C3AED]/30 animate-[pulse_1.6s_ease-in-out_infinite]"
                     : "border-slate-200"
                 }`}
@@ -1629,15 +1635,21 @@ const Prototype: React.FC = () => {
                   }}
                   readOnly={view === "onboarding"}
                   placeholder={view === "onboarding" && !chipVisible ? "Hobson is talking…" : "Ask Hobson…"}
-                  className="flex-1 outline-none text-sm bg-transparent placeholder:text-slate-400 cursor-text"
+                  className={`flex-1 outline-none text-sm bg-transparent placeholder:text-slate-400 cursor-text ${
+                    view === "onboarding" && chipVisible ? "text-[#5B21B6] font-medium" : ""
+                  }`}
                   aria-label="Ask Hobson"
                 />
                 <button
                   type="submit"
-                  className={`text-[#7C3AED] hover:text-[#6D28D9] disabled:text-slate-300 ${
-                    (view === "onboarding" && chipVisible) || (isRentFlat2Question(input) && !typing) ? "animate-[pulse_1.6s_ease-in-out_infinite]" : ""
+                  className={`flex items-center justify-center rounded-full transition ${
+                    (view === "onboarding" && chipVisible)
+                      ? "h-9 w-9 bg-[#7C3AED] text-white hover:bg-[#6D28D9] shadow-md ring-2 ring-[#7C3AED]/30 animate-[pulse_1.6s_ease-in-out_infinite]"
+                      : (isRentFlat2Question(input) && !typing)
+                      ? "h-8 w-8 text-[#7C3AED] hover:text-[#6D28D9] animate-[pulse_1.6s_ease-in-out_infinite]"
+                      : "h-8 w-8 text-[#7C3AED] hover:text-[#6D28D9] disabled:text-slate-300"
                   }`}
-                  aria-label="Send"
+                  aria-label="Send to continue"
                   disabled={!input.trim() || (view === "onboarding" && !chipVisible)}
                 >
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -1645,6 +1657,7 @@ const Prototype: React.FC = () => {
                   </svg>
                 </button>
               </form>
+
             </>
           ) : (
             <LockedComposer view={view} />
