@@ -412,8 +412,7 @@ const BEATS: Beat[] = [
   {
     owl: "reading",
     lines: [
-      "I read two families of document. Tenancy documents — leases, licences, assignments, variations, rent reviews — describe occupation: who is in possession, and upon what terms.",
-      "Asset documents — energy certificates, fire risk assessments, valuations, compliance records — describe the building itself.",
+      "I read two families of document: those that describe the occupation, and those that describe the asset itself — the property and its units.",
       
     ],
     prefill: "How does your reading become understanding?",
