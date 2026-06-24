@@ -3455,6 +3455,8 @@ function PropertyActions({
   );
 }
 
+const PERFORMABLE_CARD_IDS = new Set<string>(["act-stanley-f8-review"]);
+
 function ActionCardItem({
   card,
   level,
@@ -3467,6 +3469,7 @@ function ActionCardItem({
   onDefer,
   onDismiss,
   onManageAtProperty,
+  onPerform,
 }: {
   card: ActionCard;
   level: "portfolio" | "property" | "unit";
@@ -3479,6 +3482,7 @@ function ActionCardItem({
   onDefer: () => void;
   onDismiss: () => void;
   onManageAtProperty?: () => void;
+  onPerform?: () => void;
 }) {
   const isInferred = card.confidence === "inferred";
   // Property-anchored shown inside a unit = read-only context
