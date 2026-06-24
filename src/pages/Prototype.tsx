@@ -388,7 +388,7 @@ const BEATS: Beat[] = [
       "The portfolio is yours, and so are the decisions; that will always be so. My role is to carry the work that surrounds those decisions, so that nothing of importance is overlooked — and to become more useful to you with each passing day.",
       "If I may, I should like to explain how I work.",
     ],
-    prefill: "Please do. How do you work?",
+    prefill: "Please do",
     mapAction: "none",
   },
   {
