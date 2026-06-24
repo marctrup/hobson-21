@@ -1750,7 +1750,7 @@ const Prototype: React.FC = () => {
 
 /* ---------------- Sub-components ---------------- */
 
-function RailItem({ icon, label, active, onClick }: { icon: "pin" | "doc" | "chat" | "gear"; label: string; active?: boolean; onClick?: () => void }) {
+function RailItem({ icon, label, active, onClick }: { icon: "pin" | "doc" | "chat" | "gear" | "clock"; label: string; active?: boolean; onClick?: () => void }) {
   const stroke = active ? "#7C3AED" : "#64748B";
   return (
     <button
@@ -1766,9 +1766,10 @@ function RailItem({ icon, label, active, onClick }: { icon: "pin" | "doc" | "cha
         {icon === "pin" && (<><path d="M12 22s-7-6.5-7-12a7 7 0 1114 0c0 5.5-7 12-7 12z"/><circle cx="12" cy="10" r="2.5"/></>)}
         {icon === "doc" && (<><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/></>)}
         {icon === "chat" && (<><path d="M21 12a8 8 0 11-3-6.2L21 3v6h-6"/></>)}
+        {icon === "clock" && (<><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></>)}
         {icon === "gear" && (<><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.6 1.6 0 00.3 1.8l.1.1a2 2 0 11-2.8 2.8l-.1-.1a1.6 1.6 0 00-1.8-.3 1.6 1.6 0 00-1 1.5V21a2 2 0 11-4 0v-.1a1.6 1.6 0 00-1-1.5"/></>)}
       </svg>
-      <span className={`text-[10px] ${active ? "text-[#7C3AED] font-medium" : "text-slate-500"}`}>{label}</span>
+      <span className={`text-[10px] text-center leading-tight ${active ? "text-[#7C3AED] font-medium" : "text-slate-500"}`}>{label}</span>
     </button>
   );
 }
