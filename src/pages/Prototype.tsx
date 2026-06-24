@@ -404,7 +404,7 @@ const BEATS: Beat[] = [
   {
     owl: "default",
     lines: [
-      "I regard your portfolio as a collection of units — some gathered together under one roof as a Property, others standing on their own. The unit is the occupiable space, and it sits at the very heart of how I see your estate.",
+      "I regard your portfolio as a collection of units — some gathered together under one roof as a Property, others standing on their own. The unit is the occupiable space, and it sits at the very heart of how I view things.",
     ],
     prefill: "And where do documents belong in that?",
     mapAction: "pulse-one",
