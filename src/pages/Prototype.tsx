@@ -219,6 +219,136 @@ const PROPERTIES: Property[] = [
   },
 ];
 
+/* ---------- Proactive Action cards (portfolio briefing) ---------- */
+
+type Urgency = "now" | "week" | "watch";
+type TriggerType = "review" | "break" | "compliance" | "notice" | "expiry";
+type ApprovalState = "pending" | "approved" | "deferred" | "dismissed";
+
+type ActionCard = {
+  id: string;
+  propertyId: string;
+  unitId: string;
+  unitLabel: string;
+  propertyName: string;
+  triggerType: TriggerType;
+  title: string;
+  whyItMatters: string;          // confirmed/inferred prose, plain language
+  confidence: Confidence;
+  hobsonPrepared: string;        // what's already drafted
+  proposedAction: string;        // primary button label for confirmed items
+  urgency: Urgency;
+  approvalState: ApprovalState;
+  preparedDetail: string;        // what Hobson will do, on approve-expand
+};
+
+const INITIAL_ACTION_CARDS: ActionCard[] = [
+  {
+    id: "act-stanley-f8-review",
+    propertyId: "stanley",
+    unitId: "stanley-f8",
+    unitLabel: "Flat 8",
+    propertyName: "Stanley House",
+    triggerType: "review",
+    title: "Rent review due — Flat 8, Stanley House",
+    whyItMatters: "Review date confirmed for March 2027 in the lease.",
+    confidence: "confirmed",
+    hobsonPrepared: "I've reviewed the lease and drafted the review summary, with comparable evidence pulled from the last 12 months.",
+    proposedAction: "Review & approve",
+    urgency: "now",
+    approvalState: "pending",
+    preparedDetail:
+      "I'll send the review notice to the tenant's registered address using your standard cover letter, attach the drafted summary and comparables, and log the served-on date in the unit record.",
+  },
+  {
+    id: "act-nugent-shop-epc",
+    propertyId: "nugent",
+    unitId: "nugent-shop",
+    unitLabel: "Shop",
+    propertyName: "5 Nugent Terrace",
+    triggerType: "compliance",
+    title: "EPC expiring — Shop, 5 Nugent Terrace",
+    whyItMatters: "Current EPC expires 18 August 2026 (confirmed from certificate on file).",
+    confidence: "confirmed",
+    hobsonPrepared: "I've drafted an instruction to your usual assessor with access notes and the previous rating for reference.",
+    proposedAction: "Review & approve",
+    urgency: "now",
+    approvalState: "pending",
+    preparedDetail:
+      "I'll email the instruction to the assessor, copy you, and add the re-inspection to the compliance calendar so the new certificate lands before expiry.",
+  },
+  {
+    id: "act-stanley-f6-break",
+    propertyId: "stanley",
+    unitId: "stanley-f6",
+    unitLabel: "Flat 6",
+    propertyName: "Stanley House",
+    triggerType: "break",
+    title: "Break approaching — Flat 6, Stanley House",
+    whyItMatters: "Tenant break on 2 May 2027, confirmed from the lease. Notice window opens November.",
+    confidence: "confirmed",
+    hobsonPrepared: "I've drafted a courtesy reminder for the tenant and a file note for you summarising the break terms.",
+    proposedAction: "Review & approve",
+    urgency: "week",
+    approvalState: "pending",
+    preparedDetail:
+      "I'll diarise the notice window, send the courtesy reminder once approved, and flag the unit for a re-letting conversation if notice is served.",
+  },
+  {
+    id: "act-stanley-f3-holdover",
+    propertyId: "stanley",
+    unitId: "stanley-f3",
+    unitLabel: "Flat 3",
+    propertyName: "Stanley House",
+    triggerType: "expiry",
+    title: "Term ended — Flat 3, Stanley House",
+    whyItMatters:
+      "Term ended 24 March 2026 and I can't see a confirmed vacation or renewal — so I'm treating this as still let. Rent may still be due. Worth checking.",
+    confidence: "inferred",
+    hobsonPrepared: "I haven't acted on this — only flagged it. I won't assume the tenancy has ended without evidence.",
+    proposedAction: "Open unit to check",
+    urgency: "week",
+    approvalState: "pending",
+    preparedDetail: "",
+  },
+  {
+    id: "act-nugent-f2-holdover",
+    propertyId: "nugent",
+    unitId: "nugent-f2",
+    unitLabel: "Flat 2",
+    propertyName: "5 Nugent Terrace",
+    triggerType: "expiry",
+    title: "Term ended — Flat 2, 5 Nugent Terrace",
+    whyItMatters:
+      "Term ended 30 May 2026, no confirmed ending on file. Rent may still be due — worth a human eye.",
+    confidence: "inferred",
+    hobsonPrepared: "I haven't acted on this — flagged only.",
+    proposedAction: "Open unit to check",
+    urgency: "watch",
+    approvalState: "pending",
+    preparedDetail: "",
+  },
+  {
+    id: "act-stanley-f7-holdover",
+    propertyId: "stanley",
+    unitId: "stanley-f7",
+    unitLabel: "Flat 7",
+    propertyName: "Stanley House",
+    triggerType: "expiry",
+    title: "Term ended — Flat 7, Stanley House",
+    whyItMatters:
+      "Term ended 1 December 2025, nothing confirmed since. Treating as still let until checked.",
+    confidence: "inferred",
+    hobsonPrepared: "Flagged only — no action taken.",
+    proposedAction: "Open unit to check",
+    urgency: "watch",
+    approvalState: "pending",
+    preparedDetail: "",
+  },
+];
+
+
+
 /* ---------------- Onboarding script ---------------- */
 
 type Beat = {
@@ -573,6 +703,11 @@ const Prototype: React.FC = () => {
   const [showUnitPicker, setShowUnitPicker] = useState(false);
   const [showPropertyList, setShowPropertyList] = useState(false);
   const [portfolioChip, setPortfolioChip] = useState<string | null>(null);
+  const [actionCards, setActionCards] = useState<ActionCard[]>(INITIAL_ACTION_CARDS);
+  const [briefingChoice, setBriefingChoice] = useState<null | "all" | "urgent" | "browse">(null);
+  const [expandedCardId, setExpandedCardId] = useState<string | null>(null);
+  const [hoveredCardPropertyId, setHoveredCardPropertyId] = useState<string | null>(null);
+  const [actionToast, setActionToast] = useState<string | null>(null);
   const chatBodyRef = useRef<HTMLDivElement | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
   const searchRef = useRef<HTMLInputElement | null>(null);
@@ -703,6 +838,8 @@ const Prototype: React.FC = () => {
     setShowUnitPicker(false);
     setShowPropertyList(false);
     setPortfolioChip(null);
+    setBriefingChoice(null);
+    setExpandedCardId(null);
     setMessages([]);
 
     if (fromOnboarding) {
@@ -710,22 +847,40 @@ const Prototype: React.FC = () => {
       setHasVisited(true);
     }
 
-    const greet =
+    const pending = actionCards.filter((c) => c.approvalState === "pending");
+    const urgent = pending.filter((c) => c.urgency === "now");
+
+    const greetLines: string[] =
       portfolioMode === "first"
-        ? `Hi ${FIRST_NAME} — you're at portfolio level. Today I answer questions at the unit level, where your documents live. Click the search icon on the map to find a unit, or tap a pin to go straight there.`
-        : `Welcome back, ${FIRST_NAME}. You're at portfolio level. Today I answer questions at the unit level — click the search icon on the map to find a unit, or tap a pin to go straight there.`;
+        ? [
+            `Hi ${FIRST_NAME} — you're at portfolio level. Today I answer questions at the unit level, where your documents live. Click the search icon on the map to find a unit, or tap a pin to go straight there.`,
+          ]
+        : pending.length === 0
+        ? [
+            `Morning, ${FIRST_NAME}. The estate's quiet — nothing needs you today. Tap a pin to wander in, or use the map search.`,
+          ]
+        : [
+            `Morning, ${FIRST_NAME}. The estate's mostly quiet — ${pending.length} ${pending.length === 1 ? "thing needs" : "things need"} you${urgent.length ? `, and ${urgent.length === 1 ? "1 is" : `${urgent.length} are`} time-sensitive` : ""}.`,
+            `Want to take them now, or just the urgent one?`,
+          ];
 
     setTyping(true);
     const delay = reduced ? 200 : 450;
-    window.setTimeout(() => {
-      setTyping(false);
-      if (reduced) {
-        setMessages([{ id: "p-greet", role: "hobson", text: greet }]);
-      } else {
-        streamHobsonMessage(greet, () => {});
-      }
-    }, delay);
-
+    const playLine = (i: number) => {
+      if (i >= greetLines.length) return;
+      setTyping(true);
+      const gap = i === 0 ? delay : (reduced ? 80 : 500);
+      window.setTimeout(() => {
+        setTyping(false);
+        if (reduced) {
+          setMessages((m) => [...m, { id: `p-greet-${i}`, role: "hobson", text: greetLines[i] }]);
+          playLine(i + 1);
+        } else {
+          streamHobsonMessage(greetLines[i], () => playLine(i + 1));
+        }
+      }, gap);
+    };
+    playLine(0);
   };
 
   const goProperty = (id: string) => {
@@ -857,8 +1012,17 @@ const Prototype: React.FC = () => {
               (u.tenant && u.tenant.toLowerCase().includes(q))
           );
         }).map((p) => p.id);
+      } else if (portfolioMode === "returning" && briefingChoice !== "browse") {
+        // Glow properties that have pending action cards (matching the urgency filter)
+        const pending = actionCards.filter(
+          (c) =>
+            c.approvalState === "pending" &&
+            (briefingChoice !== "urgent" || c.urgency === "now")
+        );
+        const ids = Array.from(new Set(pending.map((c) => c.propertyId)));
+        if (ids.length) matchIds = ids;
       }
-      return { pulse: "none", matchIds, hoverId: hoveredPropertyId };
+      return { pulse: "none", matchIds, hoverId: hoveredCardPropertyId ?? hoveredPropertyId };
     }
     if (view === "property" && selectedProperty) {
       // Units are NOT shown as map pins — the map only locates the building.
@@ -880,7 +1044,7 @@ const Prototype: React.FC = () => {
       };
     }
     return { pulse: "none" };
-  }, [view, beatIdx, selectedProperty, selectedUnitId, searchQuery, portfolioMode, hoveredPropertyId]);
+  }, [view, beatIdx, selectedProperty, selectedUnitId, searchQuery, portfolioMode, hoveredPropertyId, briefingChoice, actionCards, hoveredCardPropertyId]);
 
   /* ----- unit Q&A ----- */
   const answerForUnit = (q: string): string => {
@@ -1100,6 +1264,38 @@ const Prototype: React.FC = () => {
             />
           )}
 
+          {/* Portfolio view — returning: co-worker briefing */}
+          {view === "portfolio" && portfolioMode === "returning" && !typing && messages.length > 0 && (
+            <PortfolioBriefing
+              cards={actionCards}
+              choice={briefingChoice}
+              setChoice={setBriefingChoice}
+              expandedCardId={expandedCardId}
+              setExpandedCardId={setExpandedCardId}
+              onHoverCard={setHoveredCardPropertyId}
+              onOpenUnit={(propId, unitId) => goUnit(unitId, propId)}
+              onApprove={(id) => {
+                const c = actionCards.find((x) => x.id === id);
+                setActionCards((arr) => arr.map((x) => x.id === id ? { ...x, approvalState: "approved" } : x));
+                setExpandedCardId(null);
+                if (c) {
+                  setActionToast(`Done — ${c.title} recorded.`);
+                  window.setTimeout(() => setActionToast(null), 3000);
+                }
+              }}
+              onDefer={(id) => {
+                setActionCards((arr) => arr.map((x) => x.id === id ? { ...x, approvalState: "deferred" } : x));
+                setExpandedCardId(null);
+              }}
+              onDismiss={(id) => {
+                setActionCards((arr) => arr.map((x) => x.id === id ? { ...x, approvalState: "dismissed" } : x));
+                setExpandedCardId(null);
+              }}
+            />
+          )}
+
+
+
           {/* Property view */}
           {view === "property" && selectedProperty && (
             <PropertyContent
@@ -1254,6 +1450,12 @@ const Prototype: React.FC = () => {
         {toast && (
           <div className="absolute left-1/2 -translate-x-1/2 bottom-8 z-[500] bg-slate-900 text-white text-sm px-4 py-2.5 rounded-lg shadow-lg max-w-md text-center">
             {toast}
+          </div>
+        )}
+
+        {actionToast && (
+          <div role="status" aria-live="polite" className="absolute left-1/2 -translate-x-1/2 bottom-20 z-[500] bg-emerald-700 text-white text-sm px-4 py-2.5 rounded-lg shadow-lg max-w-md text-center">
+            {actionToast}
           </div>
         )}
       </main>
@@ -2501,7 +2703,324 @@ function MapSearch({
 
 
 
+/* ---------- Portfolio briefing (returning) ---------- */
+
+const URGENCY_LABEL: Record<Urgency, string> = {
+  now: "Needs you now",
+  week: "This week",
+  watch: "Keeping an eye on",
+};
+
+const TRIGGER_ICON: Record<TriggerType, string> = {
+  review: "💬",
+  break: "⏸",
+  compliance: "✓",
+  notice: "✉",
+  expiry: "⌛",
+};
+
+function PortfolioBriefing({
+  cards,
+  choice,
+  setChoice,
+  expandedCardId,
+  setExpandedCardId,
+  onHoverCard,
+  onOpenUnit,
+  onApprove,
+  onDefer,
+  onDismiss,
+}: {
+  cards: ActionCard[];
+  choice: null | "all" | "urgent" | "browse";
+  setChoice: (c: null | "all" | "urgent" | "browse") => void;
+  expandedCardId: string | null;
+  setExpandedCardId: (id: string | null) => void;
+  onHoverCard: (propertyId: string | null) => void;
+  onOpenUnit: (propertyId: string, unitId: string) => void;
+  onApprove: (id: string) => void;
+  onDefer: (id: string) => void;
+  onDismiss: (id: string) => void;
+}) {
+  const pending = cards.filter((c) => c.approvalState === "pending");
+  const urgent = pending.filter((c) => c.urgency === "now");
+
+  // No pending — nothing to show in briefing
+  if (pending.length === 0) {
+    return (
+      <div className="text-[12px] text-slate-500 italic">Nothing on your desk today.</div>
+    );
+  }
+
+  // Initial chip choice
+  if (choice === null) {
+    const chips: { label: string; value: "all" | "urgent" | "browse" }[] = [
+      { label: `Show me what needs me (${pending.length})`, value: "all" },
+      ...(urgent.length ? [{ label: `Just the urgent ${urgent.length === 1 ? "one" : `${urgent.length}`}`, value: "urgent" as const }] : []),
+      { label: "I'll browse", value: "browse" as const },
+    ];
+    return (
+      <div className="flex flex-col items-end gap-1.5">
+        <span className="text-[11px] text-slate-500 flex items-center gap-1">
+          Tap to reply <span aria-hidden>↓</span>
+        </span>
+        <div className="flex gap-1.5 flex-wrap justify-end">
+          {chips.map((c, i) => (
+            <button
+              key={c.value}
+              onClick={() => setChoice(c.value)}
+              autoFocus={i === 0}
+              className={`inline-flex items-center px-4 py-2 rounded-full text-sm font-medium transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#7C3AED] ${
+                i === 0
+                  ? "bg-[#7C3AED] text-white hover:bg-[#6D28D9] shadow-sm"
+                  : "bg-[#EDE9FE] text-[#5B21B6] hover:bg-[#DDD6FE] border border-[#DDD6FE]"
+              }`}
+            >
+              {c.label}
+            </button>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  if (choice === "browse") {
+    return (
+      <div className="space-y-2">
+        <div className="flex items-center justify-between">
+          <div className="text-[11px] uppercase tracking-wide text-slate-400 font-medium">Properties</div>
+          <button
+            onClick={() => setChoice(null)}
+            className="text-[11px] text-[#7C3AED] hover:underline focus:outline-none focus:ring-2 focus:ring-[#7C3AED] rounded"
+          >
+            ← Back to briefing
+          </button>
+        </div>
+        <div className="space-y-1.5">
+          {PROPERTIES.map((p) => {
+            const hasAlert = pending.some((c) => c.propertyId === p.id);
+            return (
+              <button
+                key={p.id}
+                onClick={() => {
+                  if (p.standalone) onOpenUnit(p.id, p.units[0].id);
+                  else onOpenUnit(p.id, p.units[0].id); // open via unit; for non-standalone we still drill in via property
+                }}
+                onMouseEnter={() => onHoverCard(p.id)}
+                onMouseLeave={() => onHoverCard(null)}
+                className="w-full flex items-center justify-between px-3 py-2.5 rounded-lg border border-slate-200 hover:border-[#7C3AED] hover:bg-[#F5F3FF] transition text-left focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/30"
+              >
+                <div>
+                  <div className="text-sm font-medium text-slate-900 flex items-center gap-1.5">
+                    {p.name}
+                    {hasAlert && (
+                      <span className="inline-flex items-center justify-center w-3.5 h-3.5 rounded-full bg-amber-100 border border-amber-400 text-amber-700" aria-label="Has alerts">
+                        <svg width="8" height="8" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L1 21h22L12 2z"/></svg>
+                      </span>
+                    )}
+                  </div>
+                  <div className="text-[11px] text-slate-500">{p.area} · {p.standalone ? "single unit" : `${p.units.length} units`}</div>
+                </div>
+                <span className="text-[#7C3AED] text-sm">→</span>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+    );
+  }
+
+  const visible = choice === "urgent" ? urgent : pending;
+  const groups: { key: Urgency; cards: ActionCard[] }[] = (["now", "week", "watch"] as Urgency[])
+    .map((u) => ({ key: u, cards: visible.filter((c) => c.urgency === u) }))
+    .filter((g) => g.cards.length > 0);
+
+  const restCount = cards.filter((c) => c.approvalState === "pending").length - visible.length;
+  const archived = cards.filter((c) => c.approvalState !== "pending").length;
+
+  return (
+    <div className="space-y-3">
+      <div className="flex items-center justify-between">
+        <div className="text-[11px] uppercase tracking-wide text-slate-500 font-semibold">On your desk</div>
+        <div className="flex items-center gap-2">
+          {choice === "urgent" && pending.length > urgent.length && (
+            <button
+              onClick={() => setChoice("all")}
+              className="text-[11px] text-[#7C3AED] hover:underline focus:outline-none focus:ring-2 focus:ring-[#7C3AED] rounded"
+            >
+              Show all ({pending.length})
+            </button>
+          )}
+          <button
+            onClick={() => setChoice(null)}
+            className="text-[11px] text-slate-500 hover:text-slate-700 focus:outline-none focus:ring-2 focus:ring-[#7C3AED] rounded"
+          >
+            Reset
+          </button>
+        </div>
+      </div>
+
+      {groups.map((g) => (
+        <div key={g.key} className="space-y-2">
+          <div className="sticky top-0 z-[1] bg-white/95 backdrop-blur py-1 text-[10px] uppercase tracking-wide font-semibold text-slate-500 border-b border-slate-100">
+            {URGENCY_LABEL[g.key]} · {g.cards.length}
+          </div>
+          {g.cards.map((c) => (
+            <ActionCardItem
+              key={c.id}
+              card={c}
+              expanded={expandedCardId === c.id}
+              onToggleExpand={() => setExpandedCardId(expandedCardId === c.id ? null : c.id)}
+              onHover={(on) => onHoverCard(on ? c.propertyId : null)}
+              onOpenUnit={() => onOpenUnit(c.propertyId, c.unitId)}
+              onApprove={() => onApprove(c.id)}
+              onDefer={() => onDefer(c.id)}
+              onDismiss={() => onDismiss(c.id)}
+            />
+          ))}
+        </div>
+      ))}
+
+      {restCount > 0 && choice === "urgent" && (
+        <button
+          onClick={() => setChoice("all")}
+          className="w-full text-left text-[12px] text-slate-500 px-3 py-2 rounded-lg border border-dashed border-slate-200 hover:border-slate-300 hover:bg-slate-50 transition focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/30"
+        >
+          {restCount} more this week →
+        </button>
+      )}
+
+      {archived > 0 && (
+        <div className="text-[11px] text-slate-400 italic px-1">
+          {archived} {archived === 1 ? "item" : "items"} handled today.
+        </div>
+      )}
+    </div>
+  );
+}
+
+function ActionCardItem({
+  card,
+  expanded,
+  onToggleExpand,
+  onHover,
+  onOpenUnit,
+  onApprove,
+  onDefer,
+  onDismiss,
+}: {
+  card: ActionCard;
+  expanded: boolean;
+  onToggleExpand: () => void;
+  onHover: (on: boolean) => void;
+  onOpenUnit: () => void;
+  onApprove: () => void;
+  onDefer: () => void;
+  onDismiss: () => void;
+}) {
+  const isInferred = card.confidence === "inferred";
+  return (
+    <article
+      onMouseEnter={() => onHover(true)}
+      onMouseLeave={() => onHover(false)}
+      className={`rounded-xl border bg-white p-3 transition ${
+        isInferred ? "border-amber-200" : "border-slate-200 hover:border-[#7C3AED]/40"
+      }`}
+    >
+      <header className="flex items-start gap-2 mb-1.5">
+        <span aria-hidden className="text-base leading-none mt-0.5">{TRIGGER_ICON[card.triggerType]}</span>
+        <div className="flex-1 min-w-0">
+          <div className="text-[13px] font-semibold text-slate-900 leading-snug">{card.title}</div>
+          <div className="mt-0.5"><ConfidenceMark confidence={card.confidence} /></div>
+        </div>
+      </header>
+
+      <p className="text-[12.5px] text-slate-700 leading-relaxed mb-1.5">{card.whyItMatters}</p>
+      <p className="text-[12px] text-slate-500 leading-relaxed mb-2 italic">{card.hobsonPrepared}</p>
+
+      {!expanded && (
+        <div className="flex flex-wrap items-center gap-1.5">
+          {!isInferred ? (
+            <button
+              onClick={onToggleExpand}
+              className="text-xs px-3 py-1.5 rounded-full bg-[#7C3AED] text-white hover:bg-[#6D28D9] transition focus:outline-none focus:ring-2 focus:ring-[#7C3AED]"
+            >
+              {card.proposedAction}
+            </button>
+          ) : (
+            <>
+              <button
+                onClick={onOpenUnit}
+                className="text-xs px-3 py-1.5 rounded-full bg-amber-100 text-amber-900 border border-amber-300 hover:bg-amber-200 transition focus:outline-none focus:ring-2 focus:ring-amber-500"
+              >
+                Open unit to check
+              </button>
+              <button
+                onClick={onDefer}
+                className="text-xs px-3 py-1.5 rounded-full text-slate-600 border border-slate-200 hover:bg-slate-50 transition focus:outline-none focus:ring-2 focus:ring-slate-300"
+              >
+                Flag for review
+              </button>
+            </>
+          )}
+          {!isInferred && (
+            <button
+              onClick={onOpenUnit}
+              className="text-xs px-3 py-1.5 rounded-full text-slate-600 border border-slate-200 hover:bg-slate-50 transition focus:outline-none focus:ring-2 focus:ring-slate-300"
+            >
+              Open unit
+            </button>
+          )}
+          <button
+            onClick={onDefer}
+            className="text-xs px-2.5 py-1.5 rounded-full text-slate-500 hover:text-slate-700 hover:bg-slate-50 transition focus:outline-none focus:ring-2 focus:ring-slate-300"
+          >
+            Defer
+          </button>
+          <button
+            onClick={onDismiss}
+            className="text-xs px-2.5 py-1.5 rounded-full text-slate-400 hover:text-slate-600 hover:bg-slate-50 transition focus:outline-none focus:ring-2 focus:ring-slate-300"
+          >
+            Dismiss
+          </button>
+        </div>
+      )}
+
+      {expanded && !isInferred && (
+        <div className="mt-2 rounded-lg border border-[#DDD6FE] bg-[#F5F3FF] p-2.5 space-y-2">
+          <div>
+            <div className="text-[10px] uppercase tracking-wide text-[#5B21B6] font-semibold mb-1">What I'll do</div>
+            <p className="text-[12px] text-slate-700 leading-relaxed">{card.preparedDetail}</p>
+          </div>
+          <div className="flex flex-wrap gap-1.5 pt-1">
+            <button
+              onClick={onApprove}
+              autoFocus
+              className="text-xs px-3 py-1.5 rounded-full bg-[#7C3AED] text-white hover:bg-[#6D28D9] transition focus:outline-none focus:ring-2 focus:ring-[#7C3AED]"
+            >
+              Approve
+            </button>
+            <button
+              onClick={onToggleExpand}
+              className="text-xs px-3 py-1.5 rounded-full text-slate-600 border border-slate-200 hover:bg-slate-50 transition focus:outline-none focus:ring-2 focus:ring-slate-300"
+            >
+              Modify
+            </button>
+            <button
+              onClick={onToggleExpand}
+              className="text-xs px-3 py-1.5 rounded-full text-slate-500 hover:text-slate-700 hover:bg-slate-50 transition focus:outline-none focus:ring-2 focus:ring-slate-300"
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      )}
+    </article>
+  );
+}
+
 /* ---------------- styles ---------------- */
+
 
 function StyleTag() {
   return (
