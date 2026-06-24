@@ -791,19 +791,25 @@ const Prototype: React.FC = () => {
     setShowPropertyList(false);
     setPortfolioChip(null);
     setSearchQuery("");
-    const where = p.standalone ? p.address : `${p.name} — ${u.label}, ${p.postcode}`;
-    const intro = `${where}. What would you like to know? (Unit details are placeholders for now — I'll learn the real answers once your documents are uploaded.)`;
+    const where = p.standalone ? p.address : `${p.name}`;
+    const derived = deriveUnit(u);
+    const lines = buildUnitOpeningLines(u, derived, where);
     setMessages([]);
-    setTyping(true);
-    const delay = reduced ? 200 : 500;
-    window.setTimeout(() => {
-      setTyping(false);
-      if (reduced) {
-        setMessages([{ id: `unit-${unitId}`, role: "hobson", text: intro }]);
-      } else {
-        streamHobsonMessage(intro, () => {});
-      }
-    }, delay);
+    const playLine = (i: number) => {
+      if (i >= lines.length) return;
+      setTyping(true);
+      const gap = reduced ? 80 : i === 0 ? 400 : 600;
+      window.setTimeout(() => {
+        setTyping(false);
+        if (reduced) {
+          setMessages((m) => [...m, { id: `unit-${unitId}-${i}`, role: "hobson", text: lines[i] }]);
+          playLine(i + 1);
+        } else {
+          streamHobsonMessage(lines[i], () => playLine(i + 1));
+        }
+      }, gap);
+    };
+    playLine(0);
   };
 
   const replayOnboarding = () => {
