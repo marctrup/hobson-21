@@ -778,6 +778,30 @@ const Prototype: React.FC = () => {
   const [actionToast, setActionToast] = useState<string | null>(null);
   const [showDocuments, setShowDocuments] = useState(false);
   const [carriedCardId, setCarriedCardId] = useState<string | null>(null);
+  const [performingCardId, setPerformingCardId] = useState<string | null>(null);
+
+  const performCard = (id: string) => {
+    setPerformingCardId(id);
+    setExpandedCardId(null);
+    setActionCards((arr) => arr.map((x) => x.id === id ? { ...x, approvalState: "in_progress" } : x));
+  };
+  const cancelPerform = () => {
+    if (performingCardId) {
+      setActionCards((arr) => arr.map((x) => x.id === performingCardId ? { ...x, approvalState: "pending" } : x));
+    }
+    setPerformingCardId(null);
+  };
+  const completePerform = (summary: string) => {
+    if (performingCardId) {
+      const card = actionCards.find((x) => x.id === performingCardId);
+      setActionCards((arr) => arr.map((x) => x.id === performingCardId ? { ...x, approvalState: "approved" } : x));
+      if (card) {
+        setActionToast(`Done — ${card.title} · ${summary}`);
+        window.setTimeout(() => setActionToast(null), 4500);
+      }
+    }
+    setPerformingCardId(null);
+  };
   const chatBodyRef = useRef<HTMLDivElement | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
   const searchRef = useRef<HTMLInputElement | null>(null);
