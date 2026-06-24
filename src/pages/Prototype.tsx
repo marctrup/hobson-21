@@ -528,6 +528,11 @@ const Prototype: React.FC = () => {
   const goProperty = (id: string) => {
     const p = PROPERTIES.find((x) => x.id === id);
     if (!p) return;
+    // Standalone "properties" (single independent unit) skip the Property layer entirely
+    if (p.standalone) {
+      goUnit(p.units[0].id, p.id);
+      return;
+    }
     setView("property");
     setSelectedPropertyId(id);
     setSelectedUnitId(null);
@@ -537,7 +542,7 @@ const Prototype: React.FC = () => {
     setPortfolioChip(null);
     setSearchQuery("");
     setMessages([]);
-    const greet = `This is ${p.name}, ${p.area} — ${p.units.length} units. I can take you into any one of them. Which would you like to open?`;
+    const greet = `This is ${p.name}, ${p.address.replace(`${p.name} — `, "")} — ${p.units.length} units. Which would you like to open?`;
     setTyping(true);
     const delay = reduced ? 200 : 500;
     window.setTimeout(() => {
@@ -583,10 +588,8 @@ const Prototype: React.FC = () => {
     setShowPropertyList(false);
     setPortfolioChip(null);
     setSearchQuery("");
-    const intro =
-      u.status === "Let"
-        ? `${p.name} — ${u.label}, let to ${u.tenant}. What would you like to know?`
-        : `${p.name} — ${u.label}, currently vacant. What would you like to check?`;
+    const where = p.standalone ? p.address : `${p.name} — ${u.label}, ${p.postcode}`;
+    const intro = `${where}. What would you like to know? (Unit details are placeholders for now — I'll learn the real answers once your documents are uploaded.)`;
     setMessages([{ id: `unit-${unitId}`, role: "hobson", text: intro }]);
   };
 
