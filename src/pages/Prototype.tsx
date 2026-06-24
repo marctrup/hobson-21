@@ -686,21 +686,7 @@ const Prototype: React.FC = () => {
           )}
           {typing && <TypingBubble owl={owl} />}
 
-          {/* Onboarding chip */}
-          {view === "onboarding" && chipVisible && (
-            <div className="pl-12">
-              <button
-                onClick={advanceBeat}
-                className={`mt-1 inline-flex items-center px-4 py-2 rounded-full text-sm font-medium transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#7C3AED] ${
-                  beatIdx === BEATS.length - 1
-                    ? "bg-[#7C3AED] text-white hover:bg-[#6D28D9] shadow-sm"
-                    : "bg-[#EDE9FE] text-[#5B21B6] hover:bg-[#DDD6FE]"
-                }`}
-              >
-                {BEATS[beatIdx]?.chip}
-              </button>
-            </div>
-          )}
+          {/* Onboarding chip now rendered above the locked composer */}
 
           {/* Portfolio view */}
           {view === "portfolio" && (
