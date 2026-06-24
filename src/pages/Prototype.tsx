@@ -1264,6 +1264,38 @@ const Prototype: React.FC = () => {
             />
           )}
 
+          {/* Portfolio view — returning: co-worker briefing */}
+          {view === "portfolio" && portfolioMode === "returning" && !typing && messages.length > 0 && (
+            <PortfolioBriefing
+              cards={actionCards}
+              choice={briefingChoice}
+              setChoice={setBriefingChoice}
+              expandedCardId={expandedCardId}
+              setExpandedCardId={setExpandedCardId}
+              onHoverCard={setHoveredCardPropertyId}
+              onOpenUnit={(propId, unitId) => goUnit(unitId, propId)}
+              onApprove={(id) => {
+                const c = actionCards.find((x) => x.id === id);
+                setActionCards((arr) => arr.map((x) => x.id === id ? { ...x, approvalState: "approved" } : x));
+                setExpandedCardId(null);
+                if (c) {
+                  setActionToast(`Done — ${c.title} recorded.`);
+                  window.setTimeout(() => setActionToast(null), 3000);
+                }
+              }}
+              onDefer={(id) => {
+                setActionCards((arr) => arr.map((x) => x.id === id ? { ...x, approvalState: "deferred" } : x));
+                setExpandedCardId(null);
+              }}
+              onDismiss={(id) => {
+                setActionCards((arr) => arr.map((x) => x.id === id ? { ...x, approvalState: "dismissed" } : x));
+                setExpandedCardId(null);
+              }}
+            />
+          )}
+
+
+
           {/* Property view */}
           {view === "property" && selectedProperty && (
             <PropertyContent
