@@ -1366,8 +1366,28 @@ const Prototype: React.FC = () => {
           {view === "property" && selectedProperty && (
             <PropertyContent
               property={selectedProperty}
+              propertyActionCards={selectActionsForScope(actionCards, { level: "property", propertyId: selectedProperty.id })}
+              expandedCardId={expandedCardId}
+              setExpandedCardId={setExpandedCardId}
               onOpenUnit={(uid) => goUnit(uid, selectedProperty.id)}
               onPreviewQuestion={askPropertyPreview}
+              onApprove={(id) => {
+                const c = actionCards.find((x) => x.id === id);
+                setActionCards((arr) => arr.map((x) => x.id === id ? { ...x, approvalState: "approved" } : x));
+                setExpandedCardId(null);
+                if (c) {
+                  setActionToast(`Done — ${c.title} recorded.`);
+                  window.setTimeout(() => setActionToast(null), 3000);
+                }
+              }}
+              onDefer={(id) => {
+                setActionCards((arr) => arr.map((x) => x.id === id ? { ...x, approvalState: "deferred" } : x));
+                setExpandedCardId(null);
+              }}
+              onDismiss={(id) => {
+                setActionCards((arr) => arr.map((x) => x.id === id ? { ...x, approvalState: "dismissed" } : x));
+                setExpandedCardId(null);
+              }}
             />
           )}
 
