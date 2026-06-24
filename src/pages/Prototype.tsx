@@ -1887,6 +1887,16 @@ function StyleTag() {
         white-space: nowrap;
       }
       .leaflet-tooltip.hp-tooltip::before { border-top-color: #1F2330; }
+
+      /* Overlap spiderfy: pin keeps its true identity & count; thin connector shows true location */
+      .hp-marker.is-overlap-spread .hp-cluster,
+      .hp-marker.is-overlap-spread .hp-pin {
+        box-shadow: 0 0 0 2px rgba(148,163,184,0.45), 0 2px 6px rgba(0,0,0,0.18);
+      }
+      .leaflet-marker-icon { transition: transform 0.35s ease; }
+      @media (prefers-reduced-motion: reduce) {
+        .leaflet-marker-icon { transition: none; }
+      }
       .hp-pin {
         width: 28px; height: 38px; position: relative;
         filter: drop-shadow(0 2px 3px rgba(0,0,0,0.25));
