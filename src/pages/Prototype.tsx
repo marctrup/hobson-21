@@ -2532,6 +2532,170 @@ function LockedComposer({ view }: { view: View }) {
   );
 }
 
+function ScriptedComposer({
+  value,
+  onChange,
+  onSubmit,
+  helper,
+}: {
+  value: string;
+  onChange: (v: string) => void;
+  onSubmit: () => void;
+  helper: string;
+}) {
+  return (
+    <>
+      <div className="text-[11px] text-slate-400 mb-1 flex items-center gap-1.5">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
+          <rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/>
+        </svg>
+        <span>{helper}</span>
+      </div>
+      <form
+        onSubmit={(e) => { e.preventDefault(); onSubmit(); }}
+        className="flex items-center gap-2 px-4 py-2.5 rounded-full border border-slate-200 bg-white focus-within:border-[#7C3AED] focus-within:ring-2 focus-within:ring-[#7C3AED]/20 transition"
+      >
+        <input
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          placeholder="Ask Hobson…"
+          className="flex-1 outline-none text-sm bg-transparent placeholder:text-slate-400 text-slate-700"
+          aria-label="Ask Hobson"
+        />
+        <button
+          type="submit"
+          className="text-[#7C3AED] hover:text-[#6D28D9] disabled:text-slate-300"
+          aria-label="Send"
+          disabled={!value.trim()}
+        >
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/>
+          </svg>
+        </button>
+      </form>
+    </>
+  );
+}
+
+function RentRichTop() {
+  const csv = "Current Rent,Effective From,Reliable\n£2415 per month,1 October 2025,Yes\n";
+  const downloadCsv = () => {
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "rent-flat-2-nugent-terrace.csv";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  };
+  return (
+    <div className="mb-2">
+      <button
+        type="button"
+        onClick={downloadCsv}
+        className="inline-flex items-center gap-1 text-[12px] text-[#7C3AED] hover:text-[#6D28D9] underline underline-offset-2 mb-2"
+      >
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
+          <path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M5 21h14"/>
+        </svg>
+        Download as CSV
+      </button>
+      <div className="rounded-lg border border-[#DDD6FE] bg-white overflow-hidden">
+        <table className="w-full text-[12px]">
+          <thead className="bg-[#F5F3FF] text-slate-600">
+            <tr>
+              <th className="text-left font-medium px-2.5 py-1.5">Current Rent</th>
+              <th className="text-left font-medium px-2.5 py-1.5">Effective From</th>
+              <th className="text-left font-medium px-2.5 py-1.5">Reliable</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr className="border-t border-[#EDE9FE]">
+              <td className="px-2.5 py-1.5 font-medium text-slate-900">£2,415 per month</td>
+              <td className="px-2.5 py-1.5 text-slate-700">1 October 2025</td>
+              <td className="px-2.5 py-1.5 text-emerald-700">✓ Yes</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
+
+function RentRichBottom({ onFollowUp }: { onFollowUp?: (q: string) => void }) {
+  const sources = [
+    "AST nt 2.pdf — referenced by the answer",
+    "rent increase 2025-2026 NT2.pdf — referenced by the answer",
+  ];
+  const related = [
+    "Would you like the original rent amount as well?",
+    "Do you want the source documents for this rent?",
+    "Shall I check how the increase was calculated?",
+  ];
+  const docs = ["rent increase 2025-2026 NT2.pdf", "AST nt 2.pdf"];
+  const openPdf = (name: string) => {
+    // Placeholder viewer
+    window.alert(`Opening ${name} (placeholder viewer).`);
+  };
+  return (
+    <div className="mt-3 space-y-3">
+      <div>
+        <div className="text-[11px] uppercase tracking-wide text-slate-500 font-medium mb-1">Sources</div>
+        <ul className="list-disc pl-4 space-y-0.5 text-[12.5px] text-slate-700">
+          {sources.map((s) => <li key={s}>{s}</li>)}
+        </ul>
+      </div>
+      <div>
+        <div className="text-[11px] uppercase tracking-wide text-slate-500 font-medium mb-1">Related questions</div>
+        <ul className="space-y-1">
+          {related.map((q) => (
+            <li key={q}>
+              <button
+                type="button"
+                onClick={() => onFollowUp?.(q)}
+                className="text-left text-[12.5px] text-[#5B21B6] hover:text-[#7C3AED] underline underline-offset-2"
+              >
+                • {q}
+              </button>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div>
+        <div className="text-[11px] uppercase tracking-wide text-slate-500 font-medium mb-1 flex items-center gap-1.5">
+          Related documents
+          <span className="text-[9px] px-1.5 py-0.5 rounded bg-amber-100 text-amber-800 font-semibold tracking-wider">BETA</span>
+        </div>
+        <ul className="space-y-1">
+          {docs.map((d) => (
+            <li key={d}>
+              <button
+                type="button"
+                onClick={() => openPdf(d)}
+                className="inline-flex items-center gap-1.5 text-[12.5px] text-slate-800 hover:text-[#7C3AED]"
+              >
+                <span className="inline-flex items-center justify-center w-4 h-5 rounded-sm bg-red-100 text-red-700 text-[8px] font-bold">PDF</span>
+                {d}
+              </button>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div className="flex items-center gap-3 pt-1 border-t border-[#DDD6FE] text-[11px] text-slate-500">
+        <button type="button" className="hover:text-[#7C3AED]" onClick={() => navigator.clipboard?.writeText("Current rent: £2,415 per month, effective 1 October 2025.")}>Copy</button>
+        <span aria-hidden>·</span>
+        <button type="button" className="hover:text-[#7C3AED]">Regenerate</button>
+        <span aria-hidden>·</span>
+        <button type="button" className="hover:text-[#7C3AED]">Diagnostic</button>
+        <span aria-hidden>·</span>
+        <button type="button" className="hover:text-[#7C3AED]">Rate this</button>
+      </div>
+    </div>
+  );
+}
+
 /* ---------- Portfolio: first-visit guided ---------- */
 
 function PortfolioFirstVisit({
