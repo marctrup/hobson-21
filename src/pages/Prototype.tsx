@@ -686,21 +686,7 @@ const Prototype: React.FC = () => {
           )}
           {typing && <TypingBubble owl={owl} />}
 
-          {/* Onboarding chip */}
-          {view === "onboarding" && chipVisible && (
-            <div className="pl-12">
-              <button
-                onClick={advanceBeat}
-                className={`mt-1 inline-flex items-center px-4 py-2 rounded-full text-sm font-medium transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#7C3AED] ${
-                  beatIdx === BEATS.length - 1
-                    ? "bg-[#7C3AED] text-white hover:bg-[#6D28D9] shadow-sm"
-                    : "bg-[#EDE9FE] text-[#5B21B6] hover:bg-[#DDD6FE]"
-                }`}
-              >
-                {BEATS[beatIdx]?.chip}
-              </button>
-            </div>
-          )}
+          {/* Onboarding chip now rendered above the locked composer */}
 
           {/* Portfolio view */}
           {view === "portfolio" && (
@@ -733,6 +719,24 @@ const Prototype: React.FC = () => {
 
         {/* Composer */}
         <div className="px-5 pt-2 pb-4 border-t border-slate-100 bg-white">
+          {view === "onboarding" && chipVisible && (
+            <div className="mb-2 flex flex-col items-end gap-1.5">
+              <span className="text-[11px] text-slate-500 flex items-center gap-1">
+                Tap to reply <span aria-hidden>↓</span>
+              </span>
+              <button
+                onClick={advanceBeat}
+                autoFocus
+                className={`inline-flex items-center px-4 py-2 rounded-full text-sm font-medium transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#7C3AED] ${
+                  beatIdx === BEATS.length - 1
+                    ? "bg-[#7C3AED] text-white hover:bg-[#6D28D9] shadow-sm"
+                    : "bg-[#EDE9FE] text-[#5B21B6] hover:bg-[#DDD6FE] border border-[#DDD6FE]"
+                }`}
+              >
+                {BEATS[beatIdx]?.chip}
+              </button>
+            </div>
+          )}
           {view !== "unit" ? (
             <LockedComposer view={view} />
           ) : (
@@ -1058,20 +1062,27 @@ function UnitStarters({ unit, onAsk }: { unit: Unit; onAsk: (q: string) => void 
 }
 
 function LockedComposer({ view }: { view: View }) {
-  const label =
+  const placeholder = "Ask Hobson…";
+  const helper =
     view === "onboarding"
-      ? "Tap a reply to continue"
+      ? "Chat unlocks at unit level"
       : view === "portfolio"
       ? "Open a unit to ask Hobson — Portfolio chat coming soon"
       : "Open a unit to ask Hobson — Property chat coming soon";
   return (
     <>
-      <div className="text-[11px] text-slate-400 mb-1">Roadmap</div>
-      <div className="flex items-center gap-2 px-4 py-2.5 rounded-full border border-dashed border-slate-300 bg-slate-50 text-sm text-slate-400">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+      <div className="text-[11px] text-slate-400 mb-1">{view === "onboarding" ? "Locked" : "Roadmap"}</div>
+      <div
+        aria-disabled="true"
+        tabIndex={-1}
+        className="flex items-center gap-2 px-4 py-2.5 rounded-full border border-dashed border-slate-300 bg-slate-50 text-sm text-slate-400 select-none cursor-not-allowed"
+        title={helper}
+      >
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
           <rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/>
         </svg>
-        <span className="truncate">{label}</span>
+        <span className="flex-1 truncate text-slate-400">{placeholder}</span>
+        <span className="text-[10px] uppercase tracking-wide text-slate-400">{helper}</span>
       </div>
     </>
   );
