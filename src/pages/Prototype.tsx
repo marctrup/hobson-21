@@ -481,7 +481,22 @@ const prefersReducedMotion = () =>
   window.matchMedia &&
   window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-type ChatMsg = { id: string; role: "hobson" | "user"; text: string; streaming?: boolean };
+type ChatMsg = { id: string; role: "hobson" | "user"; text: string; streaming?: boolean; rich?: "rentFlat2" };
+
+const RENT_Q_PATTERNS = [
+  /^\s*rent\s*\??\s*$/i,
+  /^\s*rent\s+flat\s*2\s*$/i,
+  /^\s*rent\s+flat\s*2\s+nugent\s+terrace\s*$/i,
+  /^\s*what'?s?\s+the\s+current\s+rent\s*\??\s*$/i,
+  /^\s*current\s+rent\s+flat\s*2\s*$/i,
+];
+const isRentFlat2Question = (q: string) => RENT_Q_PATTERNS.some((re) => re.test(q));
+const rentPrefillFor = (view: View, propertyId: string | null, unitId: string | null): string => {
+  if (view === "unit" && unitId === "nugent-f2") return "rent?";
+  if (view === "property" && propertyId === "nugent") return "rent flat 2";
+  if (view === "portfolio") return "rent flat 2 Nugent Terrace";
+  return "";
+};
 
 /* ---------------- Map ---------------- */
 
