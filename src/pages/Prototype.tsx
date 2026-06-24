@@ -1354,6 +1354,7 @@ const Prototype: React.FC = () => {
                           setExpandedCardId(null);
                         }}
                       />
+                      </div>
                     ))}
                   </section>
                 );
