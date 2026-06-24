@@ -222,7 +222,7 @@ function HobsonMap({
   useEffect(() => {
     if (!mapRef.current || mapInstance.current) return;
     const map = L.map(mapRef.current, {
-      center: [51.5174, -0.1278],
+      center: [51.555, -0.185],
       zoom: 12,
       zoomControl: false,
       attributionControl: false,
@@ -235,7 +235,7 @@ function HobsonMap({
     mapInstance.current = map;
 
     PROPERTIES.forEach((p) => {
-      const isCluster = p.units.length > 1;
+      const isCluster = !p.standalone && p.units.length > 1;
       const html = isCluster
         ? `<div class="hp-cluster" data-pid="${p.id}"><span>${p.units.length}</span></div>`
         : `<div class="hp-pin" data-pid="${p.id}"><div class="hp-pin-dot"></div></div>`;
@@ -246,11 +246,20 @@ function HobsonMap({
         iconAnchor: isCluster ? [19, 19] : [14, 36],
       });
       const m = L.marker([p.lat, p.lng], { icon }).addTo(map);
+      m.bindTooltip(p.address, {
+        direction: "top",
+        offset: [0, isCluster ? -18 : -34],
+        className: "hp-tooltip",
+      });
       m.on("click", () => onPropertyClick(p.id));
       m.on("mouseover", () => onPinHover?.(p.id));
       m.on("mouseout", () => onPinHover?.(null));
       markersRef.current[p.id] = m;
     });
+
+    // Fit to all property pins
+    const bounds = L.latLngBounds(PROPERTIES.map((p) => [p.lat, p.lng] as [number, number]));
+    map.fitBounds(bounds, { padding: [60, 60], maxZoom: 13 });
 
     return () => {
       map.remove();
