@@ -1517,6 +1517,7 @@ const Prototype: React.FC = () => {
                 setExpandedCardId(null);
               }}
               onPerform={performCard}
+              onReview={reviewCard}
             />
           )}
 
