@@ -938,24 +938,28 @@ const Prototype: React.FC = () => {
     playLine(0);
   };
 
-  const goProperty = (id: string) => {
+  const goProperty = (id: string, carryCardId?: string) => {
     const p = PROPERTIES.find((x) => x.id === id);
     if (!p) return;
     // Standalone "properties" (single independent unit) skip the Property layer entirely
     if (p.standalone) {
-      goUnit(p.units[0].id, p.id);
+      goUnit(p.units[0].id, p.id, carryCardId);
       return;
     }
     setView("property");
     setSelectedPropertyId(id);
     setSelectedUnitId(null);
+    setCarriedCardId(carryCardId ?? null);
     setOwl("talking");
     setShowUnitPicker(false);
     setShowPropertyList(false);
     setPortfolioChip(null);
     setSearchQuery("");
     setMessages([]);
-    const greet = `Here you are, ${FIRST_NAME} — ${p.name}, London ${p.postcode}. ${p.units.length} units. Pick one to open.`;
+    const carriedCard = carryCardId ? actionCards.find((x) => x.id === carryCardId) : null;
+    const greet = carriedCard
+      ? `Here's ${p.name}. ${carriedCard.title} is the one that needs you — and here's everything else on this building.`
+      : `Here you are, ${FIRST_NAME} — ${p.name}, London ${p.postcode}. ${p.units.length} units. Pick one to open.`;
     setTyping(true);
     const delay = reduced ? 200 : 500;
     window.setTimeout(() => {
