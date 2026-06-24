@@ -39,86 +39,65 @@ type Unit = {
 type Property = {
   id: string;
   name: string;
-  area: string;
+  area: string;        // short label (e.g. "NW11") used in compact subtitles
+  address: string;     // full address line for hover / greeting
+  postcode: string;
   lat: number;
   lng: number;
   units: Unit[];
+  standalone?: boolean; // true = no Property layer; opens straight to its single unit
 };
 
 const PROPERTIES: Property[] = [
   {
     id: "stanley",
     name: "Stanley House",
-    area: "Marylebone, London",
-    lat: 51.5205,
-    lng: -0.1525,
+    area: "1115 Finchley Road, NW11",
+    address: "Stanley House — 1115 Finchley Road, London NW11",
+    postcode: "NW11",
+    lat: 51.583,
+    lng: -0.197,
     units: [
-      {
-        id: "stanley-gf",
-        label: "Ground Floor",
-        status: "Let",
-        tenant: "ABC Limited",
-        rent: "£48,000 p.a.",
-        leaseTo: "24 Mar 2029",
-        break: "24 Mar 2027",
-        review: "Mar 2027",
-        epc: "D",
-      },
-      {
-        id: "stanley-1f",
-        label: "First Floor",
-        status: "Let",
-        tenant: "XYZ Limited",
-        rent: "£52,000 p.a.",
-        leaseTo: "28 Sep 2031",
-        epc: "C",
-      },
-      {
-        id: "stanley-2f",
-        label: "Second Floor",
-        status: "Vacant",
-        vacantSince: "Jan 2026",
-        lastTenant: "Crompton & Co",
-        lastRent: "£45,000 p.a.",
-      },
+      { id: "stanley-f1",  label: "Flat 1",  status: "Let" },
+      { id: "stanley-f2",  label: "Flat 2",  status: "Let" },
+      { id: "stanley-f3",  label: "Flat 3",  status: "Let" },
+      { id: "stanley-f4",  label: "Flat 4",  status: "Let" },
+      { id: "stanley-f5",  label: "Flat 5",  status: "Let" },
+      { id: "stanley-f6",  label: "Flat 6",  status: "Let" },
+      { id: "stanley-f7",  label: "Flat 7",  status: "Let" },
+      { id: "stanley-f8",  label: "Flat 8",  status: "Vacant" },
+      { id: "stanley-f9",  label: "Flat 9",  status: "Let" },
+      { id: "stanley-f10", label: "Flat 10", status: "Let" },
+      { id: "stanley-f11", label: "Flat 11", status: "Let" },
+      { id: "stanley-shop", label: "Shop",   status: "Vacant" },
     ],
   },
   {
-    id: "kings",
-    name: "Kings Court",
-    area: "Holborn, London",
-    lat: 51.5174,
-    lng: -0.118,
+    id: "nugent",
+    name: "5 Nugent Terrace",
+    area: "NW8",
+    address: "5 Nugent Terrace, London NW8",
+    postcode: "NW8",
+    lat: 51.5325,
+    lng: -0.1787,
     units: [
-      {
-        id: "kings-a",
-        label: "Unit A",
-        status: "Let",
-        tenant: "Meridian Retail",
-        rent: "£61,000 p.a.",
-        leaseTo: "14 Jun 2030",
-        epc: "C",
-      },
-      { id: "kings-b", label: "Unit B", status: "Vacant", vacantSince: "Oct 2025" },
+      { id: "nugent-f1",   label: "Flat 1", status: "Let" },
+      { id: "nugent-f2",   label: "Flat 2", status: "Let" },
+      { id: "nugent-f3",   label: "Flat 3", status: "Vacant" },
+      { id: "nugent-shop", label: "Shop",   status: "Let" },
     ],
   },
   {
-    id: "camden",
-    name: "Camden Wharf",
-    area: "Camden, London",
-    lat: 51.5412,
-    lng: -0.1438,
+    id: "hamilton",
+    name: "32 Hamilton Gardens",
+    area: "NW8",
+    address: "32 Hamilton Gardens, London NW8",
+    postcode: "NW8",
+    lat: 51.5298,
+    lng: -0.1758,
+    standalone: true,
     units: [
-      {
-        id: "camden-w1",
-        label: "Warehouse 1",
-        status: "Let",
-        tenant: "Dockside Logistics",
-        rent: "£88,000 p.a.",
-        leaseTo: "01 Dec 2028",
-        epc: "B",
-      },
-      { id: "camden-w2", label: "Warehouse 2", status: "Vacant", vacantSince: "Aug 2025" },
+      { id: "hamilton-unit", label: "32 Hamilton Gardens", status: "Let" },
     ],
   },
 ];
@@ -243,7 +222,7 @@ function HobsonMap({
   useEffect(() => {
     if (!mapRef.current || mapInstance.current) return;
     const map = L.map(mapRef.current, {
-      center: [51.5174, -0.1278],
+      center: [51.555, -0.185],
       zoom: 12,
       zoomControl: false,
       attributionControl: false,
@@ -256,7 +235,7 @@ function HobsonMap({
     mapInstance.current = map;
 
     PROPERTIES.forEach((p) => {
-      const isCluster = p.units.length > 1;
+      const isCluster = !p.standalone && p.units.length > 1;
       const html = isCluster
         ? `<div class="hp-cluster" data-pid="${p.id}"><span>${p.units.length}</span></div>`
         : `<div class="hp-pin" data-pid="${p.id}"><div class="hp-pin-dot"></div></div>`;
@@ -267,11 +246,20 @@ function HobsonMap({
         iconAnchor: isCluster ? [19, 19] : [14, 36],
       });
       const m = L.marker([p.lat, p.lng], { icon }).addTo(map);
+      m.bindTooltip(p.address, {
+        direction: "top",
+        offset: [0, isCluster ? -18 : -34],
+        className: "hp-tooltip",
+      });
       m.on("click", () => onPropertyClick(p.id));
       m.on("mouseover", () => onPinHover?.(p.id));
       m.on("mouseout", () => onPinHover?.(null));
       markersRef.current[p.id] = m;
     });
+
+    // Fit to all property pins
+    const bounds = L.latLngBounds(PROPERTIES.map((p) => [p.lat, p.lng] as [number, number]));
+    map.fitBounds(bounds, { padding: [60, 60], maxZoom: 13 });
 
     return () => {
       map.remove();
@@ -311,7 +299,8 @@ function HobsonMap({
         duration: 0.8,
       });
     } else {
-      map.flyTo([51.5174, -0.1278], 12, { duration: 0.8 });
+      const bounds = L.latLngBounds(PROPERTIES.map((p) => [p.lat, p.lng] as [number, number]));
+      map.flyToBounds(bounds, { padding: [60, 60], maxZoom: 13, duration: 0.8 });
     }
   }, [highlight]);
 
@@ -539,6 +528,11 @@ const Prototype: React.FC = () => {
   const goProperty = (id: string) => {
     const p = PROPERTIES.find((x) => x.id === id);
     if (!p) return;
+    // Standalone "properties" (single independent unit) skip the Property layer entirely
+    if (p.standalone) {
+      goUnit(p.units[0].id, p.id);
+      return;
+    }
     setView("property");
     setSelectedPropertyId(id);
     setSelectedUnitId(null);
@@ -548,7 +542,7 @@ const Prototype: React.FC = () => {
     setPortfolioChip(null);
     setSearchQuery("");
     setMessages([]);
-    const greet = `This is ${p.name}, ${p.area} — ${p.units.length} units. I can take you into any one of them. Which would you like to open?`;
+    const greet = `This is ${p.name}, ${p.address.replace(`${p.name} — `, "")} — ${p.units.length} units. Which would you like to open?`;
     setTyping(true);
     const delay = reduced ? 200 : 500;
     window.setTimeout(() => {
@@ -594,10 +588,8 @@ const Prototype: React.FC = () => {
     setShowPropertyList(false);
     setPortfolioChip(null);
     setSearchQuery("");
-    const intro =
-      u.status === "Let"
-        ? `${p.name} — ${u.label}, let to ${u.tenant}. What would you like to know?`
-        : `${p.name} — ${u.label}, currently vacant. What would you like to check?`;
+    const where = p.standalone ? p.address : `${p.name} — ${u.label}, ${p.postcode}`;
+    const intro = `${where}. What would you like to know? (Unit details are placeholders for now — I'll learn the real answers once your documents are uploaded.)`;
     setMessages([{ id: `unit-${unitId}`, role: "hobson", text: intro }]);
   };
 
@@ -699,31 +691,10 @@ const Prototype: React.FC = () => {
     const u = selectedUnit;
     const p = selectedProperty;
     if (!u || !p) return "Open a unit first and I can answer.";
-    const lo = q.toLowerCase();
-    if (u.status === "Vacant") {
-      if (lo.includes("vacant") || lo.includes("empty") || lo.includes("since"))
-        return `${u.label} has been vacant since ${u.vacantSince}. Last tenant: ${u.lastTenant ?? "—"}${u.lastRent ? `, paying ${u.lastRent}` : ""}.`;
-      if (lo.includes("rent") || lo.includes("lease") || lo.includes("expire"))
-        return `${u.label} is vacant — no live lease. Last passing rent was ${u.lastRent ?? "not on file"}.`;
-      if (lo.includes("complian") || lo.includes("epc") || lo.includes("safety"))
-        return "No outstanding compliance items I can see for this vacant unit. EPC on file is due to be refreshed before re-letting.";
-      return `${u.label} is vacant since ${u.vacantSince}. Ask me about marketing history or the last tenancy.`;
-    }
-    if (lo.includes("expire") || lo.includes("when") || lo.includes("lease"))
-      return `The lease to ${u.tenant} runs to ${u.leaseTo}${u.break ? `, with a tenant break on ${u.break}` : ""}. Passing rent is ${u.rent}.`;
-    if (lo.includes("review") || lo.includes("rent review"))
-      return u.review
-        ? `Next rent review is ${u.review}. Current passing rent ${u.rent}.`
-        : `No rent review scheduled in the current lease — fixed at ${u.rent} to ${u.leaseTo}.`;
-    if (lo.includes("complian") || lo.includes("epc") || lo.includes("safety"))
-      return `EPC on file is rating ${u.epc ?? "—"}. No outstanding compliance certificates flagged for ${u.label}.`;
-    if (lo.includes("summar") || lo.includes("tenancy") || lo.includes("about"))
-      return `${u.label}, let to ${u.tenant} at ${u.rent}. Lease to ${u.leaseTo}${u.break ? `, break ${u.break}` : ""}${u.review ? `, review ${u.review}` : ""}. EPC ${u.epc ?? "—"}.`;
-    if (lo.includes("break"))
-      return u.break
-        ? `Tenant break option on ${u.break}. After that, the lease runs to ${u.leaseTo}.`
-        : `No break option in this lease — it runs to ${u.leaseTo}.`;
-    return `For ${u.label}: leased to ${u.tenant}, ${u.rent}, expiring ${u.leaseTo}. Ask me about the review, break or compliance.`;
+    // Tenant/lease/EPC data isn't loaded for these units yet — return a clear placeholder.
+    const placeholder = `I don't have the details for ${u.label} on file yet. Once your lease, compliance and rent documents are uploaded for ${p.standalone ? p.name : `${p.name} — ${u.label}`}, I'll be able to answer this properly. (Placeholder response.)`;
+    void q;
+    return placeholder;
   };
 
   const sendUnitQuestion = (q: string) => {
@@ -793,12 +764,15 @@ const Prototype: React.FC = () => {
     const arr: { label: string; onClick?: () => void }[] = [
       { label: "Portfolio", onClick: () => goPortfolio(false) },
     ];
-    if (selectedProperty)
+    if (selectedProperty && !selectedProperty.standalone)
       arr.push({
         label: selectedProperty.name,
         onClick: () => goProperty(selectedProperty.id),
       });
-    if (selectedUnit) arr.push({ label: selectedUnit.label });
+    if (selectedUnit) {
+      const label = selectedProperty?.standalone ? selectedProperty.name : selectedUnit.label;
+      arr.push({ label });
+    }
     return arr;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [view, selectedProperty, selectedUnit]);
@@ -1085,11 +1059,6 @@ const Prototype: React.FC = () => {
           <a href="?returning=1" className="px-2 py-1 hover:bg-slate-100 border-l border-slate-200">Returning</a>
         </div>
 
-        {/* Map/Satellite toggle */}
-        <div className="absolute bottom-4 right-4 z-[400] bg-white rounded-md shadow-md text-xs font-medium flex">
-          <button className="px-3 py-1.5 bg-slate-900 text-white rounded-l-md">Map</button>
-          <button className="px-3 py-1.5 text-slate-600 rounded-r-md">Satellite</button>
-        </div>
 
         {toast && (
           <div className="absolute left-1/2 -translate-x-1/2 bottom-8 z-[500] bg-slate-900 text-white text-sm px-4 py-2.5 rounded-lg shadow-lg max-w-md text-center">
@@ -1285,29 +1254,37 @@ function PropertyContent({
   return (
     <div className="space-y-3">
       <div>
+        <div className="text-base font-semibold text-slate-900">{property.name}</div>
+        <div className="text-[12px] text-slate-500">{property.address.replace(`${property.name} — `, "")} · {property.units.length} units</div>
+      </div>
+      <div>
         <div className="text-[11px] uppercase tracking-wide text-slate-400 font-medium mb-1.5">Units</div>
         <div className="space-y-1.5">
-          {property.units.map((u) => (
-            <button
-              key={u.id}
-              onClick={() => onOpenUnit(u.id)}
-              className="w-full flex items-center justify-between px-3 py-2.5 rounded-lg border border-slate-200 hover:border-[#7C3AED] hover:bg-[#F5F3FF] transition text-left focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/30"
-            >
-              <div>
-                <div className="text-sm font-medium text-slate-900">{u.label}</div>
-                <div className="text-[11px] text-slate-500">
-                  {u.status === "Let" ? `${u.tenant} · ${u.rent}` : `Vacant since ${u.vacantSince}`}
-                </div>
-              </div>
-              <span
-                className={`text-[10px] uppercase font-medium px-1.5 py-0.5 rounded ${
-                  u.status === "Let" ? "bg-emerald-50 text-emerald-700" : "bg-slate-100 text-slate-600"
-                }`}
+          {property.units.map((u) => {
+            const subtitle =
+              u.status === "Let"
+                ? (u.tenant ? `${u.tenant}${u.rent ? ` · ${u.rent}` : ""}` : "Let")
+                : (u.vacantSince ? `Vacant since ${u.vacantSince}` : "Vacant");
+            return (
+              <button
+                key={u.id}
+                onClick={() => onOpenUnit(u.id)}
+                className="w-full flex items-center justify-between px-3 py-2.5 rounded-lg border border-slate-200 hover:border-[#7C3AED] hover:bg-[#F5F3FF] transition text-left focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/30"
               >
-                {u.status}
-              </span>
-            </button>
-          ))}
+                <div>
+                  <div className="text-sm font-medium text-slate-900">{u.label}</div>
+                  <div className="text-[11px] text-slate-500">{subtitle}</div>
+                </div>
+                <span
+                  className={`text-[10px] uppercase font-medium px-1.5 py-0.5 rounded ${
+                    u.status === "Let" ? "bg-emerald-50 text-emerald-700" : "bg-slate-100 text-slate-600"
+                  }`}
+                >
+                  {u.status}
+                </span>
+              </button>
+            );
+          })}
         </div>
       </div>
     </div>
@@ -1399,7 +1376,9 @@ function PortfolioFirstVisit({
               >
                 <div>
                   <div className="text-sm font-medium text-slate-900">{p.name}</div>
-                  <div className="text-[11px] text-slate-500">{p.area} · {p.units.length} units</div>
+                  <div className="text-[11px] text-slate-500">
+                    {p.area} · {p.standalone ? "single unit" : `${p.units.length} units`}
+                  </div>
                 </div>
                 <span className="text-[#7C3AED] text-sm">→</span>
               </button>
@@ -1425,7 +1404,7 @@ function PortfolioFirstVisit({
                       <div>
                         <div className="text-sm font-medium text-slate-900">{u.label}</div>
                         <div className="text-[11px] text-slate-500">
-                          {u.status === "Let" ? u.tenant : "Vacant"}
+                          {u.status === "Let" ? (u.tenant ?? "Let") : "Vacant"}
                         </div>
                       </div>
                       <span className={`text-[10px] uppercase font-medium px-1.5 py-0.5 rounded ${u.status === "Let" ? "bg-emerald-50 text-emerald-700" : "bg-slate-100 text-slate-600"}`}>
@@ -1454,14 +1433,12 @@ function buildSearchResults(query: string): SearchResult[] {
   if (!q) return [];
   const results: SearchResult[] = [];
   PROPERTIES.forEach((p) => {
-    const propMatch = p.name.toLowerCase().includes(q) || p.area.toLowerCase().includes(q);
+    const propText = `${p.name} ${p.area} ${p.address} ${p.postcode}`.toLowerCase();
+    const propMatch = !p.standalone && propText.includes(q);
     if (propMatch) results.push({ type: "property", property: p });
     p.units.forEach((u) => {
-      const unitMatch =
-        u.label.toLowerCase().includes(q) ||
-        (u.tenant && u.tenant.toLowerCase().includes(q)) ||
-        p.name.toLowerCase().includes(q);
-      if (unitMatch) results.push({ type: "unit", property: p, unit: u });
+      const unitText = `${u.label} ${u.tenant ?? ""} ${p.name} ${p.address} ${p.postcode}`.toLowerCase();
+      if (unitText.includes(q)) results.push({ type: "unit", property: p, unit: u });
     });
   });
   return results;
@@ -1528,9 +1505,9 @@ function ReturningSearchPanel({
     return Array.from(map.entries());
   }, [results]);
 
-  const recents: { propertyId: string; unitId: string; label: string; tenant: string }[] = [
-    { propertyId: "stanley", unitId: "stanley-gf", label: "Ground Floor", tenant: "ABC Limited" },
-    { propertyId: "camden", unitId: "camden-w1", label: "Warehouse 1", tenant: "Dockside Logistics" },
+  const recents: { propertyId: string; unitId: string; label: string; sub: string }[] = [
+    { propertyId: "stanley", unitId: "stanley-f3", label: "Stanley House — Flat 3", sub: "1115 Finchley Road, NW11" },
+    { propertyId: "hamilton", unitId: "hamilton-unit", label: "32 Hamilton Gardens", sub: "NW8" },
   ];
 
   // flat index lookup for highlighting active row
@@ -1595,9 +1572,7 @@ function ReturningSearchPanel({
                           </div>
                           <div className="text-[11px] text-slate-500">
                             {r.type === "unit"
-                              ? r.unit.status === "Let"
-                                ? r.unit.tenant
-                                : "Vacant"
+                              ? `${r.property.standalone ? r.property.address : `${r.property.name} · ${r.property.postcode}`}`
                               : `${r.property.area} · ${r.property.units.length} units`}
                           </div>
                         </div>
@@ -1635,8 +1610,8 @@ function ReturningSearchPanel({
                     className="w-full flex items-center justify-between px-3 py-2.5 rounded-lg border border-slate-200 hover:border-[#7C3AED] hover:bg-[#F5F3FF] transition text-left focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/30"
                   >
                     <div>
-                      <div className="text-sm font-medium text-slate-900">{r.label} — {r.tenant}</div>
-                      <div className="text-[11px] text-slate-500">{p?.name}</div>
+                      <div className="text-sm font-medium text-slate-900">{r.label}</div>
+                      <div className="text-[11px] text-slate-500">{r.sub}</div>
                     </div>
                     <span className="text-[#7C3AED] text-sm">→</span>
                   </button>
@@ -1786,7 +1761,7 @@ function MapSearch({
                         </div>
                         <div className="text-[11px] text-slate-500">
                           {r.type === "unit"
-                            ? r.unit.status === "Let" ? r.unit.tenant : "Vacant"
+                            ? `${r.property.standalone ? r.property.address : `${r.property.name} · ${r.property.postcode}`}`
                             : `${r.property.area} · ${r.property.units.length} units`}
                         </div>
                       </div>
@@ -1825,6 +1800,12 @@ function StyleTag() {
       .animate-typing-bounce { animation: typingBounce 1.1s infinite ease-in-out; }
 
       .hp-marker { background: transparent !important; border: none !important; }
+      .leaflet-tooltip.hp-tooltip {
+        background: #1F2330; color: #fff; border: none; border-radius: 6px;
+        padding: 4px 8px; font-size: 11px; font-weight: 500; box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        white-space: nowrap;
+      }
+      .leaflet-tooltip.hp-tooltip::before { border-top-color: #1F2330; }
       .hp-pin {
         width: 28px; height: 38px; position: relative;
         filter: drop-shadow(0 2px 3px rgba(0,0,0,0.25));
