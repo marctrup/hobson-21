@@ -1499,6 +1499,7 @@ const Prototype: React.FC = () => {
                 setActionCards((arr) => arr.map((x) => x.id === id ? { ...x, approvalState: "dismissed" } : x));
                 setExpandedCardId(null);
               }}
+              onPerform={performCard}
             />
           )}
 
