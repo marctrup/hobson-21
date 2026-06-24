@@ -1306,18 +1306,6 @@ function PortfolioContent({
 
 type UnitFilter = "all" | "let" | "vacant" | "shops";
 
-function unitGroup(label: string): { key: string; sort: number } {
-  const lo = label.toLowerCase();
-  if (lo.includes("shop")) return { key: "Ground (Shop)", sort: 0 };
-  const m = lo.match(/flat\s*(\d+)/);
-  if (m) {
-    const n = parseInt(m[1], 10);
-    if (n <= 6) return { key: "Flats 1–6", sort: 1 };
-    return { key: "Flats 7–11", sort: 2 };
-  }
-  return { key: "Other", sort: 9 };
-}
-
 function unitSortKey(label: string): number {
   const lo = label.toLowerCase();
   if (lo.includes("shop")) return -1;
@@ -1337,8 +1325,8 @@ function PropertyContent({
   void onPreviewQuestion;
   const [filter, setFilter] = useState("");
   const [quick, setQuick] = useState<UnitFilter>("all");
-  const [visibleCount, setVisibleCount] = useState(50); // simple pagination for ~100-unit buildings
-  const scrollRef = useRef<HTMLDivElement | null>(null);
+  const [collapsed, setCollapsed] = useState<Record<string, boolean>>({});
+  const gridWrapRef = useRef<HTMLDivElement | null>(null);
 
   const letCount = property.units.filter((u) => u.status === "Let").length;
   const vacantCount = property.units.length - letCount;
@@ -1352,6 +1340,8 @@ function PropertyContent({
         if (quick === "vacant" && u.status !== "Vacant") return false;
         if (quick === "shops" && !u.label.toLowerCase().includes("shop")) return false;
         if (!q) return true;
+        if (q === "vac") return u.status === "Vacant";
+        if (q === "let") return u.status === "Let";
         return (
           u.label.toLowerCase().includes(q) ||
           (u.tenant ?? "").toLowerCase().includes(q)
@@ -1361,28 +1351,44 @@ function PropertyContent({
   }, [property.units, filter, quick]);
 
   const grouped = useMemo(() => {
-    const map = new Map<string, { sort: number; units: Unit[] }>();
-    filtered.slice(0, visibleCount).forEach((u) => {
-      const g = unitGroup(u.label);
-      const entry = map.get(g.key) ?? { sort: g.sort, units: [] };
-      entry.units.push(u);
-      map.set(g.key, entry);
+    const shops: Unit[] = [];
+    const flats: Unit[] = [];
+    const other: Unit[] = [];
+    filtered.forEach((u) => {
+      const lo = u.label.toLowerCase();
+      if (lo.includes("shop")) shops.push(u);
+      else if (lo.includes("flat")) flats.push(u);
+      else other.push(u);
     });
-    return Array.from(map.entries())
-      .sort((a, b) => a[1].sort - b[1].sort)
-      .map(([key, v]) => ({ key, units: v.units }));
-  }, [filtered, visibleCount]);
+    const groups: { key: string; units: Unit[] }[] = [];
+    if (shops.length) groups.push({ key: "Shop", units: shops });
+    if (flats.length) groups.push({ key: "Flats", units: flats });
+    if (other.length) groups.push({ key: "Other", units: other });
+    return groups;
+  }, [filtered]);
 
-  useEffect(() => {
-    setVisibleCount(50);
-  }, [filter, quick, property.id]);
-
-  const onListScroll = () => {
-    const el = scrollRef.current;
-    if (!el) return;
-    if (el.scrollTop + el.clientHeight >= el.scrollHeight - 80) {
-      setVisibleCount((n) => (n < filtered.length ? Math.min(n + 50, filtered.length) : n));
-    }
+  const onKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    const keys = ["ArrowRight", "ArrowLeft", "ArrowUp", "ArrowDown", "Home", "End"];
+    if (!keys.includes(e.key)) return;
+    const wrap = gridWrapRef.current;
+    if (!wrap) return;
+    const tiles = Array.from(wrap.querySelectorAll<HTMLButtonElement>("button[data-uchip]"));
+    if (!tiles.length) return;
+    const idx = tiles.findIndex((t) => t === document.activeElement);
+    if (idx < 0) return;
+    e.preventDefault();
+    // Compute columns from first row's tiles sharing the same offsetTop
+    const firstTop = tiles[0].offsetTop;
+    let cols = tiles.findIndex((t) => t.offsetTop > firstTop);
+    if (cols < 0) cols = tiles.length;
+    let next = idx;
+    if (e.key === "ArrowRight") next = Math.min(idx + 1, tiles.length - 1);
+    else if (e.key === "ArrowLeft") next = Math.max(idx - 1, 0);
+    else if (e.key === "ArrowDown") next = Math.min(idx + cols, tiles.length - 1);
+    else if (e.key === "ArrowUp") next = Math.max(idx - cols, 0);
+    else if (e.key === "Home") next = 0;
+    else if (e.key === "End") next = tiles.length - 1;
+    tiles[next]?.focus();
   };
 
   const quickBtn = (key: UnitFilter, label: string) => (
@@ -1400,6 +1406,8 @@ function PropertyContent({
     </button>
   );
 
+  let tileIndex = 0;
+
   return (
     <div className="space-y-3">
       <div>
@@ -1412,16 +1420,16 @@ function PropertyContent({
         </div>
       </div>
 
-      <div className="flex items-center gap-2 px-3 py-2 rounded-full border border-slate-200 bg-white focus-within:border-[#7C3AED] focus-within:ring-2 focus-within:ring-[#7C3AED]/20 transition">
+      <div className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-slate-200 bg-white focus-within:border-[#7C3AED] focus-within:ring-2 focus-within:ring-[#7C3AED]/20 transition">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-slate-400">
           <circle cx="11" cy="11" r="7" /><path d="M21 21l-4-4" />
         </svg>
         <input
           value={filter}
           onChange={(e) => setFilter(e.target.value)}
-          placeholder="Filter units…"
+          placeholder="Find a unit…"
           className="flex-1 outline-none text-sm bg-transparent placeholder:text-slate-400"
-          aria-label="Filter units by name or tenant"
+          aria-label="Find a unit by name or tenant"
         />
         {filter && (
           <button
@@ -1442,60 +1450,62 @@ function PropertyContent({
       </div>
 
       <div
-        ref={scrollRef}
-        onScroll={onListScroll}
-        className="max-h-[420px] overflow-y-auto -mx-1 px-1"
+        ref={gridWrapRef}
+        onKeyDown={onKeyDown}
+        className="max-h-[480px] overflow-y-auto -mx-1 px-1"
       >
         {filtered.length === 0 ? (
-          <div className="text-[12px] text-slate-500 py-4 text-center">No units match.</div>
+          <div className="text-[12px] text-slate-500 py-6 text-center">No matching units</div>
         ) : (
-          grouped.map((group) => (
-            <div key={group.key} className="mb-2">
-              <div className="sticky top-0 z-[1] bg-white/95 backdrop-blur px-1 py-1 text-[10px] uppercase tracking-wide text-slate-400 font-medium border-b border-slate-100">
-                {group.key} · {group.units.length}
-              </div>
-              <div className="space-y-1 pt-1">
-                {group.units.map((u) => {
-                  const subtitle =
-                    u.status === "Let"
-                      ? (u.tenant ? `${u.tenant}${u.rent ? ` · ${u.rent}` : ""}` : "Let")
-                      : (u.vacantSince ? `Vacant since ${u.vacantSince}` : "Vacant");
-                  return (
-                    <button
-                      key={u.id}
-                      onClick={() => onOpenUnit(u.id)}
-                      className="w-full flex items-center justify-between px-3 py-2 rounded-lg border border-slate-200 hover:border-[#7C3AED] hover:bg-[#F5F3FF] transition text-left focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/30"
-                    >
-                      <div className="min-w-0">
-                        <div className="text-sm font-medium text-slate-900 truncate">{u.label}</div>
-                        <div className="text-[11px] text-slate-500 truncate">{subtitle}</div>
-                      </div>
-                      <div className="flex items-center gap-2 shrink-0">
-                        <span
-                          className={`text-[10px] uppercase font-medium px-1.5 py-0.5 rounded ${
-                            u.status === "Let" ? "bg-emerald-50 text-emerald-700" : "bg-slate-100 text-slate-600"
-                          }`}
+          grouped.map((group) => {
+            const isCollapsed = !!collapsed[group.key];
+            return (
+              <div key={group.key} className="mb-3">
+                <button
+                  type="button"
+                  onClick={() =>
+                    setCollapsed((c) => ({ ...c, [group.key]: !c[group.key] }))
+                  }
+                  className="sticky top-0 z-[1] w-full flex items-center justify-between bg-white/95 backdrop-blur px-1 py-1.5 text-[10px] uppercase tracking-wide text-slate-500 font-medium border-b border-slate-100 hover:text-slate-700 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/30 rounded"
+                  aria-expanded={!isCollapsed}
+                >
+                  <span>
+                    {group.key} · {group.units.length} {group.units.length === 1 ? "unit" : "units"}
+                  </span>
+                  <span aria-hidden className="text-slate-400">{isCollapsed ? "▸" : "▾"}</span>
+                </button>
+                {!isCollapsed && (
+                  <div className="grid grid-cols-3 sm:grid-cols-4 gap-1.5 pt-2">
+                    {group.units.map((u) => {
+                      const tabIx = tileIndex === 0 ? 0 : -1;
+                      tileIndex += 1;
+                      const dot = u.status === "Let" ? "bg-emerald-500" : "bg-amber-400";
+                      return (
+                        <button
+                          key={u.id}
+                          data-uchip
+                          tabIndex={tabIx}
+                          onClick={() => onOpenUnit(u.id)}
+                          title={u.tenant ? `${u.label} · ${u.tenant}` : u.label}
+                          aria-label={`${u.label}, ${u.status}. Open unit.`}
+                          className="relative flex flex-col items-center justify-center gap-1 px-2 py-2.5 rounded-lg border border-slate-200 bg-white text-sm font-medium text-slate-800 hover:border-[#7C3AED] hover:bg-[#F5F3FF] transition focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40"
                         >
-                          {u.status}
-                        </span>
-                        <span className="text-slate-400 text-sm" aria-hidden>›</span>
-                      </div>
-                    </button>
-                  );
-                })}
+                          <span className="truncate max-w-full">{u.label}</span>
+                          <span className={`w-1.5 h-1.5 rounded-full ${dot}`} aria-hidden />
+                        </button>
+                      );
+                    })}
+                  </div>
+                )}
               </div>
-            </div>
-          ))
-        )}
-        {visibleCount < filtered.length && (
-          <div className="text-[11px] text-slate-400 text-center py-2">
-            Showing {Math.min(visibleCount, filtered.length)} of {filtered.length} · scroll to load more
-          </div>
+            );
+          })
         )}
       </div>
     </div>
   );
 }
+
 
 function UnitStarters({ unit, onAsk }: { unit: Unit; onAsk: (q: string) => void }) {
   const qs =
