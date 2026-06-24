@@ -908,8 +908,8 @@ const Prototype: React.FC = () => {
           )}
           {typing && <TypingBubble owl={owl} />}
 
-          {/* Returning-mode search lives below the greeting */}
-          {((view === "portfolio" && portfolioMode === "returning") || view === "property") && (
+          {/* Search panel — property level only (portfolio uses the map search button) */}
+          {view === "property" && (
             <ReturningSearchPanel
               query={searchQuery}
               setQuery={setSearchQuery}
@@ -921,6 +921,7 @@ const Prototype: React.FC = () => {
               searchRef={searchRef}
             />
           )}
+
 
 
           {/* Portfolio view — first visit (guided) */}
