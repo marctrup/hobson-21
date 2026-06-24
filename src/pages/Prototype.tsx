@@ -445,6 +445,7 @@ type MapHighlight = {
   dimExcept?: string | null;
   activeUnitPropertyId?: string | null;
   matchIds?: string[] | null;
+  fadeNonMatches?: boolean;
   hoverId?: string | null;
   unitPins?: UnitPin[] | null;
   activeUnitId?: string | null;
