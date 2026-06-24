@@ -946,19 +946,8 @@ const Prototype: React.FC = () => {
           )}
           {typing && <TypingBubble owl={owl} />}
 
-          {/* Search panel — property level only (portfolio uses the map search button) */}
-          {view === "property" && (
-            <ReturningSearchPanel
-              query={searchQuery}
-              setQuery={setSearchQuery}
-              activeIdx={searchActiveIdx}
-              setActiveIdx={setSearchActiveIdx}
-              onOpenUnit={(propId, unitId) => goUnit(unitId, propId)}
-              onOpenProperty={goProperty}
-              onHoverProperty={setHoveredPropertyId}
-              searchRef={searchRef}
-            />
-          )}
+          {/* (Global search/recents panel is intentionally NOT shown at property level — that belongs to Portfolio returning mode only.) */}
+
 
 
 
