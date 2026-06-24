@@ -219,6 +219,136 @@ const PROPERTIES: Property[] = [
   },
 ];
 
+/* ---------- Proactive Action cards (portfolio briefing) ---------- */
+
+type Urgency = "now" | "week" | "watch";
+type TriggerType = "review" | "break" | "compliance" | "notice" | "expiry";
+type ApprovalState = "pending" | "approved" | "deferred" | "dismissed";
+
+type ActionCard = {
+  id: string;
+  propertyId: string;
+  unitId: string;
+  unitLabel: string;
+  propertyName: string;
+  triggerType: TriggerType;
+  title: string;
+  whyItMatters: string;          // confirmed/inferred prose, plain language
+  confidence: Confidence;
+  hobsonPrepared: string;        // what's already drafted
+  proposedAction: string;        // primary button label for confirmed items
+  urgency: Urgency;
+  approvalState: ApprovalState;
+  preparedDetail: string;        // what Hobson will do, on approve-expand
+};
+
+const INITIAL_ACTION_CARDS: ActionCard[] = [
+  {
+    id: "act-stanley-f8-review",
+    propertyId: "stanley",
+    unitId: "stanley-f8",
+    unitLabel: "Flat 8",
+    propertyName: "Stanley House",
+    triggerType: "review",
+    title: "Rent review due — Flat 8, Stanley House",
+    whyItMatters: "Review date confirmed for March 2027 in the lease.",
+    confidence: "confirmed",
+    hobsonPrepared: "I've reviewed the lease and drafted the review summary, with comparable evidence pulled from the last 12 months.",
+    proposedAction: "Review & approve",
+    urgency: "now",
+    approvalState: "pending",
+    preparedDetail:
+      "I'll send the review notice to the tenant's registered address using your standard cover letter, attach the drafted summary and comparables, and log the served-on date in the unit record.",
+  },
+  {
+    id: "act-nugent-shop-epc",
+    propertyId: "nugent",
+    unitId: "nugent-shop",
+    unitLabel: "Shop",
+    propertyName: "5 Nugent Terrace",
+    triggerType: "compliance",
+    title: "EPC expiring — Shop, 5 Nugent Terrace",
+    whyItMatters: "Current EPC expires 18 August 2026 (confirmed from certificate on file).",
+    confidence: "confirmed",
+    hobsonPrepared: "I've drafted an instruction to your usual assessor with access notes and the previous rating for reference.",
+    proposedAction: "Review & approve",
+    urgency: "now",
+    approvalState: "pending",
+    preparedDetail:
+      "I'll email the instruction to the assessor, copy you, and add the re-inspection to the compliance calendar so the new certificate lands before expiry.",
+  },
+  {
+    id: "act-stanley-f6-break",
+    propertyId: "stanley",
+    unitId: "stanley-f6",
+    unitLabel: "Flat 6",
+    propertyName: "Stanley House",
+    triggerType: "break",
+    title: "Break approaching — Flat 6, Stanley House",
+    whyItMatters: "Tenant break on 2 May 2027, confirmed from the lease. Notice window opens November.",
+    confidence: "confirmed",
+    hobsonPrepared: "I've drafted a courtesy reminder for the tenant and a file note for you summarising the break terms.",
+    proposedAction: "Review & approve",
+    urgency: "week",
+    approvalState: "pending",
+    preparedDetail:
+      "I'll diarise the notice window, send the courtesy reminder once approved, and flag the unit for a re-letting conversation if notice is served.",
+  },
+  {
+    id: "act-stanley-f3-holdover",
+    propertyId: "stanley",
+    unitId: "stanley-f3",
+    unitLabel: "Flat 3",
+    propertyName: "Stanley House",
+    triggerType: "expiry",
+    title: "Term ended — Flat 3, Stanley House",
+    whyItMatters:
+      "Term ended 24 March 2026 and I can't see a confirmed vacation or renewal — so I'm treating this as still let. Rent may still be due. Worth checking.",
+    confidence: "inferred",
+    hobsonPrepared: "I haven't acted on this — only flagged it. I won't assume the tenancy has ended without evidence.",
+    proposedAction: "Open unit to check",
+    urgency: "week",
+    approvalState: "pending",
+    preparedDetail: "",
+  },
+  {
+    id: "act-nugent-f2-holdover",
+    propertyId: "nugent",
+    unitId: "nugent-f2",
+    unitLabel: "Flat 2",
+    propertyName: "5 Nugent Terrace",
+    triggerType: "expiry",
+    title: "Term ended — Flat 2, 5 Nugent Terrace",
+    whyItMatters:
+      "Term ended 30 May 2026, no confirmed ending on file. Rent may still be due — worth a human eye.",
+    confidence: "inferred",
+    hobsonPrepared: "I haven't acted on this — flagged only.",
+    proposedAction: "Open unit to check",
+    urgency: "watch",
+    approvalState: "pending",
+    preparedDetail: "",
+  },
+  {
+    id: "act-stanley-f7-holdover",
+    propertyId: "stanley",
+    unitId: "stanley-f7",
+    unitLabel: "Flat 7",
+    propertyName: "Stanley House",
+    triggerType: "expiry",
+    title: "Term ended — Flat 7, Stanley House",
+    whyItMatters:
+      "Term ended 1 December 2025, nothing confirmed since. Treating as still let until checked.",
+    confidence: "inferred",
+    hobsonPrepared: "Flagged only — no action taken.",
+    proposedAction: "Open unit to check",
+    urgency: "watch",
+    approvalState: "pending",
+    preparedDetail: "",
+  },
+];
+
+
+
 /* ---------------- Onboarding script ---------------- */
 
 type Beat = {
