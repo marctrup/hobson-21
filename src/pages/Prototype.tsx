@@ -3973,32 +3973,65 @@ function buildPerformConfig(card: ActionCard): {
     headerTitle: `Rent review · ${card.unitLabel ?? "Flat 8"}, ${card.propertyName}`,
     headerSub: "Due: March 2027 (≈180 days)",
   };
+
+function finalGateBeatIdx(card: ActionCard, beats: PerformBeat[]): number {
+  // Per-card final unapproved gate.
+  if (card.id === "act-stanley-fra") {
+    // PA-001 Gate B — "Send?" — beat id "fa5" (index 4)
+    const idx = beats.findIndex((b) => b.id === "fa5");
+    return idx >= 0 ? idx : 0;
+  }
+  // Default: the last beat with a gate.
+  for (let i = beats.length - 1; i >= 0; i--) {
+    if (beats[i].gate) return i;
+  }
+  return 0;
 }
 
 function PerformWorkspace({
   card,
+  mode = "perform",
   onCancel,
   onComplete,
   reducedMotion,
 }: {
   card: ActionCard;
+  mode?: "perform" | "review";
   onCancel: () => void;
   onComplete: (summary: string) => void;
   reducedMotion: boolean;
 }) {
-  const { beats, steps, headerKicker, headerTitle, headerSub } = useMemo(() => buildPerformConfig(card), [card]);
-  const [revealed, setRevealed] = useState<number>(0); // beats revealed (1-based count)
+  const { beats, steps, headerTitle, headerSub } = useMemo(() => buildPerformConfig(card), [card]);
+  const isComplete = card.approvalState === "approved";
+  const initialRevealed = useMemo(() => {
+    if (mode === "review" && !isComplete) return finalGateBeatIdx(card, beats);
+    if (isComplete) return beats.length - 1;
+    return 0;
+  }, [mode, isComplete, card, beats]);
+  const initialCompleted = useMemo(() => {
+    if (mode === "review" || isComplete) {
+      const upto = initialRevealed;
+      return Array.from(new Set(beats.slice(0, upto).map((b) => b.stepKey)));
+    }
+    return [];
+  }, [mode, isComplete, beats, initialRevealed]);
+  const headerKicker =
+    isComplete ? "Recorded action" : mode === "review" ? "Reviewing prepared work" : "Performing action";
+
+  const [revealed, setRevealed] = useState<number>(initialRevealed);
   const [streamingText, setStreamingText] = useState<string>("");
   const [streamingActive, setStreamingActive] = useState(false);
   const [approvedActions, setApprovedActions] = useState<string[]>([]);
-  const [completed, setCompleted] = useState<string[]>([]); // step keys completed
+  const [completed, setCompleted] = useState<string[]>(initialCompleted);
+  const [recapOpen, setRecapOpen] = useState<boolean>(mode === "perform");
   const scrollerRef = useRef<HTMLDivElement | null>(null);
 
-  // Stream a beat's text into view
+  // Stream a beat's text into view (skip when entering at the parked gate or completed)
   useEffect(() => {
     if (revealed >= beats.length) return;
     const beat = beats[revealed];
-    if (reducedMotion) {
+    const skipStream = (mode === "review" || isComplete) && revealed === initialRevealed;
+    if (reducedMotion || skipStream) {
       setStreamingText(beat.text);
       setStreamingActive(false);
       return;
@@ -4017,7 +4050,7 @@ function PerformWorkspace({
     };
     const t = setTimeout(step, 120);
     return () => { cancelled = true; clearTimeout(t); };
-  }, [revealed, beats, reducedMotion]);
+  }, [revealed, beats, reducedMotion, mode, isComplete, initialRevealed]);
 
   useEffect(() => {
     const el = scrollerRef.current;
