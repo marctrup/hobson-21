@@ -1714,8 +1714,24 @@ function PropertyContent({
     <div className="space-y-3">
       <div className="text-[12px] text-slate-600">
         {property.units.length} units · {counts.let} Let · {counts.vacant} Vacant
-        {counts.needsReview > 0 && <> · <span className="text-amber-700 font-medium">{counts.needsReview} Need review</span></>}
-        {counts.endingSoon > 0 && <> · {counts.endingSoon} Ending soon</>}
+        {counts.alerts > 0 && <> · <span className="text-amber-700 font-medium">{counts.alerts} with alerts</span></>}
+      </div>
+
+      <div className="text-[10.5px] text-slate-500 flex items-center gap-3 flex-wrap">
+        <span className="inline-flex items-center gap-1">
+          <svg width="10" height="10" viewBox="0 0 24 24" aria-hidden className="text-emerald-600">
+            <circle cx="12" cy="12" r="10" fill="currentColor" />
+            <path d="M7 12.5l3 3 7-7" stroke="white" strokeWidth="2.5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+          Confirmed = known fact
+        </span>
+        <span className="inline-flex items-center gap-1">
+          <svg width="10" height="10" viewBox="0 0 24 24" aria-hidden className="text-amber-700">
+            <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" strokeWidth="2" strokeDasharray="3 2" />
+            <text x="12" y="16" textAnchor="middle" fontSize="11" fontWeight="700" fill="currentColor">?</text>
+          </svg>
+          Inferred = signal Hobson spotted, needs checking
+        </span>
       </div>
 
       {property.units.length > 20 && (
@@ -1745,10 +1761,10 @@ function PropertyContent({
 
       <div className="flex flex-wrap gap-1.5">
         {quickBtn("all", `All (${property.units.length})`)}
-        {quickBtn("let", `Let (${counts.let})`)}
+        {counts.alerts > 0 && quickBtn("alerts", `Has alerts (${counts.alerts})`)}
         {quickBtn("vacant", `Vacant (${counts.vacant})`)}
-        {counts.endingSoon > 0 && quickBtn("ending_soon", `Ending soon (${counts.endingSoon})`)}
-        {counts.needsReview > 0 && quickBtn("needs_review", `Needs review (${counts.needsReview})`)}
+        {counts.endingInferred > 0 && quickBtn("ending_inferred", `Ending (inferred) (${counts.endingInferred})`)}
+        {counts.breakReview > 0 && quickBtn("break_review", `Break/review upcoming (${counts.breakReview})`)}
         {hasShops && quickBtn("shops", "Shops")}
       </div>
 
