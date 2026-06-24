@@ -4181,6 +4181,15 @@ function PerformWorkspace({
 
       {/* Beats scroller */}
       <div ref={scrollerRef} className="flex-1 overflow-auto px-5 py-4 space-y-3 bg-white">
+        {mode === "review" && !isComplete && (
+          <div className="flex items-start gap-2">
+            <OwlAvatar state={recapStreaming ? "talking" : "default"} />
+            <div className="inline-block max-w-[640px] bg-[#EDE9FE] text-[#1F2330] text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-bl-md">
+              {recapStream || (reducedMotion ? recapNarration : "")}
+              {recapStreaming && <span className="inline-block w-1.5 h-3.5 ml-0.5 bg-[#7C3AED] align-middle animate-pulse" />}
+            </div>
+          </div>
+        )}
         {(mode === "review" || isComplete) && previousBeats.length > 0 ? (
           <div className="rounded-lg border border-slate-200 bg-slate-50">
             <button
