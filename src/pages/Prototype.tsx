@@ -3139,7 +3139,7 @@ function PropertyActions({
   propertyName: string;
   expandedCardId: string | null;
   setExpandedCardId: (id: string | null) => void;
-  onOpenUnit: (unitId: string) => void;
+  onOpenUnit: (unitId: string, carryCardId?: string) => void;
   onApprove: (id: string) => void;
   onDefer: (id: string) => void;
   onDismiss: (id: string) => void;
