@@ -638,6 +638,37 @@ const Prototype: React.FC = () => {
     window.setTimeout(() => setToast(null), 3500);
   };
 
+  // First-visit preview question handler — posts as user msg, Hobson replies warmly, then shows chip
+  const askPortfolioPreview = (q: string) => {
+    setMessages((m) => [...m, { id: `u-${Date.now()}`, role: "user", text: q }]);
+    setTyping(true);
+    setOwl("default");
+    const reply = `I can't answer across your whole portfolio yet — I build that understanding unit by unit first. Let's open a unit and I'll show you what I can already do.`;
+    const delay = reduced ? 200 : 700;
+    window.setTimeout(() => {
+      setTyping(false);
+      setOwl("talking");
+      if (reduced) {
+        setMessages((m) => [...m, { id: `a-${Date.now()}`, role: "hobson", text: reply }]);
+      } else {
+        streamHobsonMessage(reply, () => {});
+      }
+      setPortfolioChip("Go straight to a unit");
+    }, delay);
+  };
+
+  const handlePortfolioChip = (label: string) => {
+    setMessages((m) => [...m, { id: `u-${Date.now()}`, role: "user", text: label }]);
+    setPortfolioChip(null);
+    if (label === "Browse properties") {
+      setShowPropertyList(true);
+      setShowUnitPicker(false);
+    } else if (label === "Go straight to a unit") {
+      setShowUnitPicker(true);
+      setShowPropertyList(false);
+    }
+  };
+
   /* ----- progress ----- */
   const progressPct =
     view !== "onboarding"
