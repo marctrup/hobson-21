@@ -1730,11 +1730,6 @@ function MapSearch({
           </div>
 
           <div className="max-h-[360px] overflow-y-auto">
-            {!query && (
-              <div className="px-3 py-3 text-xs text-slate-500">
-                Type to jump straight to a property or unit.
-              </div>
-            )}
             {query && results.length === 0 && (
               <div className="px-3 py-4 text-xs text-slate-500">No matches. Try a tenant, unit or building name.</div>
             )}
