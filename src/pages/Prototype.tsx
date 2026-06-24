@@ -1421,7 +1421,7 @@ function PortfolioContent({
   );
 }
 
-type UnitFilter = "all" | "let" | "vacant" | "ending_soon" | "needs_review" | "shops";
+type UnitFilter = "all" | "alerts" | "vacant" | "ending_inferred" | "break_review" | "shops";
 
 function unitSortKey(label: string): number {
   const lo = label.toLowerCase();
