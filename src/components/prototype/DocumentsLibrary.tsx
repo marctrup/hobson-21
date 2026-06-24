@@ -661,22 +661,91 @@ function DocViewer({ doc, onClose }: { doc: DocItem; onClose: () => void }) {
 
 /* ---------------- Main library ---------------- */
 
-export function DocumentsLibrary({ onClose }: { onClose: () => void }) {
+export type DocumentsScope = {
+  propertyId?: string;
+  unitId?: string;
+};
+
+const prefersReducedMotion = () =>
+  typeof window !== "undefined" &&
+  window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+
+export function DocumentsLibrary({
+  onClose,
+  initialScope,
+  onNavigatePortfolio,
+  onNavigateProperty,
+}: {
+  onClose: () => void;
+  initialScope?: DocumentsScope;
+  onNavigatePortfolio?: () => void;
+  onNavigateProperty?: (propertyId: string) => void;
+}) {
   const [mode, setMode] = useState<"tree" | "all">("tree");
   const [q, setQ] = useState("");
   const [family, setFamily] = useState<"all" | Family>("all");
   const [type, setType] = useState<"all" | DocType>("all");
   const [includeSuperseded, setIncludeSuperseded] = useState(false);
-  const [scope, setScope] = useState<"all" | string>("all"); // propertyId or "all"
+  const [scopeProperty, setScopeProperty] = useState<string | null>(initialScope?.propertyId ?? null);
+  const [scopeUnit, setScopeUnit] = useState<string | null>(initialScope?.unitId ?? null);
   const [viewing, setViewing] = useState<DocItem | null>(null);
   const [flash, setFlash] = useState<string | null>(null);
+
+  // resolved scope labels
+  const scopePropertyAsset = useMemo(
+    () => (scopeProperty ? ASSETS.find((a) => a.propertyId === scopeProperty) : null),
+    [scopeProperty]
+  );
+  const scopeUnitNode = useMemo(() => {
+    if (!scopePropertyAsset || !scopeUnit) return null;
+    return scopePropertyAsset.units.find((u) => u.id === scopeUnit) || null;
+  }, [scopePropertyAsset, scopeUnit]);
+
+  // streamed owl greeting (scope-aware)
+  const greeting = useMemo(() => {
+    if (scopePropertyAsset && scopeUnitNode) {
+      const unitLbl =
+        scopePropertyAsset.standalone
+          ? scopePropertyAsset.propertyName
+          : `${scopeUnitNode.label}, ${scopePropertyAsset.propertyName}`;
+      return `Here are the documents for ${unitLbl}. Browse, view or download whatever you need.`;
+    }
+    if (scopePropertyAsset) {
+      return `Here are the documents for ${scopePropertyAsset.propertyName}. Feel free to browse, view or download.`;
+    }
+    return "Here are your documents — browse, view or download anything across the estate.";
+  }, [scopePropertyAsset, scopeUnitNode]);
+
+  const reduced = prefersReducedMotion();
+  const [typed, setTyped] = useState(reduced ? greeting : "");
+  const [greetingDone, setGreetingDone] = useState(reduced);
+  useEffect(() => {
+    if (reduced) {
+      setTyped(greeting);
+      setGreetingDone(true);
+      return;
+    }
+    setTyped("");
+    setGreetingDone(false);
+    let i = 0;
+    const id = window.setInterval(() => {
+      i += 2;
+      setTyped(greeting.slice(0, i));
+      if (i >= greeting.length) {
+        window.clearInterval(id);
+        setGreetingDone(true);
+      }
+    }, 18);
+    return () => window.clearInterval(id);
+  }, [greeting, reduced]);
 
   const filtered = useMemo(() => {
     const needle = q.trim().toLowerCase();
     return DOCS.filter((d) => {
       if (family !== "all" && d.family !== family) return false;
       if (type !== "all" && d.type !== type) return false;
-      if (scope !== "all" && d.propertyId !== scope) return false;
+      if (scopeProperty && d.propertyId !== scopeProperty) return false;
+      if (scopeUnit && d.unitId !== scopeUnit) return false;
       if (!includeSuperseded && mode === "all" && d.status === "superseded") return false;
       if (needle) {
         const hay = [
@@ -687,7 +756,7 @@ export function DocumentsLibrary({ onClose }: { onClose: () => void }) {
       }
       return true;
     });
-  }, [q, family, type, scope, includeSuperseded, mode]);
+  }, [q, family, type, scopeProperty, scopeUnit, includeSuperseded, mode]);
 
   const chainsCount = useMemo(
     () => new Set(DOCS.filter((d) => d.family === "Tenancy").map((d) => d.chainId || d.id)).size,
@@ -700,6 +769,9 @@ export function DocumentsLibrary({ onClose }: { onClose: () => void }) {
     setFlash(`Downloading "${d.title}"… (prototype placeholder)`);
     window.setTimeout(() => setFlash(null), 2500);
   };
+
+  const clearScope = () => { setScopeProperty(null); setScopeUnit(null); };
+  const clearUnitScope = () => setScopeUnit(null);
 
   return (
     <div className="absolute inset-0 z-[450] bg-white flex flex-col">
