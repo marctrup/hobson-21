@@ -1292,16 +1292,60 @@ const Prototype: React.FC = () => {
 
           {/* Pinned alert briefing at the top of unit chat */}
           {view === "unit" && selectedUnit && selectedPropertyId && (
-            <PinnedAlertCard
-              unit={selectedUnit}
-              derived={deriveUnit(selectedUnit)}
-              propertyContextCards={selectActionsForScope(actionCards, {
-                level: "unit",
-                propertyId: selectedPropertyId,
-                unitId: selectedUnit.id,
-              }).filter((c) => c.anchorLevel === "property" && c.approvalState === "pending")}
-              onManageAtProperty={() => goProperty(selectedPropertyId)}
-            />
+            <>
+              <PinnedAlertCard
+                unit={selectedUnit}
+                derived={deriveUnit(selectedUnit)}
+                propertyContextCards={selectActionsForScope(actionCards, {
+                  level: "unit",
+                  propertyId: selectedPropertyId,
+                  unitId: selectedUnit.id,
+                }).filter((c) => c.anchorLevel === "property" && c.approvalState === "pending")}
+                onManageAtProperty={() => goProperty(selectedPropertyId)}
+              />
+              {(() => {
+                const unitOwnCards = selectActionsForScope(actionCards, {
+                  level: "unit",
+                  propertyId: selectedPropertyId,
+                  unitId: selectedUnit.id,
+                }).filter((c) => c.anchorLevel === "unit" && c.approvalState === "pending");
+                if (unitOwnCards.length === 0) return null;
+                return (
+                  <section aria-label={`Actions for ${selectedUnit.label}`} className="space-y-2">
+                    <div className="text-[11px] uppercase tracking-wide text-slate-500 font-semibold">
+                      On this unit's desk · {unitOwnCards.length}
+                    </div>
+                    {unitOwnCards.map((c) => (
+                      <ActionCardItem
+                        key={c.id}
+                        card={c}
+                        level="unit"
+                        expanded={expandedCardId === c.id}
+                        onToggleExpand={() => setExpandedCardId(expandedCardId === c.id ? null : c.id)}
+                        onHover={() => {}}
+                        onApprove={() => {
+                          const card = actionCards.find((x) => x.id === c.id);
+                          setActionCards((arr) => arr.map((x) => x.id === c.id ? { ...x, approvalState: "approved" } : x));
+                          setExpandedCardId(null);
+                          if (card) {
+                            setActionToast(`Done — ${card.title} recorded.`);
+                            window.setTimeout(() => setActionToast(null), 3000);
+                          }
+                        }}
+                        onDefer={() => {
+                          setActionCards((arr) => arr.map((x) => x.id === c.id ? { ...x, approvalState: "deferred" } : x));
+                          setExpandedCardId(null);
+                        }}
+                        onDismiss={() => {
+                          setActionCards((arr) => arr.map((x) => x.id === c.id ? { ...x, approvalState: "dismissed" } : x));
+                          setExpandedCardId(null);
+                        }}
+                      />
+                    ))}
+                  </section>
+                );
+              })()}
+            </>
           )}
 
           {/* Hobson messages render first so the greeting sits at the top */}
