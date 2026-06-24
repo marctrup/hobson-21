@@ -1595,7 +1595,11 @@ const Prototype: React.FC = () => {
                     window.setTimeout(() => setToast(null), 2500);
                   }
                 }}
-                className="flex items-center gap-2 px-4 py-2.5 rounded-full border border-slate-200 bg-white focus-within:border-[#7C3AED] focus-within:ring-2 focus-within:ring-[#7C3AED]/20 transition"
+                className={`flex items-center gap-2 px-4 py-2.5 rounded-full border bg-white focus-within:border-[#7C3AED] focus-within:ring-2 focus-within:ring-[#7C3AED]/20 transition ${
+                  isRentFlat2Question(input) && !typing
+                    ? "border-[#7C3AED] ring-2 ring-[#7C3AED]/30 animate-[pulse_1.6s_ease-in-out_infinite]"
+                    : "border-slate-200"
+                }`}
               >
                 <input
                   ref={inputRef}
@@ -1607,7 +1611,9 @@ const Prototype: React.FC = () => {
                 />
                 <button
                   type="submit"
-                  className="text-[#7C3AED] hover:text-[#6D28D9] disabled:text-slate-300"
+                  className={`text-[#7C3AED] hover:text-[#6D28D9] disabled:text-slate-300 ${
+                    isRentFlat2Question(input) && !typing ? "animate-[pulse_1.6s_ease-in-out_infinite]" : ""
+                  }`}
                   aria-label="Send"
                   disabled={!input.trim()}
                 >
