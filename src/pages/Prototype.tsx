@@ -21,10 +21,14 @@ type OwlState = keyof typeof OWLS;
 
 /* ---------------- Data ---------------- */
 
+type ConfirmedEnding = "none" | "end_tenancy" | "replacement_chain" | "reversionary_started";
+
 type Unit = {
   id: string;
   label: string;
-  status: "Let" | "Vacant";
+  status: "Let" | "Vacant"; // Let = occupied; Vacant = confirmed ended (re-lettable)
+  termEndDate?: string;     // ISO date of current term end (optional)
+  confirmedEnding?: ConfirmedEnding; // proof a tenancy has ended
   tenant?: string;
   rent?: string;
   leaseTo?: string;
@@ -35,6 +39,56 @@ type Unit = {
   lastTenant?: string;
   lastRent?: string;
 };
+
+/** Derived tile state — keeps occupancy and term status as two independent facts. */
+type UnitDerived = {
+  state: "let_clear" | "let_ending_soon" | "let_holding_over" | "vacant_confirmed";
+  daysToTermEnd: number | null;
+  termEndLabel: string | null;
+};
+
+const TODAY = new Date("2026-06-24T00:00:00Z");
+const ENDING_SOON_WINDOW_DAYS = 90;
+
+function formatUkDate(iso?: string): string | null {
+  if (!iso) return null;
+  const d = new Date(iso + "T00:00:00Z");
+  if (Number.isNaN(d.getTime())) return null;
+  return d.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric", timeZone: "UTC" });
+}
+
+function deriveUnit(u: Unit): UnitDerived {
+  const confirmed = u.confirmedEnding && u.confirmedEnding !== "none";
+  const isVacantConfirmed = u.status === "Vacant" || confirmed;
+  const termEndLabel = formatUkDate(u.termEndDate);
+  let daysToTermEnd: number | null = null;
+  if (u.termEndDate) {
+    const t = new Date(u.termEndDate + "T00:00:00Z").getTime();
+    daysToTermEnd = Math.round((t - TODAY.getTime()) / 86400000);
+  }
+  if (isVacantConfirmed) return { state: "vacant_confirmed", daysToTermEnd, termEndLabel };
+  if (daysToTermEnd !== null && daysToTermEnd < 0) {
+    return { state: "let_holding_over", daysToTermEnd, termEndLabel };
+  }
+  if (daysToTermEnd !== null && daysToTermEnd <= ENDING_SOON_WINDOW_DAYS) {
+    return { state: "let_ending_soon", daysToTermEnd, termEndLabel };
+  }
+  return { state: "let_clear", daysToTermEnd, termEndLabel };
+}
+
+function unitTooltip(u: Unit, d: UnitDerived): string {
+  switch (d.state) {
+    case "vacant_confirmed":
+      return "Vacant · tenancy confirmed ended — available to let";
+    case "let_holding_over":
+      return `Let · term ended ${d.termEndLabel ?? ""} — not confirmed vacated. Rent may still be due. Needs review.`;
+    case "let_ending_soon":
+      return `Let · term ends in ${d.daysToTermEnd} day${d.daysToTermEnd === 1 ? "" : "s"} — break/expiry approaching`;
+    case "let_clear":
+    default:
+      return d.termEndLabel ? `Let · term to ${d.termEndLabel}` : "Let";
+  }
+}
 
 type Property = {
   id: string;
