@@ -1382,27 +1382,48 @@ function PropertyContent({
   const [collapsed, setCollapsed] = useState<Record<string, boolean>>({});
   const gridWrapRef = useRef<HTMLDivElement | null>(null);
 
-  const letCount = property.units.filter((u) => u.status === "Let").length;
-  const vacantCount = property.units.length - letCount;
+  const derivedByUnit = useMemo(() => {
+    const map = new Map<string, UnitDerived>();
+    property.units.forEach((u) => map.set(u.id, deriveUnit(u)));
+    return map;
+  }, [property.units]);
+
+  const counts = useMemo(() => {
+    let let_ = 0, vacant = 0, endingSoon = 0, needsReview = 0;
+    property.units.forEach((u) => {
+      const d = derivedByUnit.get(u.id)!;
+      if (d.state === "vacant_confirmed") vacant += 1;
+      else {
+        let_ += 1;
+        if (d.state === "let_ending_soon") endingSoon += 1;
+        if (d.state === "let_holding_over") needsReview += 1;
+      }
+    });
+    return { let: let_, vacant, endingSoon, needsReview };
+  }, [property.units, derivedByUnit]);
+
   const hasShops = property.units.some((u) => u.label.toLowerCase().includes("shop"));
 
   const filtered = useMemo(() => {
     const q = filter.trim().toLowerCase();
     return property.units
       .filter((u) => {
-        if (quick === "let" && u.status !== "Let") return false;
-        if (quick === "vacant" && u.status !== "Vacant") return false;
+        const d = derivedByUnit.get(u.id)!;
+        if (quick === "let" && d.state === "vacant_confirmed") return false;
+        if (quick === "vacant" && d.state !== "vacant_confirmed") return false;
+        if (quick === "ending_soon" && d.state !== "let_ending_soon") return false;
+        if (quick === "needs_review" && d.state !== "let_holding_over") return false;
         if (quick === "shops" && !u.label.toLowerCase().includes("shop")) return false;
         if (!q) return true;
-        if (q === "vac") return u.status === "Vacant";
-        if (q === "let") return u.status === "Let";
+        if (q === "vac") return d.state === "vacant_confirmed";
+        if (q === "let") return d.state !== "vacant_confirmed";
         return (
           u.label.toLowerCase().includes(q) ||
           (u.tenant ?? "").toLowerCase().includes(q)
         );
       })
       .sort((a, b) => unitSortKey(a.label) - unitSortKey(b.label));
-  }, [property.units, filter, quick]);
+  }, [property.units, derivedByUnit, filter, quick]);
 
   const grouped = useMemo(() => {
     const shops: Unit[] = [];
