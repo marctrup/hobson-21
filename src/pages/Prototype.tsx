@@ -1594,6 +1594,8 @@ function UnitTile({
     </div>
   );
 }
+
+function PropertyContent({
   property,
   onOpenUnit,
   onPreviewQuestion,
