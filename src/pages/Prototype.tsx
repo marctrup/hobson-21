@@ -647,18 +647,45 @@ const Prototype: React.FC = () => {
       return { pulse: "none", matchIds, hoverId: hoveredPropertyId };
     }
     if (view === "property" && selectedProperty) {
+      const n = selectedProperty.units.length;
+      const radius = 0.0011;
+      const unitPins: UnitPin[] = selectedProperty.units.map((u, i) => {
+        const angle = (i / n) * Math.PI * 2 - Math.PI / 2;
+        return {
+          id: u.id,
+          lat: selectedProperty.lat + radius * Math.cos(angle),
+          lng: selectedProperty.lng + radius * Math.sin(angle) * 1.4,
+          label: u.label,
+          status: u.status,
+        };
+      });
       return {
         pulse: "none",
         dimExcept: selectedProperty.id,
-        focus: { lat: selectedProperty.lat, lng: selectedProperty.lng, zoom: 15 },
+        focus: { lat: selectedProperty.lat, lng: selectedProperty.lng, zoom: 16 },
+        unitPins,
       };
     }
     if (view === "unit" && selectedProperty) {
+      const n = selectedProperty.units.length;
+      const radius = 0.0011;
+      const unitPins: UnitPin[] = selectedProperty.units.map((u, i) => {
+        const angle = (i / n) * Math.PI * 2 - Math.PI / 2;
+        return {
+          id: u.id,
+          lat: selectedProperty.lat + radius * Math.cos(angle),
+          lng: selectedProperty.lng + radius * Math.sin(angle) * 1.4,
+          label: u.label,
+          status: u.status,
+        };
+      });
       return {
         pulse: "none",
         dimExcept: selectedProperty.id,
         activeUnitPropertyId: selectedProperty.id,
         focus: { lat: selectedProperty.lat, lng: selectedProperty.lng, zoom: 16 },
+        unitPins,
+        activeUnitId: selectedUnitId,
       };
     }
     return { pulse: "none" };
