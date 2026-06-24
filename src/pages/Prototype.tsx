@@ -2703,7 +2703,324 @@ function MapSearch({
 
 
 
+/* ---------- Portfolio briefing (returning) ---------- */
+
+const URGENCY_LABEL: Record<Urgency, string> = {
+  now: "Needs you now",
+  week: "This week",
+  watch: "Keeping an eye on",
+};
+
+const TRIGGER_ICON: Record<TriggerType, string> = {
+  review: "💬",
+  break: "⏸",
+  compliance: "✓",
+  notice: "✉",
+  expiry: "⌛",
+};
+
+function PortfolioBriefing({
+  cards,
+  choice,
+  setChoice,
+  expandedCardId,
+  setExpandedCardId,
+  onHoverCard,
+  onOpenUnit,
+  onApprove,
+  onDefer,
+  onDismiss,
+}: {
+  cards: ActionCard[];
+  choice: null | "all" | "urgent" | "browse";
+  setChoice: (c: null | "all" | "urgent" | "browse") => void;
+  expandedCardId: string | null;
+  setExpandedCardId: (id: string | null) => void;
+  onHoverCard: (propertyId: string | null) => void;
+  onOpenUnit: (propertyId: string, unitId: string) => void;
+  onApprove: (id: string) => void;
+  onDefer: (id: string) => void;
+  onDismiss: (id: string) => void;
+}) {
+  const pending = cards.filter((c) => c.approvalState === "pending");
+  const urgent = pending.filter((c) => c.urgency === "now");
+
+  // No pending — nothing to show in briefing
+  if (pending.length === 0) {
+    return (
+      <div className="text-[12px] text-slate-500 italic">Nothing on your desk today.</div>
+    );
+  }
+
+  // Initial chip choice
+  if (choice === null) {
+    const chips: { label: string; value: "all" | "urgent" | "browse" }[] = [
+      { label: `Show me what needs me (${pending.length})`, value: "all" },
+      ...(urgent.length ? [{ label: `Just the urgent ${urgent.length === 1 ? "one" : `${urgent.length}`}`, value: "urgent" as const }] : []),
+      { label: "I'll browse", value: "browse" as const },
+    ];
+    return (
+      <div className="flex flex-col items-end gap-1.5">
+        <span className="text-[11px] text-slate-500 flex items-center gap-1">
+          Tap to reply <span aria-hidden>↓</span>
+        </span>
+        <div className="flex gap-1.5 flex-wrap justify-end">
+          {chips.map((c, i) => (
+            <button
+              key={c.value}
+              onClick={() => setChoice(c.value)}
+              autoFocus={i === 0}
+              className={`inline-flex items-center px-4 py-2 rounded-full text-sm font-medium transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#7C3AED] ${
+                i === 0
+                  ? "bg-[#7C3AED] text-white hover:bg-[#6D28D9] shadow-sm"
+                  : "bg-[#EDE9FE] text-[#5B21B6] hover:bg-[#DDD6FE] border border-[#DDD6FE]"
+              }`}
+            >
+              {c.label}
+            </button>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  if (choice === "browse") {
+    return (
+      <div className="space-y-2">
+        <div className="flex items-center justify-between">
+          <div className="text-[11px] uppercase tracking-wide text-slate-400 font-medium">Properties</div>
+          <button
+            onClick={() => setChoice(null)}
+            className="text-[11px] text-[#7C3AED] hover:underline focus:outline-none focus:ring-2 focus:ring-[#7C3AED] rounded"
+          >
+            ← Back to briefing
+          </button>
+        </div>
+        <div className="space-y-1.5">
+          {PROPERTIES.map((p) => {
+            const hasAlert = pending.some((c) => c.propertyId === p.id);
+            return (
+              <button
+                key={p.id}
+                onClick={() => {
+                  if (p.standalone) onOpenUnit(p.id, p.units[0].id);
+                  else onOpenUnit(p.id, p.units[0].id); // open via unit; for non-standalone we still drill in via property
+                }}
+                onMouseEnter={() => onHoverCard(p.id)}
+                onMouseLeave={() => onHoverCard(null)}
+                className="w-full flex items-center justify-between px-3 py-2.5 rounded-lg border border-slate-200 hover:border-[#7C3AED] hover:bg-[#F5F3FF] transition text-left focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/30"
+              >
+                <div>
+                  <div className="text-sm font-medium text-slate-900 flex items-center gap-1.5">
+                    {p.name}
+                    {hasAlert && (
+                      <span className="inline-flex items-center justify-center w-3.5 h-3.5 rounded-full bg-amber-100 border border-amber-400 text-amber-700" aria-label="Has alerts">
+                        <svg width="8" height="8" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L1 21h22L12 2z"/></svg>
+                      </span>
+                    )}
+                  </div>
+                  <div className="text-[11px] text-slate-500">{p.area} · {p.standalone ? "single unit" : `${p.units.length} units`}</div>
+                </div>
+                <span className="text-[#7C3AED] text-sm">→</span>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+    );
+  }
+
+  const visible = choice === "urgent" ? urgent : pending;
+  const groups: { key: Urgency; cards: ActionCard[] }[] = (["now", "week", "watch"] as Urgency[])
+    .map((u) => ({ key: u, cards: visible.filter((c) => c.urgency === u) }))
+    .filter((g) => g.cards.length > 0);
+
+  const restCount = cards.filter((c) => c.approvalState === "pending").length - visible.length;
+  const archived = cards.filter((c) => c.approvalState !== "pending").length;
+
+  return (
+    <div className="space-y-3">
+      <div className="flex items-center justify-between">
+        <div className="text-[11px] uppercase tracking-wide text-slate-500 font-semibold">On your desk</div>
+        <div className="flex items-center gap-2">
+          {choice === "urgent" && pending.length > urgent.length && (
+            <button
+              onClick={() => setChoice("all")}
+              className="text-[11px] text-[#7C3AED] hover:underline focus:outline-none focus:ring-2 focus:ring-[#7C3AED] rounded"
+            >
+              Show all ({pending.length})
+            </button>
+          )}
+          <button
+            onClick={() => setChoice(null)}
+            className="text-[11px] text-slate-500 hover:text-slate-700 focus:outline-none focus:ring-2 focus:ring-[#7C3AED] rounded"
+          >
+            Reset
+          </button>
+        </div>
+      </div>
+
+      {groups.map((g) => (
+        <div key={g.key} className="space-y-2">
+          <div className="sticky top-0 z-[1] bg-white/95 backdrop-blur py-1 text-[10px] uppercase tracking-wide font-semibold text-slate-500 border-b border-slate-100">
+            {URGENCY_LABEL[g.key]} · {g.cards.length}
+          </div>
+          {g.cards.map((c) => (
+            <ActionCardItem
+              key={c.id}
+              card={c}
+              expanded={expandedCardId === c.id}
+              onToggleExpand={() => setExpandedCardId(expandedCardId === c.id ? null : c.id)}
+              onHover={(on) => onHoverCard(on ? c.propertyId : null)}
+              onOpenUnit={() => onOpenUnit(c.propertyId, c.unitId)}
+              onApprove={() => onApprove(c.id)}
+              onDefer={() => onDefer(c.id)}
+              onDismiss={() => onDismiss(c.id)}
+            />
+          ))}
+        </div>
+      ))}
+
+      {restCount > 0 && choice === "urgent" && (
+        <button
+          onClick={() => setChoice("all")}
+          className="w-full text-left text-[12px] text-slate-500 px-3 py-2 rounded-lg border border-dashed border-slate-200 hover:border-slate-300 hover:bg-slate-50 transition focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/30"
+        >
+          {restCount} more this week →
+        </button>
+      )}
+
+      {archived > 0 && (
+        <div className="text-[11px] text-slate-400 italic px-1">
+          {archived} {archived === 1 ? "item" : "items"} handled today.
+        </div>
+      )}
+    </div>
+  );
+}
+
+function ActionCardItem({
+  card,
+  expanded,
+  onToggleExpand,
+  onHover,
+  onOpenUnit,
+  onApprove,
+  onDefer,
+  onDismiss,
+}: {
+  card: ActionCard;
+  expanded: boolean;
+  onToggleExpand: () => void;
+  onHover: (on: boolean) => void;
+  onOpenUnit: () => void;
+  onApprove: () => void;
+  onDefer: () => void;
+  onDismiss: () => void;
+}) {
+  const isInferred = card.confidence === "inferred";
+  return (
+    <article
+      onMouseEnter={() => onHover(true)}
+      onMouseLeave={() => onHover(false)}
+      className={`rounded-xl border bg-white p-3 transition ${
+        isInferred ? "border-amber-200" : "border-slate-200 hover:border-[#7C3AED]/40"
+      }`}
+    >
+      <header className="flex items-start gap-2 mb-1.5">
+        <span aria-hidden className="text-base leading-none mt-0.5">{TRIGGER_ICON[card.triggerType]}</span>
+        <div className="flex-1 min-w-0">
+          <div className="text-[13px] font-semibold text-slate-900 leading-snug">{card.title}</div>
+          <div className="mt-0.5"><ConfidenceMark confidence={card.confidence} /></div>
+        </div>
+      </header>
+
+      <p className="text-[12.5px] text-slate-700 leading-relaxed mb-1.5">{card.whyItMatters}</p>
+      <p className="text-[12px] text-slate-500 leading-relaxed mb-2 italic">{card.hobsonPrepared}</p>
+
+      {!expanded && (
+        <div className="flex flex-wrap items-center gap-1.5">
+          {!isInferred ? (
+            <button
+              onClick={onToggleExpand}
+              className="text-xs px-3 py-1.5 rounded-full bg-[#7C3AED] text-white hover:bg-[#6D28D9] transition focus:outline-none focus:ring-2 focus:ring-[#7C3AED]"
+            >
+              {card.proposedAction}
+            </button>
+          ) : (
+            <>
+              <button
+                onClick={onOpenUnit}
+                className="text-xs px-3 py-1.5 rounded-full bg-amber-100 text-amber-900 border border-amber-300 hover:bg-amber-200 transition focus:outline-none focus:ring-2 focus:ring-amber-500"
+              >
+                Open unit to check
+              </button>
+              <button
+                onClick={onDefer}
+                className="text-xs px-3 py-1.5 rounded-full text-slate-600 border border-slate-200 hover:bg-slate-50 transition focus:outline-none focus:ring-2 focus:ring-slate-300"
+              >
+                Flag for review
+              </button>
+            </>
+          )}
+          {!isInferred && (
+            <button
+              onClick={onOpenUnit}
+              className="text-xs px-3 py-1.5 rounded-full text-slate-600 border border-slate-200 hover:bg-slate-50 transition focus:outline-none focus:ring-2 focus:ring-slate-300"
+            >
+              Open unit
+            </button>
+          )}
+          <button
+            onClick={onDefer}
+            className="text-xs px-2.5 py-1.5 rounded-full text-slate-500 hover:text-slate-700 hover:bg-slate-50 transition focus:outline-none focus:ring-2 focus:ring-slate-300"
+          >
+            Defer
+          </button>
+          <button
+            onClick={onDismiss}
+            className="text-xs px-2.5 py-1.5 rounded-full text-slate-400 hover:text-slate-600 hover:bg-slate-50 transition focus:outline-none focus:ring-2 focus:ring-slate-300"
+          >
+            Dismiss
+          </button>
+        </div>
+      )}
+
+      {expanded && !isInferred && (
+        <div className="mt-2 rounded-lg border border-[#DDD6FE] bg-[#F5F3FF] p-2.5 space-y-2">
+          <div>
+            <div className="text-[10px] uppercase tracking-wide text-[#5B21B6] font-semibold mb-1">What I'll do</div>
+            <p className="text-[12px] text-slate-700 leading-relaxed">{card.preparedDetail}</p>
+          </div>
+          <div className="flex flex-wrap gap-1.5 pt-1">
+            <button
+              onClick={onApprove}
+              autoFocus
+              className="text-xs px-3 py-1.5 rounded-full bg-[#7C3AED] text-white hover:bg-[#6D28D9] transition focus:outline-none focus:ring-2 focus:ring-[#7C3AED]"
+            >
+              Approve
+            </button>
+            <button
+              onClick={onToggleExpand}
+              className="text-xs px-3 py-1.5 rounded-full text-slate-600 border border-slate-200 hover:bg-slate-50 transition focus:outline-none focus:ring-2 focus:ring-slate-300"
+            >
+              Modify
+            </button>
+            <button
+              onClick={onToggleExpand}
+              className="text-xs px-3 py-1.5 rounded-full text-slate-500 hover:text-slate-700 hover:bg-slate-50 transition focus:outline-none focus:ring-2 focus:ring-slate-300"
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      )}
+    </article>
+  );
+}
+
 /* ---------------- styles ---------------- */
+
 
 function StyleTag() {
   return (
