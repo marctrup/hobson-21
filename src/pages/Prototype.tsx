@@ -961,7 +961,7 @@ const Prototype: React.FC = () => {
       setHasVisited(true);
     }
 
-    const pending = actionCards.filter((c) => c.approvalState === "pending");
+    const pending = actionCards.filter((c) => c.approvalState === "pending" || c.approvalState === "in_progress");
     const urgent = pending.filter((c) => c.urgency === "now");
 
     const greetLines: string[] =
@@ -1144,7 +1144,7 @@ const Prototype: React.FC = () => {
         // Do NOT fade the others — non-flagged pins stay full-colour and active.
         const pending = actionCards.filter(
           (c) =>
-            c.approvalState === "pending" &&
+            (c.approvalState === "pending" || c.approvalState === "in_progress") &&
             (briefingChoice !== "urgent" || c.urgency === "now")
         );
         const ids = Array.from(new Set(pending.map((c) => c.propertyId)));
@@ -1406,7 +1406,7 @@ const Prototype: React.FC = () => {
                   level: "unit",
                   propertyId: selectedPropertyId,
                   unitId: selectedUnit.id,
-                }).filter((c) => c.anchorLevel === "property" && c.approvalState === "pending")}
+                }).filter((c) => c.anchorLevel === "property" && (c.approvalState === "pending" || c.approvalState === "in_progress"))}
                 onManageAtProperty={() => goProperty(selectedPropertyId)}
               />
               {(() => {
@@ -1414,7 +1414,7 @@ const Prototype: React.FC = () => {
                   level: "unit",
                   propertyId: selectedPropertyId,
                   unitId: selectedUnit.id,
-                }).filter((c) => c.anchorLevel === "unit" && c.approvalState === "pending");
+                }).filter((c) => c.anchorLevel === "unit" && (c.approvalState === "pending" || c.approvalState === "in_progress"));
                 if (unitOwnCardsRaw.length === 0) return null;
                 // Carried card surfaces first
                 const unitOwnCards = carriedCardId
@@ -2575,9 +2575,9 @@ function PropertyContent({
         {counts.alerts > 0 && <> · <span className="text-amber-700 font-medium">{counts.alerts} with alerts</span></>}
       </div>
 
-      {propertyActionCards.filter((c) => c.approvalState === "pending").length > 0 && (
+      {propertyActionCards.filter((c) => c.approvalState === "pending" || c.approvalState === "in_progress").length > 0 && (
         <PropertyActions
-          cards={propertyActionCards.filter((c) => c.approvalState === "pending")}
+          cards={propertyActionCards.filter((c) => c.approvalState === "pending" || c.approvalState === "in_progress")}
           propertyName={property.name}
           expandedCardId={expandedCardId ?? null}
           setExpandedCardId={(id) => setExpandedCardId && setExpandedCardId(id)}
