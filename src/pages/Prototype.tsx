@@ -1079,6 +1079,8 @@ const Prototype: React.FC = () => {
     setView("onboarding");
     setSelectedPropertyId(null);
     setSelectedUnitId(null);
+    setShowDocuments(false);
+    setShowWhatIveDone(false);
   };
 
   /* ----- map highlight derived from view/beat ----- */
@@ -1290,8 +1292,8 @@ const Prototype: React.FC = () => {
           </svg>
         </div>
         <RailItem icon="pin" label="Portfolio" active={view !== "onboarding" && !showDocuments && !showWhatIveDone} onClick={() => { setShowDocuments(false); setShowWhatIveDone(false); goPortfolio(false); }} />
-        <RailItem icon="doc" label="Documents" active={showDocuments} onClick={() => { setShowWhatIveDone(false); setShowDocuments(true); }} />
-        <RailItem icon="clock" label={"What I've done"} active={showWhatIveDone} onClick={() => { setShowDocuments(false); setShowWhatIveDone(true); }} />
+        <RailItem icon="doc" label="Documents" active={view !== "onboarding" && showDocuments} onClick={() => { setShowWhatIveDone(false); setShowDocuments(true); }} />
+        <RailItem icon="clock" label={"What I've done"} active={view !== "onboarding" && showWhatIveDone} onClick={() => { setShowDocuments(false); setShowWhatIveDone(true); }} />
         <RailItem icon="chat" label="Chat History" />
         <div className="mt-auto flex flex-col items-center gap-3 pb-2">
           <button className="w-11 h-11 rounded-full bg-[#7C3AED] text-white grid place-items-center shadow-md hover:bg-[#6D28D9] transition" aria-label="New chat">
@@ -1335,13 +1337,16 @@ const Prototype: React.FC = () => {
         {view === "onboarding" ? (
           <div className="px-5 pt-3 pb-2 border-b border-slate-100">
             <div className="flex items-center justify-between text-[11px] text-slate-500 mb-1.5">
-              <span>Meet Hobson · Step {Math.min(beatIdx + 1, BEATS.length)} of {BEATS.length}</span>
-              <button
-                onClick={skipIntro}
-                className="text-[#7C3AED] hover:underline focus:outline-none focus:ring-2 focus:ring-[#7C3AED] rounded"
-              >
-                Skip intro
-              </button>
+              <span className="font-medium text-slate-700">Meet Hobson</span>
+              <div className="flex items-center gap-3">
+                <span>Step {Math.min(beatIdx + 1, BEATS.length)} of {BEATS.length}</span>
+                <button
+                  onClick={skipIntro}
+                  className="text-[#7C3AED] hover:underline focus:outline-none focus:ring-2 focus:ring-[#7C3AED] rounded"
+                >
+                  Skip intro
+                </button>
+              </div>
             </div>
             <div className="h-1 rounded-full bg-slate-100 overflow-hidden">
               <div
