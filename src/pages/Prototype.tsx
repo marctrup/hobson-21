@@ -1464,7 +1464,17 @@ const Prototype: React.FC = () => {
             {actionToast}
           </div>
         )}
-        {showDocuments && <DocumentsLibrary onClose={() => setShowDocuments(false)} />}
+        {showDocuments && (
+          <DocumentsLibrary
+            onClose={() => setShowDocuments(false)}
+            initialScope={{
+              propertyId: view === "property" || view === "unit" ? selectedPropertyId ?? undefined : undefined,
+              unitId: view === "unit" ? selectedUnitId ?? undefined : undefined,
+            }}
+            onNavigatePortfolio={() => { setShowDocuments(false); goPortfolio(false); }}
+            onNavigateProperty={(pid) => { setShowDocuments(false); goProperty(pid); }}
+          />
+        )}
       </main>
     </div>
   );
