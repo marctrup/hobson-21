@@ -1053,11 +1053,29 @@ const Prototype: React.FC = () => {
           highlight={highlight}
         />
 
+        {/* Map search (portfolio only) */}
+        {view === "portfolio" && (
+          <MapSearch
+            onOpenUnit={(propId, unitId) => goUnit(unitId, propId)}
+            onOpenProperty={(id) => {
+              const p = PROPERTIES.find((x) => x.id === id);
+              if (!p) return;
+              if (portfolioMode === "returning" && p.units.length === 1) {
+                goUnit(p.units[0].id, p.id);
+              } else {
+                goProperty(id);
+              }
+            }}
+            onHoverProperty={setHoveredPropertyId}
+          />
+        )}
+
         {/* Map/Satellite toggle */}
         <div className="absolute bottom-4 right-4 z-[400] bg-white rounded-md shadow-md text-xs font-medium flex">
           <button className="px-3 py-1.5 bg-slate-900 text-white rounded-l-md">Map</button>
           <button className="px-3 py-1.5 text-slate-600 rounded-r-md">Satellite</button>
         </div>
+
 
         {/* Dev toggle */}
         <div className="absolute bottom-4 left-4 z-[400] bg-white/90 rounded-md shadow-md text-[11px] font-medium flex overflow-hidden border border-slate-200">
