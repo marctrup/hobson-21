@@ -2138,7 +2138,7 @@ function PropertyContent({
   propertyActionCards?: ActionCard[];
   expandedCardId?: string | null;
   setExpandedCardId?: (id: string | null) => void;
-  onOpenUnit: (id: string) => void;
+  onOpenUnit: (id: string, carryCardId?: string) => void;
   onPreviewQuestion: (q: string) => void;
   onApprove?: (id: string) => void;
   onDefer?: (id: string) => void;
