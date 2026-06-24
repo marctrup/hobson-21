@@ -218,14 +218,19 @@ function HobsonMap({
   const mapInstance = useRef<L.Map | null>(null);
   const markersRef = useRef<Record<string, L.Marker>>({});
   const unitMarkersRef = useRef<Record<string, L.Marker>>({});
+  const connectorsRef = useRef<Record<string, L.Polyline>>({});
 
   useEffect(() => {
     if (!mapRef.current || mapInstance.current) return;
+    const reduced = prefersReducedMotion();
     const map = L.map(mapRef.current, {
       center: [51.555, -0.185],
       zoom: 12,
       zoomControl: false,
       attributionControl: false,
+      zoomAnimation: !reduced,
+      fadeAnimation: !reduced,
+      markerZoomAnimation: !reduced,
     });
     L.tileLayer(
       "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
@@ -254,14 +259,95 @@ function HobsonMap({
       m.on("click", () => onPropertyClick(p.id));
       m.on("mouseover", () => onPinHover?.(p.id));
       m.on("mouseout", () => onPinHover?.(null));
+      // Double-click an overlap-spread pin → zoom to fit its collision group
+      m.on("dblclick", (e) => {
+        L.DomEvent.stopPropagation(e);
+        const el = m.getElement();
+        if (!el?.classList.contains("is-overlap-spread")) return;
+        const groupIds = Object.keys(connectorsRef.current);
+        if (!groupIds.length) return;
+        const groupBounds = L.latLngBounds(
+          PROPERTIES.filter((q) => groupIds.includes(q.id)).map((q) => [q.lat, q.lng] as [number, number])
+        );
+        map.flyToBounds(groupBounds, { padding: [80, 80], maxZoom: 17, duration: reduced ? 0 : 0.6 });
+      });
       markersRef.current[p.id] = m;
     });
 
-    // Fit to all property pins
+    /* ---- Collision / spiderfy: keep true count + identity, just visually fan out ---- */
+    const recomputeOverlap = () => {
+      // Reset markers to their true locations and clear connectors
+      PROPERTIES.forEach((p) => {
+        const m = markersRef.current[p.id];
+        if (!m) return;
+        m.setLatLng([p.lat, p.lng]);
+        m.getElement()?.classList.remove("is-overlap-spread");
+      });
+      Object.values(connectorsRef.current).forEach((pl) => map.removeLayer(pl));
+      connectorsRef.current = {};
+
+      const points = PROPERTIES.map((p) => ({
+        id: p.id,
+        orig: L.latLng(p.lat, p.lng),
+        pt: map.latLngToLayerPoint([p.lat, p.lng]),
+      }));
+
+      // Single-linkage proximity grouping in pixel space
+      const COLLIDE_PX = 56;
+      const assigned = new Array(points.length).fill(-1);
+      const groups: number[][] = [];
+      for (let i = 0; i < points.length; i++) {
+        if (assigned[i] !== -1) continue;
+        const g = [i];
+        assigned[i] = groups.length;
+        for (let j = i + 1; j < points.length; j++) {
+          if (assigned[j] !== -1) continue;
+          if (points[i].pt.distanceTo(points[j].pt) < COLLIDE_PX) {
+            g.push(j);
+            assigned[j] = groups.length;
+          }
+        }
+        groups.push(g);
+      }
+
+      groups.forEach((g) => {
+        if (g.length < 2) return;
+        const cx = g.reduce((s, k) => s + points[k].pt.x, 0) / g.length;
+        const cy = g.reduce((s, k) => s + points[k].pt.y, 0) / g.length;
+        const R = 40;
+        g.forEach((k, idx) => {
+          const angle = (idx / g.length) * Math.PI * 2 - Math.PI / 2;
+          const nx = cx + R * Math.cos(angle);
+          const ny = cy + R * Math.sin(angle);
+          const newLatLng = map.layerPointToLatLng(L.point(nx, ny));
+          const id = points[k].id;
+          const m = markersRef.current[id];
+          if (!m) return;
+          m.setLatLng(newLatLng);
+          m.getElement()?.classList.add("is-overlap-spread");
+          const line = L.polyline([points[k].orig, newLatLng], {
+            color: "#94A3B8",
+            weight: 1,
+            opacity: 0.65,
+            interactive: false,
+            dashArray: "2,3",
+          }).addTo(map);
+          connectorsRef.current[id] = line;
+        });
+      });
+    };
+
+    map.on("zoomend moveend", recomputeOverlap);
+
+    // Fit to all property pins, then run overlap pass
     const bounds = L.latLngBounds(PROPERTIES.map((p) => [p.lat, p.lng] as [number, number]));
-    map.fitBounds(bounds, { padding: [60, 60], maxZoom: 13 });
+    map.fitBounds(bounds, { padding: [60, 60], maxZoom: 13, animate: !reduced });
+    setTimeout(recomputeOverlap, 0);
 
     return () => {
+      map.off("zoomend moveend", recomputeOverlap);
+      Object.values(connectorsRef.current).forEach((pl) => map.removeLayer(pl));
+      connectorsRef.current = {};
       map.remove();
       mapInstance.current = null;
       markersRef.current = {};
