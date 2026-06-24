@@ -135,10 +135,10 @@ const PROPERTIES: Property[] = [
     lat: 51.5325,
     lng: -0.1787,
     units: [
-      { id: "nugent-f1",   label: "Flat 1", status: "Let" },
-      { id: "nugent-f2",   label: "Flat 2", status: "Let" },
-      { id: "nugent-f3",   label: "Flat 3", status: "Vacant" },
-      { id: "nugent-shop", label: "Shop",   status: "Let" },
+      { id: "nugent-f1",   label: "Flat 1", status: "Let", termEndDate: "2027-07-10" },
+      { id: "nugent-f2",   label: "Flat 2", status: "Let", termEndDate: "2026-05-30", confirmedEnding: "none" },
+      { id: "nugent-f3",   label: "Flat 3", status: "Vacant", confirmedEnding: "end_tenancy" },
+      { id: "nugent-shop", label: "Shop",   status: "Let", termEndDate: "2026-08-20" },
     ],
   },
   {
