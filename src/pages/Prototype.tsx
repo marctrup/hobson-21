@@ -790,8 +790,22 @@ const Prototype: React.FC = () => {
 
         {/* Body */}
         <div ref={chatBodyRef} className="flex-1 overflow-y-auto px-5 py-4 space-y-4">
-          {view !== "onboarding" && view !== "unit" && (
+          {view !== "onboarding" && view !== "unit" && !(view === "portfolio" && portfolioMode === "returning") && (
             <IntelligenceLadder view={view} />
+          )}
+
+          {/* Returning-mode search lives at the top of the panel body */}
+          {view === "portfolio" && portfolioMode === "returning" && (
+            <ReturningSearchPanel
+              query={searchQuery}
+              setQuery={setSearchQuery}
+              activeIdx={searchActiveIdx}
+              setActiveIdx={setSearchActiveIdx}
+              onOpenUnit={(propId, unitId) => goUnit(unitId, propId)}
+              onOpenProperty={goProperty}
+              onHoverProperty={setHoveredPropertyId}
+              searchRef={searchRef}
+            />
           )}
 
           {messages.map((m) =>
@@ -803,13 +817,14 @@ const Prototype: React.FC = () => {
           )}
           {typing && <TypingBubble owl={owl} />}
 
-          {/* Onboarding chip now rendered above the locked composer */}
-
-          {/* Portfolio view */}
-          {view === "portfolio" && (
-            <PortfolioContent
+          {/* Portfolio view — first visit (guided) */}
+          {view === "portfolio" && portfolioMode === "first" && (
+            <PortfolioFirstVisit
+              showPropertyList={showPropertyList}
+              showUnitPicker={showUnitPicker}
               onOpenProperty={goProperty}
-              onPreviewQuestion={(q) => showRoadmapToast(q)}
+              onOpenUnit={(propId, unitId) => goUnit(unitId, propId)}
+              onPreviewQuestion={askPortfolioPreview}
             />
           )}
 
