@@ -939,8 +939,8 @@ const Prototype: React.FC = () => {
           ]
         : [
             `Morning, ${FIRST_NAME}. The estate's mostly quiet — ${pending.length} ${pending.length === 1 ? "thing needs" : "things need"} you${urgent.length ? `, and ${urgent.length === 1 ? "1 is" : `${urgent.length} are`} time-sensitive` : ""}.`,
-            `Want to take them now, or just the urgent one?`,
           ];
+
 
     setTyping(true);
     const delay = reduced ? 200 : 450;
