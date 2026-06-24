@@ -1617,7 +1617,7 @@ const Prototype: React.FC = () => {
           aria-hidden
           className="absolute inset-0 pointer-events-none z-[350]"
           style={{
-            background: "rgba(248, 250, 252, 0.32)",
+            background: "rgba(241, 245, 249, 0.55)",
             opacity: view === "onboarding" ? 1 : 0,
             transition: reduced ? "none" : "opacity 400ms ease-out",
           }}
