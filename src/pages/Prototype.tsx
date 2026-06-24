@@ -1398,6 +1398,7 @@ const Prototype: React.FC = () => {
               setExpandedCardId={setExpandedCardId}
               onHoverCard={setHoveredCardPropertyId}
               onOpenUnit={(propId, unitId, cardId) => goUnit(unitId, propId, cardId)}
+              onOpenProperty={(propId, cardId) => goProperty(propId, cardId)}
               onApprove={(id) => {
                 const c = actionCards.find((x) => x.id === id);
                 setActionCards((arr) => arr.map((x) => x.id === id ? { ...x, approvalState: "approved" } : x));
