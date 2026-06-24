@@ -1126,8 +1126,63 @@ const Prototype: React.FC = () => {
     return placeholder;
   };
 
+  const matchesRentDemo = (q: string): boolean => {
+    const s = q.trim().toLowerCase().replace(/[?.!,]+$/g, "").trim();
+    if (!s) return false;
+    if (s === "rent" || s === "rent?") return true;
+    if (s === "rent flat 2") return true;
+    if (s === "rent flat 2 nugent terrace") return true;
+    if (s === "current rent flat 2") return true;
+    if (s === "what's the current rent" || s === "what is the current rent") return true;
+    // forgiving: any string containing "rent" plus "flat 2" or just "rent" at unit-Flat-2 level
+    if (/\brent\b/.test(s) && /\bflat\s*2\b/.test(s)) return true;
+    if (/\brent\b/.test(s) && selectedUnit?.id === "nugent-f2") return true;
+    return false;
+  };
+
+  const streamRentAnswer = () => {
+    const paragraph =
+      "The current rent is set out in the tenancy paperwork and the later rent increase notice. The agreement also refers to annual reviews linked to RPI, with the notice saying the increase follows the agreed minimum adjustment.";
+    const id = `m-${Date.now()}-${Math.random()}`;
+    setMessages((m) => [
+      ...m,
+      { id, role: "hobson", text: "", streaming: true, rich: "rentFlat2", thoughtSeconds: 4 },
+    ]);
+    if (reduced) {
+      setMessages((m) => m.map((x) => (x.id === id ? { ...x, text: paragraph, streaming: false } : x)));
+      return;
+    }
+    const words = paragraph.split(" ");
+    let i = 0;
+    const step = () => {
+      i += 1;
+      const partial = words.slice(0, i).join(" ");
+      setMessages((m) => m.map((x) => (x.id === id ? { ...x, text: partial } : x)));
+      if (i < words.length) setTimeout(step, 45 + Math.random() * 35);
+      else setMessages((m) => m.map((x) => (x.id === id ? { ...x, streaming: false } : x)));
+    };
+    setTimeout(step, 60);
+  };
+
+  const sendRentDemo = (q: string) => {
+    setMessages((m) => [...m, { id: `u-${Date.now()}`, role: "user", text: q }]);
+    setInput("");
+    setTyping(true);
+    setOwl("reading");
+    const delay = reduced ? 200 : 900;
+    window.setTimeout(() => {
+      setTyping(false);
+      setOwl("talking");
+      streamRentAnswer();
+    }, delay);
+  };
+
   const sendUnitQuestion = (q: string) => {
     if (!q.trim()) return;
+    if (matchesRentDemo(q)) {
+      sendRentDemo(q);
+      return;
+    }
     setMessages((m) => [...m, { id: `u-${Date.now()}`, role: "user", text: q }]);
     setInput("");
     setTyping(true);
@@ -1144,6 +1199,18 @@ const Prototype: React.FC = () => {
       }
     }, delay);
   };
+
+  // Pre-fill the chat input with a level-appropriate scripted rent question.
+  // Deeper context = shorter question. User can hit send/Enter to ask it.
+  useEffect(() => {
+    if (view === "onboarding") return;
+    let prefill = "";
+    if (view === "portfolio" && portfolioMode === "returning") prefill = "rent flat 2 Nugent Terrace";
+    else if (view === "property") prefill = "rent flat 2";
+    else if (view === "unit") prefill = "rent?";
+    setInput(prefill);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [view, selectedPropertyId, selectedUnitId, portfolioMode]);
 
   const showRoadmapToast = (label: string) => {
     setToast(`"${label}" is Portfolio Intelligence — coming soon. Open a unit and I can answer it today.`);
