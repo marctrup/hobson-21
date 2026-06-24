@@ -1591,7 +1591,7 @@ const Prototype: React.FC = () => {
           aria-hidden={view === "onboarding" ? true : undefined}
           className={`absolute inset-0 ${view === "onboarding" ? "pointer-events-none" : ""}`}
           style={{
-            filter: view === "onboarding" ? "saturate(0.35) contrast(0.92) brightness(1.02)" : "none",
+            filter: view === "onboarding" ? "grayscale(0.95) contrast(0.85) brightness(1.05)" : "none",
             transition: reduced ? "none" : "filter 400ms ease-out",
           }}
         >
