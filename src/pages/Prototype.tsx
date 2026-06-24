@@ -481,7 +481,7 @@ const prefersReducedMotion = () =>
   window.matchMedia &&
   window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-type ChatMsg = { id: string; role: "hobson" | "user"; text: string; streaming?: boolean };
+type ChatMsg = { id: string; role: "hobson" | "user"; text: string; streaming?: boolean; rich?: "rentFlat2"; thoughtSeconds?: number };
 
 /* ---------------- Map ---------------- */
 
