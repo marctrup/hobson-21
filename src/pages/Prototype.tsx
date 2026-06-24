@@ -3510,6 +3510,7 @@ function PropertyActions({
                 onDefer={() => onDefer(c.id)}
                 onDismiss={() => onDismiss(c.id)}
                 onPerform={onPerform ? () => onPerform(c.id) : undefined}
+                onReview={onReview ? () => onReview(c.id) : undefined}
               />
             </div>
           ))}
