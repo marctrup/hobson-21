@@ -895,9 +895,6 @@ const Prototype: React.FC = () => {
 
         {/* Body */}
         <div ref={chatBodyRef} className="flex-1 overflow-y-auto px-5 py-4 space-y-4">
-          {view !== "onboarding" && view !== "unit" && !(view === "portfolio" && portfolioMode === "returning") && (
-            <IntelligenceLadder view={view} />
-          )}
 
           {/* Returning-mode search lives at the top of the panel body */}
           {view === "portfolio" && portfolioMode === "returning" && (
