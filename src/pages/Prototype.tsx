@@ -4334,14 +4334,45 @@ function ActionCardItem({
         </div>
       ) : !expanded && (
         <div className="flex flex-wrap items-center gap-1.5">
-          {!isInferred ? (
-            <button
-              onClick={onToggleExpand}
-              className="text-xs px-3 py-1.5 rounded-full bg-[#7C3AED] text-white hover:bg-[#6D28D9] transition focus:outline-none focus:ring-2 focus:ring-[#7C3AED]"
-            >
-              {card.proposedAction}
-            </button>
-          ) : onOpenUnit ? (
+          {!isInferred ? (() => {
+            const performable = PERFORMABLE_CARD_IDS.has(card.id);
+            const state = card.approvalState;
+            if (performable && onReview) {
+              const disabled = state === "pending";
+              const label = state === "approved" ? "View recorded outcome" : card.proposedAction;
+              const tip = disabled
+                ? "Nothing to review yet — Perform this first"
+                : state === "approved"
+                ? "Open the recorded outcome"
+                : "Jump to the final approval";
+              return (
+                <button
+                  onClick={disabled ? undefined : onReview}
+                  disabled={disabled}
+                  aria-disabled={disabled}
+                  title={tip}
+                  className={`text-xs px-3 py-1.5 rounded-full transition focus:outline-none focus:ring-2 focus:ring-[#7C3AED] inline-flex items-center gap-1 ${
+                    disabled
+                      ? "bg-slate-100 text-slate-400 border border-slate-200 cursor-not-allowed opacity-60"
+                      : "bg-[#7C3AED] text-white hover:bg-[#6D28D9]"
+                  }`}
+                >
+                  {!disabled && (
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M5 13l4 4L19 7"/></svg>
+                  )}
+                  {label}
+                </button>
+              );
+            }
+            return (
+              <button
+                onClick={onToggleExpand}
+                className="text-xs px-3 py-1.5 rounded-full bg-[#7C3AED] text-white hover:bg-[#6D28D9] transition focus:outline-none focus:ring-2 focus:ring-[#7C3AED]"
+              >
+                {card.proposedAction}
+              </button>
+            );
+          })() : onOpenUnit ? (
             <>
               <button
                 onClick={onOpenUnit}
