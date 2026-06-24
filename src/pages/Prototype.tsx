@@ -2587,6 +2587,7 @@ function PropertyContent({
           onDefer={(id) => onDefer && onDefer(id)}
           onDismiss={(id) => onDismiss && onDismiss(id)}
           onPerform={onPerform ? (id) => onPerform(id) : undefined}
+          onReview={onReview ? (id) => onReview(id) : undefined}
         />
       )}
 
