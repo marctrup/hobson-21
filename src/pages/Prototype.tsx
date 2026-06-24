@@ -370,7 +370,7 @@ function locationLabelForCard(card: ActionCard, level: "portfolio" | "property" 
 type Beat = {
   owl: OwlState;
   lines: string[];
-  chip: string;
+  prefill: string;
   mapAction:
     | "none"
     | "pulse-one"
@@ -385,55 +385,62 @@ const BEATS: Beat[] = [
     owl: "talking",
     lines: [
       `Hi ${FIRST_NAME}, I'm Hobson.`,
-      "Think of me as your property co-worker. I read your documents, connect your information, and make sure nothing gets missed.",
+      "Think of me as your property co-worker. I read your documents, connect your information, monitor your events, and help make sure nothing gets missed.",
+      "Today I'll show you how I learn — and why everything starts by gaining knowledge.",
     ],
-    chip: "Nice to meet you",
+    prefill: "How do you see my estate?",
     mapAction: "none",
   },
   {
     owl: "default",
     lines: [
-      "I see your whole estate as units — the spaces people occupy. An office, a shop, a warehouse, a flat.",
-      "Most of what matters — tenancies, deadlines, risk — starts at unit level.",
+      "I see your estate in three levels: Portfolio — your entire estate; Property — a building or site (optional); and Unit — an occupiable space.",
+      "A unit might be an office suite, a retail unit, a warehouse, a flat or a house.",
+      "Most tenancy and occupation information originates at unit level — so that's where I start.",
     ],
-    chip: "How do you learn it all?",
+    prefill: "So how do you learn it all?",
     mapAction: "pulse-one",
   },
   {
     owl: "reading",
     lines: [
-      "I learn by reading your documents — leases, rent reviews, compliance certificates.",
-      "Every document teaches me a little more about that unit.",
+      "I learn by reading your documents — and they come in two families.",
+      "Tenancy documents explain occupation and the tenancy: leases, variations, assignments, rent reviews.",
+      "Asset documents explain the asset itself: compliance records, reports, certificates.",
+      "Documents can belong to a property or a unit — I use both families to build my knowledge of the estate.",
     ],
-    chip: "Then what?",
+    prefill: "What happens once you've read them?",
     mapAction: "pulse-one-doc",
   },
   {
     owl: "default",
     lines: [
-      "Each unit I understand becomes knowledge.",
-      "Enough units, and I understand the whole property. Enough properties, and I understand your entire portfolio.",
+      "Tenancy documents plus asset documents become knowledge.",
+      "That knowledge builds up: Unit Intelligence first → then Property Intelligence → then Portfolio Intelligence.",
+      "Today we're validating my Unit knowledge. Property and Portfolio knowledge come next.",
     ],
-    chip: "What's it all for?",
+    prefill: "Why does this matter?",
     mapAction: "pulse-all",
   },
   {
     owl: "covering",
     lines: [
-      "Property people don't miss things because they lack knowledge.",
-      "They miss them because it's scattered across documents, buildings and deadlines. I'm here to change that.",
+      "Property people don't struggle because they lack knowledge.",
+      "They struggle because important information is scattered across documents, buildings and deadlines.",
+      "Things get missed. Risks get missed. Opportunities get missed.",
+      "We're building Hobson to help change that.",
     ],
-    chip: "I get it",
+    prefill: "So what will you do for me?",
     mapAction: "spread",
   },
   {
     owl: "talking",
     lines: [
       "Today, I answer your questions.",
-      "Soon, I'll handle the work — review the lease, prepare a summary, draft the next step — and bring it to you to approve.",
-      "Ready? Let's open your portfolio.",
+      "Tomorrow, I'll do the work — when a rent review is due I'll review the lease, review the history, prepare a summary, draft the instructions, and bring it to you for approval.",
+      "Understanding creates knowledge. Knowledge enables action. Action makes me your co-worker.",
     ],
-    chip: "Let's get started",
+    prefill: "Let's find a unit",
     mapAction: "check-one",
   },
 ];
