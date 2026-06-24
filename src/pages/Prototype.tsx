@@ -1459,14 +1459,12 @@ function buildSearchResults(query: string): SearchResult[] {
   if (!q) return [];
   const results: SearchResult[] = [];
   PROPERTIES.forEach((p) => {
-    const propMatch = p.name.toLowerCase().includes(q) || p.area.toLowerCase().includes(q);
+    const propText = `${p.name} ${p.area} ${p.address} ${p.postcode}`.toLowerCase();
+    const propMatch = !p.standalone && propText.includes(q);
     if (propMatch) results.push({ type: "property", property: p });
     p.units.forEach((u) => {
-      const unitMatch =
-        u.label.toLowerCase().includes(q) ||
-        (u.tenant && u.tenant.toLowerCase().includes(q)) ||
-        p.name.toLowerCase().includes(q);
-      if (unitMatch) results.push({ type: "unit", property: p, unit: u });
+      const unitText = `${u.label} ${u.tenant ?? ""} ${p.name} ${p.address} ${p.postcode}`.toLowerCase();
+      if (unitText.includes(q)) results.push({ type: "unit", property: p, unit: u });
     });
   });
   return results;
