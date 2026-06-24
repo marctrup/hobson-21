@@ -1261,20 +1261,20 @@ function PropertyContent({
   onPreviewQuestion: (q: string) => void;
 }) {
   const questions = [
-    "What's the WAULT?",
+    "What is the rent roll?",
     "Which units are vacant?",
-    "Total passing rent?",
-    "Upcoming events this year?",
+    "What compliance issues exist?",
+    "Which leases expire soon?",
   ];
   return (
     <div className="space-y-3">
       <div>
-        <div className="flex items-center gap-2 mb-1">
-          <h2 className="text-base font-semibold text-slate-900">{property.name}</h2>
-          <span className="text-[10px] uppercase tracking-wide bg-amber-100 text-amber-800 px-1.5 py-0.5 rounded">Property Intelligence — Coming soon</span>
+        <div className="flex items-center gap-2 mb-1 flex-wrap">
+          <h2 className="text-base font-semibold text-slate-900">{property.name} — Property Intelligence</h2>
+          <span className="text-[10px] uppercase tracking-wide bg-amber-100 text-amber-800 px-1.5 py-0.5 rounded">Coming soon</span>
         </div>
         <p className="text-sm text-slate-600">
-          Building-wide answers are on the way. Today, open a unit and I can answer in detail.
+          Today I work unit by unit — that's where the documents and detail live. Once I understand every unit here, I'll be able to tell you about the whole building.
         </p>
       </div>
       <div>
