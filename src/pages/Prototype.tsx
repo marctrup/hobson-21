@@ -2073,12 +2073,24 @@ function UnitTile({
 
 function PropertyContent({
   property,
+  propertyActionCards = [],
+  expandedCardId,
+  setExpandedCardId,
   onOpenUnit,
   onPreviewQuestion,
+  onApprove,
+  onDefer,
+  onDismiss,
 }: {
   property: Property;
+  propertyActionCards?: ActionCard[];
+  expandedCardId?: string | null;
+  setExpandedCardId?: (id: string | null) => void;
   onOpenUnit: (id: string) => void;
   onPreviewQuestion: (q: string) => void;
+  onApprove?: (id: string) => void;
+  onDefer?: (id: string) => void;
+  onDismiss?: (id: string) => void;
 }) {
   void onPreviewQuestion;
   const [filter, setFilter] = useState("");
