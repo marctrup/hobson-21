@@ -384,8 +384,8 @@ const BEATS: Beat[] = [
   {
     owl: "talking",
     lines: [
-      `Hi ${FIRST_NAME} — I'm Hobson. Think of me as a colleague who helps look after your estate.`,
-      "It's your estate and your call, always. My job is to do the legwork so nothing slips, and to get a little more useful to you every day.",
+      `Hi ${FIRST_NAME} — I'm Hobson. Think of me as a colleague who helps look after your portfolio.`,
+      "It's your portfolio and your call, always. My job is to do the legwork so nothing slips, and to get a little more useful to you every day.",
       "Can I show you how I work?",
     ],
     prefill: "Yes — how do you actually work?",
@@ -398,13 +398,13 @@ const BEATS: Beat[] = [
       "Your ASSETS are what I come to understand: your properties and the units inside them. Your DOCUMENTS are HOW I learn about them — they're my reading.",
       "So I never confuse the file with the thing it describes. I read the documents to understand the asset.",
     ],
-    prefill: "Okay — so how do you see my estate?",
+    prefill: "Okay — so how do you see my portfolio?",
     mapAction: "none",
   },
   {
     owl: "default",
     lines: [
-      "I see your estate in three levels: your Portfolio at the top, Properties beneath it, and Units — the actual occupiable spaces — at the heart of it.",
+      "I see your portfolio in three levels: the Portfolio at the top, Properties beneath it, and Units — the actual occupiable spaces — at the heart of it.",
       "A unit might sit inside a property, or stand on its own. Either way, the unit is where the real detail lives — the tenancy, the rent, the obligations.",
       "Properties are just a way of grouping units. The unit is my source of truth.",
     ],
