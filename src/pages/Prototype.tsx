@@ -913,11 +913,13 @@ const Prototype: React.FC = () => {
     void fromOnboarding;
 
     const pending = actionCards.filter((c) => c.approvalState === "pending" || c.approvalState === "in_progress");
-    void pending;
+    const urgent = pending.filter((c) => c.urgency === "now");
 
-    const greetLines: string[] = [
-      `Hi ${FIRST_NAME} — you're at portfolio level. Today I answer questions at the unit level, where your documents live. Click the search icon on the map to find a unit, or tap a pin to go straight there.`,
-    ];
+    const greetLines: string[] =
+      pending.length === 0
+        ? [`Morning, ${FIRST_NAME}. The estate's quiet — nothing needs you today. Tap a pin to wander in, or use the map search.`]
+        : [`Morning, ${FIRST_NAME}. ${pending.length} ${pending.length === 1 ? "thing needs" : "things need"} you${urgent.length ? `, and ${urgent.length === 1 ? "1 is" : `${urgent.length} are`} time-sensitive` : ""}.`];
+
 
 
 
