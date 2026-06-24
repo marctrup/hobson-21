@@ -580,7 +580,7 @@ const Prototype: React.FC = () => {
       };
     }
     return { pulse: "none" };
-  }, [view, beatIdx, selectedProperty]);
+  }, [view, beatIdx, selectedProperty, searchQuery, portfolioMode, hoveredPropertyId]);
 
   /* ----- unit Q&A ----- */
   const answerForUnit = (q: string): string => {
