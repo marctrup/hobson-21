@@ -1050,6 +1050,7 @@ const Prototype: React.FC = () => {
             }
           }}
           onPinHover={setHoveredPropertyId}
+          onUnitClick={(uid) => selectedPropertyId && goUnit(uid, selectedPropertyId)}
           highlight={highlight}
         />
 
