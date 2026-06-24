@@ -828,6 +828,12 @@ const Prototype: React.FC = () => {
     if (el) el.scrollTop = el.scrollHeight;
   }, [messages, typing, chipVisible, view, selectedUnitId, selectedPropertyId]);
 
+  /* ----- pre-fill demo rent question per level ----- */
+  useEffect(() => {
+    const pre = rentPrefillFor(view, selectedPropertyId, selectedUnitId);
+    setInput(pre);
+  }, [view, selectedPropertyId, selectedUnitId]);
+
   /* ----- onboarding line streaming ----- */
   useEffect(() => {
     if (view !== "onboarding") return;
