@@ -216,14 +216,18 @@ type MapHighlight = {
   focus?: { lat: number; lng: number; zoom: number } | null;
   dimExcept?: string | null;
   activeUnitPropertyId?: string | null;
+  matchIds?: string[] | null;
+  hoverId?: string | null;
 };
 
 function HobsonMap({
   onPropertyClick,
   highlight,
+  onPinHover,
 }: {
   onPropertyClick: (id: string) => void;
   highlight: MapHighlight;
+  onPinHover?: (id: string | null) => void;
 }) {
   const mapRef = useRef<HTMLDivElement | null>(null);
   const mapInstance = useRef<L.Map | null>(null);
@@ -257,6 +261,8 @@ function HobsonMap({
       });
       const m = L.marker([p.lat, p.lng], { icon }).addTo(map);
       m.on("click", () => onPropertyClick(p.id));
+      m.on("mouseover", () => onPinHover?.(p.id));
+      m.on("mouseout", () => onPinHover?.(null));
       markersRef.current[p.id] = m;
     });
 
@@ -277,7 +283,7 @@ function HobsonMap({
     Object.entries(markersRef.current).forEach(([id, m]) => {
       const el = m.getElement();
       if (!el) return;
-      el.classList.remove("is-pulse", "is-dim", "is-check", "has-doc", "is-spread");
+      el.classList.remove("is-pulse", "is-dim", "is-check", "has-doc", "is-spread", "is-match", "is-fade", "is-hover");
       if (highlight.pulse === "all") el.classList.add("is-pulse");
       if (highlight.pulse === "one" && highlight.pulseId === id) el.classList.add("is-pulse");
       if (highlight.showDoc && highlight.pulseId === id) el.classList.add("has-doc");
@@ -285,6 +291,11 @@ function HobsonMap({
       if (highlight.check && highlight.pulseId === id) el.classList.add("is-check");
       if (highlight.dimExcept && highlight.dimExcept !== id) el.classList.add("is-dim");
       if (highlight.activeUnitPropertyId === id) el.classList.add("is-pulse");
+      if (highlight.matchIds && highlight.matchIds.length) {
+        if (highlight.matchIds.includes(id)) el.classList.add("is-match");
+        else el.classList.add("is-fade");
+      }
+      if (highlight.hoverId === id) el.classList.add("is-hover");
     });
 
     if (highlight.focus) {
@@ -315,10 +326,48 @@ const Prototype: React.FC = () => {
   const [selectedUnitId, setSelectedUnitId] = useState<string | null>(null);
   const [toast, setToast] = useState<string | null>(null);
   const [input, setInput] = useState("");
+  const [hasVisited, setHasVisited] = useState(false);
+  const [portfolioMode, setPortfolioMode] = useState<"first" | "returning">("first");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchActiveIdx, setSearchActiveIdx] = useState(0);
+  const [hoveredPropertyId, setHoveredPropertyId] = useState<string | null>(null);
+  const [showUnitPicker, setShowUnitPicker] = useState(false);
+  const [showPropertyList, setShowPropertyList] = useState(false);
+  const [portfolioChip, setPortfolioChip] = useState<string | null>(null);
   const chatBodyRef = useRef<HTMLDivElement | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
+  const searchRef = useRef<HTMLInputElement | null>(null);
 
   const reduced = prefersReducedMotion();
+
+  // Mode detection on mount (query param or stored flag)
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const returning = params.get("returning");
+    if (returning === "1") {
+      localStorage.setItem("hobsonPrototype.hasVisited", "1");
+      setHasVisited(true);
+      setPortfolioMode("returning");
+      setView("portfolio");
+      setMessages([]);
+      setOwl("default");
+      return;
+    }
+    if (returning === "0") {
+      localStorage.removeItem("hobsonPrototype.hasVisited");
+      setHasVisited(false);
+      return;
+    }
+    const visited = localStorage.getItem("hobsonPrototype.hasVisited") === "1";
+    setHasVisited(visited);
+    if (visited) {
+      setPortfolioMode("returning");
+      setView("portfolio");
+      setMessages([]);
+      setOwl("default");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const selectedProperty = useMemo(
     () => PROPERTIES.find((p) => p.id === selectedPropertyId) || null,
@@ -411,15 +460,30 @@ const Prototype: React.FC = () => {
     setOwl("default");
     setChipVisible(false);
     setTyping(false);
-    setMessages([
-      {
-        id: "p-greet",
-        role: "hobson",
-        text: fromOnboarding
-          ? "Here's your portfolio. Open a property to see what I already know."
-          : "Welcome back. Open a property to drill in.",
-      },
-    ]);
+    setSearchQuery("");
+    setShowUnitPicker(false);
+    setShowPropertyList(false);
+    setPortfolioChip(null);
+    setMessages([]);
+
+    if (fromOnboarding) {
+      localStorage.setItem("hobsonPrototype.hasVisited", "1");
+      setHasVisited(true);
+    }
+
+    if (portfolioMode === "first") {
+      const greet = `Welcome. Right now I learn at unit level — that's where your documents live, and it's how I build understanding. Want to open a property, or go straight to a unit?`;
+      setTyping(true);
+      const delay = reduced ? 200 : 450;
+      window.setTimeout(() => {
+        setTyping(false);
+        if (reduced) {
+          setMessages([{ id: "p-greet", role: "hobson", text: greet }]);
+        } else {
+          streamHobsonMessage(greet, () => {});
+        }
+      }, delay);
+    }
   };
 
   const goProperty = (id: string) => {
@@ -438,17 +502,24 @@ const Prototype: React.FC = () => {
     ]);
   };
 
-  const goUnit = (unitId: string) => {
-    if (!selectedProperty) return;
-    const u = selectedProperty.units.find((x) => x.id === unitId);
+  const goUnit = (unitId: string, propertyId?: string) => {
+    const pid = propertyId ?? selectedPropertyId;
+    const p = PROPERTIES.find((x) => x.id === pid);
+    if (!p) return;
+    const u = p.units.find((x) => x.id === unitId);
     if (!u) return;
+    setSelectedPropertyId(p.id);
     setView("unit");
     setSelectedUnitId(unitId);
     setOwl("talking");
+    setShowUnitPicker(false);
+    setShowPropertyList(false);
+    setPortfolioChip(null);
+    setSearchQuery("");
     const intro =
       u.status === "Let"
-        ? `${selectedProperty.name} — ${u.label}, let to ${u.tenant}. What would you like to know?`
-        : `${selectedProperty.name} — ${u.label}, currently vacant. What would you like to check?`;
+        ? `${p.name} — ${u.label}, let to ${u.tenant}. What would you like to know?`
+        : `${p.name} — ${u.label}, currently vacant. What would you like to check?`;
     setMessages([{ id: `unit-${unitId}`, role: "hobson", text: intro }]);
   };
 
@@ -484,7 +555,22 @@ const Prototype: React.FC = () => {
           return { pulse: "none" };
       }
     }
-    if (view === "portfolio") return { pulse: "none" };
+    if (view === "portfolio") {
+      const q = searchQuery.trim().toLowerCase();
+      let matchIds: string[] | null = null;
+      if (q && portfolioMode === "returning") {
+        matchIds = PROPERTIES.filter((p) => {
+          if (p.name.toLowerCase().includes(q)) return true;
+          if (p.area.toLowerCase().includes(q)) return true;
+          return p.units.some(
+            (u) =>
+              u.label.toLowerCase().includes(q) ||
+              (u.tenant && u.tenant.toLowerCase().includes(q))
+          );
+        }).map((p) => p.id);
+      }
+      return { pulse: "none", matchIds, hoverId: hoveredPropertyId };
+    }
     if (view === "property" && selectedProperty) {
       return {
         pulse: "none",
@@ -501,7 +587,7 @@ const Prototype: React.FC = () => {
       };
     }
     return { pulse: "none" };
-  }, [view, beatIdx, selectedProperty]);
+  }, [view, beatIdx, selectedProperty, searchQuery, portfolioMode, hoveredPropertyId]);
 
   /* ----- unit Q&A ----- */
   const answerForUnit = (q: string): string => {
@@ -559,6 +645,37 @@ const Prototype: React.FC = () => {
     window.setTimeout(() => setToast(null), 3500);
   };
 
+  // First-visit preview question handler — posts as user msg, Hobson replies warmly, then shows chip
+  const askPortfolioPreview = (q: string) => {
+    setMessages((m) => [...m, { id: `u-${Date.now()}`, role: "user", text: q }]);
+    setTyping(true);
+    setOwl("default");
+    const reply = `I can't answer across your whole portfolio yet — I build that understanding unit by unit first. Let's open a unit and I'll show you what I can already do.`;
+    const delay = reduced ? 200 : 700;
+    window.setTimeout(() => {
+      setTyping(false);
+      setOwl("talking");
+      if (reduced) {
+        setMessages((m) => [...m, { id: `a-${Date.now()}`, role: "hobson", text: reply }]);
+      } else {
+        streamHobsonMessage(reply, () => {});
+      }
+      setPortfolioChip("Go straight to a unit");
+    }, delay);
+  };
+
+  const handlePortfolioChip = (label: string) => {
+    setMessages((m) => [...m, { id: `u-${Date.now()}`, role: "user", text: label }]);
+    setPortfolioChip(null);
+    if (label === "Browse properties") {
+      setShowPropertyList(true);
+      setShowUnitPicker(false);
+    } else if (label === "Go straight to a unit") {
+      setShowUnitPicker(true);
+      setShowPropertyList(false);
+    }
+  };
+
   /* ----- progress ----- */
   const progressPct =
     view !== "onboarding"
@@ -612,6 +729,9 @@ const Prototype: React.FC = () => {
         {/* Header */}
         <header className="h-14 px-5 flex items-center justify-between border-b border-slate-100">
           <div className="flex items-center gap-2">
+            {view === "portfolio" && portfolioMode === "returning" && (
+              <img src={owlDefault} alt="" aria-hidden className="w-6 h-6 object-contain" />
+            )}
             <h1 className="font-semibold text-[15px] text-slate-900">Chat with Hobson</h1>
             {view !== "onboarding" && (
               <button
@@ -673,8 +793,22 @@ const Prototype: React.FC = () => {
 
         {/* Body */}
         <div ref={chatBodyRef} className="flex-1 overflow-y-auto px-5 py-4 space-y-4">
-          {view !== "onboarding" && view !== "unit" && (
+          {view !== "onboarding" && view !== "unit" && !(view === "portfolio" && portfolioMode === "returning") && (
             <IntelligenceLadder view={view} />
+          )}
+
+          {/* Returning-mode search lives at the top of the panel body */}
+          {view === "portfolio" && portfolioMode === "returning" && (
+            <ReturningSearchPanel
+              query={searchQuery}
+              setQuery={setSearchQuery}
+              activeIdx={searchActiveIdx}
+              setActiveIdx={setSearchActiveIdx}
+              onOpenUnit={(propId, unitId) => goUnit(unitId, propId)}
+              onOpenProperty={goProperty}
+              onHoverProperty={setHoveredPropertyId}
+              searchRef={searchRef}
+            />
           )}
 
           {messages.map((m) =>
@@ -686,13 +820,14 @@ const Prototype: React.FC = () => {
           )}
           {typing && <TypingBubble owl={owl} />}
 
-          {/* Onboarding chip now rendered above the locked composer */}
-
-          {/* Portfolio view */}
-          {view === "portfolio" && (
-            <PortfolioContent
+          {/* Portfolio view — first visit (guided) */}
+          {view === "portfolio" && portfolioMode === "first" && (
+            <PortfolioFirstVisit
+              showPropertyList={showPropertyList}
+              showUnitPicker={showUnitPicker}
               onOpenProperty={goProperty}
-              onPreviewQuestion={(q) => showRoadmapToast(q)}
+              onOpenUnit={(propId, unitId) => goUnit(unitId, propId)}
+              onPreviewQuestion={askPortfolioPreview}
             />
           )}
 
@@ -737,6 +872,37 @@ const Prototype: React.FC = () => {
               </button>
             </div>
           )}
+          {view === "portfolio" && portfolioMode === "first" && !chipVisible && messages.length > 0 && !portfolioChip && !showPropertyList && !showUnitPicker && (
+            <div className="mb-2 flex flex-col items-end gap-1.5">
+              <span className="text-[11px] text-slate-500 flex items-center gap-1">
+                Tap to reply <span aria-hidden>↓</span>
+              </span>
+              <div className="flex gap-1.5 flex-wrap justify-end">
+                {["Browse properties", "Go straight to a unit"].map((label) => (
+                  <button
+                    key={label}
+                    onClick={() => handlePortfolioChip(label)}
+                    className="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-[#EDE9FE] text-[#5B21B6] hover:bg-[#DDD6FE] border border-[#DDD6FE] transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#7C3AED]"
+                  >
+                    {label}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+          {view === "portfolio" && portfolioMode === "first" && portfolioChip && (
+            <div className="mb-2 flex flex-col items-end gap-1.5">
+              <span className="text-[11px] text-slate-500 flex items-center gap-1">
+                Tap to reply <span aria-hidden>↓</span>
+              </span>
+              <button
+                onClick={() => handlePortfolioChip(portfolioChip)}
+                className="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-[#7C3AED] text-white hover:bg-[#6D28D9] shadow-sm transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#7C3AED]"
+              >
+                {portfolioChip}
+              </button>
+            </div>
+          )}
           {view !== "unit" ? (
             <LockedComposer view={view} />
           ) : (
@@ -770,15 +936,32 @@ const Prototype: React.FC = () => {
 
       {/* Map */}
       <main className="relative flex-1 bg-slate-100">
-        <HobsonMap onPropertyClick={goProperty} highlight={highlight} />
+        <HobsonMap
+          onPropertyClick={(id) => {
+            const p = PROPERTIES.find((x) => x.id === id);
+            if (!p) return;
+            // If single-unit property in returning mode, drill straight to unit
+            if (portfolioMode === "returning" && p.units.length === 1) {
+              goUnit(p.units[0].id, p.id);
+            } else {
+              goProperty(id);
+            }
+          }}
+          onPinHover={setHoveredPropertyId}
+          highlight={highlight}
+        />
 
-        {/* Search box top-right */}
-        <div className="absolute top-4 right-4 z-[400] bg-white rounded-lg shadow-md flex items-center gap-2 px-3 py-2 w-72">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-slate-400">
-            <circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/>
-          </svg>
-          <input className="flex-1 text-sm outline-none placeholder:text-slate-400" placeholder="Search" />
-          <button className="text-slate-300 text-lg leading-none">×</button>
+        {/* Map/Satellite toggle */}
+        <div className="absolute bottom-4 right-4 z-[400] bg-white rounded-md shadow-md text-xs font-medium flex">
+          <button className="px-3 py-1.5 bg-slate-900 text-white rounded-l-md">Map</button>
+          <button className="px-3 py-1.5 text-slate-600 rounded-r-md">Satellite</button>
+        </div>
+
+        {/* Dev toggle */}
+        <div className="absolute bottom-4 left-4 z-[400] bg-white/90 rounded-md shadow-md text-[11px] font-medium flex overflow-hidden border border-slate-200">
+          <span className="px-2 py-1 text-slate-500">Dev:</span>
+          <a href="?returning=0" className="px-2 py-1 hover:bg-slate-100 border-l border-slate-200">First visit</a>
+          <a href="?returning=1" className="px-2 py-1 hover:bg-slate-100 border-l border-slate-200">Returning</a>
         </div>
 
         {/* Map/Satellite toggle */}
@@ -1066,12 +1249,10 @@ function LockedComposer({ view }: { view: View }) {
   const helper =
     view === "onboarding"
       ? "Chat unlocks at unit level"
-      : view === "portfolio"
-      ? "Open a unit to ask Hobson — Portfolio chat coming soon"
-      : "Open a unit to ask Hobson — Property chat coming soon";
+      : "Open a unit to chat with Hobson";
   return (
     <>
-      <div className="text-[11px] text-slate-400 mb-1">{view === "onboarding" ? "Locked" : "Roadmap"}</div>
+      <div className="text-[11px] text-slate-400 mb-1">Locked</div>
       <div
         aria-disabled="true"
         tabIndex={-1}
@@ -1082,11 +1263,324 @@ function LockedComposer({ view }: { view: View }) {
           <rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/>
         </svg>
         <span className="flex-1 truncate text-slate-400">{placeholder}</span>
-        <span className="text-[10px] uppercase tracking-wide text-slate-400">{helper}</span>
+        <span className="text-[10px] uppercase tracking-wide text-slate-400 hidden sm:inline">{helper}</span>
       </div>
     </>
   );
 }
+
+/* ---------- Portfolio: first-visit guided ---------- */
+
+function PortfolioFirstVisit({
+  showPropertyList,
+  showUnitPicker,
+  onOpenProperty,
+  onOpenUnit,
+  onPreviewQuestion,
+}: {
+  showPropertyList: boolean;
+  showUnitPicker: boolean;
+  onOpenProperty: (id: string) => void;
+  onOpenUnit: (propertyId: string, unitId: string) => void;
+  onPreviewQuestion: (q: string) => void;
+}) {
+  const questions = [
+    "Which leases expire this year?",
+    "What reviews are due?",
+    "What is occupancy?",
+    "Which assets carry risk?",
+  ];
+  return (
+    <div className="space-y-3">
+      <div>
+        <div className="flex items-center gap-2 mb-1">
+          <h2 className="text-base font-semibold text-slate-900">Portfolio Intelligence</h2>
+          <span className="text-[10px] uppercase tracking-wide bg-amber-100 text-amber-800 px-1.5 py-0.5 rounded">Coming soon</span>
+        </div>
+        <p className="text-sm text-slate-600">
+          Today I learn at unit level — that's where your documents live. Portfolio insight comes later, once I understand enough units.
+        </p>
+      </div>
+
+      <div>
+        <div className="text-[11px] uppercase tracking-wide text-slate-400 font-medium mb-1.5">Preview questions</div>
+        <div className="flex flex-wrap gap-1.5">
+          {questions.map((q) => (
+            <button
+              key={q}
+              onClick={() => onPreviewQuestion(q)}
+              className="text-xs px-3 py-1.5 rounded-full border border-slate-200 text-slate-600 hover:bg-slate-50 hover:border-slate-300 transition focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/30"
+            >
+              {q}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {showPropertyList && (
+        <div>
+          <div className="text-[11px] uppercase tracking-wide text-slate-400 font-medium mb-1.5 mt-2">Properties</div>
+          <div className="space-y-1.5">
+            {PROPERTIES.map((p) => (
+              <button
+                key={p.id}
+                onClick={() => onOpenProperty(p.id)}
+                className="w-full flex items-center justify-between px-3 py-2.5 rounded-lg border border-slate-200 hover:border-[#7C3AED] hover:bg-[#F5F3FF] transition text-left focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/30"
+              >
+                <div>
+                  <div className="text-sm font-medium text-slate-900">{p.name}</div>
+                  <div className="text-[11px] text-slate-500">{p.area} · {p.units.length} units</div>
+                </div>
+                <span className="text-[#7C3AED] text-sm">→</span>
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {showUnitPicker && (
+        <div>
+          <div className="text-[11px] uppercase tracking-wide text-slate-400 font-medium mb-1.5 mt-2">All units</div>
+          <div className="space-y-3">
+            {PROPERTIES.map((p) => (
+              <div key={p.id}>
+                <div className="text-[11px] font-medium text-slate-500 mb-1">{p.name}</div>
+                <div className="space-y-1">
+                  {p.units.map((u) => (
+                    <button
+                      key={u.id}
+                      onClick={() => onOpenUnit(p.id, u.id)}
+                      className="w-full flex items-center justify-between px-3 py-2 rounded-lg border border-slate-200 hover:border-[#7C3AED] hover:bg-[#F5F3FF] transition text-left focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/30"
+                    >
+                      <div>
+                        <div className="text-sm font-medium text-slate-900">{u.label}</div>
+                        <div className="text-[11px] text-slate-500">
+                          {u.status === "Let" ? u.tenant : "Vacant"}
+                        </div>
+                      </div>
+                      <span className={`text-[10px] uppercase font-medium px-1.5 py-0.5 rounded ${u.status === "Let" ? "bg-emerald-50 text-emerald-700" : "bg-slate-100 text-slate-600"}`}>
+                        {u.status}
+                      </span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* ---------- Portfolio: returning launcher ---------- */
+
+type SearchResult =
+  | { type: "property"; property: Property }
+  | { type: "unit"; property: Property; unit: Unit };
+
+function buildSearchResults(query: string): SearchResult[] {
+  const q = query.trim().toLowerCase();
+  if (!q) return [];
+  const results: SearchResult[] = [];
+  PROPERTIES.forEach((p) => {
+    const propMatch = p.name.toLowerCase().includes(q) || p.area.toLowerCase().includes(q);
+    if (propMatch) results.push({ type: "property", property: p });
+    p.units.forEach((u) => {
+      const unitMatch =
+        u.label.toLowerCase().includes(q) ||
+        (u.tenant && u.tenant.toLowerCase().includes(q)) ||
+        p.name.toLowerCase().includes(q);
+      if (unitMatch) results.push({ type: "unit", property: p, unit: u });
+    });
+  });
+  return results;
+}
+
+function ReturningSearchPanel({
+  query,
+  setQuery,
+  activeIdx,
+  setActiveIdx,
+  onOpenUnit,
+  onOpenProperty,
+  onHoverProperty,
+  searchRef,
+}: {
+  query: string;
+  setQuery: (s: string) => void;
+  activeIdx: number;
+  setActiveIdx: (n: number) => void;
+  onOpenUnit: (propertyId: string, unitId: string) => void;
+  onOpenProperty: (id: string) => void;
+  onHoverProperty: (id: string | null) => void;
+  searchRef: React.RefObject<HTMLInputElement>;
+}) {
+  const results = useMemo(() => buildSearchResults(query), [query]);
+
+  useEffect(() => {
+    searchRef.current?.focus();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    setActiveIdx(0);
+  }, [query, setActiveIdx]);
+
+  const openResult = (r: SearchResult) => {
+    if (r.type === "unit") onOpenUnit(r.property.id, r.unit.id);
+    else onOpenProperty(r.property.id);
+  };
+
+  const onKeyDown = (e: React.KeyboardEvent) => {
+    if (!results.length) return;
+    if (e.key === "ArrowDown") {
+      e.preventDefault();
+      setActiveIdx(Math.min(activeIdx + 1, results.length - 1));
+    } else if (e.key === "ArrowUp") {
+      e.preventDefault();
+      setActiveIdx(Math.max(activeIdx - 1, 0));
+    } else if (e.key === "Enter") {
+      e.preventDefault();
+      const r = results[activeIdx];
+      if (r) openResult(r);
+    }
+  };
+
+  // group results by building
+  const grouped = useMemo(() => {
+    const map = new Map<string, SearchResult[]>();
+    results.forEach((r) => {
+      const key = r.property.name;
+      if (!map.has(key)) map.set(key, []);
+      map.get(key)!.push(r);
+    });
+    return Array.from(map.entries());
+  }, [results]);
+
+  const recents: { propertyId: string; unitId: string; label: string; tenant: string }[] = [
+    { propertyId: "stanley", unitId: "stanley-gf", label: "Ground Floor", tenant: "ABC Limited" },
+    { propertyId: "camden", unitId: "camden-w1", label: "Warehouse 1", tenant: "Dockside Logistics" },
+  ];
+
+  // flat index lookup for highlighting active row
+  let runningIdx = -1;
+
+  return (
+    <div className="space-y-3">
+      <div className="relative">
+        <div className="flex items-center gap-2 px-3 py-2.5 rounded-full border border-slate-200 bg-white focus-within:border-[#7C3AED] focus-within:ring-2 focus-within:ring-[#7C3AED]/20 transition">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-slate-400">
+            <circle cx="11" cy="11" r="7" /><path d="M21 21l-4-4" />
+          </svg>
+          <input
+            ref={searchRef}
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            onKeyDown={onKeyDown}
+            placeholder="Search a unit, property or tenant…"
+            className="flex-1 outline-none text-sm bg-transparent placeholder:text-slate-400"
+            aria-label="Search a unit, property or tenant"
+            autoComplete="off"
+          />
+          {query && (
+            <button
+              onClick={() => setQuery("")}
+              className="text-slate-400 hover:text-slate-700 text-lg leading-none"
+              aria-label="Clear search"
+            >
+              ×
+            </button>
+          )}
+        </div>
+
+        {query && (
+          <div className="mt-1.5 rounded-lg border border-slate-200 bg-white shadow-sm overflow-hidden">
+            {results.length === 0 ? (
+              <div className="px-3 py-4 text-xs text-slate-500">No matches. Try a tenant, unit or building name.</div>
+            ) : (
+              grouped.map(([building, items]) => (
+                <div key={building}>
+                  <div className="px-3 pt-2 pb-1 text-[10px] uppercase tracking-wide text-slate-400 bg-slate-50">{building}</div>
+                  {items.map((r) => {
+                    runningIdx += 1;
+                    const idx = runningIdx;
+                    const isActive = idx === activeIdx;
+                    return (
+                      <button
+                        key={`${r.type}-${r.type === "unit" ? r.unit.id : r.property.id}-${idx}`}
+                        onMouseEnter={() => {
+                          setActiveIdx(idx);
+                          onHoverProperty(r.property.id);
+                        }}
+                        onMouseLeave={() => onHoverProperty(null)}
+                        onClick={() => openResult(r)}
+                        className={`w-full flex items-center justify-between px-3 py-2 text-left transition focus:outline-none ${
+                          isActive ? "bg-[#F5F3FF]" : "hover:bg-slate-50"
+                        }`}
+                      >
+                        <div>
+                          <div className="text-sm font-medium text-slate-900">
+                            {r.type === "unit" ? r.unit.label : r.property.name}
+                          </div>
+                          <div className="text-[11px] text-slate-500">
+                            {r.type === "unit"
+                              ? r.unit.status === "Let"
+                                ? r.unit.tenant
+                                : "Vacant"
+                              : `${r.property.area} · ${r.property.units.length} units`}
+                          </div>
+                        </div>
+                        {r.type === "unit" && (
+                          <span className={`text-[10px] uppercase font-medium px-1.5 py-0.5 rounded ${r.unit.status === "Let" ? "bg-emerald-50 text-emerald-700" : "bg-slate-100 text-slate-600"}`}>
+                            {r.unit.status}
+                          </span>
+                        )}
+                        {r.type === "property" && (
+                          <span className="text-[10px] uppercase font-medium px-1.5 py-0.5 rounded bg-[#EDE9FE] text-[#5B21B6]">Building</span>
+                        )}
+                      </button>
+                    );
+                  })}
+                </div>
+              ))
+            )}
+          </div>
+        )}
+      </div>
+
+      {!query && (
+        <>
+          <div>
+            <div className="text-[11px] uppercase tracking-wide text-slate-400 font-medium mb-1.5">Jump back in</div>
+            <div className="space-y-1.5">
+              {recents.map((r) => {
+                const p = PROPERTIES.find((x) => x.id === r.propertyId);
+                return (
+                  <button
+                    key={r.unitId}
+                    onClick={() => onOpenUnit(r.propertyId, r.unitId)}
+                    onMouseEnter={() => onHoverProperty(r.propertyId)}
+                    onMouseLeave={() => onHoverProperty(null)}
+                    className="w-full flex items-center justify-between px-3 py-2.5 rounded-lg border border-slate-200 hover:border-[#7C3AED] hover:bg-[#F5F3FF] transition text-left focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/30"
+                  >
+                    <div>
+                      <div className="text-sm font-medium text-slate-900">{r.label} — {r.tenant}</div>
+                      <div className="text-[11px] text-slate-500">{p?.name}</div>
+                    </div>
+                    <span className="text-[#7C3AED] text-sm">→</span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+          <p className="text-[12px] text-slate-500">Search above, or pick a unit on the map.</p>
+        </>
+      )}
+    </div>
+  );
+}
+
 
 /* ---------------- styles ---------------- */
 
@@ -1158,10 +1652,24 @@ function StyleTag() {
         from { transform: scale(0); }
         to { transform: scale(1); }
       }
+      .hp-marker.is-fade { opacity: 0.25; transition: opacity .25s; }
+      .hp-marker.is-match .hp-pin,
+      .hp-marker.is-match .hp-cluster {
+        filter: drop-shadow(0 0 6px rgba(124,58,237,0.55));
+        transform: scale(1.12);
+        transition: transform .2s, filter .2s;
+      }
+      .hp-marker.is-hover .hp-pin,
+      .hp-marker.is-hover .hp-cluster {
+        transform: scale(1.2);
+        transition: transform .15s;
+      }
       @media (prefers-reduced-motion: reduce) {
         .animate-typing-bounce, .hp-marker.is-pulse .hp-pin,
         .hp-marker.is-pulse .hp-cluster, .hp-marker.is-spread .hp-pin,
         .hp-marker.is-spread .hp-cluster { animation: none !important; }
+        .hp-marker.is-match .hp-pin, .hp-marker.is-match .hp-cluster,
+        .hp-marker.is-hover .hp-pin, .hp-marker.is-hover .hp-cluster { transform: none !important; }
       }
     `}</style>
   );
