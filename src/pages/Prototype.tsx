@@ -1249,12 +1249,10 @@ function LockedComposer({ view }: { view: View }) {
   const helper =
     view === "onboarding"
       ? "Chat unlocks at unit level"
-      : view === "portfolio"
-      ? "Open a unit to ask Hobson — Portfolio chat coming soon"
-      : "Open a unit to ask Hobson — Property chat coming soon";
+      : "Open a unit to chat with Hobson";
   return (
     <>
-      <div className="text-[11px] text-slate-400 mb-1">{view === "onboarding" ? "Locked" : "Roadmap"}</div>
+      <div className="text-[11px] text-slate-400 mb-1">Locked</div>
       <div
         aria-disabled="true"
         tabIndex={-1}
@@ -1265,11 +1263,324 @@ function LockedComposer({ view }: { view: View }) {
           <rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/>
         </svg>
         <span className="flex-1 truncate text-slate-400">{placeholder}</span>
-        <span className="text-[10px] uppercase tracking-wide text-slate-400">{helper}</span>
+        <span className="text-[10px] uppercase tracking-wide text-slate-400 hidden sm:inline">{helper}</span>
       </div>
     </>
   );
 }
+
+/* ---------- Portfolio: first-visit guided ---------- */
+
+function PortfolioFirstVisit({
+  showPropertyList,
+  showUnitPicker,
+  onOpenProperty,
+  onOpenUnit,
+  onPreviewQuestion,
+}: {
+  showPropertyList: boolean;
+  showUnitPicker: boolean;
+  onOpenProperty: (id: string) => void;
+  onOpenUnit: (propertyId: string, unitId: string) => void;
+  onPreviewQuestion: (q: string) => void;
+}) {
+  const questions = [
+    "Which leases expire this year?",
+    "What reviews are due?",
+    "What is occupancy?",
+    "Which assets carry risk?",
+  ];
+  return (
+    <div className="space-y-3">
+      <div>
+        <div className="flex items-center gap-2 mb-1">
+          <h2 className="text-base font-semibold text-slate-900">Portfolio Intelligence</h2>
+          <span className="text-[10px] uppercase tracking-wide bg-amber-100 text-amber-800 px-1.5 py-0.5 rounded">Coming soon</span>
+        </div>
+        <p className="text-sm text-slate-600">
+          Today I learn at unit level — that's where your documents live. Portfolio insight comes later, once I understand enough units.
+        </p>
+      </div>
+
+      <div>
+        <div className="text-[11px] uppercase tracking-wide text-slate-400 font-medium mb-1.5">Preview questions</div>
+        <div className="flex flex-wrap gap-1.5">
+          {questions.map((q) => (
+            <button
+              key={q}
+              onClick={() => onPreviewQuestion(q)}
+              className="text-xs px-3 py-1.5 rounded-full border border-slate-200 text-slate-600 hover:bg-slate-50 hover:border-slate-300 transition focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/30"
+            >
+              {q}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {showPropertyList && (
+        <div>
+          <div className="text-[11px] uppercase tracking-wide text-slate-400 font-medium mb-1.5 mt-2">Properties</div>
+          <div className="space-y-1.5">
+            {PROPERTIES.map((p) => (
+              <button
+                key={p.id}
+                onClick={() => onOpenProperty(p.id)}
+                className="w-full flex items-center justify-between px-3 py-2.5 rounded-lg border border-slate-200 hover:border-[#7C3AED] hover:bg-[#F5F3FF] transition text-left focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/30"
+              >
+                <div>
+                  <div className="text-sm font-medium text-slate-900">{p.name}</div>
+                  <div className="text-[11px] text-slate-500">{p.area} · {p.units.length} units</div>
+                </div>
+                <span className="text-[#7C3AED] text-sm">→</span>
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {showUnitPicker && (
+        <div>
+          <div className="text-[11px] uppercase tracking-wide text-slate-400 font-medium mb-1.5 mt-2">All units</div>
+          <div className="space-y-3">
+            {PROPERTIES.map((p) => (
+              <div key={p.id}>
+                <div className="text-[11px] font-medium text-slate-500 mb-1">{p.name}</div>
+                <div className="space-y-1">
+                  {p.units.map((u) => (
+                    <button
+                      key={u.id}
+                      onClick={() => onOpenUnit(p.id, u.id)}
+                      className="w-full flex items-center justify-between px-3 py-2 rounded-lg border border-slate-200 hover:border-[#7C3AED] hover:bg-[#F5F3FF] transition text-left focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/30"
+                    >
+                      <div>
+                        <div className="text-sm font-medium text-slate-900">{u.label}</div>
+                        <div className="text-[11px] text-slate-500">
+                          {u.status === "Let" ? u.tenant : "Vacant"}
+                        </div>
+                      </div>
+                      <span className={`text-[10px] uppercase font-medium px-1.5 py-0.5 rounded ${u.status === "Let" ? "bg-emerald-50 text-emerald-700" : "bg-slate-100 text-slate-600"}`}>
+                        {u.status}
+                      </span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* ---------- Portfolio: returning launcher ---------- */
+
+type SearchResult =
+  | { type: "property"; property: Property }
+  | { type: "unit"; property: Property; unit: Unit };
+
+function buildSearchResults(query: string): SearchResult[] {
+  const q = query.trim().toLowerCase();
+  if (!q) return [];
+  const results: SearchResult[] = [];
+  PROPERTIES.forEach((p) => {
+    const propMatch = p.name.toLowerCase().includes(q) || p.area.toLowerCase().includes(q);
+    if (propMatch) results.push({ type: "property", property: p });
+    p.units.forEach((u) => {
+      const unitMatch =
+        u.label.toLowerCase().includes(q) ||
+        (u.tenant && u.tenant.toLowerCase().includes(q)) ||
+        p.name.toLowerCase().includes(q);
+      if (unitMatch) results.push({ type: "unit", property: p, unit: u });
+    });
+  });
+  return results;
+}
+
+function ReturningSearchPanel({
+  query,
+  setQuery,
+  activeIdx,
+  setActiveIdx,
+  onOpenUnit,
+  onOpenProperty,
+  onHoverProperty,
+  searchRef,
+}: {
+  query: string;
+  setQuery: (s: string) => void;
+  activeIdx: number;
+  setActiveIdx: (n: number) => void;
+  onOpenUnit: (propertyId: string, unitId: string) => void;
+  onOpenProperty: (id: string) => void;
+  onHoverProperty: (id: string | null) => void;
+  searchRef: React.RefObject<HTMLInputElement>;
+}) {
+  const results = useMemo(() => buildSearchResults(query), [query]);
+
+  useEffect(() => {
+    searchRef.current?.focus();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    setActiveIdx(0);
+  }, [query, setActiveIdx]);
+
+  const openResult = (r: SearchResult) => {
+    if (r.type === "unit") onOpenUnit(r.property.id, r.unit.id);
+    else onOpenProperty(r.property.id);
+  };
+
+  const onKeyDown = (e: React.KeyboardEvent) => {
+    if (!results.length) return;
+    if (e.key === "ArrowDown") {
+      e.preventDefault();
+      setActiveIdx(Math.min(activeIdx + 1, results.length - 1));
+    } else if (e.key === "ArrowUp") {
+      e.preventDefault();
+      setActiveIdx(Math.max(activeIdx - 1, 0));
+    } else if (e.key === "Enter") {
+      e.preventDefault();
+      const r = results[activeIdx];
+      if (r) openResult(r);
+    }
+  };
+
+  // group results by building
+  const grouped = useMemo(() => {
+    const map = new Map<string, SearchResult[]>();
+    results.forEach((r) => {
+      const key = r.property.name;
+      if (!map.has(key)) map.set(key, []);
+      map.get(key)!.push(r);
+    });
+    return Array.from(map.entries());
+  }, [results]);
+
+  const recents: { propertyId: string; unitId: string; label: string; tenant: string }[] = [
+    { propertyId: "stanley", unitId: "stanley-gf", label: "Ground Floor", tenant: "ABC Limited" },
+    { propertyId: "camden", unitId: "camden-w1", label: "Warehouse 1", tenant: "Dockside Logistics" },
+  ];
+
+  // flat index lookup for highlighting active row
+  let runningIdx = -1;
+
+  return (
+    <div className="space-y-3">
+      <div className="relative">
+        <div className="flex items-center gap-2 px-3 py-2.5 rounded-full border border-slate-200 bg-white focus-within:border-[#7C3AED] focus-within:ring-2 focus-within:ring-[#7C3AED]/20 transition">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-slate-400">
+            <circle cx="11" cy="11" r="7" /><path d="M21 21l-4-4" />
+          </svg>
+          <input
+            ref={searchRef}
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            onKeyDown={onKeyDown}
+            placeholder="Search a unit, property or tenant…"
+            className="flex-1 outline-none text-sm bg-transparent placeholder:text-slate-400"
+            aria-label="Search a unit, property or tenant"
+            autoComplete="off"
+          />
+          {query && (
+            <button
+              onClick={() => setQuery("")}
+              className="text-slate-400 hover:text-slate-700 text-lg leading-none"
+              aria-label="Clear search"
+            >
+              ×
+            </button>
+          )}
+        </div>
+
+        {query && (
+          <div className="mt-1.5 rounded-lg border border-slate-200 bg-white shadow-sm overflow-hidden">
+            {results.length === 0 ? (
+              <div className="px-3 py-4 text-xs text-slate-500">No matches. Try a tenant, unit or building name.</div>
+            ) : (
+              grouped.map(([building, items]) => (
+                <div key={building}>
+                  <div className="px-3 pt-2 pb-1 text-[10px] uppercase tracking-wide text-slate-400 bg-slate-50">{building}</div>
+                  {items.map((r) => {
+                    runningIdx += 1;
+                    const idx = runningIdx;
+                    const isActive = idx === activeIdx;
+                    return (
+                      <button
+                        key={`${r.type}-${r.type === "unit" ? r.unit.id : r.property.id}-${idx}`}
+                        onMouseEnter={() => {
+                          setActiveIdx(idx);
+                          onHoverProperty(r.property.id);
+                        }}
+                        onMouseLeave={() => onHoverProperty(null)}
+                        onClick={() => openResult(r)}
+                        className={`w-full flex items-center justify-between px-3 py-2 text-left transition focus:outline-none ${
+                          isActive ? "bg-[#F5F3FF]" : "hover:bg-slate-50"
+                        }`}
+                      >
+                        <div>
+                          <div className="text-sm font-medium text-slate-900">
+                            {r.type === "unit" ? r.unit.label : r.property.name}
+                          </div>
+                          <div className="text-[11px] text-slate-500">
+                            {r.type === "unit"
+                              ? r.unit.status === "Let"
+                                ? r.unit.tenant
+                                : "Vacant"
+                              : `${r.property.area} · ${r.property.units.length} units`}
+                          </div>
+                        </div>
+                        {r.type === "unit" && (
+                          <span className={`text-[10px] uppercase font-medium px-1.5 py-0.5 rounded ${r.unit.status === "Let" ? "bg-emerald-50 text-emerald-700" : "bg-slate-100 text-slate-600"}`}>
+                            {r.unit.status}
+                          </span>
+                        )}
+                        {r.type === "property" && (
+                          <span className="text-[10px] uppercase font-medium px-1.5 py-0.5 rounded bg-[#EDE9FE] text-[#5B21B6]">Building</span>
+                        )}
+                      </button>
+                    );
+                  })}
+                </div>
+              ))
+            )}
+          </div>
+        )}
+      </div>
+
+      {!query && (
+        <>
+          <div>
+            <div className="text-[11px] uppercase tracking-wide text-slate-400 font-medium mb-1.5">Jump back in</div>
+            <div className="space-y-1.5">
+              {recents.map((r) => {
+                const p = PROPERTIES.find((x) => x.id === r.propertyId);
+                return (
+                  <button
+                    key={r.unitId}
+                    onClick={() => onOpenUnit(r.propertyId, r.unitId)}
+                    onMouseEnter={() => onHoverProperty(r.propertyId)}
+                    onMouseLeave={() => onHoverProperty(null)}
+                    className="w-full flex items-center justify-between px-3 py-2.5 rounded-lg border border-slate-200 hover:border-[#7C3AED] hover:bg-[#F5F3FF] transition text-left focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/30"
+                  >
+                    <div>
+                      <div className="text-sm font-medium text-slate-900">{r.label} — {r.tenant}</div>
+                      <div className="text-[11px] text-slate-500">{p?.name}</div>
+                    </div>
+                    <span className="text-[#7C3AED] text-sm">→</span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+          <p className="text-[12px] text-slate-500">Search above, or pick a unit on the map.</p>
+        </>
+      )}
+    </div>
+  );
+}
+
 
 /* ---------------- styles ---------------- */
 
