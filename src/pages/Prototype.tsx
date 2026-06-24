@@ -224,7 +224,7 @@ const PROPERTIES: Property[] = [
 
 type Urgency = "now" | "week" | "watch";
 type TriggerType = "review" | "break" | "compliance" | "notice" | "expiry";
-type ApprovalState = "pending" | "approved" | "deferred" | "dismissed";
+type ApprovalState = "pending" | "in_progress" | "approved" | "deferred" | "dismissed";
 type AnchorLevel = "unit" | "property";
 
 type ActionCard = {
