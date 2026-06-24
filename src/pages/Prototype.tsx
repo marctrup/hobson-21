@@ -1399,37 +1399,34 @@ function PropertyContent({
 
   return (
     <div className="space-y-3">
-      <div>
-        <div className="text-base font-semibold text-slate-900">{property.name}</div>
-        <div className="text-[12px] text-slate-500">
-          {property.address.replace(`${property.name} — `, "")}
-        </div>
-        <div className="text-[12px] text-slate-600 mt-0.5">
-          {property.units.length} units · {letCount} Let · {vacantCount} Vacant
-        </div>
+      <div className="text-[12px] text-slate-600">
+        {property.units.length} units · {letCount} Let · {vacantCount} Vacant
       </div>
 
-      <div className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-slate-200 bg-white focus-within:border-[#7C3AED] focus-within:ring-2 focus-within:ring-[#7C3AED]/20 transition">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-slate-400">
-          <circle cx="11" cy="11" r="7" /><path d="M21 21l-4-4" />
-        </svg>
-        <input
-          value={filter}
-          onChange={(e) => setFilter(e.target.value)}
-          placeholder="Find a unit…"
-          className="flex-1 outline-none text-sm bg-transparent placeholder:text-slate-400"
-          aria-label="Find a unit by name or tenant"
-        />
-        {filter && (
-          <button
-            onClick={() => setFilter("")}
-            className="text-slate-400 hover:text-slate-700 text-base leading-none"
-            aria-label="Clear filter"
-          >
-            ×
-          </button>
-        )}
-      </div>
+      {property.units.length > 20 && (
+        <div className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-slate-200 bg-white focus-within:border-[#7C3AED] focus-within:ring-2 focus-within:ring-[#7C3AED]/20 transition">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-slate-400">
+            <circle cx="11" cy="11" r="7" /><path d="M21 21l-4-4" />
+          </svg>
+          <input
+            value={filter}
+            onChange={(e) => setFilter(e.target.value)}
+            placeholder="Find a unit…"
+            className="flex-1 outline-none text-sm bg-transparent placeholder:text-slate-400"
+            aria-label="Find a unit by name or tenant"
+          />
+          {filter && (
+            <button
+              onClick={() => setFilter("")}
+              className="text-slate-400 hover:text-slate-700 text-base leading-none"
+              aria-label="Clear filter"
+            >
+              ×
+            </button>
+          )}
+        </div>
+      )}
+
 
       <div className="flex flex-wrap gap-1.5">
         {quickBtn("all", `All (${property.units.length})`)}
