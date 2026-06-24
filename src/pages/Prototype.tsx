@@ -691,31 +691,10 @@ const Prototype: React.FC = () => {
     const u = selectedUnit;
     const p = selectedProperty;
     if (!u || !p) return "Open a unit first and I can answer.";
-    const lo = q.toLowerCase();
-    if (u.status === "Vacant") {
-      if (lo.includes("vacant") || lo.includes("empty") || lo.includes("since"))
-        return `${u.label} has been vacant since ${u.vacantSince}. Last tenant: ${u.lastTenant ?? "—"}${u.lastRent ? `, paying ${u.lastRent}` : ""}.`;
-      if (lo.includes("rent") || lo.includes("lease") || lo.includes("expire"))
-        return `${u.label} is vacant — no live lease. Last passing rent was ${u.lastRent ?? "not on file"}.`;
-      if (lo.includes("complian") || lo.includes("epc") || lo.includes("safety"))
-        return "No outstanding compliance items I can see for this vacant unit. EPC on file is due to be refreshed before re-letting.";
-      return `${u.label} is vacant since ${u.vacantSince}. Ask me about marketing history or the last tenancy.`;
-    }
-    if (lo.includes("expire") || lo.includes("when") || lo.includes("lease"))
-      return `The lease to ${u.tenant} runs to ${u.leaseTo}${u.break ? `, with a tenant break on ${u.break}` : ""}. Passing rent is ${u.rent}.`;
-    if (lo.includes("review") || lo.includes("rent review"))
-      return u.review
-        ? `Next rent review is ${u.review}. Current passing rent ${u.rent}.`
-        : `No rent review scheduled in the current lease — fixed at ${u.rent} to ${u.leaseTo}.`;
-    if (lo.includes("complian") || lo.includes("epc") || lo.includes("safety"))
-      return `EPC on file is rating ${u.epc ?? "—"}. No outstanding compliance certificates flagged for ${u.label}.`;
-    if (lo.includes("summar") || lo.includes("tenancy") || lo.includes("about"))
-      return `${u.label}, let to ${u.tenant} at ${u.rent}. Lease to ${u.leaseTo}${u.break ? `, break ${u.break}` : ""}${u.review ? `, review ${u.review}` : ""}. EPC ${u.epc ?? "—"}.`;
-    if (lo.includes("break"))
-      return u.break
-        ? `Tenant break option on ${u.break}. After that, the lease runs to ${u.leaseTo}.`
-        : `No break option in this lease — it runs to ${u.leaseTo}.`;
-    return `For ${u.label}: leased to ${u.tenant}, ${u.rent}, expiring ${u.leaseTo}. Ask me about the review, break or compliance.`;
+    // Tenant/lease/EPC data isn't loaded for these units yet — return a clear placeholder.
+    const placeholder = `I don't have the details for ${u.label} on file yet. Once your lease, compliance and rent documents are uploaded for ${p.standalone ? p.name : `${p.name} — ${u.label}`}, I'll be able to answer this properly. (Placeholder response.)`;
+    void q;
+    return placeholder;
   };
 
   const sendUnitQuestion = (q: string) => {
