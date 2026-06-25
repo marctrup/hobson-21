@@ -2180,7 +2180,10 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
           ) : adminMode ? (
             adminCharacter === "professor"
               ? <ProfessorComposer onUpload={handleProfessorUpload} />
-              : <LockedComposer view={view} />
+              : adminCharacter === "magician"
+                ? <MagicianComposer onCreate={handleCreateWorkflow} />
+                : <LockedComposer view={view} />
+
           ) : testerMode && view === "unit" ? (
 
             <form
