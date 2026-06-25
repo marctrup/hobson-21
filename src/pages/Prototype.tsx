@@ -901,7 +901,13 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
   const CHAT_COLLAPSE_THRESHOLD = 200;
   const CHAT_COLLAPSED_WIDTH = 44;
   const MAIN_MIN_WIDTH = 420;
+  const MAIN_COLLAPSE_THRESHOLD = 200;
+  const MAIN_COLLAPSED_WIDTH = 44;
   const lastExpandedWidthRef = useRef<number>(chatWidth);
+  const [mainCollapsed, setMainCollapsed] = useState<boolean>(() => {
+    if (typeof window === "undefined") return false;
+    return window.sessionStorage.getItem("hobson:mainCollapsed") === "1";
+  });
   useEffect(() => {
     if (typeof window === "undefined") return;
     window.sessionStorage.setItem("hobson:chatWidth", String(chatWidth));
@@ -910,8 +916,13 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
     if (typeof window === "undefined") return;
     window.sessionStorage.setItem("hobson:chatCollapsed", chatCollapsed ? "1" : "0");
   }, [chatCollapsed]);
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    window.sessionStorage.setItem("hobson:mainCollapsed", mainCollapsed ? "1" : "0");
+  }, [mainCollapsed]);
   const collapseChat = () => {
     if (!chatCollapsed) lastExpandedWidthRef.current = chatWidth;
+    setMainCollapsed(false);
     setChatCollapsed(true);
   };
   const expandChat = () => {
@@ -919,6 +930,12 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
     setChatWidth(Math.max(CHAT_MIN_WIDTH, lastExpandedWidthRef.current || 480));
   };
   const toggleChatCollapsed = () => (chatCollapsed ? expandChat() : collapseChat());
+  const collapseMain = () => {
+    setChatCollapsed(false);
+    setMainCollapsed(true);
+  };
+  const expandMain = () => setMainCollapsed(false);
+  const toggleMainCollapsed = () => (mainCollapsed ? expandMain() : collapseMain());
   const [adminMode, setAdminMode] = useState(false);
   const [adminCharacter, setAdminCharacter] = useState<AdminCharacter | null>(null);
 
@@ -1641,8 +1658,8 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
 
       {/* Chat panel */}
       <section
-        className={`${isExpanded ? "flex-1" : "shrink-0"} relative bg-white border-r border-slate-200 flex flex-col ${chatCollapsed ? "overflow-hidden" : ""}`}
-        style={isExpanded ? undefined : { width: chatCollapsed ? CHAT_COLLAPSED_WIDTH : chatWidth }}
+        className={`${isExpanded || mainCollapsed ? "flex-1" : "shrink-0"} relative bg-white border-r border-slate-200 flex flex-col ${chatCollapsed ? "overflow-hidden" : ""}`}
+        style={isExpanded || mainCollapsed ? undefined : { width: chatCollapsed ? CHAT_COLLAPSED_WIDTH : chatWidth }}
         aria-hidden={chatCollapsed ? true : undefined}
         onDragOver={(e) => {
           if (!chatCollapsed && adminMode && adminCharacter === "professor") { e.preventDefault(); setChatDropOver(true); }
@@ -2104,12 +2121,39 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
           onCollapse={collapseChat}
           onExpand={expandChat}
           onToggleCollapsed={toggleChatCollapsed}
+          mainCollapsed={mainCollapsed}
+          mainCollapseThreshold={MAIN_COLLAPSE_THRESHOLD}
+          onCollapseMain={collapseMain}
+          onExpandMain={expandMain}
         />
       )}
 
       {/* Map */}
       {(() => { const hasOverlay = hasRightOverlay; return (
-      <main className={`${chatExpanded && view !== "onboarding" && !hasOverlay ? "hidden" : "relative flex-1 min-w-0"} bg-slate-100`}>
+      <main
+        className={`${chatExpanded && view !== "onboarding" && !hasOverlay ? "hidden" : `relative ${mainCollapsed ? "shrink-0 overflow-hidden" : "flex-1 min-w-0"}`} bg-slate-100`}
+        style={mainCollapsed ? { width: MAIN_COLLAPSED_WIDTH } : undefined}
+        aria-hidden={mainCollapsed ? true : undefined}
+      >
+        {mainCollapsed && (
+          <button
+            type="button"
+            onClick={expandMain}
+            aria-label="Expand work area"
+            title="Expand work area"
+            className="absolute inset-0 z-[600] flex flex-col items-center justify-start pt-4 gap-3 bg-white border-l border-slate-200 hover:bg-[#F5F3FF] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]"
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+              <path d="M15 6l-6 6 6 6"/>
+            </svg>
+            <span
+              className="text-[10px] font-semibold tracking-wide text-[#7C3AED] uppercase"
+              style={{ writingMode: "vertical-rl" as const, transform: "rotate(180deg)" }}
+            >
+              Expand work area
+            </span>
+          </button>
+        )}
 
 
 
@@ -2243,6 +2287,10 @@ function ResizeDivider({
   onCollapse,
   onExpand,
   onToggleCollapsed,
+  mainCollapsed,
+  mainCollapseThreshold,
+  onCollapseMain,
+  onExpandMain,
 }: {
   width: number;
   setWidth: (n: number) => void;
@@ -2253,26 +2301,38 @@ function ResizeDivider({
   onCollapse: () => void;
   onExpand: () => void;
   onToggleCollapsed: () => void;
+  mainCollapsed: boolean;
+  mainCollapseThreshold: number;
+  onCollapseMain: () => void;
+  onExpandMain: () => void;
 }) {
   const draggingRef = useRef(false);
   const startXRef = useRef(0);
   const startWRef = useRef(width);
   const [active, setActive] = useState(false);
 
+  const railWidth = 68;
+  const getMaxLeft = () => window.innerWidth - railWidth - minRight;
+
   useEffect(() => {
     const onMove = (e: MouseEvent) => {
       if (!draggingRef.current) return;
       const dx = e.clientX - startXRef.current;
-      const railWidth = 68;
-      const maxLeft = window.innerWidth - railWidth - minRight;
+      const maxLeft = getMaxLeft();
       const raw = startWRef.current + dx;
+      // Collapse chat to the left
       if (raw < collapseThreshold) {
         if (!collapsed) onCollapse();
         return;
       }
-      if (collapsed && raw >= collapseThreshold) {
-        onExpand();
+      // Collapse work area to the right
+      const mainCollapsePoint = maxLeft + (minRight - mainCollapseThreshold);
+      if (raw > mainCollapsePoint) {
+        if (!mainCollapsed) onCollapseMain();
+        return;
       }
+      if (collapsed && raw >= collapseThreshold) onExpand();
+      if (mainCollapsed && raw <= mainCollapsePoint) onExpandMain();
       const next = Math.max(minLeft, Math.min(maxLeft, raw));
       setWidth(next);
     };
@@ -2289,41 +2349,49 @@ function ResizeDivider({
       window.removeEventListener("mousemove", onMove);
       window.removeEventListener("mouseup", onUp);
     };
-  }, [minLeft, minRight, setWidth, collapsed, collapseThreshold, onCollapse, onExpand]);
+  }, [minLeft, minRight, setWidth, collapsed, collapseThreshold, onCollapse, onExpand, mainCollapsed, mainCollapseThreshold, onCollapseMain, onExpandMain]);
 
   const onKeyDown = (e: React.KeyboardEvent) => {
     const step = e.shiftKey ? 48 : 16;
     if (e.key === "ArrowLeft") {
       e.preventDefault();
+      if (mainCollapsed) { onExpandMain(); return; }
       if (collapsed) return;
       const next = width - step;
       if (next < collapseThreshold) onCollapse();
       else setWidth(Math.max(minLeft, next));
     } else if (e.key === "ArrowRight") {
       e.preventDefault();
-      const railWidth = 68;
-      const maxLeft = window.innerWidth - railWidth - minRight;
       if (collapsed) { onExpand(); return; }
-      setWidth(Math.min(maxLeft, width + step));
+      const maxLeft = getMaxLeft();
+      const next = width + step;
+      if (next > maxLeft) { onCollapseMain(); return; }
+      setWidth(Math.min(maxLeft, next));
     } else if (e.key === "Home") {
       e.preventDefault();
       if (!collapsed) setWidth(minLeft);
     } else if (e.key === "End") {
       e.preventDefault();
       if (collapsed) onExpand();
-      const railWidth = 68;
-      setWidth(window.innerWidth - railWidth - minRight);
+      setWidth(getMaxLeft());
     } else if (e.key === "Enter" || e.key === " " || e.key.toLowerCase() === "c") {
       e.preventDefault();
-      onToggleCollapsed();
+      if (mainCollapsed) onExpandMain();
+      else onToggleCollapsed();
     }
   };
+
+  const label = collapsed
+    ? "Chat collapsed — press Enter or drag right to expand"
+    : mainCollapsed
+    ? "Work area collapsed — press Enter or drag left to expand"
+    : "Resize chat and work area (Enter to collapse)";
 
   return (
     <div
       role="separator"
       aria-orientation="vertical"
-      aria-label={collapsed ? "Chat collapsed — press Enter or drag right to expand" : "Resize chat and work area (Enter to collapse)"}
+      aria-label={label}
       aria-valuenow={width}
       aria-valuemin={minLeft}
       tabIndex={0}
@@ -2331,13 +2399,27 @@ function ResizeDivider({
       onMouseDown={(e) => {
         draggingRef.current = true;
         startXRef.current = e.clientX;
-        startWRef.current = collapsed ? collapseThreshold : width;
+        startWRef.current = collapsed
+          ? collapseThreshold
+          : mainCollapsed
+          ? getMaxLeft()
+          : width;
         setActive(true);
         document.body.style.cursor = "col-resize";
         document.body.style.userSelect = "none";
       }}
-      onDoubleClick={() => { if (collapsed) onExpand(); else setWidth(480); }}
-      title={collapsed ? "Drag right or double-click to expand chat" : "Drag to resize · double-click to reset · Enter to collapse"}
+      onDoubleClick={() => {
+        if (collapsed) onExpand();
+        else if (mainCollapsed) onExpandMain();
+        else setWidth(480);
+      }}
+      title={
+        collapsed
+          ? "Drag right or double-click to expand chat"
+          : mainCollapsed
+          ? "Drag left or double-click to expand work area"
+          : "Drag to resize · double-click to reset · Enter to collapse"
+      }
       className={`group relative w-1.5 shrink-0 cursor-col-resize select-none focus:outline-none ${active ? "bg-[#7C3AED]/30" : "bg-slate-100 hover:bg-[#7C3AED]/20"} focus-visible:bg-[#7C3AED]/30`}
     >
       <div className={`absolute inset-y-0 left-1/2 -translate-x-1/2 w-px ${active ? "bg-[#7C3AED]" : "bg-slate-200 group-hover:bg-[#7C3AED]/60"}`} />
@@ -2345,6 +2427,10 @@ function ResizeDivider({
         {collapsed ? (
           <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
             <path d="M9 6l6 6-6 6"/>
+          </svg>
+        ) : mainCollapsed ? (
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+            <path d="M15 6l-6 6 6 6"/>
           </svg>
         ) : (
           <>
