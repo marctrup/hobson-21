@@ -1358,24 +1358,54 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
       ? 100
       : Math.round(((beatIdx + (chipVisible ? 0.9 : lineIdx / Math.max(1, BEATS[beatIdx]?.lines.length || 1))) / BEATS.length) * 100);
 
-  /* ----- breadcrumbs ----- */
-  const crumbs: { label: string; onClick?: () => void }[] = useMemo(() => {
-    if (view === "onboarding") return [];
-    const arr: { label: string; onClick?: () => void }[] = [
-      { label: "Portfolio", onClick: () => goPortfolio(false) },
+  /* ----- breadcrumbs (derived from nav state) ----- */
+  const crumbs: { label: string; onClick?: () => void; title?: string }[] = useMemo(() => {
+    if (view === "onboarding") return [{ label: "Meet Hobson" }];
+
+    // Admin trail
+    if (adminMode) {
+      const arr: { label: string; onClick?: () => void }[] = [
+        { label: "Admin", onClick: adminCharacter ? () => setAdminCharacter(null) : undefined },
+      ];
+      if (adminCharacter) {
+        const c = ADMIN_CHARACTERS.find((x) => x.id === adminCharacter);
+        if (c) arr.push({ label: c.name });
+      }
+      return arr;
+    }
+
+    // Build the asset-context trail (Portfolio › [Property] › [Unit])
+    const base: { label: string; onClick?: () => void; title?: string }[] = [
+      { label: "Portfolio", onClick: () => { setShowDocuments(false); setShowWhatIveDone(false); goPortfolio(false); } },
     ];
-    if (selectedProperty && !selectedProperty.standalone)
-      arr.push({
+    if (selectedProperty && !selectedProperty.standalone) {
+      base.push({
         label: selectedProperty.name,
-        onClick: () => goProperty(selectedProperty.id),
+        title: selectedProperty.name,
+        onClick: () => { setShowDocuments(false); setShowWhatIveDone(false); goProperty(selectedProperty.id); },
       });
+    }
     if (selectedUnit) {
       const label = selectedProperty?.standalone ? selectedProperty.name : selectedUnit.label;
-      arr.push({ label });
+      base.push({
+        label,
+        title: label,
+        onClick: (showDocuments || showWhatIveDone)
+          ? () => { setShowDocuments(false); setShowWhatIveDone(false); goUnit(selectedUnit.id, selectedProperty?.id); }
+          : undefined,
+      });
     }
-    return arr;
+
+    // Right-slot suffixes (Documents / What I've done) sit at the end of the current path
+    if (showDocuments) base.push({ label: "Documents" });
+    else if (showWhatIveDone) base.push({ label: "What I've done" });
+
+    // Last item is the current location -> not clickable
+    if (base.length > 0) base[base.length - 1] = { ...base[base.length - 1], onClick: undefined };
+    return base;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [view, selectedProperty, selectedUnit]);
+  }, [view, selectedProperty, selectedUnit, showDocuments, showWhatIveDone, adminMode, adminCharacter]);
+
 
   /* ============ Render ============ */
 
