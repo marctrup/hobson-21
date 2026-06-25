@@ -587,6 +587,7 @@ type ActionCard = {
   workflowRef?: string;          // e.g. "PA-001" — links back to the Magician's workflow
   manualNote?: string;           // user-supplied note when handled manually
   manuallyCompleted?: boolean;   // true if user pressed "Let me handle this" → Complete
+  reviewReady?: boolean;         // true once the Perform journey has reached its final approval gate
 };
 
 const INITIAL_ACTION_CARDS: ActionCard[] = [
@@ -607,6 +608,7 @@ const INITIAL_ACTION_CARDS: ActionCard[] = [
       "I'll email the engineer with building access notes, send each current tenant their access notice naming their unit, copy you on everything, and add the renewed certificate to the compliance calendar.",
     addedBy: { kind: "hobson" },
     workflowRef: "PA-001",
+    reviewReady: true,
   },
   {
     id: "act-stanley-f8-review",
@@ -702,6 +704,46 @@ const INITIAL_ACTION_CARDS: ActionCard[] = [
     approvalState: "pending",
     preparedDetail: "",
     addedBy: { kind: "user", name: "Sarah Chen", initials: "SC" },
+  },
+  {
+    id: "act-stanley-f5-break",
+    propertyId: "stanley",
+    unitId: "stanley-f5",
+    unitLabel: "Flat 5",
+    propertyName: "Stanley House",
+    anchorLevel: "unit",
+    triggerType: "expiry",
+    title: "Notice deadline approaching — Flat 5, Stanley House",
+    whyItMatters: "The lease has a tenant break clause exercisable on 24 December 2026. Latest date to serve a valid landlord counter-notice is 24 September 2026 — about 90 days away. If you want to act, the window is still open.",
+    confidence: "confirmed",
+    hobsonPrepared: "I've identified the clause, the recipient details, and a compliant service method. Nothing has been served — only prepared.",
+    proposedAction: "Review & approve",
+    urgency: "week",
+    approvalState: "pending",
+    preparedDetail:
+      "I'll prepare the notice on your standard template, addressed to the tenant at the lease service address, served by recorded delivery with a deemed-receipt date logged against the unit record.",
+    addedBy: { kind: "hobson" },
+    workflowRef: "PA-002",
+  },
+  {
+    id: "act-nugent-shop-effect",
+    propertyId: "nugent",
+    unitId: "nugent-shop",
+    unitLabel: "Shop",
+    propertyName: "5 Nugent Terrace",
+    anchorLevel: "unit",
+    triggerType: "expiry",
+    title: "Served notice about to take effect — Shop, 5 Nugent Terrace",
+    whyItMatters: "The Section 25 notice served on M&S on 14 March 2026 takes effect on 28 September 2026 — 28 days away. Tenancy ends on that date unless renewal terms are agreed first.",
+    confidence: "confirmed",
+    hobsonPrepared: "Nothing needs serving — this is informational. I can prepare the follow-on work (end-of-tenancy checklist or renewal pack) if you want.",
+    proposedAction: "Review & approve",
+    urgency: "now",
+    approvalState: "pending",
+    preparedDetail:
+      "I'll assemble the end-of-tenancy checklist (keys, meter readings, dilapidations schedule, final account) or a renewal pack with revised heads of terms — your call inside the flow.",
+    addedBy: { kind: "hobson" },
+    workflowRef: "PA-003",
   },
 ];
 
@@ -1414,16 +1456,19 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
     setExpandedCardId(null);
   };
   const resetToMap = () => {
-    // Single, predictable reset — always lands on the map. No panel-history walk.
-    if (performingCardId) {
-      setActionCards((arr) => arr.map((x) => x.id === performingCardId ? { ...x, approvalState: "pending" } : x));
-    }
+    // Single, predictable reset — always lands on the map.
+    // NOTE: do NOT clear approvalState — pausing leaves the journey resumable ("Resume" on card).
     setPerformingCardId(null);
     setReviewingCardId(null);
     setShowDocuments(false);
     setShowWhatIveDone(false);
     setChatExpanded(false);
   };
+
+  const markReviewReady = (id: string) => {
+    setActionCards((arr) => arr.map((x) => x.id === id ? { ...x, reviewReady: true } : x));
+  };
+
 
   const cancelPerform = resetToMap;
   const cancelReview = resetToMap;
@@ -2685,8 +2730,10 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
               mode={mode}
               onCancel={mode === "perform" ? cancelPerform : cancelReview}
               onComplete={completePerform}
+              onReachedFinalGate={() => markReviewReady(card.id)}
               reducedMotion={reduced}
             />
+
           );
         })()}
         {adminMode && adminCharacter && (() => {
@@ -5166,7 +5213,12 @@ function PropertyActions({
   );
 }
 
-const PERFORMABLE_CARD_IDS = new Set<string>(["act-stanley-f8-review", "act-stanley-fra"]);
+const PERFORMABLE_CARD_IDS = new Set<string>([
+  "act-stanley-f8-review",
+  "act-stanley-fra",
+  "act-stanley-f5-break",
+  "act-nugent-shop-effect",
+]);
 
 /* ---------------- Perform workspace (PA-004) ---------------- */
 
@@ -5608,6 +5660,127 @@ function buildPA001Beats(): PerformBeat[] {
   ];
 }
 
+/* ─── PA-002 — Notice service window (prepare-and-serve) ─── */
+const PA002_STEPS: { key: string; label: string }[] = [
+  { key: "identify", label: "Identify" },
+  { key: "prepare",  label: "Prepare" },
+  { key: "serve",    label: "Serve" },
+  { key: "record",   label: "Record" },
+];
+
+function buildPA002Beats(): PerformBeat[] {
+  return [
+    {
+      id: "n2-1",
+      stepKey: "identify",
+      text: "A right could be lost. The tenant break in the Flat 5 lease is exercisable on 24 December 2026, but a valid landlord counter-notice must be served by 24 September 2026 — about 90 days from today. Want me to prepare it?",
+      gate: {
+        label: "How would you like to proceed?",
+        options: [
+          { label: "Prepare the notice", kind: "approve", nextBeatIdx: 1 },
+          { label: "Remind me in 14 days", kind: "defer", nextBeatIdx: "exit" },
+          { label: "Dismiss", kind: "cancel", nextBeatIdx: "exit" },
+        ],
+      },
+    },
+    {
+      id: "n2-2",
+      stepKey: "prepare",
+      text: "Drafted. Recipient: the tenant at the contractual service address on the lease. Method: recorded delivery. Deemed receipt: 2 working days after posting. Effective date: 24 December 2026.",
+      detail: (
+        <PreparedPreview
+          title="Landlord counter-notice — Flat 5, Stanley House"
+          body={`To: [Tenant], Flat 5, Stanley House, 1115 Finchley Road, NW11\nMethod: Recorded delivery to lease service address\nDeemed receipt: +2 working days\n\nRe: Tenant break clause — Lease dated 24/12/2016\n\nWe acknowledge the break right exercisable on 24/12/2026. This counter-notice is served pursuant to clause 7.3 to preserve the landlord's position on outstanding sums, dilapidations and reinstatement obligations on the break date.\n\nSigned, [You]`}
+        />
+      ),
+      flag: "Service method needs your call: the lease names recorded delivery, but the tenant's solicitor has previously asked for service by email + post. I'll default to the lease method and copy the solicitor unless you say otherwise.",
+      gate: {
+        label: "Serve the notice now, or adjust first?",
+        options: [
+          { label: "Serve notice", kind: "approve", nextBeatIdx: 2 },
+          { label: "Edit method / recipient", kind: "modify", nextBeatIdx: 1 },
+          { label: "Cancel", kind: "cancel", nextBeatIdx: "exit" },
+        ],
+      },
+    },
+    {
+      id: "n2-3",
+      stepKey: "serve",
+      text: "Served. Recorded delivery slip logged; solicitor copied; deemed-receipt date 26 September 2026 calendared against the unit record.",
+      gate: {
+        label: "Record and finish",
+        options: [{ label: "Record & close", kind: "continue", nextBeatIdx: "complete" }],
+      },
+    },
+  ];
+}
+
+/* ─── PA-003 — Served notice taking effect (consequence + optional follow-on) ─── */
+const PA003_STEPS: { key: string; label: string }[] = [
+  { key: "inform",   label: "Inform" },
+  { key: "choose",   label: "Next step" },
+  { key: "prepare",  label: "Prepare" },
+  { key: "record",   label: "Record" },
+];
+
+function buildPA003Beats(): PerformBeat[] {
+  return [
+    {
+      id: "n3-1",
+      stepKey: "inform",
+      text: "Something is about to happen. The Section 25 notice served on M&S (Shop, 5 Nugent Terrace) on 14 March 2026 takes effect on 28 September 2026 — 28 days away. On that date the contractual tenancy ends; if no renewal is agreed the unit returns to you for re-letting.",
+      gate: {
+        label: "Acknowledge — no approval needed to be informed",
+        options: [
+          { label: "Got it — what's next?", kind: "continue", nextBeatIdx: 1 },
+        ],
+      },
+    },
+    {
+      id: "n3-2",
+      stepKey: "choose",
+      text: "Two follow-on paths make sense. I can prepare either — your call.",
+      gate: {
+        label: "Choose a follow-on (or skip)",
+        options: [
+          { label: "Prepare end-of-tenancy checklist", kind: "approve", nextBeatIdx: 2 },
+          { label: "Prepare renewal pack", kind: "approve", nextBeatIdx: 2 },
+          { label: "Not now", kind: "defer", nextBeatIdx: "exit" },
+        ],
+      },
+    },
+    {
+      id: "n3-3",
+      stepKey: "prepare",
+      text: "Prepared. Bundle ready for your review: keys & access, final meter readings, dilapidations schedule, final-account reconciliation, deposit return route, re-letting brief. (Renewal pack alternative includes revised heads of terms and a comparables note — switch any time.)",
+      detail: (
+        <PreparedPreview
+          title="End-of-tenancy checklist — Shop, 5 Nugent Terrace"
+          body={`1. Keys & access — recover sets, decommission codes\n2. Meter readings — gas/elec/water on effective date\n3. Dilapidations — Schedule of Condition v final inspection\n4. Final account — service charge, insurance, rent apportionment\n5. Deposit — assess deductions, return route\n6. Re-letting — instruct agent, marketing brief, photographs`}
+        />
+      ),
+      gate: {
+        label: "Confirm and record",
+        options: [
+          { label: "Confirm & record", kind: "approve", nextBeatIdx: 3 },
+          { label: "Edit", kind: "modify", nextBeatIdx: 2 },
+        ],
+      },
+    },
+    {
+      id: "n3-4",
+      stepKey: "record",
+      text: "Recorded against the unit: notice effective date noted, follow-on bundle prepared, owner informed. I'll re-surface this 7 days before effective date.",
+      gate: {
+        label: "Finish",
+        options: [{ label: "Close", kind: "continue", nextBeatIdx: "complete" }],
+      },
+    },
+  ];
+}
+
+
+
 function buildPerformConfig(card: ActionCard): {
   beats: PerformBeat[];
   steps: { key: string; label: string }[];
@@ -5622,6 +5795,24 @@ function buildPerformConfig(card: ActionCard): {
       headerKicker: "Performing action",
       headerTitle: `Fire alarm certification · ${card.propertyName}`,
       headerSub: "Building-wide · expires 12 July 2026 (≈18 days)",
+    };
+  }
+  if (card.id === "act-stanley-f5-break") {
+    return {
+      beats: buildPA002Beats(),
+      steps: PA002_STEPS,
+      headerKicker: "Performing action",
+      headerTitle: `Notice service · ${card.unitLabel}, ${card.propertyName}`,
+      headerSub: "Latest service date: 24 September 2026 (≈90 days)",
+    };
+  }
+  if (card.id === "act-nugent-shop-effect") {
+    return {
+      beats: buildPA003Beats(),
+      steps: PA003_STEPS,
+      headerKicker: "Performing action",
+      headerTitle: `Notice takes effect · ${card.unitLabel}, ${card.propertyName}`,
+      headerSub: "Effective date: 28 September 2026 (≈28 days)",
     };
   }
   return {
@@ -5641,6 +5832,14 @@ function finalGateBeatIdx(card: ActionCard, beats: PerformBeat[]): number {
     const idx = beats.findIndex((b) => b.id === "fa5");
     return idx >= 0 ? idx : 0;
   }
+  if (card.id === "act-stanley-f5-break") {
+    const idx = beats.findIndex((b) => b.id === "n2-2");
+    return idx >= 0 ? idx : 0;
+  }
+  if (card.id === "act-nugent-shop-effect") {
+    const idx = beats.findIndex((b) => b.id === "n3-3");
+    return idx >= 0 ? idx : 0;
+  }
   // Default: the last beat with a gate.
   for (let i = beats.length - 1; i >= 0; i--) {
     if (beats[i].gate) return i;
@@ -5653,6 +5852,12 @@ function reviewRecapText(card: ActionCard): string {
     const n = STANLEY_FIRE_ALARM_TENANTS.filter((t) => t.email).length;
     return `I've done the groundwork on the Stanley House fire alarm — confirmed it's due, found your contractor, and drafted access notices for all ${n} current tenants. It's ready to send — just needs your approval.`;
   }
+  if (card.id === "act-stanley-f5-break") {
+    return `I've drafted the landlord counter-notice for Flat 5 — recipient, service method and deemed-receipt date all set per the lease. It's ready to serve — just needs your sign-off.`;
+  }
+  if (card.id === "act-nugent-shop-effect") {
+    return `I've put the follow-on bundle together for the Shop at 5 Nugent Terrace, ahead of the notice taking effect. It's ready — just needs you to confirm and record.`;
+  }
   return "Here's what I've put together so far. Take a look at the final approval below — that's all that's left.";
 }
 
@@ -5662,12 +5867,14 @@ function PerformWorkspace({
   mode = "perform",
   onCancel,
   onComplete,
+  onReachedFinalGate,
   reducedMotion,
 }: {
   card: ActionCard;
   mode?: "perform" | "review";
   onCancel: () => void;
   onComplete: (summary: string) => void;
+  onReachedFinalGate?: () => void;
   reducedMotion: boolean;
 }) {
   const { beats, steps, headerTitle, headerSub } = useMemo(() => buildPerformConfig(card), [card]);
@@ -5752,6 +5959,18 @@ function PerformWorkspace({
     const el = scrollerRef.current;
     if (el) el.scrollTop = el.scrollHeight;
   }, [revealed, streamingText]);
+
+  // Fire reviewReady once when the journey has revealed (or passed) its final approval gate.
+  const finalIdx = useMemo(() => finalGateBeatIdx(card, beats), [card, beats]);
+  const reachedFinalRef = useRef(false);
+  useEffect(() => {
+    if (!reachedFinalRef.current && revealed >= finalIdx) {
+      reachedFinalRef.current = true;
+      onReachedFinalGate?.();
+    }
+  }, [revealed, finalIdx, onReachedFinalGate]);
+
+
 
   const currentBeat = beats[revealed];
   const previousBeats = beats.slice(0, revealed);
@@ -5864,12 +6083,52 @@ function PerformWorkspace({
           previousBeats.map((b) => <BeatBubble key={b.id} beat={b} done />)
         )}
         {currentBeat && (
-          <BeatBubble
-            beat={currentBeat}
-            streamingText={streamingActive ? streamingText : currentBeat.text}
-            streaming={streamingActive}
-            done={false}
-          />
+          <div className="space-y-2.5">
+            <BeatBubble
+              beat={currentBeat}
+              streamingText={streamingActive ? streamingText : currentBeat.text}
+              streaming={streamingActive}
+              done={false}
+            />
+            {/* Inline decisions — sit directly under the current step content */}
+            {!streamingActive && !isComplete && (
+              <div className="pl-[44px]">
+                {currentBeat.gate ? (
+                  <div className="inline-block max-w-[640px] rounded-2xl border border-[#DDD6FE] bg-[#F5F3FF] px-3 py-2.5 space-y-2">
+                    <div className="text-[11px] uppercase tracking-wide text-[#5B21B6] font-semibold">{currentBeat.gate.label}</div>
+                    <div className="flex flex-wrap gap-1.5">
+                      {currentBeat.gate.options.map((opt, idx) => {
+                        const primary = opt.kind === "approve" || opt.kind === "continue";
+                        const cls = primary
+                          ? "bg-[#7C3AED] text-white hover:bg-[#6D28D9] focus:ring-[#7C3AED]"
+                          : opt.kind === "cancel"
+                          ? "text-slate-500 hover:text-slate-700 hover:bg-white border border-transparent focus:ring-slate-300"
+                          : "text-slate-700 bg-white border border-slate-200 hover:bg-slate-50 focus:ring-slate-300";
+                        return (
+                          <button
+                            key={opt.label + idx}
+                            autoFocus={idx === 0}
+                            onClick={() => advance(opt.nextBeatIdx, opt.label, opt.kind)}
+                            className={`text-xs px-3 py-1.5 rounded-full transition focus:outline-none focus:ring-2 ${cls}`}
+                          >
+                            {opt.label}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                ) : (
+                  <button
+                    autoFocus
+                    onClick={() => advance(undefined, "continue", "continue")}
+                    className="text-xs px-3 py-1.5 rounded-full bg-[#7C3AED] text-white hover:bg-[#6D28D9] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]"
+                  >
+                    Continue
+                  </button>
+                )}
+              </div>
+            )}
+          </div>
         )}
         {isComplete && (
           <div className="rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-2 text-[12px] text-emerald-900">
@@ -5878,46 +6137,6 @@ function PerformWorkspace({
         )}
       </div>
 
-      {/* Gate */}
-      {currentBeat && !streamingActive && !isComplete && (
-        <footer className="border-t border-slate-200 px-5 py-3 bg-white">
-          {currentBeat.gate ? (
-            <div className="space-y-2">
-              <div className="text-[11px] uppercase tracking-wide text-slate-500 font-semibold">{currentBeat.gate.label}</div>
-              <div className="flex flex-wrap gap-1.5">
-                {currentBeat.gate.options.map((opt, idx) => {
-                  const primary = opt.kind === "approve" || opt.kind === "continue";
-                  const cls = primary
-                    ? "bg-[#7C3AED] text-white hover:bg-[#6D28D9] focus:ring-[#7C3AED]"
-                    : opt.kind === "cancel"
-                    ? "text-slate-500 hover:text-slate-700 hover:bg-slate-50 border border-transparent focus:ring-slate-300"
-                    : "text-slate-700 border border-slate-200 hover:bg-slate-50 focus:ring-slate-300";
-                  return (
-                    <button
-                      key={opt.label + idx}
-                      autoFocus={idx === 0}
-                      onClick={() => advance(opt.nextBeatIdx, opt.label, opt.kind)}
-                      className={`text-xs px-3 py-1.5 rounded-full transition focus:outline-none focus:ring-2 ${cls}`}
-                    >
-                      {opt.label}
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-          ) : (
-            <div className="flex justify-end">
-              <button
-                autoFocus
-                onClick={() => advance(undefined, "continue", "continue")}
-                className="text-xs px-3 py-1.5 rounded-full bg-[#7C3AED] text-white hover:bg-[#6D28D9] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]"
-              >
-                Continue
-              </button>
-            </div>
-          )}
-        </footer>
-      )}
       {isComplete && (
         <footer className="border-t border-slate-200 px-5 py-3 bg-white flex justify-end">
           <button
@@ -6012,14 +6231,15 @@ function ActionCardItem({
     : state === "in_progress"
     ? "Resume the automated walkthrough"
     : "Run the automated walkthrough";
+  // Review & approve is DISABLED until the Perform journey has reached its final approval gate
+  // (or the card is complete). You can't review work that isn't ready.
+  const reviewActuallyDisabled = !isCompleted && !card.reviewReady;
   const reviewTip = isCompleted
     ? "Open the recorded outcome"
-    : state === "pending"
-    ? "Nothing prepared yet — Perform this first or handle it yourself"
+    : reviewActuallyDisabled
+    ? "Not ready to review — Perform the workflow first; this lights up at the final approval gate"
     : "Jump to the final approval gate";
-  const reviewDisabled = !readOnly && state === "pending" && !card.hobsonPrepared;
-  // Simpler honest gate: disable Review when nothing has started AND there's no prepared detail
-  const reviewActuallyDisabled = state === "pending" && !card.preparedDetail;
+
 
   return (
     <article
