@@ -1441,6 +1441,28 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
     setPerformingCardId(null);
     setReviewingCardId(null);
   };
+
+  const manualHandleCard = (id: string, note: string) => {
+    const card = actionCards.find((x) => x.id === id);
+    setActionCards((arr) =>
+      arr.map((x) =>
+        x.id === id
+          ? { ...x, approvalState: "approved", manuallyCompleted: true, manualNote: note }
+          : x,
+      ),
+    );
+    setExpandedCardId(null);
+    if (card) {
+      setActionToast(`Recorded — you handled "${card.title}".`);
+      window.setTimeout(() => setActionToast(null), 3000);
+    }
+  };
+
+  const openWorkflowFromCard = (_ref: string) => {
+    // Open the Magician's workshop where this workflow lives.
+    enterAdmin();
+    setAdminCharacter("magician");
+  };
   const chatBodyRef = useRef<HTMLDivElement | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
   const searchRef = useRef<HTMLInputElement | null>(null);
