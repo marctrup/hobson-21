@@ -1359,7 +1359,7 @@ const Prototype: React.FC = () => {
         )}
 
         {/* Body */}
-        <div ref={chatBodyRef} className={`flex-1 overflow-y-auto px-5 py-4 space-y-4 ${isExpanded ? "w-full" : ""}`}>
+        <div ref={chatBodyRef} className={`flex-1 overflow-y-auto px-5 py-5 space-y-6 ${isExpanded ? "w-full" : ""}`}>
           <div className={isExpanded ? "max-w-[820px] mx-auto" : ""}>
 
 
@@ -1388,7 +1388,7 @@ const Prototype: React.FC = () => {
                   ? [...unitOwnCardsRaw].sort((a, b) => (a.id === carriedCardId ? -1 : b.id === carriedCardId ? 1 : 0))
                   : unitOwnCardsRaw;
                 return (
-                  <section aria-label={`Actions for ${selectedUnit.label}`} className="space-y-2">
+                  <section aria-label={`Actions for ${selectedUnit.label}`} className="space-y-3">
                     <div className="text-[11px] uppercase tracking-wide text-slate-500 font-semibold">
                       On this unit's desk · {unitOwnCards.length}
                     </div>
@@ -1768,7 +1768,7 @@ function HobsonBubble({ text, owl, streaming, rich, onAskFollowUp }: { text: str
     return (
       <div className="flex items-start gap-2">
         <OwlAvatar state={owl} />
-        <div className="max-w-[560px] w-full bg-white border border-slate-200 text-[#1F2330] text-sm leading-relaxed px-4 py-3 rounded-2xl rounded-bl-md shadow-sm space-y-3">
+        <div className="max-w-[560px] w-full bg-white border border-slate-200 text-[#1F2330] text-sm leading-relaxed px-4 py-4 rounded-2xl rounded-bl-md shadow-sm space-y-4">
           <div className="flex items-center justify-between">
             <div className="text-[12px]">
               <span className="font-semibold text-slate-900">Hobson</span>
@@ -1848,7 +1848,8 @@ function RentFlat2Answer({ onAskFollowUp, bodyText }: { onAskFollowUp?: (q: stri
     try { await navigator.clipboard.writeText(text); showToast("Copied"); } catch { showToast("Copy failed"); }
   };
   return (
-    <div className="space-y-3">
+    <div className="space-y-4">
+
       <div className="overflow-hidden rounded-lg border border-slate-200">
         <table className="w-full text-[13px]">
           <thead className="bg-slate-50 text-slate-600">
@@ -1869,14 +1870,15 @@ function RentFlat2Answer({ onAskFollowUp, bodyText }: { onAskFollowUp?: (q: stri
       </div>
       <p className="text-slate-700">{bodyText}</p>
       <div>
-        <div className="text-[11px] uppercase tracking-wide text-slate-400 font-medium mb-1">Sources</div>
-        <ul className="list-disc pl-5 space-y-0.5 text-[13px] text-slate-700">
+        <div className="text-[11px] uppercase tracking-wide text-slate-400 font-medium mb-2">Sources</div>
+        <ul className="list-disc pl-5 space-y-1 text-[13px] text-slate-700">
           {sources.map((s) => <li key={s}>{s}</li>)}
         </ul>
       </div>
       <div>
-        <div className="text-[11px] uppercase tracking-wide text-slate-400 font-medium mb-1">Related questions</div>
-        <ul className="space-y-1">
+        <div className="text-[11px] uppercase tracking-wide text-slate-400 font-medium mb-2">Related questions</div>
+        <ul className="space-y-1.5">
+
           {related.map((q) => (
             <li key={q}>
               <button
@@ -1890,11 +1892,12 @@ function RentFlat2Answer({ onAskFollowUp, bodyText }: { onAskFollowUp?: (q: stri
         </ul>
       </div>
       <div>
-        <div className="flex items-center gap-2 mb-1">
+        <div className="flex items-center gap-2 mb-2">
           <div className="text-[11px] uppercase tracking-wide text-slate-400 font-medium">Related documents</div>
           <span className="text-[9px] uppercase font-semibold px-1.5 py-0.5 rounded bg-amber-100 text-amber-800 tracking-wide">Beta</span>
         </div>
-        <ul className="space-y-1">
+        <ul className="space-y-1.5">
+
           {docs.map((d) => (
             <li key={d.name}>
               <button
@@ -3309,7 +3312,8 @@ function PortfolioBriefing({
 
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-5">
+
       <div className="flex items-center justify-between">
         <div className="text-[11px] uppercase tracking-wide text-slate-500 font-semibold">On your desk</div>
         <div className="flex items-center gap-2">
@@ -3331,7 +3335,7 @@ function PortfolioBriefing({
       </div>
 
       {groups.map((g) => (
-        <div key={g.key} className="space-y-2">
+        <div key={g.key} className="space-y-3">
           <div className="sticky top-0 z-[1] bg-white/95 backdrop-blur py-1 text-[10px] uppercase tracking-wide font-semibold text-slate-500 border-b border-slate-100">
             {URGENCY_LABEL[g.key]} · {g.cards.length}
           </div>
@@ -3408,12 +3412,13 @@ function PropertyActions({
     .map((u) => ({ key: u, cards: sortCarried(cards.filter((c) => c.urgency === u)) }))
     .filter((g) => g.cards.length > 0);
   return (
-    <section aria-label={`Actions for ${propertyName}`} className="space-y-2">
+    <section aria-label={`Actions for ${propertyName}`} className="space-y-4">
       <div className="flex items-center justify-between">
         <div className="text-[11px] uppercase tracking-wide text-slate-500 font-semibold">On this building's desk · {cards.length}</div>
       </div>
       {groups.map((g) => (
-        <div key={g.key} className="space-y-1.5">
+        <div key={g.key} className="space-y-2.5">
+
           <div className="text-[10px] uppercase tracking-wide font-semibold text-slate-400">
             {URGENCY_LABEL[g.key]} · {g.cards.length}
           </div>
@@ -4100,7 +4105,7 @@ function PerformWorkspace({
       </nav>
 
       {/* Beats scroller */}
-      <div ref={scrollerRef} className="flex-1 overflow-auto px-5 py-4 space-y-3 bg-white">
+      <div ref={scrollerRef} className="flex-1 overflow-auto px-5 py-5 space-y-5 bg-white">
         {mode === "review" && !isComplete && (
           <div className="flex items-start gap-2">
             <OwlAvatar state={recapStreaming ? "talking" : "default"} />

@@ -472,7 +472,7 @@ function AcdGroup({
   const previous = sorted.filter((d) => d.id !== current.id);
 
   return (
-    <div className="space-y-1.5">
+    <div className="space-y-2">
       <DocRow doc={current} onView={onView} onDownload={onDownload} />
       {previous.length > 0 && includeSuperseded && (
         <div className="pl-3">
@@ -562,7 +562,8 @@ function AssetSection({
       </button>
 
       {open && (
-        <div className="mt-2 space-y-3 pl-5 border-l border-slate-100">
+        <div className="mt-3 space-y-4 pl-5 border-l border-slate-100">
+
           {chains.length > 0 && (
             <div className="space-y-2">
               <div className="text-[10px] font-semibold uppercase tracking-wide text-slate-500">Tenancy documents</div>
