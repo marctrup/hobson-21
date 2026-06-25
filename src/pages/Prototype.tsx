@@ -1208,7 +1208,8 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
   const chatExpanded = false;
   const setChatExpanded = (_: boolean | ((v: boolean) => boolean)) => {};
   // Stateless demo: divider and collapse states always start at their seeded defaults on every mount/reload.
-  const [chatWidth, setChatWidth] = useState<number>(480);
+  const CHAT_DEFAULT_WIDTH = 480;
+  const [chatWidth, setChatWidth] = useState<number>(CHAT_DEFAULT_WIDTH);
   const [chatCollapsed, setChatCollapsed] = useState<boolean>(false);
   const [chatDropOver, setChatDropOver] = useState(false);
   const CHAT_MIN_WIDTH = 240;
@@ -1217,7 +1218,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
   const MAIN_MIN_WIDTH = 420;
   const MAIN_COLLAPSE_THRESHOLD = 200;
   const MAIN_COLLAPSED_WIDTH = 44;
-  const lastExpandedWidthRef = useRef<number>(480);
+  const lastExpandedWidthRef = useRef<number>(CHAT_DEFAULT_WIDTH);
   const [mainCollapsed, setMainCollapsed] = useState<boolean>(false);
   const collapseChat = () => {
     if (!chatCollapsed) lastExpandedWidthRef.current = chatWidth;
@@ -1226,7 +1227,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
   };
   const expandChat = () => {
     setChatCollapsed(false);
-    setChatWidth(Math.max(CHAT_MIN_WIDTH, lastExpandedWidthRef.current || 480));
+    setChatWidth(Math.max(CHAT_MIN_WIDTH, lastExpandedWidthRef.current || CHAT_DEFAULT_WIDTH));
   };
   const toggleChatCollapsed = () => (chatCollapsed ? expandChat() : collapseChat());
   const collapseMain = () => {
@@ -1235,6 +1236,24 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
   };
   const expandMain = () => setMainCollapsed(false);
   const toggleMainCollapsed = () => (mainCollapsed ? expandMain() : collapseMain());
+  const isLayoutDefault = !chatCollapsed && !mainCollapsed && chatWidth === CHAT_DEFAULT_WIDTH;
+  const resetLayout = () => {
+    setChatCollapsed(false);
+    setMainCollapsed(false);
+    setChatWidth(CHAT_DEFAULT_WIDTH);
+    lastExpandedWidthRef.current = CHAT_DEFAULT_WIDTH;
+  };
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if ((e.altKey || e.metaKey) && e.key === "0") {
+        e.preventDefault();
+        resetLayout();
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const [adminMode, setAdminMode] = useState(false);
   const [adminCharacter, setAdminCharacter] = useState<AdminCharacter | null>(null);
 
@@ -2586,7 +2605,23 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
           mainCollapseThreshold={MAIN_COLLAPSE_THRESHOLD}
           onCollapseMain={collapseMain}
           onExpandMain={expandMain}
+          onReset={resetLayout}
+          isDefault={isLayoutDefault}
         />
+      )}
+      {!isExpanded && !isLayoutDefault && (
+        <button
+          type="button"
+          onClick={resetLayout}
+          title="Reset layout (Alt+0)"
+          aria-label="Reset layout to default"
+          className="fixed bottom-4 right-4 z-[700] inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white border border-[#7C3AED]/30 text-[#7C3AED] text-xs font-medium shadow-md hover:bg-[#F5F3FF] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED] transition-opacity duration-200 motion-reduce:transition-none"
+        >
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+            <path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/>
+          </svg>
+          Reset layout
+        </button>
       )}
 
       {/* Map */}
@@ -2787,6 +2822,8 @@ function ResizeDivider({
   mainCollapseThreshold,
   onCollapseMain,
   onExpandMain,
+  onReset,
+  isDefault,
 }: {
   width: number;
   setWidth: (n: number) => void;
@@ -2801,6 +2838,8 @@ function ResizeDivider({
   mainCollapseThreshold: number;
   onCollapseMain: () => void;
   onExpandMain: () => void;
+  onReset: () => void;
+  isDefault: boolean;
 }) {
   const draggingRef = useRef(false);
   const startXRef = useRef(0);
@@ -2905,9 +2944,7 @@ function ResizeDivider({
         document.body.style.userSelect = "none";
       }}
       onDoubleClick={() => {
-        if (collapsed) onExpand();
-        else if (mainCollapsed) onExpandMain();
-        else setWidth(480);
+        onReset();
       }}
       title={
         collapsed
@@ -2936,6 +2973,21 @@ function ResizeDivider({
           </>
         )}
       </div>
+      {!isDefault && (
+        <button
+          type="button"
+          onClick={(e) => { e.stopPropagation(); onReset(); }}
+          onMouseDown={(e) => e.stopPropagation()}
+          onDoubleClick={(e) => e.stopPropagation()}
+          aria-label="Reset layout to default"
+          title="Reset layout (double-click divider or Alt+0)"
+          className="absolute left-1/2 -translate-x-1/2 top-[calc(50%+28px)] opacity-0 group-hover:opacity-100 focus-visible:opacity-100 focus:outline-none transition-opacity duration-200 motion-reduce:transition-none w-6 h-6 rounded-full bg-white border border-[#7C3AED]/40 text-[#7C3AED] hover:bg-[#F5F3FF] shadow-sm flex items-center justify-center focus-visible:ring-2 focus-visible:ring-[#7C3AED]"
+        >
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+            <path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/>
+          </svg>
+        </button>
+      )}
     </div>
   );
 }
