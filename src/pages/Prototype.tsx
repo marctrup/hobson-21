@@ -6568,16 +6568,6 @@ function MagicianWorkArea({ character, workflows, onCreate, onAdjust, onView }: 
             <div className="text-[11px] text-slate-500">{workflows.length} workflow{workflows.length === 1 ? "" : "s"} you've built together</div>
           </div>
         </div>
-        <div className="flex items-center gap-2">
-          <button
-            type="button"
-            onClick={onCreate}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#7C3AED] text-white text-[12px] font-semibold hover:bg-[#6D28D9] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40"
-          >
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M12 5v14M5 12h14"/></svg>
-            New workflow
-          </button>
-        </div>
       </header>
 
       {/* Filters */}
@@ -7010,16 +7000,6 @@ function BrokerWorkArea({ character, contacts, onAdd }: {
             }`}
           >
             + Flagged
-          </button>
-        </div>
-        <div className="ml-auto">
-          <button
-            type="button"
-            onClick={onAdd}
-            className="inline-flex items-center gap-1.5 text-[12px] font-semibold px-3 py-1.5 rounded-md bg-[#7C3AED] text-white hover:bg-[#6D28D9] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40"
-          >
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M12 5v14M5 12h14"/></svg>
-            Add a contact
           </button>
         </div>
       </div>
