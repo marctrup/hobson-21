@@ -2822,6 +2822,8 @@ function ResizeDivider({
   mainCollapseThreshold,
   onCollapseMain,
   onExpandMain,
+  onReset,
+  isDefault,
 }: {
   width: number;
   setWidth: (n: number) => void;
@@ -2836,6 +2838,8 @@ function ResizeDivider({
   mainCollapseThreshold: number;
   onCollapseMain: () => void;
   onExpandMain: () => void;
+  onReset: () => void;
+  isDefault: boolean;
 }) {
   const draggingRef = useRef(false);
   const startXRef = useRef(0);
