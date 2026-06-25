@@ -1939,16 +1939,20 @@ function UserBubble({ text }: { text: string }) {
   );
 }
 
-function TypingBubble({ owl }: { owl: OwlState }) {
+function TypingBubble({ owl, showAvatar = true, groupedTop = false }: { owl: OwlState; showAvatar?: boolean; groupedTop?: boolean }) {
+  const AvatarSlot = showAvatar
+    ? <OwlAvatar state={owl} />
+    : <div aria-hidden className="w-10 h-10 shrink-0" />;
   return (
-    <div className="flex items-end gap-2">
-      <OwlAvatar state={owl} />
+    <div className={`flex items-end gap-2 ${groupedTop ? "mt-2" : ""}`}>
+      {AvatarSlot}
       <div className="bg-[#EDE9FE] px-4 py-3 rounded-2xl rounded-bl-md flex items-center gap-1">
         <Dot delay={0} /><Dot delay={150} /><Dot delay={300} />
       </div>
     </div>
   );
 }
+
 
 function Dot({ delay }: { delay: number }) {
   return (
