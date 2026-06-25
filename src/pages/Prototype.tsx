@@ -901,7 +901,13 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
   const CHAT_COLLAPSE_THRESHOLD = 200;
   const CHAT_COLLAPSED_WIDTH = 44;
   const MAIN_MIN_WIDTH = 420;
+  const MAIN_COLLAPSE_THRESHOLD = 200;
+  const MAIN_COLLAPSED_WIDTH = 44;
   const lastExpandedWidthRef = useRef<number>(chatWidth);
+  const [mainCollapsed, setMainCollapsed] = useState<boolean>(() => {
+    if (typeof window === "undefined") return false;
+    return window.sessionStorage.getItem("hobson:mainCollapsed") === "1";
+  });
   useEffect(() => {
     if (typeof window === "undefined") return;
     window.sessionStorage.setItem("hobson:chatWidth", String(chatWidth));
@@ -910,8 +916,13 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
     if (typeof window === "undefined") return;
     window.sessionStorage.setItem("hobson:chatCollapsed", chatCollapsed ? "1" : "0");
   }, [chatCollapsed]);
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    window.sessionStorage.setItem("hobson:mainCollapsed", mainCollapsed ? "1" : "0");
+  }, [mainCollapsed]);
   const collapseChat = () => {
     if (!chatCollapsed) lastExpandedWidthRef.current = chatWidth;
+    setMainCollapsed(false);
     setChatCollapsed(true);
   };
   const expandChat = () => {
@@ -919,6 +930,12 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
     setChatWidth(Math.max(CHAT_MIN_WIDTH, lastExpandedWidthRef.current || 480));
   };
   const toggleChatCollapsed = () => (chatCollapsed ? expandChat() : collapseChat());
+  const collapseMain = () => {
+    setChatCollapsed(false);
+    setMainCollapsed(true);
+  };
+  const expandMain = () => setMainCollapsed(false);
+  const toggleMainCollapsed = () => (mainCollapsed ? expandMain() : collapseMain());
   const [adminMode, setAdminMode] = useState(false);
   const [adminCharacter, setAdminCharacter] = useState<AdminCharacter | null>(null);
 
