@@ -5654,6 +5654,127 @@ function buildPA001Beats(): PerformBeat[] {
   ];
 }
 
+/* ─── PA-002 — Notice service window (prepare-and-serve) ─── */
+const PA002_STEPS: { key: string; label: string }[] = [
+  { key: "identify", label: "Identify" },
+  { key: "prepare",  label: "Prepare" },
+  { key: "serve",    label: "Serve" },
+  { key: "record",   label: "Record" },
+];
+
+function buildPA002Beats(): PerformBeat[] {
+  return [
+    {
+      id: "n2-1",
+      stepKey: "identify",
+      text: "A right could be lost. The tenant break in the Flat 5 lease is exercisable on 24 December 2026, but a valid landlord counter-notice must be served by 24 September 2026 — about 90 days from today. Want me to prepare it?",
+      gate: {
+        label: "How would you like to proceed?",
+        options: [
+          { label: "Prepare the notice", kind: "approve", nextBeatIdx: 1 },
+          { label: "Remind me in 14 days", kind: "defer", nextBeatIdx: "exit" },
+          { label: "Dismiss", kind: "cancel", nextBeatIdx: "exit" },
+        ],
+      },
+    },
+    {
+      id: "n2-2",
+      stepKey: "prepare",
+      text: "Drafted. Recipient: the tenant at the contractual service address on the lease. Method: recorded delivery. Deemed receipt: 2 working days after posting. Effective date: 24 December 2026.",
+      detail: (
+        <PreparedPreview
+          title="Landlord counter-notice — Flat 5, Stanley House"
+          body={`To: [Tenant], Flat 5, Stanley House, 1115 Finchley Road, NW11\nMethod: Recorded delivery to lease service address\nDeemed receipt: +2 working days\n\nRe: Tenant break clause — Lease dated 24/12/2016\n\nWe acknowledge the break right exercisable on 24/12/2026. This counter-notice is served pursuant to clause 7.3 to preserve the landlord's position on outstanding sums, dilapidations and reinstatement obligations on the break date.\n\nSigned, [You]`}
+        />
+      ),
+      flag: "Service method needs your call: the lease names recorded delivery, but the tenant's solicitor has previously asked for service by email + post. I'll default to the lease method and copy the solicitor unless you say otherwise.",
+      gate: {
+        label: "Serve the notice now, or adjust first?",
+        options: [
+          { label: "Serve notice", kind: "approve", nextBeatIdx: 2 },
+          { label: "Edit method / recipient", kind: "modify", nextBeatIdx: 1 },
+          { label: "Cancel", kind: "cancel", nextBeatIdx: "exit" },
+        ],
+      },
+    },
+    {
+      id: "n2-3",
+      stepKey: "serve",
+      text: "Served. Recorded delivery slip logged; solicitor copied; deemed-receipt date 26 September 2026 calendared against the unit record.",
+      gate: {
+        label: "Record and finish",
+        options: [{ label: "Record & close", kind: "continue", nextBeatIdx: "complete" }],
+      },
+    },
+  ];
+}
+
+/* ─── PA-003 — Served notice taking effect (consequence + optional follow-on) ─── */
+const PA003_STEPS: { key: string; label: string }[] = [
+  { key: "inform",   label: "Inform" },
+  { key: "choose",   label: "Next step" },
+  { key: "prepare",  label: "Prepare" },
+  { key: "record",   label: "Record" },
+];
+
+function buildPA003Beats(): PerformBeat[] {
+  return [
+    {
+      id: "n3-1",
+      stepKey: "inform",
+      text: "Something is about to happen. The Section 25 notice served on M&S (Shop, 5 Nugent Terrace) on 14 March 2026 takes effect on 28 September 2026 — 28 days away. On that date the contractual tenancy ends; if no renewal is agreed the unit returns to you for re-letting.",
+      gate: {
+        label: "Acknowledge — no approval needed to be informed",
+        options: [
+          { label: "Got it — what's next?", kind: "continue", nextBeatIdx: 1 },
+        ],
+      },
+    },
+    {
+      id: "n3-2",
+      stepKey: "choose",
+      text: "Two follow-on paths make sense. I can prepare either — your call.",
+      gate: {
+        label: "Choose a follow-on (or skip)",
+        options: [
+          { label: "Prepare end-of-tenancy checklist", kind: "approve", nextBeatIdx: 2 },
+          { label: "Prepare renewal pack", kind: "approve", nextBeatIdx: 2 },
+          { label: "Not now", kind: "defer", nextBeatIdx: "exit" },
+        ],
+      },
+    },
+    {
+      id: "n3-3",
+      stepKey: "prepare",
+      text: "Prepared. Bundle ready for your review: keys & access, final meter readings, dilapidations schedule, final-account reconciliation, deposit return route, re-letting brief. (Renewal pack alternative includes revised heads of terms and a comparables note — switch any time.)",
+      detail: (
+        <PreparedPreview
+          title="End-of-tenancy checklist — Shop, 5 Nugent Terrace"
+          body={`1. Keys & access — recover sets, decommission codes\n2. Meter readings — gas/elec/water on effective date\n3. Dilapidations — Schedule of Condition v final inspection\n4. Final account — service charge, insurance, rent apportionment\n5. Deposit — assess deductions, return route\n6. Re-letting — instruct agent, marketing brief, photographs`}
+        />
+      ),
+      gate: {
+        label: "Confirm and record",
+        options: [
+          { label: "Confirm & record", kind: "approve", nextBeatIdx: 3 },
+          { label: "Edit", kind: "modify", nextBeatIdx: 2 },
+        ],
+      },
+    },
+    {
+      id: "n3-4",
+      stepKey: "record",
+      text: "Recorded against the unit: notice effective date noted, follow-on bundle prepared, owner informed. I'll re-surface this 7 days before effective date.",
+      gate: {
+        label: "Finish",
+        options: [{ label: "Close", kind: "continue", nextBeatIdx: "complete" }],
+      },
+    },
+  ];
+}
+
+
+
 function buildPerformConfig(card: ActionCard): {
   beats: PerformBeat[];
   steps: { key: string; label: string }[];
