@@ -5954,6 +5954,18 @@ function PerformWorkspace({
     if (el) el.scrollTop = el.scrollHeight;
   }, [revealed, streamingText]);
 
+  // Fire reviewReady once when the journey has revealed (or passed) its final approval gate.
+  const finalIdx = useMemo(() => finalGateBeatIdx(card, beats), [card, beats]);
+  const reachedFinalRef = useRef(false);
+  useEffect(() => {
+    if (!reachedFinalRef.current && revealed >= finalIdx) {
+      reachedFinalRef.current = true;
+      onReachedFinalGate?.();
+    }
+  }, [revealed, finalIdx, onReachedFinalGate]);
+
+
+
   const currentBeat = beats[revealed];
   const previousBeats = beats.slice(0, revealed);
 
