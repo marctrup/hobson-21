@@ -2601,12 +2601,137 @@ function PropertyContent({
   let tileIndex = 0;
 
   return (
-    <div className="space-y-3">
-      <div className="text-[12px] text-slate-600">
-        {property.units.length} units · {counts.let} Let · {counts.vacant} Vacant
-        {counts.alerts > 0 && <> · <span className="text-amber-700 font-medium">{counts.alerts} with alerts</span></>}
-      </div>
+    <div className="space-y-4">
+      {/* Pinned collapsible Units section */}
+      <section
+        className="sticky top-0 z-20 -mx-1 px-1 bg-white/95 backdrop-blur border border-slate-200 rounded-xl shadow-sm"
+        aria-label="Units"
+      >
+        <button
+          type="button"
+          onClick={() => setUnitsOpen((v) => !v)}
+          aria-expanded={unitsOpen}
+          aria-controls={`units-panel-${property.id}`}
+          className="w-full flex items-center justify-between gap-3 px-3 py-2.5 text-left rounded-xl hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/30"
+        >
+          <span className="flex items-center gap-2 min-w-0">
+            <span className="text-sm font-semibold text-slate-800">Units ({property.units.length})</span>
+            <span className="text-[12px] text-slate-500 truncate">
+              · {counts.let} Let · {counts.vacant} Vacant
+              {counts.alerts > 0 && <> · <span className="text-amber-700 font-medium">{counts.alerts} need attention</span></>}
+            </span>
+          </span>
+          <span aria-hidden className={`text-slate-400 transition-transform ${unitsOpen ? "rotate-180" : ""}`} style={{ transitionDuration: "220ms" }}>▾</span>
+        </button>
 
+        <div
+          id={`units-panel-${property.id}`}
+          hidden={!unitsOpen}
+          className="px-3 pb-3 pt-1 space-y-3"
+        >
+          <div className="text-[10.5px] text-slate-500 flex items-center gap-3 flex-wrap">
+            <span className="inline-flex items-center gap-1">
+              <svg width="10" height="10" viewBox="0 0 24 24" aria-hidden className="text-emerald-600">
+                <circle cx="12" cy="12" r="10" fill="currentColor" />
+                <path d="M7 12.5l3 3 7-7" stroke="white" strokeWidth="2.5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+              Confirmed = known fact
+            </span>
+            <span className="inline-flex items-center gap-1">
+              <svg width="10" height="10" viewBox="0 0 24 24" aria-hidden className="text-amber-700">
+                <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" strokeWidth="2" strokeDasharray="3 2" />
+                <text x="12" y="16" textAnchor="middle" fontSize="11" fontWeight="700" fill="currentColor">?</text>
+              </svg>
+              Inferred = needs checking
+            </span>
+          </div>
+
+          {property.units.length > 8 && (
+            <div className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-slate-200 bg-white focus-within:border-[#7C3AED] focus-within:ring-2 focus-within:ring-[#7C3AED]/20 transition">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-slate-400">
+                <circle cx="11" cy="11" r="7" /><path d="M21 21l-4-4" />
+              </svg>
+              <input
+                value={filter}
+                onChange={(e) => setFilter(e.target.value)}
+                placeholder="Find a unit…"
+                className="flex-1 outline-none text-sm bg-transparent placeholder:text-slate-400"
+                aria-label="Find a unit by name or tenant"
+              />
+              {filter && (
+                <button
+                  onClick={() => setFilter("")}
+                  className="text-slate-400 hover:text-slate-700 text-base leading-none"
+                  aria-label="Clear filter"
+                >
+                  ×
+                </button>
+              )}
+            </div>
+          )}
+
+          <div className="flex flex-wrap gap-1.5">
+            {quickBtn("all", `All (${property.units.length})`)}
+            {counts.alerts > 0 && quickBtn("alerts", `Has alerts (${counts.alerts})`)}
+            {quickBtn("vacant", `Vacant (${counts.vacant})`)}
+            {counts.endingInferred > 0 && quickBtn("ending_inferred", `Ending (inferred) (${counts.endingInferred})`)}
+            {counts.breakReview > 0 && quickBtn("break_review", `Break/review upcoming (${counts.breakReview})`)}
+            {hasShops && quickBtn("shops", "Shops")}
+          </div>
+
+          <div
+            ref={gridWrapRef}
+            onKeyDown={onKeyDown}
+            className="max-h-[420px] overflow-y-auto -mx-1 px-1"
+          >
+            {filtered.length === 0 ? (
+              <div className="text-[12px] text-slate-500 py-6 text-center">No matching units</div>
+            ) : (
+              grouped.map((group) => {
+                const isCollapsed = !!collapsed[group.key];
+                return (
+                  <div key={group.key} className="mb-3">
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setCollapsed((c) => ({ ...c, [group.key]: !c[group.key] }))
+                      }
+                      className="sticky top-0 z-[1] w-full flex items-center justify-between bg-white/95 backdrop-blur px-1 py-1.5 text-[10px] uppercase tracking-wide text-slate-500 font-medium border-b border-slate-100 hover:text-slate-700 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/30 rounded"
+                      aria-expanded={!isCollapsed}
+                    >
+                      <span>
+                        {group.key} · {group.units.length} {group.units.length === 1 ? "unit" : "units"}
+                      </span>
+                      <span aria-hidden className="text-slate-400">{isCollapsed ? "▸" : "▾"}</span>
+                    </button>
+                    {!isCollapsed && (
+                      <div className="grid grid-cols-3 sm:grid-cols-4 gap-1.5 pt-2">
+                        {group.units.map((u) => {
+                          const tabIx: 0 | -1 = tileIndex === 0 ? 0 : -1;
+                          tileIndex += 1;
+                          const d = derivedByUnit.get(u.id)!;
+                          return (
+                            <UnitTile
+                              key={u.id}
+                              unit={u}
+                              derived={d}
+                              tabIx={tabIx}
+                              scrollRef={gridWrapRef}
+                              onOpen={() => onOpenUnit(u.id)}
+                            />
+                          );
+                        })}
+                      </div>
+                    )}
+                  </div>
+                );
+              })
+            )}
+          </div>
+        </div>
+      </section>
+
+      {/* Intelligent action cards — visible immediately because Units bar is collapsed */}
       {propertyActionCards.filter((c) => c.approvalState === "pending" || c.approvalState === "in_progress").length > 0 && (
         <PropertyActions
           cards={propertyActionCards.filter((c) => c.approvalState === "pending" || c.approvalState === "in_progress")}
@@ -2622,108 +2747,6 @@ function PropertyContent({
           onReview={onReview ? (id) => onReview(id) : undefined}
         />
       )}
-
-      <div className="text-[10.5px] text-slate-500 flex items-center gap-3 flex-wrap">
-        <span className="inline-flex items-center gap-1">
-          <svg width="10" height="10" viewBox="0 0 24 24" aria-hidden className="text-emerald-600">
-            <circle cx="12" cy="12" r="10" fill="currentColor" />
-            <path d="M7 12.5l3 3 7-7" stroke="white" strokeWidth="2.5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
-
-          </svg>
-          Confirmed = known fact
-        </span>
-        <span className="inline-flex items-center gap-1">
-          <svg width="10" height="10" viewBox="0 0 24 24" aria-hidden className="text-amber-700">
-            <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" strokeWidth="2" strokeDasharray="3 2" />
-            <text x="12" y="16" textAnchor="middle" fontSize="11" fontWeight="700" fill="currentColor">?</text>
-          </svg>
-          Inferred = signal Hobson spotted, needs checking
-        </span>
-      </div>
-
-      {property.units.length > 20 && (
-        <div className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-slate-200 bg-white focus-within:border-[#7C3AED] focus-within:ring-2 focus-within:ring-[#7C3AED]/20 transition">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-slate-400">
-            <circle cx="11" cy="11" r="7" /><path d="M21 21l-4-4" />
-          </svg>
-          <input
-            value={filter}
-            onChange={(e) => setFilter(e.target.value)}
-            placeholder="Find a unit…"
-            className="flex-1 outline-none text-sm bg-transparent placeholder:text-slate-400"
-            aria-label="Find a unit by name or tenant"
-          />
-          {filter && (
-            <button
-              onClick={() => setFilter("")}
-              className="text-slate-400 hover:text-slate-700 text-base leading-none"
-              aria-label="Clear filter"
-            >
-              ×
-            </button>
-          )}
-        </div>
-      )}
-
-
-      <div className="flex flex-wrap gap-1.5">
-        {quickBtn("all", `All (${property.units.length})`)}
-        {counts.alerts > 0 && quickBtn("alerts", `Has alerts (${counts.alerts})`)}
-        {quickBtn("vacant", `Vacant (${counts.vacant})`)}
-        {counts.endingInferred > 0 && quickBtn("ending_inferred", `Ending (inferred) (${counts.endingInferred})`)}
-        {counts.breakReview > 0 && quickBtn("break_review", `Break/review upcoming (${counts.breakReview})`)}
-        {hasShops && quickBtn("shops", "Shops")}
-      </div>
-
-      <div
-        ref={gridWrapRef}
-        onKeyDown={onKeyDown}
-        className="max-h-[480px] overflow-y-auto -mx-1 px-1"
-      >
-        {filtered.length === 0 ? (
-          <div className="text-[12px] text-slate-500 py-6 text-center">No matching units</div>
-        ) : (
-          grouped.map((group) => {
-            const isCollapsed = !!collapsed[group.key];
-            return (
-              <div key={group.key} className="mb-3">
-                <button
-                  type="button"
-                  onClick={() =>
-                    setCollapsed((c) => ({ ...c, [group.key]: !c[group.key] }))
-                  }
-                  className="sticky top-0 z-[1] w-full flex items-center justify-between bg-white/95 backdrop-blur px-1 py-1.5 text-[10px] uppercase tracking-wide text-slate-500 font-medium border-b border-slate-100 hover:text-slate-700 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/30 rounded"
-                  aria-expanded={!isCollapsed}
-                >
-                  <span>
-                    {group.key} · {group.units.length} {group.units.length === 1 ? "unit" : "units"}
-                  </span>
-                  <span aria-hidden className="text-slate-400">{isCollapsed ? "▸" : "▾"}</span>
-                </button>
-                {!isCollapsed && (
-                  <div className="grid grid-cols-3 sm:grid-cols-4 gap-1.5 pt-2">
-                    {group.units.map((u) => {
-                      const tabIx: 0 | -1 = tileIndex === 0 ? 0 : -1;
-                      tileIndex += 1;
-                      const d = derivedByUnit.get(u.id)!;
-                      return (
-                        <UnitTile
-                          key={u.id}
-                          unit={u}
-                          derived={d}
-                          tabIx={tabIx}
-                          scrollRef={gridWrapRef}
-                          onOpen={() => onOpenUnit(u.id)}
-                        />
-                      );
-                    })}
-                  </div>
-                )}
-              </div>
-            );
-          })
-        )}
-      </div>
     </div>
   );
 }
