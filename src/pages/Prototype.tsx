@@ -2113,10 +2113,9 @@ function AdminChat({ character, owl }: { character: { id: AdminCharacter; name: 
         </div>
       )}
       {character && phase !== "typing" && (
-        <div key={character.id} className="flex items-start gap-2" aria-live="polite">
+        <div key={character.id} className="flex items-end gap-2" aria-live="polite">
           <CharacterAvatar src={character.src} />
-          <div className="max-w-[560px] bg-white border border-slate-200 text-[#1F2330] text-sm leading-relaxed px-4 py-3 rounded-2xl rounded-bl-md shadow-sm">
-            <div className="text-[12px] font-semibold text-slate-900 mb-1">{character.name}</div>
+          <div className="max-w-[340px] bg-[#EDE9FE] text-[#1F2330] text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-bl-md">
             {shown}
             {phase === "streaming" && (
               <span className="inline-block w-1.5 h-3.5 ml-0.5 bg-[#7C3AED] align-middle animate-pulse" />
