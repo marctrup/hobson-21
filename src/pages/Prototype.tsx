@@ -6230,14 +6230,15 @@ function ActionCardItem({
     : state === "in_progress"
     ? "Resume the automated walkthrough"
     : "Run the automated walkthrough";
+  // Review & approve is DISABLED until the Perform journey has reached its final approval gate
+  // (or the card is complete). You can't review work that isn't ready.
+  const reviewActuallyDisabled = !isCompleted && !card.reviewReady;
   const reviewTip = isCompleted
     ? "Open the recorded outcome"
-    : state === "pending"
-    ? "Nothing prepared yet — Perform this first or handle it yourself"
+    : reviewActuallyDisabled
+    ? "Not ready to review — Perform the workflow first; this lights up at the final approval gate"
     : "Jump to the final approval gate";
-  const reviewDisabled = !readOnly && state === "pending" && !card.hobsonPrepared;
-  // Simpler honest gate: disable Review when nothing has started AND there's no prepared detail
-  const reviewActuallyDisabled = state === "pending" && !card.preparedDetail;
+
 
   return (
     <article
