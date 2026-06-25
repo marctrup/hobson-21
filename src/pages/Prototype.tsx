@@ -4711,23 +4711,25 @@ function PortfolioBriefing({
           <div className="sticky top-0 z-[1] bg-white/95 backdrop-blur py-1 text-[10px] uppercase tracking-wide font-semibold text-slate-500 border-b border-slate-100">
             {URGENCY_LABEL[g.key]} · {g.cards.length}
           </div>
-          {g.cards.map((c) => (
-            <ActionCardItem
-              key={c.id}
-              card={c}
-              level="portfolio"
-              expanded={expandedCardId === c.id}
-              onToggleExpand={() => setExpandedCardId(expandedCardId === c.id ? null : c.id)}
-              onHover={(on) => onHoverCard(on ? c.propertyId : null)}
-              onOpenUnit={c.anchorLevel === "unit" && c.unitId ? () => onOpenUnit(c.propertyId, c.unitId!, c.id) : undefined}
-              onOpenProperty={c.anchorLevel === "property" ? () => onOpenProperty(c.propertyId, c.id) : undefined}
-              onApprove={() => onApprove(c.id)}
-              onDefer={() => onDefer(c.id)}
-              onDismiss={() => onDismiss(c.id)}
-              onPerform={onPerform ? () => onPerform(c.id) : undefined}
-              onReview={onReview ? () => onReview(c.id) : undefined}
-            />
-          ))}
+          <div className="grid gap-3" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))" }}>
+            {g.cards.map((c) => (
+              <ActionCardItem
+                key={c.id}
+                card={c}
+                level="portfolio"
+                expanded={expandedCardId === c.id}
+                onToggleExpand={() => setExpandedCardId(expandedCardId === c.id ? null : c.id)}
+                onHover={(on) => onHoverCard(on ? c.propertyId : null)}
+                onOpenUnit={c.anchorLevel === "unit" && c.unitId ? () => onOpenUnit(c.propertyId, c.unitId!, c.id) : undefined}
+                onOpenProperty={c.anchorLevel === "property" ? () => onOpenProperty(c.propertyId, c.id) : undefined}
+                onApprove={() => onApprove(c.id)}
+                onDefer={() => onDefer(c.id)}
+                onDismiss={() => onDismiss(c.id)}
+                onPerform={onPerform ? () => onPerform(c.id) : undefined}
+                onReview={onReview ? () => onReview(c.id) : undefined}
+              />
+            ))}
+          </div>
         </div>
       ))}
 
