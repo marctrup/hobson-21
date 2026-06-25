@@ -6998,7 +6998,7 @@ function BrokerWorkArea({ character, contacts, onAdd }: {
     if (flaggedOnly && !c.flagged) return false;
     const q = search.trim().toLowerCase();
     if (!q) return true;
-    return c.name.toLowerCase().includes(q) || c.role.toLowerCase().includes(q) || c.relationship.toLowerCase().includes(q);
+    return c.name.toLowerCase().includes(q) || c.role.toLowerCase().includes(q) || c.relatedTo.toLowerCase().includes(q) || c.email.toLowerCase().includes(q);
   });
 
   const order: BrokerContactType[] = ["staff", "subcontractor", "occupant", "misc"];
