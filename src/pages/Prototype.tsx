@@ -2605,7 +2605,23 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
           mainCollapseThreshold={MAIN_COLLAPSE_THRESHOLD}
           onCollapseMain={collapseMain}
           onExpandMain={expandMain}
+          onReset={resetLayout}
+          isDefault={isLayoutDefault}
         />
+      )}
+      {!isExpanded && !isLayoutDefault && (
+        <button
+          type="button"
+          onClick={resetLayout}
+          title="Reset layout (Alt+0)"
+          aria-label="Reset layout to default"
+          className="fixed bottom-4 right-4 z-[700] inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white border border-[#7C3AED]/30 text-[#7C3AED] text-xs font-medium shadow-md hover:bg-[#F5F3FF] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED] transition-opacity duration-200 motion-reduce:transition-none"
+        >
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+            <path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/>
+          </svg>
+          Reset layout
+        </button>
       )}
 
       {/* Map */}
