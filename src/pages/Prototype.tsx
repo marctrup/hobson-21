@@ -1531,13 +1531,7 @@ const Prototype: React.FC = () => {
             />
           )}
 
-          {/* Unit view starters */}
-          {view === "unit" && selectedUnit && (
-            <UnitStarters
-              unit={selectedUnit}
-              onAsk={(q) => sendUnitQuestion(q)}
-            />
-          )}
+          {/* Unit view starter chips removed — chat is locked in the prototype */}
           </div>
         </div>
 
