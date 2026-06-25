@@ -1442,7 +1442,7 @@ const Prototype: React.FC = () => {
                 rich={m.rich}
                 onAskFollowUp={(q) => sendRentAnswer(q)}
                 showAvatar={!groupedWithPrev}
-                groupedTop={groupedWithPrev}
+
               />
             ) : (
               <UserBubble key={m.id} text={m.text} />
