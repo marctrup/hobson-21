@@ -1380,8 +1380,8 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
 
   // Map must stay visible during the onboarding tour (Step 5 uses map search).
   // Honour user preference otherwise.
-  const hasRightOverlay = showDocuments || showWhatIveDone || !!performingCardId || !!reviewingCardId;
-  const isExpanded = chatExpanded && view !== "onboarding" && !hasRightOverlay;
+  const hasRightOverlay = showDocuments || showWhatIveDone || !!performingCardId || !!reviewingCardId || (adminMode && !!adminCharacter);
+  const isExpanded = chatExpanded && view !== "onboarding" && !hasRightOverlay && !adminMode;
 
   return (
     <div className="hobson-proto fixed inset-0 flex bg-white text-[#1F2330]">
@@ -1390,24 +1390,51 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
 
       {/* Left nav rail */}
       <aside className="w-[68px] shrink-0 bg-white border-r border-slate-200 flex flex-col items-center py-4 gap-2">
-        <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#A78BFA] to-[#7C3AED] grid place-items-center text-white font-bold mb-2 shadow-sm">
+        <button
+          type="button"
+          onClick={adminMode ? exitAdmin : undefined}
+          aria-label={adminMode ? "Exit Admin" : "Hobson"}
+          title={adminMode ? "Exit Admin" : "Hobson"}
+          className={`w-10 h-10 rounded-xl bg-gradient-to-br from-[#A78BFA] to-[#7C3AED] grid place-items-center text-white font-bold mb-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40 ${adminMode ? "cursor-pointer hover:brightness-110" : "cursor-default"}`}
+        >
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
             <path d="M12 2L22 12L12 22L2 12L12 2Z" fill="white" />
           </svg>
-        </div>
-        <RailItem icon="pin" label="Portfolio" active={view !== "onboarding" && !showDocuments && !showWhatIveDone} onClick={() => { setShowDocuments(false); setShowWhatIveDone(false); goPortfolio(false); }} />
-        {!testerMode && <RailItem icon="doc" label="Documents" active={view !== "onboarding" && showDocuments} onClick={() => { setShowWhatIveDone(false); setShowDocuments(true); }} />}
-        {!testerMode && <RailItem icon="clock" label={"What I've done"} active={view !== "onboarding" && showWhatIveDone} onClick={() => { setShowDocuments(false); setShowWhatIveDone(true); }} />}
-        <RailItem icon="chat" label="Chat History" />
-        <div className="mt-auto flex flex-col items-center gap-3 pb-2">
-          <button className="w-11 h-11 rounded-full bg-[#7C3AED] text-white grid place-items-center shadow-md hover:bg-[#6D28D9] transition" aria-label="New chat">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><path d="M12 5v14M5 12h14"/></svg>
-          </button>
-          <span className="text-[10px] text-slate-500">New chat</span>
-          <RailItem icon="gear" label="Admin" />
-          <div className="w-9 h-9 rounded-full bg-slate-200 grid place-items-center text-xs font-semibold text-slate-700">MT</div>
-        </div>
+        </button>
+        {adminMode ? (
+          <>
+            {ADMIN_CHARACTERS.map((c) => (
+              <CharacterRailItem
+                key={c.id}
+                name={c.name}
+                src={c.src}
+                active={adminCharacter === c.id}
+                onClick={() => selectAdminCharacter(c.id)}
+              />
+            ))}
+            <div className="mt-auto flex flex-col items-center gap-3 pb-2">
+              <RailItem icon="pin" label="Exit Admin" onClick={exitAdmin} />
+              <div className="w-9 h-9 rounded-full bg-slate-200 grid place-items-center text-xs font-semibold text-slate-700">MT</div>
+            </div>
+          </>
+        ) : (
+          <>
+            <RailItem icon="pin" label="Portfolio" active={view !== "onboarding" && !showDocuments && !showWhatIveDone} onClick={() => { setShowDocuments(false); setShowWhatIveDone(false); goPortfolio(false); }} />
+            {!testerMode && <RailItem icon="doc" label="Documents" active={view !== "onboarding" && showDocuments} onClick={() => { setShowWhatIveDone(false); setShowDocuments(true); }} />}
+            {!testerMode && <RailItem icon="clock" label={"What I've done"} active={view !== "onboarding" && showWhatIveDone} onClick={() => { setShowDocuments(false); setShowWhatIveDone(true); }} />}
+            <RailItem icon="chat" label="Chat History" />
+            <div className="mt-auto flex flex-col items-center gap-3 pb-2">
+              <button className="w-11 h-11 rounded-full bg-[#7C3AED] text-white grid place-items-center shadow-md hover:bg-[#6D28D9] transition" aria-label="New chat">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><path d="M12 5v14M5 12h14"/></svg>
+              </button>
+              <span className="text-[10px] text-slate-500">New chat</span>
+              <RailItem icon="gear" label="Admin" onClick={enterAdmin} />
+              <div className="w-9 h-9 rounded-full bg-slate-200 grid place-items-center text-xs font-semibold text-slate-700">MT</div>
+            </div>
+          </>
+        )}
       </aside>
+
 
       {/* Chat panel */}
       <section className={`${isExpanded ? "flex-1" : "w-[480px] shrink-0"} bg-white border-r border-slate-200 flex flex-col motion-safe:transition-[width,flex-basis] motion-safe:duration-200`}>
