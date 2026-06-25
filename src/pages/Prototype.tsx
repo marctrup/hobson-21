@@ -7032,18 +7032,18 @@ function BrokerWorkArea({ character, contacts, onAdd }: {
             <circle cx="11" cy="11" r="7"/><path d="M21 21l-3.5-3.5"/>
           </svg>
         </div>
-        <div className="flex items-center gap-1.5">
+        <div className="flex items-center gap-1.5 flex-wrap">
           {(["all", "staff", "subcontractor", "occupant", "misc"] as const).map((t) => {
             const active = typeFilter === t;
-            const label = t === "all" ? "+ Type: All" : `+ ${BROKER_TYPE_META[t].label}`;
+            const label = t === "all" ? "Type: All" : BROKER_TYPE_META[t].label;
             return (
               <button
                 key={t}
                 type="button"
                 onClick={() => setTypeFilter(t)}
                 aria-pressed={active}
-                className={`text-[11px] font-medium px-2.5 py-1.5 rounded-md border focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/30 ${
-                  active ? "border-[#7C3AED] bg-[#F5F3FF] text-[#7C3AED]" : "border-dashed border-slate-300 bg-white text-slate-600 hover:border-[#7C3AED]/50 hover:text-[#7C3AED]"
+                className={`text-[11px] font-medium px-2.5 py-1.5 rounded-full border focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/30 ${
+                  active ? "border-[#7C3AED] bg-[#F5F3FF] text-[#7C3AED]" : "border-slate-200 bg-white text-slate-600 hover:border-[#7C3AED]/50 hover:text-[#7C3AED]"
                 }`}
               >
                 {label}
@@ -7052,19 +7052,21 @@ function BrokerWorkArea({ character, contacts, onAdd }: {
           })}
           <button
             type="button"
-            className="text-[11px] font-medium px-2.5 py-1.5 rounded-md border border-dashed border-slate-300 bg-white text-slate-600 hover:border-[#7C3AED]/50 hover:text-[#7C3AED] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/30"
+            aria-disabled="true"
+            className="text-[11px] font-medium px-2.5 py-1.5 rounded-full border border-slate-200 bg-white text-slate-500 hover:border-[#7C3AED]/40 hover:text-[#7C3AED] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/30"
+            title="Filter by linked property or unit"
           >
-            + Linked property/unit
+            Linked property/unit
           </button>
           <button
             type="button"
             onClick={() => setFlaggedOnly((v) => !v)}
             aria-pressed={flaggedOnly}
-            className={`text-[11px] font-medium px-2.5 py-1.5 rounded-md border focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/30 ${
-              flaggedOnly ? "border-amber-400 bg-amber-50 text-amber-700" : "border-dashed border-slate-300 bg-white text-slate-600 hover:border-amber-400/60 hover:text-amber-700"
+            className={`text-[11px] font-medium px-2.5 py-1.5 rounded-full border focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/30 ${
+              flaggedOnly ? "border-amber-400 bg-amber-50 text-amber-700" : "border-slate-200 bg-white text-slate-600 hover:border-amber-400/60 hover:text-amber-700"
             }`}
           >
-            + Flagged
+            Flagged
           </button>
         </div>
       </div>
