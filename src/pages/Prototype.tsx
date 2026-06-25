@@ -1207,15 +1207,9 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
   // chatExpanded removed — the draggable divider now handles full-width expansion in both directions.
   const chatExpanded = false;
   const setChatExpanded = (_: boolean | ((v: boolean) => boolean)) => {};
-  const [chatWidth, setChatWidth] = useState<number>(() => {
-    if (typeof window === "undefined") return 480;
-    const v = Number(window.sessionStorage.getItem("hobson:chatWidth"));
-    return Number.isFinite(v) && v >= 200 ? v : 480;
-  });
-  const [chatCollapsed, setChatCollapsed] = useState<boolean>(() => {
-    if (typeof window === "undefined") return false;
-    return window.sessionStorage.getItem("hobson:chatCollapsed") === "1";
-  });
+  // Stateless demo: divider and collapse states always start at their seeded defaults on every mount/reload.
+  const [chatWidth, setChatWidth] = useState<number>(480);
+  const [chatCollapsed, setChatCollapsed] = useState<boolean>(false);
   const [chatDropOver, setChatDropOver] = useState(false);
   const CHAT_MIN_WIDTH = 240;
   const CHAT_COLLAPSE_THRESHOLD = 200;
@@ -1223,23 +1217,8 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
   const MAIN_MIN_WIDTH = 420;
   const MAIN_COLLAPSE_THRESHOLD = 200;
   const MAIN_COLLAPSED_WIDTH = 44;
-  const lastExpandedWidthRef = useRef<number>(chatWidth);
-  const [mainCollapsed, setMainCollapsed] = useState<boolean>(() => {
-    if (typeof window === "undefined") return false;
-    return window.sessionStorage.getItem("hobson:mainCollapsed") === "1";
-  });
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    window.sessionStorage.setItem("hobson:chatWidth", String(chatWidth));
-  }, [chatWidth]);
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    window.sessionStorage.setItem("hobson:chatCollapsed", chatCollapsed ? "1" : "0");
-  }, [chatCollapsed]);
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    window.sessionStorage.setItem("hobson:mainCollapsed", mainCollapsed ? "1" : "0");
-  }, [mainCollapsed]);
+  const lastExpandedWidthRef = useRef<number>(480);
+  const [mainCollapsed, setMainCollapsed] = useState<boolean>(false);
   const collapseChat = () => {
     if (!chatCollapsed) lastExpandedWidthRef.current = chatWidth;
     setMainCollapsed(false);
