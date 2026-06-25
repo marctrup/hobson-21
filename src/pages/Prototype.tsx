@@ -6745,9 +6745,17 @@ function WorkLogCard({
             <div className="flex items-center gap-2 flex-wrap">
               <StatusPill kind={entry.statusKind} label={entry.statusLabel} />
               <span className="text-[11px] text-slate-500">{entry.when}</span>
+              {entry.origin && <OriginMarker origin={entry.origin} />}
+              {entry.workflowRef && <WorkflowRefTag refId={entry.workflowRef} />}
             </div>
             <h4 className="mt-1.5 text-[14px] font-semibold text-slate-900 leading-snug">{entry.title}</h4>
             <p className="mt-1.5 text-[13px] text-slate-700 leading-relaxed">{entry.narration}</p>
+            {entry.manualNote && (
+              <div className="mt-2 rounded-md border border-slate-200 bg-slate-50 px-3 py-2">
+                <div className="text-[10px] uppercase tracking-wide font-semibold text-slate-500 mb-0.5">Your note</div>
+                <p className="text-[12px] text-slate-700 leading-relaxed whitespace-pre-wrap">{entry.manualNote}</p>
+              </div>
+            )}
 
             {(entry.approvals.length > 0 || entry.flags.length > 0) && (
               <ul className="mt-2 space-y-1 text-[12px]">
