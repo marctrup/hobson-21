@@ -3412,12 +3412,13 @@ function PropertyActions({
     .map((u) => ({ key: u, cards: sortCarried(cards.filter((c) => c.urgency === u)) }))
     .filter((g) => g.cards.length > 0);
   return (
-    <section aria-label={`Actions for ${propertyName}`} className="space-y-2">
+    <section aria-label={`Actions for ${propertyName}`} className="space-y-4">
       <div className="flex items-center justify-between">
         <div className="text-[11px] uppercase tracking-wide text-slate-500 font-semibold">On this building's desk · {cards.length}</div>
       </div>
       {groups.map((g) => (
-        <div key={g.key} className="space-y-1.5">
+        <div key={g.key} className="space-y-2.5">
+
           <div className="text-[10px] uppercase tracking-wide font-semibold text-slate-400">
             {URGENCY_LABEL[g.key]} · {g.cards.length}
           </div>
