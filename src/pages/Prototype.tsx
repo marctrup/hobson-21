@@ -43,6 +43,52 @@ const ADMIN_CHARACTERS: { id: AdminCharacter; name: string; src: string; tagline
   },
 ];
 
+type BrokerContactType = "staff" | "subcontractor" | "occupant" | "misc";
+type BrokerContact = {
+  id: string;
+  name: string;
+  type: BrokerContactType;
+  role: string;
+  relationship: string;
+  initials: string;
+  flagged?: boolean;
+  flagLabel?: string;
+};
+
+const BROKER_TYPE_META: Record<BrokerContactType, { label: string; plural: string; tone: string; ring: string; bg: string; text: string; iconPath: React.ReactNode }> = {
+  staff: {
+    label: "Staff", plural: "Staff",
+    tone: "blue", ring: "ring-blue-200", bg: "bg-blue-50", text: "text-blue-700",
+    iconPath: (<><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M3 20c0-3 3-5 6-5s6 2 6 5"/><path d="M15 20c0-2 2-3.5 4-3.5s2.5 1 3 2"/></>),
+  },
+  subcontractor: {
+    label: "Subcontractors", plural: "Subcontractors",
+    tone: "teal", ring: "ring-teal-200", bg: "bg-teal-50", text: "text-teal-700",
+    iconPath: (<><path d="M14 6l4 4-8 8-4-4 8-8z"/><path d="M3 21l3-3"/><path d="M17 3l4 4"/></>),
+  },
+  occupant: {
+    label: "Occupants", plural: "Occupants",
+    tone: "purple", ring: "ring-purple-200", bg: "bg-[#F5F3FF]", text: "text-[#7C3AED]",
+    iconPath: (<><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-5h4v5"/></>),
+  },
+  misc: {
+    label: "Miscellaneous", plural: "Miscellaneous",
+    tone: "slate", ring: "ring-slate-200", bg: "bg-slate-100", text: "text-slate-600",
+    iconPath: (<><circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/></>),
+  },
+};
+
+const SEED_BROKER_CONTACTS: BrokerContact[] = [
+  { id: "bc-1", name: "Sarah Chen", type: "staff", role: "Asset Manager", relationship: "Owns 4 workflows · 9 units", initials: "SC" },
+  { id: "bc-2", name: "James Okoro", type: "staff", role: "Lease Manager", relationship: "Handles notices · 3 units", initials: "JO" },
+  { id: "bc-3", name: "Firewatch Ltd", type: "subcontractor", role: "Fire alarm engineer · John Reed", relationship: "Used 3× · prefers email", initials: "FW" },
+  { id: "bc-4", name: "Voltedge", type: "subcontractor", role: "Electrician / EICR · Priya Shah", relationship: "Used 1× · no calls Mondays", initials: "VE" },
+  { id: "bc-5", name: "M&S", type: "occupant", role: "Tenant · Shop, Nugent Terrace", relationship: "1 unit · since 2019", initials: "MS" },
+  { id: "bc-6", name: "R. Turner", type: "occupant", role: "Tenant · Flat 2, Nugent Terrace", relationship: "Rent review due · 1 unit", initials: "RT", flagged: true, flagLabel: "Rent review due" },
+  { id: "bc-7", name: "Hartwell & Co", type: "misc", role: "Solicitors", relationship: "4 matters · replies in ~6 days", initials: "HC" },
+];
+
+
 /* ---------------- Professor library types & seed ---------------- */
 
 type DocStatus = "pending" | "extracting" | "extracted";
