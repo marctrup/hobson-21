@@ -1892,11 +1892,12 @@ function RentFlat2Answer({ onAskFollowUp, bodyText }: { onAskFollowUp?: (q: stri
         </ul>
       </div>
       <div>
-        <div className="flex items-center gap-2 mb-1">
+        <div className="flex items-center gap-2 mb-2">
           <div className="text-[11px] uppercase tracking-wide text-slate-400 font-medium">Related documents</div>
           <span className="text-[9px] uppercase font-semibold px-1.5 py-0.5 rounded bg-amber-100 text-amber-800 tracking-wide">Beta</span>
         </div>
-        <ul className="space-y-1">
+        <ul className="space-y-1.5">
+
           {docs.map((d) => (
             <li key={d.name}>
               <button
