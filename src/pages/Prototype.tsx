@@ -769,7 +769,9 @@ const Prototype: React.FC = () => {
     setReviewingCardId(null);
     setShowDocuments(false);
     setShowWhatIveDone(false);
+    setChatExpanded(false);
   };
+
   const cancelPerform = resetToMap;
   const cancelReview = resetToMap;
 
