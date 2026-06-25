@@ -43,6 +43,24 @@ const ADMIN_CHARACTERS: { id: AdminCharacter; name: string; src: string; tagline
   },
 ];
 
+type BrokerEvent =
+  | { kind: "broker"; id: string; text: string }
+  | { kind: "user"; id: string; text: string }
+  | { kind: "summary"; id: string; name: string };
+
+type BrokerField = "name" | "type" | "role" | "email" | "phoneAndPref" | "address" | "relatedTo";
+
+const BROKER_QUESTIONS: { ask: string; placeholder: string; field: BrokerField }[] = [
+  { field: "name", ask: "Wonderful — let's get them in the book. What's their name?", placeholder: "e.g. Firewatch Ltd" },
+  { field: "type", ask: "How do they relate to you — staff, subcontractor, occupant, or miscellaneous?", placeholder: "staff / subcontractor / occupant / misc" },
+  { field: "role", ask: "What's their role, and is there a named person I should ask for?", placeholder: "e.g. Fire alarm engineer · contact: John Reed" },
+  { field: "email", ask: "Best email for them?", placeholder: "name@example.com" },
+  { field: "phoneAndPref", ask: "Phone number? Tell me how they prefer to be reached too — 'prefers email', 'no calls Mondays', etc.", placeholder: "020 7946 0321 · prefers email" },
+  { field: "address", ask: "Address — business address for trades, or the unit address for occupants.", placeholder: "e.g. Unit 7, Park Royal Trade Park, London NW10" },
+  { field: "relatedTo", ask: "Last one: who or what are they linked to? Properties, units, landlord, or who introduced them.", placeholder: "e.g. Linked to: 5 Nugent Terrace · introduced by Sarah Chen" },
+];
+
+
 type BrokerContactType = "staff" | "subcontractor" | "occupant" | "misc";
 type BrokerContact = {
   id: string;
@@ -1215,25 +1233,97 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
 
   // ----- Broker black-book state -----
   const [contacts, setContacts] = useState<BrokerContact[]>(SEED_BROKER_CONTACTS);
+  const [brokerEvents, setBrokerEvents] = useState<BrokerEvent[]>([]);
+  const [brokerFlow, setBrokerFlow] = useState<{ step: number; draft: Partial<BrokerContact> } | null>(null);
+
+  const initialsFromName = (name: string) => {
+    const parts = name.trim().split(/\s+/).filter(Boolean);
+    if (parts.length === 0) return "NC";
+    if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+    return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+  };
+
+  const parseBrokerType = (raw: string): BrokerContactType => {
+    const s = raw.toLowerCase();
+    if (/(subcontract|trade|contractor|engineer|electric|fire|plumb)/.test(s)) return "subcontractor";
+    if (/(occup|tenant|resident|leaseholder)/.test(s)) return "occupant";
+    if (/(staff|internal|colleague|team|employee)/.test(s)) return "staff";
+    return "misc";
+  };
+
+  const splitPhonePref = (raw: string): { phone: string; pref: string } => {
+    const parts = raw.split(/·|—|–|-|\||,/);
+    const phone = (parts[0] || raw).trim() || "—";
+    const pref = parts.slice(1).join(" · ").trim() || "no preference noted";
+    return { phone, pref };
+  };
+
   const handleAddBrokerContact = () => {
-    const n = contacts.filter((c) => c.id.startsWith("bc-new-")).length + 1;
-    const id = `bc-new-${Date.now()}`;
-    setContacts((arr) => [
-      {
-        id,
-        name: `New contact ${n}`,
-        type: "misc",
-        role: "Unspecified",
-        initials: "NC",
-        email: "—",
-        phone: "—",
-        contactPref: "preference not set",
-        address: "—",
-        relatedTo: "Just added · tell me who they are and I'll link them up.",
-      },
+    if (brokerFlow) return;
+    setBrokerFlow({ step: 0, draft: {} });
+    setBrokerEvents((arr) => [
       ...arr,
+      { kind: "broker", id: `bk-${Date.now()}-q0`, text: BROKER_QUESTIONS[0].ask },
     ]);
   };
+
+  const cancelBrokerFlow = () => {
+    setBrokerFlow(null);
+    setBrokerEvents((arr) => [...arr, { kind: "broker", id: `bk-${Date.now()}-cx`, text: "No bother — the book stays as it is. Press 'Add a contact' whenever you're ready." }]);
+  };
+
+  const submitBrokerAnswer = (answer: string) => {
+    if (!brokerFlow) return;
+    const text = answer.trim();
+    if (!text) return;
+    const ts = Date.now();
+    const q = BROKER_QUESTIONS[brokerFlow.step];
+    const draft = { ...brokerFlow.draft };
+    if (q.field === "type") draft.type = parseBrokerType(text);
+    else if (q.field === "phoneAndPref") {
+      const { phone, pref } = splitPhonePref(text);
+      draft.phone = phone;
+      draft.contactPref = pref;
+    } else if (q.field === "name") {
+      draft.name = text;
+      draft.initials = initialsFromName(text);
+    } else {
+      (draft as Record<BrokerField, string>)[q.field] = text;
+    }
+
+    const newEvents: BrokerEvent[] = [{ kind: "user", id: `bk-${ts}-u`, text }];
+    const nextStep = brokerFlow.step + 1;
+
+    if (nextStep < BROKER_QUESTIONS.length) {
+      newEvents.push({ kind: "broker", id: `bk-${ts}-q${nextStep}`, text: BROKER_QUESTIONS[nextStep].ask });
+      setBrokerFlow({ step: nextStep, draft });
+      setBrokerEvents((arr) => [...arr, ...newEvents]);
+    } else {
+      // Finalise
+      const contact: BrokerContact = {
+        id: `bc-new-${ts}`,
+        name: draft.name || "New contact",
+        type: (draft.type as BrokerContactType) || "misc",
+        role: draft.role || "Unspecified",
+        initials: draft.initials || initialsFromName(draft.name || "NC"),
+        email: draft.email || "—",
+        phone: draft.phone || "—",
+        contactPref: draft.contactPref || "no preference noted",
+        address: draft.address || "—",
+        relatedTo: draft.relatedTo || "—",
+      };
+      setContacts((arr) => [contact, ...arr]);
+      newEvents.push({
+        kind: "broker",
+        id: `bk-${ts}-done`,
+        text: `Done — ${contact.name} is in the book under ${BROKER_TYPE_META[contact.type].label.toLowerCase()}. I'll remember them and link them as we go.`,
+      });
+      newEvents.push({ kind: "summary", id: `bk-${ts}-sum`, name: contact.name });
+      setBrokerFlow(null);
+      setBrokerEvents((arr) => [...arr, ...newEvents]);
+    }
+  };
+
 
 
 
@@ -2072,8 +2162,11 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
               owl={owl}
               professorEvents={adminCharacter === "professor" ? profEvents : undefined}
               onAssignProfessorType={assignProfessorType}
+              brokerEvents={adminCharacter === "broker" ? brokerEvents : undefined}
+              brokerFlowActive={adminCharacter === "broker" && !!brokerFlow}
             />
           ) : (<>
+
 
 
 
@@ -2332,7 +2425,12 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
               : adminCharacter === "magician"
                 ? <MagicianComposer onCreate={handleCreateWorkflow} />
                 : adminCharacter === "broker"
-                  ? <BrokerComposer onAdd={handleAddBrokerContact} />
+                  ? <BrokerComposer
+                      onAdd={handleAddBrokerContact}
+                      flow={brokerFlow}
+                      onSubmitAnswer={submitBrokerAnswer}
+                      onCancel={cancelBrokerFlow}
+                    />
                   : <LockedComposer view={view} />
 
           ) : testerMode && view === "unit" ? (
@@ -2794,7 +2892,7 @@ function CharacterAvatar({ src }: { src: string }) {
 
 const HOBSON_ADMIN_INTRO = "Welcome to Admin, where my colleagues can assist. Select one of them and they will assist you.";
 
-function AdminChat({ character, owl, professorEvents, onAssignProfessorType }: { character: { id: AdminCharacter; name: string; src: string; greeting: string } | null; owl: OwlState; professorEvents?: ProfEvent[]; onAssignProfessorType?: (batchId: string, type: string) => void }) {
+function AdminChat({ character, owl, professorEvents, onAssignProfessorType, brokerEvents, brokerFlowActive }: { character: { id: AdminCharacter; name: string; src: string; greeting: string } | null; owl: OwlState; professorEvents?: ProfEvent[]; onAssignProfessorType?: (batchId: string, type: string) => void; brokerEvents?: BrokerEvent[]; brokerFlowActive?: boolean }) {
   const [phase, setPhase] = useState<"typing" | "streaming" | "done">("typing");
   const [shown, setShown] = useState("");
   const reducedMotion = typeof window !== "undefined"
@@ -2921,9 +3019,50 @@ function AdminChat({ character, owl, professorEvents, onAssignProfessorType }: {
           })}
         </div>
       )}
+      {character?.id === "broker" && phase === "done" && !brokerFlowActive && (!brokerEvents || brokerEvents.length === 0) && (
+        <div className="flex items-end gap-2">
+          <CharacterAvatar src={character.src} />
+          <div className="max-w-[420px] bg-[#EDE9FE] text-[#1F2330] text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-bl-md">
+            Press <span className="font-semibold">"Add a contact"</span> below and we'll add one together — I'll ask the questions and you will provide the answers — Lets go!
+          </div>
+        </div>
+      )}
+      {character?.id === "broker" && phase === "done" && brokerEvents && brokerEvents.length > 0 && (
+        <div className="flex flex-col" style={{ gap: CHAT_TURN_GAP_PX }}>
+          {brokerEvents.map((ev) => {
+            if (ev.kind === "broker") {
+              return (
+                <div key={ev.id} className="flex items-end gap-2">
+                  <CharacterAvatar src={character.src} />
+                  <div className="max-w-[420px] bg-[#EDE9FE] text-[#1F2330] text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-bl-md">
+                    {ev.text}
+                  </div>
+                </div>
+              );
+            }
+            if (ev.kind === "user") {
+              return (
+                <div key={ev.id} className="flex justify-end">
+                  <div className="max-w-[420px] bg-[#7C3AED] text-white text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-br-md">
+                    {ev.text}
+                  </div>
+                </div>
+              );
+            }
+            // summary
+            return (
+              <div key={ev.id} className="ml-12 max-w-[420px] rounded-xl border border-[#7C3AED]/30 bg-[#F5F3FF] p-3">
+                <div className="text-[11px] uppercase tracking-wide text-[#7C3AED] font-semibold mb-1">Added to the black book</div>
+                <div className="text-[12px] text-slate-700"><span className="font-semibold">{ev.name}</span> · pinned at the top of the book on the right.</div>
+              </div>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }
+
 
 function ProfTypeAssigner({ onAssign }: { onAssign: (type: string) => void }) {
   const [val, setVal] = useState("");
@@ -6952,35 +7091,92 @@ function WorkflowAdjustDialog({ workflow, staff, onClose, onSave }: {
 
 /* ---------- The Broker — composer + black book ---------- */
 
-function BrokerComposer({ onAdd }: { onAdd: () => void }) {
-  return (
-    <div className="flex flex-col gap-2">
-      <div className="flex items-center gap-3 px-4 py-3 rounded-2xl border-2 border-dashed border-[#7C3AED]/40 bg-white">
-        <button
-          type="button"
-          onClick={onAdd}
-          className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full bg-[#7C3AED] text-white text-[13px] font-semibold shadow-sm hover:bg-[#6D28D9] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40"
-        >
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-            <path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/>
-            <circle cx="9" cy="7" r="4"/>
-            <path d="M19 8v6M22 11h-6"/>
-          </svg>
-          Add a contact
-        </button>
-        <div className="flex-1 min-w-0">
-          <div className="text-[12px] font-medium text-slate-800">Staff, subcontractors, occupants — anyone who matters</div>
-          <div className="text-[11px] text-slate-500">I'll link them to the right properties and remember how they behave.</div>
+function BrokerComposer({ onAdd, flow, onSubmitAnswer, onCancel }: {
+  onAdd: () => void;
+  flow: { step: number; draft: Partial<BrokerContact> } | null;
+  onSubmitAnswer: (answer: string) => void;
+  onCancel: () => void;
+}) {
+  const [value, setValue] = useState("");
+  const inputRef = useRef<HTMLInputElement | null>(null);
+  const stepKey = flow?.step ?? -1;
+  useEffect(() => {
+    setValue("");
+    if (flow) {
+      const t = setTimeout(() => inputRef.current?.focus(), 30);
+      return () => clearTimeout(t);
+    }
+  }, [stepKey, flow]);
+
+  if (!flow) {
+    return (
+      <div className="flex flex-col gap-2">
+        <div className="flex items-center gap-3 px-4 py-3 rounded-2xl border-2 border-dashed border-[#7C3AED]/40 bg-white">
+          <button
+            type="button"
+            onClick={onAdd}
+            className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full bg-[#7C3AED] text-white text-[13px] font-semibold shadow-sm hover:bg-[#6D28D9] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40"
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+              <path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/>
+              <circle cx="9" cy="7" r="4"/>
+              <path d="M19 8v6M22 11h-6"/>
+            </svg>
+            Add a contact
+          </button>
+          <div className="flex-1 min-w-0">
+            <div className="text-[12px] font-medium text-slate-800">Staff, subcontractors, occupants — anyone who matters</div>
+            <div className="text-[11px] text-slate-500">I'll ask the questions and you'll provide the answers.</div>
+          </div>
         </div>
       </div>
-      <div
-        aria-disabled="true"
-        className="flex items-center gap-2 px-4 py-2 rounded-full border border-slate-200 bg-slate-50 text-[12px] text-slate-500"
-      >
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>
-        Free-text chat with The Broker is coming in the live product — for now, add contacts via the button above.
+    );
+  }
+
+  const q = BROKER_QUESTIONS[flow.step];
+  const total = BROKER_QUESTIONS.length;
+  const submit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const v = value.trim();
+    if (!v) return;
+    onSubmitAnswer(v);
+  };
+
+  return (
+    <form onSubmit={submit} className="flex flex-col gap-1.5">
+      <div className="flex items-center justify-between px-1">
+        <div className="text-[11px] uppercase tracking-wide font-semibold text-[#7C3AED]">
+          The Broker · question {flow.step + 1} of {total}
+        </div>
+        <button
+          type="button"
+          onClick={onCancel}
+          className="text-[11px] font-medium text-slate-500 hover:text-slate-700 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/30 rounded px-1.5 py-0.5"
+        >
+          Cancel
+        </button>
       </div>
-    </div>
+      <div className="flex items-center gap-2 px-4 py-2.5 rounded-full border border-[#7C3AED]/40 bg-white focus-within:border-[#7C3AED] focus-within:ring-2 focus-within:ring-[#7C3AED]/20 transition">
+        <input
+          ref={inputRef}
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
+          placeholder={q.placeholder}
+          className="flex-1 outline-none text-sm bg-transparent placeholder:text-slate-400"
+          aria-label={q.ask}
+        />
+        <button
+          type="submit"
+          disabled={!value.trim()}
+          className="flex items-center justify-center h-9 w-9 rounded-full bg-[#7C3AED] text-white hover:bg-[#6D28D9] transition disabled:bg-slate-200 disabled:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40"
+          aria-label="Send answer"
+        >
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M5 12h14M13 6l6 6-6 6"/>
+          </svg>
+        </button>
+      </div>
+    </form>
   );
 }
 
