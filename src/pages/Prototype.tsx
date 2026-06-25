@@ -1446,7 +1446,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
 
 
           {/* Pinned alert briefing at the top of unit chat */}
-          {view === "unit" && selectedUnit && selectedPropertyId && (
+          {!testerMode && view === "unit" && selectedUnit && selectedPropertyId && (
             <>
               <PinnedAlertCard
                 unit={selectedUnit}
