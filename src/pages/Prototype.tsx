@@ -6895,5 +6895,207 @@ function WorkflowAdjustDialog({ workflow, staff, onClose, onSave }: {
   );
 }
 
+/* ---------- The Broker — composer + black book ---------- */
+
+function BrokerComposer({ onAdd }: { onAdd: () => void }) {
+  return (
+    <div className="flex flex-col gap-2">
+      <div className="flex items-center gap-3 px-4 py-3 rounded-2xl border-2 border-dashed border-[#7C3AED]/40 bg-white">
+        <button
+          type="button"
+          onClick={onAdd}
+          className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full bg-[#7C3AED] text-white text-[13px] font-semibold shadow-sm hover:bg-[#6D28D9] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+            <path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <path d="M19 8v6M22 11h-6"/>
+          </svg>
+          Add a contact
+        </button>
+        <div className="flex-1 min-w-0">
+          <div className="text-[12px] font-medium text-slate-800">Staff, subcontractors, occupants — anyone who matters</div>
+          <div className="text-[11px] text-slate-500">I'll link them to the right properties and remember how they behave.</div>
+        </div>
+      </div>
+      <div
+        aria-disabled="true"
+        className="flex items-center gap-2 px-4 py-2 rounded-full border border-slate-200 bg-slate-50 text-[12px] text-slate-500"
+      >
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>
+        Free-text chat with The Broker is coming in the live product — for now, add contacts via the button above.
+      </div>
+    </div>
+  );
+}
+
+function BrokerWorkArea({ character, contacts, onAdd }: {
+  character: { id: AdminCharacter; name: string; src: string; tagline: string; workTitle: string };
+  contacts: BrokerContact[];
+  onAdd: () => void;
+}) {
+  const [search, setSearch] = useState("");
+  const [typeFilter, setTypeFilter] = useState<"all" | BrokerContactType>("all");
+  const [flaggedOnly, setFlaggedOnly] = useState(false);
+
+  const filtered = contacts.filter((c) => {
+    if (typeFilter !== "all" && c.type !== typeFilter) return false;
+    if (flaggedOnly && !c.flagged) return false;
+    const q = search.trim().toLowerCase();
+    if (!q) return true;
+    return c.name.toLowerCase().includes(q) || c.role.toLowerCase().includes(q) || c.relationship.toLowerCase().includes(q);
+  });
+
+  const order: BrokerContactType[] = ["staff", "subcontractor", "occupant", "misc"];
+  const groups = order.map((t) => ({ type: t, items: filtered.filter((c) => c.type === t) }));
+
+  return (
+    <div className="absolute inset-0 bg-white z-[450] flex flex-col">
+      <header className="h-14 px-5 flex items-center border-b border-slate-200 shrink-0">
+        <div className="flex items-center gap-3">
+          <div className="w-9 h-9 rounded-full overflow-hidden bg-[#F5F3FF] ring-1 ring-slate-200 grid place-items-center">
+            <img src={character.src} alt="" aria-hidden className="w-[120%] h-[120%] object-contain" />
+          </div>
+          <div>
+            <div className="text-[13px] font-semibold text-slate-900">The Broker's black book</div>
+            <div className="text-[11px] text-slate-500">{contacts.length} contact{contacts.length === 1 ? "" : "s"} across your portfolio</div>
+          </div>
+        </div>
+      </header>
+
+      {/* Filters */}
+      <div className="px-5 py-3 border-b border-slate-100 flex flex-wrap items-center gap-2 shrink-0">
+        <div className="relative">
+          <input
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder="Search by contact name"
+            className="text-[12px] pl-7 pr-3 py-1.5 rounded-md border border-slate-200 bg-white focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40 w-64"
+            aria-label="Search by contact name"
+          />
+          <svg aria-hidden width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="absolute left-2 top-1/2 -translate-y-1/2">
+            <circle cx="11" cy="11" r="7"/><path d="M21 21l-3.5-3.5"/>
+          </svg>
+        </div>
+        <div className="flex items-center gap-1.5">
+          {(["all", "staff", "subcontractor", "occupant", "misc"] as const).map((t) => {
+            const active = typeFilter === t;
+            const label = t === "all" ? "+ Type: All" : `+ ${BROKER_TYPE_META[t].label}`;
+            return (
+              <button
+                key={t}
+                type="button"
+                onClick={() => setTypeFilter(t)}
+                aria-pressed={active}
+                className={`text-[11px] font-medium px-2.5 py-1.5 rounded-md border focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/30 ${
+                  active ? "border-[#7C3AED] bg-[#F5F3FF] text-[#7C3AED]" : "border-dashed border-slate-300 bg-white text-slate-600 hover:border-[#7C3AED]/50 hover:text-[#7C3AED]"
+                }`}
+              >
+                {label}
+              </button>
+            );
+          })}
+          <button
+            type="button"
+            className="text-[11px] font-medium px-2.5 py-1.5 rounded-md border border-dashed border-slate-300 bg-white text-slate-600 hover:border-[#7C3AED]/50 hover:text-[#7C3AED] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/30"
+          >
+            + Linked property/unit
+          </button>
+          <button
+            type="button"
+            onClick={() => setFlaggedOnly((v) => !v)}
+            aria-pressed={flaggedOnly}
+            className={`text-[11px] font-medium px-2.5 py-1.5 rounded-md border focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/30 ${
+              flaggedOnly ? "border-amber-400 bg-amber-50 text-amber-700" : "border-dashed border-slate-300 bg-white text-slate-600 hover:border-amber-400/60 hover:text-amber-700"
+            }`}
+          >
+            + Flagged
+          </button>
+        </div>
+        <div className="ml-auto">
+          <button
+            type="button"
+            onClick={onAdd}
+            className="inline-flex items-center gap-1.5 text-[12px] font-semibold px-3 py-1.5 rounded-md bg-[#7C3AED] text-white hover:bg-[#6D28D9] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40"
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M12 5v14M5 12h14"/></svg>
+            Add a contact
+          </button>
+        </div>
+      </div>
+
+      {/* Groups */}
+      <div className="flex-1 overflow-y-auto px-5 py-4">
+        {filtered.length === 0 && (
+          <div className="max-w-md mx-auto text-center text-[12px] text-slate-500 py-10">No contacts match these filters.</div>
+        )}
+        {groups.map((g) => {
+          if (g.items.length === 0) return null;
+          const meta = BROKER_TYPE_META[g.type];
+          return (
+            <section key={g.type} className="mb-6 last:mb-0">
+              <div className="flex items-center gap-2 mb-2 px-1">
+                <span className={`inline-flex items-center justify-center w-6 h-6 rounded-md ${meta.bg} ${meta.text} ring-1 ${meta.ring}`} aria-hidden>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">{meta.iconPath}</svg>
+                </span>
+                <h3 className="text-[11px] uppercase tracking-wide font-semibold text-slate-600">{meta.label}</h3>
+                <span className="text-[11px] text-slate-400">· {g.items.length}</span>
+              </div>
+              <div className="grid gap-3" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))" }}>
+                {g.items.map((c) => (
+                  <BrokerContactCard key={c.id} contact={c} />
+                ))}
+              </div>
+            </section>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+function BrokerContactCard({ contact }: { contact: BrokerContact }) {
+  const meta = BROKER_TYPE_META[contact.type];
+  return (
+    <button
+      type="button"
+      onClick={() => { /* placeholder: open contact detail */ }}
+      className="group text-left rounded-xl border border-slate-200 bg-white p-3.5 hover:border-[#7C3AED]/60 hover:shadow-sm transition focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40"
+    >
+      <div className="flex items-start gap-3">
+        <div className={`w-10 h-10 rounded-full grid place-items-center ${meta.bg} ${meta.text} ring-1 ${meta.ring} text-[12px] font-semibold shrink-0`} aria-hidden>
+          {contact.initials}
+        </div>
+        <div className="min-w-0 flex-1">
+          <div className="flex items-center gap-1.5">
+            <div className="text-[13px] font-semibold text-slate-900 truncate">{contact.name}</div>
+            <span className={`text-[10px] uppercase tracking-wide font-semibold px-1.5 py-0.5 rounded ${meta.bg} ${meta.text}`}>{meta.label}</span>
+          </div>
+          <div className="text-[11px] text-slate-500 truncate">{contact.role}</div>
+          <div className={`mt-1.5 text-[11.5px] flex items-center gap-1 ${contact.flagged ? "text-amber-700" : "text-slate-600"}`}>
+            {contact.flagged && (
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-label="Flagged"><path d="M4 21V4h12l-2 4 2 4H4"/></svg>
+            )}
+            <span className="truncate">{contact.relationship}</span>
+          </div>
+        </div>
+      </div>
+      <div className="mt-3 flex items-center justify-end gap-2">
+        <span
+          role="button"
+          tabIndex={0}
+          onClick={(e) => { e.stopPropagation(); }}
+          onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") e.stopPropagation(); }}
+          className="text-[11px] font-medium px-2 py-1 rounded-md text-slate-600 hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/30"
+        >
+          Edit
+        </span>
+        <span className="text-[11px] font-medium px-2 py-1 rounded-md text-[#7C3AED] group-hover:bg-[#F5F3FF]">Open →</span>
+      </div>
+    </button>
+  );
+}
+
 export default Prototype;
+
 
