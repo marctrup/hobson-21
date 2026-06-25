@@ -4016,6 +4016,8 @@ function PropertyContent({
   onDismiss,
   onPerform,
   onReview,
+  onManualComplete,
+  onOpenWorkflow,
 }: {
   property: Property;
   propertyActionCards?: ActionCard[];
@@ -4029,6 +4031,8 @@ function PropertyContent({
   onDismiss?: (id: string) => void;
   onPerform?: (id: string) => void;
   onReview?: (id: string) => void;
+  onManualComplete?: (id: string, note: string) => void;
+  onOpenWorkflow?: (ref: string) => void;
 }) {
   void onPreviewQuestion;
   const [filter, setFilter] = useState("");
