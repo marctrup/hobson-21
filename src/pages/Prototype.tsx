@@ -1272,7 +1272,7 @@ const Prototype: React.FC = () => {
       </aside>
 
       {/* Chat panel */}
-      <section className="w-[480px] shrink-0 bg-white border-r border-slate-200 flex flex-col">
+      <section className={`${isExpanded ? "flex-1" : "w-[480px] shrink-0"} bg-white border-r border-slate-200 flex flex-col motion-safe:transition-[width,flex-basis] motion-safe:duration-200`}>
         {/* Header */}
         <header className="h-14 px-5 flex items-center justify-between border-b border-slate-100">
           <div className="flex items-center gap-2">
