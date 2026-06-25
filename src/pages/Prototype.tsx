@@ -885,6 +885,7 @@ const Prototype: React.FC = () => {
   /* ----- onboarding line streaming ----- */
   useEffect(() => {
     if (view !== "onboarding") return;
+    if (!owlsReady) return;
     const beat = BEATS[beatIdx];
     if (!beat) return;
     if (lineIdx >= beat.lines.length) {
