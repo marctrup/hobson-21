@@ -1768,7 +1768,7 @@ function HobsonBubble({ text, owl, streaming, rich, onAskFollowUp }: { text: str
     return (
       <div className="flex items-start gap-2">
         <OwlAvatar state={owl} />
-        <div className="max-w-[560px] w-full bg-white border border-slate-200 text-[#1F2330] text-sm leading-relaxed px-4 py-3 rounded-2xl rounded-bl-md shadow-sm space-y-3">
+        <div className="max-w-[560px] w-full bg-white border border-slate-200 text-[#1F2330] text-sm leading-relaxed px-4 py-4 rounded-2xl rounded-bl-md shadow-sm space-y-4">
           <div className="flex items-center justify-between">
             <div className="text-[12px]">
               <span className="font-semibold text-slate-900">Hobson</span>
