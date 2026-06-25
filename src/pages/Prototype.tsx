@@ -4288,6 +4288,8 @@ function PropertyContent({
           onDismiss={(id) => onDismiss && onDismiss(id)}
           onPerform={onPerform ? (id) => onPerform(id) : undefined}
           onReview={onReview ? (id) => onReview(id) : undefined}
+          onManualComplete={onManualComplete}
+          onOpenWorkflow={onOpenWorkflow}
         />
       )}
     </div>
