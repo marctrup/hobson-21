@@ -6589,7 +6589,7 @@ function MagicianWorkArea({ character, workflows, onCreate, onAdjust, onView }: 
             {g.label && (
               <div className="text-[11px] uppercase tracking-wide text-slate-500 font-semibold mb-2 px-1">{g.label}</div>
             )}
-            <div className="grid grid-cols-1 xl:grid-cols-2 gap-3">
+            <div className="grid gap-3" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(340px, 1fr))" }}>
               {g.items.map((w) => (
                 <WorkflowCard key={w.id} w={w} onAdjust={() => onAdjust(w.id)} onView={() => onView(w.id)} />
               ))}
