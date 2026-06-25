@@ -2474,6 +2474,9 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
               />
             );
           }
+          if (c.id === "broker") {
+            return <BrokerWorkArea character={c} contacts={contacts} onAdd={handleAddBrokerContact} />;
+          }
           return <AdminWorkArea character={c} />;
 
         })()}
