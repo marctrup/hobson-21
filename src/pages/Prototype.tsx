@@ -1514,7 +1514,9 @@ const Prototype: React.FC = () => {
               onAsk={(q) => sendUnitQuestion(q)}
             />
           )}
+          </div>
         </div>
+
 
         {/* Composer */}
         <div className="px-5 pt-2 pb-4 border-t border-slate-100 bg-white">
