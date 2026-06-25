@@ -1966,7 +1966,9 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
               </form>
             </>
           ) : adminMode ? (
-            <LockedComposer view={view} />
+            adminCharacter === "professor"
+              ? <ProfessorComposer onUpload={handleProfessorUpload} />
+              : <LockedComposer view={view} />
           ) : testerMode && view === "unit" ? (
 
             <form
