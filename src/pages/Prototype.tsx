@@ -1224,8 +1224,12 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
         name: `New contact ${n}`,
         type: "misc",
         role: "Unspecified",
-        relationship: "Just added · tell me who they are and I'll link them up.",
         initials: "NC",
+        email: "—",
+        phone: "—",
+        contactPref: "preference not set",
+        address: "—",
+        relatedTo: "Just added · tell me who they are and I'll link them up.",
       },
       ...arr,
     ]);
