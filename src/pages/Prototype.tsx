@@ -860,11 +860,32 @@ const Prototype: React.FC = () => {
 
   const messageGroups = useMemo(() => groupChatMessages(messages), [messages]);
 
-  /* ----- scroll chat ----- */
+  /* ----- scroll behaviour: pin to top when entering a property/unit so the
+     owl intro, tiles, and intelligent actions are visible from the top.
+     Once the user sends a message in that context, resume auto-scroll-to-bottom. ----- */
+  const pinTopRef = useRef(false);
   useEffect(() => {
     const el = chatBodyRef.current;
-    if (el) el.scrollTop = el.scrollHeight;
-  }, [messages, typing, chipVisible, view, selectedUnitId, selectedPropertyId]);
+    if (view === "property" || view === "unit") {
+      pinTopRef.current = true;
+      if (el) el.scrollTop = 0;
+    } else {
+      pinTopRef.current = false;
+      if (el) el.scrollTop = el.scrollHeight;
+    }
+  }, [view, selectedPropertyId, selectedUnitId]);
+
+  useEffect(() => {
+    const lastUser = [...messages].reverse().find((m) => m.role === "user");
+    if (lastUser) pinTopRef.current = false;
+    const el = chatBodyRef.current;
+    if (!el) return;
+    if (pinTopRef.current) {
+      el.scrollTop = 0;
+    } else {
+      el.scrollTop = el.scrollHeight;
+    }
+  }, [messages, typing, chipVisible]);
 
   /* ----- pre-fill demo rent question per level ----- */
   useEffect(() => {
