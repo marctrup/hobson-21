@@ -1061,6 +1061,34 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
   const [profDocs, setProfDocs] = useState<ProfDoc[]>(SEED_PROF_DOCS);
   const [profEvents, setProfEvents] = useState<ProfEvent[]>([]);
 
+  // ----- Magician workshop state -----
+  const [workflows, setWorkflows] = useState<Workflow[]>(SEED_WORKFLOWS);
+  const [adjustingWorkflowId, setAdjustingWorkflowId] = useState<string | null>(null);
+  const [viewingWorkflowId, setViewingWorkflowId] = useState<string | null>(null);
+
+  const handleCreateWorkflow = () => {
+    const id = `wf-${Date.now()}`;
+    const draft: Workflow = {
+      id,
+      name: "Untitled workflow",
+      purpose: "Tell me what to watch for and I'll prepare it.",
+      icon: "wand", tone: "slate", status: "draft",
+      trigger: "—",
+      action: "prepare the work and bring it to you for approval",
+      scopeLabel: "Not yet set",
+      owner: { kind: "all_teams" },
+    };
+    setWorkflows((arr) => [draft, ...arr]);
+    setAdjustingWorkflowId(id);
+  };
+
+  const handleSaveWorkflow = (next: Workflow) => {
+    setWorkflows((arr) => arr.map((w) => w.id === next.id ? next : w));
+    setAdjustingWorkflowId(null);
+  };
+
+
+
   const handleProfessorUpload = (count: number = 3) => {
     const ts = Date.now();
     const stubs = ["Tenancy Agreement.pdf", "Lease — Flat 4.pdf", "EICR Report.pdf", "Insurance Schedule.pdf", "Gas Safety Record.pdf"];
