@@ -2729,8 +2729,10 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
               mode={mode}
               onCancel={mode === "perform" ? cancelPerform : cancelReview}
               onComplete={completePerform}
+              onReachedFinalGate={() => markReviewReady(card.id)}
               reducedMotion={reduced}
             />
+
           );
         })()}
         {adminMode && adminCharacter && (() => {
