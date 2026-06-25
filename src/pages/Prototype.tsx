@@ -6065,12 +6065,52 @@ function PerformWorkspace({
           previousBeats.map((b) => <BeatBubble key={b.id} beat={b} done />)
         )}
         {currentBeat && (
-          <BeatBubble
-            beat={currentBeat}
-            streamingText={streamingActive ? streamingText : currentBeat.text}
-            streaming={streamingActive}
-            done={false}
-          />
+          <div className="space-y-2.5">
+            <BeatBubble
+              beat={currentBeat}
+              streamingText={streamingActive ? streamingText : currentBeat.text}
+              streaming={streamingActive}
+              done={false}
+            />
+            {/* Inline decisions — sit directly under the current step content */}
+            {!streamingActive && !isComplete && (
+              <div className="pl-[44px]">
+                {currentBeat.gate ? (
+                  <div className="inline-block max-w-[640px] rounded-2xl border border-[#DDD6FE] bg-[#F5F3FF] px-3 py-2.5 space-y-2">
+                    <div className="text-[11px] uppercase tracking-wide text-[#5B21B6] font-semibold">{currentBeat.gate.label}</div>
+                    <div className="flex flex-wrap gap-1.5">
+                      {currentBeat.gate.options.map((opt, idx) => {
+                        const primary = opt.kind === "approve" || opt.kind === "continue";
+                        const cls = primary
+                          ? "bg-[#7C3AED] text-white hover:bg-[#6D28D9] focus:ring-[#7C3AED]"
+                          : opt.kind === "cancel"
+                          ? "text-slate-500 hover:text-slate-700 hover:bg-white border border-transparent focus:ring-slate-300"
+                          : "text-slate-700 bg-white border border-slate-200 hover:bg-slate-50 focus:ring-slate-300";
+                        return (
+                          <button
+                            key={opt.label + idx}
+                            autoFocus={idx === 0}
+                            onClick={() => advance(opt.nextBeatIdx, opt.label, opt.kind)}
+                            className={`text-xs px-3 py-1.5 rounded-full transition focus:outline-none focus:ring-2 ${cls}`}
+                          >
+                            {opt.label}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                ) : (
+                  <button
+                    autoFocus
+                    onClick={() => advance(undefined, "continue", "continue")}
+                    className="text-xs px-3 py-1.5 rounded-full bg-[#7C3AED] text-white hover:bg-[#6D28D9] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]"
+                  >
+                    Continue
+                  </button>
+                )}
+              </div>
+            )}
+          </div>
         )}
         {isComplete && (
           <div className="rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-2 text-[12px] text-emerald-900">
@@ -6079,46 +6119,6 @@ function PerformWorkspace({
         )}
       </div>
 
-      {/* Gate */}
-      {currentBeat && !streamingActive && !isComplete && (
-        <footer className="border-t border-slate-200 px-5 py-3 bg-white">
-          {currentBeat.gate ? (
-            <div className="space-y-2">
-              <div className="text-[11px] uppercase tracking-wide text-slate-500 font-semibold">{currentBeat.gate.label}</div>
-              <div className="flex flex-wrap gap-1.5">
-                {currentBeat.gate.options.map((opt, idx) => {
-                  const primary = opt.kind === "approve" || opt.kind === "continue";
-                  const cls = primary
-                    ? "bg-[#7C3AED] text-white hover:bg-[#6D28D9] focus:ring-[#7C3AED]"
-                    : opt.kind === "cancel"
-                    ? "text-slate-500 hover:text-slate-700 hover:bg-slate-50 border border-transparent focus:ring-slate-300"
-                    : "text-slate-700 border border-slate-200 hover:bg-slate-50 focus:ring-slate-300";
-                  return (
-                    <button
-                      key={opt.label + idx}
-                      autoFocus={idx === 0}
-                      onClick={() => advance(opt.nextBeatIdx, opt.label, opt.kind)}
-                      className={`text-xs px-3 py-1.5 rounded-full transition focus:outline-none focus:ring-2 ${cls}`}
-                    >
-                      {opt.label}
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-          ) : (
-            <div className="flex justify-end">
-              <button
-                autoFocus
-                onClick={() => advance(undefined, "continue", "continue")}
-                className="text-xs px-3 py-1.5 rounded-full bg-[#7C3AED] text-white hover:bg-[#6D28D9] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]"
-              >
-                Continue
-              </button>
-            </div>
-          )}
-        </footer>
-      )}
       {isComplete && (
         <footer className="border-t border-slate-200 px-5 py-3 bg-white flex justify-end">
           <button
