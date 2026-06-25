@@ -1434,22 +1434,24 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
         </button>
         {adminMode ? (
           <>
-            {ADMIN_CHARACTERS.map((c) => (
-              <CharacterRailItem
-                key={c.id}
-                name={c.name}
-                src={c.src}
-                active={adminCharacter === c.id}
-                onClick={() => selectAdminCharacter(c.id)}
-              />
-            ))}
-            {/* Discreet way out of Admin, sits just below the characters */}
+            <div className="flex flex-col items-center w-full" style={{ gap: 24, marginTop: 12 }}>
+              {ADMIN_CHARACTERS.map((c) => (
+                <CharacterRailItem
+                  key={c.id}
+                  name={c.name}
+                  src={c.src}
+                  active={adminCharacter === c.id}
+                  onClick={() => selectAdminCharacter(c.id)}
+                />
+              ))}
+            </div>
+            {/* Discreet way out of Admin, well below the characters */}
             <button
               type="button"
               onClick={exitAdmin}
               aria-label="Exit Admin and return to main menu"
               title="Exit Admin"
-              className="mt-1 w-[56px] flex flex-col items-center gap-1 py-1.5 rounded-lg text-slate-500 hover:text-[#7C3AED] hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]"
+              className="mt-8 w-[56px] flex flex-col items-center gap-1 py-1.5 rounded-lg text-slate-500 hover:text-[#7C3AED] hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]"
             >
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
                 <path d="M15 18l-6-6 6-6"/>
