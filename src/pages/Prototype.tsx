@@ -2248,6 +2248,67 @@ function AdminChat({ character, owl, professorEvents, onAssignProfessorType }: {
           </div>
         </div>
       )}
+      {character?.id === "professor" && phase === "done" && professorEvents && professorEvents.length > 0 && (
+        <div className="flex flex-col" style={{ gap: CHAT_TURN_GAP_PX }}>
+          {professorEvents.map((ev) => {
+            if (ev.kind === "professor") {
+              return (
+                <div key={ev.id} className="flex items-end gap-2">
+                  <CharacterAvatar src={character.src} />
+                  <div className="max-w-[360px] bg-[#EDE9FE] text-[#1F2330] text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-bl-md">
+                    {ev.text}
+                  </div>
+                </div>
+              );
+            }
+            // ask-type
+            return (
+              <div key={ev.id} className="ml-12 max-w-[420px] rounded-xl border border-[#7C3AED]/30 bg-white p-3 shadow-sm">
+                <div className="text-[11px] uppercase tracking-wide text-slate-500 font-semibold mb-2">
+                  Assign document type · {ev.docIds.length} file{ev.docIds.length === 1 ? "" : "s"} · all the same type
+                </div>
+                {ev.resolved ? (
+                  <div className="text-[12px] text-slate-700">
+                    <span className="font-semibold">{ev.resolved.type}</span>
+                    <span className="ml-2 inline-flex items-center gap-1 px-1.5 py-0.5 rounded border border-slate-200 bg-slate-50 text-[10px] uppercase tracking-wide text-slate-600">
+                      {ev.resolved.family}
+                    </span>
+                  </div>
+                ) : (
+                  <ProfTypeAssigner onAssign={(t) => onAssignProfessorType?.(ev.id, t)} />
+                )}
+              </div>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function ProfTypeAssigner({ onAssign }: { onAssign: (type: string) => void }) {
+  const [val, setVal] = useState("");
+  return (
+    <div className="flex items-center gap-2">
+      <select
+        value={val}
+        onChange={(e) => setVal(e.target.value)}
+        className="flex-1 text-[12px] border border-slate-200 rounded-md px-2 py-1.5 bg-white focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40"
+        aria-label="Document type"
+      >
+        <option value="">Choose a type…</option>
+        {PROF_DOC_TYPES.map((t) => (
+          <option key={t.label} value={t.label}>{t.label}</option>
+        ))}
+      </select>
+      <button
+        type="button"
+        disabled={!val}
+        onClick={() => onAssign(val)}
+        className="text-[12px] font-semibold px-3 py-1.5 rounded-md bg-[#7C3AED] text-white hover:bg-[#6D28D9] disabled:bg-slate-200 disabled:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40"
+      >
+        Assign
+      </button>
     </div>
   );
 }
