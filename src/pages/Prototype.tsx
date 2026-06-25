@@ -2714,7 +2714,7 @@ function AdminChat({ character, owl, professorEvents, onAssignProfessorType }: {
         <div className="flex items-end gap-2">
           <CharacterAvatar src={character.src} />
           <div className="max-w-[420px] bg-[#EDE9FE] text-[#1F2330] text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-bl-md">
-            Press <span className="font-semibold">"Create a workflow"</span> below and we'll build one together — I'll ask what to watch for, who it's for, and which units it covers.
+            Press <span className="font-semibold">"Create a workflow"</span> below and we'll build one together — I'll ask the questions and you will provide the answers — Lets go!
           </div>
         </div>
       )}
