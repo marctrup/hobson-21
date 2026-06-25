@@ -1241,8 +1241,13 @@ const Prototype: React.FC = () => {
 
   /* ============ Render ============ */
 
+  // Map must stay visible during the onboarding tour (Step 5 uses map search).
+  // Honour user preference otherwise.
+  const isExpanded = chatExpanded && view !== "onboarding";
+
   return (
     <div className="hobson-proto fixed inset-0 flex bg-white text-[#1F2330]">
+
       <StyleTag />
 
       {/* Left nav rail */}
