@@ -854,6 +854,21 @@ function HobsonMap({
 
     map.on("zoomend moveend", recomputeOverlap);
 
+    // Keep map sized to its container as the divider/window resizes.
+    let rafId: number | null = null;
+    const ro = new ResizeObserver(() => {
+      if (rafId != null) cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(() => {
+        rafId = null;
+        try {
+          if (!mapInstance.current) return;
+          mapInstance.current.invalidateSize({ animate: false, pan: false });
+          recomputeOverlap();
+        } catch { /* container detached mid-resize — safe to ignore */ }
+      });
+    });
+    if (mapRef.current) ro.observe(mapRef.current);
+
     // Fit to all property pins, then run overlap pass
     const bounds = L.latLngBounds(PROPERTIES.map((p) => [p.lat, p.lng] as [number, number]));
     map.fitBounds(bounds, { padding: [60, 60], maxZoom: 13, animate: !reduced });
@@ -863,6 +878,8 @@ function HobsonMap({
       map.off("zoomend moveend", recomputeOverlap);
       Object.values(connectorsRef.current).forEach((pl) => map.removeLayer(pl));
       connectorsRef.current = {};
+      ro.disconnect();
+      if (rafId != null) cancelAnimationFrame(rafId);
       map.remove();
       mapInstance.current = null;
       markersRef.current = {};
@@ -4694,23 +4711,25 @@ function PortfolioBriefing({
           <div className="sticky top-0 z-[1] bg-white/95 backdrop-blur py-1 text-[10px] uppercase tracking-wide font-semibold text-slate-500 border-b border-slate-100">
             {URGENCY_LABEL[g.key]} · {g.cards.length}
           </div>
-          {g.cards.map((c) => (
-            <ActionCardItem
-              key={c.id}
-              card={c}
-              level="portfolio"
-              expanded={expandedCardId === c.id}
-              onToggleExpand={() => setExpandedCardId(expandedCardId === c.id ? null : c.id)}
-              onHover={(on) => onHoverCard(on ? c.propertyId : null)}
-              onOpenUnit={c.anchorLevel === "unit" && c.unitId ? () => onOpenUnit(c.propertyId, c.unitId!, c.id) : undefined}
-              onOpenProperty={c.anchorLevel === "property" ? () => onOpenProperty(c.propertyId, c.id) : undefined}
-              onApprove={() => onApprove(c.id)}
-              onDefer={() => onDefer(c.id)}
-              onDismiss={() => onDismiss(c.id)}
-              onPerform={onPerform ? () => onPerform(c.id) : undefined}
-              onReview={onReview ? () => onReview(c.id) : undefined}
-            />
-          ))}
+          <div className="grid gap-3" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))" }}>
+            {g.cards.map((c) => (
+              <ActionCardItem
+                key={c.id}
+                card={c}
+                level="portfolio"
+                expanded={expandedCardId === c.id}
+                onToggleExpand={() => setExpandedCardId(expandedCardId === c.id ? null : c.id)}
+                onHover={(on) => onHoverCard(on ? c.propertyId : null)}
+                onOpenUnit={c.anchorLevel === "unit" && c.unitId ? () => onOpenUnit(c.propertyId, c.unitId!, c.id) : undefined}
+                onOpenProperty={c.anchorLevel === "property" ? () => onOpenProperty(c.propertyId, c.id) : undefined}
+                onApprove={() => onApprove(c.id)}
+                onDefer={() => onDefer(c.id)}
+                onDismiss={() => onDismiss(c.id)}
+                onPerform={onPerform ? () => onPerform(c.id) : undefined}
+                onReview={onReview ? () => onReview(c.id) : undefined}
+              />
+            ))}
+          </div>
         </div>
       ))}
 
@@ -4777,23 +4796,25 @@ function PropertyActions({
           <div className="text-[10px] uppercase tracking-wide font-semibold text-slate-400">
             {URGENCY_LABEL[g.key]} · {g.cards.length}
           </div>
-          {g.cards.map((c) => (
-            <div key={c.id} className={c.id === carriedCardId ? "rounded-xl ring-2 ring-[#7C3AED]/50 ring-offset-2 ring-offset-white" : ""}>
-              <ActionCardItem
-                card={c}
-                level="property"
-                expanded={expandedCardId === c.id}
-                onToggleExpand={() => setExpandedCardId(expandedCardId === c.id ? null : c.id)}
-                onHover={() => { /* no map hover at property level */ }}
-                onOpenUnit={c.anchorLevel === "unit" && c.unitId ? () => onOpenUnit(c.unitId!, c.id) : undefined}
-                onApprove={() => onApprove(c.id)}
-                onDefer={() => onDefer(c.id)}
-                onDismiss={() => onDismiss(c.id)}
-                onPerform={onPerform ? () => onPerform(c.id) : undefined}
-                onReview={onReview ? () => onReview(c.id) : undefined}
-              />
-            </div>
-          ))}
+          <div className="grid gap-3" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))" }}>
+            {g.cards.map((c) => (
+              <div key={c.id} className={c.id === carriedCardId ? "rounded-xl ring-2 ring-[#7C3AED]/50 ring-offset-2 ring-offset-white" : ""}>
+                <ActionCardItem
+                  card={c}
+                  level="property"
+                  expanded={expandedCardId === c.id}
+                  onToggleExpand={() => setExpandedCardId(expandedCardId === c.id ? null : c.id)}
+                  onHover={() => { /* no map hover at property level */ }}
+                  onOpenUnit={c.anchorLevel === "unit" && c.unitId ? () => onOpenUnit(c.unitId!, c.id) : undefined}
+                  onApprove={() => onApprove(c.id)}
+                  onDefer={() => onDefer(c.id)}
+                  onDismiss={() => onDismiss(c.id)}
+                  onPerform={onPerform ? () => onPerform(c.id) : undefined}
+                  onReview={onReview ? () => onReview(c.id) : undefined}
+                />
+              </div>
+            ))}
+          </div>
         </div>
       ))}
     </section>
