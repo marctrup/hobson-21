@@ -2162,8 +2162,11 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
               owl={owl}
               professorEvents={adminCharacter === "professor" ? profEvents : undefined}
               onAssignProfessorType={assignProfessorType}
+              brokerEvents={adminCharacter === "broker" ? brokerEvents : undefined}
+              brokerFlowActive={adminCharacter === "broker" && !!brokerFlow}
             />
           ) : (<>
+
 
 
 
