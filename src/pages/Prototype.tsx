@@ -1430,14 +1430,32 @@ const Prototype: React.FC = () => {
           )}
 
           {/* Hobson messages render first so the greeting sits at the top */}
-          {messages.map((m) =>
-            m.role === "hobson" ? (
-              <HobsonBubble key={m.id} text={m.text} owl={owl} streaming={!!m.streaming} rich={m.rich} onAskFollowUp={(q) => sendRentAnswer(q)} />
+          {messages.map((m, i) => {
+            const prev = messages[i - 1];
+            const groupedWithPrev = m.role === "hobson" && prev?.role === "hobson";
+            return m.role === "hobson" ? (
+              <HobsonBubble
+                key={m.id}
+                text={m.text}
+                owl={owl}
+                streaming={!!m.streaming}
+                rich={m.rich}
+                onAskFollowUp={(q) => sendRentAnswer(q)}
+                showAvatar={!groupedWithPrev}
+
+              />
             ) : (
               <UserBubble key={m.id} text={m.text} />
-            )
+            );
+          })}
+          {typing && (
+            <TypingBubble
+              owl={owl}
+              showAvatar={messages[messages.length - 1]?.role !== "hobson"}
+
+            />
           )}
-          {typing && <TypingBubble owl={owl} />}
+
 
           {/* (Global search/recents panel is intentionally NOT shown at property level — that belongs to Portfolio returning mode only.) */}
 
@@ -1763,11 +1781,16 @@ function RailItem({ icon, label, active, onClick }: { icon: "pin" | "doc" | "cha
 }
 
 
-function HobsonBubble({ text, owl, streaming, rich, onAskFollowUp }: { text: string; owl: OwlState; streaming?: boolean; rich?: "rentFlat2"; onAskFollowUp?: (q: string) => void }) {
+function HobsonBubble({ text, owl, streaming, rich, onAskFollowUp, showAvatar = true }: { text: string; owl: OwlState; streaming?: boolean; rich?: "rentFlat2"; onAskFollowUp?: (q: string) => void; showAvatar?: boolean }) {
+  const AvatarSlot = showAvatar
+    ? <OwlAvatar state={owl} />
+    : <div aria-hidden className="w-10 h-10 shrink-0" />;
+  
+
   if (rich === "rentFlat2") {
     return (
       <div className="flex items-start gap-2">
-        <OwlAvatar state={owl} />
+        {AvatarSlot}
         <div className="max-w-[560px] w-full bg-white border border-slate-200 text-[#1F2330] text-sm leading-relaxed px-4 py-4 rounded-2xl rounded-bl-md shadow-sm space-y-4">
           <div className="flex items-center justify-between">
             <div className="text-[12px]">
@@ -1795,7 +1818,7 @@ function HobsonBubble({ text, owl, streaming, rich, onAskFollowUp }: { text: str
   }
   return (
     <div className="flex items-end gap-2">
-      <OwlAvatar state={owl} />
+      {AvatarSlot}
       <div className="max-w-[340px] bg-[#EDE9FE] text-[#1F2330] text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-bl-md">
         {text}
         {streaming && <span className="inline-block w-1.5 h-3.5 ml-0.5 bg-[#7C3AED] align-middle animate-pulse" />}
@@ -1803,6 +1826,7 @@ function HobsonBubble({ text, owl, streaming, rich, onAskFollowUp }: { text: str
     </div>
   );
 }
+
 
 const RENT_BODY_TEXT =
   "The current rent is set out in the tenancy paperwork and the later rent increase notice. The agreement also refers to annual reviews linked to RPI, with the notice saying the increase follows the agreed minimum adjustment.";
@@ -1934,16 +1958,21 @@ function UserBubble({ text }: { text: string }) {
   );
 }
 
-function TypingBubble({ owl }: { owl: OwlState }) {
+function TypingBubble({ owl, showAvatar = true }: { owl: OwlState; showAvatar?: boolean }) {
+  const AvatarSlot = showAvatar
+    ? <OwlAvatar state={owl} />
+    : <div aria-hidden className="w-10 h-10 shrink-0" />;
   return (
     <div className="flex items-end gap-2">
-      <OwlAvatar state={owl} />
+
+      {AvatarSlot}
       <div className="bg-[#EDE9FE] px-4 py-3 rounded-2xl rounded-bl-md flex items-center gap-1">
         <Dot delay={0} /><Dot delay={150} /><Dot delay={300} />
       </div>
     </div>
   );
 }
+
 
 function Dot({ delay }: { delay: number }) {
   return (
