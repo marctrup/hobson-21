@@ -888,6 +888,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
   const [reviewingCardId, setReviewingCardId] = useState<string | null>(null);
   const [chatExpanded, setChatExpanded] = useState(false);
   const [chatWidth, setChatWidth] = useState(480);
+  const [chatDropOver, setChatDropOver] = useState(false);
   const CHAT_MIN_WIDTH = 360;
   const MAIN_MIN_WIDTH = 420;
   const [adminMode, setAdminMode] = useState(false);
