@@ -48,9 +48,13 @@ type BrokerContact = {
   id: string;
   name: string;
   type: BrokerContactType;
-  role: string;
-  relationship: string;
+  role: string;                 // e.g. "Fire alarm engineer · contact: John Reed"
   initials: string;
+  email: string;
+  phone: string;
+  contactPref: string;          // e.g. "prefers email", "no calls Mondays"
+  address: string;              // unit address for occupants; business address otherwise
+  relatedTo: string;            // linked properties / landlord / introduced by …
   flagged?: boolean;
   flagLabel?: string;
 };
@@ -79,14 +83,71 @@ const BROKER_TYPE_META: Record<BrokerContactType, { label: string; plural: strin
 };
 
 const SEED_BROKER_CONTACTS: BrokerContact[] = [
-  { id: "bc-1", name: "Sarah Chen", type: "staff", role: "Asset Manager", relationship: "Owns 4 workflows · 9 units", initials: "SC" },
-  { id: "bc-2", name: "James Okoro", type: "staff", role: "Lease Manager", relationship: "Handles notices · 3 units", initials: "JO" },
-  { id: "bc-3", name: "Firewatch Ltd", type: "subcontractor", role: "Fire alarm engineer · John Reed", relationship: "Used 3× · prefers email", initials: "FW" },
-  { id: "bc-4", name: "Voltedge", type: "subcontractor", role: "Electrician / EICR · Priya Shah", relationship: "Used 1× · no calls Mondays", initials: "VE" },
-  { id: "bc-5", name: "M&S", type: "occupant", role: "Tenant · Shop, Nugent Terrace", relationship: "1 unit · since 2019", initials: "MS" },
-  { id: "bc-6", name: "R. Turner", type: "occupant", role: "Tenant · Flat 2, Nugent Terrace", relationship: "Rent review due · 1 unit", initials: "RT", flagged: true, flagLabel: "Rent review due" },
-  { id: "bc-7", name: "Hartwell & Co", type: "misc", role: "Solicitors", relationship: "4 matters · replies in ~6 days", initials: "HC" },
+  {
+    id: "bc-1", name: "Sarah Chen", type: "staff", initials: "SC",
+    role: "Asset Manager · internal",
+    email: "sarah.chen@yourco.co.uk",
+    phone: "020 7946 0188",
+    contactPref: "prefers email",
+    address: "Head office · 14 Eastcastle St, London W1W",
+    relatedTo: "Responsible for: 5 Nugent Terrace, Stanley House",
+  },
+  {
+    id: "bc-2", name: "James Okoro", type: "staff", initials: "JO",
+    role: "Lease Manager · internal",
+    email: "james.okoro@yourco.co.uk",
+    phone: "020 7946 0192",
+    contactPref: "prefers phone",
+    address: "Head office · 14 Eastcastle St, London W1W",
+    relatedTo: "Responsible for: 5 Nugent Terrace, Cromwell Mews",
+  },
+  {
+    id: "bc-3", name: "Firewatch Ltd", type: "subcontractor", initials: "FW",
+    role: "Fire alarm engineer · contact: John Reed",
+    email: "john.reed@firewatch.co.uk",
+    phone: "020 7946 0321",
+    contactPref: "prefers email",
+    address: "Unit 7, Park Royal Trade Park, London NW10",
+    relatedTo: "Linked to: 5 Nugent Terrace, Stanley House",
+  },
+  {
+    id: "bc-4", name: "Voltedge", type: "subcontractor", initials: "VE",
+    role: "Electrician / EICR · contact: Priya Shah",
+    email: "priya@voltedge.uk",
+    phone: "07700 900614",
+    contactPref: "no calls Mondays",
+    address: "22 Camden Road, London NW1",
+    relatedTo: "Linked to: 5 Nugent Terrace · introduced by Sarah Chen",
+  },
+  {
+    id: "bc-5", name: "M&S", type: "occupant", initials: "MS",
+    role: "Tenant · Shop, 5 Nugent Terrace",
+    email: "store.ops@marksandspencer.com",
+    phone: "020 7946 0440",
+    contactPref: "prefers email",
+    address: "Shop, 5 Nugent Terrace, London NW8",
+    relatedTo: "Landlord: you · Linked unit: Shop, 5 Nugent Terrace",
+  },
+  {
+    id: "bc-6", name: "R. Turner", type: "occupant", initials: "RT", flagged: true, flagLabel: "Rent review due",
+    role: "Tenant · Flat 2, 5 Nugent Terrace",
+    email: "r.turner@gmail.com",
+    phone: "07700 900221",
+    contactPref: "prefers phone",
+    address: "Flat 2, 5 Nugent Terrace, London NW8",
+    relatedTo: "Landlord: you · Linked unit: Flat 2, 5 Nugent Terrace",
+  },
+  {
+    id: "bc-7", name: "Hartwell & Co", type: "misc", initials: "HC",
+    role: "Solicitors · property team · contact: Elena Marsh",
+    email: "e.marsh@hartwell.co.uk",
+    phone: "020 7100 4422",
+    contactPref: "prefers email",
+    address: "3 Lincoln's Inn Fields, London WC2A",
+    relatedTo: "Acts on: lease renewals, Flat 2 rent review · introduced by James Okoro",
+  },
 ];
+
 
 
 /* ---------------- Professor library types & seed ---------------- */
@@ -1163,8 +1224,12 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
         name: `New contact ${n}`,
         type: "misc",
         role: "Unspecified",
-        relationship: "Just added · tell me who they are and I'll link them up.",
         initials: "NC",
+        email: "—",
+        phone: "—",
+        contactPref: "preference not set",
+        address: "—",
+        relatedTo: "Just added · tell me who they are and I'll link them up.",
       },
       ...arr,
     ]);
@@ -6933,7 +6998,7 @@ function BrokerWorkArea({ character, contacts, onAdd }: {
     if (flaggedOnly && !c.flagged) return false;
     const q = search.trim().toLowerCase();
     if (!q) return true;
-    return c.name.toLowerCase().includes(q) || c.role.toLowerCase().includes(q) || c.relationship.toLowerCase().includes(q);
+    return c.name.toLowerCase().includes(q) || c.role.toLowerCase().includes(q) || c.relatedTo.toLowerCase().includes(q) || c.email.toLowerCase().includes(q);
   });
 
   const order: BrokerContactType[] = ["staff", "subcontractor", "occupant", "misc"];
@@ -6967,18 +7032,18 @@ function BrokerWorkArea({ character, contacts, onAdd }: {
             <circle cx="11" cy="11" r="7"/><path d="M21 21l-3.5-3.5"/>
           </svg>
         </div>
-        <div className="flex items-center gap-1.5">
+        <div className="flex items-center gap-1.5 flex-wrap">
           {(["all", "staff", "subcontractor", "occupant", "misc"] as const).map((t) => {
             const active = typeFilter === t;
-            const label = t === "all" ? "+ Type: All" : `+ ${BROKER_TYPE_META[t].label}`;
+            const label = t === "all" ? "Type: All" : BROKER_TYPE_META[t].label;
             return (
               <button
                 key={t}
                 type="button"
                 onClick={() => setTypeFilter(t)}
                 aria-pressed={active}
-                className={`text-[11px] font-medium px-2.5 py-1.5 rounded-md border focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/30 ${
-                  active ? "border-[#7C3AED] bg-[#F5F3FF] text-[#7C3AED]" : "border-dashed border-slate-300 bg-white text-slate-600 hover:border-[#7C3AED]/50 hover:text-[#7C3AED]"
+                className={`text-[11px] font-medium px-2.5 py-1.5 rounded-full border focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/30 ${
+                  active ? "border-[#7C3AED] bg-[#F5F3FF] text-[#7C3AED]" : "border-slate-200 bg-white text-slate-600 hover:border-[#7C3AED]/50 hover:text-[#7C3AED]"
                 }`}
               >
                 {label}
@@ -6987,19 +7052,21 @@ function BrokerWorkArea({ character, contacts, onAdd }: {
           })}
           <button
             type="button"
-            className="text-[11px] font-medium px-2.5 py-1.5 rounded-md border border-dashed border-slate-300 bg-white text-slate-600 hover:border-[#7C3AED]/50 hover:text-[#7C3AED] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/30"
+            aria-disabled="true"
+            className="text-[11px] font-medium px-2.5 py-1.5 rounded-full border border-slate-200 bg-white text-slate-500 hover:border-[#7C3AED]/40 hover:text-[#7C3AED] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/30"
+            title="Filter by linked property or unit"
           >
-            + Linked property/unit
+            Linked property/unit
           </button>
           <button
             type="button"
             onClick={() => setFlaggedOnly((v) => !v)}
             aria-pressed={flaggedOnly}
-            className={`text-[11px] font-medium px-2.5 py-1.5 rounded-md border focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/30 ${
-              flaggedOnly ? "border-amber-400 bg-amber-50 text-amber-700" : "border-dashed border-slate-300 bg-white text-slate-600 hover:border-amber-400/60 hover:text-amber-700"
+            className={`text-[11px] font-medium px-2.5 py-1.5 rounded-full border focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/30 ${
+              flaggedOnly ? "border-amber-400 bg-amber-50 text-amber-700" : "border-slate-200 bg-white text-slate-600 hover:border-amber-400/60 hover:text-amber-700"
             }`}
           >
-            + Flagged
+            Flagged
           </button>
         </div>
       </div>
@@ -7021,7 +7088,7 @@ function BrokerWorkArea({ character, contacts, onAdd }: {
                 <h3 className="text-[11px] uppercase tracking-wide font-semibold text-slate-600">{meta.label}</h3>
                 <span className="text-[11px] text-slate-400">· {g.items.length}</span>
               </div>
-              <div className="grid gap-3" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))" }}>
+              <div className="grid gap-3" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))" }}>
                 {g.items.map((c) => (
                   <BrokerContactCard key={c.id} contact={c} />
                 ))}
@@ -7036,43 +7103,70 @@ function BrokerWorkArea({ character, contacts, onAdd }: {
 
 function BrokerContactCard({ contact }: { contact: BrokerContact }) {
   const meta = BROKER_TYPE_META[contact.type];
+  const stop = (e: React.SyntheticEvent) => e.stopPropagation();
   return (
-    <button
-      type="button"
-      onClick={() => { /* placeholder: open contact detail */ }}
-      className="group text-left rounded-xl border border-slate-200 bg-white p-3.5 hover:border-[#7C3AED]/60 hover:shadow-sm transition focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40"
-    >
+    <div className="group rounded-xl border border-slate-200 bg-white p-3.5 hover:border-[#7C3AED]/50 hover:shadow-sm transition focus-within:ring-2 focus-within:ring-[#7C3AED]/40">
+      {/* Header */}
       <div className="flex items-start gap-3">
         <div className={`w-10 h-10 rounded-full grid place-items-center ${meta.bg} ${meta.text} ring-1 ${meta.ring} text-[12px] font-semibold shrink-0`} aria-hidden>
           {contact.initials}
         </div>
         <div className="min-w-0 flex-1">
-          <div className="flex items-center gap-1.5">
+          <div className="flex items-center gap-1.5 flex-wrap">
             <div className="text-[13px] font-semibold text-slate-900 truncate">{contact.name}</div>
             <span className={`text-[10px] uppercase tracking-wide font-semibold px-1.5 py-0.5 rounded ${meta.bg} ${meta.text}`}>{meta.label}</span>
-          </div>
-          <div className="text-[11px] text-slate-500 truncate">{contact.role}</div>
-          <div className={`mt-1.5 text-[11.5px] flex items-center gap-1 ${contact.flagged ? "text-amber-700" : "text-slate-600"}`}>
             {contact.flagged && (
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-label="Flagged"><path d="M4 21V4h12l-2 4 2 4H4"/></svg>
+              <span className="inline-flex items-center gap-1 text-[10px] uppercase tracking-wide font-semibold px-1.5 py-0.5 rounded bg-amber-50 text-amber-700 ring-1 ring-amber-200" aria-label={contact.flagLabel || "Flagged"}>
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M4 21V4h12l-2 4 2 4H4"/></svg>
+                {contact.flagLabel || "Flagged"}
+              </span>
             )}
-            <span className="truncate">{contact.relationship}</span>
           </div>
+          <div className="text-[11.5px] text-slate-600 mt-0.5">{contact.role}</div>
         </div>
       </div>
-      <div className="mt-3 flex items-center justify-end gap-2">
-        <span
-          role="button"
-          tabIndex={0}
-          onClick={(e) => { e.stopPropagation(); }}
-          onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") e.stopPropagation(); }}
+
+      {/* Details */}
+      <dl className="mt-3 space-y-1.5 text-[11.5px] text-slate-700">
+        <div className="flex items-start gap-2">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#64748b" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mt-0.5 shrink-0" aria-hidden><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+          <a href={`mailto:${contact.email}`} onClick={stop} className="truncate text-slate-700 hover:text-[#7C3AED] hover:underline focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/30 rounded-sm">{contact.email}</a>
+        </div>
+        <div className="flex items-start gap-2">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#64748b" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mt-0.5 shrink-0" aria-hidden><path d="M22 16.92V21a1 1 0 01-1.1 1A19 19 0 012 4.1 1 1 0 013 3h4.09a1 1 0 011 .75l1 4a1 1 0 01-.27 1L7 10.5a16 16 0 006.5 6.5l1.75-1.82a1 1 0 011-.27l4 1a1 1 0 01.75 1z"/></svg>
+          <div className="min-w-0">
+            <a href={`tel:${contact.phone.replace(/\s+/g, "")}`} onClick={stop} className="text-slate-700 hover:text-[#7C3AED] hover:underline focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/30 rounded-sm">{contact.phone}</a>
+            <span className="text-slate-500"> · {contact.contactPref}</span>
+          </div>
+        </div>
+        <div className="flex items-start gap-2">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#64748b" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mt-0.5 shrink-0" aria-hidden><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <span className="truncate">{contact.address}</span>
+        </div>
+        <div className="flex items-start gap-2">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mt-0.5 shrink-0" aria-hidden><path d="M10 13a5 5 0 007 0l3-3a5 5 0 00-7-7l-1 1"/><path d="M14 11a5 5 0 00-7 0l-3 3a5 5 0 007 7l1-1"/></svg>
+          <span className="text-slate-700"><span className="text-slate-500">Related: </span>{contact.relatedTo}</span>
+        </div>
+      </dl>
+
+      {/* Footer */}
+      <div className="mt-3 pt-2 border-t border-slate-100 flex items-center justify-end gap-1">
+        <button
+          type="button"
+          onClick={stop}
           className="text-[11px] font-medium px-2 py-1 rounded-md text-slate-600 hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/30"
         >
           Edit
-        </span>
-        <span className="text-[11px] font-medium px-2 py-1 rounded-md text-[#7C3AED] group-hover:bg-[#F5F3FF]">Open →</span>
+        </button>
+        <button
+          type="button"
+          onClick={stop}
+          className="text-[11px] font-medium px-2 py-1 rounded-md text-[#7C3AED] hover:bg-[#F5F3FF] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/30"
+        >
+          Open →
+        </button>
       </div>
-    </button>
+    </div>
   );
 }
 
