@@ -1848,7 +1848,8 @@ function RentFlat2Answer({ onAskFollowUp, bodyText }: { onAskFollowUp?: (q: stri
     try { await navigator.clipboard.writeText(text); showToast("Copied"); } catch { showToast("Copy failed"); }
   };
   return (
-    <div className="space-y-3">
+    <div className="space-y-4">
+
       <div className="overflow-hidden rounded-lg border border-slate-200">
         <table className="w-full text-[13px]">
           <thead className="bg-slate-50 text-slate-600">
