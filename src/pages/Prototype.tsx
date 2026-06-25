@@ -3335,7 +3335,7 @@ function PortfolioBriefing({
       </div>
 
       {groups.map((g) => (
-        <div key={g.key} className="space-y-2">
+        <div key={g.key} className="space-y-3">
           <div className="sticky top-0 z-[1] bg-white/95 backdrop-blur py-1 text-[10px] uppercase tracking-wide font-semibold text-slate-500 border-b border-slate-100">
             {URGENCY_LABEL[g.key]} · {g.cards.length}
           </div>
