@@ -905,6 +905,43 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
   };
   const selectAdminCharacter = (c: AdminCharacter) => setAdminCharacter(c);
 
+  // ----- Professor library state -----
+  const [profDocs, setProfDocs] = useState<ProfDoc[]>(SEED_PROF_DOCS);
+  const [profEvents, setProfEvents] = useState<ProfEvent[]>([]);
+
+  const handleProfessorUpload = (count: number = 3) => {
+    const ts = Date.now();
+    const stubs = ["Tenancy Agreement.pdf", "Lease — Flat 4.pdf", "EICR Report.pdf", "Insurance Schedule.pdf", "Gas Safety Record.pdf"];
+    const newDocs: ProfDoc[] = Array.from({ length: count }).map((_, i) => ({
+      id: `pd-${ts}-${i}`,
+      name: stubs[i % stubs.length],
+      status: "pending" as DocStatus,
+      uploadedAt: "Today",
+    }));
+    setProfDocs((arr) => [...newDocs, ...arr]);
+    const batchId = `ev-${ts}`;
+    setProfEvents((arr) => [
+      ...arr,
+      { kind: "professor", id: `${batchId}-q`, text: `I've taken in ${count} document${count === 1 ? "" : "s"}. What type are these?` },
+      { kind: "ask-type", id: batchId, docIds: newDocs.map((d) => d.id) },
+    ]);
+  };
+
+  const assignProfessorType = (batchId: string, typeLabel: string) => {
+    const meta = PROF_DOC_TYPES.find((t) => t.label === typeLabel);
+    if (!meta) return;
+    const ev = profEvents.find((e) => e.kind === "ask-type" && e.id === batchId) as Extract<ProfEvent, { kind: "ask-type" }> | undefined;
+    if (!ev) return;
+    setProfEvents((arr) => arr.map((e) => e.kind === "ask-type" && e.id === batchId ? { ...e, resolved: { type: typeLabel, family: meta.family } } : e));
+    setProfDocs((arr) => arr.map((d) => ev.docIds.includes(d.id) ? { ...d, type: typeLabel, family: meta.family, timeClass: meta.timeClass, status: "extracting" } : d));
+    setProfEvents((arr) => [...arr, { kind: "professor", id: `${batchId}-r`, text: `Marked as ${typeLabel}. I'll read them now and let you know what I find.` }]);
+    // simulate extraction
+    window.setTimeout(() => {
+      setProfDocs((arr) => arr.map((d) => ev.docIds.includes(d.id) ? { ...d, status: "extracted", extractedAt: "Just now" } : d));
+      setProfEvents((arr) => [...arr, { kind: "professor", id: `${batchId}-done`, text: `Done. ${ev.docIds.length} document${ev.docIds.length === 1 ? "" : "s"} read and filed in the library.` }]);
+    }, 2800);
+  };
+
 
   const performCard = (id: string) => {
     setReviewingCardId(null);
