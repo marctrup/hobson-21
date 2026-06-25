@@ -1243,7 +1243,8 @@ const Prototype: React.FC = () => {
 
   // Map must stay visible during the onboarding tour (Step 5 uses map search).
   // Honour user preference otherwise.
-  const isExpanded = chatExpanded && view !== "onboarding";
+  const hasRightOverlay = showDocuments || showWhatIveDone || !!performingCardId || !!reviewingCardId;
+  const isExpanded = chatExpanded && view !== "onboarding" && !hasRightOverlay;
 
   return (
     <div className="hobson-proto fixed inset-0 flex bg-white text-[#1F2330]">
