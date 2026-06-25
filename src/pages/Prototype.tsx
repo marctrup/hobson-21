@@ -3014,9 +3014,50 @@ function AdminChat({ character, owl, professorEvents, onAssignProfessorType, bro
           })}
         </div>
       )}
+      {character?.id === "broker" && phase === "done" && !brokerFlowActive && (!brokerEvents || brokerEvents.length === 0) && (
+        <div className="flex items-end gap-2">
+          <CharacterAvatar src={character.src} />
+          <div className="max-w-[420px] bg-[#EDE9FE] text-[#1F2330] text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-bl-md">
+            Press <span className="font-semibold">"Add a contact"</span> below and we'll add one together — I'll ask the questions and you will provide the answers — Lets go!
+          </div>
+        </div>
+      )}
+      {character?.id === "broker" && phase === "done" && brokerEvents && brokerEvents.length > 0 && (
+        <div className="flex flex-col" style={{ gap: CHAT_TURN_GAP_PX }}>
+          {brokerEvents.map((ev) => {
+            if (ev.kind === "broker") {
+              return (
+                <div key={ev.id} className="flex items-end gap-2">
+                  <CharacterAvatar src={character.src} />
+                  <div className="max-w-[420px] bg-[#EDE9FE] text-[#1F2330] text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-bl-md">
+                    {ev.text}
+                  </div>
+                </div>
+              );
+            }
+            if (ev.kind === "user") {
+              return (
+                <div key={ev.id} className="flex justify-end">
+                  <div className="max-w-[420px] bg-[#7C3AED] text-white text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-br-md">
+                    {ev.text}
+                  </div>
+                </div>
+              );
+            }
+            // summary
+            return (
+              <div key={ev.id} className="ml-12 max-w-[420px] rounded-xl border border-[#7C3AED]/30 bg-[#F5F3FF] p-3">
+                <div className="text-[11px] uppercase tracking-wide text-[#7C3AED] font-semibold mb-1">Added to the black book</div>
+                <div className="text-[12px] text-slate-700"><span className="font-semibold">{ev.name}</span> · pinned at the top of the book on the right.</div>
+              </div>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }
+
 
 function ProfTypeAssigner({ onAssign }: { onAssign: (type: string) => void }) {
   const [val, setVal] = useState("");
