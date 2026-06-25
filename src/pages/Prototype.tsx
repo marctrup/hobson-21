@@ -35,10 +35,11 @@ const ADMIN_CHARACTERS: { id: AdminCharacter; name: string; src: string; tagline
     id: "broker",
     name: "The Broker",
     src: characterBroker,
-    tagline: "Deals, contracts & money",
-    greeting: "Delighted. I'm The Broker — I handle the deals, contracts and the money side of things. Talk me through what you're arranging and I'll keep the paperwork honest.",
-    workTitle: "The Broker's desk",
-    workIntro: "Where deals, contracts and figures are reviewed.",
+    tagline: "Contacts & relationships",
+    greeting: "The Broker. I keep the black book — every contact connected to your portfolio, and the history between them. Tell me who you're dealing with, and I'll give you the relationship in full context.",
+    workTitle: "The Broker's black book",
+    workIntro: "Where contacts, relationships and their histories are kept — tenants, landlords, contractors, agents, solicitors, lenders, authorities.",
+
   },
 ];
 
