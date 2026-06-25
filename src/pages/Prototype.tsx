@@ -18,7 +18,7 @@ const ADMIN_CHARACTERS: { id: AdminCharacter; name: string; src: string; tagline
     name: "The Magician",
     src: characterMagician,
     tagline: "Workflows & automations",
-    greeting: "A pleasure. I'm The Magician — I conjure the workflows and automations that keep your portfolio moving quietly in the background. Tell me what you would like to make happen, and I'll set the stage.",
+    greeting: "This is where we make the magic together. Tell me what you'd like to keep on top of — rent reviews, compliance, notice deadlines — and I'll build a workflow that watches for it and prepares the work before you ask. Press \u201cCreate a workflow\u201d and we'll build one together.",
     workTitle: "The Magician's workshop",
     workIntro: "Where automations are composed and rehearsed before they go live.",
   },
