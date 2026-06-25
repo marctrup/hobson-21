@@ -562,6 +562,10 @@ type TriggerType = "review" | "break" | "compliance" | "notice" | "expiry";
 type ApprovalState = "pending" | "in_progress" | "approved" | "deferred" | "dismissed";
 type AnchorLevel = "unit" | "property";
 
+type CardOrigin =
+  | { kind: "hobson" }
+  | { kind: "user"; name: string; initials: string };
+
 type ActionCard = {
   id: string;
   propertyId: string;
@@ -579,6 +583,10 @@ type ActionCard = {
   urgency: Urgency;
   approvalState: ApprovalState;
   preparedDetail: string;        // what Hobson will do, on approve-expand
+  addedBy: CardOrigin;           // who logged this card (Hobson proactively, or a user)
+  workflowRef?: string;          // e.g. "PA-001" — links back to the Magician's workflow
+  manualNote?: string;           // user-supplied note when handled manually
+  manuallyCompleted?: boolean;   // true if user pressed "Let me handle this" → Complete
 };
 
 const INITIAL_ACTION_CARDS: ActionCard[] = [
@@ -587,7 +595,6 @@ const INITIAL_ACTION_CARDS: ActionCard[] = [
     propertyId: "stanley",
     propertyName: "Stanley House",
     anchorLevel: "property",
-    // omitted relevantUnitIds = applies to every unit in the building
     triggerType: "compliance",
     title: "Fire alarm certification expiring — Stanley House",
     whyItMatters: "Annual fire alarm certificate for the building expires 12 July 2026 (confirmed from last year's certificate). Covers the whole property — every occupied unit needs access notice for the engineer's visit.",
@@ -598,6 +605,8 @@ const INITIAL_ACTION_CARDS: ActionCard[] = [
     approvalState: "in_progress",
     preparedDetail:
       "I'll email the engineer with building access notes, send each current tenant their access notice naming their unit, copy you on everything, and add the renewed certificate to the compliance calendar.",
+    addedBy: { kind: "hobson" },
+    workflowRef: "PA-001",
   },
   {
     id: "act-stanley-f8-review",
@@ -616,6 +625,8 @@ const INITIAL_ACTION_CARDS: ActionCard[] = [
     approvalState: "pending",
     preparedDetail:
       "I'll send the review notice to the tenant's registered address using your standard cover letter, attach the drafted summary and comparables, and log the served-on date in the unit record.",
+    addedBy: { kind: "hobson" },
+    workflowRef: "PA-004",
   },
   {
     id: "act-stanley-f3-holdover",
@@ -634,6 +645,7 @@ const INITIAL_ACTION_CARDS: ActionCard[] = [
     urgency: "week",
     approvalState: "pending",
     preparedDetail: "",
+    addedBy: { kind: "hobson" },
   },
   {
     id: "act-nugent-f2-holdover",
@@ -652,6 +664,7 @@ const INITIAL_ACTION_CARDS: ActionCard[] = [
     urgency: "watch",
     approvalState: "pending",
     preparedDetail: "",
+    addedBy: { kind: "hobson" },
   },
   {
     id: "act-stanley-f7-holdover",
@@ -670,8 +683,35 @@ const INITIAL_ACTION_CARDS: ActionCard[] = [
     urgency: "watch",
     approvalState: "pending",
     preparedDetail: "",
+    addedBy: { kind: "hobson" },
+  },
+  {
+    id: "act-nugent-shop-leak",
+    propertyId: "nugent",
+    unitId: "nugent-shop",
+    unitLabel: "Shop",
+    propertyName: "5 Nugent Terrace",
+    anchorLevel: "unit",
+    triggerType: "compliance",
+    title: "Tenant reported small leak — Shop, 5 Nugent Terrace",
+    whyItMatters: "M&S manager called Friday — slow leak under the back-of-house sink. Not urgent but needs a plumber visit and a follow-up on whose repair obligation this falls under.",
+    confidence: "confirmed",
+    hobsonPrepared: "Nothing prepared yet — I didn't log this one. Sarah added it after the phone call.",
+    proposedAction: "Open unit",
+    urgency: "week",
+    approvalState: "pending",
+    preparedDetail: "",
+    addedBy: { kind: "user", name: "Sarah Chen", initials: "SC" },
   },
 ];
+
+/** Workflow reference labels (link back to the Magician's workshop). */
+const WORKFLOW_REF_NAMES: Record<string, string> = {
+  "PA-001": "Compliance renewals",
+  "PA-002": "Notice deadlines (break)",
+  "PA-003": "Notice deadlines (expiry)",
+  "PA-004": "Rent review watch",
+};
 
 /** Selects the action cards relevant at a given vantage point. Same objects — no duplication. */
 function selectActionsForScope(
@@ -1400,6 +1440,28 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
     }
     setPerformingCardId(null);
     setReviewingCardId(null);
+  };
+
+  const manualHandleCard = (id: string, note: string) => {
+    const card = actionCards.find((x) => x.id === id);
+    setActionCards((arr) =>
+      arr.map((x) =>
+        x.id === id
+          ? { ...x, approvalState: "approved", manuallyCompleted: true, manualNote: note }
+          : x,
+      ),
+    );
+    setExpandedCardId(null);
+    if (card) {
+      setActionToast(`Recorded — you handled "${card.title}".`);
+      window.setTimeout(() => setActionToast(null), 3000);
+    }
+  };
+
+  const openWorkflowFromCard = (_ref: string) => {
+    // Open the Magician's workshop where this workflow lives.
+    enterAdmin();
+    setAdminCharacter("magician");
   };
   const chatBodyRef = useRef<HTMLDivElement | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
@@ -2228,6 +2290,8 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                         }}
                         onPerform={() => performCard(c.id)}
                         onReview={() => reviewCard(c.id)}
+                        onManualComplete={(note) => manualHandleCard(c.id, note)}
+                        onOpenWorkflow={openWorkflowFromCard}
                       />
                       </div>
                     ))}
@@ -2319,6 +2383,8 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
               }}
               onPerform={performCard}
               onReview={reviewCard}
+              onManualComplete={manualHandleCard}
+              onOpenWorkflow={openWorkflowFromCard}
             />
           )}
 
@@ -2355,6 +2421,8 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
               }}
               onPerform={performCard}
               onReview={reviewCard}
+              onManualComplete={manualHandleCard}
+              onOpenWorkflow={openWorkflowFromCard}
             />
           )}
 
@@ -3954,6 +4022,8 @@ function PropertyContent({
   onDismiss,
   onPerform,
   onReview,
+  onManualComplete,
+  onOpenWorkflow,
 }: {
   property: Property;
   propertyActionCards?: ActionCard[];
@@ -3967,6 +4037,8 @@ function PropertyContent({
   onDismiss?: (id: string) => void;
   onPerform?: (id: string) => void;
   onReview?: (id: string) => void;
+  onManualComplete?: (id: string, note: string) => void;
+  onOpenWorkflow?: (ref: string) => void;
 }) {
   void onPreviewQuestion;
   const [filter, setFilter] = useState("");
@@ -4222,6 +4294,8 @@ function PropertyContent({
           onDismiss={(id) => onDismiss && onDismiss(id)}
           onPerform={onPerform ? (id) => onPerform(id) : undefined}
           onReview={onReview ? (id) => onReview(id) : undefined}
+          onManualComplete={onManualComplete}
+          onOpenWorkflow={onOpenWorkflow}
         />
       )}
     </div>
@@ -4870,6 +4944,8 @@ function PortfolioBriefing({
   onDismiss,
   onPerform,
   onReview,
+  onManualComplete,
+  onOpenWorkflow,
 }: {
   cards: ActionCard[];
   choice: null | "all" | "urgent" | "browse";
@@ -4884,6 +4960,8 @@ function PortfolioBriefing({
   onDismiss: (id: string) => void;
   onPerform?: (id: string) => void;
   onReview?: (id: string) => void;
+  onManualComplete?: (id: string, note: string) => void;
+  onOpenWorkflow?: (ref: string) => void;
 }) {
   const pending = cards.filter((c) => c.approvalState === "pending" || c.approvalState === "in_progress");
   const urgent = pending.filter((c) => c.urgency === "now");
@@ -4986,6 +5064,8 @@ function PortfolioBriefing({
                 onDismiss={() => onDismiss(c.id)}
                 onPerform={onPerform ? () => onPerform(c.id) : undefined}
                 onReview={onReview ? () => onReview(c.id) : undefined}
+                onManualComplete={onManualComplete ? (note) => onManualComplete(c.id, note) : undefined}
+                onOpenWorkflow={onOpenWorkflow}
               />
             ))}
           </div>
@@ -5024,6 +5104,8 @@ function PropertyActions({
   onDismiss,
   onPerform,
   onReview,
+  onManualComplete,
+  onOpenWorkflow,
 }: {
   cards: ActionCard[];
   propertyName: string;
@@ -5036,6 +5118,8 @@ function PropertyActions({
   onDismiss: (id: string) => void;
   onPerform?: (id: string) => void;
   onReview?: (id: string) => void;
+  onManualComplete?: (id: string, note: string) => void;
+  onOpenWorkflow?: (ref: string) => void;
 }) {
   const sortCarried = (arr: ActionCard[]) =>
     carriedCardId
@@ -5070,6 +5154,8 @@ function PropertyActions({
                   onDismiss={() => onDismiss(c.id)}
                   onPerform={onPerform ? () => onPerform(c.id) : undefined}
                   onReview={onReview ? () => onReview(c.id) : undefined}
+                  onManualComplete={onManualComplete ? (note) => onManualComplete(c.id, note) : undefined}
+                  onOpenWorkflow={onOpenWorkflow}
                 />
               </div>
             ))}
@@ -5884,6 +5970,8 @@ function ActionCardItem({
   onManageAtProperty,
   onPerform,
   onReview,
+  onManualComplete,
+  onOpenWorkflow,
 }: {
   card: ActionCard;
   level: "portfolio" | "property" | "unit";
@@ -5898,15 +5986,41 @@ function ActionCardItem({
   onManageAtProperty?: () => void;
   onPerform?: () => void;
   onReview?: () => void;
+  onManualComplete?: (note: string) => void;
+  onOpenWorkflow?: (ref: string) => void;
 }) {
   const isInferred = card.confidence === "inferred";
-  // Property-anchored shown inside a unit = read-only context
   const readOnly = level === "unit" && card.anchorLevel === "property";
   const locationLabel = locationLabelForCard(card, level);
   const anchorChip =
     card.anchorLevel === "property"
       ? { label: "Property-anchored", cls: "bg-indigo-50 text-indigo-700 border-indigo-200" }
       : { label: "Unit-anchored", cls: "bg-slate-50 text-slate-600 border-slate-200" };
+
+  const performable = PERFORMABLE_CARD_IDS.has(card.id);
+  const state = card.approvalState;
+  const isCompleted = state === "approved";
+
+  const [noteOpen, setNoteOpen] = useState(false);
+  const [noteText, setNoteText] = useState("");
+
+  // Tooltip messages
+  const performTip = !performable
+    ? "No automated workflow for this — review & approve, or handle it yourself"
+    : isCompleted
+    ? "Already completed"
+    : state === "in_progress"
+    ? "Resume the automated walkthrough"
+    : "Run the automated walkthrough";
+  const reviewTip = isCompleted
+    ? "Open the recorded outcome"
+    : state === "pending"
+    ? "Nothing prepared yet — Perform this first or handle it yourself"
+    : "Jump to the final approval gate";
+  const reviewDisabled = !readOnly && state === "pending" && !card.hobsonPrepared;
+  // Simpler honest gate: disable Review when nothing has started AND there's no prepared detail
+  const reviewActuallyDisabled = state === "pending" && !card.preparedDetail;
+
   return (
     <article
       onMouseEnter={() => onHover(true)}
@@ -5917,28 +6031,44 @@ function ActionCardItem({
           : isInferred ? "border-amber-200" : "border-slate-200 hover:border-[#7C3AED]/40"
       }`}
     >
+      {/* Top row: location + anchor + origin marker */}
       <div className="flex flex-wrap items-center gap-1 mb-1.5">
         <span className={`text-[10px] px-1.5 py-0.5 rounded border font-medium ${anchorChip.cls}`}>
           {locationLabel}
         </span>
         <span className="text-[10px] text-slate-400">·</span>
         <span className="text-[10px] uppercase tracking-wide text-slate-400 font-medium">{anchorChip.label}</span>
-        {readOnly && (
-          <span className="text-[10px] px-1.5 py-0.5 rounded border border-slate-200 bg-white text-slate-500 font-medium ml-auto">
-            Read-only here
-          </span>
-        )}
+        <span className="ml-auto inline-flex items-center gap-1.5">
+          <OriginMarker origin={card.addedBy} />
+          {readOnly && (
+            <span className="text-[10px] px-1.5 py-0.5 rounded border border-slate-200 bg-white text-slate-500 font-medium">
+              Read-only here
+            </span>
+          )}
+        </span>
       </div>
+
       <header className="flex items-start gap-2 mb-1.5">
         <span aria-hidden className="text-base leading-none mt-0.5">{TRIGGER_ICON[card.triggerType]}</span>
         <div className="flex-1 min-w-0">
           <div className="text-[13px] font-semibold text-slate-900 leading-snug">{card.title}</div>
-          <div className="mt-0.5"><ConfidenceMark confidence={card.confidence} /></div>
+          <div className="mt-0.5 flex flex-wrap items-center gap-1.5">
+            <ConfidenceMark confidence={card.confidence} />
+            <WorkflowRefTag refId={card.workflowRef} onOpen={onOpenWorkflow} />
+          </div>
         </div>
       </header>
 
       <p className="text-[12.5px] text-slate-700 leading-relaxed mb-1.5">{card.whyItMatters}</p>
       <p className="text-[12px] text-slate-500 leading-relaxed mb-2 italic">{card.hobsonPrepared}</p>
+
+      {/* Manual-completion note shown on completed cards */}
+      {isCompleted && card.manuallyCompleted && card.manualNote && (
+        <div className="mb-2 rounded-lg border border-slate-200 bg-slate-50 p-2">
+          <div className="text-[10px] uppercase tracking-wide text-slate-500 font-semibold mb-0.5">Your note</div>
+          <p className="text-[12px] text-slate-700 leading-relaxed whitespace-pre-wrap">{card.manualNote}</p>
+        </div>
+      )}
 
       {readOnly ? (
         <div className="flex flex-wrap items-center gap-1.5">
@@ -5949,139 +6079,203 @@ function ActionCardItem({
             Manage at {card.propertyName} level →
           </button>
         </div>
-      ) : !expanded && (
-        <div className="flex flex-wrap items-center gap-1.5">
-          {!isInferred ? (() => {
-            const performable = PERFORMABLE_CARD_IDS.has(card.id);
-            const state = card.approvalState;
-            if (performable && onReview) {
-              const disabled = state === "pending";
-              const label = state === "approved" ? "View recorded outcome" : card.proposedAction;
-              const tip = disabled
-                ? "Nothing to review yet — Perform this first"
-                : state === "approved"
-                ? "Open the recorded outcome"
-                : "Jump to the final approval";
-              return (
-                <button
-                  onClick={disabled ? undefined : onReview}
-                  disabled={disabled}
-                  aria-disabled={disabled}
-                  title={tip}
-                  className={`text-xs px-3 py-1.5 rounded-full transition focus:outline-none focus:ring-2 focus:ring-[#7C3AED] inline-flex items-center gap-1 ${
-                    disabled
-                      ? "bg-slate-100 text-slate-400 border border-slate-200 cursor-not-allowed opacity-60"
-                      : "bg-[#7C3AED] text-white hover:bg-[#6D28D9]"
-                  }`}
-                >
-                  {!disabled && (
-                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M5 13l4 4L19 7"/></svg>
-                  )}
-                  {label}
-                </button>
-              );
-            }
-            return (
-              <button
-                onClick={onToggleExpand}
-                className="text-xs px-3 py-1.5 rounded-full bg-[#7C3AED] text-white hover:bg-[#6D28D9] transition focus:outline-none focus:ring-2 focus:ring-[#7C3AED]"
-              >
-                {card.proposedAction}
-              </button>
-            );
-          })() : onOpenUnit ? (
-            <>
-              <button
-                onClick={onOpenUnit}
-                className="text-xs px-3 py-1.5 rounded-full bg-amber-100 text-amber-900 border border-amber-300 hover:bg-amber-200 transition focus:outline-none focus:ring-2 focus:ring-amber-500"
-              >
-                Open unit to check
-              </button>
-              <button
-                onClick={onDefer}
-                className="text-xs px-3 py-1.5 rounded-full text-slate-600 border border-slate-200 hover:bg-slate-50 transition focus:outline-none focus:ring-2 focus:ring-slate-300"
-              >
-                Flag for review
-              </button>
-            </>
-          ) : (
+      ) : (
+        <>
+          {/* Three consistent completion buttons */}
+          <div className="flex flex-wrap items-center gap-1.5">
             <button
-              onClick={onDefer}
-              className="text-xs px-3 py-1.5 rounded-full text-slate-600 border border-slate-200 hover:bg-slate-50 transition focus:outline-none focus:ring-2 focus:ring-slate-300"
-            >
-              Flag for review
-            </button>
-          )}
-          {!isInferred && onPerform && PERFORMABLE_CARD_IDS.has(card.id) && card.approvalState !== "approved" && (
-            <button
-              onClick={onPerform}
-              className="text-xs px-3 py-1.5 rounded-full bg-emerald-600 text-white hover:bg-emerald-700 transition focus:outline-none focus:ring-2 focus:ring-emerald-500 inline-flex items-center gap-1"
+              onClick={performable && onPerform && !isCompleted ? onPerform : undefined}
+              disabled={!performable || isCompleted}
+              aria-disabled={!performable || isCompleted}
+              title={performTip}
+              className={`text-xs px-3 py-1.5 rounded-full transition inline-flex items-center gap-1 focus:outline-none focus:ring-2 focus:ring-emerald-500 ${
+                !performable || isCompleted
+                  ? "bg-slate-100 text-slate-400 border border-slate-200 cursor-not-allowed"
+                  : "bg-emerald-600 text-white hover:bg-emerald-700"
+              }`}
             >
               <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden><polygon points="6 4 20 12 6 20 6 4" /></svg>
-              {card.approvalState === "in_progress" ? "Resume" : "Perform"}
+              {state === "in_progress" && performable ? "Resume" : "Perform"}
             </button>
-          )}
-          {!isInferred && onOpenUnit && (
             <button
-              onClick={onOpenUnit}
-              className="text-xs px-3 py-1.5 rounded-full text-slate-600 border border-slate-200 hover:bg-slate-50 transition focus:outline-none focus:ring-2 focus:ring-slate-300"
+              onClick={reviewActuallyDisabled ? undefined : (onReview ?? onToggleExpand)}
+              disabled={reviewActuallyDisabled}
+              aria-disabled={reviewActuallyDisabled}
+              title={reviewTip}
+              className={`text-xs px-3 py-1.5 rounded-full transition inline-flex items-center gap-1 focus:outline-none focus:ring-2 focus:ring-[#7C3AED] ${
+                reviewActuallyDisabled
+                  ? "bg-slate-100 text-slate-400 border border-slate-200 cursor-not-allowed"
+                  : isCompleted
+                  ? "bg-white text-[#5B21B6] border border-[#7C3AED]/40 hover:bg-[#F5F3FF]"
+                  : "bg-[#7C3AED] text-white hover:bg-[#6D28D9]"
+              }`}
             >
-              Open unit
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M5 13l4 4L19 7"/></svg>
+              {isCompleted ? "View recorded outcome" : "Review & approve"}
             </button>
-          )}
-          {!isInferred && onOpenProperty && (
             <button
-              onClick={onOpenProperty}
-              className="text-xs px-3 py-1.5 rounded-full text-slate-600 border border-slate-200 hover:bg-slate-50 transition focus:outline-none focus:ring-2 focus:ring-slate-300"
+              onClick={isCompleted ? undefined : () => setNoteOpen((v) => !v)}
+              disabled={isCompleted}
+              aria-disabled={isCompleted}
+              aria-expanded={noteOpen}
+              title={isCompleted ? "Already completed" : "Mark this as handled by you, with a note for the record"}
+              className={`text-xs px-3 py-1.5 rounded-full transition inline-flex items-center gap-1 focus:outline-none focus:ring-2 focus:ring-slate-400 ${
+                isCompleted
+                  ? "bg-slate-100 text-slate-400 border border-slate-200 cursor-not-allowed"
+                  : "bg-white text-slate-700 border border-slate-300 hover:bg-slate-50"
+              }`}
             >
-              Open property
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+              Let me handle this
             </button>
-          )}
-          <button
-            onClick={onDefer}
-            className="text-xs px-2.5 py-1.5 rounded-full text-slate-500 hover:text-slate-700 hover:bg-slate-50 transition focus:outline-none focus:ring-2 focus:ring-slate-300"
-          >
-            Defer
-          </button>
-          <button
-            onClick={onDismiss}
-            className="text-xs px-2.5 py-1.5 rounded-full text-slate-400 hover:text-slate-600 hover:bg-slate-50 transition focus:outline-none focus:ring-2 focus:ring-slate-300"
-          >
-            Dismiss
-          </button>
-        </div>
-      )}
+          </div>
 
-      {!readOnly && expanded && !isInferred && (
-        <div className="mt-2 rounded-lg border border-[#DDD6FE] bg-[#F5F3FF] p-2.5 space-y-2">
-          <div>
-            <div className="text-[10px] uppercase tracking-wide text-[#5B21B6] font-semibold mb-1">What I'll do</div>
-            <p className="text-[12px] text-slate-700 leading-relaxed">{card.preparedDetail}</p>
+          {/* Secondary actions */}
+          <div className="mt-1.5 flex flex-wrap items-center gap-1.5">
+            {onOpenUnit && (
+              <button
+                onClick={onOpenUnit}
+                className="text-xs px-2.5 py-1 rounded-full text-slate-600 border border-slate-200 hover:bg-slate-50 transition focus:outline-none focus:ring-2 focus:ring-slate-300"
+              >
+                Open unit
+              </button>
+            )}
+            {onOpenProperty && (
+              <button
+                onClick={onOpenProperty}
+                className="text-xs px-2.5 py-1 rounded-full text-slate-600 border border-slate-200 hover:bg-slate-50 transition focus:outline-none focus:ring-2 focus:ring-slate-300"
+              >
+                Open property
+              </button>
+            )}
+            {!isCompleted && (
+              <>
+                <button
+                  onClick={onDefer}
+                  className="text-xs px-2.5 py-1 rounded-full text-slate-500 hover:text-slate-700 hover:bg-slate-50 transition focus:outline-none focus:ring-2 focus:ring-slate-300"
+                >
+                  Defer
+                </button>
+                <button
+                  onClick={onDismiss}
+                  className="text-xs px-2.5 py-1 rounded-full text-slate-400 hover:text-slate-600 hover:bg-slate-50 transition focus:outline-none focus:ring-2 focus:ring-slate-300"
+                >
+                  Dismiss
+                </button>
+              </>
+            )}
           </div>
-          <div className="flex flex-wrap gap-1.5 pt-1">
-            <button
-              onClick={onApprove}
-              autoFocus
-              className="text-xs px-3 py-1.5 rounded-full bg-[#7C3AED] text-white hover:bg-[#6D28D9] transition focus:outline-none focus:ring-2 focus:ring-[#7C3AED]"
-            >
-              Approve
-            </button>
-            <button
-              onClick={onToggleExpand}
-              className="text-xs px-3 py-1.5 rounded-full text-slate-600 border border-slate-200 hover:bg-slate-50 transition focus:outline-none focus:ring-2 focus:ring-slate-300"
-            >
-              Modify
-            </button>
-            <button
-              onClick={onToggleExpand}
-              className="text-xs px-3 py-1.5 rounded-full text-slate-500 hover:text-slate-700 hover:bg-slate-50 transition focus:outline-none focus:ring-2 focus:ring-slate-300"
-            >
-              Cancel
-            </button>
-          </div>
-        </div>
+
+          {/* "Let me handle this" note panel */}
+          {noteOpen && !isCompleted && (
+            <div className="mt-2 rounded-lg border border-slate-200 bg-slate-50 p-2.5 space-y-2">
+              <label htmlFor={`note-${card.id}`} className="block text-[11px] uppercase tracking-wide text-slate-500 font-semibold">
+                What did you do?
+              </label>
+              <textarea
+                id={`note-${card.id}`}
+                value={noteText}
+                onChange={(e) => setNoteText(e.target.value)}
+                placeholder="e.g. Called the tenant and agreed a renewal in principle — confirming by email."
+                rows={3}
+                className="w-full text-[12.5px] rounded-md border border-slate-300 bg-white p-2 leading-relaxed focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40"
+              />
+              <div className="flex items-center gap-1.5">
+                <button
+                  onClick={() => {
+                    const note = noteText.trim();
+                    if (!note) return;
+                    onManualComplete?.(note);
+                    setNoteOpen(false);
+                    setNoteText("");
+                  }}
+                  disabled={!noteText.trim()}
+                  className="text-xs px-3 py-1.5 rounded-full bg-slate-900 text-white hover:bg-slate-800 transition focus:outline-none focus:ring-2 focus:ring-slate-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Complete
+                </button>
+                <button
+                  onClick={() => { setNoteOpen(false); setNoteText(""); }}
+                  className="text-xs px-3 py-1.5 rounded-full text-slate-600 border border-slate-200 hover:bg-slate-100 transition focus:outline-none focus:ring-2 focus:ring-slate-300"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* Existing inline approve-expand panel (kept for backwards compatibility) */}
+          {expanded && !isInferred && (
+            <div className="mt-2 rounded-lg border border-[#DDD6FE] bg-[#F5F3FF] p-2.5 space-y-2">
+              <div>
+                <div className="text-[10px] uppercase tracking-wide text-[#5B21B6] font-semibold mb-1">What I'll do</div>
+                <p className="text-[12px] text-slate-700 leading-relaxed">{card.preparedDetail}</p>
+              </div>
+              <div className="flex flex-wrap gap-1.5 pt-1">
+                <button
+                  onClick={onApprove}
+                  autoFocus
+                  className="text-xs px-3 py-1.5 rounded-full bg-[#7C3AED] text-white hover:bg-[#6D28D9] transition focus:outline-none focus:ring-2 focus:ring-[#7C3AED]"
+                >
+                  Approve
+                </button>
+                <button
+                  onClick={onToggleExpand}
+                  className="text-xs px-3 py-1.5 rounded-full text-slate-500 hover:text-slate-700 hover:bg-slate-50 transition focus:outline-none focus:ring-2 focus:ring-slate-300"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          )}
+        </>
       )}
     </article>
+  );
+}
+
+/* Origin marker — Hobson owl mark, or user initials avatar */
+function OriginMarker({ origin }: { origin: CardOrigin }) {
+  if (origin.kind === "hobson") {
+    return (
+      <span className="inline-flex items-center gap-1 text-[10px] font-medium text-[#5B21B6] bg-[#F5F3FF] border border-[#DDD6FE] rounded-full pl-0.5 pr-1.5 py-0.5">
+        <img src={owlDefault} alt="" aria-hidden className="w-3.5 h-3.5 object-contain" />
+        Added by Hobson
+      </span>
+    );
+  }
+  return (
+    <span className="inline-flex items-center gap-1 text-[10px] font-medium text-slate-700 bg-slate-50 border border-slate-200 rounded-full pl-0.5 pr-1.5 py-0.5">
+      <span aria-hidden className="w-3.5 h-3.5 rounded-full bg-slate-700 text-white text-[8px] font-semibold inline-flex items-center justify-center">
+        {origin.initials}
+      </span>
+      Added by {origin.name}
+    </span>
+  );
+}
+
+/* PA workflow reference tag — links back to the Magician's workshop */
+function WorkflowRefTag({ refId, onOpen }: { refId?: string; onOpen?: (ref: string) => void }) {
+  if (!refId) {
+    return (
+      <span
+        className="inline-flex items-center gap-1 text-[10px] font-medium text-slate-400 border border-dashed border-slate-200 rounded-full px-1.5 py-0.5"
+        title="No originating workflow — added manually"
+      >
+        Manual
+      </span>
+    );
+  }
+  const name = WORKFLOW_REF_NAMES[refId];
+  return (
+    <button
+      onClick={() => onOpen?.(refId)}
+      title={name ? `${refId} · ${name} — open in The Magician's workshop` : `Open ${refId} in The Magician's workshop`}
+      className="inline-flex items-center gap-1 text-[10px] font-medium text-[#5B21B6] bg-white border border-[#DDD6FE] rounded-full px-1.5 py-0.5 hover:bg-[#F5F3FF] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40 transition"
+    >
+      <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+      {refId}
+    </button>
   );
 }
 
@@ -6226,17 +6420,20 @@ type WorkLogEntry = {
   propertyName?: string;
   unitId?: string;
   unitLabel?: string;
-  when: string;            // human framing, e.g. "Yesterday, 4:12pm"
+  when: string;
   bucket: "Today" | "Yesterday" | "Last week" | "Earlier";
-  statusLabel: string;     // "Waiting on you", "Finished", "Paused — you deferred this", "2 of 4 steps complete"
+  statusLabel: string;
   statusKind: "waiting" | "in_progress" | "finished" | "paused";
-  narration: string;       // first-person recap paragraph
-  approvals: string[];     // "Approved by you — surveyor instructions"
-  flags: string[];         // unknowns honestly flagged
+  narration: string;
+  approvals: string[];
+  flags: string[];
   progressDone: number;
   progressTotal: number;
   dialogue: { role: "user" | "hobson"; text: string }[];
   hasSummary?: boolean;
+  origin?: CardOrigin;       // who logged the source card
+  workflowRef?: string;      // PA ref of the source card
+  manualNote?: string;       // present when "Handled by you"
 };
 
 function buildWorkLog(actionCards: ActionCard[]): WorkLogEntry[] {
@@ -6381,9 +6578,36 @@ function buildWorkLog(actionCards: ActionCard[]): WorkLogEntry[] {
     ],
   };
 
+  // Manually-handled cards → "Handled by you" entries
+  const manualEntries: WorkLogEntry[] = actionCards
+    .filter((c) => c.manuallyCompleted)
+    .map((c) => ({
+      id: `manual-${c.id}`,
+      cardId: c.id,
+      title: c.title,
+      propertyId: c.propertyId,
+      propertyName: c.propertyName,
+      unitId: c.unitId,
+      unitLabel: c.unitLabel,
+      when: "Today",
+      bucket: "Today" as const,
+      statusLabel: "Handled by you",
+      statusKind: "finished" as const,
+      narration: `You handled this one yourself${c.manualNote ? ' — your note is on file.' : '.'}`,
+      approvals: [],
+      flags: [],
+      progressDone: 1,
+      progressTotal: 1,
+      dialogue: [],
+      hasSummary: false,
+      origin: c.addedBy,
+      workflowRef: c.workflowRef,
+      manualNote: c.manualNote,
+    }));
+
   // Waiting/in-progress first, then completed, then paused
   const order = (e: WorkLogEntry) => ({ waiting: 0, in_progress: 1, finished: 2, paused: 3 }[e.statusKind]);
-  return [f8Entry, epcEntry, breakEntry].sort((a, b) => order(a) - order(b));
+  return [f8Entry, epcEntry, breakEntry, ...manualEntries].sort((a, b) => order(a) - order(b));
 }
 
 function WhatIveDonePanel({
@@ -6521,9 +6745,17 @@ function WorkLogCard({
             <div className="flex items-center gap-2 flex-wrap">
               <StatusPill kind={entry.statusKind} label={entry.statusLabel} />
               <span className="text-[11px] text-slate-500">{entry.when}</span>
+              {entry.origin && <OriginMarker origin={entry.origin} />}
+              {entry.workflowRef && <WorkflowRefTag refId={entry.workflowRef} />}
             </div>
             <h4 className="mt-1.5 text-[14px] font-semibold text-slate-900 leading-snug">{entry.title}</h4>
             <p className="mt-1.5 text-[13px] text-slate-700 leading-relaxed">{entry.narration}</p>
+            {entry.manualNote && (
+              <div className="mt-2 rounded-md border border-slate-200 bg-slate-50 px-3 py-2">
+                <div className="text-[10px] uppercase tracking-wide font-semibold text-slate-500 mb-0.5">Your note</div>
+                <p className="text-[12px] text-slate-700 leading-relaxed whitespace-pre-wrap">{entry.manualNote}</p>
+              </div>
+            )}
 
             {(entry.approvals.length > 0 || entry.flags.length > 0) && (
               <ul className="mt-2 space-y-1 text-[12px]">
