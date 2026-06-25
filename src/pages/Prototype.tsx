@@ -43,6 +43,86 @@ const ADMIN_CHARACTERS: { id: AdminCharacter; name: string; src: string; tagline
   },
 ];
 
+/* ---------------- Professor library types & seed ---------------- */
+
+type DocStatus = "pending" | "extracting" | "extracted";
+type DocFamily = "rto" | "amd" | "acd";
+type ProfDoc = {
+  id: string;
+  name: string;
+  type?: string;
+  family?: DocFamily;
+  timeClass?: string;
+  relatedUnit?: string;
+  supersedes?: string;
+  chainedTo?: string;
+  status: DocStatus;
+  effectiveDate?: string;
+  uploadedAt: string;
+  extractedAt?: string;
+};
+
+const PROF_DOC_TYPES: { label: string; family: DocFamily; timeClass: string }[] = [
+  { label: "Lease", family: "rto", timeClass: "Long-dated" },
+  { label: "Deed of Variation", family: "amd", timeClass: "Effective from date" },
+  { label: "Licence to Alter", family: "amd", timeClass: "Effective from date" },
+  { label: "Tenancy Agreement (AST)", family: "rto", timeClass: "Fixed term" },
+  { label: "EICR Certificate", family: "acd", timeClass: "Valid 5 years" },
+  { label: "Fire Alarm Certificate", family: "acd", timeClass: "Valid 12 months" },
+  { label: "Gas Safety Record", family: "acd", timeClass: "Valid 12 months" },
+  { label: "Insurance Policy", family: "acd", timeClass: "Annual" },
+];
+
+const SEED_PROF_DOCS: ProfDoc[] = [
+  {
+    id: "pd-1", name: "Lease — Flat 2, 5 Nugent Terrace.pdf",
+    type: "Lease", family: "rto", timeClass: "Long-dated",
+    relatedUnit: "Flat 2, 5 Nugent Terrace",
+    status: "extracted",
+    effectiveDate: "12 Jun 2014",
+    uploadedAt: "21 Jun 2026", extractedAt: "21 Jun 2026",
+  },
+  {
+    id: "pd-2", name: "Deed of Variation — Flat 2.pdf",
+    type: "Deed of Variation", family: "amd", timeClass: "Effective from date",
+    relatedUnit: "Flat 2, 5 Nugent Terrace",
+    chainedTo: "Lease — Flat 2, 5 Nugent Terrace.pdf",
+    status: "extracted",
+    effectiveDate: "03 Mar 2019",
+    uploadedAt: "21 Jun 2026", extractedAt: "21 Jun 2026",
+  },
+  {
+    id: "pd-3", name: "Licence to Alter — Flat 2 kitchen.pdf",
+    type: "Licence to Alter", family: "amd", timeClass: "Effective from date",
+    relatedUnit: "Flat 2, 5 Nugent Terrace",
+    chainedTo: "Lease — Flat 2, 5 Nugent Terrace.pdf",
+    status: "extracted",
+    effectiveDate: "14 Sep 2021",
+    uploadedAt: "22 Jun 2026", extractedAt: "22 Jun 2026",
+  },
+  {
+    id: "pd-4", name: "EICR — 5 Nugent Terrace.pdf",
+    type: "EICR Certificate", family: "acd", timeClass: "Valid 5 years",
+    relatedUnit: "5 Nugent Terrace (building)",
+    status: "extracted",
+    effectiveDate: "08 Jan 2024",
+    uploadedAt: "23 Jun 2026", extractedAt: "23 Jun 2026",
+  },
+  {
+    id: "pd-5", name: "Fire Alarm Certificate — 5 Nugent Terrace.pdf",
+    type: "Fire Alarm Certificate", family: "acd", timeClass: "Valid 12 months",
+    relatedUnit: "5 Nugent Terrace (building)",
+    supersedes: "Fire Alarm Certificate (2025).pdf",
+    status: "pending",
+    effectiveDate: "—",
+    uploadedAt: "25 Jun 2026",
+  },
+];
+
+type ProfEvent =
+  | { kind: "ask-type"; id: string; docIds: string[]; resolved?: { type: string; family: DocFamily } }
+  | { kind: "professor"; id: string; text: string };
+
 
 /* ---------------- Config ---------------- */
 
