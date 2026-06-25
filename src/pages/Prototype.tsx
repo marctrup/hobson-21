@@ -1617,7 +1617,8 @@ const Prototype: React.FC = () => {
 
       {/* Map */}
       {(() => { const hasOverlay = hasRightOverlay; return (
-      <main className="relative flex-1 bg-slate-100">
+      <main className={`${chatExpanded && view !== "onboarding" && !hasOverlay ? "hidden" : "relative flex-1"} bg-slate-100`}>
+
 
 
 
