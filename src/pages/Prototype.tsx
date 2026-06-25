@@ -3312,7 +3312,8 @@ function PortfolioBriefing({
 
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-5">
+
       <div className="flex items-center justify-between">
         <div className="text-[11px] uppercase tracking-wide text-slate-500 font-semibold">On your desk</div>
         <div className="flex items-center gap-2">
