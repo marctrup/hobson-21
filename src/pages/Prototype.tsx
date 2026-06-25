@@ -1358,24 +1358,54 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
       ? 100
       : Math.round(((beatIdx + (chipVisible ? 0.9 : lineIdx / Math.max(1, BEATS[beatIdx]?.lines.length || 1))) / BEATS.length) * 100);
 
-  /* ----- breadcrumbs ----- */
-  const crumbs: { label: string; onClick?: () => void }[] = useMemo(() => {
-    if (view === "onboarding") return [];
-    const arr: { label: string; onClick?: () => void }[] = [
-      { label: "Portfolio", onClick: () => goPortfolio(false) },
+  /* ----- breadcrumbs (derived from nav state) ----- */
+  const crumbs: { label: string; onClick?: () => void; title?: string }[] = useMemo(() => {
+    if (view === "onboarding") return [{ label: "Meet Hobson" }];
+
+    // Admin trail
+    if (adminMode) {
+      const arr: { label: string; onClick?: () => void }[] = [
+        { label: "Admin", onClick: adminCharacter ? () => setAdminCharacter(null) : undefined },
+      ];
+      if (adminCharacter) {
+        const c = ADMIN_CHARACTERS.find((x) => x.id === adminCharacter);
+        if (c) arr.push({ label: c.name });
+      }
+      return arr;
+    }
+
+    // Build the asset-context trail (Portfolio › [Property] › [Unit])
+    const base: { label: string; onClick?: () => void; title?: string }[] = [
+      { label: "Portfolio", onClick: () => { setShowDocuments(false); setShowWhatIveDone(false); goPortfolio(false); } },
     ];
-    if (selectedProperty && !selectedProperty.standalone)
-      arr.push({
+    if (selectedProperty && !selectedProperty.standalone) {
+      base.push({
         label: selectedProperty.name,
-        onClick: () => goProperty(selectedProperty.id),
+        title: selectedProperty.name,
+        onClick: () => { setShowDocuments(false); setShowWhatIveDone(false); goProperty(selectedProperty.id); },
       });
+    }
     if (selectedUnit) {
       const label = selectedProperty?.standalone ? selectedProperty.name : selectedUnit.label;
-      arr.push({ label });
+      base.push({
+        label,
+        title: label,
+        onClick: (showDocuments || showWhatIveDone)
+          ? () => { setShowDocuments(false); setShowWhatIveDone(false); goUnit(selectedUnit.id, selectedProperty?.id); }
+          : undefined,
+      });
     }
-    return arr;
+
+    // Right-slot suffixes (Documents / What I've done) sit at the end of the current path
+    if (showDocuments) base.push({ label: "Documents" });
+    else if (showWhatIveDone) base.push({ label: "What I've done" });
+
+    // Last item is the current location -> not clickable
+    if (base.length > 0) base[base.length - 1] = { ...base[base.length - 1], onClick: undefined };
+    return base;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [view, selectedProperty, selectedUnit]);
+  }, [view, selectedProperty, selectedUnit, showDocuments, showWhatIveDone, adminMode, adminCharacter]);
+
 
   /* ============ Render ============ */
 
@@ -1499,24 +1529,41 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
             </div>
           </div>
         ) : (
-          <div className="px-5 py-2 border-b border-slate-100 flex items-center gap-1 text-[12px] text-slate-500 flex-wrap">
-            {crumbs.map((c, i) => (
-              <React.Fragment key={i}>
-                {i > 0 && <span className="text-slate-300">›</span>}
-                {c.onClick ? (
-                  <button
-                    onClick={c.onClick}
-                    className="hover:text-[#7C3AED] focus:outline-none focus:ring-2 focus:ring-[#7C3AED] rounded px-0.5"
-                  >
-                    {c.label}
-                  </button>
-                ) : (
-                  <span className="text-slate-900 font-medium">{c.label}</span>
-                )}
-              </React.Fragment>
-            ))}
-          </div>
+          <nav
+            aria-label="Breadcrumb"
+            className="px-5 py-2.5 border-b border-slate-200 bg-white sticky top-0 z-10"
+          >
+            <ol className="flex items-center gap-1.5 text-[13px] flex-nowrap overflow-hidden">
+              {crumbs.map((c, i) => {
+                const isLast = i === crumbs.length - 1;
+                return (
+                  <React.Fragment key={i}>
+                    {i > 0 && <li aria-hidden className="text-slate-400 shrink-0 select-none">›</li>}
+                    <li className="min-w-0 shrink truncate" title={c.title || c.label}>
+                      {c.onClick && !isLast ? (
+                        <button
+                          type="button"
+                          onClick={c.onClick}
+                          className="text-[#7C3AED] hover:underline hover:text-[#6D28D9] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED] rounded px-0.5 cursor-pointer truncate max-w-[180px] inline-block align-bottom"
+                        >
+                          {c.label}
+                        </button>
+                      ) : (
+                        <span
+                          aria-current={isLast ? "page" : undefined}
+                          className="text-slate-900 font-semibold truncate max-w-[220px] inline-block align-bottom px-0.5"
+                        >
+                          {c.label}
+                        </span>
+                      )}
+                    </li>
+                  </React.Fragment>
+                );
+              })}
+            </ol>
+          </nav>
         )}
+
 
         {/* Body */}
         <div ref={chatBodyRef} className={`flex-1 overflow-y-auto px-5 pb-5 pt-0 ${isExpanded ? "w-full" : ""}`}>
