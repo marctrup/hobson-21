@@ -562,6 +562,10 @@ type TriggerType = "review" | "break" | "compliance" | "notice" | "expiry";
 type ApprovalState = "pending" | "in_progress" | "approved" | "deferred" | "dismissed";
 type AnchorLevel = "unit" | "property";
 
+type CardOrigin =
+  | { kind: "hobson" }
+  | { kind: "user"; name: string; initials: string };
+
 type ActionCard = {
   id: string;
   propertyId: string;
@@ -579,6 +583,10 @@ type ActionCard = {
   urgency: Urgency;
   approvalState: ApprovalState;
   preparedDetail: string;        // what Hobson will do, on approve-expand
+  addedBy: CardOrigin;           // who logged this card (Hobson proactively, or a user)
+  workflowRef?: string;          // e.g. "PA-001" — links back to the Magician's workflow
+  manualNote?: string;           // user-supplied note when handled manually
+  manuallyCompleted?: boolean;   // true if user pressed "Let me handle this" → Complete
 };
 
 const INITIAL_ACTION_CARDS: ActionCard[] = [
@@ -587,7 +595,6 @@ const INITIAL_ACTION_CARDS: ActionCard[] = [
     propertyId: "stanley",
     propertyName: "Stanley House",
     anchorLevel: "property",
-    // omitted relevantUnitIds = applies to every unit in the building
     triggerType: "compliance",
     title: "Fire alarm certification expiring — Stanley House",
     whyItMatters: "Annual fire alarm certificate for the building expires 12 July 2026 (confirmed from last year's certificate). Covers the whole property — every occupied unit needs access notice for the engineer's visit.",
@@ -598,6 +605,8 @@ const INITIAL_ACTION_CARDS: ActionCard[] = [
     approvalState: "in_progress",
     preparedDetail:
       "I'll email the engineer with building access notes, send each current tenant their access notice naming their unit, copy you on everything, and add the renewed certificate to the compliance calendar.",
+    addedBy: { kind: "hobson" },
+    workflowRef: "PA-001",
   },
   {
     id: "act-stanley-f8-review",
@@ -616,6 +625,8 @@ const INITIAL_ACTION_CARDS: ActionCard[] = [
     approvalState: "pending",
     preparedDetail:
       "I'll send the review notice to the tenant's registered address using your standard cover letter, attach the drafted summary and comparables, and log the served-on date in the unit record.",
+    addedBy: { kind: "hobson" },
+    workflowRef: "PA-004",
   },
   {
     id: "act-stanley-f3-holdover",
@@ -634,6 +645,7 @@ const INITIAL_ACTION_CARDS: ActionCard[] = [
     urgency: "week",
     approvalState: "pending",
     preparedDetail: "",
+    addedBy: { kind: "hobson" },
   },
   {
     id: "act-nugent-f2-holdover",
@@ -652,6 +664,7 @@ const INITIAL_ACTION_CARDS: ActionCard[] = [
     urgency: "watch",
     approvalState: "pending",
     preparedDetail: "",
+    addedBy: { kind: "hobson" },
   },
   {
     id: "act-stanley-f7-holdover",
@@ -670,8 +683,35 @@ const INITIAL_ACTION_CARDS: ActionCard[] = [
     urgency: "watch",
     approvalState: "pending",
     preparedDetail: "",
+    addedBy: { kind: "hobson" },
+  },
+  {
+    id: "act-nugent-shop-leak",
+    propertyId: "nugent",
+    unitId: "nugent-shop",
+    unitLabel: "Shop",
+    propertyName: "5 Nugent Terrace",
+    anchorLevel: "unit",
+    triggerType: "compliance",
+    title: "Tenant reported small leak — Shop, 5 Nugent Terrace",
+    whyItMatters: "M&S manager called Friday — slow leak under the back-of-house sink. Not urgent but needs a plumber visit and a follow-up on whose repair obligation this falls under.",
+    confidence: "confirmed",
+    hobsonPrepared: "Nothing prepared yet — I didn't log this one. Sarah added it after the phone call.",
+    proposedAction: "Open unit",
+    urgency: "week",
+    approvalState: "pending",
+    preparedDetail: "",
+    addedBy: { kind: "user", name: "Sarah Chen", initials: "SC" },
   },
 ];
+
+/** Workflow reference labels (link back to the Magician's workshop). */
+const WORKFLOW_REF_NAMES: Record<string, string> = {
+  "PA-001": "Compliance renewals",
+  "PA-002": "Notice deadlines (break)",
+  "PA-003": "Notice deadlines (expiry)",
+  "PA-004": "Rent review watch",
+};
 
 /** Selects the action cards relevant at a given vantage point. Same objects — no duplication. */
 function selectActionsForScope(
