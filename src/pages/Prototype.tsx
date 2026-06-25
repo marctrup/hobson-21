@@ -1452,7 +1452,7 @@ const Prototype: React.FC = () => {
             <TypingBubble
               owl={owl}
               showAvatar={messages[messages.length - 1]?.role !== "hobson"}
-              groupedTop={messages[messages.length - 1]?.role === "hobson"}
+
             />
           )}
 
