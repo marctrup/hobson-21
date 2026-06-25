@@ -1519,7 +1519,9 @@ const Prototype: React.FC = () => {
 
 
         {/* Composer */}
-        <div className="px-5 pt-2 pb-4 border-t border-slate-100 bg-white">
+        <div className={`px-5 pt-2 pb-4 border-t border-slate-100 bg-white ${isExpanded ? "w-full" : ""}`}>
+         <div className={isExpanded ? "max-w-[820px] mx-auto" : ""}>
+
           {((view === "onboarding" && chipVisible) ||
             ((view === "portfolio" || view === "property" || view === "unit") && isRentFlat2Question(input) && !typing)) && (
             <div className="mb-2 flex items-center justify-end gap-2">
