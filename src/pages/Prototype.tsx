@@ -27,7 +27,7 @@ const ADMIN_CHARACTERS: { id: AdminCharacter; name: string; src: string; tagline
     name: "The Professor",
     src: characterProfessor,
     tagline: "Knowledge & research",
-    greeting: "Good day. I'm The Professor — keeper of the knowledge base. I'll help you teach Hobson new things, refine what we already know, and look up the finer points of your portfolio.",
+    greeting: "Good day. I am The Professor. I read every document in your portfolio and turn it into the knowledge Hobson relies upon.",
     workTitle: "The Professor's library",
     workIntro: "Where the knowledge base is curated, taught and consulted.",
   },
