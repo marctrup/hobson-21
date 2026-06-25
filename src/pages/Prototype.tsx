@@ -1817,7 +1817,7 @@ function HobsonBubble({ text, owl, streaming, rich, onAskFollowUp, showAvatar = 
     );
   }
   return (
-    <div className={`flex items-end gap-2 ${groupSpacing}`}>
+    <div className="flex items-end gap-2">
       {AvatarSlot}
       <div className="max-w-[340px] bg-[#EDE9FE] text-[#1F2330] text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-bl-md">
         {text}
