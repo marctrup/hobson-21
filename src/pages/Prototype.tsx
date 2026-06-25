@@ -6,7 +6,42 @@ import owlTalking from "@/assets/prototype/owl-talking.png";
 import owlDefault from "@/assets/prototype/owl-default.png";
 import owlReading from "@/assets/prototype/owl-reading.png";
 import owlCovering from "@/assets/prototype/owl-covering.png";
+import characterMagician from "@/assets/prototype/character-magician.png";
+import characterProfessor from "@/assets/prototype/character-professor.png";
+import characterBroker from "@/assets/prototype/character-broker.png";
 import { DocumentsLibrary } from "@/components/prototype/DocumentsLibrary";
+
+type AdminCharacter = "magician" | "professor" | "broker";
+const ADMIN_CHARACTERS: { id: AdminCharacter; name: string; src: string; tagline: string; greeting: string; workTitle: string; workIntro: string }[] = [
+  {
+    id: "magician",
+    name: "The Magician",
+    src: characterMagician,
+    tagline: "Workflows & automations",
+    greeting: "A pleasure. I'm The Magician — I conjure the workflows and automations that keep your portfolio moving quietly in the background. Tell me what you would like to make happen, and I'll set the stage.",
+    workTitle: "The Magician's workshop",
+    workIntro: "Where automations are composed and rehearsed before they go live.",
+  },
+  {
+    id: "professor",
+    name: "The Professor",
+    src: characterProfessor,
+    tagline: "Knowledge & research",
+    greeting: "Good day. I'm The Professor — keeper of the knowledge base. I'll help you teach Hobson new things, refine what we already know, and look up the finer points of your portfolio.",
+    workTitle: "The Professor's library",
+    workIntro: "Where the knowledge base is curated, taught and consulted.",
+  },
+  {
+    id: "broker",
+    name: "The Broker",
+    src: characterBroker,
+    tagline: "Deals, contracts & money",
+    greeting: "Delighted. I'm The Broker — I handle the deals, contracts and the money side of things. Talk me through what you're arranging and I'll keep the paperwork honest.",
+    workTitle: "The Broker's desk",
+    workIntro: "Where deals, contracts and figures are reviewed.",
+  },
+];
+
 
 /* ---------------- Config ---------------- */
 
@@ -771,6 +806,24 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
   const [performingCardId, setPerformingCardId] = useState<string | null>(null);
   const [reviewingCardId, setReviewingCardId] = useState<string | null>(null);
   const [chatExpanded, setChatExpanded] = useState(false);
+  const [adminMode, setAdminMode] = useState(false);
+  const [adminCharacter, setAdminCharacter] = useState<AdminCharacter | null>(null);
+
+  const enterAdmin = () => {
+    setShowDocuments(false);
+    setShowWhatIveDone(false);
+    setPerformingCardId(null);
+    setReviewingCardId(null);
+    setChatExpanded(false);
+    setAdminCharacter(null);
+    setAdminMode(true);
+  };
+  const exitAdmin = () => {
+    setAdminMode(false);
+    setAdminCharacter(null);
+  };
+  const selectAdminCharacter = (c: AdminCharacter) => setAdminCharacter(c);
+
 
   const performCard = (id: string) => {
     setReviewingCardId(null);
@@ -1327,8 +1380,8 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
 
   // Map must stay visible during the onboarding tour (Step 5 uses map search).
   // Honour user preference otherwise.
-  const hasRightOverlay = showDocuments || showWhatIveDone || !!performingCardId || !!reviewingCardId;
-  const isExpanded = chatExpanded && view !== "onboarding" && !hasRightOverlay;
+  const hasRightOverlay = showDocuments || showWhatIveDone || !!performingCardId || !!reviewingCardId || (adminMode && !!adminCharacter);
+  const isExpanded = chatExpanded && view !== "onboarding" && !hasRightOverlay && !adminMode;
 
   return (
     <div className="hobson-proto fixed inset-0 flex bg-white text-[#1F2330]">
@@ -1337,24 +1390,51 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
 
       {/* Left nav rail */}
       <aside className="w-[68px] shrink-0 bg-white border-r border-slate-200 flex flex-col items-center py-4 gap-2">
-        <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#A78BFA] to-[#7C3AED] grid place-items-center text-white font-bold mb-2 shadow-sm">
+        <button
+          type="button"
+          onClick={adminMode ? exitAdmin : undefined}
+          aria-label={adminMode ? "Exit Admin" : "Hobson"}
+          title={adminMode ? "Exit Admin" : "Hobson"}
+          className={`w-10 h-10 rounded-xl bg-gradient-to-br from-[#A78BFA] to-[#7C3AED] grid place-items-center text-white font-bold mb-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40 ${adminMode ? "cursor-pointer hover:brightness-110" : "cursor-default"}`}
+        >
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
             <path d="M12 2L22 12L12 22L2 12L12 2Z" fill="white" />
           </svg>
-        </div>
-        <RailItem icon="pin" label="Portfolio" active={view !== "onboarding" && !showDocuments && !showWhatIveDone} onClick={() => { setShowDocuments(false); setShowWhatIveDone(false); goPortfolio(false); }} />
-        {!testerMode && <RailItem icon="doc" label="Documents" active={view !== "onboarding" && showDocuments} onClick={() => { setShowWhatIveDone(false); setShowDocuments(true); }} />}
-        {!testerMode && <RailItem icon="clock" label={"What I've done"} active={view !== "onboarding" && showWhatIveDone} onClick={() => { setShowDocuments(false); setShowWhatIveDone(true); }} />}
-        <RailItem icon="chat" label="Chat History" />
-        <div className="mt-auto flex flex-col items-center gap-3 pb-2">
-          <button className="w-11 h-11 rounded-full bg-[#7C3AED] text-white grid place-items-center shadow-md hover:bg-[#6D28D9] transition" aria-label="New chat">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><path d="M12 5v14M5 12h14"/></svg>
-          </button>
-          <span className="text-[10px] text-slate-500">New chat</span>
-          <RailItem icon="gear" label="Admin" />
-          <div className="w-9 h-9 rounded-full bg-slate-200 grid place-items-center text-xs font-semibold text-slate-700">MT</div>
-        </div>
+        </button>
+        {adminMode ? (
+          <>
+            {ADMIN_CHARACTERS.map((c) => (
+              <CharacterRailItem
+                key={c.id}
+                name={c.name}
+                src={c.src}
+                active={adminCharacter === c.id}
+                onClick={() => selectAdminCharacter(c.id)}
+              />
+            ))}
+            <div className="mt-auto flex flex-col items-center gap-3 pb-2">
+              <RailItem icon="pin" label="Exit Admin" onClick={exitAdmin} />
+              <div className="w-9 h-9 rounded-full bg-slate-200 grid place-items-center text-xs font-semibold text-slate-700">MT</div>
+            </div>
+          </>
+        ) : (
+          <>
+            <RailItem icon="pin" label="Portfolio" active={view !== "onboarding" && !showDocuments && !showWhatIveDone} onClick={() => { setShowDocuments(false); setShowWhatIveDone(false); goPortfolio(false); }} />
+            {!testerMode && <RailItem icon="doc" label="Documents" active={view !== "onboarding" && showDocuments} onClick={() => { setShowWhatIveDone(false); setShowDocuments(true); }} />}
+            {!testerMode && <RailItem icon="clock" label={"What I've done"} active={view !== "onboarding" && showWhatIveDone} onClick={() => { setShowDocuments(false); setShowWhatIveDone(true); }} />}
+            <RailItem icon="chat" label="Chat History" />
+            <div className="mt-auto flex flex-col items-center gap-3 pb-2">
+              <button className="w-11 h-11 rounded-full bg-[#7C3AED] text-white grid place-items-center shadow-md hover:bg-[#6D28D9] transition" aria-label="New chat">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><path d="M12 5v14M5 12h14"/></svg>
+              </button>
+              <span className="text-[10px] text-slate-500">New chat</span>
+              <RailItem icon="gear" label="Admin" onClick={enterAdmin} />
+              <div className="w-9 h-9 rounded-full bg-slate-200 grid place-items-center text-xs font-semibold text-slate-700">MT</div>
+            </div>
+          </>
+        )}
       </aside>
+
 
       {/* Chat panel */}
       <section className={`${isExpanded ? "flex-1" : "w-[480px] shrink-0"} bg-white border-r border-slate-200 flex flex-col motion-safe:transition-[width,flex-basis] motion-safe:duration-200`}>
@@ -1443,6 +1523,12 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
             className={`${isExpanded ? "max-w-[820px] mx-auto" : ""} flex flex-col`}
             style={{ gap: CHAT_TURN_GAP_PX, paddingTop: CHAT_TOP_GAP_PX }}
           >
+
+          {adminMode ? (
+            <AdminChat character={adminCharacter ? ADMIN_CHARACTERS.find((c) => c.id === adminCharacter)! : null} owl={owl} />
+          ) : (<>
+
+
 
 
           {/* Pinned alert briefing at the top of unit chat */}
@@ -1633,7 +1719,9 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
           )}
 
           {/* Unit view starter chips removed — chat is locked in the prototype */}
+          </>)}
           </div>
+
         </div>
 
 
@@ -1691,7 +1779,10 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                 </button>
               </form>
             </>
+          ) : adminMode ? (
+            <LockedComposer view={view} />
           ) : testerMode && view === "unit" ? (
+
             <form
               onSubmit={(e) => {
                 e.preventDefault();
@@ -1835,6 +1926,11 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
             />
           );
         })()}
+        {adminMode && adminCharacter && (() => {
+          const c = ADMIN_CHARACTERS.find((x) => x.id === adminCharacter)!;
+          return <AdminWorkArea character={c} onClose={exitAdmin} />;
+        })()}
+
       </main>
       ); })()}
     </div>
@@ -1867,6 +1963,93 @@ function RailItem({ icon, label, active, onClick }: { icon: "pin" | "doc" | "cha
     </button>
   );
 }
+
+function CharacterRailItem({ name, src, active, onClick }: { name: string; src: string; active?: boolean; onClick?: () => void }) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-current={active ? "page" : undefined}
+      aria-label={name}
+      className={`w-14 flex flex-col items-center gap-1 py-1.5 rounded-lg transition focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40 ${
+        active ? "bg-[#F5F3FF] ring-1 ring-[#7C3AED]/40" : "hover:bg-slate-50"
+      }`}
+    >
+      <div className={`w-11 h-11 rounded-full overflow-hidden bg-[#F5F3FF] grid place-items-center ${active ? "ring-2 ring-[#7C3AED]" : "ring-1 ring-slate-200"}`}>
+        <img src={src} alt="" aria-hidden className="w-[120%] h-[120%] object-contain object-center" />
+      </div>
+      <span className={`text-[10px] text-center leading-tight ${active ? "text-[#7C3AED] font-medium" : "text-slate-600"}`}>{name}</span>
+    </button>
+  );
+}
+
+function CharacterAvatar({ src }: { src: string }) {
+  return (
+    <div className="w-10 h-10 shrink-0 rounded-full overflow-hidden bg-[#F5F3FF] ring-1 ring-slate-200 grid place-items-center">
+      <img src={src} alt="" aria-hidden className="w-[120%] h-[120%] object-contain object-center" />
+    </div>
+  );
+}
+
+function AdminChat({ character, owl }: { character: { id: AdminCharacter; name: string; src: string; greeting: string } | null; owl: OwlState }) {
+  return (
+    <div className="flex flex-col" style={{ gap: CHAT_TURN_GAP_PX }}>
+      <div className="flex items-start gap-2">
+        <OwlAvatar state={owl} />
+        <div className="max-w-[560px] bg-white border border-slate-200 text-[#1F2330] text-sm leading-relaxed px-4 py-3 rounded-2xl rounded-bl-md shadow-sm">
+          <div className="text-[12px] font-semibold text-slate-900 mb-1">Hobson</div>
+          Welcome to Admin, where my colleagues can assist. Select one of them and they will assist you.
+        </div>
+      </div>
+      {character && (
+        <div className="flex items-start gap-2">
+          <CharacterAvatar src={character.src} />
+          <div className="max-w-[560px] bg-white border border-slate-200 text-[#1F2330] text-sm leading-relaxed px-4 py-3 rounded-2xl rounded-bl-md shadow-sm">
+            <div className="text-[12px] font-semibold text-slate-900 mb-1">{character.name}</div>
+            {character.greeting}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function AdminWorkArea({ character, onClose }: { character: { id: AdminCharacter; name: string; src: string; tagline: string; workTitle: string; workIntro: string }; onClose: () => void }) {
+  return (
+    <div className="absolute inset-0 bg-white z-[450] flex flex-col">
+      <header className="h-14 px-5 flex items-center justify-between border-b border-slate-200">
+        <div className="flex items-center gap-3">
+          <div className="w-9 h-9 rounded-full overflow-hidden bg-[#F5F3FF] ring-1 ring-slate-200 grid place-items-center">
+            <img src={character.src} alt="" aria-hidden className="w-[120%] h-[120%] object-contain" />
+          </div>
+          <div>
+            <div className="text-[13px] font-semibold text-slate-900">{character.workTitle}</div>
+            <div className="text-[11px] text-slate-500">{character.tagline}</div>
+          </div>
+        </div>
+        <button
+          type="button"
+          onClick={onClose}
+          className="text-[12px] text-slate-500 hover:text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#7C3AED] rounded px-2 py-1"
+          aria-label="Close admin workspace"
+        >
+          ✕ Exit Admin
+        </button>
+      </header>
+      <div className="flex-1 overflow-y-auto p-8">
+        <div className="max-w-2xl mx-auto space-y-4">
+          <p className="text-sm text-slate-600">{character.workIntro}</p>
+          <div className="rounded-xl border border-dashed border-slate-300 bg-slate-50 p-10 text-center">
+            <div className="text-[13px] font-semibold text-slate-700 mb-1">{character.name}'s work area</div>
+            <div className="text-[12px] text-slate-500">Coming soon in the live product. For now, this is where {character.name} would set up their work alongside you.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+
 
 
 function HobsonBubble({ text, owl, streaming, rich, onAskFollowUp, showAvatar = true }: { text: string; owl: OwlState; streaming?: boolean; rich?: "rentFlat2"; onAskFollowUp?: (q: string) => void; showAvatar?: boolean }) {
