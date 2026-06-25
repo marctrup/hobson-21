@@ -878,6 +878,8 @@ function HobsonMap({
       map.off("zoomend moveend", recomputeOverlap);
       Object.values(connectorsRef.current).forEach((pl) => map.removeLayer(pl));
       connectorsRef.current = {};
+      ro.disconnect();
+      if (rafId != null) cancelAnimationFrame(rafId);
       map.remove();
       mapInstance.current = null;
       markersRef.current = {};
