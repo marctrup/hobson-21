@@ -5058,6 +5058,8 @@ function PortfolioBriefing({
                 onDismiss={() => onDismiss(c.id)}
                 onPerform={onPerform ? () => onPerform(c.id) : undefined}
                 onReview={onReview ? () => onReview(c.id) : undefined}
+                onManualComplete={onManualComplete ? (note) => onManualComplete(c.id, note) : undefined}
+                onOpenWorkflow={onOpenWorkflow}
               />
             ))}
           </div>
