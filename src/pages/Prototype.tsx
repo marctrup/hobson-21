@@ -2377,7 +2377,20 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
           if (c.id === "professor") {
             return <ProfessorWorkArea character={c} docs={profDocs} onClose={exitAdmin} />;
           }
+          if (c.id === "magician") {
+            return (
+              <MagicianWorkArea
+                character={c}
+                workflows={workflows}
+                onClose={exitAdmin}
+                onCreate={handleCreateWorkflow}
+                onAdjust={(id) => setAdjustingWorkflowId(id)}
+                onView={(id) => setViewingWorkflowId(id)}
+              />
+            );
+          }
           return <AdminWorkArea character={c} onClose={exitAdmin} />;
+
         })()}
 
       </main>
