@@ -4938,6 +4938,8 @@ function PortfolioBriefing({
   onDismiss,
   onPerform,
   onReview,
+  onManualComplete,
+  onOpenWorkflow,
 }: {
   cards: ActionCard[];
   choice: null | "all" | "urgent" | "browse";
@@ -4952,6 +4954,8 @@ function PortfolioBriefing({
   onDismiss: (id: string) => void;
   onPerform?: (id: string) => void;
   onReview?: (id: string) => void;
+  onManualComplete?: (id: string, note: string) => void;
+  onOpenWorkflow?: (ref: string) => void;
 }) {
   const pending = cards.filter((c) => c.approvalState === "pending" || c.approvalState === "in_progress");
   const urgent = pending.filter((c) => c.urgency === "now");
