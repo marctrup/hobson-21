@@ -3906,7 +3906,7 @@ function PropertyContent({
                       <span aria-hidden className="text-slate-400">{isCollapsed ? "▸" : "▾"}</span>
                     </button>
                     {!isCollapsed && (
-                      <div className="grid grid-cols-3 sm:grid-cols-4 gap-1.5 pt-2">
+                      <div className="grid gap-1.5 pt-2" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(120px, 1fr))" }}>
                         {group.units.map((u) => {
                           const tabIx: 0 | -1 = tileIndex === 0 ? 0 : -1;
                           tileIndex += 1;
