@@ -2419,6 +2419,8 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
               }}
               onPerform={performCard}
               onReview={reviewCard}
+              onManualComplete={manualHandleCard}
+              onOpenWorkflow={openWorkflowFromCard}
             />
           )}
 
