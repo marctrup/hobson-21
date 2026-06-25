@@ -6420,17 +6420,20 @@ type WorkLogEntry = {
   propertyName?: string;
   unitId?: string;
   unitLabel?: string;
-  when: string;            // human framing, e.g. "Yesterday, 4:12pm"
+  when: string;
   bucket: "Today" | "Yesterday" | "Last week" | "Earlier";
-  statusLabel: string;     // "Waiting on you", "Finished", "Paused — you deferred this", "2 of 4 steps complete"
+  statusLabel: string;
   statusKind: "waiting" | "in_progress" | "finished" | "paused";
-  narration: string;       // first-person recap paragraph
-  approvals: string[];     // "Approved by you — surveyor instructions"
-  flags: string[];         // unknowns honestly flagged
+  narration: string;
+  approvals: string[];
+  flags: string[];
   progressDone: number;
   progressTotal: number;
   dialogue: { role: "user" | "hobson"; text: string }[];
   hasSummary?: boolean;
+  origin?: CardOrigin;       // who logged the source card
+  workflowRef?: string;      // PA ref of the source card
+  manualNote?: string;       // present when "Handled by you"
 };
 
 function buildWorkLog(actionCards: ActionCard[]): WorkLogEntry[] {
