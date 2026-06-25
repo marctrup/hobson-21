@@ -1779,7 +1779,10 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                 </button>
               </form>
             </>
+          ) : adminMode ? (
+            <LockedComposer view={view} />
           ) : testerMode && view === "unit" ? (
+
             <form
               onSubmit={(e) => {
                 e.preventDefault();
