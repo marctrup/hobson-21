@@ -1516,10 +1516,18 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
     const fallback = window.setTimeout(() => { if (!cancelled) setOwlsReady(true); }, 1500);
     return () => { cancelled = true; window.clearTimeout(fallback); };
   }, []);
-  // Staged-tour reset: clear any legacy hasVisited flag so refreshes always land on Meet Hobson.
+  // Stateless demo reset: clear any persisted prototype keys on mount so every reload / re-entry
+  // returns to the seeded Meet Hobson starting state with no residue from a prior session.
   useEffect(() => {
     try {
       localStorage.removeItem("hobsonPrototype.hasVisited");
+      const ss = window.sessionStorage;
+      ["hobson:chatWidth", "hobson:chatCollapsed", "hobson:mainCollapsed"].forEach((k) => ss.removeItem(k));
+      // Clear any other hobson:* residue defensively.
+      for (let i = ss.length - 1; i >= 0; i--) {
+        const key = ss.key(i);
+        if (key && key.startsWith("hobson:")) ss.removeItem(key);
+      }
     } catch {}
   }, []);
 
