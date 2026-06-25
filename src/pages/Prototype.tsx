@@ -2018,9 +2018,20 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
         </div>
       </section>
 
+      {/* Resizable divider between chat (left) and right work area / map.
+          Hidden when chat is expanded full-width (no right pane visible). */}
+      {!isExpanded && (
+        <ResizeDivider
+          width={chatWidth}
+          setWidth={setChatWidth}
+          minLeft={CHAT_MIN_WIDTH}
+          minRight={MAIN_MIN_WIDTH}
+        />
+      )}
+
       {/* Map */}
       {(() => { const hasOverlay = hasRightOverlay; return (
-      <main className={`${chatExpanded && view !== "onboarding" && !hasOverlay ? "hidden" : "relative flex-1"} bg-slate-100`}>
+      <main className={`${chatExpanded && view !== "onboarding" && !hasOverlay ? "hidden" : "relative flex-1 min-w-0"} bg-slate-100`}>
 
 
 
