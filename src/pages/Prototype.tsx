@@ -1994,15 +1994,17 @@ function CharacterAvatar({ src }: { src: string }) {
 function AdminChat({ character, owl }: { character: { id: AdminCharacter; name: string; src: string; greeting: string } | null; owl: OwlState }) {
   return (
     <div className="flex flex-col" style={{ gap: CHAT_TURN_GAP_PX }}>
-      <div className="flex items-start gap-2">
-        <OwlAvatar state={owl} />
-        <div className="max-w-[560px] bg-white border border-slate-200 text-[#1F2330] text-sm leading-relaxed px-4 py-3 rounded-2xl rounded-bl-md shadow-sm">
-          <div className="text-[12px] font-semibold text-slate-900 mb-1">Hobson</div>
-          Welcome to Admin, where my colleagues can assist. Select one of them and they will assist you.
-        </div>
-      </div>
-      {character && (
+      {!character && (
         <div className="flex items-start gap-2">
+          <OwlAvatar state={owl} />
+          <div className="max-w-[560px] bg-white border border-slate-200 text-[#1F2330] text-sm leading-relaxed px-4 py-3 rounded-2xl rounded-bl-md shadow-sm">
+            <div className="text-[12px] font-semibold text-slate-900 mb-1">Hobson</div>
+            Welcome to Admin, where my colleagues can assist. Select one of them and they will assist you.
+          </div>
+        </div>
+      )}
+      {character && (
+        <div key={character.id} className="flex items-start gap-2">
           <CharacterAvatar src={character.src} />
           <div className="max-w-[560px] bg-white border border-slate-200 text-[#1F2330] text-sm leading-relaxed px-4 py-3 rounded-2xl rounded-bl-md shadow-sm">
             <div className="text-[12px] font-semibold text-slate-900 mb-1">{character.name}</div>
@@ -2013,6 +2015,7 @@ function AdminChat({ character, owl }: { character: { id: AdminCharacter; name: 
     </div>
   );
 }
+
 
 function AdminWorkArea({ character, onClose }: { character: { id: AdminCharacter; name: string; src: string; tagline: string; workTitle: string; workIntro: string }; onClose: () => void }) {
   return (
