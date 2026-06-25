@@ -608,6 +608,7 @@ const INITIAL_ACTION_CARDS: ActionCard[] = [
       "I'll email the engineer with building access notes, send each current tenant their access notice naming their unit, copy you on everything, and add the renewed certificate to the compliance calendar.",
     addedBy: { kind: "hobson" },
     workflowRef: "PA-001",
+    reviewReady: true,
   },
   {
     id: "act-stanley-f8-review",
