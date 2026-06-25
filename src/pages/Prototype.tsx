@@ -760,16 +760,21 @@ const Prototype: React.FC = () => {
     setReviewingCardId(id);
     setExpandedCardId(null);
   };
-  const cancelPerform = () => {
+  const resetToMap = () => {
+    // Single, predictable reset — always lands on the map. No panel-history walk.
     if (performingCardId) {
       setActionCards((arr) => arr.map((x) => x.id === performingCardId ? { ...x, approvalState: "pending" } : x));
     }
     setPerformingCardId(null);
-  };
-  const cancelReview = () => {
-    // Review doesn't change state on exit — the work stays parked.
     setReviewingCardId(null);
+    setShowDocuments(false);
+    setShowWhatIveDone(false);
+    setChatExpanded(false);
   };
+
+  const cancelPerform = resetToMap;
+  const cancelReview = resetToMap;
+
   const completePerform = (summary: string) => {
     const activeId = performingCardId ?? reviewingCardId;
     if (activeId) {
@@ -1690,19 +1695,19 @@ const Prototype: React.FC = () => {
         )}
         {showDocuments && (
           <DocumentsLibrary
-            onClose={() => setShowDocuments(false)}
+            onClose={resetToMap}
             initialScope={{
               propertyId: view === "property" || view === "unit" ? selectedPropertyId ?? undefined : undefined,
               unitId: view === "unit" ? selectedUnitId ?? undefined : undefined,
             }}
-            onNavigatePortfolio={() => { setShowDocuments(false); goPortfolio(false); }}
-            onNavigateProperty={(pid) => { setShowDocuments(false); goProperty(pid); }}
+            onNavigatePortfolio={() => { resetToMap(); goPortfolio(false); }}
+            onNavigateProperty={(pid) => { resetToMap(); goProperty(pid); }}
           />
         )}
         {showWhatIveDone && (
           <WhatIveDonePanel
             actionCards={actionCards}
-            onClose={() => setShowWhatIveDone(false)}
+            onClose={resetToMap}
             onResume={(id) => { setShowWhatIveDone(false); performCard(id); }}
             onOpenProperty={(pid) => { setShowWhatIveDone(false); goProperty(pid); }}
             onOpenUnit={(uid, pid) => { setShowWhatIveDone(false); goUnit(uid, pid); }}
