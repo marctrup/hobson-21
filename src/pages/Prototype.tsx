@@ -1054,9 +1054,11 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
     setSearchQuery("");
     setMessages([]);
     const carriedCard = carryCardId ? actionCards.find((x) => x.id === carryCardId) : null;
-    const greet = carriedCard
-      ? `Here's ${p.name}. ${carriedCard.title} is the one that needs you — and here's everything else on this building.`
-      : `Here you are, ${FIRST_NAME} — ${p.name}, London ${p.postcode}. ${p.units.length} units. Pick one to open.`;
+    const greet = testerMode
+      ? `This is ${p.name}. Select a unit below to open it — that is where we can talk.`
+      : carriedCard
+        ? `Here's ${p.name}. ${carriedCard.title} is the one that needs you — and here's everything else on this building.`
+        : `Here you are, ${FIRST_NAME} — ${p.name}, London ${p.postcode}. ${p.units.length} units. Pick one to open.`;
     setTyping(true);
     const delay = reduced ? 200 : 500;
     window.setTimeout(() => {
