@@ -1641,17 +1641,18 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
 
       {/* Chat panel */}
       <section
-        className={`${isExpanded ? "flex-1" : "shrink-0"} relative bg-white border-r border-slate-200 flex flex-col`}
-        style={isExpanded ? undefined : { width: chatWidth }}
+        className={`${isExpanded ? "flex-1" : "shrink-0"} relative bg-white border-r border-slate-200 flex flex-col ${chatCollapsed ? "overflow-hidden" : ""}`}
+        style={isExpanded ? undefined : { width: chatCollapsed ? CHAT_COLLAPSED_WIDTH : chatWidth }}
+        aria-hidden={chatCollapsed ? true : undefined}
         onDragOver={(e) => {
-          if (adminMode && adminCharacter === "professor") { e.preventDefault(); setChatDropOver(true); }
+          if (!chatCollapsed && adminMode && adminCharacter === "professor") { e.preventDefault(); setChatDropOver(true); }
         }}
         onDragLeave={(e) => {
           if (e.currentTarget.contains(e.relatedTarget as Node)) return;
           setChatDropOver(false);
         }}
         onDrop={(e) => {
-          if (adminMode && adminCharacter === "professor") {
+          if (!chatCollapsed && adminMode && adminCharacter === "professor") {
             e.preventDefault();
             const n = e.dataTransfer?.files?.length ?? 0;
             setChatDropOver(false);
@@ -1659,7 +1660,26 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
           }
         }}
       >
-        {chatDropOver && adminMode && adminCharacter === "professor" && (
+        {chatCollapsed && (
+          <button
+            type="button"
+            onClick={expandChat}
+            aria-label="Expand chat panel"
+            title="Expand chat"
+            className="absolute inset-0 z-40 flex flex-col items-center justify-start pt-4 gap-3 bg-white border-r border-slate-200 hover:bg-[#F5F3FF] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]"
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+              <path d="M9 6l6 6-6 6"/>
+            </svg>
+            <span
+              className="text-[10px] font-semibold tracking-wide text-[#7C3AED] uppercase"
+              style={{ writingMode: "vertical-rl" as const, transform: "rotate(180deg)" }}
+            >
+              Expand chat
+            </span>
+          </button>
+        )}
+        {!chatCollapsed && chatDropOver && adminMode && adminCharacter === "professor" && (
           <div className="absolute inset-0 z-30 grid place-items-center bg-[#F5F3FF]/95 border-2 border-dashed border-[#7C3AED] rounded-none pointer-events-none">
             <div className="text-center px-6">
               <div className="text-[#7C3AED] text-3xl mb-2" aria-hidden>↑</div>
