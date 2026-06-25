@@ -887,10 +887,38 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
   const [performingCardId, setPerformingCardId] = useState<string | null>(null);
   const [reviewingCardId, setReviewingCardId] = useState<string | null>(null);
   const [chatExpanded, setChatExpanded] = useState(false);
-  const [chatWidth, setChatWidth] = useState(480);
+  const [chatWidth, setChatWidth] = useState<number>(() => {
+    if (typeof window === "undefined") return 480;
+    const v = Number(window.sessionStorage.getItem("hobson:chatWidth"));
+    return Number.isFinite(v) && v >= 200 ? v : 480;
+  });
+  const [chatCollapsed, setChatCollapsed] = useState<boolean>(() => {
+    if (typeof window === "undefined") return false;
+    return window.sessionStorage.getItem("hobson:chatCollapsed") === "1";
+  });
   const [chatDropOver, setChatDropOver] = useState(false);
-  const CHAT_MIN_WIDTH = 360;
+  const CHAT_MIN_WIDTH = 240;
+  const CHAT_COLLAPSE_THRESHOLD = 200;
+  const CHAT_COLLAPSED_WIDTH = 44;
   const MAIN_MIN_WIDTH = 420;
+  const lastExpandedWidthRef = useRef<number>(chatWidth);
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    window.sessionStorage.setItem("hobson:chatWidth", String(chatWidth));
+  }, [chatWidth]);
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    window.sessionStorage.setItem("hobson:chatCollapsed", chatCollapsed ? "1" : "0");
+  }, [chatCollapsed]);
+  const collapseChat = () => {
+    if (!chatCollapsed) lastExpandedWidthRef.current = chatWidth;
+    setChatCollapsed(true);
+  };
+  const expandChat = () => {
+    setChatCollapsed(false);
+    setChatWidth(Math.max(CHAT_MIN_WIDTH, lastExpandedWidthRef.current || 480));
+  };
+  const toggleChatCollapsed = () => (chatCollapsed ? expandChat() : collapseChat());
   const [adminMode, setAdminMode] = useState(false);
   const [adminCharacter, setAdminCharacter] = useState<AdminCharacter | null>(null);
 
