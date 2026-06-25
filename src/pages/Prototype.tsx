@@ -2669,25 +2669,28 @@ function UnitStarters({ unit, onAsk }: { unit: Unit; onAsk: (q: string) => void 
 }
 
 function LockedComposer({ view }: { view: View }) {
-  const placeholder = "Ask Hobson…";
-  const helper =
-    view === "onboarding"
-      ? "Chat unlocks at unit level"
-      : "Open a unit to chat with Hobson";
+  void view;
+  const placeholder = "Chat is locked in this prototype";
+  const helper = "Available in the live product";
   return (
     <>
-      <div className="text-[11px] text-slate-400 mb-1">Locked</div>
+      <div className="text-[11px] font-semibold text-[#7C3AED] mb-1 flex items-center gap-1">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden>
+          <rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/>
+        </svg>
+        Chat locked for the prototype
+      </div>
       <div
         aria-disabled="true"
         tabIndex={-1}
-        className="flex items-center gap-2 px-4 py-2.5 rounded-full border border-dashed border-slate-300 bg-slate-50 text-sm text-slate-400 select-none cursor-not-allowed"
+        className="flex items-center gap-2 px-4 py-2.5 rounded-full border border-dashed border-[#7C3AED]/40 bg-[#F5F3FF] text-sm text-[#5B21B6]/70 select-none cursor-not-allowed"
         title={helper}
       >
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
           <rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/>
         </svg>
-        <span className="flex-1 truncate text-slate-400">{placeholder}</span>
-        <span className="text-[10px] uppercase tracking-wide text-slate-400 hidden sm:inline">{helper}</span>
+        <span className="flex-1 truncate">{placeholder}</span>
+        <span className="text-[10px] uppercase tracking-wide hidden sm:inline">{helper}</span>
       </div>
     </>
   );
