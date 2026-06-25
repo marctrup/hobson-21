@@ -887,10 +887,38 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
   const [performingCardId, setPerformingCardId] = useState<string | null>(null);
   const [reviewingCardId, setReviewingCardId] = useState<string | null>(null);
   const [chatExpanded, setChatExpanded] = useState(false);
-  const [chatWidth, setChatWidth] = useState(480);
+  const [chatWidth, setChatWidth] = useState<number>(() => {
+    if (typeof window === "undefined") return 480;
+    const v = Number(window.sessionStorage.getItem("hobson:chatWidth"));
+    return Number.isFinite(v) && v >= 200 ? v : 480;
+  });
+  const [chatCollapsed, setChatCollapsed] = useState<boolean>(() => {
+    if (typeof window === "undefined") return false;
+    return window.sessionStorage.getItem("hobson:chatCollapsed") === "1";
+  });
   const [chatDropOver, setChatDropOver] = useState(false);
-  const CHAT_MIN_WIDTH = 360;
+  const CHAT_MIN_WIDTH = 240;
+  const CHAT_COLLAPSE_THRESHOLD = 200;
+  const CHAT_COLLAPSED_WIDTH = 44;
   const MAIN_MIN_WIDTH = 420;
+  const lastExpandedWidthRef = useRef<number>(chatWidth);
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    window.sessionStorage.setItem("hobson:chatWidth", String(chatWidth));
+  }, [chatWidth]);
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    window.sessionStorage.setItem("hobson:chatCollapsed", chatCollapsed ? "1" : "0");
+  }, [chatCollapsed]);
+  const collapseChat = () => {
+    if (!chatCollapsed) lastExpandedWidthRef.current = chatWidth;
+    setChatCollapsed(true);
+  };
+  const expandChat = () => {
+    setChatCollapsed(false);
+    setChatWidth(Math.max(CHAT_MIN_WIDTH, lastExpandedWidthRef.current || 480));
+  };
+  const toggleChatCollapsed = () => (chatCollapsed ? expandChat() : collapseChat());
   const [adminMode, setAdminMode] = useState(false);
   const [adminCharacter, setAdminCharacter] = useState<AdminCharacter | null>(null);
 
@@ -1613,17 +1641,18 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
 
       {/* Chat panel */}
       <section
-        className={`${isExpanded ? "flex-1" : "shrink-0"} relative bg-white border-r border-slate-200 flex flex-col`}
-        style={isExpanded ? undefined : { width: chatWidth }}
+        className={`${isExpanded ? "flex-1" : "shrink-0"} relative bg-white border-r border-slate-200 flex flex-col ${chatCollapsed ? "overflow-hidden" : ""}`}
+        style={isExpanded ? undefined : { width: chatCollapsed ? CHAT_COLLAPSED_WIDTH : chatWidth }}
+        aria-hidden={chatCollapsed ? true : undefined}
         onDragOver={(e) => {
-          if (adminMode && adminCharacter === "professor") { e.preventDefault(); setChatDropOver(true); }
+          if (!chatCollapsed && adminMode && adminCharacter === "professor") { e.preventDefault(); setChatDropOver(true); }
         }}
         onDragLeave={(e) => {
           if (e.currentTarget.contains(e.relatedTarget as Node)) return;
           setChatDropOver(false);
         }}
         onDrop={(e) => {
-          if (adminMode && adminCharacter === "professor") {
+          if (!chatCollapsed && adminMode && adminCharacter === "professor") {
             e.preventDefault();
             const n = e.dataTransfer?.files?.length ?? 0;
             setChatDropOver(false);
@@ -1631,7 +1660,26 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
           }
         }}
       >
-        {chatDropOver && adminMode && adminCharacter === "professor" && (
+        {chatCollapsed && (
+          <button
+            type="button"
+            onClick={expandChat}
+            aria-label="Expand chat panel"
+            title="Expand chat"
+            className="absolute inset-0 z-40 flex flex-col items-center justify-start pt-4 gap-3 bg-white border-r border-slate-200 hover:bg-[#F5F3FF] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]"
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+              <path d="M9 6l6 6-6 6"/>
+            </svg>
+            <span
+              className="text-[10px] font-semibold tracking-wide text-[#7C3AED] uppercase"
+              style={{ writingMode: "vertical-rl" as const, transform: "rotate(180deg)" }}
+            >
+              Expand chat
+            </span>
+          </button>
+        )}
+        {!chatCollapsed && chatDropOver && adminMode && adminCharacter === "professor" && (
           <div className="absolute inset-0 z-30 grid place-items-center bg-[#F5F3FF]/95 border-2 border-dashed border-[#7C3AED] rounded-none pointer-events-none">
             <div className="text-center px-6">
               <div className="text-[#7C3AED] text-3xl mb-2" aria-hidden>↑</div>
@@ -2047,10 +2095,15 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
           Hidden when chat is expanded full-width (no right pane visible). */}
       {!isExpanded && (
         <ResizeDivider
-          width={chatWidth}
+          width={chatCollapsed ? CHAT_COLLAPSED_WIDTH : chatWidth}
           setWidth={setChatWidth}
           minLeft={CHAT_MIN_WIDTH}
           minRight={MAIN_MIN_WIDTH}
+          collapsed={chatCollapsed}
+          collapseThreshold={CHAT_COLLAPSE_THRESHOLD}
+          onCollapse={collapseChat}
+          onExpand={expandChat}
+          onToggleCollapsed={toggleChatCollapsed}
         />
       )}
 
@@ -2185,11 +2238,21 @@ function ResizeDivider({
   setWidth,
   minLeft,
   minRight,
+  collapsed,
+  collapseThreshold,
+  onCollapse,
+  onExpand,
+  onToggleCollapsed,
 }: {
   width: number;
   setWidth: (n: number) => void;
   minLeft: number;
   minRight: number;
+  collapsed: boolean;
+  collapseThreshold: number;
+  onCollapse: () => void;
+  onExpand: () => void;
+  onToggleCollapsed: () => void;
 }) {
   const draggingRef = useRef(false);
   const startXRef = useRef(0);
@@ -2200,9 +2263,17 @@ function ResizeDivider({
     const onMove = (e: MouseEvent) => {
       if (!draggingRef.current) return;
       const dx = e.clientX - startXRef.current;
-      const railWidth = 68; // left nav rail
+      const railWidth = 68;
       const maxLeft = window.innerWidth - railWidth - minRight;
-      const next = Math.max(minLeft, Math.min(maxLeft, startWRef.current + dx));
+      const raw = startWRef.current + dx;
+      if (raw < collapseThreshold) {
+        if (!collapsed) onCollapse();
+        return;
+      }
+      if (collapsed && raw >= collapseThreshold) {
+        onExpand();
+      }
+      const next = Math.max(minLeft, Math.min(maxLeft, raw));
       setWidth(next);
     };
     const onUp = () => {
@@ -2218,21 +2289,33 @@ function ResizeDivider({
       window.removeEventListener("mousemove", onMove);
       window.removeEventListener("mouseup", onUp);
     };
-  }, [minLeft, minRight, setWidth]);
+  }, [minLeft, minRight, setWidth, collapsed, collapseThreshold, onCollapse, onExpand]);
 
   const onKeyDown = (e: React.KeyboardEvent) => {
     const step = e.shiftKey ? 48 : 16;
-    if (e.key === "ArrowLeft") { e.preventDefault(); setWidth(Math.max(minLeft, width - step)); }
-    else if (e.key === "ArrowRight") {
+    if (e.key === "ArrowLeft") {
+      e.preventDefault();
+      if (collapsed) return;
+      const next = width - step;
+      if (next < collapseThreshold) onCollapse();
+      else setWidth(Math.max(minLeft, next));
+    } else if (e.key === "ArrowRight") {
       e.preventDefault();
       const railWidth = 68;
       const maxLeft = window.innerWidth - railWidth - minRight;
+      if (collapsed) { onExpand(); return; }
       setWidth(Math.min(maxLeft, width + step));
-    } else if (e.key === "Home") { e.preventDefault(); setWidth(minLeft); }
-    else if (e.key === "End") {
+    } else if (e.key === "Home") {
       e.preventDefault();
+      if (!collapsed) setWidth(minLeft);
+    } else if (e.key === "End") {
+      e.preventDefault();
+      if (collapsed) onExpand();
       const railWidth = 68;
       setWidth(window.innerWidth - railWidth - minRight);
+    } else if (e.key === "Enter" || e.key === " " || e.key.toLowerCase() === "c") {
+      e.preventDefault();
+      onToggleCollapsed();
     }
   };
 
@@ -2240,7 +2323,7 @@ function ResizeDivider({
     <div
       role="separator"
       aria-orientation="vertical"
-      aria-label="Resize chat and work area"
+      aria-label={collapsed ? "Chat collapsed — press Enter or drag right to expand" : "Resize chat and work area (Enter to collapse)"}
       aria-valuenow={width}
       aria-valuemin={minLeft}
       tabIndex={0}
@@ -2248,20 +2331,28 @@ function ResizeDivider({
       onMouseDown={(e) => {
         draggingRef.current = true;
         startXRef.current = e.clientX;
-        startWRef.current = width;
+        startWRef.current = collapsed ? collapseThreshold : width;
         setActive(true);
         document.body.style.cursor = "col-resize";
         document.body.style.userSelect = "none";
       }}
-      onDoubleClick={() => setWidth(480)}
-      title="Drag to resize · double-click to reset"
+      onDoubleClick={() => { if (collapsed) onExpand(); else setWidth(480); }}
+      title={collapsed ? "Drag right or double-click to expand chat" : "Drag to resize · double-click to reset · Enter to collapse"}
       className={`group relative w-1.5 shrink-0 cursor-col-resize select-none focus:outline-none ${active ? "bg-[#7C3AED]/30" : "bg-slate-100 hover:bg-[#7C3AED]/20"} focus-visible:bg-[#7C3AED]/30`}
     >
       <div className={`absolute inset-y-0 left-1/2 -translate-x-1/2 w-px ${active ? "bg-[#7C3AED]" : "bg-slate-200 group-hover:bg-[#7C3AED]/60"}`} />
       <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center justify-center gap-0.5 px-0.5 py-2 rounded ${active ? "bg-[#7C3AED] text-white" : "bg-white border border-slate-200 text-slate-400 group-hover:text-[#7C3AED]"}`}>
-        <span className="block w-0.5 h-0.5 rounded-full bg-current" />
-        <span className="block w-0.5 h-0.5 rounded-full bg-current" />
-        <span className="block w-0.5 h-0.5 rounded-full bg-current" />
+        {collapsed ? (
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+            <path d="M9 6l6 6-6 6"/>
+          </svg>
+        ) : (
+          <>
+            <span className="block w-0.5 h-0.5 rounded-full bg-current" />
+            <span className="block w-0.5 h-0.5 rounded-full bg-current" />
+            <span className="block w-0.5 h-0.5 rounded-full bg-current" />
+          </>
+        )}
       </div>
     </div>
   );
