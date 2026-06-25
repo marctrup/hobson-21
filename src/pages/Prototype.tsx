@@ -959,8 +959,8 @@ const Prototype: React.FC = () => {
 
     const greetLines: string[] =
       pending.length === 0
-        ? [`Good morning, ${FIRST_NAME}. Your estate is quiet today — nothing requires your attention.`]
-        : [`Good morning, ${FIRST_NAME}. Your estate is quiet for the most part — though there are ${mattersClause} your attention today${urgentClause}. Shall I take you through them?`];
+        ? [`Good morning, ${FIRST_NAME}. Your portfolio is quiet today — nothing requires your attention.`]
+        : [`Good morning, ${FIRST_NAME}. Your portfolio is quiet for the most part — though there are ${mattersClause} your attention today${urgentClause}. Shall I take you through them?`];
 
 
 
