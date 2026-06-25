@@ -911,7 +911,7 @@ const Prototype: React.FC = () => {
     }, preDelay);
     return () => clearTimeout(t);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [beatIdx, lineIdx, view]);
+  }, [beatIdx, lineIdx, view, owlsReady]);
 
   const streamHobsonMessage = (text: string, done: () => void) => {
     const id = `m-${Date.now()}-${Math.random()}`;
