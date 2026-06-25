@@ -1719,7 +1719,9 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
           )}
 
           {/* Unit view starter chips removed — chat is locked in the prototype */}
+          </>)}
           </div>
+
         </div>
 
 
