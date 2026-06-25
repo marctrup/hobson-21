@@ -1785,7 +1785,7 @@ function HobsonBubble({ text, owl, streaming, rich, onAskFollowUp, showAvatar = 
   const AvatarSlot = showAvatar
     ? <OwlAvatar state={owl} />
     : <div aria-hidden className="w-10 h-10 shrink-0" />;
-  const groupSpacing = "";
+  
 
   if (rich === "rentFlat2") {
     return (
