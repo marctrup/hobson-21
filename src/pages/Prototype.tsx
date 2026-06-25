@@ -5092,6 +5092,8 @@ function PropertyActions({
   onDismiss,
   onPerform,
   onReview,
+  onManualComplete,
+  onOpenWorkflow,
 }: {
   cards: ActionCard[];
   propertyName: string;
@@ -5104,6 +5106,8 @@ function PropertyActions({
   onDismiss: (id: string) => void;
   onPerform?: (id: string) => void;
   onReview?: (id: string) => void;
+  onManualComplete?: (id: string, note: string) => void;
+  onOpenWorkflow?: (ref: string) => void;
 }) {
   const sortCarried = (arr: ActionCard[]) =>
     carriedCardId
@@ -5138,6 +5142,8 @@ function PropertyActions({
                   onDismiss={() => onDismiss(c.id)}
                   onPerform={onPerform ? () => onPerform(c.id) : undefined}
                   onReview={onReview ? () => onReview(c.id) : undefined}
+                  onManualComplete={onManualComplete ? (note) => onManualComplete(c.id, note) : undefined}
+                  onOpenWorkflow={onOpenWorkflow}
                 />
               </div>
             ))}
