@@ -1615,7 +1615,7 @@ const Prototype: React.FC = () => {
       </section>
 
       {/* Map */}
-      <main className={`relative flex-1 bg-slate-100 ${isExpanded ? "hidden" : ""}`}>
+      <main className={isExpanded ? "fixed inset-y-0 left-[68px] right-0 bg-slate-100 z-[400] pointer-events-none" : "relative flex-1 bg-slate-100"}>
 
         <div
           aria-hidden={view === "onboarding" ? true : undefined}
