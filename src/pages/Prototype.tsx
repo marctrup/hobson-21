@@ -1434,7 +1434,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
         </button>
         {adminMode ? (
           <>
-            <div className="flex flex-col items-center w-full" style={{ gap: 24, marginTop: 12 }}>
+            <div className="flex flex-col items-center w-full" style={{ gap: 24, marginTop: 40 }}>
               {ADMIN_CHARACTERS.map((c) => (
                 <CharacterRailItem
                   key={c.id}
