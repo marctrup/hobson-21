@@ -2887,7 +2887,7 @@ function CharacterAvatar({ src }: { src: string }) {
 
 const HOBSON_ADMIN_INTRO = "Welcome to Admin, where my colleagues can assist. Select one of them and they will assist you.";
 
-function AdminChat({ character, owl, professorEvents, onAssignProfessorType }: { character: { id: AdminCharacter; name: string; src: string; greeting: string } | null; owl: OwlState; professorEvents?: ProfEvent[]; onAssignProfessorType?: (batchId: string, type: string) => void }) {
+function AdminChat({ character, owl, professorEvents, onAssignProfessorType, brokerEvents, brokerFlowActive }: { character: { id: AdminCharacter; name: string; src: string; greeting: string } | null; owl: OwlState; professorEvents?: ProfEvent[]; onAssignProfessorType?: (batchId: string, type: string) => void; brokerEvents?: BrokerEvent[]; brokerFlowActive?: boolean }) {
   const [phase, setPhase] = useState<"typing" | "streaming" | "done">("typing");
   const [shown, setShown] = useState("");
   const reducedMotion = typeof window !== "undefined"
