@@ -1706,7 +1706,12 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
           >
 
           {adminMode ? (
-            <AdminChat character={adminCharacter ? ADMIN_CHARACTERS.find((c) => c.id === adminCharacter)! : null} owl={owl} />
+            <AdminChat
+              character={adminCharacter ? ADMIN_CHARACTERS.find((c) => c.id === adminCharacter)! : null}
+              owl={owl}
+              professorEvents={adminCharacter === "professor" ? profEvents : undefined}
+              onAssignProfessorType={assignProfessorType}
+            />
           ) : (<>
 
 
