@@ -3518,6 +3518,64 @@ function LockedComposer({ view }: { view: View }) {
   );
 }
 
+function ProfessorComposer({ onUpload }: { onUpload: (count: number) => void }) {
+  const fileRef = useRef<HTMLInputElement | null>(null);
+  const [dragOver, setDragOver] = useState(false);
+  const handleFiles = (n: number) => {
+    if (n > 0) onUpload(Math.min(n, 8));
+  };
+  return (
+    <div className="flex flex-col gap-2">
+      <div
+        onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
+        onDragLeave={() => setDragOver(false)}
+        onDrop={(e) => {
+          e.preventDefault();
+          setDragOver(false);
+          const n = e.dataTransfer?.files?.length ?? 0;
+          handleFiles(n || 3);
+        }}
+        className={`flex items-center gap-3 px-4 py-3 rounded-2xl border-2 border-dashed transition ${
+          dragOver ? "border-[#7C3AED] bg-[#F5F3FF]" : "border-[#7C3AED]/40 bg-white"
+        }`}
+      >
+        <button
+          type="button"
+          onClick={() => fileRef.current?.click()}
+          className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full bg-[#7C3AED] text-white text-[13px] font-semibold shadow-sm hover:bg-[#6D28D9] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+            <path d="M12 16V4M6 10l6-6 6 6"/><path d="M4 20h16"/>
+          </svg>
+          Upload documents
+        </button>
+        <div className="flex-1 min-w-0">
+          <div className="text-[12px] font-medium text-slate-800">Drop one or many — PDFs, leases, certificates</div>
+          <div className="text-[11px] text-slate-500">Single or batch upload · multi-select supported</div>
+        </div>
+        <input
+          ref={fileRef}
+          type="file"
+          multiple
+          className="sr-only"
+          aria-label="Upload documents"
+          onChange={(e) => handleFiles(e.target.files?.length ?? 0)}
+        />
+      </div>
+      <div
+        aria-disabled="true"
+        className="flex items-center gap-2 px-4 py-2 rounded-full border border-slate-200 bg-slate-50 text-[12px] text-slate-500"
+      >
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
+          <rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/>
+        </svg>
+        Free-text chat with The Professor is coming in the live product — for now, hand him documents.
+      </div>
+    </div>
+  );
+}
+
+
 /* ---------- Portfolio: first-visit guided ---------- */
 
 function PortfolioFirstVisit({
