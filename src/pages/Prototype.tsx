@@ -741,7 +741,7 @@ function HobsonMap({
 
 type View = "onboarding" | "portfolio" | "property" | "unit";
 
-const Prototype: React.FC = () => {
+const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) => {
   const [view, setView] = useState<View>("onboarding");
   const [beatIdx, setBeatIdx] = useState(0);
   const [lineIdx, setLineIdx] = useState(0); // line within beat
