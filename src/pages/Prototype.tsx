@@ -18,7 +18,7 @@ const ADMIN_CHARACTERS: { id: AdminCharacter; name: string; src: string; tagline
     name: "The Magician",
     src: characterMagician,
     tagline: "Workflows & automations",
-    greeting: "A pleasure. I'm The Magician — I conjure the workflows and automations that keep your portfolio moving quietly in the background. Tell me what you would like to make happen, and I'll set the stage.",
+    greeting: "This is where we make the magic together. Tell me what you'd like to keep on top of — rent reviews, compliance, notice deadlines — and I'll build a workflow that watches for it and prepares the work before you ask. Press \u201cCreate a workflow\u201d and we'll build one together.",
     workTitle: "The Magician's workshop",
     workIntro: "Where automations are composed and rehearsed before they go live.",
   },
@@ -122,6 +122,100 @@ const SEED_PROF_DOCS: ProfDoc[] = [
 type ProfEvent =
   | { kind: "ask-type"; id: string; docIds: string[]; resolved?: { type: string; family: DocFamily } }
   | { kind: "professor"; id: string; text: string };
+
+/* ---------------- Magician workshop types & seed ---------------- */
+
+type WorkflowStatus = "built" | "draft";
+type WorkflowIconKey = "calendar" | "shield" | "alert" | "bell" | "leaf" | "wand";
+type WorkflowOwner =
+  | { kind: "all_teams" }
+  | { kind: "person"; name: string; role?: string; initials: string };
+
+type Workflow = {
+  id: string;
+  name: string;
+  purpose: string;
+  icon: WorkflowIconKey;
+  tone: "purple" | "teal" | "amber" | "slate";
+  status: WorkflowStatus;
+  trigger: string;     // "When ..."
+  action: string;      // "I will ..."
+  scopeLabel: string;  // short summary
+  scopeDetail?: string[]; // long form on expand
+  owner: WorkflowOwner;
+  lastAdjusted?: string;
+};
+
+const SEED_WORKFLOWS: Workflow[] = [
+  {
+    id: "wf-1",
+    name: "Rent review watch",
+    purpose: "Spots rent reviews early and drafts the review summary.",
+    icon: "calendar", tone: "purple", status: "built",
+    trigger: "a rent review is 6 months away",
+    action: "read the lease, prepare a review summary, and bring it to you for approval",
+    scopeLabel: "Flat 8 and Flat 6, Stanley House",
+    owner: { kind: "person", name: "Sarah Chen", role: "Asset Manager", initials: "SC" },
+    lastAdjusted: "12 May 2026",
+  },
+  {
+    id: "wf-2",
+    name: "Compliance renewals",
+    purpose: "Keeps certificates current across the portfolio.",
+    icon: "shield", tone: "teal", status: "built",
+    trigger: "a certificate nears its expiry window",
+    action: "find your contractor, draft the inspection and access emails, and hold them for your approval",
+    scopeLabel: "All properties",
+    owner: { kind: "all_teams" },
+    lastAdjusted: "3 Jun 2026",
+  },
+  {
+    id: "wf-3",
+    name: "Notice deadlines",
+    purpose: "Catches break and notice dates before they slip.",
+    icon: "alert", tone: "amber", status: "draft",
+    trigger: "a break or notice deadline approaches",
+    action: "prepare the notice in good time so the right is never lost, ready for you to serve",
+    scopeLabel: "Stanley House (all units) + Flat 2, Nugent Terrace",
+    owner: { kind: "person", name: "James Okoro", role: "Lease Manager", initials: "JO" },
+  },
+  {
+    id: "wf-4",
+    name: "Notice effect watch",
+    purpose: "Anticipates what happens when a served notice lands.",
+    icon: "bell", tone: "purple", status: "built",
+    trigger: "a served notice is about to take effect",
+    action: "explain what's about to happen and prepare the next step for your approval",
+    scopeLabel: "3 properties \u00b7 14 units",
+    scopeDetail: [
+      "Stanley House — all 8 units",
+      "5 Nugent Terrace — Flat 1, Flat 2, Flat 3, Flat 4",
+      "Beaufort Mews — Unit A, Unit B",
+    ],
+    owner: { kind: "person", name: "Sarah Chen", role: "Asset Manager", initials: "SC" },
+    lastAdjusted: "28 May 2026",
+  },
+  {
+    id: "wf-5",
+    name: "EPC renewals",
+    purpose: "Keeps EPCs valid and bookings booked.",
+    icon: "leaf", tone: "teal", status: "built",
+    trigger: "an EPC nears expiry",
+    action: "instruct an accredited assessor and prepare access notes for your approval",
+    scopeLabel: "All properties",
+    owner: { kind: "all_teams" },
+    lastAdjusted: "1 Jun 2026",
+  },
+];
+
+const MAGICIAN_STAFF: { name: string; role: string; initials: string }[] = [
+  { name: "Sarah Chen", role: "Asset Manager", initials: "SC" },
+  { name: "James Okoro", role: "Lease Manager", initials: "JO" },
+  { name: "Priya Shah", role: "Compliance Lead", initials: "PS" },
+  { name: "Tom Whitfield", role: "Portfolio Analyst", initials: "TW" },
+];
+
+
 
 
 /* ---------------- Config ---------------- */
@@ -966,6 +1060,34 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
   // ----- Professor library state -----
   const [profDocs, setProfDocs] = useState<ProfDoc[]>(SEED_PROF_DOCS);
   const [profEvents, setProfEvents] = useState<ProfEvent[]>([]);
+
+  // ----- Magician workshop state -----
+  const [workflows, setWorkflows] = useState<Workflow[]>(SEED_WORKFLOWS);
+  const [adjustingWorkflowId, setAdjustingWorkflowId] = useState<string | null>(null);
+  const [viewingWorkflowId, setViewingWorkflowId] = useState<string | null>(null);
+
+  const handleCreateWorkflow = () => {
+    const id = `wf-${Date.now()}`;
+    const draft: Workflow = {
+      id,
+      name: "Untitled workflow",
+      purpose: "Tell me what to watch for and I'll prepare it.",
+      icon: "wand", tone: "slate", status: "draft",
+      trigger: "—",
+      action: "prepare the work and bring it to you for approval",
+      scopeLabel: "Not yet set",
+      owner: { kind: "all_teams" },
+    };
+    setWorkflows((arr) => [draft, ...arr]);
+    setAdjustingWorkflowId(id);
+  };
+
+  const handleSaveWorkflow = (next: Workflow) => {
+    setWorkflows((arr) => arr.map((w) => w.id === next.id ? next : w));
+    setAdjustingWorkflowId(null);
+  };
+
+
 
   const handleProfessorUpload = (count: number = 3) => {
     const ts = Date.now();
@@ -2058,7 +2180,10 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
           ) : adminMode ? (
             adminCharacter === "professor"
               ? <ProfessorComposer onUpload={handleProfessorUpload} />
-              : <LockedComposer view={view} />
+              : adminCharacter === "magician"
+                ? <MagicianComposer onCreate={handleCreateWorkflow} />
+                : <LockedComposer view={view} />
+
           ) : testerMode && view === "unit" ? (
 
             <form
@@ -2252,15 +2377,46 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
           if (c.id === "professor") {
             return <ProfessorWorkArea character={c} docs={profDocs} onClose={exitAdmin} />;
           }
+          if (c.id === "magician") {
+            return (
+              <MagicianWorkArea
+                character={c}
+                workflows={workflows}
+                onClose={exitAdmin}
+                onCreate={handleCreateWorkflow}
+                onAdjust={(id) => setAdjustingWorkflowId(id)}
+                onView={(id) => setViewingWorkflowId(id)}
+              />
+            );
+          }
           return <AdminWorkArea character={c} onClose={exitAdmin} />;
+
         })()}
 
       </main>
       ); })()}
+
+      {/* Magician — Adjust / View dialogs */}
+      {adjustingWorkflowId && (
+        <WorkflowAdjustDialog
+          workflow={workflows.find((w) => w.id === adjustingWorkflowId)!}
+          staff={MAGICIAN_STAFF}
+          onClose={() => setAdjustingWorkflowId(null)}
+          onSave={handleSaveWorkflow}
+        />
+      )}
+      {viewingWorkflowId && (
+        <WorkflowViewDialog
+          workflow={workflows.find((w) => w.id === viewingWorkflowId)!}
+          onClose={() => setViewingWorkflowId(null)}
+          onAdjust={() => { setViewingWorkflowId(null); setAdjustingWorkflowId(viewingWorkflowId); }}
+        />
+      )}
     </div>
 
   );
 };
+
 
 /* ---------------- Sub-components ---------------- */
 
@@ -2551,6 +2707,14 @@ function AdminChat({ character, owl, professorEvents, onAssignProfessorType }: {
             {phase === "streaming" && (
               <span className="inline-block w-1.5 h-3.5 ml-0.5 bg-[#7C3AED] align-middle animate-pulse" />
             )}
+          </div>
+        </div>
+      )}
+      {character?.id === "magician" && phase === "done" && (
+        <div className="flex items-end gap-2">
+          <CharacterAvatar src={character.src} />
+          <div className="max-w-[420px] bg-[#EDE9FE] text-[#1F2330] text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-bl-md">
+            Press <span className="font-semibold">"Create a workflow"</span> below and we'll build one together — I'll ask what to watch for, who it's for, and which units it covers.
           </div>
         </div>
       )}
@@ -6181,4 +6345,488 @@ function WorkLogCard({
   );
 }
 
+/* ============================================================
+   Magician — workshop UI
+   ============================================================ */
+
+function WorkflowIcon({ icon, tone }: { icon: WorkflowIconKey; tone: Workflow["tone"] }) {
+  const toneCls: Record<Workflow["tone"], string> = {
+    purple: "bg-[#F5F3FF] text-[#5B21B6] ring-[#7C3AED]/30",
+    teal:   "bg-teal-50 text-teal-700 ring-teal-300/60",
+    amber:  "bg-amber-50 text-amber-800 ring-amber-300/60",
+    slate:  "bg-slate-50 text-slate-700 ring-slate-300/60",
+  };
+  const path: Record<WorkflowIconKey, JSX.Element> = {
+    calendar: (<><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/><path d="M8 14h3v3H8z"/></>),
+    shield:   (<><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6l8-3z"/><path d="M9 12l2 2 4-4"/></>),
+    alert:    (<><path d="M5 3h10l4 4v14H5z"/><path d="M12 9v4M12 17h.01"/></>),
+    bell:     (<><path d="M6 8a6 6 0 1 1 12 0c0 7 3 8 3 8H3s3-1 3-8z"/><path d="M10 21a2 2 0 0 0 4 0"/></>),
+    leaf:     (<><path d="M5 19c0-8 6-14 16-14 0 10-6 16-14 16-1 0-2-.2-2-2z"/><path d="M5 19c4-4 7-7 11-11"/></>),
+    wand:     (<><path d="M15 4l5 5-11 11H4v-5L15 4z"/><path d="M14 5l5 5"/></>),
+  };
+  return (
+    <div className={`w-10 h-10 rounded-lg ring-1 grid place-items-center ${toneCls[tone]}`}>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+        {path[icon]}
+      </svg>
+    </div>
+  );
+}
+
+function WorkflowStatusPill({ status }: { status: WorkflowStatus }) {
+  if (status === "built") {
+    return (
+      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full border border-[#7C3AED]/40 bg-[#F5F3FF] text-[#5B21B6] text-[11px] font-semibold">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M15 4l5 5-11 11H4v-5L15 4z"/><path d="M14 5l5 5"/></svg>
+        Built
+      </span>
+    );
+  }
+  return (
+    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full border border-dashed border-slate-300 bg-white text-slate-600 text-[11px] font-semibold">
+      <span aria-hidden>○</span> Draft
+    </span>
+  );
+}
+
+function OwnerChip({ owner }: { owner: WorkflowOwner }) {
+  if (owner.kind === "all_teams") {
+    return (
+      <span className="inline-flex items-center gap-1.5 px-2 py-1 rounded-full border border-slate-200 bg-slate-50 text-[11px] text-slate-700">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M3 20c0-3 3-5 6-5s6 2 6 5"/><path d="M14 20c0-2 2-3.5 4-3.5s4 1.5 4 3.5"/></svg>
+        Owner: All teams
+      </span>
+    );
+  }
+  return (
+    <span className="inline-flex items-center gap-1.5 px-2 py-1 rounded-full border border-slate-200 bg-white text-[11px] text-slate-700">
+      <span className="w-5 h-5 rounded-full bg-[#EDE9FE] text-[#5B21B6] grid place-items-center text-[10px] font-semibold" aria-hidden>{owner.initials}</span>
+      Owner: {owner.name}{owner.role ? <span className="text-slate-500"> · {owner.role}</span> : null}
+    </span>
+  );
+}
+
+function MagicianComposer({ onCreate }: { onCreate: () => void }) {
+  return (
+    <div className="flex flex-col gap-2">
+      <div className="flex items-center gap-3 px-4 py-3 rounded-2xl border-2 border-dashed border-[#7C3AED]/40 bg-white">
+        <button
+          type="button"
+          onClick={onCreate}
+          className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full bg-[#7C3AED] text-white text-[13px] font-semibold shadow-sm hover:bg-[#6D28D9] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M15 4l5 5-11 11H4v-5L15 4z"/><path d="M14 5l5 5"/><path d="M5 3v2M3 4h2M19 16v2M18 17h2"/></svg>
+          Create a workflow
+        </button>
+        <div className="flex-1 min-w-0">
+          <div className="text-[12px] font-medium text-slate-800">Build something that watches your portfolio</div>
+          <div className="text-[11px] text-slate-500">I'll prepare the work — you approve it before anything leaves.</div>
+        </div>
+      </div>
+      <div
+        aria-disabled="true"
+        className="flex items-center gap-2 px-4 py-2 rounded-full border border-slate-200 bg-slate-50 text-[12px] text-slate-500"
+      >
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>
+        Free-text chat with The Magician is coming in the live product — for now, build via "Create a workflow".
+      </div>
+    </div>
+  );
+}
+
+function MagicianWorkArea({ character, workflows, onClose, onCreate, onAdjust, onView }: {
+  character: { id: AdminCharacter; name: string; src: string; tagline: string; workTitle: string };
+  workflows: Workflow[];
+  onClose: () => void;
+  onCreate: () => void;
+  onAdjust: (id: string) => void;
+  onView: (id: string) => void;
+}) {
+  const [search, setSearch] = useState("");
+  const [ownerFilter, setOwnerFilter] = useState<string>("all");      // "all" | "mine" | name
+  const [statusFilter, setStatusFilter] = useState<"all" | WorkflowStatus>("all");
+  const [scopeFilter, setScopeFilter] = useState<string>("all");      // "all" | "portfolio" | "property" | "unit"
+  const [groupByOwner, setGroupByOwner] = useState(false);
+
+  const filtered = useMemo(() => {
+    return workflows.filter((w) => {
+      if (search && !w.name.toLowerCase().includes(search.toLowerCase())) return false;
+      if (statusFilter !== "all" && w.status !== statusFilter) return false;
+      if (ownerFilter === "mine" && !(w.owner.kind === "person" && w.owner.name === "Sarah Chen")) return false;
+      if (ownerFilter !== "all" && ownerFilter !== "mine") {
+        if (ownerFilter === "__teams__" && w.owner.kind !== "all_teams") return false;
+        if (ownerFilter !== "__teams__" && !(w.owner.kind === "person" && w.owner.name === ownerFilter)) return false;
+      }
+      if (scopeFilter === "portfolio" && !/all properties|all units/i.test(w.scopeLabel)) return false;
+      if (scopeFilter === "property" && !/(House|Terrace|Mews)/.test(w.scopeLabel)) return false;
+      if (scopeFilter === "unit" && !/Flat|Unit/i.test(w.scopeLabel)) return false;
+      return true;
+    });
+  }, [workflows, search, statusFilter, ownerFilter, scopeFilter]);
+
+  const groups: { label: string; items: Workflow[] }[] = useMemo(() => {
+    if (!groupByOwner) return [{ label: "", items: filtered }];
+    const byOwner = new Map<string, Workflow[]>();
+    for (const w of filtered) {
+      const key = w.owner.kind === "all_teams" ? "All teams" : w.owner.name;
+      if (!byOwner.has(key)) byOwner.set(key, []);
+      byOwner.get(key)!.push(w);
+    }
+    return Array.from(byOwner.entries()).map(([label, items]) => ({ label, items }));
+  }, [filtered, groupByOwner]);
+
+  const ownerOptions = useMemo(() => {
+    const names = new Set<string>();
+    workflows.forEach((w) => { if (w.owner.kind === "person") names.add(w.owner.name); });
+    return Array.from(names);
+  }, [workflows]);
+
+  return (
+    <div className="absolute inset-0 bg-white z-[450] flex flex-col">
+      <header className="h-14 px-5 flex items-center justify-between border-b border-slate-200 shrink-0">
+        <div className="flex items-center gap-3">
+          <div className="w-9 h-9 rounded-full overflow-hidden bg-[#F5F3FF] ring-1 ring-slate-200 grid place-items-center">
+            <img src={character.src} alt="" aria-hidden className="w-[120%] h-[120%] object-contain" />
+          </div>
+          <div>
+            <div className="text-[13px] font-semibold text-slate-900">{character.workTitle}</div>
+            <div className="text-[11px] text-slate-500">{workflows.length} workflow{workflows.length === 1 ? "" : "s"} you've built together</div>
+          </div>
+        </div>
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={onCreate}
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#7C3AED] text-white text-[12px] font-semibold hover:bg-[#6D28D9] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40"
+          >
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M12 5v14M5 12h14"/></svg>
+            New workflow
+          </button>
+          <button
+            type="button"
+            onClick={onClose}
+            className="text-[12px] text-slate-500 hover:text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#7C3AED] rounded px-2 py-1"
+            aria-label="Close admin workspace"
+          >
+            ✕ Exit Admin
+          </button>
+        </div>
+      </header>
+
+      {/* Filters */}
+      <div className="px-5 py-3 border-b border-slate-100 flex flex-wrap items-center gap-2 shrink-0">
+        <div className="relative">
+          <input
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder="Search by workflow name"
+            className="text-[12px] pl-7 pr-3 py-1.5 rounded-md border border-slate-200 bg-white focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40 w-64"
+            aria-label="Search by workflow name"
+          />
+          <svg aria-hidden width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="absolute left-2 top-1/2 -translate-y-1/2">
+            <circle cx="11" cy="11" r="7"/><path d="M21 21l-3.5-3.5"/>
+          </svg>
+        </div>
+
+        <label className="inline-flex items-center gap-1 text-[11px] font-medium px-2.5 py-1.5 rounded-md border border-dashed border-slate-300 bg-white text-slate-600 focus-within:border-[#7C3AED]/50">
+          + Owner
+          <select
+            value={ownerFilter}
+            onChange={(e) => setOwnerFilter(e.target.value)}
+            className="bg-transparent text-[11px] outline-none ml-1"
+            aria-label="Filter by owner"
+          >
+            <option value="all">All</option>
+            <option value="mine">Just mine</option>
+            <option value="__teams__">All teams</option>
+            {ownerOptions.map((n) => <option key={n} value={n}>{n}</option>)}
+          </select>
+        </label>
+
+        <label className="inline-flex items-center gap-1 text-[11px] font-medium px-2.5 py-1.5 rounded-md border border-dashed border-slate-300 bg-white text-slate-600 focus-within:border-[#7C3AED]/50">
+          + Status
+          <select
+            value={statusFilter}
+            onChange={(e) => setStatusFilter(e.target.value as "all" | WorkflowStatus)}
+            className="bg-transparent text-[11px] outline-none ml-1"
+            aria-label="Filter by status"
+          >
+            <option value="all">All</option>
+            <option value="built">Built</option>
+            <option value="draft">Draft</option>
+          </select>
+        </label>
+
+        <label className="inline-flex items-center gap-1 text-[11px] font-medium px-2.5 py-1.5 rounded-md border border-dashed border-slate-300 bg-white text-slate-600 focus-within:border-[#7C3AED]/50">
+          + Applies to
+          <select
+            value={scopeFilter}
+            onChange={(e) => setScopeFilter(e.target.value)}
+            className="bg-transparent text-[11px] outline-none ml-1"
+            aria-label="Filter by scope"
+          >
+            <option value="all">Any scope</option>
+            <option value="portfolio">Portfolio-wide</option>
+            <option value="property">Specific properties</option>
+            <option value="unit">Specific units</option>
+          </select>
+        </label>
+
+        <label className="inline-flex items-center gap-2 text-[11px] font-medium ml-auto text-slate-600 cursor-pointer">
+          <input
+            type="checkbox"
+            checked={groupByOwner}
+            onChange={(e) => setGroupByOwner(e.target.checked)}
+            className="accent-[#7C3AED]"
+          />
+          Group by owner
+        </label>
+        <div className="text-[11px] text-slate-500 ml-1">{filtered.length} workflow{filtered.length === 1 ? "" : "s"}</div>
+      </div>
+
+      {/* Cards */}
+      <div className="flex-1 overflow-auto px-5 py-5 bg-slate-50/40">
+        {filtered.length === 0 && (
+          <div className="max-w-md mx-auto text-center text-[12px] text-slate-500 py-10">No workflows match these filters.</div>
+        )}
+        {groups.map((g) => (
+          <div key={g.label || "all"} className="mb-6 last:mb-0">
+            {g.label && (
+              <div className="text-[11px] uppercase tracking-wide text-slate-500 font-semibold mb-2 px-1">{g.label}</div>
+            )}
+            <div className="grid grid-cols-1 xl:grid-cols-2 gap-3">
+              {g.items.map((w) => (
+                <WorkflowCard key={w.id} w={w} onAdjust={() => onAdjust(w.id)} onView={() => onView(w.id)} />
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function WorkflowCard({ w, onAdjust, onView }: { w: Workflow; onAdjust: () => void; onView: () => void }) {
+  const [scopeOpen, setScopeOpen] = useState(false);
+  return (
+    <article className="bg-white border border-slate-200/70 rounded-lg p-4 shadow-[0_0.5px_0_rgba(0,0,0,0.04)] flex flex-col gap-3">
+      <header className="flex items-start gap-3">
+        <WorkflowIcon icon={w.icon} tone={w.tone} />
+        <div className="min-w-0 flex-1">
+          <div className="text-[13px] font-semibold text-slate-900 leading-tight">{w.name}</div>
+          <div className="text-[11.5px] text-slate-500 mt-0.5">{w.purpose}</div>
+        </div>
+        <WorkflowStatusPill status={w.status} />
+      </header>
+
+      <dl className="text-[12px] leading-snug space-y-1.5">
+        <div className="flex gap-2">
+          <dt className="text-slate-500 font-medium shrink-0 w-[80px]">When</dt>
+          <dd className="text-slate-800">{w.trigger}</dd>
+        </div>
+        <div className="flex gap-2">
+          <dt className="text-[#5B21B6] font-medium shrink-0 w-[80px]">I will</dt>
+          <dd className="text-slate-800">{w.action}</dd>
+        </div>
+        <div className="flex gap-2">
+          <dt className="text-slate-500 font-medium shrink-0 w-[80px]">Applies to</dt>
+          <dd className="text-slate-800">
+            {w.scopeLabel}
+            {w.scopeDetail && w.scopeDetail.length > 0 && (
+              <button
+                type="button"
+                onClick={() => setScopeOpen((v) => !v)}
+                className="ml-2 text-[11px] text-[#7C3AED] hover:underline focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40 rounded"
+                aria-expanded={scopeOpen}
+              >
+                {scopeOpen ? "hide" : "show all"}
+              </button>
+            )}
+            {scopeOpen && w.scopeDetail && (
+              <ul className="mt-1.5 list-disc pl-5 text-[11.5px] text-slate-600 space-y-0.5">
+                {w.scopeDetail.map((line, i) => <li key={i}>{line}</li>)}
+              </ul>
+            )}
+          </dd>
+        </div>
+      </dl>
+
+      <footer className="flex items-center justify-between gap-2 pt-2 border-t border-slate-100">
+        <div className="flex items-center gap-2 min-w-0 flex-wrap">
+          <OwnerChip owner={w.owner} />
+          <span className="text-[11px] text-slate-400">
+            {w.status === "draft" ? "Draft · not yet finished" : `Last adjusted ${w.lastAdjusted ?? "—"}`}
+          </span>
+        </div>
+        <div className="flex items-center gap-1.5 shrink-0">
+          <button
+            type="button"
+            onClick={onView}
+            className="text-[12px] px-2.5 py-1.5 rounded-md text-slate-700 hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40"
+          >
+            View
+          </button>
+          <button
+            type="button"
+            onClick={onAdjust}
+            className="text-[12px] font-semibold px-3 py-1.5 rounded-md bg-[#7C3AED] text-white hover:bg-[#6D28D9] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40"
+          >
+            Adjust
+          </button>
+        </div>
+      </footer>
+    </article>
+  );
+}
+
+function WorkflowViewDialog({ workflow, onClose, onAdjust }: { workflow: Workflow; onClose: () => void; onAdjust: () => void }) {
+  return (
+    <div className="fixed inset-0 z-[600] bg-slate-900/40 grid place-items-center p-4" role="dialog" aria-modal="true" aria-label="Workflow details">
+      <div className="bg-white rounded-xl shadow-2xl w-full max-w-lg p-6">
+        <div className="flex items-start gap-3 mb-4">
+          <WorkflowIcon icon={workflow.icon} tone={workflow.tone} />
+          <div className="flex-1">
+            <div className="text-[15px] font-semibold text-slate-900">{workflow.name}</div>
+            <div className="text-[12px] text-slate-500">{workflow.purpose}</div>
+          </div>
+          <WorkflowStatusPill status={workflow.status} />
+        </div>
+        <dl className="text-[13px] space-y-2 mb-4">
+          <div><dt className="text-slate-500 text-[11px] uppercase tracking-wide">When</dt><dd className="text-slate-800">{workflow.trigger}</dd></div>
+          <div><dt className="text-[#5B21B6] text-[11px] uppercase tracking-wide">I will</dt><dd className="text-slate-800">{workflow.action}</dd></div>
+          <div><dt className="text-slate-500 text-[11px] uppercase tracking-wide">Applies to</dt><dd className="text-slate-800">{workflow.scopeLabel}{workflow.scopeDetail && <ul className="list-disc pl-5 mt-1 text-[12px] text-slate-600">{workflow.scopeDetail.map((l, i) => <li key={i}>{l}</li>)}</ul>}</dd></div>
+          <div><dt className="text-slate-500 text-[11px] uppercase tracking-wide">Owner</dt><dd className="mt-1"><OwnerChip owner={workflow.owner} /></dd></div>
+        </dl>
+        <div className="flex items-center justify-end gap-2">
+          <button type="button" onClick={onClose} className="text-[12px] px-3 py-1.5 rounded-md text-slate-700 hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40">Close</button>
+          <button type="button" onClick={onAdjust} className="text-[12px] font-semibold px-3.5 py-1.5 rounded-md bg-[#7C3AED] text-white hover:bg-[#6D28D9] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40">Adjust</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function WorkflowAdjustDialog({ workflow, staff, onClose, onSave }: {
+  workflow: Workflow;
+  staff: { name: string; role: string; initials: string }[];
+  onClose: () => void;
+  onSave: (w: Workflow) => void;
+}) {
+  const [draft, setDraft] = useState<Workflow>(workflow);
+  const setOwnerKind = (kind: "all_teams" | "person") => {
+    if (kind === "all_teams") setDraft({ ...draft, owner: { kind: "all_teams" } });
+    else {
+      const first = staff[0];
+      setDraft({ ...draft, owner: { kind: "person", name: first.name, role: first.role, initials: first.initials } });
+    }
+  };
+  return (
+    <div className="fixed inset-0 z-[600] bg-slate-900/40 grid place-items-center p-4" role="dialog" aria-modal="true" aria-label="Adjust workflow">
+      <div className="bg-white rounded-xl shadow-2xl w-full max-w-xl p-6">
+        <div className="flex items-start gap-3 mb-4">
+          <WorkflowIcon icon={draft.icon} tone={draft.tone} />
+          <div className="flex-1">
+            <input
+              value={draft.name}
+              onChange={(e) => setDraft({ ...draft, name: e.target.value })}
+              className="w-full text-[15px] font-semibold text-slate-900 border-b border-slate-200 focus:border-[#7C3AED] outline-none pb-0.5"
+              aria-label="Workflow name"
+            />
+            <input
+              value={draft.purpose}
+              onChange={(e) => setDraft({ ...draft, purpose: e.target.value })}
+              className="w-full text-[12px] text-slate-500 mt-1 outline-none"
+              aria-label="Workflow purpose"
+            />
+          </div>
+        </div>
+
+        <div className="space-y-3 text-[12px]">
+          <label className="block">
+            <span className="text-slate-500 text-[11px] uppercase tracking-wide">When</span>
+            <input
+              value={draft.trigger}
+              onChange={(e) => setDraft({ ...draft, trigger: e.target.value })}
+              className="mt-1 w-full px-2.5 py-2 rounded-md border border-slate-200 focus:border-[#7C3AED] focus:ring-2 focus:ring-[#7C3AED]/30 outline-none"
+              placeholder="a rent review is 6 months away"
+            />
+          </label>
+          <label className="block">
+            <span className="text-[#5B21B6] text-[11px] uppercase tracking-wide">I will</span>
+            <textarea
+              value={draft.action}
+              onChange={(e) => setDraft({ ...draft, action: e.target.value })}
+              rows={2}
+              className="mt-1 w-full px-2.5 py-2 rounded-md border border-slate-200 focus:border-[#7C3AED] focus:ring-2 focus:ring-[#7C3AED]/30 outline-none"
+              placeholder="prepare the work and bring it to you for approval"
+            />
+            <span className="text-[11px] text-slate-400">Always ends in bringing it to you for approval.</span>
+          </label>
+          <label className="block">
+            <span className="text-slate-500 text-[11px] uppercase tracking-wide">Applies to (scope)</span>
+            <input
+              value={draft.scopeLabel}
+              onChange={(e) => setDraft({ ...draft, scopeLabel: e.target.value })}
+              className="mt-1 w-full px-2.5 py-2 rounded-md border border-slate-200 focus:border-[#7C3AED] focus:ring-2 focus:ring-[#7C3AED]/30 outline-none"
+              placeholder="All units across the portfolio · or specific properties / units"
+            />
+            <span className="text-[11px] text-slate-400">Portfolio-wide, specific properties, specific units, or a mix. Long scopes will be summarised on the card.</span>
+          </label>
+
+          <fieldset className="space-y-2">
+            <legend className="text-slate-500 text-[11px] uppercase tracking-wide">Owner</legend>
+            <div className="flex items-center gap-3">
+              <label className="inline-flex items-center gap-1.5 text-[12px]">
+                <input type="radio" name="owner-kind" checked={draft.owner.kind === "all_teams"} onChange={() => setOwnerKind("all_teams")} className="accent-[#7C3AED]" />
+                All teams
+              </label>
+              <label className="inline-flex items-center gap-1.5 text-[12px]">
+                <input type="radio" name="owner-kind" checked={draft.owner.kind === "person"} onChange={() => setOwnerKind("person")} className="accent-[#7C3AED]" />
+                A specific person
+              </label>
+            </div>
+            {draft.owner.kind === "person" && (
+              <select
+                value={draft.owner.name}
+                onChange={(e) => {
+                  const s = staff.find((x) => x.name === e.target.value);
+                  if (s) setDraft({ ...draft, owner: { kind: "person", name: s.name, role: s.role, initials: s.initials } });
+                }}
+                className="w-full px-2.5 py-2 rounded-md border border-slate-200 focus:border-[#7C3AED] focus:ring-2 focus:ring-[#7C3AED]/30 outline-none text-[12px]"
+                aria-label="Owner"
+              >
+                {staff.map((s) => <option key={s.name} value={s.name}>{s.name} — {s.role}</option>)}
+              </select>
+            )}
+          </fieldset>
+
+          <label className="block">
+            <span className="text-slate-500 text-[11px] uppercase tracking-wide">Status</span>
+            <select
+              value={draft.status}
+              onChange={(e) => setDraft({ ...draft, status: e.target.value as WorkflowStatus })}
+              className="mt-1 w-full px-2.5 py-2 rounded-md border border-slate-200 focus:border-[#7C3AED] focus:ring-2 focus:ring-[#7C3AED]/30 outline-none text-[12px]"
+            >
+              <option value="draft">Draft</option>
+              <option value="built">Built</option>
+            </select>
+          </label>
+        </div>
+
+        <div className="flex items-center justify-end gap-2 mt-5">
+          <button type="button" onClick={onClose} className="text-[12px] px-3 py-1.5 rounded-md text-slate-700 hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40">Cancel</button>
+          <button
+            type="button"
+            onClick={() => onSave({ ...draft, lastAdjusted: draft.status === "built" ? "Today" : draft.lastAdjusted })}
+            className="text-[12px] font-semibold px-3.5 py-1.5 rounded-md bg-[#7C3AED] text-white hover:bg-[#6D28D9] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40"
+          >
+            Save
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default Prototype;
+
