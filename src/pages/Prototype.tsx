@@ -6578,9 +6578,36 @@ function buildWorkLog(actionCards: ActionCard[]): WorkLogEntry[] {
     ],
   };
 
+  // Manually-handled cards → "Handled by you" entries
+  const manualEntries: WorkLogEntry[] = actionCards
+    .filter((c) => c.manuallyCompleted)
+    .map((c) => ({
+      id: `manual-${c.id}`,
+      cardId: c.id,
+      title: c.title,
+      propertyId: c.propertyId,
+      propertyName: c.propertyName,
+      unitId: c.unitId,
+      unitLabel: c.unitLabel,
+      when: "Today",
+      bucket: "Today" as const,
+      statusLabel: "Handled by you",
+      statusKind: "finished" as const,
+      narration: `You handled this one yourself${c.manualNote ? ' — your note is on file.' : '.'}`,
+      approvals: [],
+      flags: [],
+      progressDone: 1,
+      progressTotal: 1,
+      dialogue: [],
+      hasSummary: false,
+      origin: c.addedBy,
+      workflowRef: c.workflowRef,
+      manualNote: c.manualNote,
+    }));
+
   // Waiting/in-progress first, then completed, then paused
   const order = (e: WorkLogEntry) => ({ waiting: 0, in_progress: 1, finished: 2, paused: 3 }[e.statusKind]);
-  return [f8Entry, epcEntry, breakEntry].sort((a, b) => order(a) - order(b));
+  return [f8Entry, epcEntry, breakEntry, ...manualEntries].sort((a, b) => order(a) - order(b));
 }
 
 function WhatIveDonePanel({
