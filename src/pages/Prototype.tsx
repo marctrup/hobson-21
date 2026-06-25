@@ -2054,6 +2054,43 @@ function CharacterAvatar({ src }: { src: string }) {
 }
 
 function AdminChat({ character, owl }: { character: { id: AdminCharacter; name: string; src: string; greeting: string } | null; owl: OwlState }) {
+  const [phase, setPhase] = useState<"typing" | "streaming" | "done">("typing");
+  const [shown, setShown] = useState("");
+  const reducedMotion = typeof window !== "undefined"
+    && window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+
+  useEffect(() => {
+    if (!character) return;
+    setPhase("typing");
+    setShown("");
+    if (reducedMotion) {
+      const t = setTimeout(() => {
+        setShown(character.greeting);
+        setPhase("done");
+      }, 250);
+      return () => clearTimeout(t);
+    }
+    const typingTimer = setTimeout(() => {
+      setPhase("streaming");
+      const words = character.greeting.split(" ");
+      let i = 0;
+      let cancelled = false;
+      const step = () => {
+        if (cancelled) return;
+        i += 1;
+        setShown(words.slice(0, i).join(" "));
+        if (i < words.length) {
+          setTimeout(step, 45 + Math.random() * 35);
+        } else {
+          setPhase("done");
+        }
+      };
+      setTimeout(step, 60);
+      return () => { cancelled = true; };
+    }, 700);
+    return () => clearTimeout(typingTimer);
+  }, [character?.id, reducedMotion]);
+
   return (
     <div className="flex flex-col" style={{ gap: CHAT_TURN_GAP_PX }}>
       {!character && (
@@ -2065,12 +2102,23 @@ function AdminChat({ character, owl }: { character: { id: AdminCharacter; name: 
           </div>
         </div>
       )}
-      {character && (
-        <div key={character.id} className="flex items-start gap-2">
+      {character && phase === "typing" && (
+        <div key={`${character.id}-typing`} className="flex items-end gap-2" aria-live="polite" aria-label={`${character.name} is typing`}>
+          <CharacterAvatar src={character.src} />
+          <div className="bg-[#EDE9FE] px-4 py-3 rounded-2xl rounded-bl-md flex items-center gap-1">
+            <Dot delay={0} /><Dot delay={150} /><Dot delay={300} />
+          </div>
+        </div>
+      )}
+      {character && phase !== "typing" && (
+        <div key={character.id} className="flex items-start gap-2" aria-live="polite">
           <CharacterAvatar src={character.src} />
           <div className="max-w-[560px] bg-white border border-slate-200 text-[#1F2330] text-sm leading-relaxed px-4 py-3 rounded-2xl rounded-bl-md shadow-sm">
             <div className="text-[12px] font-semibold text-slate-900 mb-1">{character.name}</div>
-            {character.greeting}
+            {shown}
+            {phase === "streaming" && (
+              <span className="inline-block w-1.5 h-3.5 ml-0.5 bg-[#7C3AED] align-middle animate-pulse" />
+            )}
           </div>
         </div>
       )}
