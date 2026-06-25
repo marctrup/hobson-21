@@ -2189,26 +2189,31 @@ function CharacterAvatar({ src }: { src: string }) {
   );
 }
 
+const HOBSON_ADMIN_INTRO = "Welcome to Admin, where my colleagues can assist. Select one of them and they will assist you.";
+
 function AdminChat({ character, owl, professorEvents, onAssignProfessorType }: { character: { id: AdminCharacter; name: string; src: string; greeting: string } | null; owl: OwlState; professorEvents?: ProfEvent[]; onAssignProfessorType?: (batchId: string, type: string) => void }) {
   const [phase, setPhase] = useState<"typing" | "streaming" | "done">("typing");
   const [shown, setShown] = useState("");
   const reducedMotion = typeof window !== "undefined"
     && window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
 
+  const speaker: "hobson" | "character" = character ? "character" : "hobson";
+  const text = character ? character.greeting : HOBSON_ADMIN_INTRO;
+  const keyId = character ? character.id : "hobson-admin-intro";
+
   useEffect(() => {
-    if (!character) return;
     setPhase("typing");
     setShown("");
     if (reducedMotion) {
       const t = setTimeout(() => {
-        setShown(character.greeting);
+        setShown(text);
         setPhase("done");
       }, 250);
       return () => clearTimeout(t);
     }
     const typingTimer = setTimeout(() => {
       setPhase("streaming");
-      const words = character.greeting.split(" ");
+      const words = text.split(" ");
       let i = 0;
       let cancelled = false;
       const step = () => {
@@ -2225,31 +2230,29 @@ function AdminChat({ character, owl, professorEvents, onAssignProfessorType }: {
       return () => { cancelled = true; };
     }, 700);
     return () => clearTimeout(typingTimer);
-  }, [character?.id, reducedMotion]);
+  }, [keyId, reducedMotion, text]);
+
+  const Avatar = speaker === "character" && character
+    ? <CharacterAvatar src={character.src} />
+    : <OwlAvatar state={owl} />;
 
   return (
     <div className="flex flex-col" style={{ gap: CHAT_TURN_GAP_PX }}>
-      {!character && (
-        <div className="flex items-start gap-2">
-          <OwlAvatar state={owl} />
-          <div className="max-w-[560px] bg-white border border-slate-200 text-[#1F2330] text-sm leading-relaxed px-4 py-3 rounded-2xl rounded-bl-md shadow-sm">
-            <div className="text-[12px] font-semibold text-slate-900 mb-1">Hobson</div>
-            Welcome to Admin, where my colleagues can assist. Select one of them and they will assist you.
-          </div>
-        </div>
-      )}
-      {character && phase === "typing" && (
-        <div key={`${character.id}-typing`} className="flex items-end gap-2" aria-live="polite" aria-label={`${character.name} is typing`}>
-          <CharacterAvatar src={character.src} />
+      {phase === "typing" && (
+        <div key={`${keyId}-typing`} className="flex items-end gap-2" aria-live="polite" aria-label={`${character?.name ?? "Hobson"} is typing`}>
+          {Avatar}
           <div className="bg-[#EDE9FE] px-4 py-3 rounded-2xl rounded-bl-md flex items-center gap-1">
             <Dot delay={0} /><Dot delay={150} /><Dot delay={300} />
           </div>
         </div>
       )}
-      {character && phase !== "typing" && (
-        <div key={character.id} className="flex items-end gap-2" aria-live="polite">
-          <CharacterAvatar src={character.src} />
-          <div className="max-w-[340px] bg-[#EDE9FE] text-[#1F2330] text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-bl-md">
+      {phase !== "typing" && (
+        <div key={keyId} className="flex items-end gap-2" aria-live="polite">
+          {Avatar}
+          <div className="max-w-[420px] bg-[#EDE9FE] text-[#1F2330] text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-bl-md">
+            {speaker === "hobson" && (
+              <div className="text-[12px] font-semibold text-slate-900 mb-1">Hobson</div>
+            )}
             {shown}
             {phase === "streaming" && (
               <span className="inline-block w-1.5 h-3.5 ml-0.5 bg-[#7C3AED] align-middle animate-pulse" />
