@@ -1384,8 +1384,11 @@ const Prototype: React.FC = () => {
         )}
 
         {/* Body */}
-        <div ref={chatBodyRef} className={`flex-1 overflow-y-auto px-5 py-5 ${isExpanded ? "w-full" : ""}`}>
-          <div className={isExpanded ? "max-w-[820px] mx-auto" : ""}>
+        <div ref={chatBodyRef} className={`flex-1 overflow-y-auto px-5 pb-5 pt-0 ${isExpanded ? "w-full" : ""}`}>
+          <div
+            className={`${isExpanded ? "max-w-[820px] mx-auto" : ""} flex flex-col`}
+            style={{ gap: CHAT_TURN_GAP_PX, paddingTop: CHAT_TOP_GAP_PX }}
+          >
 
 
           {/* Pinned alert briefing at the top of unit chat */}
@@ -1459,7 +1462,7 @@ const Prototype: React.FC = () => {
             <div
               className="flex flex-col"
               data-chat-turn-stack
-              style={{ gap: CHAT_TURN_GAP_PX, paddingTop: CHAT_TOP_GAP_PX }}
+              style={{ gap: CHAT_TURN_GAP_PX }}
             >
               {messageGroups.map((group) => (
                 <div
