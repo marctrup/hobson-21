@@ -1434,22 +1434,24 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
         </button>
         {adminMode ? (
           <>
-            {ADMIN_CHARACTERS.map((c) => (
-              <CharacterRailItem
-                key={c.id}
-                name={c.name}
-                src={c.src}
-                active={adminCharacter === c.id}
-                onClick={() => selectAdminCharacter(c.id)}
-              />
-            ))}
-            {/* Discreet way out of Admin, sits just below the characters */}
+            <div className="flex flex-col items-center w-full" style={{ gap: 24, marginTop: 12 }}>
+              {ADMIN_CHARACTERS.map((c) => (
+                <CharacterRailItem
+                  key={c.id}
+                  name={c.name}
+                  src={c.src}
+                  active={adminCharacter === c.id}
+                  onClick={() => selectAdminCharacter(c.id)}
+                />
+              ))}
+            </div>
+            {/* Discreet way out of Admin, well below the characters */}
             <button
               type="button"
               onClick={exitAdmin}
               aria-label="Exit Admin and return to main menu"
               title="Exit Admin"
-              className="mt-1 w-[56px] flex flex-col items-center gap-1 py-1.5 rounded-lg text-slate-500 hover:text-[#7C3AED] hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]"
+              className="mt-8 w-[56px] flex flex-col items-center gap-1 py-1.5 rounded-lg text-slate-500 hover:text-[#7C3AED] hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]"
             >
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
                 <path d="M15 18l-6-6 6-6"/>
@@ -2111,10 +2113,9 @@ function AdminChat({ character, owl }: { character: { id: AdminCharacter; name: 
         </div>
       )}
       {character && phase !== "typing" && (
-        <div key={character.id} className="flex items-start gap-2" aria-live="polite">
+        <div key={character.id} className="flex items-end gap-2" aria-live="polite">
           <CharacterAvatar src={character.src} />
-          <div className="max-w-[560px] bg-white border border-slate-200 text-[#1F2330] text-sm leading-relaxed px-4 py-3 rounded-2xl rounded-bl-md shadow-sm">
-            <div className="text-[12px] font-semibold text-slate-900 mb-1">{character.name}</div>
+          <div className="max-w-[340px] bg-[#EDE9FE] text-[#1F2330] text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-bl-md">
             {shown}
             {phase === "streaming" && (
               <span className="inline-block w-1.5 h-3.5 ml-0.5 bg-[#7C3AED] align-middle animate-pulse" />
@@ -2150,13 +2151,7 @@ function AdminWorkArea({ character, onClose }: { character: { id: AdminCharacter
         </button>
       </header>
       <div className="flex-1 overflow-y-auto p-8">
-        <div className="max-w-2xl mx-auto" style={{ display: "flex", flexDirection: "column", gap: CHAT_TURN_GAP_PX }}>
-          <CharacterSpeechBubble
-            key={`${character.id}-intro`}
-            name={character.name}
-            src={character.src}
-            text={character.workIntro}
-          />
+        <div className="max-w-2xl mx-auto">
           <div className="rounded-xl border border-dashed border-slate-300 bg-slate-50 p-10 text-center">
             <div className="text-[13px] font-semibold text-slate-700 mb-1">{character.name}'s work area</div>
             <div className="text-[12px] text-slate-500">Coming soon in the live product. For now, this is where {character.name} would set up their work alongside you.</div>
