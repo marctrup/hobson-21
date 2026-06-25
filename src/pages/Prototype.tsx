@@ -887,6 +887,10 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
   const [performingCardId, setPerformingCardId] = useState<string | null>(null);
   const [reviewingCardId, setReviewingCardId] = useState<string | null>(null);
   const [chatExpanded, setChatExpanded] = useState(false);
+  const [chatWidth, setChatWidth] = useState(480);
+  const [chatDropOver, setChatDropOver] = useState(false);
+  const CHAT_MIN_WIDTH = 360;
+  const MAIN_MIN_WIDTH = 420;
   const [adminMode, setAdminMode] = useState(false);
   const [adminCharacter, setAdminCharacter] = useState<AdminCharacter | null>(null);
 
@@ -1608,7 +1612,34 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
 
 
       {/* Chat panel */}
-      <section className={`${isExpanded ? "flex-1" : "w-[480px] shrink-0"} bg-white border-r border-slate-200 flex flex-col motion-safe:transition-[width,flex-basis] motion-safe:duration-200`}>
+      <section
+        className={`${isExpanded ? "flex-1" : "shrink-0"} relative bg-white border-r border-slate-200 flex flex-col`}
+        style={isExpanded ? undefined : { width: chatWidth }}
+        onDragOver={(e) => {
+          if (adminMode && adminCharacter === "professor") { e.preventDefault(); setChatDropOver(true); }
+        }}
+        onDragLeave={(e) => {
+          if (e.currentTarget.contains(e.relatedTarget as Node)) return;
+          setChatDropOver(false);
+        }}
+        onDrop={(e) => {
+          if (adminMode && adminCharacter === "professor") {
+            e.preventDefault();
+            const n = e.dataTransfer?.files?.length ?? 0;
+            setChatDropOver(false);
+            handleProfessorUpload(n || 3);
+          }
+        }}
+      >
+        {chatDropOver && adminMode && adminCharacter === "professor" && (
+          <div className="absolute inset-0 z-30 grid place-items-center bg-[#F5F3FF]/95 border-2 border-dashed border-[#7C3AED] rounded-none pointer-events-none">
+            <div className="text-center px-6">
+              <div className="text-[#7C3AED] text-3xl mb-2" aria-hidden>↑</div>
+              <div className="text-sm font-semibold text-[#5B21B6]">Drop documents for the Professor to read</div>
+              <div className="text-[12px] text-slate-600 mt-1">Leases, certificates, correspondence — one or many</div>
+            </div>
+          </div>
+        )}
         {/* Header */}
         <header className="h-14 px-5 flex items-center justify-between border-b border-slate-100">
           <div className="flex items-center gap-2">
@@ -2012,9 +2043,20 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
         </div>
       </section>
 
+      {/* Resizable divider between chat (left) and right work area / map.
+          Hidden when chat is expanded full-width (no right pane visible). */}
+      {!isExpanded && (
+        <ResizeDivider
+          width={chatWidth}
+          setWidth={setChatWidth}
+          minLeft={CHAT_MIN_WIDTH}
+          minRight={MAIN_MIN_WIDTH}
+        />
+      )}
+
       {/* Map */}
       {(() => { const hasOverlay = hasRightOverlay; return (
-      <main className={`${chatExpanded && view !== "onboarding" && !hasOverlay ? "hidden" : "relative flex-1"} bg-slate-100`}>
+      <main className={`${chatExpanded && view !== "onboarding" && !hasOverlay ? "hidden" : "relative flex-1 min-w-0"} bg-slate-100`}>
 
 
 
@@ -2138,6 +2180,94 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
 
 /* ---------------- Sub-components ---------------- */
 
+function ResizeDivider({
+  width,
+  setWidth,
+  minLeft,
+  minRight,
+}: {
+  width: number;
+  setWidth: (n: number) => void;
+  minLeft: number;
+  minRight: number;
+}) {
+  const draggingRef = useRef(false);
+  const startXRef = useRef(0);
+  const startWRef = useRef(width);
+  const [active, setActive] = useState(false);
+
+  useEffect(() => {
+    const onMove = (e: MouseEvent) => {
+      if (!draggingRef.current) return;
+      const dx = e.clientX - startXRef.current;
+      const railWidth = 68; // left nav rail
+      const maxLeft = window.innerWidth - railWidth - minRight;
+      const next = Math.max(minLeft, Math.min(maxLeft, startWRef.current + dx));
+      setWidth(next);
+    };
+    const onUp = () => {
+      if (!draggingRef.current) return;
+      draggingRef.current = false;
+      setActive(false);
+      document.body.style.cursor = "";
+      document.body.style.userSelect = "";
+    };
+    window.addEventListener("mousemove", onMove);
+    window.addEventListener("mouseup", onUp);
+    return () => {
+      window.removeEventListener("mousemove", onMove);
+      window.removeEventListener("mouseup", onUp);
+    };
+  }, [minLeft, minRight, setWidth]);
+
+  const onKeyDown = (e: React.KeyboardEvent) => {
+    const step = e.shiftKey ? 48 : 16;
+    if (e.key === "ArrowLeft") { e.preventDefault(); setWidth(Math.max(minLeft, width - step)); }
+    else if (e.key === "ArrowRight") {
+      e.preventDefault();
+      const railWidth = 68;
+      const maxLeft = window.innerWidth - railWidth - minRight;
+      setWidth(Math.min(maxLeft, width + step));
+    } else if (e.key === "Home") { e.preventDefault(); setWidth(minLeft); }
+    else if (e.key === "End") {
+      e.preventDefault();
+      const railWidth = 68;
+      setWidth(window.innerWidth - railWidth - minRight);
+    }
+  };
+
+  return (
+    <div
+      role="separator"
+      aria-orientation="vertical"
+      aria-label="Resize chat and work area"
+      aria-valuenow={width}
+      aria-valuemin={minLeft}
+      tabIndex={0}
+      onKeyDown={onKeyDown}
+      onMouseDown={(e) => {
+        draggingRef.current = true;
+        startXRef.current = e.clientX;
+        startWRef.current = width;
+        setActive(true);
+        document.body.style.cursor = "col-resize";
+        document.body.style.userSelect = "none";
+      }}
+      onDoubleClick={() => setWidth(480)}
+      title="Drag to resize · double-click to reset"
+      className={`group relative w-1.5 shrink-0 cursor-col-resize select-none focus:outline-none ${active ? "bg-[#7C3AED]/30" : "bg-slate-100 hover:bg-[#7C3AED]/20"} focus-visible:bg-[#7C3AED]/30`}
+    >
+      <div className={`absolute inset-y-0 left-1/2 -translate-x-1/2 w-px ${active ? "bg-[#7C3AED]" : "bg-slate-200 group-hover:bg-[#7C3AED]/60"}`} />
+      <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center justify-center gap-0.5 px-0.5 py-2 rounded ${active ? "bg-[#7C3AED] text-white" : "bg-white border border-slate-200 text-slate-400 group-hover:text-[#7C3AED]"}`}>
+        <span className="block w-0.5 h-0.5 rounded-full bg-current" />
+        <span className="block w-0.5 h-0.5 rounded-full bg-current" />
+        <span className="block w-0.5 h-0.5 rounded-full bg-current" />
+      </div>
+    </div>
+  );
+}
+
+
 function RailItem({ icon, label, active, onClick }: { icon: "pin" | "doc" | "chat" | "gear" | "clock"; label: string; active?: boolean; onClick?: () => void }) {
   const stroke = active ? "#7C3AED" : "#64748B";
   return (
@@ -2259,6 +2389,22 @@ function AdminChat({ character, owl, professorEvents, onAssignProfessorType }: {
             )}
           </div>
         </div>
+      )}
+      {character?.id === "professor" && phase === "done" && (
+        <>
+          <div className="flex items-end gap-2">
+            <CharacterAvatar src={character.src} />
+            <div className="max-w-[420px] bg-[#EDE9FE] text-[#1F2330] text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-bl-md">
+              Hand me a document and I shall read it for you — a lease, a certificate, a notice. Upload one or several, and I will tell you what each one is and what it means for your portfolio.
+            </div>
+          </div>
+          <div className="flex items-end gap-2">
+            <CharacterAvatar src={character.src} />
+            <div className="max-w-[420px] bg-[#EDE9FE] text-[#1F2330] text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-bl-md">
+              Use <span className="font-semibold">"Upload documents"</span> below to begin — I'll take it from there.
+            </div>
+          </div>
+        </>
       )}
       {character?.id === "professor" && phase === "done" && professorEvents && professorEvents.length > 0 && (
         <div className="flex flex-col" style={{ gap: CHAT_TURN_GAP_PX }}>
