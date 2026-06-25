@@ -1647,7 +1647,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
         </header>
 
         {/* Onboarding progress / breadcrumb */}
-        {view === "onboarding" ? (
+        {view === "onboarding" && !adminMode ? (
           <div className="px-5 pt-3 pb-2 border-b border-slate-100">
             <div className="flex items-center justify-between text-[11px] text-slate-500 mb-1.5">
               <span className="font-medium text-slate-700">Meet Hobson</span>
