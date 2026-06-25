@@ -2114,6 +2114,9 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
         })()}
         {adminMode && adminCharacter && (() => {
           const c = ADMIN_CHARACTERS.find((x) => x.id === adminCharacter)!;
+          if (c.id === "professor") {
+            return <ProfessorWorkArea character={c} docs={profDocs} onClose={exitAdmin} />;
+          }
           return <AdminWorkArea character={c} onClose={exitAdmin} />;
         })()}
 
