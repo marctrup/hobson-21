@@ -6505,14 +6505,6 @@ function MagicianWorkArea({ character, workflows, onCreate, onAdjust, onView }: 
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M12 5v14M5 12h14"/></svg>
             New workflow
           </button>
-          <button
-            type="button"
-            onClick={onClose}
-            className="text-[12px] text-slate-500 hover:text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#7C3AED] rounded px-2 py-1"
-            aria-label="Close admin workspace"
-          >
-            ✕ Exit Admin
-          </button>
         </div>
       </header>
 
