@@ -1289,12 +1289,24 @@ const Prototype: React.FC = () => {
             )}
           </div>
           <div className="flex items-center gap-1 text-slate-400">
-            <button className="p-1.5 hover:text-slate-700" aria-label="Expand">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M4 4h6M4 4v6M20 20h-6M20 20v-6"/></svg>
+            <button
+              onClick={() => setChatExpanded((v) => !v)}
+              disabled={view === "onboarding"}
+              className="p-1.5 hover:text-slate-700 focus:outline-none focus:ring-2 focus:ring-[#7C3AED] rounded disabled:opacity-40 disabled:cursor-not-allowed"
+              aria-label={isExpanded ? "Collapse chat to split view" : "Expand chat to full width"}
+              aria-pressed={isExpanded}
+              title={view === "onboarding" ? "Available after Meet Hobson" : (isExpanded ? "Collapse to split view" : "Expand to full width")}
+            >
+              {isExpanded ? (
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M10 4v6H4M14 20v-6h6M4 10l6-6M20 14l-6 6"/></svg>
+              ) : (
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M4 4h6M4 4v6M20 20h-6M20 20v-6"/></svg>
+              )}
             </button>
             <button className="p-1.5 hover:text-slate-700" aria-label="Close">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M6 6l12 12M18 6L6 18"/></svg>
             </button>
+
           </div>
         </header>
 
