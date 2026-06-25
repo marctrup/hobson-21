@@ -860,11 +860,17 @@ const Prototype: React.FC = () => {
 
   const messageGroups = useMemo(() => groupChatMessages(messages), [messages]);
 
-  /* ----- scroll chat ----- */
+  /* ----- scroll chat to top when entering a new context (property/unit/portfolio) ----- */
+  useEffect(() => {
+    const el = chatBodyRef.current;
+    if (el) el.scrollTop = 0;
+  }, [view, selectedPropertyId, selectedUnitId]);
+
+  /* ----- scroll chat to bottom as new messages stream in ----- */
   useEffect(() => {
     const el = chatBodyRef.current;
     if (el) el.scrollTop = el.scrollHeight;
-  }, [messages, typing, chipVisible, view, selectedUnitId, selectedPropertyId]);
+  }, [messages, typing, chipVisible]);
 
   /* ----- pre-fill demo rent question per level ----- */
   useEffect(() => {
