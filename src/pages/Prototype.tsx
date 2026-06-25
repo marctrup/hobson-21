@@ -747,6 +747,7 @@ const Prototype: React.FC = () => {
   const [carriedCardId, setCarriedCardId] = useState<string | null>(null);
   const [performingCardId, setPerformingCardId] = useState<string | null>(null);
   const [reviewingCardId, setReviewingCardId] = useState<string | null>(null);
+  const [chatExpanded, setChatExpanded] = useState(false);
 
   const performCard = (id: string) => {
     setReviewingCardId(null);
