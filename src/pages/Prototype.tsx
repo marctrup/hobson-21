@@ -1616,12 +1616,9 @@ const Prototype: React.FC = () => {
       </section>
 
       {/* Map */}
-      {(() => { const hasOverlay = showDocuments || showWhatIveDone || !!performingCardId || !!reviewingCardId; return (
-      <main className={
-        isExpanded
-          ? (hasOverlay ? "fixed inset-y-0 left-[68px] right-0 z-[500]" : "hidden")
-          : "relative flex-1 bg-slate-100"
-      }>
+      {(() => { const hasOverlay = hasRightOverlay; return (
+      <main className="relative flex-1 bg-slate-100">
+
 
 
         <div
