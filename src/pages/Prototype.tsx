@@ -7088,7 +7088,7 @@ function BrokerWorkArea({ character, contacts, onAdd }: {
                 <h3 className="text-[11px] uppercase tracking-wide font-semibold text-slate-600">{meta.label}</h3>
                 <span className="text-[11px] text-slate-400">· {g.items.length}</span>
               </div>
-              <div className="grid gap-3" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))" }}>
+              <div className="grid gap-3" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))" }}>
                 {g.items.map((c) => (
                   <BrokerContactCard key={c.id} contact={c} />
                 ))}
@@ -7103,43 +7103,70 @@ function BrokerWorkArea({ character, contacts, onAdd }: {
 
 function BrokerContactCard({ contact }: { contact: BrokerContact }) {
   const meta = BROKER_TYPE_META[contact.type];
+  const stop = (e: React.SyntheticEvent) => e.stopPropagation();
   return (
-    <button
-      type="button"
-      onClick={() => { /* placeholder: open contact detail */ }}
-      className="group text-left rounded-xl border border-slate-200 bg-white p-3.5 hover:border-[#7C3AED]/60 hover:shadow-sm transition focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40"
-    >
+    <div className="group rounded-xl border border-slate-200 bg-white p-3.5 hover:border-[#7C3AED]/50 hover:shadow-sm transition focus-within:ring-2 focus-within:ring-[#7C3AED]/40">
+      {/* Header */}
       <div className="flex items-start gap-3">
         <div className={`w-10 h-10 rounded-full grid place-items-center ${meta.bg} ${meta.text} ring-1 ${meta.ring} text-[12px] font-semibold shrink-0`} aria-hidden>
           {contact.initials}
         </div>
         <div className="min-w-0 flex-1">
-          <div className="flex items-center gap-1.5">
+          <div className="flex items-center gap-1.5 flex-wrap">
             <div className="text-[13px] font-semibold text-slate-900 truncate">{contact.name}</div>
             <span className={`text-[10px] uppercase tracking-wide font-semibold px-1.5 py-0.5 rounded ${meta.bg} ${meta.text}`}>{meta.label}</span>
-          </div>
-          <div className="text-[11px] text-slate-500 truncate">{contact.role}</div>
-          <div className={`mt-1.5 text-[11.5px] flex items-center gap-1 ${contact.flagged ? "text-amber-700" : "text-slate-600"}`}>
             {contact.flagged && (
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-label="Flagged"><path d="M4 21V4h12l-2 4 2 4H4"/></svg>
+              <span className="inline-flex items-center gap-1 text-[10px] uppercase tracking-wide font-semibold px-1.5 py-0.5 rounded bg-amber-50 text-amber-700 ring-1 ring-amber-200" aria-label={contact.flagLabel || "Flagged"}>
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M4 21V4h12l-2 4 2 4H4"/></svg>
+                {contact.flagLabel || "Flagged"}
+              </span>
             )}
-            <span className="truncate">{contact.relationship}</span>
           </div>
+          <div className="text-[11.5px] text-slate-600 mt-0.5">{contact.role}</div>
         </div>
       </div>
-      <div className="mt-3 flex items-center justify-end gap-2">
-        <span
-          role="button"
-          tabIndex={0}
-          onClick={(e) => { e.stopPropagation(); }}
-          onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") e.stopPropagation(); }}
+
+      {/* Details */}
+      <dl className="mt-3 space-y-1.5 text-[11.5px] text-slate-700">
+        <div className="flex items-start gap-2">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#64748b" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mt-0.5 shrink-0" aria-hidden><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+          <a href={`mailto:${contact.email}`} onClick={stop} className="truncate text-slate-700 hover:text-[#7C3AED] hover:underline focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/30 rounded-sm">{contact.email}</a>
+        </div>
+        <div className="flex items-start gap-2">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#64748b" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mt-0.5 shrink-0" aria-hidden><path d="M22 16.92V21a1 1 0 01-1.1 1A19 19 0 012 4.1 1 1 0 013 3h4.09a1 1 0 011 .75l1 4a1 1 0 01-.27 1L7 10.5a16 16 0 006.5 6.5l1.75-1.82a1 1 0 011-.27l4 1a1 1 0 01.75 1z"/></svg>
+          <div className="min-w-0">
+            <a href={`tel:${contact.phone.replace(/\s+/g, "")}`} onClick={stop} className="text-slate-700 hover:text-[#7C3AED] hover:underline focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/30 rounded-sm">{contact.phone}</a>
+            <span className="text-slate-500"> · {contact.contactPref}</span>
+          </div>
+        </div>
+        <div className="flex items-start gap-2">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#64748b" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mt-0.5 shrink-0" aria-hidden><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <span className="truncate">{contact.address}</span>
+        </div>
+        <div className="flex items-start gap-2">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mt-0.5 shrink-0" aria-hidden><path d="M10 13a5 5 0 007 0l3-3a5 5 0 00-7-7l-1 1"/><path d="M14 11a5 5 0 00-7 0l-3 3a5 5 0 007 7l1-1"/></svg>
+          <span className="text-slate-700"><span className="text-slate-500">Related: </span>{contact.relatedTo}</span>
+        </div>
+      </dl>
+
+      {/* Footer */}
+      <div className="mt-3 pt-2 border-t border-slate-100 flex items-center justify-end gap-1">
+        <button
+          type="button"
+          onClick={stop}
           className="text-[11px] font-medium px-2 py-1 rounded-md text-slate-600 hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/30"
         >
           Edit
-        </span>
-        <span className="text-[11px] font-medium px-2 py-1 rounded-md text-[#7C3AED] group-hover:bg-[#F5F3FF]">Open →</span>
+        </button>
+        <button
+          type="button"
+          onClick={stop}
+          className="text-[11px] font-medium px-2 py-1 rounded-md text-[#7C3AED] hover:bg-[#F5F3FF] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/30"
+        >
+          Open →
+        </button>
       </div>
-    </button>
+    </div>
   );
 }
 
