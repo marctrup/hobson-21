@@ -816,12 +816,37 @@ const Prototype: React.FC = () => {
   const searchRef = useRef<HTMLInputElement | null>(null);
 
   const reduced = prefersReducedMotion();
+  const [owlsReady, setOwlsReady] = useState(false);
+  // Preload owl images so the avatar appears before the chat starts streaming.
+  useEffect(() => {
+    let cancelled = false;
+    const sources = Object.values(OWLS);
+    let remaining = sources.length;
+    if (remaining === 0) {
+      setOwlsReady(true);
+      return;
+    }
+    const done = () => {
+      remaining -= 1;
+      if (remaining <= 0 && !cancelled) setOwlsReady(true);
+    };
+    sources.forEach((src) => {
+      const img = new Image();
+      img.onload = done;
+      img.onerror = done;
+      img.src = src;
+    });
+    // Safety fallback: never block more than 1.5s
+    const fallback = window.setTimeout(() => { if (!cancelled) setOwlsReady(true); }, 1500);
+    return () => { cancelled = true; window.clearTimeout(fallback); };
+  }, []);
   // Staged-tour reset: clear any legacy hasVisited flag so refreshes always land on Meet Hobson.
   useEffect(() => {
     try {
       localStorage.removeItem("hobsonPrototype.hasVisited");
     } catch {}
   }, []);
+
 
 
   const selectedProperty = useMemo(
@@ -860,6 +885,7 @@ const Prototype: React.FC = () => {
   /* ----- onboarding line streaming ----- */
   useEffect(() => {
     if (view !== "onboarding") return;
+    if (!owlsReady) return;
     const beat = BEATS[beatIdx];
     if (!beat) return;
     if (lineIdx >= beat.lines.length) {
