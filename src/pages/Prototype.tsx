@@ -1243,7 +1243,8 @@ const Prototype: React.FC = () => {
 
   // Map must stay visible during the onboarding tour (Step 5 uses map search).
   // Honour user preference otherwise.
-  const isExpanded = chatExpanded && view !== "onboarding";
+  const hasRightOverlay = showDocuments || showWhatIveDone || !!performingCardId || !!reviewingCardId;
+  const isExpanded = chatExpanded && view !== "onboarding" && !hasRightOverlay;
 
   return (
     <div className="hobson-proto fixed inset-0 flex bg-white text-[#1F2330]">
@@ -1615,12 +1616,10 @@ const Prototype: React.FC = () => {
       </section>
 
       {/* Map */}
-      {(() => { const hasOverlay = showDocuments || showWhatIveDone || !!performingCardId || !!reviewingCardId; return (
-      <main className={
-        isExpanded
-          ? (hasOverlay ? "fixed inset-y-0 left-[68px] right-0 z-[500]" : "hidden")
-          : "relative flex-1 bg-slate-100"
-      }>
+      {(() => { const hasOverlay = hasRightOverlay; return (
+      <main className={`${chatExpanded && view !== "onboarding" && !hasOverlay ? "hidden" : "relative flex-1"} bg-slate-100`}>
+
+
 
 
         <div
