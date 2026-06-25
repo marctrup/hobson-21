@@ -1434,6 +1434,20 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
         </button>
         {adminMode ? (
           <>
+            {/* Prominent, always-visible way out of Admin */}
+            <button
+              type="button"
+              onClick={exitAdmin}
+              aria-label="Exit Admin and return to main menu"
+              title="Exit Admin"
+              className="w-[56px] flex flex-col items-center gap-1 py-2 rounded-lg bg-[#F5F3FF] ring-1 ring-[#7C3AED]/40 text-[#7C3AED] hover:bg-[#EDE9FE] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED] mb-1"
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                <path d="M15 18l-6-6 6-6"/>
+              </svg>
+              <span className="text-[10px] font-semibold leading-tight text-center">Exit<br/>Admin</span>
+            </button>
+            <div className="w-8 h-px bg-slate-200 my-1" aria-hidden />
             {ADMIN_CHARACTERS.map((c) => (
               <CharacterRailItem
                 key={c.id}
@@ -1444,10 +1458,10 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
               />
             ))}
             <div className="mt-auto flex flex-col items-center gap-3 pb-2">
-              <RailItem icon="pin" label="Exit Admin" onClick={exitAdmin} />
               <div className="w-9 h-9 rounded-full bg-slate-200 grid place-items-center text-xs font-semibold text-slate-700">MT</div>
             </div>
           </>
+
         ) : (
           <>
             <RailItem icon="pin" label="Portfolio" active={view !== "onboarding" && !showDocuments && !showWhatIveDone} onClick={() => { setShowDocuments(false); setShowWhatIveDone(false); goPortfolio(false); }} />
