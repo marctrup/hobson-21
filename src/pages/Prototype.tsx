@@ -1455,16 +1455,19 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
     setExpandedCardId(null);
   };
   const resetToMap = () => {
-    // Single, predictable reset — always lands on the map. No panel-history walk.
-    if (performingCardId) {
-      setActionCards((arr) => arr.map((x) => x.id === performingCardId ? { ...x, approvalState: "pending" } : x));
-    }
+    // Single, predictable reset — always lands on the map.
+    // NOTE: do NOT clear approvalState — pausing leaves the journey resumable ("Resume" on card).
     setPerformingCardId(null);
     setReviewingCardId(null);
     setShowDocuments(false);
     setShowWhatIveDone(false);
     setChatExpanded(false);
   };
+
+  const markReviewReady = (id: string) => {
+    setActionCards((arr) => arr.map((x) => x.id === id ? { ...x, reviewReady: true } : x));
+  };
+
 
   const cancelPerform = resetToMap;
   const cancelReview = resetToMap;
