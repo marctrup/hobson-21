@@ -2150,13 +2150,73 @@ function AdminWorkArea({ character, onClose }: { character: { id: AdminCharacter
         </button>
       </header>
       <div className="flex-1 overflow-y-auto p-8">
-        <div className="max-w-2xl mx-auto space-y-4">
-          <p className="text-sm text-slate-600">{character.workIntro}</p>
+        <div className="max-w-2xl mx-auto" style={{ display: "flex", flexDirection: "column", gap: CHAT_TURN_GAP_PX }}>
+          <CharacterSpeechBubble
+            key={`${character.id}-intro`}
+            name={character.name}
+            src={character.src}
+            text={character.workIntro}
+          />
           <div className="rounded-xl border border-dashed border-slate-300 bg-slate-50 p-10 text-center">
             <div className="text-[13px] font-semibold text-slate-700 mb-1">{character.name}'s work area</div>
             <div className="text-[12px] text-slate-500">Coming soon in the live product. For now, this is where {character.name} would set up their work alongside you.</div>
           </div>
         </div>
+      </div>
+    </div>
+  );
+}
+
+function CharacterSpeechBubble({ name, src, text }: { name: string; src: string; text: string }) {
+  const [phase, setPhase] = useState<"typing" | "streaming" | "done">("typing");
+  const [shown, setShown] = useState("");
+  const reducedMotion = typeof window !== "undefined"
+    && window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+
+  useEffect(() => {
+    setPhase("typing");
+    setShown("");
+    if (reducedMotion) {
+      const t = setTimeout(() => { setShown(text); setPhase("done"); }, 200);
+      return () => clearTimeout(t);
+    }
+    let cancelled = false;
+    const typingTimer = setTimeout(() => {
+      if (cancelled) return;
+      setPhase("streaming");
+      const words = text.split(" ");
+      let i = 0;
+      const step = () => {
+        if (cancelled) return;
+        i += 1;
+        setShown(words.slice(0, i).join(" "));
+        if (i < words.length) setTimeout(step, 45 + Math.random() * 35);
+        else setPhase("done");
+      };
+      setTimeout(step, 60);
+    }, 600);
+    return () => { cancelled = true; clearTimeout(typingTimer); };
+  }, [text, reducedMotion]);
+
+  if (phase === "typing") {
+    return (
+      <div className="flex items-end gap-2" aria-live="polite" aria-label={`${name} is typing`}>
+        <CharacterAvatar src={src} />
+        <div className="bg-[#EDE9FE] px-4 py-3 rounded-2xl rounded-bl-md flex items-center gap-1">
+          <Dot delay={0} /><Dot delay={150} /><Dot delay={300} />
+        </div>
+      </div>
+    );
+  }
+  return (
+    <div className="flex items-start gap-2" aria-live="polite">
+      <CharacterAvatar src={src} />
+      <div className="max-w-[560px] bg-white border border-slate-200 text-[#1F2330] text-sm leading-relaxed px-4 py-3 rounded-2xl rounded-bl-md shadow-sm">
+        <div className="text-[12px] font-semibold text-slate-900 mb-1">{name}</div>
+        {shown}
+        {phase === "streaming" && (
+          <span className="inline-block w-1.5 h-3.5 ml-0.5 bg-[#7C3AED] align-middle animate-pulse" />
+        )}
       </div>
     </div>
   );
