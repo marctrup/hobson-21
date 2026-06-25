@@ -2399,7 +2399,6 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
               <MagicianWorkArea
                 character={c}
                 workflows={workflows}
-                onClose={exitAdmin}
                 onCreate={handleCreateWorkflow}
                 onAdjust={(id) => setAdjustingWorkflowId(id)}
                 onView={(id) => setViewingWorkflowId(id)}
