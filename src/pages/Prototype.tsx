@@ -2392,21 +2392,20 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
         {adminMode && adminCharacter && (() => {
           const c = ADMIN_CHARACTERS.find((x) => x.id === adminCharacter)!;
           if (c.id === "professor") {
-            return <ProfessorWorkArea character={c} docs={profDocs} onClose={exitAdmin} />;
+            return <ProfessorWorkArea character={c} docs={profDocs} />;
           }
           if (c.id === "magician") {
             return (
               <MagicianWorkArea
                 character={c}
                 workflows={workflows}
-                onClose={exitAdmin}
                 onCreate={handleCreateWorkflow}
                 onAdjust={(id) => setAdjustingWorkflowId(id)}
                 onView={(id) => setViewingWorkflowId(id)}
               />
             );
           }
-          return <AdminWorkArea character={c} onClose={exitAdmin} />;
+          return <AdminWorkArea character={c} />;
 
         })()}
 
@@ -2817,10 +2816,10 @@ function ProfTypeAssigner({ onAssign }: { onAssign: (type: string) => void }) {
 }
 
 
-function AdminWorkArea({ character, onClose }: { character: { id: AdminCharacter; name: string; src: string; tagline: string; workTitle: string; workIntro: string }; onClose: () => void }) {
+function AdminWorkArea({ character }: { character: { id: AdminCharacter; name: string; src: string; tagline: string; workTitle: string; workIntro: string } }) {
   return (
     <div className="absolute inset-0 bg-white z-[450] flex flex-col">
-      <header className="h-14 px-5 flex items-center justify-between border-b border-slate-200">
+      <header className="h-14 px-5 flex items-center border-b border-slate-200">
         <div className="flex items-center gap-3">
           <div className="w-9 h-9 rounded-full overflow-hidden bg-[#F5F3FF] ring-1 ring-slate-200 grid place-items-center">
             <img src={character.src} alt="" aria-hidden className="w-[120%] h-[120%] object-contain" />
@@ -2830,14 +2829,6 @@ function AdminWorkArea({ character, onClose }: { character: { id: AdminCharacter
             <div className="text-[11px] text-slate-500">{character.tagline}</div>
           </div>
         </div>
-        <button
-          type="button"
-          onClick={onClose}
-          className="text-[12px] text-slate-500 hover:text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#7C3AED] rounded px-2 py-1"
-          aria-label="Close admin workspace"
-        >
-          ✕ Exit Admin
-        </button>
       </header>
       <div className="flex-1 overflow-y-auto p-8">
         <div className="max-w-2xl mx-auto">
@@ -2851,12 +2842,12 @@ function AdminWorkArea({ character, onClose }: { character: { id: AdminCharacter
   );
 }
 
-function ProfessorWorkArea({ character, docs, onClose }: { character: { id: AdminCharacter; name: string; src: string; tagline: string; workTitle: string }; docs: ProfDoc[]; onClose: () => void }) {
+function ProfessorWorkArea({ character, docs }: { character: { id: AdminCharacter; name: string; src: string; tagline: string; workTitle: string }; docs: ProfDoc[] }) {
   const [search, setSearch] = useState("");
   const filtered = docs.filter((d) => d.name.toLowerCase().includes(search.toLowerCase()));
   return (
     <div className="absolute inset-0 bg-white z-[450] flex flex-col">
-      <header className="h-14 px-5 flex items-center justify-between border-b border-slate-200 shrink-0">
+      <header className="h-14 px-5 flex items-center border-b border-slate-200 shrink-0">
         <div className="flex items-center gap-3">
           <div className="w-9 h-9 rounded-full overflow-hidden bg-[#F5F3FF] ring-1 ring-slate-200 grid place-items-center">
             <img src={character.src} alt="" aria-hidden className="w-[120%] h-[120%] object-contain" />
@@ -2866,14 +2857,6 @@ function ProfessorWorkArea({ character, docs, onClose }: { character: { id: Admi
             <div className="text-[11px] text-slate-500">{docs.length} document{docs.length === 1 ? "" : "s"} · uploaded, classified and read</div>
           </div>
         </div>
-        <button
-          type="button"
-          onClick={onClose}
-          className="text-[12px] text-slate-500 hover:text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#7C3AED] rounded px-2 py-1"
-          aria-label="Close admin workspace"
-        >
-          ✕ Exit Admin
-        </button>
       </header>
 
       {/* Filters */}
@@ -6455,10 +6438,9 @@ function MagicianComposer({ onCreate }: { onCreate: () => void }) {
   );
 }
 
-function MagicianWorkArea({ character, workflows, onClose, onCreate, onAdjust, onView }: {
+function MagicianWorkArea({ character, workflows, onCreate, onAdjust, onView }: {
   character: { id: AdminCharacter; name: string; src: string; tagline: string; workTitle: string };
   workflows: Workflow[];
-  onClose: () => void;
   onCreate: () => void;
   onAdjust: (id: string) => void;
   onView: (id: string) => void;
@@ -6522,14 +6504,6 @@ function MagicianWorkArea({ character, workflows, onClose, onCreate, onAdjust, o
           >
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M12 5v14M5 12h14"/></svg>
             New workflow
-          </button>
-          <button
-            type="button"
-            onClick={onClose}
-            className="text-[12px] text-slate-500 hover:text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#7C3AED] rounded px-2 py-1"
-            aria-label="Close admin workspace"
-          >
-            ✕ Exit Admin
           </button>
         </div>
       </header>
