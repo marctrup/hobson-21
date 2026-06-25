@@ -1590,7 +1590,7 @@ const Prototype: React.FC = () => {
                   readOnly={view === "onboarding"}
                   placeholder={view === "onboarding" && !chipVisible ? "Hobson is talking…" : "Ask Hobson…"}
                   className={`flex-1 outline-none text-sm bg-transparent placeholder:text-slate-400 cursor-text ${
-                    view === "onboarding" && chipVisible ? "text-[#5B21B6] font-medium" : ""
+                    (view === "onboarding" && chipVisible) || (isRentFlat2Question(input) && !typing) ? "text-[#5B21B6] font-semibold" : ""
                   }`}
                   aria-label="Ask Hobson"
                 />
