@@ -2348,6 +2348,149 @@ function AdminWorkArea({ character, onClose }: { character: { id: AdminCharacter
   );
 }
 
+function ProfessorWorkArea({ character, docs, onClose }: { character: { id: AdminCharacter; name: string; src: string; tagline: string; workTitle: string }; docs: ProfDoc[]; onClose: () => void }) {
+  const [search, setSearch] = useState("");
+  const filtered = docs.filter((d) => d.name.toLowerCase().includes(search.toLowerCase()));
+  return (
+    <div className="absolute inset-0 bg-white z-[450] flex flex-col">
+      <header className="h-14 px-5 flex items-center justify-between border-b border-slate-200 shrink-0">
+        <div className="flex items-center gap-3">
+          <div className="w-9 h-9 rounded-full overflow-hidden bg-[#F5F3FF] ring-1 ring-slate-200 grid place-items-center">
+            <img src={character.src} alt="" aria-hidden className="w-[120%] h-[120%] object-contain" />
+          </div>
+          <div>
+            <div className="text-[13px] font-semibold text-slate-900">{character.workTitle}</div>
+            <div className="text-[11px] text-slate-500">{docs.length} document{docs.length === 1 ? "" : "s"} · uploaded, classified and read</div>
+          </div>
+        </div>
+        <button
+          type="button"
+          onClick={onClose}
+          className="text-[12px] text-slate-500 hover:text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#7C3AED] rounded px-2 py-1"
+          aria-label="Close admin workspace"
+        >
+          ✕ Exit Admin
+        </button>
+      </header>
+
+      {/* Filters */}
+      <div className="px-5 py-3 border-b border-slate-100 flex flex-wrap items-center gap-2 shrink-0">
+        <div className="relative">
+          <input
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder="Search by document name"
+            className="text-[12px] pl-7 pr-3 py-1.5 rounded-md border border-slate-200 bg-white focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40 w-64"
+            aria-label="Search by document name"
+          />
+          <svg aria-hidden width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="absolute left-2 top-1/2 -translate-y-1/2">
+            <circle cx="11" cy="11" r="7"/><path d="M21 21l-3.5-3.5"/>
+          </svg>
+        </div>
+        {["+ Document type", "+ Unit / Unit Group", "+ Status", "+ Effective date"].map((label) => (
+          <button
+            key={label}
+            type="button"
+            className="text-[11px] font-medium px-2.5 py-1.5 rounded-md border border-dashed border-slate-300 bg-white text-slate-600 hover:border-[#7C3AED]/50 hover:text-[#7C3AED] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/30"
+          >
+            {label}
+          </button>
+        ))}
+      </div>
+
+      {/* Table */}
+      <div className="flex-1 overflow-auto">
+        <table className="w-full text-[12px] border-collapse">
+          <thead className="bg-slate-50 text-slate-600 sticky top-0 z-10">
+            <tr className="text-left">
+              {["Document name", "Type", "Family", "Time class", "Related unit / group", "Supersedes", "Chained to", "Status", "Effective date", "Uploaded", "Extracted", ""].map((h) => (
+                <th key={h} scope="col" className="px-3 py-2 font-semibold border-b border-slate-200 whitespace-nowrap">{h}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {filtered.map((d) => (
+              <tr key={d.id} className="border-b border-slate-100 hover:bg-slate-50 focus-within:bg-slate-50">
+                <td className="px-3 py-2.5 font-medium text-slate-900 max-w-[260px] truncate" title={d.name}>{d.name}</td>
+                <td className="px-3 py-2.5 text-slate-700 whitespace-nowrap">{d.type ?? <span className="text-slate-400">—</span>}</td>
+                <td className="px-3 py-2.5">
+                  {d.family ? <FamilyChip family={d.family} /> : <span className="text-slate-400">—</span>}
+                </td>
+                <td className="px-3 py-2.5 text-slate-700 whitespace-nowrap">{d.timeClass ?? <span className="text-slate-400">—</span>}</td>
+                <td className="px-3 py-2.5 text-slate-700 whitespace-nowrap">{d.relatedUnit ?? <span className="text-slate-400">—</span>}</td>
+                <td className="px-3 py-2.5 text-slate-700 max-w-[180px] truncate" title={d.supersedes}>{d.supersedes ?? <span className="text-slate-400">—</span>}</td>
+                <td className="px-3 py-2.5 text-slate-700 max-w-[180px] truncate" title={d.chainedTo}>{d.chainedTo ?? <span className="text-slate-400">—</span>}</td>
+                <td className="px-3 py-2.5"><StatusChip status={d.status} /></td>
+                <td className="px-3 py-2.5 text-slate-700 whitespace-nowrap">{d.effectiveDate ?? <span className="text-slate-400">—</span>}</td>
+                <td className="px-3 py-2.5 text-slate-700 whitespace-nowrap">{d.uploadedAt}</td>
+                <td className="px-3 py-2.5 text-slate-700 whitespace-nowrap">{d.extractedAt ?? <span className="text-slate-400">—</span>}</td>
+                <td className="px-3 py-2.5 whitespace-nowrap text-right">
+                  <div className="inline-flex items-center gap-1">
+                    {[
+                      { label: "View extraction", icon: "👁" },
+                      { label: "Re-extract", icon: "↻" },
+                      { label: "Download", icon: "⤓" },
+                      { label: "Edit", icon: "✎" },
+                      { label: "Delete", icon: "🗑" },
+                    ].map((a) => (
+                      <button
+                        key={a.label}
+                        type="button"
+                        title={a.label}
+                        aria-label={`${a.label} — ${d.name}`}
+                        className="h-7 w-7 grid place-items-center rounded text-slate-500 hover:bg-slate-100 hover:text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40"
+                      >
+                        <span aria-hidden className="text-[12px]">{a.icon}</span>
+                      </button>
+                    ))}
+                  </div>
+                </td>
+              </tr>
+            ))}
+            {filtered.length === 0 && (
+              <tr><td colSpan={12} className="px-3 py-8 text-center text-slate-500">No documents match.</td></tr>
+            )}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
+
+function FamilyChip({ family }: { family: DocFamily }) {
+  const map: Record<DocFamily, { label: string; cls: string }> = {
+    rto: { label: "RTO", cls: "border-[#7C3AED]/40 text-[#5B21B6] bg-[#F5F3FF]" },
+    amd: { label: "AMD", cls: "border-amber-300 text-amber-800 bg-amber-50" },
+    acd: { label: "ACD", cls: "border-sky-300 text-sky-800 bg-sky-50" },
+  };
+  const m = map[family];
+  return (
+    <span className={`inline-flex items-center px-1.5 py-0.5 rounded border text-[10px] font-semibold uppercase tracking-wide ${m.cls}`}>{m.label}</span>
+  );
+}
+
+function StatusChip({ status }: { status: DocStatus }) {
+  if (status === "extracted") {
+    return (
+      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full border border-emerald-300 bg-emerald-50 text-emerald-800 text-[11px] font-semibold">
+        <span aria-hidden>●</span> Extracted
+      </span>
+    );
+  }
+  if (status === "extracting") {
+    return (
+      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md border border-[#7C3AED]/40 bg-[#F5F3FF] text-[#5B21B6] text-[11px] font-semibold">
+        <span aria-hidden className="animate-pulse">◐</span> Extracting…
+      </span>
+    );
+  }
+  return (
+    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded border border-dashed border-slate-300 bg-white text-slate-600 text-[11px] font-semibold">
+      <span aria-hidden>○</span> Pending extraction
+    </span>
+  );
+}
+
 function CharacterSpeechBubble({ name, src, text }: { name: string; src: string; text: string }) {
   const [phase, setPhase] = useState<"typing" | "streaming" | "done">("typing");
   const [shown, setShown] = useState("");
