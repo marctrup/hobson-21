@@ -2718,8 +2718,6 @@ function AdminChat({ character, owl, professorEvents, onAssignProfessorType }: {
           </div>
         </div>
       )}
-      {/* placeholder to keep block structure */}
-      {false && (
       {character?.id === "professor" && phase === "done" && (
         <>
           <div className="flex items-end gap-2">
