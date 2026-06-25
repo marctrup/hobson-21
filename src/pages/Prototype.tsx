@@ -1531,13 +1531,7 @@ const Prototype: React.FC = () => {
             />
           )}
 
-          {/* Unit view starters */}
-          {view === "unit" && selectedUnit && (
-            <UnitStarters
-              unit={selectedUnit}
-              onAsk={(q) => sendUnitQuestion(q)}
-            />
-          )}
+          {/* Unit view starter chips removed — chat is locked in the prototype */}
           </div>
         </div>
 
@@ -1546,90 +1540,55 @@ const Prototype: React.FC = () => {
         <div className={`px-5 pt-2 pb-4 border-t border-slate-100 bg-white ${isExpanded ? "w-full" : ""}`}>
          <div className={isExpanded ? "max-w-[820px] mx-auto" : ""}>
 
-          {((view === "onboarding" && chipVisible) ||
-            ((view === "portfolio" || view === "property" || view === "unit") && isRentFlat2Question(input) && !typing)) && (
-            <div className="mb-2 flex items-center justify-end gap-2">
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#7C3AED] text-white text-[11px] font-semibold shadow-sm animate-[pulse_1.6s_ease-in-out_infinite]">
-                {view === "onboarding" ? "Press send to continue" : "Ask the question"}
-                <span aria-hidden className="animate-bounce">↓</span>
-              </span>
-            </div>
-          )}
-
-
-          {/* Portfolio reply chips removed */}
-
-          {(view === "onboarding" || view === "portfolio" || view === "property" || view === "unit") ? (
+          {view === "onboarding" ? (
             <>
-              {view !== "unit" && view !== "onboarding" && (
-                <div className="text-[11px] text-slate-400 mb-1 flex items-center gap-1">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
-                    <rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/>
-                  </svg>
-                  Free typing locks here — the pre-filled question is the demo
+              {chipVisible && (
+                <div className="mb-2 flex items-center justify-end gap-2">
+                  <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#7C3AED] text-white text-[11px] font-semibold shadow-sm animate-[pulse_1.6s_ease-in-out_infinite]">
+                    Press send to continue
+                    <span aria-hidden className="animate-bounce">↓</span>
+                  </span>
                 </div>
               )}
-              {view === "unit" && <div className="text-[11px] text-slate-400 mb-1">4 remaining</div>}
               <form
                 onSubmit={(e) => {
                   e.preventDefault();
                   const q = input.trim();
                   if (!q) return;
-                  if (view === "onboarding") {
-                    if (!chipVisible) return;
-                    advanceBeat(q);
-                  } else if (view === "unit") {
-                    sendUnitQuestion(q);
-                  } else if (isRentFlat2Question(q)) {
-                    sendRentAnswer(q);
-                  } else {
-                    setToast("Free typing is locked here — try the pre-filled question.");
-                    window.setTimeout(() => setToast(null), 2500);
-                  }
+                  if (!chipVisible) return;
+                  advanceBeat(q);
                 }}
                 className={`flex items-center gap-2 px-4 py-2.5 rounded-full border bg-white focus-within:border-[#7C3AED] focus-within:ring-2 focus-within:ring-[#7C3AED]/20 transition ${
-                  (view === "onboarding" && chipVisible)
+                  chipVisible
                     ? "border-[#7C3AED] ring-2 ring-[#7C3AED]/40 bg-[#F5F3FF] shadow-[0_0_0_4px_rgba(124,58,237,0.12)] animate-[pulse_1.6s_ease-in-out_infinite]"
-                    : (isRentFlat2Question(input) && !typing)
-                    ? "border-[#7C3AED] ring-2 ring-[#7C3AED]/30 animate-[pulse_1.6s_ease-in-out_infinite]"
                     : "border-slate-200"
                 }`}
               >
                 <input
                   ref={inputRef}
                   value={input}
-                  onChange={(e) => {
-                    if (view === "onboarding") return; // locked-but-sendable
-                    setInput(e.target.value);
-                  }}
-                  onClick={() => {
-                    if (view === "onboarding" && chipVisible) advanceBeat(input);
-                  }}
-                  readOnly={view === "onboarding"}
-                  placeholder={view === "onboarding" && !chipVisible ? "Hobson is talking…" : "Ask Hobson…"}
-                  className={`flex-1 outline-none text-sm bg-transparent placeholder:text-slate-400 cursor-text ${
-                    (view === "onboarding" && chipVisible) || (isRentFlat2Question(input) && !typing) ? "text-[#5B21B6] font-semibold" : ""
-                  }`}
+                  onChange={() => { /* locked-but-sendable */ }}
+                  onClick={() => { if (chipVisible) advanceBeat(input); }}
+                  readOnly
+                  placeholder={!chipVisible ? "Hobson is talking…" : "Ask Hobson…"}
+                  className={`flex-1 outline-none text-sm bg-transparent placeholder:text-slate-400 cursor-text ${chipVisible ? "text-[#5B21B6] font-semibold" : ""}`}
                   aria-label="Ask Hobson"
                 />
                 <button
                   type="submit"
                   className={`flex items-center justify-center rounded-full transition ${
-                    (view === "onboarding" && chipVisible)
+                    chipVisible
                       ? "h-9 w-9 bg-[#7C3AED] text-white hover:bg-[#6D28D9] shadow-md ring-2 ring-[#7C3AED]/30 animate-[pulse_1.6s_ease-in-out_infinite]"
-                      : (isRentFlat2Question(input) && !typing)
-                      ? "h-8 w-8 text-[#7C3AED] hover:text-[#6D28D9] animate-[pulse_1.6s_ease-in-out_infinite]"
                       : "h-8 w-8 text-[#7C3AED] hover:text-[#6D28D9] disabled:text-slate-300"
                   }`}
                   aria-label="Send to continue"
-                  disabled={!input.trim() || (view === "onboarding" && !chipVisible)}
+                  disabled={!input.trim() || !chipVisible}
                 >
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M5 12h14M13 6l6 6-6 6"/>
                   </svg>
                 </button>
               </form>
-
             </>
           ) : (
             <LockedComposer view={view} />
@@ -1899,22 +1858,7 @@ function RentFlat2Answer({ onAskFollowUp, bodyText }: { onAskFollowUp?: (q: stri
           {sources.map((s) => <li key={s}>{s}</li>)}
         </ul>
       </div>
-      <div>
-        <div className="text-[11px] uppercase tracking-wide text-slate-400 font-medium mb-2">Related questions</div>
-        <ul className="space-y-1.5">
-
-          {related.map((q) => (
-            <li key={q}>
-              <button
-                onClick={() => onAskFollowUp?.(q)}
-                className="text-left text-[13px] text-[#5B21B6] hover:underline"
-              >
-                • {q}
-              </button>
-            </li>
-          ))}
-        </ul>
-      </div>
+      {/* Related questions removed — chat is locked in the prototype */}
       <div>
         <div className="flex items-center gap-2 mb-2">
           <div className="text-[11px] uppercase tracking-wide text-slate-400 font-medium">Related documents</div>
@@ -2710,25 +2654,28 @@ function UnitStarters({ unit, onAsk }: { unit: Unit; onAsk: (q: string) => void 
 }
 
 function LockedComposer({ view }: { view: View }) {
-  const placeholder = "Ask Hobson…";
-  const helper =
-    view === "onboarding"
-      ? "Chat unlocks at unit level"
-      : "Open a unit to chat with Hobson";
+  void view;
+  const placeholder = "Chat is locked in this prototype";
+  const helper = "Available in the live product";
   return (
     <>
-      <div className="text-[11px] text-slate-400 mb-1">Locked</div>
+      <div className="text-[11px] font-semibold text-[#7C3AED] mb-1 flex items-center gap-1">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden>
+          <rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/>
+        </svg>
+        Chat locked for the prototype
+      </div>
       <div
         aria-disabled="true"
         tabIndex={-1}
-        className="flex items-center gap-2 px-4 py-2.5 rounded-full border border-dashed border-slate-300 bg-slate-50 text-sm text-slate-400 select-none cursor-not-allowed"
+        className="flex items-center gap-2 px-4 py-2.5 rounded-full border border-dashed border-[#7C3AED]/40 bg-[#F5F3FF] text-sm text-[#5B21B6]/70 select-none cursor-not-allowed"
         title={helper}
       >
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
           <rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/>
         </svg>
-        <span className="flex-1 truncate text-slate-400">{placeholder}</span>
-        <span className="text-[10px] uppercase tracking-wide text-slate-400 hidden sm:inline">{helper}</span>
+        <span className="flex-1 truncate">{placeholder}</span>
+        <span className="text-[10px] uppercase tracking-wide hidden sm:inline">{helper}</span>
       </div>
     </>
   );
