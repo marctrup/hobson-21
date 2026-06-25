@@ -1564,7 +1564,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
 
 
           {/* Portfolio view (single state) — intelligent action briefing */}
-          {view === "portfolio" && !typing && messages.length > 0 && (
+          {!testerMode && view === "portfolio" && !typing && messages.length > 0 && (
             <PortfolioBriefing
               cards={actionCards}
               choice={briefingChoice}
