@@ -2495,6 +2495,9 @@ function PropertyContent({
   const [filter, setFilter] = useState("");
   const [quick, setQuick] = useState<UnitFilter>("all");
   const [collapsed, setCollapsed] = useState<Record<string, boolean>>({});
+  const [unitsOpen, setUnitsOpen] = useState(false);
+  // Reset to collapsed on each fresh property arrival
+  useEffect(() => { setUnitsOpen(false); }, [property.id]);
   const gridWrapRef = useRef<HTMLDivElement | null>(null);
 
   const derivedByUnit = useMemo(() => {
