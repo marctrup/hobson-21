@@ -2266,7 +2266,9 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
               ? <ProfessorComposer onUpload={handleProfessorUpload} />
               : adminCharacter === "magician"
                 ? <MagicianComposer onCreate={handleCreateWorkflow} />
-                : <LockedComposer view={view} />
+                : adminCharacter === "broker"
+                  ? <BrokerComposer onAdd={handleAddBrokerContact} />
+                  : <LockedComposer view={view} />
 
           ) : testerMode && view === "unit" ? (
 
