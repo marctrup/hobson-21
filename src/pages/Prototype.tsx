@@ -1233,25 +1233,97 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
 
   // ----- Broker black-book state -----
   const [contacts, setContacts] = useState<BrokerContact[]>(SEED_BROKER_CONTACTS);
+  const [brokerEvents, setBrokerEvents] = useState<BrokerEvent[]>([]);
+  const [brokerFlow, setBrokerFlow] = useState<{ step: number; draft: Partial<BrokerContact> } | null>(null);
+
+  const initialsFromName = (name: string) => {
+    const parts = name.trim().split(/\s+/).filter(Boolean);
+    if (parts.length === 0) return "NC";
+    if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+    return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+  };
+
+  const parseBrokerType = (raw: string): BrokerContactType => {
+    const s = raw.toLowerCase();
+    if (/(subcontract|trade|contractor|engineer|electric|fire|plumb)/.test(s)) return "subcontractor";
+    if (/(occup|tenant|resident|leaseholder)/.test(s)) return "occupant";
+    if (/(staff|internal|colleague|team|employee)/.test(s)) return "staff";
+    return "misc";
+  };
+
+  const splitPhonePref = (raw: string): { phone: string; pref: string } => {
+    const parts = raw.split(/·|—|–|-|\||,/);
+    const phone = (parts[0] || raw).trim() || "—";
+    const pref = parts.slice(1).join(" · ").trim() || "no preference noted";
+    return { phone, pref };
+  };
+
   const handleAddBrokerContact = () => {
-    const n = contacts.filter((c) => c.id.startsWith("bc-new-")).length + 1;
-    const id = `bc-new-${Date.now()}`;
-    setContacts((arr) => [
-      {
-        id,
-        name: `New contact ${n}`,
-        type: "misc",
-        role: "Unspecified",
-        initials: "NC",
-        email: "—",
-        phone: "—",
-        contactPref: "preference not set",
-        address: "—",
-        relatedTo: "Just added · tell me who they are and I'll link them up.",
-      },
+    if (brokerFlow) return;
+    setBrokerFlow({ step: 0, draft: {} });
+    setBrokerEvents((arr) => [
       ...arr,
+      { kind: "broker", id: `bk-${Date.now()}-q0`, text: BROKER_QUESTIONS[0].ask },
     ]);
   };
+
+  const cancelBrokerFlow = () => {
+    setBrokerFlow(null);
+    setBrokerEvents((arr) => [...arr, { kind: "broker", id: `bk-${Date.now()}-cx`, text: "No bother — the book stays as it is. Press 'Add a contact' whenever you're ready." }]);
+  };
+
+  const submitBrokerAnswer = (answer: string) => {
+    if (!brokerFlow) return;
+    const text = answer.trim();
+    if (!text) return;
+    const ts = Date.now();
+    const q = BROKER_QUESTIONS[brokerFlow.step];
+    const draft = { ...brokerFlow.draft };
+    if (q.field === "type") draft.type = parseBrokerType(text);
+    else if (q.field === "phoneAndPref") {
+      const { phone, pref } = splitPhonePref(text);
+      draft.phone = phone;
+      draft.contactPref = pref;
+    } else if (q.field === "name") {
+      draft.name = text;
+      draft.initials = initialsFromName(text);
+    } else {
+      (draft as Record<BrokerField, string>)[q.field] = text;
+    }
+
+    const newEvents: BrokerEvent[] = [{ kind: "user", id: `bk-${ts}-u`, text }];
+    const nextStep = brokerFlow.step + 1;
+
+    if (nextStep < BROKER_QUESTIONS.length) {
+      newEvents.push({ kind: "broker", id: `bk-${ts}-q${nextStep}`, text: BROKER_QUESTIONS[nextStep].ask });
+      setBrokerFlow({ step: nextStep, draft });
+      setBrokerEvents((arr) => [...arr, ...newEvents]);
+    } else {
+      // Finalise
+      const contact: BrokerContact = {
+        id: `bc-new-${ts}`,
+        name: draft.name || "New contact",
+        type: (draft.type as BrokerContactType) || "misc",
+        role: draft.role || "Unspecified",
+        initials: draft.initials || initialsFromName(draft.name || "NC"),
+        email: draft.email || "—",
+        phone: draft.phone || "—",
+        contactPref: draft.contactPref || "no preference noted",
+        address: draft.address || "—",
+        relatedTo: draft.relatedTo || "—",
+      };
+      setContacts((arr) => [contact, ...arr]);
+      newEvents.push({
+        kind: "broker",
+        id: `bk-${ts}-done`,
+        text: `Done — ${contact.name} is in the book under ${BROKER_TYPE_META[contact.type].label.toLowerCase()}. I'll remember them and link them as we go.`,
+      });
+      newEvents.push({ kind: "summary", id: `bk-${ts}-sum`, name: contact.name });
+      setBrokerFlow(null);
+      setBrokerEvents((arr) => [...arr, ...newEvents]);
+    }
+  };
+
 
 
 
