@@ -43,6 +43,86 @@ const ADMIN_CHARACTERS: { id: AdminCharacter; name: string; src: string; tagline
   },
 ];
 
+/* ---------------- Professor library types & seed ---------------- */
+
+type DocStatus = "pending" | "extracting" | "extracted";
+type DocFamily = "rto" | "amd" | "acd";
+type ProfDoc = {
+  id: string;
+  name: string;
+  type?: string;
+  family?: DocFamily;
+  timeClass?: string;
+  relatedUnit?: string;
+  supersedes?: string;
+  chainedTo?: string;
+  status: DocStatus;
+  effectiveDate?: string;
+  uploadedAt: string;
+  extractedAt?: string;
+};
+
+const PROF_DOC_TYPES: { label: string; family: DocFamily; timeClass: string }[] = [
+  { label: "Lease", family: "rto", timeClass: "Long-dated" },
+  { label: "Deed of Variation", family: "amd", timeClass: "Effective from date" },
+  { label: "Licence to Alter", family: "amd", timeClass: "Effective from date" },
+  { label: "Tenancy Agreement (AST)", family: "rto", timeClass: "Fixed term" },
+  { label: "EICR Certificate", family: "acd", timeClass: "Valid 5 years" },
+  { label: "Fire Alarm Certificate", family: "acd", timeClass: "Valid 12 months" },
+  { label: "Gas Safety Record", family: "acd", timeClass: "Valid 12 months" },
+  { label: "Insurance Policy", family: "acd", timeClass: "Annual" },
+];
+
+const SEED_PROF_DOCS: ProfDoc[] = [
+  {
+    id: "pd-1", name: "Lease — Flat 2, 5 Nugent Terrace.pdf",
+    type: "Lease", family: "rto", timeClass: "Long-dated",
+    relatedUnit: "Flat 2, 5 Nugent Terrace",
+    status: "extracted",
+    effectiveDate: "12 Jun 2014",
+    uploadedAt: "21 Jun 2026", extractedAt: "21 Jun 2026",
+  },
+  {
+    id: "pd-2", name: "Deed of Variation — Flat 2.pdf",
+    type: "Deed of Variation", family: "amd", timeClass: "Effective from date",
+    relatedUnit: "Flat 2, 5 Nugent Terrace",
+    chainedTo: "Lease — Flat 2, 5 Nugent Terrace.pdf",
+    status: "extracted",
+    effectiveDate: "03 Mar 2019",
+    uploadedAt: "21 Jun 2026", extractedAt: "21 Jun 2026",
+  },
+  {
+    id: "pd-3", name: "Licence to Alter — Flat 2 kitchen.pdf",
+    type: "Licence to Alter", family: "amd", timeClass: "Effective from date",
+    relatedUnit: "Flat 2, 5 Nugent Terrace",
+    chainedTo: "Lease — Flat 2, 5 Nugent Terrace.pdf",
+    status: "extracted",
+    effectiveDate: "14 Sep 2021",
+    uploadedAt: "22 Jun 2026", extractedAt: "22 Jun 2026",
+  },
+  {
+    id: "pd-4", name: "EICR — 5 Nugent Terrace.pdf",
+    type: "EICR Certificate", family: "acd", timeClass: "Valid 5 years",
+    relatedUnit: "5 Nugent Terrace (building)",
+    status: "extracted",
+    effectiveDate: "08 Jan 2024",
+    uploadedAt: "23 Jun 2026", extractedAt: "23 Jun 2026",
+  },
+  {
+    id: "pd-5", name: "Fire Alarm Certificate — 5 Nugent Terrace.pdf",
+    type: "Fire Alarm Certificate", family: "acd", timeClass: "Valid 12 months",
+    relatedUnit: "5 Nugent Terrace (building)",
+    supersedes: "Fire Alarm Certificate (2025).pdf",
+    status: "pending",
+    effectiveDate: "—",
+    uploadedAt: "25 Jun 2026",
+  },
+];
+
+type ProfEvent =
+  | { kind: "ask-type"; id: string; docIds: string[]; resolved?: { type: string; family: DocFamily } }
+  | { kind: "professor"; id: string; text: string };
+
 
 /* ---------------- Config ---------------- */
 
@@ -825,6 +905,43 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
   };
   const selectAdminCharacter = (c: AdminCharacter) => setAdminCharacter(c);
 
+  // ----- Professor library state -----
+  const [profDocs, setProfDocs] = useState<ProfDoc[]>(SEED_PROF_DOCS);
+  const [profEvents, setProfEvents] = useState<ProfEvent[]>([]);
+
+  const handleProfessorUpload = (count: number = 3) => {
+    const ts = Date.now();
+    const stubs = ["Tenancy Agreement.pdf", "Lease — Flat 4.pdf", "EICR Report.pdf", "Insurance Schedule.pdf", "Gas Safety Record.pdf"];
+    const newDocs: ProfDoc[] = Array.from({ length: count }).map((_, i) => ({
+      id: `pd-${ts}-${i}`,
+      name: stubs[i % stubs.length],
+      status: "pending" as DocStatus,
+      uploadedAt: "Today",
+    }));
+    setProfDocs((arr) => [...newDocs, ...arr]);
+    const batchId = `ev-${ts}`;
+    setProfEvents((arr) => [
+      ...arr,
+      { kind: "professor", id: `${batchId}-q`, text: `I've taken in ${count} document${count === 1 ? "" : "s"}. What type are these?` },
+      { kind: "ask-type", id: batchId, docIds: newDocs.map((d) => d.id) },
+    ]);
+  };
+
+  const assignProfessorType = (batchId: string, typeLabel: string) => {
+    const meta = PROF_DOC_TYPES.find((t) => t.label === typeLabel);
+    if (!meta) return;
+    const ev = profEvents.find((e) => e.kind === "ask-type" && e.id === batchId) as Extract<ProfEvent, { kind: "ask-type" }> | undefined;
+    if (!ev) return;
+    setProfEvents((arr) => arr.map((e) => e.kind === "ask-type" && e.id === batchId ? { ...e, resolved: { type: typeLabel, family: meta.family } } : e));
+    setProfDocs((arr) => arr.map((d) => ev.docIds.includes(d.id) ? { ...d, type: typeLabel, family: meta.family, timeClass: meta.timeClass, status: "extracting" } : d));
+    setProfEvents((arr) => [...arr, { kind: "professor", id: `${batchId}-r`, text: `Marked as ${typeLabel}. I'll read them now and let you know what I find.` }]);
+    // simulate extraction
+    window.setTimeout(() => {
+      setProfDocs((arr) => arr.map((d) => ev.docIds.includes(d.id) ? { ...d, status: "extracted", extractedAt: "Just now" } : d));
+      setProfEvents((arr) => [...arr, { kind: "professor", id: `${batchId}-done`, text: `Done. ${ev.docIds.length} document${ev.docIds.length === 1 ? "" : "s"} read and filed in the library.` }]);
+    }, 2800);
+  };
+
 
   const performCard = (id: string) => {
     setReviewingCardId(null);
@@ -1589,7 +1706,12 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
           >
 
           {adminMode ? (
-            <AdminChat character={adminCharacter ? ADMIN_CHARACTERS.find((c) => c.id === adminCharacter)! : null} owl={owl} />
+            <AdminChat
+              character={adminCharacter ? ADMIN_CHARACTERS.find((c) => c.id === adminCharacter)! : null}
+              owl={owl}
+              professorEvents={adminCharacter === "professor" ? profEvents : undefined}
+              onAssignProfessorType={assignProfessorType}
+            />
           ) : (<>
 
 
@@ -1844,7 +1966,9 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
               </form>
             </>
           ) : adminMode ? (
-            <LockedComposer view={view} />
+            adminCharacter === "professor"
+              ? <ProfessorComposer onUpload={handleProfessorUpload} />
+              : <LockedComposer view={view} />
           ) : testerMode && view === "unit" ? (
 
             <form
@@ -1992,6 +2116,9 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
         })()}
         {adminMode && adminCharacter && (() => {
           const c = ADMIN_CHARACTERS.find((x) => x.id === adminCharacter)!;
+          if (c.id === "professor") {
+            return <ProfessorWorkArea character={c} docs={profDocs} onClose={exitAdmin} />;
+          }
           return <AdminWorkArea character={c} onClose={exitAdmin} />;
         })()}
 
@@ -2055,7 +2182,7 @@ function CharacterAvatar({ src }: { src: string }) {
   );
 }
 
-function AdminChat({ character, owl }: { character: { id: AdminCharacter; name: string; src: string; greeting: string } | null; owl: OwlState }) {
+function AdminChat({ character, owl, professorEvents, onAssignProfessorType }: { character: { id: AdminCharacter; name: string; src: string; greeting: string } | null; owl: OwlState; professorEvents?: ProfEvent[]; onAssignProfessorType?: (batchId: string, type: string) => void }) {
   const [phase, setPhase] = useState<"typing" | "streaming" | "done">("typing");
   const [shown, setShown] = useState("");
   const reducedMotion = typeof window !== "undefined"
@@ -2123,6 +2250,67 @@ function AdminChat({ character, owl }: { character: { id: AdminCharacter; name: 
           </div>
         </div>
       )}
+      {character?.id === "professor" && phase === "done" && professorEvents && professorEvents.length > 0 && (
+        <div className="flex flex-col" style={{ gap: CHAT_TURN_GAP_PX }}>
+          {professorEvents.map((ev) => {
+            if (ev.kind === "professor") {
+              return (
+                <div key={ev.id} className="flex items-end gap-2">
+                  <CharacterAvatar src={character.src} />
+                  <div className="max-w-[360px] bg-[#EDE9FE] text-[#1F2330] text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-bl-md">
+                    {ev.text}
+                  </div>
+                </div>
+              );
+            }
+            // ask-type
+            return (
+              <div key={ev.id} className="ml-12 max-w-[420px] rounded-xl border border-[#7C3AED]/30 bg-white p-3 shadow-sm">
+                <div className="text-[11px] uppercase tracking-wide text-slate-500 font-semibold mb-2">
+                  Assign document type · {ev.docIds.length} file{ev.docIds.length === 1 ? "" : "s"} · all the same type
+                </div>
+                {ev.resolved ? (
+                  <div className="text-[12px] text-slate-700">
+                    <span className="font-semibold">{ev.resolved.type}</span>
+                    <span className="ml-2 inline-flex items-center gap-1 px-1.5 py-0.5 rounded border border-slate-200 bg-slate-50 text-[10px] uppercase tracking-wide text-slate-600">
+                      {ev.resolved.family}
+                    </span>
+                  </div>
+                ) : (
+                  <ProfTypeAssigner onAssign={(t) => onAssignProfessorType?.(ev.id, t)} />
+                )}
+              </div>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function ProfTypeAssigner({ onAssign }: { onAssign: (type: string) => void }) {
+  const [val, setVal] = useState("");
+  return (
+    <div className="flex items-center gap-2">
+      <select
+        value={val}
+        onChange={(e) => setVal(e.target.value)}
+        className="flex-1 text-[12px] border border-slate-200 rounded-md px-2 py-1.5 bg-white focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40"
+        aria-label="Document type"
+      >
+        <option value="">Choose a type…</option>
+        {PROF_DOC_TYPES.map((t) => (
+          <option key={t.label} value={t.label}>{t.label}</option>
+        ))}
+      </select>
+      <button
+        type="button"
+        disabled={!val}
+        onClick={() => onAssign(val)}
+        className="text-[12px] font-semibold px-3 py-1.5 rounded-md bg-[#7C3AED] text-white hover:bg-[#6D28D9] disabled:bg-slate-200 disabled:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40"
+      >
+        Assign
+      </button>
     </div>
   );
 }
@@ -2159,6 +2347,149 @@ function AdminWorkArea({ character, onClose }: { character: { id: AdminCharacter
         </div>
       </div>
     </div>
+  );
+}
+
+function ProfessorWorkArea({ character, docs, onClose }: { character: { id: AdminCharacter; name: string; src: string; tagline: string; workTitle: string }; docs: ProfDoc[]; onClose: () => void }) {
+  const [search, setSearch] = useState("");
+  const filtered = docs.filter((d) => d.name.toLowerCase().includes(search.toLowerCase()));
+  return (
+    <div className="absolute inset-0 bg-white z-[450] flex flex-col">
+      <header className="h-14 px-5 flex items-center justify-between border-b border-slate-200 shrink-0">
+        <div className="flex items-center gap-3">
+          <div className="w-9 h-9 rounded-full overflow-hidden bg-[#F5F3FF] ring-1 ring-slate-200 grid place-items-center">
+            <img src={character.src} alt="" aria-hidden className="w-[120%] h-[120%] object-contain" />
+          </div>
+          <div>
+            <div className="text-[13px] font-semibold text-slate-900">{character.workTitle}</div>
+            <div className="text-[11px] text-slate-500">{docs.length} document{docs.length === 1 ? "" : "s"} · uploaded, classified and read</div>
+          </div>
+        </div>
+        <button
+          type="button"
+          onClick={onClose}
+          className="text-[12px] text-slate-500 hover:text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#7C3AED] rounded px-2 py-1"
+          aria-label="Close admin workspace"
+        >
+          ✕ Exit Admin
+        </button>
+      </header>
+
+      {/* Filters */}
+      <div className="px-5 py-3 border-b border-slate-100 flex flex-wrap items-center gap-2 shrink-0">
+        <div className="relative">
+          <input
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder="Search by document name"
+            className="text-[12px] pl-7 pr-3 py-1.5 rounded-md border border-slate-200 bg-white focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40 w-64"
+            aria-label="Search by document name"
+          />
+          <svg aria-hidden width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="absolute left-2 top-1/2 -translate-y-1/2">
+            <circle cx="11" cy="11" r="7"/><path d="M21 21l-3.5-3.5"/>
+          </svg>
+        </div>
+        {["+ Document type", "+ Unit / Unit Group", "+ Status", "+ Effective date"].map((label) => (
+          <button
+            key={label}
+            type="button"
+            className="text-[11px] font-medium px-2.5 py-1.5 rounded-md border border-dashed border-slate-300 bg-white text-slate-600 hover:border-[#7C3AED]/50 hover:text-[#7C3AED] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/30"
+          >
+            {label}
+          </button>
+        ))}
+      </div>
+
+      {/* Table */}
+      <div className="flex-1 overflow-auto">
+        <table className="w-full text-[12px] border-collapse">
+          <thead className="bg-slate-50 text-slate-600 sticky top-0 z-10">
+            <tr className="text-left">
+              {["Document name", "Type", "Family", "Time class", "Related unit / group", "Supersedes", "Chained to", "Status", "Effective date", "Uploaded", "Extracted", ""].map((h) => (
+                <th key={h} scope="col" className="px-3 py-2 font-semibold border-b border-slate-200 whitespace-nowrap">{h}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {filtered.map((d) => (
+              <tr key={d.id} className="border-b border-slate-100 hover:bg-slate-50 focus-within:bg-slate-50">
+                <td className="px-3 py-2.5 font-medium text-slate-900 max-w-[260px] truncate" title={d.name}>{d.name}</td>
+                <td className="px-3 py-2.5 text-slate-700 whitespace-nowrap">{d.type ?? <span className="text-slate-400">—</span>}</td>
+                <td className="px-3 py-2.5">
+                  {d.family ? <FamilyChip family={d.family} /> : <span className="text-slate-400">—</span>}
+                </td>
+                <td className="px-3 py-2.5 text-slate-700 whitespace-nowrap">{d.timeClass ?? <span className="text-slate-400">—</span>}</td>
+                <td className="px-3 py-2.5 text-slate-700 whitespace-nowrap">{d.relatedUnit ?? <span className="text-slate-400">—</span>}</td>
+                <td className="px-3 py-2.5 text-slate-700 max-w-[180px] truncate" title={d.supersedes}>{d.supersedes ?? <span className="text-slate-400">—</span>}</td>
+                <td className="px-3 py-2.5 text-slate-700 max-w-[180px] truncate" title={d.chainedTo}>{d.chainedTo ?? <span className="text-slate-400">—</span>}</td>
+                <td className="px-3 py-2.5"><StatusChip status={d.status} /></td>
+                <td className="px-3 py-2.5 text-slate-700 whitespace-nowrap">{d.effectiveDate ?? <span className="text-slate-400">—</span>}</td>
+                <td className="px-3 py-2.5 text-slate-700 whitespace-nowrap">{d.uploadedAt}</td>
+                <td className="px-3 py-2.5 text-slate-700 whitespace-nowrap">{d.extractedAt ?? <span className="text-slate-400">—</span>}</td>
+                <td className="px-3 py-2.5 whitespace-nowrap text-right">
+                  <div className="inline-flex items-center gap-1">
+                    {[
+                      { label: "View extraction", icon: "👁" },
+                      { label: "Re-extract", icon: "↻" },
+                      { label: "Download", icon: "⤓" },
+                      { label: "Edit", icon: "✎" },
+                      { label: "Delete", icon: "🗑" },
+                    ].map((a) => (
+                      <button
+                        key={a.label}
+                        type="button"
+                        title={a.label}
+                        aria-label={`${a.label} — ${d.name}`}
+                        className="h-7 w-7 grid place-items-center rounded text-slate-500 hover:bg-slate-100 hover:text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40"
+                      >
+                        <span aria-hidden className="text-[12px]">{a.icon}</span>
+                      </button>
+                    ))}
+                  </div>
+                </td>
+              </tr>
+            ))}
+            {filtered.length === 0 && (
+              <tr><td colSpan={12} className="px-3 py-8 text-center text-slate-500">No documents match.</td></tr>
+            )}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
+
+function FamilyChip({ family }: { family: DocFamily }) {
+  const map: Record<DocFamily, { label: string; cls: string }> = {
+    rto: { label: "RTO", cls: "border-[#7C3AED]/40 text-[#5B21B6] bg-[#F5F3FF]" },
+    amd: { label: "AMD", cls: "border-amber-300 text-amber-800 bg-amber-50" },
+    acd: { label: "ACD", cls: "border-sky-300 text-sky-800 bg-sky-50" },
+  };
+  const m = map[family];
+  return (
+    <span className={`inline-flex items-center px-1.5 py-0.5 rounded border text-[10px] font-semibold uppercase tracking-wide ${m.cls}`}>{m.label}</span>
+  );
+}
+
+function StatusChip({ status }: { status: DocStatus }) {
+  if (status === "extracted") {
+    return (
+      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full border border-emerald-300 bg-emerald-50 text-emerald-800 text-[11px] font-semibold">
+        <span aria-hidden>●</span> Extracted
+      </span>
+    );
+  }
+  if (status === "extracting") {
+    return (
+      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md border border-[#7C3AED]/40 bg-[#F5F3FF] text-[#5B21B6] text-[11px] font-semibold">
+        <span aria-hidden className="animate-pulse">◐</span> Extracting…
+      </span>
+    );
+  }
+  return (
+    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded border border-dashed border-slate-300 bg-white text-slate-600 text-[11px] font-semibold">
+      <span aria-hidden>○</span> Pending extraction
+    </span>
   );
 }
 
@@ -3186,6 +3517,64 @@ function LockedComposer({ view }: { view: View }) {
     </>
   );
 }
+
+function ProfessorComposer({ onUpload }: { onUpload: (count: number) => void }) {
+  const fileRef = useRef<HTMLInputElement | null>(null);
+  const [dragOver, setDragOver] = useState(false);
+  const handleFiles = (n: number) => {
+    if (n > 0) onUpload(Math.min(n, 8));
+  };
+  return (
+    <div className="flex flex-col gap-2">
+      <div
+        onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
+        onDragLeave={() => setDragOver(false)}
+        onDrop={(e) => {
+          e.preventDefault();
+          setDragOver(false);
+          const n = e.dataTransfer?.files?.length ?? 0;
+          handleFiles(n || 3);
+        }}
+        className={`flex items-center gap-3 px-4 py-3 rounded-2xl border-2 border-dashed transition ${
+          dragOver ? "border-[#7C3AED] bg-[#F5F3FF]" : "border-[#7C3AED]/40 bg-white"
+        }`}
+      >
+        <button
+          type="button"
+          onClick={() => fileRef.current?.click()}
+          className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full bg-[#7C3AED] text-white text-[13px] font-semibold shadow-sm hover:bg-[#6D28D9] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+            <path d="M12 16V4M6 10l6-6 6 6"/><path d="M4 20h16"/>
+          </svg>
+          Upload documents
+        </button>
+        <div className="flex-1 min-w-0">
+          <div className="text-[12px] font-medium text-slate-800">Drop one or many — PDFs, leases, certificates</div>
+          <div className="text-[11px] text-slate-500">Single or batch upload · multi-select supported</div>
+        </div>
+        <input
+          ref={fileRef}
+          type="file"
+          multiple
+          className="sr-only"
+          aria-label="Upload documents"
+          onChange={(e) => handleFiles(e.target.files?.length ?? 0)}
+        />
+      </div>
+      <div
+        aria-disabled="true"
+        className="flex items-center gap-2 px-4 py-2 rounded-full border border-slate-200 bg-slate-50 text-[12px] text-slate-500"
+      >
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
+          <rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/>
+        </svg>
+        Free-text chat with The Professor is coming in the live product — for now, hand him documents.
+      </div>
+    </div>
+  );
+}
+
 
 /* ---------- Portfolio: first-visit guided ---------- */
 
