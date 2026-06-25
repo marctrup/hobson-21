@@ -1613,9 +1613,33 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
 
       {/* Chat panel */}
       <section
-        className={`${isExpanded ? "flex-1" : "shrink-0"} bg-white border-r border-slate-200 flex flex-col`}
+        className={`${isExpanded ? "flex-1" : "shrink-0"} relative bg-white border-r border-slate-200 flex flex-col`}
         style={isExpanded ? undefined : { width: chatWidth }}
+        onDragOver={(e) => {
+          if (adminMode && adminCharacter === "professor") { e.preventDefault(); setChatDropOver(true); }
+        }}
+        onDragLeave={(e) => {
+          if (e.currentTarget.contains(e.relatedTarget as Node)) return;
+          setChatDropOver(false);
+        }}
+        onDrop={(e) => {
+          if (adminMode && adminCharacter === "professor") {
+            e.preventDefault();
+            const n = e.dataTransfer?.files?.length ?? 0;
+            setChatDropOver(false);
+            handleProfessorUpload(n || 3);
+          }
+        }}
       >
+        {chatDropOver && adminMode && adminCharacter === "professor" && (
+          <div className="absolute inset-0 z-30 grid place-items-center bg-[#F5F3FF]/95 border-2 border-dashed border-[#7C3AED] rounded-none pointer-events-none">
+            <div className="text-center px-6">
+              <div className="text-[#7C3AED] text-3xl mb-2" aria-hidden>↑</div>
+              <div className="text-sm font-semibold text-[#5B21B6]">Drop documents for the Professor to read</div>
+              <div className="text-[12px] text-slate-600 mt-1">Leases, certificates, correspondence — one or many</div>
+            </div>
+          </div>
+        )}
         {/* Header */}
         <header className="h-14 px-5 flex items-center justify-between border-b border-slate-100">
           <div className="flex items-center gap-2">
