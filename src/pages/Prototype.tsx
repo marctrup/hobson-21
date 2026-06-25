@@ -1524,6 +1524,12 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
             style={{ gap: CHAT_TURN_GAP_PX, paddingTop: CHAT_TOP_GAP_PX }}
           >
 
+          {adminMode ? (
+            <AdminChat character={adminCharacter ? ADMIN_CHARACTERS.find((c) => c.id === adminCharacter)! : null} owl={owl} />
+          ) : (<>
+
+
+
 
           {/* Pinned alert briefing at the top of unit chat */}
           {!testerMode && view === "unit" && selectedUnit && selectedPropertyId && (
