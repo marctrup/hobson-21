@@ -741,7 +741,7 @@ function HobsonMap({
 
 type View = "onboarding" | "portfolio" | "property" | "unit";
 
-const Prototype: React.FC = () => {
+const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) => {
   const [view, setView] = useState<View>("onboarding");
   const [beatIdx, setBeatIdx] = useState(0);
   const [lineIdx, setLineIdx] = useState(0); // line within beat
@@ -1004,8 +1004,11 @@ const Prototype: React.FC = () => {
         : `, and ${numberWord(urgent.length)} are time-sensitive`
       : "";
 
-    const greetLines: string[] =
-      pending.length === 0
+    const greetLines: string[] = testerMode
+      ? [
+          `Good morning, ${FIRST_NAME}. For the purpose of testing, please use the map or the search to go straight to your unit — that is where I can answer your questions today.`,
+        ]
+      : pending.length === 0
         ? [`Good morning, ${FIRST_NAME}. Your portfolio is quiet today — nothing requires your attention.`]
         : [`Good morning, ${FIRST_NAME}. Your portfolio is quiet for the most part — though there are ${mattersClause} your attention today${urgentClause}. Shall I take you through them?`];
 
@@ -1051,9 +1054,11 @@ const Prototype: React.FC = () => {
     setSearchQuery("");
     setMessages([]);
     const carriedCard = carryCardId ? actionCards.find((x) => x.id === carryCardId) : null;
-    const greet = carriedCard
-      ? `Here's ${p.name}. ${carriedCard.title} is the one that needs you — and here's everything else on this building.`
-      : `Here you are, ${FIRST_NAME} — ${p.name}, London ${p.postcode}. ${p.units.length} units. Pick one to open.`;
+    const greet = testerMode
+      ? `This is ${p.name}. Select a unit below to open it — that is where we can talk.`
+      : carriedCard
+        ? `Here's ${p.name}. ${carriedCard.title} is the one that needs you — and here's everything else on this building.`
+        : `Here you are, ${FIRST_NAME} — ${p.name}, London ${p.postcode}. ${p.units.length} units. Pick one to open.`;
     setTyping(true);
     const delay = reduced ? 200 : 500;
     window.setTimeout(() => {
@@ -1102,8 +1107,10 @@ const Prototype: React.FC = () => {
     setSearchQuery("");
     const where = p.standalone ? p.address : `${p.name}`;
     const derived = deriveUnit(u);
-    const lines = buildUnitOpeningLines(u, derived, where);
-    if (carryCardId) {
+    const lines = testerMode
+      ? [`Here we are at ${u.label}, ${where}. This is where I can help — ask me whatever you need to know about this unit.`]
+      : buildUnitOpeningLines(u, derived, where);
+    if (!testerMode && carryCardId) {
       const card = actionCards.find((x) => x.id === carryCardId);
       if (card) {
         lines.unshift(`About that — ${card.title}. ${card.whyItMatters}`);
@@ -1336,8 +1343,8 @@ const Prototype: React.FC = () => {
           </svg>
         </div>
         <RailItem icon="pin" label="Portfolio" active={view !== "onboarding" && !showDocuments && !showWhatIveDone} onClick={() => { setShowDocuments(false); setShowWhatIveDone(false); goPortfolio(false); }} />
-        <RailItem icon="doc" label="Documents" active={view !== "onboarding" && showDocuments} onClick={() => { setShowWhatIveDone(false); setShowDocuments(true); }} />
-        <RailItem icon="clock" label={"What I've done"} active={view !== "onboarding" && showWhatIveDone} onClick={() => { setShowDocuments(false); setShowWhatIveDone(true); }} />
+        {!testerMode && <RailItem icon="doc" label="Documents" active={view !== "onboarding" && showDocuments} onClick={() => { setShowWhatIveDone(false); setShowDocuments(true); }} />}
+        {!testerMode && <RailItem icon="clock" label={"What I've done"} active={view !== "onboarding" && showWhatIveDone} onClick={() => { setShowDocuments(false); setShowWhatIveDone(true); }} />}
         <RailItem icon="chat" label="Chat History" />
         <div className="mt-auto flex flex-col items-center gap-3 pb-2">
           <button className="w-11 h-11 rounded-full bg-[#7C3AED] text-white grid place-items-center shadow-md hover:bg-[#6D28D9] transition" aria-label="New chat">
@@ -1439,7 +1446,7 @@ const Prototype: React.FC = () => {
 
 
           {/* Pinned alert briefing at the top of unit chat */}
-          {view === "unit" && selectedUnit && selectedPropertyId && (
+          {!testerMode && view === "unit" && selectedUnit && selectedPropertyId && (
             <>
               <PinnedAlertCard
                 unit={selectedUnit}
@@ -1557,7 +1564,7 @@ const Prototype: React.FC = () => {
 
 
           {/* Portfolio view (single state) — intelligent action briefing */}
-          {view === "portfolio" && !typing && messages.length > 0 && (
+          {!testerMode && view === "portfolio" && !typing && messages.length > 0 && (
             <PortfolioBriefing
               cards={actionCards}
               choice={briefingChoice}
@@ -1597,7 +1604,7 @@ const Prototype: React.FC = () => {
           {view === "property" && selectedProperty && (
             <PropertyContent
               property={selectedProperty}
-              propertyActionCards={selectActionsForScope(actionCards, { level: "property", propertyId: selectedProperty.id })}
+              propertyActionCards={testerMode ? [] : selectActionsForScope(actionCards, { level: "property", propertyId: selectedProperty.id })}
               expandedCardId={expandedCardId}
               setExpandedCardId={setExpandedCardId}
               carriedCardId={carriedCardId}
@@ -1684,6 +1691,34 @@ const Prototype: React.FC = () => {
                 </button>
               </form>
             </>
+          ) : testerMode && view === "unit" ? (
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                const q = input.trim();
+                if (!q) return;
+                sendUnitQuestion(q);
+              }}
+              className="flex items-center gap-2 px-4 py-2.5 rounded-full border border-slate-200 bg-white focus-within:border-[#7C3AED] focus-within:ring-2 focus-within:ring-[#7C3AED]/20 transition"
+            >
+              <input
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                placeholder="Ask Hobson about this unit…"
+                className="flex-1 outline-none text-sm bg-transparent placeholder:text-slate-400"
+                aria-label="Ask Hobson about this unit"
+              />
+              <button
+                type="submit"
+                disabled={!input.trim()}
+                className="flex items-center justify-center h-9 w-9 rounded-full bg-[#7C3AED] text-white hover:bg-[#6D28D9] transition disabled:bg-slate-200 disabled:text-slate-400"
+                aria-label="Send"
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M5 12h14M13 6l6 6-6 6"/>
+                </svg>
+              </button>
+            </form>
           ) : (
             <LockedComposer view={view} />
           )}
