@@ -1106,6 +1106,27 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
 
 
 
+  // ----- Broker black-book state -----
+  const [contacts, setContacts] = useState<BrokerContact[]>(SEED_BROKER_CONTACTS);
+  const handleAddBrokerContact = () => {
+    const n = contacts.filter((c) => c.id.startsWith("bc-new-")).length + 1;
+    const id = `bc-new-${Date.now()}`;
+    setContacts((arr) => [
+      {
+        id,
+        name: `New contact ${n}`,
+        type: "misc",
+        role: "Unspecified",
+        relationship: "Just added · tell me who they are and I'll link them up.",
+        initials: "NC",
+      },
+      ...arr,
+    ]);
+  };
+
+
+
+
   const handleProfessorUpload = (count: number = 3) => {
     const ts = Date.now();
     const stubs = ["Tenancy Agreement.pdf", "Lease — Flat 4.pdf", "EICR Report.pdf", "Insurance Schedule.pdf", "Gas Safety Record.pdf"];
