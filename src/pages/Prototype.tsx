@@ -1858,22 +1858,7 @@ function RentFlat2Answer({ onAskFollowUp, bodyText }: { onAskFollowUp?: (q: stri
           {sources.map((s) => <li key={s}>{s}</li>)}
         </ul>
       </div>
-      <div>
-        <div className="text-[11px] uppercase tracking-wide text-slate-400 font-medium mb-2">Related questions</div>
-        <ul className="space-y-1.5">
-
-          {related.map((q) => (
-            <li key={q}>
-              <button
-                onClick={() => onAskFollowUp?.(q)}
-                className="text-left text-[13px] text-[#5B21B6] hover:underline"
-              >
-                • {q}
-              </button>
-            </li>
-          ))}
-        </ul>
-      </div>
+      {/* Related questions removed — chat is locked in the prototype */}
       <div>
         <div className="flex items-center gap-2 mb-2">
           <div className="text-[11px] uppercase tracking-wide text-slate-400 font-medium">Related documents</div>
