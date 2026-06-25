@@ -1004,8 +1004,11 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
         : `, and ${numberWord(urgent.length)} are time-sensitive`
       : "";
 
-    const greetLines: string[] =
-      pending.length === 0
+    const greetLines: string[] = testerMode
+      ? [
+          `Good morning, ${FIRST_NAME}. For the purpose of testing, please use the map or the search to go straight to your unit — that is where I can answer your questions today.`,
+        ]
+      : pending.length === 0
         ? [`Good morning, ${FIRST_NAME}. Your portfolio is quiet today — nothing requires your attention.`]
         : [`Good morning, ${FIRST_NAME}. Your portfolio is quiet for the most part — though there are ${mattersClause} your attention today${urgentClause}. Shall I take you through them?`];
 
