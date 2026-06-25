@@ -2843,12 +2843,12 @@ function AdminWorkArea({ character }: { character: { id: AdminCharacter; name: s
   );
 }
 
-function ProfessorWorkArea({ character, docs, onClose }: { character: { id: AdminCharacter; name: string; src: string; tagline: string; workTitle: string }; docs: ProfDoc[]; onClose: () => void }) {
+function ProfessorWorkArea({ character, docs }: { character: { id: AdminCharacter; name: string; src: string; tagline: string; workTitle: string }; docs: ProfDoc[] }) {
   const [search, setSearch] = useState("");
   const filtered = docs.filter((d) => d.name.toLowerCase().includes(search.toLowerCase()));
   return (
     <div className="absolute inset-0 bg-white z-[450] flex flex-col">
-      <header className="h-14 px-5 flex items-center justify-between border-b border-slate-200 shrink-0">
+      <header className="h-14 px-5 flex items-center border-b border-slate-200 shrink-0">
         <div className="flex items-center gap-3">
           <div className="w-9 h-9 rounded-full overflow-hidden bg-[#F5F3FF] ring-1 ring-slate-200 grid place-items-center">
             <img src={character.src} alt="" aria-hidden className="w-[120%] h-[120%] object-contain" />
@@ -2858,14 +2858,6 @@ function ProfessorWorkArea({ character, docs, onClose }: { character: { id: Admi
             <div className="text-[11px] text-slate-500">{docs.length} document{docs.length === 1 ? "" : "s"} · uploaded, classified and read</div>
           </div>
         </div>
-        <button
-          type="button"
-          onClick={onClose}
-          className="text-[12px] text-slate-500 hover:text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#7C3AED] rounded px-2 py-1"
-          aria-label="Close admin workspace"
-        >
-          ✕ Exit Admin
-        </button>
       </header>
 
       {/* Filters */}
