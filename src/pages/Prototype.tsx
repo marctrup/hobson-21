@@ -48,9 +48,13 @@ type BrokerContact = {
   id: string;
   name: string;
   type: BrokerContactType;
-  role: string;
-  relationship: string;
+  role: string;                 // e.g. "Fire alarm engineer · contact: John Reed"
   initials: string;
+  email: string;
+  phone: string;
+  contactPref: string;          // e.g. "prefers email", "no calls Mondays"
+  address: string;              // unit address for occupants; business address otherwise
+  relatedTo: string;            // linked properties / landlord / introduced by …
   flagged?: boolean;
   flagLabel?: string;
 };
@@ -79,14 +83,71 @@ const BROKER_TYPE_META: Record<BrokerContactType, { label: string; plural: strin
 };
 
 const SEED_BROKER_CONTACTS: BrokerContact[] = [
-  { id: "bc-1", name: "Sarah Chen", type: "staff", role: "Asset Manager", relationship: "Owns 4 workflows · 9 units", initials: "SC" },
-  { id: "bc-2", name: "James Okoro", type: "staff", role: "Lease Manager", relationship: "Handles notices · 3 units", initials: "JO" },
-  { id: "bc-3", name: "Firewatch Ltd", type: "subcontractor", role: "Fire alarm engineer · John Reed", relationship: "Used 3× · prefers email", initials: "FW" },
-  { id: "bc-4", name: "Voltedge", type: "subcontractor", role: "Electrician / EICR · Priya Shah", relationship: "Used 1× · no calls Mondays", initials: "VE" },
-  { id: "bc-5", name: "M&S", type: "occupant", role: "Tenant · Shop, Nugent Terrace", relationship: "1 unit · since 2019", initials: "MS" },
-  { id: "bc-6", name: "R. Turner", type: "occupant", role: "Tenant · Flat 2, Nugent Terrace", relationship: "Rent review due · 1 unit", initials: "RT", flagged: true, flagLabel: "Rent review due" },
-  { id: "bc-7", name: "Hartwell & Co", type: "misc", role: "Solicitors", relationship: "4 matters · replies in ~6 days", initials: "HC" },
+  {
+    id: "bc-1", name: "Sarah Chen", type: "staff", initials: "SC",
+    role: "Asset Manager · internal",
+    email: "sarah.chen@yourco.co.uk",
+    phone: "020 7946 0188",
+    contactPref: "prefers email",
+    address: "Head office · 14 Eastcastle St, London W1W",
+    relatedTo: "Responsible for: 5 Nugent Terrace, Stanley House",
+  },
+  {
+    id: "bc-2", name: "James Okoro", type: "staff", initials: "JO",
+    role: "Lease Manager · internal",
+    email: "james.okoro@yourco.co.uk",
+    phone: "020 7946 0192",
+    contactPref: "prefers phone",
+    address: "Head office · 14 Eastcastle St, London W1W",
+    relatedTo: "Responsible for: 5 Nugent Terrace, Cromwell Mews",
+  },
+  {
+    id: "bc-3", name: "Firewatch Ltd", type: "subcontractor", initials: "FW",
+    role: "Fire alarm engineer · contact: John Reed",
+    email: "john.reed@firewatch.co.uk",
+    phone: "020 7946 0321",
+    contactPref: "prefers email",
+    address: "Unit 7, Park Royal Trade Park, London NW10",
+    relatedTo: "Linked to: 5 Nugent Terrace, Stanley House",
+  },
+  {
+    id: "bc-4", name: "Voltedge", type: "subcontractor", initials: "VE",
+    role: "Electrician / EICR · contact: Priya Shah",
+    email: "priya@voltedge.uk",
+    phone: "07700 900614",
+    contactPref: "no calls Mondays",
+    address: "22 Camden Road, London NW1",
+    relatedTo: "Linked to: 5 Nugent Terrace · introduced by Sarah Chen",
+  },
+  {
+    id: "bc-5", name: "M&S", type: "occupant", initials: "MS",
+    role: "Tenant · Shop, 5 Nugent Terrace",
+    email: "store.ops@marksandspencer.com",
+    phone: "020 7946 0440",
+    contactPref: "prefers email",
+    address: "Shop, 5 Nugent Terrace, London NW8",
+    relatedTo: "Landlord: you · Linked unit: Shop, 5 Nugent Terrace",
+  },
+  {
+    id: "bc-6", name: "R. Turner", type: "occupant", initials: "RT", flagged: true, flagLabel: "Rent review due",
+    role: "Tenant · Flat 2, 5 Nugent Terrace",
+    email: "r.turner@gmail.com",
+    phone: "07700 900221",
+    contactPref: "prefers phone",
+    address: "Flat 2, 5 Nugent Terrace, London NW8",
+    relatedTo: "Landlord: you · Linked unit: Flat 2, 5 Nugent Terrace",
+  },
+  {
+    id: "bc-7", name: "Hartwell & Co", type: "misc", initials: "HC",
+    role: "Solicitors · property team · contact: Elena Marsh",
+    email: "e.marsh@hartwell.co.uk",
+    phone: "020 7100 4422",
+    contactPref: "prefers email",
+    address: "3 Lincoln's Inn Fields, London WC2A",
+    relatedTo: "Acts on: lease renewals, Flat 2 rent review · introduced by James Okoro",
+  },
 ];
+
 
 
 /* ---------------- Professor library types & seed ---------------- */
