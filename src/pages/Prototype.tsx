@@ -448,6 +448,29 @@ const prefersReducedMotion = () =>
 
 type ChatMsg = { id: string; role: "hobson" | "user"; text: string; streaming?: boolean; rich?: "rentFlat2" };
 
+const CHAT_TURN_GAP_PX = 24;
+const CHAT_GROUP_BUBBLE_GAP_PX = 8;
+const CHAT_TOP_GAP_PX = 20;
+
+type ChatMessageGroup = {
+  id: string;
+  role: ChatMsg["role"];
+  messages: ChatMsg[];
+};
+
+function groupChatMessages(messages: ChatMsg[]): ChatMessageGroup[] {
+  return messages.reduce<ChatMessageGroup[]>((groups, message) => {
+    const last = groups[groups.length - 1];
+    if (last && last.role === message.role) {
+      last.messages.push(message);
+      return groups;
+    }
+
+    groups.push({ id: message.id, role: message.role, messages: [message] });
+    return groups;
+  }, []);
+}
+
 const RENT_Q_PATTERNS = [
   /^\s*rent\s*\??\s*$/i,
   /^\s*rent\s+flat\s*2\s*\??\s*$/i,
