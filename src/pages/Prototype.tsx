@@ -1604,7 +1604,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
           {view === "property" && selectedProperty && (
             <PropertyContent
               property={selectedProperty}
-              propertyActionCards={selectActionsForScope(actionCards, { level: "property", propertyId: selectedProperty.id })}
+              propertyActionCards={testerMode ? [] : selectActionsForScope(actionCards, { level: "property", propertyId: selectedProperty.id })}
               expandedCardId={expandedCardId}
               setExpandedCardId={setExpandedCardId}
               carriedCardId={carriedCardId}
