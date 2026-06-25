@@ -1763,11 +1763,15 @@ function RailItem({ icon, label, active, onClick }: { icon: "pin" | "doc" | "cha
 }
 
 
-function HobsonBubble({ text, owl, streaming, rich, onAskFollowUp }: { text: string; owl: OwlState; streaming?: boolean; rich?: "rentFlat2"; onAskFollowUp?: (q: string) => void }) {
+function HobsonBubble({ text, owl, streaming, rich, onAskFollowUp, showAvatar = true, groupedTop = false }: { text: string; owl: OwlState; streaming?: boolean; rich?: "rentFlat2"; onAskFollowUp?: (q: string) => void; showAvatar?: boolean; groupedTop?: boolean }) {
+  const AvatarSlot = showAvatar
+    ? <OwlAvatar state={owl} />
+    : <div aria-hidden className="w-10 h-10 shrink-0" />;
+  const groupSpacing = groupedTop ? "mt-2" : "";
   if (rich === "rentFlat2") {
     return (
-      <div className="flex items-start gap-2">
-        <OwlAvatar state={owl} />
+      <div className={`flex items-start gap-2 ${groupSpacing}`}>
+        {AvatarSlot}
         <div className="max-w-[560px] w-full bg-white border border-slate-200 text-[#1F2330] text-sm leading-relaxed px-4 py-4 rounded-2xl rounded-bl-md shadow-sm space-y-4">
           <div className="flex items-center justify-between">
             <div className="text-[12px]">
@@ -1794,8 +1798,8 @@ function HobsonBubble({ text, owl, streaming, rich, onAskFollowUp }: { text: str
     );
   }
   return (
-    <div className="flex items-end gap-2">
-      <OwlAvatar state={owl} />
+    <div className={`flex items-end gap-2 ${groupSpacing}`}>
+      {AvatarSlot}
       <div className="max-w-[340px] bg-[#EDE9FE] text-[#1F2330] text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-bl-md">
         {text}
         {streaming && <span className="inline-block w-1.5 h-3.5 ml-0.5 bg-[#7C3AED] align-middle animate-pulse" />}
@@ -1803,6 +1807,7 @@ function HobsonBubble({ text, owl, streaming, rich, onAskFollowUp }: { text: str
     </div>
   );
 }
+
 
 const RENT_BODY_TEXT =
   "The current rent is set out in the tenancy paperwork and the later rent increase notice. The agreement also refers to annual reviews linked to RPI, with the notice saying the increase follows the agreed minimum adjustment.";
