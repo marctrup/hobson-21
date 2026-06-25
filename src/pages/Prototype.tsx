@@ -3906,7 +3906,7 @@ function PropertyContent({
                       <span aria-hidden className="text-slate-400">{isCollapsed ? "▸" : "▾"}</span>
                     </button>
                     {!isCollapsed && (
-                      <div className="grid grid-cols-3 sm:grid-cols-4 gap-1.5 pt-2">
+                      <div className="grid gap-1.5 pt-2" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(120px, 1fr))" }}>
                         {group.units.map((u) => {
                           const tabIx: 0 | -1 = tileIndex === 0 ? 0 : -1;
                           tileIndex += 1;
@@ -6589,7 +6589,7 @@ function MagicianWorkArea({ character, workflows, onCreate, onAdjust, onView }: 
             {g.label && (
               <div className="text-[11px] uppercase tracking-wide text-slate-500 font-semibold mb-2 px-1">{g.label}</div>
             )}
-            <div className="grid grid-cols-1 xl:grid-cols-2 gap-3">
+            <div className="grid gap-3" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(340px, 1fr))" }}>
               {g.items.map((w) => (
                 <WorkflowCard key={w.id} w={w} onAdjust={() => onAdjust(w.id)} onView={() => onView(w.id)} />
               ))}
