@@ -1430,14 +1430,32 @@ const Prototype: React.FC = () => {
           )}
 
           {/* Hobson messages render first so the greeting sits at the top */}
-          {messages.map((m) =>
-            m.role === "hobson" ? (
-              <HobsonBubble key={m.id} text={m.text} owl={owl} streaming={!!m.streaming} rich={m.rich} onAskFollowUp={(q) => sendRentAnswer(q)} />
+          {messages.map((m, i) => {
+            const prev = messages[i - 1];
+            const groupedWithPrev = m.role === "hobson" && prev?.role === "hobson";
+            return m.role === "hobson" ? (
+              <HobsonBubble
+                key={m.id}
+                text={m.text}
+                owl={owl}
+                streaming={!!m.streaming}
+                rich={m.rich}
+                onAskFollowUp={(q) => sendRentAnswer(q)}
+                showAvatar={!groupedWithPrev}
+                groupedTop={groupedWithPrev}
+              />
             ) : (
               <UserBubble key={m.id} text={m.text} />
-            )
+            );
+          })}
+          {typing && (
+            <TypingBubble
+              owl={owl}
+              showAvatar={messages[messages.length - 1]?.role !== "hobson"}
+              groupedTop={messages[messages.length - 1]?.role === "hobson"}
+            />
           )}
-          {typing && <TypingBubble owl={owl} />}
+
 
           {/* (Global search/recents panel is intentionally NOT shown at property level — that belongs to Portfolio returning mode only.) */}
 
