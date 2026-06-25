@@ -7091,35 +7091,92 @@ function WorkflowAdjustDialog({ workflow, staff, onClose, onSave }: {
 
 /* ---------- The Broker — composer + black book ---------- */
 
-function BrokerComposer({ onAdd }: { onAdd: () => void }) {
-  return (
-    <div className="flex flex-col gap-2">
-      <div className="flex items-center gap-3 px-4 py-3 rounded-2xl border-2 border-dashed border-[#7C3AED]/40 bg-white">
-        <button
-          type="button"
-          onClick={onAdd}
-          className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full bg-[#7C3AED] text-white text-[13px] font-semibold shadow-sm hover:bg-[#6D28D9] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40"
-        >
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-            <path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/>
-            <circle cx="9" cy="7" r="4"/>
-            <path d="M19 8v6M22 11h-6"/>
-          </svg>
-          Add a contact
-        </button>
-        <div className="flex-1 min-w-0">
-          <div className="text-[12px] font-medium text-slate-800">Staff, subcontractors, occupants — anyone who matters</div>
-          <div className="text-[11px] text-slate-500">I'll link them to the right properties and remember how they behave.</div>
+function BrokerComposer({ onAdd, flow, onSubmitAnswer, onCancel }: {
+  onAdd: () => void;
+  flow: { step: number; draft: Partial<BrokerContact> } | null;
+  onSubmitAnswer: (answer: string) => void;
+  onCancel: () => void;
+}) {
+  const [value, setValue] = useState("");
+  const inputRef = useRef<HTMLInputElement | null>(null);
+  const stepKey = flow?.step ?? -1;
+  useEffect(() => {
+    setValue("");
+    if (flow) {
+      const t = setTimeout(() => inputRef.current?.focus(), 30);
+      return () => clearTimeout(t);
+    }
+  }, [stepKey, flow]);
+
+  if (!flow) {
+    return (
+      <div className="flex flex-col gap-2">
+        <div className="flex items-center gap-3 px-4 py-3 rounded-2xl border-2 border-dashed border-[#7C3AED]/40 bg-white">
+          <button
+            type="button"
+            onClick={onAdd}
+            className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full bg-[#7C3AED] text-white text-[13px] font-semibold shadow-sm hover:bg-[#6D28D9] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40"
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+              <path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/>
+              <circle cx="9" cy="7" r="4"/>
+              <path d="M19 8v6M22 11h-6"/>
+            </svg>
+            Add a contact
+          </button>
+          <div className="flex-1 min-w-0">
+            <div className="text-[12px] font-medium text-slate-800">Staff, subcontractors, occupants — anyone who matters</div>
+            <div className="text-[11px] text-slate-500">I'll ask the questions and you'll provide the answers.</div>
+          </div>
         </div>
       </div>
-      <div
-        aria-disabled="true"
-        className="flex items-center gap-2 px-4 py-2 rounded-full border border-slate-200 bg-slate-50 text-[12px] text-slate-500"
-      >
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>
-        Free-text chat with The Broker is coming in the live product — for now, add contacts via the button above.
+    );
+  }
+
+  const q = BROKER_QUESTIONS[flow.step];
+  const total = BROKER_QUESTIONS.length;
+  const submit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const v = value.trim();
+    if (!v) return;
+    onSubmitAnswer(v);
+  };
+
+  return (
+    <form onSubmit={submit} className="flex flex-col gap-1.5">
+      <div className="flex items-center justify-between px-1">
+        <div className="text-[11px] uppercase tracking-wide font-semibold text-[#7C3AED]">
+          The Broker · question {flow.step + 1} of {total}
+        </div>
+        <button
+          type="button"
+          onClick={onCancel}
+          className="text-[11px] font-medium text-slate-500 hover:text-slate-700 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/30 rounded px-1.5 py-0.5"
+        >
+          Cancel
+        </button>
       </div>
-    </div>
+      <div className="flex items-center gap-2 px-4 py-2.5 rounded-full border border-[#7C3AED]/40 bg-white focus-within:border-[#7C3AED] focus-within:ring-2 focus-within:ring-[#7C3AED]/20 transition">
+        <input
+          ref={inputRef}
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
+          placeholder={q.placeholder}
+          className="flex-1 outline-none text-sm bg-transparent placeholder:text-slate-400"
+          aria-label={q.ask}
+        />
+        <button
+          type="submit"
+          disabled={!value.trim()}
+          className="flex items-center justify-center h-9 w-9 rounded-full bg-[#7C3AED] text-white hover:bg-[#6D28D9] transition disabled:bg-slate-200 disabled:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40"
+          aria-label="Send answer"
+        >
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M5 12h14M13 6l6 6-6 6"/>
+          </svg>
+        </button>
+      </div>
+    </form>
   );
 }
 
