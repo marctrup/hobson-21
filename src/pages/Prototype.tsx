@@ -2238,11 +2238,21 @@ function ResizeDivider({
   setWidth,
   minLeft,
   minRight,
+  collapsed,
+  collapseThreshold,
+  onCollapse,
+  onExpand,
+  onToggleCollapsed,
 }: {
   width: number;
   setWidth: (n: number) => void;
   minLeft: number;
   minRight: number;
+  collapsed: boolean;
+  collapseThreshold: number;
+  onCollapse: () => void;
+  onExpand: () => void;
+  onToggleCollapsed: () => void;
 }) {
   const draggingRef = useRef(false);
   const startXRef = useRef(0);
@@ -2253,9 +2263,17 @@ function ResizeDivider({
     const onMove = (e: MouseEvent) => {
       if (!draggingRef.current) return;
       const dx = e.clientX - startXRef.current;
-      const railWidth = 68; // left nav rail
+      const railWidth = 68;
       const maxLeft = window.innerWidth - railWidth - minRight;
-      const next = Math.max(minLeft, Math.min(maxLeft, startWRef.current + dx));
+      const raw = startWRef.current + dx;
+      if (raw < collapseThreshold) {
+        if (!collapsed) onCollapse();
+        return;
+      }
+      if (collapsed && raw >= collapseThreshold) {
+        onExpand();
+      }
+      const next = Math.max(minLeft, Math.min(maxLeft, raw));
       setWidth(next);
     };
     const onUp = () => {
@@ -2271,21 +2289,33 @@ function ResizeDivider({
       window.removeEventListener("mousemove", onMove);
       window.removeEventListener("mouseup", onUp);
     };
-  }, [minLeft, minRight, setWidth]);
+  }, [minLeft, minRight, setWidth, collapsed, collapseThreshold, onCollapse, onExpand]);
 
   const onKeyDown = (e: React.KeyboardEvent) => {
     const step = e.shiftKey ? 48 : 16;
-    if (e.key === "ArrowLeft") { e.preventDefault(); setWidth(Math.max(minLeft, width - step)); }
-    else if (e.key === "ArrowRight") {
+    if (e.key === "ArrowLeft") {
+      e.preventDefault();
+      if (collapsed) return;
+      const next = width - step;
+      if (next < collapseThreshold) onCollapse();
+      else setWidth(Math.max(minLeft, next));
+    } else if (e.key === "ArrowRight") {
       e.preventDefault();
       const railWidth = 68;
       const maxLeft = window.innerWidth - railWidth - minRight;
+      if (collapsed) { onExpand(); return; }
       setWidth(Math.min(maxLeft, width + step));
-    } else if (e.key === "Home") { e.preventDefault(); setWidth(minLeft); }
-    else if (e.key === "End") {
+    } else if (e.key === "Home") {
       e.preventDefault();
+      if (!collapsed) setWidth(minLeft);
+    } else if (e.key === "End") {
+      e.preventDefault();
+      if (collapsed) onExpand();
       const railWidth = 68;
       setWidth(window.innerWidth - railWidth - minRight);
+    } else if (e.key === "Enter" || e.key === " " || e.key.toLowerCase() === "c") {
+      e.preventDefault();
+      onToggleCollapsed();
     }
   };
 
@@ -2293,7 +2323,7 @@ function ResizeDivider({
     <div
       role="separator"
       aria-orientation="vertical"
-      aria-label="Resize chat and work area"
+      aria-label={collapsed ? "Chat collapsed — press Enter or drag right to expand" : "Resize chat and work area (Enter to collapse)"}
       aria-valuenow={width}
       aria-valuemin={minLeft}
       tabIndex={0}
@@ -2301,20 +2331,28 @@ function ResizeDivider({
       onMouseDown={(e) => {
         draggingRef.current = true;
         startXRef.current = e.clientX;
-        startWRef.current = width;
+        startWRef.current = collapsed ? collapseThreshold : width;
         setActive(true);
         document.body.style.cursor = "col-resize";
         document.body.style.userSelect = "none";
       }}
-      onDoubleClick={() => setWidth(480)}
-      title="Drag to resize · double-click to reset"
+      onDoubleClick={() => { if (collapsed) onExpand(); else setWidth(480); }}
+      title={collapsed ? "Drag right or double-click to expand chat" : "Drag to resize · double-click to reset · Enter to collapse"}
       className={`group relative w-1.5 shrink-0 cursor-col-resize select-none focus:outline-none ${active ? "bg-[#7C3AED]/30" : "bg-slate-100 hover:bg-[#7C3AED]/20"} focus-visible:bg-[#7C3AED]/30`}
     >
       <div className={`absolute inset-y-0 left-1/2 -translate-x-1/2 w-px ${active ? "bg-[#7C3AED]" : "bg-slate-200 group-hover:bg-[#7C3AED]/60"}`} />
       <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center justify-center gap-0.5 px-0.5 py-2 rounded ${active ? "bg-[#7C3AED] text-white" : "bg-white border border-slate-200 text-slate-400 group-hover:text-[#7C3AED]"}`}>
-        <span className="block w-0.5 h-0.5 rounded-full bg-current" />
-        <span className="block w-0.5 h-0.5 rounded-full bg-current" />
-        <span className="block w-0.5 h-0.5 rounded-full bg-current" />
+        {collapsed ? (
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+            <path d="M9 6l6 6-6 6"/>
+          </svg>
+        ) : (
+          <>
+            <span className="block w-0.5 h-0.5 rounded-full bg-current" />
+            <span className="block w-0.5 h-0.5 rounded-full bg-current" />
+            <span className="block w-0.5 h-0.5 rounded-full bg-current" />
+          </>
+        )}
       </div>
     </div>
   );
