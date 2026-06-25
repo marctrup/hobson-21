@@ -1964,6 +1964,93 @@ function RailItem({ icon, label, active, onClick }: { icon: "pin" | "doc" | "cha
   );
 }
 
+function CharacterRailItem({ name, src, active, onClick }: { name: string; src: string; active?: boolean; onClick?: () => void }) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-current={active ? "page" : undefined}
+      aria-label={name}
+      className={`w-14 flex flex-col items-center gap-1 py-1.5 rounded-lg transition focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40 ${
+        active ? "bg-[#F5F3FF] ring-1 ring-[#7C3AED]/40" : "hover:bg-slate-50"
+      }`}
+    >
+      <div className={`w-11 h-11 rounded-full overflow-hidden bg-[#F5F3FF] grid place-items-center ${active ? "ring-2 ring-[#7C3AED]" : "ring-1 ring-slate-200"}`}>
+        <img src={src} alt="" aria-hidden className="w-[120%] h-[120%] object-contain object-center" />
+      </div>
+      <span className={`text-[10px] text-center leading-tight ${active ? "text-[#7C3AED] font-medium" : "text-slate-600"}`}>{name}</span>
+    </button>
+  );
+}
+
+function CharacterAvatar({ src }: { src: string }) {
+  return (
+    <div className="w-10 h-10 shrink-0 rounded-full overflow-hidden bg-[#F5F3FF] ring-1 ring-slate-200 grid place-items-center">
+      <img src={src} alt="" aria-hidden className="w-[120%] h-[120%] object-contain object-center" />
+    </div>
+  );
+}
+
+function AdminChat({ character, owl }: { character: { id: AdminCharacter; name: string; src: string; greeting: string } | null; owl: OwlState }) {
+  return (
+    <div className="flex flex-col" style={{ gap: CHAT_TURN_GAP_PX }}>
+      <div className="flex items-start gap-2">
+        <OwlAvatar state={owl} />
+        <div className="max-w-[560px] bg-white border border-slate-200 text-[#1F2330] text-sm leading-relaxed px-4 py-3 rounded-2xl rounded-bl-md shadow-sm">
+          <div className="text-[12px] font-semibold text-slate-900 mb-1">Hobson</div>
+          Welcome to Admin, where my colleagues can assist. Select one of them and they will assist you.
+        </div>
+      </div>
+      {character && (
+        <div className="flex items-start gap-2">
+          <CharacterAvatar src={character.src} />
+          <div className="max-w-[560px] bg-white border border-slate-200 text-[#1F2330] text-sm leading-relaxed px-4 py-3 rounded-2xl rounded-bl-md shadow-sm">
+            <div className="text-[12px] font-semibold text-slate-900 mb-1">{character.name}</div>
+            {character.greeting}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function AdminWorkArea({ character, onClose }: { character: { id: AdminCharacter; name: string; src: string; tagline: string; workTitle: string; workIntro: string }; onClose: () => void }) {
+  return (
+    <div className="absolute inset-0 bg-white z-[450] flex flex-col">
+      <header className="h-14 px-5 flex items-center justify-between border-b border-slate-200">
+        <div className="flex items-center gap-3">
+          <div className="w-9 h-9 rounded-full overflow-hidden bg-[#F5F3FF] ring-1 ring-slate-200 grid place-items-center">
+            <img src={character.src} alt="" aria-hidden className="w-[120%] h-[120%] object-contain" />
+          </div>
+          <div>
+            <div className="text-[13px] font-semibold text-slate-900">{character.workTitle}</div>
+            <div className="text-[11px] text-slate-500">{character.tagline}</div>
+          </div>
+        </div>
+        <button
+          type="button"
+          onClick={onClose}
+          className="text-[12px] text-slate-500 hover:text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#7C3AED] rounded px-2 py-1"
+          aria-label="Close admin workspace"
+        >
+          ✕ Exit Admin
+        </button>
+      </header>
+      <div className="flex-1 overflow-y-auto p-8">
+        <div className="max-w-2xl mx-auto space-y-4">
+          <p className="text-sm text-slate-600">{character.workIntro}</p>
+          <div className="rounded-xl border border-dashed border-slate-300 bg-slate-50 p-10 text-center">
+            <div className="text-[13px] font-semibold text-slate-700 mb-1">{character.name}'s work area</div>
+            <div className="text-[12px] text-slate-500">Coming soon in the live product. For now, this is where {character.name} would set up their work alongside you.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+
+
 
 function HobsonBubble({ text, owl, streaming, rich, onAskFollowUp, showAvatar = true }: { text: string; owl: OwlState; streaming?: boolean; rich?: "rentFlat2"; onAskFollowUp?: (q: string) => void; showAvatar?: boolean }) {
   const AvatarSlot = showAvatar
