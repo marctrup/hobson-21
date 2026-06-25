@@ -897,6 +897,13 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
     setReviewingCardId(null);
     setChatExpanded(false);
     setAdminCharacter(null);
+    // Ensure Meet Hobson onboarding state is fully cleared — Admin and onboarding are mutually exclusive.
+    if (view === "onboarding") {
+      setView("portfolio");
+      setChipVisible(false);
+      setTyping(false);
+      setMessages([]);
+    }
     setAdminMode(true);
   };
   const exitAdmin = () => {
