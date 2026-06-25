@@ -448,6 +448,29 @@ const prefersReducedMotion = () =>
 
 type ChatMsg = { id: string; role: "hobson" | "user"; text: string; streaming?: boolean; rich?: "rentFlat2" };
 
+const CHAT_TURN_GAP_PX = 24;
+const CHAT_GROUP_BUBBLE_GAP_PX = 8;
+const CHAT_TOP_GAP_PX = 20;
+
+type ChatMessageGroup = {
+  id: string;
+  role: ChatMsg["role"];
+  messages: ChatMsg[];
+};
+
+function groupChatMessages(messages: ChatMsg[]): ChatMessageGroup[] {
+  return messages.reduce<ChatMessageGroup[]>((groups, message) => {
+    const last = groups[groups.length - 1];
+    if (last && last.role === message.role) {
+      last.messages.push(message);
+      return groups;
+    }
+
+    groups.push({ id: message.id, role: message.role, messages: [message] });
+    return groups;
+  }, []);
+}
+
 const RENT_Q_PATTERNS = [
   /^\s*rent\s*\??\s*$/i,
   /^\s*rent\s+flat\s*2\s*\??\s*$/i,
@@ -809,6 +832,8 @@ const Prototype: React.FC = () => {
     if (!selectedProperty || !selectedUnitId) return null;
     return selectedProperty.units.find((u) => u.id === selectedUnitId) || null;
   }, [selectedProperty, selectedUnitId]);
+
+  const messageGroups = useMemo(() => groupChatMessages(messages), [messages]);
 
   /* ----- scroll chat ----- */
   useEffect(() => {
@@ -1359,8 +1384,11 @@ const Prototype: React.FC = () => {
         )}
 
         {/* Body */}
-        <div ref={chatBodyRef} className={`flex-1 overflow-y-auto px-5 py-5 space-y-6 ${isExpanded ? "w-full" : ""}`}>
-          <div className={isExpanded ? "max-w-[820px] mx-auto" : ""}>
+        <div ref={chatBodyRef} className={`flex-1 overflow-y-auto px-5 pb-5 pt-0 ${isExpanded ? "w-full" : ""}`}>
+          <div
+            className={`${isExpanded ? "max-w-[820px] mx-auto" : ""} flex flex-col`}
+            style={{ gap: CHAT_TURN_GAP_PX, paddingTop: CHAT_TOP_GAP_PX }}
+          >
 
 
           {/* Pinned alert briefing at the top of unit chat */}
@@ -1430,30 +1458,49 @@ const Prototype: React.FC = () => {
           )}
 
           {/* Hobson messages render first so the greeting sits at the top */}
-          {messages.map((m, i) => {
-            const prev = messages[i - 1];
-            const groupedWithPrev = m.role === "hobson" && prev?.role === "hobson";
-            return m.role === "hobson" ? (
-              <HobsonBubble
-                key={m.id}
-                text={m.text}
-                owl={owl}
-                streaming={!!m.streaming}
-                rich={m.rich}
-                onAskFollowUp={(q) => sendRentAnswer(q)}
-                showAvatar={!groupedWithPrev}
-
-              />
-            ) : (
-              <UserBubble key={m.id} text={m.text} />
-            );
-          })}
-          {typing && (
-            <TypingBubble
-              owl={owl}
-              showAvatar={messages[messages.length - 1]?.role !== "hobson"}
-
-            />
+          {(messageGroups.length > 0 || typing) && (
+            <div
+              className="flex flex-col"
+              data-chat-turn-stack
+              style={{ gap: CHAT_TURN_GAP_PX }}
+            >
+              {messageGroups.map((group) => (
+                <div
+                  key={group.id}
+                  className="flex flex-col"
+                  data-chat-message-group={group.role}
+                  style={{ gap: CHAT_GROUP_BUBBLE_GAP_PX }}
+                >
+                  {group.messages.map((m, i) => (
+                    m.role === "hobson" ? (
+                      <HobsonBubble
+                        key={m.id}
+                        text={m.text}
+                        owl={owl}
+                        streaming={!!m.streaming}
+                        rich={m.rich}
+                        onAskFollowUp={(q) => sendRentAnswer(q)}
+                        showAvatar={i === 0}
+                      />
+                    ) : (
+                      <UserBubble key={m.id} text={m.text} />
+                    )
+                  ))}
+                </div>
+              ))}
+              {typing && (
+                <div
+                  className="flex flex-col"
+                  data-chat-message-group="hobson"
+                  style={{ gap: CHAT_GROUP_BUBBLE_GAP_PX }}
+                >
+                  <TypingBubble
+                    owl={owl}
+                    showAvatar={messages[messages.length - 1]?.role !== "hobson"}
+                  />
+                </div>
+              )}
+            </div>
           )}
 
 
