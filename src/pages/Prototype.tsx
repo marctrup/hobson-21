@@ -886,7 +886,9 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
   const [carriedCardId, setCarriedCardId] = useState<string | null>(null);
   const [performingCardId, setPerformingCardId] = useState<string | null>(null);
   const [reviewingCardId, setReviewingCardId] = useState<string | null>(null);
-  const [chatExpanded, setChatExpanded] = useState(false);
+  // chatExpanded removed — the draggable divider now handles full-width expansion in both directions.
+  const chatExpanded = false;
+  const setChatExpanded = (_: boolean | ((v: boolean) => boolean)) => {};
   const [chatWidth, setChatWidth] = useState<number>(() => {
     if (typeof window === "undefined") return 480;
     const v = Number(window.sessionStorage.getItem("hobson:chatWidth"));
