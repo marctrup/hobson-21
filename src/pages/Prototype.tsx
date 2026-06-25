@@ -1781,11 +1781,12 @@ function RailItem({ icon, label, active, onClick }: { icon: "pin" | "doc" | "cha
 }
 
 
-function HobsonBubble({ text, owl, streaming, rich, onAskFollowUp, showAvatar = true, groupedTop = false }: { text: string; owl: OwlState; streaming?: boolean; rich?: "rentFlat2"; onAskFollowUp?: (q: string) => void; showAvatar?: boolean; groupedTop?: boolean }) {
+function HobsonBubble({ text, owl, streaming, rich, onAskFollowUp, showAvatar = true }: { text: string; owl: OwlState; streaming?: boolean; rich?: "rentFlat2"; onAskFollowUp?: (q: string) => void; showAvatar?: boolean }) {
   const AvatarSlot = showAvatar
     ? <OwlAvatar state={owl} />
     : <div aria-hidden className="w-10 h-10 shrink-0" />;
-  const groupSpacing = groupedTop ? "mt-2" : "";
+  const groupSpacing = "";
+
   if (rich === "rentFlat2") {
     return (
       <div className={`flex items-start gap-2 ${groupSpacing}`}>
