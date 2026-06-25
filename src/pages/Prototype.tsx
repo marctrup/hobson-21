@@ -1726,7 +1726,9 @@ const Prototype: React.FC = () => {
           );
         })()}
       </main>
+      ); })()}
     </div>
+
   );
 };
 
