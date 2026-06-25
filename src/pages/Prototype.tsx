@@ -1870,14 +1870,15 @@ function RentFlat2Answer({ onAskFollowUp, bodyText }: { onAskFollowUp?: (q: stri
       </div>
       <p className="text-slate-700">{bodyText}</p>
       <div>
-        <div className="text-[11px] uppercase tracking-wide text-slate-400 font-medium mb-1">Sources</div>
-        <ul className="list-disc pl-5 space-y-0.5 text-[13px] text-slate-700">
+        <div className="text-[11px] uppercase tracking-wide text-slate-400 font-medium mb-2">Sources</div>
+        <ul className="list-disc pl-5 space-y-1 text-[13px] text-slate-700">
           {sources.map((s) => <li key={s}>{s}</li>)}
         </ul>
       </div>
       <div>
-        <div className="text-[11px] uppercase tracking-wide text-slate-400 font-medium mb-1">Related questions</div>
-        <ul className="space-y-1">
+        <div className="text-[11px] uppercase tracking-wide text-slate-400 font-medium mb-2">Related questions</div>
+        <ul className="space-y-1.5">
+
           {related.map((q) => (
             <li key={q}>
               <button
