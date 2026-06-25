@@ -2817,10 +2817,10 @@ function ProfTypeAssigner({ onAssign }: { onAssign: (type: string) => void }) {
 }
 
 
-function AdminWorkArea({ character, onClose }: { character: { id: AdminCharacter; name: string; src: string; tagline: string; workTitle: string; workIntro: string }; onClose: () => void }) {
+function AdminWorkArea({ character }: { character: { id: AdminCharacter; name: string; src: string; tagline: string; workTitle: string; workIntro: string } }) {
   return (
     <div className="absolute inset-0 bg-white z-[450] flex flex-col">
-      <header className="h-14 px-5 flex items-center justify-between border-b border-slate-200">
+      <header className="h-14 px-5 flex items-center border-b border-slate-200">
         <div className="flex items-center gap-3">
           <div className="w-9 h-9 rounded-full overflow-hidden bg-[#F5F3FF] ring-1 ring-slate-200 grid place-items-center">
             <img src={character.src} alt="" aria-hidden className="w-[120%] h-[120%] object-contain" />
@@ -2830,14 +2830,6 @@ function AdminWorkArea({ character, onClose }: { character: { id: AdminCharacter
             <div className="text-[11px] text-slate-500">{character.tagline}</div>
           </div>
         </div>
-        <button
-          type="button"
-          onClick={onClose}
-          className="text-[12px] text-slate-500 hover:text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#7C3AED] rounded px-2 py-1"
-          aria-label="Close admin workspace"
-        >
-          ✕ Exit Admin
-        </button>
       </header>
       <div className="flex-1 overflow-y-auto p-8">
         <div className="max-w-2xl mx-auto">
