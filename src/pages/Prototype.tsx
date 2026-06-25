@@ -6439,10 +6439,9 @@ function MagicianComposer({ onCreate }: { onCreate: () => void }) {
   );
 }
 
-function MagicianWorkArea({ character, workflows, onClose, onCreate, onAdjust, onView }: {
+function MagicianWorkArea({ character, workflows, onCreate, onAdjust, onView }: {
   character: { id: AdminCharacter; name: string; src: string; tagline: string; workTitle: string };
   workflows: Workflow[];
-  onClose: () => void;
   onCreate: () => void;
   onAdjust: (id: string) => void;
   onView: (id: string) => void;
