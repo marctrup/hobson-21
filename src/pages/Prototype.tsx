@@ -5791,6 +5791,24 @@ function buildPerformConfig(card: ActionCard): {
       headerSub: "Building-wide · expires 12 July 2026 (≈18 days)",
     };
   }
+  if (card.id === "act-stanley-f5-break") {
+    return {
+      beats: buildPA002Beats(),
+      steps: PA002_STEPS,
+      headerKicker: "Performing action",
+      headerTitle: `Notice service · ${card.unitLabel}, ${card.propertyName}`,
+      headerSub: "Latest service date: 24 September 2026 (≈90 days)",
+    };
+  }
+  if (card.id === "act-nugent-shop-effect") {
+    return {
+      beats: buildPA003Beats(),
+      steps: PA003_STEPS,
+      headerKicker: "Performing action",
+      headerTitle: `Notice takes effect · ${card.unitLabel}, ${card.propertyName}`,
+      headerSub: "Effective date: 28 September 2026 (≈28 days)",
+    };
+  }
   return {
     beats: buildPA004Beats(),
     steps: PA004_STEPS,
@@ -5808,6 +5826,14 @@ function finalGateBeatIdx(card: ActionCard, beats: PerformBeat[]): number {
     const idx = beats.findIndex((b) => b.id === "fa5");
     return idx >= 0 ? idx : 0;
   }
+  if (card.id === "act-stanley-f5-break") {
+    const idx = beats.findIndex((b) => b.id === "n2-2");
+    return idx >= 0 ? idx : 0;
+  }
+  if (card.id === "act-nugent-shop-effect") {
+    const idx = beats.findIndex((b) => b.id === "n3-3");
+    return idx >= 0 ? idx : 0;
+  }
   // Default: the last beat with a gate.
   for (let i = beats.length - 1; i >= 0; i--) {
     if (beats[i].gate) return i;
@@ -5819,6 +5845,12 @@ function reviewRecapText(card: ActionCard): string {
   if (card.id === "act-stanley-fra") {
     const n = STANLEY_FIRE_ALARM_TENANTS.filter((t) => t.email).length;
     return `I've done the groundwork on the Stanley House fire alarm — confirmed it's due, found your contractor, and drafted access notices for all ${n} current tenants. It's ready to send — just needs your approval.`;
+  }
+  if (card.id === "act-stanley-f5-break") {
+    return `I've drafted the landlord counter-notice for Flat 5 — recipient, service method and deemed-receipt date all set per the lease. It's ready to serve — just needs your sign-off.`;
+  }
+  if (card.id === "act-nugent-shop-effect") {
+    return `I've put the follow-on bundle together for the Shop at 5 Nugent Terrace, ahead of the notice taking effect. It's ready — just needs you to confirm and record.`;
   }
   return "Here's what I've put together so far. Take a look at the final approval below — that's all that's left.";
 }
