@@ -43,6 +43,24 @@ const ADMIN_CHARACTERS: { id: AdminCharacter; name: string; src: string; tagline
   },
 ];
 
+type BrokerEvent =
+  | { kind: "broker"; id: string; text: string }
+  | { kind: "user"; id: string; text: string }
+  | { kind: "summary"; id: string; name: string };
+
+type BrokerField = "name" | "type" | "role" | "email" | "phoneAndPref" | "address" | "relatedTo";
+
+const BROKER_QUESTIONS: { ask: string; placeholder: string; field: BrokerField }[] = [
+  { field: "name", ask: "Wonderful — let's get them in the book. What's their name?", placeholder: "e.g. Firewatch Ltd" },
+  { field: "type", ask: "How do they relate to you — staff, subcontractor, occupant, or miscellaneous?", placeholder: "staff / subcontractor / occupant / misc" },
+  { field: "role", ask: "What's their role, and is there a named person I should ask for?", placeholder: "e.g. Fire alarm engineer · contact: John Reed" },
+  { field: "email", ask: "Best email for them?", placeholder: "name@example.com" },
+  { field: "phoneAndPref", ask: "Phone number? Tell me how they prefer to be reached too — 'prefers email', 'no calls Mondays', etc.", placeholder: "020 7946 0321 · prefers email" },
+  { field: "address", ask: "Address — business address for trades, or the unit address for occupants.", placeholder: "e.g. Unit 7, Park Royal Trade Park, London NW10" },
+  { field: "relatedTo", ask: "Last one: who or what are they linked to? Properties, units, landlord, or who introduced them.", placeholder: "e.g. Linked to: 5 Nugent Terrace · introduced by Sarah Chen" },
+];
+
+
 type BrokerContactType = "staff" | "subcontractor" | "occupant" | "misc";
 type BrokerContact = {
   id: string;
