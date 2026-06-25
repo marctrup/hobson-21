@@ -1615,7 +1615,13 @@ const Prototype: React.FC = () => {
       </section>
 
       {/* Map */}
-      <main className={isExpanded ? "fixed inset-y-0 left-[68px] right-0 bg-slate-100 z-[400] pointer-events-none" : "relative flex-1 bg-slate-100"}>
+      {(() => { const hasOverlay = showDocuments || showWhatIveDone || !!performingCardId || !!reviewingCardId; return (
+      <main className={
+        isExpanded
+          ? (hasOverlay ? "fixed inset-y-0 left-[68px] right-0 z-[500]" : "hidden")
+          : "relative flex-1 bg-slate-100"
+      }>
+
 
         <div
           aria-hidden={view === "onboarding" ? true : undefined}
