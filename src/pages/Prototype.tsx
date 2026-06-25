@@ -6,7 +6,42 @@ import owlTalking from "@/assets/prototype/owl-talking.png";
 import owlDefault from "@/assets/prototype/owl-default.png";
 import owlReading from "@/assets/prototype/owl-reading.png";
 import owlCovering from "@/assets/prototype/owl-covering.png";
+import characterMagician from "@/assets/prototype/character-magician.png";
+import characterProfessor from "@/assets/prototype/character-professor.png";
+import characterBroker from "@/assets/prototype/character-broker.png";
 import { DocumentsLibrary } from "@/components/prototype/DocumentsLibrary";
+
+type AdminCharacter = "magician" | "professor" | "broker";
+const ADMIN_CHARACTERS: { id: AdminCharacter; name: string; src: string; tagline: string; greeting: string; workTitle: string; workIntro: string }[] = [
+  {
+    id: "magician",
+    name: "The Magician",
+    src: characterMagician,
+    tagline: "Workflows & automations",
+    greeting: "A pleasure. I'm The Magician — I conjure the workflows and automations that keep your portfolio moving quietly in the background. Tell me what you would like to make happen, and I'll set the stage.",
+    workTitle: "The Magician's workshop",
+    workIntro: "Where automations are composed and rehearsed before they go live.",
+  },
+  {
+    id: "professor",
+    name: "The Professor",
+    src: characterProfessor,
+    tagline: "Knowledge & research",
+    greeting: "Good day. I'm The Professor — keeper of the knowledge base. I'll help you teach Hobson new things, refine what we already know, and look up the finer points of your portfolio.",
+    workTitle: "The Professor's library",
+    workIntro: "Where the knowledge base is curated, taught and consulted.",
+  },
+  {
+    id: "broker",
+    name: "The Broker",
+    src: characterBroker,
+    tagline: "Deals, contracts & money",
+    greeting: "Delighted. I'm The Broker — I handle the deals, contracts and the money side of things. Talk me through what you're arranging and I'll keep the paperwork honest.",
+    workTitle: "The Broker's desk",
+    workIntro: "Where deals, contracts and figures are reviewed.",
+  },
+];
+
 
 /* ---------------- Config ---------------- */
 
