@@ -1107,8 +1107,10 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
     setSearchQuery("");
     const where = p.standalone ? p.address : `${p.name}`;
     const derived = deriveUnit(u);
-    const lines = buildUnitOpeningLines(u, derived, where);
-    if (carryCardId) {
+    const lines = testerMode
+      ? [`Here we are at ${u.label}, ${where}. This is where I can help — ask me whatever you need to know about this unit.`]
+      : buildUnitOpeningLines(u, derived, where);
+    if (!testerMode && carryCardId) {
       const card = actionCards.find((x) => x.id === carryCardId);
       if (card) {
         lines.unshift(`About that — ${card.title}. ${card.whyItMatters}`);
