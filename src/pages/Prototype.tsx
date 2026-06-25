@@ -1789,7 +1789,7 @@ function HobsonBubble({ text, owl, streaming, rich, onAskFollowUp, showAvatar = 
 
   if (rich === "rentFlat2") {
     return (
-      <div className={`flex items-start gap-2 ${groupSpacing}`}>
+      <div className="flex items-start gap-2">
         {AvatarSlot}
         <div className="max-w-[560px] w-full bg-white border border-slate-200 text-[#1F2330] text-sm leading-relaxed px-4 py-4 rounded-2xl rounded-bl-md shadow-sm space-y-4">
           <div className="flex items-center justify-between">
