@@ -36,7 +36,7 @@ const ADMIN_CHARACTERS: { id: AdminCharacter; name: string; src: string; tagline
     name: "The Broker",
     src: characterBroker,
     tagline: "Contacts & relationships",
-    greeting: "The Broker. I keep the black book — every contact connected to your portfolio, and the history between them. Tell me who you're dealing with, and I'll give you the relationship in full context.",
+    greeting: "Good to see you. They call me The Broker — I'm the one who keeps the black book. Every tenant, landlord, contractor, agent, solicitor and lender connected to your portfolio, and the history that sits between them, lives with me. I track who has dealt with whom, what was agreed, what went well, what didn't — and I surface the bits that matter before you walk into the next conversation. Tell me who you're dealing with, and I'll give you the relationship in full context.",
     workTitle: "The Broker's black book",
     workIntro: "Where contacts, relationships and their histories are kept — tenants, landlords, contractors, agents, solicitors, lenders, authorities.",
 
