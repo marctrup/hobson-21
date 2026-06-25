@@ -1610,11 +1610,13 @@ const Prototype: React.FC = () => {
           ) : (
             <LockedComposer view={view} />
           )}
+         </div>
         </div>
       </section>
 
       {/* Map */}
-      <main className="relative flex-1 bg-slate-100">
+      <main className={`relative flex-1 bg-slate-100 ${isExpanded ? "hidden" : ""}`}>
+
         <div
           aria-hidden={view === "onboarding" ? true : undefined}
           className={`absolute inset-0 ${view === "onboarding" ? "pointer-events-none pins-hidden" : ""} ${reduced ? "reduced-motion" : ""}`}
