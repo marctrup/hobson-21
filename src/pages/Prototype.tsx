@@ -1388,7 +1388,7 @@ const Prototype: React.FC = () => {
                   ? [...unitOwnCardsRaw].sort((a, b) => (a.id === carriedCardId ? -1 : b.id === carriedCardId ? 1 : 0))
                   : unitOwnCardsRaw;
                 return (
-                  <section aria-label={`Actions for ${selectedUnit.label}`} className="space-y-2">
+                  <section aria-label={`Actions for ${selectedUnit.label}`} className="space-y-3">
                     <div className="text-[11px] uppercase tracking-wide text-slate-500 font-semibold">
                       On this unit's desk · {unitOwnCards.length}
                     </div>
