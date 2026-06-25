@@ -2406,7 +2406,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
               />
             );
           }
-          return <AdminWorkArea character={c} onClose={exitAdmin} />;
+          return <AdminWorkArea character={c} />;
 
         })()}
 
