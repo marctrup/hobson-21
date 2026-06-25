@@ -2121,12 +2121,39 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
           onCollapse={collapseChat}
           onExpand={expandChat}
           onToggleCollapsed={toggleChatCollapsed}
+          mainCollapsed={mainCollapsed}
+          mainCollapseThreshold={MAIN_COLLAPSE_THRESHOLD}
+          onCollapseMain={collapseMain}
+          onExpandMain={expandMain}
         />
       )}
 
       {/* Map */}
       {(() => { const hasOverlay = hasRightOverlay; return (
-      <main className={`${chatExpanded && view !== "onboarding" && !hasOverlay ? "hidden" : "relative flex-1 min-w-0"} bg-slate-100`}>
+      <main
+        className={`${chatExpanded && view !== "onboarding" && !hasOverlay ? "hidden" : `relative ${mainCollapsed ? "shrink-0 overflow-hidden" : "flex-1 min-w-0"}`} bg-slate-100`}
+        style={mainCollapsed ? { width: MAIN_COLLAPSED_WIDTH } : undefined}
+        aria-hidden={mainCollapsed ? true : undefined}
+      >
+        {mainCollapsed && (
+          <button
+            type="button"
+            onClick={expandMain}
+            aria-label="Expand work area"
+            title="Expand work area"
+            className="absolute inset-0 z-[600] flex flex-col items-center justify-start pt-4 gap-3 bg-white border-l border-slate-200 hover:bg-[#F5F3FF] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]"
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+              <path d="M15 6l-6 6 6 6"/>
+            </svg>
+            <span
+              className="text-[10px] font-semibold tracking-wide text-[#7C3AED] uppercase"
+              style={{ writingMode: "vertical-rl" as const, transform: "rotate(180deg)" }}
+            >
+              Expand work area
+            </span>
+          </button>
+        )}
 
 
 
