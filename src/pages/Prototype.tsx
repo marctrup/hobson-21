@@ -760,16 +760,19 @@ const Prototype: React.FC = () => {
     setReviewingCardId(id);
     setExpandedCardId(null);
   };
-  const cancelPerform = () => {
+  const resetToMap = () => {
+    // Single, predictable reset — always lands on the map. No panel-history walk.
     if (performingCardId) {
       setActionCards((arr) => arr.map((x) => x.id === performingCardId ? { ...x, approvalState: "pending" } : x));
     }
     setPerformingCardId(null);
-  };
-  const cancelReview = () => {
-    // Review doesn't change state on exit — the work stays parked.
     setReviewingCardId(null);
+    setShowDocuments(false);
+    setShowWhatIveDone(false);
   };
+  const cancelPerform = resetToMap;
+  const cancelReview = resetToMap;
+
   const completePerform = (summary: string) => {
     const activeId = performingCardId ?? reviewingCardId;
     if (activeId) {
