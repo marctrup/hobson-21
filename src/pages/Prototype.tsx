@@ -806,6 +806,24 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
   const [performingCardId, setPerformingCardId] = useState<string | null>(null);
   const [reviewingCardId, setReviewingCardId] = useState<string | null>(null);
   const [chatExpanded, setChatExpanded] = useState(false);
+  const [adminMode, setAdminMode] = useState(false);
+  const [adminCharacter, setAdminCharacter] = useState<AdminCharacter | null>(null);
+
+  const enterAdmin = () => {
+    setShowDocuments(false);
+    setShowWhatIveDone(false);
+    setPerformingCardId(null);
+    setReviewingCardId(null);
+    setChatExpanded(false);
+    setAdminCharacter(null);
+    setAdminMode(true);
+  };
+  const exitAdmin = () => {
+    setAdminMode(false);
+    setAdminCharacter(null);
+  };
+  const selectAdminCharacter = (c: AdminCharacter) => setAdminCharacter(c);
+
 
   const performCard = (id: string) => {
     setReviewingCardId(null);
