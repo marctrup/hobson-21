@@ -4796,23 +4796,25 @@ function PropertyActions({
           <div className="text-[10px] uppercase tracking-wide font-semibold text-slate-400">
             {URGENCY_LABEL[g.key]} · {g.cards.length}
           </div>
-          {g.cards.map((c) => (
-            <div key={c.id} className={c.id === carriedCardId ? "rounded-xl ring-2 ring-[#7C3AED]/50 ring-offset-2 ring-offset-white" : ""}>
-              <ActionCardItem
-                card={c}
-                level="property"
-                expanded={expandedCardId === c.id}
-                onToggleExpand={() => setExpandedCardId(expandedCardId === c.id ? null : c.id)}
-                onHover={() => { /* no map hover at property level */ }}
-                onOpenUnit={c.anchorLevel === "unit" && c.unitId ? () => onOpenUnit(c.unitId!, c.id) : undefined}
-                onApprove={() => onApprove(c.id)}
-                onDefer={() => onDefer(c.id)}
-                onDismiss={() => onDismiss(c.id)}
-                onPerform={onPerform ? () => onPerform(c.id) : undefined}
-                onReview={onReview ? () => onReview(c.id) : undefined}
-              />
-            </div>
-          ))}
+          <div className="grid gap-3" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))" }}>
+            {g.cards.map((c) => (
+              <div key={c.id} className={c.id === carriedCardId ? "rounded-xl ring-2 ring-[#7C3AED]/50 ring-offset-2 ring-offset-white" : ""}>
+                <ActionCardItem
+                  card={c}
+                  level="property"
+                  expanded={expandedCardId === c.id}
+                  onToggleExpand={() => setExpandedCardId(expandedCardId === c.id ? null : c.id)}
+                  onHover={() => { /* no map hover at property level */ }}
+                  onOpenUnit={c.anchorLevel === "unit" && c.unitId ? () => onOpenUnit(c.unitId!, c.id) : undefined}
+                  onApprove={() => onApprove(c.id)}
+                  onDefer={() => onDefer(c.id)}
+                  onDismiss={() => onDismiss(c.id)}
+                  onPerform={onPerform ? () => onPerform(c.id) : undefined}
+                  onReview={onReview ? () => onReview(c.id) : undefined}
+                />
+              </div>
+            ))}
+          </div>
         </div>
       ))}
     </section>
