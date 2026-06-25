@@ -1208,7 +1208,8 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
   const chatExpanded = false;
   const setChatExpanded = (_: boolean | ((v: boolean) => boolean)) => {};
   // Stateless demo: divider and collapse states always start at their seeded defaults on every mount/reload.
-  const [chatWidth, setChatWidth] = useState<number>(480);
+  const CHAT_DEFAULT_WIDTH = 480;
+  const [chatWidth, setChatWidth] = useState<number>(CHAT_DEFAULT_WIDTH);
   const [chatCollapsed, setChatCollapsed] = useState<boolean>(false);
   const [chatDropOver, setChatDropOver] = useState(false);
   const CHAT_MIN_WIDTH = 240;
@@ -1217,7 +1218,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
   const MAIN_MIN_WIDTH = 420;
   const MAIN_COLLAPSE_THRESHOLD = 200;
   const MAIN_COLLAPSED_WIDTH = 44;
-  const lastExpandedWidthRef = useRef<number>(480);
+  const lastExpandedWidthRef = useRef<number>(CHAT_DEFAULT_WIDTH);
   const [mainCollapsed, setMainCollapsed] = useState<boolean>(false);
   const collapseChat = () => {
     if (!chatCollapsed) lastExpandedWidthRef.current = chatWidth;
@@ -1226,7 +1227,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
   };
   const expandChat = () => {
     setChatCollapsed(false);
-    setChatWidth(Math.max(CHAT_MIN_WIDTH, lastExpandedWidthRef.current || 480));
+    setChatWidth(Math.max(CHAT_MIN_WIDTH, lastExpandedWidthRef.current || CHAT_DEFAULT_WIDTH));
   };
   const toggleChatCollapsed = () => (chatCollapsed ? expandChat() : collapseChat());
   const collapseMain = () => {
@@ -1235,6 +1236,24 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
   };
   const expandMain = () => setMainCollapsed(false);
   const toggleMainCollapsed = () => (mainCollapsed ? expandMain() : collapseMain());
+  const isLayoutDefault = !chatCollapsed && !mainCollapsed && chatWidth === CHAT_DEFAULT_WIDTH;
+  const resetLayout = () => {
+    setChatCollapsed(false);
+    setMainCollapsed(false);
+    setChatWidth(CHAT_DEFAULT_WIDTH);
+    lastExpandedWidthRef.current = CHAT_DEFAULT_WIDTH;
+  };
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if ((e.altKey || e.metaKey) && e.key === "0") {
+        e.preventDefault();
+        resetLayout();
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const [adminMode, setAdminMode] = useState(false);
   const [adminCharacter, setAdminCharacter] = useState<AdminCharacter | null>(null);
 
