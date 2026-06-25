@@ -854,6 +854,21 @@ function HobsonMap({
 
     map.on("zoomend moveend", recomputeOverlap);
 
+    // Keep map sized to its container as the divider/window resizes.
+    let rafId: number | null = null;
+    const ro = new ResizeObserver(() => {
+      if (rafId != null) cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(() => {
+        rafId = null;
+        try {
+          if (!mapInstance.current) return;
+          mapInstance.current.invalidateSize({ animate: false, pan: false });
+          recomputeOverlap();
+        } catch { /* container detached mid-resize — safe to ignore */ }
+      });
+    });
+    if (mapRef.current) ro.observe(mapRef.current);
+
     // Fit to all property pins, then run overlap pass
     const bounds = L.latLngBounds(PROPERTIES.map((p) => [p.lat, p.lng] as [number, number]));
     map.fitBounds(bounds, { padding: [60, 60], maxZoom: 13, animate: !reduced });
