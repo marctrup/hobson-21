@@ -2944,9 +2944,7 @@ function ResizeDivider({
         document.body.style.userSelect = "none";
       }}
       onDoubleClick={() => {
-        if (collapsed) onExpand();
-        else if (mainCollapsed) onExpandMain();
-        else setWidth(480);
+        onReset();
       }}
       title={
         collapsed
