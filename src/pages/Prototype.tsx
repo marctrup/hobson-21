@@ -2095,10 +2095,15 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
           Hidden when chat is expanded full-width (no right pane visible). */}
       {!isExpanded && (
         <ResizeDivider
-          width={chatWidth}
+          width={chatCollapsed ? CHAT_COLLAPSED_WIDTH : chatWidth}
           setWidth={setChatWidth}
           minLeft={CHAT_MIN_WIDTH}
           minRight={MAIN_MIN_WIDTH}
+          collapsed={chatCollapsed}
+          collapseThreshold={CHAT_COLLAPSE_THRESHOLD}
+          onCollapse={collapseChat}
+          onExpand={expandChat}
+          onToggleCollapsed={toggleChatCollapsed}
         />
       )}
 
