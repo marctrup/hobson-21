@@ -472,7 +472,7 @@ function AcdGroup({
   const previous = sorted.filter((d) => d.id !== current.id);
 
   return (
-    <div className="space-y-1.5">
+    <div className="space-y-2">
       <DocRow doc={current} onView={onView} onDownload={onDownload} />
       {previous.length > 0 && includeSuperseded && (
         <div className="pl-3">
