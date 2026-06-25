@@ -5861,12 +5861,14 @@ function PerformWorkspace({
   mode = "perform",
   onCancel,
   onComplete,
+  onReachedFinalGate,
   reducedMotion,
 }: {
   card: ActionCard;
   mode?: "perform" | "review";
   onCancel: () => void;
   onComplete: (summary: string) => void;
+  onReachedFinalGate?: () => void;
   reducedMotion: boolean;
 }) {
   const { beats, steps, headerTitle, headerSub } = useMemo(() => buildPerformConfig(card), [card]);
