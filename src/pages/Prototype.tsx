@@ -587,6 +587,7 @@ type ActionCard = {
   workflowRef?: string;          // e.g. "PA-001" — links back to the Magician's workflow
   manualNote?: string;           // user-supplied note when handled manually
   manuallyCompleted?: boolean;   // true if user pressed "Let me handle this" → Complete
+  reviewReady?: boolean;         // true once the Perform journey has reached its final approval gate
 };
 
 const INITIAL_ACTION_CARDS: ActionCard[] = [
