@@ -1353,7 +1353,9 @@ const Prototype: React.FC = () => {
         )}
 
         {/* Body */}
-        <div ref={chatBodyRef} className="flex-1 overflow-y-auto px-5 py-4 space-y-4">
+        <div ref={chatBodyRef} className={`flex-1 overflow-y-auto px-5 py-4 space-y-4 ${isExpanded ? "w-full" : ""}`}>
+          <div className={isExpanded ? "max-w-[820px] mx-auto" : ""}>
+
 
           {/* Pinned alert briefing at the top of unit chat */}
           {view === "unit" && selectedUnit && selectedPropertyId && (
