@@ -2151,13 +2151,7 @@ function AdminWorkArea({ character, onClose }: { character: { id: AdminCharacter
         </button>
       </header>
       <div className="flex-1 overflow-y-auto p-8">
-        <div className="max-w-2xl mx-auto" style={{ display: "flex", flexDirection: "column", gap: CHAT_TURN_GAP_PX }}>
-          <CharacterSpeechBubble
-            key={`${character.id}-intro`}
-            name={character.name}
-            src={character.src}
-            text={character.workIntro}
-          />
+        <div className="max-w-2xl mx-auto">
           <div className="rounded-xl border border-dashed border-slate-300 bg-slate-50 p-10 text-center">
             <div className="text-[13px] font-semibold text-slate-700 mb-1">{character.name}'s work area</div>
             <div className="text-[12px] text-slate-500">Coming soon in the live product. For now, this is where {character.name} would set up their work alongside you.</div>
