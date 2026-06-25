@@ -1926,6 +1926,11 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
             />
           );
         })()}
+        {adminMode && adminCharacter && (() => {
+          const c = ADMIN_CHARACTERS.find((x) => x.id === adminCharacter)!;
+          return <AdminWorkArea character={c} onClose={exitAdmin} />;
+        })()}
+
       </main>
       ); })()}
     </div>
