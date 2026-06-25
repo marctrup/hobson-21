@@ -1693,19 +1693,19 @@ const Prototype: React.FC = () => {
         )}
         {showDocuments && (
           <DocumentsLibrary
-            onClose={() => setShowDocuments(false)}
+            onClose={resetToMap}
             initialScope={{
               propertyId: view === "property" || view === "unit" ? selectedPropertyId ?? undefined : undefined,
               unitId: view === "unit" ? selectedUnitId ?? undefined : undefined,
             }}
-            onNavigatePortfolio={() => { setShowDocuments(false); goPortfolio(false); }}
-            onNavigateProperty={(pid) => { setShowDocuments(false); goProperty(pid); }}
+            onNavigatePortfolio={() => { resetToMap(); goPortfolio(false); }}
+            onNavigateProperty={(pid) => { resetToMap(); goProperty(pid); }}
           />
         )}
         {showWhatIveDone && (
           <WhatIveDonePanel
             actionCards={actionCards}
-            onClose={() => setShowWhatIveDone(false)}
+            onClose={resetToMap}
             onResume={(id) => { setShowWhatIveDone(false); performCard(id); }}
             onOpenProperty={(pid) => { setShowWhatIveDone(false); goProperty(pid); }}
             onOpenUnit={(uid, pid) => { setShowWhatIveDone(false); goUnit(uid, pid); }}
