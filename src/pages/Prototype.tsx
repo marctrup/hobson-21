@@ -6192,14 +6192,19 @@ function buildPA004Beats(): PerformBeat[] {
     {
       id: "s13_intro",
       stepKey: "actions",
-      text: "To raise the rent on Flat 8, the proper instrument is a Section 13 notice. I can prepare it for you. What new rent would you like to propose?",
-      gateFn: (ctx) => <RentChoiceGate ctx={ctx} nextIdx={13} />,
+      text: "Based on the comparables, I'd suggest a new rent of £49,500 per annum — the market median, an uplift of £1,500 (+3.1%) on the current £48,000. Shall I prepare the Section 13 notice with that figure?",
+      gateFn: (ctx) => <SuggestedRentGate ctx={ctx} yesIdx={14} noIdx={13} />,
+    },
+    {
+      id: "s13_blank_ack",
+      stepKey: "actions",
+      text: "Understood. I'll prepare the Section 13 notice with the new rent left blank — you can write the figure in before it's served.",
     },
     {
       id: "s13_prepared",
       stepKey: "actions",
       text: "Prepared.",
-      detailFn: (ctx) => <Section13NoticePreview chosenRent={ctx.chosenRent ?? 50400} />,
+      detailFn: (ctx) => <Section13NoticePreview chosenRent={ctx.chosenRent} />,
     },
     {
       id: "s13_delivery",
@@ -6208,8 +6213,8 @@ function buildPA004Beats(): PerformBeat[] {
       gate: {
         label: "How shall I deliver it?",
         options: [
-          { label: "Email", kind: "approve", nextBeatIdx: 15 },
-          { label: "Save to file", kind: "continue", nextBeatIdx: 17 },
+          { label: "Email", kind: "approve", nextBeatIdx: 16 },
+          { label: "Save to file", kind: "continue", nextBeatIdx: 18 },
         ],
       },
     },
@@ -6217,8 +6222,8 @@ function buildPA004Beats(): PerformBeat[] {
       id: "s13_email_prepared",
       stepKey: "actions",
       text: "Prepared.",
-      detailFn: (ctx) => <Section13EmailPreview chosenRent={ctx.chosenRent ?? 50400} />,
-      gateFn: (ctx) => <AddToOutlookGate advance={ctx.advance} nextIdx={16} />,
+      detailFn: (ctx) => <Section13EmailPreview chosenRent={ctx.chosenRent} />,
+      gateFn: (ctx) => <AddToOutlookGate advance={ctx.advance} nextIdx={17} />,
     },
     {
       id: "s13_close_email",
@@ -6239,6 +6244,35 @@ function buildPA004Beats(): PerformBeat[] {
       },
     },
   ];
+}
+
+/* ---------------- Suggested rent (Yes/No) gate ---------------- */
+function SuggestedRentGate({ ctx, yesIdx, noIdx }: { ctx: PerformCtx; yesIdx: number; noIdx: number }) {
+  const suggested = 49500;
+  return (
+    <div className="pl-[44px]">
+      <div className="inline-block max-w-[640px] rounded-2xl border border-[#DDD6FE] bg-[#F5F3FF] px-3 py-2.5 space-y-2">
+        <div className="text-[11px] uppercase tracking-wide text-[#5B21B6] font-semibold">
+          Prepare Section 13 at £49,500?
+        </div>
+        <div className="flex flex-wrap gap-1.5">
+          <button
+            autoFocus
+            onClick={() => { ctx.setChosenRent(suggested); ctx.advance(yesIdx, `Yes — prepare at ${fmtGBP(suggested)}`, "approve"); }}
+            className="text-xs px-3 py-1.5 rounded-full bg-[#7C3AED] text-white hover:bg-[#6D28D9] focus:outline-none focus:ring-2 focus:ring-[#7C3AED] transition"
+          >
+            Yes, use £49,500
+          </button>
+          <button
+            onClick={() => { ctx.setChosenRent(null); ctx.advance(noIdx, "No — leave new rent blank", "modify"); }}
+            className="text-xs px-3 py-1.5 rounded-full bg-white border border-slate-200 text-slate-700 hover:border-[#7C3AED] hover:bg-[#FAF9FF] focus:outline-none focus:ring-2 focus:ring-[#7C3AED] transition"
+          >
+            No, leave it blank
+          </button>
+        </div>
+      </div>
+    </div>
+  );
 }
 
 
@@ -6338,9 +6372,10 @@ function RentChoiceGate({ ctx, nextIdx }: { ctx: PerformCtx; nextIdx: number }) 
   );
 }
 
-function Section13NoticePreview({ chosenRent }: { chosenRent: number }) {
-  const increase = chosenRent - FLAT8_CURRENT_RENT;
-  const pct = ((increase / FLAT8_CURRENT_RENT) * 100).toFixed(1);
+function Section13NoticePreview({ chosenRent }: { chosenRent: number | null }) {
+  const hasRent = chosenRent !== null;
+  const increase = hasRent ? (chosenRent as number) - FLAT8_CURRENT_RENT : 0;
+  const pct = hasRent ? ((increase / FLAT8_CURRENT_RENT) * 100).toFixed(1) : "";
   return (
     <div className="rounded-lg border border-emerald-200 bg-emerald-50/60 p-3 text-[12px] text-slate-700">
       <div className="text-[10px] uppercase tracking-wide text-emerald-800 font-semibold mb-2">
@@ -6358,7 +6393,11 @@ function Section13NoticePreview({ chosenRent }: { chosenRent: number }) {
           <div className="text-slate-500">2. Landlord</div><div className="text-slate-800">{FLAT8_LANDLORD}</div>
           <div className="text-slate-500">3. Property</div><div className="text-slate-800">{FLAT8_ADDR}</div>
           <div className="text-slate-500">4. Current rent</div><div className="text-slate-800">{fmtGBP(FLAT8_CURRENT_RENT)} per annum (payable monthly in advance)</div>
-          <div className="text-slate-500">5. New rent</div><div className="text-slate-900 font-semibold">{fmtGBP(chosenRent)} per annum <span className="text-slate-500 font-normal">(+{fmtGBP(increase)} / +{pct}%)</span></div>
+          <div className="text-slate-500">5. New rent</div>{hasRent ? (
+            <div className="text-slate-900 font-semibold">{fmtGBP(chosenRent as number)} per annum <span className="text-slate-500 font-normal">(+{fmtGBP(increase)} / +{pct}%)</span></div>
+          ) : (
+            <div className="text-slate-900 font-semibold"><span className="inline-block min-w-[140px] border-b-2 border-dashed border-slate-400 text-slate-400">£ ______</span> per annum <span className="text-slate-500 font-normal italic">(to be entered before serving)</span></div>
+          )}
           <div className="text-slate-500">6. Effective from</div><div className="text-slate-800">{FLAT8_EFFECTIVE} (start of the new rental period)</div>
           <div className="text-slate-500">7. Notice date</div><div className="text-slate-800">{FLAT8_NOTICE_DATE}</div>
         </div>
@@ -6377,7 +6416,8 @@ function Section13NoticePreview({ chosenRent }: { chosenRent: number }) {
   );
 }
 
-function Section13EmailPreview({ chosenRent }: { chosenRent: number }) {
+function Section13EmailPreview({ chosenRent }: { chosenRent: number | null }) {
+  const rentPhrase = chosenRent !== null ? <><strong>{fmtGBP(chosenRent)} per annum</strong></> : <em className="text-slate-500">[new rent to be entered]</em>;
   return (
     <div className="rounded-lg border border-emerald-200 bg-emerald-50/60 p-3 text-[12px] text-slate-700">
       <div className="text-[10px] uppercase tracking-wide text-emerald-800 font-semibold mb-2">
@@ -6391,7 +6431,7 @@ function Section13EmailPreview({ chosenRent }: { chosenRent: number }) {
         </div>
         <div className="px-3 py-2.5 leading-relaxed text-slate-700 space-y-2 text-[12px]">
           <p>Dear {FLAT8_TENANT.split(" ")[0]},</p>
-          <p>Please find attached a Section 13 notice proposing a new rent of <strong>{fmtGBP(chosenRent)} per annum</strong> for Flat 8, Stanley House, taking effect from {FLAT8_EFFECTIVE}.</p>
+          <p>Please find attached a Section 13 notice proposing a new rent of {rentPhrase} for Flat 8, Stanley House, taking effect from {FLAT8_EFFECTIVE}.</p>
           <p>Do let me know if you have any questions; I'm happy to discuss.</p>
           <p>Kind regards,<br/>{FLAT8_LANDLORD}</p>
         </div>
