@@ -1775,7 +1775,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
 
   const appendFeedbackPrompt = (chips?: string[]) => {
     const fid = `fb-${Date.now()}-${Math.random()}`;
-    const text = "Did that answer your question?";
+    const text = "I hope that was helpful — did it answer your question?";
     if (reduced) {
       setMessages((m) => [...m, { id: fid, role: "hobson", text, kind: "feedback", feedback: {}, feedbackChips: chips }]);
       return;
@@ -3912,12 +3912,12 @@ function FeedbackBubble({
   const graded = !!feedback.grade;
   const submitted = !!feedback.submitted;
   const ack =
-    feedback.grade === "helpful" ? "Good. That's the standard I hold to."
-    : feedback.grade === "partly" ? "Noted. I'll see where it can be sharper."
-    : feedback.grade === "not" ? "Understood. I'd rather know when I've fallen short than not."
+    feedback.grade === "helpful" ? "I'm glad to hear it. Thank you."
+    : feedback.grade === "partly" ? "Thank you — that's helpful to know. I'll see where it can be clearer."
+    : feedback.grade === "not" ? "Thank you for telling me — I'd genuinely rather know. Do tell me what was missing."
     : "";
   const noteGiven = !!(feedback.note && feedback.note.trim().length > 0) || ((feedback.chips || []).length > 0);
-  const noteAck = "Noted — that's useful.";
+  const noteAck = noteGiven ? "Thank you — that's most helpful." : "Of course. Thank you.";
 
   // Reduced motion check + staged reveal of follow-up bubbles.
   const reduceMotion = typeof window !== "undefined" && window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
@@ -4042,7 +4042,7 @@ function FeedbackBubble({
       {graded && !submitted && showNoteAsk && (
         <Row className={reduceMotion ? "" : "animate-in fade-in slide-in-from-bottom-1 duration-300"}>
           <Bubble>
-            If something was missing, tell me.
+            If anything was missing, I'd be glad to hear it.
           </Bubble>
           <div className="pl-1 pt-0.5 space-y-1.5">
             {chips && chips.length > 0 && (
@@ -4099,7 +4099,7 @@ function FeedbackBubble({
       )}
 
       {/* 4. If they added a note/chips, Hobson acknowledges — own owl + bubble */}
-      {submitted && noteGiven && showNoteAck && (
+      {submitted && showNoteAck && (
         <Row className={reduceMotion ? "" : "animate-in fade-in slide-in-from-bottom-1 duration-300"}>
           <Bubble>
             <TypedText text={noteAck} enabled={showNoteAck} />
