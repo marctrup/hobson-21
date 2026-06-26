@@ -6224,21 +6224,22 @@ function buildPA004Beats(): PerformBeat[] {
       id: "s13_close_email",
       stepKey: "record",
       text: "Done. The notice is prepared and ready to send.",
+      gate: {
+        label: "Finish",
+        options: [{ label: "Record & close", kind: "continue", nextBeatIdx: "complete" }],
+      },
     },
     {
       id: "s13_close_save",
       stepKey: "record",
       text: "Saved to the file. The Section 13 notice is on the Flat 8 record.",
-    },
-    {
-      id: "b13",
-      stepKey: "record",
-      text: "I'll record what we did and update the card.",
       gate: {
-        label: "Record and finish",
+        label: "Finish",
         options: [{ label: "Record & close", kind: "continue", nextBeatIdx: "complete" }],
       },
     },
+  ];
+}
   ];
 }
 
