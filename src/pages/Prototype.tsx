@@ -1871,7 +1871,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
 
     const greetLines: string[] = testerMode
       ? [
-          `Good morning, ${FIRST_NAME}. For the purpose of testing, please use the map or the search to go straight to your unit — that is where I can answer your questions today.`,
+          `Good morning, ${FIRST_NAME}. For today's testing, go straight to your unit — by the map or the search. That is where I can answer your questions.`,
         ]
       : pending.length === 0
         ? [`Good morning, ${FIRST_NAME}. Your portfolio is quiet today — nothing requires your attention.`]
