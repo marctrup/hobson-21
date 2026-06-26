@@ -1329,32 +1329,11 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
   const [adjustingWorkflowId, setAdjustingWorkflowId] = useState<string | null>(null);
   const [viewingWorkflowId, setViewingWorkflowId] = useState<string | null>(null);
 
-  const handleCreateWorkflow = () => {
-    const id = `wf-${Date.now()}`;
-    const draft: Workflow = {
-      id,
-      name: "Untitled workflow",
-      purpose: "Tell me what to watch for and I'll prepare it.",
-      icon: "wand", tone: "slate", status: "draft",
-      trigger: "—",
-      action: "prepare the work and bring it to you for approval",
-      scopeLabel: "Not yet set",
-      owner: { kind: "all_teams" },
-    };
-    setWorkflows((arr) => [draft, ...arr]);
-    setAdjustingWorkflowId(id);
-  };
-
-  const handleSaveWorkflow = (next: Workflow) => {
-    setWorkflows((arr) => arr.map((w) => w.id === next.id ? next : w));
-    setAdjustingWorkflowId(null);
-  };
-
-
-
   // ----- Broker black-book state -----
   const [contacts, setContacts] = useState<BrokerContact[]>(SEED_BROKER_CONTACTS);
   const [brokerEvents, setBrokerEvents] = useState<BrokerEvent[]>([]);
+  const [brokerFlow, setBrokerFlow] = useState<{ step: number; draft: Partial<BrokerContact> } | null>(null);
+
   // ----- Magician build conversation state -----
   const [magicianEvents, setMagicianEvents] = useState<MagicianEvent[]>([]);
   const [magBuild, setMagBuild] = useState<MagBuildState | null>(null);
