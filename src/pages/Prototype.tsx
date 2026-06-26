@@ -6183,6 +6183,17 @@ function buildPA004Beats(): PerformBeat[] {
       text: "Comparable search prepared — request queued for the surveyor and our market data source.",
       detail: <PreparedPreview title="Comparable evidence request" body={"Scope: Marylebone NW8, residential lets, 1-bed flats, last 12 months.\nDeliverable: shortlist of 5–8 comparables with rent, term, condition notes."} />,
     },
+    {
+      id: "b10c",
+      stepKey: "actions",
+      text: "Searching open sources now — Rightmove, Zoopla, OnTheMarket, Foxtons, LonRes.",
+    },
+    {
+      id: "b10d",
+      stepKey: "actions",
+      text: "9 listings retrieved · 6 like-for-like after filtering (1-bed, NW8, last 12 months).",
+      detail: <ComparablesScrapePreview />,
+    },
 
     {
       id: "b11",
