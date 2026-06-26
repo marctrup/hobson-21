@@ -7118,13 +7118,15 @@ function PerformWorkspace({
             {recapOpen && (
               <div className="px-3 pb-3 pt-1 space-y-3 border-t border-slate-200">
                 {previousBeats.map((b) => (
-                  <BeatBubble key={b.id} beat={b} done />
+                  <BeatBubble key={b.id} beat={b} done detailOverride={b.detailFn ? b.detailFn({ chosenRent, setChosenRent, advance }) : undefined} />
                 ))}
               </div>
             )}
           </div>
         ) : (
-          previousBeats.map((b) => <BeatBubble key={b.id} beat={b} done />)
+          previousBeats.map((b) => (
+            <BeatBubble key={b.id} beat={b} done detailOverride={b.detailFn ? b.detailFn({ chosenRent, setChosenRent, advance }) : undefined} />
+          ))
         )}
         {currentBeat && (
           <div className="space-y-2.5">
@@ -7133,9 +7135,11 @@ function PerformWorkspace({
               streamingText={streamingActive ? streamingText : currentBeat.text}
               streaming={streamingActive}
               done={false}
+              detailOverride={!streamingActive && currentBeat.detailFn ? currentBeat.detailFn({ chosenRent, setChosenRent, advance }) : undefined}
             />
             {/* Inline decisions — only at genuine gates (decision, approval, flagged show-stopper, or finish) */}
-            {!streamingActive && !isComplete && currentBeat.gate && (
+            {!streamingActive && !isComplete && currentBeat.gateFn && currentBeat.gateFn({ chosenRent, setChosenRent, advance })}
+            {!streamingActive && !isComplete && !currentBeat.gateFn && currentBeat.gate && (
               <div className="pl-[44px]">
                 <div className="inline-block max-w-[640px] rounded-2xl border border-[#DDD6FE] bg-[#F5F3FF] px-3 py-2.5 space-y-2">
                   <div className="text-[11px] uppercase tracking-wide text-[#5B21B6] font-semibold">{currentBeat.gate.label}</div>
