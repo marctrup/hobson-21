@@ -3438,6 +3438,7 @@ const HOBSON_ADMIN_INTRO_PARAS = [
 const HOBSON_ADMIN_INTRO = HOBSON_ADMIN_INTRO_PARAS.join("\n\n");
 
 type MagHandlers = {
+  onIntakeSubmit: (intake: { title: string; purpose: string; description: string; whenKey: "6m" | "3m" | "on" | "always" | "custom"; whenLabel: string; visibility: "personal" | "company" }) => void;
   onQ1: (k: "rent_reviews" | "compliance" | "notices" | "other", label: string) => void;
   onQ2: (k: "6m" | "3m" | "on", label: string, phrase: string) => void;
   onQ3: (k: "unit" | "property" | "portfolio", label: string) => void;
