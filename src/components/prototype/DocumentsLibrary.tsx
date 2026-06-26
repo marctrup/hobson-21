@@ -422,7 +422,7 @@ function TenancyChain({
           <FamilyTag family="Tenancy" />
         </div>
         <span className="text-[11px] text-slate-500 shrink-0">
-          {olderCount > 0 ? `${olderCount} earlier ${olderCount === 1 ? "entry" : "entries"}` : "single entry"}
+          {olderCount > 0 ? `current position · ${olderCount} archived beneath` : "single entry on record"}
         </span>
       </button>
       {open && (
