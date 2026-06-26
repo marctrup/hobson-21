@@ -1784,7 +1784,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
       } else {
         setMessages((m) => m.map((x) => (x.id === id ? { ...x, streaming: false } : x)));
         done();
-        if (opts?.askFeedback) setTimeout(() => appendFeedbackPrompt(opts.chips), 500);
+        if (opts?.askFeedback) setTimeout(() => appendFeedbackPrompt(opts.chips), 1200);
       }
     };
     setTimeout(step, 60);
