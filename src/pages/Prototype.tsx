@@ -3224,7 +3224,12 @@ function CharacterAvatar({ src }: { src: string }) {
   );
 }
 
-const HOBSON_ADMIN_INTRO = "Welcome to Admin, where my colleagues can assist. Select one of them and they will assist you.";
+const HOBSON_ADMIN_INTRO_PARAS = [
+  "Welcome to Admin. Here you will find my three colleagues, who do much of the work behind the scenes.",
+  "The Professor reads and remembers every document — he is the source of what I know. The Magician builds the workflows that watch your portfolio and prepare the work. The Broker keeps your contacts, and the relationships between them.",
+  "Choose whichever you need, and they will see to you.",
+];
+const HOBSON_ADMIN_INTRO = HOBSON_ADMIN_INTRO_PARAS.join("\n\n");
 
 function AdminChat({ character, owl, professorEvents, onAssignProfessorType, brokerEvents, brokerFlowActive }: { character: { id: AdminCharacter; name: string; src: string; greeting: string } | null; owl: OwlState; professorEvents?: ProfEvent[]; onAssignProfessorType?: (batchId: string, type: string) => void; brokerEvents?: BrokerEvent[]; brokerFlowActive?: boolean }) {
   const [phase, setPhase] = useState<"typing" | "streaming" | "done">("typing");
