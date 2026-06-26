@@ -3473,12 +3473,48 @@ function AdminChat({ character, owl, professorEvents, onAssignProfessorType, bro
           </div>
         </div>
       )}
-      {character?.id === "magician" && phase === "done" && (
+      {character?.id === "magician" && phase === "done" && (!magicianEvents || magicianEvents.length === 0) && !magBuild && (
         <div className="flex items-end gap-2">
           <CharacterAvatar src={character.src} />
           <div className="max-w-[420px] bg-[#EDE9FE] text-[#1F2330] text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-bl-md">
             Press <span className="font-semibold">"Create a workflow"</span> below and we'll build one together — I'll ask the questions and you will provide the answers — Lets go!
           </div>
+        </div>
+      )}
+      {character?.id === "magician" && phase === "done" && magicianEvents && magicianEvents.length > 0 && (
+        <div className="flex flex-col" style={{ gap: CHAT_TURN_GAP_PX }}>
+          {magicianEvents.map((ev) => {
+            if (ev.kind === "user") {
+              return (
+                <div key={ev.id} className="flex justify-end">
+                  <div className="max-w-[420px] bg-[#7C3AED] text-white text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-br-md">{ev.text}</div>
+                </div>
+              );
+            }
+            if (ev.kind === "built") {
+              return (
+                <div key={ev.id} className="ml-12 max-w-[460px] rounded-xl border border-[#7C3AED]/30 bg-[#F5F3FF] p-3">
+                  <div className="text-[11px] uppercase tracking-wide text-[#7C3AED] font-semibold mb-1">Built into the workshop</div>
+                  <div className="text-[12px] text-slate-700"><span className="font-semibold">{ev.name}</span> — {ev.stepCount}-step workflow, ending in your approval.</div>
+                  <button type="button" onClick={() => magHandlers?.onOpenBuilt(ev.workflowId)} className="mt-2 text-[12px] font-semibold text-[#7C3AED] hover:underline focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40 rounded">View workflow →</button>
+                </div>
+              );
+            }
+            // magician streaming bubble
+            return (
+              <MagicianStreamingBubble
+                key={ev.id}
+                id={ev.id}
+                text={ev.text}
+                src={character.src}
+                stream={magStreamingId === ev.id}
+                onDone={() => onMagStreamDone?.(ev.id)}
+              />
+            );
+          })}
+          {magBuild && !magStreamingId && magHandlers && (
+            <MagicianBuildPanel build={magBuild} handlers={magHandlers} />
+          )}
         </div>
       )}
       {character?.id === "professor" && phase === "done" && (
