@@ -8717,13 +8717,24 @@ function MagicianWorkArea({ character, workflows, onCreate, onAdjust, onView }: 
         const epc = workflows.find((w) => /EPC/i.test(w.name));
         const draftWf = drafts[0];
         const notes: CharacterNote[] = [];
-        notes.push({
-          id: "mn-recent",
-          kind: "recent",
-          text: `Built 1 new workflow this week${epc ? ` — '${epc.name}'` : ""}.${newest ? ` Last adjusted '${newest.name}' on ${newest.lastAdjusted}.` : ""}`,
-          onClick: epc ? () => onView(epc.id) : (newest ? () => onView(newest.id) : undefined),
-          ctaLabel: "open workflow →",
-        });
+        const justBuilt = workflows.find((w) => w.justBuilt);
+        if (justBuilt) {
+          notes.push({
+            id: "mn-justbuilt",
+            kind: "recent",
+            text: `Built '${justBuilt.name}' just now — a ${justBuilt.stepCount ?? "multi"}-step workflow ending in your approval.`,
+            onClick: () => onView(justBuilt.id),
+            ctaLabel: "open workflow →",
+          });
+        } else {
+          notes.push({
+            id: "mn-recent",
+            kind: "recent",
+            text: `Built 1 new workflow this week${epc ? ` — '${epc.name}'` : ""}.${newest ? ` Last adjusted '${newest.name}' on ${newest.lastAdjusted}.` : ""}`,
+            onClick: epc ? () => onView(epc.id) : (newest ? () => onView(newest.id) : undefined),
+            ctaLabel: "open workflow →",
+          });
+        }
         notes.push({
           id: "mn-totals",
           kind: "totals",
