@@ -6025,6 +6025,86 @@ function PreparedPreview({ title, body }: { title: string; body: string }) {
   );
 }
 
+function ComparablesScrapePreview() {
+  const sources = [
+    { name: "Rightmove", host: "rightmove.co.uk", count: 3, dot: "bg-emerald-500" },
+    { name: "Zoopla", host: "zoopla.co.uk", count: 2, dot: "bg-violet-500" },
+    { name: "OnTheMarket", host: "onthemarket.com", count: 2, dot: "bg-sky-500" },
+    { name: "Foxtons", host: "foxtons.co.uk", count: 1, dot: "bg-amber-500" },
+    { name: "LonRes", host: "lonres.com", count: 1, dot: "bg-rose-500" },
+  ];
+  const rows = [
+    { addr: "Flat 4, Stanley House, NW8", beds: "1 bed", sqft: 612, rent: 49400, term: "12m", cond: "Refurbished", src: "Rightmove", date: "Jun 2026" },
+    { addr: "Apt 12, Nugent Terrace, NW8", beds: "1 bed", sqft: 598, rent: 48100, term: "12m", cond: "Good", src: "Zoopla", date: "May 2026" },
+    { addr: "Flat 9, Hamilton Court, NW8", beds: "1 bed", sqft: 640, rent: 50700, term: "24m", cond: "Refurbished", src: "OnTheMarket", date: "Apr 2026" },
+    { addr: "Flat 2, Cunningham Pl, NW8", beds: "1 bed", sqft: 585, rent: 46800, term: "12m", cond: "Good", src: "Foxtons", date: "Mar 2026" },
+    { addr: "Flat 7, Aberdeen Place, NW8", beds: "1 bed", sqft: 605, rent: 47950, term: "12m", cond: "Good", src: "Rightmove", date: "Feb 2026" },
+    { addr: "Flat 3, Cochrane St, NW8", beds: "1 bed", sqft: 620, rent: 49250, term: "12m", cond: "Refurbished", src: "LonRes", date: "Jan 2026" },
+  ];
+  const rents = rows.map(r => r.rent);
+  const low = Math.min(...rents);
+  const high = Math.max(...rents);
+  const median = [...rents].sort((a,b)=>a-b)[Math.floor(rents.length/2)];
+  const fmt = (n: number) => `£${n.toLocaleString()}`;
+  return (
+    <div className="rounded-lg border border-emerald-200 bg-emerald-50/60 p-2.5 text-[12px] text-slate-700">
+      <div className="text-[10px] uppercase tracking-wide text-emerald-800 font-semibold mb-2">
+        Retrieved — Open market comparables · Marylebone NW8 · last 12 months
+      </div>
+      <div className="flex flex-wrap gap-1.5 mb-2">
+        {sources.map(s => (
+          <span key={s.name} className="inline-flex items-center gap-1 rounded-full bg-white border border-slate-200 px-1.5 py-0.5 text-[10.5px] text-slate-600">
+            <span className={`w-1.5 h-1.5 rounded-full ${s.dot}`} aria-hidden />
+            <span className="font-medium text-slate-700">{s.name}</span>
+            <span className="text-slate-400">·</span>
+            <span className="text-slate-500">{s.count}</span>
+          </span>
+        ))}
+        <span className="inline-flex items-center gap-1 rounded-full bg-white border border-slate-200 px-1.5 py-0.5 text-[10.5px] text-slate-500">
+          9 found · 6 like-for-like
+        </span>
+      </div>
+      <div className="overflow-hidden rounded-md border border-slate-200 bg-white">
+        <table className="w-full text-[11px]">
+          <thead className="bg-slate-50 text-slate-500">
+            <tr>
+              <th className="text-left font-medium px-2 py-1">Address</th>
+              <th className="text-left font-medium px-2 py-1">Size</th>
+              <th className="text-right font-medium px-2 py-1">Rent p.a.</th>
+              <th className="text-left font-medium px-2 py-1">Term</th>
+              <th className="text-left font-medium px-2 py-1">Condition</th>
+              <th className="text-left font-medium px-2 py-1">Source</th>
+              <th className="text-left font-medium px-2 py-1">Listed</th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((r, i) => (
+              <tr key={i} className={i % 2 ? "bg-slate-50/40" : ""}>
+                <td className="px-2 py-1 text-slate-700">{r.addr}</td>
+                <td className="px-2 py-1 text-slate-600">{r.sqft} sqft</td>
+                <td className="px-2 py-1 text-right font-medium text-slate-800">{fmt(r.rent)}</td>
+                <td className="px-2 py-1 text-slate-600">{r.term}</td>
+                <td className="px-2 py-1 text-slate-600">{r.cond}</td>
+                <td className="px-2 py-1 text-slate-600">{r.src}</td>
+                <td className="px-2 py-1 text-slate-500">{r.date}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-[11px] text-slate-600">
+        <span><span className="text-slate-500">Range</span> <span className="font-medium text-slate-800">{fmt(low)} – {fmt(high)}</span></span>
+        <span><span className="text-slate-500">Median</span> <span className="font-medium text-slate-800">{fmt(median)}</span></span>
+        <span><span className="text-slate-500">Current passing</span> <span className="font-medium text-slate-800">£48,000</span></span>
+        <span><span className="text-slate-500">Indicative suggestion</span> <span className="font-medium text-emerald-700">£49,000 – £50,000</span></span>
+      </div>
+      <div className="mt-1 text-[10.5px] text-slate-500 italic">
+        Simulated retrieval · placeholder data from Rightmove, Zoopla, OnTheMarket, Foxtons, LonRes for prototype.
+      </div>
+    </div>
+  );
+}
+
 function buildPA004Beats(): PerformBeat[] {
   // Indexed linearly; gates jump by index to keep authoring simple.
   return [
@@ -6093,7 +6173,7 @@ function buildPA004Beats(): PerformBeat[] {
         label: "Gather comparable evidence?",
         options: [
           { label: "Approve", kind: "approve", nextBeatIdx: 11 },
-          { label: "Skip", kind: "skip", nextBeatIdx: 12 },
+          { label: "Skip", kind: "skip", nextBeatIdx: 14 },
         ],
       },
     },
@@ -6103,6 +6183,17 @@ function buildPA004Beats(): PerformBeat[] {
       text: "Comparable search prepared — request queued for the surveyor and our market data source.",
       detail: <PreparedPreview title="Comparable evidence request" body={"Scope: Marylebone NW8, residential lets, 1-bed flats, last 12 months.\nDeliverable: shortlist of 5–8 comparables with rent, term, condition notes."} />,
     },
+    {
+      id: "b10c",
+      stepKey: "actions",
+      text: "Searching open sources now — Rightmove, Zoopla, OnTheMarket, Foxtons, LonRes.",
+    },
+    {
+      id: "b10d",
+      stepKey: "actions",
+      text: "9 listings retrieved · 6 like-for-like after filtering (1-bed, NW8, last 12 months).",
+      detail: <ComparablesScrapePreview />,
+    },
 
     {
       id: "b11",
@@ -6111,8 +6202,8 @@ function buildPA004Beats(): PerformBeat[] {
       gate: {
         label: "Prepare review notice?",
         options: [
-          { label: "Approve", kind: "approve", nextBeatIdx: 13 },
-          { label: "Skip", kind: "skip", nextBeatIdx: 14 },
+          { label: "Approve", kind: "approve", nextBeatIdx: 15 },
+          { label: "Skip", kind: "skip", nextBeatIdx: 16 },
         ],
       },
     },
@@ -6130,8 +6221,8 @@ function buildPA004Beats(): PerformBeat[] {
       gate: {
         label: "Create a review task?",
         options: [
-          { label: "Approve", kind: "approve", nextBeatIdx: 15 },
-          { label: "Skip", kind: "skip", nextBeatIdx: 16 },
+          { label: "Approve", kind: "approve", nextBeatIdx: 17 },
+          { label: "Skip", kind: "skip", nextBeatIdx: 18 },
         ],
       },
     },
