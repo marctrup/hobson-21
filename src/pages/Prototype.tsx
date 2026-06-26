@@ -6083,11 +6083,8 @@ function buildPA004Beats(): PerformBeat[] {
       stepKey: "actions",
       text: "Drafted.",
       detail: <PreparedPreview title="Surveyor instructions" body={"To: [Usual surveyor]\nSubject: Open market rent advice — Flat 8, Stanley House\n\nWe have a rent review falling due in March 2027. Please advise on open market evidence and a suggested range, with comparables for the last 12 months."} />,
-      gate: {
-        label: "Continue",
-        options: [{ label: "Continue", kind: "continue", nextBeatIdx: 10 }],
-      },
     },
+
     {
       id: "b10",
       stepKey: "actions",
@@ -6105,11 +6102,8 @@ function buildPA004Beats(): PerformBeat[] {
       stepKey: "actions",
       text: "Comparable search prepared — request queued for the surveyor and our market data source.",
       detail: <PreparedPreview title="Comparable evidence request" body={"Scope: Marylebone NW8, residential lets, 1-bed flats, last 12 months.\nDeliverable: shortlist of 5–8 comparables with rent, term, condition notes."} />,
-      gate: {
-        label: "Continue",
-        options: [{ label: "Continue", kind: "continue", nextBeatIdx: 12 }],
-      },
     },
+
     {
       id: "b11",
       stepKey: "actions",
@@ -6127,11 +6121,8 @@ function buildPA004Beats(): PerformBeat[] {
       stepKey: "actions",
       text: "Draft notice prepared — held for service date.",
       detail: <PreparedPreview title="Review notice (draft)" body={"NOTICE OF RENT REVIEW\nProperty: Flat 8, Stanley House\nReview date: March 2027\nBasis: Open Market Rent (per lease)\n\nStatus: held — not yet served. Awaiting confirmed notice window."} />,
-      gate: {
-        label: "Continue",
-        options: [{ label: "Continue", kind: "continue", nextBeatIdx: 14 }],
-      },
     },
+
     {
       id: "b12",
       stepKey: "actions",
@@ -6149,11 +6140,8 @@ function buildPA004Beats(): PerformBeat[] {
       stepKey: "actions",
       text: "Task created.",
       detail: <PreparedPreview title="Review task" body={"Title: Flat 8 rent review — checkpoint\nDue: 6 weeks before March 2027 review date\nOwner: you\nLinked: this action, surveyor instruction, draft notice."} />,
-      gate: {
-        label: "Continue",
-        options: [{ label: "Continue", kind: "continue", nextBeatIdx: 16 }],
-      },
     },
+
     {
       id: "b13",
       stepKey: "record",
@@ -6389,11 +6377,8 @@ function buildPA001Beats(): PerformBeat[] {
       flag: missing.length > 0
         ? `${missing.map((m) => m.unitLabel).join(", ")} still need access notice — no contact on file. Handle separately?`
         : undefined,
-      gate: {
-        label: "Continue",
-        options: [{ label: "Continue", kind: "continue", nextBeatIdx: 6 }],
-      },
     },
+
     {
       id: "fa7",
       stepKey: "record",
@@ -6721,6 +6706,22 @@ function PerformWorkspace({
   const currentBeat = beats[revealed];
   const previousBeats = beats.slice(0, revealed);
 
+  // Auto-advance narration: when the current beat has no gate and isn't the last,
+  // move on automatically once streaming finishes. Hobson just keeps working.
+  useEffect(() => {
+    if (isComplete || mode === "review") return;
+    if (!currentBeat || currentBeat.gate) return;
+    if (revealed >= beats.length - 1) return;
+    if (streamingActive) return;
+    const delay = reducedMotion ? 0 : 650;
+    const t = setTimeout(() => {
+      setCompleted((c) => Array.from(new Set([...c, currentBeat.stepKey])));
+      setRevealed((r) => Math.min(r + 1, beats.length));
+    }, delay);
+    return () => clearTimeout(t);
+  }, [currentBeat, streamingActive, revealed, beats.length, isComplete, mode, reducedMotion]);
+
+
   const advance = (jumpTo: number | "complete" | "exit" | undefined, gateLabel: string, kind: string) => {
     // Track approved sub-actions for audit
     if (kind === "approve") setApprovedActions((a) => [...a, gateLabel]);
@@ -6836,44 +6837,35 @@ function PerformWorkspace({
               streaming={streamingActive}
               done={false}
             />
-            {/* Inline decisions — sit directly under the current step content */}
-            {!streamingActive && !isComplete && (
+            {/* Inline decisions — only at genuine gates (decision, approval, flagged show-stopper, or finish) */}
+            {!streamingActive && !isComplete && currentBeat.gate && (
               <div className="pl-[44px]">
-                {currentBeat.gate ? (
-                  <div className="inline-block max-w-[640px] rounded-2xl border border-[#DDD6FE] bg-[#F5F3FF] px-3 py-2.5 space-y-2">
-                    <div className="text-[11px] uppercase tracking-wide text-[#5B21B6] font-semibold">{currentBeat.gate.label}</div>
-                    <div className="flex flex-wrap gap-1.5">
-                      {currentBeat.gate.options.map((opt, idx) => {
-                        const primary = opt.kind === "approve" || opt.kind === "continue";
-                        const cls = primary
-                          ? "bg-[#7C3AED] text-white hover:bg-[#6D28D9] focus:ring-[#7C3AED]"
-                          : opt.kind === "cancel"
-                          ? "text-slate-500 hover:text-slate-700 hover:bg-white border border-transparent focus:ring-slate-300"
-                          : "text-slate-700 bg-white border border-slate-200 hover:bg-slate-50 focus:ring-slate-300";
-                        return (
-                          <button
-                            key={opt.label + idx}
-                            autoFocus={idx === 0}
-                            onClick={() => advance(opt.nextBeatIdx, opt.label, opt.kind)}
-                            className={`text-xs px-3 py-1.5 rounded-full transition focus:outline-none focus:ring-2 ${cls}`}
-                          >
-                            {opt.label}
-                          </button>
-                        );
-                      })}
-                    </div>
+                <div className="inline-block max-w-[640px] rounded-2xl border border-[#DDD6FE] bg-[#F5F3FF] px-3 py-2.5 space-y-2">
+                  <div className="text-[11px] uppercase tracking-wide text-[#5B21B6] font-semibold">{currentBeat.gate.label}</div>
+                  <div className="flex flex-wrap gap-1.5">
+                    {currentBeat.gate.options.map((opt, idx) => {
+                      const primary = opt.kind === "approve" || opt.kind === "continue";
+                      const cls = primary
+                        ? "bg-[#7C3AED] text-white hover:bg-[#6D28D9] focus:ring-[#7C3AED]"
+                        : opt.kind === "cancel"
+                        ? "text-slate-500 hover:text-slate-700 hover:bg-white border border-transparent focus:ring-slate-300"
+                        : "text-slate-700 bg-white border border-slate-200 hover:bg-slate-50 focus:ring-slate-300";
+                      return (
+                        <button
+                          key={opt.label + idx}
+                          autoFocus={idx === 0}
+                          onClick={() => advance(opt.nextBeatIdx, opt.label, opt.kind)}
+                          className={`text-xs px-3 py-1.5 rounded-full transition focus:outline-none focus:ring-2 ${cls}`}
+                        >
+                          {opt.label}
+                        </button>
+                      );
+                    })}
                   </div>
-                ) : (
-                  <button
-                    autoFocus
-                    onClick={() => advance(undefined, "continue", "continue")}
-                    className="text-xs px-3 py-1.5 rounded-full bg-[#7C3AED] text-white hover:bg-[#6D28D9] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]"
-                  >
-                    Continue
-                  </button>
-                )}
+                </div>
               </div>
             )}
+
           </div>
         )}
         {isComplete && (
