@@ -4042,14 +4042,23 @@ function UnitTile({
     ? derived.items.map((i) => `${i.label}${i.value ? " " + i.value : ""} (${i.confidence})`).join("; ")
     : "nothing pending";
 
+  const isVacant = derived.isVacantConfirmed;
+  const isShop = /shop/i.test(unit.label);
+  const contextLine = isVacant
+    ? unit.vacantSince
+      ? `Vacant since ${unit.vacantSince}`
+      : "Awaiting let"
+    : unit.tenant
+      ? unit.tenant
+      : "Currently let";
+
   return (
     <div
-      className="relative"
+      className="relative group"
       onMouseEnter={() => setOpen(true)}
       onMouseLeave={() => setOpen(false)}
       onFocus={() => setOpen(true)}
       onBlur={(e) => {
-        // close if focus leaves the wrapper entirely
         if (!e.currentTarget.contains(e.relatedTarget as Node)) setOpen(false);
       }}
     >
@@ -4058,29 +4067,70 @@ function UnitTile({
         data-uchip
         tabIndex={tabIx}
         onClick={(e) => {
-          // Single click on a flagged tile reveals the panel (mobile/keyboard);
-          // double-click or Enter still opens the unit. To keep behaviour simple,
-          // treat click as "open unit" — panel is shown on hover/focus.
           void e;
           onOpen();
         }}
         aria-haspopup="dialog"
         aria-expanded={open}
         aria-label={`${unit.label}, ${occupancyLabel}. ${alertSummary}. Open unit.`}
-        className="relative w-full flex items-center justify-center px-2 py-2.5 rounded-lg border border-slate-200 bg-white text-sm font-medium text-slate-800 hover:border-[#7C3AED] hover:bg-[#F5F3FF] transition focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40"
+        className={`relative w-full text-left p-3 rounded-xl border bg-gradient-to-br from-white to-[#FAF8FF] shadow-sm cursor-pointer transition-all duration-150 motion-reduce:transition-none focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/50 focus:border-[#7C3AED] ${
+          isVacant
+            ? "border-slate-200 hover:border-[#7C3AED] hover:shadow-md hover:-translate-y-0.5 motion-reduce:hover:translate-y-0"
+            : "border-slate-200 hover:border-[#7C3AED] hover:shadow-md hover:-translate-y-0.5 motion-reduce:hover:translate-y-0"
+        }`}
       >
-        {!hideAlertBadge && derived.hasAlert && (
+        {/* top row: icon + name + alert */}
+        <div className="flex items-start gap-2">
           <span
             aria-hidden
-            className="absolute top-1 right-1 inline-flex items-center justify-center w-3.5 h-3.5 rounded-full bg-amber-100 border border-amber-400 text-amber-700"
-            title="Has pending items — hover to view"
+            className="mt-0.5 inline-flex items-center justify-center w-7 h-7 rounded-md bg-[#F5F3FF] text-[#7C3AED] border border-[#E9E2FB] group-hover:bg-[#EDE5FF] transition-colors motion-reduce:transition-none"
           >
-            <svg width="8" height="8" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 2L1 21h22L12 2zm0 6l7.5 13h-15L12 8zm-1 4v4h2v-4h-2zm0 5v2h2v-2h-2z" />
-            </svg>
+            {isShop ? (
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 9l1-5h16l1 5"/><path d="M4 9v11h16V9"/><path d="M9 22V12h6v10"/></svg>
+            ) : (
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="5" y="3" width="14" height="18" rx="1"/><circle cx="15" cy="12" r="1" fill="currentColor"/></svg>
+            )}
           </span>
-        )}
-        <span className="truncate max-w-full">{unit.label}</span>
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center justify-between gap-2">
+              <span className="text-sm font-semibold text-slate-800 truncate">{unit.label}</span>
+              {!hideAlertBadge && derived.hasAlert && (
+                <span
+                  aria-label="Needs attention"
+                  title="Hobson has flagged items here"
+                  className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-amber-50 border border-amber-300 text-[10px] font-medium text-amber-800"
+                >
+                  <svg width="8" height="8" viewBox="0 0 24 24" fill="currentColor" aria-hidden><path d="M12 2L1 21h22L12 2zm-1 14h2v2h-2v-2zm0-7h2v5h-2V9z"/></svg>
+                  Attention
+                </span>
+              )}
+            </div>
+            <div className="mt-0.5 text-[11px] text-slate-500 truncate">{contextLine}</div>
+          </div>
+        </div>
+
+        {/* bottom row: status chip + open cue */}
+        <div className="mt-2.5 flex items-center justify-between">
+          <span
+            className={`inline-flex items-center gap-1.5 px-1.5 py-0.5 rounded-full border text-[10px] font-medium ${
+              isVacant
+                ? "bg-slate-50 border-slate-300 text-slate-600"
+                : "bg-emerald-50 border-emerald-300 text-emerald-700"
+            }`}
+          >
+            <span
+              aria-hidden
+              className={`inline-block w-1.5 h-1.5 rounded-full ${isVacant ? "bg-slate-400" : "bg-emerald-500"}`}
+            />
+            {isVacant ? "Vacant" : "Let"}
+          </span>
+          <span
+            aria-hidden
+            className="text-[11px] font-medium text-[#7C3AED] opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity motion-reduce:transition-none"
+          >
+            Open →
+          </span>
+        </div>
       </button>
 
       {open && (
@@ -4097,6 +4147,7 @@ function UnitTile({
     </div>
   );
 }
+
 
 function PropertyContent({
   property,
