@@ -6192,14 +6192,19 @@ function buildPA004Beats(): PerformBeat[] {
     {
       id: "s13_intro",
       stepKey: "actions",
-      text: "To raise the rent on Flat 8, the proper instrument is a Section 13 notice. I can prepare it for you. What new rent would you like to propose?",
-      gateFn: (ctx) => <RentChoiceGate ctx={ctx} nextIdx={13} />,
+      text: "Based on the comparables, I'd suggest a new rent of £49,500 per annum — the market median, an uplift of £1,500 (+3.1%) on the current £48,000. Shall I prepare the Section 13 notice with that figure?",
+      gateFn: (ctx) => <SuggestedRentGate ctx={ctx} yesIdx={14} noIdx={13} />,
+    },
+    {
+      id: "s13_blank_ack",
+      stepKey: "actions",
+      text: "Understood. I'll prepare the Section 13 notice with the new rent left blank — you can write the figure in before it's served.",
     },
     {
       id: "s13_prepared",
       stepKey: "actions",
       text: "Prepared.",
-      detailFn: (ctx) => <Section13NoticePreview chosenRent={ctx.chosenRent ?? 50400} />,
+      detailFn: (ctx) => <Section13NoticePreview chosenRent={ctx.chosenRent} />,
     },
     {
       id: "s13_delivery",
@@ -6208,8 +6213,8 @@ function buildPA004Beats(): PerformBeat[] {
       gate: {
         label: "How shall I deliver it?",
         options: [
-          { label: "Email", kind: "approve", nextBeatIdx: 15 },
-          { label: "Save to file", kind: "continue", nextBeatIdx: 17 },
+          { label: "Email", kind: "approve", nextBeatIdx: 16 },
+          { label: "Save to file", kind: "continue", nextBeatIdx: 18 },
         ],
       },
     },
@@ -6217,8 +6222,8 @@ function buildPA004Beats(): PerformBeat[] {
       id: "s13_email_prepared",
       stepKey: "actions",
       text: "Prepared.",
-      detailFn: (ctx) => <Section13EmailPreview chosenRent={ctx.chosenRent ?? 50400} />,
-      gateFn: (ctx) => <AddToOutlookGate advance={ctx.advance} nextIdx={16} />,
+      detailFn: (ctx) => <Section13EmailPreview chosenRent={ctx.chosenRent} />,
+      gateFn: (ctx) => <AddToOutlookGate advance={ctx.advance} nextIdx={17} />,
     },
     {
       id: "s13_close_email",
@@ -6239,6 +6244,35 @@ function buildPA004Beats(): PerformBeat[] {
       },
     },
   ];
+}
+
+/* ---------------- Suggested rent (Yes/No) gate ---------------- */
+function SuggestedRentGate({ ctx, yesIdx, noIdx }: { ctx: PerformCtx; yesIdx: number; noIdx: number }) {
+  const suggested = 49500;
+  return (
+    <div className="pl-[44px]">
+      <div className="inline-block max-w-[640px] rounded-2xl border border-[#DDD6FE] bg-[#F5F3FF] px-3 py-2.5 space-y-2">
+        <div className="text-[11px] uppercase tracking-wide text-[#5B21B6] font-semibold">
+          Prepare Section 13 at £49,500?
+        </div>
+        <div className="flex flex-wrap gap-1.5">
+          <button
+            autoFocus
+            onClick={() => { ctx.setChosenRent(suggested); ctx.advance(yesIdx, `Yes — prepare at ${fmtGBP(suggested)}`, "approve"); }}
+            className="text-xs px-3 py-1.5 rounded-full bg-[#7C3AED] text-white hover:bg-[#6D28D9] focus:outline-none focus:ring-2 focus:ring-[#7C3AED] transition"
+          >
+            Yes, use £49,500
+          </button>
+          <button
+            onClick={() => { ctx.setChosenRent(null); ctx.advance(noIdx, "No — leave new rent blank", "modify"); }}
+            className="text-xs px-3 py-1.5 rounded-full bg-white border border-slate-200 text-slate-700 hover:border-[#7C3AED] hover:bg-[#FAF9FF] focus:outline-none focus:ring-2 focus:ring-[#7C3AED] transition"
+          >
+            No, leave it blank
+          </button>
+        </div>
+      </div>
+    </div>
+  );
 }
 
 
