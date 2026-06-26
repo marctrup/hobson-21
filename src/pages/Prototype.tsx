@@ -3951,17 +3951,23 @@ function FeedbackBubble({
     </div>
   );
 
+  // Each Hobson "turn" in this exchange renders with its own owl avatar — never an avatar-less bubble.
+  const Row: React.FC<{ children: React.ReactNode; className?: string }> = ({ children, className = "" }) => (
+    <div className={`flex items-end gap-2 ${className}`}>
+      <OwlAvatar state={owl} />
+      <div className="flex flex-col gap-1.5 min-w-0">{children}</div>
+    </div>
+  );
+
   return (
-    <div className="flex items-end gap-2">
-      {AvatarSlot}
-      <div className="flex flex-col gap-1.5 min-w-0">
-        {/* 1. Hobson asks for feedback (typed in) */}
+    <div className="flex flex-col gap-3">
+      {/* 1. Hobson asks — owl + lavender bubble, typed in */}
+      <Row>
         <Bubble>
           {text}
           {streaming && <span className="inline-block w-1.5 h-3.5 ml-0.5 bg-[#7C3AED] align-middle animate-pulse" />}
         </Bubble>
-
-        {/* Inline reply: grade buttons sit immediately under his question, as the natural reply */}
+        {/* Inline reply: grade buttons sit immediately under his question */}
         {!streaming && (
           <div
             role="group"
@@ -3991,92 +3997,96 @@ function FeedbackBubble({
             })}
           </div>
         )}
+      </Row>
 
-        {/* 2. Hobson acknowledges — typed in, his voice, varied by grade */}
-        {graded && showAck && (
-          <Bubble className={reduceMotion ? "" : "animate-in fade-in slide-in-from-bottom-1 duration-300"}>
+      {/* 2. Hobson acknowledges — own owl + bubble, varied by grade */}
+      {graded && showAck && (
+        <Row className={reduceMotion ? "" : "animate-in fade-in slide-in-from-bottom-1 duration-300"}>
+          <Bubble>
             <TypedText text={ack} enabled={showAck} />
           </Bubble>
-        )}
+        </Row>
+      )}
 
-        {/* 3. Hobson asks the optional follow-up (separate speech bubble with inline reply) */}
-        {graded && !submitted && showNoteAsk && (
-          <>
-            <Bubble className={reduceMotion ? "" : "animate-in fade-in slide-in-from-bottom-1 duration-300"}>
-              If anything was missing, tell me.
-            </Bubble>
-            <div className="pl-1 pt-0.5 space-y-1.5">
-              {chips && chips.length > 0 && (
-                <div className="flex flex-wrap gap-1.5">
-                  {chips.map((c) => {
-                    const on = (feedback.chips || []).includes(c);
-                    return (
-                      <button
-                        key={c}
-                        type="button"
-                        onClick={() => onToggleChip(c)}
-                        aria-pressed={on}
-                        className={`text-[11px] px-2 py-0.5 rounded-full border transition focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED] focus-visible:ring-offset-1 ${
-                          on
-                            ? "bg-[#7C3AED] border-[#7C3AED] text-white"
-                            : "bg-white border-slate-300 text-slate-700 hover:border-[#7C3AED]"
-                        }`}
-                      >
-                        {c}
-                      </button>
-                    );
-                  })}
-                </div>
-              )}
-              <div className="max-w-[420px]">
-                <label htmlFor="fb-note" className="sr-only">Optional note to Hobson</label>
-                <textarea
-                  id="fb-note"
-                  value={note}
-                  onChange={(e) => setNote(e.target.value)}
-                  rows={2}
-                  placeholder="Optional — a line is fine"
-                  className="w-full text-[13px] rounded-xl border border-slate-300 bg-white px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]"
-                />
-                <div className="flex items-center gap-2 mt-1.5">
-                  <button
-                    type="button"
-                    onClick={() => onSubmitNote(note.trim())}
-                    className="text-[12px] px-3 py-1 rounded-md bg-[#7C3AED] text-white hover:bg-[#6D28D9] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED] focus-visible:ring-offset-1"
-                  >
-                    Send
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => onSkipNote()}
-                    className="text-[12px] px-2 py-1 rounded-md text-slate-600 hover:text-slate-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED] focus-visible:ring-offset-1"
-                  >
-                    Skip
-                  </button>
-                </div>
+      {/* 3. Hobson invites a note — own owl + bubble, with optional chips/textarea below */}
+      {graded && !submitted && showNoteAsk && (
+        <Row className={reduceMotion ? "" : "animate-in fade-in slide-in-from-bottom-1 duration-300"}>
+          <Bubble>
+            If something was missing, tell me.
+          </Bubble>
+          <div className="pl-1 pt-0.5 space-y-1.5">
+            {chips && chips.length > 0 && (
+              <div className="flex flex-wrap gap-1.5">
+                {chips.map((c) => {
+                  const on = (feedback.chips || []).includes(c);
+                  return (
+                    <button
+                      key={c}
+                      type="button"
+                      onClick={() => onToggleChip(c)}
+                      aria-pressed={on}
+                      className={`text-[11px] px-2 py-0.5 rounded-full border transition focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED] focus-visible:ring-offset-1 ${
+                        on
+                          ? "bg-[#7C3AED] border-[#7C3AED] text-white"
+                          : "bg-white border-slate-300 text-slate-700 hover:border-[#7C3AED]"
+                      }`}
+                    >
+                      {c}
+                    </button>
+                  );
+                })}
+              </div>
+            )}
+            <div className="max-w-[420px]">
+              <label htmlFor="fb-note" className="sr-only">Optional note to Hobson</label>
+              <textarea
+                id="fb-note"
+                value={note}
+                onChange={(e) => setNote(e.target.value)}
+                rows={2}
+                placeholder="Optional — a line is fine"
+                className="w-full text-[13px] rounded-xl border border-slate-300 bg-white px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]"
+              />
+              <div className="flex items-center gap-2 mt-1.5">
+                <button
+                  type="button"
+                  onClick={() => onSubmitNote(note.trim())}
+                  className="text-[12px] px-3 py-1 rounded-md bg-[#7C3AED] text-white hover:bg-[#6D28D9] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED] focus-visible:ring-offset-1"
+                >
+                  Send
+                </button>
+                <button
+                  type="button"
+                  onClick={() => onSkipNote()}
+                  className="text-[12px] px-2 py-1 rounded-md text-slate-600 hover:text-slate-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED] focus-visible:ring-offset-1"
+                >
+                  Skip
+                </button>
               </div>
             </div>
-            </>
-          )}
+          </div>
+        </Row>
+      )}
 
-        {/* 4. If they added a note/chips, Hobson thanks them for the detail — his voice, typed in */}
-        {submitted && noteGiven && showNoteAck && (
-          <Bubble className={reduceMotion ? "" : "animate-in fade-in slide-in-from-bottom-1 duration-300"}>
+      {/* 4. If they added a note/chips, Hobson acknowledges — own owl + bubble */}
+      {submitted && noteGiven && showNoteAck && (
+        <Row className={reduceMotion ? "" : "animate-in fade-in slide-in-from-bottom-1 duration-300"}>
+          <Bubble>
             <TypedText text={noteAck} enabled={showNoteAck} />
           </Bubble>
-        )}
+        </Row>
+      )}
 
-        {/* 5. Quiet inline confirmation — not a bubble, just a subtle, polite line */}
-        {submitted && showConfirm && (
-          <div
-            role="status"
-            aria-live="polite"
-            className={`pl-1 pt-0.5 text-[11px] text-slate-500 ${reduceMotion ? "" : "animate-in fade-in duration-300"}`}
-          >
-            Your feedback is recorded.
-          </div>
-        )}
-      </div>
+      {/* 5. Quiet inline confirmation — subtle line, not a bubble */}
+      {submitted && showConfirm && (
+        <div
+          role="status"
+          aria-live="polite"
+          className={`pl-12 text-[11px] text-slate-500 ${reduceMotion ? "" : "animate-in fade-in duration-300"}`}
+        >
+          Your feedback is recorded.
+        </div>
+      )}
     </div>
   );
 }
