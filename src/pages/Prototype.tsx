@@ -1355,9 +1355,145 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
   // ----- Broker black-book state -----
   const [contacts, setContacts] = useState<BrokerContact[]>(SEED_BROKER_CONTACTS);
   const [brokerEvents, setBrokerEvents] = useState<BrokerEvent[]>([]);
-  const [brokerFlow, setBrokerFlow] = useState<{ step: number; draft: Partial<BrokerContact> } | null>(null);
+  // ----- Magician build conversation state -----
+  const [magicianEvents, setMagicianEvents] = useState<MagicianEvent[]>([]);
+  const [magBuild, setMagBuild] = useState<MagBuildState | null>(null);
+  const [magStreamingId, setMagStreamingId] = useState<string | null>(null);
 
-  const initialsFromName = (name: string) => {
+  const magNewId = (p: string) => `${p}-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`;
+  const magAsk = (text: string) => {
+    const id = magNewId("mag");
+    setMagicianEvents((e) => [...e, { kind: "magician", id, text }]);
+    setMagStreamingId(id);
+  };
+  const magUserEcho = (text: string) => {
+    const id = magNewId("mu");
+    setMagicianEvents((e) => [...e, { kind: "user", id, text }]);
+  };
+
+  const handleCreateWorkflow = () => {
+    setMagicianEvents([]);
+    setMagBuild({ step: "q1", steps: MAG_DEFAULT_STEPS.map((s, i) => ({ ...s, uid: `${s.id}-${i}` })) });
+    setTimeout(() => magAsk("Wonderful. Let's build one together. What shall I keep watch on?"), 250);
+  };
+
+  const handleSaveWorkflow = (next: Workflow) => {
+    setWorkflows((arr) => arr.map((w) => w.id === next.id ? next : w));
+    setAdjustingWorkflowId(null);
+  };
+
+  // ----- Magician answer handlers -----
+  const magAnswerQ1 = (key: "rent_reviews" | "compliance" | "notices" | "other", label: string) => {
+    magUserEcho(label);
+    if (key === "rent_reviews") {
+      setMagBuild((b) => b ? { ...b, watch: key, step: "q2" } : b);
+      setTimeout(() => magAsk("Good — rent reviews. How far ahead should I act?"), 500);
+    } else {
+      // Politely redirect — only rent reviews are wired up in the demo.
+      setMagBuild((b) => b ? { ...b, watch: "rent_reviews", step: "q2" } : b);
+      setTimeout(() => magAsk("Noted. For today's build I'll stay with rent reviews — the others I'm preparing next. How far ahead should I act?"), 500);
+    }
+  };
+  const magAnswerQ2 = (lead: "6m" | "3m" | "on", label: string, phrase: string) => {
+    magUserEcho(label);
+    setMagBuild((b) => b ? { ...b, lead, leadLabel: label, triggerPhrase: phrase, step: "q3" } : b);
+    setTimeout(() => magAsk("Where does this apply?"), 500);
+  };
+  const magAnswerQ3 = (scope: "unit" | "property" | "portfolio", label: string) => {
+    magUserEcho(label);
+    if (scope === "unit") {
+      setMagBuild((b) => b ? { ...b, scope, step: "q3b" } : b);
+      setTimeout(() => magAsk("Which unit?"), 500);
+    } else {
+      const scopeLabel = scope === "property" ? "Stanley House (all units)" : "The whole portfolio";
+      setMagBuild((b) => b ? { ...b, scope, scopeLabel, step: "q4" } : b);
+      setTimeout(() => magAsk("And who should own it?"), 500);
+    }
+  };
+  const magAnswerQ3b = (unitLabel: string) => {
+    magUserEcho(unitLabel);
+    setMagBuild((b) => b ? { ...b, scopeLabel: unitLabel, step: "q4" } : b);
+    setTimeout(() => magAsk("And who should own it?"), 500);
+  };
+  const magAnswerQ4 = (owner: WorkflowOwner, label: string) => {
+    magUserEcho(label);
+    setMagBuild((b) => b ? { ...b, owner, step: "q5" } : b);
+    setTimeout(() => magAsk("Here's how I'd handle a rent review. Tap to keep, remove, reorder — or add a step."), 500);
+  };
+  const magUpdateSteps = (next: MagBuildStep[], note?: string) => {
+    setMagBuild((b) => b ? { ...b, steps: next, addOpen: false } : b);
+    if (note) setTimeout(() => magAsk(note), 200);
+  };
+  const magAddStep = (opt: { id: string; label: string; phrase: string }) => {
+    setMagBuild((b) => {
+      if (!b) return b;
+      const uid = `${opt.id}-${Date.now()}`;
+      return { ...b, steps: [...b.steps, { ...opt, uid }], addOpen: false };
+    });
+    setTimeout(() => magAsk("Added — anything else?"), 200);
+  };
+  const magAddCustomStep = (label: string) => {
+    if (!label.trim()) return;
+    const uid = `custom-${Date.now()}`;
+    setMagBuild((b) => b ? { ...b, steps: [...b.steps, { id: "custom", label: label.trim(), phrase: label.trim().toLowerCase(), uid }], addOpen: false, customDraft: "" } : b);
+    setTimeout(() => magAsk("Added — anything else?"), 200);
+  };
+  const magRemoveStep = (uid: string) => {
+    setMagBuild((b) => b ? { ...b, steps: b.steps.filter((s) => s.uid !== uid) } : b);
+    setTimeout(() => magAsk("Removed — anything else?"), 200);
+  };
+  const magMoveStep = (uid: string, dir: -1 | 1) => {
+    setMagBuild((b) => {
+      if (!b) return b;
+      const i = b.steps.findIndex((s) => s.uid === uid);
+      const j = i + dir;
+      if (i < 0 || j < 0 || j >= b.steps.length) return b;
+      const next = [...b.steps];
+      [next[i], next[j]] = [next[j], next[i]];
+      return { ...b, steps: next };
+    });
+  };
+  const magFinishStepsToQ6 = () => {
+    setMagBuild((b) => b ? { ...b, step: "q6" } : b);
+    setTimeout(() => magAsk("I'll prepare all of this and bring it to you for approval — I never act on my own. Shall I build it?"), 400);
+  };
+  const magAnswerQ6KeepEditing = () => {
+    magUserEcho("Keep editing");
+    setMagBuild((b) => b ? { ...b, step: "q5" } : b);
+    setTimeout(() => magAsk("Of course — adjust the steps and let me know when you're ready."), 400);
+  };
+  const magAnswerQ6Build = () => {
+    magUserEcho("Build it");
+    setMagBuild((b) => {
+      if (!b) return b;
+      const phrases = b.steps.map((s) => s.phrase);
+      const actionSummary = phrases.length === 0
+        ? "bring it to you for approval"
+        : `${phrases.slice(0, -1).join(", ")}${phrases.length > 1 ? " and " : ""}${phrases[phrases.length - 1]} — then bring it to you for approval`;
+      const id = `wf-${Date.now()}`;
+      const trigger = `a rent review is ${b.triggerPhrase || "approaching"}`;
+      const wf: Workflow = {
+        id,
+        name: "Rent review watch",
+        purpose: "Spots rent reviews early and prepares each one for your approval.",
+        icon: "calendar", tone: "purple", status: "built",
+        trigger,
+        action: actionSummary,
+        scopeLabel: b.scopeLabel || "Not yet set",
+        owner: b.owner || { kind: "all_teams" },
+        lastAdjusted: "just now",
+        stepCount: b.steps.length,
+        justBuilt: true,
+      };
+      setWorkflows((arr) => [wf, ...arr.map((w) => ({ ...w, justBuilt: false }))]);
+      const builtId = magNewId("mb");
+      setMagicianEvents((e) => [...e, { kind: "built", id: builtId, workflowId: id, name: wf.name, stepCount: wf.steps?.length ?? b.steps.length }]);
+      setTimeout(() => magAsk(`Built — '${wf.name}', a ${b.steps.length}-step workflow ending in your approval. You'll find it pinned on the right.`), 500);
+      return null;
+    });
+  };
+
+
     const parts = name.trim().split(/\s+/).filter(Boolean);
     if (parts.length === 0) return "NC";
     if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
