@@ -1967,8 +1967,10 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
       setTyping(false);
       setOwl("talking");
       const id = `rent-${Date.now()}`;
+      const chips = ["the figure", "the sources", "the explanation", "the format"];
       if (reduced) {
         setMessages((m) => [...m, { id, role: "hobson", text: RENT_BODY_TEXT, rich: "rentFlat2" }]);
+        if (testerMode) setTimeout(() => appendFeedbackPrompt(chips), 400);
         return;
       }
       // Stream the paragraph text inside a rich bubble, then settle.
@@ -1983,6 +1985,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
           setTimeout(step, 40 + Math.random() * 30);
         } else {
           setMessages((m) => m.map((x) => (x.id === id ? { ...x, streaming: false } : x)));
+          if (testerMode) setTimeout(() => appendFeedbackPrompt(chips), 700);
         }
       };
       setTimeout(step, 60);
@@ -2003,11 +2006,13 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
       const ans = selectedUnit ? answerUnitQuestion(q, selectedUnit, deriveUnit(selectedUnit)) : answerForUnit(q);
       if (reduced) {
         setMessages((m) => [...m, { id: `a-${Date.now()}`, role: "hobson", text: ans }]);
+        if (testerMode) setTimeout(() => appendFeedbackPrompt(), 400);
       } else {
-        streamHobsonMessage(ans, () => {});
+        streamHobsonMessage(ans, () => {}, { askFeedback: testerMode });
       }
     }, delay);
   };
+
 
   const showRoadmapToast = (label: string) => {
     setToast(`"${label}" is Portfolio Intelligence — coming soon. Open a unit and I can answer it today.`);
