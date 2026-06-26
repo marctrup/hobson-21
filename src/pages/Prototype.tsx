@@ -3910,11 +3910,15 @@ function FeedbackBubble({
   const submitted = !!feedback.submitted;
   const ack =
     feedback.grade === "helpful" ? "I'm glad to hear it. Thank you."
-    : feedback.grade === "partly" ? "Thank you — that's helpful to know. I'll see where it can be clearer."
-    : feedback.grade === "not" ? "Thank you for telling me — I'd genuinely rather know. Do tell me what was missing."
+    : feedback.grade === "partly" ? "Thank you — I'll see where it can be clearer."
+    : feedback.grade === "not" ? "Thank you for telling me — I'd rather know. What was missing?"
     : "";
+  // When the per-grade reply already invites the detail (Not helpful → "What was missing?"),
+  // suppress the separate note-prompt bubble so Hobson never repeats the same invitation.
+  const replyAlreadyAsks = feedback.grade === "not";
+  const noteAskText = feedback.grade === "not" ? "" : "Anything I could have done better?";
   const noteGiven = !!(feedback.note && feedback.note.trim().length > 0) || ((feedback.chips || []).length > 0);
-  const noteAck = noteGiven ? "Thank you — that's most helpful." : "Of course. Thank you.";
+  const noteAck = noteGiven ? "Thank you — that's helpful." : "Of course.";
 
   // Reduced motion check + staged reveal of follow-up bubbles.
   const reduceMotion = typeof window !== "undefined" && window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
