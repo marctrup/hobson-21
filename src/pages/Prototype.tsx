@@ -6372,9 +6372,10 @@ function RentChoiceGate({ ctx, nextIdx }: { ctx: PerformCtx; nextIdx: number }) 
   );
 }
 
-function Section13NoticePreview({ chosenRent }: { chosenRent: number }) {
-  const increase = chosenRent - FLAT8_CURRENT_RENT;
-  const pct = ((increase / FLAT8_CURRENT_RENT) * 100).toFixed(1);
+function Section13NoticePreview({ chosenRent }: { chosenRent: number | null }) {
+  const hasRent = chosenRent !== null;
+  const increase = hasRent ? (chosenRent as number) - FLAT8_CURRENT_RENT : 0;
+  const pct = hasRent ? ((increase / FLAT8_CURRENT_RENT) * 100).toFixed(1) : "";
   return (
     <div className="rounded-lg border border-emerald-200 bg-emerald-50/60 p-3 text-[12px] text-slate-700">
       <div className="text-[10px] uppercase tracking-wide text-emerald-800 font-semibold mb-2">
