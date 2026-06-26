@@ -6202,8 +6202,8 @@ function buildPA004Beats(): PerformBeat[] {
       gate: {
         label: "Create a review task?",
         options: [
-          { label: "Approve", kind: "approve", nextBeatIdx: 17 },
-          { label: "Skip", kind: "skip", nextBeatIdx: 18 },
+          { label: "Approve", kind: "approve", nextBeatIdx: 15 },
+          { label: "Skip", kind: "skip", nextBeatIdx: 16 },
         ],
       },
     },
