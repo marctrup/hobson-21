@@ -1318,7 +1318,12 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
     setAdminMode(false);
     setAdminCharacter(null);
   };
-  const selectAdminCharacter = (c: AdminCharacter) => setAdminCharacter(c);
+  const selectAdminCharacter = (c: AdminCharacter) => {
+    setAdminCharacter(c);
+    setMagicianEvents([]);
+    setMagBuild(null);
+    setMagStreamingId(null);
+  };
 
   // ----- Professor library state -----
   const [profDocs, setProfDocs] = useState<ProfDoc[]>(SEED_PROF_DOCS);
