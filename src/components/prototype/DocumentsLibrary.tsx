@@ -1149,3 +1149,173 @@ function FlatList({
 }
 
 export default DocumentsLibrary;
+
+/* ---------------- The Professor's notes ---------------- */
+
+type ProfessorNote = {
+  id: string;
+  kind: "gap" | "expiry" | "archive" | "lineage";
+  text: string;
+  cite?: { docId?: string; label: string };
+};
+
+function ProfessorNotes({
+  docs,
+  scopePropertyId,
+  scopeUnitId,
+  onJump,
+}: {
+  docs: DocItem[];
+  scopePropertyId: string | null;
+  scopeUnitId: string | null;
+  onJump: (d: DocItem) => void;
+}) {
+  const notes = useMemo<ProfessorNote[]>(() => {
+    const inScope = (d: DocItem) => {
+      if (scopePropertyId && d.propertyId !== scopePropertyId) return false;
+      if (scopeUnitId && d.unitId !== scopeUnitId) return false;
+      return true;
+    };
+    const scoped = docs.filter(inScope);
+    const out: ProfessorNote[] = [];
+
+    // Archive count (his "kept memory")
+    const archived = scoped.filter((d) => d.status === "superseded");
+    if (archived.length > 0) {
+      out.push({
+        id: "n-archive",
+        kind: "archive",
+        text: `${archived.length} superseded ${archived.length === 1 ? "document is" : "documents are"} retained as record — the lineage beneath the current position.`,
+      });
+    }
+
+    // EPC gap — units with no EPC on file (only flag in portfolio or property scope, not single-unit)
+    if (!scopeUnitId) {
+      const unitsConsidered: { propertyId: string; unitId: string; label: string }[] = [];
+      ASSETS.forEach((a) => {
+        if (scopePropertyId && a.propertyId !== scopePropertyId) return;
+        a.units.forEach((u) => unitsConsidered.push({
+          propertyId: a.propertyId,
+          unitId: u.id,
+          label: a.standalone ? a.propertyName : `${u.label}, ${a.propertyName}`,
+        }));
+      });
+      const missingEpc = unitsConsidered.filter(
+        (u) => !docs.some((d) => d.unitId === u.unitId && d.type === "EPC")
+      );
+      if (missingEpc.length > 0) {
+        const first = missingEpc[0];
+        out.push({
+          id: "n-epc-gap",
+          kind: "gap",
+          text:
+            missingEpc.length === 1
+              ? `No EPC on file for ${first.label}. An assessment may be required before the next letting.`
+              : `No EPC on file for ${missingEpc.length} units (including ${first.label}). Assessments may be required before next letting.`,
+        });
+      }
+    }
+
+    // Expiry — Gas Safety is annual; flag the Nugent certificate
+    const gas = scoped.find((d) => d.type === "Gas Safety" && d.status === "current");
+    if (gas) {
+      out.push({
+        id: "n-gas",
+        kind: "expiry",
+        text: `Gas Safety Certificate at ${gas.unitLabel ?? gas.propertyName} dated ${fmtDate(gas.date)} — annual renewal due within 12 months.`,
+        cite: { docId: gas.id, label: gas.title },
+      });
+    }
+
+    // Lineage observation — Flat 8 chain
+    const f8Var = scoped.find((d) => d.id === "d-f8-lease-var");
+    const f8Assign = scoped.find((d) => d.id === "d-f8-lease-assign");
+    if (f8Var && f8Assign) {
+      out.push({
+        id: "n-f8-lineage",
+        kind: "lineage",
+        text: `Flat 8, Stanley House: Deed of Variation (2021) raised rent £50,000 → £60,000; Assignment (2022) carried the position to ABC (Holdings) Limited. The chain is intact.`,
+        cite: { docId: f8Assign.id, label: f8Assign.title },
+      });
+    }
+
+    return out;
+  }, [docs, scopePropertyId, scopeUnitId]);
+
+  if (notes.length === 0) return null;
+
+  return (
+    <section
+      className="px-6 py-3 border-b border-slate-100 bg-[#FAF8FF]"
+      aria-label="The Professor's notes"
+    >
+      <div className="flex items-center gap-2 mb-2">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#5B21B6" strokeWidth="2" aria-hidden>
+          <path d="M4 4h12l4 4v12a0 0 0 010 0H4z" />
+          <path d="M16 4v4h4" />
+          <path d="M8 12h8M8 16h6" />
+        </svg>
+        <h3 className="text-[12px] font-semibold uppercase tracking-wide text-[#5B21B6]">
+          The Professor's notes
+        </h3>
+        <span className="text-[11px] text-slate-500">
+          observations from the catalogue
+        </span>
+      </div>
+      <ul className="grid gap-1.5 sm:grid-cols-2">
+        {notes.map((n) => {
+          const cited = n.cite?.docId ? docs.find((d) => d.id === n.cite!.docId) : null;
+          return (
+            <li key={n.id}>
+              <div className="flex items-start gap-2 px-3 py-2 rounded-md border border-[#7C3AED]/15 bg-white">
+                <NoteIcon kind={n.kind} />
+                <div className="min-w-0">
+                  <p className="text-[12px] text-slate-800 leading-snug">{n.text}</p>
+                  {cited && (
+                    <button
+                      onClick={() => onJump(cited)}
+                      className="mt-0.5 text-[11px] text-[#7C3AED] hover:underline focus:outline-none focus:ring-2 focus:ring-[#7C3AED] rounded"
+                    >
+                      cite: {cited.title} →
+                    </button>
+                  )}
+                </div>
+              </div>
+            </li>
+          );
+        })}
+      </ul>
+    </section>
+  );
+}
+
+function NoteIcon({ kind }: { kind: ProfessorNote["kind"] }) {
+  const common = "w-4 h-4 shrink-0 mt-0.5";
+  if (kind === "gap") {
+    return (
+      <svg className={common} viewBox="0 0 24 24" fill="none" stroke="#B45309" strokeWidth="2" aria-label="Gap">
+        <circle cx="12" cy="12" r="9" /><path d="M12 8v4" /><circle cx="12" cy="16" r="0.8" fill="#B45309" />
+      </svg>
+    );
+  }
+  if (kind === "expiry") {
+    return (
+      <svg className={common} viewBox="0 0 24 24" fill="none" stroke="#0369A1" strokeWidth="2" aria-label="Expiry">
+        <circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 2" />
+      </svg>
+    );
+  }
+  if (kind === "archive") {
+    return (
+      <svg className={common} viewBox="0 0 24 24" fill="none" stroke="#5B21B6" strokeWidth="2" aria-label="Archive">
+        <rect x="3" y="4" width="18" height="4" rx="1" /><path d="M5 8v12h14V8" /><path d="M10 12h4" />
+      </svg>
+    );
+  }
+  return (
+    <svg className={common} viewBox="0 0 24 24" fill="none" stroke="#5B21B6" strokeWidth="2" aria-label="Lineage">
+      <circle cx="6" cy="6" r="2" /><circle cx="18" cy="18" r="2" /><path d="M8 6h6a4 4 0 014 4v6" />
+    </svg>
+  );
+}
+
