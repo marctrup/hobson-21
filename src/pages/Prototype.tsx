@@ -863,7 +863,24 @@ const prefersReducedMotion = () =>
   window.matchMedia &&
   window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-type ChatMsg = { id: string; role: "hobson" | "user"; text: string; streaming?: boolean; rich?: "rentFlat2" };
+type FeedbackGrade = "helpful" | "partly" | "not";
+type FeedbackState = {
+  grade?: FeedbackGrade;
+  note?: string;
+  chips?: string[];
+  submitted?: boolean;
+};
+type ChatMsg = {
+  id: string;
+  role: "hobson" | "user";
+  text: string;
+  streaming?: boolean;
+  rich?: "rentFlat2";
+  kind?: "feedback";
+  feedback?: FeedbackState;
+  /** Optional component-tag chips offered with the feedback ask (Helpful/Partly/Not). */
+  feedbackChips?: string[];
+};
 
 const CHAT_TURN_GAP_PX = 24;
 const CHAT_GROUP_BUBBLE_GAP_PX = 8;
