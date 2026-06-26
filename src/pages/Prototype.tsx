@@ -6240,8 +6240,7 @@ function buildPA004Beats(): PerformBeat[] {
     },
   ];
 }
-  ];
-}
+
 
 /* ---------------- PA-004 Section 13 components ---------------- */
 
