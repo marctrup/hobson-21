@@ -6926,6 +6926,7 @@ function PerformWorkspace({
   const [streamingActive, setStreamingActive] = useState(false);
   const [approvedActions, setApprovedActions] = useState<string[]>([]);
   const [completed, setCompleted] = useState<string[]>(initialCompleted);
+  const [chosenRent, setChosenRent] = useState<number | null>(null);
   const [recapOpen, setRecapOpen] = useState<boolean>(mode === "perform");
   const recapNarration = useMemo(() => reviewRecapText(card), [card]);
   const [recapStream, setRecapStream] = useState<string>("");
