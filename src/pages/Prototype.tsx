@@ -3762,6 +3762,134 @@ function MagOptionButton({ children, onClick, disabled }: { children: React.Reac
   );
 }
 
+function MagicianIntake({ onSubmit }: { onSubmit: MagHandlers["onIntakeSubmit"] }) {
+  const [title, setTitle] = useState("");
+  const [purpose, setPurpose] = useState("");
+  const [description, setDescription] = useState("");
+  const [whenKey, setWhenKey] = useState<"6m" | "3m" | "on" | "always" | "custom" | null>(null);
+  const [whenCustom, setWhenCustom] = useState("");
+  const [visibility, setVisibility] = useState<"personal" | "company" | null>(null);
+
+  const whenOptions: { k: "6m" | "3m" | "on" | "always"; label: string }[] = [
+    { k: "6m", label: "6 months ahead" },
+    { k: "3m", label: "3 months ahead" },
+    { k: "on", label: "On the date" },
+    { k: "always", label: "Always visible" },
+  ];
+
+  const whenLabel = whenKey === "custom" ? whenCustom.trim() : whenOptions.find((o) => o.k === whenKey)?.label || "";
+  const canSubmit = title.trim() !== "" && purpose.trim() !== "" && whenKey !== null && (whenKey !== "custom" || whenCustom.trim() !== "") && visibility !== null;
+
+  const submit = () => {
+    if (!canSubmit || !whenKey || !visibility) return;
+    onSubmit({
+      title: title.trim(),
+      purpose: purpose.trim(),
+      description: description.trim(),
+      whenKey,
+      whenLabel,
+      visibility,
+    });
+  };
+
+  const fieldLabel = "block text-[11px] uppercase tracking-wide text-[#5B21B6] font-semibold mb-1";
+  const inputCls = "w-full text-[13px] border border-slate-200 rounded-md px-2.5 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40";
+
+  return (
+    <div className="space-y-3">
+      <div>
+        <label className={fieldLabel} htmlFor="mag-intake-title">Title <span className="text-rose-600">*</span></label>
+        <input id="mag-intake-title" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="e.g. Rent review" className={inputCls} autoFocus />
+      </div>
+      <div>
+        <label className={fieldLabel} htmlFor="mag-intake-purpose">Purpose <span className="text-rose-600">*</span></label>
+        <input id="mag-intake-purpose" value={purpose} onChange={(e) => setPurpose(e.target.value)} placeholder="What is this workflow for?" className={inputCls} />
+      </div>
+      <div>
+        <span className={fieldLabel}>When should it show on my dashboard? <span className="text-rose-600">*</span></span>
+        <div className="flex flex-wrap gap-1.5">
+          {whenOptions.map((o) => {
+            const active = whenKey === o.k;
+            return (
+              <button
+                key={o.k}
+                type="button"
+                onClick={() => setWhenKey(o.k)}
+                aria-pressed={active}
+                className={`px-3 py-1.5 rounded-full border text-[12.5px] font-medium focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40 ${
+                  active ? "bg-[#7C3AED] text-white border-[#7C3AED]" : "bg-white text-[#1F2330] border-[#7C3AED]/40 hover:bg-[#F5F3FF]"
+                }`}
+              >
+                {o.label}
+              </button>
+            );
+          })}
+          <button
+            type="button"
+            onClick={() => setWhenKey("custom")}
+            aria-pressed={whenKey === "custom"}
+            className={`px-3 py-1.5 rounded-full border text-[12.5px] font-medium focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40 ${
+              whenKey === "custom" ? "bg-[#7C3AED] text-white border-[#7C3AED]" : "bg-white text-[#1F2330] border-dashed border-[#7C3AED]/50 hover:bg-[#F5F3FF]"
+            }`}
+          >
+            Custom…
+          </button>
+        </div>
+        {whenKey === "custom" && (
+          <input
+            value={whenCustom}
+            onChange={(e) => setWhenCustom(e.target.value)}
+            placeholder="Type when it should appear (e.g. 9 months ahead)"
+            className={`${inputCls} mt-1.5`}
+            aria-label="Custom when"
+          />
+        )}
+      </div>
+      <div>
+        <label className={fieldLabel} htmlFor="mag-intake-desc">
+          Description <span className="text-slate-400 font-normal normal-case tracking-normal">(optional)</span>
+        </label>
+        <textarea id="mag-intake-desc" value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Any extra context — leave blank if you'd rather not." className={`${inputCls} min-h-[60px]`} />
+      </div>
+      <div>
+        <span className={fieldLabel}>Visibility <span className="text-rose-600">*</span></span>
+        <div className="inline-flex rounded-full border border-[#7C3AED]/40 p-0.5 bg-white" role="group" aria-label="Visibility">
+          {([
+            { k: "personal", label: "Personal" },
+            { k: "company", label: "Company-wide" },
+          ] as const).map((v) => {
+            const active = visibility === v.k;
+            return (
+              <button
+                key={v.k}
+                type="button"
+                onClick={() => setVisibility(v.k)}
+                aria-pressed={active}
+                className={`px-3 py-1.5 rounded-full text-[12.5px] font-medium focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40 ${
+                  active ? "bg-[#7C3AED] text-white" : "text-[#1F2330] hover:bg-[#F5F3FF]"
+                }`}
+              >
+                {v.label}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+      <div className="flex items-center justify-between gap-2 pt-1 border-t border-slate-100">
+        <span className="text-[11px] text-slate-500">Required fields marked <span className="text-rose-600">*</span></span>
+        <button
+          type="button"
+          onClick={submit}
+          disabled={!canSubmit}
+          className="px-3.5 py-1.5 rounded-full bg-[#7C3AED] text-white text-[12.5px] font-semibold hover:bg-[#6D28D9] disabled:bg-slate-200 disabled:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40"
+        >
+          Start building →
+        </button>
+      </div>
+    </div>
+  );
+}
+
 function MagicianBuildPanel({ build, handlers }: { build: MagBuildState; handlers: MagHandlers }) {
   const UNIT_CHOICES = ["Flat 8, Stanley House", "Flat 6, Stanley House", "Flat 2, 5 Nugent Terrace"];
   const usedStepIds = new Set(build.steps.map((s) => s.id));
