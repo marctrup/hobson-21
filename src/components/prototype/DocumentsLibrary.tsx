@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import owlReading from "@/assets/prototype/owl-reading.png";
+import characterProfessor from "@/assets/prototype/character-professor.png";
 
 /* ---------------- Types ---------------- */
 
