@@ -3647,6 +3647,193 @@ function AdminChat({ character, owl, professorEvents, onAssignProfessorType, bro
 }
 
 
+function MagicianStreamingBubble({ id, text, src, stream, onDone }: { id: string; text: string; src: string; stream: boolean; onDone: () => void }) {
+  const reduced = typeof window !== "undefined" && window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+  const [phase, setPhase] = useState<"typing" | "streaming" | "done">(stream ? "typing" : "done");
+  const [shown, setShown] = useState(stream ? "" : text);
+  useEffect(() => {
+    if (!stream) { setShown(text); setPhase("done"); return; }
+    setPhase("typing");
+    setShown("");
+    if (reduced) {
+      const t = setTimeout(() => { setShown(text); setPhase("done"); onDone(); }, 200);
+      return () => clearTimeout(t);
+    }
+    const typingTimer = setTimeout(() => {
+      setPhase("streaming");
+      const words = text.split(" ");
+      let i = 0;
+      let cancelled = false;
+      const step = () => {
+        if (cancelled) return;
+        i += 1;
+        setShown(words.slice(0, i).join(" "));
+        if (i < words.length) setTimeout(step, 45 + Math.random() * 35);
+        else { setPhase("done"); onDone(); }
+      };
+      setTimeout(step, 60);
+      return () => { cancelled = true; };
+    }, 500);
+    return () => clearTimeout(typingTimer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id]);
+  return (
+    <>
+      {phase === "typing" ? (
+        <div className="flex items-end gap-2" aria-live="polite">
+          <CharacterAvatar src={src} />
+          <div className="bg-[#EDE9FE] px-4 py-3 rounded-2xl rounded-bl-md flex items-center gap-1">
+            <Dot delay={0} /><Dot delay={150} /><Dot delay={300} />
+          </div>
+        </div>
+      ) : (
+        <div className="flex items-end gap-2" aria-live="polite">
+          <CharacterAvatar src={src} />
+          <div className="max-w-[420px] bg-[#EDE9FE] text-[#1F2330] text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-bl-md">
+            {shown}
+            {phase === "streaming" && <span className="inline-block w-1.5 h-3.5 ml-0.5 bg-[#7C3AED] align-middle animate-pulse" />}
+          </div>
+        </div>
+      )}
+    </>
+  );
+}
+
+function MagOptionButton({ children, onClick, disabled }: { children: React.ReactNode; onClick: () => void; disabled?: boolean }) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      disabled={disabled}
+      className="px-3 py-1.5 rounded-full border border-[#7C3AED]/40 bg-white text-[12.5px] font-medium text-[#1F2330] hover:bg-[#F5F3FF] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40 disabled:opacity-40 disabled:cursor-not-allowed"
+    >
+      {children}
+    </button>
+  );
+}
+
+function MagicianBuildPanel({ build, handlers }: { build: MagBuildState; handlers: MagHandlers }) {
+  const UNIT_CHOICES = ["Flat 8, Stanley House", "Flat 6, Stanley House", "Flat 2, 5 Nugent Terrace"];
+  const usedStepIds = new Set(build.steps.map((s) => s.id));
+  return (
+    <div className="ml-12 max-w-[480px] rounded-xl border border-[#7C3AED]/30 bg-white p-3 shadow-sm space-y-3">
+      {build.step === "q1" && (
+        <div>
+          <div className="text-[11px] uppercase tracking-wide text-[#7C3AED] font-semibold mb-2">Choose one</div>
+          <div className="flex flex-wrap gap-2">
+            <MagOptionButton onClick={() => handlers.onQ1("rent_reviews", "Rent reviews")}>Rent reviews</MagOptionButton>
+            <MagOptionButton onClick={() => handlers.onQ1("compliance", "Compliance certificates")}>Compliance certificates</MagOptionButton>
+            <MagOptionButton onClick={() => handlers.onQ1("notices", "Notice deadlines")}>Notice deadlines</MagOptionButton>
+            <MagOptionButton onClick={() => handlers.onQ1("other", "Other")}>Other</MagOptionButton>
+          </div>
+        </div>
+      )}
+      {build.step === "q2" && (
+        <div>
+          <div className="text-[11px] uppercase tracking-wide text-[#7C3AED] font-semibold mb-2">How far ahead?</div>
+          <div className="flex flex-wrap gap-2">
+            <MagOptionButton onClick={() => handlers.onQ2("6m", "6 months ahead", "6 months away")}>6 months ahead</MagOptionButton>
+            <MagOptionButton onClick={() => handlers.onQ2("3m", "3 months ahead", "3 months away")}>3 months ahead</MagOptionButton>
+            <MagOptionButton onClick={() => handlers.onQ2("on", "On the date", "on the review date")}>On the date</MagOptionButton>
+          </div>
+        </div>
+      )}
+      {build.step === "q3" && (
+        <div>
+          <div className="text-[11px] uppercase tracking-wide text-[#7C3AED] font-semibold mb-2">Where does this apply?</div>
+          <div className="flex flex-wrap gap-2">
+            <MagOptionButton onClick={() => handlers.onQ3("unit", "A specific unit")}>A specific unit</MagOptionButton>
+            <MagOptionButton onClick={() => handlers.onQ3("property", "A whole property")}>A whole property</MagOptionButton>
+            <MagOptionButton onClick={() => handlers.onQ3("portfolio", "The whole portfolio")}>The whole portfolio</MagOptionButton>
+          </div>
+        </div>
+      )}
+      {build.step === "q3b" && (
+        <div>
+          <div className="text-[11px] uppercase tracking-wide text-[#7C3AED] font-semibold mb-2">Which unit?</div>
+          <div className="flex flex-wrap gap-2">
+            {UNIT_CHOICES.map((u) => (
+              <MagOptionButton key={u} onClick={() => handlers.onQ3b(u)}>{u}</MagOptionButton>
+            ))}
+          </div>
+        </div>
+      )}
+      {build.step === "q4" && (
+        <div>
+          <div className="text-[11px] uppercase tracking-wide text-[#7C3AED] font-semibold mb-2">Who should own it?</div>
+          <div className="flex flex-wrap gap-2">
+            <MagOptionButton onClick={() => handlers.onQ4({ kind: "all_teams" }, "All teams")}>All teams</MagOptionButton>
+            <MagOptionButton onClick={() => handlers.onQ4({ kind: "person", name: "Sarah Chen", role: "Asset Manager", initials: "SC" }, "Sarah Chen · Asset Manager")}>Sarah Chen · Asset Manager</MagOptionButton>
+            <MagOptionButton onClick={() => handlers.onQ4({ kind: "person", name: "James Okoro", role: "Lease Manager", initials: "JO" }, "James Okoro · Lease Manager")}>James Okoro · Lease Manager</MagOptionButton>
+          </div>
+        </div>
+      )}
+      {build.step === "q5" && (
+        <div>
+          <div className="text-[11px] uppercase tracking-wide text-[#7C3AED] font-semibold mb-2">Steps · {build.steps.length}</div>
+          <ol className="space-y-1.5 mb-2">
+            {build.steps.map((s, i) => (
+              <li key={s.uid} className="flex items-start gap-2 rounded-md border border-slate-200 bg-slate-50 px-2 py-1.5">
+                <span className="text-[11px] font-semibold text-slate-500 mt-0.5 w-4 text-right">{i + 1}.</span>
+                <span className="flex-1 text-[12.5px] text-slate-800 leading-snug">{s.label}</span>
+                <div className="flex items-center gap-0.5">
+                  <button type="button" aria-label="Move up" disabled={i === 0} onClick={() => handlers.onMoveStep(s.uid, -1)} className="w-6 h-6 grid place-items-center rounded text-slate-500 hover:bg-white disabled:opacity-30 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40">↑</button>
+                  <button type="button" aria-label="Move down" disabled={i === build.steps.length - 1} onClick={() => handlers.onMoveStep(s.uid, 1)} className="w-6 h-6 grid place-items-center rounded text-slate-500 hover:bg-white disabled:opacity-30 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40">↓</button>
+                  <button type="button" aria-label="Remove step" onClick={() => handlers.onRemoveStep(s.uid)} className="w-6 h-6 grid place-items-center rounded text-slate-500 hover:bg-white hover:text-rose-600 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40">×</button>
+                </div>
+              </li>
+            ))}
+            {build.steps.length === 0 && (
+              <li className="text-[12px] text-slate-500 italic px-2 py-1.5">No steps yet — add one below.</li>
+            )}
+          </ol>
+          {!build.addOpen ? (
+            <div className="flex flex-wrap gap-2">
+              <button type="button" onClick={() => handlers.onToggleAdd(true)} className="px-3 py-1.5 rounded-full border border-dashed border-[#7C3AED]/50 text-[12.5px] font-medium text-[#7C3AED] hover:bg-[#F5F3FF] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40">+ Add a step</button>
+              <button type="button" onClick={handlers.onFinishSteps} className="px-3 py-1.5 rounded-full bg-[#7C3AED] text-white text-[12.5px] font-semibold hover:bg-[#6D28D9] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40">Looks good — continue</button>
+            </div>
+          ) : (
+            <div className="rounded-md border border-[#7C3AED]/30 bg-[#F5F3FF] p-2 space-y-2">
+              <div className="text-[11px] uppercase tracking-wide text-[#7C3AED] font-semibold">Add a step</div>
+              <div className="flex flex-wrap gap-1.5">
+                {MAG_ADD_OPTIONS.map((o) => (
+                  <button key={o.id} type="button" onClick={() => handlers.onAddStep(o)} className="px-2.5 py-1 rounded-full border border-[#7C3AED]/40 bg-white text-[12px] text-[#1F2330] hover:bg-white/80 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40">
+                    + {o.label}{usedStepIds.has(o.id) ? " (again)" : ""}
+                  </button>
+                ))}
+              </div>
+              <div className="flex items-center gap-1.5">
+                <input
+                  value={build.customDraft || ""}
+                  onChange={(e) => handlers.onSetCustomDraft(e.target.value)}
+                  onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); handlers.onAddCustomStep(build.customDraft || ""); } }}
+                  placeholder="Add custom step…"
+                  className="flex-1 text-[12px] border border-slate-200 rounded-md px-2 py-1.5 bg-white focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40"
+                />
+                <button type="button" onClick={() => handlers.onAddCustomStep(build.customDraft || "")} className="px-2.5 py-1.5 rounded-md bg-[#7C3AED] text-white text-[12px] font-semibold hover:bg-[#6D28D9] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40">Add</button>
+                <button type="button" onClick={() => handlers.onToggleAdd(false)} className="px-2 py-1.5 rounded-md text-[12px] text-slate-500 hover:bg-white focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40">Cancel</button>
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+      {build.step === "q6" && (
+        <div>
+          <div className="text-[11px] uppercase tracking-wide text-[#7C3AED] font-semibold mb-2">Ready when you are</div>
+          <div className="flex flex-wrap gap-2">
+            <MagOptionButton onClick={handlers.onBuild}>Build it</MagOptionButton>
+            <MagOptionButton onClick={handlers.onKeepEditing}>Keep editing</MagOptionButton>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+
+
+
+
 function ProfTypeAssigner({ onAssign }: { onAssign: (type: string) => void }) {
   const [val, setVal] = useState("");
   return (
