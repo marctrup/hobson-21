@@ -3886,31 +3886,58 @@ function FeedbackBubble({
   const graded = !!feedback.grade;
   const submitted = !!feedback.submitted;
   const ack =
-    feedback.grade === "helpful" ? "Thank you — noted."
-    : feedback.grade === "partly" ? "Thank you — noted. I'll look at where I fell short."
-    : feedback.grade === "not" ? "Thank you for the honesty — noted."
+    feedback.grade === "helpful" ? "Thank you — I'm glad it served. I'll hold to that standard."
+    : feedback.grade === "partly" ? "Thank you — noted. Knowing where I fell short is exactly how I improve."
+    : feedback.grade === "not" ? "Thank you for telling me. I'd far rather know when I've missed the mark — it's how I get better."
     : "";
+  const noteGiven = !!(feedback.note && feedback.note.trim().length > 0) || ((feedback.chips || []).length > 0);
+  const noteAck = "And thank you for the detail — that's genuinely useful.";
 
   // Reduced motion check + staged reveal of follow-up bubbles.
   const reduceMotion = typeof window !== "undefined" && window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
   const [showAck, setShowAck] = useState(false);
   const [showNoteAsk, setShowNoteAsk] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
+  const [showNoteAck, setShowNoteAck] = useState(false);
 
   useEffect(() => {
     if (!graded) { setShowAck(false); setShowNoteAsk(false); return; }
     if (reduceMotion) { setShowAck(true); setShowNoteAsk(true); return; }
     const t1 = setTimeout(() => setShowAck(true), 250);
-    const t2 = setTimeout(() => setShowNoteAsk(true), 1100);
+    const t2 = setTimeout(() => setShowNoteAsk(true), 1400);
     return () => { clearTimeout(t1); clearTimeout(t2); };
   }, [graded, reduceMotion]);
 
   useEffect(() => {
-    if (!submitted) { setShowConfirm(false); return; }
-    if (reduceMotion) { setShowConfirm(true); return; }
-    const t = setTimeout(() => setShowConfirm(true), 250);
-    return () => clearTimeout(t);
-  }, [submitted, reduceMotion]);
+    if (!submitted) { setShowConfirm(false); setShowNoteAck(false); return; }
+    if (reduceMotion) { setShowNoteAck(true); setShowConfirm(true); return; }
+    const t1 = setTimeout(() => setShowNoteAck(true), 250);
+    const t2 = setTimeout(() => setShowConfirm(true), noteGiven ? 1500 : 600);
+    return () => { clearTimeout(t1); clearTimeout(t2); };
+  }, [submitted, reduceMotion, noteGiven]);
+
+  // Tiny typewriter for Hobson's acknowledgement bubbles — matches the streaming feel of his other speech.
+  function TypedText({ text, enabled }: { text: string; enabled: boolean }) {
+    const [shown, setShown] = useState(enabled || reduceMotion ? 0 : 0);
+    useEffect(() => {
+      if (reduceMotion) { setShown(text.length); return; }
+      setShown(0);
+      let i = 0;
+      const id = setInterval(() => {
+        i += 2;
+        if (i >= text.length) { setShown(text.length); clearInterval(id); }
+        else setShown(i);
+      }, 22);
+      return () => clearInterval(id);
+    }, [text]);
+    const done = shown >= text.length;
+    return (
+      <>
+        {text.slice(0, shown)}
+        {!done && <span className="inline-block w-1.5 h-3.5 ml-0.5 bg-[#7C3AED] align-middle animate-pulse" />}
+      </>
+    );
+  }
 
   const GRADES: { id: FeedbackGrade; label: string; glyph: string; aria: string }[] = [
     { id: "helpful", label: "Helpful", glyph: "✓", aria: "Mark answer helpful" },
@@ -3965,10 +3992,10 @@ function FeedbackBubble({
           </div>
         )}
 
-        {/* 2. Hobson acknowledges (separate speech bubble) */}
+        {/* 2. Hobson acknowledges — typed in, his voice, varied by grade */}
         {graded && showAck && (
           <Bubble className={reduceMotion ? "" : "animate-in fade-in slide-in-from-bottom-1 duration-300"}>
-            {ack}
+            <TypedText text={ack} enabled={showAck} />
           </Bubble>
         )}
 
@@ -4029,14 +4056,25 @@ function FeedbackBubble({
                 </div>
               </div>
             </div>
-          </>
+            </>
+          )}
+
+        {/* 4. If they added a note/chips, Hobson thanks them for the detail — his voice, typed in */}
+        {submitted && noteGiven && showNoteAck && (
+          <Bubble className={reduceMotion ? "" : "animate-in fade-in slide-in-from-bottom-1 duration-300"}>
+            <TypedText text={noteAck} enabled={showNoteAck} />
+          </Bubble>
         )}
 
-        {/* 4. Final confirmation as Hobson speech */}
+        {/* 5. Quiet inline confirmation — not a bubble, just a subtle, polite line */}
         {submitted && showConfirm && (
-          <Bubble className={reduceMotion ? "" : "animate-in fade-in slide-in-from-bottom-1 duration-300"}>
-            <span role="status" aria-live="polite">Thank you — your feedback is recorded.</span>
-          </Bubble>
+          <div
+            role="status"
+            aria-live="polite"
+            className={`pl-1 pt-0.5 text-[11px] text-slate-500 ${reduceMotion ? "" : "animate-in fade-in duration-300"}`}
+          >
+            Your feedback is recorded.
+          </div>
         )}
       </div>
     </div>
