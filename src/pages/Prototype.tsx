@@ -1655,7 +1655,31 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [beatIdx, lineIdx, view, owlsReady]);
 
-  const streamHobsonMessage = (text: string, done: () => void) => {
+  const appendFeedbackPrompt = (chips?: string[]) => {
+    const fid = `fb-${Date.now()}-${Math.random()}`;
+    const text = "Was that of use to you? Your view helps me improve.";
+    if (reduced) {
+      setMessages((m) => [...m, { id: fid, role: "hobson", text, kind: "feedback", feedback: {}, feedbackChips: chips }]);
+      return;
+    }
+    setMessages((m) => [...m, { id: fid, role: "hobson", text: "", streaming: true, kind: "feedback", feedback: {}, feedbackChips: chips }]);
+    const words = text.split(" ");
+    let i = 0;
+    const step = () => {
+      i += 1;
+      const partial = words.slice(0, i).join(" ");
+      setMessages((m) => m.map((x) => (x.id === fid ? { ...x, text: partial } : x)));
+      if (i < words.length) setTimeout(step, 45 + Math.random() * 30);
+      else setMessages((m) => m.map((x) => (x.id === fid ? { ...x, streaming: false } : x)));
+    };
+    setTimeout(step, 350);
+  };
+
+  const updateFeedback = (id: string, patch: Partial<FeedbackState>) => {
+    setMessages((m) => m.map((x) => (x.id === id ? { ...x, feedback: { ...(x.feedback || {}), ...patch } } : x)));
+  };
+
+  const streamHobsonMessage = (text: string, done: () => void, opts?: { askFeedback?: boolean; chips?: string[] }) => {
     const id = `m-${Date.now()}-${Math.random()}`;
     setMessages((m) => [...m, { id, role: "hobson", text: "", streaming: true }]);
     const words = text.split(" ");
@@ -1669,10 +1693,12 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
       } else {
         setMessages((m) => m.map((x) => (x.id === id ? { ...x, streaming: false } : x)));
         done();
+        if (opts?.askFeedback) setTimeout(() => appendFeedbackPrompt(opts.chips), 500);
       }
     };
     setTimeout(step, 60);
   };
+
 
   /* ----- send the pre-filled question during onboarding ----- */
   const advanceBeat = (userText?: string) => {
