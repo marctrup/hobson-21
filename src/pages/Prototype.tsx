@@ -4042,7 +4042,7 @@ function FeedbackBubble({
       {graded && !submitted && showNoteAsk && (
         <Row className={reduceMotion ? "" : "animate-in fade-in slide-in-from-bottom-1 duration-300"}>
           <Bubble>
-            If something was missing, tell me.
+            If anything was missing, I'd be glad to hear it.
           </Bubble>
           <div className="pl-1 pt-0.5 space-y-1.5">
             {chips && chips.length > 0 && (
