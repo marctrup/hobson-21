@@ -6121,11 +6121,8 @@ function buildPA004Beats(): PerformBeat[] {
       stepKey: "actions",
       text: "Draft notice prepared — held for service date.",
       detail: <PreparedPreview title="Review notice (draft)" body={"NOTICE OF RENT REVIEW\nProperty: Flat 8, Stanley House\nReview date: March 2027\nBasis: Open Market Rent (per lease)\n\nStatus: held — not yet served. Awaiting confirmed notice window."} />,
-      gate: {
-        label: "Continue",
-        options: [{ label: "Continue", kind: "continue", nextBeatIdx: 14 }],
-      },
     },
+
     {
       id: "b12",
       stepKey: "actions",
