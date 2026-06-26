@@ -2447,6 +2447,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
           {view === "property" && selectedProperty && (
             <PropertyContent
               property={selectedProperty}
+              testerMode={testerMode}
               propertyActionCards={testerMode ? [] : selectActionsForScope(actionCards, { level: "property", propertyId: selectedProperty.id })}
               expandedCardId={expandedCardId}
               setExpandedCardId={setExpandedCardId}
@@ -3990,12 +3991,14 @@ function UnitTile({
   tabIx,
   onOpen,
   scrollRef,
+  hideAlertBadge = false,
 }: {
   unit: Unit;
   derived: UnitDerived;
   tabIx: 0 | -1;
   onOpen: () => void;
   scrollRef: React.RefObject<HTMLDivElement>;
+  hideAlertBadge?: boolean;
 }) {
   const [open, setOpen] = useState(false);
   const [placement, setPlacement] = useState<"below" | "above">("below");
@@ -4066,7 +4069,7 @@ function UnitTile({
         aria-label={`${unit.label}, ${occupancyLabel}. ${alertSummary}. Open unit.`}
         className="relative w-full flex items-center justify-center px-2 py-2.5 rounded-lg border border-slate-200 bg-white text-sm font-medium text-slate-800 hover:border-[#7C3AED] hover:bg-[#F5F3FF] transition focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40"
       >
-        {derived.hasAlert && (
+        {!hideAlertBadge && derived.hasAlert && (
           <span
             aria-hidden
             className="absolute top-1 right-1 inline-flex items-center justify-center w-3.5 h-3.5 rounded-full bg-amber-100 border border-amber-400 text-amber-700"
@@ -4097,6 +4100,7 @@ function UnitTile({
 
 function PropertyContent({
   property,
+  testerMode = false,
   propertyActionCards = [],
   expandedCardId,
   setExpandedCardId,
@@ -4112,6 +4116,7 @@ function PropertyContent({
   onOpenWorkflow,
 }: {
   property: Property;
+  testerMode?: boolean;
   propertyActionCards?: ActionCard[];
   expandedCardId?: string | null;
   setExpandedCardId?: (id: string | null) => void;
@@ -4253,7 +4258,7 @@ function PropertyContent({
             <span className="text-sm font-semibold text-slate-800">Units ({property.units.length})</span>
             <span className="text-[12px] text-slate-500 truncate">
               · {counts.let} Let · {counts.vacant} Vacant
-              {counts.alerts > 0 && <> · <span className="text-amber-700 font-medium">{counts.alerts} need attention</span></>}
+              {!testerMode && counts.alerts > 0 && <> · <span className="text-amber-700 font-medium">{counts.alerts} need attention</span></>}
             </span>
           </span>
           <span aria-hidden className={`text-slate-400 transition-transform ${unitsOpen ? "rotate-180" : ""}`} style={{ transitionDuration: "220ms" }}>▾</span>
@@ -4264,24 +4269,26 @@ function PropertyContent({
           hidden={!unitsOpen}
           className="px-3 pb-3 pt-1 space-y-3"
         >
-          <div className="text-[10.5px] text-slate-500 flex items-center gap-3 flex-wrap">
-            <span className="inline-flex items-center gap-1">
-              <svg width="10" height="10" viewBox="0 0 24 24" aria-hidden className="text-emerald-600">
-                <circle cx="12" cy="12" r="10" fill="currentColor" />
-                <path d="M7 12.5l3 3 7-7" stroke="white" strokeWidth="2.5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-              Confirmed = known fact
-            </span>
-            <span className="inline-flex items-center gap-1">
-              <svg width="10" height="10" viewBox="0 0 24 24" aria-hidden className="text-amber-700">
-                <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" strokeWidth="2" strokeDasharray="3 2" />
-                <text x="12" y="16" textAnchor="middle" fontSize="11" fontWeight="700" fill="currentColor">?</text>
-              </svg>
-              Inferred = needs checking
-            </span>
-          </div>
+          {!testerMode && (
+            <div className="text-[10.5px] text-slate-500 flex items-center gap-3 flex-wrap">
+              <span className="inline-flex items-center gap-1">
+                <svg width="10" height="10" viewBox="0 0 24 24" aria-hidden className="text-emerald-600">
+                  <circle cx="12" cy="12" r="10" fill="currentColor" />
+                  <path d="M7 12.5l3 3 7-7" stroke="white" strokeWidth="2.5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+                Confirmed = known fact
+              </span>
+              <span className="inline-flex items-center gap-1">
+                <svg width="10" height="10" viewBox="0 0 24 24" aria-hidden className="text-amber-700">
+                  <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" strokeWidth="2" strokeDasharray="3 2" />
+                  <text x="12" y="16" textAnchor="middle" fontSize="11" fontWeight="700" fill="currentColor">?</text>
+                </svg>
+                Inferred = needs checking
+              </span>
+            </div>
+          )}
 
-          {property.units.length > 8 && (
+          {!testerMode && property.units.length > 8 && (
             <div className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-slate-200 bg-white focus-within:border-[#7C3AED] focus-within:ring-2 focus-within:ring-[#7C3AED]/20 transition">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-slate-400">
                 <circle cx="11" cy="11" r="7" /><path d="M21 21l-4-4" />
@@ -4305,14 +4312,16 @@ function PropertyContent({
             </div>
           )}
 
-          <div className="flex flex-wrap gap-1.5">
-            {quickBtn("all", `All (${property.units.length})`)}
-            {counts.alerts > 0 && quickBtn("alerts", `Has alerts (${counts.alerts})`)}
-            {quickBtn("vacant", `Vacant (${counts.vacant})`)}
-            {counts.endingInferred > 0 && quickBtn("ending_inferred", `Ending (inferred) (${counts.endingInferred})`)}
-            {counts.breakReview > 0 && quickBtn("break_review", `Break/review upcoming (${counts.breakReview})`)}
-            {hasShops && quickBtn("shops", "Shops")}
-          </div>
+          {!testerMode && (
+            <div className="flex flex-wrap gap-1.5">
+              {quickBtn("all", `All (${property.units.length})`)}
+              {counts.alerts > 0 && quickBtn("alerts", `Has alerts (${counts.alerts})`)}
+              {quickBtn("vacant", `Vacant (${counts.vacant})`)}
+              {counts.endingInferred > 0 && quickBtn("ending_inferred", `Ending (inferred) (${counts.endingInferred})`)}
+              {counts.breakReview > 0 && quickBtn("break_review", `Break/review upcoming (${counts.breakReview})`)}
+              {hasShops && quickBtn("shops", "Shops")}
+            </div>
+          )}
 
           <div
             ref={gridWrapRef}
@@ -4352,6 +4361,7 @@ function PropertyContent({
                               derived={d}
                               tabIx={tabIx}
                               scrollRef={gridWrapRef}
+                              hideAlertBadge={testerMode}
                               onOpen={() => onOpenUnit(u.id)}
                             />
                           );
