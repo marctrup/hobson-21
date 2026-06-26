@@ -1784,7 +1784,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
       } else {
         setMessages((m) => m.map((x) => (x.id === id ? { ...x, streaming: false } : x)));
         done();
-        if (opts?.askFeedback) setTimeout(() => appendFeedbackPrompt(opts.chips), 500);
+        if (opts?.askFeedback) setTimeout(() => appendFeedbackPrompt(opts.chips), 1200);
       }
     };
     setTimeout(step, 60);
@@ -2061,7 +2061,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
       const chips = ["the figure", "the sources", "the explanation", "the format"];
       if (reduced) {
         setMessages((m) => [...m, { id, role: "hobson", text: RENT_BODY_TEXT, rich: "rentFlat2" }]);
-        if (testerMode) setTimeout(() => appendFeedbackPrompt(chips), 400);
+        if (testerMode) setTimeout(() => appendFeedbackPrompt(chips), 1100);
         return;
       }
       // Stream the paragraph text inside a rich bubble, then settle.
@@ -2076,7 +2076,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
           setTimeout(step, 40 + Math.random() * 30);
         } else {
           setMessages((m) => m.map((x) => (x.id === id ? { ...x, streaming: false } : x)));
-          if (testerMode) setTimeout(() => appendFeedbackPrompt(chips), 700);
+          if (testerMode) setTimeout(() => appendFeedbackPrompt(chips), 1300);
         }
       };
       setTimeout(step, 60);
@@ -2097,7 +2097,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
       const ans = selectedUnit ? answerUnitQuestion(q, selectedUnit, deriveUnit(selectedUnit)) : answerForUnit(q);
       if (reduced) {
         setMessages((m) => [...m, { id: `a-${Date.now()}`, role: "hobson", text: ans }]);
-        if (testerMode) setTimeout(() => appendFeedbackPrompt(), 400);
+        if (testerMode) setTimeout(() => appendFeedbackPrompt(), 1100);
       } else {
         streamHobsonMessage(ans, () => {}, { askFeedback: testerMode });
       }
@@ -3951,15 +3951,19 @@ function FeedbackBubble({
   );
 
   // Each Hobson "turn" in this exchange renders with its own owl avatar — never an avatar-less bubble.
+  // items-start keeps the owl pinned to the top-left of the turn, beside the bubble (matching HobsonBubble layout).
   const Row: React.FC<{ children: React.ReactNode; className?: string }> = ({ children, className = "" }) => (
-    <div className={`flex items-end gap-2 ${className}`}>
+    <div className={`flex items-start gap-2 ${className}`}>
       <OwlAvatar state={owl} />
       <div className="flex flex-col gap-1.5 min-w-0">{children}</div>
     </div>
   );
 
   return (
-    <div className="flex flex-col gap-3">
+    // Generous top margin separates the feedback ask from the preceding answer turn —
+    // ~36px breathing room so it reads as a courteous, separate follow-up, not crowded.
+    // Reduced-motion users get the same gap (no timed delay needed).
+    <div className="flex flex-col gap-3 mt-9">
       {/* 1. Hobson asks — owl + lavender bubble, typed in */}
       <Row>
         <Bubble>
