@@ -5968,16 +5968,28 @@ const PERFORMABLE_CARD_IDS = new Set<string>([
 
 /* ---------------- Perform workspace (PA-004) ---------------- */
 
+type PerformAdvance = (
+  jumpTo: number | "complete" | "exit" | undefined,
+  gateLabel: string,
+  kind: string,
+) => void;
+type PerformCtx = {
+  chosenRent: number | null;
+  setChosenRent: (n: number) => void;
+  advance: PerformAdvance;
+};
 type PerformBeat = {
   id: string;
   stepKey: string;            // which progress-rail step this beat belongs to
   text: string;               // narration line
   detail?: React.ReactNode;   // optional rendered block (summary, draft preview)
+  detailFn?: (ctx: PerformCtx) => React.ReactNode; // dynamic detail (uses live state)
   flag?: string;              // amber honesty flag
   gate?: {
     label: string;
     options: { label: string; kind: "approve" | "skip" | "defer" | "cancel" | "modify" | "continue"; nextBeatIdx?: number | "complete" | "exit" }[];
   };
+  gateFn?: (ctx: PerformCtx) => React.ReactNode; // custom inline decision UI
 };
 
 const PA004_STEPS: { key: string; label: string }[] = [
