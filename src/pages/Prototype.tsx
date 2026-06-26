@@ -272,7 +272,44 @@ type Workflow = {
   scopeDetail?: string[]; // long form on expand
   owner: WorkflowOwner;
   lastAdjusted?: string;
+  stepCount?: number;
+  justBuilt?: boolean;
 };
+
+type MagBuildStep = { id: string; label: string; phrase: string; uid: string };
+type MagBuildState = {
+  step: "q1" | "q2" | "q3" | "q3b" | "q4" | "q5" | "q6";
+  watch?: "rent_reviews" | "compliance" | "notices" | "other";
+  lead?: "6m" | "3m" | "on";
+  leadLabel?: string;
+  triggerPhrase?: string;
+  scope?: "unit" | "property" | "portfolio";
+  scopeLabel?: string;
+  owner?: WorkflowOwner;
+  steps: MagBuildStep[];
+  addOpen?: boolean;
+  customDraft?: string;
+};
+type MagicianEvent =
+  | { kind: "magician"; id: string; text: string }
+  | { kind: "user"; id: string; text: string }
+  | { kind: "built"; id: string; workflowId: string; name: string; stepCount: number };
+
+const MAG_DEFAULT_STEPS: { id: string; label: string; phrase: string }[] = [
+  { id: "read_lease", label: "Read the lease and confirm the review basis & date", phrase: "read the lease" },
+  { id: "comparables", label: "Gather comparable evidence", phrase: "gather comparables" },
+  { id: "surveyor", label: "Prepare a surveyor instruction", phrase: "prepare the surveyor instruction" },
+  { id: "section13", label: "Create the Section 13 notice", phrase: "create the Section 13 notice" },
+  { id: "email", label: "Draft the covering email to the tenant", phrase: "draft the covering email" },
+];
+const MAG_ADD_OPTIONS: { id: string; label: string; phrase: string }[] = [
+  { id: "comparables", label: "Gather comparables", phrase: "gather comparables" },
+  { id: "surveyor", label: "Prepare surveyor instruction", phrase: "prepare the surveyor instruction" },
+  { id: "section13", label: "Create Section 13 notice", phrase: "create the Section 13 notice" },
+  { id: "email", label: "Draft covering email", phrase: "draft the covering email" },
+  { id: "summary_review", label: "Prepare review summary", phrase: "prepare a review summary" },
+  { id: "notify_owner", label: "Notify owner", phrase: "notify the owner" },
+];
 
 const SEED_WORKFLOWS: Workflow[] = [
   {
