@@ -2116,7 +2116,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
         ) : (
           <>
             <RailItem icon="pin" label="Portfolio" active={view !== "onboarding" && !showDocuments && !showWhatIveDone} onClick={() => { setShowDocuments(false); setShowWhatIveDone(false); goPortfolio(false); }} />
-            {!testerMode && <RailItem icon="doc" label="Documents" active={view !== "onboarding" && showDocuments} onClick={() => { setShowWhatIveDone(false); setShowDocuments(true); }} />}
+            <RailItem icon="doc" label="Documents" active={view !== "onboarding" && showDocuments} onClick={() => { setShowWhatIveDone(false); setShowDocuments(true); }} />
             {!testerMode && <RailItem icon="clock" label={"What I've done"} active={view !== "onboarding" && showWhatIveDone} onClick={() => { setShowDocuments(false); setShowWhatIveDone(true); }} />}
             <RailItem icon="chat" label="Chat History" />
             <div className="mt-auto flex flex-col items-center gap-3 pb-2">
