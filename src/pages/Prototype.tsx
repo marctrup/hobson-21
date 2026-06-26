@@ -77,6 +77,7 @@ type BrokerContact = {
   relatedTo: string;            // linked properties / landlord / introduced by …
   flagged?: boolean;
   flagLabel?: string;
+  imported?: boolean;
 };
 
 const BROKER_TYPE_META: Record<BrokerContactType, { label: string; plural: string; tone: string; ring: string; bg: string; text: string; iconPath: React.ReactNode }> = {
