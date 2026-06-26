@@ -7190,7 +7190,7 @@ function PerformWorkspace({
   );
 }
 
-function BeatBubble({ beat, streamingText, streaming, done }: { beat: PerformBeat; streamingText?: string; streaming?: boolean; done: boolean }) {
+function BeatBubble({ beat, streamingText, streaming, done, detailOverride }: { beat: PerformBeat; streamingText?: string; streaming?: boolean; done: boolean; detailOverride?: React.ReactNode }) {
   const text = streamingText ?? beat.text;
   return (
     <div className={`flex items-start gap-2 ${done ? "opacity-80" : ""}`}>
