@@ -43,10 +43,12 @@ const ADMIN_CHARACTERS: { id: AdminCharacter; name: string; src: string; tagline
   },
 ];
 
+type BrokerImportFlag = { name: string; reason: string };
 type BrokerEvent =
   | { kind: "broker"; id: string; text: string }
   | { kind: "user"; id: string; text: string }
-  | { kind: "summary"; id: string; name: string };
+  | { kind: "summary"; id: string; name: string }
+  | { kind: "importSummary"; id: string; total: number; byType: Record<BrokerContactType, number>; linkedProperties: number; flagged: BrokerImportFlag[]; filename: string };
 
 type BrokerField = "name" | "type" | "role" | "email" | "phoneAndPref" | "address" | "relatedTo";
 
