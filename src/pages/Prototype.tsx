@@ -804,36 +804,32 @@ const BEATS: Beat[] = [
   {
     owl: "talking",
     lines: [
-      `Good morning, ${FIRST_NAME}. I am Hobson — a colleague entrusted with helping you look after your portfolio.`,
-      
+      `Good morning, ${FIRST_NAME}. I am Hobson — a colleague entrusted with the care of your portfolio.`,
       "If I may, I should like to explain how I work.",
     ],
-    prefill: "Go ahead",
+    prefill: "Please do.",
     mapAction: "none",
   },
   {
     owl: "default",
     lines: [
-      
       "Your assets — your properties and units — are what I seek to understand. Your documents are how I come to understand them.",
-      
     ],
-    prefill: "How, do you visualise my portfolio?",
+    prefill: "How do you see my portfolio?",
     mapAction: "none",
   },
   {
     owl: "default",
     lines: [
-      "I regard your portfolio as a collection of units — some gathered together under one roof as a Property, others standing on their own. The unit is the occupiable space, and it sits at the very heart of how I view things.",
+      "I regard your portfolio as a collection of units — some gathered under one roof as a Property, others standing alone. The unit is the occupiable space, and it sits at the very heart of how I see things.",
     ],
-    prefill: "And where do documents belong in that?",
+    prefill: "And where do documents come in?",
     mapAction: "pulse-one",
   },
   {
     owl: "reading",
     lines: [
-      "I read two families of document: those that describe the occupation, and those that describe the asset itself — the property and units.",
-      
+      "I read two families of document: those that describe the occupation, and those that describe the asset itself — the property and its units.",
     ],
     prefill: "How does your reading become knowledge?",
     mapAction: "pulse-one-doc",
@@ -841,20 +837,18 @@ const BEATS: Beat[] = [
   {
     owl: "default",
     lines: [
-      "Seldom does a single document tell the whole story. I build understanding by drawing connections between them — a lease, the variation that altered its rent, the assignment that brought in a new tenant.",
-      "From those connections I form Unit and Property Knowledge — together they help me build the Portfolio Knowledge.",
+      "Seldom does one document tell the whole story. I build understanding by drawing the connections between them — a lease, the variation that altered its rent, the assignment that brought in a new tenant. From those connections I form Unit and Property Knowledge, and together they build your Portfolio Knowledge.",
     ],
-    prefill: "What does that allow you to do on my behalf?",
+    prefill: "What does that let you do for me?",
     mapAction: "pulse-all",
   },
   {
     owl: "talking",
     lines: [
-      "At present, I answer your questions and keep your information organised, connected and current.",
-      "As my knowledge builds, I am able to do more for you. I shall read the documents, gather what is needed, and prepare the work — then bring it to you for approval. The decision is always yours; the preparation is mine.",
-      
+      "For now, I answer your questions and keep your information organised, connected, and current. As my knowledge grows, I shall do more: read the documents, gather what is needed, and prepare the work — then bring it to you for approval. The decision is always yours; the preparation is mine.",
+      "That is the essence of it. Whenever you are ready, choose a property or unit and we shall begin.",
     ],
-    prefill: "Yes — please show me around.",
+    prefill: "",
     mapAction: "check-one",
   },
 ];
@@ -1749,6 +1743,10 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
     const beat = BEATS[beatIdx];
     if (!beat) return;
     if (lineIdx >= beat.lines.length) {
+      if (beatIdx === BEATS.length - 1) {
+        const t2 = setTimeout(() => goPortfolio(true), reduced ? 600 : 1800);
+        return () => clearTimeout(t2);
+      }
       setChipVisible(true);
       return;
     }
