@@ -6431,7 +6431,7 @@ function Section13EmailPreview({ chosenRent }: { chosenRent: number | null }) {
         </div>
         <div className="px-3 py-2.5 leading-relaxed text-slate-700 space-y-2 text-[12px]">
           <p>Dear {FLAT8_TENANT.split(" ")[0]},</p>
-          <p>Please find attached a Section 13 notice proposing a new rent of <strong>{fmtGBP(chosenRent)} per annum</strong> for Flat 8, Stanley House, taking effect from {FLAT8_EFFECTIVE}.</p>
+          <p>Please find attached a Section 13 notice proposing a new rent of {rentPhrase} for Flat 8, Stanley House, taking effect from {FLAT8_EFFECTIVE}.</p>
           <p>Do let me know if you have any questions; I'm happy to discuss.</p>
           <p>Kind regards,<br/>{FLAT8_LANDLORD}</p>
         </div>
