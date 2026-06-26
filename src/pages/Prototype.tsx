@@ -3289,10 +3289,7 @@ function AdminChat({ character, owl, professorEvents, onAssignProfessorType, bro
       {phase !== "typing" && (
         <div key={keyId} className="flex items-end gap-2" aria-live="polite">
           {Avatar}
-          <div className="max-w-[420px] bg-[#EDE9FE] text-[#1F2330] text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-bl-md">
-            {speaker === "hobson" && (
-              <div className="text-[12px] font-semibold text-slate-900 mb-1">Hobson</div>
-            )}
+          <div className="max-w-[420px] bg-[#EDE9FE] text-[#1F2330] text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-bl-md whitespace-pre-line">
             {shown}
             {phase === "streaming" && (
               <span className="inline-block w-1.5 h-3.5 ml-0.5 bg-[#7C3AED] align-middle animate-pulse" />
