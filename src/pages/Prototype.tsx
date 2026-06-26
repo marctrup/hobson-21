@@ -7497,6 +7497,51 @@ function MagicianWorkArea({ character, workflows, onCreate, onAdjust, onView }: 
         </div>
       </header>
 
+      {(() => {
+        const built = workflows.filter((w) => w.status === "built");
+        const drafts = workflows.filter((w) => w.status === "draft");
+        const withDate = built.filter((w) => w.lastAdjusted);
+        const newest = [...withDate].sort((a, b) => (b.lastAdjusted || "").localeCompare(a.lastAdjusted || ""))[0];
+        const epc = workflows.find((w) => /EPC/i.test(w.name));
+        const draftWf = drafts[0];
+        const notes: CharacterNote[] = [];
+        notes.push({
+          id: "mn-recent",
+          kind: "recent",
+          text: `Built 1 new workflow this week${epc ? ` — '${epc.name}'` : ""}.${newest ? ` Last adjusted '${newest.name}' on ${newest.lastAdjusted}.` : ""}`,
+          onClick: epc ? () => onView(epc.id) : (newest ? () => onView(newest.id) : undefined),
+          ctaLabel: "open workflow →",
+        });
+        notes.push({
+          id: "mn-totals",
+          kind: "totals",
+          text: `${workflows.length} workflow${workflows.length === 1 ? "" : "s"} · ${built.length} built and running · ${drafts.length} in draft.`,
+        });
+        if (draftWf) {
+          notes.push({
+            id: "mn-issue",
+            kind: "issue",
+            text: `'${draftWf.name}' is still a draft — it needs your sign-off before it can run, and it will lean on the Broker's book for tenant contacts once it's live.`,
+            onClick: () => onView(draftWf.id),
+            ctaLabel: "open draft →",
+          });
+        } else {
+          notes.push({
+            id: "mn-coverage",
+            kind: "coverage",
+            text: "All workflows built and ready.",
+          });
+        }
+        return (
+          <CharacterNotesStrip
+            character={character}
+            title="The Magician's notes"
+            subtitle="recent builds & workshop state"
+            notes={notes}
+          />
+        );
+      })()}
+
       {/* Filters */}
       <div className="px-5 py-3 border-b border-slate-100 flex flex-wrap items-center gap-2 shrink-0">
         <div className="relative">
