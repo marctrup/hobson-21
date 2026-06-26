@@ -274,11 +274,22 @@ type Workflow = {
   lastAdjusted?: string;
   stepCount?: number;
   justBuilt?: boolean;
+  description?: string;
+  whenLabel?: string;
+  visibility?: "personal" | "company";
 };
 
 type MagBuildStep = { id: string; label: string; phrase: string; uid: string };
 type MagBuildState = {
-  step: "q1" | "q2" | "q3" | "q3b" | "q4" | "q5" | "q6";
+  step: "intake" | "q1" | "q2" | "q3" | "q3b" | "q4" | "q5" | "q6";
+  // intake (user-authored)
+  title?: string;
+  purpose?: string;
+  description?: string;
+  whenKey?: "6m" | "3m" | "on" | "always" | "custom";
+  whenLabel?: string;
+  visibility?: "personal" | "company";
+  // build conversation
   watch?: "rent_reviews" | "compliance" | "notices" | "other";
   lead?: "6m" | "3m" | "on";
   leadLabel?: string;
