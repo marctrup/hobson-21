@@ -3767,6 +3767,9 @@ function MagicianBuildPanel({ build, handlers }: { build: MagBuildState; handler
   const usedStepIds = new Set(build.steps.map((s) => s.id));
   return (
     <div className="ml-12 max-w-[480px] rounded-xl border border-[#7C3AED]/30 bg-white p-3 shadow-sm space-y-3">
+      {build.step === "intake" && (
+        <MagicianIntake onSubmit={handlers.onIntakeSubmit} />
+      )}
       {build.step === "q1" && (
         <div>
           <div className="text-[11px] uppercase tracking-wide text-[#7C3AED] font-semibold mb-2">Choose one</div>
