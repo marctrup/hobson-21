@@ -8210,14 +8210,16 @@ function WorkflowAdjustDialog({ workflow, staff, onClose, onSave }: {
 
 /* ---------- The Broker — composer + black book ---------- */
 
-function BrokerComposer({ onAdd, flow, onSubmitAnswer, onCancel }: {
+function BrokerComposer({ onAdd, onUpload, flow, onSubmitAnswer, onCancel }: {
   onAdd: () => void;
+  onUpload: (filename: string) => void;
   flow: { step: number; draft: Partial<BrokerContact> } | null;
   onSubmitAnswer: (answer: string) => void;
   onCancel: () => void;
 }) {
   const [value, setValue] = useState("");
   const inputRef = useRef<HTMLInputElement | null>(null);
+  const fileRef = useRef<HTMLInputElement | null>(null);
   const stepKey = flow?.step ?? -1;
   useEffect(() => {
     setValue("");
@@ -8230,22 +8232,50 @@ function BrokerComposer({ onAdd, flow, onSubmitAnswer, onCancel }: {
   if (!flow) {
     return (
       <div className="flex flex-col gap-2">
-        <div className="flex items-center gap-3 px-4 py-3 rounded-2xl border-2 border-dashed border-[#7C3AED]/40 bg-white">
-          <button
-            type="button"
-            onClick={onAdd}
-            className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full bg-[#7C3AED] text-white text-[13px] font-semibold shadow-sm hover:bg-[#6D28D9] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40"
-          >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-              <path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/>
-              <circle cx="9" cy="7" r="4"/>
-              <path d="M19 8v6M22 11h-6"/>
-            </svg>
-            Add a contact
-          </button>
-          <div className="flex-1 min-w-0">
-            <div className="text-[12px] font-medium text-slate-800">Staff, subcontractors, occupants — anyone who matters</div>
-            <div className="text-[11px] text-slate-500">I'll ask the questions and you'll provide the answers.</div>
+        <div className="px-4 py-3 rounded-2xl border-2 border-dashed border-[#7C3AED]/40 bg-white flex flex-col gap-2.5">
+          <div className="text-[12px] text-slate-700 leading-snug">
+            Add a contact and I'll take you through it — or hand me a spreadsheet of your contacts and I'll read them in. Either way, I'll connect each one to the right properties and remember how they relate.
+          </div>
+          <div className="flex flex-wrap items-center gap-2">
+            <button
+              type="button"
+              onClick={onAdd}
+              className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full bg-[#7C3AED] text-white text-[13px] font-semibold shadow-sm hover:bg-[#6D28D9] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                <path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/>
+                <circle cx="9" cy="7" r="4"/>
+                <path d="M19 8v6M22 11h-6"/>
+              </svg>
+              Add a contact
+            </button>
+            <span className="text-[11px] text-slate-400 px-0.5">or</span>
+            <button
+              type="button"
+              onClick={() => fileRef.current?.click()}
+              className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full border border-[#7C3AED]/60 bg-white text-[#7C3AED] text-[13px] font-semibold hover:bg-[#F5F3FF] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                <path d="M3 7h6v4H3zM3 13h6v4H3zM11 7h10v10H11z"/>
+                <path d="M16 3v4M14 5h4"/>
+              </svg>
+              Upload contacts
+            </button>
+            <input
+              ref={fileRef}
+              type="file"
+              accept=".csv,.xlsx,.xls"
+              className="sr-only"
+              aria-label="Upload contacts spreadsheet"
+              onChange={(e) => {
+                const f = e.target.files?.[0];
+                onUpload(f?.name || "contacts-export.csv");
+                if (fileRef.current) fileRef.current.value = "";
+              }}
+            />
+          </div>
+          <div className="text-[11px] text-slate-500">
+            One contact at a time, or a whole list (CSV / XLSX). I'll flag anything I can't place — I won't invent details or silently merge duplicates.
           </div>
         </div>
       </div>
