@@ -4003,7 +4003,7 @@ function FeedbackBubble({
         {graded && !submitted && showNoteAsk && (
           <>
             <Bubble className={reduceMotion ? "" : "animate-in fade-in slide-in-from-bottom-1 duration-300"}>
-              If you've a moment, what would have made it better?
+              If anything was missing, tell me.
             </Bubble>
             <div className="pl-1 pt-0.5 space-y-1.5">
               {chips && chips.length > 0 && (
