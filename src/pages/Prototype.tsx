@@ -6183,8 +6183,8 @@ function buildPA004Beats(): PerformBeat[] {
       gate: {
         label: "Prepare review notice?",
         options: [
-          { label: "Approve", kind: "approve", nextBeatIdx: 15 },
-          { label: "Skip", kind: "skip", nextBeatIdx: 16 },
+          { label: "Approve", kind: "approve", nextBeatIdx: 13 },
+          { label: "Skip", kind: "skip", nextBeatIdx: 14 },
         ],
       },
     },
