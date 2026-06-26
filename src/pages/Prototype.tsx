@@ -6083,11 +6083,8 @@ function buildPA004Beats(): PerformBeat[] {
       stepKey: "actions",
       text: "Drafted.",
       detail: <PreparedPreview title="Surveyor instructions" body={"To: [Usual surveyor]\nSubject: Open market rent advice — Flat 8, Stanley House\n\nWe have a rent review falling due in March 2027. Please advise on open market evidence and a suggested range, with comparables for the last 12 months."} />,
-      gate: {
-        label: "Continue",
-        options: [{ label: "Continue", kind: "continue", nextBeatIdx: 10 }],
-      },
     },
+
     {
       id: "b10",
       stepKey: "actions",
