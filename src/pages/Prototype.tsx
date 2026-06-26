@@ -3991,12 +3991,14 @@ function UnitTile({
   tabIx,
   onOpen,
   scrollRef,
+  hideAlertBadge = false,
 }: {
   unit: Unit;
   derived: UnitDerived;
   tabIx: 0 | -1;
   onOpen: () => void;
   scrollRef: React.RefObject<HTMLDivElement>;
+  hideAlertBadge?: boolean;
 }) {
   const [open, setOpen] = useState(false);
   const [placement, setPlacement] = useState<"below" | "above">("below");
