@@ -3273,6 +3273,99 @@ function AdminWorkArea({ character }: { character: { id: AdminCharacter; name: s
   );
 }
 
+/* ---------- Character notes strip (shared pattern: recent / totals / issues) ---------- */
+type CharacterNote = {
+  id: string;
+  kind: "recent" | "totals" | "issue" | "coverage";
+  text: string;
+  onClick?: () => void;
+  ctaLabel?: string;
+};
+
+function CharacterNotesStrip({
+  character,
+  title,
+  subtitle,
+  notes,
+}: {
+  character: { name: string; src: string };
+  title: string;
+  subtitle: string;
+  notes: CharacterNote[];
+}) {
+  if (notes.length === 0) return null;
+  return (
+    <section
+      className="px-5 py-3 border-b border-slate-100 bg-[#FAF8FF] shrink-0"
+      aria-label={`${character.name}'s notes`}
+    >
+      <div className="flex items-center gap-2 mb-2">
+        <div className="w-6 h-6 rounded-full overflow-hidden bg-white ring-1 ring-[#7C3AED]/20 grid place-items-center shrink-0">
+          <img src={character.src} alt="" aria-hidden className="w-[120%] h-[120%] object-contain" />
+        </div>
+        <h3 className="text-[12px] font-semibold uppercase tracking-wide text-[#5B21B6]">{title}</h3>
+        <span className="text-[11px] text-slate-500 truncate">· {subtitle}</span>
+      </div>
+      <ul className="grid gap-1.5 sm:grid-cols-2">
+        {notes.map((n) => {
+          const clickable = !!n.onClick;
+          const Tag: any = clickable ? "button" : "div";
+          return (
+            <li key={n.id}>
+              <Tag
+                {...(clickable ? { onClick: n.onClick, type: "button" } : {})}
+                className={`w-full text-left flex items-start gap-2 px-3 py-2 rounded-md border border-[#7C3AED]/15 bg-white ${
+                  clickable ? "hover:bg-[#F5F3FF] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]" : ""
+                }`}
+              >
+                <CharNoteIcon kind={n.kind} />
+                <div className="min-w-0">
+                  <p className="text-[12px] text-slate-800 leading-snug">{n.text}</p>
+                  {clickable && (
+                    <span className="mt-0.5 inline-block text-[11px] text-[#7C3AED]">
+                      {n.ctaLabel ?? "open →"}
+                    </span>
+                  )}
+                </div>
+              </Tag>
+            </li>
+          );
+        })}
+      </ul>
+    </section>
+  );
+}
+
+function CharNoteIcon({ kind }: { kind: CharacterNote["kind"] }) {
+  const common = "w-4 h-4 shrink-0 mt-0.5";
+  if (kind === "recent") {
+    return (
+      <svg className={common} viewBox="0 0 24 24" fill="none" stroke="#5B21B6" strokeWidth="2" aria-label="Recent activity">
+        <circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>
+      </svg>
+    );
+  }
+  if (kind === "totals") {
+    return (
+      <svg className={common} viewBox="0 0 24 24" fill="none" stroke="#5B21B6" strokeWidth="2" aria-label="Totals">
+        <rect x="3" y="4" width="18" height="4" rx="1"/><path d="M5 8v12h14V8"/><path d="M9 12h6M9 16h4"/>
+      </svg>
+    );
+  }
+  if (kind === "issue") {
+    return (
+      <svg className={common} viewBox="0 0 24 24" fill="none" stroke="#B45309" strokeWidth="2" aria-label="Issue">
+        <circle cx="12" cy="12" r="9"/><path d="M12 8v4"/><circle cx="12" cy="16" r="0.8" fill="#B45309"/>
+      </svg>
+    );
+  }
+  return (
+    <svg className={common} viewBox="0 0 24 24" fill="none" stroke="#0369A1" strokeWidth="2" aria-label="Coverage">
+      <path d="M5 12l4 4 10-10"/>
+    </svg>
+  );
+}
+
 function ProfessorWorkArea({ character, docs }: { character: { id: AdminCharacter; name: string; src: string; tagline: string; workTitle: string }; docs: ProfDoc[] }) {
   const [search, setSearch] = useState("");
   const filtered = docs.filter((d) => d.name.toLowerCase().includes(search.toLowerCase()));
@@ -3289,6 +3382,49 @@ function ProfessorWorkArea({ character, docs }: { character: { id: AdminCharacte
           </div>
         </div>
       </header>
+
+      {(() => {
+        const total = docs.length;
+        const pending = docs.filter((d) => d.status === "pending").length;
+        const extracted = docs.filter((d) => d.status === "extracted").length;
+        const chains = new Set(docs.filter((d) => d.chainedTo).map((d) => d.chainedTo)).size;
+        const recent = [...docs].sort((a, b) => (b.uploadedAt || "").localeCompare(a.uploadedAt || "")).slice(0, 3);
+        const mostRecent = recent[0];
+        const notes: CharacterNote[] = [];
+        if (mostRecent) {
+          notes.push({
+            id: "pn-recent",
+            kind: "recent",
+            text: `I have read ${recent.length} new document${recent.length === 1 ? "" : "s"} this week — most recently the ${mostRecent.type ?? "document"} for ${mostRecent.relatedUnit ?? "the portfolio"}, catalogued ${mostRecent.uploadedAt}.`,
+          });
+        }
+        notes.push({
+          id: "pn-totals",
+          kind: "totals",
+          text: `${extracted} of ${total} documents read and indexed · ${chains} chained record${chains === 1 ? "" : "s"} · every item retained, nothing discarded.`,
+        });
+        if (pending > 0) {
+          notes.push({
+            id: "pn-issue",
+            kind: "issue",
+            text: `${pending} document${pending === 1 ? " awaits" : "s await"} classification — please confirm ${pending === 1 ? "its" : "their"} type so I can index ${pending === 1 ? "it" : "them"} in full.`,
+          });
+        } else {
+          notes.push({
+            id: "pn-classify",
+            kind: "coverage",
+            text: "No documents await classification — every item has a confirmed type.",
+          });
+        }
+        return (
+          <CharacterNotesStrip
+            character={character}
+            title="The Professor's notes"
+            subtitle="recent reading & catalogue state"
+            notes={notes}
+          />
+        );
+      })()}
 
       {/* Filters */}
       <div className="px-5 py-3 border-b border-slate-100 flex flex-wrap items-center gap-2 shrink-0">
@@ -7361,6 +7497,51 @@ function MagicianWorkArea({ character, workflows, onCreate, onAdjust, onView }: 
         </div>
       </header>
 
+      {(() => {
+        const built = workflows.filter((w) => w.status === "built");
+        const drafts = workflows.filter((w) => w.status === "draft");
+        const withDate = built.filter((w) => w.lastAdjusted);
+        const newest = [...withDate].sort((a, b) => (b.lastAdjusted || "").localeCompare(a.lastAdjusted || ""))[0];
+        const epc = workflows.find((w) => /EPC/i.test(w.name));
+        const draftWf = drafts[0];
+        const notes: CharacterNote[] = [];
+        notes.push({
+          id: "mn-recent",
+          kind: "recent",
+          text: `Built 1 new workflow this week${epc ? ` — '${epc.name}'` : ""}.${newest ? ` Last adjusted '${newest.name}' on ${newest.lastAdjusted}.` : ""}`,
+          onClick: epc ? () => onView(epc.id) : (newest ? () => onView(newest.id) : undefined),
+          ctaLabel: "open workflow →",
+        });
+        notes.push({
+          id: "mn-totals",
+          kind: "totals",
+          text: `${workflows.length} workflow${workflows.length === 1 ? "" : "s"} · ${built.length} built and running · ${drafts.length} in draft.`,
+        });
+        if (draftWf) {
+          notes.push({
+            id: "mn-issue",
+            kind: "issue",
+            text: `'${draftWf.name}' is still a draft — it needs your sign-off before it can run, and it will lean on the Broker's book for tenant contacts once it's live.`,
+            onClick: () => onView(draftWf.id),
+            ctaLabel: "open draft →",
+          });
+        } else {
+          notes.push({
+            id: "mn-coverage",
+            kind: "coverage",
+            text: "All workflows built and ready.",
+          });
+        }
+        return (
+          <CharacterNotesStrip
+            character={character}
+            title="The Magician's notes"
+            subtitle="recent builds & workshop state"
+            notes={notes}
+          />
+        );
+      })()}
+
       {/* Filters */}
       <div className="px-5 py-3 border-b border-slate-100 flex flex-wrap items-center gap-2 shrink-0">
         <div className="relative">
@@ -7800,6 +7981,46 @@ function BrokerWorkArea({ character, contacts, onAdd }: {
           </div>
         </div>
       </header>
+
+      {(() => {
+        const linkedProperties = new Set<string>();
+        contacts.forEach((c) => {
+          const matches = c.relatedTo.match(/(5 Nugent Terrace|Stanley House|Cromwell Mews|Beaufort Mews)/g) || [];
+          matches.forEach((m) => linkedProperties.add(m));
+        });
+        const flagged = contacts.filter((c) => c.flagged);
+        const notes: CharacterNote[] = [];
+        notes.push({
+          id: "bn-recent",
+          kind: "recent",
+          text: "Added 2 contacts this week — Firewatch Ltd and Voltedge. Updated M&S's preferred contact.",
+        });
+        notes.push({
+          id: "bn-totals",
+          kind: "totals",
+          text: `${contacts.length} contact${contacts.length === 1 ? "" : "s"} · linked across ${linkedProperties.size} propert${linkedProperties.size === 1 ? "y" : "ies"}.`,
+        });
+        notes.push({
+          id: "bn-issue",
+          kind: "issue",
+          text: "Several occupied units have no tenant contact on file yet — notices the Magician's workflows draft can't reach them until I've added one.",
+        });
+        if (flagged.length > 0) {
+          notes.push({
+            id: "bn-flagged",
+            kind: "coverage",
+            text: `${flagged.length} contact${flagged.length === 1 ? "" : "s"} flagged for your attention — ${flagged.map((c) => c.name).join(", ")}.`,
+          });
+        }
+        return (
+          <CharacterNotesStrip
+            character={character}
+            title="The Broker's notes"
+            subtitle="recent additions & relationship gaps"
+            notes={notes}
+          />
+        );
+      })()}
 
       {/* Filters */}
       <div className="px-5 py-3 border-b border-slate-100 flex flex-wrap items-center gap-2 shrink-0">
