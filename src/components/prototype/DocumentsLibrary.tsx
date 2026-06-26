@@ -702,19 +702,19 @@ export function DocumentsLibrary({
     return scopePropertyAsset.units.find((u) => u.id === scopeUnit) || null;
   }, [scopePropertyAsset, scopeUnit]);
 
-  // streamed owl greeting (scope-aware)
+  // streamed Professor greeting (scope-aware, evidential register)
   const greeting = useMemo(() => {
     if (scopePropertyAsset && scopeUnitNode) {
       const unitLbl =
         scopePropertyAsset.standalone
           ? scopePropertyAsset.propertyName
           : `${scopeUnitNode.label}, ${scopePropertyAsset.propertyName}`;
-      return `Here are the documents for ${unitLbl}. Browse, view or download whatever you need.`;
+      return `I have catalogued every document held for ${unitLbl}. Every clause read, every date noted. Ask, and I shall cite the source.`;
     }
     if (scopePropertyAsset) {
-      return `Here are the documents for ${scopePropertyAsset.propertyName}. Feel free to browse, view or download.`;
+      return `I have catalogued every document held for ${scopePropertyAsset.propertyName}. Every clause read, every date noted. Ask, and I shall cite the source.`;
     }
-    return "Here are your documents — browse, view or download anything across the estate.";
+    return "I have catalogued 13 documents across your estate — 4 tenancy chains and 7 asset records. Every clause read, every date noted. Ask, and I shall cite the source.";
   }, [scopePropertyAsset, scopeUnitNode]);
 
   const reduced = prefersReducedMotion();
