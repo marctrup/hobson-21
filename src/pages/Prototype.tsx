@@ -4055,6 +4055,7 @@ function FeedbackBubble({
                   </button>
                 </div>
               </div>
+            </div>
             </>
           )}
 
