@@ -4098,6 +4098,7 @@ function UnitTile({
 
 function PropertyContent({
   property,
+  testerMode = false,
   propertyActionCards = [],
   expandedCardId,
   setExpandedCardId,
@@ -4113,6 +4114,7 @@ function PropertyContent({
   onOpenWorkflow,
 }: {
   property: Property;
+  testerMode?: boolean;
   propertyActionCards?: ActionCard[];
   expandedCardId?: string | null;
   setExpandedCardId?: (id: string | null) => void;
