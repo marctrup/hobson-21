@@ -4359,6 +4359,7 @@ function PropertyContent({
                               derived={d}
                               tabIx={tabIx}
                               scrollRef={gridWrapRef}
+                              hideAlertBadge={testerMode}
                               onOpen={() => onOpenUnit(u.id)}
                             />
                           );
