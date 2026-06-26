@@ -2061,7 +2061,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
       const chips = ["the figure", "the sources", "the explanation", "the format"];
       if (reduced) {
         setMessages((m) => [...m, { id, role: "hobson", text: RENT_BODY_TEXT, rich: "rentFlat2" }]);
-        if (testerMode) setTimeout(() => appendFeedbackPrompt(chips), 400);
+        if (testerMode) setTimeout(() => appendFeedbackPrompt(chips), 1100);
         return;
       }
       // Stream the paragraph text inside a rich bubble, then settle.
