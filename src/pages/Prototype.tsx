@@ -4302,7 +4302,7 @@ function PropertyContent({
         <div
           id={`units-panel-${property.id}`}
           hidden={!unitsOpen}
-          className="px-3 pb-3 pt-1 space-y-3"
+          className="mt-2 px-3 pb-3 pt-3 space-y-3 bg-white border border-slate-200 rounded-xl shadow-sm"
         >
           {!testerMode && (
             <div className="text-[10.5px] text-slate-500 flex items-center gap-3 flex-wrap">
