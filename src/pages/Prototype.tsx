@@ -1368,8 +1368,8 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
 
   const handleCreateWorkflow = () => {
     setMagicianEvents([]);
-    setMagBuild({ step: "q1", steps: MAG_DEFAULT_STEPS.map((s, i) => ({ ...s, uid: `${s.id}-${i}` })) });
-    setTimeout(() => magAsk("Wonderful. Let's build one together. What shall I keep watch on?"), 250);
+    setMagBuild({ step: "intake", steps: MAG_DEFAULT_STEPS.map((s, i) => ({ ...s, uid: `${s.id}-${i}` })) });
+    setTimeout(() => magAsk("Let's build this together. First, tell me a little about it."), 250);
   };
 
   const handleSaveWorkflow = (next: Workflow) => {
@@ -1378,15 +1378,49 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
   };
 
   // ----- Magician answer handlers -----
+  const magSubmitIntake = (intake: {
+    title: string;
+    purpose: string;
+    description: string;
+    whenKey: "6m" | "3m" | "on" | "always" | "custom";
+    whenLabel: string;
+    visibility: "personal" | "company";
+  }) => {
+    const phraseFor = (k: string, label: string) => {
+      if (k === "6m") return "6 months away";
+      if (k === "3m") return "3 months away";
+      if (k === "on") return "on the date";
+      if (k === "always") return "approaching (always visible)";
+      return label.toLowerCase();
+    };
+    magUserEcho(
+      `${intake.title} — ${intake.purpose}\nShow: ${intake.whenLabel} · ${intake.visibility === "personal" ? "Personal" : "Company-wide"}${intake.description ? `\n${intake.description}` : ""}`
+    );
+    setMagBuild((b) => b ? {
+      ...b,
+      title: intake.title,
+      purpose: intake.purpose,
+      description: intake.description,
+      whenKey: intake.whenKey,
+      whenLabel: intake.whenLabel,
+      visibility: intake.visibility,
+      lead: (intake.whenKey === "6m" || intake.whenKey === "3m" || intake.whenKey === "on") ? intake.whenKey : undefined,
+      leadLabel: intake.whenLabel,
+      triggerPhrase: phraseFor(intake.whenKey, intake.whenLabel),
+      step: "q1",
+    } : b);
+    setTimeout(() => magAsk("Thank you. Now — what shall I keep watch on?"), 500);
+  };
+
   const magAnswerQ1 = (key: "rent_reviews" | "compliance" | "notices" | "other", label: string) => {
     magUserEcho(label);
+    // 'when' is already captured at intake — skip Q2 entirely.
     if (key === "rent_reviews") {
-      setMagBuild((b) => b ? { ...b, watch: key, step: "q2" } : b);
-      setTimeout(() => magAsk("Good — rent reviews. How far ahead should I act?"), 500);
+      setMagBuild((b) => b ? { ...b, watch: key, step: "q3" } : b);
+      setTimeout(() => magAsk("Good — rent reviews. Where does this apply?"), 500);
     } else {
-      // Politely redirect — only rent reviews are wired up in the demo.
-      setMagBuild((b) => b ? { ...b, watch: "rent_reviews", step: "q2" } : b);
-      setTimeout(() => magAsk("Noted. For today's build I'll stay with rent reviews — the others I'm preparing next. How far ahead should I act?"), 500);
+      setMagBuild((b) => b ? { ...b, watch: "rent_reviews", step: "q3" } : b);
+      setTimeout(() => magAsk("Noted. For today's build I'll stay with rent reviews — the others I'm preparing next. Where does this apply?"), 500);
     }
   };
   const magAnswerQ2 = (lead: "6m" | "3m" | "on", label: string, phrase: string) => {
