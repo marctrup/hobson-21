@@ -3389,7 +3389,25 @@ const HOBSON_ADMIN_INTRO_PARAS = [
 ];
 const HOBSON_ADMIN_INTRO = HOBSON_ADMIN_INTRO_PARAS.join("\n\n");
 
-function AdminChat({ character, owl, professorEvents, onAssignProfessorType, brokerEvents, brokerFlowActive }: { character: { id: AdminCharacter; name: string; src: string; greeting: string } | null; owl: OwlState; professorEvents?: ProfEvent[]; onAssignProfessorType?: (batchId: string, type: string) => void; brokerEvents?: BrokerEvent[]; brokerFlowActive?: boolean }) {
+type MagHandlers = {
+  onQ1: (k: "rent_reviews" | "compliance" | "notices" | "other", label: string) => void;
+  onQ2: (k: "6m" | "3m" | "on", label: string, phrase: string) => void;
+  onQ3: (k: "unit" | "property" | "portfolio", label: string) => void;
+  onQ3b: (label: string) => void;
+  onQ4: (owner: WorkflowOwner, label: string) => void;
+  onAddStep: (opt: { id: string; label: string; phrase: string }) => void;
+  onAddCustomStep: (label: string) => void;
+  onRemoveStep: (uid: string) => void;
+  onMoveStep: (uid: string, dir: -1 | 1) => void;
+  onToggleAdd: (open: boolean) => void;
+  onSetCustomDraft: (v: string) => void;
+  onFinishSteps: () => void;
+  onKeepEditing: () => void;
+  onBuild: () => void;
+  onOpenBuilt: (id: string) => void;
+};
+
+function AdminChat({ character, owl, professorEvents, onAssignProfessorType, brokerEvents, brokerFlowActive, magicianEvents, magBuild, magStreamingId, onMagStreamDone, magHandlers }: { character: { id: AdminCharacter; name: string; src: string; greeting: string } | null; owl: OwlState; professorEvents?: ProfEvent[]; onAssignProfessorType?: (batchId: string, type: string) => void; brokerEvents?: BrokerEvent[]; brokerFlowActive?: boolean; magicianEvents?: MagicianEvent[]; magBuild?: MagBuildState | null; magStreamingId?: string | null; onMagStreamDone?: (id: string) => void; magHandlers?: MagHandlers }) {
   const [phase, setPhase] = useState<"typing" | "streaming" | "done">("typing");
   const [shown, setShown] = useState("");
   const reducedMotion = typeof window !== "undefined"
