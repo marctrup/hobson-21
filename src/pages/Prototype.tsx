@@ -863,7 +863,24 @@ const prefersReducedMotion = () =>
   window.matchMedia &&
   window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-type ChatMsg = { id: string; role: "hobson" | "user"; text: string; streaming?: boolean; rich?: "rentFlat2" };
+type FeedbackGrade = "helpful" | "partly" | "not";
+type FeedbackState = {
+  grade?: FeedbackGrade;
+  note?: string;
+  chips?: string[];
+  submitted?: boolean;
+};
+type ChatMsg = {
+  id: string;
+  role: "hobson" | "user";
+  text: string;
+  streaming?: boolean;
+  rich?: "rentFlat2";
+  kind?: "feedback";
+  feedback?: FeedbackState;
+  /** Optional component-tag chips offered with the feedback ask (Helpful/Partly/Not). */
+  feedbackChips?: string[];
+};
 
 const CHAT_TURN_GAP_PX = 24;
 const CHAT_GROUP_BUBBLE_GAP_PX = 8;
@@ -893,12 +910,13 @@ const RENT_Q_PATTERNS = [
   /^\s*rent\s+flat\s*2\s*\??\s*$/i,
   /^\s*rent\s+flat\s*2\s+nugent\s+terrace\s*\??\s*$/i,
   /^\s*what'?s?\s+the\s+current\s+rent\s*\??\s*$/i,
+  /^\s*what\s+is\s+the\s+(current\s+)?rent\s*\??\s*$/i,
   /^\s*current\s+rent\s*\??\s*$/i,
   /^\s*current\s+rent\s+flat\s*2\s*\??\s*$/i,
 ];
 const isRentFlat2Question = (q: string) => RENT_Q_PATTERNS.some((re) => re.test(q));
 const rentPrefillFor = (view: string, propertyId: string | null, unitId: string | null): string => {
-  if (view === "unit" && unitId === "nugent-f2") return "Current Rent?";
+  if (view === "unit" && unitId === "nugent-f2") return "What is the rent?";
   if (view === "property" && propertyId === "nugent") return "rent flat 2?";
   if (view === "portfolio") return "rent flat 2 Nugent Terrace?";
   return "";
@@ -1637,7 +1655,31 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [beatIdx, lineIdx, view, owlsReady]);
 
-  const streamHobsonMessage = (text: string, done: () => void) => {
+  const appendFeedbackPrompt = (chips?: string[]) => {
+    const fid = `fb-${Date.now()}-${Math.random()}`;
+    const text = "Was that of use to you? Your view helps me improve.";
+    if (reduced) {
+      setMessages((m) => [...m, { id: fid, role: "hobson", text, kind: "feedback", feedback: {}, feedbackChips: chips }]);
+      return;
+    }
+    setMessages((m) => [...m, { id: fid, role: "hobson", text: "", streaming: true, kind: "feedback", feedback: {}, feedbackChips: chips }]);
+    const words = text.split(" ");
+    let i = 0;
+    const step = () => {
+      i += 1;
+      const partial = words.slice(0, i).join(" ");
+      setMessages((m) => m.map((x) => (x.id === fid ? { ...x, text: partial } : x)));
+      if (i < words.length) setTimeout(step, 45 + Math.random() * 30);
+      else setMessages((m) => m.map((x) => (x.id === fid ? { ...x, streaming: false } : x)));
+    };
+    setTimeout(step, 350);
+  };
+
+  const updateFeedback = (id: string, patch: Partial<FeedbackState>) => {
+    setMessages((m) => m.map((x) => (x.id === id ? { ...x, feedback: { ...(x.feedback || {}), ...patch } } : x)));
+  };
+
+  const streamHobsonMessage = (text: string, done: () => void, opts?: { askFeedback?: boolean; chips?: string[] }) => {
     const id = `m-${Date.now()}-${Math.random()}`;
     setMessages((m) => [...m, { id, role: "hobson", text: "", streaming: true }]);
     const words = text.split(" ");
@@ -1651,10 +1693,12 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
       } else {
         setMessages((m) => m.map((x) => (x.id === id ? { ...x, streaming: false } : x)));
         done();
+        if (opts?.askFeedback) setTimeout(() => appendFeedbackPrompt(opts.chips), 500);
       }
     };
     setTimeout(step, 60);
   };
+
 
   /* ----- send the pre-filled question during onboarding ----- */
   const advanceBeat = (userText?: string) => {
@@ -1923,8 +1967,10 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
       setTyping(false);
       setOwl("talking");
       const id = `rent-${Date.now()}`;
+      const chips = ["the figure", "the sources", "the explanation", "the format"];
       if (reduced) {
         setMessages((m) => [...m, { id, role: "hobson", text: RENT_BODY_TEXT, rich: "rentFlat2" }]);
+        if (testerMode) setTimeout(() => appendFeedbackPrompt(chips), 400);
         return;
       }
       // Stream the paragraph text inside a rich bubble, then settle.
@@ -1939,6 +1985,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
           setTimeout(step, 40 + Math.random() * 30);
         } else {
           setMessages((m) => m.map((x) => (x.id === id ? { ...x, streaming: false } : x)));
+          if (testerMode) setTimeout(() => appendFeedbackPrompt(chips), 700);
         }
       };
       setTimeout(step, 60);
@@ -1959,11 +2006,13 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
       const ans = selectedUnit ? answerUnitQuestion(q, selectedUnit, deriveUnit(selectedUnit)) : answerForUnit(q);
       if (reduced) {
         setMessages((m) => [...m, { id: `a-${Date.now()}`, role: "hobson", text: ans }]);
+        if (testerMode) setTimeout(() => appendFeedbackPrompt(), 400);
       } else {
-        streamHobsonMessage(ans, () => {});
+        streamHobsonMessage(ans, () => {}, { askFeedback: testerMode });
       }
     }, delay);
   };
+
 
   const showRoadmapToast = (label: string) => {
     setToast(`"${label}" is Portfolio Intelligence — coming soon. Open a unit and I can answer it today.`);
@@ -2368,15 +2417,35 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                 >
                   {group.messages.map((m, i) => (
                     m.role === "hobson" ? (
-                      <HobsonBubble
-                        key={m.id}
-                        text={m.text}
-                        owl={owl}
-                        streaming={!!m.streaming}
-                        rich={m.rich}
-                        onAskFollowUp={(q) => sendRentAnswer(q)}
-                        showAvatar={i === 0}
-                      />
+                      m.kind === "feedback" ? (
+                        <FeedbackBubble
+                          key={m.id}
+                          owl={owl}
+                          text={m.text}
+                          streaming={!!m.streaming}
+                          feedback={m.feedback || {}}
+                          chips={m.feedbackChips}
+                          showAvatar={i === 0}
+                          onGrade={(g) => updateFeedback(m.id, { grade: g })}
+                          onToggleChip={(c) => {
+                            const cur = m.feedback?.chips || [];
+                            const next = cur.includes(c) ? cur.filter((x) => x !== c) : [...cur, c];
+                            updateFeedback(m.id, { chips: next });
+                          }}
+                          onSubmitNote={(note) => updateFeedback(m.id, { note, submitted: true })}
+                          onSkipNote={() => updateFeedback(m.id, { submitted: true })}
+                        />
+                      ) : (
+                        <HobsonBubble
+                          key={m.id}
+                          text={m.text}
+                          owl={owl}
+                          streaming={!!m.streaming}
+                          rich={m.rich}
+                          onAskFollowUp={(q) => sendRentAnswer(q)}
+                          showAvatar={i === 0}
+                        />
+                      )
                     ) : (
                       <UserBubble key={m.id} text={m.text} />
                     )
@@ -3647,6 +3716,154 @@ function HobsonBubble({ text, owl, streaming, rich, onAskFollowUp, showAvatar = 
     </div>
   );
 }
+
+
+
+
+
+function FeedbackBubble({
+  owl,
+  text,
+  streaming,
+  feedback,
+  chips,
+  showAvatar = true,
+  onGrade,
+  onToggleChip,
+  onSubmitNote,
+  onSkipNote,
+}: {
+  owl: OwlState;
+  text: string;
+  streaming?: boolean;
+  feedback: FeedbackState;
+  chips?: string[];
+  showAvatar?: boolean;
+  onGrade: (g: FeedbackGrade) => void;
+  onToggleChip: (chip: string) => void;
+  onSubmitNote: (note: string) => void;
+  onSkipNote: () => void;
+}) {
+  const [note, setNote] = useState("");
+  const AvatarSlot = showAvatar
+    ? <OwlAvatar state={owl} />
+    : <div aria-hidden className="w-10 h-10 shrink-0" />;
+  const graded = !!feedback.grade;
+  const submitted = !!feedback.submitted;
+  const ack =
+    feedback.grade === "helpful" ? "Thank you — noted."
+    : feedback.grade === "partly" ? "Thank you — noted. I'll look at where I fell short."
+    : feedback.grade === "not" ? "Thank you for the honesty — noted."
+    : "";
+  const GRADES: { id: FeedbackGrade; label: string; glyph: string; aria: string }[] = [
+    { id: "helpful", label: "Helpful", glyph: "✓", aria: "Mark answer helpful" },
+    { id: "partly", label: "Partly", glyph: "◐", aria: "Mark answer partly helpful" },
+    { id: "not", label: "Not helpful", glyph: "✕", aria: "Mark answer not helpful" },
+  ];
+  return (
+    <div className="flex items-end gap-2">
+      {AvatarSlot}
+      <div className="max-w-[420px] bg-[#EDE9FE] text-[#1F2330] text-sm leading-relaxed px-4 py-3 rounded-2xl rounded-bl-md space-y-3">
+        <div>
+          {text}
+          {streaming && <span className="inline-block w-1.5 h-3.5 ml-0.5 bg-[#7C3AED] align-middle animate-pulse" />}
+        </div>
+        {!streaming && (
+          <>
+            <div role="group" aria-label="Grade this answer" className="flex flex-wrap gap-1.5">
+              {GRADES.map((g) => {
+                const selected = feedback.grade === g.id;
+                return (
+                  <button
+                    key={g.id}
+                    type="button"
+                    onClick={() => !submitted && onGrade(g.id)}
+                    aria-pressed={selected}
+                    aria-label={g.aria}
+                    disabled={submitted}
+                    className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full border text-[12px] transition focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED] focus-visible:ring-offset-1 ${
+                      selected
+                        ? "bg-white border-[#7C3AED] text-[#4C1D95] font-medium shadow-sm"
+                        : "bg-white/70 border-slate-300 text-slate-700 hover:border-[#7C3AED] hover:text-[#4C1D95]"
+                    } ${submitted ? "cursor-default opacity-80" : ""}`}
+                  >
+                    <span aria-hidden className="font-semibold leading-none">{g.glyph}</span>
+                    <span>{g.label}</span>
+                  </button>
+                );
+              })}
+            </div>
+            {graded && !submitted && (
+              <div className="space-y-2 pt-1 border-t border-white/60">
+                <div className="text-[12px] text-slate-700">{ack}</div>
+                {chips && chips.length > 0 && (
+                  <div>
+                    <div className="text-[11px] text-slate-500 mb-1">Anything in particular? (optional)</div>
+                    <div className="flex flex-wrap gap-1.5">
+                      {chips.map((c) => {
+                        const on = (feedback.chips || []).includes(c);
+                        return (
+                          <button
+                            key={c}
+                            type="button"
+                            onClick={() => onToggleChip(c)}
+                            aria-pressed={on}
+                            className={`text-[11px] px-2 py-0.5 rounded-full border transition focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED] focus-visible:ring-offset-1 ${
+                              on
+                                ? "bg-[#7C3AED] border-[#7C3AED] text-white"
+                                : "bg-white/70 border-slate-300 text-slate-700 hover:border-[#7C3AED]"
+                            }`}
+                          >
+                            {c}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+                <div>
+                  <label htmlFor="fb-note" className="block text-[11px] text-slate-500 mb-1">
+                    If you've a moment, what would have made it better?
+                  </label>
+                  <textarea
+                    id="fb-note"
+                    value={note}
+                    onChange={(e) => setNote(e.target.value)}
+                    rows={2}
+                    placeholder="Optional"
+                    className="w-full text-[13px] rounded-md border border-slate-300 bg-white px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]"
+                  />
+                  <div className="flex items-center gap-2 mt-1.5">
+                    <button
+                      type="button"
+                      onClick={() => onSubmitNote(note.trim())}
+                      className="text-[12px] px-3 py-1 rounded-md bg-[#7C3AED] text-white hover:bg-[#6D28D9] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED] focus-visible:ring-offset-1"
+                    >
+                      Submit
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => onSkipNote()}
+                      className="text-[12px] px-2 py-1 rounded-md text-slate-600 hover:text-slate-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED] focus-visible:ring-offset-1"
+                    >
+                      Skip
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
+            {submitted && (
+              <div role="status" aria-live="polite" className="text-[12px] text-slate-600 italic pt-1 border-t border-white/60">
+                Thank you — your feedback is recorded.
+              </div>
+            )}
+          </>
+        )}
+      </div>
+    </div>
+  );
+}
+
 
 
 const RENT_BODY_TEXT =
