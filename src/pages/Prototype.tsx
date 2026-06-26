@@ -6147,41 +6147,22 @@ function buildPA004Beats(): PerformBeat[] {
       },
     },
     {
-      id: "b9",
-      stepKey: "actions",
-      text: "Recommended next: prepare surveyor instructions to obtain open-market evidence.",
-      gate: {
-        label: "Prepare surveyor instructions?",
-        options: [
-          { label: "Approve", kind: "approve", nextBeatIdx: 9 },
-          { label: "Skip", kind: "skip", nextBeatIdx: 10 },
-        ],
-      },
-    },
-    {
-      id: "b9b",
-      stepKey: "actions",
-      text: "Drafted.",
-      detail: <PreparedPreview title="Surveyor instructions" body={"To: [Usual surveyor]\nSubject: Open market rent advice — Flat 8, Stanley House\n\nWe have a rent review falling due in March 2027. Please advise on open market evidence and a suggested range, with comparables for the last 12 months."} />,
-    },
-
-    {
       id: "b10",
       stepKey: "actions",
-      text: "Next: gather comparable evidence (last 12 months, like-for-like).",
+      text: "Next: gather comparable evidence from the open market (last 12 months, like-for-like).",
       gate: {
         label: "Gather comparable evidence?",
         options: [
-          { label: "Approve", kind: "approve", nextBeatIdx: 11 },
-          { label: "Skip", kind: "skip", nextBeatIdx: 14 },
+          { label: "Approve", kind: "approve", nextBeatIdx: 9 },
+          { label: "Skip", kind: "skip", nextBeatIdx: 12 },
         ],
       },
     },
     {
       id: "b10b",
       stepKey: "actions",
-      text: "Comparable search prepared — request queued for the surveyor and our market data source.",
-      detail: <PreparedPreview title="Comparable evidence request" body={"Scope: Marylebone NW8, residential lets, 1-bed flats, last 12 months.\nDeliverable: shortlist of 5–8 comparables with rent, term, condition notes."} />,
+      text: "Comparable search prepared — querying open market sources.",
+      detail: <PreparedPreview title="Comparable evidence search" body={"Scope: Marylebone NW8, residential lets, 1-bed flats, last 12 months.\nSources: Rightmove, Zoopla, OnTheMarket, Foxtons, LonRes.\nDeliverable: shortlist of 5–8 comparables with rent, term, condition notes."} />,
     },
     {
       id: "b10c",
