@@ -4042,25 +4042,9 @@ function FeedbackBubble({
       {/* 3. Note field. If the per-grade reply already invited the detail (Not helpful),
           show NO additional spoken prompt — just the field + chips, indented under the
           avatar column. Otherwise Hobson offers a single, distinct invitation. */}
-      {graded && !submitted && showNoteAsk && (
-        replyAlreadyAsks ? (
-          <div className={`pl-12 ${reduceMotion ? "" : "animate-in fade-in slide-in-from-bottom-1 duration-300"}`}>
-            <NoteFieldBlock
-              chips={chips}
-              feedbackChips={feedback.chips || []}
-              onToggleChip={onToggleChip}
-              note={note}
-              setNote={setNote}
-              onSubmitNote={onSubmitNote}
-              onSkipNote={onSkipNote}
-            />
-          </div>
-        ) : (
-        <Row className={reduceMotion ? "" : "animate-in fade-in slide-in-from-bottom-1 duration-300"}>
-          <Bubble>
-            <TypedText text={noteAskText} enabled={showNoteAsk} />
-          </Bubble>
-          <div className="pl-1 pt-0.5 space-y-1.5">
+      {graded && !submitted && showNoteAsk && (() => {
+        const fieldBlock = (
+          <div className="space-y-1.5">
             {chips && chips.length > 0 && (
               <div className="flex flex-wrap gap-1.5">
                 {chips.map((c) => {
@@ -4111,9 +4095,23 @@ function FeedbackBubble({
               </div>
             </div>
           </div>
-        </Row>
-        )
-      )}
+        );
+        if (replyAlreadyAsks) {
+          return (
+            <div className={`pl-12 ${reduceMotion ? "" : "animate-in fade-in slide-in-from-bottom-1 duration-300"}`}>
+              {fieldBlock}
+            </div>
+          );
+        }
+        return (
+          <Row className={reduceMotion ? "" : "animate-in fade-in slide-in-from-bottom-1 duration-300"}>
+            <Bubble>
+              <TypedText text={noteAskText} enabled={showNoteAsk} />
+            </Bubble>
+            <div className="pl-1 pt-0.5">{fieldBlock}</div>
+          </Row>
+        );
+      })()}
 
       {/* 4. If they added a note/chips, Hobson acknowledges — own owl + bubble */}
       {submitted && showNoteAck && (
