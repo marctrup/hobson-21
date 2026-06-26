@@ -776,9 +776,15 @@ export function DocumentsLibrary({
 
   return (
     <div className="absolute inset-0 z-[450] bg-white flex flex-col">
-      {/* Top bar */}
-      <header className="px-6 py-4 border-b border-slate-200 flex items-start gap-4">
-        <img src={owlReading} alt="" aria-hidden className="w-10 h-10 object-contain shrink-0" />
+      {/* Top bar — The Professor presents his library */}
+      <header className="px-6 py-4 border-b border-slate-200 flex items-start gap-4 bg-gradient-to-b from-[#FAF8FF] to-white">
+        <div className="relative shrink-0">
+          <img
+            src={characterProfessor}
+            alt="The Professor"
+            className="w-14 h-14 object-contain drop-shadow-sm"
+          />
+        </div>
         <div className="flex-1 min-w-0">
           {/* Breadcrumb */}
           <nav aria-label="Breadcrumb" className="text-[11px] text-slate-500 mb-1 flex items-center gap-1 flex-wrap">
@@ -809,18 +815,22 @@ export function DocumentsLibrary({
             <span className="text-slate-700 font-medium">Documents</span>
           </nav>
 
-          <div className="flex items-center gap-3 flex-wrap">
-            <h2 className="text-base font-semibold text-slate-900">Documents</h2>
-            <span className="text-[12px] text-slate-500">
-              {filtered.length} of {DOCS.length} documents · {chainsCount} tenancy chains · {assetCount} asset records
+          <div className="flex items-center gap-2 flex-wrap">
+            <h2 className="text-base font-semibold text-slate-900">The Professor's library</h2>
+            <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-semibold uppercase tracking-wide bg-[#EDE9FE] text-[#5B21B6] border border-[#7C3AED]/20">
+              Curated by The Professor
             </span>
           </div>
+          <div className="text-[12px] text-slate-500 mt-0.5">
+            {filtered.length} of {DOCS.length} documents · {chainsCount} tenancy chains · {assetCount} asset records
+          </div>
           <p
-            className="text-[12px] text-slate-600 mt-1 min-h-[1.25rem]"
+            className="text-[12px] text-slate-700 mt-1.5 min-h-[1.25rem] italic"
             aria-live="polite"
           >
-            {typed}
-            {!greetingDone && <span className="inline-block w-1 h-3 ml-0.5 bg-slate-400 align-middle animate-pulse" aria-hidden />}
+            &ldquo;{typed}
+            {!greetingDone && <span className="inline-block w-1 h-3 ml-0.5 bg-[#7C3AED] align-middle animate-pulse" aria-hidden />}
+            {greetingDone && <span>&rdquo;</span>}
           </p>
         </div>
         <button
@@ -833,6 +843,16 @@ export function DocumentsLibrary({
           </svg>
         </button>
       </header>
+
+      {/* The Professor's notes — evidential observations from the catalogue */}
+      {greetingDone && (
+        <ProfessorNotes
+          docs={DOCS}
+          scopePropertyId={scopeProperty}
+          scopeUnitId={scopeUnit}
+          onJump={(d) => setViewing(d)}
+        />
+      )}
 
       {/* Scope chips */}
       {(scopePropertyAsset || scopeUnitNode) && (
