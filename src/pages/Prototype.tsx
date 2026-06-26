@@ -2236,11 +2236,9 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
           onClick={adminMode ? exitAdmin : undefined}
           aria-label={adminMode ? "Exit Admin" : "Hobson"}
           title={adminMode ? "Exit Admin" : "Hobson"}
-          className={`w-10 h-10 rounded-xl bg-gradient-to-br from-[#A78BFA] to-[#7C3AED] grid place-items-center text-white font-bold mb-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40 ${adminMode ? "cursor-pointer hover:brightness-110" : "cursor-default"}`}
+          className={`w-10 h-10 rounded-xl overflow-hidden grid place-items-center mb-2 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40 ${adminMode ? "cursor-pointer hover:brightness-110" : "cursor-default"}`}
         >
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-            <path d="M12 2L22 12L12 22L2 12L12 2Z" fill="white" />
-          </svg>
+          <img src={owlDefault} alt="" aria-hidden className="w-10 h-10 object-contain" />
         </button>
         {adminMode ? (
           <>
