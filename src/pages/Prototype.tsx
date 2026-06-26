@@ -6706,6 +6706,22 @@ function PerformWorkspace({
   const currentBeat = beats[revealed];
   const previousBeats = beats.slice(0, revealed);
 
+  // Auto-advance narration: when the current beat has no gate and isn't the last,
+  // move on automatically once streaming finishes. Hobson just keeps working.
+  useEffect(() => {
+    if (isComplete || mode === "review") return;
+    if (!currentBeat || currentBeat.gate) return;
+    if (revealed >= beats.length - 1) return;
+    if (streamingActive) return;
+    const delay = reducedMotion ? 0 : 650;
+    const t = setTimeout(() => {
+      setCompleted((c) => Array.from(new Set([...c, currentBeat.stepKey])));
+      setRevealed((r) => Math.min(r + 1, beats.length));
+    }, delay);
+    return () => clearTimeout(t);
+  }, [currentBeat, streamingActive, revealed, beats.length, isComplete, mode, reducedMotion]);
+
+
   const advance = (jumpTo: number | "complete" | "exit" | undefined, gateLabel: string, kind: string) => {
     // Track approved sub-actions for audit
     if (kind === "approve") setApprovedActions((a) => [...a, gateLabel]);
