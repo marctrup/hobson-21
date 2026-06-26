@@ -4069,7 +4069,7 @@ function UnitTile({
         aria-label={`${unit.label}, ${occupancyLabel}. ${alertSummary}. Open unit.`}
         className="relative w-full flex items-center justify-center px-2 py-2.5 rounded-lg border border-slate-200 bg-white text-sm font-medium text-slate-800 hover:border-[#7C3AED] hover:bg-[#F5F3FF] transition focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40"
       >
-        {derived.hasAlert && (
+        {!hideAlertBadge && derived.hasAlert && (
           <span
             aria-hidden
             className="absolute top-1 right-1 inline-flex items-center justify-center w-3.5 h-3.5 rounded-full bg-amber-100 border border-amber-400 text-amber-700"
