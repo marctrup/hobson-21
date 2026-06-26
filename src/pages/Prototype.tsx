@@ -3275,11 +3275,54 @@ function AdminChat({ character, owl, professorEvents, onAssignProfessorType, bro
                 </div>
               );
             }
-            // summary
+            if (ev.kind === "summary") {
+              return (
+                <div key={ev.id} className="ml-12 max-w-[420px] rounded-xl border border-[#7C3AED]/30 bg-[#F5F3FF] p-3">
+                  <div className="text-[11px] uppercase tracking-wide text-[#7C3AED] font-semibold mb-1">Added to the black book</div>
+                  <div className="text-[12px] text-slate-700"><span className="font-semibold">{ev.name}</span> · pinned at the top of the book on the right.</div>
+                </div>
+              );
+            }
+            // importSummary
+            const typeRows: { key: BrokerContactType; label: string }[] = [
+              { key: "occupant", label: "Occupants / tenants" },
+              { key: "subcontractor", label: "Subcontractors" },
+              { key: "staff", label: "Staff" },
+              { key: "misc", label: "Other" },
+            ];
             return (
-              <div key={ev.id} className="ml-12 max-w-[420px] rounded-xl border border-[#7C3AED]/30 bg-[#F5F3FF] p-3">
-                <div className="text-[11px] uppercase tracking-wide text-[#7C3AED] font-semibold mb-1">Added to the black book</div>
-                <div className="text-[12px] text-slate-700"><span className="font-semibold">{ev.name}</span> · pinned at the top of the book on the right.</div>
+              <div key={ev.id} className="ml-12 max-w-[460px] rounded-xl border border-[#7C3AED]/30 bg-[#F5F3FF] p-3.5">
+                <div className="flex items-center gap-2 mb-1.5">
+                  <span className="inline-flex items-center justify-center w-5 h-5 rounded bg-[#7C3AED]/10 text-[#7C3AED]" aria-hidden>
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 7h18M3 12h18M3 17h18"/></svg>
+                  </span>
+                  <div className="text-[11px] uppercase tracking-wide text-[#7C3AED] font-semibold">Imported into the black book</div>
+                </div>
+                <div className="text-[12px] text-slate-700 mb-2">
+                  Read <span className="font-semibold">{ev.total} contacts</span> from <span className="font-mono text-[11.5px]">{ev.filename}</span> · linked across <span className="font-semibold">{ev.linkedProperties}</span> propert{ev.linkedProperties === 1 ? "y" : "ies"}.
+                </div>
+                <dl className="text-[11.5px] text-slate-700 grid grid-cols-2 gap-x-3 gap-y-0.5 mb-2">
+                  {typeRows.filter((r) => (ev.byType[r.key] || 0) > 0).map((r) => (
+                    <div key={r.key} className="flex justify-between">
+                      <dt className="text-slate-500">{r.label}</dt>
+                      <dd className="font-semibold">{ev.byType[r.key]}</dd>
+                    </div>
+                  ))}
+                </dl>
+                {ev.flagged.length > 0 && (
+                  <div className="mt-1 rounded-md border border-amber-200 bg-amber-50 p-2">
+                    <div className="flex items-center gap-1.5 text-[10.5px] uppercase tracking-wide font-semibold text-amber-700 mb-1">
+                      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M4 21V4h12l-2 4 2 4H4"/></svg>
+                      {ev.flagged.length} need{ev.flagged.length === 1 ? "s" : ""} your confirmation
+                    </div>
+                    <ul className="text-[11.5px] text-slate-700 space-y-0.5">
+                      {ev.flagged.map((f, i) => (
+                        <li key={i}><span className="font-semibold">{f.name}</span> — {f.reason}</li>
+                      ))}
+                    </ul>
+                    <div className="text-[11px] text-slate-500 mt-1.5">I've parked them flagged in the book rather than guess. Open the black book to confirm.</div>
+                  </div>
+                )}
               </div>
             );
           })}
