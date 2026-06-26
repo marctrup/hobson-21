@@ -1150,11 +1150,15 @@ function FlatList({
 
 export default DocumentsLibrary;
 
-/* ---------------- The Professor's notes ---------------- */
+/* ---------------- The Professor's notes ----------------
+ * Reading-state observations about the document corpus.
+ * Strictly about what the Professor has read / catalogued / could not read.
+ * No compliance, expiry or portfolio-risk content — that lives in intelligent actions.
+ */
 
 type ProfessorNote = {
   id: string;
-  kind: "gap" | "expiry" | "archive" | "lineage";
+  kind: "recent" | "totals" | "coverage" | "issue";
   text: string;
   cite?: { docId?: string; label: string };
 };
@@ -1179,65 +1183,62 @@ function ProfessorNotes({
     const scoped = docs.filter(inScope);
     const out: ProfessorNote[] = [];
 
-    // Archive count (his "kept memory")
-    const archived = scoped.filter((d) => d.status === "superseded");
-    if (archived.length > 0) {
+    if (scoped.length === 0) {
       out.push({
-        id: "n-archive",
-        kind: "archive",
-        text: `${archived.length} superseded ${archived.length === 1 ? "document is" : "documents are"} retained as record — the lineage beneath the current position.`,
+        id: "n-empty",
+        kind: "coverage",
+        text: "Nothing yet on this shelf — once documents are added I shall read and index each one.",
+      });
+      return out;
+    }
+
+    // 1) Recently read / ingested — the three most recent by date
+    const recent = [...scoped].sort((a, b) => b.date.localeCompare(a.date)).slice(0, 3);
+    const mostRecent = recent[0];
+    if (mostRecent) {
+      const where = mostRecent.unitLabel
+        ? `${mostRecent.unitLabel}, ${mostRecent.propertyName}`
+        : mostRecent.propertyName;
+      out.push({
+        id: "n-recent",
+        kind: "recent",
+        text: `I have read ${recent.length} new ${recent.length === 1 ? "document" : "documents"} recently — most recently the ${mostRecent.title} for ${where}, catalogued ${fmtDate(mostRecent.date)}.`,
+        cite: { docId: mostRecent.id, label: mostRecent.title },
       });
     }
 
-    // EPC gap — units with no EPC on file (only flag in portfolio or property scope, not single-unit)
-    if (!scopeUnitId) {
-      const unitsConsidered: { propertyId: string; unitId: string; label: string }[] = [];
-      ASSETS.forEach((a) => {
-        if (scopePropertyId && a.propertyId !== scopePropertyId) return;
-        a.units.forEach((u) => unitsConsidered.push({
-          propertyId: a.propertyId,
-          unitId: u.id,
-          label: a.standalone ? a.propertyName : `${u.label}, ${a.propertyName}`,
-        }));
-      });
-      const missingEpc = unitsConsidered.filter(
-        (u) => !docs.some((d) => d.unitId === u.unitId && d.type === "EPC")
-      );
-      if (missingEpc.length > 0) {
-        const first = missingEpc[0];
-        out.push({
-          id: "n-epc-gap",
-          kind: "gap",
-          text:
-            missingEpc.length === 1
-              ? `No EPC on file for ${first.label}. An assessment may be required before the next letting.`
-              : `No EPC on file for ${missingEpc.length} units (including ${first.label}). Assessments may be required before next letting.`,
-        });
-      }
-    }
+    // 2) Catalogue totals — coverage + what he keeps
+    const total = scoped.length;
+    const tenancyChains = new Set(
+      scoped.filter((d) => d.family === "Tenancy" && d.chainId).map((d) => d.chainId!)
+    ).size;
+    const assetRecords = scoped.filter((d) => d.family === "Asset").length;
+    const superseded = scoped.filter((d) => d.status === "superseded").length;
 
-    // Expiry — Gas Safety is annual; flag the Nugent certificate
-    const gas = scoped.find((d) => d.type === "Gas Safety" && d.status === "current");
-    if (gas) {
+    out.push({
+      id: "n-totals",
+      kind: "totals",
+      text: `${total} of ${total} documents read and indexed · ${tenancyChains} tenancy ${tenancyChains === 1 ? "chain" : "chains"} · ${assetRecords} asset ${assetRecords === 1 ? "record" : "records"}${superseded > 0 ? ` · ${superseded} superseded ${superseded === 1 ? "version" : "versions"} retained` : ""}.`,
+    });
+
+    // 3) Reading issues — demonstrative single example: the older EPC scan
+    //    (illustrates a processing issue, not a compliance issue)
+    const partial = scoped.find((d) => d.id === "d-f8-epc-old");
+    if (partial) {
       out.push({
-        id: "n-gas",
-        kind: "expiry",
-        text: `Gas Safety Certificate at ${gas.unitLabel ?? gas.propertyName} dated ${fmtDate(gas.date)} — annual renewal due within 12 months.`,
-        cite: { docId: gas.id, label: gas.title },
+        id: "n-partial",
+        kind: "issue",
+        text: `One document — the ${partial.title} for ${partial.unitLabel}, ${partial.propertyName} — I could read only partially; the scan is low quality. A clearer copy would let me index it in full.`,
+        cite: { docId: partial.id, label: partial.title },
       });
     }
 
-    // Lineage observation — Flat 8 chain
-    const f8Var = scoped.find((d) => d.id === "d-f8-lease-var");
-    const f8Assign = scoped.find((d) => d.id === "d-f8-lease-assign");
-    if (f8Var && f8Assign) {
-      out.push({
-        id: "n-f8-lineage",
-        kind: "lineage",
-        text: `Flat 8, Stanley House: Deed of Variation (2021) raised rent £50,000 → £60,000; Assignment (2022) carried the position to ABC (Holdings) Limited. The chain is intact.`,
-        cite: { docId: f8Assign.id, label: f8Assign.title },
-      });
-    }
+    // 4) Classification confidence — none outstanding in seeded data
+    out.push({
+      id: "n-classify",
+      kind: "coverage",
+      text: "No documents await classification — every item has a confirmed type.",
+    });
 
     return out;
   }, [docs, scopePropertyId, scopeUnitId]);
@@ -1265,22 +1266,26 @@ function ProfessorNotes({
       <ul className="grid gap-1.5 sm:grid-cols-2">
         {notes.map((n) => {
           const cited = n.cite?.docId ? docs.find((d) => d.id === n.cite!.docId) : null;
+          const clickable = !!cited;
+          const Tag: any = clickable ? "button" : "div";
           return (
             <li key={n.id}>
-              <div className="flex items-start gap-2 px-3 py-2 rounded-md border border-[#7C3AED]/15 bg-white">
+              <Tag
+                {...(clickable ? { onClick: () => onJump(cited!), type: "button" } : {})}
+                className={`w-full text-left flex items-start gap-2 px-3 py-2 rounded-md border border-[#7C3AED]/15 bg-white ${
+                  clickable ? "hover:bg-[#F5F3FF] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]" : ""
+                }`}
+              >
                 <NoteIcon kind={n.kind} />
                 <div className="min-w-0">
                   <p className="text-[12px] text-slate-800 leading-snug">{n.text}</p>
                   {cited && (
-                    <button
-                      onClick={() => onJump(cited)}
-                      className="mt-0.5 text-[11px] text-[#7C3AED] hover:underline focus:outline-none focus:ring-2 focus:ring-[#7C3AED] rounded"
-                    >
-                      cite: {cited.title} →
-                    </button>
+                    <span className="mt-0.5 inline-block text-[11px] text-[#7C3AED]">
+                      open document →
+                    </span>
                   )}
                 </div>
-              </div>
+              </Tag>
             </li>
           );
         })}
@@ -1291,30 +1296,30 @@ function ProfessorNotes({
 
 function NoteIcon({ kind }: { kind: ProfessorNote["kind"] }) {
   const common = "w-4 h-4 shrink-0 mt-0.5";
-  if (kind === "gap") {
+  if (kind === "recent") {
     return (
-      <svg className={common} viewBox="0 0 24 24" fill="none" stroke="#B45309" strokeWidth="2" aria-label="Gap">
+      <svg className={common} viewBox="0 0 24 24" fill="none" stroke="#5B21B6" strokeWidth="2" aria-label="Recently read">
+        <path d="M4 5h12a3 3 0 013 3v11H7a3 3 0 01-3-3z" /><path d="M4 5v11a3 3 0 003 3" />
+      </svg>
+    );
+  }
+  if (kind === "totals") {
+    return (
+      <svg className={common} viewBox="0 0 24 24" fill="none" stroke="#5B21B6" strokeWidth="2" aria-label="Catalogue totals">
+        <rect x="3" y="4" width="18" height="4" rx="1" /><path d="M5 8v12h14V8" /><path d="M9 12h6M9 16h4" />
+      </svg>
+    );
+  }
+  if (kind === "issue") {
+    return (
+      <svg className={common} viewBox="0 0 24 24" fill="none" stroke="#B45309" strokeWidth="2" aria-label="Reading issue">
         <circle cx="12" cy="12" r="9" /><path d="M12 8v4" /><circle cx="12" cy="16" r="0.8" fill="#B45309" />
       </svg>
     );
   }
-  if (kind === "expiry") {
-    return (
-      <svg className={common} viewBox="0 0 24 24" fill="none" stroke="#0369A1" strokeWidth="2" aria-label="Expiry">
-        <circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 2" />
-      </svg>
-    );
-  }
-  if (kind === "archive") {
-    return (
-      <svg className={common} viewBox="0 0 24 24" fill="none" stroke="#5B21B6" strokeWidth="2" aria-label="Archive">
-        <rect x="3" y="4" width="18" height="4" rx="1" /><path d="M5 8v12h14V8" /><path d="M10 12h4" />
-      </svg>
-    );
-  }
   return (
-    <svg className={common} viewBox="0 0 24 24" fill="none" stroke="#5B21B6" strokeWidth="2" aria-label="Lineage">
-      <circle cx="6" cy="6" r="2" /><circle cx="18" cy="18" r="2" /><path d="M8 6h6a4 4 0 014 4v6" />
+    <svg className={common} viewBox="0 0 24 24" fill="none" stroke="#0369A1" strokeWidth="2" aria-label="Coverage">
+      <path d="M5 12l4 4 10-10" />
     </svg>
   );
 }
