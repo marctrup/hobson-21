@@ -276,17 +276,6 @@ type Workflow = {
 
 const SEED_WORKFLOWS: Workflow[] = [
   {
-    id: "wf-1",
-    name: "Rent review watch",
-    purpose: "Spots rent reviews early and drafts the review summary.",
-    icon: "calendar", tone: "purple", status: "built",
-    trigger: "a rent review is 6 months away",
-    action: "read the lease, prepare a review summary, and bring it to you for approval",
-    scopeLabel: "Flat 8 and Flat 6, Stanley House",
-    owner: { kind: "person", name: "Sarah Chen", role: "Asset Manager", initials: "SC" },
-    lastAdjusted: "12 May 2026",
-  },
-  {
     id: "wf-2",
     name: "Compliance renewals",
     purpose: "Keeps certificates current across the portfolio.",
