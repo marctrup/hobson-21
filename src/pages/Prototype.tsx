@@ -3992,10 +3992,10 @@ function FeedbackBubble({
           </div>
         )}
 
-        {/* 2. Hobson acknowledges (separate speech bubble) */}
+        {/* 2. Hobson acknowledges — typed in, his voice, varied by grade */}
         {graded && showAck && (
           <Bubble className={reduceMotion ? "" : "animate-in fade-in slide-in-from-bottom-1 duration-300"}>
-            {ack}
+            <TypedText text={ack} enabled={showAck} />
           </Bubble>
         )}
 
@@ -4055,15 +4055,25 @@ function FeedbackBubble({
                   </button>
                 </div>
               </div>
-            </div>
-          </>
+            </>
+          )}
+
+        {/* 4. If they added a note/chips, Hobson thanks them for the detail — his voice, typed in */}
+        {submitted && noteGiven && showNoteAck && (
+          <Bubble className={reduceMotion ? "" : "animate-in fade-in slide-in-from-bottom-1 duration-300"}>
+            <TypedText text={noteAck} enabled={showNoteAck} />
+          </Bubble>
         )}
 
-        {/* 4. Final confirmation as Hobson speech */}
+        {/* 5. Quiet inline confirmation — not a bubble, just a subtle, polite line */}
         {submitted && showConfirm && (
-          <Bubble className={reduceMotion ? "" : "animate-in fade-in slide-in-from-bottom-1 duration-300"}>
-            <span role="status" aria-live="polite">Thank you — your feedback is recorded.</span>
-          </Bubble>
+          <div
+            role="status"
+            aria-live="polite"
+            className={`pl-1 pt-0.5 text-[11px] text-slate-500 ${reduceMotion ? "" : "animate-in fade-in duration-300"}`}
+          >
+            Your feedback is recorded.
+          </div>
         )}
       </div>
     </div>
