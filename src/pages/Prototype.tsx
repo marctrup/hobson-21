@@ -6140,11 +6140,8 @@ function buildPA004Beats(): PerformBeat[] {
       stepKey: "actions",
       text: "Task created.",
       detail: <PreparedPreview title="Review task" body={"Title: Flat 8 rent review — checkpoint\nDue: 6 weeks before March 2027 review date\nOwner: you\nLinked: this action, surveyor instruction, draft notice."} />,
-      gate: {
-        label: "Continue",
-        options: [{ label: "Continue", kind: "continue", nextBeatIdx: 16 }],
-      },
     },
+
     {
       id: "b13",
       stepKey: "record",
