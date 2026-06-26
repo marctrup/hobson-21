@@ -2097,7 +2097,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
       const ans = selectedUnit ? answerUnitQuestion(q, selectedUnit, deriveUnit(selectedUnit)) : answerForUnit(q);
       if (reduced) {
         setMessages((m) => [...m, { id: `a-${Date.now()}`, role: "hobson", text: ans }]);
-        if (testerMode) setTimeout(() => appendFeedbackPrompt(), 400);
+        if (testerMode) setTimeout(() => appendFeedbackPrompt(), 1100);
       } else {
         streamHobsonMessage(ans, () => {}, { askFeedback: testerMode });
       }
