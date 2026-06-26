@@ -3910,11 +3910,15 @@ function FeedbackBubble({
   const submitted = !!feedback.submitted;
   const ack =
     feedback.grade === "helpful" ? "I'm glad to hear it. Thank you."
-    : feedback.grade === "partly" ? "Thank you — that's helpful to know. I'll see where it can be clearer."
-    : feedback.grade === "not" ? "Thank you for telling me — I'd genuinely rather know. Do tell me what was missing."
+    : feedback.grade === "partly" ? "Thank you — I'll see where it can be clearer."
+    : feedback.grade === "not" ? "Thank you for telling me — I'd rather know. What was missing?"
     : "";
+  // When the per-grade reply already invites the detail (Not helpful → "What was missing?"),
+  // suppress the separate note-prompt bubble so Hobson never repeats the same invitation.
+  const replyAlreadyAsks = feedback.grade === "not";
+  const noteAskText = feedback.grade === "not" ? "" : "Anything I could have done better?";
   const noteGiven = !!(feedback.note && feedback.note.trim().length > 0) || ((feedback.chips || []).length > 0);
-  const noteAck = noteGiven ? "Thank you — that's most helpful." : "Of course. Thank you.";
+  const noteAck = noteGiven ? "Thank you — that's helpful." : "Of course.";
 
   // Reduced motion check + staged reveal of follow-up bubbles.
   const reduceMotion = typeof window !== "undefined" && window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
@@ -4035,13 +4039,12 @@ function FeedbackBubble({
         </Row>
       )}
 
-      {/* 3. Hobson invites a note — own owl + bubble, with optional chips/textarea below */}
-      {graded && !submitted && showNoteAsk && (
-        <Row className={reduceMotion ? "" : "animate-in fade-in slide-in-from-bottom-1 duration-300"}>
-          <Bubble>
-            If anything was missing, I'd be glad to hear it.
-          </Bubble>
-          <div className="pl-1 pt-0.5 space-y-1.5">
+      {/* 3. Note field. If the per-grade reply already invited the detail (Not helpful),
+          show NO additional spoken prompt — just the field + chips, indented under the
+          avatar column. Otherwise Hobson offers a single, distinct invitation. */}
+      {graded && !submitted && showNoteAsk && (() => {
+        const fieldBlock = (
+          <div className="space-y-1.5">
             {chips && chips.length > 0 && (
               <div className="flex flex-wrap gap-1.5">
                 {chips.map((c) => {
@@ -4092,8 +4095,23 @@ function FeedbackBubble({
               </div>
             </div>
           </div>
-        </Row>
-      )}
+        );
+        if (replyAlreadyAsks) {
+          return (
+            <div className={`pl-12 ${reduceMotion ? "" : "animate-in fade-in slide-in-from-bottom-1 duration-300"}`}>
+              {fieldBlock}
+            </div>
+          );
+        }
+        return (
+          <Row className={reduceMotion ? "" : "animate-in fade-in slide-in-from-bottom-1 duration-300"}>
+            <Bubble>
+              <TypedText text={noteAskText} enabled={showNoteAsk} />
+            </Bubble>
+            <div className="pl-1 pt-0.5">{fieldBlock}</div>
+          </Row>
+        );
+      })()}
 
       {/* 4. If they added a note/chips, Hobson acknowledges — own owl + bubble */}
       {submitted && showNoteAck && (
