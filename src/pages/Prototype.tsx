@@ -1425,6 +1425,94 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
     }
   };
 
+  const handleUploadBrokerContacts = (filename: string = "contacts-export.csv") => {
+    if (brokerFlow) return;
+    const ts = Date.now();
+    // Placeholder import: 24 contacts — 14 occupants, 6 subcontractors, 4 misc.
+    // Three flagged: 2 missing email, 1 duplicate of M&S.
+    const imports: BrokerContact[] = [
+      // 14 occupants/tenants
+      ...Array.from({ length: 14 }).map((_, i) => {
+        const names = ["A. Patel","B. Nguyen","C. Hughes","D. Romero","E. Walsh","F. Adeyemi","G. Lindqvist","H. Bauer","I. Costa","J. Park","K. Moreau","L. Singh","M. Ortiz","N. Rashid"];
+        const units = ["Flat 1, 5 Nugent Terrace","Flat 3, 5 Nugent Terrace","Flat 4, 5 Nugent Terrace","Unit 2, Stanley House","Unit 5, Stanley House","Unit 7, Stanley House","Mews 1, Cromwell Mews","Mews 3, Cromwell Mews","Mews 4, Cromwell Mews","Mews 2, Beaufort Mews","Mews 5, Beaufort Mews","Mews 6, Beaufort Mews","Flat 6, 5 Nugent Terrace","Unit 9, Stanley House"];
+        const name = names[i];
+        const unit = units[i];
+        const missingEmail = i === 4 || i === 9; // 2 missing emails
+        return {
+          id: `bc-imp-${ts}-o${i}`,
+          name,
+          type: "occupant" as BrokerContactType,
+          role: `Tenant · ${unit}`,
+          initials: name.split(/\s+/).map((p) => p[0]).join("").toUpperCase(),
+          email: missingEmail ? "—" : `${name.replace(/[^a-z]/gi, "").toLowerCase()}@example.com`,
+          phone: `07700 900${(100 + i).toString()}`,
+          contactPref: "no preference noted",
+          address: `${unit}, London`,
+          relatedTo: `Linked unit: ${unit}`,
+          imported: true,
+          flagged: missingEmail || false,
+          flagLabel: missingEmail ? "Missing email" : undefined,
+        };
+      }),
+      // 6 subcontractors
+      ...Array.from({ length: 6 }).map((_, i) => {
+        const names = ["Northgate Plumbing","Kingsley Glazing","Atrium Cleaning","Beacon Roofing","Linnet Locksmiths","Heron Gardens"];
+        const roles = ["Plumber","Glazier","Cleaning contractor","Roofing","Locksmith","Grounds maintenance"];
+        const name = names[i];
+        return {
+          id: `bc-imp-${ts}-s${i}`,
+          name,
+          type: "subcontractor" as BrokerContactType,
+          role: `${roles[i]} · imported`,
+          initials: name.split(/\s+/).map((p) => p[0]).join("").slice(0,2).toUpperCase(),
+          email: `office@${name.split(" ")[0].toLowerCase()}.co.uk`,
+          phone: `020 7946 0${(500 + i).toString()}`,
+          contactPref: "prefers email",
+          address: "—",
+          relatedTo: "Linked to: portfolio (general)",
+          imported: true,
+        };
+      }),
+      // 4 misc — one is a duplicate of M&S
+      ...["M&S","Greenfield Surveyors","Aldgate Insurance","Beacon Accountants"].map((name, i) => ({
+        id: `bc-imp-${ts}-m${i}`,
+        name,
+        type: "misc" as BrokerContactType,
+        role: i === 0 ? "Tenant · Shop, 5 Nugent Terrace (from import)" : "Imported · type to confirm",
+        initials: name.replace(/[^A-Za-z]/g,"").slice(0,2).toUpperCase(),
+        email: i === 0 ? "store.ops@marksandspencer.com" : `contact@${name.split(" ")[0].toLowerCase()}.co.uk`,
+        phone: "—",
+        contactPref: "no preference noted",
+        address: "—",
+        relatedTo: i === 0 ? "Linked unit: Shop, 5 Nugent Terrace" : "Linked to: portfolio (general)",
+        imported: true,
+        flagged: i === 0,
+        flagLabel: i === 0 ? "Possible duplicate" : undefined,
+      })),
+    ];
+
+    setContacts((arr) => [...imports, ...arr]);
+
+    const byType: Record<BrokerContactType, number> = { staff: 0, subcontractor: 0, occupant: 0, misc: 0 };
+    imports.forEach((c) => { byType[c.type] += 1; });
+    const linkedProps = new Set<string>();
+    imports.forEach((c) => {
+      const m = c.relatedTo.match(/(5 Nugent Terrace|Stanley House|Cromwell Mews|Beaufort Mews)/g) || [];
+      m.forEach((s) => linkedProps.add(s));
+    });
+    const flaggedFlags: BrokerImportFlag[] = imports
+      .filter((c) => c.flagged)
+      .map((c) => ({ name: c.name, reason: c.flagLabel === "Possible duplicate" ? "looks like a duplicate of M&S already on file" : "missing email" }));
+
+    setBrokerEvents((arr) => [
+      ...arr,
+      { kind: "user", id: `bk-${ts}-u-upload`, text: `Uploaded ${filename}` },
+      { kind: "broker", id: `bk-${ts}-b-upload-1`, text: `Got the spreadsheet — reading it in now. One moment.` },
+      { kind: "broker", id: `bk-${ts}-b-upload-2`, text: `I've read in ${imports.length} contacts — ${byType.occupant} tenants, ${byType.subcontractor} contractors, ${byType.staff + byType.misc} others. I've linked them to their properties where the address gave me enough to go on. ${flaggedFlags.length > 0 ? `${flaggedFlags.length} I couldn't place cleanly — two are missing an email, and one looks like a duplicate of M&S already on file. I've left them flagged rather than guess — shall we run through them?` : "All placed cleanly."}` },
+      { kind: "importSummary", id: `bk-${ts}-imp`, total: imports.length, byType, linkedProperties: linkedProps.size, flagged: flaggedFlags, filename },
+    ]);
+  };
+
 
 
 
