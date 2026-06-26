@@ -3912,12 +3912,12 @@ function FeedbackBubble({
   const graded = !!feedback.grade;
   const submitted = !!feedback.submitted;
   const ack =
-    feedback.grade === "helpful" ? "Good. That's the standard I hold to."
-    : feedback.grade === "partly" ? "Noted. I'll see where it can be sharper."
-    : feedback.grade === "not" ? "Understood. I'd rather know when I've fallen short than not."
+    feedback.grade === "helpful" ? "I'm glad to hear it. Thank you."
+    : feedback.grade === "partly" ? "Thank you — that's helpful to know. I'll see where it can be clearer."
+    : feedback.grade === "not" ? "Thank you for telling me — I'd genuinely rather know. Do tell me what was missing."
     : "";
   const noteGiven = !!(feedback.note && feedback.note.trim().length > 0) || ((feedback.chips || []).length > 0);
-  const noteAck = "Noted — that's useful.";
+  const noteAck = noteGiven ? "Thank you — that's most helpful." : "Of course. Thank you.";
 
   // Reduced motion check + staged reveal of follow-up bubbles.
   const reduceMotion = typeof window !== "undefined" && window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
