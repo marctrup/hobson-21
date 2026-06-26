@@ -2704,13 +2704,14 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
               ? <ProfessorComposer onUpload={handleProfessorUpload} />
               : adminCharacter === "magician"
                 ? <MagicianComposer onCreate={handleCreateWorkflow} />
-                : adminCharacter === "broker"
-                  ? <BrokerComposer
-                      onAdd={handleAddBrokerContact}
-                      flow={brokerFlow}
-                      onSubmitAnswer={submitBrokerAnswer}
-                      onCancel={cancelBrokerFlow}
-                    />
+                  : adminCharacter === "broker"
+                    ? <BrokerComposer
+                        onAdd={handleAddBrokerContact}
+                        onUpload={handleUploadBrokerContacts}
+                        flow={brokerFlow}
+                        onSubmitAnswer={submitBrokerAnswer}
+                        onCancel={cancelBrokerFlow}
+                      />
                   : <LockedComposer view={view} />
 
           ) : testerMode && view === "unit" ? (
