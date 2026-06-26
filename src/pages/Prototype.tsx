@@ -2516,7 +2516,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                           streaming={!!m.streaming}
                           feedback={m.feedback || {}}
                           chips={m.feedbackChips}
-                          showAvatar={i === 0}
+                          showAvatar={true}
                           onGrade={(g) => updateFeedback(m.id, { grade: g })}
                           onToggleChip={(c) => {
                             const cur = m.feedback?.chips || [];
