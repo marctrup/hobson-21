@@ -7518,7 +7518,7 @@ function buildWorkLog(actionCards: ActionCard[]): WorkLogEntry[] {
       statusLabel: "Waiting on you — 2 of 4 steps complete",
       statusKind: "waiting",
       narration:
-        "I started the rent review for Flat 8, Stanley House. I read the lease, confirmed the Open Market basis and the March 2027 date, and pulled comparable evidence from the last 12 months. I've paused at the surveyor instructions for your approval. I couldn't confirm the notice period, so I've flagged that for you.",
+        "I started the rent review for Flat 8, Stanley House. I read the lease, confirmed the Open Market basis and the March 2027 date, and pulled comparable evidence from the open market over the last 12 months. I've paused at the review notice for your approval. I couldn't confirm the notice period, so I've flagged that for you.",
       approvals: [],
       flags: ["Notice period in the lease is ambiguous — needs your eye before I send the notice."],
       progressDone: 2,
@@ -7528,7 +7528,7 @@ function buildWorkLog(actionCards: ActionCard[]): WorkLogEntry[] {
         { role: "hobson", text: "I'll work through the Flat 8 rent review with you. First — the lease basis." },
         { role: "hobson", text: "Open Market review, confirmed in clause 5.2. Review date 25 March 2027." },
         { role: "user", text: "Approve — prepare review summary" },
-        { role: "hobson", text: "Done. I've pulled three comparables and drafted surveyor instructions for you to approve." },
+        { role: "hobson", text: "Done. I've pulled six like-for-like comparables from Rightmove, Zoopla, OnTheMarket, Foxtons and LonRes — ready for your eye." },
       ],
     };
   } else {
