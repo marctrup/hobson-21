@@ -8371,12 +8371,22 @@ function BrokerWorkArea({ character, contacts, onAdd }: {
           matches.forEach((m) => linkedProperties.add(m));
         });
         const flagged = contacts.filter((c) => c.flagged);
+        const importedCount = contacts.filter((c) => c.imported).length;
+        const importedFlagged = contacts.filter((c) => c.imported && c.flagged).length;
         const notes: CharacterNote[] = [];
-        notes.push({
-          id: "bn-recent",
-          kind: "recent",
-          text: "Added 2 contacts this week — Firewatch Ltd and Voltedge. Updated M&S's preferred contact.",
-        });
+        if (importedCount > 0) {
+          notes.push({
+            id: "bn-import",
+            kind: "recent",
+            text: `Added ${importedCount} contacts via import this week${importedFlagged > 0 ? ` · ${importedFlagged} need attention` : ""}.`,
+          });
+        } else {
+          notes.push({
+            id: "bn-recent",
+            kind: "recent",
+            text: "Added 2 contacts this week — Firewatch Ltd and Voltedge. Updated M&S's preferred contact.",
+          });
+        }
         notes.push({
           id: "bn-totals",
           kind: "totals",
