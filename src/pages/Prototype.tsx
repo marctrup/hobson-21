@@ -43,10 +43,12 @@ const ADMIN_CHARACTERS: { id: AdminCharacter; name: string; src: string; tagline
   },
 ];
 
+type BrokerImportFlag = { name: string; reason: string };
 type BrokerEvent =
   | { kind: "broker"; id: string; text: string }
   | { kind: "user"; id: string; text: string }
-  | { kind: "summary"; id: string; name: string };
+  | { kind: "summary"; id: string; name: string }
+  | { kind: "importSummary"; id: string; total: number; byType: Record<BrokerContactType, number>; linkedProperties: number; flagged: BrokerImportFlag[]; filename: string };
 
 type BrokerField = "name" | "type" | "role" | "email" | "phoneAndPref" | "address" | "relatedTo";
 
@@ -75,6 +77,7 @@ type BrokerContact = {
   relatedTo: string;            // linked properties / landlord / introduced by …
   flagged?: boolean;
   flagLabel?: string;
+  imported?: boolean;
 };
 
 const BROKER_TYPE_META: Record<BrokerContactType, { label: string; plural: string; tone: string; ring: string; bg: string; text: string; iconPath: React.ReactNode }> = {
@@ -1422,6 +1425,94 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
     }
   };
 
+  const handleUploadBrokerContacts = (filename: string = "contacts-export.csv") => {
+    if (brokerFlow) return;
+    const ts = Date.now();
+    // Placeholder import: 24 contacts — 14 occupants, 6 subcontractors, 4 misc.
+    // Three flagged: 2 missing email, 1 duplicate of M&S.
+    const imports: BrokerContact[] = [
+      // 14 occupants/tenants
+      ...Array.from({ length: 14 }).map((_, i) => {
+        const names = ["A. Patel","B. Nguyen","C. Hughes","D. Romero","E. Walsh","F. Adeyemi","G. Lindqvist","H. Bauer","I. Costa","J. Park","K. Moreau","L. Singh","M. Ortiz","N. Rashid"];
+        const units = ["Flat 1, 5 Nugent Terrace","Flat 3, 5 Nugent Terrace","Flat 4, 5 Nugent Terrace","Unit 2, Stanley House","Unit 5, Stanley House","Unit 7, Stanley House","Mews 1, Cromwell Mews","Mews 3, Cromwell Mews","Mews 4, Cromwell Mews","Mews 2, Beaufort Mews","Mews 5, Beaufort Mews","Mews 6, Beaufort Mews","Flat 6, 5 Nugent Terrace","Unit 9, Stanley House"];
+        const name = names[i];
+        const unit = units[i];
+        const missingEmail = i === 4 || i === 9; // 2 missing emails
+        return {
+          id: `bc-imp-${ts}-o${i}`,
+          name,
+          type: "occupant" as BrokerContactType,
+          role: `Tenant · ${unit}`,
+          initials: name.split(/\s+/).map((p) => p[0]).join("").toUpperCase(),
+          email: missingEmail ? "—" : `${name.replace(/[^a-z]/gi, "").toLowerCase()}@example.com`,
+          phone: `07700 900${(100 + i).toString()}`,
+          contactPref: "no preference noted",
+          address: `${unit}, London`,
+          relatedTo: `Linked unit: ${unit}`,
+          imported: true,
+          flagged: missingEmail || false,
+          flagLabel: missingEmail ? "Missing email" : undefined,
+        };
+      }),
+      // 6 subcontractors
+      ...Array.from({ length: 6 }).map((_, i) => {
+        const names = ["Northgate Plumbing","Kingsley Glazing","Atrium Cleaning","Beacon Roofing","Linnet Locksmiths","Heron Gardens"];
+        const roles = ["Plumber","Glazier","Cleaning contractor","Roofing","Locksmith","Grounds maintenance"];
+        const name = names[i];
+        return {
+          id: `bc-imp-${ts}-s${i}`,
+          name,
+          type: "subcontractor" as BrokerContactType,
+          role: `${roles[i]} · imported`,
+          initials: name.split(/\s+/).map((p) => p[0]).join("").slice(0,2).toUpperCase(),
+          email: `office@${name.split(" ")[0].toLowerCase()}.co.uk`,
+          phone: `020 7946 0${(500 + i).toString()}`,
+          contactPref: "prefers email",
+          address: "—",
+          relatedTo: "Linked to: portfolio (general)",
+          imported: true,
+        };
+      }),
+      // 4 misc — one is a duplicate of M&S
+      ...["M&S","Greenfield Surveyors","Aldgate Insurance","Beacon Accountants"].map((name, i) => ({
+        id: `bc-imp-${ts}-m${i}`,
+        name,
+        type: "misc" as BrokerContactType,
+        role: i === 0 ? "Tenant · Shop, 5 Nugent Terrace (from import)" : "Imported · type to confirm",
+        initials: name.replace(/[^A-Za-z]/g,"").slice(0,2).toUpperCase(),
+        email: i === 0 ? "store.ops@marksandspencer.com" : `contact@${name.split(" ")[0].toLowerCase()}.co.uk`,
+        phone: "—",
+        contactPref: "no preference noted",
+        address: "—",
+        relatedTo: i === 0 ? "Linked unit: Shop, 5 Nugent Terrace" : "Linked to: portfolio (general)",
+        imported: true,
+        flagged: i === 0,
+        flagLabel: i === 0 ? "Possible duplicate" : undefined,
+      })),
+    ];
+
+    setContacts((arr) => [...imports, ...arr]);
+
+    const byType: Record<BrokerContactType, number> = { staff: 0, subcontractor: 0, occupant: 0, misc: 0 };
+    imports.forEach((c) => { byType[c.type] += 1; });
+    const linkedProps = new Set<string>();
+    imports.forEach((c) => {
+      const m = c.relatedTo.match(/(5 Nugent Terrace|Stanley House|Cromwell Mews|Beaufort Mews)/g) || [];
+      m.forEach((s) => linkedProps.add(s));
+    });
+    const flaggedFlags: BrokerImportFlag[] = imports
+      .filter((c) => c.flagged)
+      .map((c) => ({ name: c.name, reason: c.flagLabel === "Possible duplicate" ? "looks like a duplicate of M&S already on file" : "missing email" }));
+
+    setBrokerEvents((arr) => [
+      ...arr,
+      { kind: "user", id: `bk-${ts}-u-upload`, text: `Uploaded ${filename}` },
+      { kind: "broker", id: `bk-${ts}-b-upload-1`, text: `Got the spreadsheet — reading it in now. One moment.` },
+      { kind: "broker", id: `bk-${ts}-b-upload-2`, text: `I've read in ${imports.length} contacts — ${byType.occupant} tenants, ${byType.subcontractor} contractors, ${byType.staff + byType.misc} others. I've linked them to their properties where the address gave me enough to go on. ${flaggedFlags.length > 0 ? `${flaggedFlags.length} I couldn't place cleanly — two are missing an email, and one looks like a duplicate of M&S already on file. I've left them flagged rather than guess — shall we run through them?` : "All placed cleanly."}` },
+      { kind: "importSummary", id: `bk-${ts}-imp`, total: imports.length, byType, linkedProperties: linkedProps.size, flagged: flaggedFlags, filename },
+    ]);
+  };
+
 
 
 
@@ -2613,13 +2704,14 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
               ? <ProfessorComposer onUpload={handleProfessorUpload} />
               : adminCharacter === "magician"
                 ? <MagicianComposer onCreate={handleCreateWorkflow} />
-                : adminCharacter === "broker"
-                  ? <BrokerComposer
-                      onAdd={handleAddBrokerContact}
-                      flow={brokerFlow}
-                      onSubmitAnswer={submitBrokerAnswer}
-                      onCancel={cancelBrokerFlow}
-                    />
+                  : adminCharacter === "broker"
+                    ? <BrokerComposer
+                        onAdd={handleAddBrokerContact}
+                        onUpload={handleUploadBrokerContacts}
+                        flow={brokerFlow}
+                        onSubmitAnswer={submitBrokerAnswer}
+                        onCancel={cancelBrokerFlow}
+                      />
                   : <LockedComposer view={view} />
 
           ) : testerMode && view === "unit" ? (
@@ -3273,11 +3365,54 @@ function AdminChat({ character, owl, professorEvents, onAssignProfessorType, bro
                 </div>
               );
             }
-            // summary
+            if (ev.kind === "summary") {
+              return (
+                <div key={ev.id} className="ml-12 max-w-[420px] rounded-xl border border-[#7C3AED]/30 bg-[#F5F3FF] p-3">
+                  <div className="text-[11px] uppercase tracking-wide text-[#7C3AED] font-semibold mb-1">Added to the black book</div>
+                  <div className="text-[12px] text-slate-700"><span className="font-semibold">{ev.name}</span> · pinned at the top of the book on the right.</div>
+                </div>
+              );
+            }
+            // importSummary
+            const typeRows: { key: BrokerContactType; label: string }[] = [
+              { key: "occupant", label: "Occupants / tenants" },
+              { key: "subcontractor", label: "Subcontractors" },
+              { key: "staff", label: "Staff" },
+              { key: "misc", label: "Other" },
+            ];
             return (
-              <div key={ev.id} className="ml-12 max-w-[420px] rounded-xl border border-[#7C3AED]/30 bg-[#F5F3FF] p-3">
-                <div className="text-[11px] uppercase tracking-wide text-[#7C3AED] font-semibold mb-1">Added to the black book</div>
-                <div className="text-[12px] text-slate-700"><span className="font-semibold">{ev.name}</span> · pinned at the top of the book on the right.</div>
+              <div key={ev.id} className="ml-12 max-w-[460px] rounded-xl border border-[#7C3AED]/30 bg-[#F5F3FF] p-3.5">
+                <div className="flex items-center gap-2 mb-1.5">
+                  <span className="inline-flex items-center justify-center w-5 h-5 rounded bg-[#7C3AED]/10 text-[#7C3AED]" aria-hidden>
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 7h18M3 12h18M3 17h18"/></svg>
+                  </span>
+                  <div className="text-[11px] uppercase tracking-wide text-[#7C3AED] font-semibold">Imported into the black book</div>
+                </div>
+                <div className="text-[12px] text-slate-700 mb-2">
+                  Read <span className="font-semibold">{ev.total} contacts</span> from <span className="font-mono text-[11.5px]">{ev.filename}</span> · linked across <span className="font-semibold">{ev.linkedProperties}</span> propert{ev.linkedProperties === 1 ? "y" : "ies"}.
+                </div>
+                <dl className="text-[11.5px] text-slate-700 grid grid-cols-2 gap-x-3 gap-y-0.5 mb-2">
+                  {typeRows.filter((r) => (ev.byType[r.key] || 0) > 0).map((r) => (
+                    <div key={r.key} className="flex justify-between">
+                      <dt className="text-slate-500">{r.label}</dt>
+                      <dd className="font-semibold">{ev.byType[r.key]}</dd>
+                    </div>
+                  ))}
+                </dl>
+                {ev.flagged.length > 0 && (
+                  <div className="mt-1 rounded-md border border-amber-200 bg-amber-50 p-2">
+                    <div className="flex items-center gap-1.5 text-[10.5px] uppercase tracking-wide font-semibold text-amber-700 mb-1">
+                      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M4 21V4h12l-2 4 2 4H4"/></svg>
+                      {ev.flagged.length} need{ev.flagged.length === 1 ? "s" : ""} your confirmation
+                    </div>
+                    <ul className="text-[11.5px] text-slate-700 space-y-0.5">
+                      {ev.flagged.map((f, i) => (
+                        <li key={i}><span className="font-semibold">{f.name}</span> — {f.reason}</li>
+                      ))}
+                    </ul>
+                    <div className="text-[11px] text-slate-500 mt-1.5">I've parked them flagged in the book rather than guess. Open the black book to confirm.</div>
+                  </div>
+                )}
               </div>
             );
           })}
@@ -8076,14 +8211,16 @@ function WorkflowAdjustDialog({ workflow, staff, onClose, onSave }: {
 
 /* ---------- The Broker — composer + black book ---------- */
 
-function BrokerComposer({ onAdd, flow, onSubmitAnswer, onCancel }: {
+function BrokerComposer({ onAdd, onUpload, flow, onSubmitAnswer, onCancel }: {
   onAdd: () => void;
+  onUpload: (filename: string) => void;
   flow: { step: number; draft: Partial<BrokerContact> } | null;
   onSubmitAnswer: (answer: string) => void;
   onCancel: () => void;
 }) {
   const [value, setValue] = useState("");
   const inputRef = useRef<HTMLInputElement | null>(null);
+  const fileRef = useRef<HTMLInputElement | null>(null);
   const stepKey = flow?.step ?? -1;
   useEffect(() => {
     setValue("");
@@ -8096,22 +8233,50 @@ function BrokerComposer({ onAdd, flow, onSubmitAnswer, onCancel }: {
   if (!flow) {
     return (
       <div className="flex flex-col gap-2">
-        <div className="flex items-center gap-3 px-4 py-3 rounded-2xl border-2 border-dashed border-[#7C3AED]/40 bg-white">
-          <button
-            type="button"
-            onClick={onAdd}
-            className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full bg-[#7C3AED] text-white text-[13px] font-semibold shadow-sm hover:bg-[#6D28D9] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40"
-          >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-              <path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/>
-              <circle cx="9" cy="7" r="4"/>
-              <path d="M19 8v6M22 11h-6"/>
-            </svg>
-            Add a contact
-          </button>
-          <div className="flex-1 min-w-0">
-            <div className="text-[12px] font-medium text-slate-800">Staff, subcontractors, occupants — anyone who matters</div>
-            <div className="text-[11px] text-slate-500">I'll ask the questions and you'll provide the answers.</div>
+        <div className="px-4 py-3 rounded-2xl border-2 border-dashed border-[#7C3AED]/40 bg-white flex flex-col gap-2.5">
+          <div className="text-[12px] text-slate-700 leading-snug">
+            Add a contact and I'll take you through it — or hand me a spreadsheet of your contacts and I'll read them in. Either way, I'll connect each one to the right properties and remember how they relate.
+          </div>
+          <div className="flex flex-wrap items-center gap-2">
+            <button
+              type="button"
+              onClick={onAdd}
+              className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full bg-[#7C3AED] text-white text-[13px] font-semibold shadow-sm hover:bg-[#6D28D9] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                <path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/>
+                <circle cx="9" cy="7" r="4"/>
+                <path d="M19 8v6M22 11h-6"/>
+              </svg>
+              Add a contact
+            </button>
+            <span className="text-[11px] text-slate-400 px-0.5">or</span>
+            <button
+              type="button"
+              onClick={() => fileRef.current?.click()}
+              className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full border border-[#7C3AED]/60 bg-white text-[#7C3AED] text-[13px] font-semibold hover:bg-[#F5F3FF] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                <path d="M3 7h6v4H3zM3 13h6v4H3zM11 7h10v10H11z"/>
+                <path d="M16 3v4M14 5h4"/>
+              </svg>
+              Upload contacts
+            </button>
+            <input
+              ref={fileRef}
+              type="file"
+              accept=".csv,.xlsx,.xls"
+              className="sr-only"
+              aria-label="Upload contacts spreadsheet"
+              onChange={(e) => {
+                const f = e.target.files?.[0];
+                onUpload(f?.name || "contacts-export.csv");
+                if (fileRef.current) fileRef.current.value = "";
+              }}
+            />
+          </div>
+          <div className="text-[11px] text-slate-500">
+            One contact at a time, or a whole list (CSV / XLSX). I'll flag anything I can't place — I won't invent details or silently merge duplicates.
           </div>
         </div>
       </div>
@@ -8206,12 +8371,22 @@ function BrokerWorkArea({ character, contacts, onAdd }: {
           matches.forEach((m) => linkedProperties.add(m));
         });
         const flagged = contacts.filter((c) => c.flagged);
+        const importedCount = contacts.filter((c) => c.imported).length;
+        const importedFlagged = contacts.filter((c) => c.imported && c.flagged).length;
         const notes: CharacterNote[] = [];
-        notes.push({
-          id: "bn-recent",
-          kind: "recent",
-          text: "Added 2 contacts this week — Firewatch Ltd and Voltedge. Updated M&S's preferred contact.",
-        });
+        if (importedCount > 0) {
+          notes.push({
+            id: "bn-import",
+            kind: "recent",
+            text: `Added ${importedCount} contacts via import this week${importedFlagged > 0 ? ` · ${importedFlagged} need attention` : ""}.`,
+          });
+        } else {
+          notes.push({
+            id: "bn-recent",
+            kind: "recent",
+            text: "Added 2 contacts this week — Firewatch Ltd and Voltedge. Updated M&S's preferred contact.",
+          });
+        }
         notes.push({
           id: "bn-totals",
           kind: "totals",
