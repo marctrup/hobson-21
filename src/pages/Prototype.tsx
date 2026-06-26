@@ -3273,6 +3273,99 @@ function AdminWorkArea({ character }: { character: { id: AdminCharacter; name: s
   );
 }
 
+/* ---------- Character notes strip (shared pattern: recent / totals / issues) ---------- */
+type CharacterNote = {
+  id: string;
+  kind: "recent" | "totals" | "issue" | "coverage";
+  text: string;
+  onClick?: () => void;
+  ctaLabel?: string;
+};
+
+function CharacterNotesStrip({
+  character,
+  title,
+  subtitle,
+  notes,
+}: {
+  character: { name: string; src: string };
+  title: string;
+  subtitle: string;
+  notes: CharacterNote[];
+}) {
+  if (notes.length === 0) return null;
+  return (
+    <section
+      className="px-5 py-3 border-b border-slate-100 bg-[#FAF8FF] shrink-0"
+      aria-label={`${character.name}'s notes`}
+    >
+      <div className="flex items-center gap-2 mb-2">
+        <div className="w-6 h-6 rounded-full overflow-hidden bg-white ring-1 ring-[#7C3AED]/20 grid place-items-center shrink-0">
+          <img src={character.src} alt="" aria-hidden className="w-[120%] h-[120%] object-contain" />
+        </div>
+        <h3 className="text-[12px] font-semibold uppercase tracking-wide text-[#5B21B6]">{title}</h3>
+        <span className="text-[11px] text-slate-500 truncate">· {subtitle}</span>
+      </div>
+      <ul className="grid gap-1.5 sm:grid-cols-2">
+        {notes.map((n) => {
+          const clickable = !!n.onClick;
+          const Tag: any = clickable ? "button" : "div";
+          return (
+            <li key={n.id}>
+              <Tag
+                {...(clickable ? { onClick: n.onClick, type: "button" } : {})}
+                className={`w-full text-left flex items-start gap-2 px-3 py-2 rounded-md border border-[#7C3AED]/15 bg-white ${
+                  clickable ? "hover:bg-[#F5F3FF] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]" : ""
+                }`}
+              >
+                <CharNoteIcon kind={n.kind} />
+                <div className="min-w-0">
+                  <p className="text-[12px] text-slate-800 leading-snug">{n.text}</p>
+                  {clickable && (
+                    <span className="mt-0.5 inline-block text-[11px] text-[#7C3AED]">
+                      {n.ctaLabel ?? "open →"}
+                    </span>
+                  )}
+                </div>
+              </Tag>
+            </li>
+          );
+        })}
+      </ul>
+    </section>
+  );
+}
+
+function CharNoteIcon({ kind }: { kind: CharacterNote["kind"] }) {
+  const common = "w-4 h-4 shrink-0 mt-0.5";
+  if (kind === "recent") {
+    return (
+      <svg className={common} viewBox="0 0 24 24" fill="none" stroke="#5B21B6" strokeWidth="2" aria-label="Recent activity">
+        <circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>
+      </svg>
+    );
+  }
+  if (kind === "totals") {
+    return (
+      <svg className={common} viewBox="0 0 24 24" fill="none" stroke="#5B21B6" strokeWidth="2" aria-label="Totals">
+        <rect x="3" y="4" width="18" height="4" rx="1"/><path d="M5 8v12h14V8"/><path d="M9 12h6M9 16h4"/>
+      </svg>
+    );
+  }
+  if (kind === "issue") {
+    return (
+      <svg className={common} viewBox="0 0 24 24" fill="none" stroke="#B45309" strokeWidth="2" aria-label="Issue">
+        <circle cx="12" cy="12" r="9"/><path d="M12 8v4"/><circle cx="12" cy="16" r="0.8" fill="#B45309"/>
+      </svg>
+    );
+  }
+  return (
+    <svg className={common} viewBox="0 0 24 24" fill="none" stroke="#0369A1" strokeWidth="2" aria-label="Coverage">
+      <path d="M5 12l4 4 10-10"/>
+    </svg>
+  );
+}
+
 function ProfessorWorkArea({ character, docs }: { character: { id: AdminCharacter; name: string; src: string; tagline: string; workTitle: string }; docs: ProfDoc[] }) {
   const [search, setSearch] = useState("");
   const filtered = docs.filter((d) => d.name.toLowerCase().includes(search.toLowerCase()));
