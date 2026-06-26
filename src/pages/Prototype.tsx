@@ -6173,7 +6173,7 @@ function buildPA004Beats(): PerformBeat[] {
         label: "Gather comparable evidence?",
         options: [
           { label: "Approve", kind: "approve", nextBeatIdx: 11 },
-          { label: "Skip", kind: "skip", nextBeatIdx: 12 },
+          { label: "Skip", kind: "skip", nextBeatIdx: 14 },
         ],
       },
     },
