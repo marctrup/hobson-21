@@ -4244,7 +4244,7 @@ function PropertyContent({
     <div className="space-y-4">
       {/* Pinned collapsible Units section */}
       <section
-        className="sticky top-0 z-20 -mx-1 px-1 bg-white/95 backdrop-blur border border-slate-200 rounded-xl shadow-sm"
+        className="sticky top-0 z-20 -mx-1 px-1"
         aria-label="Units"
       >
         <button
@@ -4252,22 +4252,57 @@ function PropertyContent({
           onClick={() => setUnitsOpen((v) => !v)}
           aria-expanded={unitsOpen}
           aria-controls={`units-panel-${property.id}`}
-          className="w-full flex items-center justify-between gap-3 px-3 py-2.5 text-left rounded-xl hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/30"
+          className={`group w-full flex items-center justify-between gap-3 px-4 py-3.5 text-left rounded-xl cursor-pointer
+            bg-gradient-to-r from-[#F5F3FF] to-white
+            border-2 ${unitsOpen ? "border-[#7C3AED]" : "border-[#C4B5FD]"}
+            shadow-sm hover:shadow-md hover:border-[#7C3AED] hover:from-[#EDE9FE] hover:to-[#F5F3FF]
+            active:shadow-sm active:translate-y-px
+            transition-[box-shadow,border-color,background-color,transform] motion-reduce:transition-none
+            focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]/40 focus-visible:ring-offset-2`}
         >
-          <span className="flex items-center gap-2 min-w-0">
-            <span className="text-sm font-semibold text-slate-800">Units ({property.units.length})</span>
-            <span className="text-[12px] text-slate-500 truncate">
-              · {counts.let} Let · {counts.vacant} Vacant
-              {!testerMode && counts.alerts > 0 && <> · <span className="text-amber-700 font-medium">{counts.alerts} need attention</span></>}
+          <span className="flex items-center gap-3 min-w-0">
+            <span
+              aria-hidden
+              className="flex items-center justify-center w-9 h-9 rounded-lg bg-[#7C3AED] text-white shadow-sm group-hover:scale-[1.04] transition-transform motion-reduce:transition-none"
+            >
+              {/* door / unit icon */}
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M4 21V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v17" />
+                <path d="M4 21h16" />
+                <path d="M19 21V9l-3-2" />
+                <circle cx="13" cy="13" r="0.8" fill="currentColor" />
+              </svg>
+            </span>
+            <span className="flex flex-col min-w-0">
+              <span className="text-[15px] font-semibold text-slate-900 leading-tight">
+                {unitsOpen ? "Choose a unit to open" : "Open a unit"}
+              </span>
+              <span className="text-[12px] text-slate-600 truncate">
+                {property.units.length} units · {counts.let} let · {counts.vacant} vacant
+                {!testerMode && counts.alerts > 0 && <> · <span className="text-amber-700 font-medium">{counts.alerts} need attention</span></>}
+              </span>
             </span>
           </span>
-          <span aria-hidden className={`text-slate-400 transition-transform ${unitsOpen ? "rotate-180" : ""}`} style={{ transitionDuration: "220ms" }}>▾</span>
+          <span className="flex items-center gap-2 shrink-0">
+            <span className="hidden sm:inline text-[11px] uppercase tracking-wide text-[#7C3AED] font-semibold">
+              {unitsOpen ? "Close" : "Tap to choose"}
+            </span>
+            <span
+              aria-hidden
+              className={`flex items-center justify-center w-6 h-6 rounded-full bg-white border border-[#C4B5FD] text-[#7C3AED] transition-transform motion-reduce:transition-none ${unitsOpen ? "rotate-180" : ""}`}
+              style={{ transitionDuration: "220ms" }}
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M6 9l6 6 6-6" />
+              </svg>
+            </span>
+          </span>
         </button>
 
         <div
           id={`units-panel-${property.id}`}
           hidden={!unitsOpen}
-          className="px-3 pb-3 pt-1 space-y-3"
+          className="mt-2 px-3 pb-3 pt-3 space-y-3 bg-white border border-slate-200 rounded-xl shadow-sm"
         >
           {!testerMode && (
             <div className="text-[10.5px] text-slate-500 flex items-center gap-3 flex-wrap">
