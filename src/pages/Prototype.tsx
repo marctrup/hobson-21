@@ -6389,11 +6389,8 @@ function buildPA001Beats(): PerformBeat[] {
       flag: missing.length > 0
         ? `${missing.map((m) => m.unitLabel).join(", ")} still need access notice — no contact on file. Handle separately?`
         : undefined,
-      gate: {
-        label: "Continue",
-        options: [{ label: "Continue", kind: "continue", nextBeatIdx: 6 }],
-      },
     },
+
     {
       id: "fa7",
       stepKey: "record",
