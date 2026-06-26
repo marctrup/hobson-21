@@ -6253,21 +6253,24 @@ function SuggestedRentGate({ ctx, yesIdx, noIdx }: { ctx: PerformCtx; yesIdx: nu
     <div className="pl-[44px]">
       <div className="inline-block max-w-[640px] rounded-2xl border border-[#DDD6FE] bg-[#F5F3FF] px-3 py-2.5 space-y-2">
         <div className="text-[11px] uppercase tracking-wide text-[#5B21B6] font-semibold">
-          Prepare Section 13 at £49,500?
+          Awaiting your instruction
         </div>
-        <div className="flex flex-wrap gap-1.5">
+        <div className="text-[12px] text-slate-700">
+          I won't prepare anything until you click Continue.
+        </div>
+        <div className="flex flex-wrap gap-1.5 pt-0.5">
           <button
             autoFocus
-            onClick={() => { ctx.setChosenRent(suggested); ctx.advance(yesIdx, `Yes — prepare at ${fmtGBP(suggested)}`, "approve"); }}
+            onClick={() => { ctx.setChosenRent(suggested); ctx.advance(yesIdx, `Continue — prepare at ${fmtGBP(suggested)}`, "approve"); }}
             className="text-xs px-3 py-1.5 rounded-full bg-[#7C3AED] text-white hover:bg-[#6D28D9] focus:outline-none focus:ring-2 focus:ring-[#7C3AED] transition"
           >
-            Yes, use £49,500
+            Continue — prepare at £49,500
           </button>
           <button
-            onClick={() => { ctx.setChosenRent(null); ctx.advance(noIdx, "No — leave new rent blank", "modify"); }}
+            onClick={() => { ctx.setChosenRent(null); ctx.advance(noIdx, "Continue — leave new rent blank", "modify"); }}
             className="text-xs px-3 py-1.5 rounded-full bg-white border border-slate-200 text-slate-700 hover:border-[#7C3AED] hover:bg-[#FAF9FF] focus:outline-none focus:ring-2 focus:ring-[#7C3AED] transition"
           >
-            No, leave it blank
+            Continue — leave it blank
           </button>
         </div>
       </div>
