@@ -272,20 +272,46 @@ type Workflow = {
   scopeDetail?: string[]; // long form on expand
   owner: WorkflowOwner;
   lastAdjusted?: string;
+  stepCount?: number;
+  justBuilt?: boolean;
 };
 
+type MagBuildStep = { id: string; label: string; phrase: string; uid: string };
+type MagBuildState = {
+  step: "q1" | "q2" | "q3" | "q3b" | "q4" | "q5" | "q6";
+  watch?: "rent_reviews" | "compliance" | "notices" | "other";
+  lead?: "6m" | "3m" | "on";
+  leadLabel?: string;
+  triggerPhrase?: string;
+  scope?: "unit" | "property" | "portfolio";
+  scopeLabel?: string;
+  owner?: WorkflowOwner;
+  steps: MagBuildStep[];
+  addOpen?: boolean;
+  customDraft?: string;
+};
+type MagicianEvent =
+  | { kind: "magician"; id: string; text: string }
+  | { kind: "user"; id: string; text: string }
+  | { kind: "built"; id: string; workflowId: string; name: string; stepCount: number };
+
+const MAG_DEFAULT_STEPS: { id: string; label: string; phrase: string }[] = [
+  { id: "read_lease", label: "Read the lease and confirm the review basis & date", phrase: "read the lease" },
+  { id: "comparables", label: "Gather comparable evidence", phrase: "gather comparables" },
+  { id: "surveyor", label: "Prepare a surveyor instruction", phrase: "prepare the surveyor instruction" },
+  { id: "section13", label: "Create the Section 13 notice", phrase: "create the Section 13 notice" },
+  { id: "email", label: "Draft the covering email to the tenant", phrase: "draft the covering email" },
+];
+const MAG_ADD_OPTIONS: { id: string; label: string; phrase: string }[] = [
+  { id: "comparables", label: "Gather comparables", phrase: "gather comparables" },
+  { id: "surveyor", label: "Prepare surveyor instruction", phrase: "prepare the surveyor instruction" },
+  { id: "section13", label: "Create Section 13 notice", phrase: "create the Section 13 notice" },
+  { id: "email", label: "Draft covering email", phrase: "draft the covering email" },
+  { id: "summary_review", label: "Prepare review summary", phrase: "prepare a review summary" },
+  { id: "notify_owner", label: "Notify owner", phrase: "notify the owner" },
+];
+
 const SEED_WORKFLOWS: Workflow[] = [
-  {
-    id: "wf-1",
-    name: "Rent review watch",
-    purpose: "Spots rent reviews early and drafts the review summary.",
-    icon: "calendar", tone: "purple", status: "built",
-    trigger: "a rent review is 6 months away",
-    action: "read the lease, prepare a review summary, and bring it to you for approval",
-    scopeLabel: "Flat 8 and Flat 6, Stanley House",
-    owner: { kind: "person", name: "Sarah Chen", role: "Asset Manager", initials: "SC" },
-    lastAdjusted: "12 May 2026",
-  },
   {
     id: "wf-2",
     name: "Compliance renewals",
@@ -1292,7 +1318,12 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
     setAdminMode(false);
     setAdminCharacter(null);
   };
-  const selectAdminCharacter = (c: AdminCharacter) => setAdminCharacter(c);
+  const selectAdminCharacter = (c: AdminCharacter) => {
+    setAdminCharacter(c);
+    setMagicianEvents([]);
+    setMagBuild(null);
+    setMagStreamingId(null);
+  };
 
   // ----- Professor library state -----
   const [profDocs, setProfDocs] = useState<ProfDoc[]>(SEED_PROF_DOCS);
@@ -1303,20 +1334,31 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
   const [adjustingWorkflowId, setAdjustingWorkflowId] = useState<string | null>(null);
   const [viewingWorkflowId, setViewingWorkflowId] = useState<string | null>(null);
 
+  // ----- Broker black-book state -----
+  const [contacts, setContacts] = useState<BrokerContact[]>(SEED_BROKER_CONTACTS);
+  const [brokerEvents, setBrokerEvents] = useState<BrokerEvent[]>([]);
+  const [brokerFlow, setBrokerFlow] = useState<{ step: number; draft: Partial<BrokerContact> } | null>(null);
+
+  // ----- Magician build conversation state -----
+  const [magicianEvents, setMagicianEvents] = useState<MagicianEvent[]>([]);
+  const [magBuild, setMagBuild] = useState<MagBuildState | null>(null);
+  const [magStreamingId, setMagStreamingId] = useState<string | null>(null);
+
+  const magNewId = (p: string) => `${p}-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`;
+  const magAsk = (text: string) => {
+    const id = magNewId("mag");
+    setMagicianEvents((e) => [...e, { kind: "magician", id, text }]);
+    setMagStreamingId(id);
+  };
+  const magUserEcho = (text: string) => {
+    const id = magNewId("mu");
+    setMagicianEvents((e) => [...e, { kind: "user", id, text }]);
+  };
+
   const handleCreateWorkflow = () => {
-    const id = `wf-${Date.now()}`;
-    const draft: Workflow = {
-      id,
-      name: "Untitled workflow",
-      purpose: "Tell me what to watch for and I'll prepare it.",
-      icon: "wand", tone: "slate", status: "draft",
-      trigger: "—",
-      action: "prepare the work and bring it to you for approval",
-      scopeLabel: "Not yet set",
-      owner: { kind: "all_teams" },
-    };
-    setWorkflows((arr) => [draft, ...arr]);
-    setAdjustingWorkflowId(id);
+    setMagicianEvents([]);
+    setMagBuild({ step: "q1", steps: MAG_DEFAULT_STEPS.map((s, i) => ({ ...s, uid: `${s.id}-${i}` })) });
+    setTimeout(() => magAsk("Wonderful. Let's build one together. What shall I keep watch on?"), 250);
   };
 
   const handleSaveWorkflow = (next: Workflow) => {
@@ -1324,12 +1366,117 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
     setAdjustingWorkflowId(null);
   };
 
+  // ----- Magician answer handlers -----
+  const magAnswerQ1 = (key: "rent_reviews" | "compliance" | "notices" | "other", label: string) => {
+    magUserEcho(label);
+    if (key === "rent_reviews") {
+      setMagBuild((b) => b ? { ...b, watch: key, step: "q2" } : b);
+      setTimeout(() => magAsk("Good — rent reviews. How far ahead should I act?"), 500);
+    } else {
+      // Politely redirect — only rent reviews are wired up in the demo.
+      setMagBuild((b) => b ? { ...b, watch: "rent_reviews", step: "q2" } : b);
+      setTimeout(() => magAsk("Noted. For today's build I'll stay with rent reviews — the others I'm preparing next. How far ahead should I act?"), 500);
+    }
+  };
+  const magAnswerQ2 = (lead: "6m" | "3m" | "on", label: string, phrase: string) => {
+    magUserEcho(label);
+    setMagBuild((b) => b ? { ...b, lead, leadLabel: label, triggerPhrase: phrase, step: "q3" } : b);
+    setTimeout(() => magAsk("Where does this apply?"), 500);
+  };
+  const magAnswerQ3 = (scope: "unit" | "property" | "portfolio", label: string) => {
+    magUserEcho(label);
+    if (scope === "unit") {
+      setMagBuild((b) => b ? { ...b, scope, step: "q3b" } : b);
+      setTimeout(() => magAsk("Which unit?"), 500);
+    } else {
+      const scopeLabel = scope === "property" ? "Stanley House (all units)" : "The whole portfolio";
+      setMagBuild((b) => b ? { ...b, scope, scopeLabel, step: "q4" } : b);
+      setTimeout(() => magAsk("And who should own it?"), 500);
+    }
+  };
+  const magAnswerQ3b = (unitLabel: string) => {
+    magUserEcho(unitLabel);
+    setMagBuild((b) => b ? { ...b, scopeLabel: unitLabel, step: "q4" } : b);
+    setTimeout(() => magAsk("And who should own it?"), 500);
+  };
+  const magAnswerQ4 = (owner: WorkflowOwner, label: string) => {
+    magUserEcho(label);
+    setMagBuild((b) => b ? { ...b, owner, step: "q5" } : b);
+    setTimeout(() => magAsk("Here's how I'd handle a rent review. Tap to keep, remove, reorder — or add a step."), 500);
+  };
+  const magUpdateSteps = (next: MagBuildStep[], note?: string) => {
+    setMagBuild((b) => b ? { ...b, steps: next, addOpen: false } : b);
+    if (note) setTimeout(() => magAsk(note), 200);
+  };
+  const magAddStep = (opt: { id: string; label: string; phrase: string }) => {
+    setMagBuild((b) => {
+      if (!b) return b;
+      const uid = `${opt.id}-${Date.now()}`;
+      return { ...b, steps: [...b.steps, { ...opt, uid }], addOpen: false };
+    });
+    setTimeout(() => magAsk("Added — anything else?"), 200);
+  };
+  const magAddCustomStep = (label: string) => {
+    if (!label.trim()) return;
+    const uid = `custom-${Date.now()}`;
+    setMagBuild((b) => b ? { ...b, steps: [...b.steps, { id: "custom", label: label.trim(), phrase: label.trim().toLowerCase(), uid }], addOpen: false, customDraft: "" } : b);
+    setTimeout(() => magAsk("Added — anything else?"), 200);
+  };
+  const magRemoveStep = (uid: string) => {
+    setMagBuild((b) => b ? { ...b, steps: b.steps.filter((s) => s.uid !== uid) } : b);
+    setTimeout(() => magAsk("Removed — anything else?"), 200);
+  };
+  const magMoveStep = (uid: string, dir: -1 | 1) => {
+    setMagBuild((b) => {
+      if (!b) return b;
+      const i = b.steps.findIndex((s) => s.uid === uid);
+      const j = i + dir;
+      if (i < 0 || j < 0 || j >= b.steps.length) return b;
+      const next = [...b.steps];
+      [next[i], next[j]] = [next[j], next[i]];
+      return { ...b, steps: next };
+    });
+  };
+  const magFinishStepsToQ6 = () => {
+    setMagBuild((b) => b ? { ...b, step: "q6" } : b);
+    setTimeout(() => magAsk("I'll prepare all of this and bring it to you for approval — I never act on my own. Shall I build it?"), 400);
+  };
+  const magAnswerQ6KeepEditing = () => {
+    magUserEcho("Keep editing");
+    setMagBuild((b) => b ? { ...b, step: "q5" } : b);
+    setTimeout(() => magAsk("Of course — adjust the steps and let me know when you're ready."), 400);
+  };
+  const magAnswerQ6Build = () => {
+    magUserEcho("Build it");
+    setMagBuild((b) => {
+      if (!b) return b;
+      const phrases = b.steps.map((s) => s.phrase);
+      const actionSummary = phrases.length === 0
+        ? "bring it to you for approval"
+        : `${phrases.slice(0, -1).join(", ")}${phrases.length > 1 ? " and " : ""}${phrases[phrases.length - 1]} — then bring it to you for approval`;
+      const id = `wf-${Date.now()}`;
+      const trigger = `a rent review is ${b.triggerPhrase || "approaching"}`;
+      const wf: Workflow = {
+        id,
+        name: "Rent review watch",
+        purpose: "Spots rent reviews early and prepares each one for your approval.",
+        icon: "calendar", tone: "purple", status: "built",
+        trigger,
+        action: actionSummary,
+        scopeLabel: b.scopeLabel || "Not yet set",
+        owner: b.owner || { kind: "all_teams" },
+        lastAdjusted: "just now",
+        stepCount: b.steps.length,
+        justBuilt: true,
+      };
+      setWorkflows((arr) => [wf, ...arr.map((w) => ({ ...w, justBuilt: false }))]);
+      const builtId = magNewId("mb");
+      setMagicianEvents((e) => [...e, { kind: "built", id: builtId, workflowId: id, name: wf.name, stepCount: b.steps.length }]);
+      setTimeout(() => magAsk(`Built — '${wf.name}', a ${b.steps.length}-step workflow ending in your approval. You'll find it pinned on the right.`), 500);
+      return null;
+    });
+  };
 
-
-  // ----- Broker black-book state -----
-  const [contacts, setContacts] = useState<BrokerContact[]>(SEED_BROKER_CONTACTS);
-  const [brokerEvents, setBrokerEvents] = useState<BrokerEvent[]>([]);
-  const [brokerFlow, setBrokerFlow] = useState<{ step: number; draft: Partial<BrokerContact> } | null>(null);
 
   const initialsFromName = (name: string) => {
     const parts = name.trim().split(/\s+/).filter(Boolean);
@@ -2433,7 +2580,20 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
               onAssignProfessorType={assignProfessorType}
               brokerEvents={adminCharacter === "broker" ? brokerEvents : undefined}
               brokerFlowActive={adminCharacter === "broker" && !!brokerFlow}
+              magicianEvents={adminCharacter === "magician" ? magicianEvents : undefined}
+              magBuild={adminCharacter === "magician" ? magBuild : null}
+              magStreamingId={adminCharacter === "magician" ? magStreamingId : null}
+              onMagStreamDone={(id) => setMagStreamingId((cur) => (cur === id ? null : cur))}
+              magHandlers={adminCharacter === "magician" ? {
+                onQ1: magAnswerQ1, onQ2: magAnswerQ2, onQ3: magAnswerQ3, onQ3b: magAnswerQ3b, onQ4: magAnswerQ4,
+                onAddStep: magAddStep, onAddCustomStep: magAddCustomStep, onRemoveStep: magRemoveStep, onMoveStep: magMoveStep,
+                onToggleAdd: (open: boolean) => setMagBuild((b) => b ? { ...b, addOpen: open } : b),
+                onSetCustomDraft: (v: string) => setMagBuild((b) => b ? { ...b, customDraft: v } : b),
+                onFinishSteps: magFinishStepsToQ6, onKeepEditing: magAnswerQ6KeepEditing, onBuild: magAnswerQ6Build,
+                onOpenBuilt: (id: string) => setViewingWorkflowId(id),
+              } : undefined}
             />
+
           ) : (<>
 
 
@@ -3229,7 +3389,25 @@ const HOBSON_ADMIN_INTRO_PARAS = [
 ];
 const HOBSON_ADMIN_INTRO = HOBSON_ADMIN_INTRO_PARAS.join("\n\n");
 
-function AdminChat({ character, owl, professorEvents, onAssignProfessorType, brokerEvents, brokerFlowActive }: { character: { id: AdminCharacter; name: string; src: string; greeting: string } | null; owl: OwlState; professorEvents?: ProfEvent[]; onAssignProfessorType?: (batchId: string, type: string) => void; brokerEvents?: BrokerEvent[]; brokerFlowActive?: boolean }) {
+type MagHandlers = {
+  onQ1: (k: "rent_reviews" | "compliance" | "notices" | "other", label: string) => void;
+  onQ2: (k: "6m" | "3m" | "on", label: string, phrase: string) => void;
+  onQ3: (k: "unit" | "property" | "portfolio", label: string) => void;
+  onQ3b: (label: string) => void;
+  onQ4: (owner: WorkflowOwner, label: string) => void;
+  onAddStep: (opt: { id: string; label: string; phrase: string }) => void;
+  onAddCustomStep: (label: string) => void;
+  onRemoveStep: (uid: string) => void;
+  onMoveStep: (uid: string, dir: -1 | 1) => void;
+  onToggleAdd: (open: boolean) => void;
+  onSetCustomDraft: (v: string) => void;
+  onFinishSteps: () => void;
+  onKeepEditing: () => void;
+  onBuild: () => void;
+  onOpenBuilt: (id: string) => void;
+};
+
+function AdminChat({ character, owl, professorEvents, onAssignProfessorType, brokerEvents, brokerFlowActive, magicianEvents, magBuild, magStreamingId, onMagStreamDone, magHandlers }: { character: { id: AdminCharacter; name: string; src: string; greeting: string } | null; owl: OwlState; professorEvents?: ProfEvent[]; onAssignProfessorType?: (batchId: string, type: string) => void; brokerEvents?: BrokerEvent[]; brokerFlowActive?: boolean; magicianEvents?: MagicianEvent[]; magBuild?: MagBuildState | null; magStreamingId?: string | null; onMagStreamDone?: (id: string) => void; magHandlers?: MagHandlers }) {
   const [phase, setPhase] = useState<"typing" | "streaming" | "done">("typing");
   const [shown, setShown] = useState("");
   const reducedMotion = typeof window !== "undefined"
@@ -3295,12 +3473,48 @@ function AdminChat({ character, owl, professorEvents, onAssignProfessorType, bro
           </div>
         </div>
       )}
-      {character?.id === "magician" && phase === "done" && (
+      {character?.id === "magician" && phase === "done" && (!magicianEvents || magicianEvents.length === 0) && !magBuild && (
         <div className="flex items-end gap-2">
           <CharacterAvatar src={character.src} />
           <div className="max-w-[420px] bg-[#EDE9FE] text-[#1F2330] text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-bl-md">
             Press <span className="font-semibold">"Create a workflow"</span> below and we'll build one together — I'll ask the questions and you will provide the answers — Lets go!
           </div>
+        </div>
+      )}
+      {character?.id === "magician" && phase === "done" && magicianEvents && magicianEvents.length > 0 && (
+        <div className="flex flex-col" style={{ gap: CHAT_TURN_GAP_PX }}>
+          {magicianEvents.map((ev) => {
+            if (ev.kind === "user") {
+              return (
+                <div key={ev.id} className="flex justify-end">
+                  <div className="max-w-[420px] bg-[#7C3AED] text-white text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-br-md">{ev.text}</div>
+                </div>
+              );
+            }
+            if (ev.kind === "built") {
+              return (
+                <div key={ev.id} className="ml-12 max-w-[460px] rounded-xl border border-[#7C3AED]/30 bg-[#F5F3FF] p-3">
+                  <div className="text-[11px] uppercase tracking-wide text-[#7C3AED] font-semibold mb-1">Built into the workshop</div>
+                  <div className="text-[12px] text-slate-700"><span className="font-semibold">{ev.name}</span> — {ev.stepCount}-step workflow, ending in your approval.</div>
+                  <button type="button" onClick={() => magHandlers?.onOpenBuilt(ev.workflowId)} className="mt-2 text-[12px] font-semibold text-[#7C3AED] hover:underline focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40 rounded">View workflow →</button>
+                </div>
+              );
+            }
+            // magician streaming bubble
+            return (
+              <MagicianStreamingBubble
+                key={ev.id}
+                id={ev.id}
+                text={ev.text}
+                src={character.src}
+                stream={magStreamingId === ev.id}
+                onDone={() => onMagStreamDone?.(ev.id)}
+              />
+            );
+          })}
+          {magBuild && !magStreamingId && magHandlers && (
+            <MagicianBuildPanel build={magBuild} handlers={magHandlers} />
+          )}
         </div>
       )}
       {character?.id === "professor" && phase === "done" && (
@@ -3431,6 +3645,193 @@ function AdminChat({ character, owl, professorEvents, onAssignProfessorType, bro
     </div>
   );
 }
+
+
+function MagicianStreamingBubble({ id, text, src, stream, onDone }: { id: string; text: string; src: string; stream: boolean; onDone: () => void }) {
+  const reduced = typeof window !== "undefined" && window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+  const [phase, setPhase] = useState<"typing" | "streaming" | "done">(stream ? "typing" : "done");
+  const [shown, setShown] = useState(stream ? "" : text);
+  useEffect(() => {
+    if (!stream) { setShown(text); setPhase("done"); return; }
+    setPhase("typing");
+    setShown("");
+    if (reduced) {
+      const t = setTimeout(() => { setShown(text); setPhase("done"); onDone(); }, 200);
+      return () => clearTimeout(t);
+    }
+    const typingTimer = setTimeout(() => {
+      setPhase("streaming");
+      const words = text.split(" ");
+      let i = 0;
+      let cancelled = false;
+      const step = () => {
+        if (cancelled) return;
+        i += 1;
+        setShown(words.slice(0, i).join(" "));
+        if (i < words.length) setTimeout(step, 45 + Math.random() * 35);
+        else { setPhase("done"); onDone(); }
+      };
+      setTimeout(step, 60);
+      return () => { cancelled = true; };
+    }, 500);
+    return () => clearTimeout(typingTimer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id]);
+  return (
+    <>
+      {phase === "typing" ? (
+        <div className="flex items-end gap-2" aria-live="polite">
+          <CharacterAvatar src={src} />
+          <div className="bg-[#EDE9FE] px-4 py-3 rounded-2xl rounded-bl-md flex items-center gap-1">
+            <Dot delay={0} /><Dot delay={150} /><Dot delay={300} />
+          </div>
+        </div>
+      ) : (
+        <div className="flex items-end gap-2" aria-live="polite">
+          <CharacterAvatar src={src} />
+          <div className="max-w-[420px] bg-[#EDE9FE] text-[#1F2330] text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-bl-md">
+            {shown}
+            {phase === "streaming" && <span className="inline-block w-1.5 h-3.5 ml-0.5 bg-[#7C3AED] align-middle animate-pulse" />}
+          </div>
+        </div>
+      )}
+    </>
+  );
+}
+
+function MagOptionButton({ children, onClick, disabled }: { children: React.ReactNode; onClick: () => void; disabled?: boolean }) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      disabled={disabled}
+      className="px-3 py-1.5 rounded-full border border-[#7C3AED]/40 bg-white text-[12.5px] font-medium text-[#1F2330] hover:bg-[#F5F3FF] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40 disabled:opacity-40 disabled:cursor-not-allowed"
+    >
+      {children}
+    </button>
+  );
+}
+
+function MagicianBuildPanel({ build, handlers }: { build: MagBuildState; handlers: MagHandlers }) {
+  const UNIT_CHOICES = ["Flat 8, Stanley House", "Flat 6, Stanley House", "Flat 2, 5 Nugent Terrace"];
+  const usedStepIds = new Set(build.steps.map((s) => s.id));
+  return (
+    <div className="ml-12 max-w-[480px] rounded-xl border border-[#7C3AED]/30 bg-white p-3 shadow-sm space-y-3">
+      {build.step === "q1" && (
+        <div>
+          <div className="text-[11px] uppercase tracking-wide text-[#7C3AED] font-semibold mb-2">Choose one</div>
+          <div className="flex flex-wrap gap-2">
+            <MagOptionButton onClick={() => handlers.onQ1("rent_reviews", "Rent reviews")}>Rent reviews</MagOptionButton>
+            <MagOptionButton onClick={() => handlers.onQ1("compliance", "Compliance certificates")}>Compliance certificates</MagOptionButton>
+            <MagOptionButton onClick={() => handlers.onQ1("notices", "Notice deadlines")}>Notice deadlines</MagOptionButton>
+            <MagOptionButton onClick={() => handlers.onQ1("other", "Other")}>Other</MagOptionButton>
+          </div>
+        </div>
+      )}
+      {build.step === "q2" && (
+        <div>
+          <div className="text-[11px] uppercase tracking-wide text-[#7C3AED] font-semibold mb-2">How far ahead?</div>
+          <div className="flex flex-wrap gap-2">
+            <MagOptionButton onClick={() => handlers.onQ2("6m", "6 months ahead", "6 months away")}>6 months ahead</MagOptionButton>
+            <MagOptionButton onClick={() => handlers.onQ2("3m", "3 months ahead", "3 months away")}>3 months ahead</MagOptionButton>
+            <MagOptionButton onClick={() => handlers.onQ2("on", "On the date", "on the review date")}>On the date</MagOptionButton>
+          </div>
+        </div>
+      )}
+      {build.step === "q3" && (
+        <div>
+          <div className="text-[11px] uppercase tracking-wide text-[#7C3AED] font-semibold mb-2">Where does this apply?</div>
+          <div className="flex flex-wrap gap-2">
+            <MagOptionButton onClick={() => handlers.onQ3("unit", "A specific unit")}>A specific unit</MagOptionButton>
+            <MagOptionButton onClick={() => handlers.onQ3("property", "A whole property")}>A whole property</MagOptionButton>
+            <MagOptionButton onClick={() => handlers.onQ3("portfolio", "The whole portfolio")}>The whole portfolio</MagOptionButton>
+          </div>
+        </div>
+      )}
+      {build.step === "q3b" && (
+        <div>
+          <div className="text-[11px] uppercase tracking-wide text-[#7C3AED] font-semibold mb-2">Which unit?</div>
+          <div className="flex flex-wrap gap-2">
+            {UNIT_CHOICES.map((u) => (
+              <MagOptionButton key={u} onClick={() => handlers.onQ3b(u)}>{u}</MagOptionButton>
+            ))}
+          </div>
+        </div>
+      )}
+      {build.step === "q4" && (
+        <div>
+          <div className="text-[11px] uppercase tracking-wide text-[#7C3AED] font-semibold mb-2">Who should own it?</div>
+          <div className="flex flex-wrap gap-2">
+            <MagOptionButton onClick={() => handlers.onQ4({ kind: "all_teams" }, "All teams")}>All teams</MagOptionButton>
+            <MagOptionButton onClick={() => handlers.onQ4({ kind: "person", name: "Sarah Chen", role: "Asset Manager", initials: "SC" }, "Sarah Chen · Asset Manager")}>Sarah Chen · Asset Manager</MagOptionButton>
+            <MagOptionButton onClick={() => handlers.onQ4({ kind: "person", name: "James Okoro", role: "Lease Manager", initials: "JO" }, "James Okoro · Lease Manager")}>James Okoro · Lease Manager</MagOptionButton>
+          </div>
+        </div>
+      )}
+      {build.step === "q5" && (
+        <div>
+          <div className="text-[11px] uppercase tracking-wide text-[#7C3AED] font-semibold mb-2">Steps · {build.steps.length}</div>
+          <ol className="space-y-1.5 mb-2">
+            {build.steps.map((s, i) => (
+              <li key={s.uid} className="flex items-start gap-2 rounded-md border border-slate-200 bg-slate-50 px-2 py-1.5">
+                <span className="text-[11px] font-semibold text-slate-500 mt-0.5 w-4 text-right">{i + 1}.</span>
+                <span className="flex-1 text-[12.5px] text-slate-800 leading-snug">{s.label}</span>
+                <div className="flex items-center gap-0.5">
+                  <button type="button" aria-label="Move up" disabled={i === 0} onClick={() => handlers.onMoveStep(s.uid, -1)} className="w-6 h-6 grid place-items-center rounded text-slate-500 hover:bg-white disabled:opacity-30 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40">↑</button>
+                  <button type="button" aria-label="Move down" disabled={i === build.steps.length - 1} onClick={() => handlers.onMoveStep(s.uid, 1)} className="w-6 h-6 grid place-items-center rounded text-slate-500 hover:bg-white disabled:opacity-30 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40">↓</button>
+                  <button type="button" aria-label="Remove step" onClick={() => handlers.onRemoveStep(s.uid)} className="w-6 h-6 grid place-items-center rounded text-slate-500 hover:bg-white hover:text-rose-600 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40">×</button>
+                </div>
+              </li>
+            ))}
+            {build.steps.length === 0 && (
+              <li className="text-[12px] text-slate-500 italic px-2 py-1.5">No steps yet — add one below.</li>
+            )}
+          </ol>
+          {!build.addOpen ? (
+            <div className="flex flex-wrap gap-2">
+              <button type="button" onClick={() => handlers.onToggleAdd(true)} className="px-3 py-1.5 rounded-full border border-dashed border-[#7C3AED]/50 text-[12.5px] font-medium text-[#7C3AED] hover:bg-[#F5F3FF] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40">+ Add a step</button>
+              <button type="button" onClick={handlers.onFinishSteps} className="px-3 py-1.5 rounded-full bg-[#7C3AED] text-white text-[12.5px] font-semibold hover:bg-[#6D28D9] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40">Looks good — continue</button>
+            </div>
+          ) : (
+            <div className="rounded-md border border-[#7C3AED]/30 bg-[#F5F3FF] p-2 space-y-2">
+              <div className="text-[11px] uppercase tracking-wide text-[#7C3AED] font-semibold">Add a step</div>
+              <div className="flex flex-wrap gap-1.5">
+                {MAG_ADD_OPTIONS.map((o) => (
+                  <button key={o.id} type="button" onClick={() => handlers.onAddStep(o)} className="px-2.5 py-1 rounded-full border border-[#7C3AED]/40 bg-white text-[12px] text-[#1F2330] hover:bg-white/80 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40">
+                    + {o.label}{usedStepIds.has(o.id) ? " (again)" : ""}
+                  </button>
+                ))}
+              </div>
+              <div className="flex items-center gap-1.5">
+                <input
+                  value={build.customDraft || ""}
+                  onChange={(e) => handlers.onSetCustomDraft(e.target.value)}
+                  onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); handlers.onAddCustomStep(build.customDraft || ""); } }}
+                  placeholder="Add custom step…"
+                  className="flex-1 text-[12px] border border-slate-200 rounded-md px-2 py-1.5 bg-white focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40"
+                />
+                <button type="button" onClick={() => handlers.onAddCustomStep(build.customDraft || "")} className="px-2.5 py-1.5 rounded-md bg-[#7C3AED] text-white text-[12px] font-semibold hover:bg-[#6D28D9] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40">Add</button>
+                <button type="button" onClick={() => handlers.onToggleAdd(false)} className="px-2 py-1.5 rounded-md text-[12px] text-slate-500 hover:bg-white focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40">Cancel</button>
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+      {build.step === "q6" && (
+        <div>
+          <div className="text-[11px] uppercase tracking-wide text-[#7C3AED] font-semibold mb-2">Ready when you are</div>
+          <div className="flex flex-wrap gap-2">
+            <MagOptionButton onClick={handlers.onBuild}>Build it</MagOptionButton>
+            <MagOptionButton onClick={handlers.onKeepEditing}>Keep editing</MagOptionButton>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+
+
 
 
 function ProfTypeAssigner({ onAssign }: { onAssign: (type: string) => void }) {
@@ -8316,13 +8717,24 @@ function MagicianWorkArea({ character, workflows, onCreate, onAdjust, onView }: 
         const epc = workflows.find((w) => /EPC/i.test(w.name));
         const draftWf = drafts[0];
         const notes: CharacterNote[] = [];
-        notes.push({
-          id: "mn-recent",
-          kind: "recent",
-          text: `Built 1 new workflow this week${epc ? ` — '${epc.name}'` : ""}.${newest ? ` Last adjusted '${newest.name}' on ${newest.lastAdjusted}.` : ""}`,
-          onClick: epc ? () => onView(epc.id) : (newest ? () => onView(newest.id) : undefined),
-          ctaLabel: "open workflow →",
-        });
+        const justBuilt = workflows.find((w) => w.justBuilt);
+        if (justBuilt) {
+          notes.push({
+            id: "mn-justbuilt",
+            kind: "recent",
+            text: `Built '${justBuilt.name}' just now — a ${justBuilt.stepCount ?? "multi"}-step workflow ending in your approval.`,
+            onClick: () => onView(justBuilt.id),
+            ctaLabel: "open workflow →",
+          });
+        } else {
+          notes.push({
+            id: "mn-recent",
+            kind: "recent",
+            text: `Built 1 new workflow this week${epc ? ` — '${epc.name}'` : ""}.${newest ? ` Last adjusted '${newest.name}' on ${newest.lastAdjusted}.` : ""}`,
+            onClick: epc ? () => onView(epc.id) : (newest ? () => onView(newest.id) : undefined),
+            ctaLabel: "open workflow →",
+          });
+        }
         notes.push({
           id: "mn-totals",
           kind: "totals",
