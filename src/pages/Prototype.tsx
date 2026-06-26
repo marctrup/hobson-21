@@ -9046,8 +9046,22 @@ function WorkflowCard({ w, onAdjust, onView }: { w: Workflow; onAdjust: () => vo
       <header className="flex items-start gap-3">
         <WorkflowIcon icon={w.icon} tone={w.tone} />
         <div className="min-w-0 flex-1">
-          <div className="text-[13px] font-semibold text-slate-900 leading-tight">{w.name}</div>
+          <div className="flex items-center gap-1.5 flex-wrap">
+            <div className="text-[13px] font-semibold text-slate-900 leading-tight">{w.name}</div>
+            {w.visibility && (
+              <span className={`text-[10px] font-semibold px-1.5 py-0.5 rounded-full border ${
+                w.visibility === "company"
+                  ? "border-[#7C3AED]/40 bg-[#F5F3FF] text-[#5B21B6]"
+                  : "border-slate-300 bg-slate-50 text-slate-600"
+              }`}>
+                {w.visibility === "company" ? "Company-wide" : "Personal"}
+              </span>
+            )}
+          </div>
           <div className="text-[11.5px] text-slate-500 mt-0.5">{w.purpose}</div>
+          {w.description && (
+            <div className="text-[11.5px] text-slate-500 mt-1 italic">{w.description}</div>
+          )}
         </div>
         <WorkflowStatusPill status={w.status} />
       </header>
@@ -9057,6 +9071,12 @@ function WorkflowCard({ w, onAdjust, onView }: { w: Workflow; onAdjust: () => vo
           <dt className="text-slate-500 font-medium shrink-0 w-[80px]">When</dt>
           <dd className="text-slate-800">{w.trigger}</dd>
         </div>
+        {w.whenLabel && (
+          <div className="flex gap-2">
+            <dt className="text-slate-500 font-medium shrink-0 w-[80px]">Shows</dt>
+            <dd className="text-slate-800">{w.whenLabel}</dd>
+          </div>
+        )}
         <div className="flex gap-2">
           <dt className="text-[#5B21B6] font-medium shrink-0 w-[80px]">I will</dt>
           <dd className="text-slate-800">{w.action}</dd>
@@ -9083,6 +9103,7 @@ function WorkflowCard({ w, onAdjust, onView }: { w: Workflow; onAdjust: () => vo
           </dd>
         </div>
       </dl>
+
 
       <footer className="flex items-center justify-between gap-2 pt-2 border-t border-slate-100">
         <div className="flex items-center gap-2 min-w-0 flex-wrap">
