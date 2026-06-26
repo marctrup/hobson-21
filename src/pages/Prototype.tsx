@@ -3715,7 +3715,151 @@ function HobsonBubble({ text, owl, streaming, rich, onAskFollowUp, showAvatar = 
       </div>
     </div>
   );
+
+
+function FeedbackBubble({
+  owl,
+  text,
+  streaming,
+  feedback,
+  chips,
+  showAvatar = true,
+  onGrade,
+  onToggleChip,
+  onSubmitNote,
+  onSkipNote,
+}: {
+  owl: OwlState;
+  text: string;
+  streaming?: boolean;
+  feedback: FeedbackState;
+  chips?: string[];
+  showAvatar?: boolean;
+  onGrade: (g: FeedbackGrade) => void;
+  onToggleChip: (chip: string) => void;
+  onSubmitNote: (note: string) => void;
+  onSkipNote: () => void;
+}) {
+  const [note, setNote] = useState("");
+  const AvatarSlot = showAvatar
+    ? <OwlAvatar state={owl} />
+    : <div aria-hidden className="w-10 h-10 shrink-0" />;
+  const graded = !!feedback.grade;
+  const submitted = !!feedback.submitted;
+  const ack =
+    feedback.grade === "helpful" ? "Thank you — noted."
+    : feedback.grade === "partly" ? "Thank you — noted. I'll look at where I fell short."
+    : feedback.grade === "not" ? "Thank you for the honesty — noted."
+    : "";
+  const GRADES: { id: FeedbackGrade; label: string; glyph: string; aria: string }[] = [
+    { id: "helpful", label: "Helpful", glyph: "✓", aria: "Mark answer helpful" },
+    { id: "partly", label: "Partly", glyph: "◐", aria: "Mark answer partly helpful" },
+    { id: "not", label: "Not helpful", glyph: "✕", aria: "Mark answer not helpful" },
+  ];
+  return (
+    <div className="flex items-end gap-2">
+      {AvatarSlot}
+      <div className="max-w-[420px] bg-[#EDE9FE] text-[#1F2330] text-sm leading-relaxed px-4 py-3 rounded-2xl rounded-bl-md space-y-3">
+        <div>
+          {text}
+          {streaming && <span className="inline-block w-1.5 h-3.5 ml-0.5 bg-[#7C3AED] align-middle animate-pulse" />}
+        </div>
+        {!streaming && (
+          <>
+            <div role="group" aria-label="Grade this answer" className="flex flex-wrap gap-1.5">
+              {GRADES.map((g) => {
+                const selected = feedback.grade === g.id;
+                return (
+                  <button
+                    key={g.id}
+                    type="button"
+                    onClick={() => !submitted && onGrade(g.id)}
+                    aria-pressed={selected}
+                    aria-label={g.aria}
+                    disabled={submitted}
+                    className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full border text-[12px] transition focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED] focus-visible:ring-offset-1 ${
+                      selected
+                        ? "bg-white border-[#7C3AED] text-[#4C1D95] font-medium shadow-sm"
+                        : "bg-white/70 border-slate-300 text-slate-700 hover:border-[#7C3AED] hover:text-[#4C1D95]"
+                    } ${submitted ? "cursor-default opacity-80" : ""}`}
+                  >
+                    <span aria-hidden className="font-semibold leading-none">{g.glyph}</span>
+                    <span>{g.label}</span>
+                  </button>
+                );
+              })}
+            </div>
+            {graded && !submitted && (
+              <div className="space-y-2 pt-1 border-t border-white/60">
+                <div className="text-[12px] text-slate-700">{ack}</div>
+                {chips && chips.length > 0 && (
+                  <div>
+                    <div className="text-[11px] text-slate-500 mb-1">Anything in particular? (optional)</div>
+                    <div className="flex flex-wrap gap-1.5">
+                      {chips.map((c) => {
+                        const on = (feedback.chips || []).includes(c);
+                        return (
+                          <button
+                            key={c}
+                            type="button"
+                            onClick={() => onToggleChip(c)}
+                            aria-pressed={on}
+                            className={`text-[11px] px-2 py-0.5 rounded-full border transition focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED] focus-visible:ring-offset-1 ${
+                              on
+                                ? "bg-[#7C3AED] border-[#7C3AED] text-white"
+                                : "bg-white/70 border-slate-300 text-slate-700 hover:border-[#7C3AED]"
+                            }`}
+                          >
+                            {c}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+                <div>
+                  <label htmlFor="fb-note" className="block text-[11px] text-slate-500 mb-1">
+                    If you've a moment, what would have made it better?
+                  </label>
+                  <textarea
+                    id="fb-note"
+                    value={note}
+                    onChange={(e) => setNote(e.target.value)}
+                    rows={2}
+                    placeholder="Optional"
+                    className="w-full text-[13px] rounded-md border border-slate-300 bg-white px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]"
+                  />
+                  <div className="flex items-center gap-2 mt-1.5">
+                    <button
+                      type="button"
+                      onClick={() => onSubmitNote(note.trim())}
+                      className="text-[12px] px-3 py-1 rounded-md bg-[#7C3AED] text-white hover:bg-[#6D28D9] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED] focus-visible:ring-offset-1"
+                    >
+                      Submit
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => onSkipNote()}
+                      className="text-[12px] px-2 py-1 rounded-md text-slate-600 hover:text-slate-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED] focus-visible:ring-offset-1"
+                    >
+                      Skip
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
+            {submitted && (
+              <div role="status" aria-live="polite" className="text-[12px] text-slate-600 italic pt-1 border-t border-white/60">
+                Thank you — your feedback is recorded.
+              </div>
+            )}
+          </>
+        )}
+      </div>
+    </div>
+  );
 }
+
 
 
 const RENT_BODY_TEXT =
