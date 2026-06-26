@@ -4112,6 +4112,7 @@ function FeedbackBubble({
             </div>
           </div>
         </Row>
+        )
       )}
 
       {/* 4. If they added a note/chips, Hobson acknowledges — own owl + bubble */}
