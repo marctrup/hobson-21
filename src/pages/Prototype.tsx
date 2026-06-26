@@ -1699,6 +1699,33 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
     }
   }, [messages, typing, chipVisible]);
 
+  /* ----- keep the chat pinned to the bottom while content height grows
+     (covers feedback-bubble staged reveals, typed-text streams, late-arriving
+     rich answers, and any other in-place DOM growth that doesn't re-run the
+     messages effect above). ----- */
+  useEffect(() => {
+    const el = chatBodyRef.current;
+    if (!el) return;
+    let lastHeight = el.scrollHeight;
+    const ro = new ResizeObserver(() => {
+      if (pinTopRef.current) return;
+      const h = el.scrollHeight;
+      if (h === lastHeight) return;
+      lastHeight = h;
+      // Only auto-stick if the user is already near the bottom — don't yank
+      // them down if they've scrolled up to read something.
+      const distanceFromBottom = el.scrollHeight - el.scrollTop - el.clientHeight;
+      if (distanceFromBottom < 240) {
+        el.scrollTop = el.scrollHeight;
+      }
+    });
+    ro.observe(el);
+    // Also observe the inner content so child growth is detected reliably.
+    const inner = el.firstElementChild as HTMLElement | null;
+    if (inner) ro.observe(inner);
+    return () => ro.disconnect();
+  }, []);
+
   /* ----- pre-fill demo rent question per level ----- */
   useEffect(() => {
     const pre = rentPrefillFor(view, selectedPropertyId, selectedUnitId);
