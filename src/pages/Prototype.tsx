@@ -5968,16 +5968,28 @@ const PERFORMABLE_CARD_IDS = new Set<string>([
 
 /* ---------------- Perform workspace (PA-004) ---------------- */
 
+type PerformAdvance = (
+  jumpTo: number | "complete" | "exit" | undefined,
+  gateLabel: string,
+  kind: string,
+) => void;
+type PerformCtx = {
+  chosenRent: number | null;
+  setChosenRent: (n: number) => void;
+  advance: PerformAdvance;
+};
 type PerformBeat = {
   id: string;
   stepKey: string;            // which progress-rail step this beat belongs to
   text: string;               // narration line
   detail?: React.ReactNode;   // optional rendered block (summary, draft preview)
+  detailFn?: (ctx: PerformCtx) => React.ReactNode; // dynamic detail (uses live state)
   flag?: string;              // amber honesty flag
   gate?: {
     label: string;
     options: { label: string; kind: "approve" | "skip" | "defer" | "cancel" | "modify" | "continue"; nextBeatIdx?: number | "complete" | "exit" }[];
   };
+  gateFn?: (ctx: PerformCtx) => React.ReactNode; // custom inline decision UI
 };
 
 const PA004_STEPS: { key: string; label: string }[] = [
@@ -6176,54 +6188,266 @@ function buildPA004Beats(): PerformBeat[] {
       detail: <ComparablesScrapePreview />,
     },
 
+    // ── Section 13 closing sequence ──────────────────────────────────────
     {
-      id: "b11",
+      id: "s13_intro",
       stepKey: "actions",
-      text: "Next: prepare the review notice ready to serve once the window opens.",
+      text: "To raise the rent on Flat 8, the proper instrument is a Section 13 notice. I can prepare it for you. What new rent would you like to propose?",
+      gateFn: (ctx) => <RentChoiceGate ctx={ctx} nextIdx={13} />,
+    },
+    {
+      id: "s13_prepared",
+      stepKey: "actions",
+      text: "Prepared.",
+      detailFn: (ctx) => <Section13NoticePreview chosenRent={ctx.chosenRent ?? 50400} />,
+    },
+    {
+      id: "s13_delivery",
+      stepKey: "actions",
+      text: "Shall I email this, or save it to the file?",
       gate: {
-        label: "Prepare review notice?",
+        label: "How shall I deliver it?",
         options: [
-          { label: "Approve", kind: "approve", nextBeatIdx: 13 },
-          { label: "Skip", kind: "skip", nextBeatIdx: 14 },
+          { label: "Email", kind: "approve", nextBeatIdx: 15 },
+          { label: "Save to file", kind: "continue", nextBeatIdx: 17 },
         ],
       },
     },
     {
-      id: "b11b",
+      id: "s13_email_prepared",
       stepKey: "actions",
-      text: "Draft notice prepared — held for service date.",
-      detail: <PreparedPreview title="Review notice (draft)" body={"NOTICE OF RENT REVIEW\nProperty: Flat 8, Stanley House\nReview date: March 2027\nBasis: Open Market Rent (per lease)\n\nStatus: held — not yet served. Awaiting confirmed notice window."} />,
-    },
-
-    {
-      id: "b12",
-      stepKey: "actions",
-      text: "Last one: create a review task with the review date and your next checkpoint.",
-      gate: {
-        label: "Create a review task?",
-        options: [
-          { label: "Approve", kind: "approve", nextBeatIdx: 15 },
-          { label: "Skip", kind: "skip", nextBeatIdx: 16 },
-        ],
-      },
+      text: "Prepared.",
+      detailFn: (ctx) => <Section13EmailPreview chosenRent={ctx.chosenRent ?? 50400} />,
+      gateFn: (ctx) => <AddToOutlookGate advance={ctx.advance} nextIdx={16} />,
     },
     {
-      id: "b12b",
-      stepKey: "actions",
-      text: "Task created.",
-      detail: <PreparedPreview title="Review task" body={"Title: Flat 8 rent review — checkpoint\nDue: 6 weeks before March 2027 review date\nOwner: you\nLinked: this action, comparable evidence, draft notice."} />,
-    },
-
-    {
-      id: "b13",
+      id: "s13_close_email",
       stepKey: "record",
-      text: "All set. I'll record what we did and update the card.",
+      text: "Done. The notice is prepared and ready to send.",
       gate: {
-        label: "Record and finish",
+        label: "Finish",
+        options: [{ label: "Record & close", kind: "continue", nextBeatIdx: "complete" }],
+      },
+    },
+    {
+      id: "s13_close_save",
+      stepKey: "record",
+      text: "Saved to the file. The Section 13 notice is on the Flat 8 record.",
+      gate: {
+        label: "Finish",
         options: [{ label: "Record & close", kind: "continue", nextBeatIdx: "complete" }],
       },
     },
   ];
+}
+
+
+/* ---------------- PA-004 Section 13 components ---------------- */
+
+const FLAT8_CURRENT_RENT = 48000;
+const FLAT8_MIN_UPLIFT_PCT = 5;
+const FLAT8_MIN_UPLIFT = Math.round(FLAT8_CURRENT_RENT * (1 + FLAT8_MIN_UPLIFT_PCT / 100));
+const FLAT8_MARKET = 49500;
+const FLAT8_LANDLORD = "James Okoro";
+const FLAT8_TENANT = "Sarah Mitchell";
+const FLAT8_ADDR = "Flat 8, Stanley House, 18 Cunningham Place, London NW8 7JX";
+const FLAT8_EFFECTIVE = "25 March 2027";
+const FLAT8_NOTICE_DATE = new Date().toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
+const fmtGBP = (n: number) => `£${n.toLocaleString("en-GB")}`;
+
+function RentChoiceGate({ ctx, nextIdx }: { ctx: PerformCtx; nextIdx: number }) {
+  const [customMode, setCustomMode] = useState(false);
+  const [custom, setCustom] = useState<string>("");
+  const choose = (amount: number, label: string) => {
+    ctx.setChosenRent(amount);
+    ctx.advance(nextIdx, label, "approve");
+  };
+  const submitCustom = () => {
+    const n = Number(custom.replace(/[^0-9.]/g, ""));
+    if (!n || n < FLAT8_CURRENT_RENT) return;
+    choose(Math.round(n), `Custom amount ${fmtGBP(Math.round(n))}`);
+  };
+  const options = [
+    {
+      amount: FLAT8_MIN_UPLIFT,
+      title: `${fmtGBP(FLAT8_MIN_UPLIFT)} per annum`,
+      basis: `the agreed minimum uplift (${FLAT8_MIN_UPLIFT_PCT}% on the current ${fmtGBP(FLAT8_CURRENT_RENT)}).`,
+    },
+    {
+      amount: FLAT8_MARKET,
+      title: `${fmtGBP(FLAT8_MARKET)} per annum`,
+      basis: "in line with the open-market comparables gathered (median £49,250).",
+    },
+  ];
+  return (
+    <div className="pl-[44px]">
+      <div className="inline-block max-w-[640px] rounded-2xl border border-[#DDD6FE] bg-[#F5F3FF] px-3 py-2.5 space-y-2">
+        <div className="text-[11px] uppercase tracking-wide text-[#5B21B6] font-semibold">Choose the new rent to propose</div>
+        <div className="space-y-1.5">
+          {options.map((o, i) => (
+            <button
+              key={o.amount}
+              autoFocus={i === 0}
+              onClick={() => choose(o.amount, `New rent ${fmtGBP(o.amount)}`)}
+              className="w-full text-left px-3 py-2 rounded-lg bg-white border border-slate-200 hover:border-[#7C3AED] hover:bg-[#FAF9FF] focus:outline-none focus:ring-2 focus:ring-[#7C3AED] transition"
+            >
+              <div className="text-[13px] font-semibold text-slate-900">{o.title}</div>
+              <div className="text-[11.5px] text-slate-600 mt-0.5">{o.basis}</div>
+            </button>
+          ))}
+          {!customMode ? (
+            <button
+              onClick={() => setCustomMode(true)}
+              className="w-full text-left px-3 py-2 rounded-lg bg-white border border-dashed border-slate-300 hover:border-[#7C3AED] hover:bg-[#FAF9FF] focus:outline-none focus:ring-2 focus:ring-[#7C3AED] transition"
+            >
+              <div className="text-[13px] font-semibold text-slate-900">A figure of your own</div>
+              <div className="text-[11.5px] text-slate-600 mt-0.5">Enter a custom annual rent.</div>
+            </button>
+          ) : (
+            <div className="px-3 py-2 rounded-lg bg-white border border-slate-200">
+              <label htmlFor="custom-rent" className="block text-[11.5px] text-slate-600 mb-1">Custom annual rent (£)</label>
+              <div className="flex gap-1.5">
+                <input
+                  id="custom-rent"
+                  autoFocus
+                  inputMode="decimal"
+                  value={custom}
+                  onChange={(e) => setCustom(e.target.value)}
+                  onKeyDown={(e) => { if (e.key === "Enter") submitCustom(); }}
+                  placeholder="e.g. 51000"
+                  className="flex-1 text-[13px] px-2 py-1.5 rounded-md border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]"
+                />
+                <button
+                  onClick={submitCustom}
+                  className="text-xs px-3 py-1.5 rounded-full bg-[#7C3AED] text-white hover:bg-[#6D28D9] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]"
+                >
+                  Use this
+                </button>
+                <button
+                  onClick={() => { setCustomMode(false); setCustom(""); }}
+                  className="text-xs px-2 py-1.5 rounded-full text-slate-500 hover:text-slate-700 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-slate-300"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function Section13NoticePreview({ chosenRent }: { chosenRent: number }) {
+  const increase = chosenRent - FLAT8_CURRENT_RENT;
+  const pct = ((increase / FLAT8_CURRENT_RENT) * 100).toFixed(1);
+  return (
+    <div className="rounded-lg border border-emerald-200 bg-emerald-50/60 p-3 text-[12px] text-slate-700">
+      <div className="text-[10px] uppercase tracking-wide text-emerald-800 font-semibold mb-2">
+        Prepared — Section 13 Notice
+      </div>
+      <div className="rounded-md bg-white border border-slate-200 p-3 space-y-2.5 text-[12px] leading-relaxed">
+        <div className="text-center">
+          <div className="text-[10.5px] uppercase tracking-wide text-slate-500 font-semibold">Form 4</div>
+          <div className="font-semibold text-slate-900 text-[12.5px]">Landlord's Notice proposing a new rent</div>
+          <div className="text-[11px] text-slate-600">under an Assured Periodic Tenancy or Assured Shorthold Periodic Tenancy</div>
+          <div className="text-[10.5px] text-slate-500 mt-0.5">Section 13(2), Housing Act 1988</div>
+        </div>
+        <div className="grid grid-cols-[110px_1fr] gap-x-3 gap-y-1.5 text-[12px]">
+          <div className="text-slate-500">1. Tenant(s)</div><div className="text-slate-800">{FLAT8_TENANT}</div>
+          <div className="text-slate-500">2. Landlord</div><div className="text-slate-800">{FLAT8_LANDLORD}</div>
+          <div className="text-slate-500">3. Property</div><div className="text-slate-800">{FLAT8_ADDR}</div>
+          <div className="text-slate-500">4. Current rent</div><div className="text-slate-800">{fmtGBP(FLAT8_CURRENT_RENT)} per annum (payable monthly in advance)</div>
+          <div className="text-slate-500">5. New rent</div><div className="text-slate-900 font-semibold">{fmtGBP(chosenRent)} per annum <span className="text-slate-500 font-normal">(+{fmtGBP(increase)} / +{pct}%)</span></div>
+          <div className="text-slate-500">6. Effective from</div><div className="text-slate-800">{FLAT8_EFFECTIVE} (start of the new rental period)</div>
+          <div className="text-slate-500">7. Notice date</div><div className="text-slate-800">{FLAT8_NOTICE_DATE}</div>
+        </div>
+        <div className="text-[11.5px] text-slate-600 border-t border-slate-100 pt-2">
+          The landlord proposes that the new rent shown at item 5 shall take effect from the date at item 6. If the tenant
+          does not agree, the tenant may, before that date, refer this notice to the First-tier Tribunal (Property Chamber)
+          for determination of a market rent in accordance with section 14 of the Housing Act 1988.
+        </div>
+        <div className="text-[11px] text-slate-500 grid grid-cols-2 gap-2 border-t border-slate-100 pt-2">
+          <div><div className="text-slate-400">Signed (Landlord)</div><div className="italic text-slate-700">{FLAT8_LANDLORD}</div></div>
+          <div><div className="text-slate-400">Date</div><div className="text-slate-700">{FLAT8_NOTICE_DATE}</div></div>
+        </div>
+      </div>
+      <div className="mt-1.5 text-[10.5px] text-slate-500 italic">Draft preview · placeholder content for prototype.</div>
+    </div>
+  );
+}
+
+function Section13EmailPreview({ chosenRent }: { chosenRent: number }) {
+  return (
+    <div className="rounded-lg border border-emerald-200 bg-emerald-50/60 p-3 text-[12px] text-slate-700">
+      <div className="text-[10px] uppercase tracking-wide text-emerald-800 font-semibold mb-2">
+        Prepared — Email
+      </div>
+      <div className="rounded-md bg-white border border-slate-200 text-[12px]">
+        <div className="grid grid-cols-[60px_1fr] gap-x-3 gap-y-1 px-3 py-2 border-b border-slate-100">
+          <div className="text-slate-500">To</div><div className="text-slate-800">{FLAT8_TENANT} &lt;s.mitchell@example.co.uk&gt;</div>
+          <div className="text-slate-500">From</div><div className="text-slate-800">{FLAT8_LANDLORD} &lt;james@hobsonschoice.ai&gt;</div>
+          <div className="text-slate-500">Subject</div><div className="text-slate-900 font-medium">Section 13 Notice — Flat 8, Stanley House</div>
+        </div>
+        <div className="px-3 py-2.5 leading-relaxed text-slate-700 space-y-2 text-[12px]">
+          <p>Dear {FLAT8_TENANT.split(" ")[0]},</p>
+          <p>Please find attached a Section 13 notice proposing a new rent of <strong>{fmtGBP(chosenRent)} per annum</strong> for Flat 8, Stanley House, taking effect from {FLAT8_EFFECTIVE}.</p>
+          <p>Do let me know if you have any questions; I'm happy to discuss.</p>
+          <p>Kind regards,<br/>{FLAT8_LANDLORD}</p>
+        </div>
+        <div className="px-3 py-2 border-t border-slate-100 bg-slate-50/60">
+          <div className="text-[10.5px] uppercase tracking-wide text-slate-500 font-semibold mb-1">Attachment</div>
+          <div className="inline-flex items-center gap-2 px-2 py-1 rounded-md bg-white border border-slate-200 text-[11.5px] text-slate-700">
+            <span aria-hidden className="inline-flex items-center justify-center w-5 h-5 rounded bg-rose-100 text-rose-700 text-[9px] font-bold">PDF</span>
+            <span>Section 13 Notice — Flat 8, Stanley House.pdf</span>
+            <span className="text-slate-400">· 142 KB</span>
+          </div>
+        </div>
+      </div>
+      <div className="mt-1.5 text-[10.5px] text-slate-500 italic">Editable preview · placeholder content for prototype.</div>
+    </div>
+  );
+}
+
+function AddToOutlookGate({ advance, nextIdx }: { advance: PerformAdvance; nextIdx: number }) {
+  const [queued, setQueued] = useState(false);
+  if (queued) {
+    return (
+      <div className="pl-[44px]">
+        <div className="inline-flex items-center gap-2 max-w-[640px] rounded-2xl border border-emerald-200 bg-emerald-50 px-3 py-2 text-[12px] text-emerald-900">
+          <span aria-hidden>✓</span>
+          <span>Queued to Outlook — open your draft to send.</span>
+        </div>
+      </div>
+    );
+  }
+  return (
+    <div className="pl-[44px]">
+      <div className="inline-block max-w-[640px] rounded-2xl border border-[#DDD6FE] bg-[#F5F3FF] px-3 py-2.5 space-y-2">
+        <div className="text-[11px] uppercase tracking-wide text-[#5B21B6] font-semibold">Send via Outlook</div>
+        <div className="flex flex-wrap gap-1.5">
+          <button
+            autoFocus
+            onClick={() => {
+              setQueued(true);
+              setTimeout(() => advance(nextIdx, "Add to Outlook", "approve"), 700);
+            }}
+            className="inline-flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-full bg-[#7C3AED] text-white hover:bg-[#6D28D9] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]"
+          >
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden><path d="M4 4h16v16H4z"/><path d="m4 7 8 6 8-6"/></svg>
+            Add to Outlook
+          </button>
+          <button
+            onClick={() => advance(nextIdx, "Skip Outlook", "skip")}
+            className="text-xs px-3 py-1.5 rounded-full text-slate-700 bg-white border border-slate-200 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-slate-300"
+          >
+            Not now
+          </button>
+        </div>
+        <div className="text-[10.5px] text-slate-500 italic">Prototype placeholder — would open a draft in Outlook with the notice attached.</div>
+      </div>
+    </div>
+  );
 }
 
 /* ---------------- Perform workspace (PA-001 fire alarm) ---------------- */
@@ -6702,6 +6926,7 @@ function PerformWorkspace({
   const [streamingActive, setStreamingActive] = useState(false);
   const [approvedActions, setApprovedActions] = useState<string[]>([]);
   const [completed, setCompleted] = useState<string[]>(initialCompleted);
+  const [chosenRent, setChosenRent] = useState<number | null>(null);
   const [recapOpen, setRecapOpen] = useState<boolean>(mode === "perform");
   const recapNarration = useMemo(() => reviewRecapText(card), [card]);
   const [recapStream, setRecapStream] = useState<string>("");
@@ -6893,13 +7118,15 @@ function PerformWorkspace({
             {recapOpen && (
               <div className="px-3 pb-3 pt-1 space-y-3 border-t border-slate-200">
                 {previousBeats.map((b) => (
-                  <BeatBubble key={b.id} beat={b} done />
+                  <BeatBubble key={b.id} beat={b} done detailOverride={b.detailFn ? b.detailFn({ chosenRent, setChosenRent, advance }) : undefined} />
                 ))}
               </div>
             )}
           </div>
         ) : (
-          previousBeats.map((b) => <BeatBubble key={b.id} beat={b} done />)
+          previousBeats.map((b) => (
+            <BeatBubble key={b.id} beat={b} done detailOverride={b.detailFn ? b.detailFn({ chosenRent, setChosenRent, advance }) : undefined} />
+          ))
         )}
         {currentBeat && (
           <div className="space-y-2.5">
@@ -6908,9 +7135,11 @@ function PerformWorkspace({
               streamingText={streamingActive ? streamingText : currentBeat.text}
               streaming={streamingActive}
               done={false}
+              detailOverride={!streamingActive && currentBeat.detailFn ? currentBeat.detailFn({ chosenRent, setChosenRent, advance }) : undefined}
             />
             {/* Inline decisions — only at genuine gates (decision, approval, flagged show-stopper, or finish) */}
-            {!streamingActive && !isComplete && currentBeat.gate && (
+            {!streamingActive && !isComplete && currentBeat.gateFn && currentBeat.gateFn({ chosenRent, setChosenRent, advance })}
+            {!streamingActive && !isComplete && !currentBeat.gateFn && currentBeat.gate && (
               <div className="pl-[44px]">
                 <div className="inline-block max-w-[640px] rounded-2xl border border-[#DDD6FE] bg-[#F5F3FF] px-3 py-2.5 space-y-2">
                   <div className="text-[11px] uppercase tracking-wide text-[#5B21B6] font-semibold">{currentBeat.gate.label}</div>
@@ -6961,7 +7190,7 @@ function PerformWorkspace({
   );
 }
 
-function BeatBubble({ beat, streamingText, streaming, done }: { beat: PerformBeat; streamingText?: string; streaming?: boolean; done: boolean }) {
+function BeatBubble({ beat, streamingText, streaming, done, detailOverride }: { beat: PerformBeat; streamingText?: string; streaming?: boolean; done: boolean; detailOverride?: React.ReactNode }) {
   const text = streamingText ?? beat.text;
   return (
     <div className={`flex items-start gap-2 ${done ? "opacity-80" : ""}`}>
@@ -6977,7 +7206,7 @@ function BeatBubble({ beat, streamingText, streaming, done }: { beat: PerformBea
             <span>{beat.flag}</span>
           </div>
         )}
-        {!streaming && beat.detail && <div className="max-w-[640px]">{beat.detail}</div>}
+        {!streaming && (detailOverride ?? beat.detail) && <div className="max-w-[640px]">{detailOverride ?? beat.detail}</div>}
       </div>
     </div>
   );
