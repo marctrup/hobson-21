@@ -3715,6 +3715,10 @@ function HobsonBubble({ text, owl, streaming, rich, onAskFollowUp, showAvatar = 
       </div>
     </div>
   );
+}
+
+
+
 
 
 function FeedbackBubble({
