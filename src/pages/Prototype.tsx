@@ -1503,8 +1503,11 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
       const trigger = `a rent review is ${b.triggerPhrase || "approaching"}`;
       const wf: Workflow = {
         id,
-        name: "Rent review watch",
-        purpose: "Spots rent reviews early and prepares each one for your approval.",
+        name: b.title?.trim() || "Rent review watch",
+        purpose: b.purpose?.trim() || "Spots rent reviews early and prepares each one for your approval.",
+        description: b.description?.trim() || undefined,
+        whenLabel: b.whenLabel,
+        visibility: b.visibility || "personal",
         icon: "calendar", tone: "purple", status: "built",
         trigger,
         action: actionSummary,
