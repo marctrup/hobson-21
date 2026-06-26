@@ -274,11 +274,22 @@ type Workflow = {
   lastAdjusted?: string;
   stepCount?: number;
   justBuilt?: boolean;
+  description?: string;
+  whenLabel?: string;
+  visibility?: "personal" | "company";
 };
 
 type MagBuildStep = { id: string; label: string; phrase: string; uid: string };
 type MagBuildState = {
-  step: "q1" | "q2" | "q3" | "q3b" | "q4" | "q5" | "q6";
+  step: "intake" | "q1" | "q2" | "q3" | "q3b" | "q4" | "q5" | "q6";
+  // intake (user-authored)
+  title?: string;
+  purpose?: string;
+  description?: string;
+  whenKey?: "6m" | "3m" | "on" | "always" | "custom";
+  whenLabel?: string;
+  visibility?: "personal" | "company";
+  // build conversation
   watch?: "rent_reviews" | "compliance" | "notices" | "other";
   lead?: "6m" | "3m" | "on";
   leadLabel?: string;
@@ -1357,8 +1368,8 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
 
   const handleCreateWorkflow = () => {
     setMagicianEvents([]);
-    setMagBuild({ step: "q1", steps: MAG_DEFAULT_STEPS.map((s, i) => ({ ...s, uid: `${s.id}-${i}` })) });
-    setTimeout(() => magAsk("Wonderful. Let's build one together. What shall I keep watch on?"), 250);
+    setMagBuild({ step: "intake", steps: MAG_DEFAULT_STEPS.map((s, i) => ({ ...s, uid: `${s.id}-${i}` })) });
+    setTimeout(() => magAsk("Let's build this together. First, tell me a little about it."), 250);
   };
 
   const handleSaveWorkflow = (next: Workflow) => {
@@ -1367,15 +1378,49 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
   };
 
   // ----- Magician answer handlers -----
+  const magSubmitIntake = (intake: {
+    title: string;
+    purpose: string;
+    description: string;
+    whenKey: "6m" | "3m" | "on" | "always" | "custom";
+    whenLabel: string;
+    visibility: "personal" | "company";
+  }) => {
+    const phraseFor = (k: string, label: string) => {
+      if (k === "6m") return "6 months away";
+      if (k === "3m") return "3 months away";
+      if (k === "on") return "on the date";
+      if (k === "always") return "approaching (always visible)";
+      return label.toLowerCase();
+    };
+    magUserEcho(
+      `${intake.title} — ${intake.purpose}\nShow: ${intake.whenLabel} · ${intake.visibility === "personal" ? "Personal" : "Company-wide"}${intake.description ? `\n${intake.description}` : ""}`
+    );
+    setMagBuild((b) => b ? {
+      ...b,
+      title: intake.title,
+      purpose: intake.purpose,
+      description: intake.description,
+      whenKey: intake.whenKey,
+      whenLabel: intake.whenLabel,
+      visibility: intake.visibility,
+      lead: (intake.whenKey === "6m" || intake.whenKey === "3m" || intake.whenKey === "on") ? intake.whenKey : undefined,
+      leadLabel: intake.whenLabel,
+      triggerPhrase: phraseFor(intake.whenKey, intake.whenLabel),
+      step: "q1",
+    } : b);
+    setTimeout(() => magAsk("Thank you. Now — what shall I keep watch on?"), 500);
+  };
+
   const magAnswerQ1 = (key: "rent_reviews" | "compliance" | "notices" | "other", label: string) => {
     magUserEcho(label);
+    // 'when' is already captured at intake — skip Q2 entirely.
     if (key === "rent_reviews") {
-      setMagBuild((b) => b ? { ...b, watch: key, step: "q2" } : b);
-      setTimeout(() => magAsk("Good — rent reviews. How far ahead should I act?"), 500);
+      setMagBuild((b) => b ? { ...b, watch: key, step: "q3" } : b);
+      setTimeout(() => magAsk("Good — rent reviews. Where does this apply?"), 500);
     } else {
-      // Politely redirect — only rent reviews are wired up in the demo.
-      setMagBuild((b) => b ? { ...b, watch: "rent_reviews", step: "q2" } : b);
-      setTimeout(() => magAsk("Noted. For today's build I'll stay with rent reviews — the others I'm preparing next. How far ahead should I act?"), 500);
+      setMagBuild((b) => b ? { ...b, watch: "rent_reviews", step: "q3" } : b);
+      setTimeout(() => magAsk("Noted. For today's build I'll stay with rent reviews — the others I'm preparing next. Where does this apply?"), 500);
     }
   };
   const magAnswerQ2 = (lead: "6m" | "3m" | "on", label: string, phrase: string) => {
@@ -1458,8 +1503,11 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
       const trigger = `a rent review is ${b.triggerPhrase || "approaching"}`;
       const wf: Workflow = {
         id,
-        name: "Rent review watch",
-        purpose: "Spots rent reviews early and prepares each one for your approval.",
+        name: b.title?.trim() || "Rent review watch",
+        purpose: b.purpose?.trim() || "Spots rent reviews early and prepares each one for your approval.",
+        description: b.description?.trim() || undefined,
+        whenLabel: b.whenLabel,
+        visibility: b.visibility || "personal",
         icon: "calendar", tone: "purple", status: "built",
         trigger,
         action: actionSummary,
@@ -2585,6 +2633,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
               magStreamingId={adminCharacter === "magician" ? magStreamingId : null}
               onMagStreamDone={(id) => setMagStreamingId((cur) => (cur === id ? null : cur))}
               magHandlers={adminCharacter === "magician" ? {
+                onIntakeSubmit: magSubmitIntake,
                 onQ1: magAnswerQ1, onQ2: magAnswerQ2, onQ3: magAnswerQ3, onQ3b: magAnswerQ3b, onQ4: magAnswerQ4,
                 onAddStep: magAddStep, onAddCustomStep: magAddCustomStep, onRemoveStep: magRemoveStep, onMoveStep: magMoveStep,
                 onToggleAdd: (open: boolean) => setMagBuild((b) => b ? { ...b, addOpen: open } : b),
@@ -3390,6 +3439,7 @@ const HOBSON_ADMIN_INTRO_PARAS = [
 const HOBSON_ADMIN_INTRO = HOBSON_ADMIN_INTRO_PARAS.join("\n\n");
 
 type MagHandlers = {
+  onIntakeSubmit: (intake: { title: string; purpose: string; description: string; whenKey: "6m" | "3m" | "on" | "always" | "custom"; whenLabel: string; visibility: "personal" | "company" }) => void;
   onQ1: (k: "rent_reviews" | "compliance" | "notices" | "other", label: string) => void;
   onQ2: (k: "6m" | "3m" | "on", label: string, phrase: string) => void;
   onQ3: (k: "unit" | "property" | "portfolio", label: string) => void;
@@ -3712,11 +3762,142 @@ function MagOptionButton({ children, onClick, disabled }: { children: React.Reac
   );
 }
 
+function MagicianIntake({ onSubmit }: { onSubmit: MagHandlers["onIntakeSubmit"] }) {
+  const [title, setTitle] = useState("");
+  const [purpose, setPurpose] = useState("");
+  const [description, setDescription] = useState("");
+  const [whenKey, setWhenKey] = useState<"6m" | "3m" | "on" | "always" | "custom" | null>(null);
+  const [whenCustom, setWhenCustom] = useState("");
+  const [visibility, setVisibility] = useState<"personal" | "company" | null>(null);
+
+  const whenOptions: { k: "6m" | "3m" | "on" | "always"; label: string }[] = [
+    { k: "6m", label: "6 months ahead" },
+    { k: "3m", label: "3 months ahead" },
+    { k: "on", label: "On the date" },
+    { k: "always", label: "Always visible" },
+  ];
+
+  const whenLabel = whenKey === "custom" ? whenCustom.trim() : whenOptions.find((o) => o.k === whenKey)?.label || "";
+  const canSubmit = title.trim() !== "" && purpose.trim() !== "" && whenKey !== null && (whenKey !== "custom" || whenCustom.trim() !== "") && visibility !== null;
+
+  const submit = () => {
+    if (!canSubmit || !whenKey || !visibility) return;
+    onSubmit({
+      title: title.trim(),
+      purpose: purpose.trim(),
+      description: description.trim(),
+      whenKey,
+      whenLabel,
+      visibility,
+    });
+  };
+
+  const fieldLabel = "block text-[11px] uppercase tracking-wide text-[#5B21B6] font-semibold mb-1";
+  const inputCls = "w-full text-[13px] border border-slate-200 rounded-md px-2.5 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40";
+
+  return (
+    <div className="space-y-3">
+      <div>
+        <label className={fieldLabel} htmlFor="mag-intake-title">Title <span className="text-rose-600">*</span></label>
+        <input id="mag-intake-title" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="e.g. Rent review" className={inputCls} autoFocus />
+      </div>
+      <div>
+        <label className={fieldLabel} htmlFor="mag-intake-purpose">Purpose <span className="text-rose-600">*</span></label>
+        <input id="mag-intake-purpose" value={purpose} onChange={(e) => setPurpose(e.target.value)} placeholder="What is this workflow for?" className={inputCls} />
+      </div>
+      <div>
+        <span className={fieldLabel}>When should it show on my dashboard? <span className="text-rose-600">*</span></span>
+        <div className="flex flex-wrap gap-1.5">
+          {whenOptions.map((o) => {
+            const active = whenKey === o.k;
+            return (
+              <button
+                key={o.k}
+                type="button"
+                onClick={() => setWhenKey(o.k)}
+                aria-pressed={active}
+                className={`px-3 py-1.5 rounded-full border text-[12.5px] font-medium focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40 ${
+                  active ? "bg-[#7C3AED] text-white border-[#7C3AED]" : "bg-white text-[#1F2330] border-[#7C3AED]/40 hover:bg-[#F5F3FF]"
+                }`}
+              >
+                {o.label}
+              </button>
+            );
+          })}
+          <button
+            type="button"
+            onClick={() => setWhenKey("custom")}
+            aria-pressed={whenKey === "custom"}
+            className={`px-3 py-1.5 rounded-full border text-[12.5px] font-medium focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40 ${
+              whenKey === "custom" ? "bg-[#7C3AED] text-white border-[#7C3AED]" : "bg-white text-[#1F2330] border-dashed border-[#7C3AED]/50 hover:bg-[#F5F3FF]"
+            }`}
+          >
+            Custom…
+          </button>
+        </div>
+        {whenKey === "custom" && (
+          <input
+            value={whenCustom}
+            onChange={(e) => setWhenCustom(e.target.value)}
+            placeholder="Type when it should appear (e.g. 9 months ahead)"
+            className={`${inputCls} mt-1.5`}
+            aria-label="Custom when"
+          />
+        )}
+      </div>
+      <div>
+        <label className={fieldLabel} htmlFor="mag-intake-desc">
+          Description <span className="text-slate-400 font-normal normal-case tracking-normal">(optional)</span>
+        </label>
+        <textarea id="mag-intake-desc" value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Any extra context — leave blank if you'd rather not." className={`${inputCls} min-h-[60px]`} />
+      </div>
+      <div>
+        <span className={fieldLabel}>Visibility <span className="text-rose-600">*</span></span>
+        <div className="inline-flex rounded-full border border-[#7C3AED]/40 p-0.5 bg-white" role="group" aria-label="Visibility">
+          {([
+            { k: "personal", label: "Personal" },
+            { k: "company", label: "Company-wide" },
+          ] as const).map((v) => {
+            const active = visibility === v.k;
+            return (
+              <button
+                key={v.k}
+                type="button"
+                onClick={() => setVisibility(v.k)}
+                aria-pressed={active}
+                className={`px-3 py-1.5 rounded-full text-[12.5px] font-medium focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40 ${
+                  active ? "bg-[#7C3AED] text-white" : "text-[#1F2330] hover:bg-[#F5F3FF]"
+                }`}
+              >
+                {v.label}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+      <div className="flex items-center justify-between gap-2 pt-1 border-t border-slate-100">
+        <span className="text-[11px] text-slate-500">Required fields marked <span className="text-rose-600">*</span></span>
+        <button
+          type="button"
+          onClick={submit}
+          disabled={!canSubmit}
+          className="px-3.5 py-1.5 rounded-full bg-[#7C3AED] text-white text-[12.5px] font-semibold hover:bg-[#6D28D9] disabled:bg-slate-200 disabled:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40"
+        >
+          Start building →
+        </button>
+      </div>
+    </div>
+  );
+}
+
 function MagicianBuildPanel({ build, handlers }: { build: MagBuildState; handlers: MagHandlers }) {
   const UNIT_CHOICES = ["Flat 8, Stanley House", "Flat 6, Stanley House", "Flat 2, 5 Nugent Terrace"];
   const usedStepIds = new Set(build.steps.map((s) => s.id));
   return (
     <div className="ml-12 max-w-[480px] rounded-xl border border-[#7C3AED]/30 bg-white p-3 shadow-sm space-y-3">
+      {build.step === "intake" && (
+        <MagicianIntake onSubmit={handlers.onIntakeSubmit} />
+      )}
       {build.step === "q1" && (
         <div>
           <div className="text-[11px] uppercase tracking-wide text-[#7C3AED] font-semibold mb-2">Choose one</div>
@@ -8865,8 +9046,22 @@ function WorkflowCard({ w, onAdjust, onView }: { w: Workflow; onAdjust: () => vo
       <header className="flex items-start gap-3">
         <WorkflowIcon icon={w.icon} tone={w.tone} />
         <div className="min-w-0 flex-1">
-          <div className="text-[13px] font-semibold text-slate-900 leading-tight">{w.name}</div>
+          <div className="flex items-center gap-1.5 flex-wrap">
+            <div className="text-[13px] font-semibold text-slate-900 leading-tight">{w.name}</div>
+            {w.visibility && (
+              <span className={`text-[10px] font-semibold px-1.5 py-0.5 rounded-full border ${
+                w.visibility === "company"
+                  ? "border-[#7C3AED]/40 bg-[#F5F3FF] text-[#5B21B6]"
+                  : "border-slate-300 bg-slate-50 text-slate-600"
+              }`}>
+                {w.visibility === "company" ? "Company-wide" : "Personal"}
+              </span>
+            )}
+          </div>
           <div className="text-[11.5px] text-slate-500 mt-0.5">{w.purpose}</div>
+          {w.description && (
+            <div className="text-[11.5px] text-slate-500 mt-1 italic">{w.description}</div>
+          )}
         </div>
         <WorkflowStatusPill status={w.status} />
       </header>
@@ -8876,6 +9071,12 @@ function WorkflowCard({ w, onAdjust, onView }: { w: Workflow; onAdjust: () => vo
           <dt className="text-slate-500 font-medium shrink-0 w-[80px]">When</dt>
           <dd className="text-slate-800">{w.trigger}</dd>
         </div>
+        {w.whenLabel && (
+          <div className="flex gap-2">
+            <dt className="text-slate-500 font-medium shrink-0 w-[80px]">Shows</dt>
+            <dd className="text-slate-800">{w.whenLabel}</dd>
+          </div>
+        )}
         <div className="flex gap-2">
           <dt className="text-[#5B21B6] font-medium shrink-0 w-[80px]">I will</dt>
           <dd className="text-slate-800">{w.action}</dd>
@@ -8902,6 +9103,7 @@ function WorkflowCard({ w, onAdjust, onView }: { w: Workflow; onAdjust: () => vo
           </dd>
         </div>
       </dl>
+
 
       <footer className="flex items-center justify-between gap-2 pt-2 border-t border-slate-100">
         <div className="flex items-center gap-2 min-w-0 flex-wrap">
