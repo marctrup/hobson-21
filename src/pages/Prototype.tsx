@@ -4256,7 +4256,7 @@ function PropertyContent({
             <span className="text-sm font-semibold text-slate-800">Units ({property.units.length})</span>
             <span className="text-[12px] text-slate-500 truncate">
               · {counts.let} Let · {counts.vacant} Vacant
-              {counts.alerts > 0 && <> · <span className="text-amber-700 font-medium">{counts.alerts} need attention</span></>}
+              {!testerMode && counts.alerts > 0 && <> · <span className="text-amber-700 font-medium">{counts.alerts} need attention</span></>}
             </span>
           </span>
           <span aria-hidden className={`text-slate-400 transition-transform ${unitsOpen ? "rotate-180" : ""}`} style={{ transitionDuration: "220ms" }}>▾</span>
