@@ -4099,7 +4099,7 @@ function FeedbackBubble({
       )}
 
       {/* 4. If they added a note/chips, Hobson acknowledges — own owl + bubble */}
-      {submitted && noteGiven && showNoteAck && (
+      {submitted && showNoteAck && (
         <Row className={reduceMotion ? "" : "animate-in fade-in slide-in-from-bottom-1 duration-300"}>
           <Bubble>
             <TypedText text={noteAck} enabled={showNoteAck} />
