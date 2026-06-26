@@ -6102,11 +6102,8 @@ function buildPA004Beats(): PerformBeat[] {
       stepKey: "actions",
       text: "Comparable search prepared — request queued for the surveyor and our market data source.",
       detail: <PreparedPreview title="Comparable evidence request" body={"Scope: Marylebone NW8, residential lets, 1-bed flats, last 12 months.\nDeliverable: shortlist of 5–8 comparables with rent, term, condition notes."} />,
-      gate: {
-        label: "Continue",
-        options: [{ label: "Continue", kind: "continue", nextBeatIdx: 12 }],
-      },
     },
+
     {
       id: "b11",
       stepKey: "actions",
