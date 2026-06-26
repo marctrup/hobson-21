@@ -3890,109 +3890,153 @@ function FeedbackBubble({
     : feedback.grade === "partly" ? "Thank you — noted. I'll look at where I fell short."
     : feedback.grade === "not" ? "Thank you for the honesty — noted."
     : "";
+
+  // Reduced motion check + staged reveal of follow-up bubbles.
+  const reduceMotion = typeof window !== "undefined" && window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+  const [showAck, setShowAck] = useState(false);
+  const [showNoteAsk, setShowNoteAsk] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
+
+  useEffect(() => {
+    if (!graded) { setShowAck(false); setShowNoteAsk(false); return; }
+    if (reduceMotion) { setShowAck(true); setShowNoteAsk(true); return; }
+    const t1 = setTimeout(() => setShowAck(true), 250);
+    const t2 = setTimeout(() => setShowNoteAsk(true), 1100);
+    return () => { clearTimeout(t1); clearTimeout(t2); };
+  }, [graded, reduceMotion]);
+
+  useEffect(() => {
+    if (!submitted) { setShowConfirm(false); return; }
+    if (reduceMotion) { setShowConfirm(true); return; }
+    const t = setTimeout(() => setShowConfirm(true), 250);
+    return () => clearTimeout(t);
+  }, [submitted, reduceMotion]);
+
   const GRADES: { id: FeedbackGrade; label: string; glyph: string; aria: string }[] = [
     { id: "helpful", label: "Helpful", glyph: "✓", aria: "Mark answer helpful" },
     { id: "partly", label: "Partly", glyph: "◐", aria: "Mark answer partly helpful" },
     { id: "not", label: "Not helpful", glyph: "✕", aria: "Mark answer not helpful" },
   ];
+
+  const Bubble: React.FC<{ children: React.ReactNode; className?: string }> = ({ children, className = "" }) => (
+    <div className={`max-w-[420px] bg-[#EDE9FE] text-[#1F2330] text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-bl-md ${className}`}>
+      {children}
+    </div>
+  );
+
   return (
     <div className="flex items-end gap-2">
       {AvatarSlot}
-      <div className="max-w-[420px] bg-[#EDE9FE] text-[#1F2330] text-sm leading-relaxed px-4 py-3 rounded-2xl rounded-bl-md space-y-3">
-        <div>
+      <div className="flex flex-col gap-1.5 min-w-0">
+        {/* 1. Hobson asks for feedback (typed in) */}
+        <Bubble>
           {text}
           {streaming && <span className="inline-block w-1.5 h-3.5 ml-0.5 bg-[#7C3AED] align-middle animate-pulse" />}
-        </div>
+        </Bubble>
+
+        {/* Inline reply: grade buttons sit immediately under his question, as the natural reply */}
         {!streaming && (
+          <div
+            role="group"
+            aria-label="Grade this answer"
+            className="flex flex-wrap gap-1.5 pl-1 pt-0.5"
+          >
+            {GRADES.map((g) => {
+              const selected = feedback.grade === g.id;
+              return (
+                <button
+                  key={g.id}
+                  type="button"
+                  onClick={() => !graded && onGrade(g.id)}
+                  aria-pressed={selected}
+                  aria-label={g.aria}
+                  disabled={graded}
+                  className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full border text-[12px] transition focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED] focus-visible:ring-offset-1 ${
+                    selected
+                      ? "bg-white border-[#7C3AED] text-[#4C1D95] font-medium shadow-sm"
+                      : "bg-white border-slate-300 text-slate-700 hover:border-[#7C3AED] hover:text-[#4C1D95]"
+                  } ${graded && !selected ? "opacity-50 cursor-default" : ""} ${graded ? "cursor-default" : ""}`}
+                >
+                  <span aria-hidden className="font-semibold leading-none">{g.glyph}</span>
+                  <span>{g.label}</span>
+                </button>
+              );
+            })}
+          </div>
+        )}
+
+        {/* 2. Hobson acknowledges (separate speech bubble) */}
+        {graded && showAck && (
+          <Bubble className={reduceMotion ? "" : "animate-in fade-in slide-in-from-bottom-1 duration-300"}>
+            {ack}
+          </Bubble>
+        )}
+
+        {/* 3. Hobson asks the optional follow-up (separate speech bubble with inline reply) */}
+        {graded && !submitted && showNoteAsk && (
           <>
-            <div role="group" aria-label="Grade this answer" className="flex flex-wrap gap-1.5">
-              {GRADES.map((g) => {
-                const selected = feedback.grade === g.id;
-                return (
+            <Bubble className={reduceMotion ? "" : "animate-in fade-in slide-in-from-bottom-1 duration-300"}>
+              If you've a moment, what would have made it better?
+            </Bubble>
+            <div className="pl-1 pt-0.5 space-y-1.5">
+              {chips && chips.length > 0 && (
+                <div className="flex flex-wrap gap-1.5">
+                  {chips.map((c) => {
+                    const on = (feedback.chips || []).includes(c);
+                    return (
+                      <button
+                        key={c}
+                        type="button"
+                        onClick={() => onToggleChip(c)}
+                        aria-pressed={on}
+                        className={`text-[11px] px-2 py-0.5 rounded-full border transition focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED] focus-visible:ring-offset-1 ${
+                          on
+                            ? "bg-[#7C3AED] border-[#7C3AED] text-white"
+                            : "bg-white border-slate-300 text-slate-700 hover:border-[#7C3AED]"
+                        }`}
+                      >
+                        {c}
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
+              <div className="max-w-[420px]">
+                <label htmlFor="fb-note" className="sr-only">Optional note to Hobson</label>
+                <textarea
+                  id="fb-note"
+                  value={note}
+                  onChange={(e) => setNote(e.target.value)}
+                  rows={2}
+                  placeholder="Optional — a line is fine"
+                  className="w-full text-[13px] rounded-xl border border-slate-300 bg-white px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]"
+                />
+                <div className="flex items-center gap-2 mt-1.5">
                   <button
-                    key={g.id}
                     type="button"
-                    onClick={() => !submitted && onGrade(g.id)}
-                    aria-pressed={selected}
-                    aria-label={g.aria}
-                    disabled={submitted}
-                    className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full border text-[12px] transition focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED] focus-visible:ring-offset-1 ${
-                      selected
-                        ? "bg-white border-[#7C3AED] text-[#4C1D95] font-medium shadow-sm"
-                        : "bg-white/70 border-slate-300 text-slate-700 hover:border-[#7C3AED] hover:text-[#4C1D95]"
-                    } ${submitted ? "cursor-default opacity-80" : ""}`}
+                    onClick={() => onSubmitNote(note.trim())}
+                    className="text-[12px] px-3 py-1 rounded-md bg-[#7C3AED] text-white hover:bg-[#6D28D9] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED] focus-visible:ring-offset-1"
                   >
-                    <span aria-hidden className="font-semibold leading-none">{g.glyph}</span>
-                    <span>{g.label}</span>
+                    Send
                   </button>
-                );
-              })}
-            </div>
-            {graded && !submitted && (
-              <div className="space-y-2 pt-1 border-t border-white/60">
-                <div className="text-[12px] text-slate-700">{ack}</div>
-                {chips && chips.length > 0 && (
-                  <div>
-                    <div className="text-[11px] text-slate-500 mb-1">Anything in particular? (optional)</div>
-                    <div className="flex flex-wrap gap-1.5">
-                      {chips.map((c) => {
-                        const on = (feedback.chips || []).includes(c);
-                        return (
-                          <button
-                            key={c}
-                            type="button"
-                            onClick={() => onToggleChip(c)}
-                            aria-pressed={on}
-                            className={`text-[11px] px-2 py-0.5 rounded-full border transition focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED] focus-visible:ring-offset-1 ${
-                              on
-                                ? "bg-[#7C3AED] border-[#7C3AED] text-white"
-                                : "bg-white/70 border-slate-300 text-slate-700 hover:border-[#7C3AED]"
-                            }`}
-                          >
-                            {c}
-                          </button>
-                        );
-                      })}
-                    </div>
-                  </div>
-                )}
-                <div>
-                  <label htmlFor="fb-note" className="block text-[11px] text-slate-500 mb-1">
-                    If you've a moment, what would have made it better?
-                  </label>
-                  <textarea
-                    id="fb-note"
-                    value={note}
-                    onChange={(e) => setNote(e.target.value)}
-                    rows={2}
-                    placeholder="Optional"
-                    className="w-full text-[13px] rounded-md border border-slate-300 bg-white px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]"
-                  />
-                  <div className="flex items-center gap-2 mt-1.5">
-                    <button
-                      type="button"
-                      onClick={() => onSubmitNote(note.trim())}
-                      className="text-[12px] px-3 py-1 rounded-md bg-[#7C3AED] text-white hover:bg-[#6D28D9] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED] focus-visible:ring-offset-1"
-                    >
-                      Submit
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => onSkipNote()}
-                      className="text-[12px] px-2 py-1 rounded-md text-slate-600 hover:text-slate-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED] focus-visible:ring-offset-1"
-                    >
-                      Skip
-                    </button>
-                  </div>
+                  <button
+                    type="button"
+                    onClick={() => onSkipNote()}
+                    className="text-[12px] px-2 py-1 rounded-md text-slate-600 hover:text-slate-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED] focus-visible:ring-offset-1"
+                  >
+                    Skip
+                  </button>
                 </div>
               </div>
-            )}
-            {submitted && (
-              <div role="status" aria-live="polite" className="text-[12px] text-slate-600 italic pt-1 border-t border-white/60">
-                Thank you — your feedback is recorded.
-              </div>
-            )}
+            </div>
           </>
+        )}
+
+        {/* 4. Final confirmation as Hobson speech */}
+        {submitted && showConfirm && (
+          <Bubble className={reduceMotion ? "" : "animate-in fade-in slide-in-from-bottom-1 duration-300"}>
+            <span role="status" aria-live="polite">Thank you — your feedback is recorded.</span>
+          </Bubble>
         )}
       </div>
     </div>
