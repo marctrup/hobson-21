@@ -2076,7 +2076,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
           setTimeout(step, 40 + Math.random() * 30);
         } else {
           setMessages((m) => m.map((x) => (x.id === id ? { ...x, streaming: false } : x)));
-          if (testerMode) setTimeout(() => appendFeedbackPrompt(chips), 700);
+          if (testerMode) setTimeout(() => appendFeedbackPrompt(chips), 1300);
         }
       };
       setTimeout(step, 60);
