@@ -3886,9 +3886,9 @@ function FeedbackBubble({
   const graded = !!feedback.grade;
   const submitted = !!feedback.submitted;
   const ack =
-    feedback.grade === "helpful" ? "Good. I'll hold to that standard."
+    feedback.grade === "helpful" ? "Good. That's the standard I hold to."
     : feedback.grade === "partly" ? "Noted. I'll see where it can be sharper."
-    : feedback.grade === "not" ? "Understood. I'd rather know when I've fallen short."
+    : feedback.grade === "not" ? "Understood. I'd rather know when I've fallen short than not."
     : "";
   const noteGiven = !!(feedback.note && feedback.note.trim().length > 0) || ((feedback.chips || []).length > 0);
   const noteAck = "Noted — that's useful.";
