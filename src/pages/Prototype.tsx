@@ -6416,7 +6416,8 @@ function Section13NoticePreview({ chosenRent }: { chosenRent: number | null }) {
   );
 }
 
-function Section13EmailPreview({ chosenRent }: { chosenRent: number }) {
+function Section13EmailPreview({ chosenRent }: { chosenRent: number | null }) {
+  const rentPhrase = chosenRent !== null ? <><strong>{fmtGBP(chosenRent)} per annum</strong></> : <em className="text-slate-500">[new rent to be entered]</em>;
   return (
     <div className="rounded-lg border border-emerald-200 bg-emerald-50/60 p-3 text-[12px] text-slate-700">
       <div className="text-[10px] uppercase tracking-wide text-emerald-800 font-semibold mb-2">
