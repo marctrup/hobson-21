@@ -6009,7 +6009,7 @@ function PA004Summary() {
       </div>
       <div>
         <div className="text-[10px] uppercase tracking-wide text-slate-400 font-semibold mb-0.5">Supporting Information Required</div>
-        <p>Open market comparable evidence — to be sourced. Surveyor instruction to be prepared.</p>
+        <p>Open market comparable evidence — to be sourced from listings (Rightmove, Zoopla, OnTheMarket, Foxtons, LonRes).</p>
       </div>
     </div>
   );
