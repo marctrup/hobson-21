@@ -3880,9 +3880,8 @@ function FeedbackBubble({
   onSkipNote: () => void;
 }) {
   const [note, setNote] = useState("");
-  const AvatarSlot = showAvatar
-    ? <OwlAvatar state={owl} />
-    : <div aria-hidden className="w-10 h-10 shrink-0" />;
+  void showAvatar; // every Hobson turn in this exchange now renders its own owl avatar
+
   const graded = !!feedback.grade;
   const submitted = !!feedback.submitted;
   const ack =
