@@ -7982,6 +7982,46 @@ function BrokerWorkArea({ character, contacts, onAdd }: {
         </div>
       </header>
 
+      {(() => {
+        const linkedProperties = new Set<string>();
+        contacts.forEach((c) => {
+          const matches = c.relatedTo.match(/(5 Nugent Terrace|Stanley House|Cromwell Mews|Beaufort Mews)/g) || [];
+          matches.forEach((m) => linkedProperties.add(m));
+        });
+        const flagged = contacts.filter((c) => c.flagged);
+        const notes: CharacterNote[] = [];
+        notes.push({
+          id: "bn-recent",
+          kind: "recent",
+          text: "Added 2 contacts this week — Firewatch Ltd and Voltedge. Updated M&S's preferred contact.",
+        });
+        notes.push({
+          id: "bn-totals",
+          kind: "totals",
+          text: `${contacts.length} contact${contacts.length === 1 ? "" : "s"} · linked across ${linkedProperties.size} propert${linkedProperties.size === 1 ? "y" : "ies"}.`,
+        });
+        notes.push({
+          id: "bn-issue",
+          kind: "issue",
+          text: "Several occupied units have no tenant contact on file yet — notices the Magician's workflows draft can't reach them until I've added one.",
+        });
+        if (flagged.length > 0) {
+          notes.push({
+            id: "bn-flagged",
+            kind: "coverage",
+            text: `${flagged.length} contact${flagged.length === 1 ? "" : "s"} flagged for your attention — ${flagged.map((c) => c.name).join(", ")}.`,
+          });
+        }
+        return (
+          <CharacterNotesStrip
+            character={character}
+            title="The Broker's notes"
+            subtitle="recent additions & relationship gaps"
+            notes={notes}
+          />
+        );
+      })()}
+
       {/* Filters */}
       <div className="px-5 py-3 border-b border-slate-100 flex flex-wrap items-center gap-2 shrink-0">
         <div className="relative">
