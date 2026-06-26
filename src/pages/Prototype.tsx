@@ -6009,7 +6009,7 @@ function PA004Summary() {
       </div>
       <div>
         <div className="text-[10px] uppercase tracking-wide text-slate-400 font-semibold mb-0.5">Supporting Information Required</div>
-        <p>Open market comparable evidence — to be sourced. Surveyor instruction to be prepared.</p>
+        <p>Open market comparable evidence — to be sourced from listings (Rightmove, Zoopla, OnTheMarket, Foxtons, LonRes).</p>
       </div>
     </div>
   );
@@ -6147,41 +6147,22 @@ function buildPA004Beats(): PerformBeat[] {
       },
     },
     {
-      id: "b9",
-      stepKey: "actions",
-      text: "Recommended next: prepare surveyor instructions to obtain open-market evidence.",
-      gate: {
-        label: "Prepare surveyor instructions?",
-        options: [
-          { label: "Approve", kind: "approve", nextBeatIdx: 9 },
-          { label: "Skip", kind: "skip", nextBeatIdx: 10 },
-        ],
-      },
-    },
-    {
-      id: "b9b",
-      stepKey: "actions",
-      text: "Drafted.",
-      detail: <PreparedPreview title="Surveyor instructions" body={"To: [Usual surveyor]\nSubject: Open market rent advice — Flat 8, Stanley House\n\nWe have a rent review falling due in March 2027. Please advise on open market evidence and a suggested range, with comparables for the last 12 months."} />,
-    },
-
-    {
       id: "b10",
       stepKey: "actions",
-      text: "Next: gather comparable evidence (last 12 months, like-for-like).",
+      text: "Next: gather comparable evidence from the open market (last 12 months, like-for-like).",
       gate: {
         label: "Gather comparable evidence?",
         options: [
-          { label: "Approve", kind: "approve", nextBeatIdx: 11 },
-          { label: "Skip", kind: "skip", nextBeatIdx: 14 },
+          { label: "Approve", kind: "approve", nextBeatIdx: 9 },
+          { label: "Skip", kind: "skip", nextBeatIdx: 12 },
         ],
       },
     },
     {
       id: "b10b",
       stepKey: "actions",
-      text: "Comparable search prepared — request queued for the surveyor and our market data source.",
-      detail: <PreparedPreview title="Comparable evidence request" body={"Scope: Marylebone NW8, residential lets, 1-bed flats, last 12 months.\nDeliverable: shortlist of 5–8 comparables with rent, term, condition notes."} />,
+      text: "Comparable search prepared — querying open market sources.",
+      detail: <PreparedPreview title="Comparable evidence search" body={"Scope: Marylebone NW8, residential lets, 1-bed flats, last 12 months.\nSources: Rightmove, Zoopla, OnTheMarket, Foxtons, LonRes.\nDeliverable: shortlist of 5–8 comparables with rent, term, condition notes."} />,
     },
     {
       id: "b10c",
@@ -6202,8 +6183,8 @@ function buildPA004Beats(): PerformBeat[] {
       gate: {
         label: "Prepare review notice?",
         options: [
-          { label: "Approve", kind: "approve", nextBeatIdx: 15 },
-          { label: "Skip", kind: "skip", nextBeatIdx: 16 },
+          { label: "Approve", kind: "approve", nextBeatIdx: 13 },
+          { label: "Skip", kind: "skip", nextBeatIdx: 14 },
         ],
       },
     },
@@ -6221,8 +6202,8 @@ function buildPA004Beats(): PerformBeat[] {
       gate: {
         label: "Create a review task?",
         options: [
-          { label: "Approve", kind: "approve", nextBeatIdx: 17 },
-          { label: "Skip", kind: "skip", nextBeatIdx: 18 },
+          { label: "Approve", kind: "approve", nextBeatIdx: 15 },
+          { label: "Skip", kind: "skip", nextBeatIdx: 16 },
         ],
       },
     },
@@ -6230,7 +6211,7 @@ function buildPA004Beats(): PerformBeat[] {
       id: "b12b",
       stepKey: "actions",
       text: "Task created.",
-      detail: <PreparedPreview title="Review task" body={"Title: Flat 8 rent review — checkpoint\nDue: 6 weeks before March 2027 review date\nOwner: you\nLinked: this action, surveyor instruction, draft notice."} />,
+      detail: <PreparedPreview title="Review task" body={"Title: Flat 8 rent review — checkpoint\nDue: 6 weeks before March 2027 review date\nOwner: you\nLinked: this action, comparable evidence, draft notice."} />,
     },
 
     {
@@ -7505,8 +7486,8 @@ function buildWorkLog(actionCards: ActionCard[]): WorkLogEntry[] {
       statusLabel: "Finished",
       statusKind: "finished",
       narration:
-        "I prepared the rent review for Flat 8, Stanley House. I read the lease, confirmed the Open Market basis and the March 2027 date, and pulled comparable evidence from the last 12 months. You approved the surveyor instructions and the review notice — both are out and the file is updated.",
-      approvals: ["Approved by you — surveyor instructions", "Approved by you — review notice to tenant"],
+        "I prepared the rent review for Flat 8, Stanley House. I read the lease, confirmed the Open Market basis and the March 2027 date, and gathered comparable evidence from the open market over the last 12 months. You approved the comparable search and the review notice — both are done and the file is updated.",
+      approvals: ["Approved by you — comparable evidence search", "Approved by you — review notice to tenant"],
       flags: ["Notice period in the lease is ambiguous — I noted it on file so you have it next time."],
       progressDone: 4,
       progressTotal: 4,
@@ -7516,9 +7497,9 @@ function buildWorkLog(actionCards: ActionCard[]): WorkLogEntry[] {
         { role: "hobson", text: "I'll work through the Flat 8 rent review with you. First — the lease basis." },
         { role: "hobson", text: "Open Market review, confirmed in clause 5.2. Review date 25 March 2027." },
         { role: "user", text: "Approve — prepare review summary" },
-        { role: "hobson", text: "Done. I've pulled three comparables from the last 12 months and drafted surveyor instructions." },
-        { role: "user", text: "Approve surveyor instructions" },
-        { role: "hobson", text: "Sent. Drafting the review notice now — couldn't pin down the exact notice period, flagging that." },
+        { role: "hobson", text: "Done. I've pulled six like-for-like comparables from Rightmove, Zoopla, OnTheMarket, Foxtons and LonRes — last 12 months, NW8, 1-bed flats." },
+        { role: "user", text: "Approve comparable evidence" },
+        { role: "hobson", text: "Drafting the review notice now — couldn't pin down the exact notice period, flagging that." },
         { role: "user", text: "Approve review notice" },
         { role: "hobson", text: "Notice prepared and recorded. I've saved everything to the Flat 8 file." },
       ],
@@ -7537,7 +7518,7 @@ function buildWorkLog(actionCards: ActionCard[]): WorkLogEntry[] {
       statusLabel: "Waiting on you — 2 of 4 steps complete",
       statusKind: "waiting",
       narration:
-        "I started the rent review for Flat 8, Stanley House. I read the lease, confirmed the Open Market basis and the March 2027 date, and pulled comparable evidence from the last 12 months. I've paused at the surveyor instructions for your approval. I couldn't confirm the notice period, so I've flagged that for you.",
+        "I started the rent review for Flat 8, Stanley House. I read the lease, confirmed the Open Market basis and the March 2027 date, and pulled comparable evidence from the open market over the last 12 months. I've paused at the review notice for your approval. I couldn't confirm the notice period, so I've flagged that for you.",
       approvals: [],
       flags: ["Notice period in the lease is ambiguous — needs your eye before I send the notice."],
       progressDone: 2,
@@ -7547,7 +7528,7 @@ function buildWorkLog(actionCards: ActionCard[]): WorkLogEntry[] {
         { role: "hobson", text: "I'll work through the Flat 8 rent review with you. First — the lease basis." },
         { role: "hobson", text: "Open Market review, confirmed in clause 5.2. Review date 25 March 2027." },
         { role: "user", text: "Approve — prepare review summary" },
-        { role: "hobson", text: "Done. I've pulled three comparables and drafted surveyor instructions for you to approve." },
+        { role: "hobson", text: "Done. I've pulled six like-for-like comparables from Rightmove, Zoopla, OnTheMarket, Foxtons and LonRes — ready for your eye." },
       ],
     };
   } else {
