@@ -2417,15 +2417,35 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                 >
                   {group.messages.map((m, i) => (
                     m.role === "hobson" ? (
-                      <HobsonBubble
-                        key={m.id}
-                        text={m.text}
-                        owl={owl}
-                        streaming={!!m.streaming}
-                        rich={m.rich}
-                        onAskFollowUp={(q) => sendRentAnswer(q)}
-                        showAvatar={i === 0}
-                      />
+                      m.kind === "feedback" ? (
+                        <FeedbackBubble
+                          key={m.id}
+                          owl={owl}
+                          text={m.text}
+                          streaming={!!m.streaming}
+                          feedback={m.feedback || {}}
+                          chips={m.feedbackChips}
+                          showAvatar={i === 0}
+                          onGrade={(g) => updateFeedback(m.id, { grade: g })}
+                          onToggleChip={(c) => {
+                            const cur = m.feedback?.chips || [];
+                            const next = cur.includes(c) ? cur.filter((x) => x !== c) : [...cur, c];
+                            updateFeedback(m.id, { chips: next });
+                          }}
+                          onSubmitNote={(note) => updateFeedback(m.id, { note, submitted: true })}
+                          onSkipNote={() => updateFeedback(m.id, { submitted: true })}
+                        />
+                      ) : (
+                        <HobsonBubble
+                          key={m.id}
+                          text={m.text}
+                          owl={owl}
+                          streaming={!!m.streaming}
+                          rich={m.rich}
+                          onAskFollowUp={(q) => sendRentAnswer(q)}
+                          showAvatar={i === 0}
+                        />
+                      )
                     ) : (
                       <UserBubble key={m.id} text={m.text} />
                     )
