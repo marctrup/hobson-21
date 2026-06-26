@@ -1748,7 +1748,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
 
   const appendFeedbackPrompt = (chips?: string[]) => {
     const fid = `fb-${Date.now()}-${Math.random()}`;
-    const text = "Was that of use to you? Your view helps me improve.";
+    const text = "Did that answer your question?";
     if (reduced) {
       setMessages((m) => [...m, { id: fid, role: "hobson", text, kind: "feedback", feedback: {}, feedbackChips: chips }]);
       return;
@@ -2516,7 +2516,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                           streaming={!!m.streaming}
                           feedback={m.feedback || {}}
                           chips={m.feedbackChips}
-                          showAvatar={i === 0}
+                          showAvatar={true}
                           onGrade={(g) => updateFeedback(m.id, { grade: g })}
                           onToggleChip={(c) => {
                             const cur = m.feedback?.chips || [];
@@ -3886,12 +3886,12 @@ function FeedbackBubble({
   const graded = !!feedback.grade;
   const submitted = !!feedback.submitted;
   const ack =
-    feedback.grade === "helpful" ? "Thank you — I'm glad it served. I'll hold to that standard."
-    : feedback.grade === "partly" ? "Thank you — noted. Knowing where I fell short is exactly how I improve."
-    : feedback.grade === "not" ? "Thank you for telling me. I'd far rather know when I've missed the mark — it's how I get better."
+    feedback.grade === "helpful" ? "Good. I'll hold to that standard."
+    : feedback.grade === "partly" ? "Noted. I'll see where it can be sharper."
+    : feedback.grade === "not" ? "Understood. I'd rather know when I've fallen short."
     : "";
   const noteGiven = !!(feedback.note && feedback.note.trim().length > 0) || ((feedback.chips || []).length > 0);
-  const noteAck = "And thank you for the detail — that's genuinely useful.";
+  const noteAck = "Noted — that's useful.";
 
   // Reduced motion check + staged reveal of follow-up bubbles.
   const reduceMotion = typeof window !== "undefined" && window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
@@ -4003,7 +4003,7 @@ function FeedbackBubble({
         {graded && !submitted && showNoteAsk && (
           <>
             <Bubble className={reduceMotion ? "" : "animate-in fade-in slide-in-from-bottom-1 duration-300"}>
-              If you've a moment, what would have made it better?
+              If anything was missing, tell me.
             </Bubble>
             <div className="pl-1 pt-0.5 space-y-1.5">
               {chips && chips.length > 0 && (
