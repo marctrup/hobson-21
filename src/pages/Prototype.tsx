@@ -1748,7 +1748,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
 
   const appendFeedbackPrompt = (chips?: string[]) => {
     const fid = `fb-${Date.now()}-${Math.random()}`;
-    const text = "Was that of use to you? Your view helps me improve.";
+    const text = "Did that answer your question?";
     if (reduced) {
       setMessages((m) => [...m, { id: fid, role: "hobson", text, kind: "feedback", feedback: {}, feedbackChips: chips }]);
       return;
