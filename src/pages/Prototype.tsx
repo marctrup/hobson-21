@@ -1743,6 +1743,10 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
     const beat = BEATS[beatIdx];
     if (!beat) return;
     if (lineIdx >= beat.lines.length) {
+      if (beatIdx === BEATS.length - 1) {
+        const t2 = setTimeout(() => goPortfolio(true), reduced ? 600 : 1800);
+        return () => clearTimeout(t2);
+      }
       setChipVisible(true);
       return;
     }
