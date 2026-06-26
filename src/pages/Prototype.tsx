@@ -1473,6 +1473,12 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
   };
 
 
+  const handleSaveWorkflow = (next: Workflow) => {
+    setWorkflows((arr) => arr.map((w) => w.id === next.id ? next : w));
+    setAdjustingWorkflowId(null);
+  };
+
+  const initialsFromName = (name: string) => {
     const parts = name.trim().split(/\s+/).filter(Boolean);
     if (parts.length === 0) return "NC";
     if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
