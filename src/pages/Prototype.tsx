@@ -6393,7 +6393,11 @@ function Section13NoticePreview({ chosenRent }: { chosenRent: number | null }) {
           <div className="text-slate-500">2. Landlord</div><div className="text-slate-800">{FLAT8_LANDLORD}</div>
           <div className="text-slate-500">3. Property</div><div className="text-slate-800">{FLAT8_ADDR}</div>
           <div className="text-slate-500">4. Current rent</div><div className="text-slate-800">{fmtGBP(FLAT8_CURRENT_RENT)} per annum (payable monthly in advance)</div>
-          <div className="text-slate-500">5. New rent</div><div className="text-slate-900 font-semibold">{fmtGBP(chosenRent)} per annum <span className="text-slate-500 font-normal">(+{fmtGBP(increase)} / +{pct}%)</span></div>
+          <div className="text-slate-500">5. New rent</div>{hasRent ? (
+            <div className="text-slate-900 font-semibold">{fmtGBP(chosenRent as number)} per annum <span className="text-slate-500 font-normal">(+{fmtGBP(increase)} / +{pct}%)</span></div>
+          ) : (
+            <div className="text-slate-900 font-semibold"><span className="inline-block min-w-[140px] border-b-2 border-dashed border-slate-400 text-slate-400">£ ______</span> per annum <span className="text-slate-500 font-normal italic">(to be entered before serving)</span></div>
+          )}
           <div className="text-slate-500">6. Effective from</div><div className="text-slate-800">{FLAT8_EFFECTIVE} (start of the new rental period)</div>
           <div className="text-slate-500">7. Notice date</div><div className="text-slate-800">{FLAT8_NOTICE_DATE}</div>
         </div>
