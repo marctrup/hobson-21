@@ -7206,7 +7206,7 @@ function BeatBubble({ beat, streamingText, streaming, done, detailOverride }: { 
             <span>{beat.flag}</span>
           </div>
         )}
-        {!streaming && beat.detail && <div className="max-w-[640px]">{beat.detail}</div>}
+        {!streaming && (detailOverride ?? beat.detail) && <div className="max-w-[640px]">{detailOverride ?? beat.detail}</div>}
       </div>
     </div>
   );
