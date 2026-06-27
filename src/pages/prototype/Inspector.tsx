@@ -36,7 +36,7 @@ export type ComplianceArea =
   | "licensing"
   | "other";
 
-export type RequirementBasis = "required" | "applicable";
+export type RequirementBasis = "required" | "applicable" | "business";
 export type DurationUnit = "Years" | "Months";
 export type RequirementCategory = "certification" | "notice" | "contract";
 export type VersionSource = "hobson" | "uploaded";
