@@ -9,6 +9,7 @@ import owlCovering from "@/assets/prototype/owl-covering.png";
 import characterMagician from "@/assets/prototype/character-magician.png";
 import characterProfessor from "@/assets/prototype/character-professor.png";
 import characterBroker from "@/assets/prototype/character-broker.png";
+import characterKeeper from "@/assets/prototype/character-keeper.png";
 import { DocumentsLibrary } from "@/components/prototype/DocumentsLibrary";
 import { cn } from "@/lib/utils";
 import SummaryCard, { SummaryActions } from "./prototype/SummaryCard";
@@ -3186,6 +3187,12 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                   onClick={() => selectAdminCharacter(c.id)}
                 />
               ))}
+              <CharacterRailItem
+                name="The Keeper"
+                src={characterKeeper}
+                disabled
+                disabledLabel="Coming soon"
+              />
             </div>
             {/* Discreet way out of Admin, well below the characters */}
             <button
@@ -4235,21 +4242,31 @@ function RailItem({ icon, label, active, onClick }: { icon: "pin" | "doc" | "cha
   );
 }
 
-function CharacterRailItem({ name, src, active, onClick }: { name: string; src: string; active?: boolean; onClick?: () => void }) {
+function CharacterRailItem({ name, src, active, onClick, disabled, disabledLabel }: { name: string; src: string; active?: boolean; onClick?: () => void; disabled?: boolean; disabledLabel?: string }) {
   return (
     <button
       type="button"
-      onClick={onClick}
+      onClick={disabled ? undefined : onClick}
+      disabled={disabled}
+      aria-disabled={disabled || undefined}
       aria-current={active ? "page" : undefined}
-      aria-label={name}
+      aria-label={disabled && disabledLabel ? `${name} — ${disabledLabel}` : name}
+      title={disabled && disabledLabel ? `${name} — ${disabledLabel}` : undefined}
       className={`w-14 flex flex-col items-center gap-1 py-1.5 rounded-lg transition focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40 ${
-        active ? "bg-[#F5F3FF] ring-1 ring-[#7C3AED]/40" : "hover:bg-slate-50"
+        disabled
+          ? "cursor-not-allowed opacity-60"
+          : active
+            ? "bg-[#F5F3FF] ring-1 ring-[#7C3AED]/40"
+            : "hover:bg-slate-50"
       }`}
     >
-      <div className={`w-11 h-11 rounded-full overflow-hidden bg-[#F5F3FF] grid place-items-center ${active ? "ring-2 ring-[#7C3AED]" : "ring-1 ring-slate-200"}`}>
+      <div className={`w-11 h-11 rounded-full overflow-hidden bg-[#F5F3FF] grid place-items-center ${active && !disabled ? "ring-2 ring-[#7C3AED]" : "ring-1 ring-slate-200"} ${disabled ? "grayscale" : ""}`}>
         <img src={src} alt="" aria-hidden className="w-[120%] h-[120%] object-contain object-center" />
       </div>
-      <span className={`text-[10px] text-center leading-tight ${active ? "text-[#7C3AED] font-medium" : "text-slate-600"}`}>{name}</span>
+      <span className={`text-[10px] text-center leading-tight ${disabled ? "text-slate-400" : active ? "text-[#7C3AED] font-medium" : "text-slate-600"}`}>{name}</span>
+      {disabled && disabledLabel && (
+        <span className="text-[9px] leading-tight text-slate-400">{disabledLabel}</span>
+      )}
     </button>
   );
 }
