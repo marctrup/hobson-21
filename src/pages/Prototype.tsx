@@ -632,7 +632,54 @@ const PROPERTIES: Property[] = [
   },
 ];
 
+/* ---------- Scope picker helpers (reusable across all workflow builds) ---------- */
+
+const EMPTY_SCOPE: ScopeSelection = {
+  level: "portfolio",
+  propertyIds: [],
+  unitIds: [],
+  propertyGranularity: "units",
+};
+
+function granularityWord(g: PropertyGranularity): string {
+  return g === "units" ? "units" : g === "record" ? "record" : "units + record";
+}
+
+/** Concise summary used for "Applies to", SO FAR and built workflow cards. */
+function summariseScope(sel: ScopeSelection): { label: string; detail?: string[] } {
+  if (sel.level === "portfolio") return { label: "Whole portfolio" };
+
+  if (sel.level === "properties") {
+    const props = PROPERTIES.filter((p) => sel.propertyIds.includes(p.id));
+    const g = granularityWord(sel.propertyGranularity);
+    if (props.length === 0) return { label: "Properties · none selected yet" };
+    if (props.length === 1) return { label: `Properties (${g}) · ${props[0].name}` };
+    return {
+      label: `Properties (${g}) · ${props[0].name} + ${props.length - 1} other${props.length - 1 > 1 ? "s" : ""}`,
+      detail: props.map((p) => p.name),
+    };
+  }
+
+  // units — grouped by property
+  const groups = PROPERTIES
+    .map((p) => ({ property: p, units: p.units.filter((u) => sel.unitIds.includes(u.id)) }))
+    .filter((g) => g.units.length > 0);
+  const total = groups.reduce((n, g) => n + g.units.length, 0);
+  if (total === 0) return { label: "Units · none selected yet" };
+  if (groups.length === 1) {
+    const g = groups[0];
+    if (g.units.length === 1) return { label: `Units · ${g.units[0].label}, ${g.property.name}` };
+    if (g.units.length === 2) return { label: `Units · ${g.units[0].label} and ${g.units[1].label}, ${g.property.name}` };
+    return { label: `Units · ${g.units.length} in ${g.property.name}`, detail: g.units.map((u) => `${u.label}, ${g.property.name}`) };
+  }
+  return {
+    label: `Units · ${total} across ${groups.length} properties`,
+    detail: groups.map((g) => `${g.property.name} — ${g.units.map((u) => u.label).join(", ")}`),
+  };
+}
+
 /* ---------- Proactive Action cards (portfolio briefing) ---------- */
+
 
 type Urgency = "now" | "week" | "watch";
 type TriggerType = "review" | "break" | "compliance" | "notice" | "expiry";
