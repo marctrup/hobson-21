@@ -2810,7 +2810,41 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
           setMessages((m) => m.map((x) => (x.id === id ? { ...x, streaming: false } : x)));
           if (testerMode) setTimeout(() => appendFeedbackPrompt(chips), 1300);
         }
+  };
+
+  /* ----- summary request (occupational / compliance) — same fn at every level ----- */
+  const requestSummary = (kind: "occupational" | "compliance", scope: SummaryScope) => {
+    const question = summaryQuestionFor(kind, scope);
+    const intro = summaryIntroFor(kind, scope);
+    setMessages((m) => [...m, { id: `u-${Date.now()}`, role: "user", text: question }]);
+    setInput("");
+    setTyping(true);
+    setOwl("reading");
+    const delay = reduced ? 150 : 700;
+    window.setTimeout(() => {
+      setTyping(false);
+      setOwl("talking");
+      const id = `sum-${Date.now()}`;
+      if (reduced) {
+        setMessages((m) => [...m, { id, role: "hobson", text: intro, rich: "summary", summary: { kind, scope } }]);
+        return;
+      }
+      setMessages((m) => [...m, { id, role: "hobson", text: "", streaming: true, rich: "summary", summary: { kind, scope } }]);
+      const words = intro.split(" ");
+      let i = 0;
+      const step = () => {
+        i += 1;
+        const partial = words.slice(0, i).join(" ");
+        setMessages((m) => m.map((x) => (x.id === id ? { ...x, text: partial } : x)));
+        if (i < words.length) {
+          setTimeout(step, 35 + Math.random() * 25);
+        } else {
+          setMessages((m) => m.map((x) => (x.id === id ? { ...x, streaming: false } : x)));
+        }
       };
+      setTimeout(step, 50);
+    }, delay);
+  };
       setTimeout(step, 60);
     }, delay);
   };
