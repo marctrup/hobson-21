@@ -9452,7 +9452,7 @@ function WorkflowIcon({ icon, tone }: { icon: WorkflowIconKey; tone: Workflow["t
   );
 }
 
-function WorkflowStatusPill({ status }: { status: WorkflowStatus }) {
+function WorkflowStatusPill({ status, isPausedDraft }: { status: WorkflowStatus; isPausedDraft?: boolean }) {
   if (status === "built") {
     return (
       <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full border border-[#7C3AED]/40 bg-[#F5F3FF] text-[#5B21B6] text-[11px] font-semibold">
@@ -9461,6 +9461,27 @@ function WorkflowStatusPill({ status }: { status: WorkflowStatus }) {
       </span>
     );
   }
+  if (isPausedDraft) {
+    return (
+      <span
+        className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full border border-dashed border-amber-400/70 bg-amber-50 text-amber-800 text-[11px] font-semibold"
+        title="Paused build — not yet running"
+      >
+        <span className="relative inline-flex items-center justify-center w-2.5 h-2.5" aria-hidden>
+          <span className="absolute inset-0 rounded-full bg-amber-400/40 motion-safe:animate-ping" />
+          <span className="relative w-1.5 h-1.5 rounded-full bg-amber-500" />
+        </span>
+        Draft · in progress
+      </span>
+    );
+  }
+  return (
+    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full border border-dashed border-slate-300 bg-white text-slate-600 text-[11px] font-semibold">
+      <span aria-hidden>○</span> Draft
+    </span>
+  );
+}
+
   return (
     <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full border border-dashed border-slate-300 bg-white text-slate-600 text-[11px] font-semibold">
       <span aria-hidden>○</span> Draft
