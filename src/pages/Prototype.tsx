@@ -1598,7 +1598,23 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
     }]);
   };
 
-  const inspectorBuildAnother = () => {
+  const inspectorShowMe = (areaId: ComplianceArea, group: RequirementCategory) => {
+    setInspectorEvents((e) => [...e, {
+      kind: "show_me",
+      id: inspNewId("sm"),
+      areaId,
+      group,
+    }]);
+  };
+
+  const inspectorUpdateConfirmed = (id: string, patch: Partial<ComplianceRequirement>) => {
+    setInspectorConfirmed((arr) => arr.map((r) => (r.id === id ? { ...r, ...patch } : r)));
+  };
+
+  const inspectorAddConfirmed = (req: Omit<ComplianceRequirement, "id">) => {
+    setInspectorConfirmed((arr) => [...arr, { ...req, id: `req-manual-${Date.now()}` }]);
+  };
+
     // Re-open the area picker in chat by clearing area + proposal.
     setInspectorProposed(null);
     setInspectorArea(null);
