@@ -691,6 +691,13 @@ export function DocumentsLibrary({
   const [scopeUnit, setScopeUnit] = useState<string | null>(initialScope?.unitId ?? null);
   const [viewing, setViewing] = useState<DocItem | null>(null);
   const [flash, setFlash] = useState<string | null>(null);
+  const [scopeBannerDismissed, setScopeBannerDismissed] = useState(false);
+
+  // Re-show the announce banner whenever the incoming scope changes (e.g. user
+  // re-opens Documents from a different unit/property).
+  useEffect(() => {
+    setScopeBannerDismissed(false);
+  }, [initialScope?.propertyId, initialScope?.unitId]);
 
   // resolved scope labels
   const scopePropertyAsset = useMemo(
