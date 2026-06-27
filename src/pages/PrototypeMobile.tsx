@@ -885,12 +885,7 @@ function PerformSheet({ card, onClose, onComplete }: { card: ActionCard; onClose
    ──────────────────────────────────────────────────────────────── */
 
 function BottomNav({ tab, setTab }: { tab: Tab; setTab: (t: Tab) => void }) {
-  // Hook for the unit-tile cross-tab navigation event
-  useUnitJumpListener((s) => {
-    // hop to chat or stay on desk — stay on desk to expose unit-scoped cards
-    setTab("desk");
-    // scope is updated by the parent's listener too; this is just a tab hop
-  });
+
 
   const items: { id: Tab; label: string; icon: React.ReactNode }[] = [
     { id: "desk", label: "Desk", icon: <ClipboardList className="w-4 h-4" /> },
