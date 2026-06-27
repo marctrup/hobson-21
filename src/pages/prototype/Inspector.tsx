@@ -32,6 +32,10 @@ export const INSPECTOR_CHARACTER = {
 export type ComplianceArea =
   | "health_safety"
   | "financial"
+  | "notices"
+  | "contracts"
+  | "insurance"
+  | "inspections"
   | "environmental"
   | "licensing"
   | "other";
@@ -61,13 +65,12 @@ export type ComplianceRequirement = {
   areaId?: ComplianceArea;
   /** Filename of the document currently held against this requirement (simulated). */
   documentOnFile?: string;
+  /** Public source the Inspector cited when proposing this as legally required. */
+  sourceUrl?: string;
+  sourceLabel?: string;
 };
 
 /* ---------------- Area registry ---------------- */
-/**
- * One row per compliance area the Inspector knows about. The Library is
- * organised by these; each area carries its own schedule and Update button.
- */
 export const AREA_DEFS: Record<ComplianceArea, {
   id: ComplianceArea;
   label: string;
@@ -76,41 +79,52 @@ export const AREA_DEFS: Record<ComplianceArea, {
   unchangedNote: string;
 }> = {
   health_safety: {
-    id: "health_safety",
-    label: "Health & Safety",
-    sublabel: "residential",
+    id: "health_safety", label: "Health & Safety", sublabel: "residential",
     sourceLabel: "gov.uk & HSE guidance",
     unchangedNote: "Gas, EICR and EPC requirements and frequencies are unchanged.",
   },
   financial: {
-    id: "financial",
-    label: "Financial",
-    sublabel: "client money & insurance",
+    id: "financial", label: "Financial", sublabel: "client money & insurance",
     sourceLabel: "gov.uk, Propertymark & ARLA guidance",
     unchangedNote: "Client money, insurance and deposit requirements are unchanged.",
   },
+  notices: {
+    id: "notices", label: "Notices", sublabel: "statutory notices & guides",
+    sourceLabel: "gov.uk tenant guidance",
+    unchangedNote: "Notice templates and guidance editions are unchanged.",
+  },
+  contracts: {
+    id: "contracts", label: "Contracts", sublabel: "tenancy & service agreements",
+    sourceLabel: "gov.uk model agreements & sector guidance",
+    unchangedNote: "Contract templates are unchanged.",
+  },
+  insurance: {
+    id: "insurance", label: "Insurance", sublabel: "buildings, liability & PI",
+    sourceLabel: "gov.uk & ABI guidance",
+    unchangedNote: "Insurance requirements are unchanged.",
+  },
+  inspections: {
+    id: "inspections", label: "Inspections", sublabel: "building & plant inspections",
+    sourceLabel: "gov.uk, HSE & RICS guidance",
+    unchangedNote: "Inspection requirements are unchanged.",
+  },
   environmental: {
-    id: "environmental",
-    label: "Environmental",
-    sublabel: "energy & emissions",
+    id: "environmental", label: "Environmental", sublabel: "energy & emissions",
     sourceLabel: "gov.uk & DESNZ guidance",
     unchangedNote: "Environmental requirements are unchanged.",
   },
   licensing: {
-    id: "licensing",
-    label: "Licensing",
-    sublabel: "HMO & selective licensing",
+    id: "licensing", label: "Licensing", sublabel: "HMO & selective licensing",
     sourceLabel: "local authority licensing schemes",
     unchangedNote: "Licensing requirements are unchanged.",
   },
   other: {
-    id: "other",
-    label: "Other",
-    sublabel: "your own area",
+    id: "other", label: "Other", sublabel: "your own area",
     sourceLabel: "your brief & public guidance",
     unchangedNote: "Nothing has changed for this area.",
   },
 };
+
 
 
 export type InspectorEvent =
@@ -119,6 +133,19 @@ export type InspectorEvent =
   | { kind: "researching"; id: string }
   | { kind: "confirmed"; id: string; count: number }
   | { kind: "show_me"; id: string; areaId: ComplianceArea; group: RequirementCategory };
+
+/** Live build state for the list-first, consent-and-describe flow. */
+export type InspectorBuild = {
+  step: "consent" | "describe" | "researching" | "build";
+  area: ComplianceArea;
+  areaLabel: string;
+  description?: string;
+  /** Researched legal items (carry sourceUrl/Label, basis="required"). */
+  researched: ComplianceRequirement[];
+  /** User-added items (basis="business", no source). */
+  additions: ComplianceRequirement[];
+};
+
 
 /* ---------------- Default proposed (residential H&S) ---------------- */
 
@@ -448,21 +475,28 @@ export function augmentComplianceRows(
 
 type InspectorChatProps = {
   events: InspectorEvent[];
-  area: ComplianceArea | null;
-  proposed: ComplianceRequirement[] | null;   // editable list shown during step 3
+  /** Live build state (null when no area is being set up). */
+  build: InspectorBuild | null;
   confirmed: ComplianceRequirement[];          // active rules
-  isResearching: boolean;
+
   onPickArea: (a: ComplianceArea, label: string) => void;
-  onOtherText: (text: string) => void;
-  onUpdateRequirement: (id: string, patch: Partial<ComplianceRequirement>) => void;
-  onRemoveRequirement: (id: string) => void;
-  onAddRequirement: (req: Omit<ComplianceRequirement, "id">) => void;
+  onConsent: (yes: boolean) => void;
+  onDescribe: (text: string) => void;
+
+  onUpdateResearched: (id: string, patch: Partial<ComplianceRequirement>) => void;
+  onRemoveResearched: (id: string) => void;
+  onUpdateAddition: (id: string, patch: Partial<ComplianceRequirement>) => void;
+  onRemoveAddition: (id: string) => void;
+  onAddAddition: (name: string, value: number, unit: DurationUnit) => void;
+
   onConfirm: () => void;
   onCancel: () => void;
+
   /** Update/Add against the *confirmed* rules — used by Show-me table actions. */
   onUpdateConfirmed?: (id: string, patch: Partial<ComplianceRequirement>) => void;
   onAddConfirmed?: (req: Omit<ComplianceRequirement, "id">) => void;
 };
+
 
 const BUBBLE_GAP = 10;
 const TURN_GAP = 16;
@@ -545,35 +579,161 @@ function ResearchingBubble() {
   );
 }
 
-const AREA_OPTIONS: { id: ComplianceArea; label: string; hint: string; supported: boolean }[] = [
-  { id: "health_safety", label: "Health & Safety", hint: "residential — built path", supported: true },
-  { id: "financial",     label: "Financial",       hint: "client money & insurance · built path", supported: true },
-  { id: "environmental", label: "Environmental",   hint: "coming soon",            supported: false },
-  { id: "licensing",     label: "Licensing",       hint: "coming soon",            supported: false },
-  { id: "other",         label: "Other",           hint: "describe in your own words", supported: false },
+/* ---------------- List-first build helpers ---------------- */
+
+const AREA_OPTIONS: { id: ComplianceArea; label: string; hint: string }[] = [
+  { id: "health_safety", label: "Health & Safety", hint: "gas, electrical, fire, EPC" },
+  { id: "financial",     label: "Financial",       hint: "client money, PI, insurances" },
+  { id: "notices",       label: "Notices",         hint: "statutory notices & guides" },
+  { id: "contracts",     label: "Contracts",       hint: "tenancy & service agreements" },
+  { id: "insurance",     label: "Insurance",       hint: "buildings, liability, PI" },
+  { id: "inspections",   label: "Inspections",     hint: "fire risk, asbestos, lifts" },
 ];
 
-function AreaPickCard({ onPick, onOther }: { onPick: (a: ComplianceArea, label: string) => void; onOther: (text: string) => void }) {
+/**
+ * Scripted research per area. The Inspector "checks gov.uk / HSE / sector
+ * guidance" for the described area and returns the legal requirements with
+ * a visible source link. Items here become basis="required" (red, sourced).
+ */
+export const RESEARCH_BY_AREA: Record<ComplianceArea, ComplianceRequirement[]> = {
+  health_safety: [
+    {
+      id: rid("res-gas"),
+      docType: "Gas Safety inspection (CP12)",
+      matchTerms: ["gas safety", "cp12"],
+      basis: "required",
+      durationValue: 1, durationUnit: "Years",
+      anchor: "certificate date", appliesTo: "unit", category: "certification",
+      sourceUrl: "https://www.gov.uk/landlord-gas-safety",
+      sourceLabel: "gov.uk · landlord gas safety",
+    },
+    {
+      id: rid("res-eicr"),
+      docType: "EICR inspection (electrical)",
+      matchTerms: ["eicr", "electrical"],
+      basis: "required",
+      durationValue: 5, durationUnit: "Years",
+      anchor: "inspection date", appliesTo: "unit", category: "certification",
+      sourceUrl: "https://www.gov.uk/government/publications/electrical-safety-standards-in-the-private-rented-sector-guidance-for-landlords-tenants-and-local-authorities",
+      sourceLabel: "gov.uk · electrical safety standards (PRS)",
+    },
+    {
+      id: rid("res-epc"),
+      docType: "EPC inspection",
+      matchTerms: ["epc"],
+      basis: "required",
+      durationValue: 10, durationUnit: "Years",
+      anchor: "certificate date", appliesTo: "unit", category: "certification",
+      sourceUrl: "https://www.gov.uk/buy-sell-your-home/energy-performance-certificates",
+      sourceLabel: "gov.uk · EPC",
+    },
+  ],
+  financial: [
+    {
+      id: rid("res-cmp"),
+      docType: "Client Money Protection (CMP) certificate",
+      matchTerms: ["cmp", "client money"],
+      basis: "required",
+      durationValue: 1, durationUnit: "Years",
+      anchor: "membership renewal", appliesTo: "building", category: "certification",
+      sourceUrl: "https://www.gov.uk/government/publications/client-money-protection-schemes-for-property-agents",
+      sourceLabel: "gov.uk · CMP schemes for agents",
+    },
+    {
+      id: rid("res-pi"),
+      docType: "Professional Indemnity insurance",
+      matchTerms: ["professional indemnity", "pi insurance"],
+      basis: "required",
+      durationValue: 1, durationUnit: "Years",
+      anchor: "policy renewal", appliesTo: "building", category: "certification",
+      sourceUrl: "https://www.propertymark.co.uk/professional-standards/conduct-and-membership-rules.html",
+      sourceLabel: "Propertymark · conduct rules",
+    },
+  ],
+  notices: [
+    {
+      id: rid("res-htr"),
+      docType: "How to Rent guide",
+      matchTerms: ["how to rent"],
+      basis: "required",
+      durationValue: 1, durationUnit: "Years",
+      anchor: "edition date", appliesTo: "unit", category: "notice",
+      description: "Statutory guide · current gov.uk edition · served each tenancy",
+      versionSource: "hobson",
+      sourceUrl: "https://www.gov.uk/government/publications/how-to-rent",
+      sourceLabel: "gov.uk · how to rent",
+    },
+  ],
+  contracts: [
+    {
+      id: rid("res-pst"),
+      docType: "Periodic Tenancy agreement (PST)",
+      matchTerms: ["tenancy agreement", "pst", "ast"],
+      basis: "required",
+      durationValue: 1, durationUnit: "Years",
+      anchor: "agreement date", appliesTo: "unit", category: "contract",
+      description: "Must reflect current law · Tenancy Reform Act",
+      versionSource: "hobson",
+      sourceUrl: "https://www.gov.uk/government/publications/model-agreement-for-a-shorthold-assured-tenancy",
+      sourceLabel: "gov.uk · model tenancy agreement",
+    },
+  ],
+  insurance: [
+    {
+      id: rid("res-bld"),
+      docType: "Buildings insurance",
+      matchTerms: ["buildings insurance"],
+      basis: "required",
+      durationValue: 1, durationUnit: "Years",
+      anchor: "policy renewal", appliesTo: "building", category: "certification",
+      sourceUrl: "https://www.abi.org.uk/products-and-issues/topics-and-issues/home-insurance/",
+      sourceLabel: "ABI · home insurance guidance",
+    },
+  ],
+  inspections: [
+    {
+      id: rid("res-fra"),
+      docType: "Fire Risk Assessment",
+      matchTerms: ["fire risk assessment", "fra"],
+      basis: "required",
+      durationValue: 1, durationUnit: "Years",
+      anchor: "assessment date", appliesTo: "building", category: "certification",
+      sourceUrl: "https://www.gov.uk/workplace-fire-safety-your-responsibilities",
+      sourceLabel: "gov.uk · fire safety responsibilities",
+    },
+  ],
+  environmental: [],
+  licensing: [],
+  other: [],
+};
+
+function AreaPickCard({ onPick }: { onPick: (a: ComplianceArea, label: string) => void }) {
   const [otherDraft, setOtherDraft] = useState("");
   const [showOther, setShowOther] = useState(false);
   return (
-    <div className="ml-12 max-w-[480px] rounded-xl border border-[#7C3AED]/25 bg-white p-3 space-y-2">
-      <div className="text-[11px] uppercase tracking-wide text-[#5B21B6] font-semibold">Choose an area</div>
+    <div className="ml-12 max-w-[520px] rounded-xl border border-[#7C3AED]/25 bg-white p-3 space-y-2">
+      <div className="text-[11px] uppercase tracking-wide text-[#5B21B6] font-semibold">Your compliance list · choose an area to set up</div>
       <div className="grid grid-cols-1 gap-1.5">
         {AREA_OPTIONS.map((o) => (
           <button
             key={o.id}
             type="button"
-            onClick={() => {
-              if (o.id === "other") { setShowOther((v) => !v); return; }
-              onPick(o.id, o.label);
-            }}
+            onClick={() => onPick(o.id, o.label)}
             className="flex items-center justify-between gap-3 text-left px-3 py-2 rounded-lg border border-slate-200 bg-white hover:bg-[#F5F3FF] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]"
           >
             <span className="text-[13px] font-medium text-slate-800">{o.label}</span>
-            <span className={`text-[11px] ${o.supported ? "text-emerald-700" : "text-slate-500"}`}>{o.hint}</span>
+            <span className="text-[11px] text-slate-500">{o.hint}</span>
           </button>
         ))}
+        <button
+          type="button"
+          onClick={() => setShowOther((v) => !v)}
+          className="flex items-center justify-between gap-3 text-left px-3 py-2 rounded-lg border border-dashed border-[#7C3AED]/40 bg-[#FAF8FF] hover:bg-[#F5F3FF] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]"
+          aria-expanded={showOther}
+        >
+          <span className="text-[13px] font-medium text-[#5B21B6]">＋ Add your own area</span>
+          <span className="text-[11px] text-[#5B21B6]/70">free text</span>
+        </button>
       </div>
       {showOther && (
         <form
@@ -581,29 +741,68 @@ function AreaPickCard({ onPick, onOther }: { onPick: (a: ComplianceArea, label: 
             e.preventDefault();
             const t = otherDraft.trim();
             if (!t) return;
-            onOther(t);
-            setOtherDraft("");
-            setShowOther(false);
+            onPick("other", t);
+            setOtherDraft(""); setShowOther(false);
           }}
           className="flex items-center gap-2 pt-1"
         >
           <input
             value={otherDraft}
             onChange={(e) => setOtherDraft(e.target.value)}
-            placeholder="Describe the compliance area…"
+            placeholder="Name your area (e.g. Lift maintenance)"
             className="flex-1 px-3 py-1.5 rounded-md border border-slate-300 text-[13px] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]"
-            aria-label="Other compliance area"
+            aria-label="Name your compliance area"
           />
-          <button
-            type="submit"
-            disabled={!otherDraft.trim()}
-            className="px-3 py-1.5 rounded-md bg-[#7C3AED] text-white text-[12px] font-semibold disabled:bg-slate-200 disabled:text-slate-400"
-          >Send</button>
+          <button type="submit" disabled={!otherDraft.trim()} className="px-3 py-1.5 rounded-md bg-[#7C3AED] text-white text-[12px] font-semibold disabled:bg-slate-200 disabled:text-slate-400">Add</button>
         </form>
       )}
     </div>
   );
 }
+
+function ConsentCard({ onYes, onNo, areaLabel }: { onYes: () => void; onNo: () => void; areaLabel: string }) {
+  return (
+    <div className="ml-12 max-w-[480px] rounded-xl border border-[#7C3AED]/25 bg-white p-3 space-y-2">
+      <div className="text-[11px] uppercase tracking-wide text-[#5B21B6] font-semibold">Consent to research · {areaLabel}</div>
+      <div className="text-[12.5px] text-slate-700">
+        Should I check for any <span className="font-semibold">legally required</span> requirements?
+        I'll cite my sources so you can see what marks something as law.
+      </div>
+      <div className="flex items-center gap-2 pt-1">
+        <button type="button" onClick={onYes} className="px-3 py-1.5 rounded-md bg-[#7C3AED] text-white text-[12px] font-semibold hover:bg-[#6D28D9] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]">
+          Yes — check the law
+        </button>
+        <button type="button" onClick={onNo} className="px-3 py-1.5 rounded-md border border-slate-300 bg-white text-[12px] font-medium text-slate-700 hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-400">
+          No — I'll define it myself
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function DescribeForm({ onSubmit, placeholder }: { onSubmit: (text: string) => void; placeholder: string }) {
+  const [v, setV] = useState("");
+  return (
+    <form
+      onSubmit={(e) => { e.preventDefault(); const t = v.trim(); if (!t) return; onSubmit(t); setV(""); }}
+      className="ml-12 max-w-[480px] rounded-xl border border-[#7C3AED]/25 bg-white p-3 space-y-2"
+    >
+      <label className="text-[11px] uppercase tracking-wide text-[#5B21B6] font-semibold block">Describe the area</label>
+      <div className="flex items-center gap-2">
+        <input
+          autoFocus
+          value={v}
+          onChange={(e) => setV(e.target.value)}
+          placeholder={placeholder}
+          className="flex-1 px-3 py-1.5 rounded-md border border-slate-300 text-[13px] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]"
+          aria-label="Describe the area"
+        />
+        <button type="submit" disabled={!v.trim()} className="px-3 py-1.5 rounded-md bg-[#7C3AED] text-white text-[12px] font-semibold disabled:bg-slate-200 disabled:text-slate-400">Send</button>
+      </div>
+    </form>
+  );
+}
+
 
 function BasisBadge({ basis }: { basis: RequirementBasis }) {
   if (basis === "required") {
@@ -811,57 +1010,207 @@ function AddRequirementForm({ onAdd }: { onAdd: (req: Omit<ComplianceRequirement
   );
 }
 
-function ProposalCard({
-  proposed, onUpdate, onRemove, onAdd, onConfirm, onCancel, area,
+/* ---------------- BuildCard — sourced legal + user-added business ---------------- */
+
+function SourceLink({ url, label }: { url?: string; label?: string }) {
+  if (!url) return null;
+  return (
+    <a
+      href={url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="inline-flex items-center gap-1 text-[11px] text-[#5B21B6] hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED] rounded px-0.5"
+    >
+      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
+        <path d="M10 14L21 3M15 3h6v6M21 14v6a1 1 0 01-1 1H4a1 1 0 01-1-1V4a1 1 0 011-1h6"/>
+      </svg>
+      <span>Source · {label ?? "view"}</span>
+    </a>
+  );
+}
+
+function ResearchedItemRow({
+  req, onChange, onRemove,
+}: { req: ComplianceRequirement; onChange: (patch: Partial<ComplianceRequirement>) => void; onRemove: () => void }) {
+  return (
+    <div className="rounded-lg border border-rose-200 bg-rose-50/40 p-3">
+      <div className="flex items-start justify-between gap-2">
+        <div className="min-w-0">
+          <div className="text-[13px] font-semibold text-slate-900 truncate">{req.docType}</div>
+          <div className="mt-0.5"><SourceLink url={req.sourceUrl} label={req.sourceLabel} /></div>
+        </div>
+        <BasisBadge basis="required" />
+      </div>
+      <div className="mt-2 flex flex-wrap items-center gap-2">
+        <label className="text-[11px] text-slate-600">Every</label>
+        <input
+          type="number" min={1} value={req.durationValue}
+          onChange={(e) => onChange({ durationValue: Math.max(1, Number(e.target.value) || 1) })}
+          className="w-16 px-2 py-1 rounded-md border border-slate-300 text-[13px] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]"
+          aria-label={`Frequency for ${req.docType}`}
+        />
+        <select
+          value={req.durationUnit}
+          onChange={(e) => onChange({ durationUnit: e.target.value as DurationUnit })}
+          className="px-2 py-1 rounded-md border border-slate-300 text-[13px] bg-white focus:outline-none focus:ring-2 focus:ring-[#7C3AED]"
+          aria-label={`Unit for ${req.docType}`}
+        >
+          <option value="Years">Years</option>
+          <option value="Months">Months</option>
+        </select>
+        <div className="flex-1" />
+        <button type="button" onClick={onRemove} className="text-[11px] text-rose-700 hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-rose-300 rounded px-1">Remove</button>
+      </div>
+    </div>
+  );
+}
+
+function BusinessItemRow({
+  req, onChange, onRemove,
+}: { req: ComplianceRequirement; onChange: (patch: Partial<ComplianceRequirement>) => void; onRemove: () => void }) {
+  return (
+    <div className="rounded-lg border border-amber-200 bg-amber-50/40 p-3">
+      <div className="flex items-start justify-between gap-2">
+        <div className="min-w-0">
+          <div className="text-[13px] font-semibold text-slate-900 truncate">{req.docType}</div>
+          <div className="text-[11px] text-amber-800 mt-0.5">added by you · your standard</div>
+        </div>
+        <BasisBadge basis="business" />
+      </div>
+      <div className="mt-2 flex flex-wrap items-center gap-2">
+        <label className="text-[11px] text-slate-600">Every</label>
+        <input
+          type="number" min={1} value={req.durationValue}
+          onChange={(e) => onChange({ durationValue: Math.max(1, Number(e.target.value) || 1) })}
+          className="w-16 px-2 py-1 rounded-md border border-slate-300 text-[13px] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]"
+        />
+        <select
+          value={req.durationUnit}
+          onChange={(e) => onChange({ durationUnit: e.target.value as DurationUnit })}
+          className="px-2 py-1 rounded-md border border-slate-300 text-[13px] bg-white focus:outline-none focus:ring-2 focus:ring-[#7C3AED]"
+        >
+          <option value="Years">Years</option>
+          <option value="Months">Months</option>
+        </select>
+        <div className="flex-1" />
+        <button type="button" onClick={onRemove} className="text-[11px] text-rose-700 hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-rose-300 rounded px-1">Remove</button>
+      </div>
+    </div>
+  );
+}
+
+function AddBusinessRow({ onAdd }: { onAdd: (name: string, value: number, unit: DurationUnit) => void }) {
+  const [name, setName] = useState("");
+  const [value, setValue] = useState(1);
+  const [unit, setUnit] = useState<DurationUnit>("Years");
+  return (
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        const t = name.trim(); if (!t) return;
+        onAdd(t, value, unit);
+        setName(""); setValue(1); setUnit("Years");
+      }}
+      className="rounded-lg border border-dashed border-amber-300 bg-amber-50/30 p-3 flex flex-wrap items-center gap-2"
+    >
+      <input
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        placeholder="Inspection name (e.g. Heat pump service)"
+        className="flex-1 min-w-[180px] px-2 py-1.5 rounded-md border border-slate-300 text-[13px] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]"
+        aria-label="Add a business requirement"
+      />
+      <span className="text-[11px] text-slate-600">Every</span>
+      <input
+        type="number" min={1} value={value}
+        onChange={(e) => setValue(Math.max(1, Number(e.target.value) || 1))}
+        className="w-16 px-2 py-1 rounded-md border border-slate-300 text-[13px]"
+        aria-label="Frequency value"
+      />
+      <select
+        value={unit}
+        onChange={(e) => setUnit(e.target.value as DurationUnit)}
+        className="px-2 py-1 rounded-md border border-slate-300 text-[13px] bg-white"
+        aria-label="Frequency unit"
+      >
+        <option value="Years">Years</option>
+        <option value="Months">Months</option>
+      </select>
+      <button type="submit" disabled={!name.trim()} className="px-3 py-1.5 rounded-md bg-[#7C3AED] text-white text-[12px] font-semibold disabled:bg-slate-200 disabled:text-slate-400">Add</button>
+    </form>
+  );
+}
+
+function BuildCard({
+  build,
+  onUpdateResearched, onRemoveResearched,
+  onUpdateAddition, onRemoveAddition, onAddAddition,
+  onConfirm, onCancel,
 }: {
-  proposed: ComplianceRequirement[];
-  onUpdate: (id: string, patch: Partial<ComplianceRequirement>) => void;
-  onRemove: (id: string) => void;
-  onAdd: (req: Omit<ComplianceRequirement, "id">) => void;
+  build: InspectorBuild;
+  onUpdateResearched: (id: string, patch: Partial<ComplianceRequirement>) => void;
+  onRemoveResearched: (id: string) => void;
+  onUpdateAddition: (id: string, patch: Partial<ComplianceRequirement>) => void;
+  onRemoveAddition: (id: string) => void;
+  onAddAddition: (name: string, value: number, unit: DurationUnit) => void;
   onConfirm: () => void;
   onCancel: () => void;
-  area: ComplianceArea | null;
 }) {
-  const def = area ? AREA_DEFS[area] : AREA_DEFS.health_safety;
+  const total = build.researched.length + build.additions.length;
   return (
-    <div className="ml-12 max-w-[560px] rounded-xl border border-[#7C3AED]/25 bg-white p-3 space-y-3">
-      <header className="flex items-start justify-between gap-3">
-        <div>
-          <div className="text-[11px] uppercase tracking-wide text-[#5B21B6] font-semibold">Proposed requirements · {def.label.toLowerCase()} · {def.sublabel}</div>
-          <div className="text-[12px] text-slate-600 mt-0.5">Edit any frequency, remove what doesn't apply, or add another.</div>
+    <div className="ml-12 max-w-[600px] rounded-xl border border-[#7C3AED]/25 bg-white p-3 space-y-3">
+      <header>
+        <div className="text-[11px] uppercase tracking-wide text-[#5B21B6] font-semibold">
+          Building your list · {build.areaLabel}{build.description ? ` · ${build.description}` : ""}
+        </div>
+        <div className="text-[12px] text-slate-600 mt-0.5">
+          Researched items are sourced and labelled <span className="font-semibold text-rose-700">Legally required</span>. Anything you add becomes a <span className="font-semibold text-amber-800">Business requirement</span>.
         </div>
       </header>
-      <div className="rounded-md bg-[#F5F3FF] border border-[#7C3AED]/20 px-3 py-2 text-[11px] text-[#5B21B6] flex items-start gap-2">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden className="mt-0.5 shrink-0"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
-        <span><span className="font-semibold">Sourced from {def.sourceLabel}</span> · these are researched suggestions — you can edit before confirming.</span>
-      </div>
-      <div className="space-y-2">
-        {proposed.map((r) => (
-          <RequirementEditor
-            key={r.id}
-            req={r}
-            onChange={(patch) => onUpdate(r.id, patch)}
-            onRemove={() => onRemove(r.id)}
-          />
-        ))}
-      </div>
-      <AddRequirementForm onAdd={onAdd} />
+
+      {build.researched.length > 0 && (
+        <section className="space-y-2">
+          <div className="text-[11px] uppercase tracking-wide font-semibold text-rose-700 flex items-center gap-1.5">
+            <span className="inline-block w-1.5 h-1.5 rounded-full bg-rose-500" />
+            Legally required · sourced
+          </div>
+          <div className="space-y-2">
+            {build.researched.map((r) => (
+              <ResearchedItemRow key={r.id} req={r} onChange={(p) => onUpdateResearched(r.id, p)} onRemove={() => onRemoveResearched(r.id)} />
+            ))}
+          </div>
+        </section>
+      )}
+
+      <section className="space-y-2">
+        <div className="text-[11px] uppercase tracking-wide font-semibold text-amber-800 flex items-center gap-1.5">
+          <span className="inline-block w-1.5 h-1.5 rounded-full bg-amber-500" />
+          Your additions · business required
+        </div>
+        {build.additions.length > 0 && (
+          <div className="space-y-2">
+            {build.additions.map((r) => (
+              <BusinessItemRow key={r.id} req={r} onChange={(p) => onUpdateAddition(r.id, p)} onRemove={() => onRemoveAddition(r.id)} />
+            ))}
+          </div>
+        )}
+        <AddBusinessRow onAdd={onAddAddition} />
+      </section>
+
       <footer className="flex items-center justify-end gap-2 pt-2 border-t border-slate-100">
         <button
-          type="button"
-          onClick={onCancel}
+          type="button" onClick={onCancel}
           className="px-3 py-1.5 rounded-md text-[12px] font-medium text-slate-600 hover:bg-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-300"
         >Cancel</button>
         <button
-          type="button"
-          onClick={onConfirm}
-          disabled={proposed.length === 0}
+          type="button" onClick={onConfirm} disabled={total === 0}
           className="px-3 py-1.5 rounded-md text-[12px] font-semibold bg-[#7C3AED] text-white hover:bg-[#6D28D9] disabled:bg-slate-200 disabled:text-slate-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]"
-        >Confirm these requirements</button>
+        >Confirm {build.areaLabel} list</button>
       </footer>
     </div>
   );
 }
+
 
 function ConfirmedRecap({ count }: { count: number }) {
   return (
@@ -1287,9 +1636,10 @@ function AddRowForm({
 
 export function InspectorChat(props: InspectorChatProps) {
   const {
-    events, area, proposed, confirmed, isResearching,
-    onPickArea, onOtherText,
-    onUpdateRequirement, onRemoveRequirement, onAddRequirement,
+    events, build, confirmed,
+    onPickArea, onConsent, onDescribe,
+    onUpdateResearched, onRemoveResearched,
+    onUpdateAddition, onRemoveAddition, onAddAddition,
     onConfirm, onCancel,
     onUpdateConfirmed, onAddConfirmed,
   } = props;
@@ -1302,6 +1652,8 @@ export function InspectorChat(props: InspectorChatProps) {
     const t = setTimeout(() => setIntroPhase("done"), 800);
     return () => clearTimeout(t);
   }, [reduced]);
+
+  const showPicker = introPhase === "done" && build === null;
 
   return (
     <div className="flex flex-col" style={{ gap: TURN_GAP }}>
@@ -1319,7 +1671,7 @@ export function InspectorChat(props: InspectorChatProps) {
         <InspectorBubble text={INSPECTOR_CHARACTER.greeting} showAvatar streamKey="intro" />
       )}
 
-      {/* Event log (render before the picker so it appears beneath prior turns) */}
+      {/* Event log */}
       {events.map((ev, i) => {
         if (ev.kind === "user") return <UserBubble key={ev.id} text={ev.text} />;
         if (ev.kind === "researching") return <ResearchingBubble key={ev.id} />;
@@ -1345,39 +1697,53 @@ export function InspectorChat(props: InspectorChatProps) {
         return <InspectorBubble key={ev.id} text={ev.text} showAvatar={showAvatar} streamKey={ev.id} />;
       })}
 
-      {/* Area pick — shows on first run AND whenever the user starts another area build */}
-      {introPhase === "done" && area === null && !proposed && !isResearching && (
+      {/* Step 1–2 — compliance list / area picker */}
+      {showPicker && (
         <div className="flex flex-col" style={{ gap: BUBBLE_GAP }}>
           <InspectorBubble
             text={events.length === 0
-              ? "Which area of compliance would you like to set up?"
-              : "Which area shall we set up next?"}
+              ? "Let's build your compliance list. Choose an area to set up — I'll help you establish what's required for each."
+              : "Which area shall we add to your list next?"}
             showAvatar={events.length === 0}
             streamKey={`area-prompt-${events.length}`}
           />
-          <AreaPickCard onPick={onPickArea} onOther={onOtherText} />
+          <AreaPickCard onPick={onPickArea} />
         </div>
       )}
 
+      {/* Step 3 — consent to research */}
+      {build?.step === "consent" && (
+        <ConsentCard areaLabel={build.areaLabel} onYes={() => onConsent(true)} onNo={() => onConsent(false)} />
+      )}
 
-      {/* Still researching */}
-      {isResearching && <ResearchingBubble />}
+      {/* Step 4 — describe the area */}
+      {build?.step === "describe" && (
+        <DescribeForm
+          placeholder={`e.g. "residential homes" — what should I scope ${build.areaLabel.toLowerCase()} to?`}
+          onSubmit={onDescribe}
+        />
+      )}
 
-      {/* Proposal — editable list */}
-      {proposed && proposed.length >= 0 && !isResearching && (
-        <ProposalCard
-          proposed={proposed}
-          onUpdate={onUpdateRequirement}
-          onRemove={onRemoveRequirement}
-          onAdd={onAddRequirement}
+      {/* Step 5 — researching */}
+      {build?.step === "researching" && <ResearchingBubble />}
+
+      {/* Step 6–8 — editable build with legal/business split */}
+      {build?.step === "build" && (
+        <BuildCard
+          build={build}
+          onUpdateResearched={onUpdateResearched}
+          onRemoveResearched={onRemoveResearched}
+          onUpdateAddition={onUpdateAddition}
+          onRemoveAddition={onRemoveAddition}
+          onAddAddition={onAddAddition}
           onConfirm={onConfirm}
           onCancel={onCancel}
-          area={area}
         />
       )}
     </div>
   );
 }
+
 
 /* ============================================================
    Left-pane composer — InspectorComposer
