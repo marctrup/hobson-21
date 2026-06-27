@@ -5404,9 +5404,9 @@ function CharacterNotesStrip({
   badge?: string | null;
   notes: CharacterNote[];
 }) {
-  if (notes.length === 0) return null;
   const [open, setOpen] = useState(false);
-  const panelId = `notes-${title.replace(/\W+/g, "-").toLowerCase()}`;
+  if (notes.length === 0) return null;
+
   return (
     <section
       className="border-b border-slate-100 bg-[#FAF8FF] shrink-0"
