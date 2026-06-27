@@ -13,8 +13,19 @@ import { DocumentsLibrary } from "@/components/prototype/DocumentsLibrary";
 import { cn } from "@/lib/utils";
 import SummaryCard, { SummaryActions } from "./prototype/SummaryCard";
 import { summaryIntroFor, summaryQuestionFor, type SummaryScope } from "./prototype/summaryData";
+import {
+  INSPECTOR_CHARACTER,
+  InspectorChat,
+  InspectorComposer,
+  InspectorWorkArea,
+  DEFAULT_HS_REQUIREMENTS,
+  augmentComplianceRows,
+  type ComplianceArea,
+  type ComplianceRequirement,
+  type InspectorEvent,
+} from "./prototype/Inspector";
 
-type AdminCharacter = "magician" | "professor" | "broker";
+type AdminCharacter = "magician" | "professor" | "broker" | "inspector";
 const ADMIN_CHARACTERS: { id: AdminCharacter; name: string; src: string; tagline: string; greeting: string; workTitle: string; workIntro: string }[] = [
   {
     id: "magician",
@@ -43,6 +54,15 @@ const ADMIN_CHARACTERS: { id: AdminCharacter; name: string; src: string; tagline
     workTitle: "The Broker's black book",
     workIntro: "Where contacts, relationships and their histories are kept — tenants, landlords, contractors, agents, solicitors, lenders, authorities.",
 
+  },
+  {
+    id: "inspector",
+    name: INSPECTOR_CHARACTER.name,
+    src: INSPECTOR_CHARACTER.src,
+    tagline: INSPECTOR_CHARACTER.tagline,
+    greeting: INSPECTOR_CHARACTER.greeting,
+    workTitle: INSPECTOR_CHARACTER.workTitle,
+    workIntro: INSPECTOR_CHARACTER.workIntro,
   },
 ];
 
@@ -1478,6 +1498,91 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
   const [contacts, setContacts] = useState<BrokerContact[]>(SEED_BROKER_CONTACTS);
   const [brokerEvents, setBrokerEvents] = useState<BrokerEvent[]>([]);
   const [brokerFlow, setBrokerFlow] = useState<{ step: number; draft: Partial<BrokerContact> } | null>(null);
+
+  // ----- Inspector compliance-setup state -----
+  const [inspectorEvents, setInspectorEvents] = useState<InspectorEvent[]>([]);
+  const [inspectorArea, setInspectorArea] = useState<ComplianceArea | null>(null);
+  const [inspectorProposed, setInspectorProposed] = useState<ComplianceRequirement[] | null>(null);
+  const [inspectorConfirmed, setInspectorConfirmed] = useState<ComplianceRequirement[]>([]);
+  const [inspectorResearching, setInspectorResearching] = useState(false);
+
+  const inspNewId = (p: string) => `${p}-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`;
+
+  const inspectorPickArea = (a: ComplianceArea, label: string) => {
+    setInspectorArea(a);
+    const userId = inspNewId("iu");
+    setInspectorEvents((e) => [...e, { kind: "user", id: userId, text: label }]);
+    if (a === "health_safety") {
+      const ackId = inspNewId("in");
+      setInspectorEvents((e) => [...e, { kind: "inspector", id: ackId, text: "Right — residential Health & Safety. Let me look up what the law currently requires." }]);
+      setInspectorResearching(true);
+      const researchId = inspNewId("ir");
+      setInspectorEvents((e) => [...e, { kind: "researching", id: researchId }]);
+      setTimeout(() => {
+        setInspectorResearching(false);
+        setInspectorEvents((e) => e.filter((ev) => ev.id !== researchId));
+        setInspectorEvents((e) => [...e, {
+          kind: "inspector",
+          id: inspNewId("in"),
+          text: "Here is what I found. Each one carries a default renewal frequency — edit anything that doesn't match how you run things, remove what doesn't apply, and add anything I've missed.",
+        }]);
+        // freshly cloned proposal (Inspector.tsx default ids reused — fine as keys are local)
+        setInspectorProposed(DEFAULT_HS_REQUIREMENTS.map((r) => ({ ...r })));
+      }, 1800);
+    } else {
+      setInspectorEvents((e) => [...e, {
+        kind: "inspector",
+        id: inspNewId("in"),
+        text: `${label} is coming soon. For the prototype I'm focused on residential Health & Safety — pick that to walk through the full build.`,
+      }]);
+      // reset area so the picker shows again
+      setTimeout(() => setInspectorArea(null), 50);
+    }
+  };
+
+  const inspectorOtherText = (text: string) => {
+    setInspectorEvents((e) => [...e, { kind: "user", id: inspNewId("iu"), text }]);
+    setInspectorEvents((e) => [...e, {
+      kind: "inspector",
+      id: inspNewId("in"),
+      text: `Noted — "${text}". Free-form areas are coming soon. For now, choose Health & Safety to see the full build.`,
+    }]);
+  };
+
+  const inspectorUpdateRequirement = (id: string, patch: Partial<ComplianceRequirement>) =>
+    setInspectorProposed((arr) => arr ? arr.map((r) => r.id === id ? { ...r, ...patch } : r) : arr);
+  const inspectorRemoveRequirement = (id: string) =>
+    setInspectorProposed((arr) => arr ? arr.filter((r) => r.id !== id) : arr);
+  const inspectorAddRequirement = (req: Omit<ComplianceRequirement, "id">) =>
+    setInspectorProposed((arr) => arr ? [...arr, { ...req, id: `req-custom-${Date.now()}` }] : [{ ...req, id: `req-custom-${Date.now()}` }]);
+
+  const inspectorConfirm = () => {
+    if (!inspectorProposed) return;
+    const next = inspectorProposed.map((r) => ({ ...r }));
+    setInspectorConfirmed(next);
+    setInspectorProposed(null);
+    setInspectorEvents((e) => [
+      ...e,
+      { kind: "user", id: inspNewId("iu"), text: "Confirm these requirements" },
+      { kind: "inspector", id: inspNewId("in"), text: "Recorded. I'll watch every let unit against these and flag anything missing or overdue. The Compliance summary now marks missing legally-required documents in red." },
+      { kind: "confirmed", id: inspNewId("ic"), count: next.length },
+    ]);
+  };
+
+  const inspectorCancel = () => {
+    setInspectorProposed(null);
+    setInspectorArea(null);
+    setInspectorEvents((e) => [...e, {
+      kind: "inspector",
+      id: inspNewId("in"),
+      text: "No bother — nothing recorded. Tell me which area to set up whenever you're ready.",
+    }]);
+  };
+
+  const augmentCompliance = useMemo(() => {
+    if (inspectorConfirmed.length === 0) return undefined;
+    return (rows: any[], scope: SummaryScope) => augmentComplianceRows(rows as any, scope, inspectorConfirmed) as any;
+  }, [inspectorConfirmed]);
 
   // ----- Magician build conversation state -----
   const [magicianEvents, setMagicianEvents] = useState<MagicianEvent[]>([]);
@@ -3179,6 +3284,22 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
           >
 
           {adminMode ? (
+            adminCharacter === "inspector" ? (
+              <InspectorChat
+                events={inspectorEvents}
+                proposed={inspectorProposed}
+                confirmed={inspectorConfirmed}
+                area={inspectorArea}
+                isResearching={inspectorResearching}
+                onPickArea={inspectorPickArea}
+                onOtherText={inspectorOtherText}
+                onUpdateRequirement={inspectorUpdateRequirement}
+                onRemoveRequirement={inspectorRemoveRequirement}
+                onAddRequirement={inspectorAddRequirement}
+                onConfirm={inspectorConfirm}
+                onCancel={inspectorCancel}
+              />
+            ) : (
             <AdminChat
               character={adminCharacter ? ADMIN_CHARACTERS.find((c) => c.id === adminCharacter)! : null}
               owl={owl}
@@ -3213,6 +3334,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                 onSetStepTemplate: magSetStepTemplate,
               } : undefined}
             />
+            )
 
           ) : (<>
 
@@ -3346,6 +3468,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                                 kind={m.summary.kind}
                                 scope={m.summary.scope}
                                 onOpenUnit={(pid, uid) => goUnit(uid, pid)}
+                                augmentCompliance={augmentCompliance}
                               />
                             )}
                           </div>
@@ -3550,6 +3673,8 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                         onSubmitAnswer={submitBrokerAnswer}
                         onCancel={cancelBrokerFlow}
                       />
+                  : adminCharacter === "inspector"
+                    ? <InspectorComposer buildActive={!!inspectorProposed} />
                   : <LockedComposer view={view} />
 
           ) : testerMode && view === "unit" ? (
@@ -3785,6 +3910,9 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
           }
           if (c.id === "broker") {
             return <BrokerWorkArea character={c} contacts={contacts} onAdd={handleAddBrokerContact} />;
+          }
+          if (c.id === "inspector") {
+            return <InspectorWorkArea rules={inspectorConfirmed} />;
           }
           return <AdminWorkArea character={c} />;
 

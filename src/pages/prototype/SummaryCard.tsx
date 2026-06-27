@@ -25,6 +25,8 @@ type Props = {
   kind: Kind;
   scope: SummaryScope;
   onOpenUnit?: (propertyId: string, unitId: string) => void;
+  /** Optional augmenter — Inspector rules transform rows in place. */
+  augmentCompliance?: (rows: ComplianceRow[], scope: SummaryScope) => ComplianceRow[];
 };
 
 const ND = (
@@ -43,12 +45,19 @@ const MissingChip = () => (
   </span>
 );
 
+const LegallyRequiredChip = () => (
+  <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wide bg-rose-100 text-rose-800 border border-rose-300">
+    <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" aria-hidden><circle cx="12" cy="12" r="10"/><path d="M12 8v5"/><circle cx="12" cy="17" r="0.8" fill="currentColor"/></svg>
+    Legally required
+  </span>
+);
+
 function valOrND(v?: string | null) {
   if (v === null || v === undefined || v === "") return ND;
   return <span className="text-slate-800">{v}</span>;
 }
 
-export default function SummaryCard({ kind, scope, onOpenUnit }: Props) {
+export default function SummaryCard({ kind, scope, onOpenUnit, augmentCompliance }: Props) {
   const title = scopeTitle(scope, kind);
   return (
     <div className="w-full bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden">
@@ -65,7 +74,7 @@ export default function SummaryCard({ kind, scope, onOpenUnit }: Props) {
         <div className="min-w-[640px]">
           {kind === "occupational"
             ? <OccupationalView scope={scope} onOpenUnit={onOpenUnit} />
-            : <ComplianceView scope={scope} onOpenUnit={onOpenUnit} />}
+            : <ComplianceView scope={scope} onOpenUnit={onOpenUnit} augmentCompliance={augmentCompliance} />}
         </div>
       </div>
     </div>
@@ -178,8 +187,11 @@ function OccupationalView({ scope, onOpenUnit }: { scope: SummaryScope; onOpenUn
 
 /* ---------- Compliance ---------- */
 
-function ComplianceView({ scope, onOpenUnit }: { scope: SummaryScope; onOpenUnit?: Props["onOpenUnit"] }) {
-  const rows = useMemo(() => complianceForScope(scope), [scope]);
+function ComplianceView({ scope, onOpenUnit, augmentCompliance }: { scope: SummaryScope; onOpenUnit?: Props["onOpenUnit"]; augmentCompliance?: Props["augmentCompliance"] }) {
+  const rows = useMemo(() => {
+    const base = complianceForScope(scope);
+    return augmentCompliance ? augmentCompliance(base, scope) : base;
+  }, [scope, augmentCompliance]);
 
   if (scope.level === "unit") {
     if (rows.length === 0) return <Empty label="No compliance records for this unit." />;
@@ -298,7 +310,7 @@ function ComplianceTr({
           onClick();
         }
       }}
-      className={`border-b border-slate-100 last:border-b-0 ${clickable ? "cursor-pointer hover:bg-[#F5F3FF] focus:bg-[#EDE9FE] focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#7C3AED]/40" : ""} ${r.missing ? "bg-rose-50/30" : ""}`}
+      className={`border-b border-slate-100 last:border-b-0 ${clickable ? "cursor-pointer hover:bg-[#F5F3FF] focus:bg-[#EDE9FE] focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#7C3AED]/40" : ""} ${r.missing ? (r.legallyRequired ? "bg-rose-100/40" : "bg-rose-50/30") : ""}`}
     >
       {showUnit && unitColumn && (
         <td className="px-3 py-2 align-middle text-slate-700 truncate">
@@ -307,7 +319,12 @@ function ComplianceTr({
       )}
       <td className="px-3 py-2 align-middle truncate">
         {r.missing
-          ? <span className="inline-flex items-center gap-2 min-w-0"><span className="italic text-slate-400 truncate">Not determined</span><MissingChip /></span>
+          ? r.legallyRequired
+            ? <span className="inline-flex items-center gap-2 min-w-0">
+                <span className="text-rose-800 font-medium truncate">{r.documentName ?? "Required document"} — missing</span>
+                <LegallyRequiredChip />
+              </span>
+            : <span className="inline-flex items-center gap-2 min-w-0"><span className="italic text-slate-400 truncate">Not determined</span><MissingChip /></span>
           : valOrND(r.documentName)}
       </td>
       <td className="px-3 py-2 align-middle truncate">{r.missing ? ND : valOrND(r.effectiveDate)}</td>
