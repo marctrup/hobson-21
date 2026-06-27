@@ -10520,8 +10520,9 @@ function MagicianWorkArea({ character, workflows, onCreate, onAdjust, onView, on
               text: "All workflows built and ready.",
             });
           }
-          var __magBadge = pausedDrafts.length > 0 ? `${pausedDrafts.length} paused` : null;
-        } else { var __magBadge = null; }
+          magBadge = pausedDrafts.length > 0 ? `${pausedDrafts.length} paused` : null;
+        }
+
 
         return (
           <CharacterNotesStrip
