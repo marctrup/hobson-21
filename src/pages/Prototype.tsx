@@ -7598,8 +7598,10 @@ function buildPA004Beats(section13Template: StepTemplate | null = null): Perform
     {
       id: "s13_prepared",
       stepKey: "actions",
-      text: "Prepared.",
-      detailFn: (ctx) => <Section13NoticePreview chosenRent={ctx.chosenRent} />,
+      text: section13Template && section13Template.mode === "own"
+        ? `Prepared — using your template (${section13Template.filename ?? "your document"}), filled with the case details.`
+        : "Prepared — using Hobson's standard Section 13.",
+      detailFn: (ctx) => <Section13NoticePreview chosenRent={ctx.chosenRent} template={ctx.section13Template ?? null} />,
     },
     {
       id: "s13_delivery",
