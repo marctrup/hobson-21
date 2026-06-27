@@ -3185,7 +3185,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
             adminCharacter === "professor"
               ? <ProfessorComposer onUpload={handleProfessorUpload} />
               : adminCharacter === "magician"
-                ? <MagicianComposer onCreate={handleCreateWorkflow} />
+                ? <MagicianComposer onCreate={handleCreateWorkflow} buildActive={!!magBuild} />
                   : adminCharacter === "broker"
                     ? <BrokerComposer
                         onAdd={handleAddBrokerContact}
