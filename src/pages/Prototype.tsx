@@ -5566,8 +5566,10 @@ function ProfessorWorkArea({ character, docs, summaryVisibility, onChangeSummary
             character={character}
             title="The Professor's notes"
             subtitle="recent reading & catalogue state"
+            tagline="observations from the catalogue"
             notes={notes}
           />
+
         );
       })()}
 
