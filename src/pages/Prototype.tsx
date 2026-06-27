@@ -2750,6 +2750,10 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                 onSetCustomDraft: (v: string) => setMagBuild((b) => b ? { ...b, customDraft: v } : b),
                 onFinishSteps: magFinishStepsToQ6, onKeepEditing: magAnswerQ6KeepEditing, onBuild: magAnswerQ6Build,
                 onOpenBuilt: (id: string) => setViewingWorkflowId(id),
+                onRenameStep: magRenameStep,
+                onBeginEdit: magBeginEdit,
+                onCancelEdit: magCancelEdit,
+                onGoBack: magGoBack,
               } : undefined}
             />
 
