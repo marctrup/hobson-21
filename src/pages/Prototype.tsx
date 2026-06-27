@@ -9743,16 +9743,43 @@ function MagicianWorkArea({ character, workflows, onCreate, onAdjust, onView, on
   );
 }
 
-function WorkflowCard({ w, onAdjust, onView, onResume }: { w: Workflow; onAdjust: () => void; onView: () => void; onResume?: () => void }) {
+function WorkflowCard({ w, onAdjust, onView, onResume, onDiscard }: { w: Workflow; onAdjust: () => void; onView: () => void; onResume?: () => void; onDiscard?: () => void }) {
   const [scopeOpen, setScopeOpen] = useState(false);
+  const [confirmDiscard, setConfirmDiscard] = useState(false);
+  const isPausedDraft = !!w.draftState;
+  const d = w.draftState;
+
+  // Per-field "captured / not yet set" inventory for paused drafts
+  const fieldStatus = (() => {
+    if (!isPausedDraft || !d) return null;
+    const hasTitle = !!(d.title && d.title.trim());
+    const hasPurpose = !!(d.purpose && d.purpose.trim());
+    const hasWhen = !!(d.whenLabel && d.whenLabel.trim());
+    const hasScope = !!(d.scopeLabel && d.scopeLabel.trim());
+    const stepCount = d.steps?.length ?? 0;
+    const filled = [hasTitle, hasPurpose, hasWhen, hasScope, stepCount > 0].filter(Boolean).length;
+    return { hasTitle, hasPurpose, hasWhen, hasScope, stepCount, filled, total: 5 };
+  })();
+
   return (
-    <article className="bg-white border border-slate-200/70 rounded-lg p-4 shadow-[0_0.5px_0_rgba(0,0,0,0.04)] flex flex-col gap-3">
+    <article
+      className={
+        isPausedDraft
+          ? "rounded-lg p-4 flex flex-col gap-3 border-2 border-dashed border-slate-300 bg-slate-50/60"
+          : "bg-white border border-slate-200/70 rounded-lg p-4 shadow-[0_0.5px_0_rgba(0,0,0,0.04)] flex flex-col gap-3"
+      }
+      aria-label={isPausedDraft ? `${w.name} — draft in progress, unfinished` : w.name}
+    >
       <header className="flex items-start gap-3">
-        <WorkflowIcon icon={w.icon} tone={w.tone} />
+        <div className={isPausedDraft ? "opacity-70" : ""}>
+          <WorkflowIcon icon={w.icon} tone={w.tone} />
+        </div>
         <div className="min-w-0 flex-1">
           <div className="flex items-center gap-1.5 flex-wrap">
-            <div className="text-[13px] font-semibold text-slate-900 leading-tight">{w.name}</div>
-            {w.visibility && (
+            <div className={`text-[13px] font-semibold leading-tight ${isPausedDraft ? "text-slate-700" : "text-slate-900"}`}>
+              {w.name}
+            </div>
+            {w.visibility && !isPausedDraft && (
               <span className={`text-[10px] font-semibold px-1.5 py-0.5 rounded-full border ${
                 w.visibility === "company"
                   ? "border-[#7C3AED]/40 bg-[#F5F3FF] text-[#5B21B6]"
@@ -9762,90 +9789,178 @@ function WorkflowCard({ w, onAdjust, onView, onResume }: { w: Workflow; onAdjust
               </span>
             )}
           </div>
-          <div className="text-[11.5px] text-slate-500 mt-0.5">{w.purpose}</div>
-          {w.description && (
+          <div className={`text-[11.5px] mt-0.5 ${isPausedDraft ? "text-slate-500 italic" : "text-slate-500"}`}>
+            {w.purpose || (isPausedDraft ? "Purpose — not yet set" : "")}
+          </div>
+          {w.description && !isPausedDraft && (
             <div className="text-[11.5px] text-slate-500 mt-1 italic">{w.description}</div>
           )}
         </div>
-        <WorkflowStatusPill status={w.status} />
+        <WorkflowStatusPill status={w.status} isPausedDraft={isPausedDraft} />
       </header>
 
-      <dl className="text-[12px] leading-snug space-y-1.5">
-        <div className="flex gap-2">
-          <dt className="text-slate-500 font-medium shrink-0 w-[80px]">When</dt>
-          <dd className="text-slate-800">{w.trigger}</dd>
-        </div>
-        {w.whenLabel && (
-          <div className="flex gap-2">
-            <dt className="text-slate-500 font-medium shrink-0 w-[80px]">Shows</dt>
-            <dd className="text-slate-800">{w.whenLabel}</dd>
+      {isPausedDraft && fieldStatus ? (
+        <>
+          <div className="rounded-md bg-white/70 border border-dashed border-slate-300 px-3 py-2 text-[12px] leading-snug">
+            <div className="flex items-center justify-between mb-1.5">
+              <div className="text-[10.5px] uppercase tracking-wide font-semibold text-slate-500">
+                What's captured so far
+              </div>
+              <div className="text-[10.5px] font-semibold text-slate-500">
+                {fieldStatus.filled} of {fieldStatus.total} parts filled
+              </div>
+            </div>
+            <DraftFieldRow label="Title" value={fieldStatus.hasTitle ? d!.title! : null} />
+            <DraftFieldRow label="Purpose" value={fieldStatus.hasPurpose ? d!.purpose! : null} />
+            <DraftFieldRow label="When" value={fieldStatus.hasWhen ? d!.whenLabel! : null} />
+            <DraftFieldRow label="Applies to" value={fieldStatus.hasScope ? d!.scopeLabel! : null} />
+            <DraftFieldRow
+              label="Steps"
+              value={fieldStatus.stepCount > 0 ? `${fieldStatus.stepCount} added` : null}
+              emptyLabel="none yet"
+            />
+            <div className="mt-2 h-1 rounded-full bg-slate-200 overflow-hidden" aria-hidden>
+              <div
+                className="h-full bg-slate-400"
+                style={{ width: `${Math.round((fieldStatus.filled / fieldStatus.total) * 100)}%` }}
+              />
+            </div>
           </div>
-        )}
-        <div className="flex gap-2">
-          <dt className="text-[#5B21B6] font-medium shrink-0 w-[80px]">I will</dt>
-          <dd className="text-slate-800">{w.action}</dd>
-        </div>
-        <div className="flex gap-2">
-          <dt className="text-slate-500 font-medium shrink-0 w-[80px]">Applies to</dt>
-          <dd className="text-slate-800">
-            {w.scopeLabel}
-            {w.scopeDetail && w.scopeDetail.length > 0 && (
-              <button
-                type="button"
-                onClick={() => setScopeOpen((v) => !v)}
-                className="ml-2 text-[11px] text-[#7C3AED] hover:underline focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40 rounded"
-                aria-expanded={scopeOpen}
-              >
-                {scopeOpen ? "hide" : "show all"}
-              </button>
-            )}
-            {scopeOpen && w.scopeDetail && (
-              <ul className="mt-1.5 list-disc pl-5 text-[11.5px] text-slate-600 space-y-0.5">
-                {w.scopeDetail.map((line, i) => <li key={i}>{line}</li>)}
-              </ul>
-            )}
-          </dd>
-        </div>
-      </dl>
+        </>
+      ) : (
+        <dl className="text-[12px] leading-snug space-y-1.5">
+          <div className="flex gap-2">
+            <dt className="text-slate-500 font-medium shrink-0 w-[80px]">When</dt>
+            <dd className="text-slate-800">{w.trigger}</dd>
+          </div>
+          {w.whenLabel && (
+            <div className="flex gap-2">
+              <dt className="text-slate-500 font-medium shrink-0 w-[80px]">Shows</dt>
+              <dd className="text-slate-800">{w.whenLabel}</dd>
+            </div>
+          )}
+          <div className="flex gap-2">
+            <dt className="text-[#5B21B6] font-medium shrink-0 w-[80px]">I will</dt>
+            <dd className="text-slate-800">{w.action}</dd>
+          </div>
+          <div className="flex gap-2">
+            <dt className="text-slate-500 font-medium shrink-0 w-[80px]">Applies to</dt>
+            <dd className="text-slate-800">
+              {w.scopeLabel}
+              {w.scopeDetail && w.scopeDetail.length > 0 && (
+                <button
+                  type="button"
+                  onClick={() => setScopeOpen((v) => !v)}
+                  className="ml-2 text-[11px] text-[#7C3AED] hover:underline focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40 rounded"
+                  aria-expanded={scopeOpen}
+                >
+                  {scopeOpen ? "hide" : "show all"}
+                </button>
+              )}
+              {scopeOpen && w.scopeDetail && (
+                <ul className="mt-1.5 list-disc pl-5 text-[11.5px] text-slate-600 space-y-0.5">
+                  {w.scopeDetail.map((line, i) => <li key={i}>{line}</li>)}
+                </ul>
+              )}
+            </dd>
+          </div>
+        </dl>
+      )}
 
-
-      <footer className="flex items-center justify-between gap-2 pt-2 border-t border-slate-100">
+      <footer className={`flex items-center justify-between gap-2 pt-2 border-t ${isPausedDraft ? "border-slate-200" : "border-slate-100"}`}>
         <div className="flex items-center gap-2 min-w-0 flex-wrap">
           <OwnerChip owner={w.owner} />
-          <span className="text-[11px] text-slate-400">
-            {w.status === "draft" ? (onResume ? "Draft · in progress" : "Draft · not yet finished") : `Last adjusted ${w.lastAdjusted ?? "—"}`}
+          <span className="text-[11px] text-slate-500">
+            {isPausedDraft
+              ? "Paused — nothing is watching yet"
+              : w.status === "draft"
+                ? "Draft · not yet finished"
+                : `Last adjusted ${w.lastAdjusted ?? "—"}`}
           </span>
         </div>
         <div className="flex items-center gap-1.5 shrink-0">
-          <button
-            type="button"
-            onClick={onView}
-            className="text-[12px] px-2.5 py-1.5 rounded-md text-slate-700 hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40"
-          >
-            View
-          </button>
-          {onResume ? (
-            <button
-              type="button"
-              onClick={onResume}
-              className="text-[12px] font-semibold px-3 py-1.5 rounded-md bg-[#7C3AED] text-white hover:bg-[#6D28D9] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40"
-            >
-              Resume
-            </button>
+          {isPausedDraft ? (
+            <>
+              {onDiscard && (
+                confirmDiscard ? (
+                  <span
+                    role="alertdialog"
+                    aria-label="Discard this draft"
+                    className="inline-flex items-center gap-1.5 px-2 py-1 rounded-md border border-rose-200 bg-rose-50 text-[11.5px] text-slate-700"
+                  >
+                    <span>Discard draft?</span>
+                    <button
+                      type="button"
+                      onClick={() => { setConfirmDiscard(false); onDiscard(); }}
+                      className="px-2 py-0.5 rounded bg-rose-600 text-white font-semibold hover:bg-rose-700 focus:outline-none focus:ring-2 focus:ring-rose-300"
+                    >
+                      Discard
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setConfirmDiscard(false)}
+                      className="px-2 py-0.5 rounded border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40"
+                    >
+                      Keep
+                    </button>
+                  </span>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={() => setConfirmDiscard(true)}
+                    className="text-[12px] px-2.5 py-1.5 rounded-md text-slate-600 hover:bg-rose-50 hover:text-rose-700 focus:outline-none focus:ring-2 focus:ring-rose-300"
+                  >
+                    Discard
+                  </button>
+                )
+              )}
+              {onResume && (
+                <button
+                  type="button"
+                  onClick={onResume}
+                  className="inline-flex items-center gap-1.5 text-[12px] font-semibold px-3 py-1.5 rounded-md bg-[#7C3AED] text-white hover:bg-[#6D28D9] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40"
+                >
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden><path d="M8 5v14l11-7z"/></svg>
+                  Resume
+                </button>
+              )}
+            </>
           ) : (
-            <button
-              type="button"
-              onClick={onAdjust}
-              className="text-[12px] font-semibold px-3 py-1.5 rounded-md bg-[#7C3AED] text-white hover:bg-[#6D28D9] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40"
-            >
-              Adjust
-            </button>
+            <>
+              <button
+                type="button"
+                onClick={onView}
+                className="text-[12px] px-2.5 py-1.5 rounded-md text-slate-700 hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40"
+              >
+                View
+              </button>
+              <button
+                type="button"
+                onClick={onAdjust}
+                className="text-[12px] font-semibold px-3 py-1.5 rounded-md bg-[#7C3AED] text-white hover:bg-[#6D28D9] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40"
+              >
+                Adjust
+              </button>
+            </>
           )}
         </div>
       </footer>
     </article>
   );
 }
+
+function DraftFieldRow({ label, value, emptyLabel = "not yet set" }: { label: string; value: string | null; emptyLabel?: string }) {
+  const empty = !value;
+  return (
+    <div className="flex gap-2 py-0.5">
+      <span className="text-slate-500 font-medium shrink-0 w-[80px]">{label}</span>
+      <span className={empty ? "text-slate-400 italic" : "text-slate-800"}>
+        {empty ? emptyLabel : value}
+      </span>
+    </div>
+  );
+}
+
 
 function WorkflowViewDialog({ workflow, onClose, onAdjust }: { workflow: Workflow; onClose: () => void; onAdjust: () => void }) {
   return (
