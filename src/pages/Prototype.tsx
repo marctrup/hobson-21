@@ -1034,11 +1034,13 @@ type ChatMsg = {
   role: "hobson" | "user";
   text: string;
   streaming?: boolean;
-  rich?: "rentFlat2";
+  rich?: "rentFlat2" | "summary";
   kind?: "feedback";
   feedback?: FeedbackState;
   /** Optional component-tag chips offered with the feedback ask (Helpful/Partly/Not). */
   feedbackChips?: string[];
+  /** Payload for `rich: "summary"` bubbles. */
+  summary?: { kind: "occupational" | "compliance"; scope: SummaryScope };
 };
 
 const CHAT_TURN_GAP_PX = 24;
