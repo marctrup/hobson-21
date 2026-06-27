@@ -9725,7 +9725,7 @@ function MagicianWorkArea({ character, workflows, onCreate, onAdjust, onView, on
   );
 }
 
-function WorkflowCard({ w, onAdjust, onView }: { w: Workflow; onAdjust: () => void; onView: () => void }) {
+function WorkflowCard({ w, onAdjust, onView, onResume }: { w: Workflow; onAdjust: () => void; onView: () => void; onResume?: () => void }) {
   const [scopeOpen, setScopeOpen] = useState(false);
   return (
     <article className="bg-white border border-slate-200/70 rounded-lg p-4 shadow-[0_0.5px_0_rgba(0,0,0,0.04)] flex flex-col gap-3">
