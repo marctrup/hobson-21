@@ -25,6 +25,7 @@ import {
   type ComplianceArea,
   type ComplianceRequirement,
   type InspectorEvent,
+  type RequirementCategory,
 } from "./prototype/Inspector";
 
 type AdminCharacter = "magician" | "professor" | "broker" | "inspector";
@@ -1595,6 +1596,23 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
       id: inspNewId("in"),
       text: "No bother — nothing recorded. Tell me which area to set up whenever you're ready.",
     }]);
+  };
+
+  const inspectorShowMe = (areaId: ComplianceArea, group: RequirementCategory) => {
+    setInspectorEvents((e) => [...e, {
+      kind: "show_me",
+      id: inspNewId("sm"),
+      areaId,
+      group,
+    }]);
+  };
+
+  const inspectorUpdateConfirmed = (id: string, patch: Partial<ComplianceRequirement>) => {
+    setInspectorConfirmed((arr) => arr.map((r) => (r.id === id ? { ...r, ...patch } : r)));
+  };
+
+  const inspectorAddConfirmed = (req: Omit<ComplianceRequirement, "id">) => {
+    setInspectorConfirmed((arr) => [...arr, { ...req, id: `req-manual-${Date.now()}` }]);
   };
 
   const inspectorBuildAnother = () => {
@@ -3327,6 +3345,8 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                 onAddRequirement={inspectorAddRequirement}
                 onConfirm={inspectorConfirm}
                 onCancel={inspectorCancel}
+                onUpdateConfirmed={inspectorUpdateConfirmed}
+                onAddConfirmed={inspectorAddConfirmed}
               />
             ) : (
             <AdminChat
@@ -3947,6 +3967,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                 onUpdateRules={setInspectorConfirmed}
                 onSetUpAnotherArea={inspectorBuildAnother}
                 buildActive={!!inspectorProposed || inspectorResearching || inspectorArea !== null}
+                onShowMe={inspectorShowMe}
               />
             );
           }
