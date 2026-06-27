@@ -1648,15 +1648,14 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
   };
 
   const inspectorBuildAnother = () => {
-    // Re-open the area picker in chat by clearing area + proposal.
-    setInspectorProposed(null);
-    setInspectorArea(null);
+    setInspectorBuild(null);
     setInspectorEvents((e) => [...e, {
       kind: "inspector",
       id: inspNewId("in"),
       text: "Happy to set up another area. Tell me which one.",
     }]);
   };
+
 
   const augmentCompliance = useMemo(() => {
     if (inspectorConfirmed.length === 0) return undefined;
