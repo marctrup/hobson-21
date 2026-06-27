@@ -1665,7 +1665,34 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
     } : b);
   };
 
-  // Trace-back: open an earlier answer for editing.
+  // Set a document-producing step's template (Hobson's standard vs. user's own upload).
+  const magSetStepTemplate = (uid: string, mode: "standard" | "own", filename?: string) => {
+    let shouldNarrateIntro = false;
+    let kindLabel = "your document";
+    setMagBuild((b) => {
+      if (!b) return b;
+      const target = b.steps.find((s) => s.uid === uid);
+      if (target && /section\s*13/i.test(target.label)) kindLabel = "your Section 13";
+      else if (target && /email|letter/i.test(target.label)) kindLabel = "your covering email";
+      else if (target && /surveyor|instruction/i.test(target.label)) kindLabel = "your surveyor instruction";
+      else if (target && /notice/i.test(target.label)) kindLabel = "your notice";
+      shouldNarrateIntro = !b.templateNarrated && mode === "own";
+      return {
+        ...b,
+        templateNarrated: b.templateNarrated || mode === "own",
+        steps: b.steps.map((s) => s.uid === uid ? { ...s, template: mode === "standard" ? undefined : { mode, filename } } : s),
+      };
+    });
+    setTimeout(() => {
+      if (mode === "own" && shouldNarrateIntro) {
+        magAsk(`If you have ${kindLabel}, hand it to me and I'll fill it in. Otherwise I'll use a standard one.`);
+      } else if (mode === "own") {
+        magAsk(`Noted — I'll use your template for that step and fill in the details.`);
+      } else {
+        magAsk(`Back to the standard for that step.`);
+      }
+    }, 200);
+  };
   const magBeginEdit = (field: MagEditField) => {
     setMagBuild((b) => {
       if (!b) return b;
