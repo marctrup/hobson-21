@@ -4508,8 +4508,10 @@ function MagicianBuildPanel({ build, handlers }: { build: MagBuildState; handler
   const usedStepIds = new Set(build.steps.map((s) => s.id));
   const isEditing = !!build.editing;
   const canBack = build.step !== "intake" && !isEditing;
+  const [confirmCancel, setConfirmCancel] = useState(false);
   return (
     <div className="ml-12 max-w-[480px] rounded-xl border border-[#7C3AED]/30 bg-white p-3 shadow-sm space-y-3">
+
       {isEditing && build.editing?.field !== "intake" && (
         <div className="flex items-center justify-between rounded-md bg-[#F5F3FF] border border-[#7C3AED]/30 px-2.5 py-1.5">
           <span className="text-[11.5px] text-[#5B21B6] font-medium">Changing your earlier answer</span>
