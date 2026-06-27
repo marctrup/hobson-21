@@ -7772,14 +7772,16 @@ function RentChoiceGate({ ctx, nextIdx }: { ctx: PerformCtx; nextIdx: number }) 
   );
 }
 
-function Section13NoticePreview({ chosenRent }: { chosenRent: number | null }) {
+function Section13NoticePreview({ chosenRent, template }: { chosenRent: number | null; template?: StepTemplate | null }) {
   const hasRent = chosenRent !== null;
   const increase = hasRent ? (chosenRent as number) - FLAT8_CURRENT_RENT : 0;
   const pct = hasRent ? ((increase / FLAT8_CURRENT_RENT) * 100).toFixed(1) : "";
+  const ownTpl = template && template.mode === "own";
   return (
-    <div className="rounded-lg border border-emerald-200 bg-emerald-50/60 p-3 text-[12px] text-slate-700">
-      <div className="text-[10px] uppercase tracking-wide text-emerald-800 font-semibold mb-2">
-        Prepared — Section 13 Notice
+    <div className={`rounded-lg border ${ownTpl ? "border-[#7C3AED]/40 bg-[#F5F3FF]" : "border-emerald-200 bg-emerald-50/60"} p-3 text-[12px] text-slate-700`}>
+      <div className={`text-[10px] uppercase tracking-wide ${ownTpl ? "text-[#5B21B6]" : "text-emerald-800"} font-semibold mb-2 flex items-center justify-between gap-2`}>
+        <span>Prepared — Section 13 Notice</span>
+        {ownTpl && <span className="normal-case tracking-normal font-normal text-[10.5px]">from your template: <span className="font-medium">{template?.filename}</span></span>}
       </div>
       <div className="rounded-md bg-white border border-slate-200 p-3 space-y-2.5 text-[12px] leading-relaxed">
         <div className="text-center">
