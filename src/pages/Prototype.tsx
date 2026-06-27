@@ -3880,13 +3880,13 @@ function MagOptionButton({ children, onClick, disabled }: { children: React.Reac
   );
 }
 
-function MagicianIntake({ onSubmit }: { onSubmit: MagHandlers["onIntakeSubmit"] }) {
-  const [title, setTitle] = useState("");
-  const [purpose, setPurpose] = useState("");
-  const [description, setDescription] = useState("");
-  const [whenKey, setWhenKey] = useState<"6m" | "3m" | "on" | "always" | "custom" | null>(null);
-  const [whenCustom, setWhenCustom] = useState("");
-  const [visibility, setVisibility] = useState<"personal" | "company" | null>(null);
+function MagicianIntake({ onSubmit, initial, onCancel }: { onSubmit: MagHandlers["onIntakeSubmit"]; initial?: Partial<{ title: string; purpose: string; description: string; whenKey: "6m" | "3m" | "on" | "always" | "custom"; whenLabel: string; visibility: "personal" | "company" }>; onCancel?: () => void }) {
+  const [title, setTitle] = useState(initial?.title ?? "");
+  const [purpose, setPurpose] = useState(initial?.purpose ?? "");
+  const [description, setDescription] = useState(initial?.description ?? "");
+  const [whenKey, setWhenKey] = useState<"6m" | "3m" | "on" | "always" | "custom" | null>(initial?.whenKey ?? null);
+  const [whenCustom, setWhenCustom] = useState(initial?.whenKey === "custom" ? (initial?.whenLabel ?? "") : "");
+  const [visibility, setVisibility] = useState<"personal" | "company" | null>(initial?.visibility ?? null);
 
   const whenOptions: { k: "6m" | "3m" | "on" | "always"; label: string }[] = [
     { k: "6m", label: "6 months ahead" },
