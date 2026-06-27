@@ -10518,17 +10518,21 @@ function MagicianWorkArea({ character, workflows, onCreate, onAdjust, onView, on
               text: "All workflows built and ready.",
             });
           }
-        }
+          var __magBadge = pausedDrafts.length > 0 ? `${pausedDrafts.length} paused` : null;
+        } else { var __magBadge = null; }
 
         return (
           <CharacterNotesStrip
             character={character}
             title="The Magician's notes"
             subtitle="recent builds & workshop state"
+            tagline="what's running & what's paused"
+            badge={__magBadge}
             notes={notes}
           />
         );
       })()}
+
 
       {/* Filters */}
       <div className="px-5 py-3 border-b border-slate-100 flex flex-wrap items-center gap-2 shrink-0">
