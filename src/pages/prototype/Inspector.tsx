@@ -2483,13 +2483,11 @@ function AreaPanel({
 export function InspectorWorkArea({
   rules,
   onUpdateRules,
-  onSetUpAnotherArea,
-  buildActive = false,
+  buildActive: _buildActive = false,
   onShowMe,
 }: {
   rules: ComplianceRequirement[];
   onUpdateRules?: React.Dispatch<React.SetStateAction<ComplianceRequirement[]>>;
-  onSetUpAnotherArea?: () => void;
   buildActive?: boolean;
   onShowMe?: (areaId: ComplianceArea, group: RequirementCategory) => void;
 }) {
