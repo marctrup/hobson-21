@@ -3334,20 +3334,22 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
             adminCharacter === "inspector" ? (
               <InspectorChat
                 events={inspectorEvents}
-                proposed={inspectorProposed}
+                build={inspectorBuild}
                 confirmed={inspectorConfirmed}
-                area={inspectorArea}
-                isResearching={inspectorResearching}
                 onPickArea={inspectorPickArea}
-                onOtherText={inspectorOtherText}
-                onUpdateRequirement={inspectorUpdateRequirement}
-                onRemoveRequirement={inspectorRemoveRequirement}
-                onAddRequirement={inspectorAddRequirement}
+                onConsent={inspectorConsent}
+                onDescribe={inspectorDescribe}
+                onUpdateResearched={inspectorUpdateResearched}
+                onRemoveResearched={inspectorRemoveResearched}
+                onUpdateAddition={inspectorUpdateAddition}
+                onRemoveAddition={inspectorRemoveAddition}
+                onAddAddition={inspectorAddAddition}
                 onConfirm={inspectorConfirm}
                 onCancel={inspectorCancel}
                 onUpdateConfirmed={inspectorUpdateConfirmed}
                 onAddConfirmed={inspectorAddConfirmed}
               />
+
             ) : (
             <AdminChat
               character={adminCharacter ? ADMIN_CHARACTERS.find((c) => c.id === adminCharacter)! : null}
