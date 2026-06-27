@@ -1838,18 +1838,42 @@ function InspectorNotesStrip({
     },
   ];
 
+  const [open, setOpen] = useState(false);
+  const panelId = "inspector-notes-panel";
+  const badge = awaitingCount > 0 ? `${awaitingCount} to confirm` : null;
+
   return (
     <section
       aria-label="The Inspector's notes"
-      className="px-5 py-3 border-b border-slate-100 bg-[#FAF8FF] shrink-0"
+      className="border-b border-slate-100 bg-[#FAF8FF] shrink-0"
     >
-      <div className="flex items-center gap-2 mb-2">
+      <button
+        type="button"
+        aria-expanded={open}
+        aria-controls={panelId}
+        onClick={() => setOpen((v) => !v)}
+        className="w-full flex items-center gap-2 px-5 py-2 text-left hover:bg-[#F5F3FF] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]"
+      >
         <div className="w-6 h-6 rounded-full overflow-hidden bg-white ring-1 ring-[#7C3AED]/20 grid place-items-center shrink-0">
           <img src={INSPECTOR_CHARACTER.src} alt="" aria-hidden className="w-[120%] h-[120%] object-contain" />
         </div>
-        <h3 className="text-[12px] font-semibold uppercase tracking-wide text-[#5B21B6]">The Inspector's notes</h3>
-        <span className="text-[11px] text-slate-500 truncate">· my vigilance &amp; the state of the rulebook</span>
-      </div>
+        <h3 className="text-[12px] font-semibold uppercase tracking-wide text-[#5B21B6] shrink-0">The Inspector's notes</h3>
+        <span className="text-[11px] text-slate-500 truncate min-w-0">· my vigilance &amp; the rulebook</span>
+        {badge && (
+          <span className="ml-1 shrink-0 inline-flex items-center px-1.5 py-0.5 rounded-full bg-[#B45309]/10 text-[#B45309] text-[10px] font-semibold tracking-wide uppercase">
+            {badge}
+          </span>
+        )}
+        <span className="ml-auto shrink-0 text-[#5B21B6]" aria-hidden>
+          <svg className={`w-4 h-4 transition-transform ${open ? "rotate-90" : ""}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M9 6l6 6-6 6" />
+          </svg>
+        </span>
+      </button>
+
+      {open && (
+      <div id={panelId} className="px-5 pb-3">
+
 
       {/* Opening note — lavender bubble, his voice */}
       <div className="flex items-start gap-2 mb-2">
