@@ -277,11 +277,21 @@ type Workflow = {
   justBuilt?: boolean;
   description?: string;
   whenLabel?: string;
+  whenKey?: "6m" | "3m" | "on" | "always" | "custom";
   visibility?: "personal" | "company";
   draftState?: MagBuildState;
   stepTemplates?: Record<string, StepTemplate>; // keyed by step id; doc-producing steps may use the user's own template
   steps?: { id: string; label: string; phrase: string }[]; // assembled steps — used for "Run a simulation"
+  // build-state echoes — kept so Adjust can re-walk the full build flow with the workflow's saved values
+  watch?: "rent_reviews" | "compliance" | "notices" | "other";
+  lead?: "6m" | "3m" | "on";
+  leadLabel?: string;
+  triggerPhrase?: string;
+  scope?: "unit" | "property" | "portfolio";
+  scopeSelection?: ScopeSelection;
+  ownerLabel?: string;
 };
+
 
 type StepTemplate = { mode: "standard" | "own"; filename?: string };
 
@@ -1417,7 +1427,9 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
   const [magicianEvents, setMagicianEvents] = useState<MagicianEvent[]>([]);
   const [magBuild, setMagBuild] = useState<MagBuildState | null>(null);
   const [magStreamingId, setMagStreamingId] = useState<string | null>(null);
+  const [adjustingId, setAdjustingId] = useState<string | null>(null);
   const magSimQueueRef = useRef<string[]>([]); // queued simulation bubble texts
+
 
   const magNewId = (p: string) => `${p}-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`;
   const magAsk = (text: string) => {
@@ -1729,15 +1741,56 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
     setTimeout(() => magAsk("Of course — adjust as you like, and tell me when you're ready."), 400);
   };
   const magAnswerQ6Build = () => {
-    magUserEcho("Build it");
+    magUserEcho(adjustingId ? "Save changes" : "Build it");
     const b = magBuild;
     if (!b) return;
     const phrases = b.steps.map((s) => s.phrase);
     const actionSummary = phrases.length === 0
       ? "bring it to you for approval"
       : `${phrases.slice(0, -1).join(", ")}${phrases.length > 1 ? " and " : ""}${phrases[phrases.length - 1]} — then bring it to you for approval`;
-    const id = `wf-${Date.now()}`;
     const trigger = triggerSentenceFor(b.watch, b.triggerPhrase || "approaching");
+    const persistedBuild = {
+      whenKey: b.whenKey,
+      watch: b.watch,
+      lead: b.lead, leadLabel: b.leadLabel,
+      triggerPhrase: b.triggerPhrase,
+      scope: b.scope,
+      scopeSelection: b.scopeSelection,
+      ownerLabel: b.ownerLabel,
+    };
+    if (adjustingId) {
+      const targetId = adjustingId;
+      setWorkflows((arr) => arr.map((w) => w.id === targetId ? {
+        ...w,
+        name: b.title?.trim() || w.name,
+        purpose: b.purpose?.trim() || w.purpose,
+        description: b.description?.trim() || undefined,
+        whenLabel: b.whenLabel ?? w.whenLabel,
+        visibility: b.visibility || w.visibility,
+        icon: b.watch === "compliance" ? "shield" : b.watch === "notices" ? "bell" : "calendar",
+        tone: "purple", status: "built",
+        trigger,
+        action: actionSummary,
+        scopeLabel: b.scopeLabel || w.scopeLabel,
+        scopeDetail: b.scopeDetail ?? w.scopeDetail,
+        owner: b.owner || w.owner,
+        lastAdjusted: "just now",
+        stepCount: b.steps.length,
+        justBuilt: true,
+        draftState: undefined,
+        stepTemplates: collectStepTemplates(b.steps),
+        steps: b.steps.map((s) => ({ id: s.id, label: s.label, phrase: s.phrase })),
+        ...persistedBuild,
+      } : { ...w, justBuilt: false }));
+      const name = b.title?.trim() || "this workflow";
+      setMagBuild(null);
+      setAdjustingId(null);
+      const builtId = magNewId("mb");
+      setMagicianEvents((e) => [...e, { kind: "built", id: builtId, workflowId: targetId, name, stepCount: b.steps.length }]);
+      setTimeout(() => magAsk(`Adjusted — '${name}' updated. The card on the right reflects your changes.`), 500);
+      return;
+    }
+    const id = `wf-${Date.now()}`;
     const wf: Workflow = {
       id,
       name: b.title?.trim() || "New workflow",
@@ -1757,6 +1810,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
       justBuilt: true,
       stepTemplates: collectStepTemplates(b.steps),
       steps: b.steps.map((s) => ({ id: s.id, label: s.label, phrase: s.phrase })),
+      ...persistedBuild,
     };
     setMagBuild(null);
     setWorkflows((arr) => [wf, ...arr.map((w) => ({ ...w, justBuilt: false }))]);
@@ -1764,6 +1818,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
     setMagicianEvents((e) => [...e, { kind: "built", id: builtId, workflowId: id, name: wf.name, stepCount: b.steps.length }]);
     setTimeout(() => magAsk(`Built — '${wf.name}', a ${b.steps.length}-step workflow ending in your approval. You'll find it pinned on the right.`), 500);
   };
+
 
   // ----- Pause / cancel / resume a workflow build -----
   const magPauseSave = () => {
@@ -1796,15 +1851,76 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
         stepTemplates: collectStepTemplates(b.steps),
         steps: b.steps.map((s) => ({ id: s.id, label: s.label, phrase: s.phrase })),
       };
-      setWorkflows((arr) => [wf, ...arr.map((w) => ({ ...w, justBuilt: false }))]);
+      // If pausing during an Adjust, update the existing workflow in place as a draft (no duplicate).
+      if (adjustingId) {
+        const targetId = adjustingId;
+        setWorkflows((arr) => arr.map((w) => w.id === targetId ? { ...wf, id: targetId } : w));
+        setAdjustingId(null);
+      } else {
+        setWorkflows((arr) => [wf, ...arr.map((w) => ({ ...w, justBuilt: false }))]);
+      }
       setTimeout(() => magAsk("Saved — we'll pick this up whenever you're ready."), 350);
       return null;
     });
   };
 
   const magCancelBuild = () => {
+    const wasAdjusting = !!adjustingId;
     setMagBuild(null);
-    setTimeout(() => magAsk("Of course — discarded."), 250);
+    setAdjustingId(null);
+    setTimeout(() => magAsk(wasAdjusting ? "Of course — changes discarded. The workflow is unchanged." : "Of course — discarded."), 250);
+  };
+
+  // Open the FULL build flow pre-filled with a workflow's saved configuration.
+  // Adjust = Create-a-workflow, started from the workflow's current values; finish updates in place.
+  const magAdjustWorkflow = (id: string) => {
+    const wf = workflows.find((w) => w.id === id);
+    if (!wf) return;
+    setMagicianEvents([]);
+    magSimQueueRef.current = [];
+    // If a paused draft is being adjusted, prefer the saved live build state.
+    if (wf.draftState) {
+      setAdjustingId(id);
+      setMagBuild({ ...wf.draftState, step: "intake", editing: undefined });
+      setTimeout(() => magAsk(`Let's adjust '${wf.name}' together — change anything you like. I'll walk you through it; keep what's right, change what isn't.`), 300);
+      return;
+    }
+    const watch: "rent_reviews" | "compliance" | "notices" | "other" =
+      wf.watch ?? (wf.icon === "shield" ? "compliance" : wf.icon === "bell" ? "notices" : "rent_reviews");
+    const baseSteps = wf.steps && wf.steps.length > 0 ? wf.steps : MAG_DEFAULT_STEPS;
+    const steps: MagBuildStep[] = baseSteps.map((s, i) => ({
+      id: s.id,
+      label: s.label,
+      phrase: s.phrase,
+      uid: `${s.id}-${i}-${Date.now()}`,
+      template: wf.stepTemplates?.[s.id],
+    }));
+    const state: MagBuildState = {
+      step: "intake",
+      title: wf.name,
+      purpose: wf.purpose,
+      description: wf.description,
+      whenKey: wf.whenKey,
+      whenLabel: wf.whenLabel,
+      visibility: wf.visibility ?? "company",
+      watch,
+      watchLabel: watchLabelFor(watch),
+      lead: wf.lead,
+      leadLabel: wf.leadLabel,
+      triggerPhrase: wf.triggerPhrase,
+      scope: wf.scope,
+      scopeLabel: wf.scopeLabel,
+      scopeDetail: wf.scopeDetail,
+      scopeSelection: wf.scopeSelection,
+      owner: wf.owner,
+      ownerLabel: wf.ownerLabel,
+      steps,
+      stepsTouched: true,
+      templateNarrated: true,
+    };
+    setAdjustingId(id);
+    setMagBuild(state);
+    setTimeout(() => magAsk(`Let's adjust '${wf.name}' together — change anything you like. I'll walk you through it; keep what's right, change what isn't.`), 300);
   };
 
   const magResumeDraft = (id: string) => {
@@ -1822,6 +1938,8 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
     setWorkflows((arr) => arr.filter((w) => w.id !== id));
     setTimeout(() => magAsk(`Of course — '${wf.name}' discarded.`), 250);
   };
+
+
 
 
 
@@ -3489,7 +3607,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                 character={c}
                 workflows={workflows}
                 onCreate={handleCreateWorkflow}
-                onAdjust={(id) => setAdjustingWorkflowId(id)}
+                onAdjust={magAdjustWorkflow}
                 onView={(id) => setViewingWorkflowId(id)}
                 onResume={magResumeDraft}
                 onDiscard={magDiscardDraft}
@@ -3507,23 +3625,16 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
       </main>
       ); })()}
 
-      {/* Magician — Adjust / View dialogs */}
-      {adjustingWorkflowId && (
-        <WorkflowAdjustDialog
-          workflow={workflows.find((w) => w.id === adjustingWorkflowId)!}
-          staff={MAGICIAN_STAFF}
-          onClose={() => setAdjustingWorkflowId(null)}
-          onSave={handleSaveWorkflow}
-        />
-      )}
+      {/* Magician — View dialog (Adjust opens the full build flow in the left chat) */}
       {viewingWorkflowId && (
         <WorkflowViewDialog
           workflow={workflows.find((w) => w.id === viewingWorkflowId)!}
           onClose={() => setViewingWorkflowId(null)}
-          onAdjust={() => { setViewingWorkflowId(null); setAdjustingWorkflowId(viewingWorkflowId); }}
+          onAdjust={() => { const id = viewingWorkflowId; setViewingWorkflowId(null); if (id) magAdjustWorkflow(id); }}
         />
       )}
     </div>
+
 
   );
 };
