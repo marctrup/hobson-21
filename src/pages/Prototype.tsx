@@ -1615,6 +1615,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
     setInspectorConfirmed((arr) => [...arr, { ...req, id: `req-manual-${Date.now()}` }]);
   };
 
+  const inspectorBuildAnother = () => {
     // Re-open the area picker in chat by clearing area + proposal.
     setInspectorProposed(null);
     setInspectorArea(null);
