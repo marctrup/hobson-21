@@ -11312,7 +11312,9 @@ function BrokerWorkArea({ character, contacts, onAdd }: {
             character={character}
             title="The Broker's notes"
             subtitle="recent additions & relationship gaps"
+            tagline="the state of the black book"
             notes={notes}
+
           />
         );
       })()}
