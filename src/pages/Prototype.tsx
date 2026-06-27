@@ -387,60 +387,7 @@ const MAG_DEFAULTS_BY_WATCH: Record<"rent_reviews" | "compliance" | "notices" | 
   ],
 };
 
-const SEED_WORKFLOWS: Workflow[] = [
-  {
-    id: "wf-2",
-    name: "Compliance renewals",
-    purpose: "Keeps certificates current across the portfolio.",
-    icon: "shield", tone: "teal", status: "built",
-    trigger: "a certificate nears its expiry window",
-    action: "find your contractor, draft the inspection and access emails, and hold them for your approval",
-    scopeLabel: "All properties",
-    owner: { kind: "all_teams" },
-    lastAdjusted: "3 Jun 2026",
-    steps: MAG_DEFAULTS_BY_WATCH.compliance.map((s) => ({ id: s.id, label: s.label, phrase: s.phrase })),
-  },
-  {
-    id: "wf-3",
-    name: "Notice deadlines",
-    purpose: "Catches break and notice dates before they slip.",
-    icon: "alert", tone: "amber", status: "draft",
-    trigger: "a break or notice deadline approaches",
-    action: "prepare the notice in good time so the right is never lost, ready for you to serve",
-    scopeLabel: "Stanley House (all units) + Flat 2, Nugent Terrace",
-    owner: { kind: "person", name: "James Okoro", role: "Lease Manager", initials: "JO" },
-    steps: MAG_DEFAULTS_BY_WATCH.notices.map((s) => ({ id: s.id, label: s.label, phrase: s.phrase })),
-  },
-  {
-    id: "wf-4",
-    name: "Notice effect watch",
-    purpose: "Anticipates what happens when a served notice lands.",
-    icon: "bell", tone: "purple", status: "built",
-    trigger: "a served notice is about to take effect",
-    action: "explain what's about to happen and prepare the next step for your approval",
-    scopeLabel: "3 properties \u00b7 14 units",
-    scopeDetail: [
-      "Stanley House — all 8 units",
-      "5 Nugent Terrace — Flat 1, Flat 2, Flat 3, Flat 4",
-      "Beaufort Mews — Unit A, Unit B",
-    ],
-    owner: { kind: "person", name: "Sarah Chen", role: "Asset Manager", initials: "SC" },
-    lastAdjusted: "28 May 2026",
-    steps: MAG_DEFAULTS_BY_WATCH.notices.map((s) => ({ id: s.id, label: s.label, phrase: s.phrase })),
-  },
-  {
-    id: "wf-5",
-    name: "EPC renewals",
-    purpose: "Keeps EPCs valid and bookings booked.",
-    icon: "leaf", tone: "teal", status: "built",
-    trigger: "an EPC nears expiry",
-    action: "instruct an accredited assessor and prepare access notes for your approval",
-    scopeLabel: "All properties",
-    owner: { kind: "all_teams" },
-    lastAdjusted: "1 Jun 2026",
-    steps: MAG_DEFAULTS_BY_WATCH.compliance.map((s) => ({ id: s.id, label: s.label, phrase: s.phrase })),
-  },
-];
+const SEED_WORKFLOWS: Workflow[] = [];
 
 const MAGICIAN_STAFF: { name: string; role: string; initials: string }[] = [
   { name: "Sarah Chen", role: "Asset Manager", initials: "SC" },
@@ -9818,56 +9765,73 @@ function MagicianWorkArea({ character, workflows, onCreate, onAdjust, onView, on
         const drafts = workflows.filter((w) => w.status === "draft");
         const withDate = built.filter((w) => w.lastAdjusted);
         const newest = [...withDate].sort((a, b) => (b.lastAdjusted || "").localeCompare(a.lastAdjusted || ""))[0];
-        const epc = workflows.find((w) => /EPC/i.test(w.name));
         const draftWf = drafts[0];
         const notes: CharacterNote[] = [];
         const justBuilt = workflows.find((w) => w.justBuilt);
-        if (justBuilt) {
+        if (workflows.length === 0) {
           notes.push({
-            id: "mn-justbuilt",
+            id: "mn-empty",
             kind: "recent",
-            text: `Built '${justBuilt.name}' just now — a ${justBuilt.stepCount ?? "multi"}-step workflow ending in your approval.`,
-            onClick: () => onView(justBuilt.id),
-            ctaLabel: "open workflow →",
+            text: "No workflows yet — let's build one. When you're ready, hit 'Create a workflow' and I'll walk you through it.",
           });
-        } else {
           notes.push({
-            id: "mn-recent",
-            kind: "recent",
-            text: `Built 1 new workflow this week${epc ? ` — '${epc.name}'` : ""}.${newest ? ` Last adjusted '${newest.name}' on ${newest.lastAdjusted}.` : ""}`,
-            onClick: epc ? () => onView(epc.id) : (newest ? () => onView(newest.id) : undefined),
-            ctaLabel: "open workflow →",
+            id: "mn-totals",
+            kind: "totals",
+            text: "0 workflows · 0 built and running · 0 in draft.",
           });
-        }
-        notes.push({
-          id: "mn-totals",
-          kind: "totals",
-          text: `${workflows.length} workflow${workflows.length === 1 ? "" : "s"} · ${built.length} built and running · ${drafts.length} in draft.`,
-        });
-        const pausedDrafts = drafts.filter((w) => !!w.draftState);
-        if (pausedDrafts.length > 0) {
-          const pd = pausedDrafts[0];
-          notes.push({
-            id: "mn-paused",
-            kind: "issue",
-            text: `${pausedDrafts.length} workflow${pausedDrafts.length === 1 ? "" : "s"} paused — saved as ${pausedDrafts.length === 1 ? "a draft" : "drafts"}. '${pd.name}' is waiting for us to pick it back up; nothing is watching from it yet.`,
-            onClick: () => onResume?.(pd.id),
-            ctaLabel: "resume draft →",
-          });
-        } else if (draftWf) {
-          notes.push({
-            id: "mn-issue",
-            kind: "issue",
-            text: `'${draftWf.name}' is still a draft — it needs your sign-off before it can run, and it will lean on the Broker's book for tenant contacts once it's live.`,
-            onClick: () => onView(draftWf.id),
-            ctaLabel: "open draft →",
-          });
-        } else {
           notes.push({
             id: "mn-coverage",
             kind: "coverage",
-            text: "All workflows built and ready.",
+            text: "The workshop is empty — a clean bench, ready for the first piece of work.",
           });
+        } else {
+          if (justBuilt) {
+            notes.push({
+              id: "mn-justbuilt",
+              kind: "recent",
+              text: `Built '${justBuilt.name}' just now — a ${justBuilt.stepCount ?? "multi"}-step workflow ending in your approval.`,
+              onClick: () => onView(justBuilt.id),
+              ctaLabel: "open workflow →",
+            });
+          } else if (newest) {
+            notes.push({
+              id: "mn-recent",
+              kind: "recent",
+              text: `Last adjusted '${newest.name}' on ${newest.lastAdjusted}.`,
+              onClick: () => onView(newest.id),
+              ctaLabel: "open workflow →",
+            });
+          }
+          notes.push({
+            id: "mn-totals",
+            kind: "totals",
+            text: `${workflows.length} workflow${workflows.length === 1 ? "" : "s"} · ${built.length} built and running · ${drafts.length} in draft.`,
+          });
+          const pausedDrafts = drafts.filter((w) => !!w.draftState);
+          if (pausedDrafts.length > 0) {
+            const pd = pausedDrafts[0];
+            notes.push({
+              id: "mn-paused",
+              kind: "issue",
+              text: `${pausedDrafts.length} workflow${pausedDrafts.length === 1 ? "" : "s"} paused — saved as ${pausedDrafts.length === 1 ? "a draft" : "drafts"}. '${pd.name}' is waiting for us to pick it back up; nothing is watching from it yet.`,
+              onClick: () => onResume?.(pd.id),
+              ctaLabel: "resume draft →",
+            });
+          } else if (draftWf) {
+            notes.push({
+              id: "mn-issue",
+              kind: "issue",
+              text: `'${draftWf.name}' is still a draft — it needs your sign-off before it can run.`,
+              onClick: () => onView(draftWf.id),
+              ctaLabel: "open draft →",
+            });
+          } else {
+            notes.push({
+              id: "mn-coverage",
+              kind: "coverage",
+              text: "All workflows built and ready.",
+            });
+          }
         }
 
         return (
@@ -9953,29 +9917,40 @@ function MagicianWorkArea({ character, workflows, onCreate, onAdjust, onView, on
 
       {/* Cards */}
       <div className="flex-1 overflow-auto px-5 py-5 bg-slate-50/40">
-        {filtered.length === 0 && (
-          <div className="max-w-md mx-auto text-center text-[12px] text-slate-500 py-10">No workflows match these filters.</div>
-        )}
-        {groups.map((g) => (
-          <div key={g.label || "all"} className="mb-6 last:mb-0">
-            {g.label && (
-              <div className="text-[11px] uppercase tracking-wide text-slate-500 font-semibold mb-2 px-1">{g.label}</div>
-            )}
-            <div className="grid gap-3" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(340px, 1fr))" }}>
-              {g.items.map((w) => (
-                <WorkflowCard
-                  key={w.id}
-                  w={w}
-                  onAdjust={() => onAdjust(w.id)}
-                  onView={() => onView(w.id)}
-                  onResume={w.draftState && onResume ? () => onResume(w.id) : undefined}
-                  onDiscard={w.draftState && onDiscard ? () => onDiscard(w.id) : undefined}
-                  onSimulate={onSimulate ? () => onSimulate(w.id) : undefined}
-                />
-              ))}
+        {workflows.length === 0 ? (
+          <div className="max-w-md mx-auto text-center py-12">
+            <div className="text-[14px] font-semibold text-slate-700 mb-1.5">No workflows yet</div>
+            <div className="text-[12px] text-slate-500 leading-relaxed">
+              The workshop is empty. When you're ready, hit <span className="font-medium text-[#7C3AED]">Create a workflow</span> in the chat and I'll walk you through it — nothing watches your portfolio until you set it loose.
             </div>
           </div>
-        ))}
+        ) : (
+          <>
+            {filtered.length === 0 && (
+              <div className="max-w-md mx-auto text-center text-[12px] text-slate-500 py-10">No workflows match these filters.</div>
+            )}
+            {groups.map((g) => (
+              <div key={g.label || "all"} className="mb-6 last:mb-0">
+                {g.label && (
+                  <div className="text-[11px] uppercase tracking-wide text-slate-500 font-semibold mb-2 px-1">{g.label}</div>
+                )}
+                <div className="grid gap-3" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(340px, 1fr))" }}>
+                  {g.items.map((w) => (
+                    <WorkflowCard
+                      key={w.id}
+                      w={w}
+                      onAdjust={() => onAdjust(w.id)}
+                      onView={() => onView(w.id)}
+                      onResume={w.draftState && onResume ? () => onResume(w.id) : undefined}
+                      onDiscard={w.draftState && onDiscard ? () => onDiscard(w.id) : undefined}
+                      onSimulate={onSimulate ? () => onSimulate(w.id) : undefined}
+                    />
+                  ))}
+                </div>
+              </div>
+            ))}
+          </>
+        )}
       </div>
     </div>
   );
