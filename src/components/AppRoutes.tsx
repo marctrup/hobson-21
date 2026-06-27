@@ -34,6 +34,7 @@ const InPractice = lazy(() => import("../pages/InPractice"));
 const Admin = lazy(() => import("../pages/Admin"));
 const FaqManagement = lazy(() => import("../pages/admin/FaqManagement"));
 const GlossaryManagement = lazy(() => import("../pages/admin/GlossaryManagement"));
+const InvestmentPassword = lazy(() => import("../pages/admin/InvestmentPassword"));
 const InvestmentOpportunity = lazy(() => import("../pages/InvestmentOpportunity"));
 const Prototype = lazy(() => import("../pages/Prototype"));
 const PrototypeTesters = lazy(() => import("../pages/PrototypeTesters"));
@@ -156,6 +157,7 @@ const AppContent = () => {
               <Route path="/admin" element={<Admin />} />
               <Route path="/admin/faq-management" element={<FaqManagement />} />
               <Route path="/admin/glossary-management" element={<GlossaryManagement />} />
+              <Route path="/admin/investment-password" element={<InvestmentPassword />} />
               <Route path="/admin/blog" element={<BlogManagement />} />
               <Route path="/admin/blog/new" element={<BlogEditor />} />
               <Route path="/admin/blog/edit/:id" element={<BlogEditor />} />
