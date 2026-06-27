@@ -59,6 +59,8 @@ export type ComplianceRequirement = {
   uploadedFileName?: string;
   /** Which compliance area this rule belongs to. Untagged = "health_safety" (legacy). */
   areaId?: ComplianceArea;
+  /** Filename of the document currently held against this requirement (simulated). */
+  documentOnFile?: string;
 };
 
 /* ---------------- Area registry ---------------- */
