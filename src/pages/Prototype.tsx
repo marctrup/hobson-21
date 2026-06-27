@@ -350,7 +350,8 @@ type MagBuildState = {
 type MagicianEvent =
   | { kind: "magician"; id: string; text: string }
   | { kind: "user"; id: string; text: string }
-  | { kind: "built"; id: string; workflowId: string; name: string; stepCount: number };
+  | { kind: "built"; id: string; workflowId: string; name: string; stepCount: number }
+  | { kind: "sim_header"; id: string; workflowName: string; trigger: string };
 
 const MAG_DEFAULT_STEPS: { id: string; label: string; phrase: string }[] = [
   { id: "read_lease", label: "Read the lease and confirm the review basis & date", phrase: "read the lease" },
