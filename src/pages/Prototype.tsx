@@ -10414,10 +10414,52 @@ function WorkflowCard({ w, onAdjust, onView, onResume, onDiscard, onSimulate }: 
             </>
           )}
         </div>
+        </div>
       </footer>
+      {activityOpen && activity.length > 0 && (
+        <div
+          id={`activity-${w.id}`}
+          className="rounded-md border border-slate-200 bg-slate-50/60 px-3 py-2"
+          role="region"
+          aria-label={`Activity log for ${w.name}`}
+        >
+          <div className="text-[10.5px] uppercase tracking-wide font-semibold text-slate-500 mb-1.5">
+            Activity — most recent first
+          </div>
+          <ul className="space-y-1.5 max-h-48 overflow-y-auto">
+            {activity.map((e) => (
+              <li key={e.id} className="flex items-start gap-2 text-[11.5px] leading-snug">
+                <ActorAvatar actor={e.actor} />
+                <div className="min-w-0 flex-1">
+                  <span className="text-slate-800">{e.action}</span>
+                  <span className="text-slate-500"> by </span>
+                  <span className="font-medium text-slate-700">{e.actor.name}</span>
+                  {e.actor.role && <span className="text-slate-400"> ({e.actor.role})</span>}
+                  <span className="text-slate-500"> · </span>
+                  <span className="text-slate-500">{e.tsLabel}</span>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </article>
   );
 }
+
+function ActorAvatar({ actor }: { actor: ActivityActor }) {
+  return (
+    <span
+      className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-[#EDE9FE] text-[9.5px] font-semibold text-[#5B21B6] shrink-0"
+      aria-label={`${actor.name}${actor.role ? `, ${actor.role}` : ""}`}
+      title={`${actor.name}${actor.role ? ` · ${actor.role}` : ""}`}
+    >
+      {actor.initials}
+    </span>
+  );
+}
+
+
 
 function DraftFieldRow({ label, value, emptyLabel = "not yet set" }: { label: string; value: string | null; emptyLabel?: string }) {
   const empty = !value;
