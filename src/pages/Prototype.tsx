@@ -280,6 +280,7 @@ type Workflow = {
   visibility?: "personal" | "company";
   draftState?: MagBuildState;
   stepTemplates?: Record<string, StepTemplate>; // keyed by step id; doc-producing steps may use the user's own template
+  steps?: { id: string; label: string; phrase: string }[]; // assembled steps — used for "Run a simulation"
 };
 
 type StepTemplate = { mode: "standard" | "own"; filename?: string };
