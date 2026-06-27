@@ -8892,10 +8892,30 @@ function PerformWorkspace({
     return () => { cancelled = true; clearTimeout(t); };
   }, [revealed, beats, reducedMotion, mode, isComplete, initialRevealed]);
 
+  // Auto-follow the workspace journey as steps reveal and text streams.
+  // Pause if the user has scrolled up to re-read; resume when they return.
   useEffect(() => {
     const el = scrollerRef.current;
-    if (el) el.scrollTop = el.scrollHeight;
-  }, [revealed, streamingText]);
+    if (!el) return;
+    const distance = el.scrollHeight - el.scrollTop - el.clientHeight;
+    if (distance > 240) return;
+    const id = requestAnimationFrame(() => { el.scrollTop = el.scrollHeight; });
+    return () => cancelAnimationFrame(id);
+  }, [revealed, streamingText, recapStream, completed.length, approvedActions.length]);
+
+  // Cover any late layout growth (rich previews, tables, embedded forms).
+  useEffect(() => {
+    const el = scrollerRef.current;
+    if (!el) return;
+    const ro = new ResizeObserver(() => {
+      const distance = el.scrollHeight - el.scrollTop - el.clientHeight;
+      if (distance < 240) el.scrollTop = el.scrollHeight;
+    });
+    ro.observe(el);
+    const inner = el.firstElementChild as HTMLElement | null;
+    if (inner) ro.observe(inner);
+    return () => ro.disconnect();
+  }, []);
 
   // Fire reviewReady once when the journey has revealed (or passed) its final approval gate.
   const finalIdx = useMemo(() => finalGateBeatIdx(card, beats), [card, beats]);
