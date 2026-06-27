@@ -668,6 +668,7 @@ function RequirementEditor({
         >
           <option value="required">Legally required</option>
           <option value="applicable">Where applicable</option>
+          <option value="business">Business requirement</option>
         </select>
         <div className="flex-1" />
         <button
@@ -800,6 +801,7 @@ function AddRequirementForm({ onAdd }: { onAdd: (req: Omit<ComplianceRequirement
         <select value={basis} onChange={(e) => setBasis(e.target.value as RequirementBasis)} className="px-2 py-1 rounded-md border border-slate-300 text-[13px] bg-white">
           <option value="required">Legally required</option>
           <option value="applicable">Where applicable</option>
+          <option value="business">Business requirement</option>
         </select>
         <div className="flex-1" />
         <button type="button" onClick={() => { reset(); setOpen(false); }} className="text-[12px] text-slate-600 hover:underline px-1">Cancel</button>
@@ -1265,6 +1267,7 @@ function AddRowForm({
         >
           <option value="required">Legally required</option>
           <option value="applicable">Where applicable</option>
+          <option value="business">Business requirement</option>
         </select>
         <div className="flex-1" />
         <button
