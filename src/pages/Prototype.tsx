@@ -1470,6 +1470,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
   const [magicianEvents, setMagicianEvents] = useState<MagicianEvent[]>([]);
   const [magBuild, setMagBuild] = useState<MagBuildState | null>(null);
   const [magStreamingId, setMagStreamingId] = useState<string | null>(null);
+  const magSimQueueRef = useRef<string[]>([]); // queued simulation bubble texts
 
   const magNewId = (p: string) => `${p}-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`;
   const magAsk = (text: string) => {
@@ -1484,8 +1485,42 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
 
   const handleCreateWorkflow = () => {
     setMagicianEvents([]);
+    magSimQueueRef.current = [];
     setMagBuild({ step: "intake", steps: MAG_DEFAULT_STEPS.map((s, i) => ({ ...s, uid: `${s.id}-${i}` })) });
     setTimeout(() => magAsk("Let's build this together. First, tell me a little about it."), 250);
+  };
+
+  // ----- Run a simulation of a built workflow -----
+  const magSimulate = (id: string) => {
+    const wf = workflows.find((w) => w.id === id);
+    if (!wf || wf.status !== "built") return;
+    const steps = wf.steps && wf.steps.length > 0 ? wf.steps : MAG_DEFAULT_STEPS;
+    const lines: string[] = [];
+    lines.push(`Let's see it in action. Here's what I'd do when ${wf.trigger}.`);
+    steps.forEach((s, i) => {
+      const isDoc = isDocStep({ id: s.id, label: s.label });
+      const tpl = wf.stepTemplates?.[s.id];
+      let tail = "";
+      if (isDoc) {
+        if (tpl && tpl.mode === "own") {
+          tail = ` — using your template${tpl.filename ? ` (${tpl.filename})` : ""}.`;
+        } else {
+          tail = " — using our standard template.";
+        }
+      } else {
+        tail = ".";
+      }
+      lines.push(`Step ${i + 1} — I ${s.phrase}${tail.startsWith(" —") ? "" : ""}${tail}`);
+    });
+    lines.push("Then I bring it to you for approval — that's the gate where you decide.");
+    lines.push("That's how it runs. Nothing was sent — it's yours to set live when you're ready.");
+
+    setMagicianEvents((e) => [
+      ...e,
+      { kind: "sim_header", id: magNewId("simhdr"), workflowName: wf.name, trigger: wf.trigger },
+    ]);
+    magSimQueueRef.current = lines.slice(1);
+    setTimeout(() => magAsk(lines[0]), 250);
   };
 
   const handleSaveWorkflow = (next: Workflow) => {
