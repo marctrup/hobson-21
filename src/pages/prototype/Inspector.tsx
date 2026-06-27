@@ -1179,6 +1179,38 @@ export function InspectorWorkArea({
     certification: null, notice: null, contract: null,
   });
 
+  // Standing schedule (resets with the prototype). Seed: quarterly cadence, last checked 14 days ago.
+  const [frequency, setFrequency] = useState<CheckFrequency>("quarterly");
+  const [lastChecked, setLastChecked] = useState<Date>(() => {
+    const d = new Date(); d.setDate(d.getDate() - 14); return d;
+  });
+  const [globalRecal, setGlobalRecal] = useState<RecalibrationState | null>(null);
+
+  function runFullCheck() {
+    const next = buildFullRecalibration(rules);
+    setGlobalRecal(next);
+    window.setTimeout(() => {
+      setGlobalRecal((cur) => (cur ? { ...cur, phase: "results" } : cur));
+      setLastChecked(new Date());
+    }, 1500);
+  }
+
+  function closeGlobal() { setGlobalRecal(null); }
+
+  function resolveGlobal(changeId: string, decision: "applied" | "dismissed", change: RecalibrationChange) {
+    setGlobalRecal((cur) => cur ? { ...cur, resolved: { ...cur.resolved, [changeId]: decision } } : cur);
+    if (decision === "applied" && onUpdateRules) {
+      onUpdateRules((rs) => rs.map((r) => {
+        if (r.id !== change.targetRuleId) return r;
+        if (change.kind === "document_updated")  return { ...r, versionSource: "hobson", uploadedFileName: undefined, description: change.newVersionLabel };
+        if (change.kind === "edition_updated")   return { ...r, versionSource: "hobson", uploadedFileName: undefined, description: change.newEditionLabel };
+        if (change.kind === "frequency_changed") return { ...r, durationValue: change.newValue, durationUnit: change.newUnit };
+        return r;
+      }));
+    }
+  }
+
+
   function startRecalibrate(group: RequirementCategory) {
     const next = buildRecalibration(group, rules);
     setRecal((m) => ({ ...m, [group]: next }));
