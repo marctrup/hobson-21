@@ -2426,7 +2426,9 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
     if (!adminMode) return;
     const el = chatBodyRef.current;
     if (!el) return;
-    // Defer to next frame so the new content has laid out.
+    // Respect the user — only auto-follow if they're near the bottom.
+    const distanceFromBottom = el.scrollHeight - el.scrollTop - el.clientHeight;
+    if (distanceFromBottom > 240) return;
     const id = requestAnimationFrame(() => {
       el.scrollTop = el.scrollHeight;
     });
