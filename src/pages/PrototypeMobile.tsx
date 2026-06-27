@@ -609,17 +609,8 @@ function DeskTab({
   );
 }
 
-/* Listen for unit-scope-jumps fired by unit tiles (keeps DeskTab dumb) */
-function useUnitJumpListener(setScope: (s: Scope) => void) {
-  useEffect(() => {
-    const handler = (e: Event) => {
-      const detail = (e as CustomEvent).detail as Scope;
-      setScope(detail);
-    };
-    window.addEventListener("hobson-mobile-scope", handler);
-    return () => window.removeEventListener("hobson-mobile-scope", handler);
-  }, [setScope]);
-}
+
+
 
 function ActionCardView({ card, onPerform, onReview }: { card: ActionCard; onPerform: () => void; onReview: () => void }) {
   const u = URGENCY_META[card.urgency];
