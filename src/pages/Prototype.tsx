@@ -278,6 +278,7 @@ type Workflow = {
   description?: string;
   whenLabel?: string;
   visibility?: "personal" | "company";
+  draftState?: MagBuildState;
 };
 
 type MagBuildStep = { id: string; label: string; phrase: string; uid: string };
