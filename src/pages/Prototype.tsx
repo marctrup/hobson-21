@@ -10704,8 +10704,8 @@ function WorkflowCard({ w, onAdjust, onView, onResume, onDiscard, onSimulate }: 
     <article
       className={
         isPausedDraft
-          ? "rounded-lg p-4 flex flex-col gap-3 border-2 border-dashed border-slate-300 bg-slate-50/60"
-          : "bg-white border border-slate-200/70 rounded-lg p-4 shadow-[0_0.5px_0_rgba(0,0,0,0.04)] flex flex-col gap-3"
+          ? "rounded-lg p-4 flex flex-col gap-3 border border-dashed border-slate-300 bg-slate-50/60"
+          : "rounded-lg p-3 flex flex-col gap-3 bg-white"
       }
       aria-label={isPausedDraft ? `${w.name} — draft in progress, unfinished` : w.name}
     >
