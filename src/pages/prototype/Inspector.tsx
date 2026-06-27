@@ -234,6 +234,7 @@ export const DEFAULT_HS_REQUIREMENTS: ComplianceRequirement[] = [
     versionSource: "hobson",
     areaId: "health_safety",
     documentOnFile: "How-to-Rent-2025-edition.pdf",
+  },
   {
     id: rid("pump"),
     docType: "Pump service certificate",
