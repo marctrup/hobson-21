@@ -1709,6 +1709,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
         trigger,
         action: actionSummary,
         scopeLabel: b.scopeLabel || "Not yet set",
+        scopeDetail: b.scopeDetail,
         owner: b.owner || { kind: "all_teams" },
         lastAdjusted: "just now",
         stepCount: b.steps.length,
