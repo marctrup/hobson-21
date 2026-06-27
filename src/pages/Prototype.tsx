@@ -1760,9 +1760,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
         lastAdjusted: "just now",
         stepCount: b.steps.length,
         justBuilt: true,
-      };
-      setWorkflows((arr) => [wf, ...arr.map((w) => ({ ...w, justBuilt: false }))]);
-      const builtId = magNewId("mb");
+        stepTemplates: collectStepTemplates(b.steps),
       setMagicianEvents((e) => [...e, { kind: "built", id: builtId, workflowId: id, name: wf.name, stepCount: b.steps.length }]);
       setTimeout(() => magAsk(`Built — '${wf.name}', a ${b.steps.length}-step workflow ending in your approval. You'll find it pinned on the right.`), 500);
       return null;
