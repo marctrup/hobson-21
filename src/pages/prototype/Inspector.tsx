@@ -1190,12 +1190,24 @@ export function InspectorWorkArea({
   });
   const [globalRecal, setGlobalRecal] = useState<RecalibrationState | null>(null);
 
+  // Single source of truth for "awaiting your confirmation" — shared by Notes,
+  // schedule context, and recalibration cards. Seeded from the scripted last check.
+  const [pending, setPending] = useState<{ pst: boolean; howToRent: boolean }>({ pst: true, howToRent: true });
+
+  function noteChange(change: RecalibrationChange, decision: "applied" | "dismissed") {
+    // Both decisions clear the pending flag (user has made a call).
+    if (change.kind === "document_updated") setPending((p) => ({ ...p, pst: false }));
+    if (change.kind === "edition_updated")  setPending((p) => ({ ...p, howToRent: false }));
+  }
+
   function runFullCheck() {
     const next = buildFullRecalibration(rules);
     setGlobalRecal(next);
     window.setTimeout(() => {
       setGlobalRecal((cur) => (cur ? { ...cur, phase: "results" } : cur));
       setLastChecked(new Date());
+      // A fresh check re-surfaces the same scripted pending items.
+      setPending({ pst: true, howToRent: true });
     }, 1500);
   }
 
