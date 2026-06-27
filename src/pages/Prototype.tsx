@@ -3967,6 +3967,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                 onUpdateRules={setInspectorConfirmed}
                 onSetUpAnotherArea={inspectorBuildAnother}
                 buildActive={!!inspectorProposed || inspectorResearching || inspectorArea !== null}
+                onShowMe={inspectorShowMe}
               />
             );
           }
