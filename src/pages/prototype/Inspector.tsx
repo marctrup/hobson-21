@@ -884,6 +884,7 @@ export function InspectorChat(props: InspectorChatProps) {
           onAdd={onAddRequirement}
           onConfirm={onConfirm}
           onCancel={onCancel}
+          area={area}
         />
       )}
     </div>
