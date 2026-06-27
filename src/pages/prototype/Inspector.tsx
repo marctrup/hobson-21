@@ -1952,13 +1952,14 @@ function InspectorNotesStrip({
  * re-checks another.
  */
 function AreaPanel({
-  areaId, rules, onUpdateRules, defaultOpen, onShowMe,
+  areaId, rules, onUpdateRules, defaultOpen, onShowMe, lastChecked,
 }: {
   areaId: ComplianceArea;
   rules: ComplianceRequirement[];
   onUpdateRules?: React.Dispatch<React.SetStateAction<ComplianceRequirement[]>>;
   defaultOpen: boolean;
   onShowMe?: (areaId: ComplianceArea, group: RequirementCategory) => void;
+  lastChecked: Date;
 }) {
   const def = AREA_DEFS[areaId];
   const [open, setOpen] = useState(defaultOpen);
@@ -1970,26 +1971,10 @@ function AreaPanel({
   const [recal, setRecal] = useState<Record<RequirementCategory, RecalibrationState | null>>({
     certification: null, notice: null, contract: null,
   });
-  const [frequency, setFrequency] = useState<CheckFrequency>("quarterly");
-  const [lastChecked, setLastChecked] = useState<Date>(() => {
-    const d = new Date(); d.setDate(d.getDate() - 14); return d;
-  });
-  const [globalRecal, setGlobalRecal] = useState<RecalibrationState | null>(null);
 
   function applyArea<T extends RecalibrationState>(s: T): T {
     return { ...s, unchangedNote: def.unchangedNote };
   }
-
-  function runFullCheck() {
-    const next = applyArea(buildFullRecalibration(rules));
-    setGlobalRecal(next);
-    window.setTimeout(() => {
-      setGlobalRecal((cur) => (cur ? { ...cur, phase: "results" } : cur));
-      setLastChecked(new Date());
-    }, 1500);
-  }
-
-  function closeGlobal() { setGlobalRecal(null); }
 
   function applyDecision(change: RecalibrationChange) {
     if (!onUpdateRules) return;
@@ -2000,11 +1985,6 @@ function AreaPanel({
       if (change.kind === "frequency_changed") return { ...r, durationValue: change.newValue, durationUnit: change.newUnit };
       return r;
     }));
-  }
-
-  function resolveGlobal(changeId: string, decision: "applied" | "dismissed", change: RecalibrationChange) {
-    setGlobalRecal((cur) => cur ? { ...cur, resolved: { ...cur.resolved, [changeId]: decision } } : cur);
-    if (decision === "applied") applyDecision(change);
   }
 
   function startRecalibrate(group: RequirementCategory) {
@@ -2066,21 +2046,6 @@ function AreaPanel({
 
       {open && (
         <div id={panelId} className="px-4 pb-4 space-y-4 border-t border-slate-100 pt-4">
-          <ScheduleHeader
-            frequency={frequency}
-            onFrequency={setFrequency}
-            lastChecked={lastChecked}
-            onCheckNow={runFullCheck}
-            busy={!!globalRecal && globalRecal.phase === "researching"}
-          />
-          {globalRecal && (
-            <RecalibrationPanel
-              state={globalRecal}
-              onResolve={resolveGlobal}
-              onDismissAll={closeGlobal}
-            />
-          )}
-
           <div className="space-y-4">
             <GroupSection
               group="certification"
@@ -2092,36 +2057,33 @@ function AreaPanel({
               onClose={() => closeRecal("certification")}
               onShowMe={onShowMe ? () => onShowMe(areaId, "certification") : undefined}
             />
-            {notices.length > 0 && (
-              <GroupSection
-                group="notice"
-                rules={notices}
-                onUpdateRule={updateRule}
-                onRecalibrate={() => startRecalibrate("notice")}
-                recal={recal.notice}
-                onResolve={(id, d, c) => resolveChange("notice", id, d, c)}
-                onClose={() => closeRecal("notice")}
-                onShowMe={onShowMe ? () => onShowMe(areaId, "notice") : undefined}
-              />
-            )}
-            {contracts.length > 0 && (
-              <GroupSection
-                group="contract"
-                rules={contracts}
-                onUpdateRule={updateRule}
-                onRecalibrate={() => startRecalibrate("contract")}
-                recal={recal.contract}
-                onResolve={(id, d, c) => resolveChange("contract", id, d, c)}
-                onClose={() => closeRecal("contract")}
-                onShowMe={onShowMe ? () => onShowMe(areaId, "contract") : undefined}
-              />
-            )}
+            <GroupSection
+              group="notice"
+              rules={notices}
+              onUpdateRule={updateRule}
+              onRecalibrate={() => startRecalibrate("notice")}
+              recal={recal.notice}
+              onResolve={(id, d, c) => resolveChange("notice", id, d, c)}
+              onClose={() => closeRecal("notice")}
+              onShowMe={onShowMe ? () => onShowMe(areaId, "notice") : undefined}
+            />
+            <GroupSection
+              group="contract"
+              rules={contracts}
+              onUpdateRule={updateRule}
+              onRecalibrate={() => startRecalibrate("contract")}
+              recal={recal.contract}
+              onResolve={(id, d, c) => resolveChange("contract", id, d, c)}
+              onClose={() => closeRecal("contract")}
+              onShowMe={onShowMe ? () => onShowMe(areaId, "contract") : undefined}
+            />
           </div>
         </div>
       )}
     </section>
   );
 }
+
 
 /* ---------------- Build CTA — sibling of Magician's "Create a workflow" ---------------- */
 function AddAreaBox({ onClick, disabled }: { onClick: () => void; disabled?: boolean }) {
