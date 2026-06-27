@@ -2015,14 +2015,32 @@ function GroupSection({
 }) {
   const meta = GROUP_META[group];
   const busy = !!recal && recal.phase === "researching";
+  const [open, setOpen] = useState(false);
+  const panelId = `group-panel-${group}`;
   return (
     <section className="rounded-xl border border-slate-200 bg-white">
-      <header className="flex items-center justify-between gap-3 px-4 py-3 border-b border-slate-100">
-        <div className="min-w-0">
-          <div className="text-[13px] font-semibold text-slate-900">{meta.label}</div>
-          <div className="text-[11px] text-slate-500">{meta.helper}</div>
-        </div>
-        <div className="flex items-center gap-1.5 shrink-0">
+      <div className="flex items-stretch">
+        <button
+          type="button"
+          aria-expanded={open}
+          aria-controls={panelId}
+          onClick={() => setOpen((v) => !v)}
+          className="flex-1 flex items-center gap-2 px-4 py-3 text-left hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED] rounded-l-xl min-w-0"
+        >
+          <svg
+            className={`w-4 h-4 text-[#5B21B6] shrink-0 transition-transform ${open ? "rotate-90" : ""}`}
+            viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden
+          >
+            <path d="M9 6l6 6-6 6" />
+          </svg>
+          <div className="min-w-0">
+            <div className="text-[13px] font-semibold text-slate-900 truncate">
+              {meta.label} <span className="text-slate-500 font-normal">· {rules.length}</span>
+            </div>
+            <div className="text-[11px] text-slate-500 truncate">{meta.helper}</div>
+          </div>
+        </button>
+        <div className="flex items-center gap-1.5 shrink-0 px-3">
           {onShowMe && (
             <button
               type="button"
@@ -2049,41 +2067,43 @@ function GroupSection({
             {busy ? "Re-checking…" : "Update"}
           </button>
         </div>
-      </header>
-      <div className="p-3 space-y-2">
-        {rules.length === 0 ? (
-          <div className="text-[12px] text-slate-500 italic px-1 py-3">No items in this group yet.</div>
-        ) : (
-          <div className="grid gap-2 sm:grid-cols-2">
-            {rules.map((r) => (
-              <div key={r.id} className="rounded-lg border border-slate-200 bg-white p-3">
-                <div className="flex items-start justify-between gap-2 mb-1">
-                  <div className="text-[13px] font-semibold text-slate-900 truncate">{r.docType}</div>
-                  <BasisBadge basis={r.basis} />
-                </div>
-                {r.category === "certification" ? (
-                  <>
-                    <div className="text-[12px] text-slate-700">
-                      Renews every <span className="font-medium">{r.durationValue} {r.durationUnit.toLowerCase()}</span>
-                    </div>
-                    <div className="text-[11px] text-slate-500 mt-0.5">
-                      Anchor: {r.anchor} · scope: {r.appliesTo === "building" ? "building" : "per let unit"}
-                    </div>
-                  </>
-                ) : (
-                  <>
-                    {r.description && <div className="text-[12px] text-slate-700">{r.description}</div>}
-                    <VersionSourcePicker req={r} onChange={(patch) => onUpdateRule(r.id, patch)} compact />
-                  </>
-                )}
-              </div>
-            ))}
-          </div>
-        )}
-        {recal && (
-          <RecalibrationPanel state={recal} onResolve={onResolve} onDismissAll={onClose} />
-        )}
       </div>
+      {open && (
+        <div id={panelId} className="p-3 space-y-2 border-t border-slate-100">
+          {rules.length === 0 ? (
+            <div className="text-[12px] text-slate-500 italic px-1 py-3">No items in this group yet.</div>
+          ) : (
+            <div className="grid gap-2 sm:grid-cols-2">
+              {rules.map((r) => (
+                <div key={r.id} className="rounded-lg border border-slate-200 bg-white p-3">
+                  <div className="flex items-start justify-between gap-2 mb-1">
+                    <div className="text-[13px] font-semibold text-slate-900 truncate">{r.docType}</div>
+                    <BasisBadge basis={r.basis} />
+                  </div>
+                  {r.category === "certification" ? (
+                    <>
+                      <div className="text-[12px] text-slate-700">
+                        Renews every <span className="font-medium">{r.durationValue} {r.durationUnit.toLowerCase()}</span>
+                      </div>
+                      <div className="text-[11px] text-slate-500 mt-0.5">
+                        Anchor: {r.anchor} · scope: {r.appliesTo === "building" ? "building" : "per let unit"}
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      {r.description && <div className="text-[12px] text-slate-700">{r.description}</div>}
+                      <VersionSourcePicker req={r} onChange={(patch) => onUpdateRule(r.id, patch)} compact />
+                    </>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
+          {recal && (
+            <RecalibrationPanel state={recal} onResolve={onResolve} onDismissAll={onClose} />
+          )}
+        </div>
+      )}
     </section>
   );
 }

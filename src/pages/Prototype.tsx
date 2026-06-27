@@ -11,6 +11,7 @@ import characterProfessor from "@/assets/prototype/character-professor.png";
 import characterBroker from "@/assets/prototype/character-broker.png";
 import characterKeeper from "@/assets/prototype/character-keeper.png";
 import { DocumentsLibrary } from "@/components/prototype/DocumentsLibrary";
+import { CollapsibleSection } from "@/components/prototype/CollapsibleSection";
 import { cn } from "@/lib/utils";
 import SummaryCard, { SummaryActions } from "./prototype/SummaryCard";
 import { summaryIntroFor, summaryQuestionFor, type SummaryScope } from "./prototype/summaryData";
@@ -10636,17 +10637,37 @@ function MagicianWorkArea({ character, workflows, onCreate, onAdjust, onView, on
                   <div className="text-[11px] uppercase tracking-wide text-slate-500 font-semibold mb-2 px-1">{g.label}</div>
                 )}
                 <div className="grid gap-3" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(340px, 1fr))" }}>
-                  {g.items.map((w) => (
-                    <WorkflowCard
-                      key={w.id}
-                      w={w}
-                      onAdjust={() => onAdjust(w.id)}
-                      onView={() => onView(w.id)}
-                      onResume={w.draftState && onResume ? () => onResume(w.id) : undefined}
-                      onDiscard={w.draftState && onDiscard ? () => onDiscard(w.id) : undefined}
-                      onSimulate={onSimulate ? () => onSimulate(w.id) : undefined}
-                    />
-                  ))}
+                  {g.items.map((w) => {
+                    const statusLabel = w.draftState ? "Draft · paused" : (w.status === "draft" ? "Draft" : "Built");
+                    return (
+                      <CollapsibleSection
+                        key={w.id}
+                        className="bg-white border border-slate-200/70 rounded-lg shadow-[0_0.5px_0_rgba(0,0,0,0.04)]"
+                        headerClassName="w-full flex items-center gap-2.5 px-3 py-2.5 text-left hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED] rounded-lg"
+                        contentClassName="px-2 pb-2 pt-2 border-t border-slate-100"
+                        ariaLabel={`Toggle ${w.name}`}
+                        summary={
+                          <div className="flex items-center gap-2 min-w-0">
+                            <div className="text-[13px] font-semibold text-slate-900 truncate">{w.name}</div>
+                            <span className="text-slate-400 shrink-0">·</span>
+                            <div className="text-[11.5px] text-slate-500 truncate">{w.scopeLabel}</div>
+                            <span className="ml-auto shrink-0 inline-flex items-center px-1.5 py-0.5 rounded-full bg-slate-100 text-slate-600 text-[10px] font-semibold uppercase tracking-wide">
+                              {statusLabel}
+                            </span>
+                          </div>
+                        }
+                      >
+                        <WorkflowCard
+                          w={w}
+                          onAdjust={() => onAdjust(w.id)}
+                          onView={() => onView(w.id)}
+                          onResume={w.draftState && onResume ? () => onResume(w.id) : undefined}
+                          onDiscard={w.draftState && onDiscard ? () => onDiscard(w.id) : undefined}
+                          onSimulate={onSimulate ? () => onSimulate(w.id) : undefined}
+                        />
+                      </CollapsibleSection>
+                    );
+                  })}
                 </div>
               </div>
             ))}
@@ -10683,8 +10704,8 @@ function WorkflowCard({ w, onAdjust, onView, onResume, onDiscard, onSimulate }: 
     <article
       className={
         isPausedDraft
-          ? "rounded-lg p-4 flex flex-col gap-3 border-2 border-dashed border-slate-300 bg-slate-50/60"
-          : "bg-white border border-slate-200/70 rounded-lg p-4 shadow-[0_0.5px_0_rgba(0,0,0,0.04)] flex flex-col gap-3"
+          ? "rounded-lg p-4 flex flex-col gap-3 border border-dashed border-slate-300 bg-slate-50/60"
+          : "rounded-lg p-3 flex flex-col gap-3 bg-white"
       }
       aria-label={isPausedDraft ? `${w.name} — draft in progress, unfinished` : w.name}
     >
@@ -11389,20 +11410,29 @@ function BrokerWorkArea({ character, contacts, onAdd }: {
           if (g.items.length === 0) return null;
           const meta = BROKER_TYPE_META[g.type];
           return (
-            <section key={g.type} className="mb-6 last:mb-0">
-              <div className="flex items-center gap-2 mb-2 px-1">
-                <span className={`inline-flex items-center justify-center w-6 h-6 rounded-md ${meta.bg} ${meta.text} ring-1 ${meta.ring}`} aria-hidden>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">{meta.iconPath}</svg>
-                </span>
-                <h3 className="text-[11px] uppercase tracking-wide font-semibold text-slate-600">{meta.label}</h3>
-                <span className="text-[11px] text-slate-400">· {g.items.length}</span>
-              </div>
-              <div className="grid gap-3" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))" }}>
-                {g.items.map((c) => (
-                  <BrokerContactCard key={c.id} contact={c} />
-                ))}
-              </div>
-            </section>
+            <div key={g.type} className="mb-3 last:mb-0">
+              <CollapsibleSection
+                className="bg-white border border-slate-200 rounded-xl"
+                headerClassName="w-full flex items-center gap-2.5 px-4 py-3 text-left hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED] rounded-xl"
+                contentClassName="px-4 pb-4 pt-3 border-t border-slate-100"
+                ariaLabel={`Toggle ${meta.label}`}
+                summary={
+                  <div className="flex items-center gap-2 min-w-0">
+                    <span className={`inline-flex items-center justify-center w-6 h-6 rounded-md ${meta.bg} ${meta.text} ring-1 ${meta.ring} shrink-0`} aria-hidden>
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">{meta.iconPath}</svg>
+                    </span>
+                    <h3 className="text-[12px] uppercase tracking-wide font-semibold text-slate-700 truncate">{meta.label}</h3>
+                    <span className="text-[11px] text-slate-500 shrink-0">· {g.items.length}</span>
+                  </div>
+                }
+              >
+                <div className="grid gap-3" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))" }}>
+                  {g.items.map((c) => (
+                    <BrokerContactCard key={c.id} contact={c} />
+                  ))}
+                </div>
+              </CollapsibleSection>
+            </div>
           );
         })}
       </div>
