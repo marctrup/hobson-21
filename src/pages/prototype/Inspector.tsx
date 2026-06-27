@@ -76,6 +76,7 @@ export const DEFAULT_HS_REQUIREMENTS: ComplianceRequirement[] = [
     durationUnit: "Years",
     anchor: "certificate date",
     appliesTo: "unit",
+    category: "certification",
   },
   {
     id: rid("eicr"),
@@ -86,6 +87,7 @@ export const DEFAULT_HS_REQUIREMENTS: ComplianceRequirement[] = [
     durationUnit: "Years",
     anchor: "inspection date",
     appliesTo: "unit",
+    category: "certification",
   },
   {
     id: rid("epc"),
@@ -96,6 +98,7 @@ export const DEFAULT_HS_REQUIREMENTS: ComplianceRequirement[] = [
     durationUnit: "Years",
     anchor: "certificate date",
     appliesTo: "unit",
+    category: "certification",
   },
   {
     id: rid("firedoor"),
@@ -106,6 +109,7 @@ export const DEFAULT_HS_REQUIREMENTS: ComplianceRequirement[] = [
     durationUnit: "Months",
     anchor: "last inspection",
     appliesTo: "building",
+    category: "certification",
   },
   {
     id: rid("firealarm"),
@@ -116,8 +120,49 @@ export const DEFAULT_HS_REQUIREMENTS: ComplianceRequirement[] = [
     durationUnit: "Months",
     anchor: "last test",
     appliesTo: "building",
+    category: "certification",
+  },
+  {
+    id: rid("s13"),
+    docType: "Section 13 rent-increase notice (template)",
+    matchTerms: ["section 13", "s13"],
+    basis: "applicable",
+    durationValue: 1,
+    durationUnit: "Years",
+    anchor: "template version date",
+    appliesTo: "unit",
+    category: "notice",
+    description: "Held template · used when proposing a rent increase",
+    versionSource: "hobson",
+  },
+  {
+    id: rid("pst"),
+    docType: "Periodic Tenancy agreement (PST)",
+    matchTerms: ["tenancy agreement", "ast", "pst"],
+    basis: "required",
+    durationValue: 1,
+    durationUnit: "Years",
+    anchor: "agreement date",
+    appliesTo: "unit",
+    category: "contract",
+    description: "Must reflect current law · Tenancy Reform Act",
+    versionSource: "hobson",
+  },
+  {
+    id: rid("howtorent"),
+    docType: "How to Rent guide",
+    matchTerms: ["how to rent"],
+    basis: "required",
+    durationValue: 1,
+    durationUnit: "Years",
+    anchor: "edition date",
+    appliesTo: "unit",
+    category: "contract",
+    description: "Statutory guide · must be the current gov.uk edition",
+    versionSource: "hobson",
   },
 ];
+
 
 /* ---------------- Augment compliance rows with rule-driven flagging ---------------- */
 
