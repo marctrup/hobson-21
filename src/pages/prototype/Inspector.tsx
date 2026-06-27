@@ -2253,16 +2253,6 @@ export function InspectorWorkArea({
             />
           )}
 
-          {/* (d) How this connects */}
-          <section className="rounded-xl border border-[#7C3AED]/20 bg-[#FAF8FF] p-4">
-            <div className="text-[12px] font-semibold text-[#5B21B6] mb-1">How this connects</div>
-            <p className="text-[12px] text-slate-700 leading-relaxed">
-              The Professor extracts dates from your documents. I check them against the rules in each area below.
-              Anything missing or out of date appears in the Compliance summary — a missing
-              <span className="font-semibold"> legally required</span> document is flagged accordingly.
-              The standing check above governs the whole board; use <span className="font-semibold">Update</span> on any group for a one-off re-check of that section.
-            </p>
-          </section>
 
           {/* (e) Areas */}
           {rules.length === 0 ? (
