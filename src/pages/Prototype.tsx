@@ -279,10 +279,26 @@ type Workflow = {
   whenLabel?: string;
   visibility?: "personal" | "company";
   draftState?: MagBuildState;
+  stepTemplates?: Record<string, StepTemplate>; // keyed by step id; doc-producing steps may use the user's own template
 };
 
-type MagBuildStep = { id: string; label: string; phrase: string; uid: string };
+type StepTemplate = { mode: "standard" | "own"; filename?: string };
+
+type MagBuildStep = { id: string; label: string; phrase: string; uid: string; template?: StepTemplate };
 type MagBuildStepKey = "intake" | "q1" | "q2" | "q3" | "q3b" | "q4" | "q5" | "q6";
+
+// Steps that produce an output document — these get the "Template: standard / own" affordance.
+const DOC_STEP_IDS = new Set(["section13", "email", "surveyor", "draft_notice", "access_notice", "summary_review"]);
+const DOC_STEP_LABEL_RE = /\b(section\s*13|notice|letter|email|instruction|memorandum|report|draft|prepare|create)\b/i;
+const NON_DOC_STEP_LABEL_RE = /\b(read|gather|audit|outline|notify|schedule|log|review|check|monitor|watch|confirm)\b/i;
+function isDocStep(s: { id: string; label: string }): boolean {
+  if (DOC_STEP_IDS.has(s.id)) return true;
+  if (s.id === "custom") {
+    return DOC_STEP_LABEL_RE.test(s.label) && !NON_DOC_STEP_LABEL_RE.test(s.label);
+  }
+  return false;
+}
+function templateOf(s: MagBuildStep): StepTemplate { return s.template ?? { mode: "standard" }; }
 type MagEditField = "intake" | "watch" | "scope" | "scopeUnit" | "owner";
 
 type ScopeLevel = "portfolio" | "properties" | "units";
