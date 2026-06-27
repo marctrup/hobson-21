@@ -1655,7 +1655,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
         intake: "intake",
         watch: "q1",
         scope: "q3",
-        scopeUnit: "q3b",
+        scopeUnit: "q3",
         owner: "q4",
       };
       return { ...b, step: stepFor[field], editing: { field, returnStep } };
@@ -1671,12 +1671,9 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
   const magGoBack = () => {
     setMagBuild((b) => {
       if (!b) return b;
-      const order: MagBuildStepKey[] = ["intake", "q3", b.scope === "unit" ? "q3b" : "q3", "q4", "q5", "q6"];
-      // dedupe consecutive
-      const seen: MagBuildStepKey[] = [];
-      for (const s of order) if (seen[seen.length - 1] !== s) seen.push(s);
-      const i = seen.indexOf(b.step);
-      const prev = i > 0 ? seen[i - 1] : "intake";
+      const order: MagBuildStepKey[] = ["intake", "q3", "q4", "q5", "q6"];
+      const i = order.indexOf(b.step);
+      const prev = i > 0 ? order[i - 1] : "intake";
       return { ...b, step: prev, editing: undefined };
     });
   };
