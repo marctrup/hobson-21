@@ -387,60 +387,7 @@ const MAG_DEFAULTS_BY_WATCH: Record<"rent_reviews" | "compliance" | "notices" | 
   ],
 };
 
-const SEED_WORKFLOWS: Workflow[] = [
-  {
-    id: "wf-2",
-    name: "Compliance renewals",
-    purpose: "Keeps certificates current across the portfolio.",
-    icon: "shield", tone: "teal", status: "built",
-    trigger: "a certificate nears its expiry window",
-    action: "find your contractor, draft the inspection and access emails, and hold them for your approval",
-    scopeLabel: "All properties",
-    owner: { kind: "all_teams" },
-    lastAdjusted: "3 Jun 2026",
-    steps: MAG_DEFAULTS_BY_WATCH.compliance.map((s) => ({ id: s.id, label: s.label, phrase: s.phrase })),
-  },
-  {
-    id: "wf-3",
-    name: "Notice deadlines",
-    purpose: "Catches break and notice dates before they slip.",
-    icon: "alert", tone: "amber", status: "draft",
-    trigger: "a break or notice deadline approaches",
-    action: "prepare the notice in good time so the right is never lost, ready for you to serve",
-    scopeLabel: "Stanley House (all units) + Flat 2, Nugent Terrace",
-    owner: { kind: "person", name: "James Okoro", role: "Lease Manager", initials: "JO" },
-    steps: MAG_DEFAULTS_BY_WATCH.notices.map((s) => ({ id: s.id, label: s.label, phrase: s.phrase })),
-  },
-  {
-    id: "wf-4",
-    name: "Notice effect watch",
-    purpose: "Anticipates what happens when a served notice lands.",
-    icon: "bell", tone: "purple", status: "built",
-    trigger: "a served notice is about to take effect",
-    action: "explain what's about to happen and prepare the next step for your approval",
-    scopeLabel: "3 properties \u00b7 14 units",
-    scopeDetail: [
-      "Stanley House — all 8 units",
-      "5 Nugent Terrace — Flat 1, Flat 2, Flat 3, Flat 4",
-      "Beaufort Mews — Unit A, Unit B",
-    ],
-    owner: { kind: "person", name: "Sarah Chen", role: "Asset Manager", initials: "SC" },
-    lastAdjusted: "28 May 2026",
-    steps: MAG_DEFAULTS_BY_WATCH.notices.map((s) => ({ id: s.id, label: s.label, phrase: s.phrase })),
-  },
-  {
-    id: "wf-5",
-    name: "EPC renewals",
-    purpose: "Keeps EPCs valid and bookings booked.",
-    icon: "leaf", tone: "teal", status: "built",
-    trigger: "an EPC nears expiry",
-    action: "instruct an accredited assessor and prepare access notes for your approval",
-    scopeLabel: "All properties",
-    owner: { kind: "all_teams" },
-    lastAdjusted: "1 Jun 2026",
-    steps: MAG_DEFAULTS_BY_WATCH.compliance.map((s) => ({ id: s.id, label: s.label, phrase: s.phrase })),
-  },
-];
+const SEED_WORKFLOWS: Workflow[] = [];
 
 const MAGICIAN_STAFF: { name: string; role: string; initials: string }[] = [
   { name: "Sarah Chen", role: "Asset Manager", initials: "SC" },
