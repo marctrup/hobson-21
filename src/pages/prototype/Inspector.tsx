@@ -2058,7 +2058,7 @@ function AreaPanel({
               {def.label} <span className="text-slate-500 font-normal">· {def.sublabel}</span>
             </div>
             <div className="text-[11px] text-slate-500 truncate">
-              {rules.length} requirement{rules.length === 1 ? "" : "s"} · {required} legally required · {applicable} where applicable · last checked {fmtDate(lastChecked)}
+              {rules.length} requirement{rules.length === 1 ? "" : "s"} · {required} legally required · {business} business · {applicable} where applicable · last checked {fmtDate(lastChecked)}
             </div>
           </div>
         </div>
