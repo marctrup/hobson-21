@@ -354,8 +354,11 @@ export function augmentComplianceRows(
 ): ComplianceRow[] {
   if (rules.length === 0) return rows;
 
-  const required = rules.filter((r) => r.basis === "required");
-  if (required.length === 0) return rows;
+  // Both legal ("required") and "business" basis flag missing/overdue.
+  // They differ in severity — legal=red, business=amber — surfaced via
+  // separate ComplianceRow flags. "applicable" never flags.
+  const flagging = rules.filter((r) => r.basis === "required" || r.basis === "business");
+  if (flagging.length === 0) return rows;
 
   const matches = (docName: string | null | undefined, rule: ComplianceRequirement) => {
     if (!docName) return false;
@@ -363,14 +366,17 @@ export function augmentComplianceRows(
     return rule.matchTerms.some((t) => lower.includes(t));
   };
 
+  const tag = (rule: ComplianceRequirement): Partial<ComplianceRow> =>
+    rule.basis === "required" ? { legallyRequired: true } : { businessRequired: true };
+
   const upgraded = rows.map((row): ComplianceRow => {
     if (!row.missing || !row.documentName) return row;
-    const rule = required.find((r) => matches(row.documentName, r));
+    const rule = flagging.find((r) => matches(row.documentName, r));
     if (!rule) return row;
-    return { ...row, legallyRequired: true };
+    return { ...row, ...tag(rule) };
   });
 
-  // Synthesise missing rows for required rules with no presence in scope.
+  // Synthesise missing rows for flagging rules with no presence in scope.
   const synthesised: ComplianceRow[] = [];
   const propertiesInScope = scope.level === "portfolio"
     ? SUMMARY_PROPERTIES.map((p) => p.id)
@@ -381,10 +387,8 @@ export function augmentComplianceRows(
     if (!propertyMeta) continue;
     const propertyName = propertyMeta.name;
 
-    for (const rule of required) {
+    for (const rule of flagging) {
       if (rule.appliesTo === "building") {
-        // Only synthesise building rows when viewing the whole property/portfolio,
-        // not a single unit view.
         if (scope.level === "unit") continue;
         const has = upgraded.some(
           (r) => r.propertyId === propertyId && r.unitId === null && matches(r.documentName, rule),
@@ -399,13 +403,13 @@ export function augmentComplianceRows(
             effectiveDate: null,
             expiryDate: null,
             missing: true,
-            legallyRequired: true,
+            ...tag(rule),
           });
         }
         continue;
       }
 
-      // unit-level required rule
+      // unit-level rule
       const letUnits = occupationalForScope(
         scope.level === "unit"
           ? scope
@@ -428,7 +432,7 @@ export function augmentComplianceRows(
             effectiveDate: null,
             expiryDate: null,
             missing: true,
-            legallyRequired: true,
+            ...tag(rule),
           });
         }
       }
