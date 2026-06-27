@@ -133,6 +133,7 @@ export const DEFAULT_HS_REQUIREMENTS: ComplianceRequirement[] = [
     anchor: "certificate date",
     appliesTo: "unit",
     category: "certification",
+    areaId: "health_safety",
   },
   {
     id: rid("eicr"),
@@ -144,6 +145,7 @@ export const DEFAULT_HS_REQUIREMENTS: ComplianceRequirement[] = [
     anchor: "inspection date",
     appliesTo: "unit",
     category: "certification",
+    areaId: "health_safety",
   },
   {
     id: rid("epc"),
@@ -155,6 +157,7 @@ export const DEFAULT_HS_REQUIREMENTS: ComplianceRequirement[] = [
     anchor: "certificate date",
     appliesTo: "unit",
     category: "certification",
+    areaId: "health_safety",
   },
   {
     id: rid("firedoor"),
@@ -166,6 +169,7 @@ export const DEFAULT_HS_REQUIREMENTS: ComplianceRequirement[] = [
     anchor: "last inspection",
     appliesTo: "building",
     category: "certification",
+    areaId: "health_safety",
   },
   {
     id: rid("firealarm"),
@@ -177,6 +181,7 @@ export const DEFAULT_HS_REQUIREMENTS: ComplianceRequirement[] = [
     anchor: "last test",
     appliesTo: "building",
     category: "certification",
+    areaId: "health_safety",
   },
   {
     id: rid("s13"),
@@ -190,6 +195,7 @@ export const DEFAULT_HS_REQUIREMENTS: ComplianceRequirement[] = [
     category: "notice",
     description: "Held template · used when proposing a rent increase",
     versionSource: "hobson",
+    areaId: "health_safety",
   },
   {
     id: rid("pst"),
@@ -203,6 +209,7 @@ export const DEFAULT_HS_REQUIREMENTS: ComplianceRequirement[] = [
     category: "contract",
     description: "Must reflect current law · Tenancy Reform Act",
     versionSource: "hobson",
+    areaId: "health_safety",
   },
   {
     id: rid("howtorent"),
@@ -216,6 +223,73 @@ export const DEFAULT_HS_REQUIREMENTS: ComplianceRequirement[] = [
     category: "contract",
     description: "Statutory guide · must be the current gov.uk edition",
     versionSource: "hobson",
+    areaId: "health_safety",
+  },
+];
+
+/** Scripted Financial set — demonstrable built path for the prototype. */
+export const DEFAULT_FINANCIAL_REQUIREMENTS: ComplianceRequirement[] = [
+  {
+    id: rid("cmp"),
+    docType: "Client Money Protection (CMP) certificate",
+    matchTerms: ["cmp", "client money"],
+    basis: "required",
+    durationValue: 1,
+    durationUnit: "Years",
+    anchor: "membership renewal",
+    appliesTo: "building",
+    category: "certification",
+    areaId: "financial",
+  },
+  {
+    id: rid("pi"),
+    docType: "Professional Indemnity insurance",
+    matchTerms: ["professional indemnity", "pi insurance"],
+    basis: "required",
+    durationValue: 1,
+    durationUnit: "Years",
+    anchor: "policy renewal",
+    appliesTo: "building",
+    category: "certification",
+    areaId: "financial",
+  },
+  {
+    id: rid("buildings"),
+    docType: "Buildings insurance",
+    matchTerms: ["buildings insurance"],
+    basis: "required",
+    durationValue: 1,
+    durationUnit: "Years",
+    anchor: "policy renewal",
+    appliesTo: "building",
+    category: "certification",
+    areaId: "financial",
+  },
+  {
+    id: rid("deposit"),
+    docType: "Tenancy Deposit Scheme registration",
+    matchTerms: ["tenancy deposit", "tds", "dps"],
+    basis: "required",
+    durationValue: 1,
+    durationUnit: "Years",
+    anchor: "scheme renewal",
+    appliesTo: "unit",
+    category: "certification",
+    areaId: "financial",
+  },
+  {
+    id: rid("prescribed"),
+    docType: "Prescribed Information (deposit)",
+    matchTerms: ["prescribed information"],
+    basis: "required",
+    durationValue: 1,
+    durationUnit: "Years",
+    anchor: "tenancy start",
+    appliesTo: "unit",
+    category: "contract",
+    description: "Served with the tenancy agreement when a deposit is taken",
+    versionSource: "hobson",
+    areaId: "financial",
   },
 ];
 
