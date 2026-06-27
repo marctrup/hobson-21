@@ -874,6 +874,22 @@ export function InspectorChat(props: InspectorChatProps) {
         if (ev.kind === "user") return <UserBubble key={ev.id} text={ev.text} />;
         if (ev.kind === "researching") return <ResearchingBubble key={ev.id} />;
         if (ev.kind === "confirmed") return <ConfirmedRecap key={ev.id} count={ev.count} />;
+        if (ev.kind === "show_me") {
+          const groupRules = confirmed.filter(
+            (r) => (r.areaId ?? "health_safety") === ev.areaId && r.category === ev.group,
+          );
+          return (
+            <ShowMeBubble
+              key={ev.id}
+              streamKey={ev.id}
+              areaId={ev.areaId}
+              group={ev.group}
+              rules={groupRules}
+              onUpdate={onUpdateConfirmed}
+              onAdd={onAddConfirmed}
+            />
+          );
+        }
         const prev = events[i - 1];
         const showAvatar = !prev || prev.kind === "user";
         return <InspectorBubble key={ev.id} text={ev.text} showAvatar={showAvatar} streamKey={ev.id} />;
