@@ -4439,21 +4439,8 @@ function AdminChat({ character, owl, professorEvents, onAssignProfessorType, bro
           )}
         </div>
       )}
-      {character?.id === "professor" && phase === "done" && (
-        <>
-          <div className="flex items-end gap-2">
-            <CharacterAvatar src={character.src} />
-            <div className="max-w-[420px] bg-[#EDE9FE] text-[#1F2330] text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-bl-md">
-              Hand me a document and I shall read it for you — a lease, a certificate, a notice. Upload one or several, and I will tell you what each one is and what it means for your portfolio.
-            </div>
-          </div>
-          <div className="flex items-end gap-2">
-            <CharacterAvatar src={character.src} />
-            <div className="max-w-[420px] bg-[#EDE9FE] text-[#1F2330] text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-bl-md">
-              Use <span className="font-semibold">"Upload documents"</span> below to begin — I'll take it from there.
-            </div>
-          </div>
-        </>
+      {character?.id === "professor" && phase === "done" && (!professorEvents || professorEvents.length === 0) && (
+        <ProfessorBuildInviteCard onUpload={(n) => onUploadDocuments?.(n)} />
       )}
       {character?.id === "professor" && phase === "done" && professorEvents && professorEvents.length > 0 && (
         <div className="flex flex-col" style={{ gap: CHAT_TURN_GAP_PX }}>
