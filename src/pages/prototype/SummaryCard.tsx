@@ -62,9 +62,11 @@ export default function SummaryCard({ kind, scope, onOpenUnit }: Props) {
         <ExportButton kind={kind} scope={scope} />
       </header>
       <div className="max-h-[460px] overflow-auto">
-        {kind === "occupational"
-          ? <OccupationalView scope={scope} onOpenUnit={onOpenUnit} />
-          : <ComplianceView scope={scope} onOpenUnit={onOpenUnit} />}
+        <div className="min-w-[640px]">
+          {kind === "occupational"
+            ? <OccupationalView scope={scope} onOpenUnit={onOpenUnit} />
+            : <ComplianceView scope={scope} onOpenUnit={onOpenUnit} />}
+        </div>
       </div>
     </div>
   );
@@ -101,9 +103,8 @@ function OccupationalView({ scope, onOpenUnit }: { scope: SummaryScope; onOpenUn
   const counts = occupationalCounts(rows);
   const grouped = scope.level === "portfolio";
 
-  const headers = grouped
-    ? ["Unit", "Tenant", "Landlord", "Rent", "Next Review", "Next Break"]
-    : ["Unit", "Tenant", "Landlord", "Rent", "Next Review", "Next Break"];
+  const headers = ["Unit", "Tenant", "Landlord", "Rent", "Next Review", "Next Break"];
+  const colWidths = ["16%", "24%", "22%", "14%", "12%", "12%"];
 
   const renderRow = (r: OccupationalRow) => (
     <tr
@@ -120,20 +121,23 @@ function OccupationalView({ scope, onOpenUnit }: { scope: SummaryScope; onOpenUn
       }}
       className="cursor-pointer border-b border-slate-100 last:border-b-0 hover:bg-[#F5F3FF] focus:bg-[#EDE9FE] focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#7C3AED]/40"
     >
-      <td className="px-3 py-2 align-middle">
+      <td className="px-3 py-2 align-middle truncate">
         <span className="text-slate-900 font-medium">{r.unitLabel}</span>
         {r.status === "Vacant" && <span className="ml-2"><VacantChip /></span>}
       </td>
-      <td className="px-3 py-2 align-middle">{r.status === "Vacant" ? ND : valOrND(r.tenantName)}</td>
-      <td className="px-3 py-2 align-middle">{valOrND(r.landlordName)}</td>
-      <td className="px-3 py-2 align-middle">{valOrND(r.currentRent)}</td>
-      <td className="px-3 py-2 align-middle">{valOrND(r.nextReviewDate)}</td>
-      <td className="px-3 py-2 align-middle">{valOrND(r.nextBreakDate)}</td>
+      <td className="px-3 py-2 align-middle truncate">{r.status === "Vacant" ? ND : valOrND(r.tenantName)}</td>
+      <td className="px-3 py-2 align-middle truncate">{valOrND(r.landlordName)}</td>
+      <td className="px-3 py-2 align-middle truncate">{valOrND(r.currentRent)}</td>
+      <td className="px-3 py-2 align-middle truncate">{valOrND(r.nextReviewDate)}</td>
+      <td className="px-3 py-2 align-middle truncate">{valOrND(r.nextBreakDate)}</td>
     </tr>
   );
 
   return (
-    <table className="w-full text-sm">
+    <table className="w-full text-[12.5px] table-fixed">
+      <colgroup>
+        {colWidths.map((w, i) => <col key={i} style={{ width: w }} />)}
+      </colgroup>
       <thead className="bg-slate-50 text-slate-500 text-[11px] uppercase tracking-wide">
         <tr>
           {headers.map((h) => (
@@ -148,8 +152,8 @@ function OccupationalView({ scope, onOpenUnit }: { scope: SummaryScope; onOpenUn
               const pc = occupationalCounts(prows);
               return (
                 <React.Fragment key={p.id}>
-                  <tr className="bg-slate-50/80">
-                    <td colSpan={headers.length} className="px-3 py-2 text-[11px] font-semibold uppercase tracking-wide text-slate-600">
+                  <tr className="bg-slate-100/80">
+                    <td colSpan={headers.length} className="px-3 py-2 text-[11px] font-semibold uppercase tracking-wide text-slate-700">
                       {p.name} · {p.area} · {p.unitsTotal} units · {pc.let} let · {pc.vacant} vacant
                     </td>
                   </tr>
@@ -180,7 +184,12 @@ function ComplianceView({ scope, onOpenUnit }: { scope: SummaryScope; onOpenUnit
   if (scope.level === "unit") {
     if (rows.length === 0) return <Empty label="No compliance records for this unit." />;
     return (
-      <table className="w-full text-sm">
+      <table className="w-full text-[12.5px] table-fixed">
+        <colgroup>
+          <col style={{ width: "44%" }} />
+          <col style={{ width: "28%" }} />
+          <col style={{ width: "28%" }} />
+        </colgroup>
         <thead className="bg-slate-50 text-slate-500 text-[11px] uppercase tracking-wide">
           <tr>
             <th className="px-3 py-2 text-left font-medium">Document</th>
@@ -189,18 +198,21 @@ function ComplianceView({ scope, onOpenUnit }: { scope: SummaryScope; onOpenUnit
           </tr>
         </thead>
         <tbody>
-          {rows.map((r, i) => <ComplianceTr key={i} r={r} />)}
+          {rows.map((r, i) => <ComplianceTr key={i} r={r} showUnit={false} unitColumn={false} />)}
         </tbody>
       </table>
     );
   }
 
   const grouped = scope.level === "portfolio";
+  const colWidths = ["22%", "38%", "20%", "20%"];
+  const headers = ["Unit / Where", "Document", "Effective", "Expiry"];
 
   const renderBlock = (propertyId: string) => {
     const p = propertyMeta(propertyId);
     const prows = rows.filter((r) => r.propertyId === propertyId);
     if (prows.length === 0) return null;
+    // Preserve order; group by unit but render unit label inline (first row only)
     const byUnit = new Map<string, ComplianceRow[]>();
     prows.forEach((r) => {
       const key = r.unitId ?? "__building__";
@@ -211,24 +223,23 @@ function ComplianceView({ scope, onOpenUnit }: { scope: SummaryScope; onOpenUnit
     return (
       <React.Fragment key={propertyId}>
         {grouped && (
-          <tr className="bg-slate-50/80">
-            <td colSpan={4} className="px-3 py-2 text-[11px] font-semibold uppercase tracking-wide text-slate-600">
+          <tr className="bg-slate-100/80">
+            <td colSpan={headers.length} className="px-3 py-2 text-[11px] font-semibold uppercase tracking-wide text-slate-700">
               {p?.name} · {p?.area} · {p?.unitsTotal} units
             </td>
           </tr>
         )}
-        {Array.from(byUnit.entries()).map(([key, urows]) => (
-          <React.Fragment key={key}>
-            <tr>
-              <td colSpan={4} className="px-3 pt-3 pb-1 text-[11px] uppercase tracking-wide text-slate-500">
-                {urows[0].unitLabel}
-              </td>
-            </tr>
-            {urows.map((r, i) => (
-              <ComplianceTr key={`${key}-${i}`} r={r} showUnit={false} onOpenUnit={onOpenUnit} />
-            ))}
-          </React.Fragment>
-        ))}
+        {Array.from(byUnit.entries()).flatMap(([key, urows]) =>
+          urows.map((r, i) => (
+            <ComplianceTr
+              key={`${key}-${i}`}
+              r={r}
+              showUnit
+              unitLabelVisible={i === 0}
+              onOpenUnit={onOpenUnit}
+            />
+          ))
+        )}
       </React.Fragment>
     );
   };
@@ -236,13 +247,15 @@ function ComplianceView({ scope, onOpenUnit }: { scope: SummaryScope; onOpenUnit
   const missing = rows.filter((r) => r.missing).length;
 
   return (
-    <table className="w-full text-sm">
+    <table className="w-full text-[12.5px] table-fixed">
+      <colgroup>
+        {colWidths.map((w, i) => <col key={i} style={{ width: w }} />)}
+      </colgroup>
       <thead className="bg-slate-50 text-slate-500 text-[11px] uppercase tracking-wide">
         <tr>
-          <th className="px-3 py-2 text-left font-medium">Where</th>
-          <th className="px-3 py-2 text-left font-medium">Document</th>
-          <th className="px-3 py-2 text-left font-medium">Effective</th>
-          <th className="px-3 py-2 text-left font-medium">Expiry</th>
+          {headers.map((h) => (
+            <th key={h} className="px-3 py-2 text-left font-medium">{h}</th>
+          ))}
         </tr>
       </thead>
       <tbody>
@@ -252,7 +265,7 @@ function ComplianceView({ scope, onOpenUnit }: { scope: SummaryScope; onOpenUnit
       </tbody>
       <tfoot>
         <tr>
-          <td colSpan={4} className="px-3 py-2 text-[11px] text-slate-500 bg-white border-t border-slate-100">
+          <td colSpan={headers.length} className="px-3 py-2 text-[11px] text-slate-500 bg-white border-t border-slate-100">
             {rows.length} records {missing > 0 && <>· <span className="text-rose-700 font-medium">{missing} flagged as not determined</span></>}
           </td>
         </tr>
@@ -261,7 +274,15 @@ function ComplianceView({ scope, onOpenUnit }: { scope: SummaryScope; onOpenUnit
   );
 }
 
-function ComplianceTr({ r, showUnit = true, onOpenUnit }: { r: ComplianceRow; showUnit?: boolean; onOpenUnit?: Props["onOpenUnit"] }) {
+function ComplianceTr({
+  r, showUnit = true, unitLabelVisible = true, unitColumn = true, onOpenUnit,
+}: {
+  r: ComplianceRow;
+  showUnit?: boolean;
+  unitLabelVisible?: boolean;
+  unitColumn?: boolean;
+  onOpenUnit?: Props["onOpenUnit"];
+}) {
   const clickable = !!onOpenUnit && r.unitId !== null;
   const onClick = () => {
     if (clickable && r.unitId) onOpenUnit?.(r.propertyId, r.unitId);
@@ -279,17 +300,18 @@ function ComplianceTr({ r, showUnit = true, onOpenUnit }: { r: ComplianceRow; sh
       }}
       className={`border-b border-slate-100 last:border-b-0 ${clickable ? "cursor-pointer hover:bg-[#F5F3FF] focus:bg-[#EDE9FE] focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#7C3AED]/40" : ""} ${r.missing ? "bg-rose-50/30" : ""}`}
     >
-      {showUnit && (
-        <td className="px-3 py-2 align-middle text-slate-700">{r.unitLabel}</td>
+      {showUnit && unitColumn && (
+        <td className="px-3 py-2 align-middle text-slate-700 truncate">
+          {unitLabelVisible ? <span className="font-medium text-slate-800">{r.unitLabel}</span> : <span className="text-slate-300">·</span>}
+        </td>
       )}
-      {!showUnit && <td className="px-3 py-2 align-middle text-slate-400">↳</td>}
-      <td className="px-3 py-2 align-middle">
+      <td className="px-3 py-2 align-middle truncate">
         {r.missing
-          ? <span className="inline-flex items-center gap-2">{ND}<MissingChip /></span>
+          ? <span className="inline-flex items-center gap-2 min-w-0"><span className="italic text-slate-400 truncate">Not determined</span><MissingChip /></span>
           : valOrND(r.documentName)}
       </td>
-      <td className="px-3 py-2 align-middle">{valOrND(r.effectiveDate)}</td>
-      <td className="px-3 py-2 align-middle">{valOrND(r.expiryDate)}</td>
+      <td className="px-3 py-2 align-middle truncate">{r.missing ? ND : valOrND(r.effectiveDate)}</td>
+      <td className="px-3 py-2 align-middle truncate">{r.missing ? ND : valOrND(r.expiryDate)}</td>
     </tr>
   );
 }
