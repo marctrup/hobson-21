@@ -1164,6 +1164,150 @@ function buildFullRecalibration(rules: ComplianceRequirement[]): RecalibrationSt
 }
 
 
+/* ---------------- The Inspector's notes strip ---------------- */
+/**
+ * Mirrors the Notes strip the other agents have (Professor / Magician / Broker),
+ * in the Inspector's own voice. Strictly about HIS vigilance — when he last
+ * checked the law, what changed, what he's watching, and gaps in HIS coverage.
+ * Never a per-unit pass/fail (that's Hobson's job, surfaced in the Compliance
+ * Summary). Single source of truth for "awaiting your confirmation" is shared
+ * with the schedule header and the recalibration cards.
+ */
+function InspectorNotesStrip({
+  lastChecked, nextDue, rulesCount, pending, gapsCoverage,
+}: {
+  lastChecked: Date;
+  nextDue: Date;
+  rulesCount: number;
+  pending: { pst: boolean; howToRent: boolean };
+  gapsCoverage: { commercial: boolean };
+}) {
+  const awaitingCount = (pending.pst ? 1 : 0) + (pending.howToRent ? 1 : 0);
+  const updatedItems = [
+    {
+      id: "pst",
+      label: "Periodic Tenancy agreement",
+      reason: "new version — Tenancy Reform Act",
+      status: pending.pst ? "Awaiting your confirmation" : "Confirmed",
+      pending: pending.pst,
+    },
+    {
+      id: "htr",
+      label: "How to Rent guide",
+      reason: "newer edition",
+      status: pending.howToRent ? "Awaiting your confirmation" : "Confirmed",
+      pending: pending.howToRent,
+    },
+  ];
+
+  return (
+    <section
+      aria-label="The Inspector's notes"
+      className="px-5 py-3 border-b border-slate-100 bg-[#FAF8FF] shrink-0"
+    >
+      <div className="flex items-center gap-2 mb-2">
+        <div className="w-6 h-6 rounded-full overflow-hidden bg-white ring-1 ring-[#7C3AED]/20 grid place-items-center shrink-0">
+          <img src={INSPECTOR_CHARACTER.src} alt="" aria-hidden className="w-[120%] h-[120%] object-contain" />
+        </div>
+        <h3 className="text-[12px] font-semibold uppercase tracking-wide text-[#5B21B6]">The Inspector's notes</h3>
+        <span className="text-[11px] text-slate-500 truncate">· my vigilance &amp; the state of the rulebook</span>
+      </div>
+
+      {/* Opening note — lavender bubble, his voice */}
+      <div className="flex items-start gap-2 mb-2">
+        <div className="w-7 h-7 rounded-full overflow-hidden bg-white ring-1 ring-[#7C3AED]/20 grid place-items-center shrink-0">
+          <img src={INSPECTOR_CHARACTER.src} alt="" aria-hidden className="w-[120%] h-[120%] object-contain" />
+        </div>
+        <div className="max-w-[640px] bg-white border border-[#7C3AED]/20 text-[12.5px] leading-relaxed px-3 py-2 rounded-2xl rounded-bl-md text-slate-800">
+          A note on where things stand. I last checked the law and guidance on{" "}
+          <span className="font-semibold">{fmtDate(lastChecked)}</span>. I'm watching{" "}
+          <span className="font-semibold">{rulesCount} requirement{rulesCount === 1 ? "" : "s"}</span> across your residential units.
+          My next check is due <span className="font-semibold">{fmtDate(nextDue)}</span>.
+        </div>
+      </div>
+
+      <div className="grid gap-2 lg:grid-cols-3">
+        {/* Section 1 — Last web check */}
+        <div className="lg:col-span-2 rounded-md border border-[#7C3AED]/15 bg-white p-3">
+          <div className="flex items-center justify-between gap-2 mb-1.5">
+            <div className="text-[11px] font-semibold uppercase tracking-wide text-[#5B21B6]">Last web check</div>
+            <div className="text-[11px] text-slate-500">
+              {fmtDate(lastChecked)} · gov.uk &amp; HSE guidance
+            </div>
+          </div>
+          <ul className="space-y-1">
+            {updatedItems.map((it) => (
+              <li key={it.id} className="flex items-start gap-2 text-[12px] text-slate-800">
+                <span
+                  aria-hidden
+                  className={`mt-1.5 w-1.5 h-1.5 rounded-full shrink-0 ${it.pending ? "bg-[#B45309]" : "bg-emerald-500"}`}
+                />
+                <div className="min-w-0 flex-1">
+                  <span className="font-medium">{it.label}</span>
+                  <span className="text-slate-500"> — {it.reason}</span>
+                </div>
+                <span
+                  className={`text-[11px] px-1.5 py-0.5 rounded border shrink-0 ${
+                    it.pending
+                      ? "border-[#B45309]/30 bg-[#FFF7ED] text-[#B45309]"
+                      : "border-emerald-200 bg-emerald-50 text-emerald-700"
+                  }`}
+                >
+                  {it.status}
+                </span>
+              </li>
+            ))}
+            <li className="flex items-start gap-2 text-[12px] text-slate-800">
+              <span aria-hidden className="mt-1.5 w-1.5 h-1.5 rounded-full bg-slate-300 shrink-0" />
+              <div className="min-w-0 flex-1">
+                <span className="font-medium">Gas, EICR, EPC</span>
+                <span className="text-slate-500"> — unchanged at this check.</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        {/* Section 2 — What I'm watching */}
+        <div className="rounded-md border border-[#7C3AED]/15 bg-white p-3">
+          <div className="text-[11px] font-semibold uppercase tracking-wide text-[#5B21B6] mb-1.5">What I'm watching</div>
+          <div className="flex items-end gap-4">
+            <div>
+              <div className="text-[20px] font-semibold text-slate-900 leading-none">{rulesCount}</div>
+              <div className="text-[11px] text-slate-500 mt-1">requirements set</div>
+            </div>
+            <div>
+              <div className={`text-[20px] font-semibold leading-none ${awaitingCount > 0 ? "text-[#B45309]" : "text-slate-900"}`}>
+                {awaitingCount}
+              </div>
+              <div className="text-[11px] text-slate-500 mt-1">awaiting your confirmation</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Section 3 — Gaps in MY coverage (not a unit verdict) */}
+      {gapsCoverage.commercial && (
+        <div className="mt-2 flex items-start gap-2 px-3 py-2 rounded-md border border-[#7C3AED]/15 bg-white text-[12px] text-slate-800">
+          <svg
+            className="w-4 h-4 shrink-0 mt-0.5"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="#5B21B6"
+            strokeWidth="2"
+            aria-hidden
+          >
+            <path d="M12 3l9 16H3z" /><path d="M12 10v4" /><circle cx="12" cy="17" r="0.9" fill="#5B21B6" />
+          </svg>
+          <div className="min-w-0">
+            <span className="font-medium text-[#5B21B6]">Gaps in the rulebook.</span>{" "}
+            No requirements set yet for commercial units. I can only watch what we've defined — say the word and I'll set them up.
+          </div>
+        </div>
+      )}
+    </section>
+  );
+}
+
 export function InspectorWorkArea({
 
   rules,
@@ -1190,12 +1334,24 @@ export function InspectorWorkArea({
   });
   const [globalRecal, setGlobalRecal] = useState<RecalibrationState | null>(null);
 
+  // Single source of truth for "awaiting your confirmation" — shared by Notes,
+  // schedule context, and recalibration cards. Seeded from the scripted last check.
+  const [pending, setPending] = useState<{ pst: boolean; howToRent: boolean }>({ pst: true, howToRent: true });
+
+  function noteChange(change: RecalibrationChange, decision: "applied" | "dismissed") {
+    // Both decisions clear the pending flag (user has made a call).
+    if (change.kind === "document_updated") setPending((p) => ({ ...p, pst: false }));
+    if (change.kind === "edition_updated")  setPending((p) => ({ ...p, howToRent: false }));
+  }
+
   function runFullCheck() {
     const next = buildFullRecalibration(rules);
     setGlobalRecal(next);
     window.setTimeout(() => {
       setGlobalRecal((cur) => (cur ? { ...cur, phase: "results" } : cur));
       setLastChecked(new Date());
+      // A fresh check re-surfaces the same scripted pending items.
+      setPending({ pst: true, howToRent: true });
     }, 1500);
   }
 
@@ -1203,6 +1359,7 @@ export function InspectorWorkArea({
 
   function resolveGlobal(changeId: string, decision: "applied" | "dismissed", change: RecalibrationChange) {
     setGlobalRecal((cur) => cur ? { ...cur, resolved: { ...cur.resolved, [changeId]: decision } } : cur);
+    noteChange(change, decision);
     if (decision === "applied" && onUpdateRules) {
       onUpdateRules((rs) => rs.map((r) => {
         if (r.id !== change.targetRuleId) return r;
@@ -1237,6 +1394,7 @@ export function InspectorWorkArea({
       if (!cur) return m;
       return { ...m, [group]: { ...cur, resolved: { ...cur.resolved, [changeId]: decision } } };
     });
+    noteChange(change, decision);
     if (decision === "applied" && onUpdateRules) {
       onUpdateRules((rs) => rs.map((r) => {
         if (r.id !== change.targetRuleId) return r;
@@ -1270,6 +1428,16 @@ export function InspectorWorkArea({
           </div>
         </div>
       </header>
+
+      {rules.length > 0 && (
+        <InspectorNotesStrip
+          lastChecked={lastChecked}
+          nextDue={addMonths(lastChecked, FREQUENCY_OPTIONS.find((f) => f.value === frequency)?.months ?? 3)}
+          rulesCount={rules.length}
+          pending={pending}
+          gapsCoverage={{ commercial: true }}
+        />
+      )}
 
       <div className="flex-1 overflow-y-auto px-6 py-6">
         <div className="max-w-3xl mx-auto space-y-6">
