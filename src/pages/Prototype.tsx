@@ -9412,7 +9412,18 @@ function OwnerChip({ owner }: { owner: WorkflowOwner }) {
   );
 }
 
-function MagicianComposer({ onCreate }: { onCreate: () => void }) {
+function MagicianComposer({ onCreate, buildActive }: { onCreate: () => void; buildActive?: boolean }) {
+  if (buildActive) {
+    return (
+      <div
+        aria-live="polite"
+        className="flex items-center gap-2 px-4 py-3 rounded-2xl border border-dashed border-[#7C3AED]/30 bg-[#F5F3FF] text-[12px] text-[#5B21B6]"
+      >
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden><path d="M15 4l5 5-11 11H4v-5L15 4z"/><path d="M14 5l5 5"/></svg>
+        <span>Building a workflow above — pause or cancel it to start another.</span>
+      </div>
+    );
+  }
   return (
     <div className="flex flex-col gap-2">
       <div className="flex items-center gap-3 px-4 py-3 rounded-2xl border-2 border-dashed border-[#7C3AED]/40 bg-white">
@@ -9439,6 +9450,7 @@ function MagicianComposer({ onCreate }: { onCreate: () => void }) {
     </div>
   );
 }
+
 
 function MagicianWorkArea({ character, workflows, onCreate, onAdjust, onView }: {
   character: { id: AdminCharacter; name: string; src: string; tagline: string; workTitle: string };
