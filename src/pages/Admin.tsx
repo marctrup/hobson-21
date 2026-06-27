@@ -4,7 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { HelpCircle, BookOpen, FileText } from "lucide-react";
+import { HelpCircle, BookOpen, FileText, KeyRound } from "lucide-react";
 
 const ADMIN_SECTIONS = [
   {
@@ -24,6 +24,12 @@ const ADMIN_SECTIONS = [
     description: "Manage glossary terms and definitions.",
     href: "/admin/glossary-management",
     icon: BookOpen,
+  },
+  {
+    title: "Investment Page Password",
+    description: "Reset the password protecting /investment-opportunity.",
+    href: "/admin/investment-password",
+    icon: KeyRound,
   },
 ];
 
