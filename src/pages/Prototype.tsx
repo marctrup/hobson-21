@@ -3435,6 +3435,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
             <SummaryActions
               scope={{ level: "property", propertyId: selectedProperty.id }}
               onRequest={requestSummary}
+              enabledKinds={summaryVisibility}
             />
           )}
 
