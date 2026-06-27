@@ -4619,9 +4619,67 @@ function MagicianBuildPanel({ build, handlers }: { build: MagBuildState; handler
           </div>
         </div>
       )}
+
+      {/* Persistent build controls — breathing space above bottom buttons */}
+      <div className="pt-6 mt-2 border-t border-slate-100">
+        {confirmCancel ? (
+          <div
+            role="alertdialog"
+            aria-label="Discard this workflow"
+            className="rounded-md border border-rose-200 bg-rose-50/60 px-3 py-2.5"
+          >
+            <div className="text-[12.5px] text-slate-800 font-medium">Discard this workflow? This can't be undone.</div>
+            <div className="mt-2 flex flex-wrap gap-2">
+              <button
+                type="button"
+                onClick={() => { setConfirmCancel(false); handlers.onCancelBuild(); }}
+                className="px-3 py-1.5 rounded-md bg-rose-600 text-white text-[12.5px] font-semibold hover:bg-rose-700 focus:outline-none focus:ring-2 focus:ring-rose-300"
+              >
+                Discard
+              </button>
+              <button
+                type="button"
+                onClick={() => setConfirmCancel(false)}
+                className="px-3 py-1.5 rounded-md border border-slate-200 bg-white text-[12.5px] font-medium text-slate-700 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40"
+              >
+                Keep building
+              </button>
+            </div>
+          </div>
+        ) : (
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <div className="text-[11px] text-slate-500">Nothing here is final until you press <span className="font-medium text-slate-700">Build it</span>.</div>
+            <div className="flex flex-wrap gap-2">
+              <button
+                type="button"
+                onClick={handlers.onPauseSave}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md border border-[#7C3AED]/40 bg-white text-[12.5px] font-semibold text-[#5B21B6] hover:bg-[#F5F3FF] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40"
+              >
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><rect x="6" y="5" width="4" height="14"/><rect x="14" y="5" width="4" height="14"/></svg>
+                Pause &amp; save
+              </button>
+              <button
+                type="button"
+                onClick={() => setConfirmCancel(true)}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md border border-slate-200 bg-white text-[12.5px] font-medium text-slate-600 hover:bg-rose-50 hover:text-rose-700 hover:border-rose-200 focus:outline-none focus:ring-2 focus:ring-rose-300"
+              >
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"/></svg>
+                Cancel &amp; delete
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
+
+/* Vertical breathing room below the active build panel so the last line isn't
+   flush against the chat composer. */
+function MagicianBuildSpacer() {
+  return <div aria-hidden style={{ height: 96 }} />;
+}
+
 
 
 
