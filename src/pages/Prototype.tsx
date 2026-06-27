@@ -2810,7 +2810,12 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
           setMessages((m) => m.map((x) => (x.id === id ? { ...x, streaming: false } : x)));
           if (testerMode) setTimeout(() => appendFeedbackPrompt(chips), 1300);
         }
+      };
+      setTimeout(step, 60);
+    }, delay);
   };
+
+
 
   /* ----- summary request (occupational / compliance) — same fn at every level ----- */
   const requestSummary = (kind: "occupational" | "compliance", scope: SummaryScope) => {
