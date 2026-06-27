@@ -29,7 +29,12 @@ export const INSPECTOR_CHARACTER = {
 
 /* ---------------- Types ---------------- */
 
-export type ComplianceArea = "health_safety" | "notices" | "lease" | "other";
+export type ComplianceArea =
+  | "health_safety"
+  | "financial"
+  | "environmental"
+  | "licensing"
+  | "other";
 
 export type RequirementBasis = "required" | "applicable";
 export type DurationUnit = "Years" | "Months";
@@ -52,6 +57,57 @@ export type ComplianceRequirement = {
   versionSource?: VersionSource;
   /** Filename the user uploaded as their own version, if any. */
   uploadedFileName?: string;
+  /** Which compliance area this rule belongs to. Untagged = "health_safety" (legacy). */
+  areaId?: ComplianceArea;
+};
+
+/* ---------------- Area registry ---------------- */
+/**
+ * One row per compliance area the Inspector knows about. The Library is
+ * organised by these; each area carries its own schedule and Update button.
+ */
+export const AREA_DEFS: Record<ComplianceArea, {
+  id: ComplianceArea;
+  label: string;
+  sublabel: string;
+  sourceLabel: string;
+  unchangedNote: string;
+}> = {
+  health_safety: {
+    id: "health_safety",
+    label: "Health & Safety",
+    sublabel: "residential",
+    sourceLabel: "gov.uk & HSE guidance",
+    unchangedNote: "Gas, EICR and EPC requirements and frequencies are unchanged.",
+  },
+  financial: {
+    id: "financial",
+    label: "Financial",
+    sublabel: "client money & insurance",
+    sourceLabel: "gov.uk, Propertymark & ARLA guidance",
+    unchangedNote: "Client money, insurance and deposit requirements are unchanged.",
+  },
+  environmental: {
+    id: "environmental",
+    label: "Environmental",
+    sublabel: "energy & emissions",
+    sourceLabel: "gov.uk & DESNZ guidance",
+    unchangedNote: "Environmental requirements are unchanged.",
+  },
+  licensing: {
+    id: "licensing",
+    label: "Licensing",
+    sublabel: "HMO & selective licensing",
+    sourceLabel: "local authority licensing schemes",
+    unchangedNote: "Licensing requirements are unchanged.",
+  },
+  other: {
+    id: "other",
+    label: "Other",
+    sublabel: "your own area",
+    sourceLabel: "your brief & public guidance",
+    unchangedNote: "Nothing has changed for this area.",
+  },
 };
 
 
