@@ -10,6 +10,7 @@ import characterMagician from "@/assets/prototype/character-magician.png";
 import characterProfessor from "@/assets/prototype/character-professor.png";
 import characterBroker from "@/assets/prototype/character-broker.png";
 import { DocumentsLibrary } from "@/components/prototype/DocumentsLibrary";
+import { cn } from "@/lib/utils";
 
 type AdminCharacter = "magician" | "professor" | "broker";
 const ADMIN_CHARACTERS: { id: AdminCharacter; name: string; src: string; tagline: string; greeting: string; workTitle: string; workIntro: string }[] = [
@@ -282,6 +283,16 @@ type Workflow = {
 type MagBuildStep = { id: string; label: string; phrase: string; uid: string };
 type MagBuildStepKey = "intake" | "q1" | "q2" | "q3" | "q3b" | "q4" | "q5" | "q6";
 type MagEditField = "intake" | "watch" | "scope" | "scopeUnit" | "owner";
+
+type ScopeLevel = "portfolio" | "properties" | "units";
+type PropertyGranularity = "units" | "record" | "both";
+type ScopeSelection = {
+  level: ScopeLevel;
+  propertyIds: string[];           // selected when level === "properties"
+  unitIds: string[];               // selected when level === "units"
+  propertyGranularity: PropertyGranularity; // applies when level === "properties"
+};
+
 type MagBuildState = {
   step: MagBuildStepKey;
   // intake (user-authored)
@@ -299,6 +310,8 @@ type MagBuildState = {
   triggerPhrase?: string;
   scope?: "unit" | "property" | "portfolio";
   scopeLabel?: string;
+  scopeDetail?: string[];
+  scopeSelection?: ScopeSelection;
   owner?: WorkflowOwner;
   ownerLabel?: string;
   steps: MagBuildStep[];
@@ -620,7 +633,54 @@ const PROPERTIES: Property[] = [
   },
 ];
 
+/* ---------- Scope picker helpers (reusable across all workflow builds) ---------- */
+
+const EMPTY_SCOPE: ScopeSelection = {
+  level: "portfolio",
+  propertyIds: [],
+  unitIds: [],
+  propertyGranularity: "units",
+};
+
+function granularityWord(g: PropertyGranularity): string {
+  return g === "units" ? "units" : g === "record" ? "record" : "units + record";
+}
+
+/** Concise summary used for "Applies to", SO FAR and built workflow cards. */
+function summariseScope(sel: ScopeSelection): { label: string; detail?: string[] } {
+  if (sel.level === "portfolio") return { label: "Whole portfolio" };
+
+  if (sel.level === "properties") {
+    const props = PROPERTIES.filter((p) => sel.propertyIds.includes(p.id));
+    const g = granularityWord(sel.propertyGranularity);
+    if (props.length === 0) return { label: "Properties · none selected yet" };
+    if (props.length === 1) return { label: `Properties (${g}) · ${props[0].name}` };
+    return {
+      label: `Properties (${g}) · ${props[0].name} + ${props.length - 1} other${props.length - 1 > 1 ? "s" : ""}`,
+      detail: props.map((p) => p.name),
+    };
+  }
+
+  // units — grouped by property
+  const groups = PROPERTIES
+    .map((p) => ({ property: p, units: p.units.filter((u) => sel.unitIds.includes(u.id)) }))
+    .filter((g) => g.units.length > 0);
+  const total = groups.reduce((n, g) => n + g.units.length, 0);
+  if (total === 0) return { label: "Units · none selected yet" };
+  if (groups.length === 1) {
+    const g = groups[0];
+    if (g.units.length === 1) return { label: `Units · ${g.units[0].label}, ${g.property.name}` };
+    if (g.units.length === 2) return { label: `Units · ${g.units[0].label} and ${g.units[1].label}, ${g.property.name}` };
+    return { label: `Units · ${g.units.length} in ${g.property.name}`, detail: g.units.map((u) => `${u.label}, ${g.property.name}`) };
+  }
+  return {
+    label: `Units · ${total} across ${groups.length} properties`,
+    detail: groups.map((g) => `${g.property.name} — ${g.units.map((u) => u.label).join(", ")}`),
+  };
+}
+
 /* ---------- Proactive Action cards (portfolio briefing) ---------- */
+
 
 type Urgency = "now" | "week" | "watch";
 type TriggerType = "review" | "break" | "compliance" | "notice" | "expiry";
@@ -1523,25 +1583,24 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
     setTimeout(() => magAsk("Where does this apply?"), 400);
   };
 
-  const magAnswerQ3 = (scope: "unit" | "property" | "portfolio", label: string) => {
+  const magAnswerQ3Scope = (sel: ScopeSelection) => {
+    const { label, detail } = summariseScope(sel);
     magUserEcho(label);
-    const wasEditing = !!magBuild?.editing && magBuild.editing.field === "scope";
-    if (scope === "unit") {
-      setMagBuild((b) => b ? { ...b, scope, scopeLabel: undefined, step: "q3b", editing: wasEditing ? { field: "scopeUnit", returnStep: b.editing!.returnStep } : undefined } : b);
-      setTimeout(() => magAsk("Which unit?"), 400);
-    } else {
-      const scopeLabel = scope === "property" ? "Stanley House (all units)" : "The whole portfolio";
-      setMagBuild((b) => b ? { ...b, scope, scopeLabel, step: wasEditing ? b.editing!.returnStep : "q4", editing: undefined } : b);
-      setTimeout(() => magAsk(wasEditing ? "Updated." : "And who should own it?"), 400);
-    }
-  };
-
-  const magAnswerQ3b = (unitLabel: string) => {
-    magUserEcho(unitLabel);
-    const wasEditing = !!magBuild?.editing && (magBuild.editing.field === "scopeUnit" || magBuild.editing.field === "scope");
-    setMagBuild((b) => b ? { ...b, scopeLabel: unitLabel, step: wasEditing ? b.editing!.returnStep : "q4", editing: undefined } : b);
+    const wasEditing = !!magBuild?.editing && (magBuild.editing.field === "scope" || magBuild.editing.field === "scopeUnit");
+    const scopeShort: "unit" | "property" | "portfolio" =
+      sel.level === "portfolio" ? "portfolio" : sel.level === "properties" ? "property" : "unit";
+    setMagBuild((b) => b ? {
+      ...b,
+      scope: scopeShort,
+      scopeLabel: label,
+      scopeDetail: detail,
+      scopeSelection: sel,
+      step: wasEditing ? b.editing!.returnStep : "q4",
+      editing: undefined,
+    } : b);
     setTimeout(() => magAsk(wasEditing ? "Updated." : "And who should own it?"), 400);
   };
+
 
   const magAnswerQ4 = (owner: WorkflowOwner, label: string) => {
     magUserEcho(label);
@@ -1597,7 +1656,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
         intake: "intake",
         watch: "q1",
         scope: "q3",
-        scopeUnit: "q3b",
+        scopeUnit: "q3",
         owner: "q4",
       };
       return { ...b, step: stepFor[field], editing: { field, returnStep } };
@@ -1613,12 +1672,9 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
   const magGoBack = () => {
     setMagBuild((b) => {
       if (!b) return b;
-      const order: MagBuildStepKey[] = ["intake", "q3", b.scope === "unit" ? "q3b" : "q3", "q4", "q5", "q6"];
-      // dedupe consecutive
-      const seen: MagBuildStepKey[] = [];
-      for (const s of order) if (seen[seen.length - 1] !== s) seen.push(s);
-      const i = seen.indexOf(b.step);
-      const prev = i > 0 ? seen[i - 1] : "intake";
+      const order: MagBuildStepKey[] = ["intake", "q3", "q4", "q5", "q6"];
+      const i = order.indexOf(b.step);
+      const prev = i > 0 ? order[i - 1] : "intake";
       return { ...b, step: prev, editing: undefined };
     });
   };
@@ -1654,6 +1710,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
         trigger,
         action: actionSummary,
         scopeLabel: b.scopeLabel || "Not yet set",
+        scopeDetail: b.scopeDetail,
         owner: b.owner || { kind: "all_teams" },
         lastAdjusted: "just now",
         stepCount: b.steps.length,
@@ -2776,7 +2833,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
               onMagStreamDone={(id) => setMagStreamingId((cur) => (cur === id ? null : cur))}
               magHandlers={adminCharacter === "magician" ? {
                 onIntakeSubmit: magSubmitIntake,
-                onQ1: magAnswerQ1, onQ2: magAnswerQ2, onQ3: magAnswerQ3, onQ3b: magAnswerQ3b, onQ4: magAnswerQ4,
+                onQ1: magAnswerQ1, onQ2: magAnswerQ2, onQ3Scope: magAnswerQ3Scope, onQ4: magAnswerQ4,
                 onAddStep: magAddStep, onAddCustomStep: magAddCustomStep, onRemoveStep: magRemoveStep, onMoveStep: magMoveStep,
                 onToggleAdd: (open: boolean) => setMagBuild((b) => b ? { ...b, addOpen: open } : b),
                 onSetCustomDraft: (v: string) => setMagBuild((b) => b ? { ...b, customDraft: v } : b),
@@ -3588,8 +3645,7 @@ type MagHandlers = {
   onIntakeSubmit: (intake: { title: string; purpose: string; description: string; whenKey: "6m" | "3m" | "on" | "always" | "custom"; whenLabel: string; visibility: "personal" | "company" }) => void;
   onQ1: (k: "rent_reviews" | "compliance" | "notices" | "other", label: string) => void;
   onQ2: (k: "6m" | "3m" | "on", label: string, phrase: string) => void;
-  onQ3: (k: "unit" | "property" | "portfolio", label: string) => void;
-  onQ3b: (label: string) => void;
+  onQ3Scope: (sel: ScopeSelection) => void;
   onQ4: (owner: WorkflowOwner, label: string) => void;
   onAddStep: (opt: { id: string; label: string; phrase: string }) => void;
   onAddCustomStep: (label: string) => void;
@@ -4162,8 +4218,237 @@ function MagBackBar({ onBack, editing, onCancelEdit }: { onBack: () => void; edi
   );
 }
 
+/* ---------- ScopePicker — reusable scope chooser (level + searchable multi-select) ---------- */
+
+function ScopePicker({ initial, onCommit }: { initial?: ScopeSelection; onCommit: (sel: ScopeSelection) => void }) {
+  const [sel, setSel] = useState<ScopeSelection>(initial ?? EMPTY_SCOPE);
+  const [query, setQuery] = useState("");
+  const reduced = typeof window !== "undefined" && window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+
+  const setLevel = (level: ScopeLevel) => {
+    setQuery("");
+    setSel((s) => ({ ...s, level }));
+  };
+
+  const togglePropertyId = (id: string) =>
+    setSel((s) => ({ ...s, propertyIds: s.propertyIds.includes(id) ? s.propertyIds.filter((x) => x !== id) : [...s.propertyIds, id] }));
+  const toggleUnitId = (id: string) =>
+    setSel((s) => ({ ...s, unitIds: s.unitIds.includes(id) ? s.unitIds.filter((x) => x !== id) : [...s.unitIds, id] }));
+
+  const q = query.trim().toLowerCase();
+  const matchProp = (p: Property) => !q || p.name.toLowerCase().includes(q) || p.address.toLowerCase().includes(q) || p.postcode.toLowerCase().includes(q);
+  const matchUnit = (p: Property, u: Unit) => !q || u.label.toLowerCase().includes(q) || p.name.toLowerCase().includes(q);
+
+  const filteredProperties = PROPERTIES.filter(matchProp);
+  const filteredGroups = PROPERTIES
+    .map((p) => ({ p, units: p.units.filter((u) => matchUnit(p, u)) }))
+    .filter((g) => g.units.length > 0);
+
+  const selectedCount =
+    sel.level === "portfolio" ? PROPERTIES.length :
+    sel.level === "properties" ? sel.propertyIds.length :
+    sel.unitIds.length;
+
+  const totalUnitsForProperties = sel.propertyIds.reduce((n, pid) => {
+    const p = PROPERTIES.find((x) => x.id === pid); return n + (p ? p.units.length : 0);
+  }, 0);
+
+  const countLine =
+    sel.level === "portfolio" ? `Whole portfolio · ${PROPERTIES.length} properties · ${PROPERTIES.reduce((n, p) => n + p.units.length, 0)} units`
+    : sel.level === "properties" ? `${sel.propertyIds.length} propert${sel.propertyIds.length === 1 ? "y" : "ies"} · ${totalUnitsForProperties} units`
+    : `${new Set(PROPERTIES.filter((p) => p.units.some((u) => sel.unitIds.includes(u.id))).map((p) => p.id)).size} properties · ${sel.unitIds.length} units`;
+
+  const canCommit =
+    sel.level === "portfolio" ||
+    (sel.level === "properties" && sel.propertyIds.length > 0) ||
+    (sel.level === "units" && sel.unitIds.length > 0);
+
+  const selectAllInProperty = (p: Property) => {
+    const allIds = p.units.map((u) => u.id);
+    const everySelected = allIds.every((id) => sel.unitIds.includes(id));
+    setSel((s) => ({
+      ...s,
+      unitIds: everySelected
+        ? s.unitIds.filter((id) => !allIds.includes(id))
+        : Array.from(new Set([...s.unitIds, ...allIds])),
+    }));
+  };
+
+  const selectAllProperties = () => {
+    const allIds = filteredProperties.map((p) => p.id);
+    const every = allIds.every((id) => sel.propertyIds.includes(id));
+    setSel((s) => ({
+      ...s,
+      propertyIds: every ? s.propertyIds.filter((id) => !allIds.includes(id)) : Array.from(new Set([...s.propertyIds, ...allIds])),
+    }));
+  };
+
+  const levelBtn = (key: ScopeLevel, label: string) => {
+    const active = sel.level === key;
+    return (
+      <button
+        type="button"
+        onClick={() => setLevel(key)}
+        aria-pressed={active}
+        className={cn(
+          "px-3 py-1.5 rounded-full border text-[12.5px] font-medium focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40",
+          reduced ? "" : "transition-colors",
+          active
+            ? "bg-[#7C3AED] text-white border-[#7C3AED]"
+            : "bg-white text-slate-700 border-slate-300 hover:border-[#7C3AED]/60 hover:text-[#5B21B6]",
+        )}
+      >
+        {label}
+      </button>
+    );
+  };
+
+  return (
+    <div className="space-y-3">
+      <div>
+        <div className="text-[11px] uppercase tracking-wide text-[#7C3AED] font-semibold mb-2">Where should this apply?</div>
+        <div className="text-[12px] text-slate-600 mb-2">Choose as many as you like.</div>
+        <div className="flex flex-wrap gap-2" role="group" aria-label="Scope level">
+          {levelBtn("portfolio", "The whole portfolio")}
+          {levelBtn("properties", "Properties")}
+          {levelBtn("units", "Units")}
+        </div>
+      </div>
+
+      {sel.level !== "portfolio" && (
+        <div className="rounded-md border border-slate-200 bg-white p-2 space-y-2">
+          <div className="flex items-center gap-2">
+            <input
+              type="search"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder={sel.level === "properties" ? "Search properties…" : "Search units or properties…"}
+              aria-label="Search"
+              className="flex-1 h-8 rounded-md border border-slate-200 px-2 text-[12.5px] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40"
+            />
+            <button
+              type="button"
+              onClick={sel.level === "properties" ? selectAllProperties : () => {
+                const allIds = filteredGroups.flatMap((g) => g.units.map((u) => u.id));
+                const every = allIds.every((id) => sel.unitIds.includes(id));
+                setSel((s) => ({
+                  ...s,
+                  unitIds: every ? s.unitIds.filter((id) => !allIds.includes(id)) : Array.from(new Set([...s.unitIds, ...allIds])),
+                }));
+              }}
+              className="text-[11.5px] font-semibold text-[#7C3AED] hover:underline focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40 rounded px-1"
+            >
+              Select all{query ? " (matching)" : ""}
+            </button>
+          </div>
+
+          <div className="max-h-[220px] overflow-y-auto rounded border border-slate-100 divide-y divide-slate-100" role="listbox" aria-multiselectable="true">
+            {sel.level === "properties" && filteredProperties.map((p) => {
+              const checked = sel.propertyIds.includes(p.id);
+              return (
+                <label key={p.id} className="flex items-center gap-2 px-2 py-1.5 text-[12.5px] hover:bg-slate-50 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={checked}
+                    onChange={() => togglePropertyId(p.id)}
+                    className="h-4 w-4 accent-[#7C3AED]"
+                  />
+                  <span className="flex-1 text-slate-800">{p.name}</span>
+                  <span className="text-slate-400 text-[11px]">{p.units.length} units</span>
+                </label>
+              );
+            })}
+            {sel.level === "properties" && filteredProperties.length === 0 && (
+              <div className="px-2 py-3 text-[12px] text-slate-500 italic">No properties match "{query}".</div>
+            )}
+
+            {sel.level === "units" && filteredGroups.map((g) => {
+              const allIds = g.units.map((u) => u.id);
+              const everySelected = allIds.every((id) => sel.unitIds.includes(id));
+              return (
+                <div key={g.p.id}>
+                  <div className="flex items-center gap-2 px-2 py-1 bg-slate-50">
+                    <span className="text-[11.5px] font-semibold text-slate-700 flex-1">{g.p.name}</span>
+                    <button
+                      type="button"
+                      onClick={() => selectAllInProperty(g.p)}
+                      className="text-[11px] text-[#7C3AED] hover:underline focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40 rounded px-1"
+                    >
+                      {everySelected ? "Clear" : `Select all in ${g.p.name}`}
+                    </button>
+                  </div>
+                  {g.units.map((u) => {
+                    const checked = sel.unitIds.includes(u.id);
+                    return (
+                      <label key={u.id} className="flex items-center gap-2 px-3 py-1.5 text-[12.5px] hover:bg-slate-50 cursor-pointer">
+                        <input
+                          type="checkbox"
+                          checked={checked}
+                          onChange={() => toggleUnitId(u.id)}
+                          className="h-4 w-4 accent-[#7C3AED]"
+                        />
+                        <span className="flex-1 text-slate-800">{u.label}</span>
+                        <span className="text-slate-400 text-[11px]">{u.status}</span>
+                      </label>
+                    );
+                  })}
+                </div>
+              );
+            })}
+            {sel.level === "units" && filteredGroups.length === 0 && (
+              <div className="px-2 py-3 text-[12px] text-slate-500 italic">No units match "{query}".</div>
+            )}
+          </div>
+
+          {sel.level === "properties" && (
+            <div className="rounded border border-slate-200 bg-slate-50/70 p-2">
+              <div className="text-[11px] uppercase tracking-wide text-slate-500 font-semibold mb-1.5">Apply to</div>
+              <div className="flex flex-wrap gap-1.5" role="radiogroup" aria-label="Property granularity">
+                {(["units", "record", "both"] as PropertyGranularity[]).map((g) => {
+                  const active = sel.propertyGranularity === g;
+                  const label = g === "units" ? "The property's units" : g === "record" ? "The property record" : "Both";
+                  return (
+                    <button
+                      key={g}
+                      type="button"
+                      role="radio"
+                      aria-checked={active}
+                      onClick={() => setSel((s) => ({ ...s, propertyGranularity: g }))}
+                      className={cn(
+                        "px-2.5 py-1 rounded-full border text-[11.5px] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40",
+                        active ? "bg-[#7C3AED] text-white border-[#7C3AED]" : "bg-white text-slate-700 border-slate-300 hover:border-[#7C3AED]/60",
+                      )}
+                    >
+                      {label}
+                    </button>
+                  );
+                })}
+              </div>
+              <p className="text-[11px] text-slate-500 mt-1.5">"The property's units" suits most workflows. Switch if this watches the building itself.</p>
+            </div>
+          )}
+        </div>
+      )}
+
+      <div className="flex items-center justify-between gap-3 pt-1">
+        <div className="text-[11.5px] text-slate-600" aria-live="polite">{countLine}</div>
+        <button
+          type="button"
+          disabled={!canCommit}
+          onClick={() => onCommit(sel)}
+          className={cn(
+            "px-3 py-1.5 rounded-full text-[12.5px] font-semibold focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40",
+            canCommit ? "bg-[#7C3AED] text-white hover:bg-[#6D28D9]" : "bg-slate-200 text-slate-500 cursor-not-allowed",
+          )}
+        >
+          Use this scope
+        </button>
+      </div>
+    </div>
+  );
+}
+
 function MagicianBuildPanel({ build, handlers }: { build: MagBuildState; handlers: MagHandlers }) {
-  const UNIT_CHOICES = ["Flat 8, Stanley House", "Flat 6, Stanley House", "Flat 2, 5 Nugent Terrace"];
   const usedStepIds = new Set(build.steps.map((s) => s.id));
   const isEditing = !!build.editing;
   const canBack = build.step !== "intake" && !isEditing;
@@ -4209,25 +4494,12 @@ function MagicianBuildPanel({ build, handlers }: { build: MagBuildState; handler
         </div>
       )}
       {build.step === "q3" && (
-        <div>
-          <div className="text-[11px] uppercase tracking-wide text-[#7C3AED] font-semibold mb-2">Where does this apply?</div>
-          <div className="flex flex-wrap gap-2">
-            <MagOptionButton onClick={() => handlers.onQ3("unit", "A specific unit")}>A specific unit</MagOptionButton>
-            <MagOptionButton onClick={() => handlers.onQ3("property", "A whole property")}>A whole property</MagOptionButton>
-            <MagOptionButton onClick={() => handlers.onQ3("portfolio", "The whole portfolio")}>The whole portfolio</MagOptionButton>
-          </div>
-        </div>
+        <ScopePicker
+          initial={build.scopeSelection}
+          onCommit={handlers.onQ3Scope}
+        />
       )}
-      {build.step === "q3b" && (
-        <div>
-          <div className="text-[11px] uppercase tracking-wide text-[#7C3AED] font-semibold mb-2">Which unit?</div>
-          <div className="flex flex-wrap gap-2">
-            {UNIT_CHOICES.map((u) => (
-              <MagOptionButton key={u} onClick={() => handlers.onQ3b(u)}>{u}</MagOptionButton>
-            ))}
-          </div>
-        </div>
-      )}
+
       {build.step === "q4" && (
         <div>
           <div className="text-[11px] uppercase tracking-wide text-[#7C3AED] font-semibold mb-2">Who should own it?</div>
