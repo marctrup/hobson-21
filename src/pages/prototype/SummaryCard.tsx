@@ -62,9 +62,11 @@ export default function SummaryCard({ kind, scope, onOpenUnit }: Props) {
         <ExportButton kind={kind} scope={scope} />
       </header>
       <div className="max-h-[460px] overflow-auto">
-        {kind === "occupational"
-          ? <OccupationalView scope={scope} onOpenUnit={onOpenUnit} />
-          : <ComplianceView scope={scope} onOpenUnit={onOpenUnit} />}
+        <div className="min-w-[640px]">
+          {kind === "occupational"
+            ? <OccupationalView scope={scope} onOpenUnit={onOpenUnit} />
+            : <ComplianceView scope={scope} onOpenUnit={onOpenUnit} />}
+        </div>
       </div>
     </div>
   );
