@@ -5405,7 +5405,9 @@ function CharacterNotesStrip({
   notes: CharacterNote[];
 }) {
   const [open, setOpen] = useState(false);
+  const panelId = `notes-${title.replace(/\W+/g, "-").toLowerCase()}`;
   if (notes.length === 0) return null;
+
 
   return (
     <section
