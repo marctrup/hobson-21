@@ -1403,6 +1403,26 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
   };
 
   // ----- Magician answer handlers -----
+  const magPhraseFor = (k: string, label: string) => {
+    if (k === "6m") return "6 months away";
+    if (k === "3m") return "3 months away";
+    if (k === "on") return "on the date";
+    if (k === "always") return "approaching (always visible)";
+    return (label || "").toLowerCase();
+  };
+  const watchLabelFor = (k: "rent_reviews" | "compliance" | "notices" | "other") =>
+    k === "rent_reviews" ? "Rent reviews"
+      : k === "compliance" ? "Compliance certificates"
+      : k === "notices" ? "Notice deadlines"
+      : "Other";
+  const triggerSentenceFor = (watch: MagBuildState["watch"], whenPhrase: string) => {
+    const subject = watch === "compliance" ? "a certificate is due"
+      : watch === "notices" ? "a notice deadline is approaching"
+      : watch === "other" ? "the date is approaching"
+      : "a rent review is";
+    return `${subject} ${whenPhrase}`.trim();
+  };
+
   const magSubmitIntake = (intake: {
     title: string;
     purpose: string;
@@ -1411,13 +1431,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
     whenLabel: string;
     visibility: "personal" | "company";
   }) => {
-    const phraseFor = (k: string, label: string) => {
-      if (k === "6m") return "6 months away";
-      if (k === "3m") return "3 months away";
-      if (k === "on") return "on the date";
-      if (k === "always") return "approaching (always visible)";
-      return label.toLowerCase();
-    };
+    const wasEditing = !!magBuild?.editing && magBuild.editing.field === "intake";
     magUserEcho(
       `${intake.title} — ${intake.purpose}\nShow: ${intake.whenLabel} · ${intake.visibility === "personal" ? "Personal" : "Company-wide"}${intake.description ? `\n${intake.description}` : ""}`
     );
@@ -1431,69 +1445,95 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
       visibility: intake.visibility,
       lead: (intake.whenKey === "6m" || intake.whenKey === "3m" || intake.whenKey === "on") ? intake.whenKey : undefined,
       leadLabel: intake.whenLabel,
-      triggerPhrase: phraseFor(intake.whenKey, intake.whenLabel),
-      step: "q1",
+      triggerPhrase: magPhraseFor(intake.whenKey, intake.whenLabel),
+      step: wasEditing ? (b.editing!.returnStep) : "q1",
+      editing: undefined,
     } : b);
-    setTimeout(() => magAsk("Thank you. Now — what shall I keep watch on?"), 500);
+    setTimeout(() => magAsk(wasEditing ? "Updated." : "Thank you. Now — what shall I keep watch on?"), 400);
   };
 
   const magAnswerQ1 = (key: "rent_reviews" | "compliance" | "notices" | "other", label: string) => {
     magUserEcho(label);
-    // 'when' is already captured at intake — skip Q2 entirely.
-    if (key === "rent_reviews") {
-      setMagBuild((b) => b ? { ...b, watch: key, step: "q3" } : b);
-      setTimeout(() => magAsk("Good — rent reviews. Where does this apply?"), 500);
-    } else {
-      setMagBuild((b) => b ? { ...b, watch: "rent_reviews", step: "q3" } : b);
-      setTimeout(() => magAsk("Noted. For today's build I'll stay with rent reviews — the others I'm preparing next. Where does this apply?"), 500);
-    }
+    setMagBuild((b) => {
+      if (!b) return b;
+      const editing = b.editing;
+      const watchChanged = !!editing && editing.field === "watch" && b.watch && b.watch !== key;
+      const shouldRepropose = watchChanged && !b.stepsTouched;
+      const nextSteps = shouldRepropose
+        ? MAG_DEFAULTS_BY_WATCH[key].map((s, i) => ({ ...s, uid: `${s.id}-${Date.now()}-${i}` }))
+        : b.steps;
+      return {
+        ...b,
+        watch: key,
+        watchLabel: watchLabelFor(key),
+        steps: nextSteps,
+        step: editing ? editing.returnStep : "q3",
+        editing: undefined,
+      };
+    });
+    const editing = magBuild?.editing;
+    const watchChanged = !!editing && editing.field === "watch" && magBuild?.watch && magBuild.watch !== key;
+    const reproposed = watchChanged && !magBuild?.stepsTouched;
+    setTimeout(() => {
+      if (reproposed) {
+        magAsk(`That changes the steps — here's how I'd handle ${watchLabelFor(key).toLowerCase()} instead. Adjust as you like.`);
+      } else if (editing) {
+        magAsk("Updated.");
+      } else {
+        magAsk(key === "rent_reviews" ? "Good — rent reviews. Where does this apply?" : `Noted — ${watchLabelFor(key).toLowerCase()}. Where does this apply?`);
+      }
+    }, 400);
   };
+
   const magAnswerQ2 = (lead: "6m" | "3m" | "on", label: string, phrase: string) => {
     magUserEcho(label);
-    setMagBuild((b) => b ? { ...b, lead, leadLabel: label, triggerPhrase: phrase, step: "q3" } : b);
-    setTimeout(() => magAsk("Where does this apply?"), 500);
+    setMagBuild((b) => b ? { ...b, lead, leadLabel: label, triggerPhrase: phrase, step: "q3", editing: undefined } : b);
+    setTimeout(() => magAsk("Where does this apply?"), 400);
   };
+
   const magAnswerQ3 = (scope: "unit" | "property" | "portfolio", label: string) => {
     magUserEcho(label);
+    const wasEditing = !!magBuild?.editing && magBuild.editing.field === "scope";
     if (scope === "unit") {
-      setMagBuild((b) => b ? { ...b, scope, step: "q3b" } : b);
-      setTimeout(() => magAsk("Which unit?"), 500);
+      setMagBuild((b) => b ? { ...b, scope, scopeLabel: undefined, step: "q3b", editing: wasEditing ? { field: "scopeUnit", returnStep: b.editing!.returnStep } : undefined } : b);
+      setTimeout(() => magAsk("Which unit?"), 400);
     } else {
       const scopeLabel = scope === "property" ? "Stanley House (all units)" : "The whole portfolio";
-      setMagBuild((b) => b ? { ...b, scope, scopeLabel, step: "q4" } : b);
-      setTimeout(() => magAsk("And who should own it?"), 500);
+      setMagBuild((b) => b ? { ...b, scope, scopeLabel, step: wasEditing ? b.editing!.returnStep : "q4", editing: undefined } : b);
+      setTimeout(() => magAsk(wasEditing ? "Updated." : "And who should own it?"), 400);
     }
   };
+
   const magAnswerQ3b = (unitLabel: string) => {
     magUserEcho(unitLabel);
-    setMagBuild((b) => b ? { ...b, scopeLabel: unitLabel, step: "q4" } : b);
-    setTimeout(() => magAsk("And who should own it?"), 500);
+    const wasEditing = !!magBuild?.editing && (magBuild.editing.field === "scopeUnit" || magBuild.editing.field === "scope");
+    setMagBuild((b) => b ? { ...b, scopeLabel: unitLabel, step: wasEditing ? b.editing!.returnStep : "q4", editing: undefined } : b);
+    setTimeout(() => magAsk(wasEditing ? "Updated." : "And who should own it?"), 400);
   };
+
   const magAnswerQ4 = (owner: WorkflowOwner, label: string) => {
     magUserEcho(label);
-    setMagBuild((b) => b ? { ...b, owner, step: "q5" } : b);
-    setTimeout(() => magAsk("Here's how I'd handle a rent review. Tap to keep, remove, reorder — or add a step."), 500);
+    const wasEditing = !!magBuild?.editing && magBuild.editing.field === "owner";
+    setMagBuild((b) => b ? { ...b, owner, ownerLabel: label, step: wasEditing ? b.editing!.returnStep : "q5", editing: undefined } : b);
+    setTimeout(() => magAsk(wasEditing ? "Updated." : "Here's how I'd handle it. Tap to keep, remove, reorder, rename — or add a step."), 400);
   };
-  const magUpdateSteps = (next: MagBuildStep[], note?: string) => {
-    setMagBuild((b) => b ? { ...b, steps: next, addOpen: false } : b);
-    if (note) setTimeout(() => magAsk(note), 200);
-  };
+
   const magAddStep = (opt: { id: string; label: string; phrase: string }) => {
     setMagBuild((b) => {
       if (!b) return b;
       const uid = `${opt.id}-${Date.now()}`;
-      return { ...b, steps: [...b.steps, { ...opt, uid }], addOpen: false };
+      return { ...b, steps: [...b.steps, { ...opt, uid }], addOpen: false, stepsTouched: true };
     });
     setTimeout(() => magAsk("Added — anything else?"), 200);
   };
   const magAddCustomStep = (label: string) => {
     if (!label.trim()) return;
     const uid = `custom-${Date.now()}`;
-    setMagBuild((b) => b ? { ...b, steps: [...b.steps, { id: "custom", label: label.trim(), phrase: label.trim().toLowerCase(), uid }], addOpen: false, customDraft: "" } : b);
+    setMagBuild((b) => b ? { ...b, steps: [...b.steps, { id: "custom", label: label.trim(), phrase: label.trim().toLowerCase(), uid }], addOpen: false, customDraft: "", stepsTouched: true } : b);
     setTimeout(() => magAsk("Added — anything else?"), 200);
   };
   const magRemoveStep = (uid: string) => {
-    setMagBuild((b) => b ? { ...b, steps: b.steps.filter((s) => s.uid !== uid) } : b);
+    setMagBuild((b) => b ? { ...b, steps: b.steps.filter((s) => s.uid !== uid), stepsTouched: true } : b);
     setTimeout(() => magAsk("Removed — anything else?"), 200);
   };
   const magMoveStep = (uid: string, dir: -1 | 1) => {
@@ -1504,17 +1544,61 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
       if (i < 0 || j < 0 || j >= b.steps.length) return b;
       const next = [...b.steps];
       [next[i], next[j]] = [next[j], next[i]];
-      return { ...b, steps: next };
+      return { ...b, steps: next, stepsTouched: true };
     });
   };
+  const magRenameStep = (uid: string, label: string) => {
+    if (!label.trim()) return;
+    setMagBuild((b) => b ? {
+      ...b,
+      steps: b.steps.map((s) => s.uid === uid ? { ...s, label: label.trim(), phrase: label.trim().toLowerCase() } : s),
+      stepsTouched: true,
+    } : b);
+  };
+
+  // Trace-back: open an earlier answer for editing.
+  const magBeginEdit = (field: MagEditField) => {
+    setMagBuild((b) => {
+      if (!b) return b;
+      const returnStep: MagBuildStepKey = b.step === "intake" ? "q1" : b.step;
+      const stepFor: Record<MagEditField, MagBuildStepKey> = {
+        intake: "intake",
+        watch: "q1",
+        scope: "q3",
+        scopeUnit: "q3b",
+        owner: "q4",
+      };
+      return { ...b, step: stepFor[field], editing: { field, returnStep } };
+    });
+    setTimeout(() => magAsk("Of course — let's change that."), 250);
+  };
+
+  const magCancelEdit = () => {
+    setMagBuild((b) => b && b.editing ? { ...b, step: b.editing.returnStep, editing: undefined } : b);
+  };
+
+  // ← Back at each question.
+  const magGoBack = () => {
+    setMagBuild((b) => {
+      if (!b) return b;
+      const order: MagBuildStepKey[] = ["intake", "q1", "q3", b.scope === "unit" ? "q3b" : "q3", "q4", "q5", "q6"];
+      // dedupe consecutive
+      const seen: MagBuildStepKey[] = [];
+      for (const s of order) if (seen[seen.length - 1] !== s) seen.push(s);
+      const i = seen.indexOf(b.step);
+      const prev = i > 0 ? seen[i - 1] : "intake";
+      return { ...b, step: prev, editing: undefined };
+    });
+  };
+
   const magFinishStepsToQ6 = () => {
-    setMagBuild((b) => b ? { ...b, step: "q6" } : b);
+    setMagBuild((b) => b ? { ...b, step: "q6", editing: undefined } : b);
     setTimeout(() => magAsk("I'll prepare all of this and bring it to you for approval — I never act on my own. Shall I build it?"), 400);
   };
   const magAnswerQ6KeepEditing = () => {
     magUserEcho("Keep editing");
     setMagBuild((b) => b ? { ...b, step: "q5" } : b);
-    setTimeout(() => magAsk("Of course — adjust the steps and let me know when you're ready."), 400);
+    setTimeout(() => magAsk("Of course — adjust as you like, and tell me when you're ready."), 400);
   };
   const magAnswerQ6Build = () => {
     magUserEcho("Build it");
@@ -1525,15 +1609,16 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
         ? "bring it to you for approval"
         : `${phrases.slice(0, -1).join(", ")}${phrases.length > 1 ? " and " : ""}${phrases[phrases.length - 1]} — then bring it to you for approval`;
       const id = `wf-${Date.now()}`;
-      const trigger = `a rent review is ${b.triggerPhrase || "approaching"}`;
+      const trigger = triggerSentenceFor(b.watch, b.triggerPhrase || "approaching");
       const wf: Workflow = {
         id,
-        name: b.title?.trim() || "Rent review watch",
-        purpose: b.purpose?.trim() || "Spots rent reviews early and prepares each one for your approval.",
+        name: b.title?.trim() || "New workflow",
+        purpose: b.purpose?.trim() || "Watches the portfolio and prepares the work for your approval.",
         description: b.description?.trim() || undefined,
         whenLabel: b.whenLabel,
         visibility: b.visibility || "personal",
-        icon: "calendar", tone: "purple", status: "built",
+        icon: b.watch === "compliance" ? "shield" : b.watch === "notices" ? "bell" : "calendar",
+        tone: "purple", status: "built",
         trigger,
         action: actionSummary,
         scopeLabel: b.scopeLabel || "Not yet set",
