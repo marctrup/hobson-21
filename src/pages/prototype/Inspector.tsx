@@ -430,6 +430,9 @@ type InspectorChatProps = {
   onAddRequirement: (req: Omit<ComplianceRequirement, "id">) => void;
   onConfirm: () => void;
   onCancel: () => void;
+  /** Update/Add against the *confirmed* rules — used by Show-me table actions. */
+  onUpdateConfirmed?: (id: string, patch: Partial<ComplianceRequirement>) => void;
+  onAddConfirmed?: (req: Omit<ComplianceRequirement, "id">) => void;
 };
 
 const BUBBLE_GAP = 10;
