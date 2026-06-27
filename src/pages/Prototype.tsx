@@ -4239,17 +4239,79 @@ function MagicianStepRow({ s, i, total, handlers }: { s: MagBuildStep; i: number
       </li>
     );
   }
+  const docStep = isDocStep(s);
   return (
-    <li className="flex items-start gap-2 rounded-md border border-slate-200 bg-slate-50 px-2 py-1.5">
-      <span className="text-[11px] font-semibold text-slate-500 mt-0.5 w-4 text-right">{i + 1}.</span>
-      <span className="flex-1 text-[12.5px] text-slate-800 leading-snug">{s.label}</span>
-      <div className="flex items-center gap-0.5">
-        <button type="button" aria-label={`Edit step ${i + 1}`} onClick={() => setEditing(true)} className="px-1.5 h-6 grid place-items-center rounded text-[11px] font-medium text-[#7C3AED] hover:bg-white focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40">Edit</button>
-        <button type="button" aria-label="Move up" disabled={i === 0} onClick={() => handlers.onMoveStep(s.uid, -1)} className="w-6 h-6 grid place-items-center rounded text-slate-500 hover:bg-white disabled:opacity-30 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40">↑</button>
-        <button type="button" aria-label="Move down" disabled={i === total - 1} onClick={() => handlers.onMoveStep(s.uid, 1)} className="w-6 h-6 grid place-items-center rounded text-slate-500 hover:bg-white disabled:opacity-30 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40">↓</button>
-        <button type="button" aria-label="Remove step" onClick={() => handlers.onRemoveStep(s.uid)} className="w-6 h-6 grid place-items-center rounded text-slate-500 hover:bg-white hover:text-rose-600 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40">×</button>
+    <li className="rounded-md border border-slate-200 bg-slate-50 px-2 py-1.5">
+      <div className="flex items-start gap-2">
+        <span className="text-[11px] font-semibold text-slate-500 mt-0.5 w-4 text-right">{i + 1}.</span>
+        <span className="flex-1 text-[12.5px] text-slate-800 leading-snug">{s.label}</span>
+        <div className="flex items-center gap-0.5">
+          <button type="button" aria-label={`Edit step ${i + 1}`} onClick={() => setEditing(true)} className="px-1.5 h-6 grid place-items-center rounded text-[11px] font-medium text-[#7C3AED] hover:bg-white focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40">Edit</button>
+          <button type="button" aria-label="Move up" disabled={i === 0} onClick={() => handlers.onMoveStep(s.uid, -1)} className="w-6 h-6 grid place-items-center rounded text-slate-500 hover:bg-white disabled:opacity-30 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40">↑</button>
+          <button type="button" aria-label="Move down" disabled={i === total - 1} onClick={() => handlers.onMoveStep(s.uid, 1)} className="w-6 h-6 grid place-items-center rounded text-slate-500 hover:bg-white disabled:opacity-30 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40">↓</button>
+          <button type="button" aria-label="Remove step" onClick={() => handlers.onRemoveStep(s.uid)} className="w-6 h-6 grid place-items-center rounded text-slate-500 hover:bg-white hover:text-rose-600 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40">×</button>
+        </div>
       </div>
+      {docStep && (
+        <div className="mt-1.5 ml-6">
+          <StepTemplatePicker s={s} onSet={(mode, filename) => handlers.onSetStepTemplate(s.uid, mode, filename)} />
+        </div>
+      )}
     </li>
+  );
+}
+
+function StepTemplatePicker({ s, onSet }: { s: MagBuildStep; onSet: (mode: "standard" | "own", filename?: string) => void }) {
+  const [open, setOpen] = useState(false);
+  const fileRef = useRef<HTMLInputElement | null>(null);
+  const tpl = templateOf(s);
+  const onPick = () => fileRef.current?.click();
+  const onFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const f = e.target.files?.[0];
+    if (f) onSet("own", f.name);
+    e.target.value = "";
+    setOpen(false);
+  };
+  return (
+    <div className="inline-flex flex-wrap items-center gap-1.5 text-[11.5px]">
+      <span className="text-slate-500">Template:</span>
+      {tpl.mode === "standard" ? (
+        <>
+          <div className="relative">
+            <button
+              type="button"
+              onClick={() => setOpen((v) => !v)}
+              aria-haspopup="menu"
+              aria-expanded={open}
+              className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full border border-slate-300 bg-white text-slate-700 hover:border-[#7C3AED]/60 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40"
+            >
+              Hobson's standard <span aria-hidden>▾</span>
+            </button>
+            {open && (
+              <div role="menu" className="absolute z-10 mt-1 left-0 w-[200px] rounded-md border border-slate-200 bg-white shadow-md p-1 text-[11.5px]">
+                <button type="button" role="menuitem" onClick={() => { onSet("standard"); setOpen(false); }} className="w-full text-left px-2 py-1.5 rounded hover:bg-slate-50 text-slate-700 flex items-center justify-between focus:outline-none focus:bg-slate-50">
+                  Use Hobson's standard <span className="text-[#7C3AED]">✓</span>
+                </button>
+                <button type="button" role="menuitem" onClick={onPick} className="w-full text-left px-2 py-1.5 rounded hover:bg-slate-50 text-slate-700 focus:outline-none focus:bg-slate-50">
+                  Use my own…
+                </button>
+              </div>
+            )}
+          </div>
+          <input ref={fileRef} type="file" className="sr-only" aria-label="Upload your template" onChange={onFile} />
+        </>
+      ) : (
+        <>
+          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full border border-[#7C3AED]/40 bg-[#F5F3FF] text-[#5B21B6]" title={tpl.filename}>
+            <svg aria-hidden width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/></svg>
+            Using your template: <span className="font-medium truncate max-w-[140px] inline-block align-bottom">{tpl.filename}</span>
+          </span>
+          <button type="button" onClick={onPick} className="text-[#7C3AED] hover:underline focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40 rounded px-1">Replace</button>
+          <button type="button" onClick={() => onSet("standard")} className="text-slate-500 hover:text-slate-700 hover:underline focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40 rounded px-1">Use standard instead</button>
+          <input ref={fileRef} type="file" className="sr-only" aria-label="Replace your template" onChange={onFile} />
+        </>
+      )}
+    </div>
   );
 }
 
