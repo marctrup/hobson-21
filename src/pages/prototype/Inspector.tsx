@@ -1636,9 +1636,10 @@ function AddRowForm({
 
 export function InspectorChat(props: InspectorChatProps) {
   const {
-    events, area, proposed, confirmed, isResearching,
-    onPickArea, onOtherText,
-    onUpdateRequirement, onRemoveRequirement, onAddRequirement,
+    events, build, confirmed,
+    onPickArea, onConsent, onDescribe,
+    onUpdateResearched, onRemoveResearched,
+    onUpdateAddition, onRemoveAddition, onAddAddition,
     onConfirm, onCancel,
     onUpdateConfirmed, onAddConfirmed,
   } = props;
@@ -1651,6 +1652,8 @@ export function InspectorChat(props: InspectorChatProps) {
     const t = setTimeout(() => setIntroPhase("done"), 800);
     return () => clearTimeout(t);
   }, [reduced]);
+
+  const showPicker = introPhase === "done" && build === null;
 
   return (
     <div className="flex flex-col" style={{ gap: TURN_GAP }}>
@@ -1668,7 +1671,7 @@ export function InspectorChat(props: InspectorChatProps) {
         <InspectorBubble text={INSPECTOR_CHARACTER.greeting} showAvatar streamKey="intro" />
       )}
 
-      {/* Event log (render before the picker so it appears beneath prior turns) */}
+      {/* Event log */}
       {events.map((ev, i) => {
         if (ev.kind === "user") return <UserBubble key={ev.id} text={ev.text} />;
         if (ev.kind === "researching") return <ResearchingBubble key={ev.id} />;
@@ -1694,39 +1697,53 @@ export function InspectorChat(props: InspectorChatProps) {
         return <InspectorBubble key={ev.id} text={ev.text} showAvatar={showAvatar} streamKey={ev.id} />;
       })}
 
-      {/* Area pick — shows on first run AND whenever the user starts another area build */}
-      {introPhase === "done" && area === null && !proposed && !isResearching && (
+      {/* Step 1–2 — compliance list / area picker */}
+      {showPicker && (
         <div className="flex flex-col" style={{ gap: BUBBLE_GAP }}>
           <InspectorBubble
             text={events.length === 0
-              ? "Which area of compliance would you like to set up?"
-              : "Which area shall we set up next?"}
+              ? "Let's build your compliance list. Choose an area to set up — I'll help you establish what's required for each."
+              : "Which area shall we add to your list next?"}
             showAvatar={events.length === 0}
             streamKey={`area-prompt-${events.length}`}
           />
-          <AreaPickCard onPick={onPickArea} onOther={onOtherText} />
+          <AreaPickCard onPick={onPickArea} />
         </div>
       )}
 
+      {/* Step 3 — consent to research */}
+      {build?.step === "consent" && (
+        <ConsentCard areaLabel={build.areaLabel} onYes={() => onConsent(true)} onNo={() => onConsent(false)} />
+      )}
 
-      {/* Still researching */}
-      {isResearching && <ResearchingBubble />}
+      {/* Step 4 — describe the area */}
+      {build?.step === "describe" && (
+        <DescribeForm
+          placeholder={`e.g. "residential homes" — what should I scope ${build.areaLabel.toLowerCase()} to?`}
+          onSubmit={onDescribe}
+        />
+      )}
 
-      {/* Proposal — editable list */}
-      {proposed && proposed.length >= 0 && !isResearching && (
-        <ProposalCard
-          proposed={proposed}
-          onUpdate={onUpdateRequirement}
-          onRemove={onRemoveRequirement}
-          onAdd={onAddRequirement}
+      {/* Step 5 — researching */}
+      {build?.step === "researching" && <ResearchingBubble />}
+
+      {/* Step 6–8 — editable build with legal/business split */}
+      {build?.step === "build" && (
+        <BuildCard
+          build={build}
+          onUpdateResearched={onUpdateResearched}
+          onRemoveResearched={onRemoveResearched}
+          onUpdateAddition={onUpdateAddition}
+          onRemoveAddition={onRemoveAddition}
+          onAddAddition={onAddAddition}
           onConfirm={onConfirm}
           onCancel={onCancel}
-          area={area}
         />
       )}
     </div>
   );
 }
+
 
 /* ============================================================
    Left-pane composer — InspectorComposer
