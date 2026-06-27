@@ -1269,15 +1269,36 @@ export function InspectorWorkArea({
 
       <div className="flex-1 overflow-y-auto px-6 py-6">
         <div className="max-w-3xl mx-auto space-y-6">
+          {rules.length > 0 && (
+            <>
+              <ScheduleHeader
+                frequency={frequency}
+                onFrequency={setFrequency}
+                lastChecked={lastChecked}
+                onCheckNow={runFullCheck}
+                busy={!!globalRecal && globalRecal.phase === "researching"}
+              />
+              {globalRecal && (
+                <RecalibrationPanel
+                  state={globalRecal}
+                  onResolve={resolveGlobal}
+                  onDismissAll={closeGlobal}
+                />
+              )}
+            </>
+          )}
+
           <section className="rounded-xl border border-[#7C3AED]/20 bg-[#FAF8FF] p-4">
             <div className="text-[12px] font-semibold text-[#5B21B6] mb-1">How this connects</div>
             <p className="text-[12px] text-slate-700 leading-relaxed">
               The Professor extracts dates from your documents. I check them against the rules below.
               Anything missing or out of date appears in the Compliance summary — a missing
               <span className="font-semibold"> legally required</span> document is flagged accordingly.
-              Use <span className="font-semibold">Update</span> on any group to have me re-check the current legal position and propose changes you can confirm.
+              The standing check above runs me across the whole set on your chosen cadence;
+              use <span className="font-semibold">Update</span> on any group for a one-off re-check.
             </p>
           </section>
+
 
           {rules.length === 0 ? (
             <div className="rounded-xl border border-dashed border-slate-300 bg-slate-50 p-10 text-center">
