@@ -3212,6 +3212,14 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
 
 
 
+          {/* Unit-level summary buttons (Occupational / Compliance) */}
+          {view === "unit" && selectedUnit && selectedPropertyId && (
+            <SummaryActions
+              scope={{ level: "unit", propertyId: selectedPropertyId, unitId: selectedUnit.id }}
+              onRequest={requestSummary}
+            />
+          )}
+
           {/* Pinned alert briefing at the top of unit chat */}
           {!testerMode && view === "unit" && selectedUnit && selectedPropertyId && (
             <>
