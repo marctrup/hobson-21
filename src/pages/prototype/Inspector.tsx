@@ -32,6 +32,10 @@ export const INSPECTOR_CHARACTER = {
 export type ComplianceArea =
   | "health_safety"
   | "financial"
+  | "notices"
+  | "contracts"
+  | "insurance"
+  | "inspections"
   | "environmental"
   | "licensing"
   | "other";
@@ -61,13 +65,12 @@ export type ComplianceRequirement = {
   areaId?: ComplianceArea;
   /** Filename of the document currently held against this requirement (simulated). */
   documentOnFile?: string;
+  /** Public source the Inspector cited when proposing this as legally required. */
+  sourceUrl?: string;
+  sourceLabel?: string;
 };
 
 /* ---------------- Area registry ---------------- */
-/**
- * One row per compliance area the Inspector knows about. The Library is
- * organised by these; each area carries its own schedule and Update button.
- */
 export const AREA_DEFS: Record<ComplianceArea, {
   id: ComplianceArea;
   label: string;
@@ -76,41 +79,52 @@ export const AREA_DEFS: Record<ComplianceArea, {
   unchangedNote: string;
 }> = {
   health_safety: {
-    id: "health_safety",
-    label: "Health & Safety",
-    sublabel: "residential",
+    id: "health_safety", label: "Health & Safety", sublabel: "residential",
     sourceLabel: "gov.uk & HSE guidance",
     unchangedNote: "Gas, EICR and EPC requirements and frequencies are unchanged.",
   },
   financial: {
-    id: "financial",
-    label: "Financial",
-    sublabel: "client money & insurance",
+    id: "financial", label: "Financial", sublabel: "client money & insurance",
     sourceLabel: "gov.uk, Propertymark & ARLA guidance",
     unchangedNote: "Client money, insurance and deposit requirements are unchanged.",
   },
+  notices: {
+    id: "notices", label: "Notices", sublabel: "statutory notices & guides",
+    sourceLabel: "gov.uk tenant guidance",
+    unchangedNote: "Notice templates and guidance editions are unchanged.",
+  },
+  contracts: {
+    id: "contracts", label: "Contracts", sublabel: "tenancy & service agreements",
+    sourceLabel: "gov.uk model agreements & sector guidance",
+    unchangedNote: "Contract templates are unchanged.",
+  },
+  insurance: {
+    id: "insurance", label: "Insurance", sublabel: "buildings, liability & PI",
+    sourceLabel: "gov.uk & ABI guidance",
+    unchangedNote: "Insurance requirements are unchanged.",
+  },
+  inspections: {
+    id: "inspections", label: "Inspections", sublabel: "building & plant inspections",
+    sourceLabel: "gov.uk, HSE & RICS guidance",
+    unchangedNote: "Inspection requirements are unchanged.",
+  },
   environmental: {
-    id: "environmental",
-    label: "Environmental",
-    sublabel: "energy & emissions",
+    id: "environmental", label: "Environmental", sublabel: "energy & emissions",
     sourceLabel: "gov.uk & DESNZ guidance",
     unchangedNote: "Environmental requirements are unchanged.",
   },
   licensing: {
-    id: "licensing",
-    label: "Licensing",
-    sublabel: "HMO & selective licensing",
+    id: "licensing", label: "Licensing", sublabel: "HMO & selective licensing",
     sourceLabel: "local authority licensing schemes",
     unchangedNote: "Licensing requirements are unchanged.",
   },
   other: {
-    id: "other",
-    label: "Other",
-    sublabel: "your own area",
+    id: "other", label: "Other", sublabel: "your own area",
     sourceLabel: "your brief & public guidance",
     unchangedNote: "Nothing has changed for this area.",
   },
 };
+
 
 
 export type InspectorEvent =
