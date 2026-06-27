@@ -19,6 +19,8 @@ import {
   InspectorComposer,
   InspectorWorkArea,
   DEFAULT_HS_REQUIREMENTS,
+  DEFAULT_FINANCIAL_REQUIREMENTS,
+  AREA_DEFS,
   augmentComplianceRows,
   type ComplianceArea,
   type ComplianceRequirement,
