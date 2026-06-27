@@ -329,6 +329,24 @@ const MAG_ADD_OPTIONS: { id: string; label: string; phrase: string }[] = [
   { id: "notify_owner", label: "Notify owner", phrase: "notify the owner" },
 ];
 
+const MAG_DEFAULTS_BY_WATCH: Record<"rent_reviews" | "compliance" | "notices" | "other", { id: string; label: string; phrase: string }[]> = {
+  rent_reviews: MAG_DEFAULT_STEPS,
+  compliance: [
+    { id: "cert_audit", label: "Audit current certificates and expiry dates", phrase: "audit certificates" },
+    { id: "schedule_renewal", label: "Schedule renewal visits with contractors", phrase: "schedule renewal visits" },
+    { id: "access_notice", label: "Draft tenant access notices", phrase: "draft access notices" },
+    { id: "log_certs", label: "Log new certificates on the unit record", phrase: "log certificates" },
+  ],
+  notices: [
+    { id: "read_lease", label: "Read the lease and confirm notice mechanics", phrase: "read the lease" },
+    { id: "draft_notice", label: "Draft the notice", phrase: "draft the notice" },
+    { id: "email", label: "Draft the covering email to the tenant", phrase: "draft the covering email" },
+  ],
+  other: [
+    { id: "outline", label: "Outline the task in your words", phrase: "outline the task" },
+  ],
+};
+
 const SEED_WORKFLOWS: Workflow[] = [
   {
     id: "wf-2",
