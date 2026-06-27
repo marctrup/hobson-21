@@ -277,11 +277,21 @@ type Workflow = {
   justBuilt?: boolean;
   description?: string;
   whenLabel?: string;
+  whenKey?: "6m" | "3m" | "on" | "always" | "custom";
   visibility?: "personal" | "company";
   draftState?: MagBuildState;
   stepTemplates?: Record<string, StepTemplate>; // keyed by step id; doc-producing steps may use the user's own template
   steps?: { id: string; label: string; phrase: string }[]; // assembled steps — used for "Run a simulation"
+  // build-state echoes — kept so Adjust can re-walk the full build flow with the workflow's saved values
+  watch?: "rent_reviews" | "compliance" | "notices" | "other";
+  lead?: "6m" | "3m" | "on";
+  leadLabel?: string;
+  triggerPhrase?: string;
+  scope?: "unit" | "property" | "portfolio";
+  scopeSelection?: ScopeSelection;
+  ownerLabel?: string;
 };
+
 
 type StepTemplate = { mode: "standard" | "own"; filename?: string };
 
