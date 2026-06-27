@@ -1774,6 +1774,14 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
     setTimeout(() => magAsk(`Picking up '${wf.name}' where we left off — change anything you like.`), 300);
   };
 
+  const magDiscardDraft = (id: string) => {
+    const wf = workflows.find((w) => w.id === id);
+    if (!wf) return;
+    setWorkflows((arr) => arr.filter((w) => w.id !== id));
+    setTimeout(() => magAsk(`Of course — '${wf.name}' discarded.`), 250);
+  };
+
+
 
 
 
