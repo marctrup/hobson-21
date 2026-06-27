@@ -3912,7 +3912,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
             return <BrokerWorkArea character={c} contacts={contacts} onAdd={handleAddBrokerContact} />;
           }
           if (c.id === "inspector") {
-            return <InspectorWorkArea rules={inspectorConfirmed} />;
+            return <InspectorWorkArea rules={inspectorConfirmed} onUpdateRules={setInspectorConfirmed} />;
           }
           return <AdminWorkArea character={c} />;
 
