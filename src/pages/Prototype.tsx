@@ -7512,7 +7512,7 @@ function ComparablesScrapePreview() {
   );
 }
 
-function buildPA004Beats(): PerformBeat[] {
+function buildPA004Beats(section13Template: StepTemplate | null = null): PerformBeat[] {
   // Indexed linearly; gates jump by index to keep authoring simple.
   return [
     {
