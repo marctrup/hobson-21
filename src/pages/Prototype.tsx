@@ -10453,6 +10453,8 @@ function MagicianWorkArea({ character, workflows, onCreate, onAdjust, onView, on
         const newest = [...withDate].sort((a, b) => (b.lastAdjusted || "").localeCompare(a.lastAdjusted || ""))[0];
         const draftWf = drafts[0];
         const notes: CharacterNote[] = [];
+        let magBadge: string | null = null;
+
         const justBuilt = workflows.find((w) => w.justBuilt);
         if (workflows.length === 0) {
           notes.push({
