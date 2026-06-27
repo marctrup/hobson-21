@@ -3771,6 +3771,7 @@ type MagHandlers = {
   onGoBack: () => void;
   onPauseSave: () => void;
   onCancelBuild: () => void;
+  onSetStepTemplate: (uid: string, mode: "standard" | "own", filename?: string) => void;
 };
 
 function AdminChat({ character, owl, professorEvents, onAssignProfessorType, brokerEvents, brokerFlowActive, magicianEvents, magBuild, magStreamingId, onMagStreamDone, magHandlers }: { character: { id: AdminCharacter; name: string; src: string; greeting: string } | null; owl: OwlState; professorEvents?: ProfEvent[]; onAssignProfessorType?: (batchId: string, type: string) => void; brokerEvents?: BrokerEvent[]; brokerFlowActive?: boolean; magicianEvents?: MagicianEvent[]; magBuild?: MagBuildState | null; magStreamingId?: string | null; onMagStreamDone?: (id: string) => void; magHandlers?: MagHandlers }) {
