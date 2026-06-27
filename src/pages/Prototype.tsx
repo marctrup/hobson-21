@@ -21,12 +21,16 @@ import {
   DEFAULT_HS_REQUIREMENTS,
   DEFAULT_FINANCIAL_REQUIREMENTS,
   AREA_DEFS,
+  RESEARCH_BY_AREA,
   augmentComplianceRows,
   type ComplianceArea,
   type ComplianceRequirement,
+  type InspectorBuild,
   type InspectorEvent,
   type RequirementCategory,
+  type DurationUnit,
 } from "./prototype/Inspector";
+
 
 type AdminCharacter = "magician" | "professor" | "broker" | "inspector";
 const ADMIN_CHARACTERS: { id: AdminCharacter; name: string; src: string; tagline: string; greeting: string; workTitle: string; workIntro: string }[] = [
