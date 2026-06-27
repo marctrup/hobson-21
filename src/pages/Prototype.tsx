@@ -10,6 +10,7 @@ import characterMagician from "@/assets/prototype/character-magician.png";
 import characterProfessor from "@/assets/prototype/character-professor.png";
 import characterBroker from "@/assets/prototype/character-broker.png";
 import { DocumentsLibrary } from "@/components/prototype/DocumentsLibrary";
+import { cn } from "@/lib/utils";
 
 type AdminCharacter = "magician" | "professor" | "broker";
 const ADMIN_CHARACTERS: { id: AdminCharacter; name: string; src: string; tagline: string; greeting: string; workTitle: string; workIntro: string }[] = [
