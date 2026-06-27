@@ -490,9 +490,71 @@ function RequirementEditor({
           className="text-[11px] text-rose-700 hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-rose-300 rounded px-1"
         >Remove</button>
       </div>
+      {req.category !== "certification" && (
+        <VersionSourcePicker req={req} onChange={onChange} />
+      )}
+      {req.description && (
+        <div className="mt-2 text-[11px] text-slate-500 italic">{req.description}</div>
+      )}
     </div>
   );
 }
+
+function VersionSourcePicker({
+  req, onChange, compact = false,
+}: {
+  req: ComplianceRequirement;
+  onChange: (patch: Partial<ComplianceRequirement>) => void;
+  compact?: boolean;
+}) {
+  const fileRef = React.useRef<HTMLInputElement | null>(null);
+  const source = req.versionSource ?? "hobson";
+  return (
+    <div className={(compact ? "mt-1.5 " : "mt-2 ") + "flex flex-wrap items-center gap-2 text-[11px] text-slate-600"}>
+      <span className="text-slate-500">Version held:</span>
+      <span
+        className={
+          "inline-flex items-center gap-1 px-2 py-0.5 rounded-full border " +
+          (source === "hobson"
+            ? "bg-[#F5F3FF] border-[#7C3AED]/30 text-[#5B21B6]"
+            : "bg-amber-50 border-amber-200 text-amber-800")
+        }
+      >
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
+          <path d="M4 7h16M4 12h16M4 17h10"/>
+        </svg>
+        {source === "hobson"
+          ? "Hobson holds the latest"
+          : `Your version${req.uploadedFileName ? ` · ${req.uploadedFileName}` : ""}`}
+      </span>
+      <div className="flex-1" />
+      {source === "hobson" ? (
+        <button
+          type="button"
+          onClick={() => fileRef.current?.click()}
+          className="px-2 py-0.5 rounded-md border border-slate-300 bg-white hover:bg-slate-50 text-[11px] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]"
+        >Upload my own</button>
+      ) : (
+        <button
+          type="button"
+          onClick={() => onChange({ versionSource: "hobson", uploadedFileName: undefined })}
+          className="px-2 py-0.5 rounded-md border border-slate-300 bg-white hover:bg-slate-50 text-[11px] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]"
+        >Use Hobson's</button>
+      )}
+      <input
+        ref={fileRef}
+        type="file"
+        className="sr-only"
+        onChange={(e) => {
+          const f = e.target.files?.[0];
+          if (f) onChange({ versionSource: "uploaded", uploadedFileName: f.name });
+          e.currentTarget.value = "";
+        }}
+      />
+    </div>
+  );
+}
+
 
 function AddRequirementForm({ onAdd }: { onAdd: (req: Omit<ComplianceRequirement, "id">) => void }) {
   const [open, setOpen] = useState(false);
