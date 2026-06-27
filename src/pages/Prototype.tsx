@@ -1813,6 +1813,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
         justBuilt: true,
         draftState: b,
         stepTemplates: collectStepTemplates(b.steps),
+        steps: b.steps.map((s) => ({ id: s.id, label: s.label, phrase: s.phrase })),
       };
       setWorkflows((arr) => [wf, ...arr.map((w) => ({ ...w, justBuilt: false }))]);
       setTimeout(() => magAsk("Saved — we'll pick this up whenever you're ready."), 350);
