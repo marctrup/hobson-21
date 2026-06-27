@@ -3427,6 +3427,14 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
 
 
 
+          {/* Property-level summary buttons */}
+          {view === "property" && selectedProperty && (
+            <SummaryActions
+              scope={{ level: "property", propertyId: selectedProperty.id }}
+              onRequest={requestSummary}
+            />
+          )}
+
           {/* Property view */}
           {view === "property" && selectedProperty && (
             <PropertyContent
