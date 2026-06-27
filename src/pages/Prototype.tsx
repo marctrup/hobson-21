@@ -19,6 +19,8 @@ import {
   InspectorComposer,
   InspectorWorkArea,
   DEFAULT_HS_REQUIREMENTS,
+  DEFAULT_FINANCIAL_REQUIREMENTS,
+  AREA_DEFS,
   augmentComplianceRows,
   type ComplianceArea,
   type ComplianceRequirement,
@@ -1512,9 +1514,20 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
     setInspectorArea(a);
     const userId = inspNewId("iu");
     setInspectorEvents((e) => [...e, { kind: "user", id: userId, text: label }]);
-    if (a === "health_safety") {
-      const ackId = inspNewId("in");
-      setInspectorEvents((e) => [...e, { kind: "inspector", id: ackId, text: "Right — residential Health & Safety. Let me look up what the law currently requires." }]);
+
+    const seedByArea: Partial<Record<ComplianceArea, ComplianceRequirement[]>> = {
+      health_safety: DEFAULT_HS_REQUIREMENTS,
+      financial: DEFAULT_FINANCIAL_REQUIREMENTS,
+    };
+    const seed = seedByArea[a];
+
+    if (seed) {
+      const def = AREA_DEFS[a];
+      setInspectorEvents((e) => [...e, {
+        kind: "inspector",
+        id: inspNewId("in"),
+        text: `Right — ${def.label.toLowerCase()} (${def.sublabel}). Let me look up what's currently expected.`,
+      }]);
       setInspectorResearching(true);
       const researchId = inspNewId("ir");
       setInspectorEvents((e) => [...e, { kind: "researching", id: researchId }]);
@@ -1526,16 +1539,15 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
           id: inspNewId("in"),
           text: "Here is what I found. Each one carries a default renewal frequency — edit anything that doesn't match how you run things, remove what doesn't apply, and add anything I've missed.",
         }]);
-        // freshly cloned proposal (Inspector.tsx default ids reused — fine as keys are local)
-        setInspectorProposed(DEFAULT_HS_REQUIREMENTS.map((r) => ({ ...r })));
+        setInspectorProposed(seed.map((r) => ({ ...r, areaId: a })));
       }, 1800);
     } else {
       setInspectorEvents((e) => [...e, {
         kind: "inspector",
         id: inspNewId("in"),
-        text: `${label} is coming soon. For the prototype I'm focused on residential Health & Safety — pick that to walk through the full build.`,
+        text: `${label} — I'll set that up properly soon. For the prototype, choose Health & Safety or Financial to walk through the full build.`,
       }]);
-      // reset area so the picker shows again
+      // reset area so the picker re-shows
       setTimeout(() => setInspectorArea(null), 50);
     }
   };
@@ -1545,7 +1557,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
     setInspectorEvents((e) => [...e, {
       kind: "inspector",
       id: inspNewId("in"),
-      text: `Noted — "${text}". Free-form areas are coming soon. For now, choose Health & Safety to see the full build.`,
+      text: `Noted — "${text}". Free-form areas are coming soon. For now, choose Health & Safety or Financial to see the full build.`,
     }]);
   };
 
@@ -1554,17 +1566,23 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
   const inspectorRemoveRequirement = (id: string) =>
     setInspectorProposed((arr) => arr ? arr.filter((r) => r.id !== id) : arr);
   const inspectorAddRequirement = (req: Omit<ComplianceRequirement, "id">) =>
-    setInspectorProposed((arr) => arr ? [...arr, { ...req, id: `req-custom-${Date.now()}` }] : [{ ...req, id: `req-custom-${Date.now()}` }]);
+    setInspectorProposed((arr) => arr ? [...arr, { ...req, id: `req-custom-${Date.now()}`, areaId: inspectorArea ?? req.areaId }] : [{ ...req, id: `req-custom-${Date.now()}`, areaId: inspectorArea ?? req.areaId }]);
 
   const inspectorConfirm = () => {
     if (!inspectorProposed) return;
-    const next = inspectorProposed.map((r) => ({ ...r }));
-    setInspectorConfirmed(next);
+    const areaId = inspectorArea ?? "health_safety";
+    const next = inspectorProposed.map((r) => ({ ...r, areaId }));
+    // Append: confirming a new area never replaces previously confirmed areas.
+    setInspectorConfirmed((prev) => {
+      const keep = prev.filter((r) => (r.areaId ?? "health_safety") !== areaId);
+      return [...keep, ...next];
+    });
     setInspectorProposed(null);
+    setInspectorArea(null);
     setInspectorEvents((e) => [
       ...e,
       { kind: "user", id: inspNewId("iu"), text: "Confirm these requirements" },
-      { kind: "inspector", id: inspNewId("in"), text: "Recorded. I'll watch every let unit against these and flag anything missing or overdue. The Compliance summary now marks missing legally-required documents in red." },
+      { kind: "inspector", id: inspNewId("in"), text: "Recorded. I'll watch these and re-check the rules on your schedule. The Compliance summary now reflects this area." },
       { kind: "confirmed", id: inspNewId("ic"), count: next.length },
     ]);
   };
@@ -1576,6 +1594,17 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
       kind: "inspector",
       id: inspNewId("in"),
       text: "No bother — nothing recorded. Tell me which area to set up whenever you're ready.",
+    }]);
+  };
+
+  const inspectorBuildAnother = () => {
+    // Re-open the area picker in chat by clearing area + proposal.
+    setInspectorProposed(null);
+    setInspectorArea(null);
+    setInspectorEvents((e) => [...e, {
+      kind: "inspector",
+      id: inspNewId("in"),
+      text: "Happy to set up another area. Tell me which one.",
     }]);
   };
 
@@ -3912,7 +3941,14 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
             return <BrokerWorkArea character={c} contacts={contacts} onAdd={handleAddBrokerContact} />;
           }
           if (c.id === "inspector") {
-            return <InspectorWorkArea rules={inspectorConfirmed} onUpdateRules={setInspectorConfirmed} />;
+            return (
+              <InspectorWorkArea
+                rules={inspectorConfirmed}
+                onUpdateRules={setInspectorConfirmed}
+                onSetUpAnotherArea={inspectorBuildAnother}
+                buildActive={!!inspectorProposed || inspectorResearching || inspectorArea !== null}
+              />
+            );
           }
           return <AdminWorkArea character={c} />;
 
