@@ -3190,8 +3190,6 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
               <CharacterRailItem
                 name="The Keeper"
                 src={characterKeeper}
-                disabled
-                disabledLabel="Coming soon"
               />
             </div>
             {/* Discreet way out of Admin, well below the characters */}
