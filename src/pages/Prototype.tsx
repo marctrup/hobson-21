@@ -290,7 +290,18 @@ type Workflow = {
   scope?: "unit" | "property" | "portfolio";
   scopeSelection?: ScopeSelection;
   ownerLabel?: string;
+  activity?: ActivityEntry[]; // attributed change log — most recent first
 };
+
+type ActivityActor = { name: string; initials: string; role?: string };
+type ActivityEntry = {
+  id: string;
+  ts: number;       // epoch ms (for sort)
+  tsLabel: string;  // formatted "27 Jun 2026, 08:38"
+  actor: ActivityActor;
+  action: string;   // "Built", "Scope changed to Whole portfolio", "Steps edited", "Paused", "Resumed"
+};
+
 
 
 type StepTemplate = { mode: "standard" | "own"; filename?: string };
@@ -398,6 +409,45 @@ const MAG_DEFAULTS_BY_WATCH: Record<"rent_reviews" | "compliance" | "notices" | 
 };
 
 const SEED_WORKFLOWS: Workflow[] = [];
+
+// Current actor for prototype-attribution (in a real app this would come from auth).
+const CURRENT_ACTOR: ActivityActor = { name: "Marc Trup", initials: "MT", role: "Owner" };
+
+const formatActivityStamp = (d: Date = new Date()) => {
+  const date = d.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
+  const time = d.toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit", hour12: false });
+  return { ts: d.getTime(), label: `${date}, ${time}` };
+};
+const makeActivity = (action: string, actor: ActivityActor = CURRENT_ACTOR): ActivityEntry => {
+  const t = formatActivityStamp();
+  return { id: `act-${t.ts}-${Math.random().toString(36).slice(2, 6)}`, ts: t.ts, tsLabel: t.label, actor, action };
+};
+const prependActivity = (existing: ActivityEntry[] | undefined, entries: ActivityEntry[]) =>
+  [...entries, ...(existing ?? [])];
+
+// Diff two build snapshots and return concise change descriptions for the activity log.
+const diffWorkflowChanges = (prev: Workflow, b: MagBuildState): string[] => {
+  const changes: string[] = [];
+  const newName = (b.title?.trim() || prev.name);
+  if (newName && newName !== prev.name) changes.push(`Title changed to "${newName}"`);
+  const newScope = b.scopeLabel || prev.scopeLabel;
+  if (newScope && newScope !== prev.scopeLabel) changes.push(`Scope changed to ${newScope}`);
+  if (b.whenLabel && b.whenLabel !== prev.whenLabel) changes.push(`Timing changed to ${b.whenLabel}`);
+  if (b.visibility && b.visibility !== prev.visibility) {
+    changes.push(`Visibility changed to ${b.visibility === "company" ? "Company-wide" : "Personal"}`);
+  }
+  const prevOwner = prev.owner?.kind === "all_teams" ? "All teams" : prev.owner && "name" in prev.owner ? prev.owner.name : "";
+  const newOwner = b.owner?.kind === "all_teams" ? "All teams" : b.owner && "name" in b.owner ? b.owner.name : "";
+  if (newOwner && newOwner !== prevOwner) changes.push(`Owner changed to ${newOwner}`);
+  const prevStepKey = (prev.steps ?? []).map((s) => `${s.id}:${s.label}`).join("|");
+  const newStepKey = b.steps.map((s) => `${s.id}:${s.label}`).join("|");
+  if (newStepKey !== prevStepKey) changes.push("Steps edited");
+  const prevTpls = JSON.stringify(prev.stepTemplates ?? {});
+  const newTpls = JSON.stringify(collectStepTemplates(b.steps) ?? {});
+  if (prevTpls !== newTpls) changes.push("Templates updated");
+  return changes;
+};
+
 
 const MAGICIAN_STAFF: { name: string; role: string; initials: string }[] = [
   { name: "Sarah Chen", role: "Asset Manager", initials: "SC" },
@@ -1429,6 +1479,8 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
   const [magStreamingId, setMagStreamingId] = useState<string | null>(null);
   const [adjustingId, setAdjustingId] = useState<string | null>(null);
   const magSimQueueRef = useRef<string[]>([]); // queued simulation bubble texts
+  const adjustOriginalRef = useRef<Workflow | null>(null); // snapshot of workflow before Adjust began (for activity diffs)
+
 
 
   const magNewId = (p: string) => `${p}-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`;
@@ -1760,6 +1812,17 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
     };
     if (adjustingId) {
       const targetId = adjustingId;
+      const original = adjustOriginalRef.current;
+      const changes = original ? diffWorkflowChanges(original, b) : [];
+      const wasDraft = original?.status === "draft";
+      const activityEntries: ActivityEntry[] = [];
+      if (wasDraft) {
+        activityEntries.push(makeActivity(changes.length > 0 ? `Set live — ${changes.join("; ")}` : "Set live"));
+      } else if (changes.length === 0) {
+        activityEntries.push(makeActivity("Adjusted (no changes)"));
+      } else {
+        for (const c of changes) activityEntries.push(makeActivity(c));
+      }
       setWorkflows((arr) => arr.map((w) => w.id === targetId ? {
         ...w,
         name: b.title?.trim() || w.name,
@@ -1781,13 +1844,15 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
         stepTemplates: collectStepTemplates(b.steps),
         steps: b.steps.map((s) => ({ id: s.id, label: s.label, phrase: s.phrase })),
         ...persistedBuild,
+        activity: prependActivity(w.activity, activityEntries),
       } : { ...w, justBuilt: false }));
       const name = b.title?.trim() || "this workflow";
+      adjustOriginalRef.current = null;
       setMagBuild(null);
       setAdjustingId(null);
       const builtId = magNewId("mb");
       setMagicianEvents((e) => [...e, { kind: "built", id: builtId, workflowId: targetId, name, stepCount: b.steps.length }]);
-      setTimeout(() => magAsk(`Adjusted — '${name}' updated. The card on the right reflects your changes.`), 500);
+      setTimeout(() => magAsk(`Adjusted — '${name}' updated. The card on the right reflects your changes, and the activity log captures who changed what.`), 500);
       return;
     }
     const id = `wf-${Date.now()}`;
@@ -1811,6 +1876,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
       stepTemplates: collectStepTemplates(b.steps),
       steps: b.steps.map((s) => ({ id: s.id, label: s.label, phrase: s.phrase })),
       ...persistedBuild,
+      activity: [makeActivity("Built")],
     };
     setMagBuild(null);
     setWorkflows((arr) => [wf, ...arr.map((w) => ({ ...w, justBuilt: false }))]);
@@ -1822,6 +1888,8 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
 
   // ----- Pause / cancel / resume a workflow build -----
   const magPauseSave = () => {
+    const currentAdjustingId = adjustingId;
+    const original = adjustOriginalRef.current;
     setMagBuild((b) => {
       if (!b) return b;
       const phrases = b.steps.map((s) => s.phrase);
@@ -1850,12 +1918,18 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
         draftState: b,
         stepTemplates: collectStepTemplates(b.steps),
         steps: b.steps.map((s) => ({ id: s.id, label: s.label, phrase: s.phrase })),
+        activity: [makeActivity("Paused — saved as draft")],
       };
       // If pausing during an Adjust, update the existing workflow in place as a draft (no duplicate).
-      if (adjustingId) {
-        const targetId = adjustingId;
-        setWorkflows((arr) => arr.map((w) => w.id === targetId ? { ...wf, id: targetId } : w));
+      if (currentAdjustingId) {
+        const targetId = currentAdjustingId;
+        const changes = original ? diffWorkflowChanges(original, b) : [];
+        const entries: ActivityEntry[] = changes.length > 0
+          ? [...changes.map((c) => makeActivity(c)), makeActivity("Paused — saved as draft")]
+          : [makeActivity("Paused — saved as draft")];
+        setWorkflows((arr) => arr.map((w) => w.id === targetId ? { ...wf, id: targetId, activity: prependActivity(w.activity, entries) } : w));
         setAdjustingId(null);
+        adjustOriginalRef.current = null;
       } else {
         setWorkflows((arr) => [wf, ...arr.map((w) => ({ ...w, justBuilt: false }))]);
       }
@@ -1868,6 +1942,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
     const wasAdjusting = !!adjustingId;
     setMagBuild(null);
     setAdjustingId(null);
+    adjustOriginalRef.current = null;
     setTimeout(() => magAsk(wasAdjusting ? "Of course — changes discarded. The workflow is unchanged." : "Of course — discarded."), 250);
   };
 
@@ -1878,6 +1953,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
     if (!wf) return;
     setMagicianEvents([]);
     magSimQueueRef.current = [];
+    adjustOriginalRef.current = wf;
     // If a paused draft is being adjusted, prefer the saved live build state.
     if (wf.draftState) {
       setAdjustingId(id);
@@ -1927,8 +2003,11 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
     const wf = workflows.find((w) => w.id === id);
     if (!wf || !wf.draftState) return;
     setMagicianEvents([]);
+    // Keep the existing card in place and treat resume as an in-place adjust so activity history is preserved.
+    adjustOriginalRef.current = wf;
+    setAdjustingId(id);
     setMagBuild(wf.draftState);
-    setWorkflows((arr) => arr.filter((w) => w.id !== id));
+    setWorkflows((arr) => arr.map((w) => w.id === id ? { ...w, activity: prependActivity(w.activity, [makeActivity("Resumed editing")]) } : w));
     setTimeout(() => magAsk(`Picking up '${wf.name}' where we left off — change anything you like.`), 300);
   };
 
@@ -1938,6 +2017,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
     setWorkflows((arr) => arr.filter((w) => w.id !== id));
     setTimeout(() => magAsk(`Of course — '${wf.name}' discarded.`), 250);
   };
+
 
 
 
@@ -10082,9 +10162,13 @@ function MagicianWorkArea({ character, workflows, onCreate, onAdjust, onView, on
 
 function WorkflowCard({ w, onAdjust, onView, onResume, onDiscard, onSimulate }: { w: Workflow; onAdjust: () => void; onView: () => void; onResume?: () => void; onDiscard?: () => void; onSimulate?: () => void }) {
   const [scopeOpen, setScopeOpen] = useState(false);
+  const [activityOpen, setActivityOpen] = useState(false);
   const [confirmDiscard, setConfirmDiscard] = useState(false);
   const isPausedDraft = !!w.draftState;
   const d = w.draftState;
+  const activity = w.activity ?? [];
+  const latest = activity[0];
+
 
   // Per-field "captured / not yet set" inventory for paused drafts
   const fieldStatus = (() => {
@@ -10219,14 +10303,40 @@ function WorkflowCard({ w, onAdjust, onView, onResume, onDiscard, onSimulate }: 
       <footer className={`flex items-center justify-between gap-2 pt-2 border-t ${isPausedDraft ? "border-slate-200" : "border-slate-100"}`}>
         <div className="flex items-center gap-2 min-w-0 flex-wrap">
           <OwnerChip owner={w.owner} />
-          <span className="text-[11px] text-slate-500">
-            {isPausedDraft
-              ? "Paused — nothing is watching yet"
-              : w.status === "draft"
-                ? "Draft · not yet finished"
-                : `Last adjusted ${w.lastAdjusted ?? "—"}`}
+          <span className="text-[11px] text-slate-500 inline-flex items-center gap-1.5 flex-wrap">
+            {latest ? (
+              <>
+                <ActorAvatar actor={latest.actor} />
+                <span>
+                  Last {latest.action.split("—")[0].trim().toLowerCase()} by{" "}
+                  <span className="font-medium text-slate-700">{latest.actor.name}</span>
+                  {" · "}
+                  <span title={latest.tsLabel}>{latest.tsLabel}</span>
+                </span>
+              </>
+            ) : (
+              <span>
+                {isPausedDraft
+                  ? "Paused — nothing is watching yet"
+                  : w.status === "draft"
+                    ? "Draft · not yet finished"
+                    : `Last adjusted ${w.lastAdjusted ?? "—"}`}
+              </span>
+            )}
+            {activity.length > 0 && (
+              <button
+                type="button"
+                onClick={() => setActivityOpen((v) => !v)}
+                className="text-[11px] text-[#7C3AED] hover:underline focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40 rounded px-1"
+                aria-expanded={activityOpen}
+                aria-controls={`activity-${w.id}`}
+              >
+                {activityOpen ? "Hide activity" : `Activity (${activity.length})`}
+              </button>
+            )}
           </span>
         </div>
+
         <div className="flex items-center gap-1.5 shrink-0">
           {isPausedDraft ? (
             <>
@@ -10305,9 +10415,51 @@ function WorkflowCard({ w, onAdjust, onView, onResume, onDiscard, onSimulate }: 
           )}
         </div>
       </footer>
+
+      {activityOpen && activity.length > 0 && (
+        <div
+          id={`activity-${w.id}`}
+          className="rounded-md border border-slate-200 bg-slate-50/60 px-3 py-2"
+          role="region"
+          aria-label={`Activity log for ${w.name}`}
+        >
+          <div className="text-[10.5px] uppercase tracking-wide font-semibold text-slate-500 mb-1.5">
+            Activity — most recent first
+          </div>
+          <ul className="space-y-1.5 max-h-48 overflow-y-auto">
+            {activity.map((e) => (
+              <li key={e.id} className="flex items-start gap-2 text-[11.5px] leading-snug">
+                <ActorAvatar actor={e.actor} />
+                <div className="min-w-0 flex-1">
+                  <span className="text-slate-800">{e.action}</span>
+                  <span className="text-slate-500"> by </span>
+                  <span className="font-medium text-slate-700">{e.actor.name}</span>
+                  {e.actor.role && <span className="text-slate-400"> ({e.actor.role})</span>}
+                  <span className="text-slate-500"> · </span>
+                  <span className="text-slate-500">{e.tsLabel}</span>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </article>
   );
 }
+
+function ActorAvatar({ actor }: { actor: ActivityActor }) {
+  return (
+    <span
+      className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-[#EDE9FE] text-[9.5px] font-semibold text-[#5B21B6] shrink-0"
+      aria-label={`${actor.name}${actor.role ? `, ${actor.role}` : ""}`}
+      title={`${actor.name}${actor.role ? ` · ${actor.role}` : ""}`}
+    >
+      {actor.initials}
+    </span>
+  );
+}
+
+
 
 function DraftFieldRow({ label, value, emptyLabel = "not yet set" }: { label: string; value: string | null; emptyLabel?: string }) {
   const empty = !value;
