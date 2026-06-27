@@ -874,15 +874,6 @@ export function InspectorChat(props: InspectorChatProps) {
         </div>
       )}
 
-      {/* Event log */}
-      {events.map((ev, i) => {
-        if (ev.kind === "user") return <UserBubble key={ev.id} text={ev.text} />;
-        if (ev.kind === "researching") return <ResearchingBubble key={ev.id} />;
-        if (ev.kind === "confirmed") return <ConfirmedRecap key={ev.id} count={ev.count} />;
-        const prev = events[i - 1];
-        const showAvatar = !prev || prev.kind === "user";
-        return <InspectorBubble key={ev.id} text={ev.text} showAvatar={showAvatar} streamKey={ev.id} />;
-      })}
 
       {/* Still researching */}
       {isResearching && <ResearchingBubble />}
