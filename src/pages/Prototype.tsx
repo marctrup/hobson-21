@@ -9917,8 +9917,41 @@ function MagicianWorkArea({ character, workflows, onCreate, onAdjust, onView, on
 
       {/* Cards */}
       <div className="flex-1 overflow-auto px-5 py-5 bg-slate-50/40">
-        {filtered.length === 0 && (
-          <div className="max-w-md mx-auto text-center text-[12px] text-slate-500 py-10">No workflows match these filters.</div>
+        {workflows.length === 0 ? (
+          <div className="max-w-md mx-auto text-center py-12">
+            <div className="text-[14px] font-semibold text-slate-700 mb-1.5">No workflows yet</div>
+            <div className="text-[12px] text-slate-500 leading-relaxed">
+              The workshop is empty. When you're ready, hit <span className="font-medium text-[#7C3AED]">Create a workflow</span> in the chat and I'll walk you through it — nothing watches your portfolio until you set it loose.
+            </div>
+          </div>
+        ) : (
+          <>
+            {filtered.length === 0 && (
+              <div className="max-w-md mx-auto text-center text-[12px] text-slate-500 py-10">No workflows match these filters.</div>
+            )}
+            {groups.map((g) => (
+              <div key={g.label || "all"} className="mb-6 last:mb-0">
+                {g.label && (
+                  <div className="text-[11px] uppercase tracking-wide text-slate-500 font-semibold mb-2 px-1">{g.label}</div>
+                )}
+                <div className="grid gap-3" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(340px, 1fr))" }}>
+                  {g.items.map((w) => (
+                    <WorkflowCard
+                      key={w.id}
+                      w={w}
+                      onAdjust={() => onAdjust(w.id)}
+                      onView={() => onView(w.id)}
+                      onResume={w.draftState && onResume ? () => onResume(w.id) : undefined}
+                      onDiscard={w.draftState && onDiscard ? () => onDiscard(w.id) : undefined}
+                      onSimulate={onSimulate ? () => onSimulate(w.id) : undefined}
+                    />
+                  ))}
+                </div>
+              </div>
+            ))}
+          </>
+        )}
+      </div>
         )}
         {groups.map((g) => (
           <div key={g.label || "all"} className="mb-6 last:mb-0">
