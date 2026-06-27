@@ -4266,25 +4266,12 @@ function MagicianBuildPanel({ build, handlers }: { build: MagBuildState; handler
         </div>
       )}
       {build.step === "q3" && (
-        <div>
-          <div className="text-[11px] uppercase tracking-wide text-[#7C3AED] font-semibold mb-2">Where does this apply?</div>
-          <div className="flex flex-wrap gap-2">
-            <MagOptionButton onClick={() => handlers.onQ3("unit", "A specific unit")}>A specific unit</MagOptionButton>
-            <MagOptionButton onClick={() => handlers.onQ3("property", "A whole property")}>A whole property</MagOptionButton>
-            <MagOptionButton onClick={() => handlers.onQ3("portfolio", "The whole portfolio")}>The whole portfolio</MagOptionButton>
-          </div>
-        </div>
+        <ScopePicker
+          initial={build.scopeSelection}
+          onCommit={handlers.onQ3Scope}
+        />
       )}
-      {build.step === "q3b" && (
-        <div>
-          <div className="text-[11px] uppercase tracking-wide text-[#7C3AED] font-semibold mb-2">Which unit?</div>
-          <div className="flex flex-wrap gap-2">
-            {UNIT_CHOICES.map((u) => (
-              <MagOptionButton key={u} onClick={() => handlers.onQ3b(u)}>{u}</MagOptionButton>
-            ))}
-          </div>
-        </div>
-      )}
+
       {build.step === "q4" && (
         <div>
           <div className="text-[11px] uppercase tracking-wide text-[#7C3AED] font-semibold mb-2">Who should own it?</div>
