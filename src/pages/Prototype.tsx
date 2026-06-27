@@ -3388,7 +3388,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
 
           {/* Portfolio-level summary buttons */}
           {view === "portfolio" && !typing && messages.length > 0 && (
-            <SummaryActions scope={{ level: "portfolio" }} onRequest={requestSummary} />
+            <SummaryActions scope={{ level: "portfolio" }} onRequest={requestSummary} enabledKinds={summaryVisibility} />
           )}
 
           {/* Portfolio view (single state) — intelligent action briefing */}
