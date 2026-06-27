@@ -290,7 +290,18 @@ type Workflow = {
   scope?: "unit" | "property" | "portfolio";
   scopeSelection?: ScopeSelection;
   ownerLabel?: string;
+  activity?: ActivityEntry[]; // attributed change log — most recent first
 };
+
+type ActivityActor = { name: string; initials: string; role?: string };
+type ActivityEntry = {
+  id: string;
+  ts: number;       // epoch ms (for sort)
+  tsLabel: string;  // formatted "27 Jun 2026, 08:38"
+  actor: ActivityActor;
+  action: string;   // "Built", "Scope changed to Whole portfolio", "Steps edited", "Paused", "Resumed"
+};
+
 
 
 type StepTemplate = { mode: "standard" | "own"; filename?: string };
