@@ -524,7 +524,7 @@ function VersionSourcePicker({
           <path d="M4 7h16M4 12h16M4 17h10"/>
         </svg>
         {source === "hobson"
-          ? "Hobson holds the latest"
+          ? "I hold the latest"
           : `Your version${req.uploadedFileName ? ` · ${req.uploadedFileName}` : ""}`}
       </span>
       <div className="flex-1" />
@@ -539,7 +539,8 @@ function VersionSourcePicker({
           type="button"
           onClick={() => onChange({ versionSource: "hobson", uploadedFileName: undefined })}
           className="px-2 py-0.5 rounded-md border border-slate-300 bg-white hover:bg-slate-50 text-[11px] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]"
-        >Use Hobson's</button>
+        >Use mine</button>
+
       )}
       <input
         ref={fileRef}
@@ -834,7 +835,10 @@ type RecalibrationState = {
   changes: RecalibrationChange[];
   unchangedNote: string;
   resolved: Record<string, "applied" | "dismissed">;
+  /** Override the scope label used in the panel intro (e.g. "the whole set"). */
+  scopeLabel?: string;
 };
+
 
 const GROUP_META: Record<RequirementCategory, { label: string; helper: string }> = {
   certification: { label: "Certifications", helper: "Inspections and certificates — held as individual instances." },
@@ -920,7 +924,7 @@ function RecalibrationPanel({
                 <span className="w-1.5 h-1.5 rounded-full bg-[#7C3AED] animate-pulse" style={{ animationDelay: "150ms" }} />
                 <span className="w-1.5 h-1.5 rounded-full bg-[#7C3AED] animate-pulse" style={{ animationDelay: "300ms" }} />
               </span>
-              Re-checking gov.uk and HSE guidance for {GROUP_META[state.group].label.toLowerCase()}…
+              Re-checking gov.uk and HSE guidance for {state.scopeLabel ?? GROUP_META[state.group].label.toLowerCase()}…
             </div>
           ) : state.changes.length === 0 ? (
             <div className="text-[12px] text-slate-700">
@@ -1068,7 +1072,100 @@ function GroupSection({
   );
 }
 
+/* ------------------------------------------------------------
+   Standing check schedule
+   ------------------------------------------------------------ */
+
+type CheckFrequency = "monthly" | "quarterly" | "halfyearly" | "yearly";
+
+const FREQUENCY_OPTIONS: { value: CheckFrequency; label: string; months: number }[] = [
+  { value: "monthly",    label: "Every month",    months: 1 },
+  { value: "quarterly",  label: "Every 3 months", months: 3 },
+  { value: "halfyearly", label: "Every 6 months", months: 6 },
+  { value: "yearly",     label: "Every year",     months: 12 },
+];
+
+function addMonths(d: Date, months: number): Date {
+  const x = new Date(d);
+  x.setMonth(x.getMonth() + months);
+  return x;
+}
+
+function fmtDate(d: Date): string {
+  return d.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
+}
+
+function ScheduleHeader({
+  frequency, onFrequency, lastChecked, onCheckNow, busy,
+}: {
+  frequency: CheckFrequency;
+  onFrequency: (f: CheckFrequency) => void;
+  lastChecked: Date;
+  onCheckNow: () => void;
+  busy: boolean;
+}) {
+  const months = FREQUENCY_OPTIONS.find((f) => f.value === frequency)?.months ?? 3;
+  const nextDue = addMonths(lastChecked, months);
+  return (
+    <section
+      aria-label="Inspector recalibration schedule"
+      className="rounded-xl border border-[#7C3AED]/25 bg-white p-4"
+    >
+      <div className="flex items-start gap-3 flex-wrap">
+        <div className="w-9 h-9 rounded-full overflow-hidden bg-[#F5F3FF] ring-1 ring-[#7C3AED]/20 grid place-items-center shrink-0">
+          <img src={INSPECTOR_CHARACTER.src} alt="" aria-hidden className="w-[120%] h-[120%] object-contain" />
+        </div>
+        <div className="min-w-0 flex-1">
+          <div className="text-[13px] font-semibold text-slate-900">The Inspector re-checks the law &amp; documents</div>
+          <div className="text-[11px] text-slate-500 mt-0.5">
+            A standing check across every requirement. I'll propose any changes — I never apply them on my own.
+          </div>
+          <div className="mt-2 flex items-center gap-3 flex-wrap">
+            <label className="text-[11px] text-slate-600 flex items-center gap-2">
+              <span>Cadence</span>
+              <select
+                value={frequency}
+                onChange={(e) => onFrequency(e.target.value as CheckFrequency)}
+                className="px-2 py-1 rounded-md border border-slate-300 text-[12px] bg-white focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]"
+                aria-label="Recalibration cadence"
+              >
+                {FREQUENCY_OPTIONS.map((o) => (
+                  <option key={o.value} value={o.value}>{o.label}</option>
+                ))}
+              </select>
+            </label>
+            <div className="text-[11px] text-slate-500">
+              Last checked <span className="text-slate-700 font-medium">{fmtDate(lastChecked)}</span>
+              {" · "}next due <span className="text-slate-700 font-medium">{fmtDate(nextDue)}</span>
+            </div>
+          </div>
+        </div>
+        <button
+          type="button"
+          onClick={onCheckNow}
+          disabled={busy}
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-[#7C3AED] text-white text-[12px] font-semibold hover:bg-[#6D28D9] disabled:opacity-60 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]"
+        >
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden className={busy ? "animate-spin" : ""}>
+            <path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 4v5h-5"/>
+          </svg>
+          {busy ? "Checking…" : "Check now"}
+        </button>
+      </div>
+    </section>
+  );
+}
+
+function buildFullRecalibration(rules: ComplianceRequirement[]): RecalibrationState {
+  // Reuse the contract-group script (AST→PST + How to Rent + certifications unchanged note),
+  // re-scoped as a whole-set check for the standing schedule / "Check now".
+  const base = buildRecalibration("contract", rules);
+  return { ...base, scopeLabel: "the whole set" };
+}
+
+
 export function InspectorWorkArea({
+
   rules,
   onUpdateRules,
 }: {
@@ -1085,6 +1182,38 @@ export function InspectorWorkArea({
   const [recal, setRecal] = useState<Record<RequirementCategory, RecalibrationState | null>>({
     certification: null, notice: null, contract: null,
   });
+
+  // Standing schedule (resets with the prototype). Seed: quarterly cadence, last checked 14 days ago.
+  const [frequency, setFrequency] = useState<CheckFrequency>("quarterly");
+  const [lastChecked, setLastChecked] = useState<Date>(() => {
+    const d = new Date(); d.setDate(d.getDate() - 14); return d;
+  });
+  const [globalRecal, setGlobalRecal] = useState<RecalibrationState | null>(null);
+
+  function runFullCheck() {
+    const next = buildFullRecalibration(rules);
+    setGlobalRecal(next);
+    window.setTimeout(() => {
+      setGlobalRecal((cur) => (cur ? { ...cur, phase: "results" } : cur));
+      setLastChecked(new Date());
+    }, 1500);
+  }
+
+  function closeGlobal() { setGlobalRecal(null); }
+
+  function resolveGlobal(changeId: string, decision: "applied" | "dismissed", change: RecalibrationChange) {
+    setGlobalRecal((cur) => cur ? { ...cur, resolved: { ...cur.resolved, [changeId]: decision } } : cur);
+    if (decision === "applied" && onUpdateRules) {
+      onUpdateRules((rs) => rs.map((r) => {
+        if (r.id !== change.targetRuleId) return r;
+        if (change.kind === "document_updated")  return { ...r, versionSource: "hobson", uploadedFileName: undefined, description: change.newVersionLabel };
+        if (change.kind === "edition_updated")   return { ...r, versionSource: "hobson", uploadedFileName: undefined, description: change.newEditionLabel };
+        if (change.kind === "frequency_changed") return { ...r, durationValue: change.newValue, durationUnit: change.newUnit };
+        return r;
+      }));
+    }
+  }
+
 
   function startRecalibrate(group: RequirementCategory) {
     const next = buildRecalibration(group, rules);
@@ -1144,15 +1273,36 @@ export function InspectorWorkArea({
 
       <div className="flex-1 overflow-y-auto px-6 py-6">
         <div className="max-w-3xl mx-auto space-y-6">
+          {rules.length > 0 && (
+            <>
+              <ScheduleHeader
+                frequency={frequency}
+                onFrequency={setFrequency}
+                lastChecked={lastChecked}
+                onCheckNow={runFullCheck}
+                busy={!!globalRecal && globalRecal.phase === "researching"}
+              />
+              {globalRecal && (
+                <RecalibrationPanel
+                  state={globalRecal}
+                  onResolve={resolveGlobal}
+                  onDismissAll={closeGlobal}
+                />
+              )}
+            </>
+          )}
+
           <section className="rounded-xl border border-[#7C3AED]/20 bg-[#FAF8FF] p-4">
             <div className="text-[12px] font-semibold text-[#5B21B6] mb-1">How this connects</div>
             <p className="text-[12px] text-slate-700 leading-relaxed">
               The Professor extracts dates from your documents. I check them against the rules below.
               Anything missing or out of date appears in the Compliance summary — a missing
               <span className="font-semibold"> legally required</span> document is flagged accordingly.
-              Use <span className="font-semibold">Update</span> on any group to have me re-check the current legal position and propose changes you can confirm.
+              The standing check above runs me across the whole set on your chosen cadence;
+              use <span className="font-semibold">Update</span> on any group for a one-off re-check.
             </p>
           </section>
+
 
           {rules.length === 0 ? (
             <div className="rounded-xl border border-dashed border-slate-300 bg-slate-50 p-10 text-center">
