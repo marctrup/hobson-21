@@ -848,7 +848,7 @@ export function DocumentsLibrary({
             </span>
           </div>
           <div className="text-[12px] text-slate-500 mt-0.5">
-            {filtered.length} of {DOCS.length} documents · {chainsCount} tenancy chains · {assetCount} asset records
+            {filtered.length} of {isScoped ? scopedTotal : DOCS.length} documents{scopeLabel ? ` for ${scopeLabel}` : ""} · {chainsCount} tenancy chains · {assetCount} asset records
           </div>
           <p
             className="text-[12px] text-slate-700 mt-1.5 min-h-[1.25rem] italic"
