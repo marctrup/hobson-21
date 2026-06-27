@@ -1427,7 +1427,9 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
   const [magicianEvents, setMagicianEvents] = useState<MagicianEvent[]>([]);
   const [magBuild, setMagBuild] = useState<MagBuildState | null>(null);
   const [magStreamingId, setMagStreamingId] = useState<string | null>(null);
+  const [adjustingId, setAdjustingId] = useState<string | null>(null);
   const magSimQueueRef = useRef<string[]>([]); // queued simulation bubble texts
+
 
   const magNewId = (p: string) => `${p}-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`;
   const magAsk = (text: string) => {
