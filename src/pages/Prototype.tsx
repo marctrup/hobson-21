@@ -299,6 +299,13 @@ function isDocStep(s: { id: string; label: string }): boolean {
   return false;
 }
 function templateOf(s: MagBuildStep): StepTemplate { return s.template ?? { mode: "standard" }; }
+function collectStepTemplates(steps: MagBuildStep[]): Record<string, StepTemplate> | undefined {
+  const out: Record<string, StepTemplate> = {};
+  for (const s of steps) {
+    if (isDocStep(s) && s.template && s.template.mode === "own") out[s.id] = s.template;
+  }
+  return Object.keys(out).length > 0 ? out : undefined;
+}
 type MagEditField = "intake" | "watch" | "scope" | "scopeUnit" | "owner";
 
 type ScopeLevel = "portfolio" | "properties" | "units";
