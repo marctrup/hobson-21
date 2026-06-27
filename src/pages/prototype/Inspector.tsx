@@ -526,6 +526,8 @@ function AddRequirementForm({ onAdd }: { onAdd: (req: Omit<ComplianceRequirement
           durationUnit: unit,
           anchor: "certificate date",
           appliesTo: "unit",
+          category: "certification",
+
         });
         reset();
         setOpen(false);
