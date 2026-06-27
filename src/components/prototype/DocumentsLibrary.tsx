@@ -772,6 +772,25 @@ export function DocumentsLibrary({
   );
   const assetCount = useMemo(() => DOCS.filter((d) => d.family === "Asset").length, []);
 
+  // Scoped totals (denominator adapts to active scope; "6 of 6 documents for Flat 2").
+  const scopedTotal = useMemo(() => {
+    return DOCS.filter((d) => {
+      if (scopeProperty && d.propertyId !== scopeProperty) return false;
+      if (scopeUnit && d.unitId !== scopeUnit) return false;
+      return true;
+    }).length;
+  }, [scopeProperty, scopeUnit]);
+  const scopeLabel = useMemo(() => {
+    if (scopePropertyAsset && scopeUnitNode) {
+      return scopePropertyAsset.standalone
+        ? scopePropertyAsset.propertyName
+        : `${scopeUnitNode.label}, ${scopePropertyAsset.propertyName}`;
+    }
+    if (scopePropertyAsset) return scopePropertyAsset.propertyName;
+    return null;
+  }, [scopePropertyAsset, scopeUnitNode]);
+  const isScoped = !!(scopeProperty || scopeUnit);
+
   const onView = (d: DocItem) => setViewing(d);
   const onDownload = (d: DocItem) => {
     setFlash(`Downloading "${d.title}"… (prototype placeholder)`);
