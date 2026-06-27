@@ -1493,8 +1493,10 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
   // ----- Professor library state -----
   const [profDocs, setProfDocs] = useState<ProfDoc[]>(SEED_PROF_DOCS);
   const [profEvents, setProfEvents] = useState<ProfEvent[]>([]);
-  // Summary visibility — single source of truth for which summary buttons appear at every level.
-  const [summaryVisibility, setSummaryVisibility] = useState<{ occupational: boolean; compliance: boolean }>({ occupational: true, compliance: true });
+  // Summary visibility — both summaries are available by default everywhere.
+  // (Access/permissions for hiding summaries will belong to a future security character; not the Professor's job.)
+  const summaryVisibility = { occupational: true, compliance: true } as const;
+
 
   // ----- Magician workshop state -----
   const [workflows, setWorkflows] = useState<Workflow[]>(SEED_WORKFLOWS);
