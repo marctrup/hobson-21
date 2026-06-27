@@ -2034,6 +2034,7 @@ function AreaPanel({
 
   const required = rules.filter((r) => r.basis === "required").length;
   const applicable = rules.filter((r) => r.basis === "applicable").length;
+  const business = rules.filter((r) => r.basis === "business").length;
   const panelId = `area-panel-${areaId}`;
 
   return (
