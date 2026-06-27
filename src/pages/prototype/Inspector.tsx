@@ -835,7 +835,10 @@ type RecalibrationState = {
   changes: RecalibrationChange[];
   unchangedNote: string;
   resolved: Record<string, "applied" | "dismissed">;
+  /** Override the scope label used in the panel intro (e.g. "the whole set"). */
+  scopeLabel?: string;
 };
+
 
 const GROUP_META: Record<RequirementCategory, { label: string; helper: string }> = {
   certification: { label: "Certifications", helper: "Inspections and certificates — held as individual instances." },
