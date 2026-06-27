@@ -3345,6 +3345,8 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                 onAddRequirement={inspectorAddRequirement}
                 onConfirm={inspectorConfirm}
                 onCancel={inspectorCancel}
+                onUpdateConfirmed={inspectorUpdateConfirmed}
+                onAddConfirmed={inspectorAddConfirmed}
               />
             ) : (
             <AdminChat
