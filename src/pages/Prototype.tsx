@@ -10414,8 +10414,8 @@ function WorkflowCard({ w, onAdjust, onView, onResume, onDiscard, onSimulate }: 
             </>
           )}
         </div>
-        </div>
       </footer>
+
       {activityOpen && activity.length > 0 && (
         <div
           id={`activity-${w.id}`}
