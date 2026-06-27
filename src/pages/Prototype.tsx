@@ -3534,6 +3534,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                 onView={(id) => setViewingWorkflowId(id)}
                 onResume={magResumeDraft}
                 onDiscard={magDiscardDraft}
+                onSimulate={magSimulate}
               />
             );
           }
