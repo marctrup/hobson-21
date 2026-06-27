@@ -1966,7 +1966,10 @@ function InspectorNotesStrip({
           </div>
         </div>
       )}
+      </div>
+      )}
     </section>
+
   );
 }
 
