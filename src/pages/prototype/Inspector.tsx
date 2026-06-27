@@ -837,10 +837,11 @@ function ConfirmedRecap({ count }: { count: number }) {
 
 export function InspectorChat(props: InspectorChatProps) {
   const {
-    events, area, proposed, isResearching,
+    events, area, proposed, confirmed, isResearching,
     onPickArea, onOtherText,
     onUpdateRequirement, onRemoveRequirement, onAddRequirement,
     onConfirm, onCancel,
+    onUpdateConfirmed, onAddConfirmed,
   } = props;
 
   // Intro typing — mirrors AdminChat
