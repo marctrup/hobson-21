@@ -1783,40 +1783,39 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
   };
   const magAnswerQ6Build = () => {
     magUserEcho("Build it");
-    setMagBuild((b) => {
-      if (!b) return b;
-      const phrases = b.steps.map((s) => s.phrase);
-      const actionSummary = phrases.length === 0
-        ? "bring it to you for approval"
-        : `${phrases.slice(0, -1).join(", ")}${phrases.length > 1 ? " and " : ""}${phrases[phrases.length - 1]} — then bring it to you for approval`;
-      const id = `wf-${Date.now()}`;
-      const trigger = triggerSentenceFor(b.watch, b.triggerPhrase || "approaching");
-      const wf: Workflow = {
-        id,
-        name: b.title?.trim() || "New workflow",
-        purpose: b.purpose?.trim() || "Watches the portfolio and prepares the work for your approval.",
-        description: b.description?.trim() || undefined,
-        whenLabel: b.whenLabel,
-        visibility: b.visibility || "personal",
-        icon: b.watch === "compliance" ? "shield" : b.watch === "notices" ? "bell" : "calendar",
-        tone: "purple", status: "built",
-        trigger,
-        action: actionSummary,
-        scopeLabel: b.scopeLabel || "Not yet set",
-        scopeDetail: b.scopeDetail,
-        owner: b.owner || { kind: "all_teams" },
-        lastAdjusted: "just now",
-        stepCount: b.steps.length,
-        justBuilt: true,
-        stepTemplates: collectStepTemplates(b.steps),
-        steps: b.steps.map((s) => ({ id: s.id, label: s.label, phrase: s.phrase })),
-      };
-      setWorkflows((arr) => [wf, ...arr.map((w) => ({ ...w, justBuilt: false }))]);
-      const builtId = magNewId("mb");
-      setMagicianEvents((e) => [...e, { kind: "built", id: builtId, workflowId: id, name: wf.name, stepCount: b.steps.length }]);
-      setTimeout(() => magAsk(`Built — '${wf.name}', a ${b.steps.length}-step workflow ending in your approval. You'll find it pinned on the right.`), 500);
-      return null;
-    });
+    const b = magBuild;
+    if (!b) return;
+    const phrases = b.steps.map((s) => s.phrase);
+    const actionSummary = phrases.length === 0
+      ? "bring it to you for approval"
+      : `${phrases.slice(0, -1).join(", ")}${phrases.length > 1 ? " and " : ""}${phrases[phrases.length - 1]} — then bring it to you for approval`;
+    const id = `wf-${Date.now()}`;
+    const trigger = triggerSentenceFor(b.watch, b.triggerPhrase || "approaching");
+    const wf: Workflow = {
+      id,
+      name: b.title?.trim() || "New workflow",
+      purpose: b.purpose?.trim() || "Watches the portfolio and prepares the work for your approval.",
+      description: b.description?.trim() || undefined,
+      whenLabel: b.whenLabel,
+      visibility: b.visibility || "personal",
+      icon: b.watch === "compliance" ? "shield" : b.watch === "notices" ? "bell" : "calendar",
+      tone: "purple", status: "built",
+      trigger,
+      action: actionSummary,
+      scopeLabel: b.scopeLabel || "Not yet set",
+      scopeDetail: b.scopeDetail,
+      owner: b.owner || { kind: "all_teams" },
+      lastAdjusted: "just now",
+      stepCount: b.steps.length,
+      justBuilt: true,
+      stepTemplates: collectStepTemplates(b.steps),
+      steps: b.steps.map((s) => ({ id: s.id, label: s.label, phrase: s.phrase })),
+    };
+    setMagBuild(null);
+    setWorkflows((arr) => [wf, ...arr.map((w) => ({ ...w, justBuilt: false }))]);
+    const builtId = magNewId("mb");
+    setMagicianEvents((e) => [...e, { kind: "built", id: builtId, workflowId: id, name: wf.name, stepCount: b.steps.length }]);
+    setTimeout(() => magAsk(`Built — '${wf.name}', a ${b.steps.length}-step workflow ending in your approval. You'll find it pinned on the right.`), 500);
   };
 
   // ----- Pause / cancel / resume a workflow build -----
