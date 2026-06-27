@@ -2986,7 +2986,13 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
               magicianEvents={adminCharacter === "magician" ? magicianEvents : undefined}
               magBuild={adminCharacter === "magician" ? magBuild : null}
               magStreamingId={adminCharacter === "magician" ? magStreamingId : null}
-              onMagStreamDone={(id) => setMagStreamingId((cur) => (cur === id ? null : cur))}
+              onMagStreamDone={(id) => {
+                setMagStreamingId((cur) => (cur === id ? null : cur));
+                if (magSimQueueRef.current.length > 0) {
+                  const next = magSimQueueRef.current.shift()!;
+                  setTimeout(() => magAsk(next), 450);
+                }
+              }}
               magHandlers={adminCharacter === "magician" ? {
                 onIntakeSubmit: magSubmitIntake,
                 onQ1: magAnswerQ1, onQ2: magAnswerQ2, onQ3Scope: magAnswerQ3Scope, onQ4: magAnswerQ4,
