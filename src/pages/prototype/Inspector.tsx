@@ -1584,7 +1584,7 @@ function RecalibrationPanel({
 }
 
 function GroupSection({
-  group, rules, onUpdateRule, onRecalibrate, recal, onResolve, onClose,
+  group, rules, onUpdateRule, onRecalibrate, recal, onResolve, onClose, onShowMe,
 }: {
   group: RequirementCategory;
   rules: ComplianceRequirement[];
@@ -1593,6 +1593,7 @@ function GroupSection({
   recal: RecalibrationState | null;
   onResolve: (changeId: string, decision: "applied" | "dismissed", change: RecalibrationChange) => void;
   onClose: () => void;
+  onShowMe?: () => void;
 }) {
   const meta = GROUP_META[group];
   const busy = !!recal && recal.phase === "researching";
@@ -1603,18 +1604,33 @@ function GroupSection({
           <div className="text-[13px] font-semibold text-slate-900">{meta.label}</div>
           <div className="text-[11px] text-slate-500">{meta.helper}</div>
         </div>
-        <button
-          type="button"
-          onClick={onRecalibrate}
-          disabled={busy}
-          className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md border border-slate-300 bg-white text-[12px] text-slate-700 hover:bg-slate-50 disabled:opacity-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]"
-          aria-label={`Update ${meta.label} from the web`}
-        >
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden className={busy ? "animate-spin" : ""}>
-            <path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 4v5h-5"/>
-          </svg>
-          {busy ? "Re-checking…" : "Update"}
-        </button>
+        <div className="flex items-center gap-1.5 shrink-0">
+          {onShowMe && (
+            <button
+              type="button"
+              onClick={onShowMe}
+              className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md border border-slate-300 bg-white text-[12px] text-slate-700 hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]"
+              aria-label={`Show me ${meta.label} in the chat`}
+            >
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
+                <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/>
+              </svg>
+              Show me
+            </button>
+          )}
+          <button
+            type="button"
+            onClick={onRecalibrate}
+            disabled={busy}
+            className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md border border-slate-300 bg-white text-[12px] text-slate-700 hover:bg-slate-50 disabled:opacity-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]"
+            aria-label={`Update ${meta.label} from the web`}
+          >
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden className={busy ? "animate-spin" : ""}>
+              <path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 4v5h-5"/>
+            </svg>
+            {busy ? "Re-checking…" : "Update"}
+          </button>
+        </div>
       </header>
       <div className="p-3 space-y-2">
         {rules.length === 0 ? (
