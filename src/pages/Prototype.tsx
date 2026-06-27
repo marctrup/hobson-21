@@ -7147,19 +7147,6 @@ function MagicianBuildInviteCard({ onStart }: { onStart: () => void }) {
   ];
   return (
     <ChatInviteShell avatarSrc={characterMagician}>
-      <div>Pick a starting point and we'll build it together — I'll ask the questions, you give the answers.</div>
-      <div className="flex flex-wrap gap-1.5">
-        {quickStarts.map((q) => (
-          <button
-            key={q.label}
-            type="button"
-            onClick={onStart}
-            className="px-2.5 py-1 rounded-full border border-[#7C3AED]/40 bg-white text-[12px] text-[#1F2330] hover:bg-white/80 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40"
-          >
-            {q.label}
-          </button>
-        ))}
-      </div>
       <button
         type="button"
         onClick={onStart}
@@ -7171,6 +7158,7 @@ function MagicianBuildInviteCard({ onStart }: { onStart: () => void }) {
     </ChatInviteShell>
   );
 }
+
 
 function ProfessorBuildInviteCard({ onUpload }: { onUpload: (count: number) => void }) {
   const fileRef = useRef<HTMLInputElement | null>(null);
