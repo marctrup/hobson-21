@@ -1502,101 +1502,129 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
   const [brokerEvents, setBrokerEvents] = useState<BrokerEvent[]>([]);
   const [brokerFlow, setBrokerFlow] = useState<{ step: number; draft: Partial<BrokerContact> } | null>(null);
 
-  // ----- Inspector compliance-setup state -----
+  // ----- Inspector compliance-setup state (list-first, consent-and-describe) -----
   const [inspectorEvents, setInspectorEvents] = useState<InspectorEvent[]>([]);
-  const [inspectorArea, setInspectorArea] = useState<ComplianceArea | null>(null);
-  const [inspectorProposed, setInspectorProposed] = useState<ComplianceRequirement[] | null>(null);
+  const [inspectorBuild, setInspectorBuild] = useState<InspectorBuild | null>(null);
   const [inspectorConfirmed, setInspectorConfirmed] = useState<ComplianceRequirement[]>([]);
-  const [inspectorResearching, setInspectorResearching] = useState(false);
 
   const inspNewId = (p: string) => `${p}-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`;
 
+  /** Step 1–2: user picks an area from the compliance list. */
   const inspectorPickArea = (a: ComplianceArea, label: string) => {
-    setInspectorArea(a);
-    const userId = inspNewId("iu");
-    setInspectorEvents((e) => [...e, { kind: "user", id: userId, text: label }]);
+    setInspectorEvents((e) => [...e, { kind: "user", id: inspNewId("iu"), text: label }]);
+    setInspectorBuild({ step: "consent", area: a, areaLabel: label, researched: [], additions: [] });
+  };
 
-    const seedByArea: Partial<Record<ComplianceArea, ComplianceRequirement[]>> = {
-      health_safety: DEFAULT_HS_REQUIREMENTS,
-      financial: DEFAULT_FINANCIAL_REQUIREMENTS,
-    };
-    const seed = seedByArea[a];
-
-    if (seed) {
-      const def = AREA_DEFS[a];
-      setInspectorEvents((e) => [...e, {
-        kind: "inspector",
-        id: inspNewId("in"),
-        text: `Right — ${def.label.toLowerCase()} (${def.sublabel}). Let me look up what's currently expected.`,
-      }]);
-      setInspectorResearching(true);
-      const researchId = inspNewId("ir");
-      setInspectorEvents((e) => [...e, { kind: "researching", id: researchId }]);
-      setTimeout(() => {
-        setInspectorResearching(false);
-        setInspectorEvents((e) => e.filter((ev) => ev.id !== researchId));
-        setInspectorEvents((e) => [...e, {
+  /** Step 3: consent to legal research. */
+  const inspectorConsent = (yes: boolean) => {
+    setInspectorBuild((b) => {
+      if (!b) return b;
+      const userText = yes ? "Yes — check the law" : "No — I'll define it myself";
+      setInspectorEvents((e) => [
+        ...e,
+        { kind: "user", id: inspNewId("iu"), text: userText },
+        {
           kind: "inspector",
           id: inspNewId("in"),
-          text: "Here is what I found. Each one carries a default renewal frequency — edit anything that doesn't match how you run things, remove what doesn't apply, and add anything I've missed.",
-        }]);
-        setInspectorProposed(seed.map((r) => ({ ...r, areaId: a })));
-      }, 1800);
-    } else {
-      setInspectorEvents((e) => [...e, {
-        kind: "inspector",
-        id: inspNewId("in"),
-        text: `${label} — I'll set that up properly soon. For the prototype, choose Health & Safety or Financial to walk through the full build.`,
-      }]);
-      // reset area so the picker re-shows
-      setTimeout(() => setInspectorArea(null), 50);
-    }
-  };
-
-  const inspectorOtherText = (text: string) => {
-    setInspectorEvents((e) => [...e, { kind: "user", id: inspNewId("iu"), text }]);
-    setInspectorEvents((e) => [...e, {
-      kind: "inspector",
-      id: inspNewId("in"),
-      text: `Noted — "${text}". Free-form areas are coming soon. For now, choose Health & Safety or Financial to see the full build.`,
-    }]);
-  };
-
-  const inspectorUpdateRequirement = (id: string, patch: Partial<ComplianceRequirement>) =>
-    setInspectorProposed((arr) => arr ? arr.map((r) => r.id === id ? { ...r, ...patch } : r) : arr);
-  const inspectorRemoveRequirement = (id: string) =>
-    setInspectorProposed((arr) => arr ? arr.filter((r) => r.id !== id) : arr);
-  const inspectorAddRequirement = (req: Omit<ComplianceRequirement, "id">) =>
-    setInspectorProposed((arr) => arr ? [...arr, { ...req, id: `req-custom-${Date.now()}`, areaId: inspectorArea ?? req.areaId }] : [{ ...req, id: `req-custom-${Date.now()}`, areaId: inspectorArea ?? req.areaId }]);
-
-  const inspectorConfirm = () => {
-    if (!inspectorProposed) return;
-    const areaId = inspectorArea ?? "health_safety";
-    const next = inspectorProposed.map((r) => ({ ...r, areaId }));
-    // Append: confirming a new area never replaces previously confirmed areas.
-    setInspectorConfirmed((prev) => {
-      const keep = prev.filter((r) => (r.areaId ?? "health_safety") !== areaId);
-      return [...keep, ...next];
+          text: yes
+            ? `Good. Before I do — describe the area you want me to look for. A short line is plenty.`
+            : `Understood. I'll skip the legal check — you can build ${b.areaLabel.toLowerCase()} as your own standard. Add what you need below; each one will be marked as a business requirement.`,
+        },
+      ]);
+      return { ...b, step: yes ? "describe" : "build" };
     });
-    setInspectorProposed(null);
-    setInspectorArea(null);
+  };
+
+  /** Step 4–6: describe → simulate research → return sourced legal items. */
+  const inspectorDescribe = (text: string) => {
+    setInspectorEvents((e) => [...e, { kind: "user", id: inspNewId("iu"), text }]);
+    setInspectorBuild((b) => (b ? { ...b, description: text, step: "researching" } : b));
+
+    const researchId = inspNewId("ir");
     setInspectorEvents((e) => [
       ...e,
-      { kind: "user", id: inspNewId("iu"), text: "Confirm these requirements" },
-      { kind: "inspector", id: inspNewId("in"), text: "Recorded. I'll watch these and re-check the rules on your schedule. The Compliance summary now reflects this area." },
-      { kind: "confirmed", id: inspNewId("ic"), count: next.length },
+      { kind: "inspector", id: inspNewId("in"), text: `Right — checking gov.uk and HSE guidance for "${text}".` },
+      { kind: "researching", id: researchId },
     ]);
+
+    setTimeout(() => {
+      setInspectorEvents((e) => e.filter((ev) => ev.id !== researchId));
+      setInspectorBuild((b) => {
+        if (!b) return b;
+        const found = (RESEARCH_BY_AREA[b.area] ?? []).map((r) => ({
+          ...r,
+          id: `${r.id}-${Math.random().toString(36).slice(2, 5)}`,
+          areaId: b.area,
+        }));
+        setInspectorEvents((ev) => [...ev, {
+          kind: "inspector",
+          id: inspNewId("in"),
+          text: found.length
+            ? `Here's what's legally required for "${text}". Each one shows the source so you can see why it's law. Edit the frequencies if your standard is stricter, then add anything else you want to track — those will be saved as your business requirements.`
+            : `I couldn't find any specific legal requirements for "${text}" in my sources. Add what you need below — they'll be saved as business requirements.`,
+        }]);
+        return { ...b, step: "build", researched: found };
+      });
+    }, 1600);
+  };
+
+  /** Edits — researched (legal) side. */
+  const inspectorUpdateResearched = (id: string, patch: Partial<ComplianceRequirement>) =>
+    setInspectorBuild((b) => b ? { ...b, researched: b.researched.map((r) => r.id === id ? { ...r, ...patch } : r) } : b);
+  const inspectorRemoveResearched = (id: string) =>
+    setInspectorBuild((b) => b ? { ...b, researched: b.researched.filter((r) => r.id !== id) } : b);
+
+  /** Edits — additions (business) side. */
+  const inspectorUpdateAddition = (id: string, patch: Partial<ComplianceRequirement>) =>
+    setInspectorBuild((b) => b ? { ...b, additions: b.additions.map((r) => r.id === id ? { ...r, ...patch } : r) } : b);
+  const inspectorRemoveAddition = (id: string) =>
+    setInspectorBuild((b) => b ? { ...b, additions: b.additions.filter((r) => r.id !== id) } : b);
+  const inspectorAddAddition = (name: string, value: number, unit: DurationUnit) =>
+    setInspectorBuild((b) => {
+      if (!b) return b;
+      const newReq: ComplianceRequirement = {
+        id: `req-biz-${Date.now()}-${Math.random().toString(36).slice(2, 5)}`,
+        docType: name,
+        matchTerms: [name.toLowerCase()],
+        basis: "business",
+        durationValue: value,
+        durationUnit: unit,
+        anchor: "certificate date",
+        appliesTo: "unit",
+        category: "certification",
+        areaId: b.area,
+      };
+      return { ...b, additions: [...b.additions, newReq] };
+    });
+
+  const inspectorConfirm = () => {
+    setInspectorBuild((b) => {
+      if (!b) return b;
+      const merged = [...b.researched, ...b.additions].map((r) => ({ ...r, areaId: b.area }));
+      setInspectorConfirmed((prev) => {
+        const keep = prev.filter((r) => (r.areaId ?? "health_safety") !== b.area);
+        return [...keep, ...merged];
+      });
+      setInspectorEvents((e) => [
+        ...e,
+        { kind: "user", id: inspNewId("iu"), text: `Confirm ${b.areaLabel} list` },
+        { kind: "inspector", id: inspNewId("in"), text: `Recorded. ${b.areaLabel} is now on your board on the right. I'll re-check the sourced items on your schedule. The Compliance summary will start flagging any of these that aren't held.` },
+        { kind: "confirmed", id: inspNewId("ic"), count: merged.length },
+      ]);
+      return null;
+    });
   };
 
   const inspectorCancel = () => {
-    setInspectorProposed(null);
-    setInspectorArea(null);
+    setInspectorBuild(null);
     setInspectorEvents((e) => [...e, {
       kind: "inspector",
       id: inspNewId("in"),
-      text: "No bother — nothing recorded. Tell me which area to set up whenever you're ready.",
+      text: "No bother — nothing recorded. Pick another area whenever you're ready.",
     }]);
   };
+
+
 
   const inspectorShowMe = (areaId: ComplianceArea, group: RequirementCategory) => {
     setInspectorEvents((e) => [...e, {
