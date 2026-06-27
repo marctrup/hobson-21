@@ -3756,7 +3756,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                         onCancel={cancelBrokerFlow}
                       />
                   : adminCharacter === "inspector"
-                    ? <InspectorComposer buildActive={!!inspectorProposed} />
+                    ? <InspectorComposer buildActive={inspectorBuild !== null} />
                   : <LockedComposer view={view} />
 
           ) : testerMode && view === "unit" ? (
