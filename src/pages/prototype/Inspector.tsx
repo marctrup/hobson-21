@@ -117,7 +117,8 @@ export type InspectorEvent =
   | { kind: "inspector"; id: string; text: string }
   | { kind: "user"; id: string; text: string }
   | { kind: "researching"; id: string }
-  | { kind: "confirmed"; id: string; count: number };
+  | { kind: "confirmed"; id: string; count: number }
+  | { kind: "show_me"; id: string; areaId: ComplianceArea; group: RequirementCategory };
 
 /* ---------------- Default proposed (residential H&S) ---------------- */
 
