@@ -43,6 +43,8 @@ export type ComplianceRow = {
   missing?: boolean;
   /** When true (set by Inspector rules), upgrades a missing row to "missing — legally required". */
   legallyRequired?: boolean;
+  /** When true, signals a missing item the business has set as required (not law). */
+  businessRequired?: boolean;
 };
 
 export type SummaryPropertyMeta = {

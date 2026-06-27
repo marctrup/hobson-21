@@ -36,7 +36,7 @@ export type ComplianceArea =
   | "licensing"
   | "other";
 
-export type RequirementBasis = "required" | "applicable";
+export type RequirementBasis = "required" | "applicable" | "business";
 export type DurationUnit = "Years" | "Months";
 export type RequirementCategory = "certification" | "notice" | "contract";
 export type VersionSource = "hobson" | "uploaded";
@@ -235,6 +235,31 @@ export const DEFAULT_HS_REQUIREMENTS: ComplianceRequirement[] = [
     areaId: "health_safety",
     documentOnFile: "How-to-Rent-2025-edition.pdf",
   },
+  {
+    id: rid("pump"),
+    docType: "Pump service certificate",
+    matchTerms: ["pump service", "booster pump"],
+    basis: "business",
+    durationValue: 1,
+    durationUnit: "Years",
+    anchor: "last service",
+    appliesTo: "building",
+    category: "certification",
+    areaId: "health_safety",
+    documentOnFile: "Pump-Service-2024.pdf",
+  },
+  {
+    id: rid("loler"),
+    docType: "Lift inspection (LOLER)",
+    matchTerms: ["lift inspection", "loler"],
+    basis: "business",
+    durationValue: 6,
+    durationUnit: "Months",
+    anchor: "last inspection",
+    appliesTo: "building",
+    category: "certification",
+    areaId: "health_safety",
+  },
 ];
 
 /** Scripted Financial set — demonstrable built path for the prototype. */
@@ -329,8 +354,11 @@ export function augmentComplianceRows(
 ): ComplianceRow[] {
   if (rules.length === 0) return rows;
 
-  const required = rules.filter((r) => r.basis === "required");
-  if (required.length === 0) return rows;
+  // Both legal ("required") and "business" basis flag missing/overdue.
+  // They differ in severity — legal=red, business=amber — surfaced via
+  // separate ComplianceRow flags. "applicable" never flags.
+  const flagging = rules.filter((r) => r.basis === "required" || r.basis === "business");
+  if (flagging.length === 0) return rows;
 
   const matches = (docName: string | null | undefined, rule: ComplianceRequirement) => {
     if (!docName) return false;
@@ -338,14 +366,17 @@ export function augmentComplianceRows(
     return rule.matchTerms.some((t) => lower.includes(t));
   };
 
+  const tag = (rule: ComplianceRequirement): Partial<ComplianceRow> =>
+    rule.basis === "required" ? { legallyRequired: true } : { businessRequired: true };
+
   const upgraded = rows.map((row): ComplianceRow => {
     if (!row.missing || !row.documentName) return row;
-    const rule = required.find((r) => matches(row.documentName, r));
+    const rule = flagging.find((r) => matches(row.documentName, r));
     if (!rule) return row;
-    return { ...row, legallyRequired: true };
+    return { ...row, ...tag(rule) };
   });
 
-  // Synthesise missing rows for required rules with no presence in scope.
+  // Synthesise missing rows for flagging rules with no presence in scope.
   const synthesised: ComplianceRow[] = [];
   const propertiesInScope = scope.level === "portfolio"
     ? SUMMARY_PROPERTIES.map((p) => p.id)
@@ -356,10 +387,8 @@ export function augmentComplianceRows(
     if (!propertyMeta) continue;
     const propertyName = propertyMeta.name;
 
-    for (const rule of required) {
+    for (const rule of flagging) {
       if (rule.appliesTo === "building") {
-        // Only synthesise building rows when viewing the whole property/portfolio,
-        // not a single unit view.
         if (scope.level === "unit") continue;
         const has = upgraded.some(
           (r) => r.propertyId === propertyId && r.unitId === null && matches(r.documentName, rule),
@@ -374,13 +403,13 @@ export function augmentComplianceRows(
             effectiveDate: null,
             expiryDate: null,
             missing: true,
-            legallyRequired: true,
+            ...tag(rule),
           });
         }
         continue;
       }
 
-      // unit-level required rule
+      // unit-level rule
       const letUnits = occupationalForScope(
         scope.level === "unit"
           ? scope
@@ -403,7 +432,7 @@ export function augmentComplianceRows(
             effectiveDate: null,
             expiryDate: null,
             missing: true,
-            legallyRequired: true,
+            ...tag(rule),
           });
         }
       }
@@ -585,8 +614,16 @@ function BasisBadge({ basis }: { basis: RequirementBasis }) {
       </span>
     );
   }
+  if (basis === "business") {
+    return (
+      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wide bg-amber-50 text-amber-800 border border-amber-300" title="Your own / contractual standard — not law">
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden><path d="M3 21h18M5 21V8l7-5 7 5v13M9 21v-6h6v6"/></svg>
+        Business requirement
+      </span>
+    );
+  }
   return (
-    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wide bg-amber-50 text-amber-800 border border-amber-200">
+    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wide bg-slate-100 text-slate-700 border border-slate-300">
       Where applicable
     </span>
   );
@@ -631,6 +668,7 @@ function RequirementEditor({
         >
           <option value="required">Legally required</option>
           <option value="applicable">Where applicable</option>
+          <option value="business">Business requirement</option>
         </select>
         <div className="flex-1" />
         <button
@@ -763,6 +801,7 @@ function AddRequirementForm({ onAdd }: { onAdd: (req: Omit<ComplianceRequirement
         <select value={basis} onChange={(e) => setBasis(e.target.value as RequirementBasis)} className="px-2 py-1 rounded-md border border-slate-300 text-[13px] bg-white">
           <option value="required">Legally required</option>
           <option value="applicable">Where applicable</option>
+          <option value="business">Business requirement</option>
         </select>
         <div className="flex-1" />
         <button type="button" onClick={() => { reset(); setOpen(false); }} className="text-[12px] text-slate-600 hover:underline px-1">Cancel</button>
@@ -1228,6 +1267,7 @@ function AddRowForm({
         >
           <option value="required">Legally required</option>
           <option value="applicable">Where applicable</option>
+          <option value="business">Business requirement</option>
         </select>
         <div className="flex-1" />
         <button
@@ -1994,6 +2034,7 @@ function AreaPanel({
 
   const required = rules.filter((r) => r.basis === "required").length;
   const applicable = rules.filter((r) => r.basis === "applicable").length;
+  const business = rules.filter((r) => r.basis === "business").length;
   const panelId = `area-panel-${areaId}`;
 
   return (
@@ -2017,7 +2058,7 @@ function AreaPanel({
               {def.label} <span className="text-slate-500 font-normal">· {def.sublabel}</span>
             </div>
             <div className="text-[11px] text-slate-500 truncate">
-              {rules.length} requirement{rules.length === 1 ? "" : "s"} · {required} legally required · {applicable} where applicable · last checked {fmtDate(lastChecked)}
+              {rules.length} requirement{rules.length === 1 ? "" : "s"} · {required} legally required · {business} business · {applicable} where applicable · last checked {fmtDate(lastChecked)}
             </div>
           </div>
         </div>
@@ -2122,6 +2163,7 @@ export function InspectorWorkArea({
 }) {
   const required = rules.filter((r) => r.basis === "required").length;
   const applicable = rules.filter((r) => r.basis === "applicable").length;
+  const business = rules.filter((r) => r.basis === "business").length;
 
   // Group rules by area (legacy untagged → health_safety).
   const presentAreas: ComplianceArea[] = [];
@@ -2157,7 +2199,7 @@ export function InspectorWorkArea({
             <div className="text-[11px] text-slate-500">
               {rules.length === 0
                 ? "No rules yet — set them up on the left."
-                : `${presentAreas.length} area${presentAreas.length === 1 ? "" : "s"} · ${required} legally required · ${applicable} where applicable`}
+                : `${presentAreas.length} area${presentAreas.length === 1 ? "" : "s"} · ${required} legally required · ${business} business · ${applicable} where applicable`}
             </div>
           </div>
         </div>
