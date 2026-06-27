@@ -2243,15 +2243,14 @@ export function InspectorWorkArea({
           )}
 
           {/* (c) Notes strip */}
-          {hasHS && (
-            <InspectorNotesStrip
-              lastChecked={boardLastChecked}
-              nextDue={addMonths(boardLastChecked, FREQUENCY_OPTIONS.find((f) => f.value === frequency)?.months ?? 3)}
-              rulesCount={hsRules.length}
-              pending={pending}
-              gapsCoverage={{ commercial: true }}
-            />
-          )}
+          <InspectorNotesStrip
+            lastChecked={boardLastChecked}
+            nextDue={addMonths(boardLastChecked, FREQUENCY_OPTIONS.find((f) => f.value === frequency)?.months ?? 3)}
+            rulesCount={hsRules.length}
+            pending={pending}
+            gapsCoverage={{ commercial: true }}
+          />
+
 
 
           {/* (e) Areas */}
