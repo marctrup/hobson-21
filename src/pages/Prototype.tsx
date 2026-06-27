@@ -3713,6 +3713,8 @@ type MagHandlers = {
   onBeginEdit: (field: MagEditField) => void;
   onCancelEdit: () => void;
   onGoBack: () => void;
+  onPauseSave: () => void;
+  onCancelBuild: () => void;
 };
 
 function AdminChat({ character, owl, professorEvents, onAssignProfessorType, brokerEvents, brokerFlowActive, magicianEvents, magBuild, magStreamingId, onMagStreamDone, magHandlers }: { character: { id: AdminCharacter; name: string; src: string; greeting: string } | null; owl: OwlState; professorEvents?: ProfEvent[]; onAssignProfessorType?: (batchId: string, type: string) => void; brokerEvents?: BrokerEvent[]; brokerFlowActive?: boolean; magicianEvents?: MagicianEvent[]; magBuild?: MagBuildState | null; magStreamingId?: string | null; onMagStreamDone?: (id: string) => void; magHandlers?: MagHandlers }) {
