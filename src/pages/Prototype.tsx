@@ -8281,7 +8281,7 @@ function buildPerformConfig(card: ActionCard, section13Template: StepTemplate | 
     };
   }
   return {
-    beats: buildPA004Beats(),
+    beats: buildPA004Beats(section13Template),
     steps: PA004_STEPS,
     headerKicker: "Performing action",
     headerTitle: `Rent review · ${card.unitLabel ?? "Flat 8"}, ${card.propertyName}`,
