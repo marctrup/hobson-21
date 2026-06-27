@@ -25,6 +25,7 @@ import {
   type ComplianceArea,
   type ComplianceRequirement,
   type InspectorEvent,
+  type RequirementCategory,
 } from "./prototype/Inspector";
 
 type AdminCharacter = "magician" | "professor" | "broker" | "inspector";
