@@ -1429,6 +1429,16 @@ export function InspectorWorkArea({
         </div>
       </header>
 
+      {rules.length > 0 && (
+        <InspectorNotesStrip
+          lastChecked={lastChecked}
+          nextDue={addMonths(lastChecked, FREQUENCY_OPTIONS.find((f) => f.value === frequency)?.months ?? 3)}
+          rulesCount={rules.length}
+          pending={pending}
+          gapsCoverage={{ commercial: true }}
+        />
+      )}
+
       <div className="flex-1 overflow-y-auto px-6 py-6">
         <div className="max-w-3xl mx-auto space-y-6">
           {rules.length > 0 && (
