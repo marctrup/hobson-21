@@ -1810,6 +1810,17 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
     };
     if (adjustingId) {
       const targetId = adjustingId;
+      const original = adjustOriginalRef.current;
+      const changes = original ? diffWorkflowChanges(original, b) : [];
+      const wasDraft = original?.status === "draft";
+      const activityEntries: ActivityEntry[] = [];
+      if (wasDraft) {
+        activityEntries.push(makeActivity(changes.length > 0 ? `Set live — ${changes.join("; ")}` : "Set live"));
+      } else if (changes.length === 0) {
+        activityEntries.push(makeActivity("Adjusted (no changes)"));
+      } else {
+        for (const c of changes) activityEntries.push(makeActivity(c));
+      }
       setWorkflows((arr) => arr.map((w) => w.id === targetId ? {
         ...w,
         name: b.title?.trim() || w.name,
@@ -1831,13 +1842,15 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
         stepTemplates: collectStepTemplates(b.steps),
         steps: b.steps.map((s) => ({ id: s.id, label: s.label, phrase: s.phrase })),
         ...persistedBuild,
+        activity: prependActivity(w.activity, activityEntries),
       } : { ...w, justBuilt: false }));
       const name = b.title?.trim() || "this workflow";
+      adjustOriginalRef.current = null;
       setMagBuild(null);
       setAdjustingId(null);
       const builtId = magNewId("mb");
       setMagicianEvents((e) => [...e, { kind: "built", id: builtId, workflowId: targetId, name, stepCount: b.steps.length }]);
-      setTimeout(() => magAsk(`Adjusted — '${name}' updated. The card on the right reflects your changes.`), 500);
+      setTimeout(() => magAsk(`Adjusted — '${name}' updated. The card on the right reflects your changes, and the activity log captures who changed what.`), 500);
       return;
     }
     const id = `wf-${Date.now()}`;
@@ -1861,6 +1874,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
       stepTemplates: collectStepTemplates(b.steps),
       steps: b.steps.map((s) => ({ id: s.id, label: s.label, phrase: s.phrase })),
       ...persistedBuild,
+      activity: [makeActivity("Built")],
     };
     setMagBuild(null);
     setWorkflows((arr) => [wf, ...arr.map((w) => ({ ...w, justBuilt: false }))]);
@@ -1872,6 +1886,8 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
 
   // ----- Pause / cancel / resume a workflow build -----
   const magPauseSave = () => {
+    const currentAdjustingId = adjustingId;
+    const original = adjustOriginalRef.current;
     setMagBuild((b) => {
       if (!b) return b;
       const phrases = b.steps.map((s) => s.phrase);
@@ -1900,12 +1916,18 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
         draftState: b,
         stepTemplates: collectStepTemplates(b.steps),
         steps: b.steps.map((s) => ({ id: s.id, label: s.label, phrase: s.phrase })),
+        activity: [makeActivity("Paused — saved as draft")],
       };
       // If pausing during an Adjust, update the existing workflow in place as a draft (no duplicate).
-      if (adjustingId) {
-        const targetId = adjustingId;
-        setWorkflows((arr) => arr.map((w) => w.id === targetId ? { ...wf, id: targetId } : w));
+      if (currentAdjustingId) {
+        const targetId = currentAdjustingId;
+        const changes = original ? diffWorkflowChanges(original, b) : [];
+        const entries: ActivityEntry[] = changes.length > 0
+          ? [...changes.map((c) => makeActivity(c)), makeActivity("Paused — saved as draft")]
+          : [makeActivity("Paused — saved as draft")];
+        setWorkflows((arr) => arr.map((w) => w.id === targetId ? { ...wf, id: targetId, activity: prependActivity(w.activity, entries) } : w));
         setAdjustingId(null);
+        adjustOriginalRef.current = null;
       } else {
         setWorkflows((arr) => [wf, ...arr.map((w) => ({ ...w, justBuilt: false }))]);
       }
@@ -1918,6 +1940,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
     const wasAdjusting = !!adjustingId;
     setMagBuild(null);
     setAdjustingId(null);
+    adjustOriginalRef.current = null;
     setTimeout(() => magAsk(wasAdjusting ? "Of course — changes discarded. The workflow is unchanged." : "Of course — discarded."), 250);
   };
 
@@ -1928,6 +1951,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
     if (!wf) return;
     setMagicianEvents([]);
     magSimQueueRef.current = [];
+    adjustOriginalRef.current = wf;
     // If a paused draft is being adjusted, prefer the saved live build state.
     if (wf.draftState) {
       setAdjustingId(id);
@@ -1977,8 +2001,11 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
     const wf = workflows.find((w) => w.id === id);
     if (!wf || !wf.draftState) return;
     setMagicianEvents([]);
+    // Keep the existing card in place and treat resume as an in-place adjust so activity history is preserved.
+    adjustOriginalRef.current = wf;
+    setAdjustingId(id);
     setMagBuild(wf.draftState);
-    setWorkflows((arr) => arr.filter((w) => w.id !== id));
+    setWorkflows((arr) => arr.map((w) => w.id === id ? { ...w, activity: prependActivity(w.activity, [makeActivity("Resumed editing")]) } : w));
     setTimeout(() => magAsk(`Picking up '${wf.name}' where we left off — change anything you like.`), 300);
   };
 
@@ -1988,6 +2015,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
     setWorkflows((arr) => arr.filter((w) => w.id !== id));
     setTimeout(() => magAsk(`Of course — '${wf.name}' discarded.`), 250);
   };
+
 
 
 
