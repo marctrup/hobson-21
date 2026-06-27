@@ -4013,17 +4013,152 @@ function MagicianIntake({ onSubmit, initial, onCancel }: { onSubmit: MagHandlers
   );
 }
 
+function MagicianStepRow({ s, i, total, handlers }: { s: MagBuildStep; i: number; total: number; handlers: MagHandlers }) {
+  const [editing, setEditing] = useState(false);
+  const [draft, setDraft] = useState(s.label);
+  if (editing) {
+    return (
+      <li className="flex items-start gap-2 rounded-md border border-[#7C3AED]/40 bg-[#F5F3FF] px-2 py-1.5">
+        <span className="text-[11px] font-semibold text-slate-500 mt-1.5 w-4 text-right">{i + 1}.</span>
+        <input
+          autoFocus
+          value={draft}
+          onChange={(e) => setDraft(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") { e.preventDefault(); handlers.onRenameStep(s.uid, draft); setEditing(false); }
+            if (e.key === "Escape") { setDraft(s.label); setEditing(false); }
+          }}
+          className="flex-1 text-[12.5px] border border-slate-200 rounded-md px-2 py-1 bg-white focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40"
+          aria-label={`Edit step ${i + 1}`}
+        />
+        <button type="button" onClick={() => { handlers.onRenameStep(s.uid, draft); setEditing(false); }} className="px-2 py-1 rounded-md bg-[#7C3AED] text-white text-[11.5px] font-semibold hover:bg-[#6D28D9] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40">Save</button>
+        <button type="button" onClick={() => { setDraft(s.label); setEditing(false); }} className="px-2 py-1 rounded-md text-[11.5px] text-slate-500 hover:bg-white focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40">Cancel</button>
+      </li>
+    );
+  }
+  return (
+    <li className="flex items-start gap-2 rounded-md border border-slate-200 bg-slate-50 px-2 py-1.5">
+      <span className="text-[11px] font-semibold text-slate-500 mt-0.5 w-4 text-right">{i + 1}.</span>
+      <span className="flex-1 text-[12.5px] text-slate-800 leading-snug">{s.label}</span>
+      <div className="flex items-center gap-0.5">
+        <button type="button" aria-label={`Edit step ${i + 1}`} onClick={() => setEditing(true)} className="px-1.5 h-6 grid place-items-center rounded text-[11px] font-medium text-[#7C3AED] hover:bg-white focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40">Edit</button>
+        <button type="button" aria-label="Move up" disabled={i === 0} onClick={() => handlers.onMoveStep(s.uid, -1)} className="w-6 h-6 grid place-items-center rounded text-slate-500 hover:bg-white disabled:opacity-30 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40">↑</button>
+        <button type="button" aria-label="Move down" disabled={i === total - 1} onClick={() => handlers.onMoveStep(s.uid, 1)} className="w-6 h-6 grid place-items-center rounded text-slate-500 hover:bg-white disabled:opacity-30 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40">↓</button>
+        <button type="button" aria-label="Remove step" onClick={() => handlers.onRemoveStep(s.uid)} className="w-6 h-6 grid place-items-center rounded text-slate-500 hover:bg-white hover:text-rose-600 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40">×</button>
+      </div>
+    </li>
+  );
+}
+
+function MagicianSoFar({ build, handlers }: { build: MagBuildState; handlers: MagHandlers }) {
+  // Hide during intake (nothing committed yet) and while editing intake.
+  if (build.step === "intake") return null;
+  const rows: { key: string; label: string; value?: string; field: MagEditField | null }[] = [
+    { key: "title", label: "Title", value: build.title, field: "intake" },
+    { key: "purpose", label: "Purpose", value: build.purpose, field: "intake" },
+    { key: "when", label: "When", value: build.whenLabel, field: "intake" },
+    { key: "visibility", label: "Visibility", value: build.visibility === "company" ? "Company-wide" : build.visibility === "personal" ? "Personal" : undefined, field: "intake" },
+    { key: "watch", label: "Watch", value: build.watchLabel, field: "watch" },
+    { key: "scope", label: "Scope", value: build.scopeLabel, field: build.scope === "unit" ? "scopeUnit" : "scope" },
+    { key: "owner", label: "Owner", value: build.ownerLabel, field: "owner" },
+  ];
+  const visible = rows.filter((r) => r.value);
+  if (visible.length === 0) return null;
+  return (
+    <div className="rounded-md border border-slate-200 bg-slate-50/70 p-2.5">
+      <div className="flex items-center justify-between mb-1.5">
+        <div className="text-[11px] uppercase tracking-wide text-[#5B21B6] font-semibold">So far</div>
+        <div className="text-[10.5px] text-slate-500">Tap a line to change it</div>
+      </div>
+      <ul className="space-y-1">
+        {visible.map((r) => (
+          <li key={r.key} className="flex items-start gap-2 text-[12px]">
+            <span className="text-slate-500 w-[68px] shrink-0">{r.label}</span>
+            <span className="flex-1 text-slate-800">{r.value}</span>
+            {r.field && (
+              <button
+                type="button"
+                onClick={() => handlers.onBeginEdit(r.field!)}
+                className="text-[11px] font-semibold text-[#7C3AED] hover:underline focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40 rounded px-1"
+                aria-label={`Change ${r.label.toLowerCase()}`}
+              >
+                Change
+              </button>
+            )}
+          </li>
+        ))}
+        {build.steps.length > 0 && (build.step === "q6" || build.step === "q5") && (
+          <li className="flex items-start gap-2 text-[12px] pt-1 border-t border-slate-200/70 mt-1">
+            <span className="text-slate-500 w-[68px] shrink-0">Steps</span>
+            <span className="flex-1 text-slate-800">{build.steps.length} · {build.steps.map((s) => s.phrase).join(" · ")}</span>
+            {build.step === "q6" && (
+              <button
+                type="button"
+                onClick={handlers.onKeepEditing}
+                className="text-[11px] font-semibold text-[#7C3AED] hover:underline focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40 rounded px-1"
+              >
+                Change
+              </button>
+            )}
+          </li>
+        )}
+      </ul>
+    </div>
+  );
+}
+
+function MagBackBar({ onBack, editing, onCancelEdit }: { onBack: () => void; editing?: boolean; onCancelEdit?: () => void }) {
+  return (
+    <div className="flex items-center justify-between -mt-0.5">
+      <button
+        type="button"
+        onClick={onBack}
+        className="text-[11.5px] text-slate-500 hover:text-[#7C3AED] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40 rounded px-1"
+        aria-label="Back to previous question"
+      >
+        ← Back
+      </button>
+      {editing && onCancelEdit && (
+        <button
+          type="button"
+          onClick={onCancelEdit}
+          className="text-[11.5px] text-slate-500 hover:text-[#7C3AED] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40 rounded px-1"
+        >
+          Cancel change
+        </button>
+      )}
+    </div>
+  );
+}
+
 function MagicianBuildPanel({ build, handlers }: { build: MagBuildState; handlers: MagHandlers }) {
   const UNIT_CHOICES = ["Flat 8, Stanley House", "Flat 6, Stanley House", "Flat 2, 5 Nugent Terrace"];
   const usedStepIds = new Set(build.steps.map((s) => s.id));
+  const isEditing = !!build.editing;
+  const canBack = build.step !== "intake" && !isEditing;
   return (
     <div className="ml-12 max-w-[480px] rounded-xl border border-[#7C3AED]/30 bg-white p-3 shadow-sm space-y-3">
+      {isEditing && build.editing?.field !== "intake" && (
+        <div className="flex items-center justify-between rounded-md bg-[#F5F3FF] border border-[#7C3AED]/30 px-2.5 py-1.5">
+          <span className="text-[11.5px] text-[#5B21B6] font-medium">Changing your earlier answer</span>
+          <button type="button" onClick={handlers.onCancelEdit} className="text-[11.5px] text-[#7C3AED] hover:underline focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40 rounded px-1">Cancel</button>
+        </div>
+      )}
+
+      <MagicianSoFar build={build} handlers={handlers} />
+
+      {canBack && <MagBackBar onBack={handlers.onGoBack} />}
+
       {build.step === "intake" && (
-        <MagicianIntake onSubmit={handlers.onIntakeSubmit} />
+        <MagicianIntake
+          onSubmit={handlers.onIntakeSubmit}
+          initial={build.title ? { title: build.title, purpose: build.purpose, description: build.description, whenKey: build.whenKey, whenLabel: build.whenLabel, visibility: build.visibility } : undefined}
+          onCancel={isEditing ? handlers.onCancelEdit : undefined}
+        />
       )}
       {build.step === "q1" && (
         <div>
-          <div className="text-[11px] uppercase tracking-wide text-[#7C3AED] font-semibold mb-2">Choose one</div>
+          <div className="text-[11px] uppercase tracking-wide text-[#7C3AED] font-semibold mb-2">{isEditing ? "Change what I watch" : "Choose one"}</div>
           <div className="flex flex-wrap gap-2">
             <MagOptionButton onClick={() => handlers.onQ1("rent_reviews", "Rent reviews")}>Rent reviews</MagOptionButton>
             <MagOptionButton onClick={() => handlers.onQ1("compliance", "Compliance certificates")}>Compliance certificates</MagOptionButton>
@@ -4077,15 +4212,7 @@ function MagicianBuildPanel({ build, handlers }: { build: MagBuildState; handler
           <div className="text-[11px] uppercase tracking-wide text-[#7C3AED] font-semibold mb-2">Steps · {build.steps.length}</div>
           <ol className="space-y-1.5 mb-2">
             {build.steps.map((s, i) => (
-              <li key={s.uid} className="flex items-start gap-2 rounded-md border border-slate-200 bg-slate-50 px-2 py-1.5">
-                <span className="text-[11px] font-semibold text-slate-500 mt-0.5 w-4 text-right">{i + 1}.</span>
-                <span className="flex-1 text-[12.5px] text-slate-800 leading-snug">{s.label}</span>
-                <div className="flex items-center gap-0.5">
-                  <button type="button" aria-label="Move up" disabled={i === 0} onClick={() => handlers.onMoveStep(s.uid, -1)} className="w-6 h-6 grid place-items-center rounded text-slate-500 hover:bg-white disabled:opacity-30 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40">↑</button>
-                  <button type="button" aria-label="Move down" disabled={i === build.steps.length - 1} onClick={() => handlers.onMoveStep(s.uid, 1)} className="w-6 h-6 grid place-items-center rounded text-slate-500 hover:bg-white disabled:opacity-30 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40">↓</button>
-                  <button type="button" aria-label="Remove step" onClick={() => handlers.onRemoveStep(s.uid)} className="w-6 h-6 grid place-items-center rounded text-slate-500 hover:bg-white hover:text-rose-600 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40">×</button>
-                </div>
-              </li>
+              <MagicianStepRow key={s.uid} s={s} i={i} total={build.steps.length} handlers={handlers} />
             ))}
             {build.steps.length === 0 && (
               <li className="text-[12px] text-slate-500 italic px-2 py-1.5">No steps yet — add one below.</li>
@@ -4124,9 +4251,10 @@ function MagicianBuildPanel({ build, handlers }: { build: MagBuildState; handler
       {build.step === "q6" && (
         <div>
           <div className="text-[11px] uppercase tracking-wide text-[#7C3AED] font-semibold mb-2">Ready when you are</div>
+          <div className="text-[12px] text-slate-600 mb-2">Tap any line in “So far” above to change it before we build.</div>
           <div className="flex flex-wrap gap-2">
             <MagOptionButton onClick={handlers.onBuild}>Build it</MagOptionButton>
-            <MagOptionButton onClick={handlers.onKeepEditing}>Keep editing</MagOptionButton>
+            <MagOptionButton onClick={handlers.onKeepEditing}>Keep editing steps</MagOptionButton>
           </div>
         </div>
       )}
