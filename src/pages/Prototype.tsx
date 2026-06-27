@@ -3170,7 +3170,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
 
 
         {/* Body */}
-        <div ref={chatBodyRef} className={`flex-1 overflow-y-auto px-5 pb-5 pt-0 ${isExpanded ? "w-full" : ""}`}>
+        <div ref={chatBodyRef} className={`flex-1 overflow-y-auto px-5 pt-0 ${isExpanded ? "w-full" : ""}`} style={{ paddingBottom: 48, scrollPaddingBottom: 48 }}>
           <div
             className={`${isExpanded ? "max-w-[820px] mx-auto" : ""} flex flex-col`}
             style={{ gap: CHAT_TURN_GAP_PX, paddingTop: CHAT_TOP_GAP_PX }}
