@@ -1158,10 +1158,11 @@ function ScheduleHeader({
 
 function buildFullRecalibration(rules: ComplianceRequirement[]): RecalibrationState {
   // Reuse the contract-group script (AST→PST + How to Rent + certifications unchanged note),
-  // but mark scope as "all" so the report header reads as a whole-set check.
+  // re-scoped as a whole-set check for the standing schedule / "Check now".
   const base = buildRecalibration("contract", rules);
-  return { ...base, group: "contract" };
+  return { ...base, scopeLabel: "the whole set" };
 }
+
 
 export function InspectorWorkArea({
 
