@@ -1805,6 +1805,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
         stepCount: b.steps.length,
         justBuilt: true,
         draftState: b,
+        stepTemplates: collectStepTemplates(b.steps),
       };
       setWorkflows((arr) => [wf, ...arr.map((w) => ({ ...w, justBuilt: false }))]);
       setTimeout(() => magAsk("Saved — we'll pick this up whenever you're ready."), 350);
