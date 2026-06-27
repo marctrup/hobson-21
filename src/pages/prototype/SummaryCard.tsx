@@ -52,6 +52,12 @@ const LegallyRequiredChip = () => (
   </span>
 );
 
+const BusinessRequiredChip = () => (
+  <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wide bg-amber-50 text-amber-800 border border-amber-300" title="Your own / contractual standard — not law">
+    Required
+  </span>
+);
+
 function valOrND(v?: string | null) {
   if (v === null || v === undefined || v === "") return ND;
   return <span className="text-slate-800">{v}</span>;
