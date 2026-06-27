@@ -10162,9 +10162,13 @@ function MagicianWorkArea({ character, workflows, onCreate, onAdjust, onView, on
 
 function WorkflowCard({ w, onAdjust, onView, onResume, onDiscard, onSimulate }: { w: Workflow; onAdjust: () => void; onView: () => void; onResume?: () => void; onDiscard?: () => void; onSimulate?: () => void }) {
   const [scopeOpen, setScopeOpen] = useState(false);
+  const [activityOpen, setActivityOpen] = useState(false);
   const [confirmDiscard, setConfirmDiscard] = useState(false);
   const isPausedDraft = !!w.draftState;
   const d = w.draftState;
+  const activity = w.activity ?? [];
+  const latest = activity[0];
+
 
   // Per-field "captured / not yet set" inventory for paused drafts
   const fieldStatus = (() => {
