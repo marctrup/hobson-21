@@ -7371,6 +7371,7 @@ type PerformCtx = {
   chosenRent: number | null;
   setChosenRent: (n: number) => void;
   advance: PerformAdvance;
+  section13Template?: StepTemplate | null;
 };
 type PerformBeat = {
   id: string;
