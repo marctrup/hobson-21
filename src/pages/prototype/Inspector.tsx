@@ -2199,7 +2199,7 @@ export function InspectorWorkArea({
             <div className="text-[11px] text-slate-500">
               {rules.length === 0
                 ? "No rules yet — set them up on the left."
-                : `${presentAreas.length} area${presentAreas.length === 1 ? "" : "s"} · ${required} legally required · ${applicable} where applicable`}
+                : `${presentAreas.length} area${presentAreas.length === 1 ? "" : "s"} · ${required} legally required · ${business} business · ${applicable} where applicable`}
             </div>
           </div>
         </div>
