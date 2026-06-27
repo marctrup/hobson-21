@@ -691,6 +691,13 @@ export function DocumentsLibrary({
   const [scopeUnit, setScopeUnit] = useState<string | null>(initialScope?.unitId ?? null);
   const [viewing, setViewing] = useState<DocItem | null>(null);
   const [flash, setFlash] = useState<string | null>(null);
+  const [scopeBannerDismissed, setScopeBannerDismissed] = useState(false);
+
+  // Re-show the announce banner whenever the incoming scope changes (e.g. user
+  // re-opens Documents from a different unit/property).
+  useEffect(() => {
+    setScopeBannerDismissed(false);
+  }, [initialScope?.propertyId, initialScope?.unitId]);
 
   // resolved scope labels
   const scopePropertyAsset = useMemo(
@@ -765,6 +772,25 @@ export function DocumentsLibrary({
   );
   const assetCount = useMemo(() => DOCS.filter((d) => d.family === "Asset").length, []);
 
+  // Scoped totals (denominator adapts to active scope; "6 of 6 documents for Flat 2").
+  const scopedTotal = useMemo(() => {
+    return DOCS.filter((d) => {
+      if (scopeProperty && d.propertyId !== scopeProperty) return false;
+      if (scopeUnit && d.unitId !== scopeUnit) return false;
+      return true;
+    }).length;
+  }, [scopeProperty, scopeUnit]);
+  const scopeLabel = useMemo(() => {
+    if (scopePropertyAsset && scopeUnitNode) {
+      return scopePropertyAsset.standalone
+        ? scopePropertyAsset.propertyName
+        : `${scopeUnitNode.label}, ${scopePropertyAsset.propertyName}`;
+    }
+    if (scopePropertyAsset) return scopePropertyAsset.propertyName;
+    return null;
+  }, [scopePropertyAsset, scopeUnitNode]);
+  const isScoped = !!(scopeProperty || scopeUnit);
+
   const onView = (d: DocItem) => setViewing(d);
   const onDownload = (d: DocItem) => {
     setFlash(`Downloading "${d.title}"… (prototype placeholder)`);
@@ -822,7 +848,7 @@ export function DocumentsLibrary({
             </span>
           </div>
           <div className="text-[12px] text-slate-500 mt-0.5">
-            {filtered.length} of {DOCS.length} documents · {chainsCount} tenancy chains · {assetCount} asset records
+            {filtered.length} of {isScoped ? scopedTotal : DOCS.length} documents{scopeLabel ? ` for ${scopeLabel}` : ""} · {chainsCount} tenancy chains · {assetCount} asset records
           </div>
           <p
             className="text-[12px] text-slate-700 mt-1.5 min-h-[1.25rem] italic"
@@ -884,9 +910,41 @@ export function DocumentsLibrary({
               widen to whole property
             </button>
           )}
-          <span className="text-[11px] text-slate-500 ml-1">
-            (remove to see the whole portfolio)
-          </span>
+          <button
+            onClick={clearScope}
+            className="text-[11px] text-slate-500 hover:text-[#5B21B6] underline focus:outline-none focus:ring-2 focus:ring-[#7C3AED] rounded"
+          >
+            show all documents
+          </button>
+        </div>
+      )}
+
+      {/* Announce banner — explains the pre-filter inherited from where the user was */}
+      {isScoped && scopeLabel && !scopeBannerDismissed && (
+        <div
+          role="status"
+          aria-live="polite"
+          className="px-6 py-2 border-b border-[#7C3AED]/15 bg-[#F5F3FF] flex items-center gap-3"
+        >
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#5B21B6" strokeWidth="2" aria-hidden>
+            <circle cx="12" cy="12" r="9"/><path d="M12 8v5"/><circle cx="12" cy="16.5" r="0.9" fill="#5B21B6"/>
+          </svg>
+          <p className="text-[12px] text-[#3F2A8A] flex-1">
+            Showing documents for <span className="font-semibold">{scopeLabel}</span> — because that's where you are.{" "}
+            <button
+              onClick={clearScope}
+              className="underline font-medium hover:text-[#5B21B6] focus:outline-none focus:ring-2 focus:ring-[#7C3AED] rounded"
+            >
+              Show all documents
+            </button>
+          </p>
+          <button
+            onClick={() => setScopeBannerDismissed(true)}
+            className="p-1 text-[#5B21B6]/60 hover:text-[#5B21B6] focus:outline-none focus:ring-2 focus:ring-[#7C3AED] rounded"
+            aria-label="Dismiss scope notice"
+          >
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M6 6l12 12M18 6L6 18"/></svg>
+          </button>
         </div>
       )}
 
