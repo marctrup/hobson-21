@@ -1069,7 +1069,99 @@ function GroupSection({
   );
 }
 
+/* ------------------------------------------------------------
+   Standing check schedule
+   ------------------------------------------------------------ */
+
+type CheckFrequency = "monthly" | "quarterly" | "halfyearly" | "yearly";
+
+const FREQUENCY_OPTIONS: { value: CheckFrequency; label: string; months: number }[] = [
+  { value: "monthly",    label: "Every month",    months: 1 },
+  { value: "quarterly",  label: "Every 3 months", months: 3 },
+  { value: "halfyearly", label: "Every 6 months", months: 6 },
+  { value: "yearly",     label: "Every year",     months: 12 },
+];
+
+function addMonths(d: Date, months: number): Date {
+  const x = new Date(d);
+  x.setMonth(x.getMonth() + months);
+  return x;
+}
+
+function fmtDate(d: Date): string {
+  return d.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
+}
+
+function ScheduleHeader({
+  frequency, onFrequency, lastChecked, onCheckNow, busy,
+}: {
+  frequency: CheckFrequency;
+  onFrequency: (f: CheckFrequency) => void;
+  lastChecked: Date;
+  onCheckNow: () => void;
+  busy: boolean;
+}) {
+  const months = FREQUENCY_OPTIONS.find((f) => f.value === frequency)?.months ?? 3;
+  const nextDue = addMonths(lastChecked, months);
+  return (
+    <section
+      aria-label="Inspector recalibration schedule"
+      className="rounded-xl border border-[#7C3AED]/25 bg-white p-4"
+    >
+      <div className="flex items-start gap-3 flex-wrap">
+        <div className="w-9 h-9 rounded-full overflow-hidden bg-[#F5F3FF] ring-1 ring-[#7C3AED]/20 grid place-items-center shrink-0">
+          <img src={INSPECTOR_CHARACTER.src} alt="" aria-hidden className="w-[120%] h-[120%] object-contain" />
+        </div>
+        <div className="min-w-0 flex-1">
+          <div className="text-[13px] font-semibold text-slate-900">The Inspector re-checks the law &amp; documents</div>
+          <div className="text-[11px] text-slate-500 mt-0.5">
+            A standing check across every requirement. I'll propose any changes — I never apply them on my own.
+          </div>
+          <div className="mt-2 flex items-center gap-3 flex-wrap">
+            <label className="text-[11px] text-slate-600 flex items-center gap-2">
+              <span>Cadence</span>
+              <select
+                value={frequency}
+                onChange={(e) => onFrequency(e.target.value as CheckFrequency)}
+                className="px-2 py-1 rounded-md border border-slate-300 text-[12px] bg-white focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]"
+                aria-label="Recalibration cadence"
+              >
+                {FREQUENCY_OPTIONS.map((o) => (
+                  <option key={o.value} value={o.value}>{o.label}</option>
+                ))}
+              </select>
+            </label>
+            <div className="text-[11px] text-slate-500">
+              Last checked <span className="text-slate-700 font-medium">{fmtDate(lastChecked)}</span>
+              {" · "}next due <span className="text-slate-700 font-medium">{fmtDate(nextDue)}</span>
+            </div>
+          </div>
+        </div>
+        <button
+          type="button"
+          onClick={onCheckNow}
+          disabled={busy}
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-[#7C3AED] text-white text-[12px] font-semibold hover:bg-[#6D28D9] disabled:opacity-60 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]"
+        >
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden className={busy ? "animate-spin" : ""}>
+            <path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 4v5h-5"/>
+          </svg>
+          {busy ? "Checking…" : "Check now"}
+        </button>
+      </div>
+    </section>
+  );
+}
+
+function buildFullRecalibration(rules: ComplianceRequirement[]): RecalibrationState {
+  // Reuse the contract-group script (AST→PST + How to Rent + certifications unchanged note),
+  // but mark scope as "all" so the report header reads as a whole-set check.
+  const base = buildRecalibration("contract", rules);
+  return { ...base, group: "contract" };
+}
+
 export function InspectorWorkArea({
+
   rules,
   onUpdateRules,
 }: {
