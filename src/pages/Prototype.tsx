@@ -10303,14 +10303,40 @@ function WorkflowCard({ w, onAdjust, onView, onResume, onDiscard, onSimulate }: 
       <footer className={`flex items-center justify-between gap-2 pt-2 border-t ${isPausedDraft ? "border-slate-200" : "border-slate-100"}`}>
         <div className="flex items-center gap-2 min-w-0 flex-wrap">
           <OwnerChip owner={w.owner} />
-          <span className="text-[11px] text-slate-500">
-            {isPausedDraft
-              ? "Paused — nothing is watching yet"
-              : w.status === "draft"
-                ? "Draft · not yet finished"
-                : `Last adjusted ${w.lastAdjusted ?? "—"}`}
+          <span className="text-[11px] text-slate-500 inline-flex items-center gap-1.5 flex-wrap">
+            {latest ? (
+              <>
+                <ActorAvatar actor={latest.actor} />
+                <span>
+                  Last {latest.action.split("—")[0].trim().toLowerCase()} by{" "}
+                  <span className="font-medium text-slate-700">{latest.actor.name}</span>
+                  {" · "}
+                  <span title={latest.tsLabel}>{latest.tsLabel}</span>
+                </span>
+              </>
+            ) : (
+              <span>
+                {isPausedDraft
+                  ? "Paused — nothing is watching yet"
+                  : w.status === "draft"
+                    ? "Draft · not yet finished"
+                    : `Last adjusted ${w.lastAdjusted ?? "—"}`}
+              </span>
+            )}
+            {activity.length > 0 && (
+              <button
+                type="button"
+                onClick={() => setActivityOpen((v) => !v)}
+                className="text-[11px] text-[#7C3AED] hover:underline focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40 rounded px-1"
+                aria-expanded={activityOpen}
+                aria-controls={`activity-${w.id}`}
+              >
+                {activityOpen ? "Hide activity" : `Activity (${activity.length})`}
+              </button>
+            )}
           </span>
         </div>
+
         <div className="flex items-center gap-1.5 shrink-0">
           {isPausedDraft ? (
             <>
