@@ -3891,6 +3891,24 @@ function AdminChat({ character, owl, professorEvents, onAssignProfessorType, bro
                 </div>
               );
             }
+            if (ev.kind === "sim_header") {
+              return (
+                <div
+                  key={ev.id}
+                  className="ml-12 max-w-[460px] rounded-xl border-2 border-dashed border-[#7C3AED]/40 bg-[#F5F3FF]/70 p-3"
+                  role="status"
+                  aria-label={`Simulation of ${ev.workflowName}`}
+                >
+                  <div className="flex items-center gap-1.5 mb-1">
+                    <span className="text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded bg-[#7C3AED] text-white">Simulation</span>
+                    <span className="text-[11px] text-slate-500">safe preview · nothing is sent</span>
+                  </div>
+                  <div className="text-[12px] text-slate-700">
+                    Dry-run of <span className="font-semibold">{ev.workflowName}</span> — what I'd do when {ev.trigger}.
+                  </div>
+                </div>
+              );
+            }
             // magician streaming bubble
             return (
               <MagicianStreamingBubble
