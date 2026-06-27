@@ -755,7 +755,7 @@ function AddRequirementForm({ onAdd }: { onAdd: (req: Omit<ComplianceRequirement
 }
 
 function ProposalCard({
-  proposed, onUpdate, onRemove, onAdd, onConfirm, onCancel,
+  proposed, onUpdate, onRemove, onAdd, onConfirm, onCancel, area,
 }: {
   proposed: ComplianceRequirement[];
   onUpdate: (id: string, patch: Partial<ComplianceRequirement>) => void;
@@ -763,18 +763,20 @@ function ProposalCard({
   onAdd: (req: Omit<ComplianceRequirement, "id">) => void;
   onConfirm: () => void;
   onCancel: () => void;
+  area: ComplianceArea | null;
 }) {
+  const def = area ? AREA_DEFS[area] : AREA_DEFS.health_safety;
   return (
     <div className="ml-12 max-w-[560px] rounded-xl border border-[#7C3AED]/25 bg-white p-3 space-y-3">
       <header className="flex items-start justify-between gap-3">
         <div>
-          <div className="text-[11px] uppercase tracking-wide text-[#5B21B6] font-semibold">Proposed requirements · residential H&amp;S</div>
+          <div className="text-[11px] uppercase tracking-wide text-[#5B21B6] font-semibold">Proposed requirements · {def.label.toLowerCase()} · {def.sublabel}</div>
           <div className="text-[12px] text-slate-600 mt-0.5">Edit any frequency, remove what doesn't apply, or add another.</div>
         </div>
       </header>
       <div className="rounded-md bg-[#F5F3FF] border border-[#7C3AED]/20 px-3 py-2 text-[11px] text-[#5B21B6] flex items-start gap-2">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden className="mt-0.5 shrink-0"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
-        <span><span className="font-semibold">Sourced from gov.uk &amp; HSE guidance</span> · these are researched suggestions — you can edit before confirming.</span>
+        <span><span className="font-semibold">Sourced from {def.sourceLabel}</span> · these are researched suggestions — you can edit before confirming.</span>
       </div>
       <div className="space-y-2">
         {proposed.map((r) => (
