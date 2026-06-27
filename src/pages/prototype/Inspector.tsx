@@ -2049,6 +2049,7 @@ function AreaPanel({
               recal={recal.certification}
               onResolve={(id, d, c) => resolveChange("certification", id, d, c)}
               onClose={() => closeRecal("certification")}
+              onShowMe={onShowMe ? () => onShowMe(areaId, "certification") : undefined}
             />
             {notices.length > 0 && (
               <GroupSection
@@ -2059,6 +2060,7 @@ function AreaPanel({
                 recal={recal.notice}
                 onResolve={(id, d, c) => resolveChange("notice", id, d, c)}
                 onClose={() => closeRecal("notice")}
+                onShowMe={onShowMe ? () => onShowMe(areaId, "notice") : undefined}
               />
             )}
             {contracts.length > 0 && (
@@ -2070,6 +2072,7 @@ function AreaPanel({
                 recal={recal.contract}
                 onResolve={(id, d, c) => resolveChange("contract", id, d, c)}
                 onClose={() => closeRecal("contract")}
+                onShowMe={onShowMe ? () => onShowMe(areaId, "contract") : undefined}
               />
             )}
           </div>
