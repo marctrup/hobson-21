@@ -2199,6 +2199,7 @@ export function InspectorWorkArea({
                   rules={byArea.get(aid)!}
                   onUpdateRules={onUpdateRules}
                   defaultOpen={idx === 0}
+                  onShowMe={onShowMe}
                 />
               ))}
             </div>
