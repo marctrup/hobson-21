@@ -9795,7 +9795,7 @@ function WorkflowCard({ w, onAdjust, onView, onResume }: { w: Workflow; onAdjust
         <div className="flex items-center gap-2 min-w-0 flex-wrap">
           <OwnerChip owner={w.owner} />
           <span className="text-[11px] text-slate-400">
-            {w.status === "draft" ? "Draft · not yet finished" : `Last adjusted ${w.lastAdjusted ?? "—"}`}
+            {w.status === "draft" ? (onResume ? "Draft · in progress" : "Draft · not yet finished") : `Last adjusted ${w.lastAdjusted ?? "—"}`}
           </span>
         </div>
         <div className="flex items-center gap-1.5 shrink-0">
