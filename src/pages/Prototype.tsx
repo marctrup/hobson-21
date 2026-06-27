@@ -9482,12 +9482,7 @@ function WorkflowStatusPill({ status, isPausedDraft }: { status: WorkflowStatus;
   );
 }
 
-  return (
-    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full border border-dashed border-slate-300 bg-white text-slate-600 text-[11px] font-semibold">
-      <span aria-hidden>○</span> Draft
-    </span>
-  );
-}
+
 
 function OwnerChip({ owner }: { owner: WorkflowOwner }) {
   if (owner.kind === "all_teams") {
