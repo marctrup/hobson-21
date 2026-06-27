@@ -2163,6 +2163,7 @@ export function InspectorWorkArea({
 }) {
   const required = rules.filter((r) => r.basis === "required").length;
   const applicable = rules.filter((r) => r.basis === "applicable").length;
+  const business = rules.filter((r) => r.basis === "business").length;
 
   // Group rules by area (legacy untagged → health_safety).
   const presentAreas: ComplianceArea[] = [];
