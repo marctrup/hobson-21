@@ -38,6 +38,7 @@ const InvestmentPassword = lazy(() => import("../pages/admin/InvestmentPassword"
 const InvestmentOpportunity = lazy(() => import("../pages/InvestmentOpportunity"));
 const Prototype = lazy(() => import("../pages/Prototype"));
 const PrototypeTesters = lazy(() => import("../pages/PrototypeTesters"));
+const PrototypeMobile = lazy(() => import("../pages/PrototypeMobile"));
 
 const Features = lazy(() => import("../pages/Features"));
 
