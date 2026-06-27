@@ -278,6 +278,7 @@ type Workflow = {
   description?: string;
   whenLabel?: string;
   visibility?: "personal" | "company";
+  draftState?: MagBuildState;
 };
 
 type MagBuildStep = { id: string; label: string; phrase: string; uid: string };
@@ -1724,6 +1725,57 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
     });
   };
 
+  // ----- Pause / cancel / resume a workflow build -----
+  const magPauseSave = () => {
+    setMagBuild((b) => {
+      if (!b) return b;
+      const phrases = b.steps.map((s) => s.phrase);
+      const actionSummary = phrases.length === 0
+        ? "bring it to you for approval"
+        : `${phrases.slice(0, -1).join(", ")}${phrases.length > 1 ? " and " : ""}${phrases[phrases.length - 1]} — then bring it to you for approval`;
+      const id = `wf-draft-${Date.now()}`;
+      const trigger = b.triggerPhrase ? triggerSentenceFor(b.watch, b.triggerPhrase) : "When this is ready to watch";
+      const wf: Workflow = {
+        id,
+        name: b.title?.trim() || "Untitled workflow",
+        purpose: b.purpose?.trim() || "Draft — picked up from where you left off.",
+        description: b.description?.trim() || undefined,
+        whenLabel: b.whenLabel,
+        visibility: b.visibility || "personal",
+        icon: b.watch === "compliance" ? "shield" : b.watch === "notices" ? "bell" : "calendar",
+        tone: "slate", status: "draft",
+        trigger,
+        action: actionSummary,
+        scopeLabel: b.scopeLabel || "Not yet set",
+        scopeDetail: b.scopeDetail,
+        owner: b.owner || { kind: "all_teams" },
+        lastAdjusted: "just now",
+        stepCount: b.steps.length,
+        justBuilt: true,
+        draftState: b,
+      };
+      setWorkflows((arr) => [wf, ...arr.map((w) => ({ ...w, justBuilt: false }))]);
+      setTimeout(() => magAsk("Saved — we'll pick this up whenever you're ready."), 350);
+      return null;
+    });
+  };
+
+  const magCancelBuild = () => {
+    setMagBuild(null);
+    setTimeout(() => magAsk("Of course — discarded."), 250);
+  };
+
+  const magResumeDraft = (id: string) => {
+    const wf = workflows.find((w) => w.id === id);
+    if (!wf || !wf.draftState) return;
+    setMagicianEvents([]);
+    setMagBuild(wf.draftState);
+    setWorkflows((arr) => arr.filter((w) => w.id !== id));
+    setTimeout(() => magAsk(`Picking up '${wf.name}' where we left off — change anything you like.`), 300);
+  };
+
+
+
 
   const initialsFromName = (name: string) => {
     const parts = name.trim().split(/\s+/).filter(Boolean);
@@ -2843,6 +2895,8 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                 onBeginEdit: magBeginEdit,
                 onCancelEdit: magCancelEdit,
                 onGoBack: magGoBack,
+                onPauseSave: magPauseSave,
+                onCancelBuild: magCancelBuild,
               } : undefined}
             />
 
@@ -3131,7 +3185,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
             adminCharacter === "professor"
               ? <ProfessorComposer onUpload={handleProfessorUpload} />
               : adminCharacter === "magician"
-                ? <MagicianComposer onCreate={handleCreateWorkflow} />
+                ? <MagicianComposer onCreate={handleCreateWorkflow} buildActive={!!magBuild} />
                   : adminCharacter === "broker"
                     ? <BrokerComposer
                         onAdd={handleAddBrokerContact}
@@ -3361,6 +3415,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                 onCreate={handleCreateWorkflow}
                 onAdjust={(id) => setAdjustingWorkflowId(id)}
                 onView={(id) => setViewingWorkflowId(id)}
+                onResume={magResumeDraft}
               />
             );
           }
@@ -3661,6 +3716,8 @@ type MagHandlers = {
   onBeginEdit: (field: MagEditField) => void;
   onCancelEdit: () => void;
   onGoBack: () => void;
+  onPauseSave: () => void;
+  onCancelBuild: () => void;
 };
 
 function AdminChat({ character, owl, professorEvents, onAssignProfessorType, brokerEvents, brokerFlowActive, magicianEvents, magBuild, magStreamingId, onMagStreamDone, magHandlers }: { character: { id: AdminCharacter; name: string; src: string; greeting: string } | null; owl: OwlState; professorEvents?: ProfEvent[]; onAssignProfessorType?: (batchId: string, type: string) => void; brokerEvents?: BrokerEvent[]; brokerFlowActive?: boolean; magicianEvents?: MagicianEvent[]; magBuild?: MagBuildState | null; magStreamingId?: string | null; onMagStreamDone?: (id: string) => void; magHandlers?: MagHandlers }) {
@@ -3769,7 +3826,10 @@ function AdminChat({ character, owl, professorEvents, onAssignProfessorType, bro
             );
           })}
           {magBuild && !magStreamingId && magHandlers && (
-            <MagicianBuildPanel build={magBuild} handlers={magHandlers} />
+            <>
+              <MagicianBuildPanel build={magBuild} handlers={magHandlers} />
+              <MagicianBuildSpacer />
+            </>
           )}
         </div>
       )}
@@ -4452,8 +4512,10 @@ function MagicianBuildPanel({ build, handlers }: { build: MagBuildState; handler
   const usedStepIds = new Set(build.steps.map((s) => s.id));
   const isEditing = !!build.editing;
   const canBack = build.step !== "intake" && !isEditing;
+  const [confirmCancel, setConfirmCancel] = useState(false);
   return (
     <div className="ml-12 max-w-[480px] rounded-xl border border-[#7C3AED]/30 bg-white p-3 shadow-sm space-y-3">
+
       {isEditing && build.editing?.field !== "intake" && (
         <div className="flex items-center justify-between rounded-md bg-[#F5F3FF] border border-[#7C3AED]/30 px-2.5 py-1.5">
           <span className="text-[11.5px] text-[#5B21B6] font-medium">Changing your earlier answer</span>
@@ -4561,9 +4623,67 @@ function MagicianBuildPanel({ build, handlers }: { build: MagBuildState; handler
           </div>
         </div>
       )}
+
+      {/* Persistent build controls — breathing space above bottom buttons */}
+      <div className="pt-6 mt-2 border-t border-slate-100">
+        {confirmCancel ? (
+          <div
+            role="alertdialog"
+            aria-label="Discard this workflow"
+            className="rounded-md border border-rose-200 bg-rose-50/60 px-3 py-2.5"
+          >
+            <div className="text-[12.5px] text-slate-800 font-medium">Discard this workflow? This can't be undone.</div>
+            <div className="mt-2 flex flex-wrap gap-2">
+              <button
+                type="button"
+                onClick={() => { setConfirmCancel(false); handlers.onCancelBuild(); }}
+                className="px-3 py-1.5 rounded-md bg-rose-600 text-white text-[12.5px] font-semibold hover:bg-rose-700 focus:outline-none focus:ring-2 focus:ring-rose-300"
+              >
+                Discard
+              </button>
+              <button
+                type="button"
+                onClick={() => setConfirmCancel(false)}
+                className="px-3 py-1.5 rounded-md border border-slate-200 bg-white text-[12.5px] font-medium text-slate-700 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40"
+              >
+                Keep building
+              </button>
+            </div>
+          </div>
+        ) : (
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <div className="text-[11px] text-slate-500">Nothing here is final until you press <span className="font-medium text-slate-700">Build it</span>.</div>
+            <div className="flex flex-wrap gap-2">
+              <button
+                type="button"
+                onClick={handlers.onPauseSave}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md border border-[#7C3AED]/40 bg-white text-[12.5px] font-semibold text-[#5B21B6] hover:bg-[#F5F3FF] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40"
+              >
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><rect x="6" y="5" width="4" height="14"/><rect x="14" y="5" width="4" height="14"/></svg>
+                Pause &amp; save
+              </button>
+              <button
+                type="button"
+                onClick={() => setConfirmCancel(true)}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md border border-slate-200 bg-white text-[12.5px] font-medium text-slate-600 hover:bg-rose-50 hover:text-rose-700 hover:border-rose-200 focus:outline-none focus:ring-2 focus:ring-rose-300"
+              >
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"/></svg>
+                Cancel &amp; delete
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
+
+/* Vertical breathing room below the active build panel so the last line isn't
+   flush against the chat composer. */
+function MagicianBuildSpacer() {
+  return <div aria-hidden style={{ height: 96 }} />;
+}
+
 
 
 
@@ -9356,7 +9476,18 @@ function OwnerChip({ owner }: { owner: WorkflowOwner }) {
   );
 }
 
-function MagicianComposer({ onCreate }: { onCreate: () => void }) {
+function MagicianComposer({ onCreate, buildActive }: { onCreate: () => void; buildActive?: boolean }) {
+  if (buildActive) {
+    return (
+      <div
+        aria-live="polite"
+        className="flex items-center gap-2 px-4 py-3 rounded-2xl border border-dashed border-[#7C3AED]/30 bg-[#F5F3FF] text-[12px] text-[#5B21B6]"
+      >
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden><path d="M15 4l5 5-11 11H4v-5L15 4z"/><path d="M14 5l5 5"/></svg>
+        <span>Building a workflow above — pause or cancel it to start another.</span>
+      </div>
+    );
+  }
   return (
     <div className="flex flex-col gap-2">
       <div className="flex items-center gap-3 px-4 py-3 rounded-2xl border-2 border-dashed border-[#7C3AED]/40 bg-white">
@@ -9384,12 +9515,14 @@ function MagicianComposer({ onCreate }: { onCreate: () => void }) {
   );
 }
 
-function MagicianWorkArea({ character, workflows, onCreate, onAdjust, onView }: {
+
+function MagicianWorkArea({ character, workflows, onCreate, onAdjust, onView, onResume }: {
   character: { id: AdminCharacter; name: string; src: string; tagline: string; workTitle: string };
   workflows: Workflow[];
   onCreate: () => void;
   onAdjust: (id: string) => void;
   onView: (id: string) => void;
+  onResume?: (id: string) => void;
 }) {
   const [search, setSearch] = useState("");
   const [ownerFilter, setOwnerFilter] = useState<string>("all");      // "all" | "mine" | name
@@ -9583,7 +9716,7 @@ function MagicianWorkArea({ character, workflows, onCreate, onAdjust, onView }: 
             )}
             <div className="grid gap-3" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(340px, 1fr))" }}>
               {g.items.map((w) => (
-                <WorkflowCard key={w.id} w={w} onAdjust={() => onAdjust(w.id)} onView={() => onView(w.id)} />
+                <WorkflowCard key={w.id} w={w} onAdjust={() => onAdjust(w.id)} onView={() => onView(w.id)} onResume={w.draftState && onResume ? () => onResume(w.id) : undefined} />
               ))}
             </div>
           </div>
@@ -9593,7 +9726,7 @@ function MagicianWorkArea({ character, workflows, onCreate, onAdjust, onView }: 
   );
 }
 
-function WorkflowCard({ w, onAdjust, onView }: { w: Workflow; onAdjust: () => void; onView: () => void }) {
+function WorkflowCard({ w, onAdjust, onView, onResume }: { w: Workflow; onAdjust: () => void; onView: () => void; onResume?: () => void }) {
   const [scopeOpen, setScopeOpen] = useState(false);
   return (
     <article className="bg-white border border-slate-200/70 rounded-lg p-4 shadow-[0_0.5px_0_rgba(0,0,0,0.04)] flex flex-col gap-3">
@@ -9663,7 +9796,7 @@ function WorkflowCard({ w, onAdjust, onView }: { w: Workflow; onAdjust: () => vo
         <div className="flex items-center gap-2 min-w-0 flex-wrap">
           <OwnerChip owner={w.owner} />
           <span className="text-[11px] text-slate-400">
-            {w.status === "draft" ? "Draft · not yet finished" : `Last adjusted ${w.lastAdjusted ?? "—"}`}
+            {w.status === "draft" ? (onResume ? "Draft · in progress" : "Draft · not yet finished") : `Last adjusted ${w.lastAdjusted ?? "—"}`}
           </span>
         </div>
         <div className="flex items-center gap-1.5 shrink-0">
@@ -9674,13 +9807,23 @@ function WorkflowCard({ w, onAdjust, onView }: { w: Workflow; onAdjust: () => vo
           >
             View
           </button>
-          <button
-            type="button"
-            onClick={onAdjust}
-            className="text-[12px] font-semibold px-3 py-1.5 rounded-md bg-[#7C3AED] text-white hover:bg-[#6D28D9] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40"
-          >
-            Adjust
-          </button>
+          {onResume ? (
+            <button
+              type="button"
+              onClick={onResume}
+              className="text-[12px] font-semibold px-3 py-1.5 rounded-md bg-[#7C3AED] text-white hover:bg-[#6D28D9] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40"
+            >
+              Resume
+            </button>
+          ) : (
+            <button
+              type="button"
+              onClick={onAdjust}
+              className="text-[12px] font-semibold px-3 py-1.5 rounded-md bg-[#7C3AED] text-white hover:bg-[#6D28D9] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40"
+            >
+              Adjust
+            </button>
+          )}
         </div>
       </footer>
     </article>
