@@ -9806,13 +9806,23 @@ function WorkflowCard({ w, onAdjust, onView, onResume }: { w: Workflow; onAdjust
           >
             View
           </button>
-          <button
-            type="button"
-            onClick={onAdjust}
-            className="text-[12px] font-semibold px-3 py-1.5 rounded-md bg-[#7C3AED] text-white hover:bg-[#6D28D9] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40"
-          >
-            Adjust
-          </button>
+          {onResume ? (
+            <button
+              type="button"
+              onClick={onResume}
+              className="text-[12px] font-semibold px-3 py-1.5 rounded-md bg-[#7C3AED] text-white hover:bg-[#6D28D9] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40"
+            >
+              Resume
+            </button>
+          ) : (
+            <button
+              type="button"
+              onClick={onAdjust}
+              className="text-[12px] font-semibold px-3 py-1.5 rounded-md bg-[#7C3AED] text-white hover:bg-[#6D28D9] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40"
+            >
+              Adjust
+            </button>
+          )}
         </div>
       </footer>
     </article>
