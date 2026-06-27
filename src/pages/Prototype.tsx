@@ -3460,6 +3460,11 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
               onComplete={completePerform}
               onReachedFinalGate={() => markReviewReady(card.id)}
               reducedMotion={reduced}
+              section13Template={
+                card.id.startsWith("act-")
+                  ? (workflows.find((w) => w.id === card.workflowRef)?.stepTemplates?.["section13"] ?? null)
+                  : null
+              }
             />
 
           );
