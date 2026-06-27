@@ -4351,21 +4351,33 @@ function MagicianSoFar({ build, handlers }: { build: MagBuildState; handlers: Ma
             )}
           </li>
         ))}
-        {build.steps.length > 0 && (build.step === "q6" || build.step === "q5") && (
-          <li className="flex items-start gap-2 text-[12px] pt-1 border-t border-slate-200/70 mt-1">
-            <span className="text-slate-500 w-[68px] shrink-0">Steps</span>
-            <span className="flex-1 text-slate-800">{build.steps.length} · {build.steps.map((s) => s.phrase).join(" · ")}</span>
-            {build.step === "q6" && (
-              <button
-                type="button"
-                onClick={handlers.onKeepEditing}
-                className="text-[11px] font-semibold text-[#7C3AED] hover:underline focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40 rounded px-1"
-              >
-                Change
-              </button>
-            )}
-          </li>
-        )}
+        {build.steps.length > 0 && (build.step === "q6" || build.step === "q5") && (() => {
+          const ownTpls = build.steps.filter((s) => isDocStep(s) && templateOf(s).mode === "own");
+          return (
+            <li className="flex items-start gap-2 text-[12px] pt-1 border-t border-slate-200/70 mt-1">
+              <span className="text-slate-500 w-[68px] shrink-0">Steps</span>
+              <span className="flex-1 text-slate-800">
+                {build.steps.length} · {build.steps.map((s) => s.phrase).join(" · ")}
+                {ownTpls.length > 0 && (
+                  <span className="block mt-0.5 text-[11px] text-[#5B21B6]">
+                    {ownTpls.length === 1 ? "1 step using your template" : `${ownTpls.length} steps using your templates`}
+                    {": "}
+                    {ownTpls.map((s) => s.template?.filename).filter(Boolean).join(", ")}
+                  </span>
+                )}
+              </span>
+              {build.step === "q6" && (
+                <button
+                  type="button"
+                  onClick={handlers.onKeepEditing}
+                  className="text-[11px] font-semibold text-[#7C3AED] hover:underline focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40 rounded px-1"
+                >
+                  Change
+                </button>
+              )}
+            </li>
+          );
+        })()}
       </ul>
     </div>
   );
