@@ -3995,14 +3995,19 @@ function MagicianIntake({ onSubmit, initial, onCancel }: { onSubmit: MagHandlers
       </div>
       <div className="flex items-center justify-between gap-2 pt-1 border-t border-slate-100">
         <span className="text-[11px] text-slate-500">Required fields marked <span className="text-rose-600">*</span></span>
-        <button
-          type="button"
-          onClick={submit}
-          disabled={!canSubmit}
-          className="px-3.5 py-1.5 rounded-full bg-[#7C3AED] text-white text-[12.5px] font-semibold hover:bg-[#6D28D9] disabled:bg-slate-200 disabled:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40"
-        >
-          Start building →
-        </button>
+        <div className="flex items-center gap-1.5">
+          {onCancel && (
+            <button type="button" onClick={onCancel} className="px-3 py-1.5 rounded-full text-[12.5px] text-slate-600 hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40">Cancel</button>
+          )}
+          <button
+            type="button"
+            onClick={submit}
+            disabled={!canSubmit}
+            className="px-3.5 py-1.5 rounded-full bg-[#7C3AED] text-white text-[12.5px] font-semibold hover:bg-[#6D28D9] disabled:bg-slate-200 disabled:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40"
+          >
+            {initial ? "Save changes" : "Start building →"}
+          </button>
+        </div>
       </div>
     </div>
   );
