@@ -2470,39 +2470,36 @@ function AreaPanel({
       </button>
 
       {open && (
-        <div id={panelId} className="px-4 pb-4 space-y-4 border-t border-slate-100 pt-4">
-          <div className="space-y-4">
-            <GroupSection
-              group="certification"
-              rules={certs}
-              onUpdateRule={updateRule}
-              onRecalibrate={() => startRecalibrate("certification")}
-              recal={recal.certification}
-              onResolve={(id, d, c) => resolveChange("certification", id, d, c)}
-              onClose={() => closeRecal("certification")}
-              onShowMe={onShowMe ? () => onShowMe(areaId, "certification") : undefined}
-            />
-            <GroupSection
-              group="notice"
-              rules={notices}
-              onUpdateRule={updateRule}
-              onRecalibrate={() => startRecalibrate("notice")}
-              recal={recal.notice}
-              onResolve={(id, d, c) => resolveChange("notice", id, d, c)}
-              onClose={() => closeRecal("notice")}
-              onShowMe={onShowMe ? () => onShowMe(areaId, "notice") : undefined}
-            />
-            <GroupSection
-              group="contract"
-              rules={contracts}
-              onUpdateRule={updateRule}
-              onRecalibrate={() => startRecalibrate("contract")}
-              recal={recal.contract}
-              onResolve={(id, d, c) => resolveChange("contract", id, d, c)}
-              onClose={() => closeRecal("contract")}
-              onShowMe={onShowMe ? () => onShowMe(areaId, "contract") : undefined}
-            />
-          </div>
+        <div id={panelId} className="px-4 pb-4 space-y-3 border-t border-slate-100 pt-4">
+          {rules.length === 0 ? (
+            <div className="text-[12px] text-slate-500 italic px-1 py-3">No requirements in this area yet.</div>
+          ) : (
+            <div className="grid gap-2 sm:grid-cols-2">
+              {rules.map((r) => (
+                <div key={r.id} className="rounded-lg border border-slate-200 bg-white p-3">
+                  <div className="flex items-start justify-between gap-2 mb-1">
+                    <div className="text-[13px] font-semibold text-slate-900 truncate">{r.docType}</div>
+                    <BasisBadge basis={r.basis} />
+                  </div>
+                  {r.category === "certification" ? (
+                    <>
+                      <div className="text-[12px] text-slate-700">
+                        Renews every <span className="font-medium">{r.durationValue} {r.durationUnit.toLowerCase()}</span>
+                      </div>
+                      <div className="text-[11px] text-slate-500 mt-0.5">
+                        Anchor: {r.anchor} · scope: {r.appliesTo === "building" ? "building" : "per let unit"}
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      {r.description && <div className="text-[12px] text-slate-700">{r.description}</div>}
+                      <VersionSourcePicker req={r} onChange={(patch) => updateRule(r.id, patch)} compact />
+                    </>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       )}
     </section>
