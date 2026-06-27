@@ -103,9 +103,8 @@ function OccupationalView({ scope, onOpenUnit }: { scope: SummaryScope; onOpenUn
   const counts = occupationalCounts(rows);
   const grouped = scope.level === "portfolio";
 
-  const headers = grouped
-    ? ["Unit", "Tenant", "Landlord", "Rent", "Next Review", "Next Break"]
-    : ["Unit", "Tenant", "Landlord", "Rent", "Next Review", "Next Break"];
+  const headers = ["Unit", "Tenant", "Landlord", "Rent", "Next Review", "Next Break"];
+  const colWidths = ["16%", "24%", "22%", "14%", "12%", "12%"];
 
   const renderRow = (r: OccupationalRow) => (
     <tr
@@ -122,20 +121,23 @@ function OccupationalView({ scope, onOpenUnit }: { scope: SummaryScope; onOpenUn
       }}
       className="cursor-pointer border-b border-slate-100 last:border-b-0 hover:bg-[#F5F3FF] focus:bg-[#EDE9FE] focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#7C3AED]/40"
     >
-      <td className="px-3 py-2 align-middle">
+      <td className="px-3 py-2 align-middle truncate">
         <span className="text-slate-900 font-medium">{r.unitLabel}</span>
         {r.status === "Vacant" && <span className="ml-2"><VacantChip /></span>}
       </td>
-      <td className="px-3 py-2 align-middle">{r.status === "Vacant" ? ND : valOrND(r.tenantName)}</td>
-      <td className="px-3 py-2 align-middle">{valOrND(r.landlordName)}</td>
-      <td className="px-3 py-2 align-middle">{valOrND(r.currentRent)}</td>
-      <td className="px-3 py-2 align-middle">{valOrND(r.nextReviewDate)}</td>
-      <td className="px-3 py-2 align-middle">{valOrND(r.nextBreakDate)}</td>
+      <td className="px-3 py-2 align-middle truncate">{r.status === "Vacant" ? ND : valOrND(r.tenantName)}</td>
+      <td className="px-3 py-2 align-middle truncate">{valOrND(r.landlordName)}</td>
+      <td className="px-3 py-2 align-middle truncate">{valOrND(r.currentRent)}</td>
+      <td className="px-3 py-2 align-middle truncate">{valOrND(r.nextReviewDate)}</td>
+      <td className="px-3 py-2 align-middle truncate">{valOrND(r.nextBreakDate)}</td>
     </tr>
   );
 
   return (
-    <table className="w-full text-sm">
+    <table className="w-full text-[12.5px] table-fixed">
+      <colgroup>
+        {colWidths.map((w, i) => <col key={i} style={{ width: w }} />)}
+      </colgroup>
       <thead className="bg-slate-50 text-slate-500 text-[11px] uppercase tracking-wide">
         <tr>
           {headers.map((h) => (
@@ -150,8 +152,8 @@ function OccupationalView({ scope, onOpenUnit }: { scope: SummaryScope; onOpenUn
               const pc = occupationalCounts(prows);
               return (
                 <React.Fragment key={p.id}>
-                  <tr className="bg-slate-50/80">
-                    <td colSpan={headers.length} className="px-3 py-2 text-[11px] font-semibold uppercase tracking-wide text-slate-600">
+                  <tr className="bg-slate-100/80">
+                    <td colSpan={headers.length} className="px-3 py-2 text-[11px] font-semibold uppercase tracking-wide text-slate-700">
                       {p.name} · {p.area} · {p.unitsTotal} units · {pc.let} let · {pc.vacant} vacant
                     </td>
                   </tr>
