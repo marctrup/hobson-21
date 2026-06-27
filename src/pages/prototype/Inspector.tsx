@@ -134,6 +134,19 @@ export type InspectorEvent =
   | { kind: "confirmed"; id: string; count: number }
   | { kind: "show_me"; id: string; areaId: ComplianceArea; group: RequirementCategory };
 
+/** Live build state for the list-first, consent-and-describe flow. */
+export type InspectorBuild = {
+  step: "consent" | "describe" | "researching" | "build";
+  area: ComplianceArea;
+  areaLabel: string;
+  description?: string;
+  /** Researched legal items (carry sourceUrl/Label, basis="required"). */
+  researched: ComplianceRequirement[];
+  /** User-added items (basis="business", no source). */
+  additions: ComplianceRequirement[];
+};
+
+
 /* ---------------- Default proposed (residential H&S) ---------------- */
 
 let counter = 0;
