@@ -10035,6 +10035,18 @@ function WorkflowCard({ w, onAdjust, onView, onResume, onDiscard }: { w: Workflo
         </dl>
       )}
 
+      {!isPausedDraft && w.stepTemplates && Object.keys(w.stepTemplates).length > 0 && (
+        <div className="text-[11.5px] text-[#5B21B6] -mt-1 flex flex-wrap items-center gap-1.5">
+          <span aria-hidden>📎</span>
+          <span>Using your template{Object.keys(w.stepTemplates).length === 1 ? "" : "s"}:</span>
+          {Object.entries(w.stepTemplates).map(([k, t]) => (
+            <span key={k} className="inline-flex items-center px-1.5 py-0.5 rounded-full border border-[#7C3AED]/30 bg-[#F5F3FF]" title={`${k}: ${t.filename ?? "uploaded"}`}>
+              {t.filename ?? "uploaded"}
+            </span>
+          ))}
+        </div>
+      )}
+
       <footer className={`flex items-center justify-between gap-2 pt-2 border-t ${isPausedDraft ? "border-slate-200" : "border-slate-100"}`}>
         <div className="flex items-center gap-2 min-w-0 flex-wrap">
           <OwnerChip owner={w.owner} />
