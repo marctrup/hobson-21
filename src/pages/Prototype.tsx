@@ -11,6 +11,7 @@ import characterProfessor from "@/assets/prototype/character-professor.png";
 import characterBroker from "@/assets/prototype/character-broker.png";
 import characterKeeper from "@/assets/prototype/character-keeper.png";
 import { DocumentsLibrary } from "@/components/prototype/DocumentsLibrary";
+import { CollapsibleSection } from "@/components/prototype/CollapsibleSection";
 import { cn } from "@/lib/utils";
 import SummaryCard, { SummaryActions } from "./prototype/SummaryCard";
 import { summaryIntroFor, summaryQuestionFor, type SummaryScope } from "./prototype/summaryData";
