@@ -1423,6 +1423,19 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
     return `${subject} ${whenPhrase}`.trim();
   };
 
+  const inferWatchFromIntake = (title: string, purpose: string): "rent_reviews" | "compliance" | "notices" | "other" => {
+    const t = `${title} ${purpose}`.toLowerCase();
+    if (/\brent\b|review|section\s*13/.test(t)) return "rent_reviews";
+    if (/complian|certificat|gas|eicr|epc|fire|inspection/.test(t)) return "compliance";
+    if (/notice|deadline|break|renewal|expir/.test(t)) return "notices";
+    return "other";
+  };
+  const ackForWatch = (k: "rent_reviews" | "compliance" | "notices" | "other") =>
+    k === "rent_reviews" ? "A rent-review watch — good, I know these well. A few details and I'll lay out how I'd handle it."
+      : k === "compliance" ? "A compliance watch — familiar ground. A few details and I'll lay out how I'd handle it."
+      : k === "notices" ? "A notice-deadline watch — understood. A few details and I'll lay out how I'd handle it."
+      : "Understood. A few details and I'll lay out how I'd handle it.";
+
   const magSubmitIntake = (intake: {
     title: string;
     purpose: string;
@@ -1435,6 +1448,11 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
     magUserEcho(
       `${intake.title} — ${intake.purpose}\nShow: ${intake.whenLabel} · ${intake.visibility === "personal" ? "Personal" : "Company-wide"}${intake.description ? `\n${intake.description}` : ""}`
     );
+    const inferred = inferWatchFromIntake(intake.title, intake.purpose);
+    const prevWatch = magBuild?.watch;
+    const watchChanged = wasEditing && !!prevWatch && prevWatch !== inferred;
+    const stepsTouched = !!magBuild?.stepsTouched;
+    const shouldRepropose = !wasEditing || (watchChanged && !stepsTouched);
     setMagBuild((b) => b ? {
       ...b,
       title: intake.title,
@@ -1446,10 +1464,24 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
       lead: (intake.whenKey === "6m" || intake.whenKey === "3m" || intake.whenKey === "on") ? intake.whenKey : undefined,
       leadLabel: intake.whenLabel,
       triggerPhrase: magPhraseFor(intake.whenKey, intake.whenLabel),
-      step: wasEditing ? (b.editing!.returnStep) : "q1",
+      watch: inferred,
+      watchLabel: watchLabelFor(inferred),
+      steps: shouldRepropose
+        ? MAG_DEFAULTS_BY_WATCH[inferred].map((s, i) => ({ ...s, uid: `${s.id}-${Date.now()}-${i}` }))
+        : b.steps,
+      step: wasEditing ? (b.editing!.returnStep) : "q3",
       editing: undefined,
     } : b);
-    setTimeout(() => magAsk(wasEditing ? "Updated." : "Thank you. Now — what shall I keep watch on?"), 400);
+    setTimeout(() => {
+      if (wasEditing && watchChanged && !stepsTouched) {
+        magAsk(`That changes the shape of it — here's how I'd handle ${watchLabelFor(inferred).toLowerCase()} instead. Adjust as you like.`);
+      } else if (wasEditing) {
+        magAsk("Updated.");
+      } else {
+        magAsk(ackForWatch(inferred));
+        setTimeout(() => magAsk("Where should this apply?"), 1400);
+      }
+    }, 400);
   };
 
   const magAnswerQ1 = (key: "rent_reviews" | "compliance" | "notices" | "other", label: string) => {
@@ -1560,7 +1592,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
   const magBeginEdit = (field: MagEditField) => {
     setMagBuild((b) => {
       if (!b) return b;
-      const returnStep: MagBuildStepKey = b.step === "intake" ? "q1" : b.step;
+      const returnStep: MagBuildStepKey = b.step === "intake" ? "q3" : b.step;
       const stepFor: Record<MagEditField, MagBuildStepKey> = {
         intake: "intake",
         watch: "q1",
@@ -1581,7 +1613,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
   const magGoBack = () => {
     setMagBuild((b) => {
       if (!b) return b;
-      const order: MagBuildStepKey[] = ["intake", "q1", "q3", b.scope === "unit" ? "q3b" : "q3", "q4", "q5", "q6"];
+      const order: MagBuildStepKey[] = ["intake", "q3", b.scope === "unit" ? "q3b" : "q3", "q4", "q5", "q6"];
       // dedupe consecutive
       const seen: MagBuildStepKey[] = [];
       for (const s of order) if (seen[seen.length - 1] !== s) seen.push(s);
@@ -4058,7 +4090,6 @@ function MagicianSoFar({ build, handlers }: { build: MagBuildState; handlers: Ma
     { key: "purpose", label: "Purpose", value: build.purpose, field: "intake" },
     { key: "when", label: "When", value: build.whenLabel, field: "intake" },
     { key: "visibility", label: "Visibility", value: build.visibility === "company" ? "Company-wide" : build.visibility === "personal" ? "Personal" : undefined, field: "intake" },
-    { key: "watch", label: "Watch", value: build.watchLabel, field: "watch" },
     { key: "scope", label: "Scope", value: build.scopeLabel, field: build.scope === "unit" ? "scopeUnit" : "scope" },
     { key: "owner", label: "Owner", value: build.ownerLabel, field: "owner" },
   ];
