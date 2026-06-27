@@ -11410,20 +11410,29 @@ function BrokerWorkArea({ character, contacts, onAdd }: {
           if (g.items.length === 0) return null;
           const meta = BROKER_TYPE_META[g.type];
           return (
-            <section key={g.type} className="mb-6 last:mb-0">
-              <div className="flex items-center gap-2 mb-2 px-1">
-                <span className={`inline-flex items-center justify-center w-6 h-6 rounded-md ${meta.bg} ${meta.text} ring-1 ${meta.ring}`} aria-hidden>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">{meta.iconPath}</svg>
-                </span>
-                <h3 className="text-[11px] uppercase tracking-wide font-semibold text-slate-600">{meta.label}</h3>
-                <span className="text-[11px] text-slate-400">· {g.items.length}</span>
-              </div>
-              <div className="grid gap-3" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))" }}>
-                {g.items.map((c) => (
-                  <BrokerContactCard key={c.id} contact={c} />
-                ))}
-              </div>
-            </section>
+            <div key={g.type} className="mb-3 last:mb-0">
+              <CollapsibleSection
+                className="bg-white border border-slate-200 rounded-xl"
+                headerClassName="w-full flex items-center gap-2.5 px-4 py-3 text-left hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED] rounded-xl"
+                contentClassName="px-4 pb-4 pt-3 border-t border-slate-100"
+                ariaLabel={`Toggle ${meta.label}`}
+                summary={
+                  <div className="flex items-center gap-2 min-w-0">
+                    <span className={`inline-flex items-center justify-center w-6 h-6 rounded-md ${meta.bg} ${meta.text} ring-1 ${meta.ring} shrink-0`} aria-hidden>
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">{meta.iconPath}</svg>
+                    </span>
+                    <h3 className="text-[12px] uppercase tracking-wide font-semibold text-slate-700 truncate">{meta.label}</h3>
+                    <span className="text-[11px] text-slate-500 shrink-0">· {g.items.length}</span>
+                  </div>
+                }
+              >
+                <div className="grid gap-3" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))" }}>
+                  {g.items.map((c) => (
+                    <BrokerContactCard key={c.id} contact={c} />
+                  ))}
+                </div>
+              </CollapsibleSection>
+            </div>
           );
         })}
       </div>
