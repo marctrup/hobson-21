@@ -280,8 +280,10 @@ type Workflow = {
 };
 
 type MagBuildStep = { id: string; label: string; phrase: string; uid: string };
+type MagBuildStepKey = "intake" | "q1" | "q2" | "q3" | "q3b" | "q4" | "q5" | "q6";
+type MagEditField = "intake" | "watch" | "scope" | "scopeUnit" | "owner";
 type MagBuildState = {
-  step: "intake" | "q1" | "q2" | "q3" | "q3b" | "q4" | "q5" | "q6";
+  step: MagBuildStepKey;
   // intake (user-authored)
   title?: string;
   purpose?: string;
@@ -291,15 +293,20 @@ type MagBuildState = {
   visibility?: "personal" | "company";
   // build conversation
   watch?: "rent_reviews" | "compliance" | "notices" | "other";
+  watchLabel?: string;
   lead?: "6m" | "3m" | "on";
   leadLabel?: string;
   triggerPhrase?: string;
   scope?: "unit" | "property" | "portfolio";
   scopeLabel?: string;
   owner?: WorkflowOwner;
+  ownerLabel?: string;
   steps: MagBuildStep[];
   addOpen?: boolean;
   customDraft?: string;
+  // trace-back
+  editing?: { field: MagEditField; returnStep: MagBuildStepKey };
+  stepsTouched?: boolean; // user has personally tweaked steps — don't silently overwrite
 };
 type MagicianEvent =
   | { kind: "magician"; id: string; text: string }
