@@ -8246,7 +8246,7 @@ function buildPA003Beats(): PerformBeat[] {
 
 
 
-function buildPerformConfig(card: ActionCard): {
+function buildPerformConfig(card: ActionCard, section13Template: StepTemplate | null = null): {
   beats: PerformBeat[];
   steps: { key: string; label: string }[];
   headerKicker: string;
