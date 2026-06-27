@@ -4090,7 +4090,6 @@ function MagicianSoFar({ build, handlers }: { build: MagBuildState; handlers: Ma
     { key: "purpose", label: "Purpose", value: build.purpose, field: "intake" },
     { key: "when", label: "When", value: build.whenLabel, field: "intake" },
     { key: "visibility", label: "Visibility", value: build.visibility === "company" ? "Company-wide" : build.visibility === "personal" ? "Personal" : undefined, field: "intake" },
-    { key: "watch", label: "Watch", value: build.watchLabel, field: "watch" },
     { key: "scope", label: "Scope", value: build.scopeLabel, field: build.scope === "unit" ? "scopeUnit" : "scope" },
     { key: "owner", label: "Owner", value: build.ownerLabel, field: "owner" },
   ];
