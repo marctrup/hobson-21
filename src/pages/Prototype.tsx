@@ -8334,6 +8334,7 @@ function PerformWorkspace({
   onComplete,
   onReachedFinalGate,
   reducedMotion,
+  section13Template,
 }: {
   card: ActionCard;
   mode?: "perform" | "review";
@@ -8341,8 +8342,9 @@ function PerformWorkspace({
   onComplete: (summary: string) => void;
   onReachedFinalGate?: () => void;
   reducedMotion: boolean;
+  section13Template?: StepTemplate | null;
 }) {
-  const { beats, steps, headerTitle, headerSub } = useMemo(() => buildPerformConfig(card), [card]);
+  const { beats, steps, headerTitle, headerSub } = useMemo(() => buildPerformConfig(card, section13Template ?? null), [card, section13Template]);
   const isComplete = card.approvalState === "approved";
   const initialRevealed = useMemo(() => {
     if (mode === "review" && !isComplete) return finalGateBeatIdx(card, beats);
