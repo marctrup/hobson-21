@@ -1592,7 +1592,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
   const magBeginEdit = (field: MagEditField) => {
     setMagBuild((b) => {
       if (!b) return b;
-      const returnStep: MagBuildStepKey = b.step === "intake" ? "q1" : b.step;
+      const returnStep: MagBuildStepKey = b.step === "intake" ? "q3" : b.step;
       const stepFor: Record<MagEditField, MagBuildStepKey> = {
         intake: "intake",
         watch: "q1",
