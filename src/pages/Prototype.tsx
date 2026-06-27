@@ -3280,13 +3280,32 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                           onSubmitNote={(note) => updateFeedback(m.id, { note, submitted: true })}
                           onSkipNote={() => updateFeedback(m.id, { submitted: true })}
                         />
+                      ) : m.rich === "summary" && m.summary ? (
+                        <div key={m.id} className="flex items-start gap-2">
+                          {i === 0 ? <OwlAvatar state={owl} /> : <div aria-hidden className="w-10 h-10 shrink-0" />}
+                          <div className="flex-1 min-w-0 space-y-2">
+                            {m.text && (
+                              <div className="max-w-[420px] bg-[#EDE9FE] text-[#1F2330] text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-bl-md">
+                                {m.text}
+                                {m.streaming && <span className="inline-block w-1.5 h-3.5 ml-0.5 bg-[#7C3AED] align-middle animate-pulse" />}
+                              </div>
+                            )}
+                            {!m.streaming && (
+                              <SummaryCard
+                                kind={m.summary.kind}
+                                scope={m.summary.scope}
+                                onOpenUnit={(pid, uid) => goUnit(uid, pid)}
+                              />
+                            )}
+                          </div>
+                        </div>
                       ) : (
                         <HobsonBubble
                           key={m.id}
                           text={m.text}
                           owl={owl}
                           streaming={!!m.streaming}
-                          rich={m.rich}
+                          rich={m.rich === "rentFlat2" ? "rentFlat2" : undefined}
                           onAskFollowUp={(q) => sendRentAnswer(q)}
                           showAvatar={i === 0}
                         />
