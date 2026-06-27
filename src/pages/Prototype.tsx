@@ -3607,7 +3607,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                 character={c}
                 workflows={workflows}
                 onCreate={handleCreateWorkflow}
-                onAdjust={(id) => setAdjustingWorkflowId(id)}
+                onAdjust={magAdjustWorkflow}
                 onView={(id) => setViewingWorkflowId(id)}
                 onResume={magResumeDraft}
                 onDiscard={magDiscardDraft}
@@ -3625,23 +3625,16 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
       </main>
       ); })()}
 
-      {/* Magician — Adjust / View dialogs */}
-      {adjustingWorkflowId && (
-        <WorkflowAdjustDialog
-          workflow={workflows.find((w) => w.id === adjustingWorkflowId)!}
-          staff={MAGICIAN_STAFF}
-          onClose={() => setAdjustingWorkflowId(null)}
-          onSave={handleSaveWorkflow}
-        />
-      )}
+      {/* Magician — View dialog (Adjust opens the full build flow in the left chat) */}
       {viewingWorkflowId && (
         <WorkflowViewDialog
           workflow={workflows.find((w) => w.id === viewingWorkflowId)!}
           onClose={() => setViewingWorkflowId(null)}
-          onAdjust={() => { setViewingWorkflowId(null); setAdjustingWorkflowId(viewingWorkflowId); }}
+          onAdjust={() => { const id = viewingWorkflowId; setViewingWorkflowId(null); if (id) magAdjustWorkflow(id); }}
         />
       )}
     </div>
+
 
   );
 };
