@@ -1599,9 +1599,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
     } : b);
     setTimeout(() => magAsk(wasEditing ? "Updated." : "And who should own it?"), 400);
   };
-    setMagBuild((b) => b ? { ...b, scopeLabel: unitLabel, step: wasEditing ? b.editing!.returnStep : "q4", editing: undefined } : b);
-    setTimeout(() => magAsk(wasEditing ? "Updated." : "And who should own it?"), 400);
-  };
+
 
   const magAnswerQ4 = (owner: WorkflowOwner, label: string) => {
     magUserEcho(label);
