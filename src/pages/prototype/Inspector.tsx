@@ -2618,10 +2618,7 @@ export function InspectorWorkArea({
             </div>
           )}
 
-          {/* (f) Build CTA — hidden during an active build, like the Magician's */}
-          {!buildActive && onSetUpAnotherArea && (
-            <AddAreaBox onClick={onSetUpAnotherArea} />
-          )}
+          {/* Build CTA removed — area creation happens only in chat via the AreaPickCard. */}
         </div>
       </div>
     </div>
