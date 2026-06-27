@@ -1479,6 +1479,8 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
   const [magStreamingId, setMagStreamingId] = useState<string | null>(null);
   const [adjustingId, setAdjustingId] = useState<string | null>(null);
   const magSimQueueRef = useRef<string[]>([]); // queued simulation bubble texts
+  const adjustOriginalRef = useRef<Workflow | null>(null); // snapshot of workflow before Adjust began (for activity diffs)
+
 
 
   const magNewId = (p: string) => `${p}-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`;
