@@ -279,10 +279,33 @@ type Workflow = {
   whenLabel?: string;
   visibility?: "personal" | "company";
   draftState?: MagBuildState;
+  stepTemplates?: Record<string, StepTemplate>; // keyed by step id; doc-producing steps may use the user's own template
 };
 
-type MagBuildStep = { id: string; label: string; phrase: string; uid: string };
+type StepTemplate = { mode: "standard" | "own"; filename?: string };
+
+type MagBuildStep = { id: string; label: string; phrase: string; uid: string; template?: StepTemplate };
 type MagBuildStepKey = "intake" | "q1" | "q2" | "q3" | "q3b" | "q4" | "q5" | "q6";
+
+// Steps that produce an output document — these get the "Template: standard / own" affordance.
+const DOC_STEP_IDS = new Set(["section13", "email", "surveyor", "draft_notice", "access_notice", "summary_review"]);
+const DOC_STEP_LABEL_RE = /\b(section\s*13|notice|letter|email|instruction|memorandum|report|draft|prepare|create)\b/i;
+const NON_DOC_STEP_LABEL_RE = /\b(read|gather|audit|outline|notify|schedule|log|review|check|monitor|watch|confirm)\b/i;
+function isDocStep(s: { id: string; label: string }): boolean {
+  if (DOC_STEP_IDS.has(s.id)) return true;
+  if (s.id === "custom") {
+    return DOC_STEP_LABEL_RE.test(s.label) && !NON_DOC_STEP_LABEL_RE.test(s.label);
+  }
+  return false;
+}
+function templateOf(s: MagBuildStep): StepTemplate { return s.template ?? { mode: "standard" }; }
+function collectStepTemplates(steps: MagBuildStep[]): Record<string, StepTemplate> | undefined {
+  const out: Record<string, StepTemplate> = {};
+  for (const s of steps) {
+    if (isDocStep(s) && s.template && s.template.mode === "own") out[s.id] = s.template;
+  }
+  return Object.keys(out).length > 0 ? out : undefined;
+}
 type MagEditField = "intake" | "watch" | "scope" | "scopeUnit" | "owner";
 
 type ScopeLevel = "portfolio" | "properties" | "units";
@@ -321,6 +344,7 @@ type MagBuildState = {
   // trace-back
   editing?: { field: MagEditField; returnStep: MagBuildStepKey };
   stepsTouched?: boolean; // user has personally tweaked steps — don't silently overwrite
+  templateNarrated?: boolean; // Magician has explained the template option once already this build
 };
 type MagicianEvent =
   | { kind: "magician"; id: string; text: string }
@@ -1648,7 +1672,34 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
     } : b);
   };
 
-  // Trace-back: open an earlier answer for editing.
+  // Set a document-producing step's template (Hobson's standard vs. user's own upload).
+  const magSetStepTemplate = (uid: string, mode: "standard" | "own", filename?: string) => {
+    let shouldNarrateIntro = false;
+    let kindLabel = "your document";
+    setMagBuild((b) => {
+      if (!b) return b;
+      const target = b.steps.find((s) => s.uid === uid);
+      if (target && /section\s*13/i.test(target.label)) kindLabel = "your Section 13";
+      else if (target && /email|letter/i.test(target.label)) kindLabel = "your covering email";
+      else if (target && /surveyor|instruction/i.test(target.label)) kindLabel = "your surveyor instruction";
+      else if (target && /notice/i.test(target.label)) kindLabel = "your notice";
+      shouldNarrateIntro = !b.templateNarrated && mode === "own";
+      return {
+        ...b,
+        templateNarrated: b.templateNarrated || mode === "own",
+        steps: b.steps.map((s) => s.uid === uid ? { ...s, template: mode === "standard" ? undefined : { mode, filename } } : s),
+      };
+    });
+    setTimeout(() => {
+      if (mode === "own" && shouldNarrateIntro) {
+        magAsk(`If you have ${kindLabel}, hand it to me and I'll fill it in. Otherwise I'll use a standard one.`);
+      } else if (mode === "own") {
+        magAsk(`Noted — I'll use your template for that step and fill in the details.`);
+      } else {
+        magAsk(`Back to the standard for that step.`);
+      }
+    }, 200);
+  };
   const magBeginEdit = (field: MagEditField) => {
     setMagBuild((b) => {
       if (!b) return b;
@@ -1716,6 +1767,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
         lastAdjusted: "just now",
         stepCount: b.steps.length,
         justBuilt: true,
+        stepTemplates: collectStepTemplates(b.steps),
       };
       setWorkflows((arr) => [wf, ...arr.map((w) => ({ ...w, justBuilt: false }))]);
       const builtId = magNewId("mb");
@@ -1753,6 +1805,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
         stepCount: b.steps.length,
         justBuilt: true,
         draftState: b,
+        stepTemplates: collectStepTemplates(b.steps),
       };
       setWorkflows((arr) => [wf, ...arr.map((w) => ({ ...w, justBuilt: false }))]);
       setTimeout(() => magAsk("Saved — we'll pick this up whenever you're ready."), 350);
@@ -2905,6 +2958,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                 onGoBack: magGoBack,
                 onPauseSave: magPauseSave,
                 onCancelBuild: magCancelBuild,
+                onSetStepTemplate: magSetStepTemplate,
               } : undefined}
             />
 
@@ -3406,6 +3460,12 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
               onComplete={completePerform}
               onReachedFinalGate={() => markReviewReady(card.id)}
               reducedMotion={reduced}
+              section13Template={(() => {
+                if (card.id !== "act-stanley-f8-rent") return null;
+                const w = workflows.find((w) => w.id === card.workflowRef)
+                  ?? workflows.find((w) => /rent\s*review/i.test(w.name) && w.stepTemplates?.["section13"]);
+                return w?.stepTemplates?.["section13"] ?? null;
+              })()}
             />
 
           );
@@ -3727,6 +3787,7 @@ type MagHandlers = {
   onGoBack: () => void;
   onPauseSave: () => void;
   onCancelBuild: () => void;
+  onSetStepTemplate: (uid: string, mode: "standard" | "own", filename?: string) => void;
 };
 
 function AdminChat({ character, owl, professorEvents, onAssignProfessorType, brokerEvents, brokerFlowActive, magicianEvents, magBuild, magStreamingId, onMagStreamDone, magHandlers }: { character: { id: AdminCharacter; name: string; src: string; greeting: string } | null; owl: OwlState; professorEvents?: ProfEvent[]; onAssignProfessorType?: (batchId: string, type: string) => void; brokerEvents?: BrokerEvent[]; brokerFlowActive?: boolean; magicianEvents?: MagicianEvent[]; magBuild?: MagBuildState | null; magStreamingId?: string | null; onMagStreamDone?: (id: string) => void; magHandlers?: MagHandlers }) {
@@ -4193,17 +4254,79 @@ function MagicianStepRow({ s, i, total, handlers }: { s: MagBuildStep; i: number
       </li>
     );
   }
+  const docStep = isDocStep(s);
   return (
-    <li className="flex items-start gap-2 rounded-md border border-slate-200 bg-slate-50 px-2 py-1.5">
-      <span className="text-[11px] font-semibold text-slate-500 mt-0.5 w-4 text-right">{i + 1}.</span>
-      <span className="flex-1 text-[12.5px] text-slate-800 leading-snug">{s.label}</span>
-      <div className="flex items-center gap-0.5">
-        <button type="button" aria-label={`Edit step ${i + 1}`} onClick={() => setEditing(true)} className="px-1.5 h-6 grid place-items-center rounded text-[11px] font-medium text-[#7C3AED] hover:bg-white focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40">Edit</button>
-        <button type="button" aria-label="Move up" disabled={i === 0} onClick={() => handlers.onMoveStep(s.uid, -1)} className="w-6 h-6 grid place-items-center rounded text-slate-500 hover:bg-white disabled:opacity-30 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40">↑</button>
-        <button type="button" aria-label="Move down" disabled={i === total - 1} onClick={() => handlers.onMoveStep(s.uid, 1)} className="w-6 h-6 grid place-items-center rounded text-slate-500 hover:bg-white disabled:opacity-30 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40">↓</button>
-        <button type="button" aria-label="Remove step" onClick={() => handlers.onRemoveStep(s.uid)} className="w-6 h-6 grid place-items-center rounded text-slate-500 hover:bg-white hover:text-rose-600 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40">×</button>
+    <li className="rounded-md border border-slate-200 bg-slate-50 px-2 py-1.5">
+      <div className="flex items-start gap-2">
+        <span className="text-[11px] font-semibold text-slate-500 mt-0.5 w-4 text-right">{i + 1}.</span>
+        <span className="flex-1 text-[12.5px] text-slate-800 leading-snug">{s.label}</span>
+        <div className="flex items-center gap-0.5">
+          <button type="button" aria-label={`Edit step ${i + 1}`} onClick={() => setEditing(true)} className="px-1.5 h-6 grid place-items-center rounded text-[11px] font-medium text-[#7C3AED] hover:bg-white focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40">Edit</button>
+          <button type="button" aria-label="Move up" disabled={i === 0} onClick={() => handlers.onMoveStep(s.uid, -1)} className="w-6 h-6 grid place-items-center rounded text-slate-500 hover:bg-white disabled:opacity-30 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40">↑</button>
+          <button type="button" aria-label="Move down" disabled={i === total - 1} onClick={() => handlers.onMoveStep(s.uid, 1)} className="w-6 h-6 grid place-items-center rounded text-slate-500 hover:bg-white disabled:opacity-30 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40">↓</button>
+          <button type="button" aria-label="Remove step" onClick={() => handlers.onRemoveStep(s.uid)} className="w-6 h-6 grid place-items-center rounded text-slate-500 hover:bg-white hover:text-rose-600 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40">×</button>
+        </div>
       </div>
+      {docStep && (
+        <div className="mt-1.5 ml-6">
+          <StepTemplatePicker s={s} onSet={(mode, filename) => handlers.onSetStepTemplate(s.uid, mode, filename)} />
+        </div>
+      )}
     </li>
+  );
+}
+
+function StepTemplatePicker({ s, onSet }: { s: MagBuildStep; onSet: (mode: "standard" | "own", filename?: string) => void }) {
+  const [open, setOpen] = useState(false);
+  const fileRef = useRef<HTMLInputElement | null>(null);
+  const tpl = templateOf(s);
+  const onPick = () => fileRef.current?.click();
+  const onFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const f = e.target.files?.[0];
+    if (f) onSet("own", f.name);
+    e.target.value = "";
+    setOpen(false);
+  };
+  return (
+    <div className="inline-flex flex-wrap items-center gap-1.5 text-[11.5px]">
+      <span className="text-slate-500">Template:</span>
+      {tpl.mode === "standard" ? (
+        <>
+          <div className="relative">
+            <button
+              type="button"
+              onClick={() => setOpen((v) => !v)}
+              aria-haspopup="menu"
+              aria-expanded={open}
+              className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full border border-slate-300 bg-white text-slate-700 hover:border-[#7C3AED]/60 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40"
+            >
+              Hobson's standard <span aria-hidden>▾</span>
+            </button>
+            {open && (
+              <div role="menu" className="absolute z-10 mt-1 left-0 w-[200px] rounded-md border border-slate-200 bg-white shadow-md p-1 text-[11.5px]">
+                <button type="button" role="menuitem" onClick={() => { onSet("standard"); setOpen(false); }} className="w-full text-left px-2 py-1.5 rounded hover:bg-slate-50 text-slate-700 flex items-center justify-between focus:outline-none focus:bg-slate-50">
+                  Use Hobson's standard <span className="text-[#7C3AED]">✓</span>
+                </button>
+                <button type="button" role="menuitem" onClick={onPick} className="w-full text-left px-2 py-1.5 rounded hover:bg-slate-50 text-slate-700 focus:outline-none focus:bg-slate-50">
+                  Use my own…
+                </button>
+              </div>
+            )}
+          </div>
+          <input ref={fileRef} type="file" className="sr-only" aria-label="Upload your template" onChange={onFile} />
+        </>
+      ) : (
+        <>
+          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full border border-[#7C3AED]/40 bg-[#F5F3FF] text-[#5B21B6]" title={tpl.filename}>
+            <svg aria-hidden width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/></svg>
+            Using your template: <span className="font-medium truncate max-w-[140px] inline-block align-bottom">{tpl.filename}</span>
+          </span>
+          <button type="button" onClick={onPick} className="text-[#7C3AED] hover:underline focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40 rounded px-1">Replace</button>
+          <button type="button" onClick={() => onSet("standard")} className="text-slate-500 hover:text-slate-700 hover:underline focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40 rounded px-1">Use standard instead</button>
+          <input ref={fileRef} type="file" className="sr-only" aria-label="Replace your template" onChange={onFile} />
+        </>
+      )}
+    </div>
   );
 }
 
@@ -4243,21 +4366,33 @@ function MagicianSoFar({ build, handlers }: { build: MagBuildState; handlers: Ma
             )}
           </li>
         ))}
-        {build.steps.length > 0 && (build.step === "q6" || build.step === "q5") && (
-          <li className="flex items-start gap-2 text-[12px] pt-1 border-t border-slate-200/70 mt-1">
-            <span className="text-slate-500 w-[68px] shrink-0">Steps</span>
-            <span className="flex-1 text-slate-800">{build.steps.length} · {build.steps.map((s) => s.phrase).join(" · ")}</span>
-            {build.step === "q6" && (
-              <button
-                type="button"
-                onClick={handlers.onKeepEditing}
-                className="text-[11px] font-semibold text-[#7C3AED] hover:underline focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40 rounded px-1"
-              >
-                Change
-              </button>
-            )}
-          </li>
-        )}
+        {build.steps.length > 0 && (build.step === "q6" || build.step === "q5") && (() => {
+          const ownTpls = build.steps.filter((s) => isDocStep(s) && templateOf(s).mode === "own");
+          return (
+            <li className="flex items-start gap-2 text-[12px] pt-1 border-t border-slate-200/70 mt-1">
+              <span className="text-slate-500 w-[68px] shrink-0">Steps</span>
+              <span className="flex-1 text-slate-800">
+                {build.steps.length} · {build.steps.map((s) => s.phrase).join(" · ")}
+                {ownTpls.length > 0 && (
+                  <span className="block mt-0.5 text-[11px] text-[#5B21B6]">
+                    {ownTpls.length === 1 ? "1 step using your template" : `${ownTpls.length} steps using your templates`}
+                    {": "}
+                    {ownTpls.map((s) => s.template?.filename).filter(Boolean).join(", ")}
+                  </span>
+                )}
+              </span>
+              {build.step === "q6" && (
+                <button
+                  type="button"
+                  onClick={handlers.onKeepEditing}
+                  className="text-[11px] font-semibold text-[#7C3AED] hover:underline focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40 rounded px-1"
+                >
+                  Change
+                </button>
+              )}
+            </li>
+          );
+        })()}
       </ul>
     </div>
   );
@@ -7242,6 +7377,7 @@ type PerformCtx = {
   chosenRent: number | null;
   setChosenRent: (n: number) => void;
   advance: PerformAdvance;
+  section13Template?: StepTemplate | null;
 };
 type PerformBeat = {
   id: string;
@@ -7382,7 +7518,7 @@ function ComparablesScrapePreview() {
   );
 }
 
-function buildPA004Beats(): PerformBeat[] {
+function buildPA004Beats(section13Template: StepTemplate | null = null): PerformBeat[] {
   // Indexed linearly; gates jump by index to keep authoring simple.
   return [
     {
@@ -7468,8 +7604,10 @@ function buildPA004Beats(): PerformBeat[] {
     {
       id: "s13_prepared",
       stepKey: "actions",
-      text: "Prepared.",
-      detailFn: (ctx) => <Section13NoticePreview chosenRent={ctx.chosenRent} />,
+      text: section13Template && section13Template.mode === "own"
+        ? `Prepared — using your template (${section13Template.filename ?? "your document"}), filled with the case details.`
+        : "Prepared — using Hobson's standard Section 13.",
+      detailFn: (ctx) => <Section13NoticePreview chosenRent={ctx.chosenRent} template={ctx.section13Template ?? null} />,
     },
     {
       id: "s13_delivery",
@@ -7640,14 +7778,16 @@ function RentChoiceGate({ ctx, nextIdx }: { ctx: PerformCtx; nextIdx: number }) 
   );
 }
 
-function Section13NoticePreview({ chosenRent }: { chosenRent: number | null }) {
+function Section13NoticePreview({ chosenRent, template }: { chosenRent: number | null; template?: StepTemplate | null }) {
   const hasRent = chosenRent !== null;
   const increase = hasRent ? (chosenRent as number) - FLAT8_CURRENT_RENT : 0;
   const pct = hasRent ? ((increase / FLAT8_CURRENT_RENT) * 100).toFixed(1) : "";
+  const ownTpl = template && template.mode === "own";
   return (
-    <div className="rounded-lg border border-emerald-200 bg-emerald-50/60 p-3 text-[12px] text-slate-700">
-      <div className="text-[10px] uppercase tracking-wide text-emerald-800 font-semibold mb-2">
-        Prepared — Section 13 Notice
+    <div className={`rounded-lg border ${ownTpl ? "border-[#7C3AED]/40 bg-[#F5F3FF]" : "border-emerald-200 bg-emerald-50/60"} p-3 text-[12px] text-slate-700`}>
+      <div className={`text-[10px] uppercase tracking-wide ${ownTpl ? "text-[#5B21B6]" : "text-emerald-800"} font-semibold mb-2 flex items-center justify-between gap-2`}>
+        <span>Prepared — Section 13 Notice</span>
+        {ownTpl && <span className="normal-case tracking-normal font-normal text-[10.5px]">from your template: <span className="font-medium">{template?.filename}</span></span>}
       </div>
       <div className="rounded-md bg-white border border-slate-200 p-3 space-y-2.5 text-[12px] leading-relaxed">
         <div className="text-center">
@@ -8116,7 +8256,7 @@ function buildPA003Beats(): PerformBeat[] {
 
 
 
-function buildPerformConfig(card: ActionCard): {
+function buildPerformConfig(card: ActionCard, section13Template: StepTemplate | null = null): {
   beats: PerformBeat[];
   steps: { key: string; label: string }[];
   headerKicker: string;
@@ -8151,7 +8291,7 @@ function buildPerformConfig(card: ActionCard): {
     };
   }
   return {
-    beats: buildPA004Beats(),
+    beats: buildPA004Beats(section13Template),
     steps: PA004_STEPS,
     headerKicker: "Performing action",
     headerTitle: `Rent review · ${card.unitLabel ?? "Flat 8"}, ${card.propertyName}`,
@@ -8204,6 +8344,7 @@ function PerformWorkspace({
   onComplete,
   onReachedFinalGate,
   reducedMotion,
+  section13Template,
 }: {
   card: ActionCard;
   mode?: "perform" | "review";
@@ -8211,8 +8352,9 @@ function PerformWorkspace({
   onComplete: (summary: string) => void;
   onReachedFinalGate?: () => void;
   reducedMotion: boolean;
+  section13Template?: StepTemplate | null;
 }) {
-  const { beats, steps, headerTitle, headerSub } = useMemo(() => buildPerformConfig(card), [card]);
+  const { beats, steps, headerTitle, headerSub } = useMemo(() => buildPerformConfig(card, section13Template ?? null), [card, section13Template]);
   const isComplete = card.approvalState === "approved";
   const initialRevealed = useMemo(() => {
     if (mode === "review" && !isComplete) return finalGateBeatIdx(card, beats);
@@ -8426,14 +8568,14 @@ function PerformWorkspace({
             {recapOpen && (
               <div className="px-3 pb-3 pt-1 space-y-3 border-t border-slate-200">
                 {previousBeats.map((b) => (
-                  <BeatBubble key={b.id} beat={b} done detailOverride={b.detailFn ? b.detailFn({ chosenRent, setChosenRent, advance }) : undefined} />
+                  <BeatBubble key={b.id} beat={b} done detailOverride={b.detailFn ? b.detailFn({ chosenRent, setChosenRent, advance, section13Template: section13Template ?? null }) : undefined} />
                 ))}
               </div>
             )}
           </div>
         ) : (
           previousBeats.map((b) => (
-            <BeatBubble key={b.id} beat={b} done detailOverride={b.detailFn ? b.detailFn({ chosenRent, setChosenRent, advance }) : undefined} />
+            <BeatBubble key={b.id} beat={b} done detailOverride={b.detailFn ? b.detailFn({ chosenRent, setChosenRent, advance, section13Template: section13Template ?? null }) : undefined} />
           ))
         )}
         {currentBeat && (
@@ -8443,10 +8585,10 @@ function PerformWorkspace({
               streamingText={streamingActive ? streamingText : currentBeat.text}
               streaming={streamingActive}
               done={false}
-              detailOverride={!streamingActive && currentBeat.detailFn ? currentBeat.detailFn({ chosenRent, setChosenRent, advance }) : undefined}
+              detailOverride={!streamingActive && currentBeat.detailFn ? currentBeat.detailFn({ chosenRent, setChosenRent, advance, section13Template: section13Template ?? null }) : undefined}
             />
             {/* Inline decisions — only at genuine gates (decision, approval, flagged show-stopper, or finish) */}
-            {!streamingActive && !isComplete && currentBeat.gateFn && currentBeat.gateFn({ chosenRent, setChosenRent, advance })}
+            {!streamingActive && !isComplete && currentBeat.gateFn && currentBeat.gateFn({ chosenRent, setChosenRent, advance, section13Template: section13Template ?? null })}
             {!streamingActive && !isComplete && !currentBeat.gateFn && currentBeat.gate && (
               <div className="pl-[44px]">
                 <div className="inline-block max-w-[640px] rounded-2xl border border-[#DDD6FE] bg-[#F5F3FF] px-3 py-2.5 space-y-2">
@@ -9892,6 +10034,18 @@ function WorkflowCard({ w, onAdjust, onView, onResume, onDiscard }: { w: Workflo
             </dd>
           </div>
         </dl>
+      )}
+
+      {!isPausedDraft && w.stepTemplates && Object.keys(w.stepTemplates).length > 0 && (
+        <div className="text-[11.5px] text-[#5B21B6] -mt-1 flex flex-wrap items-center gap-1.5">
+          <span aria-hidden>📎</span>
+          <span>Using your template{Object.keys(w.stepTemplates).length === 1 ? "" : "s"}:</span>
+          {Object.entries(w.stepTemplates).map(([k, t]) => (
+            <span key={k} className="inline-flex items-center px-1.5 py-0.5 rounded-full border border-[#7C3AED]/30 bg-[#F5F3FF]" title={`${k}: ${t.filename ?? "uploaded"}`}>
+              {t.filename ?? "uploaded"}
+            </span>
+          ))}
+        </div>
       )}
 
       <footer className={`flex items-center justify-between gap-2 pt-2 border-t ${isPausedDraft ? "border-slate-200" : "border-slate-100"}`}>
