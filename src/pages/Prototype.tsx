@@ -1741,15 +1741,56 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
     setTimeout(() => magAsk("Of course — adjust as you like, and tell me when you're ready."), 400);
   };
   const magAnswerQ6Build = () => {
-    magUserEcho("Build it");
+    magUserEcho(adjustingId ? "Save changes" : "Build it");
     const b = magBuild;
     if (!b) return;
     const phrases = b.steps.map((s) => s.phrase);
     const actionSummary = phrases.length === 0
       ? "bring it to you for approval"
       : `${phrases.slice(0, -1).join(", ")}${phrases.length > 1 ? " and " : ""}${phrases[phrases.length - 1]} — then bring it to you for approval`;
-    const id = `wf-${Date.now()}`;
     const trigger = triggerSentenceFor(b.watch, b.triggerPhrase || "approaching");
+    const persistedBuild = {
+      whenKey: b.whenKey,
+      watch: b.watch,
+      lead: b.lead, leadLabel: b.leadLabel,
+      triggerPhrase: b.triggerPhrase,
+      scope: b.scope,
+      scopeSelection: b.scopeSelection,
+      ownerLabel: b.ownerLabel,
+    };
+    if (adjustingId) {
+      const targetId = adjustingId;
+      setWorkflows((arr) => arr.map((w) => w.id === targetId ? {
+        ...w,
+        name: b.title?.trim() || w.name,
+        purpose: b.purpose?.trim() || w.purpose,
+        description: b.description?.trim() || undefined,
+        whenLabel: b.whenLabel ?? w.whenLabel,
+        visibility: b.visibility || w.visibility,
+        icon: b.watch === "compliance" ? "shield" : b.watch === "notices" ? "bell" : "calendar",
+        tone: "purple", status: "built",
+        trigger,
+        action: actionSummary,
+        scopeLabel: b.scopeLabel || w.scopeLabel,
+        scopeDetail: b.scopeDetail ?? w.scopeDetail,
+        owner: b.owner || w.owner,
+        lastAdjusted: "just now",
+        stepCount: b.steps.length,
+        justBuilt: true,
+        draftState: undefined,
+        stepTemplates: collectStepTemplates(b.steps),
+        steps: b.steps.map((s) => ({ id: s.id, label: s.label, phrase: s.phrase })),
+        ...persistedBuild,
+      } : { ...w, justBuilt: false }));
+      const name = b.title?.trim() || "this workflow";
+      setMagBuild(null);
+      setAdjustingId(null);
+      const builtId = magNewId("mb");
+      setMagicianEvents((e) => [...e, { kind: "built", id: builtId, workflowId: targetId, name, stepCount: b.steps.length }]);
+      setTimeout(() => magAsk(`Adjusted — '${name}' updated. The card on the right reflects your changes.`), 500);
+      return;
+    }
+    const id = `wf-${Date.now()}`;
     const wf: Workflow = {
       id,
       name: b.title?.trim() || "New workflow",
@@ -1769,6 +1810,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
       justBuilt: true,
       stepTemplates: collectStepTemplates(b.steps),
       steps: b.steps.map((s) => ({ id: s.id, label: s.label, phrase: s.phrase })),
+      ...persistedBuild,
     };
     setMagBuild(null);
     setWorkflows((arr) => [wf, ...arr.map((w) => ({ ...w, justBuilt: false }))]);
@@ -1776,6 +1818,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
     setMagicianEvents((e) => [...e, { kind: "built", id: builtId, workflowId: id, name: wf.name, stepCount: b.steps.length }]);
     setTimeout(() => magAsk(`Built — '${wf.name}', a ${b.steps.length}-step workflow ending in your approval. You'll find it pinned on the right.`), 500);
   };
+
 
   // ----- Pause / cancel / resume a workflow build -----
   const magPauseSave = () => {
