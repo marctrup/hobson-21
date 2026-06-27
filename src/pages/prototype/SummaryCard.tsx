@@ -337,7 +337,15 @@ function ExportButton({ kind, scope }: { kind: Kind; scope: SummaryScope }) {
   );
 }
 
-/* ---------- Summary action buttons (invocation row) ---------- */
+/* ---------- Quick-overview chips (invocation row) ---------- */
+
+import { Users, ShieldCheck } from "lucide-react";
+
+function scopeHint(scope: SummaryScope): string {
+  if (scope.level === "portfolio") return "whole portfolio";
+  if (scope.level === "property") return propertyMeta(scope.propertyId)?.name ?? "this property";
+  return "this unit";
+}
 
 export function SummaryActions({
   scope,
@@ -352,39 +360,59 @@ export function SummaryActions({
   const showOcc = enabledKinds?.occupational !== false;
   const showCom = enabledKinds?.compliance !== false;
   if (!showOcc && !showCom) return null;
-  const levelLabel =
-    scope.level === "portfolio" ? "portfolio"
-    : scope.level === "property" ? "property"
-    : "unit";
+  const hint = scopeHint(scope);
+
   return (
     <section
-      aria-label="Hobson summaries"
-      className="bg-white border border-slate-200 rounded-xl p-3 space-y-2"
+      aria-label="Quick overviews from Hobson"
+      className="bg-white/70 border border-slate-200 rounded-xl p-3 space-y-2"
     >
       <div className="text-[11px] uppercase tracking-wide text-slate-500 font-semibold">
-        Summaries for this {levelLabel}
+        Quick overviews
       </div>
       <div className="flex flex-wrap gap-2">
         {showOcc && (
-          <button
-            type="button"
+          <OverviewChip
+            icon={<Users className="w-3.5 h-3.5" aria-hidden />}
+            name="Occupational summary"
+            hint={hint}
             onClick={() => onRequest("occupational", scope)}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[12px] font-medium border border-[#C4B5FD] bg-[#F5F3FF] text-[#5B21B6] hover:bg-[#EDE9FE] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]/40"
-          >
-            Summarise current occupation
-          </button>
+          />
         )}
         {showCom && (
-          <button
-            type="button"
+          <OverviewChip
+            icon={<ShieldCheck className="w-3.5 h-3.5" aria-hidden />}
+            name="Compliance summary"
+            hint={hint}
             onClick={() => onRequest("compliance", scope)}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[12px] font-medium border border-[#C4B5FD] bg-[#F5F3FF] text-[#5B21B6] hover:bg-[#EDE9FE] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]/40"
-          >
-            Summarise current &amp; overdue compliance
-          </button>
+          />
         )}
       </div>
+      {(!showOcc || !showCom) && (
+        <p className="text-[11px] text-slate-500 italic">
+          {!showOcc && "Occupational summary "}
+          {!showOcc && !showCom && " and "}
+          {!showCom && "Compliance summary "}
+          can be enabled by your administrator.
+        </p>
+      )}
     </section>
+  );
+}
+
+function OverviewChip({
+  icon, name, hint, onClick,
+}: { icon: React.ReactNode; name: string; hint: string; onClick: () => void }) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[12px] font-medium border border-[#C4B5FD] bg-[#F5F3FF] text-[#5B21B6] hover:bg-[#EDE9FE] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]/40"
+    >
+      <span className="text-[#7C3AED]">{icon}</span>
+      <span>{name}</span>
+      <span className="text-slate-500 font-normal">· {hint}</span>
+    </button>
   );
 }
 
