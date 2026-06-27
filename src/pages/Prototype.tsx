@@ -398,6 +398,7 @@ const SEED_WORKFLOWS: Workflow[] = [
     scopeLabel: "All properties",
     owner: { kind: "all_teams" },
     lastAdjusted: "3 Jun 2026",
+    steps: MAG_DEFAULTS_BY_WATCH.compliance.map((s) => ({ id: s.id, label: s.label, phrase: s.phrase })),
   },
   {
     id: "wf-3",
@@ -408,6 +409,7 @@ const SEED_WORKFLOWS: Workflow[] = [
     action: "prepare the notice in good time so the right is never lost, ready for you to serve",
     scopeLabel: "Stanley House (all units) + Flat 2, Nugent Terrace",
     owner: { kind: "person", name: "James Okoro", role: "Lease Manager", initials: "JO" },
+    steps: MAG_DEFAULTS_BY_WATCH.notices.map((s) => ({ id: s.id, label: s.label, phrase: s.phrase })),
   },
   {
     id: "wf-4",
@@ -424,6 +426,7 @@ const SEED_WORKFLOWS: Workflow[] = [
     ],
     owner: { kind: "person", name: "Sarah Chen", role: "Asset Manager", initials: "SC" },
     lastAdjusted: "28 May 2026",
+    steps: MAG_DEFAULTS_BY_WATCH.notices.map((s) => ({ id: s.id, label: s.label, phrase: s.phrase })),
   },
   {
     id: "wf-5",
@@ -435,6 +438,7 @@ const SEED_WORKFLOWS: Workflow[] = [
     scopeLabel: "All properties",
     owner: { kind: "all_teams" },
     lastAdjusted: "1 Jun 2026",
+    steps: MAG_DEFAULTS_BY_WATCH.compliance.map((s) => ({ id: s.id, label: s.label, phrase: s.phrase })),
   },
 ];
 
