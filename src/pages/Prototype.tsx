@@ -10622,7 +10622,7 @@ function MagicianWorkArea({ character, workflows, onCreate, onAdjust, onView, on
           <div className="max-w-md mx-auto text-center py-12">
             <div className="text-[14px] font-semibold text-slate-700 mb-1.5">No workflows yet</div>
             <div className="text-[12px] text-slate-500 leading-relaxed">
-              The workshop is empty. When you're ready, hit <span className="font-medium text-[#7C3AED]">Create a workflow</span> in the chat and I'll walk you through it — nothing watches your portfolio until you set it loose.
+              The workshop is empty — nothing watches your portfolio until you set it loose.
             </div>
           </div>
         ) : (
