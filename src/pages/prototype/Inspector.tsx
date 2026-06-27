@@ -500,8 +500,9 @@ function ResearchingBubble() {
 
 const AREA_OPTIONS: { id: ComplianceArea; label: string; hint: string; supported: boolean }[] = [
   { id: "health_safety", label: "Health & Safety", hint: "residential — built path", supported: true },
-  { id: "notices",       label: "Notices",         hint: "coming soon",            supported: false },
-  { id: "lease",         label: "Lease contracts", hint: "coming soon",            supported: false },
+  { id: "financial",     label: "Financial",       hint: "client money & insurance · built path", supported: true },
+  { id: "environmental", label: "Environmental",   hint: "coming soon",            supported: false },
+  { id: "licensing",     label: "Licensing",       hint: "coming soon",            supported: false },
   { id: "other",         label: "Other",           hint: "describe in your own words", supported: false },
 ];
 
