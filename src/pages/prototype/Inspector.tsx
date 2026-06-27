@@ -524,7 +524,7 @@ function VersionSourcePicker({
           <path d="M4 7h16M4 12h16M4 17h10"/>
         </svg>
         {source === "hobson"
-          ? "Hobson holds the latest"
+          ? "I hold the latest"
           : `Your version${req.uploadedFileName ? ` · ${req.uploadedFileName}` : ""}`}
       </span>
       <div className="flex-1" />
@@ -539,7 +539,8 @@ function VersionSourcePicker({
           type="button"
           onClick={() => onChange({ versionSource: "hobson", uploadedFileName: undefined })}
           className="px-2 py-0.5 rounded-md border border-slate-300 bg-white hover:bg-slate-50 text-[11px] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]"
-        >Use Hobson's</button>
+        >Use mine</button>
+
       )}
       <input
         ref={fileRef}
