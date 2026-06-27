@@ -1003,57 +1003,207 @@ function AddRequirementForm({ onAdd }: { onAdd: (req: Omit<ComplianceRequirement
   );
 }
 
-function ProposalCard({
-  proposed, onUpdate, onRemove, onAdd, onConfirm, onCancel, area,
+/* ---------------- BuildCard — sourced legal + user-added business ---------------- */
+
+function SourceLink({ url, label }: { url?: string; label?: string }) {
+  if (!url) return null;
+  return (
+    <a
+      href={url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="inline-flex items-center gap-1 text-[11px] text-[#5B21B6] hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED] rounded px-0.5"
+    >
+      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
+        <path d="M10 14L21 3M15 3h6v6M21 14v6a1 1 0 01-1 1H4a1 1 0 01-1-1V4a1 1 0 011-1h6"/>
+      </svg>
+      <span>Source · {label ?? "view"}</span>
+    </a>
+  );
+}
+
+function ResearchedItemRow({
+  req, onChange, onRemove,
+}: { req: ComplianceRequirement; onChange: (patch: Partial<ComplianceRequirement>) => void; onRemove: () => void }) {
+  return (
+    <div className="rounded-lg border border-rose-200 bg-rose-50/40 p-3">
+      <div className="flex items-start justify-between gap-2">
+        <div className="min-w-0">
+          <div className="text-[13px] font-semibold text-slate-900 truncate">{req.docType}</div>
+          <div className="mt-0.5"><SourceLink url={req.sourceUrl} label={req.sourceLabel} /></div>
+        </div>
+        <BasisBadge basis="required" />
+      </div>
+      <div className="mt-2 flex flex-wrap items-center gap-2">
+        <label className="text-[11px] text-slate-600">Every</label>
+        <input
+          type="number" min={1} value={req.durationValue}
+          onChange={(e) => onChange({ durationValue: Math.max(1, Number(e.target.value) || 1) })}
+          className="w-16 px-2 py-1 rounded-md border border-slate-300 text-[13px] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]"
+          aria-label={`Frequency for ${req.docType}`}
+        />
+        <select
+          value={req.durationUnit}
+          onChange={(e) => onChange({ durationUnit: e.target.value as DurationUnit })}
+          className="px-2 py-1 rounded-md border border-slate-300 text-[13px] bg-white focus:outline-none focus:ring-2 focus:ring-[#7C3AED]"
+          aria-label={`Unit for ${req.docType}`}
+        >
+          <option value="Years">Years</option>
+          <option value="Months">Months</option>
+        </select>
+        <div className="flex-1" />
+        <button type="button" onClick={onRemove} className="text-[11px] text-rose-700 hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-rose-300 rounded px-1">Remove</button>
+      </div>
+    </div>
+  );
+}
+
+function BusinessItemRow({
+  req, onChange, onRemove,
+}: { req: ComplianceRequirement; onChange: (patch: Partial<ComplianceRequirement>) => void; onRemove: () => void }) {
+  return (
+    <div className="rounded-lg border border-amber-200 bg-amber-50/40 p-3">
+      <div className="flex items-start justify-between gap-2">
+        <div className="min-w-0">
+          <div className="text-[13px] font-semibold text-slate-900 truncate">{req.docType}</div>
+          <div className="text-[11px] text-amber-800 mt-0.5">added by you · your standard</div>
+        </div>
+        <BasisBadge basis="business" />
+      </div>
+      <div className="mt-2 flex flex-wrap items-center gap-2">
+        <label className="text-[11px] text-slate-600">Every</label>
+        <input
+          type="number" min={1} value={req.durationValue}
+          onChange={(e) => onChange({ durationValue: Math.max(1, Number(e.target.value) || 1) })}
+          className="w-16 px-2 py-1 rounded-md border border-slate-300 text-[13px] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]"
+        />
+        <select
+          value={req.durationUnit}
+          onChange={(e) => onChange({ durationUnit: e.target.value as DurationUnit })}
+          className="px-2 py-1 rounded-md border border-slate-300 text-[13px] bg-white focus:outline-none focus:ring-2 focus:ring-[#7C3AED]"
+        >
+          <option value="Years">Years</option>
+          <option value="Months">Months</option>
+        </select>
+        <div className="flex-1" />
+        <button type="button" onClick={onRemove} className="text-[11px] text-rose-700 hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-rose-300 rounded px-1">Remove</button>
+      </div>
+    </div>
+  );
+}
+
+function AddBusinessRow({ onAdd }: { onAdd: (name: string, value: number, unit: DurationUnit) => void }) {
+  const [name, setName] = useState("");
+  const [value, setValue] = useState(1);
+  const [unit, setUnit] = useState<DurationUnit>("Years");
+  return (
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        const t = name.trim(); if (!t) return;
+        onAdd(t, value, unit);
+        setName(""); setValue(1); setUnit("Years");
+      }}
+      className="rounded-lg border border-dashed border-amber-300 bg-amber-50/30 p-3 flex flex-wrap items-center gap-2"
+    >
+      <input
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        placeholder="Inspection name (e.g. Heat pump service)"
+        className="flex-1 min-w-[180px] px-2 py-1.5 rounded-md border border-slate-300 text-[13px] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]"
+        aria-label="Add a business requirement"
+      />
+      <span className="text-[11px] text-slate-600">Every</span>
+      <input
+        type="number" min={1} value={value}
+        onChange={(e) => setValue(Math.max(1, Number(e.target.value) || 1))}
+        className="w-16 px-2 py-1 rounded-md border border-slate-300 text-[13px]"
+        aria-label="Frequency value"
+      />
+      <select
+        value={unit}
+        onChange={(e) => setUnit(e.target.value as DurationUnit)}
+        className="px-2 py-1 rounded-md border border-slate-300 text-[13px] bg-white"
+        aria-label="Frequency unit"
+      >
+        <option value="Years">Years</option>
+        <option value="Months">Months</option>
+      </select>
+      <button type="submit" disabled={!name.trim()} className="px-3 py-1.5 rounded-md bg-[#7C3AED] text-white text-[12px] font-semibold disabled:bg-slate-200 disabled:text-slate-400">Add</button>
+    </form>
+  );
+}
+
+function BuildCard({
+  build,
+  onUpdateResearched, onRemoveResearched,
+  onUpdateAddition, onRemoveAddition, onAddAddition,
+  onConfirm, onCancel,
 }: {
-  proposed: ComplianceRequirement[];
-  onUpdate: (id: string, patch: Partial<ComplianceRequirement>) => void;
-  onRemove: (id: string) => void;
-  onAdd: (req: Omit<ComplianceRequirement, "id">) => void;
+  build: InspectorBuild;
+  onUpdateResearched: (id: string, patch: Partial<ComplianceRequirement>) => void;
+  onRemoveResearched: (id: string) => void;
+  onUpdateAddition: (id: string, patch: Partial<ComplianceRequirement>) => void;
+  onRemoveAddition: (id: string) => void;
+  onAddAddition: (name: string, value: number, unit: DurationUnit) => void;
   onConfirm: () => void;
   onCancel: () => void;
-  area: ComplianceArea | null;
 }) {
-  const def = area ? AREA_DEFS[area] : AREA_DEFS.health_safety;
+  const total = build.researched.length + build.additions.length;
   return (
-    <div className="ml-12 max-w-[560px] rounded-xl border border-[#7C3AED]/25 bg-white p-3 space-y-3">
-      <header className="flex items-start justify-between gap-3">
-        <div>
-          <div className="text-[11px] uppercase tracking-wide text-[#5B21B6] font-semibold">Proposed requirements · {def.label.toLowerCase()} · {def.sublabel}</div>
-          <div className="text-[12px] text-slate-600 mt-0.5">Edit any frequency, remove what doesn't apply, or add another.</div>
+    <div className="ml-12 max-w-[600px] rounded-xl border border-[#7C3AED]/25 bg-white p-3 space-y-3">
+      <header>
+        <div className="text-[11px] uppercase tracking-wide text-[#5B21B6] font-semibold">
+          Building your list · {build.areaLabel}{build.description ? ` · ${build.description}` : ""}
+        </div>
+        <div className="text-[12px] text-slate-600 mt-0.5">
+          Researched items are sourced and labelled <span className="font-semibold text-rose-700">Legally required</span>. Anything you add becomes a <span className="font-semibold text-amber-800">Business requirement</span>.
         </div>
       </header>
-      <div className="rounded-md bg-[#F5F3FF] border border-[#7C3AED]/20 px-3 py-2 text-[11px] text-[#5B21B6] flex items-start gap-2">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden className="mt-0.5 shrink-0"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
-        <span><span className="font-semibold">Sourced from {def.sourceLabel}</span> · these are researched suggestions — you can edit before confirming.</span>
-      </div>
-      <div className="space-y-2">
-        {proposed.map((r) => (
-          <RequirementEditor
-            key={r.id}
-            req={r}
-            onChange={(patch) => onUpdate(r.id, patch)}
-            onRemove={() => onRemove(r.id)}
-          />
-        ))}
-      </div>
-      <AddRequirementForm onAdd={onAdd} />
+
+      {build.researched.length > 0 && (
+        <section className="space-y-2">
+          <div className="text-[11px] uppercase tracking-wide font-semibold text-rose-700 flex items-center gap-1.5">
+            <span className="inline-block w-1.5 h-1.5 rounded-full bg-rose-500" />
+            Legally required · sourced
+          </div>
+          <div className="space-y-2">
+            {build.researched.map((r) => (
+              <ResearchedItemRow key={r.id} req={r} onChange={(p) => onUpdateResearched(r.id, p)} onRemove={() => onRemoveResearched(r.id)} />
+            ))}
+          </div>
+        </section>
+      )}
+
+      <section className="space-y-2">
+        <div className="text-[11px] uppercase tracking-wide font-semibold text-amber-800 flex items-center gap-1.5">
+          <span className="inline-block w-1.5 h-1.5 rounded-full bg-amber-500" />
+          Your additions · business required
+        </div>
+        {build.additions.length > 0 && (
+          <div className="space-y-2">
+            {build.additions.map((r) => (
+              <BusinessItemRow key={r.id} req={r} onChange={(p) => onUpdateAddition(r.id, p)} onRemove={() => onRemoveAddition(r.id)} />
+            ))}
+          </div>
+        )}
+        <AddBusinessRow onAdd={onAddAddition} />
+      </section>
+
       <footer className="flex items-center justify-end gap-2 pt-2 border-t border-slate-100">
         <button
-          type="button"
-          onClick={onCancel}
+          type="button" onClick={onCancel}
           className="px-3 py-1.5 rounded-md text-[12px] font-medium text-slate-600 hover:bg-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-300"
         >Cancel</button>
         <button
-          type="button"
-          onClick={onConfirm}
-          disabled={proposed.length === 0}
+          type="button" onClick={onConfirm} disabled={total === 0}
           className="px-3 py-1.5 rounded-md text-[12px] font-semibold bg-[#7C3AED] text-white hover:bg-[#6D28D9] disabled:bg-slate-200 disabled:text-slate-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]"
-        >Confirm these requirements</button>
+        >Confirm {build.areaLabel} list</button>
       </footer>
     </div>
   );
 }
+
 
 function ConfirmedRecap({ count }: { count: number }) {
   return (
