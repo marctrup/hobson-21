@@ -2850,9 +2850,8 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
       setTimeout(step, 50);
     }, delay);
   };
-      setTimeout(step, 60);
-    }, delay);
-  };
+
+
 
   const sendUnitQuestion = (q: string) => {
     if (!q.trim()) return;
