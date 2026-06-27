@@ -572,35 +572,161 @@ function ResearchingBubble() {
   );
 }
 
-const AREA_OPTIONS: { id: ComplianceArea; label: string; hint: string; supported: boolean }[] = [
-  { id: "health_safety", label: "Health & Safety", hint: "residential — built path", supported: true },
-  { id: "financial",     label: "Financial",       hint: "client money & insurance · built path", supported: true },
-  { id: "environmental", label: "Environmental",   hint: "coming soon",            supported: false },
-  { id: "licensing",     label: "Licensing",       hint: "coming soon",            supported: false },
-  { id: "other",         label: "Other",           hint: "describe in your own words", supported: false },
+/* ---------------- List-first build helpers ---------------- */
+
+const AREA_OPTIONS: { id: ComplianceArea; label: string; hint: string }[] = [
+  { id: "health_safety", label: "Health & Safety", hint: "gas, electrical, fire, EPC" },
+  { id: "financial",     label: "Financial",       hint: "client money, PI, insurances" },
+  { id: "notices",       label: "Notices",         hint: "statutory notices & guides" },
+  { id: "contracts",     label: "Contracts",       hint: "tenancy & service agreements" },
+  { id: "insurance",     label: "Insurance",       hint: "buildings, liability, PI" },
+  { id: "inspections",   label: "Inspections",     hint: "fire risk, asbestos, lifts" },
 ];
 
-function AreaPickCard({ onPick, onOther }: { onPick: (a: ComplianceArea, label: string) => void; onOther: (text: string) => void }) {
+/**
+ * Scripted research per area. The Inspector "checks gov.uk / HSE / sector
+ * guidance" for the described area and returns the legal requirements with
+ * a visible source link. Items here become basis="required" (red, sourced).
+ */
+export const RESEARCH_BY_AREA: Record<ComplianceArea, ComplianceRequirement[]> = {
+  health_safety: [
+    {
+      id: rid("res-gas"),
+      docType: "Gas Safety inspection (CP12)",
+      matchTerms: ["gas safety", "cp12"],
+      basis: "required",
+      durationValue: 1, durationUnit: "Years",
+      anchor: "certificate date", appliesTo: "unit", category: "certification",
+      sourceUrl: "https://www.gov.uk/landlord-gas-safety",
+      sourceLabel: "gov.uk · landlord gas safety",
+    },
+    {
+      id: rid("res-eicr"),
+      docType: "EICR inspection (electrical)",
+      matchTerms: ["eicr", "electrical"],
+      basis: "required",
+      durationValue: 5, durationUnit: "Years",
+      anchor: "inspection date", appliesTo: "unit", category: "certification",
+      sourceUrl: "https://www.gov.uk/government/publications/electrical-safety-standards-in-the-private-rented-sector-guidance-for-landlords-tenants-and-local-authorities",
+      sourceLabel: "gov.uk · electrical safety standards (PRS)",
+    },
+    {
+      id: rid("res-epc"),
+      docType: "EPC inspection",
+      matchTerms: ["epc"],
+      basis: "required",
+      durationValue: 10, durationUnit: "Years",
+      anchor: "certificate date", appliesTo: "unit", category: "certification",
+      sourceUrl: "https://www.gov.uk/buy-sell-your-home/energy-performance-certificates",
+      sourceLabel: "gov.uk · EPC",
+    },
+  ],
+  financial: [
+    {
+      id: rid("res-cmp"),
+      docType: "Client Money Protection (CMP) certificate",
+      matchTerms: ["cmp", "client money"],
+      basis: "required",
+      durationValue: 1, durationUnit: "Years",
+      anchor: "membership renewal", appliesTo: "building", category: "certification",
+      sourceUrl: "https://www.gov.uk/government/publications/client-money-protection-schemes-for-property-agents",
+      sourceLabel: "gov.uk · CMP schemes for agents",
+    },
+    {
+      id: rid("res-pi"),
+      docType: "Professional Indemnity insurance",
+      matchTerms: ["professional indemnity", "pi insurance"],
+      basis: "required",
+      durationValue: 1, durationUnit: "Years",
+      anchor: "policy renewal", appliesTo: "building", category: "certification",
+      sourceUrl: "https://www.propertymark.co.uk/professional-standards/conduct-and-membership-rules.html",
+      sourceLabel: "Propertymark · conduct rules",
+    },
+  ],
+  notices: [
+    {
+      id: rid("res-htr"),
+      docType: "How to Rent guide",
+      matchTerms: ["how to rent"],
+      basis: "required",
+      durationValue: 1, durationUnit: "Years",
+      anchor: "edition date", appliesTo: "unit", category: "notice",
+      description: "Statutory guide · current gov.uk edition · served each tenancy",
+      versionSource: "hobson",
+      sourceUrl: "https://www.gov.uk/government/publications/how-to-rent",
+      sourceLabel: "gov.uk · how to rent",
+    },
+  ],
+  contracts: [
+    {
+      id: rid("res-pst"),
+      docType: "Periodic Tenancy agreement (PST)",
+      matchTerms: ["tenancy agreement", "pst", "ast"],
+      basis: "required",
+      durationValue: 1, durationUnit: "Years",
+      anchor: "agreement date", appliesTo: "unit", category: "contract",
+      description: "Must reflect current law · Tenancy Reform Act",
+      versionSource: "hobson",
+      sourceUrl: "https://www.gov.uk/government/publications/model-agreement-for-a-shorthold-assured-tenancy",
+      sourceLabel: "gov.uk · model tenancy agreement",
+    },
+  ],
+  insurance: [
+    {
+      id: rid("res-bld"),
+      docType: "Buildings insurance",
+      matchTerms: ["buildings insurance"],
+      basis: "required",
+      durationValue: 1, durationUnit: "Years",
+      anchor: "policy renewal", appliesTo: "building", category: "certification",
+      sourceUrl: "https://www.abi.org.uk/products-and-issues/topics-and-issues/home-insurance/",
+      sourceLabel: "ABI · home insurance guidance",
+    },
+  ],
+  inspections: [
+    {
+      id: rid("res-fra"),
+      docType: "Fire Risk Assessment",
+      matchTerms: ["fire risk assessment", "fra"],
+      basis: "required",
+      durationValue: 1, durationUnit: "Years",
+      anchor: "assessment date", appliesTo: "building", category: "certification",
+      sourceUrl: "https://www.gov.uk/workplace-fire-safety-your-responsibilities",
+      sourceLabel: "gov.uk · fire safety responsibilities",
+    },
+  ],
+  environmental: [],
+  licensing: [],
+  other: [],
+};
+
+function AreaPickCard({ onPick }: { onPick: (a: ComplianceArea, label: string) => void }) {
   const [otherDraft, setOtherDraft] = useState("");
   const [showOther, setShowOther] = useState(false);
   return (
-    <div className="ml-12 max-w-[480px] rounded-xl border border-[#7C3AED]/25 bg-white p-3 space-y-2">
-      <div className="text-[11px] uppercase tracking-wide text-[#5B21B6] font-semibold">Choose an area</div>
+    <div className="ml-12 max-w-[520px] rounded-xl border border-[#7C3AED]/25 bg-white p-3 space-y-2">
+      <div className="text-[11px] uppercase tracking-wide text-[#5B21B6] font-semibold">Your compliance list · choose an area to set up</div>
       <div className="grid grid-cols-1 gap-1.5">
         {AREA_OPTIONS.map((o) => (
           <button
             key={o.id}
             type="button"
-            onClick={() => {
-              if (o.id === "other") { setShowOther((v) => !v); return; }
-              onPick(o.id, o.label);
-            }}
+            onClick={() => onPick(o.id, o.label)}
             className="flex items-center justify-between gap-3 text-left px-3 py-2 rounded-lg border border-slate-200 bg-white hover:bg-[#F5F3FF] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]"
           >
             <span className="text-[13px] font-medium text-slate-800">{o.label}</span>
-            <span className={`text-[11px] ${o.supported ? "text-emerald-700" : "text-slate-500"}`}>{o.hint}</span>
+            <span className="text-[11px] text-slate-500">{o.hint}</span>
           </button>
         ))}
+        <button
+          type="button"
+          onClick={() => setShowOther((v) => !v)}
+          className="flex items-center justify-between gap-3 text-left px-3 py-2 rounded-lg border border-dashed border-[#7C3AED]/40 bg-[#FAF8FF] hover:bg-[#F5F3FF] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]"
+          aria-expanded={showOther}
+        >
+          <span className="text-[13px] font-medium text-[#5B21B6]">＋ Add your own area</span>
+          <span className="text-[11px] text-[#5B21B6]/70">free text</span>
+        </button>
       </div>
       {showOther && (
         <form
@@ -608,29 +734,68 @@ function AreaPickCard({ onPick, onOther }: { onPick: (a: ComplianceArea, label: 
             e.preventDefault();
             const t = otherDraft.trim();
             if (!t) return;
-            onOther(t);
-            setOtherDraft("");
-            setShowOther(false);
+            onPick("other", t);
+            setOtherDraft(""); setShowOther(false);
           }}
           className="flex items-center gap-2 pt-1"
         >
           <input
             value={otherDraft}
             onChange={(e) => setOtherDraft(e.target.value)}
-            placeholder="Describe the compliance area…"
+            placeholder="Name your area (e.g. Lift maintenance)"
             className="flex-1 px-3 py-1.5 rounded-md border border-slate-300 text-[13px] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]"
-            aria-label="Other compliance area"
+            aria-label="Name your compliance area"
           />
-          <button
-            type="submit"
-            disabled={!otherDraft.trim()}
-            className="px-3 py-1.5 rounded-md bg-[#7C3AED] text-white text-[12px] font-semibold disabled:bg-slate-200 disabled:text-slate-400"
-          >Send</button>
+          <button type="submit" disabled={!otherDraft.trim()} className="px-3 py-1.5 rounded-md bg-[#7C3AED] text-white text-[12px] font-semibold disabled:bg-slate-200 disabled:text-slate-400">Add</button>
         </form>
       )}
     </div>
   );
 }
+
+function ConsentCard({ onYes, onNo, areaLabel }: { onYes: () => void; onNo: () => void; areaLabel: string }) {
+  return (
+    <div className="ml-12 max-w-[480px] rounded-xl border border-[#7C3AED]/25 bg-white p-3 space-y-2">
+      <div className="text-[11px] uppercase tracking-wide text-[#5B21B6] font-semibold">Consent to research · {areaLabel}</div>
+      <div className="text-[12.5px] text-slate-700">
+        Should I check for any <span className="font-semibold">legally required</span> requirements?
+        I'll cite my sources so you can see what marks something as law.
+      </div>
+      <div className="flex items-center gap-2 pt-1">
+        <button type="button" onClick={onYes} className="px-3 py-1.5 rounded-md bg-[#7C3AED] text-white text-[12px] font-semibold hover:bg-[#6D28D9] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]">
+          Yes — check the law
+        </button>
+        <button type="button" onClick={onNo} className="px-3 py-1.5 rounded-md border border-slate-300 bg-white text-[12px] font-medium text-slate-700 hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-400">
+          No — I'll define it myself
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function DescribeForm({ onSubmit, placeholder }: { onSubmit: (text: string) => void; placeholder: string }) {
+  const [v, setV] = useState("");
+  return (
+    <form
+      onSubmit={(e) => { e.preventDefault(); const t = v.trim(); if (!t) return; onSubmit(t); setV(""); }}
+      className="ml-12 max-w-[480px] rounded-xl border border-[#7C3AED]/25 bg-white p-3 space-y-2"
+    >
+      <label className="text-[11px] uppercase tracking-wide text-[#5B21B6] font-semibold block">Describe the area</label>
+      <div className="flex items-center gap-2">
+        <input
+          autoFocus
+          value={v}
+          onChange={(e) => setV(e.target.value)}
+          placeholder={placeholder}
+          className="flex-1 px-3 py-1.5 rounded-md border border-slate-300 text-[13px] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]"
+          aria-label="Describe the area"
+        />
+        <button type="submit" disabled={!v.trim()} className="px-3 py-1.5 rounded-md bg-[#7C3AED] text-white text-[12px] font-semibold disabled:bg-slate-200 disabled:text-slate-400">Send</button>
+      </div>
+    </form>
+  );
+}
+
 
 function BasisBadge({ basis }: { basis: RequirementBasis }) {
   if (basis === "required") {
