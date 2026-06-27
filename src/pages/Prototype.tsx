@@ -10530,7 +10530,7 @@ function MagicianWorkArea({ character, workflows, onCreate, onAdjust, onView, on
             title="The Magician's notes"
             subtitle="recent builds & workshop state"
             tagline="what's running & what's paused"
-            badge={__magBadge}
+            badge={magBadge}
             notes={notes}
           />
         );
