@@ -299,6 +299,8 @@ type MagBuildState = {
   triggerPhrase?: string;
   scope?: "unit" | "property" | "portfolio";
   scopeLabel?: string;
+  scopeDetail?: string[];
+  scopeSelection?: ScopeSelection;
   owner?: WorkflowOwner;
   ownerLabel?: string;
   steps: MagBuildStep[];
