@@ -9634,7 +9634,17 @@ function MagicianWorkArea({ character, workflows, onCreate, onAdjust, onView, on
           kind: "totals",
           text: `${workflows.length} workflow${workflows.length === 1 ? "" : "s"} · ${built.length} built and running · ${drafts.length} in draft.`,
         });
-        if (draftWf) {
+        const pausedDrafts = drafts.filter((w) => !!w.draftState);
+        if (pausedDrafts.length > 0) {
+          const pd = pausedDrafts[0];
+          notes.push({
+            id: "mn-paused",
+            kind: "issue",
+            text: `${pausedDrafts.length} workflow${pausedDrafts.length === 1 ? "" : "s"} paused — saved as ${pausedDrafts.length === 1 ? "a draft" : "drafts"}. '${pd.name}' is waiting for us to pick it back up; nothing is watching from it yet.`,
+            onClick: () => onResume?.(pd.id),
+            ctaLabel: "resume draft →",
+          });
+        } else if (draftWf) {
           notes.push({
             id: "mn-issue",
             kind: "issue",
@@ -9649,6 +9659,7 @@ function MagicianWorkArea({ character, workflows, onCreate, onAdjust, onView, on
             text: "All workflows built and ready.",
           });
         }
+
         return (
           <CharacterNotesStrip
             character={character}
