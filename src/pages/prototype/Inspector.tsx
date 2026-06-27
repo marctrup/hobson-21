@@ -1912,12 +1912,13 @@ function InspectorNotesStrip({
  * re-checks another.
  */
 function AreaPanel({
-  areaId, rules, onUpdateRules, defaultOpen,
+  areaId, rules, onUpdateRules, defaultOpen, onShowMe,
 }: {
   areaId: ComplianceArea;
   rules: ComplianceRequirement[];
   onUpdateRules?: React.Dispatch<React.SetStateAction<ComplianceRequirement[]>>;
   defaultOpen: boolean;
+  onShowMe?: (areaId: ComplianceArea, group: RequirementCategory) => void;
 }) {
   const def = AREA_DEFS[areaId];
   const [open, setOpen] = useState(defaultOpen);
