@@ -10637,17 +10637,37 @@ function MagicianWorkArea({ character, workflows, onCreate, onAdjust, onView, on
                   <div className="text-[11px] uppercase tracking-wide text-slate-500 font-semibold mb-2 px-1">{g.label}</div>
                 )}
                 <div className="grid gap-3" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(340px, 1fr))" }}>
-                  {g.items.map((w) => (
-                    <WorkflowCard
-                      key={w.id}
-                      w={w}
-                      onAdjust={() => onAdjust(w.id)}
-                      onView={() => onView(w.id)}
-                      onResume={w.draftState && onResume ? () => onResume(w.id) : undefined}
-                      onDiscard={w.draftState && onDiscard ? () => onDiscard(w.id) : undefined}
-                      onSimulate={onSimulate ? () => onSimulate(w.id) : undefined}
-                    />
-                  ))}
+                  {g.items.map((w) => {
+                    const statusLabel = w.draftState ? "Draft · paused" : (w.status === "draft" ? "Draft" : "Built");
+                    return (
+                      <CollapsibleSection
+                        key={w.id}
+                        className="bg-white border border-slate-200/70 rounded-lg shadow-[0_0.5px_0_rgba(0,0,0,0.04)]"
+                        headerClassName="w-full flex items-center gap-2.5 px-3 py-2.5 text-left hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED] rounded-lg"
+                        contentClassName="px-2 pb-2 pt-2 border-t border-slate-100"
+                        ariaLabel={`Toggle ${w.name}`}
+                        summary={
+                          <div className="flex items-center gap-2 min-w-0">
+                            <div className="text-[13px] font-semibold text-slate-900 truncate">{w.name}</div>
+                            <span className="text-slate-400 shrink-0">·</span>
+                            <div className="text-[11.5px] text-slate-500 truncate">{w.scopeLabel}</div>
+                            <span className="ml-auto shrink-0 inline-flex items-center px-1.5 py-0.5 rounded-full bg-slate-100 text-slate-600 text-[10px] font-semibold uppercase tracking-wide">
+                              {statusLabel}
+                            </span>
+                          </div>
+                        }
+                      >
+                        <WorkflowCard
+                          w={w}
+                          onAdjust={() => onAdjust(w.id)}
+                          onView={() => onView(w.id)}
+                          onResume={w.draftState && onResume ? () => onResume(w.id) : undefined}
+                          onDiscard={w.draftState && onDiscard ? () => onDiscard(w.id) : undefined}
+                          onSimulate={onSimulate ? () => onSimulate(w.id) : undefined}
+                        />
+                      </CollapsibleSection>
+                    );
+                  })}
                 </div>
               </div>
             ))}
