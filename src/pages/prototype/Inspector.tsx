@@ -475,21 +475,28 @@ export function augmentComplianceRows(
 
 type InspectorChatProps = {
   events: InspectorEvent[];
-  area: ComplianceArea | null;
-  proposed: ComplianceRequirement[] | null;   // editable list shown during step 3
+  /** Live build state (null when no area is being set up). */
+  build: InspectorBuild | null;
   confirmed: ComplianceRequirement[];          // active rules
-  isResearching: boolean;
+
   onPickArea: (a: ComplianceArea, label: string) => void;
-  onOtherText: (text: string) => void;
-  onUpdateRequirement: (id: string, patch: Partial<ComplianceRequirement>) => void;
-  onRemoveRequirement: (id: string) => void;
-  onAddRequirement: (req: Omit<ComplianceRequirement, "id">) => void;
+  onConsent: (yes: boolean) => void;
+  onDescribe: (text: string) => void;
+
+  onUpdateResearched: (id: string, patch: Partial<ComplianceRequirement>) => void;
+  onRemoveResearched: (id: string) => void;
+  onUpdateAddition: (id: string, patch: Partial<ComplianceRequirement>) => void;
+  onRemoveAddition: (id: string) => void;
+  onAddAddition: (name: string, value: number, unit: DurationUnit) => void;
+
   onConfirm: () => void;
   onCancel: () => void;
+
   /** Update/Add against the *confirmed* rules — used by Show-me table actions. */
   onUpdateConfirmed?: (id: string, patch: Partial<ComplianceRequirement>) => void;
   onAddConfirmed?: (req: Omit<ComplianceRequirement, "id">) => void;
 };
+
 
 const BUBBLE_GAP = 10;
 const TURN_GAP = 16;
