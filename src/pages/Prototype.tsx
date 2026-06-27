@@ -280,6 +280,7 @@ type Workflow = {
   visibility?: "personal" | "company";
   draftState?: MagBuildState;
   stepTemplates?: Record<string, StepTemplate>; // keyed by step id; doc-producing steps may use the user's own template
+  steps?: { id: string; label: string; phrase: string }[]; // assembled steps — used for "Run a simulation"
 };
 
 type StepTemplate = { mode: "standard" | "own"; filename?: string };
@@ -349,7 +350,8 @@ type MagBuildState = {
 type MagicianEvent =
   | { kind: "magician"; id: string; text: string }
   | { kind: "user"; id: string; text: string }
-  | { kind: "built"; id: string; workflowId: string; name: string; stepCount: number };
+  | { kind: "built"; id: string; workflowId: string; name: string; stepCount: number }
+  | { kind: "sim_header"; id: string; workflowName: string; trigger: string };
 
 const MAG_DEFAULT_STEPS: { id: string; label: string; phrase: string }[] = [
   { id: "read_lease", label: "Read the lease and confirm the review basis & date", phrase: "read the lease" },
@@ -396,6 +398,7 @@ const SEED_WORKFLOWS: Workflow[] = [
     scopeLabel: "All properties",
     owner: { kind: "all_teams" },
     lastAdjusted: "3 Jun 2026",
+    steps: MAG_DEFAULTS_BY_WATCH.compliance.map((s) => ({ id: s.id, label: s.label, phrase: s.phrase })),
   },
   {
     id: "wf-3",
@@ -406,6 +409,7 @@ const SEED_WORKFLOWS: Workflow[] = [
     action: "prepare the notice in good time so the right is never lost, ready for you to serve",
     scopeLabel: "Stanley House (all units) + Flat 2, Nugent Terrace",
     owner: { kind: "person", name: "James Okoro", role: "Lease Manager", initials: "JO" },
+    steps: MAG_DEFAULTS_BY_WATCH.notices.map((s) => ({ id: s.id, label: s.label, phrase: s.phrase })),
   },
   {
     id: "wf-4",
@@ -422,6 +426,7 @@ const SEED_WORKFLOWS: Workflow[] = [
     ],
     owner: { kind: "person", name: "Sarah Chen", role: "Asset Manager", initials: "SC" },
     lastAdjusted: "28 May 2026",
+    steps: MAG_DEFAULTS_BY_WATCH.notices.map((s) => ({ id: s.id, label: s.label, phrase: s.phrase })),
   },
   {
     id: "wf-5",
@@ -433,6 +438,7 @@ const SEED_WORKFLOWS: Workflow[] = [
     scopeLabel: "All properties",
     owner: { kind: "all_teams" },
     lastAdjusted: "1 Jun 2026",
+    steps: MAG_DEFAULTS_BY_WATCH.compliance.map((s) => ({ id: s.id, label: s.label, phrase: s.phrase })),
   },
 ];
 
@@ -1464,6 +1470,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
   const [magicianEvents, setMagicianEvents] = useState<MagicianEvent[]>([]);
   const [magBuild, setMagBuild] = useState<MagBuildState | null>(null);
   const [magStreamingId, setMagStreamingId] = useState<string | null>(null);
+  const magSimQueueRef = useRef<string[]>([]); // queued simulation bubble texts
 
   const magNewId = (p: string) => `${p}-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`;
   const magAsk = (text: string) => {
@@ -1478,8 +1485,42 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
 
   const handleCreateWorkflow = () => {
     setMagicianEvents([]);
+    magSimQueueRef.current = [];
     setMagBuild({ step: "intake", steps: MAG_DEFAULT_STEPS.map((s, i) => ({ ...s, uid: `${s.id}-${i}` })) });
     setTimeout(() => magAsk("Let's build this together. First, tell me a little about it."), 250);
+  };
+
+  // ----- Run a simulation of a built workflow -----
+  const magSimulate = (id: string) => {
+    const wf = workflows.find((w) => w.id === id);
+    if (!wf || wf.status !== "built") return;
+    const steps = wf.steps && wf.steps.length > 0 ? wf.steps : MAG_DEFAULT_STEPS;
+    const lines: string[] = [];
+    lines.push(`Let's see it in action. Here's what I'd do when ${wf.trigger}.`);
+    steps.forEach((s, i) => {
+      const isDoc = isDocStep({ id: s.id, label: s.label });
+      const tpl = wf.stepTemplates?.[s.id];
+      let tail = "";
+      if (isDoc) {
+        if (tpl && tpl.mode === "own") {
+          tail = ` — using your template${tpl.filename ? ` (${tpl.filename})` : ""}.`;
+        } else {
+          tail = " — using our standard template.";
+        }
+      } else {
+        tail = ".";
+      }
+      lines.push(`Step ${i + 1} — I ${s.phrase}${tail.startsWith(" —") ? "" : ""}${tail}`);
+    });
+    lines.push("Then I bring it to you for approval — that's the gate where you decide.");
+    lines.push("That's how it runs. Nothing was sent — it's yours to set live when you're ready.");
+
+    setMagicianEvents((e) => [
+      ...e,
+      { kind: "sim_header", id: magNewId("simhdr"), workflowName: wf.name, trigger: wf.trigger },
+    ]);
+    magSimQueueRef.current = lines.slice(1);
+    setTimeout(() => magAsk(lines[0]), 250);
   };
 
   const handleSaveWorkflow = (next: Workflow) => {
@@ -1768,6 +1809,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
         stepCount: b.steps.length,
         justBuilt: true,
         stepTemplates: collectStepTemplates(b.steps),
+        steps: b.steps.map((s) => ({ id: s.id, label: s.label, phrase: s.phrase })),
       };
       setWorkflows((arr) => [wf, ...arr.map((w) => ({ ...w, justBuilt: false }))]);
       const builtId = magNewId("mb");
@@ -1806,6 +1848,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
         justBuilt: true,
         draftState: b,
         stepTemplates: collectStepTemplates(b.steps),
+        steps: b.steps.map((s) => ({ id: s.id, label: s.label, phrase: s.phrase })),
       };
       setWorkflows((arr) => [wf, ...arr.map((w) => ({ ...w, justBuilt: false }))]);
       setTimeout(() => magAsk("Saved — we'll pick this up whenever you're ready."), 350);
@@ -2943,7 +2986,13 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
               magicianEvents={adminCharacter === "magician" ? magicianEvents : undefined}
               magBuild={adminCharacter === "magician" ? magBuild : null}
               magStreamingId={adminCharacter === "magician" ? magStreamingId : null}
-              onMagStreamDone={(id) => setMagStreamingId((cur) => (cur === id ? null : cur))}
+              onMagStreamDone={(id) => {
+                setMagStreamingId((cur) => (cur === id ? null : cur));
+                if (magSimQueueRef.current.length > 0) {
+                  const next = magSimQueueRef.current.shift()!;
+                  setTimeout(() => magAsk(next), 450);
+                }
+              }}
               magHandlers={adminCharacter === "magician" ? {
                 onIntakeSubmit: magSubmitIntake,
                 onQ1: magAnswerQ1, onQ2: magAnswerQ2, onQ3Scope: magAnswerQ3Scope, onQ4: magAnswerQ4,
@@ -3485,6 +3534,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                 onView={(id) => setViewingWorkflowId(id)}
                 onResume={magResumeDraft}
                 onDiscard={magDiscardDraft}
+                onSimulate={magSimulate}
               />
             );
           }
@@ -3880,6 +3930,24 @@ function AdminChat({ character, owl, professorEvents, onAssignProfessorType, bro
                   <div className="text-[11px] uppercase tracking-wide text-[#7C3AED] font-semibold mb-1">Built into the workshop</div>
                   <div className="text-[12px] text-slate-700"><span className="font-semibold">{ev.name}</span> — {ev.stepCount}-step workflow, ending in your approval.</div>
                   <button type="button" onClick={() => magHandlers?.onOpenBuilt(ev.workflowId)} className="mt-2 text-[12px] font-semibold text-[#7C3AED] hover:underline focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40 rounded">View workflow →</button>
+                </div>
+              );
+            }
+            if (ev.kind === "sim_header") {
+              return (
+                <div
+                  key={ev.id}
+                  className="ml-12 max-w-[460px] rounded-xl border-2 border-dashed border-[#7C3AED]/40 bg-[#F5F3FF]/70 p-3"
+                  role="status"
+                  aria-label={`Simulation of ${ev.workflowName}`}
+                >
+                  <div className="flex items-center gap-1.5 mb-1">
+                    <span className="text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded bg-[#7C3AED] text-white">Simulation</span>
+                    <span className="text-[11px] text-slate-500">safe preview · nothing is sent</span>
+                  </div>
+                  <div className="text-[12px] text-slate-700">
+                    Dry-run of <span className="font-semibold">{ev.workflowName}</span> — what I'd do when {ev.trigger}.
+                  </div>
                 </div>
               );
             }
@@ -9683,7 +9751,7 @@ function MagicianComposer({ onCreate, buildActive }: { onCreate: () => void; bui
 }
 
 
-function MagicianWorkArea({ character, workflows, onCreate, onAdjust, onView, onResume, onDiscard }: {
+function MagicianWorkArea({ character, workflows, onCreate, onAdjust, onView, onResume, onDiscard, onSimulate }: {
   character: { id: AdminCharacter; name: string; src: string; tagline: string; workTitle: string };
   workflows: Workflow[];
   onCreate: () => void;
@@ -9691,6 +9759,7 @@ function MagicianWorkArea({ character, workflows, onCreate, onAdjust, onView, on
   onView: (id: string) => void;
   onResume?: (id: string) => void;
   onDiscard?: (id: string) => void;
+  onSimulate?: (id: string) => void;
 }) {
   const [search, setSearch] = useState("");
   const [ownerFilter, setOwnerFilter] = useState<string>("all");      // "all" | "mine" | name
@@ -9902,6 +9971,7 @@ function MagicianWorkArea({ character, workflows, onCreate, onAdjust, onView, on
                   onView={() => onView(w.id)}
                   onResume={w.draftState && onResume ? () => onResume(w.id) : undefined}
                   onDiscard={w.draftState && onDiscard ? () => onDiscard(w.id) : undefined}
+                  onSimulate={onSimulate ? () => onSimulate(w.id) : undefined}
                 />
               ))}
             </div>
@@ -9912,7 +9982,7 @@ function MagicianWorkArea({ character, workflows, onCreate, onAdjust, onView, on
   );
 }
 
-function WorkflowCard({ w, onAdjust, onView, onResume, onDiscard }: { w: Workflow; onAdjust: () => void; onView: () => void; onResume?: () => void; onDiscard?: () => void }) {
+function WorkflowCard({ w, onAdjust, onView, onResume, onDiscard, onSimulate }: { w: Workflow; onAdjust: () => void; onView: () => void; onResume?: () => void; onDiscard?: () => void; onSimulate?: () => void }) {
   const [scopeOpen, setScopeOpen] = useState(false);
   const [confirmDiscard, setConfirmDiscard] = useState(false);
   const isPausedDraft = !!w.draftState;
@@ -10108,6 +10178,17 @@ function WorkflowCard({ w, onAdjust, onView, onResume, onDiscard }: { w: Workflo
             </>
           ) : (
             <>
+              {onSimulate && (
+                <button
+                  type="button"
+                  onClick={onSimulate}
+                  className="inline-flex items-center gap-1 text-[12px] px-2.5 py-1.5 rounded-md border border-[#7C3AED]/40 bg-white text-[#5B21B6] hover:bg-[#F5F3FF] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40"
+                  title="Safe preview — plays the workflow out in chat. Nothing is sent."
+                  aria-label={`Run a simulation of ${w.name} — safe preview, nothing is sent`}
+                >
+                  <span aria-hidden>▷</span> Run a simulation
+                </button>
+              )}
               <button
                 type="button"
                 onClick={onView}
