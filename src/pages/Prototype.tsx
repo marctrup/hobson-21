@@ -1851,15 +1851,76 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
         stepTemplates: collectStepTemplates(b.steps),
         steps: b.steps.map((s) => ({ id: s.id, label: s.label, phrase: s.phrase })),
       };
-      setWorkflows((arr) => [wf, ...arr.map((w) => ({ ...w, justBuilt: false }))]);
+      // If pausing during an Adjust, update the existing workflow in place as a draft (no duplicate).
+      if (adjustingId) {
+        const targetId = adjustingId;
+        setWorkflows((arr) => arr.map((w) => w.id === targetId ? { ...wf, id: targetId } : w));
+        setAdjustingId(null);
+      } else {
+        setWorkflows((arr) => [wf, ...arr.map((w) => ({ ...w, justBuilt: false }))]);
+      }
       setTimeout(() => magAsk("Saved — we'll pick this up whenever you're ready."), 350);
       return null;
     });
   };
 
   const magCancelBuild = () => {
+    const wasAdjusting = !!adjustingId;
     setMagBuild(null);
-    setTimeout(() => magAsk("Of course — discarded."), 250);
+    setAdjustingId(null);
+    setTimeout(() => magAsk(wasAdjusting ? "Of course — changes discarded. The workflow is unchanged." : "Of course — discarded."), 250);
+  };
+
+  // Open the FULL build flow pre-filled with a workflow's saved configuration.
+  // Adjust = Create-a-workflow, started from the workflow's current values; finish updates in place.
+  const magAdjustWorkflow = (id: string) => {
+    const wf = workflows.find((w) => w.id === id);
+    if (!wf) return;
+    setMagicianEvents([]);
+    magSimQueueRef.current = [];
+    // If a paused draft is being adjusted, prefer the saved live build state.
+    if (wf.draftState) {
+      setAdjustingId(id);
+      setMagBuild({ ...wf.draftState, step: "intake", editing: undefined });
+      setTimeout(() => magAsk(`Let's adjust '${wf.name}' together — change anything you like. I'll walk you through it; keep what's right, change what isn't.`), 300);
+      return;
+    }
+    const watch: "rent_reviews" | "compliance" | "notices" | "other" =
+      wf.watch ?? (wf.icon === "shield" ? "compliance" : wf.icon === "bell" ? "notices" : "rent_reviews");
+    const baseSteps = wf.steps && wf.steps.length > 0 ? wf.steps : MAG_DEFAULT_STEPS;
+    const steps: MagBuildStep[] = baseSteps.map((s, i) => ({
+      id: s.id,
+      label: s.label,
+      phrase: s.phrase,
+      uid: `${s.id}-${i}-${Date.now()}`,
+      template: wf.stepTemplates?.[s.id],
+    }));
+    const state: MagBuildState = {
+      step: "intake",
+      title: wf.name,
+      purpose: wf.purpose,
+      description: wf.description,
+      whenKey: wf.whenKey,
+      whenLabel: wf.whenLabel,
+      visibility: wf.visibility ?? "company",
+      watch,
+      watchLabel: watchLabelFor(watch),
+      lead: wf.lead,
+      leadLabel: wf.leadLabel,
+      triggerPhrase: wf.triggerPhrase,
+      scope: wf.scope,
+      scopeLabel: wf.scopeLabel,
+      scopeDetail: wf.scopeDetail,
+      scopeSelection: wf.scopeSelection,
+      owner: wf.owner,
+      ownerLabel: wf.ownerLabel,
+      steps,
+      stepsTouched: true,
+      templateNarrated: true,
+    };
+    setAdjustingId(id);
+    setMagBuild(state);
+    setTimeout(() => magAsk(`Let's adjust '${wf.name}' together — change anything you like. I'll walk you through it; keep what's right, change what isn't.`), 300);
   };
 
   const magResumeDraft = (id: string) => {
@@ -1877,6 +1938,8 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
     setWorkflows((arr) => arr.filter((w) => w.id !== id));
     setTimeout(() => magAsk(`Of course — '${wf.name}' discarded.`), 250);
   };
+
+
 
 
 
