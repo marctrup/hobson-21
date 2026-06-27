@@ -9018,7 +9018,7 @@ function PerformWorkspace({
       </nav>
 
       {/* Beats scroller */}
-      <div ref={scrollerRef} className="flex-1 overflow-auto px-5 py-5 space-y-5 bg-white">
+      <div ref={scrollerRef} className="flex-1 overflow-auto px-5 py-5 space-y-5 bg-white" style={{ paddingBottom: 64, scrollPaddingBottom: 64 }}>
         {mode === "review" && !isComplete && (
           <div className="flex items-start gap-2">
             <OwlAvatar state={recapStreaming ? "talking" : "default"} />
