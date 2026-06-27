@@ -342,10 +342,16 @@ function ExportButton({ kind, scope }: { kind: Kind; scope: SummaryScope }) {
 export function SummaryActions({
   scope,
   onRequest,
+  enabledKinds,
 }: {
   scope: SummaryScope;
   onRequest: (kind: Kind, scope: SummaryScope) => void;
+  /** Which summary buttons are visible. Defaults to both. */
+  enabledKinds?: { occupational?: boolean; compliance?: boolean };
 }) {
+  const showOcc = enabledKinds?.occupational !== false;
+  const showCom = enabledKinds?.compliance !== false;
+  if (!showOcc && !showCom) return null;
   const levelLabel =
     scope.level === "portfolio" ? "portfolio"
     : scope.level === "property" ? "property"
@@ -359,21 +365,26 @@ export function SummaryActions({
         Summaries for this {levelLabel}
       </div>
       <div className="flex flex-wrap gap-2">
-        <button
-          type="button"
-          onClick={() => onRequest("occupational", scope)}
-          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[12px] font-medium border border-[#C4B5FD] bg-[#F5F3FF] text-[#5B21B6] hover:bg-[#EDE9FE] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]/40"
-        >
-          Summarise current occupation
-        </button>
-        <button
-          type="button"
-          onClick={() => onRequest("compliance", scope)}
-          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[12px] font-medium border border-[#C4B5FD] bg-[#F5F3FF] text-[#5B21B6] hover:bg-[#EDE9FE] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]/40"
-        >
-          Summarise current &amp; overdue compliance
-        </button>
+        {showOcc && (
+          <button
+            type="button"
+            onClick={() => onRequest("occupational", scope)}
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[12px] font-medium border border-[#C4B5FD] bg-[#F5F3FF] text-[#5B21B6] hover:bg-[#EDE9FE] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]/40"
+          >
+            Summarise current occupation
+          </button>
+        )}
+        {showCom && (
+          <button
+            type="button"
+            onClick={() => onRequest("compliance", scope)}
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[12px] font-medium border border-[#C4B5FD] bg-[#F5F3FF] text-[#5B21B6] hover:bg-[#EDE9FE] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]/40"
+          >
+            Summarise current &amp; overdue compliance
+          </button>
+        )}
       </div>
     </section>
   );
 }
+

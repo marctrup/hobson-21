@@ -1466,6 +1466,8 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
   // ----- Professor library state -----
   const [profDocs, setProfDocs] = useState<ProfDoc[]>(SEED_PROF_DOCS);
   const [profEvents, setProfEvents] = useState<ProfEvent[]>([]);
+  // Summary visibility — single source of truth for which summary buttons appear at every level.
+  const [summaryVisibility, setSummaryVisibility] = useState<{ occupational: boolean; compliance: boolean }>({ occupational: true, compliance: true });
 
   // ----- Magician workshop state -----
   const [workflows, setWorkflows] = useState<Workflow[]>(SEED_WORKFLOWS);
@@ -3221,6 +3223,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
             <SummaryActions
               scope={{ level: "unit", propertyId: selectedPropertyId, unitId: selectedUnit.id }}
               onRequest={requestSummary}
+              enabledKinds={summaryVisibility}
             />
           )}
 
@@ -3385,7 +3388,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
 
           {/* Portfolio-level summary buttons */}
           {view === "portfolio" && !typing && messages.length > 0 && (
-            <SummaryActions scope={{ level: "portfolio" }} onRequest={requestSummary} />
+            <SummaryActions scope={{ level: "portfolio" }} onRequest={requestSummary} enabledKinds={summaryVisibility} />
           )}
 
           {/* Portfolio view (single state) — intelligent action briefing */}
@@ -3432,6 +3435,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
             <SummaryActions
               scope={{ level: "property", propertyId: selectedProperty.id }}
               onRequest={requestSummary}
+              enabledKinds={summaryVisibility}
             />
           )}
 
@@ -3761,7 +3765,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
         {adminMode && adminCharacter && (() => {
           const c = ADMIN_CHARACTERS.find((x) => x.id === adminCharacter)!;
           if (c.id === "professor") {
-            return <ProfessorWorkArea character={c} docs={profDocs} />;
+            return <ProfessorWorkArea character={c} docs={profDocs} summaryVisibility={summaryVisibility} onChangeSummaryVisibility={setSummaryVisibility} />;
           }
           if (c.id === "magician") {
             return (
@@ -5280,9 +5284,15 @@ function CharNoteIcon({ kind }: { kind: CharacterNote["kind"] }) {
   );
 }
 
-function ProfessorWorkArea({ character, docs }: { character: { id: AdminCharacter; name: string; src: string; tagline: string; workTitle: string }; docs: ProfDoc[] }) {
+function ProfessorWorkArea({ character, docs, summaryVisibility, onChangeSummaryVisibility }: { character: { id: AdminCharacter; name: string; src: string; tagline: string; workTitle: string }; docs: ProfDoc[]; summaryVisibility: { occupational: boolean; compliance: boolean }; onChangeSummaryVisibility: (next: { occupational: boolean; compliance: boolean }) => void }) {
   const [search, setSearch] = useState("");
   const filtered = docs.filter((d) => d.name.toLowerCase().includes(search.toLowerCase()));
+  const toggleKind = (k: "occupational" | "compliance") => {
+    const next = { ...summaryVisibility, [k]: !summaryVisibility[k] };
+    // Allow disabling down to one; allow both off (gentle note shown).
+    onChangeSummaryVisibility(next);
+  };
+  const bothOff = !summaryVisibility.occupational && !summaryVisibility.compliance;
   return (
     <div className="absolute inset-0 bg-white z-[450] flex flex-col">
       <header className="h-14 px-5 flex items-center border-b border-slate-200 shrink-0">
@@ -5339,6 +5349,42 @@ function ProfessorWorkArea({ character, docs }: { character: { id: AdminCharacte
           />
         );
       })()}
+
+      {/* Summary visibility — controls which summary buttons appear at every level */}
+      <section className="px-5 py-4 border-b border-slate-100 shrink-0 bg-[#FAFAF7]">
+        <div className="flex items-start gap-3 mb-3">
+          <div className="w-9 h-9 rounded-full overflow-hidden bg-[#F5F3FF] ring-1 ring-slate-200 grid place-items-center shrink-0">
+            <img src={character.src} alt="" aria-hidden className="w-[120%] h-[120%] object-contain" />
+          </div>
+          <div className="max-w-[560px] bg-white border border-slate-200 text-[13px] leading-relaxed px-3.5 py-2.5 rounded-2xl rounded-bl-md text-slate-800">
+            <div className="font-semibold text-[12px] uppercase tracking-wide text-slate-500 mb-1">Summary visibility</div>
+            Choose which overviews I keep ready for you. Enable both, or just one — your choice governs the summary buttons everywhere in Hobson.
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
+          <SummaryVisibilityRow
+            kind="occupational"
+            title="Occupational summary"
+            description="Tenant, landlord, rent, review & break dates."
+            enabled={summaryVisibility.occupational}
+            onToggle={() => toggleKind("occupational")}
+          />
+          <SummaryVisibilityRow
+            kind="compliance"
+            title="Compliance summary"
+            description="Compliance documents, effective & expiry dates."
+            enabled={summaryVisibility.compliance}
+            onToggle={() => toggleKind("compliance")}
+          />
+        </div>
+
+        {bothOff && (
+          <div className="mt-3 text-[12px] text-amber-800 bg-amber-50 border border-amber-200 rounded-md px-3 py-2">
+            Both summaries are off — no summary buttons will appear in the product. Enable at least one to restore them.
+          </div>
+        )}
+      </section>
 
       {/* Filters */}
       <div className="px-5 py-3 border-b border-slate-100 flex flex-wrap items-center gap-2 shrink-0">
@@ -5421,6 +5467,117 @@ function ProfessorWorkArea({ character, docs }: { character: { id: AdminCharacte
         </table>
       </div>
     </div>
+  );
+}
+
+function SummaryVisibilityRow({
+  kind,
+  title,
+  description,
+  enabled,
+  onToggle,
+}: {
+  kind: "occupational" | "compliance";
+  title: string;
+  description: string;
+  enabled: boolean;
+  onToggle: () => void;
+}) {
+  return (
+    <div className={`rounded-lg border ${enabled ? "border-[#C4B5FD] bg-white" : "border-slate-200 bg-slate-50/60 opacity-80"} p-3`}>
+      <div className="flex items-start justify-between gap-3">
+        <div className="min-w-0">
+          <div className="flex items-center gap-2">
+            <span className={`inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-semibold uppercase tracking-wide border ${enabled ? "border-[#7C3AED]/30 text-[#5B21B6] bg-[#F5F3FF]" : "border-slate-300 text-slate-500 bg-white"}`}>
+              {enabled ? "Enabled" : "Disabled"}
+            </span>
+            <h4 className="text-[13px] font-semibold text-slate-900 truncate">{title}</h4>
+          </div>
+          <p className="text-[12px] text-slate-600 mt-0.5">{description}</p>
+        </div>
+        <button
+          type="button"
+          role="switch"
+          aria-checked={enabled}
+          aria-label={`${enabled ? "Disable" : "Enable"} ${title}`}
+          onClick={onToggle}
+          className={`relative inline-flex h-6 w-11 shrink-0 items-center rounded-full transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]/40 ${enabled ? "bg-[#7C3AED]" : "bg-slate-300"}`}
+        >
+          <span aria-hidden className={`inline-block h-5 w-5 transform rounded-full bg-white shadow transition-transform ${enabled ? "translate-x-5" : "translate-x-0.5"}`} />
+        </button>
+      </div>
+
+      {/* Compact preview */}
+      <div className="mt-3 rounded-md border border-slate-200 bg-white overflow-hidden">
+        <div className="px-2.5 py-1.5 text-[10px] uppercase tracking-wide text-slate-500 bg-slate-50 border-b border-slate-200 flex items-center justify-between">
+          <span>Preview</span>
+          <span className="italic">sample data</span>
+        </div>
+        <div className="overflow-x-auto">
+          {kind === "occupational" ? <OccupationalPreviewTable /> : <CompliancePreviewTable />}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function OccupationalPreviewTable() {
+  const rows = [
+    { unit: "Flat 1", tenant: "Iris Mendoza", rent: "£36,000 p.a.", review: "10 Jul 2027" },
+    { unit: "Flat 2", tenant: "Daniel & Sara Levy", rent: "£48,000 p.a.", review: "01 Oct 2026" },
+    { unit: "Flat 3", tenant: "—", rent: null, review: null },
+  ];
+  return (
+    <table className="w-full text-[11px] border-collapse">
+      <thead className="text-slate-500">
+        <tr className="text-left">
+          {["Unit", "Tenant", "Current rent", "Next review"].map((h) => (
+            <th key={h} scope="col" className="px-2.5 py-1.5 font-semibold border-b border-slate-100 whitespace-nowrap">{h}</th>
+          ))}
+        </tr>
+      </thead>
+      <tbody>
+        {rows.map((r, i) => (
+          <tr key={i} className="border-b border-slate-50 last:border-0">
+            <td className="px-2.5 py-1.5 font-medium text-slate-800 whitespace-nowrap">{r.unit}</td>
+            <td className="px-2.5 py-1.5 text-slate-700 whitespace-nowrap">{r.tenant === "—" ? <span className="inline-flex items-center px-1.5 py-0.5 rounded-full border border-slate-300 bg-slate-50 text-slate-600 text-[10px]">Vacant</span> : r.tenant}</td>
+            <td className="px-2.5 py-1.5 text-slate-700 whitespace-nowrap">{r.rent ?? <span className="italic text-slate-400">Not determined</span>}</td>
+            <td className="px-2.5 py-1.5 text-slate-700 whitespace-nowrap">{r.review ?? <span className="italic text-slate-400">Not determined</span>}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  );
+}
+
+function CompliancePreviewTable() {
+  const rows = [
+    { doc: "Gas Safety", effective: "12 Jun 2025", expiry: "12 Jun 2026" },
+    { doc: "EPC", effective: "03 Mar 2022", expiry: "03 Mar 2032" },
+    { doc: "EICR", effective: null, expiry: null, missing: true },
+  ];
+  return (
+    <table className="w-full text-[11px] border-collapse">
+      <thead className="text-slate-500">
+        <tr className="text-left">
+          {["Document", "Effective", "Expiry"].map((h) => (
+            <th key={h} scope="col" className="px-2.5 py-1.5 font-semibold border-b border-slate-100 whitespace-nowrap">{h}</th>
+          ))}
+        </tr>
+      </thead>
+      <tbody>
+        {rows.map((r, i) => (
+          <tr key={i} className={`border-b border-slate-50 last:border-0 ${r.missing ? "bg-rose-50/40" : ""}`}>
+            <td className="px-2.5 py-1.5 font-medium text-slate-800 whitespace-nowrap">
+              {r.doc}
+              {r.missing && <span className="ml-1.5 inline-flex items-center px-1.5 py-0.5 rounded-full border border-rose-300 bg-rose-50 text-rose-700 text-[10px]">No document on file</span>}
+            </td>
+            <td className="px-2.5 py-1.5 text-slate-700 whitespace-nowrap">{r.effective ?? <span className="italic text-slate-400">Not determined</span>}</td>
+            <td className="px-2.5 py-1.5 text-slate-700 whitespace-nowrap">{r.expiry ?? <span className="italic text-slate-400">Not determined</span>}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
   );
 }
 
