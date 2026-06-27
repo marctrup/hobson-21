@@ -2426,7 +2426,9 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
     if (!adminMode) return;
     const el = chatBodyRef.current;
     if (!el) return;
-    // Defer to next frame so the new content has laid out.
+    // Respect the user — only auto-follow if they're near the bottom.
+    const distanceFromBottom = el.scrollHeight - el.scrollTop - el.clientHeight;
+    if (distanceFromBottom > 240) return;
     const id = requestAnimationFrame(() => {
       el.scrollTop = el.scrollHeight;
     });
@@ -3170,7 +3172,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
 
 
         {/* Body */}
-        <div ref={chatBodyRef} className={`flex-1 overflow-y-auto px-5 pb-5 pt-0 ${isExpanded ? "w-full" : ""}`}>
+        <div ref={chatBodyRef} className={`flex-1 overflow-y-auto px-5 pt-0 ${isExpanded ? "w-full" : ""}`} style={{ paddingBottom: 48, scrollPaddingBottom: 48 }}>
           <div
             className={`${isExpanded ? "max-w-[820px] mx-auto" : ""} flex flex-col`}
             style={{ gap: CHAT_TURN_GAP_PX, paddingTop: CHAT_TOP_GAP_PX }}
@@ -8890,10 +8892,30 @@ function PerformWorkspace({
     return () => { cancelled = true; clearTimeout(t); };
   }, [revealed, beats, reducedMotion, mode, isComplete, initialRevealed]);
 
+  // Auto-follow the workspace journey as steps reveal and text streams.
+  // Pause if the user has scrolled up to re-read; resume when they return.
   useEffect(() => {
     const el = scrollerRef.current;
-    if (el) el.scrollTop = el.scrollHeight;
-  }, [revealed, streamingText]);
+    if (!el) return;
+    const distance = el.scrollHeight - el.scrollTop - el.clientHeight;
+    if (distance > 240) return;
+    const id = requestAnimationFrame(() => { el.scrollTop = el.scrollHeight; });
+    return () => cancelAnimationFrame(id);
+  }, [revealed, streamingText, recapStream, completed.length, approvedActions.length]);
+
+  // Cover any late layout growth (rich previews, tables, embedded forms).
+  useEffect(() => {
+    const el = scrollerRef.current;
+    if (!el) return;
+    const ro = new ResizeObserver(() => {
+      const distance = el.scrollHeight - el.scrollTop - el.clientHeight;
+      if (distance < 240) el.scrollTop = el.scrollHeight;
+    });
+    ro.observe(el);
+    const inner = el.firstElementChild as HTMLElement | null;
+    if (inner) ro.observe(inner);
+    return () => ro.disconnect();
+  }, []);
 
   // Fire reviewReady once when the journey has revealed (or passed) its final approval gate.
   const finalIdx = useMemo(() => finalGateBeatIdx(card, beats), [card, beats]);
@@ -8996,7 +9018,7 @@ function PerformWorkspace({
       </nav>
 
       {/* Beats scroller */}
-      <div ref={scrollerRef} className="flex-1 overflow-auto px-5 py-5 space-y-5 bg-white">
+      <div ref={scrollerRef} className="flex-1 overflow-auto px-5 py-5 space-y-5 bg-white" style={{ paddingBottom: 64, scrollPaddingBottom: 64 }}>
         {mode === "review" && !isComplete && (
           <div className="flex items-start gap-2">
             <OwlAvatar state={recapStreaming ? "talking" : "default"} />
