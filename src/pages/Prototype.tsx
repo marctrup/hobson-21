@@ -5284,9 +5284,15 @@ function CharNoteIcon({ kind }: { kind: CharacterNote["kind"] }) {
   );
 }
 
-function ProfessorWorkArea({ character, docs }: { character: { id: AdminCharacter; name: string; src: string; tagline: string; workTitle: string }; docs: ProfDoc[] }) {
+function ProfessorWorkArea({ character, docs, summaryVisibility, onChangeSummaryVisibility }: { character: { id: AdminCharacter; name: string; src: string; tagline: string; workTitle: string }; docs: ProfDoc[]; summaryVisibility: { occupational: boolean; compliance: boolean }; onChangeSummaryVisibility: (next: { occupational: boolean; compliance: boolean }) => void }) {
   const [search, setSearch] = useState("");
   const filtered = docs.filter((d) => d.name.toLowerCase().includes(search.toLowerCase()));
+  const toggleKind = (k: "occupational" | "compliance") => {
+    const next = { ...summaryVisibility, [k]: !summaryVisibility[k] };
+    // Allow disabling down to one; allow both off (gentle note shown).
+    onChangeSummaryVisibility(next);
+  };
+  const bothOff = !summaryVisibility.occupational && !summaryVisibility.compliance;
   return (
     <div className="absolute inset-0 bg-white z-[450] flex flex-col">
       <header className="h-14 px-5 flex items-center border-b border-slate-200 shrink-0">
