@@ -136,6 +136,7 @@ export const DEFAULT_HS_REQUIREMENTS: ComplianceRequirement[] = [
     appliesTo: "unit",
     category: "certification",
     areaId: "health_safety",
+    documentOnFile: "Gas-Safety-CP12-2024.pdf",
   },
   {
     id: rid("eicr"),
@@ -160,6 +161,7 @@ export const DEFAULT_HS_REQUIREMENTS: ComplianceRequirement[] = [
     appliesTo: "unit",
     category: "certification",
     areaId: "health_safety",
+    documentOnFile: "EPC-2023.pdf",
   },
   {
     id: rid("firedoor"),
@@ -172,6 +174,7 @@ export const DEFAULT_HS_REQUIREMENTS: ComplianceRequirement[] = [
     appliesTo: "building",
     category: "certification",
     areaId: "health_safety",
+    documentOnFile: "Fire-Door-Log-Q2-2025.pdf",
   },
   {
     id: rid("firealarm"),
@@ -184,6 +187,7 @@ export const DEFAULT_HS_REQUIREMENTS: ComplianceRequirement[] = [
     appliesTo: "building",
     category: "certification",
     areaId: "health_safety",
+    documentOnFile: "Fire-Alarm-Test-Log-2025.pdf",
   },
   {
     id: rid("s13"),
@@ -198,6 +202,7 @@ export const DEFAULT_HS_REQUIREMENTS: ComplianceRequirement[] = [
     description: "Held template · used when proposing a rent increase",
     versionSource: "hobson",
     areaId: "health_safety",
+    documentOnFile: "Section13-template-v2.docx",
   },
   {
     id: rid("pst"),
@@ -212,6 +217,7 @@ export const DEFAULT_HS_REQUIREMENTS: ComplianceRequirement[] = [
     description: "Must reflect current law · Tenancy Reform Act",
     versionSource: "hobson",
     areaId: "health_safety",
+    documentOnFile: "PST-Agreement-v3.docx",
   },
   {
     id: rid("howtorent"),
@@ -226,6 +232,7 @@ export const DEFAULT_HS_REQUIREMENTS: ComplianceRequirement[] = [
     description: "Statutory guide · must be the current gov.uk edition",
     versionSource: "hobson",
     areaId: "health_safety",
+    documentOnFile: "How-to-Rent-2025-edition.pdf",
   },
 ];
 
@@ -242,6 +249,7 @@ export const DEFAULT_FINANCIAL_REQUIREMENTS: ComplianceRequirement[] = [
     appliesTo: "building",
     category: "certification",
     areaId: "financial",
+    documentOnFile: "CMP-Certificate-2025.pdf",
   },
   {
     id: rid("pi"),
@@ -254,6 +262,7 @@ export const DEFAULT_FINANCIAL_REQUIREMENTS: ComplianceRequirement[] = [
     appliesTo: "building",
     category: "certification",
     areaId: "financial",
+    documentOnFile: "PI-Insurance-2025.pdf",
   },
   {
     id: rid("buildings"),
@@ -266,6 +275,7 @@ export const DEFAULT_FINANCIAL_REQUIREMENTS: ComplianceRequirement[] = [
     appliesTo: "building",
     category: "certification",
     areaId: "financial",
+    documentOnFile: "Buildings-Insurance-2025.pdf",
   },
   {
     id: rid("deposit"),
@@ -278,6 +288,7 @@ export const DEFAULT_FINANCIAL_REQUIREMENTS: ComplianceRequirement[] = [
     appliesTo: "unit",
     category: "certification",
     areaId: "financial",
+    documentOnFile: "TDS-Registration-2025.pdf",
   },
   {
     id: rid("prescribed"),
@@ -292,6 +303,7 @@ export const DEFAULT_FINANCIAL_REQUIREMENTS: ComplianceRequirement[] = [
     description: "Served with the tenancy agreement when a deposit is taken",
     versionSource: "hobson",
     areaId: "financial",
+    documentOnFile: "Prescribed-Information-v2.docx",
   },
 ];
 
