@@ -410,6 +410,45 @@ const MAG_DEFAULTS_BY_WATCH: Record<"rent_reviews" | "compliance" | "notices" | 
 
 const SEED_WORKFLOWS: Workflow[] = [];
 
+// Current actor for prototype-attribution (in a real app this would come from auth).
+const CURRENT_ACTOR: ActivityActor = { name: "Marc Trup", initials: "MT", role: "Owner" };
+
+const formatActivityStamp = (d: Date = new Date()) => {
+  const date = d.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
+  const time = d.toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit", hour12: false });
+  return { ts: d.getTime(), label: `${date}, ${time}` };
+};
+const makeActivity = (action: string, actor: ActivityActor = CURRENT_ACTOR): ActivityEntry => {
+  const t = formatActivityStamp();
+  return { id: `act-${t.ts}-${Math.random().toString(36).slice(2, 6)}`, ts: t.ts, tsLabel: t.label, actor, action };
+};
+const prependActivity = (existing: ActivityEntry[] | undefined, entries: ActivityEntry[]) =>
+  [...entries, ...(existing ?? [])];
+
+// Diff two build snapshots and return concise change descriptions for the activity log.
+const diffWorkflowChanges = (prev: Workflow, b: MagBuildState): string[] => {
+  const changes: string[] = [];
+  const newName = (b.title?.trim() || prev.name);
+  if (newName && newName !== prev.name) changes.push(`Title changed to "${newName}"`);
+  const newScope = b.scopeLabel || prev.scopeLabel;
+  if (newScope && newScope !== prev.scopeLabel) changes.push(`Scope changed to ${newScope}`);
+  if (b.whenLabel && b.whenLabel !== prev.whenLabel) changes.push(`Timing changed to ${b.whenLabel}`);
+  if (b.visibility && b.visibility !== prev.visibility) {
+    changes.push(`Visibility changed to ${b.visibility === "company" ? "Company-wide" : "Personal"}`);
+  }
+  const prevOwner = prev.owner?.kind === "all_teams" ? "All teams" : prev.owner && "name" in prev.owner ? prev.owner.name : "";
+  const newOwner = b.owner?.kind === "all_teams" ? "All teams" : b.owner && "name" in b.owner ? b.owner.name : "";
+  if (newOwner && newOwner !== prevOwner) changes.push(`Owner changed to ${newOwner}`);
+  const prevStepKey = (prev.steps ?? []).map((s) => `${s.id}:${s.label}`).join("|");
+  const newStepKey = b.steps.map((s) => `${s.id}:${s.label}`).join("|");
+  if (newStepKey !== prevStepKey) changes.push("Steps edited");
+  const prevTpls = JSON.stringify(prev.stepTemplates ?? {});
+  const newTpls = JSON.stringify(collectStepTemplates(b.steps) ?? {});
+  if (prevTpls !== newTpls) changes.push("Templates updated");
+  return changes;
+};
+
+
 const MAGICIAN_STAFF: { name: string; role: string; initials: string }[] = [
   { name: "Sarah Chen", role: "Asset Manager", initials: "SC" },
   { name: "James Okoro", role: "Lease Manager", initials: "JO" },
