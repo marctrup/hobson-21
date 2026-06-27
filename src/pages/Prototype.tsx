@@ -4476,6 +4476,9 @@ function AdminChat({ character, owl, professorEvents, onAssignProfessorType, bro
           })}
         </div>
       )}
+      {character?.id === "broker" && phase === "done" && (!brokerEvents || brokerEvents.length === 0) && !brokerFlowActive && (
+        <BrokerBuildInviteCard onAdd={() => onAddContact?.()} onUpload={(name) => onUploadContacts?.(name)} />
+      )}
       {character?.id === "broker" && phase === "done" && brokerEvents && brokerEvents.length > 0 && (
         <div className="flex flex-col" style={{ gap: CHAT_TURN_GAP_PX }}>
           {brokerEvents.map((ev) => {
