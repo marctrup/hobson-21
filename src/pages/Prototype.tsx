@@ -2949,6 +2949,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                 onGoBack: magGoBack,
                 onPauseSave: magPauseSave,
                 onCancelBuild: magCancelBuild,
+                onSetStepTemplate: magSetStepTemplate,
               } : undefined}
             />
 
