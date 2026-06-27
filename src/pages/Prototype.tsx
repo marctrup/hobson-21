@@ -3223,6 +3223,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
             <SummaryActions
               scope={{ level: "unit", propertyId: selectedPropertyId, unitId: selectedUnit.id }}
               onRequest={requestSummary}
+              enabledKinds={summaryVisibility}
             />
           )}
 
