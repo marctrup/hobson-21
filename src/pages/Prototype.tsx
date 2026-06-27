@@ -280,8 +280,10 @@ type Workflow = {
 };
 
 type MagBuildStep = { id: string; label: string; phrase: string; uid: string };
+type MagBuildStepKey = "intake" | "q1" | "q2" | "q3" | "q3b" | "q4" | "q5" | "q6";
+type MagEditField = "intake" | "watch" | "scope" | "scopeUnit" | "owner";
 type MagBuildState = {
-  step: "intake" | "q1" | "q2" | "q3" | "q3b" | "q4" | "q5" | "q6";
+  step: MagBuildStepKey;
   // intake (user-authored)
   title?: string;
   purpose?: string;
@@ -291,15 +293,20 @@ type MagBuildState = {
   visibility?: "personal" | "company";
   // build conversation
   watch?: "rent_reviews" | "compliance" | "notices" | "other";
+  watchLabel?: string;
   lead?: "6m" | "3m" | "on";
   leadLabel?: string;
   triggerPhrase?: string;
   scope?: "unit" | "property" | "portfolio";
   scopeLabel?: string;
   owner?: WorkflowOwner;
+  ownerLabel?: string;
   steps: MagBuildStep[];
   addOpen?: boolean;
   customDraft?: string;
+  // trace-back
+  editing?: { field: MagEditField; returnStep: MagBuildStepKey };
+  stepsTouched?: boolean; // user has personally tweaked steps — don't silently overwrite
 };
 type MagicianEvent =
   | { kind: "magician"; id: string; text: string }
@@ -321,6 +328,24 @@ const MAG_ADD_OPTIONS: { id: string; label: string; phrase: string }[] = [
   { id: "summary_review", label: "Prepare review summary", phrase: "prepare a review summary" },
   { id: "notify_owner", label: "Notify owner", phrase: "notify the owner" },
 ];
+
+const MAG_DEFAULTS_BY_WATCH: Record<"rent_reviews" | "compliance" | "notices" | "other", { id: string; label: string; phrase: string }[]> = {
+  rent_reviews: MAG_DEFAULT_STEPS,
+  compliance: [
+    { id: "cert_audit", label: "Audit current certificates and expiry dates", phrase: "audit certificates" },
+    { id: "schedule_renewal", label: "Schedule renewal visits with contractors", phrase: "schedule renewal visits" },
+    { id: "access_notice", label: "Draft tenant access notices", phrase: "draft access notices" },
+    { id: "log_certs", label: "Log new certificates on the unit record", phrase: "log certificates" },
+  ],
+  notices: [
+    { id: "read_lease", label: "Read the lease and confirm notice mechanics", phrase: "read the lease" },
+    { id: "draft_notice", label: "Draft the notice", phrase: "draft the notice" },
+    { id: "email", label: "Draft the covering email to the tenant", phrase: "draft the covering email" },
+  ],
+  other: [
+    { id: "outline", label: "Outline the task in your words", phrase: "outline the task" },
+  ],
+};
 
 const SEED_WORKFLOWS: Workflow[] = [
   {
@@ -1378,6 +1403,26 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
   };
 
   // ----- Magician answer handlers -----
+  const magPhraseFor = (k: string, label: string) => {
+    if (k === "6m") return "6 months away";
+    if (k === "3m") return "3 months away";
+    if (k === "on") return "on the date";
+    if (k === "always") return "approaching (always visible)";
+    return (label || "").toLowerCase();
+  };
+  const watchLabelFor = (k: "rent_reviews" | "compliance" | "notices" | "other") =>
+    k === "rent_reviews" ? "Rent reviews"
+      : k === "compliance" ? "Compliance certificates"
+      : k === "notices" ? "Notice deadlines"
+      : "Other";
+  const triggerSentenceFor = (watch: MagBuildState["watch"], whenPhrase: string) => {
+    const subject = watch === "compliance" ? "a certificate is due"
+      : watch === "notices" ? "a notice deadline is approaching"
+      : watch === "other" ? "the date is approaching"
+      : "a rent review is";
+    return `${subject} ${whenPhrase}`.trim();
+  };
+
   const magSubmitIntake = (intake: {
     title: string;
     purpose: string;
@@ -1386,13 +1431,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
     whenLabel: string;
     visibility: "personal" | "company";
   }) => {
-    const phraseFor = (k: string, label: string) => {
-      if (k === "6m") return "6 months away";
-      if (k === "3m") return "3 months away";
-      if (k === "on") return "on the date";
-      if (k === "always") return "approaching (always visible)";
-      return label.toLowerCase();
-    };
+    const wasEditing = !!magBuild?.editing && magBuild.editing.field === "intake";
     magUserEcho(
       `${intake.title} — ${intake.purpose}\nShow: ${intake.whenLabel} · ${intake.visibility === "personal" ? "Personal" : "Company-wide"}${intake.description ? `\n${intake.description}` : ""}`
     );
@@ -1406,69 +1445,95 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
       visibility: intake.visibility,
       lead: (intake.whenKey === "6m" || intake.whenKey === "3m" || intake.whenKey === "on") ? intake.whenKey : undefined,
       leadLabel: intake.whenLabel,
-      triggerPhrase: phraseFor(intake.whenKey, intake.whenLabel),
-      step: "q1",
+      triggerPhrase: magPhraseFor(intake.whenKey, intake.whenLabel),
+      step: wasEditing ? (b.editing!.returnStep) : "q1",
+      editing: undefined,
     } : b);
-    setTimeout(() => magAsk("Thank you. Now — what shall I keep watch on?"), 500);
+    setTimeout(() => magAsk(wasEditing ? "Updated." : "Thank you. Now — what shall I keep watch on?"), 400);
   };
 
   const magAnswerQ1 = (key: "rent_reviews" | "compliance" | "notices" | "other", label: string) => {
     magUserEcho(label);
-    // 'when' is already captured at intake — skip Q2 entirely.
-    if (key === "rent_reviews") {
-      setMagBuild((b) => b ? { ...b, watch: key, step: "q3" } : b);
-      setTimeout(() => magAsk("Good — rent reviews. Where does this apply?"), 500);
-    } else {
-      setMagBuild((b) => b ? { ...b, watch: "rent_reviews", step: "q3" } : b);
-      setTimeout(() => magAsk("Noted. For today's build I'll stay with rent reviews — the others I'm preparing next. Where does this apply?"), 500);
-    }
+    setMagBuild((b) => {
+      if (!b) return b;
+      const editing = b.editing;
+      const watchChanged = !!editing && editing.field === "watch" && b.watch && b.watch !== key;
+      const shouldRepropose = watchChanged && !b.stepsTouched;
+      const nextSteps = shouldRepropose
+        ? MAG_DEFAULTS_BY_WATCH[key].map((s, i) => ({ ...s, uid: `${s.id}-${Date.now()}-${i}` }))
+        : b.steps;
+      return {
+        ...b,
+        watch: key,
+        watchLabel: watchLabelFor(key),
+        steps: nextSteps,
+        step: editing ? editing.returnStep : "q3",
+        editing: undefined,
+      };
+    });
+    const editing = magBuild?.editing;
+    const watchChanged = !!editing && editing.field === "watch" && magBuild?.watch && magBuild.watch !== key;
+    const reproposed = watchChanged && !magBuild?.stepsTouched;
+    setTimeout(() => {
+      if (reproposed) {
+        magAsk(`That changes the steps — here's how I'd handle ${watchLabelFor(key).toLowerCase()} instead. Adjust as you like.`);
+      } else if (editing) {
+        magAsk("Updated.");
+      } else {
+        magAsk(key === "rent_reviews" ? "Good — rent reviews. Where does this apply?" : `Noted — ${watchLabelFor(key).toLowerCase()}. Where does this apply?`);
+      }
+    }, 400);
   };
+
   const magAnswerQ2 = (lead: "6m" | "3m" | "on", label: string, phrase: string) => {
     magUserEcho(label);
-    setMagBuild((b) => b ? { ...b, lead, leadLabel: label, triggerPhrase: phrase, step: "q3" } : b);
-    setTimeout(() => magAsk("Where does this apply?"), 500);
+    setMagBuild((b) => b ? { ...b, lead, leadLabel: label, triggerPhrase: phrase, step: "q3", editing: undefined } : b);
+    setTimeout(() => magAsk("Where does this apply?"), 400);
   };
+
   const magAnswerQ3 = (scope: "unit" | "property" | "portfolio", label: string) => {
     magUserEcho(label);
+    const wasEditing = !!magBuild?.editing && magBuild.editing.field === "scope";
     if (scope === "unit") {
-      setMagBuild((b) => b ? { ...b, scope, step: "q3b" } : b);
-      setTimeout(() => magAsk("Which unit?"), 500);
+      setMagBuild((b) => b ? { ...b, scope, scopeLabel: undefined, step: "q3b", editing: wasEditing ? { field: "scopeUnit", returnStep: b.editing!.returnStep } : undefined } : b);
+      setTimeout(() => magAsk("Which unit?"), 400);
     } else {
       const scopeLabel = scope === "property" ? "Stanley House (all units)" : "The whole portfolio";
-      setMagBuild((b) => b ? { ...b, scope, scopeLabel, step: "q4" } : b);
-      setTimeout(() => magAsk("And who should own it?"), 500);
+      setMagBuild((b) => b ? { ...b, scope, scopeLabel, step: wasEditing ? b.editing!.returnStep : "q4", editing: undefined } : b);
+      setTimeout(() => magAsk(wasEditing ? "Updated." : "And who should own it?"), 400);
     }
   };
+
   const magAnswerQ3b = (unitLabel: string) => {
     magUserEcho(unitLabel);
-    setMagBuild((b) => b ? { ...b, scopeLabel: unitLabel, step: "q4" } : b);
-    setTimeout(() => magAsk("And who should own it?"), 500);
+    const wasEditing = !!magBuild?.editing && (magBuild.editing.field === "scopeUnit" || magBuild.editing.field === "scope");
+    setMagBuild((b) => b ? { ...b, scopeLabel: unitLabel, step: wasEditing ? b.editing!.returnStep : "q4", editing: undefined } : b);
+    setTimeout(() => magAsk(wasEditing ? "Updated." : "And who should own it?"), 400);
   };
+
   const magAnswerQ4 = (owner: WorkflowOwner, label: string) => {
     magUserEcho(label);
-    setMagBuild((b) => b ? { ...b, owner, step: "q5" } : b);
-    setTimeout(() => magAsk("Here's how I'd handle a rent review. Tap to keep, remove, reorder — or add a step."), 500);
+    const wasEditing = !!magBuild?.editing && magBuild.editing.field === "owner";
+    setMagBuild((b) => b ? { ...b, owner, ownerLabel: label, step: wasEditing ? b.editing!.returnStep : "q5", editing: undefined } : b);
+    setTimeout(() => magAsk(wasEditing ? "Updated." : "Here's how I'd handle it. Tap to keep, remove, reorder, rename — or add a step."), 400);
   };
-  const magUpdateSteps = (next: MagBuildStep[], note?: string) => {
-    setMagBuild((b) => b ? { ...b, steps: next, addOpen: false } : b);
-    if (note) setTimeout(() => magAsk(note), 200);
-  };
+
   const magAddStep = (opt: { id: string; label: string; phrase: string }) => {
     setMagBuild((b) => {
       if (!b) return b;
       const uid = `${opt.id}-${Date.now()}`;
-      return { ...b, steps: [...b.steps, { ...opt, uid }], addOpen: false };
+      return { ...b, steps: [...b.steps, { ...opt, uid }], addOpen: false, stepsTouched: true };
     });
     setTimeout(() => magAsk("Added — anything else?"), 200);
   };
   const magAddCustomStep = (label: string) => {
     if (!label.trim()) return;
     const uid = `custom-${Date.now()}`;
-    setMagBuild((b) => b ? { ...b, steps: [...b.steps, { id: "custom", label: label.trim(), phrase: label.trim().toLowerCase(), uid }], addOpen: false, customDraft: "" } : b);
+    setMagBuild((b) => b ? { ...b, steps: [...b.steps, { id: "custom", label: label.trim(), phrase: label.trim().toLowerCase(), uid }], addOpen: false, customDraft: "", stepsTouched: true } : b);
     setTimeout(() => magAsk("Added — anything else?"), 200);
   };
   const magRemoveStep = (uid: string) => {
-    setMagBuild((b) => b ? { ...b, steps: b.steps.filter((s) => s.uid !== uid) } : b);
+    setMagBuild((b) => b ? { ...b, steps: b.steps.filter((s) => s.uid !== uid), stepsTouched: true } : b);
     setTimeout(() => magAsk("Removed — anything else?"), 200);
   };
   const magMoveStep = (uid: string, dir: -1 | 1) => {
@@ -1479,17 +1544,61 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
       if (i < 0 || j < 0 || j >= b.steps.length) return b;
       const next = [...b.steps];
       [next[i], next[j]] = [next[j], next[i]];
-      return { ...b, steps: next };
+      return { ...b, steps: next, stepsTouched: true };
     });
   };
+  const magRenameStep = (uid: string, label: string) => {
+    if (!label.trim()) return;
+    setMagBuild((b) => b ? {
+      ...b,
+      steps: b.steps.map((s) => s.uid === uid ? { ...s, label: label.trim(), phrase: label.trim().toLowerCase() } : s),
+      stepsTouched: true,
+    } : b);
+  };
+
+  // Trace-back: open an earlier answer for editing.
+  const magBeginEdit = (field: MagEditField) => {
+    setMagBuild((b) => {
+      if (!b) return b;
+      const returnStep: MagBuildStepKey = b.step === "intake" ? "q1" : b.step;
+      const stepFor: Record<MagEditField, MagBuildStepKey> = {
+        intake: "intake",
+        watch: "q1",
+        scope: "q3",
+        scopeUnit: "q3b",
+        owner: "q4",
+      };
+      return { ...b, step: stepFor[field], editing: { field, returnStep } };
+    });
+    setTimeout(() => magAsk("Of course — let's change that."), 250);
+  };
+
+  const magCancelEdit = () => {
+    setMagBuild((b) => b && b.editing ? { ...b, step: b.editing.returnStep, editing: undefined } : b);
+  };
+
+  // ← Back at each question.
+  const magGoBack = () => {
+    setMagBuild((b) => {
+      if (!b) return b;
+      const order: MagBuildStepKey[] = ["intake", "q1", "q3", b.scope === "unit" ? "q3b" : "q3", "q4", "q5", "q6"];
+      // dedupe consecutive
+      const seen: MagBuildStepKey[] = [];
+      for (const s of order) if (seen[seen.length - 1] !== s) seen.push(s);
+      const i = seen.indexOf(b.step);
+      const prev = i > 0 ? seen[i - 1] : "intake";
+      return { ...b, step: prev, editing: undefined };
+    });
+  };
+
   const magFinishStepsToQ6 = () => {
-    setMagBuild((b) => b ? { ...b, step: "q6" } : b);
+    setMagBuild((b) => b ? { ...b, step: "q6", editing: undefined } : b);
     setTimeout(() => magAsk("I'll prepare all of this and bring it to you for approval — I never act on my own. Shall I build it?"), 400);
   };
   const magAnswerQ6KeepEditing = () => {
     magUserEcho("Keep editing");
     setMagBuild((b) => b ? { ...b, step: "q5" } : b);
-    setTimeout(() => magAsk("Of course — adjust the steps and let me know when you're ready."), 400);
+    setTimeout(() => magAsk("Of course — adjust as you like, and tell me when you're ready."), 400);
   };
   const magAnswerQ6Build = () => {
     magUserEcho("Build it");
@@ -1500,15 +1609,16 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
         ? "bring it to you for approval"
         : `${phrases.slice(0, -1).join(", ")}${phrases.length > 1 ? " and " : ""}${phrases[phrases.length - 1]} — then bring it to you for approval`;
       const id = `wf-${Date.now()}`;
-      const trigger = `a rent review is ${b.triggerPhrase || "approaching"}`;
+      const trigger = triggerSentenceFor(b.watch, b.triggerPhrase || "approaching");
       const wf: Workflow = {
         id,
-        name: b.title?.trim() || "Rent review watch",
-        purpose: b.purpose?.trim() || "Spots rent reviews early and prepares each one for your approval.",
+        name: b.title?.trim() || "New workflow",
+        purpose: b.purpose?.trim() || "Watches the portfolio and prepares the work for your approval.",
         description: b.description?.trim() || undefined,
         whenLabel: b.whenLabel,
         visibility: b.visibility || "personal",
-        icon: "calendar", tone: "purple", status: "built",
+        icon: b.watch === "compliance" ? "shield" : b.watch === "notices" ? "bell" : "calendar",
+        tone: "purple", status: "built",
         trigger,
         action: actionSummary,
         scopeLabel: b.scopeLabel || "Not yet set",
@@ -2640,6 +2750,10 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                 onSetCustomDraft: (v: string) => setMagBuild((b) => b ? { ...b, customDraft: v } : b),
                 onFinishSteps: magFinishStepsToQ6, onKeepEditing: magAnswerQ6KeepEditing, onBuild: magAnswerQ6Build,
                 onOpenBuilt: (id: string) => setViewingWorkflowId(id),
+                onRenameStep: magRenameStep,
+                onBeginEdit: magBeginEdit,
+                onCancelEdit: magCancelEdit,
+                onGoBack: magGoBack,
               } : undefined}
             />
 
@@ -3455,6 +3569,10 @@ type MagHandlers = {
   onKeepEditing: () => void;
   onBuild: () => void;
   onOpenBuilt: (id: string) => void;
+  onRenameStep: (uid: string, label: string) => void;
+  onBeginEdit: (field: MagEditField) => void;
+  onCancelEdit: () => void;
+  onGoBack: () => void;
 };
 
 function AdminChat({ character, owl, professorEvents, onAssignProfessorType, brokerEvents, brokerFlowActive, magicianEvents, magBuild, magStreamingId, onMagStreamDone, magHandlers }: { character: { id: AdminCharacter; name: string; src: string; greeting: string } | null; owl: OwlState; professorEvents?: ProfEvent[]; onAssignProfessorType?: (batchId: string, type: string) => void; brokerEvents?: BrokerEvent[]; brokerFlowActive?: boolean; magicianEvents?: MagicianEvent[]; magBuild?: MagBuildState | null; magStreamingId?: string | null; onMagStreamDone?: (id: string) => void; magHandlers?: MagHandlers }) {
@@ -3762,13 +3880,13 @@ function MagOptionButton({ children, onClick, disabled }: { children: React.Reac
   );
 }
 
-function MagicianIntake({ onSubmit }: { onSubmit: MagHandlers["onIntakeSubmit"] }) {
-  const [title, setTitle] = useState("");
-  const [purpose, setPurpose] = useState("");
-  const [description, setDescription] = useState("");
-  const [whenKey, setWhenKey] = useState<"6m" | "3m" | "on" | "always" | "custom" | null>(null);
-  const [whenCustom, setWhenCustom] = useState("");
-  const [visibility, setVisibility] = useState<"personal" | "company" | null>(null);
+function MagicianIntake({ onSubmit, initial, onCancel }: { onSubmit: MagHandlers["onIntakeSubmit"]; initial?: Partial<{ title: string; purpose: string; description: string; whenKey: "6m" | "3m" | "on" | "always" | "custom"; whenLabel: string; visibility: "personal" | "company" }>; onCancel?: () => void }) {
+  const [title, setTitle] = useState(initial?.title ?? "");
+  const [purpose, setPurpose] = useState(initial?.purpose ?? "");
+  const [description, setDescription] = useState(initial?.description ?? "");
+  const [whenKey, setWhenKey] = useState<"6m" | "3m" | "on" | "always" | "custom" | null>(initial?.whenKey ?? null);
+  const [whenCustom, setWhenCustom] = useState(initial?.whenKey === "custom" ? (initial?.whenLabel ?? "") : "");
+  const [visibility, setVisibility] = useState<"personal" | "company" | null>(initial?.visibility ?? null);
 
   const whenOptions: { k: "6m" | "3m" | "on" | "always"; label: string }[] = [
     { k: "6m", label: "6 months ahead" },
@@ -3877,15 +3995,138 @@ function MagicianIntake({ onSubmit }: { onSubmit: MagHandlers["onIntakeSubmit"] 
       </div>
       <div className="flex items-center justify-between gap-2 pt-1 border-t border-slate-100">
         <span className="text-[11px] text-slate-500">Required fields marked <span className="text-rose-600">*</span></span>
+        <div className="flex items-center gap-1.5">
+          {onCancel && (
+            <button type="button" onClick={onCancel} className="px-3 py-1.5 rounded-full text-[12.5px] text-slate-600 hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40">Cancel</button>
+          )}
+          <button
+            type="button"
+            onClick={submit}
+            disabled={!canSubmit}
+            className="px-3.5 py-1.5 rounded-full bg-[#7C3AED] text-white text-[12.5px] font-semibold hover:bg-[#6D28D9] disabled:bg-slate-200 disabled:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40"
+          >
+            {initial ? "Save changes" : "Start building →"}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function MagicianStepRow({ s, i, total, handlers }: { s: MagBuildStep; i: number; total: number; handlers: MagHandlers }) {
+  const [editing, setEditing] = useState(false);
+  const [draft, setDraft] = useState(s.label);
+  if (editing) {
+    return (
+      <li className="flex items-start gap-2 rounded-md border border-[#7C3AED]/40 bg-[#F5F3FF] px-2 py-1.5">
+        <span className="text-[11px] font-semibold text-slate-500 mt-1.5 w-4 text-right">{i + 1}.</span>
+        <input
+          autoFocus
+          value={draft}
+          onChange={(e) => setDraft(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") { e.preventDefault(); handlers.onRenameStep(s.uid, draft); setEditing(false); }
+            if (e.key === "Escape") { setDraft(s.label); setEditing(false); }
+          }}
+          className="flex-1 text-[12.5px] border border-slate-200 rounded-md px-2 py-1 bg-white focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40"
+          aria-label={`Edit step ${i + 1}`}
+        />
+        <button type="button" onClick={() => { handlers.onRenameStep(s.uid, draft); setEditing(false); }} className="px-2 py-1 rounded-md bg-[#7C3AED] text-white text-[11.5px] font-semibold hover:bg-[#6D28D9] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40">Save</button>
+        <button type="button" onClick={() => { setDraft(s.label); setEditing(false); }} className="px-2 py-1 rounded-md text-[11.5px] text-slate-500 hover:bg-white focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40">Cancel</button>
+      </li>
+    );
+  }
+  return (
+    <li className="flex items-start gap-2 rounded-md border border-slate-200 bg-slate-50 px-2 py-1.5">
+      <span className="text-[11px] font-semibold text-slate-500 mt-0.5 w-4 text-right">{i + 1}.</span>
+      <span className="flex-1 text-[12.5px] text-slate-800 leading-snug">{s.label}</span>
+      <div className="flex items-center gap-0.5">
+        <button type="button" aria-label={`Edit step ${i + 1}`} onClick={() => setEditing(true)} className="px-1.5 h-6 grid place-items-center rounded text-[11px] font-medium text-[#7C3AED] hover:bg-white focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40">Edit</button>
+        <button type="button" aria-label="Move up" disabled={i === 0} onClick={() => handlers.onMoveStep(s.uid, -1)} className="w-6 h-6 grid place-items-center rounded text-slate-500 hover:bg-white disabled:opacity-30 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40">↑</button>
+        <button type="button" aria-label="Move down" disabled={i === total - 1} onClick={() => handlers.onMoveStep(s.uid, 1)} className="w-6 h-6 grid place-items-center rounded text-slate-500 hover:bg-white disabled:opacity-30 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40">↓</button>
+        <button type="button" aria-label="Remove step" onClick={() => handlers.onRemoveStep(s.uid)} className="w-6 h-6 grid place-items-center rounded text-slate-500 hover:bg-white hover:text-rose-600 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40">×</button>
+      </div>
+    </li>
+  );
+}
+
+function MagicianSoFar({ build, handlers }: { build: MagBuildState; handlers: MagHandlers }) {
+  // Hide during intake (nothing committed yet) and while editing intake.
+  if (build.step === "intake") return null;
+  const rows: { key: string; label: string; value?: string; field: MagEditField | null }[] = [
+    { key: "title", label: "Title", value: build.title, field: "intake" },
+    { key: "purpose", label: "Purpose", value: build.purpose, field: "intake" },
+    { key: "when", label: "When", value: build.whenLabel, field: "intake" },
+    { key: "visibility", label: "Visibility", value: build.visibility === "company" ? "Company-wide" : build.visibility === "personal" ? "Personal" : undefined, field: "intake" },
+    { key: "watch", label: "Watch", value: build.watchLabel, field: "watch" },
+    { key: "scope", label: "Scope", value: build.scopeLabel, field: build.scope === "unit" ? "scopeUnit" : "scope" },
+    { key: "owner", label: "Owner", value: build.ownerLabel, field: "owner" },
+  ];
+  const visible = rows.filter((r) => r.value);
+  if (visible.length === 0) return null;
+  return (
+    <div className="rounded-md border border-slate-200 bg-slate-50/70 p-2.5">
+      <div className="flex items-center justify-between mb-1.5">
+        <div className="text-[11px] uppercase tracking-wide text-[#5B21B6] font-semibold">So far</div>
+        <div className="text-[10.5px] text-slate-500">Tap a line to change it</div>
+      </div>
+      <ul className="space-y-1">
+        {visible.map((r) => (
+          <li key={r.key} className="flex items-start gap-2 text-[12px]">
+            <span className="text-slate-500 w-[68px] shrink-0">{r.label}</span>
+            <span className="flex-1 text-slate-800">{r.value}</span>
+            {r.field && (
+              <button
+                type="button"
+                onClick={() => handlers.onBeginEdit(r.field!)}
+                className="text-[11px] font-semibold text-[#7C3AED] hover:underline focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40 rounded px-1"
+                aria-label={`Change ${r.label.toLowerCase()}`}
+              >
+                Change
+              </button>
+            )}
+          </li>
+        ))}
+        {build.steps.length > 0 && (build.step === "q6" || build.step === "q5") && (
+          <li className="flex items-start gap-2 text-[12px] pt-1 border-t border-slate-200/70 mt-1">
+            <span className="text-slate-500 w-[68px] shrink-0">Steps</span>
+            <span className="flex-1 text-slate-800">{build.steps.length} · {build.steps.map((s) => s.phrase).join(" · ")}</span>
+            {build.step === "q6" && (
+              <button
+                type="button"
+                onClick={handlers.onKeepEditing}
+                className="text-[11px] font-semibold text-[#7C3AED] hover:underline focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40 rounded px-1"
+              >
+                Change
+              </button>
+            )}
+          </li>
+        )}
+      </ul>
+    </div>
+  );
+}
+
+function MagBackBar({ onBack, editing, onCancelEdit }: { onBack: () => void; editing?: boolean; onCancelEdit?: () => void }) {
+  return (
+    <div className="flex items-center justify-between -mt-0.5">
+      <button
+        type="button"
+        onClick={onBack}
+        className="text-[11.5px] text-slate-500 hover:text-[#7C3AED] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40 rounded px-1"
+        aria-label="Back to previous question"
+      >
+        ← Back
+      </button>
+      {editing && onCancelEdit && (
         <button
           type="button"
-          onClick={submit}
-          disabled={!canSubmit}
-          className="px-3.5 py-1.5 rounded-full bg-[#7C3AED] text-white text-[12.5px] font-semibold hover:bg-[#6D28D9] disabled:bg-slate-200 disabled:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40"
+          onClick={onCancelEdit}
+          className="text-[11.5px] text-slate-500 hover:text-[#7C3AED] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40 rounded px-1"
         >
-          Start building →
+          Cancel change
         </button>
-      </div>
+      )}
     </div>
   );
 }
@@ -3893,14 +4134,31 @@ function MagicianIntake({ onSubmit }: { onSubmit: MagHandlers["onIntakeSubmit"] 
 function MagicianBuildPanel({ build, handlers }: { build: MagBuildState; handlers: MagHandlers }) {
   const UNIT_CHOICES = ["Flat 8, Stanley House", "Flat 6, Stanley House", "Flat 2, 5 Nugent Terrace"];
   const usedStepIds = new Set(build.steps.map((s) => s.id));
+  const isEditing = !!build.editing;
+  const canBack = build.step !== "intake" && !isEditing;
   return (
     <div className="ml-12 max-w-[480px] rounded-xl border border-[#7C3AED]/30 bg-white p-3 shadow-sm space-y-3">
+      {isEditing && build.editing?.field !== "intake" && (
+        <div className="flex items-center justify-between rounded-md bg-[#F5F3FF] border border-[#7C3AED]/30 px-2.5 py-1.5">
+          <span className="text-[11.5px] text-[#5B21B6] font-medium">Changing your earlier answer</span>
+          <button type="button" onClick={handlers.onCancelEdit} className="text-[11.5px] text-[#7C3AED] hover:underline focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40 rounded px-1">Cancel</button>
+        </div>
+      )}
+
+      <MagicianSoFar build={build} handlers={handlers} />
+
+      {canBack && <MagBackBar onBack={handlers.onGoBack} />}
+
       {build.step === "intake" && (
-        <MagicianIntake onSubmit={handlers.onIntakeSubmit} />
+        <MagicianIntake
+          onSubmit={handlers.onIntakeSubmit}
+          initial={build.title ? { title: build.title, purpose: build.purpose, description: build.description, whenKey: build.whenKey, whenLabel: build.whenLabel, visibility: build.visibility } : undefined}
+          onCancel={isEditing ? handlers.onCancelEdit : undefined}
+        />
       )}
       {build.step === "q1" && (
         <div>
-          <div className="text-[11px] uppercase tracking-wide text-[#7C3AED] font-semibold mb-2">Choose one</div>
+          <div className="text-[11px] uppercase tracking-wide text-[#7C3AED] font-semibold mb-2">{isEditing ? "Change what I watch" : "Choose one"}</div>
           <div className="flex flex-wrap gap-2">
             <MagOptionButton onClick={() => handlers.onQ1("rent_reviews", "Rent reviews")}>Rent reviews</MagOptionButton>
             <MagOptionButton onClick={() => handlers.onQ1("compliance", "Compliance certificates")}>Compliance certificates</MagOptionButton>
@@ -3954,15 +4212,7 @@ function MagicianBuildPanel({ build, handlers }: { build: MagBuildState; handler
           <div className="text-[11px] uppercase tracking-wide text-[#7C3AED] font-semibold mb-2">Steps · {build.steps.length}</div>
           <ol className="space-y-1.5 mb-2">
             {build.steps.map((s, i) => (
-              <li key={s.uid} className="flex items-start gap-2 rounded-md border border-slate-200 bg-slate-50 px-2 py-1.5">
-                <span className="text-[11px] font-semibold text-slate-500 mt-0.5 w-4 text-right">{i + 1}.</span>
-                <span className="flex-1 text-[12.5px] text-slate-800 leading-snug">{s.label}</span>
-                <div className="flex items-center gap-0.5">
-                  <button type="button" aria-label="Move up" disabled={i === 0} onClick={() => handlers.onMoveStep(s.uid, -1)} className="w-6 h-6 grid place-items-center rounded text-slate-500 hover:bg-white disabled:opacity-30 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40">↑</button>
-                  <button type="button" aria-label="Move down" disabled={i === build.steps.length - 1} onClick={() => handlers.onMoveStep(s.uid, 1)} className="w-6 h-6 grid place-items-center rounded text-slate-500 hover:bg-white disabled:opacity-30 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40">↓</button>
-                  <button type="button" aria-label="Remove step" onClick={() => handlers.onRemoveStep(s.uid)} className="w-6 h-6 grid place-items-center rounded text-slate-500 hover:bg-white hover:text-rose-600 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40">×</button>
-                </div>
-              </li>
+              <MagicianStepRow key={s.uid} s={s} i={i} total={build.steps.length} handlers={handlers} />
             ))}
             {build.steps.length === 0 && (
               <li className="text-[12px] text-slate-500 italic px-2 py-1.5">No steps yet — add one below.</li>
@@ -4001,9 +4251,10 @@ function MagicianBuildPanel({ build, handlers }: { build: MagBuildState; handler
       {build.step === "q6" && (
         <div>
           <div className="text-[11px] uppercase tracking-wide text-[#7C3AED] font-semibold mb-2">Ready when you are</div>
+          <div className="text-[12px] text-slate-600 mb-2">Tap any line in “So far” above to change it before we build.</div>
           <div className="flex flex-wrap gap-2">
             <MagOptionButton onClick={handlers.onBuild}>Build it</MagOptionButton>
-            <MagOptionButton onClick={handlers.onKeepEditing}>Keep editing</MagOptionButton>
+            <MagOptionButton onClick={handlers.onKeepEditing}>Keep editing steps</MagOptionButton>
           </div>
         </div>
       )}
