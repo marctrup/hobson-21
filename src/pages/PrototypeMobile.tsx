@@ -317,6 +317,17 @@ export default function PrototypeMobile() {
     },
   ]);
 
+  // Cross-component: unit tiles dispatch a scope-jump event
+  useEffect(() => {
+    const handler = (e: Event) => {
+      const detail = (e as CustomEvent).detail as Scope;
+      setScope(detail);
+      setTab("desk");
+    };
+    window.addEventListener("hobson-mobile-scope", handler);
+    return () => window.removeEventListener("hobson-mobile-scope", handler);
+  }, []);
+
   const reset = () => {
     setTab("desk");
     setScope({ level: "portfolio" });
