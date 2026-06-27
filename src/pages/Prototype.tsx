@@ -8562,14 +8562,14 @@ function PerformWorkspace({
             {recapOpen && (
               <div className="px-3 pb-3 pt-1 space-y-3 border-t border-slate-200">
                 {previousBeats.map((b) => (
-                  <BeatBubble key={b.id} beat={b} done detailOverride={b.detailFn ? b.detailFn({ chosenRent, setChosenRent, advance }) : undefined} />
+                  <BeatBubble key={b.id} beat={b} done detailOverride={b.detailFn ? b.detailFn({ chosenRent, setChosenRent, advance, section13Template: section13Template ?? null }) : undefined} />
                 ))}
               </div>
             )}
           </div>
         ) : (
           previousBeats.map((b) => (
-            <BeatBubble key={b.id} beat={b} done detailOverride={b.detailFn ? b.detailFn({ chosenRent, setChosenRent, advance }) : undefined} />
+            <BeatBubble key={b.id} beat={b} done detailOverride={b.detailFn ? b.detailFn({ chosenRent, setChosenRent, advance, section13Template: section13Template ?? null }) : undefined} />
           ))
         )}
         {currentBeat && (
@@ -8579,10 +8579,10 @@ function PerformWorkspace({
               streamingText={streamingActive ? streamingText : currentBeat.text}
               streaming={streamingActive}
               done={false}
-              detailOverride={!streamingActive && currentBeat.detailFn ? currentBeat.detailFn({ chosenRent, setChosenRent, advance }) : undefined}
+              detailOverride={!streamingActive && currentBeat.detailFn ? currentBeat.detailFn({ chosenRent, setChosenRent, advance, section13Template: section13Template ?? null }) : undefined}
             />
             {/* Inline decisions — only at genuine gates (decision, approval, flagged show-stopper, or finish) */}
-            {!streamingActive && !isComplete && currentBeat.gateFn && currentBeat.gateFn({ chosenRent, setChosenRent, advance })}
+            {!streamingActive && !isComplete && currentBeat.gateFn && currentBeat.gateFn({ chosenRent, setChosenRent, advance, section13Template: section13Template ?? null })}
             {!streamingActive && !isComplete && !currentBeat.gateFn && currentBeat.gate && (
               <div className="pl-[44px]">
                 <div className="inline-block max-w-[640px] rounded-2xl border border-[#DDD6FE] bg-[#F5F3FF] px-3 py-2.5 space-y-2">
