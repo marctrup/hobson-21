@@ -3941,7 +3941,14 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
             return <BrokerWorkArea character={c} contacts={contacts} onAdd={handleAddBrokerContact} />;
           }
           if (c.id === "inspector") {
-            return <InspectorWorkArea rules={inspectorConfirmed} onUpdateRules={setInspectorConfirmed} />;
+            return (
+              <InspectorWorkArea
+                rules={inspectorConfirmed}
+                onUpdateRules={setInspectorConfirmed}
+                onSetUpAnotherArea={inspectorBuildAnother}
+                buildActive={!!inspectorProposed || inspectorResearching || inspectorArea !== null}
+              />
+            );
           }
           return <AdminWorkArea character={c} />;
 
