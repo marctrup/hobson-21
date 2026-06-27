@@ -835,6 +835,416 @@ function ConfirmedRecap({ count }: { count: number }) {
   );
 }
 
+/* ---------------- Show-me table (in-chat library view) ---------------- */
+
+function ShowMeBubble({
+  streamKey, areaId, group, rules, onUpdate, onAdd,
+}: {
+  streamKey: string;
+  areaId: ComplianceArea;
+  group: RequirementCategory;
+  rules: ComplianceRequirement[];
+  onUpdate?: (id: string, patch: Partial<ComplianceRequirement>) => void;
+  onAdd?: (req: Omit<ComplianceRequirement, "id">) => void;
+}) {
+  const reduced = useReducedMotion();
+  const def = AREA_DEFS[areaId];
+  const meta = GROUP_META[group];
+  const intro =
+    group === "certification"
+      ? `Here are the ${meta.label.toLowerCase()} I'm watching under ${def.label.toLowerCase()}, and what's held against each. View a document, upload one to replace what's on file, edit a rule, or add one I've missed.`
+      : group === "notice"
+        ? `Here are the ${meta.label.toLowerCase()} I'm holding for ${def.label.toLowerCase()}. View the template on file, upload your own to override it, edit the rule, or add one I've missed.`
+        : `Here are the ${meta.label.toLowerCase()} I'm holding for ${def.label.toLowerCase()}. View the document on file, upload your own to override it, edit the rule, or add one I've missed.`;
+
+  const [introShown, setIntroShown] = useState(reduced ? intro : "");
+  const [introDone, setIntroDone] = useState(reduced);
+  useEffect(() => {
+    if (reduced) { setIntroShown(intro); setIntroDone(true); return; }
+    setIntroShown(""); setIntroDone(false);
+    const words = intro.split(" ");
+    let i = 0; let cancelled = false;
+    const step = () => {
+      if (cancelled) return;
+      i += 1;
+      setIntroShown(words.slice(0, i).join(" "));
+      if (i < words.length) setTimeout(step, 28 + Math.random() * 24);
+      else setIntroDone(true);
+    };
+    const t = setTimeout(step, 80);
+    return () => { cancelled = true; clearTimeout(t); };
+  }, [streamKey, intro, reduced]);
+
+  return (
+    <div className="flex items-end gap-2">
+      <CharacterAvatar src={INSPECTOR_CHARACTER.src} alt="The Inspector" />
+      <div className="max-w-[640px] w-full bg-[#EDE9FE] text-[#1F2330] text-sm leading-relaxed px-4 py-3 rounded-2xl rounded-bl-md">
+        <div className="whitespace-pre-line">
+          {introShown}
+          {!introDone && <span className="inline-block w-1.5 h-3.5 ml-0.5 bg-[#7C3AED] align-middle animate-pulse" />}
+        </div>
+        {introDone && (
+          <ShowMeTable
+            areaId={areaId}
+            group={group}
+            rules={rules}
+            onUpdate={onUpdate}
+            onAdd={onAdd}
+          />
+        )}
+      </div>
+    </div>
+  );
+}
+
+function ShowMeTable({
+  areaId, group, rules, onUpdate, onAdd,
+}: {
+  areaId: ComplianceArea;
+  group: RequirementCategory;
+  rules: ComplianceRequirement[];
+  onUpdate?: (id: string, patch: Partial<ComplianceRequirement>) => void;
+  onAdd?: (req: Omit<ComplianceRequirement, "id">) => void;
+}) {
+  const meta = GROUP_META[group];
+  const [openRowId, setOpenRowId] = useState<string | null>(null);
+  const [rowMode, setRowMode] = useState<"view" | "upload" | "edit" | null>(null);
+  const [showAdd, setShowAdd] = useState(false);
+
+  function trigger(id: string, mode: "view" | "upload" | "edit") {
+    if (openRowId === id && rowMode === mode) {
+      setOpenRowId(null); setRowMode(null);
+    } else {
+      setOpenRowId(id); setRowMode(mode);
+    }
+  }
+
+  return (
+    <div className="mt-3 rounded-lg border border-[#7C3AED]/20 bg-white overflow-hidden">
+      <table className="w-full text-[12px] text-left" style={{ tableLayout: "fixed" }}>
+        <colgroup>
+          <col style={{ width: "38%" }} />
+          <col style={{ width: "18%" }} />
+          <col style={{ width: "30%" }} />
+          <col style={{ width: "14%" }} />
+        </colgroup>
+        <thead>
+          <tr className="bg-slate-50 border-b border-slate-200 text-[11px] uppercase tracking-wide text-slate-500">
+            <th className="px-3 py-2 font-semibold">Requirement</th>
+            <th className="px-3 py-2 font-semibold">Renews</th>
+            <th className="px-3 py-2 font-semibold">Document on file</th>
+            <th className="px-3 py-2 font-semibold text-right">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {rules.length === 0 && (
+            <tr><td colSpan={4} className="px-3 py-4 text-center text-slate-500 italic">No {meta.label.toLowerCase()} yet.</td></tr>
+          )}
+          {rules.map((r) => {
+            const hasDoc = !!r.documentOnFile;
+            const isOpen = openRowId === r.id && rowMode !== null;
+            return (
+              <React.Fragment key={r.id}>
+                <tr className="border-b border-slate-100 align-top">
+                  <td className="px-3 py-2.5">
+                    <div className="font-semibold text-slate-900 break-words">{r.docType}</div>
+                    <div className="mt-1"><BasisBadge basis={r.basis} /></div>
+                  </td>
+                  <td className="px-3 py-2.5 text-slate-700">
+                    Every {r.durationValue} {r.durationUnit.toLowerCase()}
+                  </td>
+                  <td className="px-3 py-2.5">
+                    {hasDoc ? (
+                      <span className="text-slate-800 break-words">{r.documentOnFile}</span>
+                    ) : (
+                      <span className="text-slate-400 italic">None on file</span>
+                    )}
+                  </td>
+                  <td className="px-3 py-2.5">
+                    <div className="flex items-center justify-end gap-1">
+                      <RowIconBtn
+                        ariaLabel={hasDoc ? `View ${r.documentOnFile}` : `No document to view for ${r.docType}`}
+                        disabled={!hasDoc}
+                        active={isOpen && rowMode === "view"}
+                        onClick={() => trigger(r.id, "view")}
+                        title={hasDoc ? "View" : "No document on file"}
+                      >
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
+                          <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/>
+                        </svg>
+                      </RowIconBtn>
+                      <RowIconBtn
+                        ariaLabel={hasDoc ? `Upload to override ${r.documentOnFile}` : `Upload a document for ${r.docType}`}
+                        active={isOpen && rowMode === "upload"}
+                        highlight={!hasDoc}
+                        onClick={() => trigger(r.id, "upload")}
+                        title={hasDoc ? "Upload to override" : "Upload"}
+                      >
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
+                          <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><path d="M17 8l-5-5-5 5"/><path d="M12 3v12"/>
+                        </svg>
+                      </RowIconBtn>
+                      <RowIconBtn
+                        ariaLabel={`Edit rule for ${r.docType}`}
+                        active={isOpen && rowMode === "edit"}
+                        onClick={() => trigger(r.id, "edit")}
+                        title="Edit rule"
+                      >
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
+                          <path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 113 3L7 19l-4 1 1-4 12.5-12.5z"/>
+                        </svg>
+                      </RowIconBtn>
+                    </div>
+                  </td>
+                </tr>
+                {isOpen && (
+                  <tr className="bg-[#FAF8FF] border-b border-slate-100">
+                    <td colSpan={4} className="px-3 py-3">
+                      {rowMode === "view" && hasDoc && (
+                        <ViewPanel filename={r.documentOnFile!} onClose={() => { setOpenRowId(null); setRowMode(null); }} />
+                      )}
+                      {rowMode === "upload" && (
+                        <UploadOverridePanel
+                          req={r}
+                          onClose={() => { setOpenRowId(null); setRowMode(null); }}
+                          onPicked={(name) => { onUpdate?.(r.id, { documentOnFile: name }); setOpenRowId(null); setRowMode(null); }}
+                        />
+                      )}
+                      {rowMode === "edit" && onUpdate && (
+                        <RequirementEditor
+                          req={r}
+                          onChange={(patch) => onUpdate(r.id, patch)}
+                          onRemove={() => { setOpenRowId(null); setRowMode(null); }}
+                        />
+                      )}
+                    </td>
+                  </tr>
+                )}
+              </React.Fragment>
+            );
+          })}
+        </tbody>
+      </table>
+      <div className="px-3 py-3 bg-white border-t border-slate-100">
+        {showAdd && onAdd ? (
+          <AddRowForm
+            group={group}
+            areaId={areaId}
+            onCancel={() => setShowAdd(false)}
+            onAdd={(req) => { onAdd(req); setShowAdd(false); }}
+          />
+        ) : (
+          <button
+            type="button"
+            onClick={() => setShowAdd(true)}
+            disabled={!onAdd}
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md border border-dashed border-[#7C3AED]/40 text-[12px] text-[#5B21B6] hover:bg-[#F5F3FF] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED] disabled:opacity-50"
+            aria-label="Add a requirement manually"
+          >
+            <span aria-hidden>＋</span> Add a requirement manually
+          </button>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function RowIconBtn({
+  children, onClick, disabled, active, highlight, ariaLabel, title,
+}: {
+  children: React.ReactNode;
+  onClick: () => void;
+  disabled?: boolean;
+  active?: boolean;
+  highlight?: boolean;
+  ariaLabel: string;
+  title: string;
+}) {
+  const base = "inline-flex items-center justify-center w-7 h-7 rounded-md border focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]";
+  const cls = disabled
+    ? `${base} border-slate-200 bg-slate-50 text-slate-300 cursor-not-allowed`
+    : highlight
+      ? `${base} border-[#7C3AED] bg-[#7C3AED] text-white hover:bg-[#6D28D9]`
+      : active
+        ? `${base} border-[#7C3AED] bg-[#F5F3FF] text-[#5B21B6]`
+        : `${base} border-slate-300 bg-white text-slate-600 hover:bg-slate-50`;
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      disabled={disabled}
+      aria-label={ariaLabel}
+      aria-pressed={active}
+      title={title}
+      className={cls}
+    >
+      {children}
+    </button>
+  );
+}
+
+function ViewPanel({ filename, onClose }: { filename: string; onClose: () => void }) {
+  return (
+    <div className="rounded-md border border-slate-200 bg-white p-3">
+      <div className="flex items-start justify-between gap-3">
+        <div className="min-w-0">
+          <div className="text-[11px] uppercase tracking-wide text-slate-500 font-semibold">Document preview</div>
+          <div className="text-[13px] font-semibold text-slate-900 truncate mt-0.5">{filename}</div>
+          <div className="text-[11px] text-slate-500 mt-0.5">
+            Opens in the Professor's Documents — this is the file Hobson is reading for dates.
+          </div>
+        </div>
+        <button
+          type="button"
+          onClick={onClose}
+          className="text-[11px] text-slate-500 hover:text-slate-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED] rounded px-1"
+          aria-label="Close preview"
+        >Close</button>
+      </div>
+      <div className="mt-2 h-24 rounded border border-dashed border-slate-300 bg-slate-50 grid place-items-center text-[11px] text-slate-500">
+        Simulated preview — {filename}
+      </div>
+    </div>
+  );
+}
+
+function UploadOverridePanel({
+  req, onClose, onPicked,
+}: { req: ComplianceRequirement; onClose: () => void; onPicked: (filename: string) => void }) {
+  const fileRef = React.useRef<HTMLInputElement | null>(null);
+  const hasCurrent = !!req.documentOnFile;
+  return (
+    <div className="rounded-md border border-[#7C3AED]/30 bg-white p-3">
+      <div className="text-[11px] uppercase tracking-wide text-[#5B21B6] font-semibold">
+        {hasCurrent ? "Replace the document held for" : "Upload a document for"} {req.docType}
+      </div>
+      <div className="text-[12px] text-slate-700 mt-1">
+        Current: <span className={hasCurrent ? "text-slate-900" : "italic text-slate-400"}>
+          {hasCurrent ? req.documentOnFile : "None on file"}
+        </span>
+      </div>
+      <div className="text-[11px] text-slate-500 mt-0.5">
+        The Professor will read the new file and update the dates — feeding the Compliance summary.
+      </div>
+      <div className="mt-2 flex items-center gap-2">
+        <button
+          type="button"
+          onClick={() => fileRef.current?.click()}
+          className="px-3 py-1.5 rounded-md bg-[#7C3AED] text-white text-[12px] font-semibold hover:bg-[#6D28D9] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]"
+        >Choose file</button>
+        <button
+          type="button"
+          onClick={onClose}
+          className="px-3 py-1.5 rounded-md border border-slate-300 bg-white text-[12px] text-slate-700 hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-300"
+        >Cancel</button>
+        <input
+          ref={fileRef}
+          type="file"
+          className="sr-only"
+          onChange={(e) => {
+            const f = e.target.files?.[0];
+            if (f) onPicked(f.name);
+            e.currentTarget.value = "";
+          }}
+        />
+      </div>
+    </div>
+  );
+}
+
+function AddRowForm({
+  group, areaId, onCancel, onAdd,
+}: {
+  group: RequirementCategory;
+  areaId: ComplianceArea;
+  onCancel: () => void;
+  onAdd: (req: Omit<ComplianceRequirement, "id">) => void;
+}) {
+  const [name, setName] = useState("");
+  const [value, setValue] = useState(1);
+  const [unit, setUnit] = useState<DurationUnit>("Years");
+  const [anchor, setAnchor] = useState("certificate date");
+  const [basis, setBasis] = useState<RequirementBasis>("required");
+  return (
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        const t = name.trim();
+        if (!t) return;
+        onAdd({
+          docType: t,
+          matchTerms: [t.toLowerCase()],
+          basis,
+          durationValue: value,
+          durationUnit: unit,
+          anchor,
+          appliesTo: "unit",
+          category: group,
+          areaId,
+        });
+      }}
+      className="rounded-md border border-[#7C3AED]/30 bg-white p-3 space-y-2"
+    >
+      <div className="text-[11px] uppercase tracking-wide text-[#5B21B6] font-semibold">Add a requirement manually</div>
+      <input
+        autoFocus
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        placeholder="Document type (e.g. Legionella risk assessment)"
+        className="w-full px-3 py-1.5 rounded-md border border-slate-300 text-[12px] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]"
+        aria-label="Document type"
+      />
+      <input
+        value={anchor}
+        onChange={(e) => setAnchor(e.target.value)}
+        placeholder="Anchor (e.g. inspection date)"
+        className="w-full px-3 py-1.5 rounded-md border border-slate-300 text-[12px] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]"
+        aria-label="Renewal anchor"
+      />
+      <div className="flex flex-wrap items-center gap-2">
+        <label className="text-[11px] text-slate-600">Renew every</label>
+        <input
+          type="number"
+          min={1}
+          value={value}
+          onChange={(e) => setValue(Math.max(1, Number(e.target.value) || 1))}
+          className="w-16 px-2 py-1 rounded-md border border-slate-300 text-[12px] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]"
+          aria-label="Renewal duration"
+        />
+        <select
+          value={unit}
+          onChange={(e) => setUnit(e.target.value as DurationUnit)}
+          className="px-2 py-1 rounded-md border border-slate-300 text-[12px] bg-white focus:outline-none focus:ring-2 focus:ring-[#7C3AED]"
+          aria-label="Renewal unit"
+        >
+          <option value="Years">Years</option>
+          <option value="Months">Months</option>
+        </select>
+        <select
+          value={basis}
+          onChange={(e) => setBasis(e.target.value as RequirementBasis)}
+          className="px-2 py-1 rounded-md border border-slate-300 text-[12px] bg-white focus:outline-none focus:ring-2 focus:ring-[#7C3AED]"
+          aria-label="Legal basis"
+        >
+          <option value="required">Legally required</option>
+          <option value="applicable">Where applicable</option>
+        </select>
+        <div className="flex-1" />
+        <button
+          type="button"
+          onClick={onCancel}
+          className="px-2.5 py-1 rounded-md text-[11px] text-slate-600 hover:bg-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-300"
+        >Cancel</button>
+        <button
+          type="submit"
+          disabled={!name.trim()}
+          className="px-3 py-1 rounded-md bg-[#7C3AED] text-white text-[11px] font-semibold hover:bg-[#6D28D9] disabled:bg-slate-200 disabled:text-slate-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]"
+        >Add</button>
+      </div>
+    </form>
+  );
+}
+
 export function InspectorChat(props: InspectorChatProps) {
   const {
     events, area, proposed, confirmed, isResearching,
