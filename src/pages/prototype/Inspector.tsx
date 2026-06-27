@@ -33,6 +33,8 @@ export type ComplianceArea = "health_safety" | "notices" | "lease" | "other";
 
 export type RequirementBasis = "required" | "applicable";
 export type DurationUnit = "Years" | "Months";
+export type RequirementCategory = "certification" | "notice" | "contract";
+export type VersionSource = "hobson" | "uploaded";
 
 export type ComplianceRequirement = {
   id: string;
@@ -43,7 +45,15 @@ export type ComplianceRequirement = {
   durationUnit: DurationUnit;
   anchor: string;            // human-readable anchor description
   appliesTo: "unit" | "building";
+  category: RequirementCategory;
+  /** Short note shown on contract/notice cards in place of renewal cadence. */
+  description?: string;
+  /** Only meaningful for contracts/notices — certifications don't have versions. */
+  versionSource?: VersionSource;
+  /** Filename the user uploaded as their own version, if any. */
+  uploadedFileName?: string;
 };
+
 
 export type InspectorEvent =
   | { kind: "inspector"; id: string; text: string }
