@@ -262,7 +262,9 @@ function ComplianceView({ scope, onOpenUnit, augmentCompliance }: { scope: Summa
     );
   };
 
-  const missing = rows.filter((r) => r.missing).length;
+  const missingLegal = rows.filter((r) => r.missing && r.legallyRequired).length;
+  const missingBusiness = rows.filter((r) => r.missing && r.businessRequired).length;
+  const missingOther = rows.filter((r) => r.missing && !r.legallyRequired && !r.businessRequired).length;
 
   return (
     <table className="w-full text-[12.5px] table-fixed">
@@ -284,7 +286,10 @@ function ComplianceView({ scope, onOpenUnit, augmentCompliance }: { scope: Summa
       <tfoot>
         <tr>
           <td colSpan={headers.length} className="px-3 py-2 text-[11px] text-slate-500 bg-white border-t border-slate-100">
-            {rows.length} records {missing > 0 && <>· <span className="text-rose-700 font-medium">{missing} flagged as not determined</span></>}
+            {rows.length} records
+            {missingLegal > 0 && <> · <span className="text-rose-700 font-medium">{missingLegal} missing — legally required</span></>}
+            {missingBusiness > 0 && <> · <span className="text-amber-800 font-medium">{missingBusiness} missing — required</span></>}
+            {missingOther > 0 && <> · <span className="text-slate-600">{missingOther} not determined</span></>}
           </td>
         </tr>
       </tfoot>
@@ -305,6 +310,13 @@ function ComplianceTr({
   const onClick = () => {
     if (clickable && r.unitId) onOpenUnit?.(r.propertyId, r.unitId);
   };
+  const bg = r.missing
+    ? r.legallyRequired
+      ? "bg-rose-100/40"
+      : r.businessRequired
+        ? "bg-amber-50/60"
+        : "bg-rose-50/30"
+    : "";
   return (
     <tr
       tabIndex={clickable ? 0 : -1}
@@ -316,7 +328,7 @@ function ComplianceTr({
           onClick();
         }
       }}
-      className={`border-b border-slate-100 last:border-b-0 ${clickable ? "cursor-pointer hover:bg-[#F5F3FF] focus:bg-[#EDE9FE] focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#7C3AED]/40" : ""} ${r.missing ? (r.legallyRequired ? "bg-rose-100/40" : "bg-rose-50/30") : ""}`}
+      className={`border-b border-slate-100 last:border-b-0 ${clickable ? "cursor-pointer hover:bg-[#F5F3FF] focus:bg-[#EDE9FE] focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#7C3AED]/40" : ""} ${bg}`}
     >
       {showUnit && unitColumn && (
         <td className="px-3 py-2 align-middle text-slate-700 truncate">
@@ -330,7 +342,12 @@ function ComplianceTr({
                 <span className="text-rose-800 font-medium truncate">{r.documentName ?? "Required document"} — missing</span>
                 <LegallyRequiredChip />
               </span>
-            : <span className="inline-flex items-center gap-2 min-w-0"><span className="italic text-slate-400 truncate">Not determined</span><MissingChip /></span>
+            : r.businessRequired
+              ? <span className="inline-flex items-center gap-2 min-w-0">
+                  <span className="text-amber-900 font-medium truncate">{r.documentName ?? "Required document"} — missing</span>
+                  <BusinessRequiredChip />
+                </span>
+              : <span className="inline-flex items-center gap-2 min-w-0"><span className="italic text-slate-400 truncate">Not determined</span><MissingChip /></span>
           : valOrND(r.documentName)}
       </td>
       <td className="px-3 py-2 align-middle truncate">{r.missing ? ND : valOrND(r.effectiveDate)}</td>
