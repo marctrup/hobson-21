@@ -924,7 +924,7 @@ function RecalibrationPanel({
                 <span className="w-1.5 h-1.5 rounded-full bg-[#7C3AED] animate-pulse" style={{ animationDelay: "150ms" }} />
                 <span className="w-1.5 h-1.5 rounded-full bg-[#7C3AED] animate-pulse" style={{ animationDelay: "300ms" }} />
               </span>
-              Re-checking gov.uk and HSE guidance for {GROUP_META[state.group].label.toLowerCase()}…
+              Re-checking gov.uk and HSE guidance for {state.scopeLabel ?? GROUP_META[state.group].label.toLowerCase()}…
             </div>
           ) : state.changes.length === 0 ? (
             <div className="text-[12px] text-slate-700">
