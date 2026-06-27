@@ -2216,6 +2216,19 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
     return () => ro.disconnect();
   }, []);
 
+  /* ----- Admin (Magician) chat: keep pinned to bottom as the build progresses
+     so the user never has to chase new questions/bubbles with the scrollbar. ----- */
+  useEffect(() => {
+    if (!adminMode) return;
+    const el = chatBodyRef.current;
+    if (!el) return;
+    // Defer to next frame so the new content has laid out.
+    const id = requestAnimationFrame(() => {
+      el.scrollTop = el.scrollHeight;
+    });
+    return () => cancelAnimationFrame(id);
+  }, [adminMode, adminCharacter, magicianEvents, magBuild?.step, magBuild?.steps?.length, magStreamingId, brokerEvents, profEvents]);
+
   /* ----- pre-fill demo rent question per level ----- */
   useEffect(() => {
     const pre = rentPrefillFor(view, selectedPropertyId, selectedUnitId);
