@@ -3418,6 +3418,10 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                 onCancelBuild: magCancelBuild,
                 onSetStepTemplate: magSetStepTemplate,
               } : undefined}
+              onCreateWorkflow={adminCharacter === "magician" ? handleCreateWorkflow : undefined}
+              onAddContact={adminCharacter === "broker" ? handleAddBrokerContact : undefined}
+              onUploadContacts={adminCharacter === "broker" ? handleUploadBrokerContacts : undefined}
+              onUploadDocuments={adminCharacter === "professor" ? handleProfessorUpload : undefined}
             />
             )
 
