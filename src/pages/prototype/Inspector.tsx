@@ -1250,6 +1250,7 @@ export function InspectorWorkArea({
       if (!cur) return m;
       return { ...m, [group]: { ...cur, resolved: { ...cur.resolved, [changeId]: decision } } };
     });
+    noteChange(change, decision);
     if (decision === "applied" && onUpdateRules) {
       onUpdateRules((rs) => rs.map((r) => {
         if (r.id !== change.targetRuleId) return r;
