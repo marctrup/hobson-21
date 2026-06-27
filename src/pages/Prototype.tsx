@@ -1774,6 +1774,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
         stepCount: b.steps.length,
         justBuilt: true,
         stepTemplates: collectStepTemplates(b.steps),
+        steps: b.steps.map((s) => ({ id: s.id, label: s.label, phrase: s.phrase })),
       };
       setWorkflows((arr) => [wf, ...arr.map((w) => ({ ...w, justBuilt: false }))]);
       const builtId = magNewId("mb");
