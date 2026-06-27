@@ -1725,6 +1725,57 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
     });
   };
 
+  // ----- Pause / cancel / resume a workflow build -----
+  const magPauseSave = () => {
+    setMagBuild((b) => {
+      if (!b) return b;
+      const phrases = b.steps.map((s) => s.phrase);
+      const actionSummary = phrases.length === 0
+        ? "bring it to you for approval"
+        : `${phrases.slice(0, -1).join(", ")}${phrases.length > 1 ? " and " : ""}${phrases[phrases.length - 1]} — then bring it to you for approval`;
+      const id = `wf-draft-${Date.now()}`;
+      const trigger = b.triggerPhrase ? triggerSentenceFor(b.watch, b.triggerPhrase) : "When this is ready to watch";
+      const wf: Workflow = {
+        id,
+        name: b.title?.trim() || "Untitled workflow",
+        purpose: b.purpose?.trim() || "Draft — picked up from where you left off.",
+        description: b.description?.trim() || undefined,
+        whenLabel: b.whenLabel,
+        visibility: b.visibility || "personal",
+        icon: b.watch === "compliance" ? "shield" : b.watch === "notices" ? "bell" : "calendar",
+        tone: "slate", status: "draft",
+        trigger,
+        action: actionSummary,
+        scopeLabel: b.scopeLabel || "Not yet set",
+        scopeDetail: b.scopeDetail,
+        owner: b.owner || { kind: "all_teams" },
+        lastAdjusted: "just now",
+        stepCount: b.steps.length,
+        justBuilt: true,
+        draftState: b,
+      };
+      setWorkflows((arr) => [wf, ...arr.map((w) => ({ ...w, justBuilt: false }))]);
+      setTimeout(() => magAsk("Saved — we'll pick this up whenever you're ready."), 350);
+      return null;
+    });
+  };
+
+  const magCancelBuild = () => {
+    setMagBuild(null);
+    setTimeout(() => magAsk("Of course — discarded."), 250);
+  };
+
+  const magResumeDraft = (id: string) => {
+    const wf = workflows.find((w) => w.id === id);
+    if (!wf || !wf.draftState) return;
+    setMagicianEvents([]);
+    setMagBuild(wf.draftState);
+    setWorkflows((arr) => arr.filter((w) => w.id !== id));
+    setTimeout(() => magAsk(`Picking up '${wf.name}' where we left off — change anything you like.`), 300);
+  };
+
+
+
 
   const initialsFromName = (name: string) => {
     const parts = name.trim().split(/\s+/).filter(Boolean);
