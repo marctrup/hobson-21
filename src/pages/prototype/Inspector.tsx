@@ -1445,16 +1445,21 @@ function InspectorNotesStrip({
   );
 }
 
-export function InspectorWorkArea({
-
-  rules,
-  onUpdateRules,
+/* ---------------- Per-area panel ----------------
+ * One independent panel per compliance area. Carries its own schedule,
+ * recalibration state and group sections. Re-checking one area never
+ * re-checks another.
+ */
+function AreaPanel({
+  areaId, rules, onUpdateRules, defaultOpen,
 }: {
+  areaId: ComplianceArea;
   rules: ComplianceRequirement[];
   onUpdateRules?: React.Dispatch<React.SetStateAction<ComplianceRequirement[]>>;
+  defaultOpen: boolean;
 }) {
-  const required = rules.filter((r) => r.basis === "required");
-  const applicable = rules.filter((r) => r.basis === "applicable");
+  const def = AREA_DEFS[areaId];
+  const [open, setOpen] = useState(defaultOpen);
 
   const certs     = rules.filter((r) => r.category === "certification");
   const notices   = rules.filter((r) => r.category === "notice");
@@ -1463,54 +1468,45 @@ export function InspectorWorkArea({
   const [recal, setRecal] = useState<Record<RequirementCategory, RecalibrationState | null>>({
     certification: null, notice: null, contract: null,
   });
-
-  // Standing schedule (resets with the prototype). Seed: quarterly cadence, last checked 14 days ago.
   const [frequency, setFrequency] = useState<CheckFrequency>("quarterly");
   const [lastChecked, setLastChecked] = useState<Date>(() => {
     const d = new Date(); d.setDate(d.getDate() - 14); return d;
   });
   const [globalRecal, setGlobalRecal] = useState<RecalibrationState | null>(null);
 
-  // Single source of truth for "awaiting your confirmation" — shared by Notes,
-  // schedule context, and recalibration cards. Seeded from the scripted last check.
-  const [pending, setPending] = useState<{ pst: boolean; howToRent: boolean }>({ pst: true, howToRent: true });
-
-  function noteChange(change: RecalibrationChange, decision: "applied" | "dismissed") {
-    // Both decisions clear the pending flag (user has made a call).
-    if (change.kind === "document_updated") setPending((p) => ({ ...p, pst: false }));
-    if (change.kind === "edition_updated")  setPending((p) => ({ ...p, howToRent: false }));
+  function applyArea<T extends RecalibrationState>(s: T): T {
+    return { ...s, unchangedNote: def.unchangedNote };
   }
 
   function runFullCheck() {
-    const next = buildFullRecalibration(rules);
+    const next = applyArea(buildFullRecalibration(rules));
     setGlobalRecal(next);
     window.setTimeout(() => {
       setGlobalRecal((cur) => (cur ? { ...cur, phase: "results" } : cur));
       setLastChecked(new Date());
-      // A fresh check re-surfaces the same scripted pending items.
-      setPending({ pst: true, howToRent: true });
     }, 1500);
   }
 
   function closeGlobal() { setGlobalRecal(null); }
 
-  function resolveGlobal(changeId: string, decision: "applied" | "dismissed", change: RecalibrationChange) {
-    setGlobalRecal((cur) => cur ? { ...cur, resolved: { ...cur.resolved, [changeId]: decision } } : cur);
-    noteChange(change, decision);
-    if (decision === "applied" && onUpdateRules) {
-      onUpdateRules((rs) => rs.map((r) => {
-        if (r.id !== change.targetRuleId) return r;
-        if (change.kind === "document_updated")  return { ...r, versionSource: "hobson", uploadedFileName: undefined, description: change.newVersionLabel };
-        if (change.kind === "edition_updated")   return { ...r, versionSource: "hobson", uploadedFileName: undefined, description: change.newEditionLabel };
-        if (change.kind === "frequency_changed") return { ...r, durationValue: change.newValue, durationUnit: change.newUnit };
-        return r;
-      }));
-    }
+  function applyDecision(change: RecalibrationChange) {
+    if (!onUpdateRules) return;
+    onUpdateRules((rs) => rs.map((r) => {
+      if (r.id !== change.targetRuleId) return r;
+      if (change.kind === "document_updated")  return { ...r, versionSource: "hobson", uploadedFileName: undefined, description: change.newVersionLabel };
+      if (change.kind === "edition_updated")   return { ...r, versionSource: "hobson", uploadedFileName: undefined, description: change.newEditionLabel };
+      if (change.kind === "frequency_changed") return { ...r, durationValue: change.newValue, durationUnit: change.newUnit };
+      return r;
+    }));
   }
 
+  function resolveGlobal(changeId: string, decision: "applied" | "dismissed", change: RecalibrationChange) {
+    setGlobalRecal((cur) => cur ? { ...cur, resolved: { ...cur.resolved, [changeId]: decision } } : cur);
+    if (decision === "applied") applyDecision(change);
+  }
 
   function startRecalibrate(group: RequirementCategory) {
-    const next = buildRecalibration(group, rules);
+    const next = applyArea(buildRecalibration(group, rules));
     setRecal((m) => ({ ...m, [group]: next }));
     window.setTimeout(() => {
       setRecal((m) => {
@@ -1520,33 +1516,167 @@ export function InspectorWorkArea({
       });
     }, 1400);
   }
-
-  function closeRecal(group: RequirementCategory) {
-    setRecal((m) => ({ ...m, [group]: null }));
-  }
-
+  function closeRecal(group: RequirementCategory) { setRecal((m) => ({ ...m, [group]: null })); }
   function resolveChange(group: RequirementCategory, changeId: string, decision: "applied" | "dismissed", change: RecalibrationChange) {
     setRecal((m) => {
       const cur = m[group];
       if (!cur) return m;
       return { ...m, [group]: { ...cur, resolved: { ...cur.resolved, [changeId]: decision } } };
     });
-    noteChange(change, decision);
-    if (decision === "applied" && onUpdateRules) {
-      onUpdateRules((rs) => rs.map((r) => {
-        if (r.id !== change.targetRuleId) return r;
-        if (change.kind === "document_updated")  return { ...r, versionSource: "hobson", uploadedFileName: undefined, description: change.newVersionLabel };
-        if (change.kind === "edition_updated")   return { ...r, versionSource: "hobson", uploadedFileName: undefined, description: change.newEditionLabel };
-        if (change.kind === "frequency_changed") return { ...r, durationValue: change.newValue, durationUnit: change.newUnit };
-        return r;
-      }));
-    }
+    if (decision === "applied") applyDecision(change);
   }
-
   function updateRule(id: string, patch: Partial<ComplianceRequirement>) {
     if (!onUpdateRules) return;
     onUpdateRules((rs) => rs.map((r) => (r.id === id ? { ...r, ...patch } : r)));
   }
+
+  const required = rules.filter((r) => r.basis === "required").length;
+  const applicable = rules.filter((r) => r.basis === "applicable").length;
+  const panelId = `area-panel-${areaId}`;
+
+  return (
+    <section className="rounded-xl border border-slate-200 bg-white">
+      <button
+        type="button"
+        aria-expanded={open}
+        aria-controls={panelId}
+        onClick={() => setOpen((v) => !v)}
+        className="w-full flex items-center justify-between gap-3 px-4 py-3 text-left hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED] rounded-xl"
+      >
+        <div className="flex items-center gap-3 min-w-0">
+          <svg
+            className={`w-4 h-4 text-[#5B21B6] shrink-0 transition-transform ${open ? "rotate-90" : ""}`}
+            viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden
+          >
+            <path d="M9 6l6 6-6 6" />
+          </svg>
+          <div className="min-w-0">
+            <div className="text-[13px] font-semibold text-slate-900 truncate">
+              {def.label} <span className="text-slate-500 font-normal">· {def.sublabel}</span>
+            </div>
+            <div className="text-[11px] text-slate-500 truncate">
+              {rules.length} requirement{rules.length === 1 ? "" : "s"} · {required} legally required · {applicable} where applicable · last checked {fmtDate(lastChecked)}
+            </div>
+          </div>
+        </div>
+      </button>
+
+      {open && (
+        <div id={panelId} className="px-4 pb-4 space-y-4 border-t border-slate-100 pt-4">
+          <ScheduleHeader
+            frequency={frequency}
+            onFrequency={setFrequency}
+            lastChecked={lastChecked}
+            onCheckNow={runFullCheck}
+            busy={!!globalRecal && globalRecal.phase === "researching"}
+          />
+          {globalRecal && (
+            <RecalibrationPanel
+              state={globalRecal}
+              onResolve={resolveGlobal}
+              onDismissAll={closeGlobal}
+            />
+          )}
+
+          <div className="space-y-4">
+            <GroupSection
+              group="certification"
+              rules={certs}
+              onUpdateRule={updateRule}
+              onRecalibrate={() => startRecalibrate("certification")}
+              recal={recal.certification}
+              onResolve={(id, d, c) => resolveChange("certification", id, d, c)}
+              onClose={() => closeRecal("certification")}
+            />
+            {notices.length > 0 && (
+              <GroupSection
+                group="notice"
+                rules={notices}
+                onUpdateRule={updateRule}
+                onRecalibrate={() => startRecalibrate("notice")}
+                recal={recal.notice}
+                onResolve={(id, d, c) => resolveChange("notice", id, d, c)}
+                onClose={() => closeRecal("notice")}
+              />
+            )}
+            {contracts.length > 0 && (
+              <GroupSection
+                group="contract"
+                rules={contracts}
+                onUpdateRule={updateRule}
+                onRecalibrate={() => startRecalibrate("contract")}
+                recal={recal.contract}
+                onResolve={(id, d, c) => resolveChange("contract", id, d, c)}
+                onClose={() => closeRecal("contract")}
+              />
+            )}
+          </div>
+        </div>
+      )}
+    </section>
+  );
+}
+
+/* ---------------- Build CTA — sibling of Magician's "Create a workflow" ---------------- */
+function AddAreaBox({ onClick, disabled }: { onClick: () => void; disabled?: boolean }) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      disabled={disabled}
+      className="w-full flex items-start gap-3 px-4 py-4 rounded-xl border border-dashed border-[#7C3AED]/40 bg-[#FAF8FF] hover:bg-[#F5F3FF] text-left transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED] disabled:opacity-50 disabled:cursor-not-allowed"
+    >
+      <span
+        aria-hidden
+        className="w-9 h-9 shrink-0 rounded-full bg-white border border-[#7C3AED]/30 grid place-items-center text-[#7C3AED]"
+      >
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+          <path d="M12 5v14M5 12h14"/>
+        </svg>
+      </span>
+      <span className="min-w-0">
+        <span className="block text-[13px] font-semibold text-slate-900">Set up another area of compliance</span>
+        <span className="block text-[12px] text-slate-600 mt-0.5">Financial, environmental, licensing, or your own — I'll find what's required.</span>
+      </span>
+    </button>
+  );
+}
+
+export function InspectorWorkArea({
+  rules,
+  onUpdateRules,
+  onSetUpAnotherArea,
+  buildActive = false,
+}: {
+  rules: ComplianceRequirement[];
+  onUpdateRules?: React.Dispatch<React.SetStateAction<ComplianceRequirement[]>>;
+  onSetUpAnotherArea?: () => void;
+  buildActive?: boolean;
+}) {
+  const required = rules.filter((r) => r.basis === "required").length;
+  const applicable = rules.filter((r) => r.basis === "applicable").length;
+
+  // Group rules by area (legacy untagged → health_safety).
+  const presentAreas: ComplianceArea[] = [];
+  const byArea = new Map<ComplianceArea, ComplianceRequirement[]>();
+  for (const r of rules) {
+    const a = r.areaId ?? "health_safety";
+    if (!byArea.has(a)) { byArea.set(a, []); presentAreas.push(a); }
+    byArea.get(a)!.push(r);
+  }
+
+  // Notes strip surfaces H&S-specific pending items (PST + How to Rent).
+  const hsRules = byArea.get("health_safety") ?? [];
+  const hasHS = hsRules.length > 0;
+
+  // Per-area lastChecked is held inside each AreaPanel, but the Notes strip
+  // needs a single "last checked" anchor for the opening paragraph.
+  // We use a stable seed (14 days ago) shared with AreaPanel defaults.
+  const stripLastChecked = useMemo(() => {
+    const d = new Date(); d.setDate(d.getDate() - 14); return d;
+  }, []);
+  const stripNextDue = useMemo(() => addMonths(stripLastChecked, 3), [stripLastChecked]);
+  const [pending] = useState<{ pst: boolean; howToRent: boolean }>({ pst: true, howToRent: true });
 
   return (
     <div className="absolute inset-0 bg-white z-[450] flex flex-col">
@@ -1560,17 +1690,17 @@ export function InspectorWorkArea({
             <div className="text-[11px] text-slate-500">
               {rules.length === 0
                 ? "No rules yet — set them up on the left."
-                : `${required.length} legally required · ${applicable.length} where applicable`}
+                : `${presentAreas.length} area${presentAreas.length === 1 ? "" : "s"} · ${required} legally required · ${applicable} where applicable`}
             </div>
           </div>
         </div>
       </header>
 
-      {rules.length > 0 && (
+      {hasHS && (
         <InspectorNotesStrip
-          lastChecked={lastChecked}
-          nextDue={addMonths(lastChecked, FREQUENCY_OPTIONS.find((f) => f.value === frequency)?.months ?? 3)}
-          rulesCount={rules.length}
+          lastChecked={stripLastChecked}
+          nextDue={stripNextDue}
+          rulesCount={hsRules.length}
           pending={pending}
           gapsCoverage={{ commercial: true }}
         />
@@ -1578,76 +1708,43 @@ export function InspectorWorkArea({
 
       <div className="flex-1 overflow-y-auto px-6 py-6">
         <div className="max-w-3xl mx-auto space-y-6">
-          {rules.length > 0 && (
-            <>
-              <ScheduleHeader
-                frequency={frequency}
-                onFrequency={setFrequency}
-                lastChecked={lastChecked}
-                onCheckNow={runFullCheck}
-                busy={!!globalRecal && globalRecal.phase === "researching"}
-              />
-              {globalRecal && (
-                <RecalibrationPanel
-                  state={globalRecal}
-                  onResolve={resolveGlobal}
-                  onDismissAll={closeGlobal}
-                />
-              )}
-            </>
-          )}
-
           <section className="rounded-xl border border-[#7C3AED]/20 bg-[#FAF8FF] p-4">
             <div className="text-[12px] font-semibold text-[#5B21B6] mb-1">How this connects</div>
             <p className="text-[12px] text-slate-700 leading-relaxed">
-              The Professor extracts dates from your documents. I check them against the rules below.
+              The Professor extracts dates from your documents. I check them against the rules in each area below.
               Anything missing or out of date appears in the Compliance summary — a missing
               <span className="font-semibold"> legally required</span> document is flagged accordingly.
-              The standing check above runs me across the whole set on your chosen cadence;
-              use <span className="font-semibold">Update</span> on any group for a one-off re-check.
+              Each area carries its own standing check; use <span className="font-semibold">Update</span> on any group for a one-off re-check.
             </p>
           </section>
 
-
           {rules.length === 0 ? (
             <div className="rounded-xl border border-dashed border-slate-300 bg-slate-50 p-10 text-center">
-              <div className="text-[13px] font-semibold text-slate-700 mb-1">No compliance rules yet</div>
+              <div className="text-[13px] font-semibold text-slate-700 mb-1">No compliance areas yet</div>
               <div className="text-[12px] text-slate-500">Pick an area on the left and I'll propose what the law requires.</div>
             </div>
           ) : (
-            <div className="space-y-4">
-              <GroupSection
-                group="certification"
-                rules={certs}
-                onUpdateRule={updateRule}
-                onRecalibrate={() => startRecalibrate("certification")}
-                recal={recal.certification}
-                onResolve={(id, d, c) => resolveChange("certification", id, d, c)}
-                onClose={() => closeRecal("certification")}
-              />
-              <GroupSection
-                group="notice"
-                rules={notices}
-                onUpdateRule={updateRule}
-                onRecalibrate={() => startRecalibrate("notice")}
-                recal={recal.notice}
-                onResolve={(id, d, c) => resolveChange("notice", id, d, c)}
-                onClose={() => closeRecal("notice")}
-              />
-              <GroupSection
-                group="contract"
-                rules={contracts}
-                onUpdateRule={updateRule}
-                onRecalibrate={() => startRecalibrate("contract")}
-                recal={recal.contract}
-                onResolve={(id, d, c) => resolveChange("contract", id, d, c)}
-                onClose={() => closeRecal("contract")}
-              />
+            <div className="space-y-3">
+              {presentAreas.map((aid, idx) => (
+                <AreaPanel
+                  key={aid}
+                  areaId={aid}
+                  rules={byArea.get(aid)!}
+                  onUpdateRules={onUpdateRules}
+                  defaultOpen={idx === 0}
+                />
+              ))}
             </div>
+          )}
+
+          {/* Build CTA — hidden during an active build, like the Magician's */}
+          {!buildActive && onSetUpAnotherArea && (
+            <AddAreaBox onClick={onSetUpAnotherArea} />
           )}
         </div>
       </div>
     </div>
   );
 }
+
 
