@@ -2895,6 +2895,8 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                 onBeginEdit: magBeginEdit,
                 onCancelEdit: magCancelEdit,
                 onGoBack: magGoBack,
+                onPauseSave: magPauseSave,
+                onCancelBuild: magCancelBuild,
               } : undefined}
             />
 
