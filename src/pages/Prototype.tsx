@@ -11,6 +11,8 @@ import characterProfessor from "@/assets/prototype/character-professor.png";
 import characterBroker from "@/assets/prototype/character-broker.png";
 import { DocumentsLibrary } from "@/components/prototype/DocumentsLibrary";
 import { cn } from "@/lib/utils";
+import SummaryCard, { SummaryActions } from "./prototype/SummaryCard";
+import { summaryIntroFor, summaryQuestionFor, type SummaryScope } from "./prototype/summaryData";
 
 type AdminCharacter = "magician" | "professor" | "broker";
 const ADMIN_CHARACTERS: { id: AdminCharacter; name: string; src: string; tagline: string; greeting: string; workTitle: string; workIntro: string }[] = [
@@ -1032,11 +1034,13 @@ type ChatMsg = {
   role: "hobson" | "user";
   text: string;
   streaming?: boolean;
-  rich?: "rentFlat2";
+  rich?: "rentFlat2" | "summary";
   kind?: "feedback";
   feedback?: FeedbackState;
   /** Optional component-tag chips offered with the feedback ask (Helpful/Partly/Not). */
   feedbackChips?: string[];
+  /** Payload for `rich: "summary"` bubbles. */
+  summary?: { kind: "occupational" | "compliance"; scope: SummaryScope };
 };
 
 const CHAT_TURN_GAP_PX = 24;
@@ -2811,6 +2815,44 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
     }, delay);
   };
 
+
+
+  /* ----- summary request (occupational / compliance) — same fn at every level ----- */
+  const requestSummary = (kind: "occupational" | "compliance", scope: SummaryScope) => {
+    const question = summaryQuestionFor(kind, scope);
+    const intro = summaryIntroFor(kind, scope);
+    setMessages((m) => [...m, { id: `u-${Date.now()}`, role: "user", text: question }]);
+    setInput("");
+    setTyping(true);
+    setOwl("reading");
+    const delay = reduced ? 150 : 700;
+    window.setTimeout(() => {
+      setTyping(false);
+      setOwl("talking");
+      const id = `sum-${Date.now()}`;
+      if (reduced) {
+        setMessages((m) => [...m, { id, role: "hobson", text: intro, rich: "summary", summary: { kind, scope } }]);
+        return;
+      }
+      setMessages((m) => [...m, { id, role: "hobson", text: "", streaming: true, rich: "summary", summary: { kind, scope } }]);
+      const words = intro.split(" ");
+      let i = 0;
+      const step = () => {
+        i += 1;
+        const partial = words.slice(0, i).join(" ");
+        setMessages((m) => m.map((x) => (x.id === id ? { ...x, text: partial } : x)));
+        if (i < words.length) {
+          setTimeout(step, 35 + Math.random() * 25);
+        } else {
+          setMessages((m) => m.map((x) => (x.id === id ? { ...x, streaming: false } : x)));
+        }
+      };
+      setTimeout(step, 50);
+    }, delay);
+  };
+
+
+
   const sendUnitQuestion = (q: string) => {
     if (!q.trim()) return;
     if (isRentFlat2Question(q)) { sendRentAnswer(q); return; }
@@ -3174,6 +3216,14 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
 
 
 
+          {/* Unit-level summary buttons (Occupational / Compliance) */}
+          {view === "unit" && selectedUnit && selectedPropertyId && (
+            <SummaryActions
+              scope={{ level: "unit", propertyId: selectedPropertyId, unitId: selectedUnit.id }}
+              onRequest={requestSummary}
+            />
+          )}
+
           {/* Pinned alert briefing at the top of unit chat */}
           {!testerMode && view === "unit" && selectedUnit && selectedPropertyId && (
             <>
@@ -3276,13 +3326,32 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                           onSubmitNote={(note) => updateFeedback(m.id, { note, submitted: true })}
                           onSkipNote={() => updateFeedback(m.id, { submitted: true })}
                         />
+                      ) : m.rich === "summary" && m.summary ? (
+                        <div key={m.id} className="flex items-start gap-2">
+                          {i === 0 ? <OwlAvatar state={owl} /> : <div aria-hidden className="w-10 h-10 shrink-0" />}
+                          <div className="flex-1 min-w-0 space-y-2">
+                            {m.text && (
+                              <div className="max-w-[420px] bg-[#EDE9FE] text-[#1F2330] text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-bl-md">
+                                {m.text}
+                                {m.streaming && <span className="inline-block w-1.5 h-3.5 ml-0.5 bg-[#7C3AED] align-middle animate-pulse" />}
+                              </div>
+                            )}
+                            {!m.streaming && (
+                              <SummaryCard
+                                kind={m.summary.kind}
+                                scope={m.summary.scope}
+                                onOpenUnit={(pid, uid) => goUnit(uid, pid)}
+                              />
+                            )}
+                          </div>
+                        </div>
                       ) : (
                         <HobsonBubble
                           key={m.id}
                           text={m.text}
                           owl={owl}
                           streaming={!!m.streaming}
-                          rich={m.rich}
+                          rich={m.rich === "rentFlat2" ? "rentFlat2" : undefined}
                           onAskFollowUp={(q) => sendRentAnswer(q)}
                           showAvatar={i === 0}
                         />
@@ -3313,6 +3382,11 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
 
 
 
+
+          {/* Portfolio-level summary buttons */}
+          {view === "portfolio" && !typing && messages.length > 0 && (
+            <SummaryActions scope={{ level: "portfolio" }} onRequest={requestSummary} />
+          )}
 
           {/* Portfolio view (single state) — intelligent action briefing */}
           {!testerMode && view === "portfolio" && !typing && messages.length > 0 && (
@@ -3352,6 +3426,14 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
 
 
 
+
+          {/* Property-level summary buttons */}
+          {view === "property" && selectedProperty && (
+            <SummaryActions
+              scope={{ level: "property", propertyId: selectedProperty.id }}
+              onRequest={requestSummary}
+            />
+          )}
 
           {/* Property view */}
           {view === "property" && selectedProperty && (
