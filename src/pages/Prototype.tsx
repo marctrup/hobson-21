@@ -2834,7 +2834,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
               onMagStreamDone={(id) => setMagStreamingId((cur) => (cur === id ? null : cur))}
               magHandlers={adminCharacter === "magician" ? {
                 onIntakeSubmit: magSubmitIntake,
-                onQ1: magAnswerQ1, onQ2: magAnswerQ2, onQ3: magAnswerQ3, onQ3b: magAnswerQ3b, onQ4: magAnswerQ4,
+                onQ1: magAnswerQ1, onQ2: magAnswerQ2, onQ3Scope: magAnswerQ3Scope, onQ4: magAnswerQ4,
                 onAddStep: magAddStep, onAddCustomStep: magAddCustomStep, onRemoveStep: magRemoveStep, onMoveStep: magMoveStep,
                 onToggleAdd: (open: boolean) => setMagBuild((b) => b ? { ...b, addOpen: open } : b),
                 onSetCustomDraft: (v: string) => setMagBuild((b) => b ? { ...b, customDraft: v } : b),
