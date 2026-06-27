@@ -3750,11 +3750,12 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
               </form>
             </>
           ) : adminMode ? (
-            adminCharacter === "professor"
-              ? <ProfessorComposer onUpload={handleProfessorUpload} />
-              : adminCharacter === "magician"
-                ? <MagicianComposer onCreate={handleCreateWorkflow} buildActive={!!magBuild} />
-                  : adminCharacter === "broker"
+            adminCharacter === "magician"
+              ? (magBuild
+                  ? <AdminBuildActiveBanner label="Building a workflow above — pause or cancel it to start another." />
+                  : <LockedComposer view={view} />)
+              : adminCharacter === "broker"
+                ? (brokerFlow
                     ? <BrokerComposer
                         onAdd={handleAddBrokerContact}
                         onUpload={handleUploadBrokerContacts}
@@ -3762,9 +3763,11 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                         onSubmitAnswer={submitBrokerAnswer}
                         onCancel={cancelBrokerFlow}
                       />
-                  : adminCharacter === "inspector"
-                    ? <InspectorComposer buildActive={inspectorBuild !== null} />
+                    : <LockedComposer view={view} />)
+                : adminCharacter === "inspector"
+                  ? <InspectorComposer buildActive={inspectorBuild !== null} />
                   : <LockedComposer view={view} />
+
 
           ) : testerMode && view === "unit" ? (
 
