@@ -3999,7 +3999,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                 rules={inspectorConfirmed}
                 onUpdateRules={setInspectorConfirmed}
                 onSetUpAnotherArea={inspectorBuildAnother}
-                buildActive={!!inspectorProposed || inspectorResearching || inspectorArea !== null}
+                buildActive={inspectorBuild !== null}
                 onShowMe={inspectorShowMe}
               />
             );
