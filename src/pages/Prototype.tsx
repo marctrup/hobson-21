@@ -11,6 +11,8 @@ import characterProfessor from "@/assets/prototype/character-professor.png";
 import characterBroker from "@/assets/prototype/character-broker.png";
 import { DocumentsLibrary } from "@/components/prototype/DocumentsLibrary";
 import { cn } from "@/lib/utils";
+import SummaryCard, { SummaryActions } from "./prototype/SummaryCard";
+import { summaryIntroFor, summaryQuestionFor, type SummaryScope } from "./prototype/summaryData";
 
 type AdminCharacter = "magician" | "professor" | "broker";
 const ADMIN_CHARACTERS: { id: AdminCharacter; name: string; src: string; tagline: string; greeting: string; workTitle: string; workIntro: string }[] = [
