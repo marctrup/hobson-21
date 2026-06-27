@@ -9726,7 +9726,14 @@ function MagicianWorkArea({ character, workflows, onCreate, onAdjust, onView, on
             )}
             <div className="grid gap-3" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(340px, 1fr))" }}>
               {g.items.map((w) => (
-                <WorkflowCard key={w.id} w={w} onAdjust={() => onAdjust(w.id)} onView={() => onView(w.id)} onResume={w.draftState && onResume ? () => onResume(w.id) : undefined} />
+                <WorkflowCard
+                  key={w.id}
+                  w={w}
+                  onAdjust={() => onAdjust(w.id)}
+                  onView={() => onView(w.id)}
+                  onResume={w.draftState && onResume ? () => onResume(w.id) : undefined}
+                  onDiscard={w.draftState && onDiscard ? () => onDiscard(w.id) : undefined}
+                />
               ))}
             </div>
           </div>
