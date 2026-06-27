@@ -7116,6 +7116,135 @@ function LockedComposer({ view }: { view: View }) {
   );
 }
 
+function AdminBuildActiveBanner({ label }: { label: string }) {
+  return (
+    <div className="flex items-center gap-2 px-4 py-2.5 rounded-full border border-dashed border-[#7C3AED]/40 bg-[#F5F3FF] text-[12px] text-[#5B21B6]/80">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
+        <path d="M12 6v6l4 2"/><circle cx="12" cy="12" r="9"/>
+      </svg>
+      <span className="flex-1 truncate">{label}</span>
+    </div>
+  );
+}
+
+function ChatInviteShell({ avatarSrc, children }: { avatarSrc: string; children: React.ReactNode }) {
+  return (
+    <div className="flex items-end gap-2">
+      <CharacterAvatar src={avatarSrc} />
+      <div className="max-w-[460px] bg-[#EDE9FE] text-[#1F2330] text-sm leading-relaxed px-4 py-3 rounded-2xl rounded-bl-md flex flex-col gap-2.5">
+        {children}
+      </div>
+    </div>
+  );
+}
+
+function MagicianBuildInviteCard({ onStart }: { onStart: () => void }) {
+  const quickStarts: { label: string }[] = [
+    { label: "Rent reviews" },
+    { label: "Compliance checks" },
+    { label: "Notices & deadlines" },
+    { label: "Something else" },
+  ];
+  return (
+    <ChatInviteShell avatarSrc={characterMagician}>
+      <div>Pick a starting point and we'll build it together — I'll ask the questions, you give the answers.</div>
+      <div className="flex flex-wrap gap-1.5">
+        {quickStarts.map((q) => (
+          <button
+            key={q.label}
+            type="button"
+            onClick={onStart}
+            className="px-2.5 py-1 rounded-full border border-[#7C3AED]/40 bg-white text-[12px] text-[#1F2330] hover:bg-white/80 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40"
+          >
+            {q.label}
+          </button>
+        ))}
+      </div>
+      <button
+        type="button"
+        onClick={onStart}
+        className="self-start inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#7C3AED] text-white text-[12.5px] font-semibold shadow-sm hover:bg-[#6D28D9] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40"
+      >
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M15 4l5 5-11 11H4v-5L15 4z"/><path d="M14 5l5 5"/></svg>
+        Build a workflow
+      </button>
+    </ChatInviteShell>
+  );
+}
+
+function ProfessorBuildInviteCard({ onUpload }: { onUpload: (count: number) => void }) {
+  const fileRef = useRef<HTMLInputElement | null>(null);
+  return (
+    <ChatInviteShell avatarSrc={characterProfessor}>
+      <div>Hand me your documents and I shall read them — leases, certificates, notices. Upload one or several here and I'll tell you what each one is.</div>
+      <div className="flex flex-wrap items-center gap-2">
+        <button
+          type="button"
+          onClick={() => fileRef.current?.click()}
+          className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#7C3AED] text-white text-[12.5px] font-semibold shadow-sm hover:bg-[#6D28D9] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40"
+        >
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M12 16V4M6 10l6-6 6 6"/><path d="M4 20h16"/></svg>
+          Upload documents
+        </button>
+        <span className="text-[11px] text-slate-500">or drop files anywhere on this chat</span>
+        <input
+          ref={fileRef}
+          type="file"
+          multiple
+          className="sr-only"
+          aria-label="Upload documents"
+          onChange={(e) => {
+            const n = e.target.files?.length ?? 0;
+            if (n > 0) onUpload(Math.min(n, 8));
+            if (fileRef.current) fileRef.current.value = "";
+          }}
+        />
+      </div>
+    </ChatInviteShell>
+  );
+}
+
+function BrokerBuildInviteCard({ onAdd, onUpload }: { onAdd: () => void; onUpload: (name: string) => void }) {
+  const fileRef = useRef<HTMLInputElement | null>(null);
+  return (
+    <ChatInviteShell avatarSrc={characterBroker}>
+      <div>Add a contact one at a time and I'll walk you through it — or hand me a spreadsheet and I'll read them all in. Either way I'll connect each one to the right properties and remember how they relate.</div>
+      <div className="flex flex-wrap items-center gap-2">
+        <button
+          type="button"
+          onClick={onAdd}
+          className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#7C3AED] text-white text-[12.5px] font-semibold shadow-sm hover:bg-[#6D28D9] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40"
+        >
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/></svg>
+          Add a contact
+        </button>
+        <span className="text-[11px] text-slate-400">or</span>
+        <button
+          type="button"
+          onClick={() => fileRef.current?.click()}
+          className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[#7C3AED]/60 bg-white text-[#7C3AED] text-[12.5px] font-semibold hover:bg-[#F5F3FF] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40"
+        >
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M3 7h6v4H3zM3 13h6v4H3zM11 7h10v10H11z"/></svg>
+          Upload contacts
+        </button>
+        <input
+          ref={fileRef}
+          type="file"
+          accept=".csv,.xlsx,.xls"
+          className="sr-only"
+          aria-label="Upload contacts spreadsheet"
+          onChange={(e) => {
+            const f = e.target.files?.[0];
+            onUpload(f?.name || "contacts-export.csv");
+            if (fileRef.current) fileRef.current.value = "";
+          }}
+        />
+      </div>
+    </ChatInviteShell>
+  );
+}
+
+
 function ProfessorComposer({ onUpload }: { onUpload: (count: number) => void }) {
   const fileRef = useRef<HTMLInputElement | null>(null);
   const [dragOver, setDragOver] = useState(false);
