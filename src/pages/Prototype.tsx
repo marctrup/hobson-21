@@ -282,6 +282,16 @@ type Workflow = {
 type MagBuildStep = { id: string; label: string; phrase: string; uid: string };
 type MagBuildStepKey = "intake" | "q1" | "q2" | "q3" | "q3b" | "q4" | "q5" | "q6";
 type MagEditField = "intake" | "watch" | "scope" | "scopeUnit" | "owner";
+
+type ScopeLevel = "portfolio" | "properties" | "units";
+type PropertyGranularity = "units" | "record" | "both";
+type ScopeSelection = {
+  level: ScopeLevel;
+  propertyIds: string[];           // selected when level === "properties"
+  unitIds: string[];               // selected when level === "units"
+  propertyGranularity: PropertyGranularity; // applies when level === "properties"
+};
+
 type MagBuildState = {
   step: MagBuildStepKey;
   // intake (user-authored)
