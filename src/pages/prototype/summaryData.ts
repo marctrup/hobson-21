@@ -41,6 +41,8 @@ export type ComplianceRow = {
   expiryDate?: string | null;
   /** When true, signals "missing — no document on file" treatment. */
   missing?: boolean;
+  /** When true (set by Inspector rules), upgrades a missing row to "missing — legally required". */
+  legallyRequired?: boolean;
 };
 
 export type SummaryPropertyMeta = {
