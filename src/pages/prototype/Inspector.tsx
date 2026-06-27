@@ -1647,13 +1647,25 @@ export function InspectorChat(props: InspectorChatProps) {
   // Intro typing — mirrors AdminChat
   const reduced = useReducedMotion();
   const [introPhase, setIntroPhase] = useState<"typing" | "done">(reduced ? "done" : "typing");
+  const [pickerReady, setPickerReady] = useState<boolean>(reduced);
   useEffect(() => {
     if (reduced) return;
     const t = setTimeout(() => setIntroPhase("done"), 800);
     return () => clearTimeout(t);
   }, [reduced]);
+  useEffect(() => {
+    if (reduced) { setPickerReady(true); return; }
+    if (introPhase !== "done") return;
+    // Wait for greeting stream to finish + a short conversational beat before the second bubble lands.
+    const words = INSPECTOR_CHARACTER.greeting.split(/\s+/).length;
+    const streamMs = words * 55 + 200;
+    const beatMs = 650;
+    const t = setTimeout(() => setPickerReady(true), streamMs + beatMs);
+    return () => clearTimeout(t);
+  }, [introPhase, reduced]);
 
-  const showPicker = introPhase === "done" && build === null;
+  const showPicker = pickerReady && build === null;
+
 
   return (
     <div className="flex flex-col" style={{ gap: TURN_GAP }}>
