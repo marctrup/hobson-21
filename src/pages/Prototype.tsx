@@ -9971,6 +9971,7 @@ function MagicianWorkArea({ character, workflows, onCreate, onAdjust, onView, on
                   onView={() => onView(w.id)}
                   onResume={w.draftState && onResume ? () => onResume(w.id) : undefined}
                   onDiscard={w.draftState && onDiscard ? () => onDiscard(w.id) : undefined}
+                  onSimulate={onSimulate ? () => onSimulate(w.id) : undefined}
                 />
               ))}
             </div>
@@ -9981,7 +9982,7 @@ function MagicianWorkArea({ character, workflows, onCreate, onAdjust, onView, on
   );
 }
 
-function WorkflowCard({ w, onAdjust, onView, onResume, onDiscard }: { w: Workflow; onAdjust: () => void; onView: () => void; onResume?: () => void; onDiscard?: () => void }) {
+function WorkflowCard({ w, onAdjust, onView, onResume, onDiscard, onSimulate }: { w: Workflow; onAdjust: () => void; onView: () => void; onResume?: () => void; onDiscard?: () => void; onSimulate?: () => void }) {
   const [scopeOpen, setScopeOpen] = useState(false);
   const [confirmDiscard, setConfirmDiscard] = useState(false);
   const isPausedDraft = !!w.draftState;
