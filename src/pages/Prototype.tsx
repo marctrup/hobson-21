@@ -1582,22 +1582,23 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
     setTimeout(() => magAsk("Where does this apply?"), 400);
   };
 
-  const magAnswerQ3 = (scope: "unit" | "property" | "portfolio", label: string) => {
+  const magAnswerQ3Scope = (sel: ScopeSelection) => {
+    const { label, detail } = summariseScope(sel);
     magUserEcho(label);
-    const wasEditing = !!magBuild?.editing && magBuild.editing.field === "scope";
-    if (scope === "unit") {
-      setMagBuild((b) => b ? { ...b, scope, scopeLabel: undefined, step: "q3b", editing: wasEditing ? { field: "scopeUnit", returnStep: b.editing!.returnStep } : undefined } : b);
-      setTimeout(() => magAsk("Which unit?"), 400);
-    } else {
-      const scopeLabel = scope === "property" ? "Stanley House (all units)" : "The whole portfolio";
-      setMagBuild((b) => b ? { ...b, scope, scopeLabel, step: wasEditing ? b.editing!.returnStep : "q4", editing: undefined } : b);
-      setTimeout(() => magAsk(wasEditing ? "Updated." : "And who should own it?"), 400);
-    }
+    const wasEditing = !!magBuild?.editing && (magBuild.editing.field === "scope" || magBuild.editing.field === "scopeUnit");
+    const scopeShort: "unit" | "property" | "portfolio" =
+      sel.level === "portfolio" ? "portfolio" : sel.level === "properties" ? "property" : "unit";
+    setMagBuild((b) => b ? {
+      ...b,
+      scope: scopeShort,
+      scopeLabel: label,
+      scopeDetail: detail,
+      scopeSelection: sel,
+      step: wasEditing ? b.editing!.returnStep : "q4",
+      editing: undefined,
+    } : b);
+    setTimeout(() => magAsk(wasEditing ? "Updated." : "And who should own it?"), 400);
   };
-
-  const magAnswerQ3b = (unitLabel: string) => {
-    magUserEcho(unitLabel);
-    const wasEditing = !!magBuild?.editing && (magBuild.editing.field === "scopeUnit" || magBuild.editing.field === "scope");
     setMagBuild((b) => b ? { ...b, scopeLabel: unitLabel, step: wasEditing ? b.editing!.returnStep : "q4", editing: undefined } : b);
     setTimeout(() => magAsk(wasEditing ? "Updated." : "And who should own it?"), 400);
   };
