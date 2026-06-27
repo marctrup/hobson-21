@@ -3825,7 +3825,10 @@ function AdminChat({ character, owl, professorEvents, onAssignProfessorType, bro
             );
           })}
           {magBuild && !magStreamingId && magHandlers && (
-            <MagicianBuildPanel build={magBuild} handlers={magHandlers} />
+            <>
+              <MagicianBuildPanel build={magBuild} handlers={magHandlers} />
+              <MagicianBuildSpacer />
+            </>
           )}
         </div>
       )}
