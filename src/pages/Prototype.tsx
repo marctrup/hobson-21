@@ -4000,7 +4000,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
               <InspectorWorkArea
                 rules={inspectorConfirmed}
                 onUpdateRules={setInspectorConfirmed}
-                onSetUpAnotherArea={inspectorBuildAnother}
+                
                 buildActive={inspectorBuild !== null}
                 onShowMe={inspectorShowMe}
               />
