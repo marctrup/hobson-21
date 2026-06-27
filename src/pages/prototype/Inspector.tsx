@@ -2478,30 +2478,7 @@ function AreaPanel({
 }
 
 
-/* ---------------- Build CTA — sibling of Magician's "Create a workflow" ---------------- */
-function AddAreaBox({ onClick, disabled }: { onClick: () => void; disabled?: boolean }) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      disabled={disabled}
-      className="w-full flex items-start gap-3 px-4 py-4 rounded-xl border border-dashed border-[#7C3AED]/40 bg-[#FAF8FF] hover:bg-[#F5F3FF] text-left transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED] disabled:opacity-50 disabled:cursor-not-allowed"
-    >
-      <span
-        aria-hidden
-        className="w-9 h-9 shrink-0 rounded-full bg-white border border-[#7C3AED]/30 grid place-items-center text-[#7C3AED]"
-      >
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-          <path d="M12 5v14M5 12h14"/>
-        </svg>
-      </span>
-      <span className="min-w-0">
-        <span className="block text-[13px] font-semibold text-slate-900">Set up another area of compliance</span>
-        <span className="block text-[12px] text-slate-600 mt-0.5">Financial, environmental, licensing, or your own — I'll find what's required.</span>
-      </span>
-    </button>
-  );
-}
+/* Build CTA removed — area creation is conversational only, via the chat AreaPickCard. */
 
 export function InspectorWorkArea({
   rules,
