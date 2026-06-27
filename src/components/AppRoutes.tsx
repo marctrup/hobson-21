@@ -38,6 +38,7 @@ const InvestmentPassword = lazy(() => import("../pages/admin/InvestmentPassword"
 const InvestmentOpportunity = lazy(() => import("../pages/InvestmentOpportunity"));
 const Prototype = lazy(() => import("../pages/Prototype"));
 const PrototypeTesters = lazy(() => import("../pages/PrototypeTesters"));
+const PrototypeMobile = lazy(() => import("../pages/PrototypeMobile"));
 
 const Features = lazy(() => import("../pages/Features"));
 
@@ -151,6 +152,7 @@ const AppContent = () => {
               <Route path="/investment-opportunity" element={<InvestmentOpportunity />} />
               <Route path="/investor-summary" element={<Navigate to="/investment-opportunity" replace />} />
               <Route path="/prototype" element={<Prototype />} />
+              <Route path="/prototype-mobile" element={<PrototypeMobile />} />
               <Route path="/prototype_testers" element={<PrototypeTesters />} />
               
               <Route path="/auth" element={<Auth />} />
