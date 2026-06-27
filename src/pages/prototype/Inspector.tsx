@@ -850,13 +850,25 @@ export function InspectorChat(props: InspectorChatProps) {
         <InspectorBubble text={INSPECTOR_CHARACTER.greeting} showAvatar streamKey="intro" />
       )}
 
-      {/* Area pick — appears once intro is done and no area chosen yet */}
-      {introPhase === "done" && area === null && events.length === 0 && (
+      {/* Event log (render before the picker so it appears beneath prior turns) */}
+      {events.map((ev, i) => {
+        if (ev.kind === "user") return <UserBubble key={ev.id} text={ev.text} />;
+        if (ev.kind === "researching") return <ResearchingBubble key={ev.id} />;
+        if (ev.kind === "confirmed") return <ConfirmedRecap key={ev.id} count={ev.count} />;
+        const prev = events[i - 1];
+        const showAvatar = !prev || prev.kind === "user";
+        return <InspectorBubble key={ev.id} text={ev.text} showAvatar={showAvatar} streamKey={ev.id} />;
+      })}
+
+      {/* Area pick — shows on first run AND whenever the user starts another area build */}
+      {introPhase === "done" && area === null && !proposed && !isResearching && (
         <div className="flex flex-col" style={{ gap: BUBBLE_GAP }}>
           <InspectorBubble
-            text="Which area of compliance would you like to set up?"
-            showAvatar={false}
-            streamKey="area-prompt"
+            text={events.length === 0
+              ? "Which area of compliance would you like to set up?"
+              : "Which area shall we set up next?"}
+            showAvatar={events.length === 0}
+            streamKey={`area-prompt-${events.length}`}
           />
           <AreaPickCard onPick={onPickArea} onOther={onOtherText} />
         </div>
