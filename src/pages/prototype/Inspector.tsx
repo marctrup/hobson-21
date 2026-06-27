@@ -2112,11 +2112,13 @@ export function InspectorWorkArea({
   onUpdateRules,
   onSetUpAnotherArea,
   buildActive = false,
+  onShowMe,
 }: {
   rules: ComplianceRequirement[];
   onUpdateRules?: React.Dispatch<React.SetStateAction<ComplianceRequirement[]>>;
   onSetUpAnotherArea?: () => void;
   buildActive?: boolean;
+  onShowMe?: (areaId: ComplianceArea, group: RequirementCategory) => void;
 }) {
   const required = rules.filter((r) => r.basis === "required").length;
   const applicable = rules.filter((r) => r.basis === "applicable").length;
