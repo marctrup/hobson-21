@@ -337,6 +337,7 @@ type MagBuildState = {
   // trace-back
   editing?: { field: MagEditField; returnStep: MagBuildStepKey };
   stepsTouched?: boolean; // user has personally tweaked steps — don't silently overwrite
+  templateNarrated?: boolean; // Magician has explained the template option once already this build
 };
 type MagicianEvent =
   | { kind: "magician"; id: string; text: string }
