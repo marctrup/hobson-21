@@ -10178,6 +10178,17 @@ function WorkflowCard({ w, onAdjust, onView, onResume, onDiscard, onSimulate }: 
             </>
           ) : (
             <>
+              {onSimulate && (
+                <button
+                  type="button"
+                  onClick={onSimulate}
+                  className="inline-flex items-center gap-1 text-[12px] px-2.5 py-1.5 rounded-md border border-[#7C3AED]/40 bg-white text-[#5B21B6] hover:bg-[#F5F3FF] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40"
+                  title="Safe preview — plays the workflow out in chat. Nothing is sent."
+                  aria-label={`Run a simulation of ${w.name} — safe preview, nothing is sent`}
+                >
+                  <span aria-hidden>▷</span> Run a simulation
+                </button>
+              )}
               <button
                 type="button"
                 onClick={onView}
