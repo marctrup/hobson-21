@@ -1649,14 +1649,10 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
     setInspectorConfirmed((arr) => [...arr, { ...req, id: `req-manual-${Date.now()}` }]);
   };
 
-  const inspectorBuildAnother = () => {
-    setInspectorBuild(null);
-    setInspectorEvents((e) => [...e, {
-      kind: "inspector",
-      id: inspNewId("in"),
-      text: "Happy to set up another area. Tell me which one.",
-    }]);
-  };
+  // Note: area creation is conversational — the chat AreaPickCard reappears whenever
+  // there's no active build, so no "set up another area" affordance is needed in the
+  // right-hand output panel.
+
 
 
   const augmentCompliance = useMemo(() => {
@@ -4000,7 +3996,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
               <InspectorWorkArea
                 rules={inspectorConfirmed}
                 onUpdateRules={setInspectorConfirmed}
-                onSetUpAnotherArea={inspectorBuildAnother}
+                
                 buildActive={inspectorBuild !== null}
                 onShowMe={inspectorShowMe}
               />
