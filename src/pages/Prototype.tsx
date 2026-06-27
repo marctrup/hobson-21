@@ -9515,12 +9515,13 @@ function MagicianComposer({ onCreate, buildActive }: { onCreate: () => void; bui
 }
 
 
-function MagicianWorkArea({ character, workflows, onCreate, onAdjust, onView }: {
+function MagicianWorkArea({ character, workflows, onCreate, onAdjust, onView, onResume }: {
   character: { id: AdminCharacter; name: string; src: string; tagline: string; workTitle: string };
   workflows: Workflow[];
   onCreate: () => void;
   onAdjust: (id: string) => void;
   onView: (id: string) => void;
+  onResume?: (id: string) => void;
 }) {
   const [search, setSearch] = useState("");
   const [ownerFilter, setOwnerFilter] = useState<string>("all");      // "all" | "mine" | name
