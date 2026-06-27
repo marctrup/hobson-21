@@ -9751,7 +9751,7 @@ function MagicianComposer({ onCreate, buildActive }: { onCreate: () => void; bui
 }
 
 
-function MagicianWorkArea({ character, workflows, onCreate, onAdjust, onView, onResume, onDiscard }: {
+function MagicianWorkArea({ character, workflows, onCreate, onAdjust, onView, onResume, onDiscard, onSimulate }: {
   character: { id: AdminCharacter; name: string; src: string; tagline: string; workTitle: string };
   workflows: Workflow[];
   onCreate: () => void;
@@ -9759,6 +9759,7 @@ function MagicianWorkArea({ character, workflows, onCreate, onAdjust, onView, on
   onView: (id: string) => void;
   onResume?: (id: string) => void;
   onDiscard?: (id: string) => void;
+  onSimulate?: (id: string) => void;
 }) {
   const [search, setSearch] = useState("");
   const [ownerFilter, setOwnerFilter] = useState<string>("all");      // "all" | "mine" | name
