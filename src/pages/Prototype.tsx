@@ -5391,55 +5391,89 @@ function CharacterNotesStrip({
   character,
   title,
   subtitle,
+  tagline,
+  badge,
   notes,
 }: {
   character: { name: string; src: string };
   title: string;
   subtitle: string;
+  /** Shown on the collapsed single-line strip (e.g. "observations from the catalogue"). Falls back to subtitle. */
+  tagline?: string;
+  /** Quiet attention badge on the collapsed strip — only set when there's genuine signal (e.g. "1 paused"). */
+  badge?: string | null;
   notes: CharacterNote[];
 }) {
+  const [open, setOpen] = useState(false);
+  const panelId = `notes-${title.replace(/\W+/g, "-").toLowerCase()}`;
   if (notes.length === 0) return null;
+
+
   return (
     <section
-      className="px-5 py-3 border-b border-slate-100 bg-[#FAF8FF] shrink-0"
+      className="border-b border-slate-100 bg-[#FAF8FF] shrink-0"
       aria-label={`${character.name}'s notes`}
     >
-      <div className="flex items-center gap-2 mb-2">
+      <button
+        type="button"
+        aria-expanded={open}
+        aria-controls={panelId}
+        onClick={() => setOpen((v) => !v)}
+        className="w-full flex items-center gap-2 px-5 py-2 text-left hover:bg-[#F5F3FF] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]"
+      >
         <div className="w-6 h-6 rounded-full overflow-hidden bg-white ring-1 ring-[#7C3AED]/20 grid place-items-center shrink-0">
           <img src={character.src} alt="" aria-hidden className="w-[120%] h-[120%] object-contain" />
         </div>
-        <h3 className="text-[12px] font-semibold uppercase tracking-wide text-[#5B21B6]">{title}</h3>
-        <span className="text-[11px] text-slate-500 truncate">· {subtitle}</span>
-      </div>
-      <ul className="grid gap-1.5 sm:grid-cols-2">
-        {notes.map((n) => {
-          const clickable = !!n.onClick;
-          const Tag: any = clickable ? "button" : "div";
-          return (
-            <li key={n.id}>
-              <Tag
-                {...(clickable ? { onClick: n.onClick, type: "button" } : {})}
-                className={`w-full text-left flex items-start gap-2 px-3 py-2 rounded-md border border-[#7C3AED]/15 bg-white ${
-                  clickable ? "hover:bg-[#F5F3FF] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]" : ""
-                }`}
-              >
-                <CharNoteIcon kind={n.kind} />
-                <div className="min-w-0">
-                  <p className="text-[12px] text-slate-800 leading-snug">{n.text}</p>
-                  {clickable && (
-                    <span className="mt-0.5 inline-block text-[11px] text-[#7C3AED]">
-                      {n.ctaLabel ?? "open →"}
-                    </span>
-                  )}
-                </div>
-              </Tag>
-            </li>
-          );
-        })}
-      </ul>
+        <h3 className="text-[12px] font-semibold uppercase tracking-wide text-[#5B21B6] shrink-0">{title}</h3>
+        <span className="text-[11px] text-slate-500 truncate min-w-0">· {tagline ?? subtitle}</span>
+        {badge && (
+          <span className="ml-1 shrink-0 inline-flex items-center px-1.5 py-0.5 rounded-full bg-[#7C3AED]/10 text-[#5B21B6] text-[10px] font-semibold tracking-wide uppercase">
+            {badge}
+          </span>
+        )}
+        <span className="ml-auto shrink-0 text-[#5B21B6]" aria-hidden>
+          <svg
+            className={`w-4 h-4 transition-transform ${open ? "rotate-90" : ""}`}
+            viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
+          >
+            <path d="M9 6l6 6-6 6" />
+          </svg>
+        </span>
+      </button>
+      {open && (
+        <div id={panelId} className="px-5 pb-3">
+          <ul className="grid gap-1.5 sm:grid-cols-2">
+            {notes.map((n) => {
+              const clickable = !!n.onClick;
+              const Tag: any = clickable ? "button" : "div";
+              return (
+                <li key={n.id}>
+                  <Tag
+                    {...(clickable ? { onClick: n.onClick, type: "button" } : {})}
+                    className={`w-full text-left flex items-start gap-2 px-3 py-2 rounded-md border border-[#7C3AED]/15 bg-white ${
+                      clickable ? "hover:bg-[#F5F3FF] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]" : ""
+                    }`}
+                  >
+                    <CharNoteIcon kind={n.kind} />
+                    <div className="min-w-0">
+                      <p className="text-[12px] text-slate-800 leading-snug">{n.text}</p>
+                      {clickable && (
+                        <span className="mt-0.5 inline-block text-[11px] text-[#7C3AED]">
+                          {n.ctaLabel ?? "open →"}
+                        </span>
+                      )}
+                    </div>
+                  </Tag>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      )}
     </section>
   );
 }
+
 
 function CharNoteIcon({ kind }: { kind: CharacterNote["kind"] }) {
   const common = "w-4 h-4 shrink-0 mt-0.5";
@@ -5532,8 +5566,10 @@ function ProfessorWorkArea({ character, docs, summaryVisibility, onChangeSummary
             character={character}
             title="The Professor's notes"
             subtitle="recent reading & catalogue state"
+            tagline="observations from the catalogue"
             notes={notes}
           />
+
         );
       })()}
 
@@ -10417,6 +10453,8 @@ function MagicianWorkArea({ character, workflows, onCreate, onAdjust, onView, on
         const newest = [...withDate].sort((a, b) => (b.lastAdjusted || "").localeCompare(a.lastAdjusted || ""))[0];
         const draftWf = drafts[0];
         const notes: CharacterNote[] = [];
+        let magBadge: string | null = null;
+
         const justBuilt = workflows.find((w) => w.justBuilt);
         if (workflows.length === 0) {
           notes.push({
@@ -10482,17 +10520,22 @@ function MagicianWorkArea({ character, workflows, onCreate, onAdjust, onView, on
               text: "All workflows built and ready.",
             });
           }
+          magBadge = pausedDrafts.length > 0 ? `${pausedDrafts.length} paused` : null;
         }
+
 
         return (
           <CharacterNotesStrip
             character={character}
             title="The Magician's notes"
             subtitle="recent builds & workshop state"
+            tagline="what's running & what's paused"
+            badge={magBadge}
             notes={notes}
           />
         );
       })()}
+
 
       {/* Filters */}
       <div className="px-5 py-3 border-b border-slate-100 flex flex-wrap items-center gap-2 shrink-0">
@@ -11269,7 +11312,9 @@ function BrokerWorkArea({ character, contacts, onAdd }: {
             character={character}
             title="The Broker's notes"
             subtitle="recent additions & relationship gaps"
+            tagline="the state of the black book"
             notes={notes}
+
           />
         );
       })()}
