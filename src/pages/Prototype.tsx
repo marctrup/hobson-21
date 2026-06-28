@@ -7700,7 +7700,7 @@ function BackOfficeStage({
         <div className="mb-6">
           <h2 className="text-lg font-semibold text-slate-900 mb-1">Meet My Team</h2>
           <p className="text-[12px] text-slate-500 max-w-lg leading-relaxed">
-            Each of them looks after one part of your portfolio, so I can give you a single, personal service. You only ever speak to me.
+            I decide which specialists I need for every question and piece of work, then bring everything together into one answer. You'll only ever speak to me.
           </p>
         </div>
         <div className="grid gap-4 grid-cols-1 sm:grid-cols-2" role="list" aria-label="Hobson's team">
