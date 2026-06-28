@@ -4923,8 +4923,8 @@ function AdminChat({ character, owl, professorEvents, onAssignProfessorType, bro
           </div>
         </div>
       )}
-      {!character && phase === "done" && (!boEvents || boEvents.length === 0) && (
-        <BackOfficeOfferText />
+      {!character && phase === "done" && (!boEvents || boEvents.length === 0) && onPickOffer && (
+        <BackOfficeOfferChips offers={BACK_OFFICE_OFFERS} onPick={onPickOffer} />
       )}
       {!character && phase === "done" && boEvents && boEvents.map((ev) => {
         if (ev.kind === "user") {
@@ -4945,6 +4945,11 @@ function AdminChat({ character, owl, professorEvents, onAssignProfessorType, bro
               </div>
               <JobGrid helpers={helpers} onPick={onPickJob} />
             </div>
+          ) : null;
+        }
+        if (ev.kind === "chips") {
+          return ev.chips && onPickOffer ? (
+            <BackOfficeOfferChips key={ev.id} offers={ev.chips} onPick={onPickOffer} ariaLabel={ev.ariaLabel} />
           ) : null;
         }
         return (
