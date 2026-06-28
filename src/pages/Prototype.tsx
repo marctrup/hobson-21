@@ -3224,7 +3224,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
 
   // Map must stay visible during the onboarding tour (Step 5 uses map search).
   // Honour user preference otherwise.
-  const hasRightOverlay = showDocuments || showWhatIveDone || !!performingCardId || !!reviewingCardId || (adminMode && !!adminCharacter);
+  const hasRightOverlay = showDocuments || showWhatIveDone || !!performingCardId || !!reviewingCardId || adminMode;
   const isExpanded = chatExpanded && view !== "onboarding" && !hasRightOverlay && !adminMode;
 
   return (
