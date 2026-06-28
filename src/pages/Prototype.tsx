@@ -12584,4 +12584,294 @@ function BrokerContactCard({ contact }: { contact: BrokerContact }) {
 
 export default Prototype;
 
+/* ---------------- Back-office Workflows sample section ---------------- */
+
+type SampleWfState = "active" | "draft" | "paused" | "completed";
+
+function SampleStateBadge({ state }: { state: SampleWfState }) {
+  const cfg: Record<SampleWfState, { label: string; cls: string; icon: React.ReactNode; shape: string }> = {
+    active: {
+      label: "Active",
+      cls: "bg-emerald-50 text-emerald-800 border-emerald-200",
+      shape: "rounded-full",
+      icon: (<svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" aria-hidden><path d="M8 5v14l11-7z"/></svg>),
+    },
+    draft: {
+      label: "Draft",
+      cls: "bg-amber-50 text-amber-800 border-amber-300 border-dashed",
+      shape: "rounded-md",
+      icon: (<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 113 3L7 19l-4 1 1-4 12.5-12.5z"/></svg>),
+    },
+    paused: {
+      label: "Paused",
+      cls: "bg-slate-100 text-slate-700 border-slate-300",
+      shape: "rounded-md",
+      icon: (<svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" aria-hidden><rect x="6" y="5" width="4" height="14"/><rect x="14" y="5" width="4" height="14"/></svg>),
+    },
+    completed: {
+      label: "Completed",
+      cls: "bg-emerald-50 text-emerald-800 border-emerald-200",
+      shape: "rounded-sm",
+      icon: (<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M20 6L9 17l-5-5"/></svg>),
+    },
+  };
+  const c = cfg[state];
+  return (
+    <span className={`inline-flex items-center gap-1 px-2 py-0.5 border text-[11px] font-medium ${c.cls} ${c.shape}`} aria-label={`Status: ${c.label}`}>
+      {c.icon}<span>{c.label}</span>
+    </span>
+  );
+}
+
+function SampleWfCardShell({ state, title, summary, children, defaultOpen = false }: {
+  state: SampleWfState; title: string; summary: string; children?: React.ReactNode; defaultOpen?: boolean;
+}) {
+  const [open, setOpen] = useState(defaultOpen);
+  const isDraft = state === "draft";
+  return (
+    <section className={`rounded-lg bg-white border ${isDraft ? "border-dashed border-amber-300" : open ? "border-[#7C3AED]/50 shadow-sm" : "border-slate-200"}`}>
+      <button
+        type="button"
+        aria-expanded={open}
+        onClick={() => setOpen((v) => !v)}
+        className="w-full flex items-start gap-3 px-3.5 py-3 text-left hover:bg-slate-50 rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]"
+      >
+        <SampleStateBadge state={state} />
+        <div className="min-w-0 flex-1">
+          <div className="text-[13.5px] font-semibold text-slate-900 leading-tight">{title}</div>
+          <div className="text-[12px] text-slate-500 mt-0.5">{summary}</div>
+        </div>
+        <svg className={`w-4 h-4 mt-1 text-slate-400 transition-transform ${open ? "rotate-180" : ""}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      {open && children && (
+        <div className="px-4 pb-4 pt-1 border-t border-slate-100">{children}</div>
+      )}
+    </section>
+  );
+}
+
+function BreakClauseSample() {
+  const presets: { key: "3" | "6" | "12" | "custom"; label: string }[] = [
+    { key: "3", label: "3 months" },
+    { key: "6", label: "6 months" },
+    { key: "12", label: "12 months" },
+    { key: "custom", label: "Custom…" },
+  ];
+  const [lead, setLead] = useState<"3" | "6" | "12" | "custom">("12");
+  return (
+    <div className="space-y-4 pt-3">
+      <p className="text-[12.5px] text-slate-600">A standing routine · built by Hobson · nothing goes out without your approval</p>
+
+      <div>
+        <div className="text-[10.5px] uppercase tracking-wide font-semibold text-slate-500 mb-1.5">The rules</div>
+        <dl className="grid grid-cols-[110px_1fr] gap-x-4 gap-y-1.5 text-[12.5px]">
+          <dt className="text-slate-500">Watches</dt><dd className="text-slate-800 font-medium">Break clause dates across your leases</dd>
+          <dt className="text-slate-500">Scope</dt><dd className="text-slate-800 font-medium">Whole portfolio</dd>
+          <dt className="text-slate-500">When it fires</dt><dd className="text-slate-800">Hobson puts the team to work and prepares your options for approval</dd>
+          <dt className="text-slate-500">Ends</dt><dd className="text-slate-800 font-medium">At your approval — nothing serves automatically</dd>
+        </dl>
+      </div>
+
+      <div className="rounded-md border border-sky-200 bg-sky-50/70 p-3">
+        <div className="flex items-center gap-2 text-[12.5px] font-semibold text-sky-900">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+          How far ahead it warns you
+        </div>
+        <p className="text-[12px] text-sky-900/90 mt-1 leading-relaxed">
+          A break clause is a big decision, so I'd suggest warning you <strong>12 months</strong> ahead. You can change this.
+        </p>
+        <div role="radiogroup" aria-label="Lead time" className="mt-2.5 flex flex-wrap gap-1.5">
+          {presets.map((p) => {
+            const sel = lead === p.key;
+            return (
+              <button
+                key={p.key}
+                type="button"
+                role="radio"
+                aria-checked={sel}
+                onClick={() => setLead(p.key)}
+                className={`inline-flex items-center gap-1.5 text-[12px] px-2.5 py-1 rounded-full border bg-white focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED] ${
+                  sel ? "border-[#7C3AED] text-[#5B21B6] font-semibold" : "border-slate-300 text-slate-700 hover:bg-slate-50"
+                }`}
+              >
+                {p.label}
+                {sel && p.key !== "custom" && (
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" aria-hidden><path d="M20 6L9 17l-5-5"/></svg>
+                )}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      <div className="flex flex-wrap items-center gap-2 pt-1">
+        <button type="button" className="inline-flex items-center gap-1.5 text-[12px] px-3 py-1.5 rounded-md border border-slate-300 bg-white hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 113 3L7 19l-4 1 1-4 12.5-12.5z"/></svg>
+          Adjust the rules
+        </button>
+        <button type="button" className="inline-flex items-center gap-1.5 text-[12px] px-3 py-1.5 rounded-md border border-slate-300 bg-white hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" aria-hidden><path d="M8 5v14l11-7z"/></svg>
+          Run a simulation
+        </button>
+        <button type="button" className="inline-flex items-center gap-1.5 text-[12px] px-3 py-1.5 rounded-md border border-slate-300 bg-white hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" aria-hidden><rect x="6" y="5" width="4" height="14"/><rect x="14" y="5" width="4" height="14"/></svg>
+          Pause
+        </button>
+      </div>
+
+      <div className="flex items-start gap-2 text-[11.5px] text-slate-500 border-t border-slate-100 pt-3">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="mt-0.5 shrink-0" aria-hidden><circle cx="12" cy="12" r="9"/><path d="M12 8v4M12 16h.01"/></svg>
+        <span>This is where you set the rule. The actual break dates as they come up appear in your day-to-day view, not in admin.</span>
+      </div>
+    </div>
+  );
+}
+
+function EicrCompletedSample() {
+  const contributors: { name: string; line: string }[] = [
+    { name: "Researcher", line: "checked the current EICR requirement & renewal interval" },
+    { name: "Professor", line: "found the existing certificate & its expiry in your documents" },
+    { name: "Inspector", line: "confirmed the renewal was due and what's required" },
+  ];
+  return (
+    <div className="space-y-4 pt-3">
+      <p className="text-[12.5px] text-slate-600">Completed 3 Jun 2026 · built by Hobson · finished with your approval</p>
+
+      <div>
+        <div className="text-[10.5px] uppercase tracking-wide font-semibold text-slate-500 mb-2">How I built it</div>
+        <ul className="space-y-1.5">
+          {contributors.map((c) => (
+            <li key={c.name} className="flex items-start gap-2 text-[12.5px]">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#059669" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="mt-0.5 shrink-0" aria-hidden><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg>
+              <span className="text-slate-800"><strong className="font-semibold">{c.name}</strong> — {c.line}</span>
+            </li>
+          ))}
+          <li className="flex items-start gap-2 text-[12.5px]">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="mt-0.5 shrink-0" aria-hidden><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg>
+            <span className="text-slate-800"><strong className="font-semibold">Hobson</strong> — assembled the renewal instruction & the workflow, presented for your approval</span>
+          </li>
+        </ul>
+      </div>
+
+      <div className="border-t border-slate-100 pt-3">
+        <div className="text-[10.5px] uppercase tracking-wide font-semibold text-slate-500 mb-2">The output</div>
+        <div className="flex items-center gap-3 rounded-md border border-slate-200 bg-slate-50/60 px-3 py-2.5">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#475569" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/></svg>
+          <div className="flex-1 min-w-0">
+            <div className="text-[12.5px] font-semibold text-slate-900 truncate">Renewal instruction — Stanley House EICR</div>
+          </div>
+          <button type="button" className="text-[12px] font-medium text-[#7C3AED] hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED] rounded">View</button>
+        </div>
+        <div className="text-[11.5px] text-slate-500 mt-1.5">Certificate expires 30 Jun 2026 · contractor Firewatch · all 12 units <span className="text-slate-400">· example data</span></div>
+      </div>
+
+      <div className="flex flex-wrap items-center gap-2">
+        <button type="button" className="inline-flex items-center gap-1.5 text-[12px] px-3 py-1.5 rounded-md border border-slate-300 bg-white hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg>
+          View the output
+        </button>
+        <button type="button" className="inline-flex items-center gap-1.5 text-[12px] px-3 py-1.5 rounded-md border border-slate-300 bg-white hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M3 12a9 9 0 109-9"/><path d="M3 4v5h5"/></svg>
+          Run again
+        </button>
+        <button type="button" className="inline-flex items-center gap-1.5 text-[12px] px-3 py-1.5 rounded-md border border-slate-300 bg-white hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+          Duplicate
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function WorkflowsBackOfficeSection() {
+  const [search, setSearch] = useState("");
+  const [stateFilter, setStateFilter] = useState<"all" | SampleWfState>("all");
+  return (
+    <div className="absolute inset-0 overflow-auto bg-white">
+      <div className="px-5 py-5 space-y-4">
+        {/* Hobson-voiced intro */}
+        <div className="flex items-start gap-3 rounded-lg border border-slate-200 bg-[#FAF7F2] px-3.5 py-3">
+          <img src={owlDefault} alt="" aria-hidden className="w-7 h-7 object-contain shrink-0" />
+          <p className="text-[12.5px] text-slate-700 leading-relaxed">
+            These are the routines I've set up for you. Here you set the rules — when each one watches, and how far ahead it should warn you. You'll see the actual upcoming items in your day-to-day view, not here.
+          </p>
+        </div>
+
+        {/* Filters */}
+        <div className="flex flex-wrap items-center gap-2">
+          <div className="relative flex-1 min-w-[180px]">
+            <input
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Search workflows"
+              aria-label="Search workflows"
+              className="w-full text-[12.5px] pl-8 pr-3 py-2 rounded-md border border-slate-200 bg-white focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40"
+            />
+            <svg aria-hidden width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" strokeWidth="2" className="absolute left-2.5 top-1/2 -translate-y-1/2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-3.5-3.5"/></svg>
+          </div>
+          <select
+            value={stateFilter}
+            onChange={(e) => setStateFilter(e.target.value as "all" | SampleWfState)}
+            aria-label="Filter by state"
+            className="text-[12px] px-2.5 py-2 rounded-md border border-slate-200 bg-white focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40"
+          >
+            <option value="all">All states</option>
+            <option value="active">Active</option>
+            <option value="draft">Draft</option>
+            <option value="paused">Paused</option>
+            <option value="completed">Completed</option>
+          </select>
+          <select aria-label="Filter by owner" className="text-[12px] px-2.5 py-2 rounded-md border border-slate-200 bg-white focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40">
+            <option>All owners</option>
+          </select>
+          <select aria-label="Filter by applies-to" className="text-[12px] px-2.5 py-2 rounded-md border border-slate-200 bg-white focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40">
+            <option>Applies to: anywhere</option>
+          </select>
+        </div>
+
+        {/* Cards */}
+        <div className="space-y-2.5">
+          {(stateFilter === "all" || stateFilter === "active") && (
+            <SampleWfCardShell
+              state="active"
+              title="Rent review watch"
+              summary="Whole portfolio · surfaces 6 months ahead"
+            />
+          )}
+          {(stateFilter === "all" || stateFilter === "active") && (
+            <SampleWfCardShell
+              state="active"
+              title="Break clause watch"
+              summary="Whole portfolio · surfaces 12 months ahead"
+              defaultOpen
+            >
+              <BreakClauseSample />
+            </SampleWfCardShell>
+          )}
+          {(stateFilter === "all" || stateFilter === "draft") && (
+            <SampleWfCardShell
+              state="draft"
+              title="Notice deadlines"
+              summary="Draft · needs your sign-off"
+            />
+          )}
+          {(stateFilter === "all" || stateFilter === "completed") && (
+            <SampleWfCardShell
+              state="completed"
+              title="Stanley House — EICR renewal"
+              summary="Completed 3 Jun 2026 · finished with your approval"
+              defaultOpen
+            >
+              <EicrCompletedSample />
+            </SampleWfCardShell>
+          )}
+        </div>
+
+        <p className="text-[11px] text-slate-400 italic pt-1">Sample workflows shown for design review — figures are examples, not live data.</p>
+      </div>
+    </div>
+  );
+}
+
+
 
