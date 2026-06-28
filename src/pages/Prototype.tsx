@@ -7069,9 +7069,10 @@ function PropertyContent({
 
   return (
     <div className="space-y-4">
-      {/* Pinned collapsible Units section */}
+      {/* Collapsible Units section (anchored, not pinned — the chat pinned bar handles always-on access) */}
       <section
-        className="sticky top-0 z-20 -mx-1 px-1"
+        id={`units-section-${property.id}`}
+        className="-mx-1 px-1"
         aria-label="Units"
       >
         <button
