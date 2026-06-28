@@ -1275,7 +1275,7 @@ function ShowMeBubble({
 
   return (
     <div className="flex items-end gap-2">
-      <CharacterAvatar src={INSPECTOR_CHARACTER.src} alt="The Inspector" />
+      <HobsonAvatar />
       <div className="max-w-[640px] w-full bg-[#EDE9FE] text-[#1F2330] text-sm leading-relaxed px-4 py-3 rounded-2xl rounded-bl-md">
         <div className="whitespace-pre-line">
           {introShown}
