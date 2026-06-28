@@ -3486,19 +3486,6 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                         onRequest={(k, s) => requestSummary(k, s)}
                         enabledKinds={summaryVisibility}
                       />
-                      <button
-                        type="button"
-                        onClick={() => setOpenUnitsSignal((n) => n + 1)}
-                        className="w-full flex items-center justify-between gap-3 px-3 py-2 rounded-lg border border-[#C4B5FD] bg-gradient-to-r from-[#F5F3FF] to-white text-left hover:border-[#7C3AED] hover:from-[#EDE9FE] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]/40 transition motion-reduce:transition-none"
-                      >
-                        <span className="flex flex-col min-w-0">
-                          <span className="text-[13px] font-semibold text-slate-900">Open a unit</span>
-                          <span className="text-[11px] text-slate-600 truncate">
-                            {selectedProperty.units.length} units — tap to choose
-                          </span>
-                        </span>
-                        <span aria-hidden className="text-[#7C3AED] text-[11px] uppercase tracking-wide font-semibold">Open ↓</span>
-                      </button>
                     </>
                   )}
                   {view === "unit" && selectedUnit && selectedPropertyId && (
