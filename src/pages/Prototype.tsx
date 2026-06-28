@@ -3434,6 +3434,27 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
               <span>Meet my team</span>
             </button>
           )}
+          {/* "Show everything" — discreet standing control that opens the unified
+              back-office workbench on the right stage. Companion to "Meet my team":
+              that shows WHO is on the team; this shows WHAT the team holds. */}
+          {view !== "onboarding" && (
+            <button
+              type="button"
+              onClick={() => { if (showWorkbench) { setShowWorkbench(false); } else { revealWorkbench("Show me what's been recorded"); } }}
+              aria-pressed={showWorkbench}
+              aria-label={showWorkbench ? "Hide what's been recorded" : "Show what's been recorded"}
+              title={showWorkbench ? "Hide what's been recorded" : "Show what's been recorded"}
+              className="ml-0.5 inline-flex items-center gap-1.5 px-2 py-1 rounded-md text-[11px] font-medium text-[#5B21B6] hover:text-[#4C1D95] hover:bg-[#F5F3FF] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED] transition-colors motion-reduce:transition-none"
+            >
+              {/* Stacked-layers icon — distinct from the "trio" team icon */}
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                <path d="M12 3l9 5-9 5-9-5 9-5z" />
+                <path d="M3 13l9 5 9-5" />
+                <path d="M3 17l9 5 9-5" />
+              </svg>
+              <span>Show everything</span>
+            </button>
+          )}
         </header>
 
         {/* Onboarding progress / breadcrumb */}
