@@ -33,6 +33,19 @@ export type BackOfficeHelper = {
 
 export const BACK_OFFICE_HELPERS: BackOfficeHelper[] = [
   {
+    id: "architect",
+    name: "The Architect",
+    src: characterArchitect,
+    domain: "Properties & Units",
+    tagline: "Designs, organises and evolves your portfolio structure.",
+    roleTitle: "Properties & Units",
+    contributionLine: "Helps build your portfolio by asking the right questions, creating units, assembling them into properties where appropriate, and keeping everything organised as your estate evolves.",
+    triggers: ["property", "properties", "unit", "units", "portfolio structure", "add property", "add unit", "architect"],
+    narration: "The Architect is just unrolling his plans — that room is being prepared.",
+    themeAccent: "text-violet-700 border-violet-200",
+    status: "coming-soon",
+  },
+  {
     id: "professor",
     name: "The Professor",
     src: characterProfessor,
@@ -95,19 +108,6 @@ export const BACK_OFFICE_HELPERS: BackOfficeHelper[] = [
     triggers: ["user", "users", "role", "permission", "access", "security", "keeper", "audit log", "sign in"],
     narration: "The Keeper hasn't moved in yet — that room is being prepared.",
     themeAccent: "text-emerald-700 border-emerald-200",
-    status: "coming-soon",
-  },
-  {
-    id: "architect",
-    name: "The Architect",
-    src: characterArchitect,
-    domain: "Properties & Units",
-    tagline: "Designs, organises and evolves your portfolio structure.",
-    roleTitle: "Properties & Units",
-    contributionLine: "Helps build your portfolio by asking the right questions, creating units, assembling them into properties where appropriate, and keeping everything organised as your estate evolves.",
-    triggers: ["property", "properties", "unit", "units", "portfolio structure", "add property", "add unit", "architect"],
-    narration: "The Architect is just unrolling his plans — that room is being prepared.",
-    themeAccent: "text-violet-700 border-violet-200",
     status: "coming-soon",
   },
 ];
