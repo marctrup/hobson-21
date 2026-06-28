@@ -1585,6 +1585,25 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
     setBoEvents((arr) => [...arr, { kind: "jobs", id: `bo-jobs-${Date.now()}` }]);
   };
 
+  // Tapping a Hobson "offer" chip — acts as the user asking him for that thing.
+  // Echoes the user intent, Hobson replies in his voice, and (when mapped) the
+  // matching workbench section is expanded/scrolled into view on the right.
+  // Where the offer has followups, Hobson presents the next set of chips for a
+  // guided back-and-forth. Joining-soon domains are acknowledged honestly with
+  // no fabricated section.
+  const boPickOffer = (o: BackOfficeOffer) => {
+    const ts = Date.now();
+    const id = `bo-offer-${ts}`;
+    setBoEvents((arr) => [...arr, { kind: "user", id, text: o.text }]);
+    setTimeout(() => {
+      setBoEvents((arr) => [...arr, { kind: "hobson", id: `${id}-r`, text: o.hobsonReply }]);
+      if (o.followups && o.followups.length > 0) {
+        setBoEvents((arr) => [...arr, { kind: "chips", id: `${id}-c`, chips: o.followups!, ariaLabel: "Next options from Hobson" }]);
+      }
+      if (o.sectionId) setTimeout(() => setBoJumpSectionId(o.sectionId!), 250);
+    }, 250);
+  };
+
 
   // ----- Professor library state -----
   const [profDocs, setProfDocs] = useState<ProfDoc[]>(SEED_PROF_DOCS);
