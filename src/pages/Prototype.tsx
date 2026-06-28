@@ -7593,6 +7593,347 @@ function BackOfficeStage({
   );
 }
 
+type WorkbenchCounts = {
+  documents: number;
+  documentsPending: number;
+  compliance: number;
+  complianceToConfirm: number;
+  contacts: number;
+  workflows: number;
+  workflowsActive: number;
+  workflowsDraft: number;
+  units: number;
+  properties: number;
+};
+
+function BackOfficeWorkbench({
+  helpers,
+  scopeProperty,
+  scopeUnit,
+  onClearScope,
+  jumpSectionId,
+  onJumpHandled,
+  renderDocuments,
+  renderCompliance,
+  renderPeople,
+  renderWorkflows,
+  counts,
+}: {
+  helpers: BackOfficeHelper[];
+  scopeProperty: Property | null;
+  scopeUnit: Unit | null;
+  onClearScope: () => void;
+  jumpSectionId: string | null;
+  onJumpHandled: () => void;
+  renderDocuments: () => React.ReactNode;
+  renderCompliance: () => React.ReactNode;
+  renderPeople: () => React.ReactNode;
+  renderWorkflows: () => React.ReactNode;
+  counts: WorkbenchCounts;
+}) {
+  const findHelper = (id: string) => helpers.find((h) => h.id === id);
+  const professor = findHelper("professor");
+  const inspector = findHelper("inspector");
+  const broker = findHelper("broker");
+  const magician = findHelper("magician");
+  const architect = findHelper("architect");
+
+  const [openIds, setOpenIds] = useState<Set<string>>(new Set());
+  const [notesOpen, setNotesOpen] = useState(false);
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const sectionRefs = useRef<Record<string, HTMLDivElement | null>>({});
+
+  useEffect(() => {
+    if (!jumpSectionId) return;
+    setOpenIds((prev) => {
+      const n = new Set(prev);
+      n.add(jumpSectionId);
+      return n;
+    });
+    const t = window.setTimeout(() => {
+      const el = sectionRefs.current[jumpSectionId];
+      if (el && containerRef.current) {
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+      onJumpHandled();
+    }, 80);
+    return () => window.clearTimeout(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [jumpSectionId]);
+
+  const toggle = (id: string) =>
+    setOpenIds((prev) => {
+      const n = new Set(prev);
+      if (n.has(id)) n.delete(id);
+      else n.add(id);
+      return n;
+    });
+
+  const scopeChip = scopeUnit
+    ? { kind: "unit", text: scopeUnit.label }
+    : scopeProperty
+    ? { kind: "property", text: scopeProperty.name }
+    : null;
+
+  const agentNotes: { id: string; src?: string; name: string; text: string }[] = [
+    professor && {
+      id: "n-prof",
+      src: professor.src,
+      name: "Professor",
+      text: `${counts.documents} documents read${counts.documentsPending > 0 ? ` · ${counts.documentsPending} awaiting classification` : " · catalogue current"}`,
+    },
+    inspector && {
+      id: "n-insp",
+      src: inspector.src,
+      name: "Inspector",
+      text: `rulebook current${counts.complianceToConfirm > 0 ? ` · ${counts.complianceToConfirm} changes to confirm` : ""}`,
+    },
+    broker && {
+      id: "n-brk",
+      src: broker.src,
+      name: "Broker",
+      text: `${counts.contacts} contacts · 1 missing details`,
+    },
+    magician && {
+      id: "n-mag",
+      src: magician.src,
+      name: "Magician",
+      text: `${counts.workflowsActive} workflows running${counts.workflowsDraft > 0 ? ` · ${counts.workflowsDraft} in draft` : ""}`,
+    },
+    architect && {
+      id: "n-arch",
+      src: architect.src,
+      name: "Architect",
+      text: `${counts.units} units across ${counts.properties} properties`,
+    },
+  ].filter(Boolean) as { id: string; src?: string; name: string; text: string }[];
+
+  const totalToConfirm = counts.documentsPending + counts.complianceToConfirm + counts.workflowsDraft;
+
+  type SectionDef = {
+    id: string;
+    name: string;
+    summary: string;
+    agentName: string;
+    agentSrc?: string;
+    icon: React.ReactNode;
+    content: React.ReactNode;
+  };
+
+  const structureContent = (
+    <div className="absolute inset-0 bg-white overflow-auto">
+      <div className="px-5 py-4 space-y-3">
+        <div className="text-[13px] font-semibold text-slate-900">Portfolio structure</div>
+        <div className="text-[12px] text-slate-500">{counts.units} units across {counts.properties} properties — kept in shape by the Architect.</div>
+        <div className="space-y-2 pt-2">
+          {PROPERTIES.map((p) => (
+            <div key={p.id} className="rounded-xl border border-slate-200 bg-white p-3">
+              <div className="flex items-center justify-between">
+                <div className="text-[13px] font-semibold text-slate-900">{p.name}</div>
+                <div className="text-[11px] text-slate-500">{p.area} · {p.standalone ? "single unit" : `${p.units.length} units`}</div>
+              </div>
+              {!p.standalone && (
+                <ul className="mt-2 grid grid-cols-2 gap-1 text-[12px] text-slate-600">
+                  {p.units.map((u) => (
+                    <li key={u.id} className="flex items-center justify-between px-2 py-1 rounded bg-slate-50">
+                      <span>{u.label}</span>
+                      <span className={`text-[10px] uppercase ${u.status === "Let" ? "text-emerald-700" : "text-slate-500"}`}>{u.status}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+
+  const sections: SectionDef[] = [
+    {
+      id: "documents",
+      name: "Documents",
+      summary: `${counts.documents} documents · 4 tenancy chains`,
+      agentName: "Professor",
+      agentSrc: professor?.src,
+      icon: (<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M9 3h7l4 4v14H9z"/><path d="M5 7h7v14H5z"/></svg>),
+      content: renderDocuments(),
+    },
+    {
+      id: "compliance",
+      name: "Compliance",
+      summary: `${counts.compliance} requirements${counts.complianceToConfirm > 0 ? ` · ${counts.complianceToConfirm} to confirm` : ""}`,
+      agentName: "Inspector",
+      agentSrc: inspector?.src,
+      icon: (<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M12 3l8 4v5c0 5-3.5 8.5-8 9-4.5-.5-8-4-8-9V7l8-4z"/></svg>),
+      content: renderCompliance(),
+    },
+    {
+      id: "people",
+      name: "People & relationships",
+      summary: `${counts.contacts} contacts`,
+      agentName: "Broker",
+      agentSrc: broker?.src,
+      icon: (<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="11" r="2.5"/><path d="M5 18c.8-2 2.2-3 4-3s3.2 1 4 3"/><path d="M15 9h4M15 13h4"/></svg>),
+      content: renderPeople(),
+    },
+    {
+      id: "workflows",
+      name: "Workflows",
+      summary: `${counts.workflowsActive} running${counts.workflowsDraft > 0 ? ` · ${counts.workflowsDraft} draft` : ""}`,
+      agentName: "Magician",
+      agentSrc: magician?.src,
+      icon: (<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M15 4l5 5-11 11H4v-5L15 4z"/><path d="M14 5l5 5"/></svg>),
+      content: renderWorkflows(),
+    },
+    {
+      id: "structure",
+      name: "Structure",
+      summary: `${counts.units} units · ${counts.properties} properties`,
+      agentName: "Architect",
+      agentSrc: architect?.src,
+      icon: (<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M3 21h18"/><path d="M5 21V9l7-5 7 5v12"/><path d="M9 21v-6h6v6"/></svg>),
+      content: structureContent,
+    },
+  ];
+
+  const comingSoonTiles = [
+    { id: "researcher", label: "Research", person: "Researcher", icon: (<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>) },
+    { id: "bookkeeper", label: "Calculations", person: "Bookkeeper", icon: (<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 7h8M8 11h8M8 15h5"/></svg>) },
+    { id: "communicator", label: "Connections", person: "Communicator", icon: (<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden><path d="M5 12a7 7 0 0114 0"/><path d="M8 12a4 4 0 018 0"/><circle cx="12" cy="12" r="1.5"/></svg>) },
+    { id: "keeper", label: "Access", person: "Keeper", icon: (<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>) },
+  ];
+
+  return (
+    <div ref={containerRef} className="absolute inset-0 bg-[#FAF7F2] overflow-auto">
+      <div className="max-w-3xl mx-auto px-6 py-8 space-y-5">
+        {/* Page header */}
+        <header className="flex items-start justify-between gap-4">
+          <div>
+            <h1 className="text-[22px] leading-tight font-semibold text-slate-900">Here's everything my team holds for you.</h1>
+            {scopeChip && (
+              <p className="text-[12.5px] text-slate-500 mt-1">Scoped to one {scopeChip.kind} · remove the chip for the whole portfolio</p>
+            )}
+          </div>
+          {scopeChip && (
+            <button
+              type="button"
+              onClick={onClearScope}
+              aria-label={`Clear scope ${scopeChip.text}`}
+              className="inline-flex items-center gap-1.5 text-[12px] px-2.5 py-1 rounded-full border border-slate-300 bg-white hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]"
+            >
+              <span className="text-slate-700">{scopeChip.text}</span>
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden><path d="M6 6l12 12M18 6L6 18"/></svg>
+            </button>
+          )}
+        </header>
+
+        {/* Agents' notes (consolidated) */}
+        <section className="rounded-2xl border border-slate-200 bg-white">
+          <button
+            type="button"
+            aria-expanded={notesOpen}
+            onClick={() => setNotesOpen((v) => !v)}
+            className="w-full flex items-center gap-3 px-4 py-3.5 text-left hover:bg-slate-50 rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]"
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#64748b" strokeWidth="2" aria-hidden><circle cx="9" cy="8" r="3"/><circle cx="17" cy="10" r="2.5"/><path d="M3 20v-1a5 5 0 015-5h2a5 5 0 015 5v1"/><path d="M14 20v-.5a4 4 0 014-4h1a4 4 0 014 4V20"/></svg>
+            <span className="text-[14px] font-semibold text-slate-900">Agents' notes</span>
+            <span className="text-[12px] text-slate-500 hidden sm:inline">· what your team has been doing</span>
+            <span className="ml-auto flex items-center gap-2">
+              {totalToConfirm > 0 && (
+                <span className="text-[11px] font-medium px-2 py-0.5 rounded-full bg-amber-50 text-amber-800 border border-amber-200">{totalToConfirm} to confirm</span>
+              )}
+              <svg className={`w-4 h-4 text-slate-400 transition-transform ${notesOpen ? "rotate-180" : ""}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden><path d="M6 9l6 6 6-6"/></svg>
+            </span>
+          </button>
+          {notesOpen && (
+            <div className="px-4 pb-4 pt-2 border-t border-slate-100">
+              <dl className="grid grid-cols-[max-content_1fr] gap-x-6 gap-y-2 text-[13px]">
+                {agentNotes.map((n) => (
+                  <React.Fragment key={n.id}>
+                    <dt className="flex items-center gap-2 text-slate-700">
+                      {n.src && <img src={n.src} alt="" aria-hidden className="w-5 h-5 object-contain" />}
+                      <span className="font-medium">{n.name}</span>
+                    </dt>
+                    <dd className="text-slate-600">{n.text}</dd>
+                  </React.Fragment>
+                ))}
+              </dl>
+            </div>
+          )}
+        </section>
+
+        <div className="text-[11px] uppercase tracking-wider text-slate-500 font-semibold pt-1">Your team's work</div>
+
+        {/* Work sections */}
+        <div className="space-y-3">
+          {sections.map((s) => {
+            const open = openIds.has(s.id);
+            return (
+              <section
+                key={s.id}
+                ref={(el) => { sectionRefs.current[s.id] = el; }}
+                className={`rounded-2xl border bg-white transition ${open ? "border-[#7C3AED]/50 shadow-sm" : "border-slate-200"}`}
+              >
+                <button
+                  type="button"
+                  aria-expanded={open}
+                  aria-controls={`bo-sec-${s.id}`}
+                  onClick={() => toggle(s.id)}
+                  className="w-full flex items-center gap-3 px-4 py-3.5 text-left hover:bg-slate-50 rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]"
+                >
+                  <span className="w-9 h-9 rounded-lg bg-slate-50 grid place-items-center text-slate-600 shrink-0">{s.icon}</span>
+                  <div className="min-w-0 flex-1">
+                    <div className="text-[15px] font-semibold text-slate-900">{s.name}</div>
+                    <div className="text-[12px] text-slate-500 flex items-center gap-2 flex-wrap">
+                      <span>{s.summary}</span>
+                      <span aria-hidden>·</span>
+                      <span className="inline-flex items-center gap-1.5">
+                        {s.agentSrc && <img src={s.agentSrc} alt="" aria-hidden className="w-3.5 h-3.5 object-contain" />}
+                        <span>{s.agentName}</span>
+                      </span>
+                    </div>
+                  </div>
+                  <svg className={`w-4 h-4 text-slate-400 transition-transform ${open ? "rotate-180" : ""}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden><path d="M6 9l6 6 6-6"/></svg>
+                </button>
+                {open && (
+                  <div id={`bo-sec-${s.id}`} className="border-t border-slate-100">
+                    <div className="relative overflow-hidden rounded-b-2xl" style={{ height: "min(78vh, 880px)" }}>
+                      {s.content}
+                    </div>
+                  </div>
+                )}
+              </section>
+            );
+          })}
+        </div>
+
+        {/* Joining soon */}
+        <div className="pt-2">
+          <div className="text-[11px] uppercase tracking-wider text-slate-500 font-semibold mb-2">Joining soon</div>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+            {comingSoonTiles.map((t) => (
+              <div
+                key={t.id}
+                aria-label={`${t.label} — ${t.person} — joining soon`}
+                className="rounded-xl border border-dashed border-slate-300 bg-slate-50/70 px-3 py-3"
+              >
+                <div className="flex items-center gap-2 text-[13px] font-medium text-slate-700">
+                  <span className="text-slate-500">{t.icon}</span>
+                  <span>{t.label}</span>
+                </div>
+                <div className="text-[11px] text-slate-500 mt-0.5">{t.person}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+
+
 function AdminBuildActiveBanner({ label }: { label: string }) {
   return (
     <div className="flex items-center gap-2 px-4 py-2.5 rounded-full border border-dashed border-[#7C3AED]/40 bg-[#F5F3FF] text-[12px] text-[#5B21B6]/80">
