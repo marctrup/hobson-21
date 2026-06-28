@@ -1682,7 +1682,7 @@ export function InspectorChat(props: InspectorChatProps) {
       {/* Greeting */}
       {introPhase === "typing" ? (
         <div className="flex items-end gap-2" aria-live="polite">
-          <CharacterAvatar src={INSPECTOR_CHARACTER.src} alt="" />
+          <HobsonAvatar />
           <div className="bg-[#EDE9FE] px-4 py-3 rounded-2xl rounded-bl-md flex items-center gap-1">
             <span className="w-1.5 h-1.5 rounded-full bg-[#7C3AED] animate-pulse" />
             <span className="w-1.5 h-1.5 rounded-full bg-[#7C3AED] animate-pulse" style={{ animationDelay: "150ms" }} />
@@ -1690,7 +1690,7 @@ export function InspectorChat(props: InspectorChatProps) {
           </div>
         </div>
       ) : (
-        <InspectorBubble text={INSPECTOR_CHARACTER.greeting} showAvatar streamKey="intro" />
+        <InspectorBubble text="This is the Inspector's compliance board — where the rules are set that I watch every property against. Tell me which area of compliance to set up, and I'll have him find what the law requires." showAvatar streamKey="intro" />
       )}
 
       {/* Event log */}
