@@ -3461,7 +3461,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                 className="w-full flex items-center justify-between gap-3 py-2 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]/40 rounded"
               >
                 <span className="text-[11.5px] uppercase tracking-wide text-slate-500 font-semibold truncate">
-                  Quick overviews{view === "property" ? " · Open a unit" : ""}
+                  Quick overviews{(view === "property" || (view === "unit" && selectedProperty && !selectedProperty.standalone)) ? " · Open a unit" : ""}
                 </span>
                 <span
                   aria-hidden
@@ -3471,21 +3471,24 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M6 9l6 6 6-6"/></svg>
                 </span>
               </button>
+              {/* PERSISTENT inner content — rendered from props/static state, never
+                  from the chat message list. Running a Quick overview or "Open a unit"
+                  appends to the chat but does NOT remove, clear, or collapse this bar. */}
               {pinnedQuickOpen && (
                 <div id="pinned-quick-panel" className="pb-3 pt-1 space-y-2">
                   {view === "portfolio" && (
-                    <SummaryActions scope={{ level: "portfolio" }} onRequest={(k, s) => { requestSummary(k, s); setPinnedQuickOpen(false); }} enabledKinds={summaryVisibility} />
+                    <SummaryActions scope={{ level: "portfolio" }} onRequest={(k, s) => requestSummary(k, s)} enabledKinds={summaryVisibility} />
                   )}
                   {view === "property" && selectedProperty && (
                     <>
                       <SummaryActions
                         scope={{ level: "property", propertyId: selectedProperty.id }}
-                        onRequest={(k, s) => { requestSummary(k, s); setPinnedQuickOpen(false); }}
+                        onRequest={(k, s) => requestSummary(k, s)}
                         enabledKinds={summaryVisibility}
                       />
                       <button
                         type="button"
-                        onClick={() => { setOpenUnitsSignal((n) => n + 1); setPinnedQuickOpen(false); }}
+                        onClick={() => setOpenUnitsSignal((n) => n + 1)}
                         className="w-full flex items-center justify-between gap-3 px-3 py-2 rounded-lg border border-[#C4B5FD] bg-gradient-to-r from-[#F5F3FF] to-white text-left hover:border-[#7C3AED] hover:from-[#EDE9FE] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]/40 transition motion-reduce:transition-none"
                       >
                         <span className="flex flex-col min-w-0">
@@ -3499,11 +3502,28 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                     </>
                   )}
                   {view === "unit" && selectedUnit && selectedPropertyId && (
-                    <SummaryActions
-                      scope={{ level: "unit", propertyId: selectedPropertyId, unitId: selectedUnit.id }}
-                      onRequest={(k, s) => { requestSummary(k, s); setPinnedQuickOpen(false); }}
-                      enabledKinds={summaryVisibility}
-                    />
+                    <>
+                      <SummaryActions
+                        scope={{ level: "unit", propertyId: selectedPropertyId, unitId: selectedUnit.id }}
+                        onRequest={(k, s) => requestSummary(k, s)}
+                        enabledKinds={summaryVisibility}
+                      />
+                      {selectedProperty && !selectedProperty.standalone && (
+                        <button
+                          type="button"
+                          onClick={() => { const pid = selectedPropertyId; if (pid) goProperty(pid); }}
+                          className="w-full flex items-center justify-between gap-3 px-3 py-2 rounded-lg border border-[#C4B5FD] bg-gradient-to-r from-[#F5F3FF] to-white text-left hover:border-[#7C3AED] hover:from-[#EDE9FE] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]/40 transition motion-reduce:transition-none"
+                        >
+                          <span className="flex flex-col min-w-0">
+                            <span className="text-[13px] font-semibold text-slate-900">Open another unit</span>
+                            <span className="text-[11px] text-slate-600 truncate">
+                              {selectedProperty.units.length} units in {selectedProperty.name}
+                            </span>
+                          </span>
+                          <span aria-hidden className="text-[#7C3AED] text-[11px] uppercase tracking-wide font-semibold">Open ↓</span>
+                        </button>
+                      )}
+                    </>
                   )}
                 </div>
               )}
