@@ -4395,7 +4395,6 @@ function AdminChat({ character, owl, professorEvents, onAssignProfessorType, bro
   const reducedMotion = typeof window !== "undefined"
     && window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
 
-  const speaker: "hobson" | "character" = character ? "character" : "hobson";
   const text = character ? character.greeting : HOBSON_ADMIN_INTRO;
   const keyId = character ? character.id : "hobson-admin-intro";
 
