@@ -7471,7 +7471,7 @@ function PortraitTile({
   return (
     <article
       className={`relative rounded-2xl border border-slate-200/80 bg-white shadow-sm overflow-hidden ${isNotReady ? "opacity-70" : ""}`}
-      aria-label={`${helper.name}, ${helper.roleTitle}. ${helper.contributionLine} One of Hobson's Specialists.${isNotReady ? ` ${badgeText}.` : ""}`}
+      aria-label={`${helper.name}, ${helper.roleTitle}. ${helper.contributionLine} ${helper.footerLine}${isNotReady ? ` ${badgeText}.` : ""}`}
     >
       <div className={`flex flex-col items-center text-center px-5 ${compact ? "pt-5 pb-3" : "pt-8 pb-4"}`}>
         <div className="relative">
