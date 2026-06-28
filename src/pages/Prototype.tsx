@@ -32,6 +32,13 @@ import {
   type RequirementCategory,
   type DurationUnit,
 } from "./prototype/Inspector";
+import {
+  BACK_OFFICE_HELPERS,
+  detectRoomFromMessage,
+  hasEnteredBackOffice,
+  markBackOfficeEntered,
+  type BackOfficeHelper,
+} from "./prototype/backOffice";
 
 
 type AdminCharacter = "magician" | "professor" | "broker" | "inspector";
@@ -1465,6 +1472,12 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
   const [adminMode, setAdminMode] = useState(false);
   const [adminCharacter, setAdminCharacter] = useState<AdminCharacter | null>(null);
 
+  // Back Office: hallway-vs-home (in-memory module flag, not localStorage)
+  const [boFirstEntry, setBoFirstEntry] = useState<boolean>(false);
+  const [boShowHallway, setBoShowHallway] = useState<boolean>(false);
+  // Global Hobson narration thread for the Back Office (persists across room switches)
+  const [boEvents, setBoEvents] = useState<{ kind: "user" | "hobson"; id: string; text: string }[]>([]);
+
   const enterAdmin = () => {
     setShowDocuments(false);
     setShowWhatIveDone(false);
@@ -1479,18 +1492,69 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
       setTyping(false);
       setMessages([]);
     }
+    const first = !hasEnteredBackOffice();
+    setBoFirstEntry(first);
+    setBoShowHallway(true);
+    if (first) markBackOfficeEntered();
     setAdminMode(true);
   };
   const exitAdmin = () => {
     setAdminMode(false);
     setAdminCharacter(null);
+    setBoShowHallway(false);
   };
   const selectAdminCharacter = (c: AdminCharacter) => {
     setAdminCharacter(c);
+    setBoShowHallway(false);
     setMagicianEvents([]);
     setMagBuild(null);
     setMagStreamingId(null);
   };
+
+  // Free-text "Ask Hobson" from the Back Office landing (hallway/home).
+  const boAskHobson = (text: string) => {
+    const trimmed = text.trim();
+    if (!trimmed) return;
+    const baseId = `bo-${Date.now()}`;
+    setBoEvents((arr) => [...arr, { kind: "user", id: baseId, text: trimmed }]);
+    const room = detectRoomFromMessage(trimmed);
+    setTimeout(() => {
+      if (room) {
+        setBoEvents((arr) => [...arr, { kind: "hobson", id: `${baseId}-r`, text: room.narration }]);
+        if (room.status === "ready" && (room.id === "magician" || room.id === "professor" || room.id === "broker" || room.id === "inspector")) {
+          setTimeout(() => selectAdminCharacter(room.id as AdminCharacter), 450);
+        }
+      } else {
+        setBoEvents((arr) => [...arr, { kind: "hobson", id: `${baseId}-r`, text: "Of course. Which would you like — documents, compliance, contacts, or workflows?" }]);
+      }
+    }, 250);
+  };
+
+  // Entering a room from the hallway/home: Hobson narrates the handoff first.
+  const boEnterRoom = (h: BackOfficeHelper) => {
+    if (h.status === "coming-soon") {
+      const id = `bo-cs-${Date.now()}`;
+      setBoEvents((arr) => [...arr, { kind: "hobson", id, text: h.narration }]);
+      setAdminCharacter(null);
+      setBoShowHallway(false);
+      // Render a coming-soon stage by selecting nothing; the right pane shows the locked room.
+      setComingSoonHelperId(h.id);
+      return;
+    }
+    setComingSoonHelperId(null);
+    const id = `bo-enter-${Date.now()}`;
+    setBoEvents((arr) => [...arr, { kind: "hobson", id, text: h.narration }]);
+    setTimeout(() => selectAdminCharacter(h.id as AdminCharacter), 300);
+  };
+
+  const [comingSoonHelperId, setComingSoonHelperId] = useState<string | null>(null);
+
+  const boReturnToHallway = () => {
+    setAdminCharacter(null);
+    setComingSoonHelperId(null);
+    setBoShowHallway(true);
+  };
+
 
   // ----- Professor library state -----
   const [profDocs, setProfDocs] = useState<ProfDoc[]>(SEED_PROF_DOCS);
@@ -3108,14 +3172,17 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
   const crumbs: { label: string; onClick?: () => void; title?: string }[] = useMemo(() => {
     if (view === "onboarding") return [{ label: "Meet Hobson" }];
 
-    // Admin trail
+    // Back Office trail
     if (adminMode) {
       const arr: { label: string; onClick?: () => void }[] = [
-        { label: "Admin", onClick: adminCharacter ? () => setAdminCharacter(null) : undefined },
+        { label: "Back office", onClick: (adminCharacter || comingSoonHelperId) ? boReturnToHallway : undefined },
       ];
       if (adminCharacter) {
         const c = ADMIN_CHARACTERS.find((x) => x.id === adminCharacter);
-        if (c) arr.push({ label: c.name });
+        if (c) arr.push({ label: c.workTitle });
+      } else if (comingSoonHelperId) {
+        const h = BACK_OFFICE_HELPERS.find((x) => x.id === comingSoonHelperId);
+        if (h) arr.push({ label: `${h.name}'s room` });
       }
       return arr;
     }
@@ -3150,14 +3217,14 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
     if (base.length > 0) base[base.length - 1] = { ...base[base.length - 1], onClick: undefined };
     return base;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [view, selectedProperty, selectedUnit, showDocuments, showWhatIveDone, adminMode, adminCharacter]);
+  }, [view, selectedProperty, selectedUnit, showDocuments, showWhatIveDone, adminMode, adminCharacter, comingSoonHelperId]);
 
 
   /* ============ Render ============ */
 
   // Map must stay visible during the onboarding tour (Step 5 uses map search).
   // Honour user preference otherwise.
-  const hasRightOverlay = showDocuments || showWhatIveDone || !!performingCardId || !!reviewingCardId || (adminMode && !!adminCharacter);
+  const hasRightOverlay = showDocuments || showWhatIveDone || !!performingCardId || !!reviewingCardId || adminMode;
   const isExpanded = chatExpanded && view !== "onboarding" && !hasRightOverlay && !adminMode;
 
   return (
@@ -3178,38 +3245,27 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
         </button>
         {adminMode ? (
           <>
-            <div className="flex flex-col items-center w-full" style={{ gap: 24, marginTop: 40 }}>
-              {ADMIN_CHARACTERS.map((c) => (
-                <CharacterRailItem
-                  key={c.id}
-                  name={c.name}
-                  src={c.src}
-                  active={adminCharacter === c.id}
-                  onClick={() => selectAdminCharacter(c.id)}
-                />
-              ))}
-              <CharacterRailItem
-                name="The Keeper"
-                src={characterKeeper}
-              />
+            {/* Back Office: no specialist nav. Rooms + conversation are the navigation. */}
+            <div className="mt-3 flex flex-col items-center gap-1">
+              <span className="text-[9px] uppercase tracking-wider text-slate-400 font-semibold">Back office</span>
             </div>
-            {/* Discreet way out of Admin, well below the characters */}
             <button
               type="button"
               onClick={exitAdmin}
-              aria-label="Exit Admin and return to main menu"
-              title="Exit Admin"
-              className="mt-8 w-[56px] flex flex-col items-center gap-1 py-1.5 rounded-lg text-slate-500 hover:text-[#7C3AED] hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]"
+              aria-label="Exit Back Office and return to main menu"
+              title="Exit Back Office"
+              className="mt-6 w-[56px] flex flex-col items-center gap-1 py-1.5 rounded-lg text-slate-500 hover:text-[#7C3AED] hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]"
             >
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
                 <path d="M15 18l-6-6 6-6"/>
               </svg>
-              <span className="text-[10px] leading-tight text-center">Exit Admin</span>
+              <span className="text-[10px] leading-tight text-center">Exit</span>
             </button>
             <div className="mt-auto flex flex-col items-center gap-3 pb-2">
               <div className="w-9 h-9 rounded-full bg-slate-200 grid place-items-center text-xs font-semibold text-slate-700">MT</div>
             </div>
           </>
+
 
 
         ) : (
@@ -3423,6 +3479,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
               onAddContact={adminCharacter === "broker" ? handleAddBrokerContact : undefined}
               onUploadContacts={adminCharacter === "broker" ? handleUploadBrokerContacts : undefined}
               onUploadDocuments={adminCharacter === "professor" ? handleProfessorUpload : undefined}
+              boEvents={!adminCharacter ? boEvents : undefined}
             />
             )
 
@@ -3767,7 +3824,9 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                     : <LockedComposer view={view} />)
                 : adminCharacter === "inspector"
                   ? <InspectorComposer buildActive={inspectorBuild !== null} />
-                  : <LockedComposer view={view} />
+                  : !adminCharacter
+                    ? <BackOfficeComposer onSubmit={boAskHobson} />
+                    : <LockedComposer view={view} />
 
 
           ) : testerMode && view === "unit" ? (
@@ -4018,6 +4077,15 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
           return <AdminWorkArea character={c} />;
 
         })()}
+        {adminMode && !adminCharacter && (
+          <BackOfficeStage
+            mode={comingSoonHelperId ? "coming-soon" : (boShowHallway && boFirstEntry ? "hallway" : "home")}
+            helpers={BACK_OFFICE_HELPERS}
+            comingSoonId={comingSoonHelperId}
+            onEnter={boEnterRoom}
+            onReturnHallway={boReturnToHallway}
+          />
+        )}
 
       </main>
       ); })()}
@@ -4286,9 +4354,9 @@ function CharacterAvatar({ src }: { src: string }) {
 }
 
 const HOBSON_ADMIN_INTRO_PARAS = [
-  "Welcome to Admin. Here you will find my three colleagues, who do much of the work behind the scenes.",
-  "The Professor reads and remembers every document — he is the source of what I know. The Magician builds the workflows that watch your portfolio and prepare the work. The Broker keeps your contacts, and the relationships between them.",
-  "Choose whichever you need, and they will see to you.",
+  "Welcome to my back office. This is where my team helps me stay organised.",
+  "Each specialist looks after one part of my work — documents, compliance, contacts, workflows, and access.",
+  "You can simply ask me to do anything, or step into one of the rooms to set that part up.",
 ];
 const HOBSON_ADMIN_INTRO = HOBSON_ADMIN_INTRO_PARAS.join("\n\n");
 
@@ -4317,7 +4385,7 @@ type MagHandlers = {
   onSetStepTemplate: (uid: string, mode: "standard" | "own", filename?: string) => void;
 };
 
-function AdminChat({ character, owl, professorEvents, onAssignProfessorType, brokerEvents, brokerFlowActive, magicianEvents, magBuild, magStreamingId, onMagStreamDone, magHandlers, onCreateWorkflow, onAddContact, onUploadContacts, onUploadDocuments }: { character: { id: AdminCharacter; name: string; src: string; greeting: string } | null; owl: OwlState; professorEvents?: ProfEvent[]; onAssignProfessorType?: (batchId: string, type: string) => void; brokerEvents?: BrokerEvent[]; brokerFlowActive?: boolean; magicianEvents?: MagicianEvent[]; magBuild?: MagBuildState | null; magStreamingId?: string | null; onMagStreamDone?: (id: string) => void; magHandlers?: MagHandlers; onCreateWorkflow?: () => void; onAddContact?: () => void; onUploadContacts?: (filename: string) => void; onUploadDocuments?: (count: number) => void }) {
+function AdminChat({ character, owl, professorEvents, onAssignProfessorType, brokerEvents, brokerFlowActive, magicianEvents, magBuild, magStreamingId, onMagStreamDone, magHandlers, onCreateWorkflow, onAddContact, onUploadContacts, onUploadDocuments, boEvents }: { character: { id: AdminCharacter; name: string; src: string; greeting: string } | null; owl: OwlState; professorEvents?: ProfEvent[]; onAssignProfessorType?: (batchId: string, type: string) => void; brokerEvents?: BrokerEvent[]; brokerFlowActive?: boolean; magicianEvents?: MagicianEvent[]; magBuild?: MagBuildState | null; magStreamingId?: string | null; onMagStreamDone?: (id: string) => void; magHandlers?: MagHandlers; onCreateWorkflow?: () => void; onAddContact?: () => void; onUploadContacts?: (filename: string) => void; onUploadDocuments?: (count: number) => void; boEvents?: { kind: "user" | "hobson"; id: string; text: string }[] }) {
   const [phase, setPhase] = useState<"typing" | "streaming" | "done">("typing");
   const [shown, setShown] = useState("");
   const reducedMotion = typeof window !== "undefined"
@@ -4382,6 +4450,18 @@ function AdminChat({ character, owl, professorEvents, onAssignProfessorType, bro
             )}
           </div>
         </div>
+      )}
+      {!character && phase === "done" && boEvents && boEvents.map((ev) =>
+        ev.kind === "user" ? (
+          <div key={ev.id} className="flex justify-end">
+            <div className="max-w-[420px] bg-[#7C3AED] text-white text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-br-md">{ev.text}</div>
+          </div>
+        ) : (
+          <div key={ev.id} className="flex items-end gap-2">
+            <OwlAvatar state={owl} />
+            <div className="max-w-[420px] bg-[#EDE9FE] text-[#1F2330] text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-bl-md whitespace-pre-line">{ev.text}</div>
+          </div>
+        )
       )}
       {character?.id === "magician" && phase === "done" && (!magicianEvents || magicianEvents.length === 0) && !magBuild && (
         <MagicianBuildInviteCard onStart={() => onCreateWorkflow?.()} />
@@ -7114,6 +7194,149 @@ function LockedComposer({ view }: { view: View }) {
         <span className="text-[10px] uppercase tracking-wide hidden sm:inline">{helper}</span>
       </div>
     </>
+  );
+}
+
+function BackOfficeComposer({ onSubmit }: { onSubmit: (text: string) => void }) {
+  const [val, setVal] = useState("");
+  return (
+    <form
+      onSubmit={(e) => { e.preventDefault(); const t = val.trim(); if (!t) return; onSubmit(t); setVal(""); }}
+      className="flex items-center gap-2 px-4 py-2.5 rounded-full border border-slate-200 bg-white focus-within:border-[#7C3AED] focus-within:ring-2 focus-within:ring-[#7C3AED]/20 transition"
+    >
+      <input
+        value={val}
+        onChange={(e) => setVal(e.target.value)}
+        placeholder="Ask Hobson… (e.g. 'show me my contacts', 'set up compliance')"
+        aria-label="Ask Hobson"
+        className="flex-1 outline-none text-sm bg-transparent placeholder:text-slate-400"
+      />
+      <button
+        type="submit"
+        disabled={!val.trim()}
+        aria-label="Send"
+        className="flex items-center justify-center h-9 w-9 rounded-full bg-[#7C3AED] text-white hover:bg-[#6D28D9] transition disabled:bg-slate-200 disabled:text-slate-400"
+      >
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M5 12h14M13 6l6 6-6 6"/>
+        </svg>
+      </button>
+    </form>
+  );
+}
+
+function BackOfficeStage({
+  mode,
+  helpers,
+  comingSoonId,
+  onEnter,
+  onReturnHallway,
+}: {
+  mode: "hallway" | "home" | "coming-soon";
+  helpers: BackOfficeHelper[];
+  comingSoonId: string | null;
+  onEnter: (h: BackOfficeHelper) => void;
+  onReturnHallway: () => void;
+}) {
+  const reducedMotion = typeof window !== "undefined" && window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+  if (mode === "coming-soon") {
+    const h = helpers.find((x) => x.id === comingSoonId);
+    return (
+      <div className="absolute inset-0 bg-gradient-to-br from-slate-50 to-white overflow-auto motion-reduce:transition-none">
+        <div className="max-w-2xl mx-auto px-6 py-16 text-center">
+          <img src={h?.src} alt="" aria-hidden className="w-24 h-24 mx-auto opacity-60 mb-4" />
+          <h2 className="text-2xl font-semibold text-slate-900 mb-2">{h?.name}'s room</h2>
+          <p className="text-sm text-slate-600 mb-1">{h?.domain}</p>
+          <p className="text-sm text-slate-500 italic mb-6">{h?.tagline}</p>
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-50 border border-amber-200 text-amber-800 text-xs font-medium mb-8">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 2"/></svg>
+            Coming soon
+          </div>
+          <div>
+            <button onClick={onReturnHallway} className="text-sm text-[#7C3AED] hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED] rounded px-2 py-1">
+              ← Back to hallway
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (mode === "hallway") {
+    // First-time entry: theatrical reveal of the hallway and rooms
+    return (
+      <div className="absolute inset-0 bg-gradient-to-b from-[#FAF7FF] via-white to-slate-50 overflow-auto">
+        <div className="max-w-5xl mx-auto px-6 py-10">
+          <div className="text-center mb-8">
+            <p className="text-[11px] uppercase tracking-wider text-[#7C3AED] font-semibold mb-1">Hobson's back office</p>
+            <h1 className="text-3xl font-semibold text-slate-900 mb-2">Welcome through</h1>
+            <p className="text-sm text-slate-600 max-w-xl mx-auto">
+              This is where my team helps me stay organised. Each specialist looks after one part of my work.
+              Ask me anything in the chat, or step into a room to set that part up.
+            </p>
+          </div>
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {helpers.map((h) => (
+              <button
+                key={h.id}
+                onClick={() => onEnter(h)}
+                disabled={h.status === "coming-soon"}
+                className={`group relative text-left rounded-2xl border bg-white shadow-sm hover:shadow-md transition p-5 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED] ${h.status === "coming-soon" ? "opacity-60 cursor-default" : "hover:-translate-y-0.5"} motion-reduce:transition-none motion-reduce:transform-none ${h.themeAccent}`}
+              >
+                <div className="flex items-center gap-3 mb-3">
+                  <div className={`w-14 h-14 rounded-xl bg-slate-50 grid place-items-center overflow-hidden ${reducedMotion ? "" : "group-hover:bg-white"}`}>
+                    <img src={h.src} alt="" aria-hidden className="w-12 h-12 object-contain" />
+                  </div>
+                  <div>
+                    <div className="text-[15px] font-semibold text-slate-900">{h.name}</div>
+                    <div className="text-[11px] uppercase tracking-wide text-slate-500">{h.domain}</div>
+                  </div>
+                </div>
+                <p className="text-[13px] text-slate-600 leading-relaxed">{h.tagline}</p>
+                {h.status === "coming-soon" ? (
+                  <span className="absolute top-3 right-3 text-[10px] px-2 py-0.5 rounded-full bg-amber-50 text-amber-800 border border-amber-200 font-medium">Coming soon</span>
+                ) : (
+                  <span className="absolute top-3 right-3 text-[10px] text-slate-400">Step in →</span>
+                )}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Returning view — calm, compact home with fast room access
+  return (
+    <div className="absolute inset-0 bg-white overflow-auto">
+      <div className="max-w-3xl mx-auto px-6 py-8">
+        <div className="flex items-baseline justify-between mb-5">
+          <div>
+            <h2 className="text-lg font-semibold text-slate-900">Back office</h2>
+            <p className="text-[12px] text-slate-500">Ask Hobson, or pick a room.</p>
+          </div>
+        </div>
+        <div className="grid gap-3 sm:grid-cols-2">
+          {helpers.map((h) => (
+            <button
+              key={h.id}
+              onClick={() => onEnter(h)}
+              disabled={h.status === "coming-soon"}
+              className={`flex items-center gap-3 text-left rounded-xl border bg-white hover:bg-slate-50 transition p-3 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED] ${h.status === "coming-soon" ? "opacity-60 cursor-default" : ""} motion-reduce:transition-none`}
+            >
+              <img src={h.src} alt="" aria-hidden className="w-9 h-9 object-contain" />
+              <div className="min-w-0 flex-1">
+                <div className="text-[13px] font-semibold text-slate-900 truncate">{h.name}</div>
+                <div className="text-[11px] text-slate-500 truncate">{h.domain}</div>
+              </div>
+              {h.status === "coming-soon" && (
+                <span className="text-[10px] px-1.5 py-0.5 rounded bg-amber-50 text-amber-800 border border-amber-200">Soon</span>
+              )}
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
   );
 }
 
