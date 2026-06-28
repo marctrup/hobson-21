@@ -34,7 +34,7 @@ export type BackOfficeHelper = {
   triggers: string[];   // lowercase phrases that route Hobson here
   narration: string;    // Hobson's line when entering this room
   themeAccent: string;  // tailwind text/border accent
-  status: "ready" | "coming-soon";
+  status: "ready" | "started" | "joining-soon";
 };
 
 export const BACK_OFFICE_HELPERS: BackOfficeHelper[] = [
