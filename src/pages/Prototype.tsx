@@ -1495,6 +1495,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
     const first = !hasEnteredBackOffice();
     setBoFirstEntry(first);
     setBoShowHallway(true);
+    setBoEvents([]);
     if (first) markBackOfficeEntered();
     setAdminMode(true);
   };
