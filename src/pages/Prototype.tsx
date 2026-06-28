@@ -7586,7 +7586,7 @@ function BackOfficeStage({
           </p>
         </div>
         <div className="grid gap-4 grid-cols-1 sm:grid-cols-2" role="list" aria-label="Hobson's team">
-          {helpers.map((h) => (
+          {helpers.filter((h) => h.id !== "magician").map((h) => (
             <PortraitTile key={h.id} helper={h} compact />
           ))}
         </div>
