@@ -1112,6 +1112,15 @@ const RENT_Q_PATTERNS = [
   /^\s*current\s+rent\s+flat\s*2\s*\??\s*$/i,
 ];
 const isRentFlat2Question = (q: string) => RENT_Q_PATTERNS.some((re) => re.test(q));
+// "Show me everything my team has recorded" — opens the unified back-office workbench on the right stage.
+const SHOW_EVERYTHING_PATTERNS: RegExp[] = [
+  /show\s+me\s+(everything|what(?:'s|\s+is| has)?\s+been\s+recorded|what\s+you\s+hold|what\s+(my\s+)?team\s+(holds|has))/i,
+  /open\s+the\s+(back[\s-]?office|workbench)/i,
+  /show\s+me\s+the\s+(back[\s-]?office|workbench)/i,
+  /what(?:'s|\s+is)\s+been\s+recorded(?:\s+to\s+date)?/i,
+  /what\s+(have|has)\s+(you|the\s+team)\s+recorded/i,
+];
+const isShowEverythingIntent = (q: string) => SHOW_EVERYTHING_PATTERNS.some((re) => re.test(q.trim()));
 const rentPrefillFor = (view: string, propertyId: string | null, unitId: string | null): string => {
   if (view === "unit" && unitId === "nugent-f2") return "What is the rent?";
   if (view === "property" && propertyId === "nugent") return "rent flat 2?";
@@ -1421,6 +1430,9 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
   // "Meet my team" — user-summonable team wall overlay on the right stage.
   // In-memory only (no localStorage/sessionStorage); does not disturb the chat.
   const [showTeamWall, setShowTeamWall] = useState(false);
+  // "Show me everything" — user-summonable unified back-office workbench overlay on the right stage.
+  // Display-only; sections collapsed by default (the workbench owns its own collapse state).
+  const [showWorkbench, setShowWorkbench] = useState(false);
   const [carriedCardId, setCarriedCardId] = useState<string | null>(null);
   const [performingCardId, setPerformingCardId] = useState<string | null>(null);
   const [reviewingCardId, setReviewingCardId] = useState<string | null>(null);
@@ -3102,6 +3114,30 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
   };
 
 
+  /* ----- "show me everything" — open unified back-office workbench on the right stage ----- */
+  const revealWorkbench = (viaText?: string) => {
+    if (viaText && viaText.trim()) {
+      setMessages((m) => [...m, { id: `u-${Date.now()}`, role: "user", text: viaText.trim() }]);
+      setInput("");
+    }
+    setTyping(true);
+    setOwl("talking");
+    const reply = "Of course — here's everything my team holds for you.";
+    const delay = reduced ? 150 : 500;
+    window.setTimeout(() => {
+      setTyping(false);
+      // Close any competing overlay; ensure workbench is the focused stage.
+      setShowTeamWall(false);
+      if (reduced) {
+        setMessages((m) => [...m, { id: `wb-${Date.now()}`, role: "hobson", text: reply }]);
+        setShowWorkbench(true);
+      } else {
+        streamHobsonMessage(reply, () => setShowWorkbench(true));
+      }
+    }, delay);
+  };
+
+
 
   /* ----- summary request (occupational / compliance) — same fn at every level ----- */
   const requestSummary = (kind: "occupational" | "compliance", scope: SummaryScope) => {
@@ -3141,6 +3177,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
 
   const sendUnitQuestion = (q: string) => {
     if (!q.trim()) return;
+    if (isShowEverythingIntent(q)) { revealWorkbench(q); return; }
     if (isRentFlat2Question(q)) { sendRentAnswer(q); return; }
     setMessages((m) => [...m, { id: `u-${Date.now()}`, role: "user", text: q }]);
     setInput("");
@@ -3247,7 +3284,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
 
   // Map must stay visible during the onboarding tour (Step 5 uses map search).
   // Honour user preference otherwise.
-  const hasRightOverlay = showDocuments || showWhatIveDone || showTeamWall || !!performingCardId || !!reviewingCardId || adminMode;
+  const hasRightOverlay = showDocuments || showWhatIveDone || showTeamWall || showWorkbench || !!performingCardId || !!reviewingCardId || adminMode;
   const isExpanded = chatExpanded && view !== "onboarding" && !hasRightOverlay && !adminMode;
 
   return (
@@ -3395,6 +3432,27 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                 <path d="M15 19c0-2 2-3.5 4-3.5s2.5 1 2.5 2.5" />
               </svg>
               <span>Meet my team</span>
+            </button>
+          )}
+          {/* "Show everything" — discreet standing control that opens the unified
+              back-office workbench on the right stage. Companion to "Meet my team":
+              that shows WHO is on the team; this shows WHAT the team holds. */}
+          {view !== "onboarding" && (
+            <button
+              type="button"
+              onClick={() => { if (showWorkbench) { setShowWorkbench(false); } else { revealWorkbench("Show me what's been recorded"); } }}
+              aria-pressed={showWorkbench}
+              aria-label={showWorkbench ? "Hide what's been recorded" : "Show what's been recorded"}
+              title={showWorkbench ? "Hide what's been recorded" : "Show what's been recorded"}
+              className="ml-0.5 inline-flex items-center gap-1.5 px-2 py-1 rounded-md text-[11px] font-medium text-[#5B21B6] hover:text-[#4C1D95] hover:bg-[#F5F3FF] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED] transition-colors motion-reduce:transition-none"
+            >
+              {/* Stacked-layers icon — distinct from the "trio" team icon */}
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                <path d="M12 3l9 5-9 5-9-5 9-5z" />
+                <path d="M3 13l9 5 9-5" />
+                <path d="M3 17l9 5 9-5" />
+              </svg>
+              <span>Show everything</span>
             </button>
           )}
         </header>
@@ -4198,6 +4256,83 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                 comingSoonId={null}
                 onEnter={() => { /* purely cosmetic outside Back Office */ }}
                 onReturnHallway={() => setShowTeamWall(false)}
+              />
+            </div>
+          </div>
+        )}
+        {/* "Show everything" — unified back-office workbench overlay on the right stage.
+            Display-only; sections collapsed by default. Suppressed in admin mode (the
+            workbench is already the permanent right-side stage there). */}
+        {showWorkbench && !adminMode && (
+          <div className="absolute inset-0 z-[540] bg-white flex flex-col motion-reduce:transition-none">
+            <div className="flex items-center justify-between px-5 h-14 border-b border-slate-100 shrink-0">
+              <div className="flex items-center gap-2">
+                <span className="text-[11px] uppercase tracking-wider text-[#7C3AED] font-semibold">Hobson's back office</span>
+                <span aria-hidden className="text-slate-300">·</span>
+                <h2 className="text-[15px] font-semibold text-slate-900">Everything my team holds</h2>
+              </div>
+              <button
+                type="button"
+                onClick={() => setShowWorkbench(false)}
+                aria-label="Close workbench"
+                className="inline-flex items-center justify-center w-8 h-8 rounded-md text-slate-500 hover:text-slate-900 hover:bg-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]"
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M6 6l12 12M18 6L6 18"/></svg>
+              </button>
+            </div>
+            <div className="flex-1 relative overflow-hidden">
+              <BackOfficeWorkbench
+                helpers={BACK_OFFICE_HELPERS}
+                scopeProperty={selectedProperty}
+                scopeUnit={selectedUnit}
+                onClearScope={() => { setSelectedPropertyId(null); setSelectedUnitId(null); setView("portfolio"); }}
+                jumpSectionId={null}
+                onJumpHandled={() => { /* no-op: opening from chat does not auto-expand sections */ }}
+                renderDocuments={() => (
+                  <ProfessorWorkArea
+                    character={ADMIN_CHARACTERS.find((x) => x.id === "professor")!}
+                    docs={profDocs}
+                  />
+                )}
+                renderCompliance={() => (
+                  <InspectorWorkArea
+                    rules={inspectorConfirmed}
+                    onUpdateRules={setInspectorConfirmed}
+                    buildActive={false}
+                    onShowMe={() => { /* show-me requires admin chat; no-op in display overlay */ }}
+                  />
+                )}
+                renderPeople={() => (
+                  <BrokerWorkArea
+                    character={ADMIN_CHARACTERS.find((x) => x.id === "broker")!}
+                    contacts={contacts}
+                    onAdd={() => { /* read-only in display overlay */ }}
+                  />
+                )}
+                renderWorkflows={() => (
+                  <MagicianWorkArea
+                    character={ADMIN_CHARACTERS.find((x) => x.id === "magician")!}
+                    workflows={workflows}
+                    onCreate={() => { /* read-only in display overlay */ }}
+                    onAdjust={() => { /* read-only in display overlay */ }}
+                    onView={(id) => setViewingWorkflowId(id)}
+                    onResume={() => { /* read-only in display overlay */ }}
+                    onDiscard={() => { /* read-only in display overlay */ }}
+                    onSimulate={() => { /* read-only in display overlay */ }}
+                  />
+                )}
+                counts={{
+                  documents: profDocs.length,
+                  documentsPending: profDocs.filter((d) => d.status === "pending").length,
+                  compliance: inspectorConfirmed.length,
+                  complianceToConfirm: 2,
+                  contacts: contacts.length,
+                  workflows: workflows.length,
+                  workflowsActive: workflows.filter((w) => w.status === "built").length,
+                  workflowsDraft: workflows.filter((w) => w.status === "draft").length,
+                  units: PROPERTIES.reduce((n, p) => n + p.units.length, 0),
+                  properties: PROPERTIES.filter((p) => !p.standalone).length,
+                }}
               />
             </div>
           </div>
