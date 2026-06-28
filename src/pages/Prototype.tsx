@@ -1488,6 +1488,8 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
   }, []);
   const [adminMode, setAdminMode] = useState(false);
   const [adminCharacter, setAdminCharacter] = useState<AdminCharacter | null>(null);
+  const [showBackOfficeGate, setShowBackOfficeGate] = useState(false);
+  const [backOfficeGatePassword, setBackOfficeGatePassword] = useState("");
 
   // Back Office: hallway-vs-home (in-memory module flag, not localStorage)
   const [boFirstEntry, setBoFirstEntry] = useState<boolean>(false);
@@ -3363,12 +3365,66 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><path d="M12 5v14M5 12h14"/></svg>
               </button>
               <span className="text-[10px] text-slate-500">New chat</span>
-              {!testerMode && <RailItem icon="gear" label="Admin" onClick={enterAdmin} />}
+              {!testerMode && <RailItem icon="gear" label="Back Office" onClick={() => setShowBackOfficeGate(true)} />}
               <div className="w-9 h-9 rounded-full bg-slate-200 grid place-items-center text-xs font-semibold text-slate-700">MT</div>
             </div>
           </>
         )}
       </aside>
+
+      {showBackOfficeGate && (
+        <div
+          className="fixed inset-0 z-[100] bg-slate-900/50 backdrop-blur-sm grid place-items-center p-4"
+          onClick={() => { setShowBackOfficeGate(false); setBackOfficeGatePassword(""); }}
+        >
+          <div
+            className="w-full max-w-sm rounded-2xl bg-white shadow-2xl border border-slate-200 p-6"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-10 h-10 rounded-xl bg-[#7C3AED]/10 grid place-items-center text-[#7C3AED]">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              </div>
+              <div>
+                <div className="text-base font-semibold text-slate-900">Back Office</div>
+                <div className="text-xs text-slate-500">Enter your password to continue.</div>
+              </div>
+            </div>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                setShowBackOfficeGate(false);
+                setBackOfficeGatePassword("");
+                enterAdmin();
+              }}
+            >
+              <input
+                type="password"
+                autoFocus
+                value={backOfficeGatePassword}
+                onChange={(e) => setBackOfficeGatePassword(e.target.value)}
+                placeholder="Password"
+                className="w-full h-10 rounded-md border border-slate-200 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40"
+              />
+              <div className="mt-4 flex items-center justify-end gap-2">
+                <button
+                  type="button"
+                  onClick={() => { setShowBackOfficeGate(false); setBackOfficeGatePassword(""); }}
+                  className="h-9 px-3 rounded-md text-sm text-slate-600 hover:bg-slate-100"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="h-9 px-4 rounded-md text-sm font-medium bg-[#7C3AED] text-white hover:bg-[#6D28D9]"
+                >
+                  Enter
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
 
 
       {/* Chat panel */}
