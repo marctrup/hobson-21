@@ -1472,6 +1472,12 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
   const [adminMode, setAdminMode] = useState(false);
   const [adminCharacter, setAdminCharacter] = useState<AdminCharacter | null>(null);
 
+  // Back Office: hallway-vs-home (in-memory module flag, not localStorage)
+  const [boFirstEntry, setBoFirstEntry] = useState<boolean>(false);
+  const [boShowHallway, setBoShowHallway] = useState<boolean>(false);
+  // Global Hobson narration thread for the Back Office (persists across room switches)
+  const [boEvents, setBoEvents] = useState<{ kind: "user" | "hobson"; id: string; text: string }[]>([]);
+
   const enterAdmin = () => {
     setShowDocuments(false);
     setShowWhatIveDone(false);
@@ -1486,18 +1492,69 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
       setTyping(false);
       setMessages([]);
     }
+    const first = !hasEnteredBackOffice();
+    setBoFirstEntry(first);
+    setBoShowHallway(true);
+    if (first) markBackOfficeEntered();
     setAdminMode(true);
   };
   const exitAdmin = () => {
     setAdminMode(false);
     setAdminCharacter(null);
+    setBoShowHallway(false);
   };
   const selectAdminCharacter = (c: AdminCharacter) => {
     setAdminCharacter(c);
+    setBoShowHallway(false);
     setMagicianEvents([]);
     setMagBuild(null);
     setMagStreamingId(null);
   };
+
+  // Free-text "Ask Hobson" from the Back Office landing (hallway/home).
+  const boAskHobson = (text: string) => {
+    const trimmed = text.trim();
+    if (!trimmed) return;
+    const baseId = `bo-${Date.now()}`;
+    setBoEvents((arr) => [...arr, { kind: "user", id: baseId, text: trimmed }]);
+    const room = detectRoomFromMessage(trimmed);
+    setTimeout(() => {
+      if (room) {
+        setBoEvents((arr) => [...arr, { kind: "hobson", id: `${baseId}-r`, text: room.narration }]);
+        if (room.status === "ready" && (room.id === "magician" || room.id === "professor" || room.id === "broker" || room.id === "inspector")) {
+          setTimeout(() => selectAdminCharacter(room.id as AdminCharacter), 450);
+        }
+      } else {
+        setBoEvents((arr) => [...arr, { kind: "hobson", id: `${baseId}-r`, text: "Of course. Which would you like — documents, compliance, contacts, or workflows?" }]);
+      }
+    }, 250);
+  };
+
+  // Entering a room from the hallway/home: Hobson narrates the handoff first.
+  const boEnterRoom = (h: BackOfficeHelper) => {
+    if (h.status === "coming-soon") {
+      const id = `bo-cs-${Date.now()}`;
+      setBoEvents((arr) => [...arr, { kind: "hobson", id, text: h.narration }]);
+      setAdminCharacter(null);
+      setBoShowHallway(false);
+      // Render a coming-soon stage by selecting nothing; the right pane shows the locked room.
+      setComingSoonHelperId(h.id);
+      return;
+    }
+    setComingSoonHelperId(null);
+    const id = `bo-enter-${Date.now()}`;
+    setBoEvents((arr) => [...arr, { kind: "hobson", id, text: h.narration }]);
+    setTimeout(() => selectAdminCharacter(h.id as AdminCharacter), 300);
+  };
+
+  const [comingSoonHelperId, setComingSoonHelperId] = useState<string | null>(null);
+
+  const boReturnToHallway = () => {
+    setAdminCharacter(null);
+    setComingSoonHelperId(null);
+    setBoShowHallway(true);
+  };
+
 
   // ----- Professor library state -----
   const [profDocs, setProfDocs] = useState<ProfDoc[]>(SEED_PROF_DOCS);
