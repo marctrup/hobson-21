@@ -4260,6 +4260,83 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
             </div>
           </div>
         )}
+        {/* "Show everything" — unified back-office workbench overlay on the right stage.
+            Display-only; sections collapsed by default. Suppressed in admin mode (the
+            workbench is already the permanent right-side stage there). */}
+        {showWorkbench && !adminMode && (
+          <div className="absolute inset-0 z-[540] bg-white flex flex-col motion-reduce:transition-none">
+            <div className="flex items-center justify-between px-5 h-14 border-b border-slate-100 shrink-0">
+              <div className="flex items-center gap-2">
+                <span className="text-[11px] uppercase tracking-wider text-[#7C3AED] font-semibold">Hobson's back office</span>
+                <span aria-hidden className="text-slate-300">·</span>
+                <h2 className="text-[15px] font-semibold text-slate-900">Everything my team holds</h2>
+              </div>
+              <button
+                type="button"
+                onClick={() => setShowWorkbench(false)}
+                aria-label="Close workbench"
+                className="inline-flex items-center justify-center w-8 h-8 rounded-md text-slate-500 hover:text-slate-900 hover:bg-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]"
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M6 6l12 12M18 6L6 18"/></svg>
+              </button>
+            </div>
+            <div className="flex-1 relative overflow-hidden">
+              <BackOfficeWorkbench
+                helpers={BACK_OFFICE_HELPERS}
+                scopeProperty={selectedProperty}
+                scopeUnit={selectedUnit}
+                onClearScope={() => { setSelectedPropertyId(null); setSelectedUnitId(null); setView("portfolio"); }}
+                jumpSectionId={null}
+                onJumpHandled={() => { /* no-op: opening from chat does not auto-expand sections */ }}
+                renderDocuments={() => (
+                  <ProfessorWorkArea
+                    character={ADMIN_CHARACTERS.find((x) => x.id === "professor")!}
+                    docs={profDocs}
+                  />
+                )}
+                renderCompliance={() => (
+                  <InspectorWorkArea
+                    rules={inspectorConfirmed}
+                    onUpdateRules={setInspectorConfirmed}
+                    buildActive={false}
+                    onShowMe={() => { /* show-me requires admin chat; no-op in display overlay */ }}
+                  />
+                )}
+                renderPeople={() => (
+                  <BrokerWorkArea
+                    character={ADMIN_CHARACTERS.find((x) => x.id === "broker")!}
+                    contacts={contacts}
+                    onAdd={() => { /* read-only in display overlay */ }}
+                  />
+                )}
+                renderWorkflows={() => (
+                  <MagicianWorkArea
+                    character={ADMIN_CHARACTERS.find((x) => x.id === "magician")!}
+                    workflows={workflows}
+                    onCreate={() => { /* read-only in display overlay */ }}
+                    onAdjust={() => { /* read-only in display overlay */ }}
+                    onView={(id) => setViewingWorkflowId(id)}
+                    onResume={() => { /* read-only in display overlay */ }}
+                    onDiscard={() => { /* read-only in display overlay */ }}
+                    onSimulate={() => { /* read-only in display overlay */ }}
+                  />
+                )}
+                counts={{
+                  documents: profDocs.length,
+                  documentsPending: profDocs.filter((d) => d.status === "pending").length,
+                  compliance: inspectorConfirmed.length,
+                  complianceToConfirm: 2,
+                  contacts: contacts.length,
+                  workflows: workflows.length,
+                  workflowsActive: workflows.filter((w) => w.status === "built").length,
+                  workflowsDraft: workflows.filter((w) => w.status === "draft").length,
+                  units: PROPERTIES.reduce((n, p) => n + p.units.length, 0),
+                  properties: PROPERTIES.filter((p) => !p.standalone).length,
+                }}
+              />
+            </div>
+          </div>
+        )}
         {(performingCardId || reviewingCardId) && (() => {
           const activeId = performingCardId ?? reviewingCardId!;
           const card = actionCards.find((c) => c.id === activeId);
