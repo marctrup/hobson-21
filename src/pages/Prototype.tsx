@@ -3172,14 +3172,17 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
   const crumbs: { label: string; onClick?: () => void; title?: string }[] = useMemo(() => {
     if (view === "onboarding") return [{ label: "Meet Hobson" }];
 
-    // Admin trail
+    // Back Office trail
     if (adminMode) {
       const arr: { label: string; onClick?: () => void }[] = [
-        { label: "Admin", onClick: adminCharacter ? () => setAdminCharacter(null) : undefined },
+        { label: "Back office", onClick: (adminCharacter || comingSoonHelperId) ? boReturnToHallway : undefined },
       ];
       if (adminCharacter) {
         const c = ADMIN_CHARACTERS.find((x) => x.id === adminCharacter);
-        if (c) arr.push({ label: c.name });
+        if (c) arr.push({ label: c.workTitle });
+      } else if (comingSoonHelperId) {
+        const h = BACK_OFFICE_HELPERS.find((x) => x.id === comingSoonHelperId);
+        if (h) arr.push({ label: `${h.name}'s room` });
       }
       return arr;
     }
