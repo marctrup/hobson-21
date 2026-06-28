@@ -24,6 +24,7 @@ export const INSPECTOR_CHARACTER = {
   tagline: "Compliance & protection",
   greeting:
     "I make sure you're never caught out. Tell me which area of compliance to set up, and I'll find what the law requires.",
+  workTitle: "",
   workIntro: "Where the rules are set that I watch every property against.",
 };
 
