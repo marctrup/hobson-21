@@ -3492,6 +3492,8 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
               onUploadContacts={adminCharacter === "broker" ? handleUploadBrokerContacts : undefined}
               onUploadDocuments={adminCharacter === "professor" ? handleProfessorUpload : undefined}
               boEvents={!adminCharacter ? boEvents : undefined}
+              helpers={!adminCharacter ? BACK_OFFICE_HELPERS : undefined}
+              onPickJob={!adminCharacter ? boPickJob : undefined}
             />
             )
 
