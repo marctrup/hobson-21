@@ -13,6 +13,7 @@
  */
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import characterInspector from "@/assets/prototype/character-inspector.png";
+import owlDefault from "@/assets/prototype/owl-default.png";
 import type { ComplianceRow, SummaryScope } from "./summaryData";
 import { SUMMARY_PROPERTIES, occupationalForScope } from "./summaryData";
 
@@ -513,6 +514,15 @@ function CharacterAvatar({ src, alt }: { src: string; alt: string }) {
   );
 }
 
+// In the left chat, Hobson is the only voice. The Inspector is seen working on the right.
+function HobsonAvatar() {
+  return (
+    <div className="w-10 h-10 shrink-0 rounded-full overflow-hidden bg-[#EDE9FE] ring-1 ring-slate-200 grid place-items-center">
+      <img src={owlDefault} alt="" aria-hidden className="w-full h-full object-contain" />
+    </div>
+  );
+}
+
 function InspectorBubble({
   text,
   showAvatar,
@@ -541,7 +551,7 @@ function InspectorBubble({
   return (
     <div className="flex items-end gap-2">
       {showAvatar
-        ? <CharacterAvatar src={INSPECTOR_CHARACTER.src} alt="The Inspector" />
+        ? <HobsonAvatar />
         : <div aria-hidden className="w-10 h-10 shrink-0" />}
       <div className="max-w-[460px] bg-[#EDE9FE] text-[#1F2330] text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-bl-md whitespace-pre-line">
         {shown}
@@ -564,7 +574,7 @@ function UserBubble({ text }: { text: string }) {
 function ResearchingBubble() {
   return (
     <div className="flex items-end gap-2" aria-live="polite">
-      <CharacterAvatar src={INSPECTOR_CHARACTER.src} alt="" />
+      <HobsonAvatar />
       <div className="max-w-[460px] bg-[#EDE9FE] text-[#1F2330] text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-bl-md">
         <span className="inline-flex items-center gap-2">
           <span className="inline-flex gap-1">
@@ -1265,7 +1275,7 @@ function ShowMeBubble({
 
   return (
     <div className="flex items-end gap-2">
-      <CharacterAvatar src={INSPECTOR_CHARACTER.src} alt="The Inspector" />
+      <HobsonAvatar />
       <div className="max-w-[640px] w-full bg-[#EDE9FE] text-[#1F2330] text-sm leading-relaxed px-4 py-3 rounded-2xl rounded-bl-md">
         <div className="whitespace-pre-line">
           {introShown}
@@ -1672,7 +1682,7 @@ export function InspectorChat(props: InspectorChatProps) {
       {/* Greeting */}
       {introPhase === "typing" ? (
         <div className="flex items-end gap-2" aria-live="polite">
-          <CharacterAvatar src={INSPECTOR_CHARACTER.src} alt="" />
+          <HobsonAvatar />
           <div className="bg-[#EDE9FE] px-4 py-3 rounded-2xl rounded-bl-md flex items-center gap-1">
             <span className="w-1.5 h-1.5 rounded-full bg-[#7C3AED] animate-pulse" />
             <span className="w-1.5 h-1.5 rounded-full bg-[#7C3AED] animate-pulse" style={{ animationDelay: "150ms" }} />
@@ -1680,7 +1690,7 @@ export function InspectorChat(props: InspectorChatProps) {
           </div>
         </div>
       ) : (
-        <InspectorBubble text={INSPECTOR_CHARACTER.greeting} showAvatar streamKey="intro" />
+        <InspectorBubble text="This is the Inspector's compliance board — where the rules are set that I watch every property against. Tell me which area of compliance to set up, and I'll have him find what the law requires." showAvatar streamKey="intro" />
       )}
 
       {/* Event log */}

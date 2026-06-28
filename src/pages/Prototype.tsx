@@ -48,7 +48,7 @@ const ADMIN_CHARACTERS: { id: AdminCharacter; name: string; src: string; tagline
     name: "The Magician",
     src: characterMagician,
     tagline: "Workflows & automations",
-    greeting: "Let's build a workflow. Tell me what you'd like me to keep on top of — rent reviews, compliance, notices — and we'll build it together. Pick a starting point below.",
+    greeting: "This is the Magician's workshop — where your workflows are composed and rehearsed before they go live. Tell me what you'd like me to keep on top of — rent reviews, compliance, notices — and I'll have him build it with you. Pick a starting point below.",
     workTitle: "The Magician's workshop",
     workIntro: "Where automations are composed and rehearsed before they go live.",
   },
@@ -57,7 +57,7 @@ const ADMIN_CHARACTERS: { id: AdminCharacter; name: string; src: string; tagline
     name: "The Professor",
     src: characterProfessor,
     tagline: "Knowledge & research",
-    greeting: "Let's build your library. Hand me your documents and I'll read them — leases, certificates, notices, anything you keep. Upload one or several below and I'll tell you what each one is and what it means for your portfolio.",
+    greeting: "This is the Professor's library — where your documents are read and kept. Hand them over and I'll have him read and catalogue them for you — leases, certificates, notices, anything you keep. Upload one or several below.",
     workTitle: "The Professor's library",
     workIntro: "Where the knowledge base is curated, taught and consulted.",
   },
@@ -66,7 +66,7 @@ const ADMIN_CHARACTERS: { id: AdminCharacter; name: string; src: string; tagline
     name: "The Broker",
     src: characterBroker,
     tagline: "Contacts & relationships",
-    greeting: "Let's build your black book. Add a contact one at a time, or hand me a spreadsheet and I'll read them all in — staff, subcontractors, occupants, anyone who matters. Pick how you'd like to start below.",
+    greeting: "This is the Broker's black book — where your contacts and relationships are kept. Add a contact one at a time, or hand me a spreadsheet and I'll have him read them all in — staff, subcontractors, occupants, anyone who matters. Pick how you'd like to start below.",
     workTitle: "The Broker's black book",
     workIntro: "Where contacts, relationships and their histories are kept — tenants, landlords, contractors, agents, solicitors, lenders, authorities.",
 
@@ -76,7 +76,7 @@ const ADMIN_CHARACTERS: { id: AdminCharacter; name: string; src: string; tagline
     name: INSPECTOR_CHARACTER.name,
     src: INSPECTOR_CHARACTER.src,
     tagline: INSPECTOR_CHARACTER.tagline,
-    greeting: INSPECTOR_CHARACTER.greeting,
+    greeting: "This is the Inspector's compliance board — where the rules are set that I watch every property against. Tell me which area of compliance to set up, and I'll have him find what the law requires.",
     workTitle: INSPECTOR_CHARACTER.workTitle,
     workIntro: INSPECTOR_CHARACTER.workIntro,
   },
@@ -4045,6 +4045,18 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
 
           );
         })()}
+        {adminMode && adminCharacter && (
+          <button
+            type="button"
+            onClick={boReturnToHallway}
+            aria-label="Back to the back office hallway"
+            title="Back to the back office"
+            className="absolute top-3 right-3 z-[450] inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-md bg-white/95 backdrop-blur border border-slate-200 text-[12px] font-medium text-slate-700 shadow-sm hover:bg-white hover:text-[#7C3AED] hover:border-[#7C3AED]/40 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/50"
+          >
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M15 18l-6-6 6-6"/></svg>
+            <span>Back office</span>
+          </button>
+        )}
         {adminMode && adminCharacter && (() => {
           const c = ADMIN_CHARACTERS.find((x) => x.id === adminCharacter)!;
           if (c.id === "professor") {
@@ -4395,7 +4407,6 @@ function AdminChat({ character, owl, professorEvents, onAssignProfessorType, bro
   const reducedMotion = typeof window !== "undefined"
     && window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
 
-  const speaker: "hobson" | "character" = character ? "character" : "hobson";
   const text = character ? character.greeting : HOBSON_ADMIN_INTRO;
   const keyId = character ? character.id : "hobson-admin-intro";
 
@@ -4430,14 +4441,14 @@ function AdminChat({ character, owl, professorEvents, onAssignProfessorType, bro
     return () => clearTimeout(typingTimer);
   }, [keyId, reducedMotion, text]);
 
-  const Avatar = speaker === "character" && character
-    ? <CharacterAvatar src={character.src} />
-    : <OwlAvatar state={owl} />;
+  // One voice rule: Hobson is the only speaker in the left chat, in every room.
+  // The specialist is seen working on the right but never speaks here.
+  const Avatar = <OwlAvatar state={owl} />;
 
   return (
     <div className="flex flex-col" style={{ gap: CHAT_TURN_GAP_PX }}>
       {phase === "typing" && (
-        <div key={`${keyId}-typing`} className="flex items-end gap-2" aria-live="polite" aria-label={`${character?.name ?? "Hobson"} is typing`}>
+        <div key={`${keyId}-typing`} className="flex items-end gap-2" aria-live="polite" aria-label="Hobson is typing">
           {Avatar}
           <div className="bg-[#EDE9FE] px-4 py-3 rounded-2xl rounded-bl-md flex items-center gap-1">
             <Dot delay={0} /><Dot delay={150} /><Dot delay={300} />
@@ -4536,7 +4547,8 @@ function AdminChat({ character, owl, professorEvents, onAssignProfessorType, bro
             if (ev.kind === "professor") {
               return (
                 <div key={ev.id} className="flex items-end gap-2">
-                  <CharacterAvatar src={character.src} />
+                  <OwlAvatar state={owl} />
+
                   <div className="max-w-[360px] bg-[#EDE9FE] text-[#1F2330] text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-bl-md">
                     {ev.text}
                   </div>
@@ -4573,7 +4585,7 @@ function AdminChat({ character, owl, professorEvents, onAssignProfessorType, bro
             if (ev.kind === "broker") {
               return (
                 <div key={ev.id} className="flex items-end gap-2">
-                  <CharacterAvatar src={character.src} />
+                  <OwlAvatar state={owl} />
                   <div className="max-w-[420px] bg-[#EDE9FE] text-[#1F2330] text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-bl-md">
                     {ev.text}
                   </div>
@@ -4681,14 +4693,14 @@ function MagicianStreamingBubble({ id, text, src, stream, onDone }: { id: string
     <>
       {phase === "typing" ? (
         <div className="flex items-end gap-2" aria-live="polite">
-          <CharacterAvatar src={src} />
+          <OwlAvatar state="talking" />
           <div className="bg-[#EDE9FE] px-4 py-3 rounded-2xl rounded-bl-md flex items-center gap-1">
             <Dot delay={0} /><Dot delay={150} /><Dot delay={300} />
           </div>
         </div>
       ) : (
         <div className="flex items-end gap-2" aria-live="polite">
-          <CharacterAvatar src={src} />
+          <OwlAvatar state={phase === "streaming" ? "talking" : "default"} />
           <div className="max-w-[420px] bg-[#EDE9FE] text-[#1F2330] text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-bl-md">
             {shown}
             {phase === "streaming" && <span className="inline-block w-1.5 h-3.5 ml-0.5 bg-[#7C3AED] align-middle animate-pulse" />}
