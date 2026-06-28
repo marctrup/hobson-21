@@ -1536,7 +1536,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
 
   // Entering a room from the hallway/home: Hobson narrates the handoff first.
   const boEnterRoom = (h: BackOfficeHelper) => {
-    if (h.status === "coming-soon") {
+    if (h.status !== "ready") {
       const id = `bo-cs-${Date.now()}`;
       setBoEvents((arr) => [...arr, { kind: "hobson", id, text: h.narration }]);
       setAdminCharacter(null);
