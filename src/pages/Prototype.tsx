@@ -3479,6 +3479,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
               onAddContact={adminCharacter === "broker" ? handleAddBrokerContact : undefined}
               onUploadContacts={adminCharacter === "broker" ? handleUploadBrokerContacts : undefined}
               onUploadDocuments={adminCharacter === "professor" ? handleProfessorUpload : undefined}
+              boEvents={!adminCharacter ? boEvents : undefined}
             />
             )
 
