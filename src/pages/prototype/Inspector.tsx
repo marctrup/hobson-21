@@ -2162,9 +2162,9 @@ function ScheduleHeader({
           <img src={INSPECTOR_CHARACTER.src} alt="" aria-hidden className="w-[120%] h-[120%] object-contain" />
         </div>
         <div className="min-w-0 flex-1">
-          <div className="text-[13px] font-semibold text-slate-900">The Inspector re-checks the law &amp; documents</div>
+          <div className="text-[13px] font-semibold text-slate-900">Hobson sends the Researcher · the Inspector updates your rulebook</div>
           <div className="text-[11px] text-slate-500 mt-0.5">
-            A standing check across every requirement. I'll propose any changes — I never apply them on my own.
+            A standing check across every requirement. The Researcher watches the law and guidance; the Inspector updates your rulebook from what's found. I always propose changes — I never apply them on my own.
           </div>
           <div className="mt-2 flex items-center gap-3 flex-wrap">
             <label className="text-[11px] text-slate-600 flex items-center gap-2">
