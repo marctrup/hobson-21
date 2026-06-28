@@ -2622,14 +2622,10 @@ export function InspectorWorkArea({
             />
           )}
 
-          {/* (c) Notes strip */}
-          <InspectorNotesStrip
-            lastChecked={boardLastChecked}
-            nextDue={addMonths(boardLastChecked, FREQUENCY_OPTIONS.find((f) => f.value === frequency)?.months ?? 3)}
-            rulesCount={hsRules.length}
-            pending={pending}
-            gapsCoverage={{ commercial: true }}
-          />
+          {/* Inspector's status line is surfaced in the consolidated Agents' notes
+              on the workbench — the separate notes strip has been removed to
+              avoid duplication. The detailed recalibration feed stays here
+              inside the Compliance section (above). */}
 
 
 
