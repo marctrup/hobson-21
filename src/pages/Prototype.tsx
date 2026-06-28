@@ -4654,6 +4654,15 @@ function CharacterAvatar({ src: _src }: { src: string }) {
 
 const HOBSON_ADMIN_INTRO = "Welcome to my back office. Everything I need to look after your portfolio begins here. Simply tell me what you'd like me to take care of.";
 
+// Curated jobs Hobson offers to do FOR the user (his voice, as questions).
+const JOB_CATALOGUE: Record<string, { offer: string }> = {
+  professor: { offer: "Want me to get more of your documents processed?" },
+  inspector: { offer: "Want me to make sure you stay compliant?" },
+  broker:    { offer: "Want me to update or add to your related parties?" },
+  magician:  { offer: "Want me to build or change how I handle your work?" },
+  keeper:    { offer: "Want me to manage who can access what?" },
+};
+
 const BACK_OFFICE_OFFER_LINES: string[] = [
   "Process more of your documents and expand what I know about your portfolio.",
   "Review your compliance position and identify anything that needs attention.",
