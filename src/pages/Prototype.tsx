@@ -7560,8 +7560,8 @@ function BackOfficeStage({
             <h1 className="text-2xl font-semibold text-slate-900 mb-4">Meet My Team</h1>
             <div className="max-w-lg mx-auto text-sm text-slate-600 leading-relaxed space-y-3">
               <p>I may be the one you'll always speak to, but I don't work alone.</p>
-              <p>Behind me is a team of specialists, each responsible for a different part of your organisation. Together they help me understand your portfolio, keep it organised, protect it and make sure the answers I give you are accurate.</p>
-              <p><strong className="text-slate-800">You'll only ever speak to me.</strong> My team works quietly behind the scenes so I can give you one simple, personal service.</p>
+              <p>Behind me is a team of specialists, each responsible for maintaining one part of your portfolio. Whenever I need to answer a question or complete a piece of work, I ask the right specialists to help. I then bring everything together into one answer.</p>
+              <p><strong className="text-slate-800">You'll only ever speak to me.</strong> My specialists quietly maintain the knowledge I rely on while I coordinate their work and deliver the final result.</p>
             </div>
             <div className="mt-6 border-t border-slate-200 max-w-xs mx-auto" />
           </div>
