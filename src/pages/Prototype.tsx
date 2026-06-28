@@ -4569,7 +4569,7 @@ function JobGrid({ helpers, onPick }: { helpers: BackOfficeHelper[]; onPick: (h:
     >
       {items.map((h) => {
         const job = JOB_CATALOGUE[h.id];
-        const disabled = h.status === "coming-soon";
+        const disabled = h.status !== "ready";
         return (
           <button
             key={h.id}
