@@ -3422,74 +3422,78 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
         ) : null}
 
 
-        {/* Body */}
-        <div ref={chatBodyRef} className={`flex-1 overflow-y-auto px-5 pt-0 ${isExpanded ? "w-full" : ""}`} style={{ paddingBottom: 48, scrollPaddingBottom: 48 }}>
-          {/* Pinned Quick bar (Quick overviews + Open a unit). Sticks to the top of the chat
-              column while messages scroll beneath. Collapsed by default; expand on tap. */}
-          {!adminMode && view !== "onboarding" && (view === "portfolio" || (view === "property" && selectedProperty) || (view === "unit" && selectedUnit && selectedPropertyId)) && (
-            <div className="sticky top-0 z-30 -mx-5 px-5 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/80 border-b border-slate-200 motion-reduce:bg-white">
-              <div className={isExpanded ? "max-w-[820px] mx-auto" : ""}>
-                <button
-                  type="button"
-                  onClick={() => setPinnedQuickOpen((v) => !v)}
-                  aria-expanded={pinnedQuickOpen}
-                  aria-controls="pinned-quick-panel"
-                  className="w-full flex items-center justify-between gap-3 py-2 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]/40 rounded"
+        {/* Pinned Quick bar (Quick overviews + Open a unit).
+            Lives OUTSIDE the scrolling message list as a sibling of chatBodyRef,
+            so the conversation scrolls beneath it and the bar stays fixed at the
+            top of the chat column at any scroll position. Collapsed by default. */}
+        {!adminMode && view !== "onboarding" && (view === "portfolio" || (view === "property" && selectedProperty) || (view === "unit" && selectedUnit && selectedPropertyId)) && (
+          <div className="shrink-0 z-30 px-5 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/80 border-b border-slate-200 motion-reduce:bg-white">
+            <div className={isExpanded ? "max-w-[820px] mx-auto" : ""}>
+              <button
+                type="button"
+                onClick={() => setPinnedQuickOpen((v) => !v)}
+                aria-expanded={pinnedQuickOpen}
+                aria-controls="pinned-quick-panel"
+                className="w-full flex items-center justify-between gap-3 py-2 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]/40 rounded"
+              >
+                <span className="text-[11.5px] uppercase tracking-wide text-slate-500 font-semibold truncate">
+                  Quick overviews{view === "property" ? " · Open a unit" : ""}
+                </span>
+                <span
+                  aria-hidden
+                  className={`flex items-center justify-center w-5 h-5 rounded-full border border-slate-300 text-slate-500 transition-transform motion-reduce:transition-none ${pinnedQuickOpen ? "rotate-180" : ""}`}
+                  style={{ transitionDuration: "180ms" }}
                 >
-                  <span className="text-[11.5px] uppercase tracking-wide text-slate-500 font-semibold truncate">
-                    Quick overviews{view === "property" ? " · Open a unit" : ""}
-                  </span>
-                  <span
-                    aria-hidden
-                    className={`flex items-center justify-center w-5 h-5 rounded-full border border-slate-300 text-slate-500 transition-transform motion-reduce:transition-none ${pinnedQuickOpen ? "rotate-180" : ""}`}
-                    style={{ transitionDuration: "180ms" }}
-                  >
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M6 9l6 6 6-6"/></svg>
-                  </span>
-                </button>
-                {pinnedQuickOpen && (
-                  <div id="pinned-quick-panel" className="pb-3 pt-1 space-y-2">
-                    {view === "portfolio" && (
-                      <SummaryActions scope={{ level: "portfolio" }} onRequest={(k, s) => { requestSummary(k, s); setPinnedQuickOpen(false); }} enabledKinds={summaryVisibility} />
-                    )}
-                    {view === "property" && selectedProperty && (
-                      <>
-                        <SummaryActions
-                          scope={{ level: "property", propertyId: selectedProperty.id }}
-                          onRequest={(k, s) => { requestSummary(k, s); setPinnedQuickOpen(false); }}
-                          enabledKinds={summaryVisibility}
-                        />
-                        <button
-                          type="button"
-                          onClick={() => { setOpenUnitsSignal((n) => n + 1); setPinnedQuickOpen(false); }}
-                          className="w-full flex items-center justify-between gap-3 px-3 py-2 rounded-lg border border-[#C4B5FD] bg-gradient-to-r from-[#F5F3FF] to-white text-left hover:border-[#7C3AED] hover:from-[#EDE9FE] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]/40 transition motion-reduce:transition-none"
-                        >
-                          <span className="flex flex-col min-w-0">
-                            <span className="text-[13px] font-semibold text-slate-900">Open a unit</span>
-                            <span className="text-[11px] text-slate-600 truncate">
-                              {selectedProperty.units.length} units — tap to choose
-                            </span>
-                          </span>
-                          <span aria-hidden className="text-[#7C3AED] text-[11px] uppercase tracking-wide font-semibold">Open ↓</span>
-                        </button>
-                      </>
-                    )}
-                    {view === "unit" && selectedUnit && selectedPropertyId && (
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+                </span>
+              </button>
+              {pinnedQuickOpen && (
+                <div id="pinned-quick-panel" className="pb-3 pt-1 space-y-2">
+                  {view === "portfolio" && (
+                    <SummaryActions scope={{ level: "portfolio" }} onRequest={(k, s) => { requestSummary(k, s); setPinnedQuickOpen(false); }} enabledKinds={summaryVisibility} />
+                  )}
+                  {view === "property" && selectedProperty && (
+                    <>
                       <SummaryActions
-                        scope={{ level: "unit", propertyId: selectedPropertyId, unitId: selectedUnit.id }}
+                        scope={{ level: "property", propertyId: selectedProperty.id }}
                         onRequest={(k, s) => { requestSummary(k, s); setPinnedQuickOpen(false); }}
                         enabledKinds={summaryVisibility}
                       />
-                    )}
-                  </div>
-                )}
-              </div>
+                      <button
+                        type="button"
+                        onClick={() => { setOpenUnitsSignal((n) => n + 1); setPinnedQuickOpen(false); }}
+                        className="w-full flex items-center justify-between gap-3 px-3 py-2 rounded-lg border border-[#C4B5FD] bg-gradient-to-r from-[#F5F3FF] to-white text-left hover:border-[#7C3AED] hover:from-[#EDE9FE] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]/40 transition motion-reduce:transition-none"
+                      >
+                        <span className="flex flex-col min-w-0">
+                          <span className="text-[13px] font-semibold text-slate-900">Open a unit</span>
+                          <span className="text-[11px] text-slate-600 truncate">
+                            {selectedProperty.units.length} units — tap to choose
+                          </span>
+                        </span>
+                        <span aria-hidden className="text-[#7C3AED] text-[11px] uppercase tracking-wide font-semibold">Open ↓</span>
+                      </button>
+                    </>
+                  )}
+                  {view === "unit" && selectedUnit && selectedPropertyId && (
+                    <SummaryActions
+                      scope={{ level: "unit", propertyId: selectedPropertyId, unitId: selectedUnit.id }}
+                      onRequest={(k, s) => { requestSummary(k, s); setPinnedQuickOpen(false); }}
+                      enabledKinds={summaryVisibility}
+                    />
+                  )}
+                </div>
+              )}
             </div>
-          )}
+          </div>
+        )}
+
+        {/* Body */}
+        <div ref={chatBodyRef} className={`flex-1 overflow-y-auto px-5 pt-0 ${isExpanded ? "w-full" : ""}`} style={{ paddingBottom: 48, scrollPaddingBottom: 48 }}>
           <div
             className={`${isExpanded ? "max-w-[820px] mx-auto" : ""} flex flex-col`}
             style={{ gap: CHAT_TURN_GAP_PX, paddingTop: CHAT_TOP_GAP_PX }}
           >
+
 
 
           {adminMode ? (
