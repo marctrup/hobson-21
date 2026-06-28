@@ -4535,7 +4535,8 @@ function AdminChat({ character, owl, professorEvents, onAssignProfessorType, bro
             if (ev.kind === "professor") {
               return (
                 <div key={ev.id} className="flex items-end gap-2">
-                  <CharacterAvatar src={character.src} />
+                  <OwlAvatar state={owl} />
+
                   <div className="max-w-[360px] bg-[#EDE9FE] text-[#1F2330] text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-bl-md">
                     {ev.text}
                   </div>
