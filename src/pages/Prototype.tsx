@@ -7386,6 +7386,7 @@ function MagicianBuildInviteCard({ onStart }: { onStart: () => void }) {
   ];
   return (
     <ChatInviteShell avatarSrc={characterMagician}>
+      <div>Tell me what you'd like me to keep on top of and I'll have the Magician build it with you — rent reviews, compliance checks, notices, anything that needs minding.</div>
       <button
         type="button"
         onClick={onStart}
