@@ -4383,18 +4383,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                 onAdd={handleAddBrokerContact}
               />
             )}
-            renderWorkflows={() => (
-              <MagicianWorkArea
-                character={ADMIN_CHARACTERS.find((x) => x.id === "magician")!}
-                workflows={workflows}
-                onCreate={handleCreateWorkflow}
-                onAdjust={magAdjustWorkflow}
-                onView={(id) => setViewingWorkflowId(id)}
-                onResume={magResumeDraft}
-                onDiscard={magDiscardDraft}
-                onSimulate={magSimulate}
-              />
-            )}
+            renderWorkflows={() => (<WorkflowsBackOfficeSection />)}
             counts={{
               documents: profDocs.length,
               documentsPending: profDocs.filter((d) => d.status === "pending").length,
