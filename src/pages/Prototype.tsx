@@ -3362,8 +3362,29 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
               </button>
             )}
           </div>
-          {/* Close button removed — the resizable divider (drag / double-click / reset chip)
-              handles collapsing the chat panel, so a separate × is redundant. */}
+          {/* Top-right pair to "Meet Hobson" on the left: a persistent, header-fixed
+              affordance to re-summon the team wall on the right-hand stage.
+              Lives in the chat header (does not scroll with messages).
+              Hidden during the Meet Hobson onboarding to keep that flow focused. */}
+          {view !== "onboarding" && (
+            <button
+              type="button"
+              onClick={() => setShowTeamWall((v) => !v)}
+              aria-pressed={showTeamWall}
+              aria-label={showTeamWall ? "Hide my team" : "Meet my team"}
+              title={showTeamWall ? "Hide my team" : "Meet my team"}
+              className="inline-flex items-center gap-1.5 px-2 py-1 rounded-md text-[11px] font-medium text-[#5B21B6] hover:text-[#4C1D95] hover:bg-[#F5F3FF] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED] transition-colors motion-reduce:transition-none"
+            >
+              {/* Small team/trio icon — visually distinct from the text-only "Meet Hobson" */}
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                <circle cx="9" cy="8" r="3" />
+                <circle cx="17" cy="9" r="2.2" />
+                <path d="M3 19c0-3 3-5 6-5s6 2 6 5" />
+                <path d="M15 19c0-2 2-3.5 4-3.5s2.5 1 2.5 2.5" />
+              </svg>
+              <span>Meet my team</span>
+            </button>
+          )}
         </header>
 
         {/* Onboarding progress / breadcrumb */}
