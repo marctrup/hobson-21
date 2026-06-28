@@ -1476,7 +1476,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
   const [boFirstEntry, setBoFirstEntry] = useState<boolean>(false);
   const [boShowHallway, setBoShowHallway] = useState<boolean>(false);
   // Global Hobson narration thread for the Back Office (persists across room switches)
-  const [boEvents, setBoEvents] = useState<{ kind: "user" | "hobson"; id: string; text: string }[]>([]);
+  const [boEvents, setBoEvents] = useState<{ kind: "user" | "hobson" | "jobs"; id: string; text?: string }[]>([]);
 
   const enterAdmin = () => {
     setShowDocuments(false);
@@ -1553,6 +1553,18 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
     setAdminCharacter(null);
     setComingSoonHelperId(null);
     setBoShowHallway(true);
+  };
+
+  // Picking a job from the chat grid — reads as the user asking Hobson for that thing.
+  const boPickJob = (h: BackOfficeHelper) => {
+    const id = `bo-job-${Date.now()}`;
+    const label = JOB_CATALOGUE[h.id]?.label ?? h.name;
+    setBoEvents((arr) => [...arr, { kind: "user", id, text: label }]);
+    setTimeout(() => boEnterRoom(h), 220);
+  };
+  // Recall the job grid into the conversation.
+  const boShowJobs = () => {
+    setBoEvents((arr) => [...arr, { kind: "jobs", id: `bo-jobs-${Date.now()}` }]);
   };
 
 
@@ -3480,6 +3492,8 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
               onUploadContacts={adminCharacter === "broker" ? handleUploadBrokerContacts : undefined}
               onUploadDocuments={adminCharacter === "professor" ? handleProfessorUpload : undefined}
               boEvents={!adminCharacter ? boEvents : undefined}
+              helpers={!adminCharacter ? BACK_OFFICE_HELPERS : undefined}
+              onPickJob={!adminCharacter ? boPickJob : undefined}
             />
             )
 
@@ -3825,7 +3839,23 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                 : adminCharacter === "inspector"
                   ? <InspectorComposer buildActive={inspectorBuild !== null} />
                   : !adminCharacter
-                    ? <BackOfficeComposer onSubmit={boAskHobson} />
+                    ? (
+                        <div className="flex flex-col gap-1.5">
+                          {boEvents.length > 0 && (
+                            <div className="flex justify-start">
+                              <button
+                                type="button"
+                                onClick={boShowJobs}
+                                className="text-[11px] text-[#7C3AED] hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]/40 rounded px-1.5 py-0.5"
+                                aria-label="Show what Hobson can do"
+                              >
+                                What can you do?
+                              </button>
+                            </div>
+                          )}
+                          <BackOfficeComposer onSubmit={boAskHobson} />
+                        </div>
+                      )
                     : <LockedComposer view={view} />
 
 
@@ -4368,12 +4398,66 @@ function CharacterAvatar({ src: _src }: { src: string }) {
   return <OwlAvatar state="default" />;
 }
 
-const HOBSON_ADMIN_INTRO_PARAS = [
-  "Welcome to my back office. This is where my team helps me stay organised.",
-  "Each specialist looks after one part of my work — documents, compliance, contacts, workflows, and access.",
-  "You can simply ask me to do anything, or step into one of the rooms to set that part up.",
-];
-const HOBSON_ADMIN_INTRO = HOBSON_ADMIN_INTRO_PARAS.join("\n\n");
+const HOBSON_ADMIN_INTRO = "Welcome to my back office. What would you like me to take care of? Choose one below, or just tell me what you need.";
+
+// Curated, high-value jobs the user can pick from the chat.
+// Keyed by helper id so adding a helper in BACK_OFFICE_HELPERS auto-extends the grid (if a job entry exists).
+const JOB_CATALOGUE: Record<string, { label: string; hint: string }> = {
+  inspector: { label: "Review compliance", hint: "See what's required, done, and coming due." },
+  broker:    { label: "Add or find contacts", hint: "Tenants, contractors, suppliers, staff." },
+  magician:  { label: "Build a routine", hint: "An automation that watches your portfolio." },
+  professor: { label: "Read & organise documents", hint: "Upload, file, and recall any document." },
+  keeper:    { label: "Manage access & security", hint: "Users, roles, and audit trail." },
+};
+
+function JobGrid({ helpers, onPick }: { helpers: BackOfficeHelper[]; onPick: (h: BackOfficeHelper) => void }) {
+  const items = helpers.filter((h) => JOB_CATALOGUE[h.id]);
+  return (
+    <div
+      className="ml-12 max-w-[520px] grid gap-2"
+      style={{ gridTemplateColumns: "repeat(auto-fill, minmax(210px, 1fr))" }}
+      role="group"
+      aria-label="Things Hobson can take care of"
+    >
+      {items.map((h) => {
+        const job = JOB_CATALOGUE[h.id];
+        const disabled = h.status === "coming-soon";
+        return (
+          <button
+            key={h.id}
+            type="button"
+            onClick={() => { if (!disabled) onPick(h); }}
+            disabled={disabled}
+            aria-label={disabled ? `${job.label} — coming soon` : `Ask Hobson to: ${job.label}`}
+            className={`group text-left rounded-xl bg-white p-3 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED] motion-reduce:transition-none ${
+              disabled
+                ? "border border-dashed border-slate-300 opacity-70 cursor-not-allowed"
+                : "border border-slate-200 hover:border-[#7C3AED]/50 hover:shadow-sm hover:-translate-y-0.5 motion-reduce:transform-none"
+            }`}
+          >
+            <div className="flex items-start gap-2.5">
+              <div aria-hidden className="w-9 h-9 rounded-lg bg-slate-50 grid place-items-center shrink-0 overflow-hidden">
+                <img src={h.src} alt="" className="w-8 h-8 object-contain" />
+              </div>
+              <div className="min-w-0 flex-1">
+                <div className="text-[13px] font-semibold text-slate-900 flex items-center gap-1.5 flex-wrap">
+                  <span>{job.label}</span>
+                  {disabled && (
+                    <span className="text-[9px] uppercase tracking-wide px-1.5 py-0.5 rounded-full border border-amber-200 bg-amber-50 text-amber-700 font-medium">
+                      Soon
+                    </span>
+                  )}
+                </div>
+                <div className="text-[11.5px] text-slate-500 leading-snug mt-0.5">{job.hint}</div>
+                <div className="text-[10px] text-slate-400 mt-1">via {h.name}</div>
+              </div>
+            </div>
+          </button>
+        );
+      })}
+    </div>
+  );
+}
 
 type MagHandlers = {
   onIntakeSubmit: (intake: { title: string; purpose: string; description: string; whenKey: "6m" | "3m" | "on" | "always" | "custom"; whenLabel: string; visibility: "personal" | "company" }) => void;
@@ -4400,7 +4484,7 @@ type MagHandlers = {
   onSetStepTemplate: (uid: string, mode: "standard" | "own", filename?: string) => void;
 };
 
-function AdminChat({ character, owl, professorEvents, onAssignProfessorType, brokerEvents, brokerFlowActive, magicianEvents, magBuild, magStreamingId, onMagStreamDone, magHandlers, onCreateWorkflow, onAddContact, onUploadContacts, onUploadDocuments, boEvents }: { character: { id: AdminCharacter; name: string; src: string; greeting: string } | null; owl: OwlState; professorEvents?: ProfEvent[]; onAssignProfessorType?: (batchId: string, type: string) => void; brokerEvents?: BrokerEvent[]; brokerFlowActive?: boolean; magicianEvents?: MagicianEvent[]; magBuild?: MagBuildState | null; magStreamingId?: string | null; onMagStreamDone?: (id: string) => void; magHandlers?: MagHandlers; onCreateWorkflow?: () => void; onAddContact?: () => void; onUploadContacts?: (filename: string) => void; onUploadDocuments?: (count: number) => void; boEvents?: { kind: "user" | "hobson"; id: string; text: string }[] }) {
+function AdminChat({ character, owl, professorEvents, onAssignProfessorType, brokerEvents, brokerFlowActive, magicianEvents, magBuild, magStreamingId, onMagStreamDone, magHandlers, onCreateWorkflow, onAddContact, onUploadContacts, onUploadDocuments, boEvents, helpers, onPickJob }: { character: { id: AdminCharacter; name: string; src: string; greeting: string } | null; owl: OwlState; professorEvents?: ProfEvent[]; onAssignProfessorType?: (batchId: string, type: string) => void; brokerEvents?: BrokerEvent[]; brokerFlowActive?: boolean; magicianEvents?: MagicianEvent[]; magBuild?: MagBuildState | null; magStreamingId?: string | null; onMagStreamDone?: (id: string) => void; magHandlers?: MagHandlers; onCreateWorkflow?: () => void; onAddContact?: () => void; onUploadContacts?: (filename: string) => void; onUploadDocuments?: (count: number) => void; boEvents?: { kind: "user" | "hobson" | "jobs"; id: string; text?: string }[]; helpers?: BackOfficeHelper[]; onPickJob?: (h: BackOfficeHelper) => void }) {
   const [phase, setPhase] = useState<"typing" | "streaming" | "done">("typing");
   const [shown, setShown] = useState("");
   const reducedMotion = typeof window !== "undefined"
@@ -4465,18 +4549,37 @@ function AdminChat({ character, owl, professorEvents, onAssignProfessorType, bro
           </div>
         </div>
       )}
-      {!character && phase === "done" && boEvents && boEvents.map((ev) =>
-        ev.kind === "user" ? (
-          <div key={ev.id} className="flex justify-end">
-            <div className="max-w-[420px] bg-[#7C3AED] text-white text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-br-md">{ev.text}</div>
-          </div>
-        ) : (
+      {!character && phase === "done" && helpers && onPickJob && (!boEvents || boEvents.length === 0) && (
+        <JobGrid helpers={helpers} onPick={onPickJob} />
+      )}
+      {!character && phase === "done" && boEvents && boEvents.map((ev) => {
+        if (ev.kind === "user") {
+          return (
+            <div key={ev.id} className="flex justify-end">
+              <div className="max-w-[420px] bg-[#7C3AED] text-white text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-br-md">{ev.text}</div>
+            </div>
+          );
+        }
+        if (ev.kind === "jobs") {
+          return helpers && onPickJob ? (
+            <div key={ev.id} className="flex flex-col gap-1.5">
+              <div className="flex items-end gap-2">
+                <OwlAvatar state={owl} />
+                <div className="max-w-[420px] bg-[#EDE9FE] text-[#1F2330] text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-bl-md">
+                  Here's what I can take on for you — pick one, or just tell me what you need.
+                </div>
+              </div>
+              <JobGrid helpers={helpers} onPick={onPickJob} />
+            </div>
+          ) : null;
+        }
+        return (
           <div key={ev.id} className="flex items-end gap-2">
             <OwlAvatar state={owl} />
             <div className="max-w-[420px] bg-[#EDE9FE] text-[#1F2330] text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-bl-md whitespace-pre-line">{ev.text}</div>
           </div>
-        )
-      )}
+        );
+      })}
       {character?.id === "magician" && phase === "done" && (!magicianEvents || magicianEvents.length === 0) && !magBuild && (
         <MagicianBuildInviteCard onStart={() => onCreateWorkflow?.()} />
       )}
