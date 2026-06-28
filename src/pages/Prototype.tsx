@@ -3439,17 +3439,25 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
               <span>Meet my team</span>
             </button>
           )}
-          {/* "Workbench" — Back Office only. Static label in the chat header.
-              Not shown in the main product (it's an Admin/Back Office concept). */}
+          {/* "Workbench" — Back Office only. Clicking it closes any overlay
+              (e.g. Meet my team) and returns focus to the right-hand workbench. */}
           {adminMode && view !== "onboarding" && (
-            <div className="ml-1 inline-flex items-center gap-1.5 px-2.5 py-1.5 text-[12px] font-semibold text-[#5B21B6]">
+            <button
+              type="button"
+              onClick={() => {
+                setShowTeamWall(false);
+                const wb = document.getElementById("back-office-workbench");
+                if (wb) wb.scrollTo({ top: 0, behavior: "smooth" });
+              }}
+              className="ml-1 inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-[12px] font-semibold text-[#5B21B6] hover:text-[#4C1D95] hover:bg-[#F5F3FF] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED] transition-colors motion-reduce:transition-none"
+            >
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
                 <path d="M12 3l9 5-9 5-9-5 9-5z" />
                 <path d="M3 13l9 5 9-5" />
                 <path d="M3 17l9 5 9-5" />
               </svg>
               <span>Workbench</span>
-            </div>
+            </button>
           )}
 
         </header>
