@@ -7637,7 +7637,6 @@ function BackOfficeWorkbench({
   const professor = findHelper("professor");
   const inspector = findHelper("inspector");
   const broker = findHelper("broker");
-  const magician = findHelper("magician");
   const architect = findHelper("architect");
 
   const [openIds, setOpenIds] = useState<Set<string>>(new Set());
