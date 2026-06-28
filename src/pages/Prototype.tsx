@@ -7862,34 +7862,8 @@ function BackOfficeWorkbench({
     content: React.ReactNode;
   };
 
-  const structureContent = (
-    <div className="absolute inset-0 bg-white overflow-auto">
-      <div className="px-5 py-4 space-y-3">
-        <div className="text-[13px] font-semibold text-slate-900">Portfolio structure</div>
-        <div className="text-[12px] text-slate-500">{counts.units} units across {counts.properties} properties — kept in shape by the Architect.</div>
-        <div className="space-y-2 pt-2">
-          {PROPERTIES.map((p) => (
-            <div key={p.id} className="rounded-xl border border-slate-200 bg-white p-3">
-              <div className="flex items-center justify-between">
-                <div className="text-[13px] font-semibold text-slate-900">{p.name}</div>
-                <div className="text-[11px] text-slate-500">{p.area} · {p.standalone ? "single unit" : `${p.units.length} units`}</div>
-              </div>
-              {!p.standalone && (
-                <ul className="mt-2 grid grid-cols-2 gap-1 text-[12px] text-slate-600">
-                  {p.units.map((u) => (
-                    <li key={u.id} className="flex items-center justify-between px-2 py-1 rounded bg-slate-50">
-                      <span>{u.label}</span>
-                      <span className={`text-[10px] uppercase ${u.status === "Let" ? "text-emerald-700" : "text-slate-500"}`}>{u.status}</span>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
+  const structureContent = <StructureSection counts={counts} />;
+
 
   const sections: SectionDef[] = [
     {
