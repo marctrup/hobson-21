@@ -3725,6 +3725,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
               boEvents={!adminCharacter ? boEvents : undefined}
               helpers={!adminCharacter ? BACK_OFFICE_HELPERS : undefined}
               onPickJob={!adminCharacter ? boPickJob : undefined}
+              onPickOffer={!adminCharacter ? boPickOffer : undefined}
             />
             )
 
