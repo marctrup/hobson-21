@@ -7506,7 +7506,7 @@ function PortraitTile({
       </div>
 
       <div className={`px-5 text-center ${compact ? "pb-3" : "pb-5"}`}>
-        <p className="text-[11px] text-slate-400 italic">One of Hobson's Specialists</p>
+        <p className="text-[11px] text-slate-400 italic">{helper.footerLine}</p>
       </div>
     </article>
   );
