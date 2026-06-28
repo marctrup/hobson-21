@@ -7346,7 +7346,7 @@ function PortraitTile({
   return (
     <article
       className={`relative rounded-2xl border border-slate-200/80 bg-white shadow-sm overflow-hidden ${isSoon ? "opacity-70" : ""}`}
-      aria-label={`${helper.name}, ${helper.roleTitle}. ${helper.contributionLine} Works alongside Hobson.${isSoon ? " Joining soon." : ""}`}
+      aria-label={`${helper.name}, ${helper.roleTitle}. ${helper.contributionLine} One of Hobson's Specialists.${isSoon ? " Joining soon." : ""}`}
     >
       <div className={`flex flex-col items-center text-center px-5 ${compact ? "pt-5 pb-3" : "pt-8 pb-4"}`}>
         <div className="relative">
@@ -7381,7 +7381,7 @@ function PortraitTile({
       </div>
 
       <div className={`px-5 text-center ${compact ? "pb-3" : "pb-5"}`}>
-        <p className="text-[11px] text-slate-400 italic">Works alongside Hobson</p>
+        <p className="text-[11px] text-slate-400 italic">One of Hobson's Specialists</p>
       </div>
     </article>
   );
@@ -7428,11 +7428,17 @@ function BackOfficeStage({
       <div className="absolute inset-0 bg-gradient-to-b from-[#FAF7FF] via-white to-slate-50 overflow-auto">
         <div className="max-w-4xl mx-auto px-6 py-10">
           <div className="text-center mb-10">
+            <div className="flex justify-center mb-3">
+              <OwlAvatar state="default" />
+            </div>
             <p className="text-[11px] uppercase tracking-wider text-[#7C3AED] font-semibold mb-2">Hobson's back office</p>
-            <h1 className="text-2xl font-semibold text-slate-900 mb-2">My team</h1>
-            <p className="text-sm text-slate-600 max-w-lg mx-auto leading-relaxed">
-              Each of them looks after one part of your portfolio, so I can give you a single, personal service. You only ever speak to me.
-            </p>
+            <h1 className="text-2xl font-semibold text-slate-900 mb-4">Meet My Team</h1>
+            <div className="max-w-lg mx-auto text-sm text-slate-600 leading-relaxed space-y-3">
+              <p>I may be the one you'll always speak to, but I don't work alone.</p>
+              <p>Behind me is a team of specialists, each responsible for a different part of your organisation. They help me understand your business, monitor what's important and make sure the answers I give you are accurate.</p>
+              <p><strong className="text-slate-800">You'll only ever speak to me.</strong> My team works quietly behind the scenes so I can give you one simple, personal service.</p>
+            </div>
+            <div className="mt-6 border-t border-slate-200 max-w-xs mx-auto" />
           </div>
           <div className="grid gap-5 grid-cols-1 sm:grid-cols-2" role="list" aria-label="Hobson's team">
             {helpers.map((h) => (
@@ -7449,7 +7455,7 @@ function BackOfficeStage({
     <div className="absolute inset-0 bg-white overflow-auto">
       <div className="max-w-3xl mx-auto px-6 py-8">
         <div className="mb-6">
-          <h2 className="text-lg font-semibold text-slate-900 mb-1">My team</h2>
+          <h2 className="text-lg font-semibold text-slate-900 mb-1">Meet My Team</h2>
           <p className="text-[12px] text-slate-500 max-w-lg leading-relaxed">
             Each of them looks after one part of your portfolio, so I can give you a single, personal service. You only ever speak to me.
           </p>
