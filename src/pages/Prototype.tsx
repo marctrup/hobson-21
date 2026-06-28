@@ -3407,7 +3407,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
             {/* Owl avatar removed with returning-user mode */}
 
             <h1 className="font-semibold text-[15px] text-slate-900">Chat with Hobson</h1>
-            {view !== "onboarding" && (
+            {view !== "onboarding" && !adminMode && (
               <button
                 onClick={replayOnboarding}
                 className="ml-2 text-[11px] text-[#7C3AED] hover:underline focus:outline-none focus:ring-2 focus:ring-[#7C3AED] rounded"
