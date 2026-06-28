@@ -7676,7 +7676,14 @@ function BackOfficeWorkbench({
     ? { kind: "property", text: scopeProperty.name }
     : null;
 
-  const agentNotes: { id: string; src?: string; name: string; text: string }[] = [
+  const agentNotes: { id: string; src?: string; name: string; text: string; isHobson?: boolean }[] = [
+    {
+      id: "n-hobson",
+      src: owlDefault,
+      name: "Hobson",
+      text: `${counts.workflowsActive} workflows running${counts.workflowsDraft > 0 ? ` · ${counts.workflowsDraft} in draft` : ""}`,
+      isHobson: true,
+    },
     professor && {
       id: "n-prof",
       src: professor.src,
@@ -7695,19 +7702,13 @@ function BackOfficeWorkbench({
       name: "Broker",
       text: `${counts.contacts} contacts · 1 missing details`,
     },
-    magician && {
-      id: "n-mag",
-      src: magician.src,
-      name: "Magician",
-      text: `${counts.workflowsActive} workflows running${counts.workflowsDraft > 0 ? ` · ${counts.workflowsDraft} in draft` : ""}`,
-    },
     architect && {
       id: "n-arch",
       src: architect.src,
       name: "Architect",
       text: `${counts.units} units across ${counts.properties} properties`,
     },
-  ].filter(Boolean) as { id: string; src?: string; name: string; text: string }[];
+  ].filter(Boolean) as { id: string; src?: string; name: string; text: string; isHobson?: boolean }[];
 
   const totalToConfirm = counts.documentsPending + counts.complianceToConfirm + counts.workflowsDraft;
 
@@ -7782,8 +7783,8 @@ function BackOfficeWorkbench({
       id: "workflows",
       name: "Workflows",
       summary: `${counts.workflowsActive} running${counts.workflowsDraft > 0 ? ` · ${counts.workflowsDraft} draft` : ""}`,
-      agentName: "Magician",
-      agentSrc: magician?.src,
+      agentName: "Built by Hobson",
+      agentSrc: owlDefault,
       icon: (<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M15 4l5 5-11 11H4v-5L15 4z"/><path d="M14 5l5 5"/></svg>),
       content: renderWorkflows(),
     },
