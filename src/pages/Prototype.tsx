@@ -3439,25 +3439,17 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
               <span>Meet my team</span>
             </button>
           )}
-          {/* "Workbench" — Back Office only. Pinned, obvious button in the
-              chat header so it stays visible as the chat scrolls. Not shown in
-              the main product (it's an Admin/Back Office concept). */}
+          {/* "Workbench" — Back Office only. Static label in the chat header.
+              Not shown in the main product (it's an Admin/Back Office concept). */}
           {adminMode && view !== "onboarding" && (
-            <button
-              type="button"
-              onClick={() => { if (showWorkbench) { setShowWorkbench(false); } else { revealWorkbench("Show me what's been recorded"); } }}
-              aria-pressed={showWorkbench}
-              aria-label={showWorkbench ? "Close workbench" : "Workbench"}
-              title={showWorkbench ? "Close workbench" : "Workbench"}
-              className="ml-1 inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-[12px] font-semibold text-white bg-[#7C3AED] hover:bg-[#6D28D9] focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:ring-[#7C3AED] shadow-sm transition-colors motion-reduce:transition-none"
-            >
+            <div className="ml-1 inline-flex items-center gap-1.5 px-2.5 py-1.5 text-[12px] font-semibold text-[#5B21B6]">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
                 <path d="M12 3l9 5-9 5-9-5 9-5z" />
                 <path d="M3 13l9 5 9-5" />
                 <path d="M3 17l9 5 9-5" />
               </svg>
-              <span>{showWorkbench ? "Close workbench" : "Workbench"}</span>
-            </button>
+              <span>Workbench</span>
+            </div>
           )}
 
         </header>
