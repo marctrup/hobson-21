@@ -12772,7 +12772,7 @@ function EicrCompletedSample() {
         <div className="flex items-center gap-3 rounded-md border border-slate-200 bg-slate-50/60 px-3 py-2.5">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#475569" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/></svg>
           <div className="flex-1 min-w-0">
-            <div className="text-[12.5px] font-semibold text-slate-900 truncate">Renewal instruction — Stanley House EICR</div>
+            <div className="text-[12.5px] font-semibold text-slate-900 truncate">Renewal instruction — Health & Safety Certificates</div>
           </div>
           <button type="button" className="text-[12px] font-medium text-[#7C3AED] hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED] rounded">View</button>
         </div>
