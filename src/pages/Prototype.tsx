@@ -4108,6 +4108,38 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
             reducedMotion={reduced}
           />
         )}
+        {/* "Meet my team" — user-summoned team wall overlay on the right-hand stage.
+            The conversation on the left is undisturbed (no reset, no navigation).
+            Z-index sits above documents/what-I've-done so it overlays whatever is
+            currently on the stage, including admin rooms. */}
+        {showTeamWall && (
+          <div className="absolute inset-0 z-[550] bg-white flex flex-col motion-reduce:transition-none">
+            <div className="flex items-center justify-between px-5 h-14 border-b border-slate-100 shrink-0">
+              <div className="flex items-center gap-2">
+                <span className="text-[11px] uppercase tracking-wider text-[#7C3AED] font-semibold">Hobson's back office</span>
+                <span aria-hidden className="text-slate-300">·</span>
+                <h2 className="text-[15px] font-semibold text-slate-900">Meet My Team</h2>
+              </div>
+              <button
+                type="button"
+                onClick={() => setShowTeamWall(false)}
+                aria-label="Close team wall"
+                className="inline-flex items-center justify-center w-8 h-8 rounded-md text-slate-500 hover:text-slate-900 hover:bg-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]"
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M6 6l12 12M18 6L6 18"/></svg>
+              </button>
+            </div>
+            <div className="flex-1 relative">
+              <BackOfficeStage
+                mode="home"
+                helpers={BACK_OFFICE_HELPERS}
+                comingSoonId={null}
+                onEnter={() => { /* purely cosmetic outside Back Office */ }}
+                onReturnHallway={() => setShowTeamWall(false)}
+              />
+            </div>
+          </div>
+        )}
         {(performingCardId || reviewingCardId) && (() => {
           const activeId = performingCardId ?? reviewingCardId!;
           const card = actionCards.find((c) => c.id === activeId);
