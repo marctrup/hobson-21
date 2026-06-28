@@ -4223,27 +4223,38 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
 
           );
         })()}
-        {adminMode && adminCharacter && (
-          <button
-            type="button"
-            onClick={boReturnToHallway}
-            aria-label="Back to the back office hallway"
-            title="Back to the back office"
-            className="absolute top-3 right-3 z-[450] inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-md bg-white/95 backdrop-blur border border-slate-200 text-[12px] font-medium text-slate-700 shadow-sm hover:bg-white hover:text-[#7C3AED] hover:border-[#7C3AED]/40 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/50"
-          >
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M15 18l-6-6 6-6"/></svg>
-            <span>Back office</span>
-          </button>
-        )}
-        {adminMode && adminCharacter && (() => {
-          const c = ADMIN_CHARACTERS.find((x) => x.id === adminCharacter)!;
-          if (c.id === "professor") {
-            return <ProfessorWorkArea character={c} docs={profDocs} />;
-          }
-          if (c.id === "magician") {
-            return (
+        {adminMode && (
+          <BackOfficeWorkbench
+            helpers={BACK_OFFICE_HELPERS}
+            scopeProperty={selectedProperty}
+            scopeUnit={selectedUnit}
+            onClearScope={() => { setSelectedPropertyId(null); setSelectedUnitId(null); setView("portfolio"); }}
+            jumpSectionId={boJumpSectionId}
+            onJumpHandled={() => setBoJumpSectionId(null)}
+            renderDocuments={() => (
+              <ProfessorWorkArea
+                character={ADMIN_CHARACTERS.find((x) => x.id === "professor")!}
+                docs={profDocs}
+              />
+            )}
+            renderCompliance={() => (
+              <InspectorWorkArea
+                rules={inspectorConfirmed}
+                onUpdateRules={setInspectorConfirmed}
+                buildActive={inspectorBuild !== null}
+                onShowMe={inspectorShowMe}
+              />
+            )}
+            renderPeople={() => (
+              <BrokerWorkArea
+                character={ADMIN_CHARACTERS.find((x) => x.id === "broker")!}
+                contacts={contacts}
+                onAdd={handleAddBrokerContact}
+              />
+            )}
+            renderWorkflows={() => (
               <MagicianWorkArea
-                character={c}
+                character={ADMIN_CHARACTERS.find((x) => x.id === "magician")!}
                 workflows={workflows}
                 onCreate={handleCreateWorkflow}
                 onAdjust={magAdjustWorkflow}
@@ -4252,37 +4263,25 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                 onDiscard={magDiscardDraft}
                 onSimulate={magSimulate}
               />
-            );
-          }
-          if (c.id === "broker") {
-            return <BrokerWorkArea character={c} contacts={contacts} onAdd={handleAddBrokerContact} />;
-          }
-          if (c.id === "inspector") {
-            return (
-              <InspectorWorkArea
-                rules={inspectorConfirmed}
-                onUpdateRules={setInspectorConfirmed}
-                
-                buildActive={inspectorBuild !== null}
-                onShowMe={inspectorShowMe}
-              />
-            );
-          }
-          return <AdminWorkArea character={c} />;
-
-        })()}
-        {adminMode && !adminCharacter && (
-          <BackOfficeStage
-            mode={comingSoonHelperId ? "coming-soon" : (boShowHallway && boFirstEntry ? "hallway" : "home")}
-            helpers={BACK_OFFICE_HELPERS}
-            comingSoonId={comingSoonHelperId}
-            onEnter={boEnterRoom}
-            onReturnHallway={boReturnToHallway}
+            )}
+            counts={{
+              documents: profDocs.length,
+              documentsPending: profDocs.filter((d) => d.status === "pending").length,
+              compliance: inspectorConfirmed.length,
+              complianceToConfirm: 2,
+              contacts: contacts.length,
+              workflows: workflows.length,
+              workflowsActive: workflows.filter((w) => w.status === "active").length,
+              workflowsDraft: workflows.filter((w) => w.status === "draft").length,
+              units: PROPERTIES.reduce((n, p) => n + p.units.length, 0),
+              properties: PROPERTIES.filter((p) => !p.standalone).length,
+            }}
           />
         )}
 
       </main>
       ); })()}
+
 
       {/* Magician — View dialog (Adjust opens the full build flow in the left chat) */}
       {viewingWorkflowId && (
