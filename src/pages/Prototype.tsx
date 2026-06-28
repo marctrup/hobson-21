@@ -1262,14 +1262,16 @@ function HobsonMap({
           if (!m) return;
           m.setLatLng(newLatLng);
           m.getElement()?.classList.add("is-overlap-spread");
-          const line = L.polyline([points[k].orig, newLatLng], {
-            color: "#94A3B8",
-            weight: 1,
-            opacity: 0.65,
-            interactive: false,
-            dashArray: "2,3",
-          }).addTo(map);
-          connectorsRef.current[id] = line;
+          try {
+            const line = L.polyline([points[k].orig, newLatLng], {
+              color: "#94A3B8",
+              weight: 1,
+              opacity: 0.65,
+              interactive: false,
+              dashArray: "2,3",
+            }).addTo(map);
+            connectorsRef.current[id] = line;
+          } catch { /* renderer pane not ready — connector will appear on next moveend */ }
         });
       });
     };
