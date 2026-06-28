@@ -4389,7 +4389,7 @@ function CharacterAvatar({ src: _src }: { src: string }) {
   return <OwlAvatar state="default" />;
 }
 
-const HOBSON_ADMIN_INTRO = "Welcome to my back office. What would you like me to take care of? Choose one below, or just tell me what you need.";
+const HOBSON_ADMIN_INTRO = "Welcome to my back office. Here are a few things I could take care of for you — or just tell me what you need.";
 
 // Curated jobs Hobson offers to do FOR the user (his voice, as questions).
 // Keyed by helper id so adding a helper in BACK_OFFICE_HELPERS auto-extends the list (if an entry exists).
