@@ -4131,7 +4131,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
             </div>
             <div className="flex-1 relative">
               <BackOfficeStage
-                mode="home"
+                mode="hallway"
                 helpers={BACK_OFFICE_HELPERS}
                 comingSoonId={null}
                 onEnter={() => { /* purely cosmetic outside Back Office */ }}
