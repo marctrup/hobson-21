@@ -1613,7 +1613,12 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
   // ----- Inspector compliance-setup state (list-first, consent-and-describe) -----
   const [inspectorEvents, setInspectorEvents] = useState<InspectorEvent[]>([]);
   const [inspectorBuild, setInspectorBuild] = useState<InspectorBuild | null>(null);
-  const [inspectorConfirmed, setInspectorConfirmed] = useState<ComplianceRequirement[]>([]);
+  // Seed the rulebook with the example residential H&S requirements so the
+  // workbench reflects an honest state: counts, recalibration findings and
+  // the rulebook matrix all refer to real items. (Step 1 of the Compliance
+  // realignment — see prompt: "POPULATE the rulebook with example
+  // requirements … never show findings against an empty matrix.")
+  const [inspectorConfirmed, setInspectorConfirmed] = useState<ComplianceRequirement[]>(() => DEFAULT_HS_REQUIREMENTS);
 
   const inspNewId = (p: string) => `${p}-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`;
 
