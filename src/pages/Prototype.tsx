@@ -4705,7 +4705,12 @@ export const BACK_OFFICE_OFFERS: BackOfficeOffer[] = [
     id: "documents",
     text: "Process more of your documents and expand what I know about your portfolio.",
     sectionId: "documents",
-    hobsonReply: "Of course — let me open the document library so we can add to what I know.",
+    hobsonReply: "Happy to. Where would you like to start?",
+    followups: [
+      { id: "documents-upload", text: "Upload documents.", sectionId: "documents", hobsonReply: "Opening the document library — drop the files in and the Professor will read them." },
+      { id: "documents-reprocess", text: "Re-process or re-read documents I already have.", sectionId: "documents", hobsonReply: "Opening the document library — pick the ones you'd like me to read again." },
+      { id: "documents-show", text: "Show me the library.", sectionId: "documents", hobsonReply: "Opening the document library so you can see everything I hold." },
+    ],
   },
   {
     id: "compliance",
@@ -4713,9 +4718,10 @@ export const BACK_OFFICE_OFFERS: BackOfficeOffer[] = [
     sectionId: "compliance",
     hobsonReply: "Happy to. Where would you like to start?",
     followups: [
-      { id: "compliance-gaps", text: "Show me anything currently missing or overdue.", sectionId: "compliance", hobsonReply: "Opening the compliance board — I'll surface the gaps and anything overdue." },
-      { id: "compliance-upcoming", text: "Show me what's coming up for renewal.", sectionId: "compliance", hobsonReply: "Opening the compliance board — I'll highlight what's coming up for renewal." },
-      { id: "compliance-rulebook", text: "Show me the rulebook itself.", sectionId: "compliance", hobsonReply: "Opening the compliance board — the Inspector keeps the rulebook there." },
+      { id: "compliance-add-business", text: "Add a business requirement.", sectionId: "compliance", hobsonReply: "Opening the compliance rulebook — tell me what you'd like added and the Inspector and I will draft it together." },
+      { id: "compliance-recheck-legal", text: "Re-check what's legally required.", sectionId: "compliance", hobsonReply: "Opening the compliance rulebook — the Researcher will re-check the sources and I'll bring back anything that's changed." },
+      { id: "compliance-schedule", text: "Set your check schedule.", sectionId: "compliance", hobsonReply: "Opening the compliance rulebook — we'll set how often I should be re-checking each area." },
+      { id: "compliance-show", text: "Show me the rulebook.", sectionId: "compliance", hobsonReply: "Opening the compliance rulebook so you can see how it's configured today." },
     ],
   },
   {
@@ -4724,34 +4730,47 @@ export const BACK_OFFICE_OFFERS: BackOfficeOffer[] = [
     sectionId: "structure",
     hobsonReply: "Of course. What would you like to do?",
     followups: [
-      { id: "structure-property", text: "Add a property.", sectionId: "structure", hobsonReply: "Opening the structure section — the Architect will take the details when you're ready." },
-      { id: "structure-unit", text: "Add a unit to an existing property.", sectionId: "structure", hobsonReply: "Opening the structure section — pick the property and we'll add the unit." },
-      { id: "structure-review", text: "Review the structure as it stands.", sectionId: "structure", hobsonReply: "Opening the structure section so you can see how it's organised today." },
+      { id: "structure-add", text: "Add a property or unit.", sectionId: "structure", hobsonReply: "Opening the structure section — the Architect will take the details when you're ready." },
+      { id: "structure-fetch", text: "Fetch public records.", sectionId: "structure", hobsonReply: "Opening the structure section — the Researcher will pull EPC, Land Registry and the other public records I rely on." },
+      { id: "structure-field", text: "Add a field to track.", sectionId: "structure", hobsonReply: "Opening the structure section — tell me what you'd like me to track and the Architect and I will add it to the schema." },
+      { id: "structure-schedule", text: "Set your fetch schedule.", sectionId: "structure", hobsonReply: "Opening the structure section — we'll set how often I should be refreshing the public records." },
+      { id: "structure-show", text: "Show me the structure.", sectionId: "structure", hobsonReply: "Opening the structure section so you can see how it's organised today." },
     ],
   },
   {
     id: "people",
     text: "Organise your contacts, organisations and relationships.",
     sectionId: "people",
-    hobsonReply: "Of course — opening the relationships section. The Broker keeps the black book there.",
+    hobsonReply: "Of course. Where would you like to start?",
+    followups: [
+      { id: "people-add", text: "Add a contact or organisation.", sectionId: "people", hobsonReply: "Opening the black book — tell me who you'd like added and the Broker and I will record the details." },
+      { id: "people-link", text: "Link a contact to a property or unit.", sectionId: "people", hobsonReply: "Opening the black book — pick the contact and we'll link them to the right property or unit." },
+      { id: "people-show", text: "Show me the black book.", sectionId: "people", hobsonReply: "Opening the black book so you can see every relationship I hold." },
+    ],
   },
   {
     id: "workflows",
     text: "Build or change how I handle your work.",
     sectionId: "workflows",
-    hobsonReply: "Of course — opening the workflows section so we can shape how I handle things for you.",
+    hobsonReply: "Of course. Where would you like to start?",
+    followups: [
+      { id: "workflows-new", text: "Set up a new workflow.", sectionId: "workflows", hobsonReply: "Opening the workflows section — tell me what you'd like me to handle and we'll shape it together." },
+      { id: "workflows-adjust", text: "Adjust a workflow's rules.", sectionId: "workflows", hobsonReply: "Opening the workflows section — pick the one you'd like to tune and we'll work through the rules." },
+      { id: "workflows-pause", text: "Pause or resume a workflow.", sectionId: "workflows", hobsonReply: "Opening the workflows section — choose the one you'd like to pause or bring back into play." },
+      { id: "workflows-show", text: "Show me my workflows.", sectionId: "workflows", hobsonReply: "Opening the workflows section so you can see everything I'm running for you." },
+    ],
   },
   {
     id: "integrations",
     text: "Connect another system so I can work with live information.",
     joiningSoon: "Communicator",
-    hobsonReply: "The Communicator is joining the team shortly — system connections will live alongside the other sections on your workbench once he's in.",
+    hobsonReply: "That's something my Communicator will handle — he's joining the team shortly. Once he's in, system connections will live alongside the other sections on your workbench.",
   },
   {
     id: "access",
     text: "Manage who can access your portfolio and what they are permitted to do.",
     joiningSoon: "Keeper",
-    hobsonReply: "The Keeper is joining the team shortly — access and permissions will live alongside the other sections on your workbench once he's at his post.",
+    hobsonReply: "That's something my Keeper will handle — he's joining the team shortly. Once he's at his post, access and permissions will live alongside the other sections on your workbench.",
   },
 ];
 
