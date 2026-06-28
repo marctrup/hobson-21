@@ -4548,7 +4548,7 @@ function AdminChat({ character, owl, professorEvents, onAssignProfessorType, bro
               <div className="flex items-end gap-2">
                 <OwlAvatar state={owl} />
                 <div className="max-w-[420px] bg-[#EDE9FE] text-[#1F2330] text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-bl-md">
-                  Here's what I can take on for you — pick one, or just tell me what you need.
+                  A few things I could take on for you —
                 </div>
               </div>
               <JobGrid helpers={helpers} onPick={onPickJob} />
