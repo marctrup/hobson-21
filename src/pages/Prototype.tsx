@@ -1421,6 +1421,9 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
   // "Meet my team" — user-summonable team wall overlay on the right stage.
   // In-memory only (no localStorage/sessionStorage); does not disturb the chat.
   const [showTeamWall, setShowTeamWall] = useState(false);
+  // "Show me everything" — user-summonable unified back-office workbench overlay on the right stage.
+  // Display-only; sections collapsed by default (the workbench owns its own collapse state).
+  const [showWorkbench, setShowWorkbench] = useState(false);
   const [carriedCardId, setCarriedCardId] = useState<string | null>(null);
   const [performingCardId, setPerformingCardId] = useState<string | null>(null);
   const [reviewingCardId, setReviewingCardId] = useState<string | null>(null);
