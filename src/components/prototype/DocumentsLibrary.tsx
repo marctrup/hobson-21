@@ -870,15 +870,6 @@ export function DocumentsLibrary({
         </button>
       </header>
 
-      {/* The Professor's notes — evidential observations from the catalogue */}
-      {greetingDone && (
-        <ProfessorNotes
-          docs={DOCS}
-          scopePropertyId={scopeProperty}
-          scopeUnitId={scopeUnit}
-          onJump={(d) => setViewing(d)}
-        />
-      )}
 
       {/* Scope chips */}
       {(scopePropertyAsset || scopeUnitNode) && (
