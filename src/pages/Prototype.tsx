@@ -3931,31 +3931,33 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
 
 
 
-        <div
-          aria-hidden={view === "onboarding" ? true : undefined}
-          className={`absolute inset-0 ${view === "onboarding" ? "pointer-events-none pins-hidden" : ""} ${reduced ? "reduced-motion" : ""}`}
-        >
-          <HobsonMap
-            onPropertyClick={(id) => {
-              const p = PROPERTIES.find((x) => x.id === id);
-              if (!p) return;
-              // Single-unit property: drill straight to the unit
-              if (p.units.length === 1) {
-                goUnit(p.units[0].id, p.id);
-              } else {
-                goProperty(id);
-              }
-            }}
-            onPinHover={setHoveredPropertyId}
-            onUnitClick={(uid) => selectedPropertyId && goUnit(uid, selectedPropertyId)}
-            highlight={highlight}
-          />
-        </div>
+        {!adminMode && (
+          <div
+            aria-hidden={view === "onboarding" ? true : undefined}
+            className={`absolute inset-0 ${view === "onboarding" ? "pointer-events-none pins-hidden" : ""} ${reduced ? "reduced-motion" : ""}`}
+          >
+            <HobsonMap
+              onPropertyClick={(id) => {
+                const p = PROPERTIES.find((x) => x.id === id);
+                if (!p) return;
+                // Single-unit property: drill straight to the unit
+                if (p.units.length === 1) {
+                  goUnit(p.units[0].id, p.id);
+                } else {
+                  goProperty(id);
+                }
+              }}
+              onPinHover={setHoveredPropertyId}
+              onUnitClick={(uid) => selectedPropertyId && goUnit(uid, selectedPropertyId)}
+              highlight={highlight}
+            />
+          </div>
+        )}
 
 
 
-        {/* Global map search — persistent on every level (hidden during Meet Hobson) */}
-        {view !== "onboarding" && (
+        {/* Global map search — persistent on every level (hidden during Meet Hobson and in the Back Office) */}
+        {view !== "onboarding" && !adminMode && (
           <MapSearch
             query={searchQuery}
             setQuery={setSearchQuery}
@@ -3975,11 +3977,13 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
 
 
 
-        {/* Map/Satellite toggle */}
-        <div className="absolute bottom-4 right-4 z-[400] bg-white rounded-md shadow-md text-xs font-medium flex">
-          <button className="px-3 py-1.5 bg-slate-900 text-white rounded-l-md">Map</button>
-          <button className="px-3 py-1.5 text-slate-600 rounded-r-md">Satellite</button>
-        </div>
+        {/* Map/Satellite toggle — hidden in the Back Office */}
+        {!adminMode && (
+          <div className="absolute bottom-4 right-4 z-[400] bg-white rounded-md shadow-md text-xs font-medium flex">
+            <button className="px-3 py-1.5 bg-slate-900 text-white rounded-l-md">Map</button>
+            <button className="px-3 py-1.5 text-slate-600 rounded-r-md">Satellite</button>
+          </div>
+        )}
 
 
         {/* Dev toggle removed: staged tour always starts at Meet Hobson */}
