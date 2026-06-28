@@ -3,6 +3,15 @@
 import characterProfessor from "@/assets/prototype/character-professor.png";
 import characterArchitectAsset from "@/assets/prototype/character-architect.png.asset.json";
 const characterArchitect = characterArchitectAsset.url;
+import characterInspector from "@/assets/prototype/character-inspector.png";
+import characterBroker from "@/assets/prototype/character-broker.png";
+import characterResearcherAsset from "@/assets/prototype/character-researcher.png.asset.json";
+const characterResearcher = characterResearcherAsset.url;
+import characterBookkeeperAsset from "@/assets/prototype/character-bookkeeper.png.asset.json";
+const characterBookkeeper = characterBookkeeperAsset.url;
+import characterCommunicatorAsset from "@/assets/prototype/character-communicator.png.asset.json";
+const characterCommunicator = characterCommunicatorAsset.url;
+import characterKeeper from "@/assets/prototype/character-keeper.png";
 export type BackOfficeHelperId =
   | "professor"
   | "architect"
