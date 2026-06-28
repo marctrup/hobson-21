@@ -4655,7 +4655,6 @@ function CharacterAvatar({ src: _src }: { src: string }) {
 const HOBSON_ADMIN_INTRO = "Welcome to my back office. Everything I need to look after your portfolio begins here. Simply tell me what you'd like me to take care of.";
 
 // Curated jobs Hobson offers to do FOR the user (his voice, as questions).
-// Keyed by helper id so adding a helper in BACK_OFFICE_HELPERS auto-extends the list (if an entry exists).
 const JOB_CATALOGUE: Record<string, { offer: string }> = {
   professor: { offer: "Want me to get more of your documents processed?" },
   inspector: { offer: "Want me to make sure you stay compliant?" },
@@ -4664,6 +4663,35 @@ const JOB_CATALOGUE: Record<string, { offer: string }> = {
   keeper:    { offer: "Want me to manage who can access what?" },
 };
 
+const BACK_OFFICE_OFFER_LINES: string[] = [
+  "Process more of your documents and expand what I know about your portfolio.",
+  "Review your compliance position and identify anything that needs attention.",
+  "Build or update your portfolio structure by adding properties and units.",
+  "Organise your contacts, organisations and relationships.",
+  "Research legislation, public records, comparable evidence or industry guidance.",
+  "Prepare calculations, statements or financial analysis.",
+  "Connect another system so I can work with live information.",
+  "Manage who can access your portfolio and what they are permitted to do.",
+  "…or simply tell me what you need.",
+];
+
+function BackOfficeOfferText() {
+  return (
+    <div className="ml-12 max-w-[560px]">
+      <div className="bg-[#EDE9FE] text-[#1F2330] text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-bl-md">
+        <ul className="list-disc pl-4 space-y-1">
+          {BACK_OFFICE_OFFER_LINES.map((line, i) => (
+            <li key={i} className={line.startsWith("…") ? "italic text-slate-500 mt-1" : ""}>
+              {line.startsWith("…") ? line.slice(1) : line}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
+}
+
+// Kept for mid-conversation "jobs" replay if needed.
 function JobGrid({ helpers, onPick }: { helpers: BackOfficeHelper[]; onPick: (h: BackOfficeHelper) => void }) {
   const items = helpers.filter((h) => JOB_CATALOGUE[h.id]);
   return (
@@ -4794,8 +4822,8 @@ function AdminChat({ character, owl, professorEvents, onAssignProfessorType, bro
           </div>
         </div>
       )}
-      {!character && phase === "done" && helpers && onPickJob && (!boEvents || boEvents.length === 0) && (
-        <JobGrid helpers={helpers} onPick={onPickJob} />
+      {!character && phase === "done" && (!boEvents || boEvents.length === 0) && (
+        <BackOfficeOfferText />
       )}
       {!character && phase === "done" && boEvents && boEvents.map((ev) => {
         if (ev.kind === "user") {
