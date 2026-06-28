@@ -13,6 +13,7 @@
  */
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import characterInspector from "@/assets/prototype/character-inspector.png";
+import owlDefault from "@/assets/prototype/owl-default.png";
 import type { ComplianceRow, SummaryScope } from "./summaryData";
 import { SUMMARY_PROPERTIES, occupationalForScope } from "./summaryData";
 
