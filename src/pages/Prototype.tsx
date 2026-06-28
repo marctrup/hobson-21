@@ -4742,18 +4742,6 @@ export const BACK_OFFICE_OFFERS: BackOfficeOffer[] = [
     hobsonReply: "Of course — opening the workflows section so we can shape how I handle things for you.",
   },
   {
-    id: "research",
-    text: "Research legislation, public records, comparable evidence or industry guidance.",
-    joiningSoon: "Researcher",
-    hobsonReply: "The Researcher is joining the team shortly — when she's settled, this will live alongside the other sections on your workbench. For now, just tell me what you'd like to know and I'll do what I can.",
-  },
-  {
-    id: "calculations",
-    text: "Prepare calculations, statements or financial analysis.",
-    joiningSoon: "Bookkeeper",
-    hobsonReply: "The Bookkeeper is joining the team shortly — when he's settled, calculations and statements will live alongside the other sections on your workbench.",
-  },
-  {
     id: "integrations",
     text: "Connect another system so I can work with live information.",
     joiningSoon: "Communicator",
