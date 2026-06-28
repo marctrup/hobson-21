@@ -3379,7 +3379,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
               />
             </div>
           </div>
-        ) : (
+        ) : !adminMode ? (
           <nav
             aria-label="Breadcrumb"
             className="px-5 py-2.5 border-b border-slate-200 bg-white sticky top-0 z-10"
@@ -3413,7 +3413,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
               })}
             </ol>
           </nav>
-        )}
+        ) : null}
 
 
         {/* Body */}
