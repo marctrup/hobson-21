@@ -7637,7 +7637,6 @@ function BackOfficeWorkbench({
   const professor = findHelper("professor");
   const inspector = findHelper("inspector");
   const broker = findHelper("broker");
-  const magician = findHelper("magician");
   const architect = findHelper("architect");
 
   const [openIds, setOpenIds] = useState<Set<string>>(new Set());
@@ -7677,7 +7676,14 @@ function BackOfficeWorkbench({
     ? { kind: "property", text: scopeProperty.name }
     : null;
 
-  const agentNotes: { id: string; src?: string; name: string; text: string }[] = [
+  const agentNotes: { id: string; src?: string; name: string; text: string; isHobson?: boolean }[] = [
+    {
+      id: "n-hobson",
+      src: owlDefault,
+      name: "Hobson",
+      text: `${counts.workflowsActive} workflows running${counts.workflowsDraft > 0 ? ` · ${counts.workflowsDraft} in draft` : ""}`,
+      isHobson: true,
+    },
     professor && {
       id: "n-prof",
       src: professor.src,
@@ -7696,19 +7702,13 @@ function BackOfficeWorkbench({
       name: "Broker",
       text: `${counts.contacts} contacts · 1 missing details`,
     },
-    magician && {
-      id: "n-mag",
-      src: magician.src,
-      name: "Magician",
-      text: `${counts.workflowsActive} workflows running${counts.workflowsDraft > 0 ? ` · ${counts.workflowsDraft} in draft` : ""}`,
-    },
     architect && {
       id: "n-arch",
       src: architect.src,
       name: "Architect",
       text: `${counts.units} units across ${counts.properties} properties`,
     },
-  ].filter(Boolean) as { id: string; src?: string; name: string; text: string }[];
+  ].filter(Boolean) as { id: string; src?: string; name: string; text: string; isHobson?: boolean }[];
 
   const totalToConfirm = counts.documentsPending + counts.complianceToConfirm + counts.workflowsDraft;
 
@@ -7783,8 +7783,8 @@ function BackOfficeWorkbench({
       id: "workflows",
       name: "Workflows",
       summary: `${counts.workflowsActive} running${counts.workflowsDraft > 0 ? ` · ${counts.workflowsDraft} draft` : ""}`,
-      agentName: "Magician",
-      agentSrc: magician?.src,
+      agentName: "Built by Hobson",
+      agentSrc: owlDefault,
       icon: (<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M15 4l5 5-11 11H4v-5L15 4z"/><path d="M14 5l5 5"/></svg>),
       content: renderWorkflows(),
     },
@@ -7851,13 +7851,14 @@ function BackOfficeWorkbench({
           {notesOpen && (
             <div className="px-4 pb-4 pt-2 border-t border-slate-100">
               <dl className="grid grid-cols-[max-content_1fr] gap-x-6 gap-y-2 text-[13px]">
-                {agentNotes.map((n) => (
+                {agentNotes.map((n, idx) => (
                   <React.Fragment key={n.id}>
-                    <dt className="flex items-center gap-2 text-slate-700">
+                    {idx === 1 && <div role="separator" className="col-span-2 border-t border-slate-200 my-1" />}
+                    <dt className={`flex items-center gap-2 ${n.isHobson ? "text-[#5B21B6]" : "text-slate-700"}`}>
                       {n.src && <img src={n.src} alt="" aria-hidden className="w-5 h-5 object-contain" />}
                       <span className="font-medium">{n.name}</span>
                     </dt>
-                    <dd className="text-slate-600">{n.text}</dd>
+                    <dd className={n.isHobson ? "text-[#5B21B6]" : "text-slate-600"}>{n.text}</dd>
                   </React.Fragment>
                 ))}
               </dl>
@@ -7890,10 +7891,17 @@ function BackOfficeWorkbench({
                     <div className="text-[12px] text-slate-500 flex items-center gap-2 flex-wrap">
                       <span>{s.summary}</span>
                       <span aria-hidden>·</span>
-                      <span className="inline-flex items-center gap-1.5">
-                        {s.agentSrc && <img src={s.agentSrc} alt="" aria-hidden className="w-3.5 h-3.5 object-contain" />}
-                        <span>{s.agentName}</span>
-                      </span>
+                      {s.id === "workflows" ? (
+                        <span className="inline-flex items-center gap-1.5 text-[#5B21B6] font-medium">
+                          <img src={owlDefault} alt="" aria-hidden className="w-3.5 h-3.5 object-contain" />
+                          <span>Built by Hobson</span>
+                        </span>
+                      ) : (
+                        <span className="inline-flex items-center gap-1.5">
+                          {s.agentSrc && <img src={s.agentSrc} alt="" aria-hidden className="w-3.5 h-3.5 object-contain" />}
+                          <span>{s.agentName}</span>
+                        </span>
+                      )}
                     </div>
                   </div>
                   <svg className={`w-4 h-4 text-slate-400 transition-transform ${open ? "rotate-180" : ""}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden><path d="M6 9l6 6 6-6"/></svg>
