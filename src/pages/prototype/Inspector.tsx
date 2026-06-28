@@ -24,7 +24,7 @@ export const INSPECTOR_CHARACTER = {
   tagline: "Compliance & protection",
   greeting:
     "I make sure you're never caught out. Tell me which area of compliance to set up, and I'll find what the law requires.",
-  workTitle: "The Inspector's compliance board",
+  workTitle: "",
   workIntro: "Where the rules are set that I watch every property against.",
 };
 
@@ -2594,7 +2594,6 @@ export function InspectorWorkArea({
             <img src={INSPECTOR_CHARACTER.src} alt="" aria-hidden className="w-[120%] h-[120%] object-contain" />
           </div>
           <div>
-            <div className="text-[13px] font-semibold text-slate-900">{INSPECTOR_CHARACTER.workTitle}</div>
             <div className="text-[11px] text-slate-500">
               {rules.length === 0
                 ? "No rules yet — ask Hobson to set up your compliance and the Researcher will find what the law requires."
