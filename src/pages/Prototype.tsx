@@ -4436,7 +4436,7 @@ function AdminChat({ character, owl, professorEvents, onAssignProfessorType, bro
   return (
     <div className="flex flex-col" style={{ gap: CHAT_TURN_GAP_PX }}>
       {phase === "typing" && (
-        <div key={`${keyId}-typing`} className="flex items-end gap-2" aria-live="polite" aria-label={`${character?.name ?? "Hobson"} is typing`}>
+        <div key={`${keyId}-typing`} className="flex items-end gap-2" aria-live="polite" aria-label="Hobson is typing">
           {Avatar}
           <div className="bg-[#EDE9FE] px-4 py-3 rounded-2xl rounded-bl-md flex items-center gap-1">
             <Dot delay={0} /><Dot delay={150} /><Dot delay={300} />
