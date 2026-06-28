@@ -3144,6 +3144,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
 
   const sendUnitQuestion = (q: string) => {
     if (!q.trim()) return;
+    if (isShowEverythingIntent(q)) { revealWorkbench(q); return; }
     if (isRentFlat2Question(q)) { sendRentAnswer(q); return; }
     setMessages((m) => [...m, { id: `u-${Date.now()}`, role: "user", text: q }]);
     setInput("");
