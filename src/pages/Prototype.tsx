@@ -4361,12 +4361,11 @@ function CharacterRailItem({ name, src, active, onClick, disabled, disabledLabel
   );
 }
 
-function CharacterAvatar({ src }: { src: string }) {
-  return (
-    <div className="w-10 h-10 shrink-0 rounded-full overflow-hidden bg-[#F5F3FF] ring-1 ring-slate-200 grid place-items-center">
-      <img src={src} alt="" aria-hidden className="w-[120%] h-[120%] object-contain object-center" />
-    </div>
-  );
+// CharacterAvatar always renders Hobson's owl in the left chat —
+// specialist owls appear only in their rooms on the right.
+// The `src` prop is intentionally ignored to enforce the one-voice rule.
+function CharacterAvatar({ src: _src }: { src: string }) {
+  return <OwlAvatar state="default" />;
 }
 
 const HOBSON_ADMIN_INTRO_PARAS = [
@@ -7387,6 +7386,7 @@ function MagicianBuildInviteCard({ onStart }: { onStart: () => void }) {
   ];
   return (
     <ChatInviteShell avatarSrc={characterMagician}>
+      <div>Tell me what you'd like me to keep on top of and I'll have the Magician build it with you — rent reviews, compliance checks, notices, anything that needs minding.</div>
       <button
         type="button"
         onClick={onStart}
