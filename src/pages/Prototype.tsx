@@ -4822,8 +4822,8 @@ function AdminChat({ character, owl, professorEvents, onAssignProfessorType, bro
           </div>
         </div>
       )}
-      {!character && phase === "done" && helpers && onPickJob && (!boEvents || boEvents.length === 0) && (
-        <JobGrid helpers={helpers} onPick={onPickJob} />
+      {!character && phase === "done" && (!boEvents || boEvents.length === 0) && (
+        <BackOfficeOfferText />
       )}
       {!character && phase === "done" && boEvents && boEvents.map((ev) => {
         if (ev.kind === "user") {
