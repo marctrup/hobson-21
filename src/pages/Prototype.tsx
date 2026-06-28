@@ -7238,6 +7238,17 @@ function PropertyContent({
           hidden={!unitsOpen}
           className="mt-2 px-3 pb-3 pt-3 space-y-3 bg-white border border-slate-200 rounded-xl shadow-sm"
         >
+          <div className="flex items-center justify-between">
+            <span className="text-[12px] font-semibold text-slate-700 uppercase tracking-wide">Units</span>
+            <button
+              type="button"
+              onClick={() => setUnitsOpen(false)}
+              className="text-[11px] font-medium text-[#7C3AED] hover:text-[#5B21B6] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]/40 rounded px-2 py-1"
+              aria-label="Close unit picker"
+            >
+              Close
+            </button>
+          </div>
           {!testerMode && (
             <div className="text-[10.5px] text-slate-500 flex items-center gap-3 flex-wrap">
               <span className="inline-flex items-center gap-1">
