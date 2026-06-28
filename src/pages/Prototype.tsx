@@ -3472,7 +3472,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                 className="w-full flex items-center justify-between gap-3 py-2 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]/40 rounded"
               >
                 <span className="text-[11.5px] uppercase tracking-wide text-slate-500 font-semibold truncate">
-                  Quick overviews{(view === "unit" && selectedProperty && !selectedProperty.standalone) ? " · Open a unit" : ""}
+                  Quick overviews{view === "property" ? " · Open a unit" : (view === "unit" && selectedProperty && !selectedProperty.standalone) ? " · Open a unit" : ""}
                 </span>
                 <span
                   aria-hidden
@@ -3490,13 +3490,56 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                   {view === "portfolio" && (
                     <SummaryActions scope={{ level: "portfolio" }} onRequest={(k, s) => requestSummary(k, s)} enabledKinds={summaryVisibility} />
                   )}
-                  {view === "property" && selectedProperty && (
+                  {view === "property" && selectedProperty && selectedPropertyUnitCounts && (
                     <>
                       <SummaryActions
                         scope={{ level: "property", propertyId: selectedProperty.id }}
                         onRequest={(k, s) => requestSummary(k, s)}
                         enabledKinds={summaryVisibility}
                       />
+                      <button
+                        type="button"
+                        onClick={() => setOpenUnitsSignal((n) => n + 1)}
+                        className="w-full flex items-center justify-between gap-3 px-4 py-3.5 rounded-xl text-left cursor-pointer
+                          bg-gradient-to-r from-[#F5F3FF] to-white
+                          border-2 border-[#C4B5FD]
+                          shadow-sm hover:shadow-md hover:border-[#7C3AED] hover:from-[#EDE9FE] hover:to-[#F5F3FF]
+                          active:shadow-sm active:translate-y-px
+                          transition-[box-shadow,border-color,background-color,transform] motion-reduce:transition-none
+                          focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]/40 focus-visible:ring-offset-2"
+                      >
+                        <span className="flex items-center gap-3 min-w-0">
+                          <span
+                            aria-hidden
+                            className="flex items-center justify-center w-9 h-9 rounded-lg bg-[#7C3AED] text-white shadow-sm"
+                          >
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                              <path d="M4 21V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v17" />
+                              <path d="M4 21h16" />
+                              <path d="M19 21V9l-3-2" />
+                              <circle cx="13" cy="13" r="0.8" fill="currentColor" />
+                            </svg>
+                          </span>
+                          <span className="flex flex-col min-w-0">
+                            <span className="text-[15px] font-semibold text-slate-900 leading-tight">Open a unit</span>
+                            <span className="text-[12px] text-slate-600 truncate">
+                              {selectedPropertyUnitCounts.total} units · {selectedPropertyUnitCounts.let} let · {selectedPropertyUnitCounts.vacant} vacant
+                              {!testerMode && selectedPropertyUnitCounts.alerts > 0 && <> · <span className="text-amber-700 font-medium">{selectedPropertyUnitCounts.alerts} need attention</span></>}
+                            </span>
+                          </span>
+                        </span>
+                        <span className="flex items-center gap-2 shrink-0">
+                          <span className="hidden sm:inline text-[11px] uppercase tracking-wide text-[#7C3AED] font-semibold">Tap to choose</span>
+                          <span
+                            aria-hidden
+                            className="flex items-center justify-center w-6 h-6 rounded-full bg-white border border-[#C4B5FD] text-[#7C3AED]"
+                          >
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                              <path d="M6 9l6 6 6-6" />
+                            </svg>
+                          </span>
+                        </span>
+                      </button>
                     </>
                   )}
                   {view === "unit" && selectedUnit && selectedPropertyId && (
