@@ -4414,8 +4414,7 @@ function JobGrid({ helpers, onPick }: { helpers: BackOfficeHelper[]; onPick: (h:
   const items = helpers.filter((h) => JOB_CATALOGUE[h.id]);
   return (
     <div
-      className="ml-12 max-w-[520px] grid gap-2"
-      style={{ gridTemplateColumns: "repeat(auto-fill, minmax(210px, 1fr))" }}
+      className="ml-12 max-w-[560px] flex flex-wrap gap-1.5"
       role="group"
       aria-label="Things Hobson can take care of"
     >
@@ -4428,30 +4427,20 @@ function JobGrid({ helpers, onPick }: { helpers: BackOfficeHelper[]; onPick: (h:
             type="button"
             onClick={() => { if (!disabled) onPick(h); }}
             disabled={disabled}
+            title={disabled ? `${job.label} — coming soon` : job.hint}
             aria-label={disabled ? `${job.label} — coming soon` : `Ask Hobson to: ${job.label}`}
-            className={`group text-left rounded-xl bg-white p-3 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED] motion-reduce:transition-none ${
+            className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[12.5px] transition focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED] motion-reduce:transition-none ${
               disabled
-                ? "border border-dashed border-slate-300 opacity-70 cursor-not-allowed"
-                : "border border-slate-200 hover:border-[#7C3AED]/50 hover:shadow-sm hover:-translate-y-0.5 motion-reduce:transform-none"
+                ? "border border-dashed border-slate-300 bg-slate-50 text-slate-500 cursor-not-allowed"
+                : "border border-[#7C3AED]/25 bg-[#7C3AED]/5 text-slate-800 hover:bg-[#7C3AED]/10 hover:border-[#7C3AED]/50"
             }`}
           >
-            <div className="flex items-start gap-2.5">
-              <div aria-hidden className="w-9 h-9 rounded-lg bg-slate-50 grid place-items-center shrink-0 overflow-hidden">
-                <img src={h.src} alt="" className="w-8 h-8 object-contain" />
-              </div>
-              <div className="min-w-0 flex-1">
-                <div className="text-[13px] font-semibold text-slate-900 flex items-center gap-1.5 flex-wrap">
-                  <span>{job.label}</span>
-                  {disabled && (
-                    <span className="text-[9px] uppercase tracking-wide px-1.5 py-0.5 rounded-full border border-amber-200 bg-amber-50 text-amber-700 font-medium">
-                      Soon
-                    </span>
-                  )}
-                </div>
-                <div className="text-[11.5px] text-slate-500 leading-snug mt-0.5">{job.hint}</div>
-                <div className="text-[10px] text-slate-400 mt-1">via {h.name}</div>
-              </div>
-            </div>
+            <span>{job.label}</span>
+            {disabled && (
+              <span className="text-[9px] uppercase tracking-wide px-1.5 py-0.5 rounded-full border border-amber-200 bg-amber-50 text-amber-700 font-medium">
+                Soon
+              </span>
+            )}
           </button>
         );
       })}
