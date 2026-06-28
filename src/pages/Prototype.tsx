@@ -2634,6 +2634,17 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
     return selectedProperty.units.find((u) => u.id === selectedUnitId) || null;
   }, [selectedProperty, selectedUnitId]);
 
+  const selectedPropertyUnitCounts = useMemo(() => {
+    if (!selectedProperty) return null;
+    let alerts = 0, vacant = 0;
+    selectedProperty.units.forEach((u) => {
+      const d = deriveUnit(u);
+      if (d.hasAlert) alerts += 1;
+      if (d.isVacantConfirmed) vacant += 1;
+    });
+    return { total: selectedProperty.units.length, let: selectedProperty.units.length - vacant, vacant, alerts };
+  }, [selectedProperty]);
+
   const messageGroups = useMemo(() => groupChatMessages(messages), [messages]);
 
   /* ----- scroll behaviour: pin to top when entering a property/unit so the
@@ -3461,7 +3472,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                 className="w-full flex items-center justify-between gap-3 py-2 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]/40 rounded"
               >
                 <span className="text-[11.5px] uppercase tracking-wide text-slate-500 font-semibold truncate">
-                  Quick overviews{(view === "property" || (view === "unit" && selectedProperty && !selectedProperty.standalone)) ? " · Open a unit" : ""}
+                  Quick overviews{view === "property" ? " · Open a unit" : (view === "unit" && selectedProperty && !selectedProperty.standalone) ? " · Open a unit" : ""}
                 </span>
                 <span
                   aria-hidden
@@ -3479,7 +3490,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                   {view === "portfolio" && (
                     <SummaryActions scope={{ level: "portfolio" }} onRequest={(k, s) => requestSummary(k, s)} enabledKinds={summaryVisibility} />
                   )}
-                  {view === "property" && selectedProperty && (
+                  {view === "property" && selectedProperty && selectedPropertyUnitCounts && (
                     <>
                       <SummaryActions
                         scope={{ level: "property", propertyId: selectedProperty.id }}
@@ -3489,15 +3500,45 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                       <button
                         type="button"
                         onClick={() => setOpenUnitsSignal((n) => n + 1)}
-                        className="w-full flex items-center justify-between gap-3 px-3 py-2 rounded-lg border border-[#C4B5FD] bg-gradient-to-r from-[#F5F3FF] to-white text-left hover:border-[#7C3AED] hover:from-[#EDE9FE] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]/40 transition motion-reduce:transition-none"
+                        className="w-full flex items-center justify-between gap-3 px-4 py-3.5 rounded-xl text-left cursor-pointer
+                          bg-gradient-to-r from-[#F5F3FF] to-white
+                          border-2 border-[#C4B5FD]
+                          shadow-sm hover:shadow-md hover:border-[#7C3AED] hover:from-[#EDE9FE] hover:to-[#F5F3FF]
+                          active:shadow-sm active:translate-y-px
+                          transition-[box-shadow,border-color,background-color,transform] motion-reduce:transition-none
+                          focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]/40 focus-visible:ring-offset-2"
                       >
-                        <span className="flex flex-col min-w-0">
-                          <span className="text-[13px] font-semibold text-slate-900">Open a unit</span>
-                          <span className="text-[11px] text-slate-600 truncate">
-                            {selectedProperty.units.length} units — tap to choose
+                        <span className="flex items-center gap-3 min-w-0">
+                          <span
+                            aria-hidden
+                            className="flex items-center justify-center w-9 h-9 rounded-lg bg-[#7C3AED] text-white shadow-sm"
+                          >
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                              <path d="M4 21V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v17" />
+                              <path d="M4 21h16" />
+                              <path d="M19 21V9l-3-2" />
+                              <circle cx="13" cy="13" r="0.8" fill="currentColor" />
+                            </svg>
+                          </span>
+                          <span className="flex flex-col min-w-0">
+                            <span className="text-[15px] font-semibold text-slate-900 leading-tight">Open a unit</span>
+                            <span className="text-[12px] text-slate-600 truncate">
+                              {selectedPropertyUnitCounts.total} units · {selectedPropertyUnitCounts.let} let · {selectedPropertyUnitCounts.vacant} vacant
+                              {!testerMode && selectedPropertyUnitCounts.alerts > 0 && <> · <span className="text-amber-700 font-medium">{selectedPropertyUnitCounts.alerts} need attention</span></>}
+                            </span>
                           </span>
                         </span>
-                        <span aria-hidden className="text-[#7C3AED] text-[11px] uppercase tracking-wide font-semibold">Open ↓</span>
+                        <span className="flex items-center gap-2 shrink-0">
+                          <span className="hidden sm:inline text-[11px] uppercase tracking-wide text-[#7C3AED] font-semibold">Tap to choose</span>
+                          <span
+                            aria-hidden
+                            className="flex items-center justify-center w-6 h-6 rounded-full bg-white border border-[#C4B5FD] text-[#7C3AED]"
+                          >
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                              <path d="M6 9l6 6 6-6" />
+                            </svg>
+                          </span>
+                        </span>
                       </button>
                     </>
                   )}
@@ -7192,63 +7233,22 @@ function PropertyContent({
         className="-mx-1 px-1"
         aria-label="Units"
       >
-        <button
-          type="button"
-          onClick={() => setUnitsOpen((v) => !v)}
-          aria-expanded={unitsOpen}
-          aria-controls={`units-panel-${property.id}`}
-          className={`group w-full flex items-center justify-between gap-3 px-4 py-3.5 text-left rounded-xl cursor-pointer
-            bg-gradient-to-r from-[#F5F3FF] to-white
-            border-2 ${unitsOpen ? "border-[#7C3AED]" : "border-[#C4B5FD]"}
-            shadow-sm hover:shadow-md hover:border-[#7C3AED] hover:from-[#EDE9FE] hover:to-[#F5F3FF]
-            active:shadow-sm active:translate-y-px
-            transition-[box-shadow,border-color,background-color,transform] motion-reduce:transition-none
-            focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]/40 focus-visible:ring-offset-2`}
-        >
-          <span className="flex items-center gap-3 min-w-0">
-            <span
-              aria-hidden
-              className="flex items-center justify-center w-9 h-9 rounded-lg bg-[#7C3AED] text-white shadow-sm group-hover:scale-[1.04] transition-transform motion-reduce:transition-none"
-            >
-              {/* door / unit icon */}
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M4 21V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v17" />
-                <path d="M4 21h16" />
-                <path d="M19 21V9l-3-2" />
-                <circle cx="13" cy="13" r="0.8" fill="currentColor" />
-              </svg>
-            </span>
-            <span className="flex flex-col min-w-0">
-              <span className="text-[15px] font-semibold text-slate-900 leading-tight">
-                {unitsOpen ? "Choose a unit to open" : "Open a unit"}
-              </span>
-              <span className="text-[12px] text-slate-600 truncate">
-                {property.units.length} units · {counts.let} let · {counts.vacant} vacant
-                {!testerMode && counts.alerts > 0 && <> · <span className="text-amber-700 font-medium">{counts.alerts} need attention</span></>}
-              </span>
-            </span>
-          </span>
-          <span className="flex items-center gap-2 shrink-0">
-            <span className="hidden sm:inline text-[11px] uppercase tracking-wide text-[#7C3AED] font-semibold">
-              {unitsOpen ? "Close" : "Tap to choose"}
-            </span>
-            <span
-              aria-hidden
-              className={`flex items-center justify-center w-6 h-6 rounded-full bg-white border border-[#C4B5FD] text-[#7C3AED] transition-transform motion-reduce:transition-none ${unitsOpen ? "rotate-180" : ""}`}
-              style={{ transitionDuration: "220ms" }}
-            >
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M6 9l6 6 6-6" />
-              </svg>
-            </span>
-          </span>
-        </button>
-
         <div
           id={`units-panel-${property.id}`}
           hidden={!unitsOpen}
           className="mt-2 px-3 pb-3 pt-3 space-y-3 bg-white border border-slate-200 rounded-xl shadow-sm"
         >
+          <div className="flex items-center justify-between">
+            <span className="text-[12px] font-semibold text-slate-700 uppercase tracking-wide">Units</span>
+            <button
+              type="button"
+              onClick={() => setUnitsOpen(false)}
+              className="text-[11px] font-medium text-[#7C3AED] hover:text-[#5B21B6] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]/40 rounded px-2 py-1"
+              aria-label="Close unit picker"
+            >
+              Close
+            </button>
+          </div>
           {!testerMode && (
             <div className="text-[10.5px] text-slate-500 flex items-center gap-3 flex-wrap">
               <span className="inline-flex items-center gap-1">
