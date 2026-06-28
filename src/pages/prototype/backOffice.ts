@@ -49,7 +49,7 @@ export const BACK_OFFICE_HELPERS: BackOfficeHelper[] = [
     triggers: ["property", "properties", "unit", "units", "portfolio structure", "add property", "add unit", "architect"],
     narration: "The Architect is just unrolling his plans — that room is being prepared.",
     themeAccent: "text-violet-700 border-violet-200",
-    status: "coming-soon",
+    status: "started",
   },
   {
     id: "professor",
@@ -62,7 +62,7 @@ export const BACK_OFFICE_HELPERS: BackOfficeHelper[] = [
     triggers: ["document", "documents", "lease", "library", "upload", "read", "certificate", "notice", "correspondence", "knowledge", "professor"],
     narration: "Of course — let me take you to the Professor's library.",
     themeAccent: "text-amber-700 border-amber-200",
-    status: "ready",
+    status: "started",
   },
   {
     id: "inspector",
@@ -75,7 +75,7 @@ export const BACK_OFFICE_HELPERS: BackOfficeHelper[] = [
     triggers: ["compliance", "comply", "compliant", "regulation", "legal", "inspector", "safety", "fire", "gas safety", "eicr", "re-check", "audit-trail"],
     narration: "Right away — let me bring up your compliance register.",
     themeAccent: "text-rose-700 border-rose-200",
-    status: "ready",
+    status: "joining-soon",
   },
   {
     id: "broker",
@@ -88,7 +88,7 @@ export const BACK_OFFICE_HELPERS: BackOfficeHelper[] = [
     triggers: ["contact", "contacts", "tenant", "tenants", "subcontractor", "supplier", "plumber", "electrician", "occupant", "staff", "black book", "relationship", "who do we use", "phone number", "broker"],
     narration: "Let me bring up your black book.",
     themeAccent: "text-slate-800 border-slate-300",
-    status: "ready",
+    status: "joining-soon",
   },
   {
     id: "magician",
@@ -101,7 +101,7 @@ export const BACK_OFFICE_HELPERS: BackOfficeHelper[] = [
     triggers: ["workflow", "workflows", "automation", "automate", "routine", "schedule", "trigger", "build me", "rent review", "magician"],
     narration: "Let me take you to the Magician's workshop.",
     themeAccent: "text-violet-700 border-violet-200",
-    status: "ready",
+    status: "joining-soon",
   },
   {
     id: "keeper",
@@ -114,7 +114,7 @@ export const BACK_OFFICE_HELPERS: BackOfficeHelper[] = [
     triggers: ["user", "users", "role", "permission", "access", "security", "keeper", "audit log", "sign in"],
     narration: "The Keeper hasn't moved in yet — that room is being prepared.",
     themeAccent: "text-emerald-700 border-emerald-200",
-    status: "coming-soon",
+    status: "joining-soon",
   },
   {
     id: "researcher",
@@ -127,7 +127,7 @@ export const BACK_OFFICE_HELPERS: BackOfficeHelper[] = [
     triggers: ["research", "researcher", "comparable", "comparables", "legislation", "guidance", "industry update"],
     narration: "The Researcher is out gathering sources — that room is being prepared.",
     themeAccent: "text-sky-700 border-sky-200",
-    status: "coming-soon",
+    status: "joining-soon",
   },
   {
     id: "bookkeeper",
@@ -140,7 +140,7 @@ export const BACK_OFFICE_HELPERS: BackOfficeHelper[] = [
     triggers: ["bookkeeper", "calculation", "calculations", "statement", "statements", "reconciliation", "ledger", "accounts"],
     narration: "The Bookkeeper is balancing the books — that room is being prepared.",
     themeAccent: "text-purple-700 border-purple-200",
-    status: "coming-soon",
+    status: "joining-soon",
   },
   {
     id: "communicator",
@@ -153,7 +153,7 @@ export const BACK_OFFICE_HELPERS: BackOfficeHelper[] = [
     triggers: ["integration", "integrations", "api", "connect", "system", "systems", "communicator"],
     narration: "The Communicator is wiring things up — that room is being prepared.",
     themeAccent: "text-indigo-700 border-indigo-200",
-    status: "coming-soon",
+    status: "joining-soon",
   },
 ];
 
