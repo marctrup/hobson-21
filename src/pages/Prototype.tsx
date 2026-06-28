@@ -4314,18 +4314,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                     onAdd={() => { /* read-only in display overlay */ }}
                   />
                 )}
-                renderWorkflows={() => (
-                  <MagicianWorkArea
-                    character={ADMIN_CHARACTERS.find((x) => x.id === "magician")!}
-                    workflows={workflows}
-                    onCreate={() => { /* read-only in display overlay */ }}
-                    onAdjust={() => { /* read-only in display overlay */ }}
-                    onView={(id) => setViewingWorkflowId(id)}
-                    onResume={() => { /* read-only in display overlay */ }}
-                    onDiscard={() => { /* read-only in display overlay */ }}
-                    onSimulate={() => { /* read-only in display overlay */ }}
-                  />
-                )}
+                renderWorkflows={() => (<WorkflowsBackOfficeSection />)}
                 counts={{
                   documents: profDocs.length,
                   documentsPending: profDocs.filter((d) => d.status === "pending").length,
