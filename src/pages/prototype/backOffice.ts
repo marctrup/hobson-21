@@ -20,6 +20,8 @@ export type BackOfficeHelper = {
   src: string;
   domain: string;       // e.g. "Documents & Knowledge"
   tagline: string;      // hallway one-liner
+  roleTitle: string;    // job title under the portrait (e.g. "Knowledge & Memory")
+  contributionLine: string; // "so I can…" line tying them back to Hobson
   triggers: string[];   // lowercase phrases that route Hobson here
   narration: string;    // Hobson's line when entering this room
   themeAccent: string;  // tailwind text/border accent
@@ -33,6 +35,8 @@ export const BACK_OFFICE_HELPERS: BackOfficeHelper[] = [
     src: characterProfessor,
     domain: "Documents & Knowledge",
     tagline: "Reads and remembers every document.",
+    roleTitle: "Knowledge & Memory",
+    contributionLine: "Reads and remembers every document, so I can answer you in seconds.",
     triggers: ["document", "documents", "lease", "library", "upload", "read", "certificate", "notice", "correspondence", "knowledge", "professor"],
     narration: "Of course — let me take you to the Professor's library.",
     themeAccent: "text-amber-700 border-amber-200",
@@ -44,6 +48,8 @@ export const BACK_OFFICE_HELPERS: BackOfficeHelper[] = [
     src: INSPECTOR_CHARACTER.src,
     domain: "Compliance",
     tagline: "Watches what the law and your business require.",
+    roleTitle: "Compliance & Protection",
+    contributionLine: "Watches what the law and your business require, so I can keep you protected.",
     triggers: ["compliance", "comply", "compliant", "regulation", "legal", "inspector", "safety", "fire", "gas safety", "eicr", "re-check", "audit-trail"],
     narration: "Right away — let me bring up your compliance register.",
     themeAccent: "text-rose-700 border-rose-200",
@@ -55,6 +61,8 @@ export const BACK_OFFICE_HELPERS: BackOfficeHelper[] = [
     src: characterBroker,
     domain: "Contacts & Relationships",
     tagline: "Keeps your black book of people.",
+    roleTitle: "Relationships & Contacts",
+    contributionLine: "Keeps your black book of people, so I always know who to call.",
     triggers: ["contact", "contacts", "tenant", "tenants", "subcontractor", "supplier", "plumber", "electrician", "occupant", "staff", "black book", "relationship", "who do we use", "phone number", "broker"],
     narration: "Let me bring up your black book.",
     themeAccent: "text-slate-800 border-slate-300",
@@ -66,6 +74,8 @@ export const BACK_OFFICE_HELPERS: BackOfficeHelper[] = [
     src: characterMagician,
     domain: "Automations & Workflows",
     tagline: "Builds the routines that watch your portfolio.",
+    roleTitle: "Workflows & Automation",
+    contributionLine: "Builds the routines that watch your portfolio, so I can act before you ask.",
     triggers: ["workflow", "workflows", "automation", "automate", "routine", "schedule", "trigger", "build me", "rent review", "magician"],
     narration: "Let me take you to the Magician's workshop.",
     themeAccent: "text-violet-700 border-violet-200",
@@ -77,6 +87,8 @@ export const BACK_OFFICE_HELPERS: BackOfficeHelper[] = [
     src: characterKeeper,
     domain: "Security & Access",
     tagline: "Looks after users, roles and access.",
+    roleTitle: "Access & Security",
+    contributionLine: "Looks after who can see and do what, so I can keep everything safe.",
     triggers: ["user", "users", "role", "permission", "access", "security", "keeper", "audit log", "sign in"],
     narration: "The Keeper hasn't moved in yet — that room is being prepared.",
     themeAccent: "text-emerald-700 border-emerald-200",
