@@ -4,6 +4,8 @@ import characterMagician from "@/assets/prototype/character-magician.png";
 import characterProfessor from "@/assets/prototype/character-professor.png";
 import characterBroker from "@/assets/prototype/character-broker.png";
 import characterKeeper from "@/assets/prototype/character-keeper.png";
+import characterArchitectAsset from "@/assets/prototype/character-architect.png.asset.json";
+const characterArchitect = characterArchitectAsset.url;
 import { INSPECTOR_CHARACTER } from "./Inspector";
 
 export type BackOfficeHelperId =
