@@ -3823,7 +3823,9 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                     : <LockedComposer view={view} />)
                 : adminCharacter === "inspector"
                   ? <InspectorComposer buildActive={inspectorBuild !== null} />
-                  : <LockedComposer view={view} />
+                  : !adminCharacter
+                    ? <BackOfficeComposer onSubmit={boAskHobson} />
+                    : <LockedComposer view={view} />
 
 
           ) : testerMode && view === "unit" ? (
