@@ -2633,7 +2633,7 @@ export function InspectorWorkArea({
           {rules.length === 0 ? (
             <div className="rounded-xl border border-dashed border-slate-300 bg-slate-50 p-10 text-center">
               <div className="text-[13px] font-semibold text-slate-700 mb-1">No compliance areas yet</div>
-              <div className="text-[12px] text-slate-500">Pick an area on the left and I'll propose what the law requires.</div>
+              <div className="text-[12px] text-slate-500">Ask Hobson to set up your compliance and he'll have the Researcher find what the law requires, then the Inspector will build your rulebook.</div>
             </div>
           ) : (
             <div className="space-y-3">
