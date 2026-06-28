@@ -3186,20 +3186,8 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
   const crumbs: { label: string; onClick?: () => void; title?: string }[] = useMemo(() => {
     if (view === "onboarding") return [{ label: "Meet Hobson" }];
 
-    // Back Office trail
-    if (adminMode) {
-      const arr: { label: string; onClick?: () => void }[] = [
-        { label: "Back office", onClick: (adminCharacter || comingSoonHelperId) ? boReturnToHallway : undefined },
-      ];
-      if (adminCharacter) {
-        const c = ADMIN_CHARACTERS.find((x) => x.id === adminCharacter);
-        if (c) arr.push({ label: c.workTitle });
-      } else if (comingSoonHelperId) {
-        const h = BACK_OFFICE_HELPERS.find((x) => x.id === comingSoonHelperId);
-        if (h) arr.push({ label: `${h.name}'s room` });
-      }
-      return arr;
-    }
+    // No breadcrumbs in the Back Office — chat is the only navigation.
+    if (adminMode) return [];
 
     // Build the asset-context trail (Portfolio › [Property] › [Unit])
     const base: { label: string; onClick?: () => void; title?: string }[] = [
@@ -3391,7 +3379,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
               />
             </div>
           </div>
-        ) : (
+        ) : !adminMode ? (
           <nav
             aria-label="Breadcrumb"
             className="px-5 py-2.5 border-b border-slate-200 bg-white sticky top-0 z-10"
@@ -3425,7 +3413,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
               })}
             </ol>
           </nav>
-        )}
+        ) : null}
 
 
         {/* Body */}
