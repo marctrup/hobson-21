@@ -4271,7 +4271,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
               complianceToConfirm: 2,
               contacts: contacts.length,
               workflows: workflows.length,
-              workflowsActive: workflows.filter((w) => w.status === "active").length,
+              workflowsActive: workflows.filter((w) => w.status === "built").length,
               workflowsDraft: workflows.filter((w) => w.status === "draft").length,
               units: PROPERTIES.reduce((n, p) => n + p.units.length, 0),
               properties: PROPERTIES.filter((p) => !p.standalone).length,
