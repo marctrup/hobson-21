@@ -3217,7 +3217,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
     if (base.length > 0) base[base.length - 1] = { ...base[base.length - 1], onClick: undefined };
     return base;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [view, selectedProperty, selectedUnit, showDocuments, showWhatIveDone, adminMode, adminCharacter]);
+  }, [view, selectedProperty, selectedUnit, showDocuments, showWhatIveDone, adminMode, adminCharacter, comingSoonHelperId]);
 
 
   /* ============ Render ============ */
