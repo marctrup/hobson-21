@@ -3562,16 +3562,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
 
 
 
-          {/* Unit-level summary buttons (Occupational / Compliance) */}
-          {view === "unit" && selectedUnit && selectedPropertyId && (
-            <SummaryActions
-              scope={{ level: "unit", propertyId: selectedPropertyId, unitId: selectedUnit.id }}
-              onRequest={requestSummary}
-              enabledKinds={summaryVisibility}
-            />
-          )}
-
-          {/* Pinned alert briefing at the top of unit chat */}
+          {/* Unit-level briefing — pinned alert + on-this-unit action cards */}
           {!testerMode && view === "unit" && selectedUnit && selectedPropertyId && (
             <>
               <PinnedAlertCard
@@ -3591,7 +3582,6 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                   unitId: selectedUnit.id,
                 }).filter((c) => c.anchorLevel === "unit" && (c.approvalState === "pending" || c.approvalState === "in_progress"));
                 if (unitOwnCardsRaw.length === 0) return null;
-                // Carried card surfaces first
                 const unitOwnCards = carriedCardId
                   ? [...unitOwnCardsRaw].sort((a, b) => (a.id === carriedCardId ? -1 : b.id === carriedCardId ? 1 : 0))
                   : unitOwnCardsRaw;
@@ -3639,7 +3629,79 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
             </>
           )}
 
-          {/* Hobson messages render first so the greeting sits at the top */}
+          {/* Portfolio view (single state) — intelligent action briefing */}
+          {!testerMode && view === "portfolio" && !typing && messages.length > 0 && (
+            <PortfolioBriefing
+              cards={actionCards}
+              choice={briefingChoice}
+              setChoice={setBriefingChoice}
+              expandedCardId={expandedCardId}
+              setExpandedCardId={setExpandedCardId}
+              onHoverCard={setHoveredCardPropertyId}
+              onOpenUnit={(propId, unitId, cardId) => goUnit(unitId, propId, cardId)}
+              onOpenProperty={(propId, cardId) => goProperty(propId, cardId)}
+              onApprove={(id) => {
+                const c = actionCards.find((x) => x.id === id);
+                setActionCards((arr) => arr.map((x) => x.id === id ? { ...x, approvalState: "approved" } : x));
+                setExpandedCardId(null);
+                if (c) {
+                  setActionToast(`Done — ${c.title} recorded.`);
+                  window.setTimeout(() => setActionToast(null), 3000);
+                }
+              }}
+              onDefer={(id) => {
+                setActionCards((arr) => arr.map((x) => x.id === id ? { ...x, approvalState: "deferred" } : x));
+                setExpandedCardId(null);
+              }}
+              onDismiss={(id) => {
+                setActionCards((arr) => arr.map((x) => x.id === id ? { ...x, approvalState: "dismissed" } : x));
+                setExpandedCardId(null);
+              }}
+              onPerform={performCard}
+              onReview={reviewCard}
+              onManualComplete={manualHandleCard}
+              onOpenWorkflow={openWorkflowFromCard}
+            />
+          )}
+
+          {/* Property view */}
+          {view === "property" && selectedProperty && (
+            <PropertyContent
+              property={selectedProperty}
+              testerMode={testerMode}
+              propertyActionCards={testerMode ? [] : selectActionsForScope(actionCards, { level: "property", propertyId: selectedProperty.id })}
+              expandedCardId={expandedCardId}
+              setExpandedCardId={setExpandedCardId}
+              carriedCardId={carriedCardId}
+              openUnitsSignal={openUnitsSignal}
+              onOpenUnit={(uid, cardId) => goUnit(uid, selectedProperty.id, cardId)}
+              onPreviewQuestion={askPropertyPreview}
+              onApprove={(id) => {
+                const c = actionCards.find((x) => x.id === id);
+                setActionCards((arr) => arr.map((x) => x.id === id ? { ...x, approvalState: "approved" } : x));
+                setExpandedCardId(null);
+                if (c) {
+                  setActionToast(`Done — ${c.title} recorded.`);
+                  window.setTimeout(() => setActionToast(null), 3000);
+                }
+              }}
+              onDefer={(id) => {
+                setActionCards((arr) => arr.map((x) => x.id === id ? { ...x, approvalState: "deferred" } : x));
+                setExpandedCardId(null);
+              }}
+              onDismiss={(id) => {
+                setActionCards((arr) => arr.map((x) => x.id === id ? { ...x, approvalState: "dismissed" } : x));
+                setExpandedCardId(null);
+              }}
+              onPerform={performCard}
+              onReview={reviewCard}
+              onManualComplete={manualHandleCard}
+              onOpenWorkflow={openWorkflowFromCard}
+            />
+          )}
+
+          {/* Messages render LAST so new content (summaries, answers, results of pinned-bar actions)
+              always appears at the bottom of the chat where the user is looking. */}
           {(messageGroups.length > 0 || typing) && (
             <div
               className="flex flex-col"
@@ -3723,100 +3785,6 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                 </div>
               )}
             </div>
-          )}
-
-
-          {/* (Global search/recents panel is intentionally NOT shown at property level — that belongs to Portfolio returning mode only.) */}
-
-
-
-
-          {/* Portfolio-level summary buttons */}
-          {view === "portfolio" && !typing && messages.length > 0 && (
-            <SummaryActions scope={{ level: "portfolio" }} onRequest={requestSummary} enabledKinds={summaryVisibility} />
-          )}
-
-          {/* Portfolio view (single state) — intelligent action briefing */}
-          {!testerMode && view === "portfolio" && !typing && messages.length > 0 && (
-            <PortfolioBriefing
-              cards={actionCards}
-              choice={briefingChoice}
-              setChoice={setBriefingChoice}
-              expandedCardId={expandedCardId}
-              setExpandedCardId={setExpandedCardId}
-              onHoverCard={setHoveredCardPropertyId}
-              onOpenUnit={(propId, unitId, cardId) => goUnit(unitId, propId, cardId)}
-              onOpenProperty={(propId, cardId) => goProperty(propId, cardId)}
-              onApprove={(id) => {
-                const c = actionCards.find((x) => x.id === id);
-                setActionCards((arr) => arr.map((x) => x.id === id ? { ...x, approvalState: "approved" } : x));
-                setExpandedCardId(null);
-                if (c) {
-                  setActionToast(`Done — ${c.title} recorded.`);
-                  window.setTimeout(() => setActionToast(null), 3000);
-                }
-              }}
-              onDefer={(id) => {
-                setActionCards((arr) => arr.map((x) => x.id === id ? { ...x, approvalState: "deferred" } : x));
-                setExpandedCardId(null);
-              }}
-              onDismiss={(id) => {
-                setActionCards((arr) => arr.map((x) => x.id === id ? { ...x, approvalState: "dismissed" } : x));
-                setExpandedCardId(null);
-              }}
-              onPerform={performCard}
-              onReview={reviewCard}
-              onManualComplete={manualHandleCard}
-              onOpenWorkflow={openWorkflowFromCard}
-            />
-          )}
-
-
-
-
-
-          {/* Property-level summary buttons */}
-          {view === "property" && selectedProperty && (
-            <SummaryActions
-              scope={{ level: "property", propertyId: selectedProperty.id }}
-              onRequest={requestSummary}
-              enabledKinds={summaryVisibility}
-            />
-          )}
-
-          {/* Property view */}
-          {view === "property" && selectedProperty && (
-            <PropertyContent
-              property={selectedProperty}
-              testerMode={testerMode}
-              propertyActionCards={testerMode ? [] : selectActionsForScope(actionCards, { level: "property", propertyId: selectedProperty.id })}
-              expandedCardId={expandedCardId}
-              setExpandedCardId={setExpandedCardId}
-              carriedCardId={carriedCardId}
-              onOpenUnit={(uid, cardId) => goUnit(uid, selectedProperty.id, cardId)}
-              onPreviewQuestion={askPropertyPreview}
-              onApprove={(id) => {
-                const c = actionCards.find((x) => x.id === id);
-                setActionCards((arr) => arr.map((x) => x.id === id ? { ...x, approvalState: "approved" } : x));
-                setExpandedCardId(null);
-                if (c) {
-                  setActionToast(`Done — ${c.title} recorded.`);
-                  window.setTimeout(() => setActionToast(null), 3000);
-                }
-              }}
-              onDefer={(id) => {
-                setActionCards((arr) => arr.map((x) => x.id === id ? { ...x, approvalState: "deferred" } : x));
-                setExpandedCardId(null);
-              }}
-              onDismiss={(id) => {
-                setActionCards((arr) => arr.map((x) => x.id === id ? { ...x, approvalState: "dismissed" } : x));
-                setExpandedCardId(null);
-              }}
-              onPerform={performCard}
-              onReview={reviewCard}
-              onManualComplete={manualHandleCard}
-              onOpenWorkflow={openWorkflowFromCard}
-            />
           )}
 
           {/* Unit view starter chips removed — chat is locked in the prototype */}
