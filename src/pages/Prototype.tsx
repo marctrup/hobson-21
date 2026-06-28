@@ -4045,6 +4045,18 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
 
           );
         })()}
+        {adminMode && adminCharacter && (
+          <button
+            type="button"
+            onClick={boReturnToHallway}
+            aria-label="Back to the back office hallway"
+            title="Back to the back office"
+            className="absolute top-3 right-3 z-[450] inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-md bg-white/95 backdrop-blur border border-slate-200 text-[12px] font-medium text-slate-700 shadow-sm hover:bg-white hover:text-[#7C3AED] hover:border-[#7C3AED]/40 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/50"
+          >
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M15 18l-6-6 6-6"/></svg>
+            <span>Back office</span>
+          </button>
+        )}
         {adminMode && adminCharacter && (() => {
           const c = ADMIN_CHARACTERS.find((x) => x.id === adminCharacter)!;
           if (c.id === "professor") {
