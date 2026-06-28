@@ -7851,13 +7851,14 @@ function BackOfficeWorkbench({
           {notesOpen && (
             <div className="px-4 pb-4 pt-2 border-t border-slate-100">
               <dl className="grid grid-cols-[max-content_1fr] gap-x-6 gap-y-2 text-[13px]">
-                {agentNotes.map((n) => (
+                {agentNotes.map((n, idx) => (
                   <React.Fragment key={n.id}>
-                    <dt className="flex items-center gap-2 text-slate-700">
+                    {idx === 1 && <div role="separator" className="col-span-2 border-t border-slate-200 my-1" />}
+                    <dt className={`flex items-center gap-2 ${n.isHobson ? "text-[#5B21B6]" : "text-slate-700"}`}>
                       {n.src && <img src={n.src} alt="" aria-hidden className="w-5 h-5 object-contain" />}
                       <span className="font-medium">{n.name}</span>
                     </dt>
-                    <dd className="text-slate-600">{n.text}</dd>
+                    <dd className={n.isHobson ? "text-[#5B21B6]" : "text-slate-600"}>{n.text}</dd>
                   </React.Fragment>
                 ))}
               </dl>
@@ -7890,10 +7891,17 @@ function BackOfficeWorkbench({
                     <div className="text-[12px] text-slate-500 flex items-center gap-2 flex-wrap">
                       <span>{s.summary}</span>
                       <span aria-hidden>·</span>
-                      <span className="inline-flex items-center gap-1.5">
-                        {s.agentSrc && <img src={s.agentSrc} alt="" aria-hidden className="w-3.5 h-3.5 object-contain" />}
-                        <span>{s.agentName}</span>
-                      </span>
+                      {s.id === "workflows" ? (
+                        <span className="inline-flex items-center gap-1.5 text-[#5B21B6] font-medium">
+                          <img src={owlDefault} alt="" aria-hidden className="w-3.5 h-3.5 object-contain" />
+                          <span>Built by Hobson</span>
+                        </span>
+                      ) : (
+                        <span className="inline-flex items-center gap-1.5">
+                          {s.agentSrc && <img src={s.agentSrc} alt="" aria-hidden className="w-3.5 h-3.5 object-contain" />}
+                          <span>{s.agentName}</span>
+                        </span>
+                      )}
                     </div>
                   </div>
                   <svg className={`w-4 h-4 text-slate-400 transition-transform ${open ? "rotate-180" : ""}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden><path d="M6 9l6 6 6-6"/></svg>
