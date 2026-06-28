@@ -5997,50 +5997,6 @@ function ProfessorWorkArea({ character, docs }: { character: { id: AdminCharacte
         </div>
       </header>
 
-      {(() => {
-        const total = docs.length;
-        const pending = docs.filter((d) => d.status === "pending").length;
-        const extracted = docs.filter((d) => d.status === "extracted").length;
-        const chains = new Set(docs.filter((d) => d.chainedTo).map((d) => d.chainedTo)).size;
-        const recent = [...docs].sort((a, b) => (b.uploadedAt || "").localeCompare(a.uploadedAt || "")).slice(0, 3);
-        const mostRecent = recent[0];
-        const notes: CharacterNote[] = [];
-        if (mostRecent) {
-          notes.push({
-            id: "pn-recent",
-            kind: "recent",
-            text: `I have read ${recent.length} new document${recent.length === 1 ? "" : "s"} this week — most recently the ${mostRecent.type ?? "document"} for ${mostRecent.relatedUnit ?? "the portfolio"}, catalogued ${mostRecent.uploadedAt}.`,
-          });
-        }
-        notes.push({
-          id: "pn-totals",
-          kind: "totals",
-          text: `${extracted} of ${total} documents read and indexed · ${chains} chained record${chains === 1 ? "" : "s"} · every item retained, nothing discarded.`,
-        });
-        if (pending > 0) {
-          notes.push({
-            id: "pn-issue",
-            kind: "issue",
-            text: `${pending} document${pending === 1 ? " awaits" : "s await"} classification — please confirm ${pending === 1 ? "its" : "their"} type so I can index ${pending === 1 ? "it" : "them"} in full.`,
-          });
-        } else {
-          notes.push({
-            id: "pn-classify",
-            kind: "coverage",
-            text: "No documents await classification — every item has a confirmed type.",
-          });
-        }
-        return (
-          <CharacterNotesStrip
-            character={character}
-            title="The Professor's notes"
-            subtitle="recent reading & catalogue state"
-            tagline="observations from the catalogue"
-            notes={notes}
-          />
-
-        );
-      })()}
 
 
 
