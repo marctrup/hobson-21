@@ -5,7 +5,13 @@ import characterProfessor from "@/assets/prototype/character-professor.png";
 import characterBroker from "@/assets/prototype/character-broker.png";
 import characterKeeper from "@/assets/prototype/character-keeper.png";
 import characterArchitectAsset from "@/assets/prototype/character-architect.png.asset.json";
+import characterResearcherAsset from "@/assets/prototype/character-researcher.png.asset.json";
+import characterBookkeeperAsset from "@/assets/prototype/character-bookkeeper.png.asset.json";
+import characterCommunicatorAsset from "@/assets/prototype/character-communicator.png.asset.json";
 const characterArchitect = characterArchitectAsset.url;
+const characterResearcher = characterResearcherAsset.url;
+const characterBookkeeper = characterBookkeeperAsset.url;
+const characterCommunicator = characterCommunicatorAsset.url;
 import { INSPECTOR_CHARACTER } from "./Inspector";
 
 export type BackOfficeHelperId =
