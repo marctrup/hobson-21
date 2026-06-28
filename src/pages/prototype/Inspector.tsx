@@ -2597,7 +2597,7 @@ export function InspectorWorkArea({
             <div className="text-[13px] font-semibold text-slate-900">{INSPECTOR_CHARACTER.workTitle}</div>
             <div className="text-[11px] text-slate-500">
               {rules.length === 0
-                ? "No rules yet — set them up on the left."
+                ? "No rules yet — ask Hobson to set up your compliance and the Researcher will find what the law requires."
                 : `${presentAreas.length} area${presentAreas.length === 1 ? "" : "s"} · ${required} legally required · ${business} business · ${applicable} where applicable`}
             </div>
           </div>
