@@ -3,14 +3,8 @@
 import characterProfessor from "@/assets/prototype/character-professor.png";
 import characterArchitectAsset from "@/assets/prototype/character-architect.png.asset.json";
 const characterArchitect = characterArchitectAsset.url;
-import { INSPECTOR_CHARACTER } from "./Inspector";
-
 export type BackOfficeHelperId =
   | "professor"
-  | "inspector"
-  | "broker"
-  | "magician"
-  | "keeper"
   | "architect"
   | string; // extensible: any future helper id
 
