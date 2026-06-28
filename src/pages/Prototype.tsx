@@ -1112,6 +1112,15 @@ const RENT_Q_PATTERNS = [
   /^\s*current\s+rent\s+flat\s*2\s*\??\s*$/i,
 ];
 const isRentFlat2Question = (q: string) => RENT_Q_PATTERNS.some((re) => re.test(q));
+// "Show me everything my team has recorded" — opens the unified back-office workbench on the right stage.
+const SHOW_EVERYTHING_PATTERNS: RegExp[] = [
+  /show\s+me\s+(everything|what(?:'s|\s+is| has)?\s+been\s+recorded|what\s+you\s+hold|what\s+(my\s+)?team\s+(holds|has))/i,
+  /open\s+the\s+(back[\s-]?office|workbench)/i,
+  /show\s+me\s+the\s+(back[\s-]?office|workbench)/i,
+  /what(?:'s|\s+is)\s+been\s+recorded(?:\s+to\s+date)?/i,
+  /what\s+(have|has)\s+(you|the\s+team)\s+recorded/i,
+];
+const isShowEverythingIntent = (q: string) => SHOW_EVERYTHING_PATTERNS.some((re) => re.test(q.trim()));
 const rentPrefillFor = (view: string, propertyId: string | null, unitId: string | null): string => {
   if (view === "unit" && unitId === "nugent-f2") return "What is the rent?";
   if (view === "property" && propertyId === "nugent") return "rent flat 2?";
