@@ -2162,9 +2162,9 @@ function ScheduleHeader({
           <img src={INSPECTOR_CHARACTER.src} alt="" aria-hidden className="w-[120%] h-[120%] object-contain" />
         </div>
         <div className="min-w-0 flex-1">
-          <div className="text-[13px] font-semibold text-slate-900">The Inspector re-checks the law &amp; documents</div>
+          <div className="text-[13px] font-semibold text-slate-900">Hobson sends the Researcher · the Inspector updates your rulebook</div>
           <div className="text-[11px] text-slate-500 mt-0.5">
-            A standing check across every requirement. I'll propose any changes — I never apply them on my own.
+            A standing check across every requirement. The Researcher watches the law and guidance; the Inspector updates your rulebook from what's found. I always propose changes — I never apply them on my own.
           </div>
           <div className="mt-2 flex items-center gap-3 flex-wrap">
             <label className="text-[11px] text-slate-600 flex items-center gap-2">
@@ -2597,7 +2597,7 @@ export function InspectorWorkArea({
             <div className="text-[13px] font-semibold text-slate-900">{INSPECTOR_CHARACTER.workTitle}</div>
             <div className="text-[11px] text-slate-500">
               {rules.length === 0
-                ? "No rules yet — set them up on the left."
+                ? "No rules yet — ask Hobson to set up your compliance and the Researcher will find what the law requires."
                 : `${presentAreas.length} area${presentAreas.length === 1 ? "" : "s"} · ${required} legally required · ${business} business · ${applicable} where applicable`}
             </div>
           </div>
@@ -2622,14 +2622,10 @@ export function InspectorWorkArea({
             />
           )}
 
-          {/* (c) Notes strip */}
-          <InspectorNotesStrip
-            lastChecked={boardLastChecked}
-            nextDue={addMonths(boardLastChecked, FREQUENCY_OPTIONS.find((f) => f.value === frequency)?.months ?? 3)}
-            rulesCount={hsRules.length}
-            pending={pending}
-            gapsCoverage={{ commercial: true }}
-          />
+          {/* Inspector's status line is surfaced in the consolidated Agents' notes
+              on the workbench — the separate notes strip has been removed to
+              avoid duplication. The detailed recalibration feed stays here
+              inside the Compliance section (above). */}
 
 
 
@@ -2637,7 +2633,7 @@ export function InspectorWorkArea({
           {rules.length === 0 ? (
             <div className="rounded-xl border border-dashed border-slate-300 bg-slate-50 p-10 text-center">
               <div className="text-[13px] font-semibold text-slate-700 mb-1">No compliance areas yet</div>
-              <div className="text-[12px] text-slate-500">Pick an area on the left and I'll propose what the law requires.</div>
+              <div className="text-[12px] text-slate-500">Ask Hobson to set up your compliance and he'll have the Researcher find what the law requires, then the Inspector will build your rulebook.</div>
             </div>
           ) : (
             <div className="space-y-3">
