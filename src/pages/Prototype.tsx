@@ -19,7 +19,7 @@ import {
   INSPECTOR_CHARACTER,
   InspectorChat,
   InspectorComposer,
-  
+  InspectorWorkArea,
   DEFAULT_HS_REQUIREMENTS,
   DEFAULT_FINANCIAL_REQUIREMENTS,
   AREA_DEFS,
@@ -4286,6 +4286,14 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                     docs={profDocs}
                   />
                 )}
+                renderCompliance={() => (
+                  <InspectorWorkArea
+                    rules={inspectorConfirmed}
+                    onUpdateRules={setInspectorConfirmed}
+                    buildActive={false}
+                    onShowMe={() => { /* show-me requires admin chat; no-op in display overlay */ }}
+                  />
+                )}
                 renderPeople={() => (
                   <BrokerWorkArea
                     character={ADMIN_CHARACTERS.find((x) => x.id === "broker")!}
@@ -4345,6 +4353,14 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
               <ProfessorWorkArea
                 character={ADMIN_CHARACTERS.find((x) => x.id === "professor")!}
                 docs={profDocs}
+              />
+            )}
+            renderCompliance={() => (
+              <InspectorWorkArea
+                rules={inspectorConfirmed}
+                onUpdateRules={setInspectorConfirmed}
+                buildActive={inspectorBuild !== null}
+                onShowMe={inspectorShowMe}
               />
             )}
             renderPeople={() => (
@@ -7842,7 +7858,7 @@ function BackOfficeWorkbench({
   jumpSectionId,
   onJumpHandled,
   renderDocuments,
-  
+  renderCompliance,
   renderPeople,
   renderWorkflows,
   counts,
@@ -7854,7 +7870,7 @@ function BackOfficeWorkbench({
   jumpSectionId: string | null;
   onJumpHandled: () => void;
   renderDocuments: () => React.ReactNode;
-  
+  renderCompliance: () => React.ReactNode;
   renderPeople: () => React.ReactNode;
   renderWorkflows: () => React.ReactNode;
   counts: WorkbenchCounts;
@@ -7960,6 +7976,15 @@ function BackOfficeWorkbench({
       agentSrc: professor?.src,
       icon: (<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M9 3h7l4 4v14H9z"/><path d="M5 7h7v14H5z"/></svg>),
       content: renderDocuments(),
+    },
+    {
+      id: "compliance",
+      name: "Compliance",
+      summary: "1 area · 5 legally required · 2 business · 3 where applicable, the brokers notes",
+      agentName: "Inspector",
+      agentSrc: inspector?.src,
+      icon: (<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M12 3l8 4v5c0 5-3.5 8.5-8 9-4.5-.5-8-4-8-9V7l8-4z"/></svg>),
+      content: renderCompliance(),
     },
     {
       id: "people",
