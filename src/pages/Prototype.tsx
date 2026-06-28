@@ -3439,7 +3439,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
               <span>Meet my team</span>
             </button>
           )}
-          {/* "Show everything" — Back Office only. Pinned, obvious button in the
+          {/* "Workbench" — Back Office only. Pinned, obvious button in the
               chat header so it stays visible as the chat scrolls. Not shown in
               the main product (it's an Admin/Back Office concept). */}
           {adminMode && view !== "onboarding" && (
@@ -3447,8 +3447,8 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
               type="button"
               onClick={() => { if (showWorkbench) { setShowWorkbench(false); } else { revealWorkbench("Show me what's been recorded"); } }}
               aria-pressed={showWorkbench}
-              aria-label={showWorkbench ? "Hide everything" : "Show everything"}
-              title={showWorkbench ? "Hide everything" : "Show everything"}
+              aria-label={showWorkbench ? "Close workbench" : "Workbench"}
+              title={showWorkbench ? "Close workbench" : "Workbench"}
               className="ml-1 inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-[12px] font-semibold text-white bg-[#7C3AED] hover:bg-[#6D28D9] focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:ring-[#7C3AED] shadow-sm transition-colors motion-reduce:transition-none"
             >
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
@@ -3456,7 +3456,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                 <path d="M3 13l9 5 9-5" />
                 <path d="M3 17l9 5 9-5" />
               </svg>
-              <span>{showWorkbench ? "Hide everything" : "Show everything"}</span>
+              <span>{showWorkbench ? "Close workbench" : "Workbench"}</span>
             </button>
           )}
 
