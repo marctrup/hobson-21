@@ -1577,6 +1577,12 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
   // (Access/permissions for hiding summaries will belong to a future security character; not the Professor's job.)
   const summaryVisibility = { occupational: true, compliance: true } as const;
 
+  // Pinned Quick bar (Quick overviews / Open a unit) — sits at the top of the chat column.
+  const [pinnedQuickOpen, setPinnedQuickOpen] = useState(false);
+  const [openUnitsSignal, setOpenUnitsSignal] = useState(0);
+
+
+
 
   // ----- Magician workshop state -----
   const [workflows, setWorkflows] = useState<Workflow[]>(SEED_WORKFLOWS);
@@ -3418,10 +3424,73 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
 
         {/* Body */}
         <div ref={chatBodyRef} className={`flex-1 overflow-y-auto px-5 pt-0 ${isExpanded ? "w-full" : ""}`} style={{ paddingBottom: 48, scrollPaddingBottom: 48 }}>
+          {/* Pinned Quick bar (Quick overviews + Open a unit). Sticks to the top of the chat
+              column while messages scroll beneath. Collapsed by default; expand on tap. */}
+          {!adminMode && view !== "onboarding" && (view === "portfolio" || (view === "property" && selectedProperty) || (view === "unit" && selectedUnit && selectedPropertyId)) && (
+            <div className="sticky top-0 z-30 -mx-5 px-5 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/80 border-b border-slate-200 motion-reduce:bg-white">
+              <div className={isExpanded ? "max-w-[820px] mx-auto" : ""}>
+                <button
+                  type="button"
+                  onClick={() => setPinnedQuickOpen((v) => !v)}
+                  aria-expanded={pinnedQuickOpen}
+                  aria-controls="pinned-quick-panel"
+                  className="w-full flex items-center justify-between gap-3 py-2 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]/40 rounded"
+                >
+                  <span className="text-[11.5px] uppercase tracking-wide text-slate-500 font-semibold truncate">
+                    Quick overviews{view === "property" ? " · Open a unit" : ""}
+                  </span>
+                  <span
+                    aria-hidden
+                    className={`flex items-center justify-center w-5 h-5 rounded-full border border-slate-300 text-slate-500 transition-transform motion-reduce:transition-none ${pinnedQuickOpen ? "rotate-180" : ""}`}
+                    style={{ transitionDuration: "180ms" }}
+                  >
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+                  </span>
+                </button>
+                {pinnedQuickOpen && (
+                  <div id="pinned-quick-panel" className="pb-3 pt-1 space-y-2">
+                    {view === "portfolio" && (
+                      <SummaryActions scope={{ level: "portfolio" }} onRequest={(k, s) => { requestSummary(k, s); setPinnedQuickOpen(false); }} enabledKinds={summaryVisibility} />
+                    )}
+                    {view === "property" && selectedProperty && (
+                      <>
+                        <SummaryActions
+                          scope={{ level: "property", propertyId: selectedProperty.id }}
+                          onRequest={(k, s) => { requestSummary(k, s); setPinnedQuickOpen(false); }}
+                          enabledKinds={summaryVisibility}
+                        />
+                        <button
+                          type="button"
+                          onClick={() => { setOpenUnitsSignal((n) => n + 1); setPinnedQuickOpen(false); }}
+                          className="w-full flex items-center justify-between gap-3 px-3 py-2 rounded-lg border border-[#C4B5FD] bg-gradient-to-r from-[#F5F3FF] to-white text-left hover:border-[#7C3AED] hover:from-[#EDE9FE] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]/40 transition motion-reduce:transition-none"
+                        >
+                          <span className="flex flex-col min-w-0">
+                            <span className="text-[13px] font-semibold text-slate-900">Open a unit</span>
+                            <span className="text-[11px] text-slate-600 truncate">
+                              {selectedProperty.units.length} units — tap to choose
+                            </span>
+                          </span>
+                          <span aria-hidden className="text-[#7C3AED] text-[11px] uppercase tracking-wide font-semibold">Open ↓</span>
+                        </button>
+                      </>
+                    )}
+                    {view === "unit" && selectedUnit && selectedPropertyId && (
+                      <SummaryActions
+                        scope={{ level: "unit", propertyId: selectedPropertyId, unitId: selectedUnit.id }}
+                        onRequest={(k, s) => { requestSummary(k, s); setPinnedQuickOpen(false); }}
+                        enabledKinds={summaryVisibility}
+                      />
+                    )}
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
           <div
             className={`${isExpanded ? "max-w-[820px] mx-auto" : ""} flex flex-col`}
             style={{ gap: CHAT_TURN_GAP_PX, paddingTop: CHAT_TOP_GAP_PX }}
           >
+
 
           {adminMode ? (
             adminCharacter === "inspector" ? (
@@ -3493,16 +3562,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
 
 
 
-          {/* Unit-level summary buttons (Occupational / Compliance) */}
-          {view === "unit" && selectedUnit && selectedPropertyId && (
-            <SummaryActions
-              scope={{ level: "unit", propertyId: selectedPropertyId, unitId: selectedUnit.id }}
-              onRequest={requestSummary}
-              enabledKinds={summaryVisibility}
-            />
-          )}
-
-          {/* Pinned alert briefing at the top of unit chat */}
+          {/* Unit-level briefing — pinned alert + on-this-unit action cards */}
           {!testerMode && view === "unit" && selectedUnit && selectedPropertyId && (
             <>
               <PinnedAlertCard
@@ -3522,7 +3582,6 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                   unitId: selectedUnit.id,
                 }).filter((c) => c.anchorLevel === "unit" && (c.approvalState === "pending" || c.approvalState === "in_progress"));
                 if (unitOwnCardsRaw.length === 0) return null;
-                // Carried card surfaces first
                 const unitOwnCards = carriedCardId
                   ? [...unitOwnCardsRaw].sort((a, b) => (a.id === carriedCardId ? -1 : b.id === carriedCardId ? 1 : 0))
                   : unitOwnCardsRaw;
@@ -3570,7 +3629,79 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
             </>
           )}
 
-          {/* Hobson messages render first so the greeting sits at the top */}
+          {/* Portfolio view (single state) — intelligent action briefing */}
+          {!testerMode && view === "portfolio" && !typing && messages.length > 0 && (
+            <PortfolioBriefing
+              cards={actionCards}
+              choice={briefingChoice}
+              setChoice={setBriefingChoice}
+              expandedCardId={expandedCardId}
+              setExpandedCardId={setExpandedCardId}
+              onHoverCard={setHoveredCardPropertyId}
+              onOpenUnit={(propId, unitId, cardId) => goUnit(unitId, propId, cardId)}
+              onOpenProperty={(propId, cardId) => goProperty(propId, cardId)}
+              onApprove={(id) => {
+                const c = actionCards.find((x) => x.id === id);
+                setActionCards((arr) => arr.map((x) => x.id === id ? { ...x, approvalState: "approved" } : x));
+                setExpandedCardId(null);
+                if (c) {
+                  setActionToast(`Done — ${c.title} recorded.`);
+                  window.setTimeout(() => setActionToast(null), 3000);
+                }
+              }}
+              onDefer={(id) => {
+                setActionCards((arr) => arr.map((x) => x.id === id ? { ...x, approvalState: "deferred" } : x));
+                setExpandedCardId(null);
+              }}
+              onDismiss={(id) => {
+                setActionCards((arr) => arr.map((x) => x.id === id ? { ...x, approvalState: "dismissed" } : x));
+                setExpandedCardId(null);
+              }}
+              onPerform={performCard}
+              onReview={reviewCard}
+              onManualComplete={manualHandleCard}
+              onOpenWorkflow={openWorkflowFromCard}
+            />
+          )}
+
+          {/* Property view */}
+          {view === "property" && selectedProperty && (
+            <PropertyContent
+              property={selectedProperty}
+              testerMode={testerMode}
+              propertyActionCards={testerMode ? [] : selectActionsForScope(actionCards, { level: "property", propertyId: selectedProperty.id })}
+              expandedCardId={expandedCardId}
+              setExpandedCardId={setExpandedCardId}
+              carriedCardId={carriedCardId}
+              openUnitsSignal={openUnitsSignal}
+              onOpenUnit={(uid, cardId) => goUnit(uid, selectedProperty.id, cardId)}
+              onPreviewQuestion={askPropertyPreview}
+              onApprove={(id) => {
+                const c = actionCards.find((x) => x.id === id);
+                setActionCards((arr) => arr.map((x) => x.id === id ? { ...x, approvalState: "approved" } : x));
+                setExpandedCardId(null);
+                if (c) {
+                  setActionToast(`Done — ${c.title} recorded.`);
+                  window.setTimeout(() => setActionToast(null), 3000);
+                }
+              }}
+              onDefer={(id) => {
+                setActionCards((arr) => arr.map((x) => x.id === id ? { ...x, approvalState: "deferred" } : x));
+                setExpandedCardId(null);
+              }}
+              onDismiss={(id) => {
+                setActionCards((arr) => arr.map((x) => x.id === id ? { ...x, approvalState: "dismissed" } : x));
+                setExpandedCardId(null);
+              }}
+              onPerform={performCard}
+              onReview={reviewCard}
+              onManualComplete={manualHandleCard}
+              onOpenWorkflow={openWorkflowFromCard}
+            />
+          )}
+
+          {/* Messages render LAST so new content (summaries, answers, results of pinned-bar actions)
+              always appears at the bottom of the chat where the user is looking. */}
           {(messageGroups.length > 0 || typing) && (
             <div
               className="flex flex-col"
@@ -3654,100 +3785,6 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                 </div>
               )}
             </div>
-          )}
-
-
-          {/* (Global search/recents panel is intentionally NOT shown at property level — that belongs to Portfolio returning mode only.) */}
-
-
-
-
-          {/* Portfolio-level summary buttons */}
-          {view === "portfolio" && !typing && messages.length > 0 && (
-            <SummaryActions scope={{ level: "portfolio" }} onRequest={requestSummary} enabledKinds={summaryVisibility} />
-          )}
-
-          {/* Portfolio view (single state) — intelligent action briefing */}
-          {!testerMode && view === "portfolio" && !typing && messages.length > 0 && (
-            <PortfolioBriefing
-              cards={actionCards}
-              choice={briefingChoice}
-              setChoice={setBriefingChoice}
-              expandedCardId={expandedCardId}
-              setExpandedCardId={setExpandedCardId}
-              onHoverCard={setHoveredCardPropertyId}
-              onOpenUnit={(propId, unitId, cardId) => goUnit(unitId, propId, cardId)}
-              onOpenProperty={(propId, cardId) => goProperty(propId, cardId)}
-              onApprove={(id) => {
-                const c = actionCards.find((x) => x.id === id);
-                setActionCards((arr) => arr.map((x) => x.id === id ? { ...x, approvalState: "approved" } : x));
-                setExpandedCardId(null);
-                if (c) {
-                  setActionToast(`Done — ${c.title} recorded.`);
-                  window.setTimeout(() => setActionToast(null), 3000);
-                }
-              }}
-              onDefer={(id) => {
-                setActionCards((arr) => arr.map((x) => x.id === id ? { ...x, approvalState: "deferred" } : x));
-                setExpandedCardId(null);
-              }}
-              onDismiss={(id) => {
-                setActionCards((arr) => arr.map((x) => x.id === id ? { ...x, approvalState: "dismissed" } : x));
-                setExpandedCardId(null);
-              }}
-              onPerform={performCard}
-              onReview={reviewCard}
-              onManualComplete={manualHandleCard}
-              onOpenWorkflow={openWorkflowFromCard}
-            />
-          )}
-
-
-
-
-
-          {/* Property-level summary buttons */}
-          {view === "property" && selectedProperty && (
-            <SummaryActions
-              scope={{ level: "property", propertyId: selectedProperty.id }}
-              onRequest={requestSummary}
-              enabledKinds={summaryVisibility}
-            />
-          )}
-
-          {/* Property view */}
-          {view === "property" && selectedProperty && (
-            <PropertyContent
-              property={selectedProperty}
-              testerMode={testerMode}
-              propertyActionCards={testerMode ? [] : selectActionsForScope(actionCards, { level: "property", propertyId: selectedProperty.id })}
-              expandedCardId={expandedCardId}
-              setExpandedCardId={setExpandedCardId}
-              carriedCardId={carriedCardId}
-              onOpenUnit={(uid, cardId) => goUnit(uid, selectedProperty.id, cardId)}
-              onPreviewQuestion={askPropertyPreview}
-              onApprove={(id) => {
-                const c = actionCards.find((x) => x.id === id);
-                setActionCards((arr) => arr.map((x) => x.id === id ? { ...x, approvalState: "approved" } : x));
-                setExpandedCardId(null);
-                if (c) {
-                  setActionToast(`Done — ${c.title} recorded.`);
-                  window.setTimeout(() => setActionToast(null), 3000);
-                }
-              }}
-              onDefer={(id) => {
-                setActionCards((arr) => arr.map((x) => x.id === id ? { ...x, approvalState: "deferred" } : x));
-                setExpandedCardId(null);
-              }}
-              onDismiss={(id) => {
-                setActionCards((arr) => arr.map((x) => x.id === id ? { ...x, approvalState: "dismissed" } : x));
-                setExpandedCardId(null);
-              }}
-              onPerform={performCard}
-              onReview={reviewCard}
-              onManualComplete={manualHandleCard}
-              onOpenWorkflow={openWorkflowFromCard}
-            />
           )}
 
           {/* Unit view starter chips removed — chat is locked in the prototype */}
@@ -6928,6 +6965,7 @@ function PropertyContent({
   onReview,
   onManualComplete,
   onOpenWorkflow,
+  openUnitsSignal = 0,
 }: {
   property: Property;
   testerMode?: boolean;
@@ -6944,6 +6982,7 @@ function PropertyContent({
   onReview?: (id: string) => void;
   onManualComplete?: (id: string, note: string) => void;
   onOpenWorkflow?: (ref: string) => void;
+  openUnitsSignal?: number;
 }) {
   void onPreviewQuestion;
   const [filter, setFilter] = useState("");
@@ -6952,6 +6991,17 @@ function PropertyContent({
   const [unitsOpen, setUnitsOpen] = useState(false);
   // Reset to collapsed on each fresh property arrival
   useEffect(() => { setUnitsOpen(false); }, [property.id]);
+  // External trigger from the pinned Quick bar (parent increments the signal).
+  useEffect(() => {
+    if (openUnitsSignal && openUnitsSignal > 0) {
+      setUnitsOpen(true);
+      requestAnimationFrame(() => {
+        const el = document.getElementById(`units-section-${property.id}`);
+        el?.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [openUnitsSignal]);
   const gridWrapRef = useRef<HTMLDivElement | null>(null);
 
   const derivedByUnit = useMemo(() => {
@@ -7056,9 +7106,10 @@ function PropertyContent({
 
   return (
     <div className="space-y-4">
-      {/* Pinned collapsible Units section */}
+      {/* Collapsible Units section (anchored, not pinned — the chat pinned bar handles always-on access) */}
       <section
-        className="sticky top-0 z-20 -mx-1 px-1"
+        id={`units-section-${property.id}`}
+        className="-mx-1 px-1"
         aria-label="Units"
       >
         <button
