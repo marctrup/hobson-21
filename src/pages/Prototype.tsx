@@ -1560,7 +1560,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
   // Picking a job from the chat grid — reads as the user asking Hobson for that thing.
   const boPickJob = (h: BackOfficeHelper) => {
     const id = `bo-job-${Date.now()}`;
-    const label = JOB_CATALOGUE[h.id]?.label ?? h.name;
+    const label = JOB_CATALOGUE[h.id]?.offer ? "Yes please." : h.name;
     setBoEvents((arr) => [...arr, { kind: "user", id, text: label }]);
     setTimeout(() => boEnterRoom(h), 220);
   };
@@ -4389,25 +4389,25 @@ function CharacterAvatar({ src: _src }: { src: string }) {
   return <OwlAvatar state="default" />;
 }
 
-const HOBSON_ADMIN_INTRO = "Welcome to my back office. What would you like me to take care of? Choose one below, or just tell me what you need.";
+const HOBSON_ADMIN_INTRO = "Welcome to my back office. Here are a few things I could take care of for you — or just tell me what you need.";
 
-// Curated, high-value jobs the user can pick from the chat.
-// Keyed by helper id so adding a helper in BACK_OFFICE_HELPERS auto-extends the grid (if a job entry exists).
-const JOB_CATALOGUE: Record<string, { label: string; hint: string }> = {
-  inspector: { label: "Review compliance", hint: "See what's required, done, and coming due." },
-  broker:    { label: "Add or find contacts", hint: "Tenants, contractors, suppliers, staff." },
-  magician:  { label: "Build a routine", hint: "An automation that watches your portfolio." },
-  professor: { label: "Read & organise documents", hint: "Upload, file, and recall any document." },
-  keeper:    { label: "Manage access & security", hint: "Users, roles, and audit trail." },
+// Curated jobs Hobson offers to do FOR the user (his voice, as questions).
+// Keyed by helper id so adding a helper in BACK_OFFICE_HELPERS auto-extends the list (if an entry exists).
+const JOB_CATALOGUE: Record<string, { offer: string }> = {
+  professor: { offer: "Want me to get more of your documents processed?" },
+  inspector: { offer: "Want me to make sure you stay compliant?" },
+  broker:    { offer: "Want me to update or add to your related parties?" },
+  magician:  { offer: "Want me to build or change how I handle your work?" },
+  keeper:    { offer: "Want me to manage who can access what?" },
 };
 
 function JobGrid({ helpers, onPick }: { helpers: BackOfficeHelper[]; onPick: (h: BackOfficeHelper) => void }) {
   const items = helpers.filter((h) => JOB_CATALOGUE[h.id]);
   return (
     <div
-      className="ml-12 max-w-[560px] flex flex-wrap gap-1.5"
+      className="ml-12 max-w-[560px] flex flex-col gap-1.5"
       role="group"
-      aria-label="Things Hobson can take care of"
+      aria-label="Things Hobson is offering to do for you"
     >
       {items.map((h) => {
         const job = JOB_CATALOGUE[h.id];
@@ -4418,23 +4418,25 @@ function JobGrid({ helpers, onPick }: { helpers: BackOfficeHelper[]; onPick: (h:
             type="button"
             onClick={() => { if (!disabled) onPick(h); }}
             disabled={disabled}
-            title={disabled ? `${job.label} — coming soon` : job.hint}
-            aria-label={disabled ? `${job.label} — coming soon` : `Ask Hobson to: ${job.label}`}
-            className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[12.5px] transition focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED] motion-reduce:transition-none ${
+            aria-label={disabled ? `${job.offer} (coming soon)` : job.offer}
+            className={`group w-full text-left rounded-xl px-4 py-2.5 text-[13.5px] leading-snug transition focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED] motion-reduce:transition-none ${
               disabled
-                ? "border border-dashed border-slate-300 bg-slate-50 text-slate-500 cursor-not-allowed"
-                : "border border-[#7C3AED]/25 bg-[#7C3AED]/5 text-slate-800 hover:bg-[#7C3AED]/10 hover:border-[#7C3AED]/50"
+                ? "bg-slate-50/70 text-slate-500 cursor-not-allowed italic"
+                : "bg-[#7C3AED]/5 text-slate-800 hover:bg-[#7C3AED]/10"
             }`}
           >
-            <span>{job.label}</span>
-            {disabled && (
-              <span className="text-[9px] uppercase tracking-wide px-1.5 py-0.5 rounded-full border border-amber-200 bg-amber-50 text-amber-700 font-medium">
-                Soon
-              </span>
-            )}
+            <span className="inline-flex items-center gap-2">
+              <span>{job.offer}</span>
+              {disabled && (
+                <span className="text-[9px] uppercase tracking-wide px-1.5 py-0.5 rounded-full bg-slate-100 text-slate-500 font-medium not-italic">
+                  Soon
+                </span>
+              )}
+            </span>
           </button>
         );
       })}
+      <p className="text-[12px] text-slate-500 italic mt-1 pl-1">…or just tell me what you need.</p>
     </div>
   );
 }
@@ -4546,7 +4548,7 @@ function AdminChat({ character, owl, professorEvents, onAssignProfessorType, bro
               <div className="flex items-end gap-2">
                 <OwlAvatar state={owl} />
                 <div className="max-w-[420px] bg-[#EDE9FE] text-[#1F2330] text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-bl-md">
-                  Here's what I can take on for you — pick one, or just tell me what you need.
+                  A few things I could take on for you —
                 </div>
               </div>
               <JobGrid helpers={helpers} onPick={onPickJob} />
