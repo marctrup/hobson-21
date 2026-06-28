@@ -7332,11 +7332,63 @@ function BackOfficeComposer({ onSubmit }: { onSubmit: (text: string) => void }) 
   );
 }
 
+function PortraitTile({
+  helper,
+  compact = false,
+}: {
+  helper: BackOfficeHelper;
+  compact?: boolean;
+}) {
+  const isSoon = helper.status === "coming-soon";
+  return (
+    <article
+      className={`relative rounded-2xl border border-slate-200/80 bg-white shadow-sm overflow-hidden ${isSoon ? "opacity-70" : ""}`}
+      aria-label={`${helper.name}, ${helper.roleTitle}. ${helper.contributionLine} Works alongside Hobson.${isSoon ? " Joining soon." : ""}`}
+    >
+      <div className={`flex flex-col items-center text-center px-5 ${compact ? "pt-5 pb-3" : "pt-8 pb-4"}`}>
+        <div className="relative">
+          <div className={`rounded-full border-2 border-slate-100 bg-slate-50 grid place-items-center overflow-hidden ${compact ? "w-16 h-16" : "w-24 h-24"}`}>
+            <img
+              src={helper.src}
+              alt=""
+              aria-hidden
+              className={`object-contain ${compact ? "w-14 h-14" : "w-20 h-20"}`}
+            />
+          </div>
+          {isSoon && (
+            <span className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 text-[10px] px-2 py-0.5 rounded-full bg-amber-50 text-amber-800 border border-amber-200 font-medium whitespace-nowrap">
+              Joining soon
+            </span>
+          )}
+        </div>
+        <h3 className={`font-semibold text-slate-900 mt-4 ${compact ? "text-[13px]" : "text-[15px]"}`}>
+          {helper.name}
+        </h3>
+        <p className={`font-medium text-slate-500 mt-0.5 ${compact ? "text-[11px]" : "text-[12px]"}`}>
+          {helper.roleTitle}
+        </p>
+      </div>
+
+      <div className="mx-5 border-t border-slate-100" />
+
+      <div className={`px-5 text-center ${compact ? "py-3" : "py-4"}`}>
+        <p className={`text-slate-600 leading-relaxed ${compact ? "text-[12px]" : "text-[13px]"}`}>
+          {helper.contributionLine}
+        </p>
+      </div>
+
+      <div className={`px-5 text-center ${compact ? "pb-3" : "pb-5"}`}>
+        <p className="text-[11px] text-slate-400 italic">Works alongside Hobson</p>
+      </div>
+    </article>
+  );
+}
+
 function BackOfficeStage({
   mode,
   helpers,
   comingSoonId,
-  onEnter,
+  onEnter: _onEnter,
   onReturnHallway,
 }: {
   mode: "hallway" | "home" | "coming-soon";
@@ -7345,7 +7397,6 @@ function BackOfficeStage({
   onEnter: (h: BackOfficeHelper) => void;
   onReturnHallway: () => void;
 }) {
-  const reducedMotion = typeof window !== "undefined" && window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
   if (mode === "coming-soon") {
     const h = helpers.find((x) => x.id === comingSoonId);
     return (
@@ -7370,42 +7421,19 @@ function BackOfficeStage({
   }
 
   if (mode === "hallway") {
-    // First-time entry: theatrical reveal of the hallway and rooms
     return (
       <div className="absolute inset-0 bg-gradient-to-b from-[#FAF7FF] via-white to-slate-50 overflow-auto">
-        <div className="max-w-5xl mx-auto px-6 py-10">
-          <div className="text-center mb-8">
-            <p className="text-[11px] uppercase tracking-wider text-[#7C3AED] font-semibold mb-1">Hobson's back office</p>
-            <h1 className="text-3xl font-semibold text-slate-900 mb-2">Welcome through</h1>
-            <p className="text-sm text-slate-600 max-w-xl mx-auto">
-              This is where my team helps me stay organised. Each specialist looks after one part of my work.
-              Ask me anything in the chat, or step into a room to set that part up.
+        <div className="max-w-4xl mx-auto px-6 py-10">
+          <div className="text-center mb-10">
+            <p className="text-[11px] uppercase tracking-wider text-[#7C3AED] font-semibold mb-2">Hobson's back office</p>
+            <h1 className="text-2xl font-semibold text-slate-900 mb-2">My team</h1>
+            <p className="text-sm text-slate-600 max-w-lg mx-auto leading-relaxed">
+              Each of them looks after one part of your portfolio, so I can give you a single, personal service. You only ever speak to me.
             </p>
           </div>
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-5 grid-cols-1 sm:grid-cols-2" role="list" aria-label="Hobson's team">
             {helpers.map((h) => (
-              <button
-                key={h.id}
-                onClick={() => onEnter(h)}
-                disabled={h.status === "coming-soon"}
-                className={`group relative text-left rounded-2xl border bg-white shadow-sm hover:shadow-md transition p-5 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED] ${h.status === "coming-soon" ? "opacity-60 cursor-default" : "hover:-translate-y-0.5"} motion-reduce:transition-none motion-reduce:transform-none ${h.themeAccent}`}
-              >
-                <div className="flex items-center gap-3 mb-3">
-                  <div className={`w-14 h-14 rounded-xl bg-slate-50 grid place-items-center overflow-hidden ${reducedMotion ? "" : "group-hover:bg-white"}`}>
-                    <img src={h.src} alt="" aria-hidden className="w-12 h-12 object-contain" />
-                  </div>
-                  <div>
-                    <div className="text-[15px] font-semibold text-slate-900">{h.name}</div>
-                    <div className="text-[11px] uppercase tracking-wide text-slate-500">{h.domain}</div>
-                  </div>
-                </div>
-                <p className="text-[13px] text-slate-600 leading-relaxed">{h.tagline}</p>
-                {h.status === "coming-soon" ? (
-                  <span className="absolute top-3 right-3 text-[10px] px-2 py-0.5 rounded-full bg-amber-50 text-amber-800 border border-amber-200 font-medium">Coming soon</span>
-                ) : (
-                  <span className="absolute top-3 right-3 text-[10px] text-slate-400">Step in →</span>
-                )}
-              </button>
+              <PortraitTile key={h.id} helper={h} />
             ))}
           </div>
         </div>
@@ -7413,33 +7441,19 @@ function BackOfficeStage({
     );
   }
 
-  // Returning view — calm, compact home with fast room access
+  // Returning view — compact team wall
   return (
     <div className="absolute inset-0 bg-white overflow-auto">
       <div className="max-w-3xl mx-auto px-6 py-8">
-        <div className="flex items-baseline justify-between mb-5">
-          <div>
-            <h2 className="text-lg font-semibold text-slate-900">Back office</h2>
-            <p className="text-[12px] text-slate-500">Ask Hobson, or pick a room.</p>
-          </div>
+        <div className="mb-6">
+          <h2 className="text-lg font-semibold text-slate-900 mb-1">My team</h2>
+          <p className="text-[12px] text-slate-500 max-w-lg leading-relaxed">
+            Each of them looks after one part of your portfolio, so I can give you a single, personal service. You only ever speak to me.
+          </p>
         </div>
-        <div className="grid gap-3 sm:grid-cols-2">
+        <div className="grid gap-4 grid-cols-1 sm:grid-cols-2" role="list" aria-label="Hobson's team">
           {helpers.map((h) => (
-            <button
-              key={h.id}
-              onClick={() => onEnter(h)}
-              disabled={h.status === "coming-soon"}
-              className={`flex items-center gap-3 text-left rounded-xl border bg-white hover:bg-slate-50 transition p-3 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED] ${h.status === "coming-soon" ? "opacity-60 cursor-default" : ""} motion-reduce:transition-none`}
-            >
-              <img src={h.src} alt="" aria-hidden className="w-9 h-9 object-contain" />
-              <div className="min-w-0 flex-1">
-                <div className="text-[13px] font-semibold text-slate-900 truncate">{h.name}</div>
-                <div className="text-[11px] text-slate-500 truncate">{h.domain}</div>
-              </div>
-              {h.status === "coming-soon" && (
-                <span className="text-[10px] px-1.5 py-0.5 rounded bg-amber-50 text-amber-800 border border-amber-200">Soon</span>
-              )}
-            </button>
+            <PortraitTile key={h.id} helper={h} compact />
           ))}
         </div>
       </div>
