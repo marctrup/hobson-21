@@ -7184,6 +7184,149 @@ function LockedComposer({ view }: { view: View }) {
   );
 }
 
+function BackOfficeComposer({ onSubmit }: { onSubmit: (text: string) => void }) {
+  const [val, setVal] = useState("");
+  return (
+    <form
+      onSubmit={(e) => { e.preventDefault(); const t = val.trim(); if (!t) return; onSubmit(t); setVal(""); }}
+      className="flex items-center gap-2 px-4 py-2.5 rounded-full border border-slate-200 bg-white focus-within:border-[#7C3AED] focus-within:ring-2 focus-within:ring-[#7C3AED]/20 transition"
+    >
+      <input
+        value={val}
+        onChange={(e) => setVal(e.target.value)}
+        placeholder="Ask Hobson… (e.g. 'show me my contacts', 'set up compliance')"
+        aria-label="Ask Hobson"
+        className="flex-1 outline-none text-sm bg-transparent placeholder:text-slate-400"
+      />
+      <button
+        type="submit"
+        disabled={!val.trim()}
+        aria-label="Send"
+        className="flex items-center justify-center h-9 w-9 rounded-full bg-[#7C3AED] text-white hover:bg-[#6D28D9] transition disabled:bg-slate-200 disabled:text-slate-400"
+      >
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M5 12h14M13 6l6 6-6 6"/>
+        </svg>
+      </button>
+    </form>
+  );
+}
+
+function BackOfficeStage({
+  mode,
+  helpers,
+  comingSoonId,
+  onEnter,
+  onReturnHallway,
+}: {
+  mode: "hallway" | "home" | "coming-soon";
+  helpers: BackOfficeHelper[];
+  comingSoonId: string | null;
+  onEnter: (h: BackOfficeHelper) => void;
+  onReturnHallway: () => void;
+}) {
+  const reducedMotion = typeof window !== "undefined" && window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+  if (mode === "coming-soon") {
+    const h = helpers.find((x) => x.id === comingSoonId);
+    return (
+      <div className="absolute inset-0 bg-gradient-to-br from-slate-50 to-white overflow-auto motion-reduce:transition-none">
+        <div className="max-w-2xl mx-auto px-6 py-16 text-center">
+          <img src={h?.src} alt="" aria-hidden className="w-24 h-24 mx-auto opacity-60 mb-4" />
+          <h2 className="text-2xl font-semibold text-slate-900 mb-2">{h?.name}'s room</h2>
+          <p className="text-sm text-slate-600 mb-1">{h?.domain}</p>
+          <p className="text-sm text-slate-500 italic mb-6">{h?.tagline}</p>
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-50 border border-amber-200 text-amber-800 text-xs font-medium mb-8">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 2"/></svg>
+            Coming soon
+          </div>
+          <div>
+            <button onClick={onReturnHallway} className="text-sm text-[#7C3AED] hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED] rounded px-2 py-1">
+              ← Back to hallway
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (mode === "hallway") {
+    // First-time entry: theatrical reveal of the hallway and rooms
+    return (
+      <div className="absolute inset-0 bg-gradient-to-b from-[#FAF7FF] via-white to-slate-50 overflow-auto">
+        <div className="max-w-5xl mx-auto px-6 py-10">
+          <div className="text-center mb-8">
+            <p className="text-[11px] uppercase tracking-wider text-[#7C3AED] font-semibold mb-1">Hobson's back office</p>
+            <h1 className="text-3xl font-semibold text-slate-900 mb-2">Welcome through</h1>
+            <p className="text-sm text-slate-600 max-w-xl mx-auto">
+              This is where my team helps me stay organised. Each specialist looks after one part of my work.
+              Ask me anything in the chat, or step into a room to set that part up.
+            </p>
+          </div>
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {helpers.map((h) => (
+              <button
+                key={h.id}
+                onClick={() => onEnter(h)}
+                disabled={h.status === "coming-soon"}
+                className={`group relative text-left rounded-2xl border bg-white shadow-sm hover:shadow-md transition p-5 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED] ${h.status === "coming-soon" ? "opacity-60 cursor-default" : "hover:-translate-y-0.5"} motion-reduce:transition-none motion-reduce:transform-none ${h.themeAccent}`}
+              >
+                <div className="flex items-center gap-3 mb-3">
+                  <div className={`w-14 h-14 rounded-xl bg-slate-50 grid place-items-center overflow-hidden ${reducedMotion ? "" : "group-hover:bg-white"}`}>
+                    <img src={h.src} alt="" aria-hidden className="w-12 h-12 object-contain" />
+                  </div>
+                  <div>
+                    <div className="text-[15px] font-semibold text-slate-900">{h.name}</div>
+                    <div className="text-[11px] uppercase tracking-wide text-slate-500">{h.domain}</div>
+                  </div>
+                </div>
+                <p className="text-[13px] text-slate-600 leading-relaxed">{h.tagline}</p>
+                {h.status === "coming-soon" ? (
+                  <span className="absolute top-3 right-3 text-[10px] px-2 py-0.5 rounded-full bg-amber-50 text-amber-800 border border-amber-200 font-medium">Coming soon</span>
+                ) : (
+                  <span className="absolute top-3 right-3 text-[10px] text-slate-400">Step in →</span>
+                )}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Returning view — calm, compact home with fast room access
+  return (
+    <div className="absolute inset-0 bg-white overflow-auto">
+      <div className="max-w-3xl mx-auto px-6 py-8">
+        <div className="flex items-baseline justify-between mb-5">
+          <div>
+            <h2 className="text-lg font-semibold text-slate-900">Back office</h2>
+            <p className="text-[12px] text-slate-500">Ask Hobson, or pick a room.</p>
+          </div>
+        </div>
+        <div className="grid gap-3 sm:grid-cols-2">
+          {helpers.map((h) => (
+            <button
+              key={h.id}
+              onClick={() => onEnter(h)}
+              disabled={h.status === "coming-soon"}
+              className={`flex items-center gap-3 text-left rounded-xl border bg-white hover:bg-slate-50 transition p-3 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED] ${h.status === "coming-soon" ? "opacity-60 cursor-default" : ""} motion-reduce:transition-none`}
+            >
+              <img src={h.src} alt="" aria-hidden className="w-9 h-9 object-contain" />
+              <div className="min-w-0 flex-1">
+                <div className="text-[13px] font-semibold text-slate-900 truncate">{h.name}</div>
+                <div className="text-[11px] text-slate-500 truncate">{h.domain}</div>
+              </div>
+              {h.status === "coming-soon" && (
+                <span className="text-[10px] px-1.5 py-0.5 rounded bg-amber-50 text-amber-800 border border-amber-200">Soon</span>
+              )}
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function AdminBuildActiveBanner({ label }: { label: string }) {
   return (
     <div className="flex items-center gap-2 px-4 py-2.5 rounded-full border border-dashed border-[#7C3AED]/40 bg-[#F5F3FF] text-[12px] text-[#5B21B6]/80">
