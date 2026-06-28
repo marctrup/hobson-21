@@ -7748,6 +7748,159 @@ type WorkbenchCounts = {
   properties: number;
 };
 
+/* ---------- Structure section (Architect owns; Researcher fetches public records) ---------- */
+
+type PublicRecord = {
+  epc?: { rating: string; fetchedOn: string };
+  title?: { number: string };
+  planning?: { date: string } | "not_fetched";
+};
+
+const FETCH_DATE = "12 Jan 2026";
+
+function publicRecordFor(propertyId: string, unitId: string, index: number): PublicRecord {
+  // Deterministic example data — never invent confirmed records for unseeded units.
+  const epcLetters = ["C", "D", "C", "B", "D", "C", "E", "C", "B", "C", "D", "C"];
+  const titleBase: Record<string, number> = { stanley: 824107, nugent: 730412, hamilton: 612008 };
+  const base = titleBase[propertyId] ?? 900000;
+  const planningDates: Record<string, string> = {
+    "stanley-f1": "Apr 2019",
+    "stanley-f3": "Aug 2020",
+    "stanley-f6": "Mar 2018",
+    "nugent-f1": "Jun 2017",
+    "hamilton-unit": "Sep 2015",
+  };
+  const notFetched = new Set(["stanley-f2", "nugent-f3"]);
+  return {
+    epc: { rating: epcLetters[index % epcLetters.length], fetchedOn: FETCH_DATE },
+    title: { number: `NGL${base + index}` },
+    planning: notFetched.has(unitId)
+      ? "not_fetched"
+      : planningDates[unitId]
+      ? { date: planningDates[unitId] }
+      : "not_fetched",
+  };
+}
+
+function FactChip({ label, value, muted, amber }: { label: string; value: string; muted?: boolean; amber?: boolean }) {
+  const cls = amber
+    ? "border-amber-300 bg-amber-50 text-amber-900"
+    : muted
+    ? "border-slate-200 bg-slate-50 text-slate-500"
+    : "border-slate-200 bg-slate-50 text-slate-700";
+  return (
+    <span className={`inline-flex items-center gap-1 rounded-md border px-2 py-0.5 text-[11px] ${cls}`}>
+      <span className="text-slate-500">{label}</span>
+      <span className="font-medium">{value}</span>
+    </span>
+  );
+}
+
+function UnitPublicRecordRow({ unitLabel, record }: { unitLabel: string; record: PublicRecord }) {
+  const [open, setOpen] = useState(false);
+  const sources: string[] = [];
+  if (record.epc) sources.push(`EPC fetched ${record.epc.fetchedOn} · EPC register`);
+  if (record.title) sources.push("Title · Land Registry");
+  return (
+    <div className="rounded-lg border border-slate-200 bg-white">
+      <button
+        type="button"
+        onClick={() => setOpen((o) => !o)}
+        aria-expanded={open}
+        className="w-full px-3 py-2 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 rounded-lg"
+      >
+        <div className="flex items-center justify-between">
+          <div className="text-[13px] font-medium text-slate-900">{unitLabel}</div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className={`text-slate-400 transition-transform ${open ? "rotate-180" : ""}`} aria-hidden>
+            <path d="M6 9l6 6 6-6" />
+          </svg>
+        </div>
+        <div className="mt-1.5 flex flex-wrap gap-1.5">
+          {record.epc ? <FactChip label="EPC" value={record.epc.rating} /> : <FactChip label="EPC" value="Not fetched yet" amber />}
+          {record.title ? <FactChip label="Title" value={record.title.number} /> : <FactChip label="Title" value="Not fetched yet" amber />}
+          {record.planning === "not_fetched" || !record.planning
+            ? <FactChip label="Planning" value="Not fetched yet" amber />
+            : <FactChip label="Planning" value={record.planning.date} />}
+        </div>
+        {sources.length > 0 && (
+          <div className="mt-1 text-[10.5px] text-slate-500">{sources.join(" · ")}</div>
+        )}
+      </button>
+      {open && (
+        <div className="border-t border-slate-100 px-3 py-2 space-y-1 text-[11.5px] text-slate-600">
+          <div><span className="text-slate-500">EPC register</span> — rating {record.epc?.rating ?? "—"} · last fetched {record.epc?.fetchedOn ?? "—"}</div>
+          <div><span className="text-slate-500">Land Registry</span> — title {record.title?.number ?? "—"}</div>
+          <div>
+            <span className="text-slate-500">Planning portal</span> —{" "}
+            {record.planning && record.planning !== "not_fetched"
+              ? `last application ${record.planning.date}`
+              : <span className="text-amber-800">Not fetched yet</span>}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function StructureSection({ counts }: { counts: WorkbenchCounts }) {
+  const [openProps, setOpenProps] = useState<Set<string>>(new Set(["stanley"]));
+  const togglePropOpen = (id: string) =>
+    setOpenProps((prev) => {
+      const n = new Set(prev);
+      if (n.has(id)) n.delete(id);
+      else n.add(id);
+      return n;
+    });
+
+  return (
+    <div className="absolute inset-0 bg-white overflow-auto">
+      <div className="px-5 py-4 space-y-4">
+        <p className="text-[12.5px] text-slate-700 leading-relaxed">
+          {counts.units} units across {counts.properties} properties — kept in shape by the Architect.
+          The public record below is fetched from external sources; who occupies each unit lives in your documents.
+        </p>
+
+        {PROPERTIES.map((p) => {
+          const isOpen = openProps.has(p.id);
+          let idx = 0;
+          return (
+            <div key={p.id} className="rounded-xl border border-slate-200 bg-slate-50/60 overflow-hidden">
+              <button
+                type="button"
+                onClick={() => togglePropOpen(p.id)}
+                aria-expanded={isOpen}
+                className="w-full flex items-center justify-between px-3 py-2.5 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-400"
+              >
+                <div className="text-[13px] font-semibold text-slate-900">{p.name}</div>
+                <div className="text-[11.5px] text-slate-500">{p.area} · {p.standalone ? "single unit" : `${p.units.length} units`}</div>
+              </button>
+              {isOpen && (
+                <div className="px-3 pb-3 space-y-1.5">
+                  {p.units.map((u) => {
+                    const rec = publicRecordFor(p.id, u.id, idx++);
+                    return <UnitPublicRecordRow key={u.id} unitLabel={u.label} record={rec} />;
+                  })}
+                </div>
+              )}
+            </div>
+          );
+        })}
+
+        <div className="rounded-lg border border-slate-200 bg-slate-50 px-3 py-2.5 flex gap-2 text-[11.5px] text-slate-600">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-slate-400 mt-0.5 flex-shrink-0" aria-hidden>
+            <circle cx="12" cy="12" r="9" /><path d="M12 8v4M12 16h.01" />
+          </svg>
+          <span>
+            This is the building's public record — EPC, title and planning. Who occupies each unit, and on what terms, lives in your documents, not here.
+          </span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+
+
 function BackOfficeWorkbench({
   helpers,
   scopeProperty,
