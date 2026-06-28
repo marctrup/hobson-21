@@ -1577,6 +1577,12 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
   // (Access/permissions for hiding summaries will belong to a future security character; not the Professor's job.)
   const summaryVisibility = { occupational: true, compliance: true } as const;
 
+  // Pinned Quick bar (Quick overviews / Open a unit) — sits at the top of the chat column.
+  const [pinnedQuickOpen, setPinnedQuickOpen] = useState(false);
+  const [openUnitsSignal, setOpenUnitsSignal] = useState(0);
+
+
+
 
   // ----- Magician workshop state -----
   const [workflows, setWorkflows] = useState<Workflow[]>(SEED_WORKFLOWS);
