@@ -1488,6 +1488,8 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
   }, []);
   const [adminMode, setAdminMode] = useState(false);
   const [adminCharacter, setAdminCharacter] = useState<AdminCharacter | null>(null);
+  const [showBackOfficeGate, setShowBackOfficeGate] = useState(false);
+  const [backOfficeGatePassword, setBackOfficeGatePassword] = useState("");
 
   // Back Office: hallway-vs-home (in-memory module flag, not localStorage)
   const [boFirstEntry, setBoFirstEntry] = useState<boolean>(false);
