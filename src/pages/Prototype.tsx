@@ -4354,9 +4354,9 @@ function CharacterAvatar({ src }: { src: string }) {
 }
 
 const HOBSON_ADMIN_INTRO_PARAS = [
-  "Welcome to Admin. Here you will find my three colleagues, who do much of the work behind the scenes.",
-  "The Professor reads and remembers every document — he is the source of what I know. The Magician builds the workflows that watch your portfolio and prepare the work. The Broker keeps your contacts, and the relationships between them.",
-  "Choose whichever you need, and they will see to you.",
+  "Welcome to my back office. This is where my team helps me stay organised.",
+  "Each specialist looks after one part of my work — documents, compliance, contacts, workflows, and access.",
+  "You can simply ask me to do anything, or step into one of the rooms to set that part up.",
 ];
 const HOBSON_ADMIN_INTRO = HOBSON_ADMIN_INTRO_PARAS.join("\n\n");
 
