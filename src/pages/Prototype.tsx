@@ -1560,7 +1560,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
   // Picking a job from the chat grid — reads as the user asking Hobson for that thing.
   const boPickJob = (h: BackOfficeHelper) => {
     const id = `bo-job-${Date.now()}`;
-    const label = JOB_CATALOGUE[h.id]?.label ?? h.name;
+    const label = JOB_CATALOGUE[h.id]?.offer ? "Yes please." : h.name;
     setBoEvents((arr) => [...arr, { kind: "user", id, text: label }]);
     setTimeout(() => boEnterRoom(h), 220);
   };
