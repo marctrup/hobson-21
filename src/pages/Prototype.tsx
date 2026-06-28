@@ -6928,6 +6928,7 @@ function PropertyContent({
   onReview,
   onManualComplete,
   onOpenWorkflow,
+  openUnitsSignal = 0,
 }: {
   property: Property;
   testerMode?: boolean;
@@ -6944,6 +6945,7 @@ function PropertyContent({
   onReview?: (id: string) => void;
   onManualComplete?: (id: string, note: string) => void;
   onOpenWorkflow?: (ref: string) => void;
+  openUnitsSignal?: number;
 }) {
   void onPreviewQuestion;
   const [filter, setFilter] = useState("");
@@ -6952,6 +6954,17 @@ function PropertyContent({
   const [unitsOpen, setUnitsOpen] = useState(false);
   // Reset to collapsed on each fresh property arrival
   useEffect(() => { setUnitsOpen(false); }, [property.id]);
+  // External trigger from the pinned Quick bar (parent increments the signal).
+  useEffect(() => {
+    if (openUnitsSignal && openUnitsSignal > 0) {
+      setUnitsOpen(true);
+      requestAnimationFrame(() => {
+        const el = document.getElementById(`units-section-${property.id}`);
+        el?.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [openUnitsSignal]);
   const gridWrapRef = useRef<HTMLDivElement | null>(null);
 
   const derivedByUnit = useMemo(() => {
