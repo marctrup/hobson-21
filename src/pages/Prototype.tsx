@@ -1493,7 +1493,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
   const [boFirstEntry, setBoFirstEntry] = useState<boolean>(false);
   const [boShowHallway, setBoShowHallway] = useState<boolean>(false);
   // Global Hobson narration thread for the Back Office (persists across room switches)
-  const [boEvents, setBoEvents] = useState<{ kind: "user" | "hobson" | "jobs"; id: string; text?: string }[]>([]);
+  const [boEvents, setBoEvents] = useState<{ kind: "user" | "hobson" | "jobs" | "chips"; id: string; text?: string; chips?: BackOfficeOffer[]; ariaLabel?: string }[]>([]);
 
   const enterAdmin = () => {
     setShowDocuments(false);
