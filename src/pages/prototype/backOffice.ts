@@ -39,7 +39,7 @@ export const BACK_OFFICE_HELPERS: BackOfficeHelper[] = [
     domain: "Properties & Units",
     tagline: "Designs, organises and evolves your portfolio structure.",
     roleTitle: "Properties & Units",
-    contributionLine: "Helps build your portfolio by asking the right questions, creating units, assembling them into properties where appropriate, and keeping everything organised as your estate evolves.",
+    contributionLine: "Helps build your portfolio by asking the right questions, creating units, assembling them into properties where appropriate, checks planning and keeping everything organised as your estate evolves.",
     triggers: ["property", "properties", "unit", "units", "portfolio structure", "add property", "add unit", "architect"],
     narration: "The Architect is just unrolling his plans — that room is being prepared.",
     themeAccent: "text-violet-700 border-violet-200",
