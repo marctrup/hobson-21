@@ -4451,6 +4451,18 @@ function AdminChat({ character, owl, professorEvents, onAssignProfessorType, bro
           </div>
         </div>
       )}
+      {!character && phase === "done" && boEvents && boEvents.map((ev) =>
+        ev.kind === "user" ? (
+          <div key={ev.id} className="flex justify-end">
+            <div className="max-w-[420px] bg-[#7C3AED] text-white text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-br-md">{ev.text}</div>
+          </div>
+        ) : (
+          <div key={ev.id} className="flex items-end gap-2">
+            <OwlAvatar state={owl} />
+            <div className="max-w-[420px] bg-[#EDE9FE] text-[#1F2330] text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-bl-md whitespace-pre-line">{ev.text}</div>
+          </div>
+        )
+      )}
       {character?.id === "magician" && phase === "done" && (!magicianEvents || magicianEvents.length === 0) && !magBuild && (
         <MagicianBuildInviteCard onStart={() => onCreateWorkflow?.()} />
       )}
