@@ -4074,6 +4074,15 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
           return <AdminWorkArea character={c} />;
 
         })()}
+        {adminMode && !adminCharacter && (
+          <BackOfficeStage
+            mode={comingSoonHelperId ? "coming-soon" : (boShowHallway && boFirstEntry ? "hallway" : "home")}
+            helpers={BACK_OFFICE_HELPERS}
+            comingSoonId={comingSoonHelperId}
+            onEnter={boEnterRoom}
+            onReturnHallway={boReturnToHallway}
+          />
+        )}
 
       </main>
       ); })()}
