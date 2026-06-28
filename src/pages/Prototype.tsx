@@ -4519,18 +4519,37 @@ function AdminChat({ character, owl, professorEvents, onAssignProfessorType, bro
           </div>
         </div>
       )}
-      {!character && phase === "done" && boEvents && boEvents.map((ev) =>
-        ev.kind === "user" ? (
-          <div key={ev.id} className="flex justify-end">
-            <div className="max-w-[420px] bg-[#7C3AED] text-white text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-br-md">{ev.text}</div>
-          </div>
-        ) : (
+      {!character && phase === "done" && helpers && onPickJob && (!boEvents || boEvents.length === 0) && (
+        <JobGrid helpers={helpers} onPick={onPickJob} />
+      )}
+      {!character && phase === "done" && boEvents && boEvents.map((ev) => {
+        if (ev.kind === "user") {
+          return (
+            <div key={ev.id} className="flex justify-end">
+              <div className="max-w-[420px] bg-[#7C3AED] text-white text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-br-md">{ev.text}</div>
+            </div>
+          );
+        }
+        if (ev.kind === "jobs") {
+          return helpers && onPickJob ? (
+            <div key={ev.id} className="flex flex-col gap-1.5">
+              <div className="flex items-end gap-2">
+                <OwlAvatar state={owl} />
+                <div className="max-w-[420px] bg-[#EDE9FE] text-[#1F2330] text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-bl-md">
+                  Here's what I can take on for you — pick one, or just tell me what you need.
+                </div>
+              </div>
+              <JobGrid helpers={helpers} onPick={onPickJob} />
+            </div>
+          ) : null;
+        }
+        return (
           <div key={ev.id} className="flex items-end gap-2">
             <OwlAvatar state={owl} />
             <div className="max-w-[420px] bg-[#EDE9FE] text-[#1F2330] text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-bl-md whitespace-pre-line">{ev.text}</div>
           </div>
-        )
-      )}
+        );
+      })}
       {character?.id === "magician" && phase === "done" && (!magicianEvents || magicianEvents.length === 0) && !magBuild && (
         <MagicianBuildInviteCard onStart={() => onCreateWorkflow?.()} />
       )}
