@@ -1493,7 +1493,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
   const [boFirstEntry, setBoFirstEntry] = useState<boolean>(false);
   const [boShowHallway, setBoShowHallway] = useState<boolean>(false);
   // Global Hobson narration thread for the Back Office (persists across room switches)
-  const [boEvents, setBoEvents] = useState<{ kind: "user" | "hobson" | "jobs"; id: string; text?: string }[]>([]);
+  const [boEvents, setBoEvents] = useState<{ kind: "user" | "hobson" | "jobs" | "chips"; id: string; text?: string; chips?: BackOfficeOffer[]; ariaLabel?: string }[]>([]);
 
   const enterAdmin = () => {
     setShowDocuments(false);
@@ -1583,6 +1583,25 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
   // Recall the job grid into the conversation.
   const boShowJobs = () => {
     setBoEvents((arr) => [...arr, { kind: "jobs", id: `bo-jobs-${Date.now()}` }]);
+  };
+
+  // Tapping a Hobson "offer" chip — acts as the user asking him for that thing.
+  // Echoes the user intent, Hobson replies in his voice, and (when mapped) the
+  // matching workbench section is expanded/scrolled into view on the right.
+  // Where the offer has followups, Hobson presents the next set of chips for a
+  // guided back-and-forth. Joining-soon domains are acknowledged honestly with
+  // no fabricated section.
+  const boPickOffer = (o: BackOfficeOffer) => {
+    const ts = Date.now();
+    const id = `bo-offer-${ts}`;
+    setBoEvents((arr) => [...arr, { kind: "user", id, text: o.text }]);
+    setTimeout(() => {
+      setBoEvents((arr) => [...arr, { kind: "hobson", id: `${id}-r`, text: o.hobsonReply }]);
+      if (o.followups && o.followups.length > 0) {
+        setBoEvents((arr) => [...arr, { kind: "chips", id: `${id}-c`, chips: o.followups!, ariaLabel: "Next options from Hobson" }]);
+      }
+      if (o.sectionId) setTimeout(() => setBoJumpSectionId(o.sectionId!), 250);
+    }, 250);
   };
 
 
@@ -3706,6 +3725,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
               boEvents={!adminCharacter ? boEvents : undefined}
               helpers={!adminCharacter ? BACK_OFFICE_HELPERS : undefined}
               onPickJob={!adminCharacter ? boPickJob : undefined}
+              onPickOffer={!adminCharacter ? boPickOffer : undefined}
             />
             )
 
@@ -4663,30 +4683,112 @@ const JOB_CATALOGUE: Record<string, { offer: string }> = {
   keeper:    { offer: "Want me to manage who can access what?" },
 };
 
-const BACK_OFFICE_OFFER_LINES: string[] = [
-  "Process more of your documents and expand what I know about your portfolio.",
-  "Review your compliance position and identify anything that needs attention.",
-  "Build or update your portfolio structure by adding properties and units.",
-  "Organise your contacts, organisations and relationships.",
-  "Research legislation, public records, comparable evidence or industry guidance.",
-  "Prepare calculations, statements or financial analysis.",
-  "Connect another system so I can work with live information.",
-  "Manage who can access your portfolio and what they are permitted to do.",
-  "…or simply tell me what you need.",
+// Structured offers Hobson voices in the Back Office. Tapping a chip acts as
+// if the user asked Hobson for that thing — Hobson replies in chat AND the
+// matching workbench section opens/expands on the right. Offers whose section
+// isn't built yet are acknowledged honestly via `joiningSoon` (no fabricated
+// section). Optional `followups` let Hobson present the next set of chips for
+// a guided back-and-forth (same chip styling).
+export type BackOfficeOffer = {
+  id: string;
+  text: string;
+  // Mapping to a workbench section id (see helperToSection). When absent,
+  // the offer is "joining soon" and Hobson acknowledges where it'll live.
+  sectionId?: "documents" | "compliance" | "structure" | "people" | "workflows";
+  joiningSoon?: string; // helper/domain name for acknowledgement copy
+  hobsonReply: string;
+  followups?: BackOfficeOffer[];
+};
+
+export const BACK_OFFICE_OFFERS: BackOfficeOffer[] = [
+  {
+    id: "documents",
+    text: "Process more of your documents and expand what I know about your portfolio.",
+    sectionId: "documents",
+    hobsonReply: "Of course — let me open the document library so we can add to what I know.",
+  },
+  {
+    id: "compliance",
+    text: "Review your compliance position and identify anything that needs attention.",
+    sectionId: "compliance",
+    hobsonReply: "Happy to. Where would you like to start?",
+    followups: [
+      { id: "compliance-gaps", text: "Show me anything currently missing or overdue.", sectionId: "compliance", hobsonReply: "Opening the compliance board — I'll surface the gaps and anything overdue." },
+      { id: "compliance-upcoming", text: "Show me what's coming up for renewal.", sectionId: "compliance", hobsonReply: "Opening the compliance board — I'll highlight what's coming up for renewal." },
+      { id: "compliance-rulebook", text: "Show me the rulebook itself.", sectionId: "compliance", hobsonReply: "Opening the compliance board — the Inspector keeps the rulebook there." },
+    ],
+  },
+  {
+    id: "structure",
+    text: "Build or update your portfolio structure by adding properties and units.",
+    sectionId: "structure",
+    hobsonReply: "Of course. What would you like to do?",
+    followups: [
+      { id: "structure-property", text: "Add a property.", sectionId: "structure", hobsonReply: "Opening the structure section — the Architect will take the details when you're ready." },
+      { id: "structure-unit", text: "Add a unit to an existing property.", sectionId: "structure", hobsonReply: "Opening the structure section — pick the property and we'll add the unit." },
+      { id: "structure-review", text: "Review the structure as it stands.", sectionId: "structure", hobsonReply: "Opening the structure section so you can see how it's organised today." },
+    ],
+  },
+  {
+    id: "people",
+    text: "Organise your contacts, organisations and relationships.",
+    sectionId: "people",
+    hobsonReply: "Of course — opening the relationships section. The Broker keeps the black book there.",
+  },
+  {
+    id: "workflows",
+    text: "Build or change how I handle your work.",
+    sectionId: "workflows",
+    hobsonReply: "Of course — opening the workflows section so we can shape how I handle things for you.",
+  },
+  {
+    id: "research",
+    text: "Research legislation, public records, comparable evidence or industry guidance.",
+    joiningSoon: "Researcher",
+    hobsonReply: "The Researcher is joining the team shortly — when she's settled, this will live alongside the other sections on your workbench. For now, just tell me what you'd like to know and I'll do what I can.",
+  },
+  {
+    id: "calculations",
+    text: "Prepare calculations, statements or financial analysis.",
+    joiningSoon: "Bookkeeper",
+    hobsonReply: "The Bookkeeper is joining the team shortly — when he's settled, calculations and statements will live alongside the other sections on your workbench.",
+  },
+  {
+    id: "integrations",
+    text: "Connect another system so I can work with live information.",
+    joiningSoon: "Communicator",
+    hobsonReply: "The Communicator is joining the team shortly — system connections will live alongside the other sections on your workbench once he's in.",
+  },
+  {
+    id: "access",
+    text: "Manage who can access your portfolio and what they are permitted to do.",
+    joiningSoon: "Keeper",
+    hobsonReply: "The Keeper is joining the team shortly — access and permissions will live alongside the other sections on your workbench once he's at his post.",
+  },
 ];
 
-function BackOfficeOfferText() {
+function BackOfficeOfferChips({ offers, onPick, ariaLabel }: { offers: BackOfficeOffer[]; onPick: (o: BackOfficeOffer) => void; ariaLabel?: string }) {
   return (
-    <div className="ml-12 max-w-[560px]">
-      <div className="bg-[#EDE9FE] text-[#1F2330] text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-bl-md">
-        <ul className="list-disc pl-4 space-y-1">
-          {BACK_OFFICE_OFFER_LINES.map((line, i) => (
-            <li key={i} className={line.startsWith("…") ? "italic text-slate-500 mt-1" : ""}>
-              {line.startsWith("…") ? line.slice(1) : line}
-            </li>
-          ))}
-        </ul>
-      </div>
+    <div className="ml-12 max-w-[560px] flex flex-col gap-1.5" role="group" aria-label={ariaLabel ?? "Things Hobson is offering to do for you"}>
+      {offers.map((o) => (
+        <button
+          key={o.id}
+          type="button"
+          onClick={() => onPick(o)}
+          aria-label={o.text}
+          className="group w-full text-left rounded-2xl px-4 py-2.5 text-[13.5px] leading-snug bg-white border border-[#E5E1F5] text-slate-800 hover:bg-[#7C3AED]/5 hover:border-[#C4B5FD] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED] transition motion-reduce:transition-none shadow-sm"
+        >
+          <span className="inline-flex items-center gap-2">
+            <span>{o.text}</span>
+            {o.joiningSoon && (
+              <span className="text-[9px] uppercase tracking-wide px-1.5 py-0.5 rounded-full bg-slate-100 text-slate-500 font-medium">
+                Joining soon
+              </span>
+            )}
+          </span>
+        </button>
+      ))}
+      <p className="text-[12px] text-slate-500 italic mt-1 pl-1">…or simply tell me what you need.</p>
     </div>
   );
 }
@@ -4757,7 +4859,7 @@ type MagHandlers = {
   onSetStepTemplate: (uid: string, mode: "standard" | "own", filename?: string) => void;
 };
 
-function AdminChat({ character, owl, professorEvents, onAssignProfessorType, brokerEvents, brokerFlowActive, magicianEvents, magBuild, magStreamingId, onMagStreamDone, magHandlers, onCreateWorkflow, onAddContact, onUploadContacts, onUploadDocuments, boEvents, helpers, onPickJob }: { character: { id: AdminCharacter; name: string; src: string; greeting: string } | null; owl: OwlState; professorEvents?: ProfEvent[]; onAssignProfessorType?: (batchId: string, type: string) => void; brokerEvents?: BrokerEvent[]; brokerFlowActive?: boolean; magicianEvents?: MagicianEvent[]; magBuild?: MagBuildState | null; magStreamingId?: string | null; onMagStreamDone?: (id: string) => void; magHandlers?: MagHandlers; onCreateWorkflow?: () => void; onAddContact?: () => void; onUploadContacts?: (filename: string) => void; onUploadDocuments?: (count: number) => void; boEvents?: { kind: "user" | "hobson" | "jobs"; id: string; text?: string }[]; helpers?: BackOfficeHelper[]; onPickJob?: (h: BackOfficeHelper) => void }) {
+function AdminChat({ character, owl, professorEvents, onAssignProfessorType, brokerEvents, brokerFlowActive, magicianEvents, magBuild, magStreamingId, onMagStreamDone, magHandlers, onCreateWorkflow, onAddContact, onUploadContacts, onUploadDocuments, boEvents, helpers, onPickJob, onPickOffer }: { character: { id: AdminCharacter; name: string; src: string; greeting: string } | null; owl: OwlState; professorEvents?: ProfEvent[]; onAssignProfessorType?: (batchId: string, type: string) => void; brokerEvents?: BrokerEvent[]; brokerFlowActive?: boolean; magicianEvents?: MagicianEvent[]; magBuild?: MagBuildState | null; magStreamingId?: string | null; onMagStreamDone?: (id: string) => void; magHandlers?: MagHandlers; onCreateWorkflow?: () => void; onAddContact?: () => void; onUploadContacts?: (filename: string) => void; onUploadDocuments?: (count: number) => void; boEvents?: { kind: "user" | "hobson" | "jobs" | "chips"; id: string; text?: string; chips?: BackOfficeOffer[]; ariaLabel?: string }[]; helpers?: BackOfficeHelper[]; onPickJob?: (h: BackOfficeHelper) => void; onPickOffer?: (o: BackOfficeOffer) => void }) {
   const [phase, setPhase] = useState<"typing" | "streaming" | "done">("typing");
   const [shown, setShown] = useState("");
   const reducedMotion = typeof window !== "undefined"
@@ -4822,8 +4924,8 @@ function AdminChat({ character, owl, professorEvents, onAssignProfessorType, bro
           </div>
         </div>
       )}
-      {!character && phase === "done" && (!boEvents || boEvents.length === 0) && (
-        <BackOfficeOfferText />
+      {!character && phase === "done" && (!boEvents || boEvents.length === 0) && onPickOffer && (
+        <BackOfficeOfferChips offers={BACK_OFFICE_OFFERS} onPick={onPickOffer} />
       )}
       {!character && phase === "done" && boEvents && boEvents.map((ev) => {
         if (ev.kind === "user") {
@@ -4844,6 +4946,11 @@ function AdminChat({ character, owl, professorEvents, onAssignProfessorType, bro
               </div>
               <JobGrid helpers={helpers} onPick={onPickJob} />
             </div>
+          ) : null;
+        }
+        if (ev.kind === "chips") {
+          return ev.chips && onPickOffer ? (
+            <BackOfficeOfferChips key={ev.id} offers={ev.chips} onPick={onPickOffer} ariaLabel={ev.ariaLabel} />
           ) : null;
         }
         return (
