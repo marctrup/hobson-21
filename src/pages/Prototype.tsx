@@ -7455,7 +7455,7 @@ function BackOfficeStage({
     <div className="absolute inset-0 bg-white overflow-auto">
       <div className="max-w-3xl mx-auto px-6 py-8">
         <div className="mb-6">
-          <h2 className="text-lg font-semibold text-slate-900 mb-1">My team</h2>
+          <h2 className="text-lg font-semibold text-slate-900 mb-1">Meet My Team</h2>
           <p className="text-[12px] text-slate-500 max-w-lg leading-relaxed">
             Each of them looks after one part of your portfolio, so I can give you a single, personal service. You only ever speak to me.
           </p>
