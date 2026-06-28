@@ -7995,7 +7995,7 @@ function BackOfficeWorkbench({
   ];
 
   return (
-    <div ref={containerRef} className="absolute inset-0 bg-[#FAF7F2] overflow-auto">
+    <div ref={containerRef} id="back-office-workbench" className="absolute inset-0 bg-[#FAF7F2] overflow-auto">
       <div className="max-w-3xl mx-auto px-6 py-8 space-y-5">
         {/* Page header */}
         <header className="flex items-start justify-between gap-4">
