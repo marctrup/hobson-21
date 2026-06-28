@@ -514,6 +514,15 @@ function CharacterAvatar({ src, alt }: { src: string; alt: string }) {
   );
 }
 
+// In the left chat, Hobson is the only voice. The Inspector is seen working on the right.
+function HobsonAvatar() {
+  return (
+    <div className="w-10 h-10 shrink-0 rounded-full overflow-hidden bg-[#EDE9FE] ring-1 ring-slate-200 grid place-items-center">
+      <img src={owlDefault} alt="" aria-hidden className="w-full h-full object-contain" />
+    </div>
+  );
+}
+
 function InspectorBubble({
   text,
   showAvatar,
