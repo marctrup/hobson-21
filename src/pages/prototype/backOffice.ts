@@ -43,7 +43,7 @@ export const BACK_OFFICE_HELPERS: BackOfficeHelper[] = [
     contributionLine: "Maintains everything I know from your documents, including leases, licences, plans, reports and every other record you entrust to me.",
     footerLine: "Maintains my knowledge of your portfolio.",
     triggers: ["document", "documents", "lease", "library", "upload", "read", "certificate", "notice", "correspondence", "knowledge", "professor"],
-    narration: "Of course — let me take you to the Professor's library.",
+    narration: "Of course — let me open the document library.",
     themeAccent: "text-amber-700 border-amber-200",
     status: "ready",
   },

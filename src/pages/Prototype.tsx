@@ -1576,7 +1576,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
   // Picking a job from the chat grid — reads as the user asking Hobson for that thing.
   const boPickJob = (h: BackOfficeHelper) => {
     const id = `bo-job-${Date.now()}`;
-    const label = JOB_CATALOGUE[h.id]?.offer ? "Yes please." : h.name;
+    const label = JOB_CATALOGUE[h.id]?.offer ?? h.name;
     setBoEvents((arr) => [...arr, { kind: "user", id, text: label }]);
     setTimeout(() => boEnterRoom(h), 220);
   };
@@ -4652,7 +4652,7 @@ function CharacterAvatar({ src: _src }: { src: string }) {
   return <OwlAvatar state="default" />;
 }
 
-const HOBSON_ADMIN_INTRO = "Welcome to my back office. Here are a few things I could take care of for you — or just tell me what you need.";
+const HOBSON_ADMIN_INTRO = "Welcome to my back office. Everything I need to look after your portfolio begins here. Simply tell me what you'd like me to take care of.";
 
 // Curated jobs Hobson offers to do FOR the user (his voice, as questions).
 // Keyed by helper id so adding a helper in BACK_OFFICE_HELPERS auto-extends the list (if an entry exists).
