@@ -1416,6 +1416,9 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
   const [actionToast, setActionToast] = useState<string | null>(null);
   const [showDocuments, setShowDocuments] = useState(false);
   const [showWhatIveDone, setShowWhatIveDone] = useState(false);
+  // "Meet my team" — user-summonable team wall overlay on the right stage.
+  // In-memory only (no localStorage/sessionStorage); does not disturb the chat.
+  const [showTeamWall, setShowTeamWall] = useState(false);
   const [carriedCardId, setCarriedCardId] = useState<string | null>(null);
   const [performingCardId, setPerformingCardId] = useState<string | null>(null);
   const [reviewingCardId, setReviewingCardId] = useState<string | null>(null);
@@ -3232,7 +3235,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
 
   // Map must stay visible during the onboarding tour (Step 5 uses map search).
   // Honour user preference otherwise.
-  const hasRightOverlay = showDocuments || showWhatIveDone || !!performingCardId || !!reviewingCardId || adminMode;
+  const hasRightOverlay = showDocuments || showWhatIveDone || showTeamWall || !!performingCardId || !!reviewingCardId || adminMode;
   const isExpanded = chatExpanded && view !== "onboarding" && !hasRightOverlay && !adminMode;
 
   return (
@@ -3359,8 +3362,29 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
               </button>
             )}
           </div>
-          {/* Close button removed — the resizable divider (drag / double-click / reset chip)
-              handles collapsing the chat panel, so a separate × is redundant. */}
+          {/* Top-right pair to "Meet Hobson" on the left: a persistent, header-fixed
+              affordance to re-summon the team wall on the right-hand stage.
+              Lives in the chat header (does not scroll with messages).
+              Hidden during the Meet Hobson onboarding to keep that flow focused. */}
+          {view !== "onboarding" && (
+            <button
+              type="button"
+              onClick={() => setShowTeamWall((v) => !v)}
+              aria-pressed={showTeamWall}
+              aria-label={showTeamWall ? "Hide my team" : "Meet my team"}
+              title={showTeamWall ? "Hide my team" : "Meet my team"}
+              className="inline-flex items-center gap-1.5 px-2 py-1 rounded-md text-[11px] font-medium text-[#5B21B6] hover:text-[#4C1D95] hover:bg-[#F5F3FF] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED] transition-colors motion-reduce:transition-none"
+            >
+              {/* Small team/trio icon — visually distinct from the text-only "Meet Hobson" */}
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                <circle cx="9" cy="8" r="3" />
+                <circle cx="17" cy="9" r="2.2" />
+                <path d="M3 19c0-3 3-5 6-5s6 2 6 5" />
+                <path d="M15 19c0-2 2-3.5 4-3.5s2.5 1 2.5 2.5" />
+              </svg>
+              <span>Meet my team</span>
+            </button>
+          )}
         </header>
 
         {/* Onboarding progress / breadcrumb */}
@@ -4083,6 +4107,38 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
             onOpenUnit={(uid, pid) => { setShowWhatIveDone(false); goUnit(uid, pid); }}
             reducedMotion={reduced}
           />
+        )}
+        {/* "Meet my team" — user-summoned team wall overlay on the right-hand stage.
+            The conversation on the left is undisturbed (no reset, no navigation).
+            Z-index sits above documents/what-I've-done so it overlays whatever is
+            currently on the stage, including admin rooms. */}
+        {showTeamWall && (
+          <div className="absolute inset-0 z-[550] bg-white flex flex-col motion-reduce:transition-none">
+            <div className="flex items-center justify-between px-5 h-14 border-b border-slate-100 shrink-0">
+              <div className="flex items-center gap-2">
+                <span className="text-[11px] uppercase tracking-wider text-[#7C3AED] font-semibold">Hobson's back office</span>
+                <span aria-hidden className="text-slate-300">·</span>
+                <h2 className="text-[15px] font-semibold text-slate-900">Meet My Team</h2>
+              </div>
+              <button
+                type="button"
+                onClick={() => setShowTeamWall(false)}
+                aria-label="Close team wall"
+                className="inline-flex items-center justify-center w-8 h-8 rounded-md text-slate-500 hover:text-slate-900 hover:bg-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]"
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M6 6l12 12M18 6L6 18"/></svg>
+              </button>
+            </div>
+            <div className="flex-1 relative">
+              <BackOfficeStage
+                mode="home"
+                helpers={BACK_OFFICE_HELPERS}
+                comingSoonId={null}
+                onEnter={() => { /* purely cosmetic outside Back Office */ }}
+                onReturnHallway={() => setShowTeamWall(false)}
+              />
+            </div>
+          </div>
         )}
         {(performingCardId || reviewingCardId) && (() => {
           const activeId = performingCardId ?? reviewingCardId!;
