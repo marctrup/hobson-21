@@ -7641,7 +7641,7 @@ function BackOfficeWorkbench({
   const [openIds, setOpenIds] = useState<Set<string>>(new Set());
   const [notesOpen, setNotesOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const sectionRefs = useRef<Record<string, HTMLDivElement | null>>({});
+  const sectionRefs = useRef<Record<string, HTMLElement | null>>({});
 
   useEffect(() => {
     if (!jumpSectionId) return;
