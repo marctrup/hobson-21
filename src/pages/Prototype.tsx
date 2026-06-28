@@ -1555,6 +1555,18 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
     setBoShowHallway(true);
   };
 
+  // Picking a job from the chat grid — reads as the user asking Hobson for that thing.
+  const boPickJob = (h: BackOfficeHelper) => {
+    const id = `bo-job-${Date.now()}`;
+    const label = JOB_CATALOGUE[h.id]?.label ?? h.name;
+    setBoEvents((arr) => [...arr, { kind: "user", id, text: label }]);
+    setTimeout(() => boEnterRoom(h), 220);
+  };
+  // Recall the job grid into the conversation.
+  const boShowJobs = () => {
+    setBoEvents((arr) => [...arr, { kind: "jobs", id: `bo-jobs-${Date.now()}` }]);
+  };
+
 
   // ----- Professor library state -----
   const [profDocs, setProfDocs] = useState<ProfDoc[]>(SEED_PROF_DOCS);
