@@ -2634,6 +2634,17 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
     return selectedProperty.units.find((u) => u.id === selectedUnitId) || null;
   }, [selectedProperty, selectedUnitId]);
 
+  const selectedPropertyUnitCounts = useMemo(() => {
+    if (!selectedProperty) return null;
+    let alerts = 0, vacant = 0;
+    selectedProperty.units.forEach((u) => {
+      const d = deriveUnit(u);
+      if (d.hasAlert) alerts += 1;
+      if (d.isVacantConfirmed) vacant += 1;
+    });
+    return { total: selectedProperty.units.length, let: selectedProperty.units.length - vacant, vacant, alerts };
+  }, [selectedProperty]);
+
   const messageGroups = useMemo(() => groupChatMessages(messages), [messages]);
 
   /* ----- scroll behaviour: pin to top when entering a property/unit so the
