@@ -3242,38 +3242,27 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
         </button>
         {adminMode ? (
           <>
-            <div className="flex flex-col items-center w-full" style={{ gap: 24, marginTop: 40 }}>
-              {ADMIN_CHARACTERS.map((c) => (
-                <CharacterRailItem
-                  key={c.id}
-                  name={c.name}
-                  src={c.src}
-                  active={adminCharacter === c.id}
-                  onClick={() => selectAdminCharacter(c.id)}
-                />
-              ))}
-              <CharacterRailItem
-                name="The Keeper"
-                src={characterKeeper}
-              />
+            {/* Back Office: no specialist nav. Rooms + conversation are the navigation. */}
+            <div className="mt-3 flex flex-col items-center gap-1">
+              <span className="text-[9px] uppercase tracking-wider text-slate-400 font-semibold">Back office</span>
             </div>
-            {/* Discreet way out of Admin, well below the characters */}
             <button
               type="button"
               onClick={exitAdmin}
-              aria-label="Exit Admin and return to main menu"
-              title="Exit Admin"
-              className="mt-8 w-[56px] flex flex-col items-center gap-1 py-1.5 rounded-lg text-slate-500 hover:text-[#7C3AED] hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]"
+              aria-label="Exit Back Office and return to main menu"
+              title="Exit Back Office"
+              className="mt-6 w-[56px] flex flex-col items-center gap-1 py-1.5 rounded-lg text-slate-500 hover:text-[#7C3AED] hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]"
             >
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
                 <path d="M15 18l-6-6 6-6"/>
               </svg>
-              <span className="text-[10px] leading-tight text-center">Exit Admin</span>
+              <span className="text-[10px] leading-tight text-center">Exit</span>
             </button>
             <div className="mt-auto flex flex-col items-center gap-3 pb-2">
               <div className="w-9 h-9 rounded-full bg-slate-200 grid place-items-center text-xs font-semibold text-slate-700">MT</div>
             </div>
           </>
+
 
 
         ) : (
