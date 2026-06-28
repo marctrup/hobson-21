@@ -4681,14 +4681,14 @@ function MagicianStreamingBubble({ id, text, src, stream, onDone }: { id: string
     <>
       {phase === "typing" ? (
         <div className="flex items-end gap-2" aria-live="polite">
-          <CharacterAvatar src={src} />
+          <OwlAvatar state="talking" />
           <div className="bg-[#EDE9FE] px-4 py-3 rounded-2xl rounded-bl-md flex items-center gap-1">
             <Dot delay={0} /><Dot delay={150} /><Dot delay={300} />
           </div>
         </div>
       ) : (
         <div className="flex items-end gap-2" aria-live="polite">
-          <CharacterAvatar src={src} />
+          <OwlAvatar state={phase === "streaming" ? "talking" : "default"} />
           <div className="max-w-[420px] bg-[#EDE9FE] text-[#1F2330] text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-bl-md">
             {shown}
             {phase === "streaming" && <span className="inline-block w-1.5 h-3.5 ml-0.5 bg-[#7C3AED] align-middle animate-pulse" />}
