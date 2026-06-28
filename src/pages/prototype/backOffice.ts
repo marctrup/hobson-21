@@ -5,7 +5,13 @@ import characterProfessor from "@/assets/prototype/character-professor.png";
 import characterBroker from "@/assets/prototype/character-broker.png";
 import characterKeeper from "@/assets/prototype/character-keeper.png";
 import characterArchitectAsset from "@/assets/prototype/character-architect.png.asset.json";
+import characterResearcherAsset from "@/assets/prototype/character-researcher.png.asset.json";
+import characterBookkeeperAsset from "@/assets/prototype/character-bookkeeper.png.asset.json";
+import characterCommunicatorAsset from "@/assets/prototype/character-communicator.png.asset.json";
 const characterArchitect = characterArchitectAsset.url;
+const characterResearcher = characterResearcherAsset.url;
+const characterBookkeeper = characterBookkeeperAsset.url;
+const characterCommunicator = characterCommunicatorAsset.url;
 import { INSPECTOR_CHARACTER } from "./Inspector";
 
 export type BackOfficeHelperId =
@@ -108,6 +114,45 @@ export const BACK_OFFICE_HELPERS: BackOfficeHelper[] = [
     triggers: ["user", "users", "role", "permission", "access", "security", "keeper", "audit log", "sign in"],
     narration: "The Keeper hasn't moved in yet — that room is being prepared.",
     themeAccent: "text-emerald-700 border-emerald-200",
+    status: "coming-soon",
+  },
+  {
+    id: "researcher",
+    name: "The Researcher",
+    src: characterResearcher,
+    domain: "Research & Intelligence",
+    tagline: "Finds trusted information beyond your portfolio.",
+    roleTitle: "Research & Intelligence",
+    contributionLine: "Searches trusted sources whenever I need information beyond your portfolio, from comparable evidence and legislation to the latest guidance, notices and industry updates.",
+    triggers: ["research", "researcher", "comparable", "comparables", "legislation", "guidance", "industry update"],
+    narration: "The Researcher is out gathering sources — that room is being prepared.",
+    themeAccent: "text-sky-700 border-sky-200",
+    status: "coming-soon",
+  },
+  {
+    id: "bookkeeper",
+    name: "The Bookkeeper",
+    src: characterBookkeeper,
+    domain: "Calculations & Statements",
+    tagline: "Looks after the numbers, calculations and statements.",
+    roleTitle: "Calculations & Statements",
+    contributionLine: "Looks after anything involving numbers, carrying out calculations, preparing statements and helping me produce accurate financial information.",
+    triggers: ["bookkeeper", "calculation", "calculations", "statement", "statements", "reconciliation", "ledger", "accounts"],
+    narration: "The Bookkeeper is balancing the books — that room is being prepared.",
+    themeAccent: "text-purple-700 border-purple-200",
+    status: "coming-soon",
+  },
+  {
+    id: "communicator",
+    name: "The Communicator",
+    src: characterCommunicator,
+    domain: "Systems & Integrations",
+    tagline: "Connects me securely to your other systems.",
+    roleTitle: "Systems & Integrations",
+    contributionLine: "Connects me securely to your other systems, giving me access to the information I need through trusted integrations and live data connections.",
+    triggers: ["integration", "integrations", "api", "connect", "system", "systems", "communicator"],
+    narration: "The Communicator is wiring things up — that room is being prepared.",
+    themeAccent: "text-indigo-700 border-indigo-200",
     status: "coming-soon",
   },
 ];
