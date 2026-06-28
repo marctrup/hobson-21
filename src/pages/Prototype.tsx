@@ -3114,6 +3114,30 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
   };
 
 
+  /* ----- "show me everything" — open unified back-office workbench on the right stage ----- */
+  const revealWorkbench = (viaText?: string) => {
+    if (viaText && viaText.trim()) {
+      setMessages((m) => [...m, { id: `u-${Date.now()}`, role: "user", text: viaText.trim() }]);
+      setInput("");
+    }
+    setTyping(true);
+    setOwl("talking");
+    const reply = "Of course — here's everything my team holds for you.";
+    const delay = reduced ? 150 : 500;
+    window.setTimeout(() => {
+      setTyping(false);
+      // Close any competing overlay; ensure workbench is the focused stage.
+      setShowTeamWall(false);
+      if (reduced) {
+        setMessages((m) => [...m, { id: `wb-${Date.now()}`, role: "hobson", text: reply }]);
+        setShowWorkbench(true);
+      } else {
+        streamHobsonMessage(reply, () => setShowWorkbench(true));
+      }
+    }, delay);
+  };
+
+
 
   /* ----- summary request (occupational / compliance) — same fn at every level ----- */
   const requestSummary = (kind: "occupational" | "compliance", scope: SummaryScope) => {
