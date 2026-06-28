@@ -1554,6 +1554,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
     setAdminCharacter(null);
     setComingSoonHelperId(null);
     setBoShowHallway(true);
+    setBoEvents([]);
   };
 
   // Picking a job from the chat grid — reads as the user asking Hobson for that thing.
