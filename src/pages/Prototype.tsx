@@ -3839,7 +3839,23 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                 : adminCharacter === "inspector"
                   ? <InspectorComposer buildActive={inspectorBuild !== null} />
                   : !adminCharacter
-                    ? <BackOfficeComposer onSubmit={boAskHobson} />
+                    ? (
+                        <div className="flex flex-col gap-1.5">
+                          {boEvents.length > 0 && (
+                            <div className="flex justify-start">
+                              <button
+                                type="button"
+                                onClick={boShowJobs}
+                                className="text-[11px] text-[#7C3AED] hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]/40 rounded px-1.5 py-0.5"
+                                aria-label="Show what Hobson can do"
+                              >
+                                What can you do?
+                              </button>
+                            </div>
+                          )}
+                          <BackOfficeComposer onSubmit={boAskHobson} />
+                        </div>
+                      )
                     : <LockedComposer view={view} />
 
 
