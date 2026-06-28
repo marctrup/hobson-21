@@ -12729,7 +12729,6 @@ function BreakClauseSample() {
 
 function EicrCompletedSample() {
   const contributors: { name: string; line: string }[] = [
-    { name: "Researcher", line: "checked the current EICR requirement & renewal interval" },
     { name: "Professor", line: "found the existing certificate & its expiry in your documents" },
     { name: "Inspector", line: "confirmed the renewal was due and what's required" },
   ];
