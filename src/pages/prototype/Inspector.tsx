@@ -574,7 +574,7 @@ function UserBubble({ text }: { text: string }) {
 function ResearchingBubble() {
   return (
     <div className="flex items-end gap-2" aria-live="polite">
-      <CharacterAvatar src={INSPECTOR_CHARACTER.src} alt="" />
+      <HobsonAvatar />
       <div className="max-w-[460px] bg-[#EDE9FE] text-[#1F2330] text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-bl-md">
         <span className="inline-flex items-center gap-2">
           <span className="inline-flex gap-1">
