@@ -25,7 +25,6 @@ import {
   AREA_DEFS,
   RESEARCH_BY_AREA,
   augmentComplianceRows,
-  DEFAULT_HS_REQUIREMENTS,
   type ComplianceArea,
   type ComplianceRequirement,
   type InspectorBuild,
