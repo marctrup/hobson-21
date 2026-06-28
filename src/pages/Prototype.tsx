@@ -1515,7 +1515,17 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
     setMagStreamingId(null);
   };
 
-  // Free-text "Ask Hobson" from the Back Office landing (hallway/home).
+  // Workbench jump signal — expand & scroll the matching section in place.
+  const [boJumpSectionId, setBoJumpSectionId] = useState<string | null>(null);
+  const helperToSection: Record<string, string> = {
+    professor: "documents",
+    inspector: "compliance",
+    broker: "people",
+    magician: "workflows",
+    architect: "structure",
+  };
+
+  // Free-text "Ask Hobson" from the Back Office.
   const boAskHobson = (text: string) => {
     const trimmed = text.trim();
     if (!trimmed) return;
@@ -1525,37 +1535,26 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
     setTimeout(() => {
       if (room) {
         setBoEvents((arr) => [...arr, { kind: "hobson", id: `${baseId}-r`, text: room.narration }]);
-        if (room.status === "ready" && (room.id === "magician" || room.id === "professor" || room.id === "broker" || room.id === "inspector")) {
-          setTimeout(() => selectAdminCharacter(room.id as AdminCharacter), 450);
-        }
+        const sec = helperToSection[room.id];
+        if (sec) setTimeout(() => setBoJumpSectionId(sec), 250);
       } else {
-        setBoEvents((arr) => [...arr, { kind: "hobson", id: `${baseId}-r`, text: "Of course. Which would you like — documents, compliance, contacts, or workflows?" }]);
+        setBoEvents((arr) => [...arr, { kind: "hobson", id: `${baseId}-r`, text: "Of course. Which would you like — documents, compliance, contacts, workflows or structure?" }]);
       }
     }, 250);
   };
 
-  // Entering a room from the hallway/home: Hobson narrates the handoff first.
+  // Entering a "room" — now expands the relevant section of the unified workbench.
   const boEnterRoom = (h: BackOfficeHelper) => {
-    if (h.status !== "ready") {
-      const id = `bo-cs-${Date.now()}`;
-      setBoEvents((arr) => [...arr, { kind: "hobson", id, text: h.narration }]);
-      setAdminCharacter(null);
-      setBoShowHallway(false);
-      // Render a coming-soon stage by selecting nothing; the right pane shows the locked room.
-      setComingSoonHelperId(h.id);
-      return;
-    }
-    setComingSoonHelperId(null);
     const id = `bo-enter-${Date.now()}`;
     setBoEvents((arr) => [...arr, { kind: "hobson", id, text: h.narration }]);
-    setTimeout(() => selectAdminCharacter(h.id as AdminCharacter), 300);
+    const sec = helperToSection[h.id];
+    if (sec) setTimeout(() => setBoJumpSectionId(sec), 250);
   };
 
-  const [comingSoonHelperId, setComingSoonHelperId] = useState<string | null>(null);
+  const [comingSoonHelperId] = useState<string | null>(null);
 
   const boReturnToHallway = () => {
     setAdminCharacter(null);
-    setComingSoonHelperId(null);
     setBoShowHallway(true);
     setBoEvents([]);
   };
