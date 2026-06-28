@@ -4430,9 +4430,9 @@ function AdminChat({ character, owl, professorEvents, onAssignProfessorType, bro
     return () => clearTimeout(typingTimer);
   }, [keyId, reducedMotion, text]);
 
-  const Avatar = speaker === "character" && character
-    ? <CharacterAvatar src={character.src} />
-    : <OwlAvatar state={owl} />;
+  // One voice rule: Hobson is the only speaker in the left chat, in every room.
+  // The specialist is seen working on the right but never speaks here.
+  const Avatar = <OwlAvatar state={owl} />;
 
   return (
     <div className="flex flex-col" style={{ gap: CHAT_TURN_GAP_PX }}>
