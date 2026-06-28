@@ -31,6 +31,7 @@ export type BackOfficeHelper = {
   tagline: string;      // hallway one-liner
   roleTitle: string;    // job title under the portrait (e.g. "Knowledge & Memory")
   contributionLine: string; // "so I can…" line tying them back to Hobson
+  footerLine: string;   // credit line on the team card
   triggers: string[];   // lowercase phrases that route Hobson here
   narration: string;    // Hobson's line when entering this room
   themeAccent: string;  // tailwind text/border accent
