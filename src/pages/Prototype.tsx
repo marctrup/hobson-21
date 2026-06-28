@@ -3373,9 +3373,9 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
         )}
       </aside>
 
-      {showBackOfficeGate && (
+      {showBackOfficeGate && createPortal(
         <div
-          className="fixed inset-0 z-[100] bg-slate-900/50 backdrop-blur-sm grid place-items-center p-4"
+          className="fixed inset-0 z-[9999] bg-slate-900/60 backdrop-blur-sm grid place-items-center p-4"
           onClick={() => { setShowBackOfficeGate(false); setBackOfficeGatePassword(""); }}
         >
           <div
@@ -3424,7 +3424,8 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
               </div>
             </form>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
 
 
