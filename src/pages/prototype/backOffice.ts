@@ -14,6 +14,7 @@ export type BackOfficeHelperId =
   | "broker"
   | "magician"
   | "keeper"
+  | "architect"
   | string; // extensible: any future helper id
 
 export type BackOfficeHelper = {
