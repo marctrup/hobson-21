@@ -3439,25 +3439,17 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
               <span>Meet my team</span>
             </button>
           )}
-          {/* "Workbench" — Back Office only. Pinned, obvious button in the
-              chat header so it stays visible as the chat scrolls. Not shown in
-              the main product (it's an Admin/Back Office concept). */}
+          {/* "Workbench" — Back Office only. Static label in the chat header.
+              Not shown in the main product (it's an Admin/Back Office concept). */}
           {adminMode && view !== "onboarding" && (
-            <button
-              type="button"
-              onClick={() => { if (showWorkbench) { setShowWorkbench(false); } else { revealWorkbench("Show me what's been recorded"); } }}
-              aria-pressed={showWorkbench}
-              aria-label={showWorkbench ? "Close workbench" : "Workbench"}
-              title={showWorkbench ? "Close workbench" : "Workbench"}
-              className="ml-1 inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-[12px] font-semibold text-white bg-[#7C3AED] hover:bg-[#6D28D9] focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:ring-[#7C3AED] shadow-sm transition-colors motion-reduce:transition-none"
-            >
+            <div className="ml-1 inline-flex items-center gap-1.5 px-2.5 py-1.5 text-[12px] font-semibold text-[#5B21B6]">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
                 <path d="M12 3l9 5-9 5-9-5 9-5z" />
                 <path d="M3 13l9 5 9-5" />
                 <path d="M3 17l9 5 9-5" />
               </svg>
-              <span>{showWorkbench ? "Close workbench" : "Workbench"}</span>
-            </button>
+              <span>Workbench</span>
+            </div>
           )}
 
         </header>
@@ -4020,20 +4012,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                   ? <InspectorComposer buildActive={inspectorBuild !== null} />
                   : !adminCharacter
                     ? (
-                        <div className="flex flex-col gap-2">
-                          {boEvents.length > 0 && (
-                            <div className="flex justify-start">
-                              <button
-                                type="button"
-                                onClick={boShowJobs}
-                                aria-label="Show what Hobson can do"
-                                className="inline-flex items-center gap-1.5 rounded-full border border-[#7C3AED]/25 bg-[#7C3AED]/5 px-3 py-1 text-[11.5px] text-[#5B21B6] hover:bg-[#7C3AED]/10 hover:border-[#7C3AED]/50 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]/40 transition motion-reduce:transition-none"
-                              >
-                                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 2.5-3 4.5"/><path d="M12 17.5h.01"/></svg>
-                                <span>What can you do?</span>
-                              </button>
-                            </div>
-                          )}
+                           <div className="flex flex-col gap-2">
                           <BackOfficeComposer onSubmit={boAskHobson} />
                         </div>
                       )
