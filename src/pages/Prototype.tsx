@@ -7463,11 +7463,15 @@ function PortraitTile({
   helper: BackOfficeHelper;
   compact?: boolean;
 }) {
-  const isSoon = helper.status === "coming-soon";
+  const isNotReady = helper.status !== "ready";
+  const badgeText = helper.status === "started" ? "Started" : "Joining soon";
+  const badgeClasses = helper.status === "started"
+    ? "bg-sky-50 text-sky-800 border-sky-200"
+    : "bg-amber-50 text-amber-800 border-amber-200";
   return (
     <article
-      className={`relative rounded-2xl border border-slate-200/80 bg-white shadow-sm overflow-hidden ${isSoon ? "opacity-70" : ""}`}
-      aria-label={`${helper.name}, ${helper.roleTitle}. ${helper.contributionLine} One of Hobson's Specialists.${isSoon ? " Joining soon." : ""}`}
+      className={`relative rounded-2xl border border-slate-200/80 bg-white shadow-sm overflow-hidden ${isNotReady ? "opacity-70" : ""}`}
+      aria-label={`${helper.name}, ${helper.roleTitle}. ${helper.contributionLine} One of Hobson's Specialists.${isNotReady ? ` ${badgeText}.` : ""}`}
     >
       <div className={`flex flex-col items-center text-center px-5 ${compact ? "pt-5 pb-3" : "pt-8 pb-4"}`}>
         <div className="relative">
@@ -7479,9 +7483,9 @@ function PortraitTile({
               className={`object-contain ${compact ? "w-14 h-14" : "w-20 h-20"}`}
             />
           </div>
-          {isSoon && (
-            <span className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 text-[10px] px-2 py-0.5 rounded-full bg-amber-50 text-amber-800 border border-amber-200 font-medium whitespace-nowrap">
-              Joining soon
+          {isNotReady && (
+            <span className={`absolute -bottom-1.5 left-1/2 -translate-x-1/2 text-[10px] px-2 py-0.5 rounded-full border font-medium whitespace-nowrap ${badgeClasses}`}>
+              {badgeText}
             </span>
           )}
         </div>
