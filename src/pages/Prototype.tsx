@@ -12872,7 +12872,7 @@ function WorkflowsBackOfficeSection() {
           {(stateFilter === "all" || stateFilter === "completed") && (
             <SampleWfCardShell
               state="completed"
-              title="Stanley House — EICR renewal"
+              title="Health & Safety renewal"
               summary="Completed 3 Jun 2026 · finished with your approval"
               defaultOpen
             >
