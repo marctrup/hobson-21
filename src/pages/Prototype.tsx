@@ -3461,7 +3461,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                 className="w-full flex items-center justify-between gap-3 py-2 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]/40 rounded"
               >
                 <span className="text-[11.5px] uppercase tracking-wide text-slate-500 font-semibold truncate">
-                  Quick overviews{view === "property" ? " · Open a unit" : ""}
+                  Quick overviews{(view === "property" || (view === "unit" && selectedProperty && !selectedProperty.standalone)) ? " · Open a unit" : ""}
                 </span>
                 <span
                   aria-hidden
