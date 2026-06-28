@@ -7684,7 +7684,7 @@ function BackOfficeStage({
             <div className="mt-6 border-t border-slate-200 max-w-xs mx-auto" />
           </div>
           <div className="grid gap-5 grid-cols-1 sm:grid-cols-2" role="list" aria-label="Hobson's team">
-            {helpers.filter((h) => h.id !== "magician").map((h) => (
+            {helpers.map((h) => (
               <PortraitTile key={h.id} helper={h} />
             ))}
           </div>
