@@ -32,6 +32,13 @@ import {
   type RequirementCategory,
   type DurationUnit,
 } from "./prototype/Inspector";
+import {
+  BACK_OFFICE_HELPERS,
+  detectRoomFromMessage,
+  hasEnteredBackOffice,
+  markBackOfficeEntered,
+  type BackOfficeHelper,
+} from "./prototype/backOffice";
 
 
 type AdminCharacter = "magician" | "professor" | "broker" | "inspector";
