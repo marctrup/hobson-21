@@ -234,12 +234,8 @@ export const Homepage = () => {
 
           {/* Audience Strip */}
           <AudienceStrip />
-
-          {/* Features Section */}
-          <FeaturesSection />
-
-          {/* Mobile App Showcase */}
-          <MobileShowcase />
+          {/* Product Showcase — Desktop + Mobile */}
+          <ProductShowcase />
 
 
 
