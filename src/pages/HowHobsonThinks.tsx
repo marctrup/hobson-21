@@ -211,9 +211,7 @@ const HowHobsonThinks: React.FC = () => {
             Never another specialist for every new job.
           </h2>
           <p className="mt-6 text-lg text-slate-600 leading-relaxed">
-            Most AI products grow by adding more bots. Hobson grows differently. New capabilities arrive by
-            <span className="text-purple-700 font-semibold"> orchestrating the same eight specialists in new ways</span> —
-            so the product stays calm, understandable and trustworthy as it expands.
+            Hobson's team is designed to remain stable. As he learns new ways to help, he simply brings together the expertise of the right specialists to complete the task. That means Hobson can continually grow without becoming more complicated to use.
           </p>
           <div className="mt-10 grid sm:grid-cols-3 gap-4 text-left">
             {[
