@@ -4,6 +4,11 @@ import { Link } from "react-router-dom";
 import { HomepageHeader } from "@/components/homepage/HomepageHeader";
 import { HomepageFooter } from "@/components/homepage/HomepageFooter";
 import { ArrowRight, Check } from "lucide-react";
+import {
+  TEAM_INTRO_LABEL,
+  TEAM_INTRO_HEADING,
+  TEAM_INTRO_BODY,
+} from "@/data/teamIntro";
 
 import hobsonOwl from "@/assets/hobson-owl-hero.png";
 import professorImg from "@/assets/prototype/character-professor.png";
