@@ -5,7 +5,7 @@ import { Menu, X, ArrowRight } from "lucide-react";
 import { SimpleButton } from "@/components/ui/simple-button";
 import { OptimizedImage } from "@/components/OptimizedImage";
 import { Helmet } from "react-helmet-async";
-import { PropertyManagementVisualization } from "@/components/homepage/PropertyManagementVisualization";
+import { OrchestrationDemo } from "@/components/homepage/OrchestrationDemo";
 
 import { FeaturesSection } from "@/components/homepage/FeaturesSection";
 import MobileShowcase from "@/components/features/MobileShowcase";
@@ -185,13 +185,9 @@ export const Homepage = () => {
                   
                 </div>
 
-                {/* Right Container - Document to Insights Visualization */}
-                <div className="relative mt-8 lg:mt-[5px] font-space border-[2px] sm:border-[3px] border-gray-500 rounded-lg" style={{
-                transform: 'perspective(1000px) rotateY(-10deg)',
-                transformStyle: 'preserve-3d',
-                boxShadow: '15px 15px 40px rgba(0, 0, 0, 0.06), 8px 8px 25px rgba(0, 0, 0, 0.04)',
-              }}>
-                  <PropertyManagementVisualization />
+                {/* Right Container - Orchestration Demo */}
+                <div className="relative mt-8 lg:mt-[5px]">
+                  <OrchestrationDemo />
                 </div>
 
               </div>
