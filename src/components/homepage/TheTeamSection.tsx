@@ -101,8 +101,8 @@ export const TheTeamSection = () => {
         <div className="mt-20 max-w-5xl mx-auto">
           <div className="flex items-end justify-between gap-4 mb-6">
             <div>
-              <h3 className="text-2xl font-bold text-slate-900">Specialist services</h3>
-              <p className="text-slate-600 text-sm mt-1">Called on whenever I need their expertise.</p>
+              <h3 className="text-2xl font-bold text-slate-900">Specialist Services</h3>
+              <p className="text-slate-600 text-sm mt-1">Whenever Hobson needs specialist expertise, these are the people he calls upon.</p>
             </div>
             <span className="hidden sm:inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-purple-700 bg-white border border-purple-200 rounded-full px-3 py-1.5">
               On demand
