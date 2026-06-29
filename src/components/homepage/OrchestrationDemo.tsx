@@ -288,8 +288,9 @@ export const OrchestrationDemo: React.FC = () => {
             </div>
           </div>
         </div>
+        </div>
 
-        <div className="mt-5 flex items-center justify-between text-xs text-slate-500">
+        <div className="border-t border-purple-100 bg-white/70 backdrop-blur px-4 sm:px-6 py-3 flex items-center justify-between text-xs text-slate-500">
           <span>The user only ever speaks to Hobson.</span>
           <button
             onClick={() => {
