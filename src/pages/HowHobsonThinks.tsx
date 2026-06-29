@@ -439,37 +439,6 @@ const HowHobsonThinks: React.FC = () => {
 
 
 
-      {/* OUTPUTS BELONG TO HOBSON */}
-      <section className="py-20 bg-gradient-to-b from-purple-50/40 to-white">
-        <div className="container mx-auto px-6 grid lg:grid-cols-2 gap-12 items-center">
-          <div>
-            <p className="text-xs font-semibold tracking-[0.2em] text-purple-600 uppercase">Who owns the answer</p>
-            <h2 className="mt-3 text-3xl sm:text-4xl font-bold text-slate-900">Every output belongs to Hobson.</h2>
-            <p className="mt-4 text-lg text-slate-600 leading-relaxed">
-              Specialists contribute expertise. They never speak to you, and they never sign their work.
-              The answer, the workflow, the report, the email, the notice — all of it comes from Hobson, with his name on it.
-            </p>
-            <p className="mt-4 text-slate-600 leading-relaxed">
-              That's the part property professionals tell us feels different.
-              One trusted face. One accountable colleague. No tab-switching, no choosing which assistant to ask.
-            </p>
-          </div>
-          <div className="relative rounded-3xl bg-white border border-purple-100 p-6 shadow-[0_20px_60px_-30px_rgba(124,58,237,0.4)]">
-            <div className="grid grid-cols-2 gap-3">
-              {["Answers","Recommendations","Reports","Emails","Notices","Statements","Workflows","Assessments"].map((o, i) => (
-                <div key={o} className="rounded-xl border border-purple-100 bg-purple-50/40 px-4 py-3 text-sm text-slate-700 font-medium flex items-center gap-2"
-                  style={{ animation: `fade-up 0.6s ease ${i * 60}ms both` }}>
-                  <span className="w-1.5 h-1.5 rounded-full bg-purple-500" /> {o}
-                </div>
-              ))}
-            </div>
-            <div className="mt-5 flex items-center gap-3 rounded-2xl bg-gradient-to-r from-purple-700 to-violet-600 text-white px-4 py-3">
-              <img src={hobsonOwl} alt="" className="w-10 h-10 rounded-full bg-white/20 p-1" />
-              <p className="text-sm font-semibold">All produced by Hobson — once the specialists have done their part.</p>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* CLOSING */}
       <section className="py-24 bg-white">
