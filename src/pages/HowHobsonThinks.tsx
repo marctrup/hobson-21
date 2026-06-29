@@ -420,9 +420,17 @@ const HowHobsonThinks: React.FC = () => {
             <div className="mt-5 flex items-center justify-between text-xs text-slate-500">
               <span>The user only ever speaks to Hobson.</span>
               <button
-                onClick={() => { setPlaying((p) => !p); setCursor(0); }}
+                onClick={() => {
+                  if (finished) {
+                    setCursor(0);
+                    setFinished(false);
+                    setPlaying(true);
+                  } else {
+                    setPlaying((p) => !p);
+                  }
+                }}
                 className="px-3 py-1.5 rounded-full bg-white border border-purple-200 text-purple-700 hover:bg-purple-50 font-semibold">
-                {playing ? "Pause" : "Replay"}
+                {finished ? "Replay" : playing ? "Pause" : "Resume"}
               </button>
             </div>
           </div>
