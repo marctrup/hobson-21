@@ -410,7 +410,8 @@ export const CONTENT = {
   // Navigation (used in GlobalHeader and Homepage)
   navigation: {
     links: [
-      { to: "/how-hobson-thinks", label: "How Hobson Thinks", title: "How Hobson Thinks" },
+      { to: "/features", label: "Features", title: "What Hobson does, how it works, why it matters" },
+      { to: "/in-practice", label: "In Practice", title: "Real property work, real results" },
       { to: "/pricing", label: "Pricing", title: "Hobson AI Pricing Plans" },
       { to: "/blog", label: "Blog", title: "Property Management Insights" },
     ],
