@@ -5,19 +5,19 @@ const points = [
   {
     icon: MessageSquare,
     title: "One conversation",
-    body: "Always with Hobson. You never choose which AI to ask.",
+    body: "You'll always speak to me. There's never another AI to choose.",
     tone: { icon: "text-primary", bg: "bg-primary/10" },
   },
   {
     icon: GitBranch,
     title: "One orchestrator",
-    body: "Hobson decides who is needed and in what order.",
+    body: "I decide which specialists I need and quietly coordinate their work.",
     tone: { icon: "text-accent-teal", bg: "bg-accent-teal/10" },
   },
   {
     icon: Users,
     title: "Eight specialists",
-    body: "Four maintain his memory. Four bring expertise on demand.",
+    body: "Four help me maintain my understanding. Four provide specialist expertise whenever I need it.",
     tone: { icon: "text-accent-amber", bg: "bg-accent-amber/15" },
   },
 ];
@@ -50,7 +50,7 @@ export const TrustedConversationSection = () => {
           {/* Intro paragraph */}
           <div className="max-w-3xl mx-auto text-center mb-10 sm:mb-14">
             <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
-              You only ever speak to Hobson. Behind him stands a small, carefully chosen team of specialists — each with one job. Hobson decides who is needed, in what order, and brings their work together as a single answer.
+              You'll only ever speak to me. Behind me is a carefully chosen team of agents, each responsible for one area of expertise. Some help me maintain my understanding of your portfolio, while others provide specialist services whenever I need them. I decide who to involve, quietly coordinate their work and bring everything together into one clear answer.
             </p>
           </div>
 
