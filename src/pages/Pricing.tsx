@@ -125,10 +125,9 @@ const Pricing = () => {
         { text: "Sourced, auditable answers", ok: true },
         { text: formatLimit(t1.monthly_extractions, "document extractions"), ok: true },
         { text: formatLimit(t1.monthly_questions, "questions"), ok: true },
-        
-        { text: "Business Memory", ok: false },
-        { text: "Proactive Work", ok: false },
-        { text: "Learns How You Work", ok: false },
+        { text: "Business Memory", ok: true },
+        { text: "Proactive Work", ok: true },
+        { text: "Learns How You Work", ok: true },
       ],
       cta: "Join the waitlist", ctaStyle: "outline" as const, waitlist: true,
       muted: null,
