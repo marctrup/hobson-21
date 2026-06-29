@@ -107,8 +107,48 @@ const HowHobsonThinks: React.FC = () => {
   const [hasStarted, setHasStarted] = useState(false);
   const orchestrationRef = useRef<HTMLElement>(null);
 
+  const [introPhase, setIntroPhase] = useState(0); // 0=idle,1=typing-user,2=typing-hobson,3=done
+  const [introUserIdx, setIntroUserIdx] = useState(0);
+  const [introHobsonIdx, setIntroHobsonIdx] = useState(0);
+
+  // Kick off intro typing when play begins
   useEffect(() => {
-    if (!playing || finished) return;
+    if (!playing || introPhase !== 0) return;
+    setIntroPhase(1);
+  }, [playing, introPhase]);
+
+  // Type user message
+  useEffect(() => {
+    if (introPhase !== 1 || !playing) return;
+    if (introUserIdx >= USER_INTRO.length) {
+      const t = setTimeout(() => setIntroPhase(2), 500);
+      return () => clearTimeout(t);
+    }
+    const t = setTimeout(() => setIntroUserIdx((i) => i + 1), 30);
+    return () => clearTimeout(t);
+  }, [introPhase, introUserIdx, playing]);
+
+  // Type Hobson reply
+  useEffect(() => {
+    if (introPhase !== 2 || !playing) return;
+    if (introHobsonIdx >= HOBSON_INTRO.length) {
+      const t = setTimeout(() => setIntroPhase(3), 600);
+      return () => clearTimeout(t);
+    }
+    const t = setTimeout(() => setIntroHobsonIdx((i) => i + 1), 30);
+    return () => clearTimeout(t);
+  }, [introPhase, introHobsonIdx, playing]);
+
+  // Jump cursor to INTRO_BEATS once typing is finished so specialists begin
+  useEffect(() => {
+    if (introPhase === 3 && cursor < INTRO_BEATS) {
+      setCursor(INTRO_BEATS);
+    }
+  }, [introPhase, cursor]);
+
+  // Specialist + final progression
+  useEffect(() => {
+    if (!playing || finished || introPhase < 3) return;
     const id = setInterval(() => {
       setCursor((c) => {
         if (c >= endCursor) {
@@ -120,7 +160,7 @@ const HowHobsonThinks: React.FC = () => {
       });
     }, 700);
     return () => clearInterval(id);
-  }, [playing, finished, endCursor]);
+  }, [playing, finished, endCursor, introPhase]);
 
   // Start animation when "See him at work" scrolls into view
   useEffect(() => {
