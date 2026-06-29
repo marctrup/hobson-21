@@ -236,39 +236,69 @@ export const Homepage = () => {
           <AudienceStrip />
 
           {/* Product Screenshot — Document Q&A */}
-          <section className="py-12 sm:py-16 md:py-20 bg-background" aria-labelledby="screenshot-heading">
+          <section className="py-16 sm:py-20 md:py-24 bg-background overflow-hidden" aria-labelledby="screenshot-heading">
             <div className="container mx-auto px-4">
-              <div className="max-w-5xl mx-auto text-center">
-                <h2
-                  id="screenshot-heading"
-                  className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-4"
-                >
-                  Ask once. Get the full picture.
-                </h2>
-                <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto mb-10 sm:mb-14">
-                  Hobson reads every document you share, understands the relationships between them, and answers your questions with confidence — always citing his sources.
-                </p>
-                <div className="rounded-2xl border border-border/60 bg-gradient-to-b from-background to-muted/30 shadow-xl overflow-hidden">
-                  <img
-                    src={documentAnswerAsset.url}
-                    alt="Hobson answering a rent review question by referencing two uploaded tenancy documents and showing the answer alongside a property map"
-                    className="w-full h-auto"
-                    loading="lazy"
-                  />
+              <div className="max-w-6xl mx-auto">
+                <div className="max-w-2xl mb-12 md:mb-16">
+                  <h2
+                    id="screenshot-heading"
+                    className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4"
+                  >
+                    Ask once. Get the full picture.
+                  </h2>
+                  <p className="text-lg sm:text-xl text-muted-foreground">
+                    Hobson reads every document you share, understands the relationships between them, and answers your questions with confidence — always citing his sources.
+                  </p>
                 </div>
-                <div className="mt-6 flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-muted-foreground">
-                  <span className="inline-flex items-center gap-1.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-primary" />
-                    Answers from multiple documents
-                  </span>
-                  <span className="inline-flex items-center gap-1.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-primary" />
-                    Every source cited
-                  </span>
-                  <span className="inline-flex items-center gap-1.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-primary" />
-                    Property context on every reply
-                  </span>
+
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
+                  {/* Screenshot with creative framing */}
+                  <div className="lg:col-span-7">
+                    <div className="relative perspective-1000">
+                      <div className="absolute -inset-6 bg-gradient-to-br from-primary/15 via-transparent to-primary/5 rounded-[2rem] blur-2xl opacity-50" />
+                      <div className="relative rounded-2xl border border-border/60 bg-gradient-to-b from-background to-muted/20 shadow-2xl overflow-hidden">
+                        <img
+                          src="/hobson-document-answer-focused.png"
+                          alt="Hobson answering a property question by referencing uploaded tenancy documents, showing the complete response with cited sources"
+                          className="w-full h-auto"
+                          loading="lazy"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Feature narrative */}
+                  <div className="lg:col-span-5 space-y-10">
+                    <div className="flex gap-5">
+                      <div className="shrink-0 w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
+                        <FileText className="w-6 h-6 text-primary" />
+                      </div>
+                      <div>
+                        <h3 className="text-lg font-semibold text-foreground mb-1">Answers from multiple documents</h3>
+                        <p className="text-muted-foreground leading-relaxed">Hobson reads every lease, schedule, and agreement you share, then connects the dots between them.</p>
+                      </div>
+                    </div>
+
+                    <div className="flex gap-5">
+                      <div className="shrink-0 w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
+                        <CheckCircle className="w-6 h-6 text-primary" />
+                      </div>
+                      <div>
+                        <h3 className="text-lg font-semibold text-foreground mb-1">Every source cited</h3>
+                        <p className="text-muted-foreground leading-relaxed">Every response points back to the exact document and clause so you can verify with confidence.</p>
+                      </div>
+                    </div>
+
+                    <div className="flex gap-5">
+                      <div className="shrink-0 w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
+                        <Building2 className="w-6 h-6 text-primary" />
+                      </div>
+                      <div>
+                        <h3 className="text-lg font-semibold text-foreground mb-1">Property context on every reply</h3>
+                        <p className="text-muted-foreground leading-relaxed">Hobson understands your portfolio, your units, and your obligations — not just the words on the page.</p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
