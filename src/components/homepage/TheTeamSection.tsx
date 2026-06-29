@@ -22,7 +22,7 @@ type Specialist = {
 
 const PERSISTENT: Specialist[] = [
   { name: "The Professor", owns: "Portfolio Knowledge", img: professorImg, tone: "persistent",
-    blurb: "Reads every lease, licence, report and certificate you entrust to Hobson — and remembers." },
+    blurb: "Maintains everything I know from your documents — leases, licences, plans, reports and every other record you entrust to me." },
   { name: "The Architect", owns: "Portfolio Structure", img: architectImg, tone: "persistent",
     blurb: "Maintains everything I know from your documents — leases, licences, plans, reports and every other record you entrust to me." },
   { name: "The Inspector", owns: "Compliance Position", img: inspectorImg, tone: "persistent",
