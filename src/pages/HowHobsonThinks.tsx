@@ -189,20 +189,6 @@ const HowHobsonThinks: React.FC = () => {
               <div className="absolute inset-0 grid place-items-center" style={{ animation: "float-slow 6s ease-in-out infinite" }}>
                 <img src={hobsonOwl} alt="Hobson" className="w-80 lg:w-[26rem] drop-shadow-[0_30px_40px_rgba(124,58,237,0.35)]" />
               </div>
-              {/* Mini specialist orbs */}
-              {[professorImg, researcherImg, bookkeeperImg, brokerImg, inspectorImg, keeperImg].map((src, i, arr) => {
-                const angle = (i / arr.length) * Math.PI * 2 - Math.PI / 2;
-                const r = 220;
-                const x = Math.cos(angle) * r;
-                const y = Math.sin(angle) * r;
-                return (
-                  <div key={i}
-                    className="absolute left-1/2 top-1/2 w-16 h-16 -ml-8 -mt-8 rounded-2xl bg-white border border-purple-100 grid place-items-center shadow-lg"
-                    style={{ transform: `translate(${x}px, ${y}px)`, animation: `fade-up 0.6s ease ${300 + i * 100}ms both` }}>
-                    <img src={src} alt="" className="w-12 h-12 object-contain" />
-                  </div>
-                );
-              })}
             </div>
           </div>
         </div>
