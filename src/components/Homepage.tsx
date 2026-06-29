@@ -7,8 +7,7 @@ import { OptimizedImage } from "@/components/OptimizedImage";
 import { Helmet } from "react-helmet-async";
 import { OrchestrationDemo } from "@/components/homepage/OrchestrationDemo";
 
-import { FeaturesSection } from "@/components/homepage/FeaturesSection";
-import MobileShowcase from "@/components/features/MobileShowcase";
+import ProductShowcase from "@/components/homepage/ProductShowcase";
 
 import { PilotApplicationForm } from "@/components/homepage/PilotApplicationForm";
 
@@ -235,12 +234,8 @@ export const Homepage = () => {
 
           {/* Audience Strip */}
           <AudienceStrip />
-
-          {/* Features Section */}
-          <FeaturesSection />
-
-          {/* Mobile App Showcase */}
-          <MobileShowcase />
+          {/* Product Showcase — Desktop + Mobile */}
+          <ProductShowcase />
 
 
 
