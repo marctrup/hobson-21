@@ -21,18 +21,18 @@ type Specialist = {
 };
 
 const PERSISTENT: Specialist[] = [
-  { name: "The Professor", owns: "Portfolio Knowledge", img: professorImg, tone: "persistent",
+  { name: "The Professor", owns: "Knowledge & Memory", img: professorImg, tone: "persistent",
     blurb: "Maintains everything I know from your documents — leases, licences, plans, reports and every other record you entrust to me." },
-  { name: "The Architect", owns: "Portfolio Structure", img: architectImg, tone: "persistent",
+  { name: "The Architect", owns: "Properties & Units", img: architectImg, tone: "persistent",
     blurb: "Keeps the structure of your estate accurate — units, properties, hierarchies and groupings — so I always understand how everything fits together." },
   { name: "The Inspector", owns: "Compliance Position", img: inspectorImg, tone: "persistent",
-    blurb: "Compares what is known against what is required, helping me understand your compliance position and identify anything that's missing." },
-  { name: "The Broker", owns: "Relationships", img: brokerImg, tone: "persistent",
+    blurb: "Maintains my understanding of your compliance position by comparing what is known against what is required, and quietly identifying anything that's missing." },
+  { name: "The Broker", owns: "Relationships & Contacts", img: brokerImg, tone: "persistent",
     blurb: "Maintains my understanding of the people and organisations connected to your portfolio, so I always know who I'm working with." },
 ];
 
 const SERVICES: Specialist[] = [
-  { name: "The Researcher", owns: "External Research", img: researcherImg, tone: "service",
+  { name: "The Researcher", owns: "Research & Intelligence", img: researcherImg, tone: "service",
     blurb: "Finds trusted information beyond your portfolio whenever I need it, including legislation, public records, market evidence and industry guidance." },
   { name: "The Bookkeeper", owns: "Calculations & Finance", img: bookkeeperImg, tone: "service",
     blurb: "Performs calculations, reconciliations and financial analysis whenever I need accurate figures or statements." },
