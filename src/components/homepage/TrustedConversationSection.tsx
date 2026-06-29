@@ -1,4 +1,5 @@
 import { MessageSquare, GitBranch, Users } from "lucide-react";
+import owlMascot from "@/assets/owl-mascot.png";
 
 const points = [
   {
