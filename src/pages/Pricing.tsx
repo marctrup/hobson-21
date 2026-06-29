@@ -40,17 +40,17 @@ const faqGroups = [
     heading: "Getting Started & Trials",
     items: [
       { q: "Is there a free trial?", a: "Yes. Tier 1 comes with a free 3-day trial — no credit card required. You can upload your first document and start asking questions about it within minutes of signing up. Tier 2, 3 and 4 are available to join the waitlist ahead of their launch later this year, with founding member pricing locked in for early signups." },
-      { q: "When will Tiers 2, 3 and 4 be available?", a: "Tiers 2, 3 and 4 — which unlock the full Knowledge Base platform, workflow automation and action memory — are launching later this year. Join the waitlist now to be notified first and to lock in founding member pricing before public launch." },
-      { q: "Can I start on Tier 1 and upgrade later?", a: "Yes. When you upgrade to Tier 2 or above, everything you have already taught Hobson stays. Your documents remain in your account. Your Knowledge Base carries over. There is no reset, no re-upload and no loss of work. Upgrading simply unlocks the next layer of capability on top of what you have already built." },
+      { q: "When will Tiers 2, 3 and 4 be available?", a: "Tiers 2, 3 and 4 — which unlock Business Memory, Proactive Work and the ability for Hobson to learn how you work — are launching later this year. Join the waitlist now to be notified first and to lock in founding member pricing before public launch." },
+      { q: "Can I start on Tier 1 and upgrade later?", a: "Yes. When you upgrade to Tier 2 or above, everything you have already taught Hobson stays. Your documents remain in your account. Your Business Memory carries over. There is no reset, no re-upload and no loss of work. Upgrading simply unlocks the next layer of capability on top of what you have already built." },
       { q: "Can I use Hobson on my phone?", a: "Yes. Hobson has a mobile version available on Tier 1, giving you access to your portfolio documents and AI query capability from anywhere. No desktop required to get started." },
     ],
   },
   {
     heading: "Understanding The Tiers",
     items: [
-      { q: "What is the difference between Tier 1 and Tiers 2, 3 and 4?", a: "Tier 1 gives you Hobson's AI document reasoning — ask anything across your leases, contracts and compliance documents and get instant, sourced, auditable answers. What it does not have is the Knowledge Base. Hobson on Tier 1 knows your documents. It does not yet know your business. Tiers 2, 3 and 4 unlock the full platform — the Knowledge Base, workflow automation, action memory, monthly impact summaries and personal shortcuts. Every feature and capability is identical across Tiers 2, 3 and 4. The only difference is how many seats you need. Same Hobson, more people, better value per seat as you scale." },
-      { q: "What is the Knowledge Base?", a: "The Knowledge Base is Hobson's persistent memory about your business. You tell Hobson who your contractors are, how you handle rent arrears, what your approval thresholds are, how you like your reports formatted — and it remembers permanently. Every answer and every action it takes reflects what it knows about how your business operates. It is what transforms Hobson from a smart document tool into an AI that behaves like an informed member of your team. The Knowledge Base is included in Tiers 2, 3 and 4 and becomes more valuable the longer you use it." },
-      { q: "What happens to my Knowledge Base if I leave?", a: "Your data belongs to you and can be exported at any time. However it is worth understanding what leaving means in practice — the institutional memory Hobson has built about your business, your contractors, your preferences and your compliance history does not transfer to another tool. That knowledge lives in Hobson because Hobson built it. The longer you use Hobson at Tier 2 or above, the more valuable that memory becomes." },
+      { q: "What is the difference between Tier 1 and Tiers 2, 3 and 4?", a: "Tier 1 gives you Hobson's AI document reasoning — ask anything across your leases, contracts and compliance documents and get instant, sourced, auditable answers. What it does not have is Business Memory, Proactive Work and the ability for Hobson to learn how you work. Hobson on Tier 1 knows your documents. It does not yet know your business. Tiers 2, 3 and 4 unlock the full platform — Business Memory, Proactive Work, the ability for Hobson to learn how you work, monthly activity summaries and personal working preferences. Every feature and capability is identical across Tiers 2, 3 and 4. The only difference is how many seats you need. Same Hobson, more people, better value per seat as you scale." },
+      { q: "What is Business Memory?", a: "Business Memory is Hobson's persistent memory about your business. You tell Hobson who your contractors are, how you handle rent arrears, what your approval thresholds are, how you like your reports formatted — and it remembers permanently. Every answer and every action it takes reflects what it knows about how your business operates. It is what transforms Hobson from a smart document tool into an AI that behaves like an informed member of your team. Business Memory is included in Tiers 2, 3 and 4 and becomes more valuable the longer you use it." },
+      { q: "What happens to my Business Memory if I leave?", a: "Your data belongs to you and can be exported at any time. However it is worth understanding what leaving means in practice — the institutional memory Hobson has built about your business, your contractors, your preferences and your compliance history does not transfer to another tool. That knowledge lives in Hobson because Hobson built it. The longer you use Hobson at Tier 2 or above, the more valuable that memory becomes." },
       { q: "What if I need more than 10 seats?", a: "Enterprise pricing is available for organisations with more than 10 users. Enterprise packages are based on usage and portfolio size rather than headcount, and include bespoke onboarding and dedicated support. Contact the team at rochelle.t@hobsonschoice.ai to discuss your requirements." },
     ],
   },
@@ -59,7 +59,7 @@ const faqGroups = [
     items: [
       { q: "What does annual billing mean and how does the 20% saving work?", a: "Annual billing means you pay for twelve months upfront in a single payment. The saving versus monthly billing is 20% across all tiers. Tier 1 billed annually costs £187 upfront — equivalent to £15.60 per month. Tier 2 costs £1,584 upfront — equivalent to £132 per month. Tier 3 costs £2,400 upfront — equivalent to £200 per month. Tier 4 costs £4,320 upfront — equivalent to £360 per month. Monthly billing is available at the standard rate if you prefer flexibility." },
       { q: "What if I need more documents or questions than my tier includes?", a: "No problem. Additional document ingestion is available at £0.30 per document, charged once only — the same document is never charged twice. Once Hobson has read and understood a document it stays in your account permanently at no further cost. For additional questions during busy periods, top-up packs are available at £7.50 per 100 questions. You are always in control of what you spend." },
-      { q: "Do I need technical skills to set up or use Hobson?", a: "No. Hobson is designed to be used in plain English. You ask questions the way you would ask a colleague — \"When is the next rent review on Unit 4?\" or \"Which of my properties have EPC certificates expiring in the next six months?\" — and Hobson answers directly from your documents and Knowledge Base. No technical training, no complex interfaces, no specialist knowledge required." },
+      { q: "Do I need technical skills to set up or use Hobson?", a: "No. Hobson is designed to be used in plain English. You ask questions the way you would ask a colleague — \"When is the next rent review on Unit 4?\" or \"Which of my properties have EPC certificates expiring in the next six months?\" — and Hobson answers directly from your documents and Business Memory. No technical training, no complex interfaces, no specialist knowledge required." },
     ],
   },
   {
@@ -68,8 +68,8 @@ const faqGroups = [
       { q: "We are not a property management company — we are a retailer or hospitality business with leases. Is Hobson for us?", a: "Yes — and this is one of the most important things to understand about Hobson. It is built for any business where property is a material operating cost, not just businesses whose primary activity is property management. A retailer with 30 store leases, a restaurant group with 15 sites, or a corporate with a regional office estate all face exactly the same obligations — rent reviews, break clauses, EPC deadlines, compliance certificates — and Hobson manages all of them. You do not need to be in the property industry to benefit. You just need property to be part of how your business operates." },
       { q: "We already use property management software. Do we need to replace it?", a: "No. Hobson is designed to work alongside your existing systems, not replace them. Your current software stores and organises information. Hobson reasons across it, acts on it and delivers the work your team currently does manually. There is no rip-and-replace requirement. Hobson connects to your existing document sources and operates inside your current workflows — adding an intelligence layer on top of what you already have." },
       { q: "Does Hobson help with Building Safety Act and EPC compliance?", a: "Yes. Hobson reads your compliance certificates, builds a live register, flags upcoming deadlines at 90, 60 and 30 days, instructs contractors, verifies completed certificates and files the outcome automatically. This applies to EPC obligations, Building Safety Act requirements, fire safety, EICR, gas safety, HMO licensing, Legionella, asbestos and other compliance categories. Compliance deadlines exist whether or not you manage them efficiently — Hobson makes sure they are never missed." },
-      { q: "How does Hobson handle documents it cannot find an answer in?", a: "Hobson never guesses. If the information you are asking about does not exist in your documents or Knowledge Base, Hobson tells you clearly rather than generating a plausible but potentially incorrect answer. Every answer Hobson provides is sourced and auditable — you can see exactly which document and clause each answer came from. For regulated property decisions, that auditability is not optional. It is essential." },
-      { q: "Where is my data stored and is it secure?", a: "All data is encrypted and UK-hosted. Hobson is aligned to ISO 27001 standards. Your data is never used to train AI models — not Hobson's and not any third-party model. Your documents, your Knowledge Base and your business information remain entirely within your account and are never shared with or visible to other clients." },
+      { q: "How does Hobson handle documents it cannot find an answer in?", a: "Hobson never guesses. If the information you are asking about does not exist in your documents or Business Memory, Hobson tells you clearly rather than generating a plausible but potentially incorrect answer. Every answer Hobson provides is sourced and auditable — you can see exactly which document and clause each answer came from. For regulated property decisions, that auditability is not optional. It is essential." },
+      { q: "Where is my data stored and is it secure?", a: "All data is encrypted and UK-hosted. Hobson is aligned to ISO 27001 standards. Your data is never used to train AI models — not Hobson's and not any third-party model. Your documents, your Business Memory and your business information remain entirely within your account and are never shared with or visible to other clients." },
     ],
   },
 ];
@@ -155,7 +155,7 @@ const Pricing = () => {
 
   const tiers = [
     {
-      tier: 1, seats: "1 seat", perSeat: null, label: "No Knowledge Base",
+      tier: 1, seats: "1 seat", perSeat: null, label: "Ideal for individuals",
       priceMonthly: 19.50, priceAnnualMonthly: 15.60, priceAnnualYearly: 187.20,
       badge: "live" as const, badgeText: "Live very soon",
       features: (p: typeof pricing) => [
@@ -165,62 +165,62 @@ const Pricing = () => {
         { text: formatLimit(t1.monthly_extractions, "document extractions"), ok: true },
         { text: formatLimit(t1.monthly_questions, "questions"), ok: true },
         
-        { text: "Knowledge Base", ok: false },
-        { text: "Workflow automation", ok: false },
-        { text: "Action memory", ok: false },
+        { text: "Business Memory", ok: false },
+        { text: "Proactive Work", ok: false },
+        { text: "Learns How You Work", ok: false },
       ],
       cta: "Join the waitlist", ctaStyle: "outline" as const, waitlist: true,
       muted: null,
     },
     {
-      tier: 2, seats: "2 seats", perSeat: "£82.50/seat", label: "Full platform",
+      tier: 2, seats: "2 seats", perSeat: "£82.50/seat", label: "Ideal for small teams",
       priceMonthly: 165.00, priceAnnualMonthly: 132.00, priceAnnualYearly: 1584.00,
       badge: "coming" as const, badgeText: "Coming later this year",
       features: () => [
         { text: "Everything in Tier 1", ok: true },
-        { text: "Knowledge Base", ok: true },
+        { text: "Business Memory", ok: true },
         { text: formatLimit(t2.monthly_extractions, "document extractions"), ok: true },
         { text: formatLimit(t2.monthly_questions, "questions"), ok: true },
-        { text: "Workflow automation", ok: true },
-        { text: "Action memory", ok: true },
-        { text: "Monthly impact summaries", ok: true },
-        { text: "Personal shortcuts", ok: true },
+        { text: "Proactive Work", ok: true },
+        { text: "Learns How You Work", ok: true },
+        { text: "Monthly Activity Summary", ok: true },
+        { text: "Personal Working Preferences", ok: true },
       ],
       cta: "Join the waitlist", ctaStyle: "outline" as const, waitlist: true,
       muted: null,
     },
     {
-      tier: 3, seats: "5 seats", perSeat: "£50.00/seat", label: "Full platform",
+      tier: 3, seats: "5 seats", perSeat: "£50.00/seat", label: "Ideal for growing businesses",
       priceMonthly: 250.00, priceAnnualMonthly: 200.00, priceAnnualYearly: 2400.00,
       badge: "coming" as const, badgeText: "Coming later this year",
       
       features: () => [
         { text: "Everything in Tier 1", ok: true },
-        { text: "Knowledge Base", ok: true },
+        { text: "Business Memory", ok: true },
         { text: formatLimit(t3.monthly_extractions, "document extractions"), ok: true },
         { text: formatLimit(t3.monthly_questions, "questions"), ok: true },
-        { text: "Workflow automation", ok: true },
-        { text: "Action memory", ok: true },
-        { text: "Monthly impact summaries", ok: true },
-        { text: "Personal shortcuts", ok: true },
+        { text: "Proactive Work", ok: true },
+        { text: "Learns How You Work", ok: true },
+        { text: "Monthly Activity Summary", ok: true },
+        { text: "Personal Working Preferences", ok: true },
       ],
       cta: "Join the waitlist", ctaStyle: "outline" as const, waitlist: true,
       muted: null,
     },
     {
-      tier: 4, seats: "10 seats", perSeat: "£45.00/seat", label: "Full platform",
+      tier: 4, seats: "10 seats", perSeat: "£45.00/seat", label: "Ideal for larger organisations",
       priceMonthly: 450.00, priceAnnualMonthly: 360.00, priceAnnualYearly: 4320.00,
       badge: "coming" as const, badgeText: "Coming later this year",
       
       features: () => [
         { text: "Everything in Tier 1", ok: true },
-        { text: "Knowledge Base", ok: true },
+        { text: "Business Memory", ok: true },
         { text: formatLimit(t4.monthly_extractions, "document extractions"), ok: true },
         { text: formatLimit(t4.monthly_questions, "questions"), ok: true },
-        { text: "Workflow automation", ok: true },
-        { text: "Action memory", ok: true },
-        { text: "Monthly impact summaries", ok: true },
-        { text: "Personal shortcuts", ok: true },
+        { text: "Proactive Work", ok: true },
+        { text: "Learns How You Work", ok: true },
+        { text: "Monthly Activity Summary", ok: true },
+        { text: "Personal Working Preferences", ok: true },
       ],
       cta: "Join the waitlist", ctaStyle: "outline" as const, waitlist: true,
       muted: null,
@@ -299,7 +299,7 @@ const Pricing = () => {
               <span style={{ color: C.navy }}>Choose your </span>
               <span style={{ background: `linear-gradient(90deg, ${C.purple}, ${C.teal})`, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>plan</span>
             </h1>
-            <p className="text-base sm:text-lg text-muted-foreground mb-8 text-center">Tier 1 knows your documents. Tier 2 – 4 knows your business.</p>
+            <p className="text-base sm:text-lg text-muted-foreground mb-8 text-center">Every plan includes the complete Hobson experience. Choose the plan that best matches the size of your team and the amount of work you'd like Hobson to take care of.</p>
 
             {/* Billing toggle */}
             <div className="flex flex-wrap items-center justify-center gap-2 mb-8">
@@ -495,50 +495,23 @@ const Pricing = () => {
 
         {/* VALUE LADDER CALLOUT */}
         <section className="py-10 sm:py-14 md:py-20 px-4 sm:px-6" style={{ background: `linear-gradient(135deg, ${C.amberSoft}, ${C.tealSoft})` }}>
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3" style={{ color: C.navy }}>
-              Why does each tier become more valuable?
+          <div className="max-w-4xl mx-auto text-center space-y-6">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold" style={{ color: C.navy }}>
+              Why do the plans change?
             </h2>
-            <p className="text-lg sm:text-xl font-medium mb-10" style={{ color: C.purple }}>
-              Tier 1 gives you Hobson with knowledge. Tiers 2–4 give Hobson an increasingly capable team.
-            </p>
-
-            {/* Universal truth pill */}
-            <div className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 mb-10" style={{ background: C.purpleBadgeBg, color: C.purple }}>
-              <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M10 1l2.5 6.5L19 8.5l-5 4.5 1.5 6.5-5.5-3.5-5.5 3.5L6 13 1 8.5l6.5-1L10 1z" fill="currentColor"/></svg>
-              <span className="text-sm font-semibold">Every Hobson plan includes Hobson himself</span>
-            </div>
-
-            {/* Tier journey */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-left mb-10">
-              {[
-                { tier: "Tier 1", label: "Hobson learns", body: "Hobson reads and understands your documents. You can ask anything and get sourced, accurate answers.", colour: C.amber, bg: C.amberSoft },
-                { tier: "Tiers 2 – 3", label: "Hobson understands", body: "Hobson begins to understand your portfolio structure, your compliance position, your people and how your business operates.", colour: C.purple, bg: C.callout },
-                { tier: "Tier 4", label: "Hobson coordinates", body: "Hobson can coordinate specialists, prepare work, monitor what matters and take on increasingly valuable responsibilities on your behalf.", colour: C.teal, bg: C.tealSoft },
-              ].map((step) => (
-                <div key={step.tier} className="rounded-xl p-5 sm:p-6" style={{ background: C.bg, border: `1px solid ${C.border}`, borderTop: `4px solid ${step.colour}` }}>
-                  <p className="text-xs font-bold uppercase tracking-wider mb-1" style={{ color: step.colour }}>{step.tier}</p>
-                  <p className="text-base font-bold mb-2" style={{ color: C.navy }}>{step.label}</p>
-                  <p className="text-sm leading-relaxed" style={{ color: C.muted }}>{step.body}</p>
-                </div>
-              ))}
-            </div>
-
-            <div className="max-w-2xl mx-auto space-y-6">
-              <p className="text-sm sm:text-base leading-relaxed" style={{ color: C.muted }}>
-                As you move through the tiers, Hobson gains access to more of his specialist team and a deeper understanding of your organisation.
+            <div className="space-y-4 text-sm sm:text-base leading-relaxed" style={{ color: C.muted }}>
+              <p>Every plan includes the same Hobson.</p>
+              <p>The same conversation.</p>
+              <p>The same specialist team.</p>
+              <p>The same intelligence.</p>
+              <p className="font-semibold" style={{ color: C.navy }}>
+                The difference between the plans isn't what Hobson can do—it's how much he can do.
               </p>
-              <p className="text-sm sm:text-base leading-relaxed" style={{ color: C.muted }}>
-                That means he doesn't simply answer questions. He can coordinate specialists, prepare work, monitor what matters and take on increasingly valuable responsibilities on your behalf.
+              <p>
+                As your team grows, Hobson can support more people, process more documents, answer more questions and take on more work each month.
               </p>
-              <p className="text-sm sm:text-base leading-relaxed font-semibold" style={{ color: C.navy }}>
-                The difference between the tiers isn't just more features. It's a more capable Hobson.
-              </p>
-            </div>
-
-            <div className="mt-10 rounded-xl p-6 sm:p-8 text-center" style={{ background: C.bg, border: `1px solid ${C.border}` }}>
-              <p className="text-sm sm:text-base leading-relaxed" style={{ color: C.muted }}>
-                A single hour of a property professional's time often costs more than an entire month's subscription. As Hobson's understanding grows and more specialists become available, so does the amount of work he can take care of for you.
+              <p>
+                Choose the plan that matches your organisation today. As your business grows, Hobson grows with you.
               </p>
             </div>
           </div>
