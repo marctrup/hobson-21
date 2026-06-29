@@ -7,7 +7,7 @@ import { OptimizedImage } from "@/components/OptimizedImage";
 import { Helmet } from "react-helmet-async";
 import { OrchestrationDemo } from "@/components/homepage/OrchestrationDemo";
 
-import ProductShowcase from "@/components/homepage/ProductShowcase";
+
 
 import { PilotApplicationForm } from "@/components/homepage/PilotApplicationForm";
 
