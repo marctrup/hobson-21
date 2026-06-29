@@ -276,12 +276,12 @@ const HowHobsonThinks: React.FC = () => {
       {/* PRINCIPLE */}
       <section className="py-12 bg-white">
         <div className="container mx-auto px-6 max-w-4xl text-center">
-          <p className="text-xs font-semibold tracking-[0.2em] text-purple-600 uppercase">The guiding principle</p>
+          <p className="text-xs font-semibold tracking-[0.2em] text-purple-600 uppercase">{TEAM_INTRO_LABEL}</p>
           <h2 className="mt-4 text-3xl sm:text-4xl font-bold text-slate-900 leading-tight">
-            Never another specialist for every new job.
+            {TEAM_INTRO_HEADING}
           </h2>
           <p className="mt-6 text-lg text-slate-600 leading-relaxed">
-            Hobson's team is designed to remain stable. As he learns new ways to help, he simply brings together the expertise of the right specialists to complete the task. That means Hobson can continually grow without becoming more complicated to use.
+            {TEAM_INTRO_BODY}
           </p>
           <div className="mt-10 grid sm:grid-cols-3 gap-4 text-left">
             {[
