@@ -124,11 +124,8 @@ export const Homepage = () => {
             {/* Mobile Navigation Menu */}
             {isMobileMenuOpen && <nav className="md:hidden mt-4 pb-4 border-t pt-4" role="navigation" aria-label="Mobile navigation">
                 <div className="flex flex-col gap-4">
-                  <Link to="/features" className="text-base text-muted-foreground hover:text-foreground transition-colors py-2" onClick={closeMobileMenu}>
-                    Features
-                  </Link>
-                  <Link to="/in-practice" className="text-base text-muted-foreground hover:text-foreground transition-colors py-2" onClick={closeMobileMenu}>
-                    In Practice
+                  <Link to="/how-hobson-thinks" className="text-base text-muted-foreground hover:text-foreground transition-colors py-2" onClick={closeMobileMenu}>
+                    How Hobson Thinks
                   </Link>
                   <Link to="/pricing" className="text-base text-muted-foreground hover:text-foreground transition-colors py-2" onClick={closeMobileMenu}>
                     Pricing
