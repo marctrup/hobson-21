@@ -118,7 +118,7 @@ const Pricing = () => {
     {
       tier: 1, seats: "1 seat", perSeat: null, label: "Ideal for individuals",
       priceMonthly: 19.50, priceAnnualMonthly: 15.60, priceAnnualYearly: 187.20,
-      badge: "live" as const, badgeText: "Live very soon",
+      badge: "coming" as const, badgeText: "Coming later this year",
       features: () => [
         { text: "Multi-document AI reasoning", ok: true },
         { text: "Plain English queries", ok: true },
@@ -279,10 +279,8 @@ const Pricing = () => {
                   : null;
                 const displayPerSeat = hasAnnual ? perSeatAnnual : tier.perSeat;
                 const featureList = tier.features();
-                const isLive = tier.badge === "live";
-
                 return (
-                  <div key={tier.tier} className="rounded-xl p-6 flex flex-col" style={{ background: C.bg, border: isLive ? `2px solid ${C.purple}` : `1px solid ${C.border}` }}>
+                  <div key={tier.tier} className="rounded-xl p-6 flex flex-col" style={{ background: C.bg, border: `1px solid ${C.border}` }}>
                     <div className="mb-4">
                       <div className="flex items-center gap-2 mb-1">
                         <p className="text-xs font-medium uppercase tracking-wider" style={{ color: C.purple }}>Tier {tier.tier}</p>
