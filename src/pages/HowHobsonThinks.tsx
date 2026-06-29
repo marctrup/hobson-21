@@ -217,7 +217,7 @@ const HowHobsonThinks: React.FC = () => {
               <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-purple-600 mb-1">Persistent portfolio domains — always on</p>
               <div className="grid sm:grid-cols-2 gap-2">
                 {PERSISTENT.map((s, i) => (
-                  <div key={s.name} className="flex items-start gap-2.5 rounded-xl border border-purple-100 bg-white px-3 py-2.5 shadow-sm" style={{ animation: `fade-up 0.4s ease ${0.35 + i * 0.08}s both` }}>
+                  <div key={s.name} className="flex items-start gap-2.5 rounded-xl border border-purple-100 bg-white px-3 py-2.5 shadow-sm">
                     <div className="w-10 h-10 shrink-0 rounded-lg bg-purple-50 border border-purple-100 grid place-items-center">
                       <img src={s.img} alt={s.name} className="w-8 h-8 object-contain" />
                     </div>
