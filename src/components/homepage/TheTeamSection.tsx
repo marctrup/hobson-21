@@ -39,7 +39,7 @@ const SERVICES: Specialist[] = [
   { name: "The Communicator", owns: "Systems & Integrations", img: communicatorImg, tone: "service",
     blurb: "Connects securely to your existing systems whenever I need authorised information that's held elsewhere." },
   { name: "The Keeper", owns: "Access & Security", img: keeperImg, tone: "service",
-    blurb: "Verifies permissions and protects confidential information. Usually invisible — always present." },
+    blurb: "Protects your information by verifying permissions before I access, share or carry out sensitive work on your behalf." },
 ];
 
 const SpecialistCard: React.FC<{ s: Specialist; index: number }> = ({ s, index }) => (
