@@ -355,24 +355,26 @@ const HowHobsonThinks: React.FC = () => {
           {/* Chat surface */}
           <div className="mt-12 max-w-3xl mx-auto rounded-3xl border border-purple-100 bg-gradient-to-b from-purple-50/40 to-white p-4 sm:p-6 shadow-[0_20px_60px_-30px_rgba(124,58,237,0.4)]">
 
-            {/* User bubble — appears immediately as the conversation starts */}
+            {/* User bubble — types out character by character */}
             <div
               className={`flex justify-end transition-all duration-500 ${hasStarted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"}`}
               style={{ animation: hasStarted ? "fade-up 0.4s ease both" : undefined }}
             >
               <div className="max-w-[85%] rounded-2xl rounded-tr-sm bg-purple-700 text-white px-4 py-3 text-sm shadow">
-                Hobson, please prepare my rent review for 32 Hamilton Gardens.
+                {USER_INTRO.slice(0, introUserIdx)}
+                {introPhase === 1 && <span className="animate-pulse">|</span>}
               </div>
             </div>
 
-            {/* Hobson opening — appears after one beat, as if replying */}
+            {/* Hobson opening — types out character by character after user message */}
             <div
-              className={`mt-4 flex items-start gap-3 transition-all duration-500 ${cursor >= 1 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2 pointer-events-none h-0 overflow-hidden mt-0"}`}
-              style={{ animation: cursor >= 1 ? "fade-up 0.4s ease both" : undefined }}
+              className={`mt-4 flex items-start gap-3 transition-all duration-500 ${introPhase >= 2 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2 pointer-events-none h-0 overflow-hidden mt-0"}`}
+              style={{ animation: introPhase >= 2 ? "fade-up 0.4s ease both" : undefined }}
             >
               <img src={hobsonOwl} alt="Hobson" className="w-10 h-10 rounded-full bg-purple-100 p-1 border border-purple-200" />
               <div className="rounded-2xl rounded-tl-sm bg-white border border-purple-100 px-4 py-3 text-sm text-slate-700 shadow-sm">
-                Of course. I'll prepare the rent review for <span className="font-semibold text-slate-900">32 Hamilton Gardens</span> now — one moment while my team gathers what's needed.
+                {HOBSON_INTRO.slice(0, introHobsonIdx)}
+                {introPhase === 2 && <span className="animate-pulse">|</span>}
               </div>
             </div>
 
@@ -495,6 +497,9 @@ const HowHobsonThinks: React.FC = () => {
                     setCursor(0);
                     setFinished(false);
                     setPlaying(true);
+                    setIntroPhase(0);
+                    setIntroUserIdx(0);
+                    setIntroHobsonIdx(0);
                     orchestrationRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
                   } else {
                     setPlaying((p) => !p);
