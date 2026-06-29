@@ -21,25 +21,25 @@ type Specialist = {
 };
 
 const PERSISTENT: Specialist[] = [
-  { name: "The Professor", owns: "Knowledge & Memory", img: professorImg, tone: "persistent",
-    blurb: "Maintains everything I know from your documents — leases, licences, plans, reports and every other record you entrust to me." },
-  { name: "The Architect", owns: "Properties & Units", img: architectImg, tone: "persistent",
-    blurb: "Keeps the structure of your estate accurate — units, properties, hierarchies and groupings — so I always understand how everything fits together." },
+  { name: "The Professor", owns: "Portfolio Knowledge", img: professorImg, tone: "persistent",
+    blurb: "I maintain everything Hobson knows from your documents — leases, licences, plans, reports and every other record you entrust to him." },
+  { name: "The Architect", owns: "Portfolio Structure", img: architectImg, tone: "persistent",
+    blurb: "I keep the structure of your estate accurate — units, properties, hierarchies and groupings — so Hobson always understands how everything fits together." },
   { name: "The Inspector", owns: "Compliance Position", img: inspectorImg, tone: "persistent",
-    blurb: "Maintains my understanding of your compliance position by comparing what is known against what is required, and quietly identifying anything that's missing." },
-  { name: "The Broker", owns: "Relationships & Contacts", img: brokerImg, tone: "persistent",
-    blurb: "Maintains my understanding of the people and organisations connected to your portfolio, so I always know who I'm working with." },
+    blurb: "I compare what is known against what is required, helping Hobson understand your compliance position and quietly identifying anything that's missing." },
+  { name: "The Broker", owns: "Relationships", img: brokerImg, tone: "persistent",
+    blurb: "I maintain Hobson's understanding of the people and organisations connected to your portfolio, so he always knows who he's working with." },
 ];
 
 const SERVICES: Specialist[] = [
-  { name: "The Researcher", owns: "Research & Intelligence", img: researcherImg, tone: "service",
-    blurb: "Finds trusted information beyond your portfolio whenever I need it, including legislation, public records, market evidence and industry guidance." },
+  { name: "The Researcher", owns: "External Research", img: researcherImg, tone: "service",
+    blurb: "I find trusted information beyond your portfolio, including legislation, public records, market evidence and industry guidance." },
   { name: "The Bookkeeper", owns: "Calculations & Finance", img: bookkeeperImg, tone: "service",
-    blurb: "Performs calculations, reconciliations and financial analysis whenever I need accurate figures or statements." },
+    blurb: "I perform calculations, reconciliations and financial analysis whenever Hobson needs accurate figures or statements." },
   { name: "The Communicator", owns: "Systems & Integrations", img: communicatorImg, tone: "service",
-    blurb: "Connects securely to your existing systems whenever I need authorised information that's held elsewhere." },
+    blurb: "I connect securely to your existing systems, retrieving authorised information whenever Hobson needs live data." },
   { name: "The Keeper", owns: "Access & Security", img: keeperImg, tone: "service",
-    blurb: "Protects your information by verifying permissions before I access, share or carry out sensitive work on your behalf." },
+    blurb: "I protect your information by verifying permissions before Hobson accesses, shares or carries out sensitive work on your behalf." },
 ];
 
 const SpecialistCard: React.FC<{ s: Specialist; index: number }> = ({ s, index }) => (
@@ -77,8 +77,7 @@ export const TheTeamSection = () => {
           <p className="text-xs font-semibold tracking-[0.2em] text-purple-600 uppercase">The team</p>
           <h2 className="mt-3 text-3xl sm:text-4xl font-bold text-slate-900">Two kinds of specialist.</h2>
           <p className="mt-4 text-lg text-slate-600">
-            Some help me maintain my understanding of your portfolio over time. Others provide expert services
-            whenever I need them. Together, they let me answer almost anything you put to me.
+            You'll only ever speak to me. Behind me is a carefully chosen team of specialists. Some quietly maintain my understanding of your portfolio over time. Others provide expert services whenever I need them. Together, they help me understand your business, complete work on your behalf and give you one clear answer.
           </p>
         </div>
 
@@ -86,8 +85,8 @@ export const TheTeamSection = () => {
         <div className="mt-14 max-w-5xl mx-auto">
           <div className="flex items-end justify-between gap-4 mb-6">
             <div>
-              <h3 className="text-2xl font-bold text-slate-900">My permanent memory</h3>
-              <p className="text-slate-600 text-sm mt-1">These four specialists quietly maintain everything I know about your estate.</p>
+              <h3 className="text-2xl font-bold text-slate-900">Hobson's Permanent Memory</h3>
+              <p className="text-slate-600 text-sm mt-1">These four specialists quietly maintain everything I know about your portfolio.</p>
             </div>
             <span className="hidden sm:inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-purple-700 bg-white border border-purple-200 rounded-full px-3 py-1.5">
               Always on
@@ -102,8 +101,8 @@ export const TheTeamSection = () => {
         <div className="mt-20 max-w-5xl mx-auto">
           <div className="flex items-end justify-between gap-4 mb-6">
             <div>
-              <h3 className="text-2xl font-bold text-slate-900">Specialist services</h3>
-              <p className="text-slate-600 text-sm mt-1">Called on whenever I need their expertise.</p>
+              <h3 className="text-2xl font-bold text-slate-900">Specialist Services</h3>
+              <p className="text-slate-600 text-sm mt-1">Whenever Hobson needs specialist expertise, these are the people he calls upon.</p>
             </div>
             <span className="hidden sm:inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-purple-700 bg-white border border-purple-200 rounded-full px-3 py-1.5">
               On demand
