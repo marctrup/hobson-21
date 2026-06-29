@@ -93,19 +93,34 @@ const SpecialistCard: React.FC<{ s: Specialist; index: number }> = ({ s, index }
 );
 
 const HowHobsonThinks: React.FC = () => {
-  // Orchestration demo state
-  const [step, setStep] = useState(0);
+  // Orchestration demo: a single ticking cursor that walks through every sub-step of every specialist,
+  // then reveals Hobson's final answer. Each beat = a specialist; cursor = which sub-step is active.
+  const totalSteps = RENT_REVIEW.reduce((n, b) => n + b.steps.length, 0);
+  const [cursor, setCursor] = useState(0); // 0..totalSteps (totalSteps = final answer shown)
   const [playing, setPlaying] = useState(true);
 
   useEffect(() => {
     if (!playing) return;
     const id = setInterval(() => {
-      setStep((s) => (s + 1) % (RENT_REVIEW.length + 2));
-    }, 1800);
+      setCursor((c) => (c >= totalSteps + 4 ? 0 : c + 1));
+    }, 700);
     return () => clearInterval(id);
-  }, [playing]);
+  }, [playing, totalSteps]);
 
-  const finalShown = step >= RENT_REVIEW.length + 1;
+  // Map cursor to (beatIndex, stepIndex)
+  let runningTotal = 0;
+  const beatProgress = RENT_REVIEW.map((b) => {
+    const start = runningTotal;
+    runningTotal += b.steps.length;
+    const end = runningTotal;
+    const stepsDone = Math.max(0, Math.min(b.steps.length, cursor - start));
+    const isActive = cursor >= start && cursor < end;
+    const isDone = cursor >= end;
+    const visible = cursor >= start;
+    return { start, end, stepsDone, isActive, isDone, visible };
+  });
+  const finalShown = cursor >= totalSteps;
+
 
   return (
     <div className="min-h-screen bg-white text-slate-900">
