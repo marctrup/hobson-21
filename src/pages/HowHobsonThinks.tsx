@@ -449,8 +449,8 @@ const HowHobsonThinks: React.FC = () => {
             That's how Hobson thinks. Quietly, methodically, and always on your behalf.
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
-            <Link to="/features" className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-purple-700 hover:bg-purple-800 text-white font-semibold transition">
-              See what Hobson can do <ArrowRight className="w-4 h-4" />
+            <Link to="/pricing" className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-purple-700 hover:bg-purple-800 text-white font-semibold transition">
+              See pricing <ArrowRight className="w-4 h-4" />
             </Link>
             <Link to="/contact" className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white border border-purple-200 text-purple-800 hover:bg-purple-50 font-semibold transition">
               Talk to us
