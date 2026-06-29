@@ -33,7 +33,7 @@ const PERSISTENT: Specialist[] = [
 
 const SERVICES: Specialist[] = [
   { name: "The Researcher", owns: "External Research", img: researcherImg, tone: "service",
-    blurb: "Fetches trusted information from beyond your portfolio — legislation, Land Registry, EPCs, comparables." },
+    blurb: "Finds trusted information beyond your portfolio whenever I need it, including legislation, public records, market evidence and industry guidance." },
   { name: "The Bookkeeper", owns: "Calculations & Finance", img: bookkeeperImg, tone: "service",
     blurb: "Performs every figure Hobson needs — rent, service charges, reconciliations, statements." },
   { name: "The Communicator", owns: "Systems & Integrations", img: communicatorImg, tone: "service",
