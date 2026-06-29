@@ -99,9 +99,6 @@ export const Homepage = () => {
                 <Link to="/blog" className="text-base text-muted-foreground hover:text-foreground transition-colors">
                     {content.header.nav.blog}
                   </Link>
-                <Link to="/learn/smart-navigation" className="text-base text-muted-foreground hover:text-foreground transition-colors">
-                  Learn
-                </Link>
                 <Link to="/contact" className="text-base text-muted-foreground hover:text-foreground transition-colors">
                   Contact
                 </Link>
@@ -134,9 +131,6 @@ export const Homepage = () => {
                   <Link to="/blog" className="text-base text-muted-foreground hover:text-foreground transition-colors py-2" onClick={closeMobileMenu}>
                       {content.header.nav.blog}
                     </Link>
-                  <Link to="/learn/smart-navigation" className="text-base text-muted-foreground hover:text-foreground transition-colors py-2" onClick={closeMobileMenu}>
-                    Learn
-                  </Link>
                   <Link to="/contact" className="text-base text-muted-foreground hover:text-foreground transition-colors py-2" onClick={closeMobileMenu}>
                     Contact
                   </Link>
@@ -357,16 +351,6 @@ export const Homepage = () => {
                   </div>
                 </div>
 
-                {/* Learn links */}
-                <div>
-                  <h4 className="text-sm font-semibold uppercase tracking-wider text-foreground mb-5">Learn</h4>
-                  <div className="space-y-3">
-                    <Link to="/learn/faq" className="block text-sm text-muted-foreground hover:text-primary transition-colors">FAQ</Link>
-                    <Link to="/learn/glossary" className="block text-sm text-muted-foreground hover:text-primary transition-colors">Glossary</Link>
-                    <Link to="/learn/smart-navigation" className="block text-sm text-muted-foreground hover:text-primary transition-colors">Smart Navigation</Link>
-                    <Link to="/learn/integrations" className="block text-sm text-muted-foreground hover:text-primary transition-colors">Integrations</Link>
-                  </div>
-                </div>
               </div>
 
               <div className="border-t mt-12 pt-8 text-center">
