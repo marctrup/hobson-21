@@ -938,6 +938,12 @@ const Learn = () => {
                     </div>
                     <div className="ml-11 space-y-4">
                       <div className="bg-card border rounded-lg p-6">
+                        <h3 className="font-semibold text-foreground mb-2">How Hobson Thinks</h3>
+                        <p className="text-muted-foreground text-sm">
+                          A new page explaining Hobson's specialist team, how they work together, and how orchestration delivers answers.
+                        </p>
+                      </div>
+                      <div className="bg-card border rounded-lg p-6">
                         <h3 className="font-semibold text-foreground mb-2">AI-powered document summarisation</h3>
                         <p className="text-muted-foreground text-sm">
                           Transform lengthy documents into clear, actionable summaries.
@@ -2336,7 +2342,7 @@ Content-Type: multipart/form-data
                   setActiveHorizontalTab(tab.id);
                   setActiveVerticalTab(newVerticalTab);
                   setIsGlobalPageActive(false);
-                  navigate(tab.id === "in-practice" ? "/in-practice" : `/learn/${newVerticalTab}`, {
+                  navigate(`/learn/${newVerticalTab}`, {
                     replace: true
                   });
                 }} className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-left transition-colors ${activeHorizontalTab === tab.id && !isGlobalPageActive ? "bg-primary/10 text-primary font-medium" : "text-muted-foreground hover:text-foreground hover:bg-muted"}`}>
@@ -2366,7 +2372,7 @@ Content-Type: multipart/form-data
               setActiveHorizontalTab(e.target.value);
               setActiveVerticalTab(newVerticalTab);
               setIsGlobalPageActive(false);
-              navigate(e.target.value === "in-practice" ? "/in-practice" : `/learn/${newVerticalTab}`, {
+              navigate(`/learn/${newVerticalTab}`, {
                 replace: true
               });
             }} className="w-full p-2 border border-border rounded-lg bg-background text-foreground">

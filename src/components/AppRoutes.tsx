@@ -30,7 +30,7 @@ const Announcements = lazy(() => import("../pages/Announcements"));
 const AnnouncementPost = lazy(() => import("../pages/AnnouncementPost"));
 const FeatureRequests = lazy(() => import("../pages/FeatureRequests"));
 const UseHobson = lazy(() => import("../pages/UseHobson").then(module => ({ default: module.UseHobson })));
-const InPractice = lazy(() => import("../pages/InPractice"));
+
 const Admin = lazy(() => import("../pages/Admin"));
 const FaqManagement = lazy(() => import("../pages/admin/FaqManagement"));
 const GlossaryManagement = lazy(() => import("../pages/admin/GlossaryManagement"));
@@ -40,7 +40,7 @@ const Prototype = lazy(() => import("../pages/Prototype"));
 const PrototypeTesters = lazy(() => import("../pages/PrototypeTesters"));
 const PrototypeMobile = lazy(() => import("../pages/PrototypeMobile"));
 
-const Features = lazy(() => import("../pages/Features"));
+
 const HowHobsonThinks = lazy(() => import("../pages/HowHobsonThinks"));
 
 // CRM
@@ -144,14 +144,8 @@ const AppContent = () => {
               <Route path="/announcement/:slug" element={<AnnouncementPost />} />
               <Route path="/feature-requests" element={<FeatureRequests />} />
               <Route path="/usehobson" element={<UseHobson />} />
-              <Route path="/in-practice" element={<InPractice />} />
-              <Route path="/features" element={<Features />} />
               <Route path="/how-hobson-thinks" element={<HowHobsonThinks />} />
               <Route path="/How-hobson-thinks" element={<Navigate to="/how-hobson-thinks" replace />} />
-              <Route path="/learn/features" element={<Navigate to="/features" replace />} />
-              <Route path="/learn/core-features" element={<Navigate to="/features" replace />} />
-              <Route path="/learn/use-cases" element={<Navigate to="/in-practice" replace />} />
-              <Route path="/use-cases" element={<Navigate to="/in-practice" replace />} />
               <Route path="/investment-opportunity" element={<InvestmentOpportunity />} />
               <Route path="/investor-summary" element={<Navigate to="/investment-opportunity" replace />} />
               <Route path="/prototype" element={<Prototype />} />
