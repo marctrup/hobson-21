@@ -356,7 +356,7 @@ const HowHobsonThinks: React.FC = () => {
 
             {/* User bubble — types out character by character */}
             <div
-              className={`flex justify-end transition-all duration-500 ${hasStarted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"}`}
+              className={`flex justify-start transition-all duration-500 ${hasStarted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"}`}
               style={{ animation: hasStarted ? "fade-up 0.4s ease both" : undefined }}
             >
               <div className="max-w-[85%] rounded-2xl rounded-tr-sm bg-purple-700 text-white px-4 py-3 text-sm shadow">
