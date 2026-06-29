@@ -89,11 +89,8 @@ export const Homepage = () => {
 
               {/* Desktop Navigation */}
               <nav className="hidden md:flex items-center gap-6" role="navigation" aria-label="Main navigation">
-                <Link to="/features" className="text-base text-muted-foreground hover:text-foreground transition-colors">
-                  Features
-                </Link>
-                <Link to="/in-practice" className="text-base text-muted-foreground hover:text-foreground transition-colors">
-                  In Practice
+                <Link to="/how-hobson-thinks" className="text-base text-muted-foreground hover:text-foreground transition-colors">
+                  How Hobson Thinks
                 </Link>
                 <Link to="/pricing" className="text-base text-muted-foreground hover:text-foreground transition-colors">
                   Pricing
