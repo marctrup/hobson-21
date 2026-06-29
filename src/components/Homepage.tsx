@@ -16,6 +16,7 @@ import { AudienceStrip } from "@/components/homepage/AudienceStrip";
 import { TrustStrip } from "@/components/homepage/TrustStrip";
 
 import { YouTubeVideoSection } from "@/components/homepage/YouTubeVideoSection";
+import { TrustedConversationSection } from "@/components/homepage/TrustedConversationSection";
 
 import owlMascot from "@/assets/owl-mascot.png";
 import { structuredData } from "@/utils/seo-data";
