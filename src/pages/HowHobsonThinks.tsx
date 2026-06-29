@@ -176,7 +176,7 @@ const HowHobsonThinks: React.FC = () => {
 
       {/* HERO */}
       <section className="relative overflow-hidden hh-grid-bg">
-        <div className="container mx-auto px-6 pt-16 pb-24 lg:pt-24 lg:pb-32">
+        <div className="container mx-auto px-6 pt-16 pb-12 lg:pt-24 lg:pb-16">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div style={{ animation: "fade-up 0.7s ease both" }}>
               <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-purple-100 text-purple-700 text-xs font-semibold tracking-wide uppercase">
