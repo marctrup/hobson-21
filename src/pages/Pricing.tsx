@@ -495,23 +495,84 @@ const Pricing = () => {
 
         {/* VALUE LADDER CALLOUT */}
         <section className="py-10 sm:py-14 md:py-20 px-4 sm:px-6" style={{ background: `linear-gradient(135deg, ${C.amberSoft}, ${C.tealSoft})` }}>
-          <div className="max-w-4xl mx-auto text-center space-y-6">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold" style={{ color: C.navy }}>
-              Why do the plans change?
-            </h2>
-            <div className="space-y-4 text-sm sm:text-base leading-relaxed" style={{ color: C.muted }}>
-              <p>Every plan includes the same Hobson.</p>
-              <p>The same conversation.</p>
-              <p>The same specialist team.</p>
-              <p>The same intelligence.</p>
-              <p className="font-semibold" style={{ color: C.navy }}>
-                The difference between the plans isn't what Hobson can do—it's how much he can do.
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center space-y-6 mb-10">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold" style={{ color: C.navy }}>
+                Why do the plans change?
+              </h2>
+              <p className="text-sm sm:text-base leading-relaxed" style={{ color: C.muted }}>
+                Every plan includes the same Hobson. The difference is how much work you'd like him to take care of.
               </p>
-              <p>
-                As your team grows, Hobson can support more people, process more documents, answer more questions and take on more work each month.
+            </div>
+
+            {/* Every plan includes */}
+            <div className="rounded-2xl p-6 sm:p-8 mb-10" style={{ background: C.bg, border: `1px solid ${C.border}` }}>
+              <p className="text-xs font-semibold uppercase tracking-wider mb-4" style={{ color: C.purple }}>Every plan includes</p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {[
+                  "The same Hobson",
+                  "The same specialist team",
+                  "The same intelligence",
+                  "The same ability to answer questions and complete work",
+                ].map(item => (
+                  <div key={item} className="flex items-center gap-3">
+                    <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0" style={{ background: C.greenBg }}>
+                      <CheckIcon />
+                    </div>
+                    <span className="text-sm font-medium" style={{ color: C.navy }}>{item}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Tier table */}
+            <div className="rounded-2xl overflow-hidden mb-10" style={{ background: C.bg, border: `1px solid ${C.border}` }}>
+              <div className="grid grid-cols-3 gap-0">
+                <div className="px-4 py-3 text-xs font-semibold uppercase tracking-wider" style={{ background: C.bgAlt, color: C.purple, borderBottom: `1px solid ${C.border}` }}>Tier</div>
+                <div className="px-4 py-3 text-xs font-semibold uppercase tracking-wider col-span-2" style={{ background: C.bgAlt, color: C.purple, borderBottom: `1px solid ${C.border}` }}>Designed for</div>
+                <div className="px-4 py-3 text-sm font-semibold" style={{ color: C.navy, borderBottom: `1px solid ${C.border}` }}>Tier 1</div>
+                <div className="px-4 py-3 text-sm col-span-2" style={{ color: C.muted, borderBottom: `1px solid ${C.border}` }}>Individuals and smaller portfolios</div>
+                <div className="px-4 py-3 text-sm font-semibold" style={{ color: C.navy, borderBottom: `1px solid ${C.border}` }}>Tier 2</div>
+                <div className="px-4 py-3 text-sm col-span-2" style={{ color: C.muted, borderBottom: `1px solid ${C.border}` }}>Small teams working together</div>
+                <div className="px-4 py-3 text-sm font-semibold" style={{ color: C.navy, borderBottom: `1px solid ${C.border}` }}>Tier 3</div>
+                <div className="px-4 py-3 text-sm col-span-2" style={{ color: C.muted, borderBottom: `1px solid ${C.border}` }}>Growing businesses managing more work</div>
+                <div className="px-4 py-3 text-sm font-semibold" style={{ color: C.navy }}>Tier 4</div>
+                <div className="px-4 py-3 text-sm col-span-2" style={{ color: C.muted }}>Larger organisations supporting more users and larger portfolios</div>
+              </div>
+            </div>
+
+            {/* Higher tiers increase */}
+            <div className="rounded-2xl p-6 sm:p-8 mb-10" style={{ background: C.bg, border: `1px solid ${C.border}` }}>
+              <p className="text-xs font-semibold uppercase tracking-wider mb-4" style={{ color: C.purple }}>Higher tiers increase</p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {[
+                  "The number of people who can work with Hobson",
+                  "The number of documents Hobson can process",
+                  "The number of questions he can answer",
+                  "The amount of work he can take care of each month",
+                ].map(item => (
+                  <div key={item} className="flex items-start gap-3">
+                    <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5" style={{ background: C.purpleBadgeBg }}>
+                      <svg width="14" height="14" viewBox="0 0 20 20" fill="none"><path d="M10 4v12M4 10h12" stroke={C.purple} strokeWidth="2" strokeLinecap="round" /></svg>
+                    </div>
+                    <span className="text-sm" style={{ color: C.navy }}>{item}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Closing statement */}
+            <div className="text-center space-y-4">
+              <p className="text-sm sm:text-base font-semibold" style={{ color: C.navy }}>
+                The experience remains exactly the same.
               </p>
-              <p>
-                Choose the plan that matches your organisation today. As your business grows, Hobson grows with you.
+              <div className="space-y-1 text-sm sm:text-base leading-relaxed" style={{ color: C.muted }}>
+                <p>You'll always speak to Hobson.</p>
+                <p>He'll always rely on the same trusted team of specialists.</p>
+                <p>The only difference is the capacity available to support your organisation.</p>
+              </div>
+              <p className="text-sm sm:text-base leading-relaxed max-w-2xl mx-auto pt-2" style={{ color: C.muted }}>
+                A single hour of a property professional's time often costs more than an entire month's subscription. As your organisation grows, Hobson is simply able to take on more of the workload alongside your team.
               </p>
             </div>
           </div>
