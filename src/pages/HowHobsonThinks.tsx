@@ -52,6 +52,9 @@ const SERVICES: Specialist[] = [
 
 // Rent review orchestration beats — each specialist has progressive sub-steps
 type Beat = { who: string; img: string; headline: string; steps: string[] };
+const USER_INTRO = "Hobson, please prepare my rent review for 32 Hamilton Gardens.";
+const HOBSON_INTRO = "Of course. I'll prepare the rent review for 32 Hamilton Gardens now — one moment while my team gathers what's needed.";
+
 const RENT_REVIEW: Beat[] = [
   { who: "The Professor", img: professorImg, headline: "Reviewing your lease…",
     steps: ["Locating the lease for 32 Hamilton Gardens", "Identifying the rent review clause", "Extracting review date & mechanism", "Noting assumptions and disregards"] },
