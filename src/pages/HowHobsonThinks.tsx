@@ -182,10 +182,7 @@ const HowHobsonThinks: React.FC = () => {
                 How Hobson thinks
               </div>
               <h1 className="mt-6 text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.05] tracking-tight text-slate-900">
-                One conversation.<br/>
-                <span className="bg-gradient-to-r from-purple-700 via-violet-600 to-fuchsia-600 bg-clip-text text-transparent">
-                  A quiet team behind it.
-                </span>
+                One Trusted Conversation
               </h1>
               <p className="mt-6 text-lg text-slate-600 max-w-xl leading-relaxed">
                 You only ever speak to Hobson. Behind him stands a small, carefully chosen team of specialists —
@@ -298,7 +295,7 @@ const HowHobsonThinks: React.FC = () => {
         <div className="container mx-auto px-6">
           <div className="max-w-3xl mx-auto text-center">
             <p className="text-xs font-semibold tracking-[0.2em] text-purple-600 uppercase">See him at work</p>
-            <h2 className="mt-3 text-3xl sm:text-4xl font-bold text-slate-900">One conversation. A quiet team behind it.</h2>
+            <h2 className="mt-3 text-3xl sm:text-4xl font-bold text-slate-900">One Trusted Conversation</h2>
             <p className="mt-4 text-lg text-slate-600">
               You always speak to Hobson. When real work is needed, he quietly delegates — and shows you who is helping.
               The specialists never reply, never ask questions, never become another chat.
