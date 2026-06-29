@@ -5,7 +5,7 @@ import { Menu, X, ArrowRight } from "lucide-react";
 import { SimpleButton } from "@/components/ui/simple-button";
 import { OptimizedImage } from "@/components/OptimizedImage";
 import { Helmet } from "react-helmet-async";
-import { PropertyManagementVisualization } from "@/components/homepage/PropertyManagementVisualization";
+import { OrchestrationDemo } from "@/components/homepage/OrchestrationDemo";
 
 import { FeaturesSection } from "@/components/homepage/FeaturesSection";
 import MobileShowcase from "@/components/features/MobileShowcase";
