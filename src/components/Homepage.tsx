@@ -17,6 +17,7 @@ import { TrustStrip } from "@/components/homepage/TrustStrip";
 
 import { YouTubeVideoSection } from "@/components/homepage/YouTubeVideoSection";
 import { TrustedConversationSection } from "@/components/homepage/TrustedConversationSection";
+import { TheTeamSection } from "@/components/homepage/TheTeamSection";
 
 import owlMascot from "@/assets/owl-mascot.png";
 import { structuredData } from "@/utils/seo-data";
@@ -197,6 +198,9 @@ export const Homepage = () => {
 
           {/* One Trusted Conversation */}
           <TrustedConversationSection />
+
+          {/* The Team */}
+          <TheTeamSection />
 
           {/* YouTube Explainer Video */}
           <YouTubeVideoSection
