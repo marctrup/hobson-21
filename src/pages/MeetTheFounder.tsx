@@ -1,7 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-import { ArrowRight } from "lucide-react";
 import { GlobalHeader } from "@/components/GlobalHeader";
 import { YouTubeVideoSection } from "@/components/homepage/YouTubeVideoSection";
 
@@ -80,26 +78,6 @@ const MeetTheFounder = () => {
             </div>
           </section>
 
-          {/* CTA */}
-          <section className="pb-20 sm:pb-28">
-            <div className="container mx-auto px-4 max-w-3xl text-center">
-              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                <Link
-                  to="/"
-                  className="inline-flex items-center justify-center gap-2 rounded-md bg-primary px-6 py-3 text-base font-medium text-primary-foreground transition-colors hover:bg-primary/90 w-full sm:w-auto"
-                >
-                  See how Hobson works
-                  <ArrowRight className="h-4 w-4" />
-                </Link>
-                <Link
-                  to="/pricing"
-                  className="inline-flex items-center justify-center rounded-md border border-primary/20 bg-primary/10 px-6 py-3 text-base font-medium text-primary transition-colors hover:bg-primary/15 w-full sm:w-auto"
-                >
-                  View pricing
-                </Link>
-              </div>
-            </div>
-          </section>
         </main>
       </div>
     </>
