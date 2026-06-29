@@ -6,6 +6,8 @@ import { SimpleButton } from "@/components/ui/simple-button";
 import { OptimizedImage } from "@/components/OptimizedImage";
 import { Helmet } from "react-helmet-async";
 import { OrchestrationDemo } from "@/components/homepage/OrchestrationDemo";
+import SeeHobsonInAction from "@/components/homepage/SeeHobsonInAction";
+
 
 
 
