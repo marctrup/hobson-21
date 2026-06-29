@@ -294,9 +294,9 @@ const HowHobsonThinks: React.FC = () => {
       </section>
 
       {/* TWO TYPES */}
-      <section id="team" className="py-12 bg-gradient-to-b from-white to-purple-50/40">
+      <section id="team" className="pt-20 pb-12 bg-gradient-to-b from-white to-purple-50/40">
         <div className="container mx-auto px-6">
-          <div className="max-w-3xl">
+          <div className="max-w-3xl mx-auto text-center">
             <p className="text-xs font-semibold tracking-[0.2em] text-purple-600 uppercase">The team</p>
             <h2 className="mt-3 text-3xl sm:text-4xl font-bold text-slate-900">Two kinds of specialist.</h2>
             <p className="mt-4 text-lg text-slate-600">
