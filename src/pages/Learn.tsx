@@ -938,6 +938,12 @@ const Learn = () => {
                     </div>
                     <div className="ml-11 space-y-4">
                       <div className="bg-card border rounded-lg p-6">
+                        <h3 className="font-semibold text-foreground mb-2">How Hobson Thinks</h3>
+                        <p className="text-muted-foreground text-sm">
+                          A new page explaining Hobson's specialist team, how they work together, and how orchestration delivers answers.
+                        </p>
+                      </div>
+                      <div className="bg-card border rounded-lg p-6">
                         <h3 className="font-semibold text-foreground mb-2">AI-powered document summarisation</h3>
                         <p className="text-muted-foreground text-sm">
                           Transform lengthy documents into clear, actionable summaries.
