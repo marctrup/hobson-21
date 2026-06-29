@@ -302,11 +302,9 @@ const HowHobsonThinks: React.FC = () => {
       <section id="team" className="py-12 bg-gradient-to-b from-white to-purple-50/40">
         <div className="container mx-auto px-6">
           <div className="max-w-3xl">
-            <p className="text-xs font-semibold tracking-[0.2em] text-purple-600 uppercase">The team</p>
-            <h2 className="mt-3 text-3xl sm:text-4xl font-bold text-slate-900">Two kinds of specialist.</h2>
+            <h2 className="text-3xl sm:text-4xl font-bold text-slate-900">Meet the specialists</h2>
             <p className="mt-4 text-lg text-slate-600">
-              Some look after what Hobson knows about your portfolio over time. Others provide an expert service
-              the moment Hobson needs it. Together, they let him answer almost anything you put to him.
+              Each has one job. Hobson decides who is needed and brings their work together as a single answer.
             </p>
           </div>
 
