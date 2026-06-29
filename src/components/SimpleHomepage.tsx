@@ -50,8 +50,8 @@ export const SimpleHomepage = () => {
           {isMobileMenuOpen && (
             <nav className="md:hidden mt-4 pb-4 border-t pt-4">
               <div className="flex flex-col gap-4">
-                <Link to="/features" className="text-base text-muted-foreground hover:text-foreground transition-colors py-2">
-                  Features
+                <Link to="/how-hobson-thinks" className="text-base text-muted-foreground hover:text-foreground transition-colors py-2">
+                  How Hobson Thinks
                 </Link>
                 <Link to="/blog" className="text-base text-muted-foreground hover:text-foreground transition-colors py-2">
                   Blog
