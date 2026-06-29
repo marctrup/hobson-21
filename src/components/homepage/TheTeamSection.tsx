@@ -21,25 +21,25 @@ type Specialist = {
 };
 
 const PERSISTENT: Specialist[] = [
-  { name: "The Professor", owns: "Knowledge & Memory", img: professorImg, tone: "persistent",
-    blurb: "Maintains everything I know from your documents — leases, licences, plans, reports and every other record you entrust to me." },
-  { name: "The Architect", owns: "Properties & Units", img: architectImg, tone: "persistent",
-    blurb: "Keeps the structure of your estate accurate — units, properties, hierarchies and groupings — so I always understand how everything fits together." },
+  { name: "The Professor", owns: "Portfolio Knowledge", img: professorImg, tone: "persistent",
+    blurb: "I maintain everything Hobson knows from your documents — leases, licences, plans, reports and every other record you entrust to him." },
+  { name: "The Architect", owns: "Portfolio Structure", img: architectImg, tone: "persistent",
+    blurb: "I keep the structure of your estate accurate — units, properties, hierarchies and groupings — so Hobson always understands how everything fits together." },
   { name: "The Inspector", owns: "Compliance Position", img: inspectorImg, tone: "persistent",
-    blurb: "Maintains my understanding of your compliance position by comparing what is known against what is required, and quietly identifying anything that's missing." },
-  { name: "The Broker", owns: "Relationships & Contacts", img: brokerImg, tone: "persistent",
-    blurb: "Maintains my understanding of the people and organisations connected to your portfolio, so I always know who I'm working with." },
+    blurb: "I compare what is known against what is required, helping Hobson understand your compliance position and quietly identifying anything that's missing." },
+  { name: "The Broker", owns: "Relationships", img: brokerImg, tone: "persistent",
+    blurb: "I maintain Hobson's understanding of the people and organisations connected to your portfolio, so he always knows who he's working with." },
 ];
 
 const SERVICES: Specialist[] = [
-  { name: "The Researcher", owns: "Research & Intelligence", img: researcherImg, tone: "service",
-    blurb: "Finds trusted information beyond your portfolio whenever I need it, including legislation, public records, market evidence and industry guidance." },
+  { name: "The Researcher", owns: "External Research", img: researcherImg, tone: "service",
+    blurb: "I find trusted information beyond your portfolio, including legislation, public records, market evidence and industry guidance." },
   { name: "The Bookkeeper", owns: "Calculations & Finance", img: bookkeeperImg, tone: "service",
-    blurb: "Performs calculations, reconciliations and financial analysis whenever I need accurate figures or statements." },
+    blurb: "I perform calculations, reconciliations and financial analysis whenever Hobson needs accurate figures or statements." },
   { name: "The Communicator", owns: "Systems & Integrations", img: communicatorImg, tone: "service",
-    blurb: "Connects securely to your existing systems whenever I need authorised information that's held elsewhere." },
+    blurb: "I connect securely to your existing systems, retrieving authorised information whenever Hobson needs live data." },
   { name: "The Keeper", owns: "Access & Security", img: keeperImg, tone: "service",
-    blurb: "Protects your information by verifying permissions before I access, share or carry out sensitive work on your behalf." },
+    blurb: "I protect your information by verifying permissions before Hobson accesses, shares or carries out sensitive work on your behalf." },
 ];
 
 const SpecialistCard: React.FC<{ s: Specialist; index: number }> = ({ s, index }) => (
