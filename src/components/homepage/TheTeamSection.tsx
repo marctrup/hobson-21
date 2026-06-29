@@ -28,7 +28,7 @@ const PERSISTENT: Specialist[] = [
   { name: "The Inspector", owns: "Compliance Position", img: inspectorImg, tone: "persistent",
     blurb: "Compares what is known against what is required, helping me understand your compliance position and identify anything that's missing." },
   { name: "The Broker", owns: "Relationships", img: brokerImg, tone: "persistent",
-    blurb: "Holds the web of people and organisations — landlords, tenants, agents, contractors." },
+    blurb: "Maintains my understanding of the people and organisations connected to your portfolio, so I always know who I'm working with." },
 ];
 
 const SERVICES: Specialist[] = [
