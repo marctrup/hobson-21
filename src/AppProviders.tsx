@@ -1,12 +1,11 @@
-import React, { lazy, Suspense, useEffect, useState } from "react";
+import React from "react";
 import { HelmetProvider } from "react-helmet-async";
-import { BrowserRouter, useLocation } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import { ThemeProvider } from "next-themes";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { AuthProvider } from "@/hooks/useAuth";
 import { ToastPortal } from "@/components/ToastPortal";
 import { AppRoutes } from "@/components/AppRoutes";
-import { ErrorBoundary } from "@/components/ErrorBoundary";
 
 const queryClient = new QueryClient({
   defaultOptions: {
