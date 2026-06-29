@@ -22,6 +22,7 @@ import { TheTeamSection } from "@/components/homepage/TheTeamSection";
 
 import { structuredData } from "@/utils/seo-data";
 import { CONTENT } from "@/config/content";
+import documentAnswerAsset from "@/assets/hobson-document-answer.png.asset.json";
 
 export const Homepage = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -250,7 +251,7 @@ export const Homepage = () => {
                 </p>
                 <div className="rounded-2xl border border-border/60 bg-gradient-to-b from-background to-muted/30 shadow-xl overflow-hidden">
                   <img
-                    src="/__l5e/assets-v1/80e68880-31b4-4bff-956c-a11ba7fc2515/hobson-document-answer.png"
+                    src={documentAnswerAsset.url}
                     alt="Hobson answering a rent review question by referencing two uploaded tenancy documents and showing the answer alongside a property map"
                     className="w-full h-auto"
                     loading="lazy"
