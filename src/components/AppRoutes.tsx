@@ -121,6 +121,8 @@ const AppContent = () => {
               <Route path="/" element={<Homepage />} />
               <Route path="/property-management-software" element={<Navigate to="/" replace />} />
               <Route path="/pricing" element={<Pricing />} />
+              <Route path="/founder" element={<MeetTheFounder />} />
+              <Route path="/meet-the-founder" element={<Navigate to="/founder" replace />} />
               <Route path="/blog" element={<Blog />} />
               <Route path="/blog/:slug" element={<BlogPost />} />
               <Route path="/contact" element={<ContactUs />} />
