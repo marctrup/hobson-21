@@ -42,6 +42,7 @@ const PrototypeMobile = lazy(() => import("../pages/PrototypeMobile"));
 
 
 const HowHobsonThinks = lazy(() => import("../pages/HowHobsonThinks"));
+const MeetTheFounder = lazy(() => import("../pages/MeetTheFounder"));
 
 // CRM
 const CrmGuard = lazy(() => import("./crm/CrmGuard").then(m => ({ default: m.CrmGuard })));
