@@ -41,7 +41,7 @@ const PrototypeTesters = lazy(() => import("../pages/PrototypeTesters"));
 const PrototypeMobile = lazy(() => import("../pages/PrototypeMobile"));
 
 
-const HowHobsonThinks = lazy(() => import("../pages/HowHobsonThinks"));
+
 const MeetTheFounder = lazy(() => import("../pages/MeetTheFounder"));
 
 // CRM
@@ -147,8 +147,6 @@ const AppContent = () => {
               <Route path="/announcement/:slug" element={<AnnouncementPost />} />
               <Route path="/feature-requests" element={<FeatureRequests />} />
               <Route path="/usehobson" element={<UseHobson />} />
-              <Route path="/how-hobson-thinks" element={<HowHobsonThinks />} />
-              <Route path="/How-hobson-thinks" element={<Navigate to="/how-hobson-thinks" replace />} />
               <Route path="/investment-opportunity" element={<InvestmentOpportunity />} />
               <Route path="/investor-summary" element={<Navigate to="/investment-opportunity" replace />} />
               <Route path="/prototype" element={<Prototype />} />
