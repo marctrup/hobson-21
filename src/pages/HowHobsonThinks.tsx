@@ -96,7 +96,8 @@ const HowHobsonThinks: React.FC = () => {
   // Orchestration demo: a single ticking cursor that walks through every sub-step of every specialist,
   // then reveals Hobson's final answer. Each beat = a specialist; cursor = which sub-step is active.
   const totalSteps = RENT_REVIEW.reduce((n, b) => n + b.steps.length, 0);
-  const endCursor = totalSteps + 4;
+  const INTRO_BEATS = 2; // user message, then Hobson reply
+  const endCursor = totalSteps + INTRO_BEATS + 4;
   const [cursor, setCursor] = useState(0); // 0..endCursor (endCursor = final answer fully shown)
   const [playing, setPlaying] = useState(false);
   const [finished, setFinished] = useState(false);
@@ -135,19 +136,19 @@ const HowHobsonThinks: React.FC = () => {
     return () => observer.disconnect();
   }, [hasStarted]);
 
-  // Map cursor to (beatIndex, stepIndex)
+  // Map cursor to (beatIndex, stepIndex) — offset by INTRO_BEATS so specialists start after the chat intro
   let runningTotal = 0;
   const beatProgress = RENT_REVIEW.map((b) => {
     const start = runningTotal;
     runningTotal += b.steps.length;
     const end = runningTotal;
-    const stepsDone = Math.max(0, Math.min(b.steps.length, cursor - start));
-    const isActive = cursor >= start && cursor < end;
-    const isDone = cursor >= end;
-    const visible = cursor >= start;
+    const stepsDone = Math.max(0, Math.min(b.steps.length, cursor - INTRO_BEATS - start));
+    const isActive = cursor >= INTRO_BEATS + start && cursor < INTRO_BEATS + end;
+    const isDone = cursor >= INTRO_BEATS + end;
+    const visible = cursor >= INTRO_BEATS + start;
     return { start, end, stepsDone, isActive, isDone, visible };
   });
-  const finalShown = cursor >= totalSteps;
+  const finalShown = cursor >= totalSteps + INTRO_BEATS;
 
 
   return (
@@ -305,15 +306,21 @@ const HowHobsonThinks: React.FC = () => {
           {/* Chat surface */}
           <div className="mt-12 max-w-3xl mx-auto rounded-3xl border border-purple-100 bg-gradient-to-b from-purple-50/40 to-white p-4 sm:p-6 shadow-[0_20px_60px_-30px_rgba(124,58,237,0.4)]">
 
-            {/* User bubble */}
-            <div className="flex justify-end">
+            {/* User bubble — appears immediately as the conversation starts */}
+            <div
+              className={`flex justify-end transition-all duration-500 ${hasStarted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"}`}
+              style={{ animation: hasStarted ? "fade-up 0.4s ease both" : undefined }}
+            >
               <div className="max-w-[85%] rounded-2xl rounded-tr-sm bg-purple-700 text-white px-4 py-3 text-sm shadow">
                 Hobson, please prepare my rent review for 32 Hamilton Gardens.
               </div>
             </div>
 
-            {/* Hobson opening */}
-            <div className="mt-4 flex items-start gap-3">
+            {/* Hobson opening — appears after one beat, as if replying */}
+            <div
+              className={`mt-4 flex items-start gap-3 transition-all duration-500 ${cursor >= 1 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2 pointer-events-none h-0 overflow-hidden mt-0"}`}
+              style={{ animation: cursor >= 1 ? "fade-up 0.4s ease both" : undefined }}
+            >
               <img src={hobsonOwl} alt="Hobson" className="w-10 h-10 rounded-full bg-purple-100 p-1 border border-purple-200" />
               <div className="rounded-2xl rounded-tl-sm bg-white border border-purple-100 px-4 py-3 text-sm text-slate-700 shadow-sm">
                 Of course. I'll prepare the rent review for <span className="font-semibold text-slate-900">32 Hamilton Gardens</span> now — one moment while my team gathers what's needed.
