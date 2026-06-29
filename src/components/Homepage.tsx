@@ -5,7 +5,7 @@ import { Menu, X, ArrowRight } from "lucide-react";
 import { SimpleButton } from "@/components/ui/simple-button";
 import { OptimizedImage } from "@/components/OptimizedImage";
 import { Helmet } from "react-helmet-async";
-import { PropertyManagementVisualization } from "@/components/homepage/PropertyManagementVisualization";
+import { HobsonAtWorkVisualization } from "@/components/homepage/HobsonAtWorkVisualization";
 
 import { FeaturesSection } from "@/components/homepage/FeaturesSection";
 import MobileShowcase from "@/components/features/MobileShowcase";
@@ -16,6 +16,9 @@ import { AudienceStrip } from "@/components/homepage/AudienceStrip";
 import { TrustStrip } from "@/components/homepage/TrustStrip";
 
 import { YouTubeVideoSection } from "@/components/homepage/YouTubeVideoSection";
+import { MeetHobsonSection } from "@/components/homepage/MeetHobsonSection";
+import { HowHobsonWorksSection } from "@/components/homepage/HowHobsonWorksSection";
+import { PricingSection } from "@/components/homepage/PricingSection";
 
 import owlMascot from "@/assets/owl-mascot.png";
 import { structuredData } from "@/utils/seo-data";
