@@ -3,7 +3,7 @@ import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
 import { HomepageHeader } from "@/components/homepage/HomepageHeader";
 import { HomepageFooter } from "@/components/homepage/HomepageFooter";
-import { ArrowRight, Sparkles, Check } from "lucide-react";
+import { ArrowRight, Check } from "lucide-react";
 
 import hobsonOwl from "@/assets/hobson-owl-hero.png";
 import professorImg from "@/assets/prototype/character-professor.png";
