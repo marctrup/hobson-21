@@ -50,15 +50,23 @@ const SERVICES: Specialist[] = [
     blurb: "Verifies permissions and protects confidential information. Usually invisible — always present." },
 ];
 
-// Rent review orchestration beats
-const RENT_REVIEW: { who: string; img: string; line: string }[] = [
-  { who: "The Professor", img: professorImg, line: "Reviewing your lease and rent review provisions…" },
-  { who: "The Researcher", img: researcherImg, line: "Finding comparable evidence in the market…" },
-  { who: "The Bookkeeper", img: bookkeeperImg, line: "Preparing the rental analysis…" },
-  { who: "The Broker", img: brokerImg, line: "Identifying the relevant parties for the notice…" },
-  { who: "The Inspector", img: inspectorImg, line: "Confirming statutory requirements…" },
-  { who: "The Keeper", img: keeperImg, line: "Verifying permissions to send the notice…" },
+// Rent review orchestration beats — each specialist has progressive sub-steps
+type Beat = { who: string; img: string; headline: string; steps: string[] };
+const RENT_REVIEW: Beat[] = [
+  { who: "The Professor", img: professorImg, headline: "Reviewing your lease…",
+    steps: ["Locating the lease for 32 Hamilton Gardens", "Identifying the rent review clause", "Extracting review date & mechanism", "Noting assumptions and disregards"] },
+  { who: "The Researcher", img: researcherImg, headline: "Finding comparable evidence…",
+    steps: ["Searching nearby lettings within 0.5 mi", "Filtering for similar size & use", "Capturing three strong comparables", "Saving sources for the audit trail"] },
+  { who: "The Bookkeeper", img: bookkeeperImg, headline: "Preparing the rental analysis…",
+    steps: ["Calculating £/sq ft from comparables", "Applying review assumptions", "Producing the proposed new rent", "Drafting the figures table"] },
+  { who: "The Broker", img: brokerImg, headline: "Identifying the parties…",
+    steps: ["Locating the current tenant on file", "Confirming the service address", "Checking last contact and channel"] },
+  { who: "The Inspector", img: inspectorImg, headline: "Confirming statutory requirements…",
+    steps: ["Checking the correct notice form", "Verifying minimum notice period", "Validating service method"] },
+  { who: "The Keeper", img: keeperImg, headline: "Verifying permissions…",
+    steps: ["Confirming you may issue this notice", "Logging the action to the audit trail"] },
 ];
+
 
 const SpecialistCard: React.FC<{ s: Specialist; index: number }> = ({ s, index }) => (
   <article
