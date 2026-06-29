@@ -40,7 +40,7 @@ const ProductShowcase = memo(() => {
           {/* Composite device showcase */}
           <div className="relative mx-auto max-w-4xl">
             {/* Soft ambient glow */}
-            <div className="absolute -inset-x-12 -inset-y-8 bg-gradient-to-br from-primary/10 via-transparent to-accent-teal/10 blur-3xl rounded-full pointer-events-none" />
+            <div className="absolute -inset-x-12 -inset-y-8 bg-gradient-to-br from-primary/10 via-transparent to-accent-teal/10 blur-3xl rounded-full pointer-events-none" aria-hidden="true" />
 
             {/* Desktop */}
             <div
@@ -54,33 +54,31 @@ const ProductShowcase = memo(() => {
                 loading="lazy"
                 decoding="async"
               />
-            </div>
 
-            {/* Phone overlap (bottom-right) */}
-            <div
-              className="absolute right-[-2%] sm:right-[-3%] bottom-[-12%] sm:bottom-[-15%] w-[34%] sm:w-[36%] max-w-[230px] animate-slide-up"
-              style={{ animationDelay: "350ms", animationFillMode: "backwards" }}
-            >
-              <div className="relative rounded-[1.4rem] sm:rounded-[1.8rem] border-[4px] sm:border-[5px] border-foreground/90 bg-foreground/90 shadow-2xl shadow-primary/20 overflow-hidden">
-                {/* Notch */}
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[40%] h-3 sm:h-4 bg-foreground/90 rounded-b-xl z-20" />
-                <div className="relative w-full aspect-[9/19.5] overflow-hidden rounded-[1.1rem] sm:rounded-[1.5rem] bg-background">
-                  <img
-                    src={mobileChatImg}
-                    alt="Hobson AI mobile chat"
-                    className="absolute inset-0 w-full h-full object-cover object-top"
-                    loading="lazy"
-                    decoding="async"
-                  />
+              {/* Phone overlap, contained inside the desktop frame so it never escapes */}
+              <div
+                className="absolute right-[3%] bottom-[4%] w-[22%] sm:w-[20%] max-w-[180px] min-w-[110px] animate-slide-up"
+                style={{ animationDelay: "350ms", animationFillMode: "backwards" }}
+              >
+                <div className="relative rounded-[1.1rem] sm:rounded-[1.4rem] border-[3px] sm:border-[4px] border-foreground/90 bg-foreground/90 shadow-2xl shadow-primary/30 overflow-hidden">
+                  <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[40%] h-2.5 sm:h-3 bg-foreground/90 rounded-b-xl z-20" />
+                  <div className="relative w-full aspect-[9/19.5] overflow-hidden rounded-[0.85rem] sm:rounded-[1.1rem] bg-background">
+                    <img
+                      src={mobileChatImg}
+                      alt="Hobson AI mobile chat"
+                      className="absolute inset-0 w-full h-full object-cover object-top"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </div>
+                  <div className="absolute bottom-1 left-1/2 -translate-x-1/2 w-[35%] h-[2px] bg-white/40 rounded-full z-20" />
                 </div>
-                {/* Home indicator */}
-                <div className="absolute bottom-1 sm:bottom-1.5 left-1/2 -translate-x-1/2 w-[35%] h-[2px] sm:h-1 bg-white/40 rounded-full z-20" />
               </div>
             </div>
           </div>
 
           {/* Feature highlights */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8 mt-24 sm:mt-28">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8 mt-10 sm:mt-12">
             {highlights.map((h, i) => (
               <div
                 key={h.title}
