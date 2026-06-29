@@ -1,6 +1,6 @@
 import React, { memo } from "react";
 import { Check } from "lucide-react";
-import hobsonUnitInterface from "@/assets/hobson-unit-interface.png";
+import hobsonUnitInterface from "@/assets/hobson-conversation-updated.png.asset.json";
 import mobileChatImg from "@/assets/hobson-mobile-chat.png";
 
 const highlights = [
