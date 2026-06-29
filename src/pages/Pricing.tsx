@@ -40,17 +40,17 @@ const faqGroups = [
     heading: "Getting Started & Trials",
     items: [
       { q: "Is there a free trial?", a: "Yes. Tier 1 comes with a free 3-day trial — no credit card required. You can upload your first document and start asking questions about it within minutes of signing up. Tier 2, 3 and 4 are available to join the waitlist ahead of their launch later this year, with founding member pricing locked in for early signups." },
-      { q: "When will Tiers 2, 3 and 4 be available?", a: "Tiers 2, 3 and 4 — which unlock the full Knowledge Base platform, workflow automation and action memory — are launching later this year. Join the waitlist now to be notified first and to lock in founding member pricing before public launch." },
-      { q: "Can I start on Tier 1 and upgrade later?", a: "Yes. When you upgrade to Tier 2 or above, everything you have already taught Hobson stays. Your documents remain in your account. Your Knowledge Base carries over. There is no reset, no re-upload and no loss of work. Upgrading simply unlocks the next layer of capability on top of what you have already built." },
+      { q: "When will Tiers 2, 3 and 4 be available?", a: "Tiers 2, 3 and 4 — which unlock Business Memory, Proactive Work and the ability for Hobson to learn how you work — are launching later this year. Join the waitlist now to be notified first and to lock in founding member pricing before public launch." },
+      { q: "Can I start on Tier 1 and upgrade later?", a: "Yes. When you upgrade to Tier 2 or above, everything you have already taught Hobson stays. Your documents remain in your account. Your Business Memory carries over. There is no reset, no re-upload and no loss of work. Upgrading simply unlocks the next layer of capability on top of what you have already built." },
       { q: "Can I use Hobson on my phone?", a: "Yes. Hobson has a mobile version available on Tier 1, giving you access to your portfolio documents and AI query capability from anywhere. No desktop required to get started." },
     ],
   },
   {
     heading: "Understanding The Tiers",
     items: [
-      { q: "What is the difference between Tier 1 and Tiers 2, 3 and 4?", a: "Tier 1 gives you Hobson's AI document reasoning — ask anything across your leases, contracts and compliance documents and get instant, sourced, auditable answers. What it does not have is the Knowledge Base. Hobson on Tier 1 knows your documents. It does not yet know your business. Tiers 2, 3 and 4 unlock the full platform — the Knowledge Base, workflow automation, action memory, monthly impact summaries and personal shortcuts. Every feature and capability is identical across Tiers 2, 3 and 4. The only difference is how many seats you need. Same Hobson, more people, better value per seat as you scale." },
-      { q: "What is the Knowledge Base?", a: "The Knowledge Base is Hobson's persistent memory about your business. You tell Hobson who your contractors are, how you handle rent arrears, what your approval thresholds are, how you like your reports formatted — and it remembers permanently. Every answer and every action it takes reflects what it knows about how your business operates. It is what transforms Hobson from a smart document tool into an AI that behaves like an informed member of your team. The Knowledge Base is included in Tiers 2, 3 and 4 and becomes more valuable the longer you use it." },
-      { q: "What happens to my Knowledge Base if I leave?", a: "Your data belongs to you and can be exported at any time. However it is worth understanding what leaving means in practice — the institutional memory Hobson has built about your business, your contractors, your preferences and your compliance history does not transfer to another tool. That knowledge lives in Hobson because Hobson built it. The longer you use Hobson at Tier 2 or above, the more valuable that memory becomes." },
+      { q: "What is the difference between Tier 1 and Tiers 2, 3 and 4?", a: "Tier 1 gives you Hobson's AI document reasoning — ask anything across your leases, contracts and compliance documents and get instant, sourced, auditable answers. What it does not have is Business Memory, Proactive Work and the ability for Hobson to learn how you work. Hobson on Tier 1 knows your documents. It does not yet know your business. Tiers 2, 3 and 4 unlock the full platform — Business Memory, Proactive Work, the ability for Hobson to learn how you work, monthly activity summaries and personal working preferences. Every feature and capability is identical across Tiers 2, 3 and 4. The only difference is how many seats you need. Same Hobson, more people, better value per seat as you scale." },
+      { q: "What is Business Memory?", a: "Business Memory is Hobson's persistent memory about your business. You tell Hobson who your contractors are, how you handle rent arrears, what your approval thresholds are, how you like your reports formatted — and it remembers permanently. Every answer and every action it takes reflects what it knows about how your business operates. It is what transforms Hobson from a smart document tool into an AI that behaves like an informed member of your team. Business Memory is included in Tiers 2, 3 and 4 and becomes more valuable the longer you use it." },
+      { q: "What happens to my Business Memory if I leave?", a: "Your data belongs to you and can be exported at any time. However it is worth understanding what leaving means in practice — the institutional memory Hobson has built about your business, your contractors, your preferences and your compliance history does not transfer to another tool. That knowledge lives in Hobson because Hobson built it. The longer you use Hobson at Tier 2 or above, the more valuable that memory becomes." },
       { q: "What if I need more than 10 seats?", a: "Enterprise pricing is available for organisations with more than 10 users. Enterprise packages are based on usage and portfolio size rather than headcount, and include bespoke onboarding and dedicated support. Contact the team at rochelle.t@hobsonschoice.ai to discuss your requirements." },
     ],
   },
@@ -155,7 +155,7 @@ const Pricing = () => {
 
   const tiers = [
     {
-      tier: 1, seats: "1 seat", perSeat: null, label: "No Knowledge Base",
+      tier: 1, seats: "1 seat", perSeat: null, label: "Ideal for individuals",
       priceMonthly: 19.50, priceAnnualMonthly: 15.60, priceAnnualYearly: 187.20,
       badge: "live" as const, badgeText: "Live very soon",
       features: (p: typeof pricing) => [
@@ -165,62 +165,62 @@ const Pricing = () => {
         { text: formatLimit(t1.monthly_extractions, "document extractions"), ok: true },
         { text: formatLimit(t1.monthly_questions, "questions"), ok: true },
         
-        { text: "Knowledge Base", ok: false },
-        { text: "Workflow automation", ok: false },
-        { text: "Action memory", ok: false },
+        { text: "Business Memory", ok: false },
+        { text: "Proactive Work", ok: false },
+        { text: "Learns How You Work", ok: false },
       ],
       cta: "Join the waitlist", ctaStyle: "outline" as const, waitlist: true,
       muted: null,
     },
     {
-      tier: 2, seats: "2 seats", perSeat: "£82.50/seat", label: "Full platform",
+      tier: 2, seats: "2 seats", perSeat: "£82.50/seat", label: "Ideal for small teams",
       priceMonthly: 165.00, priceAnnualMonthly: 132.00, priceAnnualYearly: 1584.00,
       badge: "coming" as const, badgeText: "Coming later this year",
       features: () => [
         { text: "Everything in Tier 1", ok: true },
-        { text: "Knowledge Base", ok: true },
+        { text: "Business Memory", ok: true },
         { text: formatLimit(t2.monthly_extractions, "document extractions"), ok: true },
         { text: formatLimit(t2.monthly_questions, "questions"), ok: true },
-        { text: "Workflow automation", ok: true },
-        { text: "Action memory", ok: true },
-        { text: "Monthly impact summaries", ok: true },
-        { text: "Personal shortcuts", ok: true },
+        { text: "Proactive Work", ok: true },
+        { text: "Learns How You Work", ok: true },
+        { text: "Monthly Activity Summary", ok: true },
+        { text: "Personal Working Preferences", ok: true },
       ],
       cta: "Join the waitlist", ctaStyle: "outline" as const, waitlist: true,
       muted: null,
     },
     {
-      tier: 3, seats: "5 seats", perSeat: "£50.00/seat", label: "Full platform",
+      tier: 3, seats: "5 seats", perSeat: "£50.00/seat", label: "Ideal for growing businesses",
       priceMonthly: 250.00, priceAnnualMonthly: 200.00, priceAnnualYearly: 2400.00,
       badge: "coming" as const, badgeText: "Coming later this year",
       
       features: () => [
         { text: "Everything in Tier 1", ok: true },
-        { text: "Knowledge Base", ok: true },
+        { text: "Business Memory", ok: true },
         { text: formatLimit(t3.monthly_extractions, "document extractions"), ok: true },
         { text: formatLimit(t3.monthly_questions, "questions"), ok: true },
-        { text: "Workflow automation", ok: true },
-        { text: "Action memory", ok: true },
-        { text: "Monthly impact summaries", ok: true },
-        { text: "Personal shortcuts", ok: true },
+        { text: "Proactive Work", ok: true },
+        { text: "Learns How You Work", ok: true },
+        { text: "Monthly Activity Summary", ok: true },
+        { text: "Personal Working Preferences", ok: true },
       ],
       cta: "Join the waitlist", ctaStyle: "outline" as const, waitlist: true,
       muted: null,
     },
     {
-      tier: 4, seats: "10 seats", perSeat: "£45.00/seat", label: "Full platform",
+      tier: 4, seats: "10 seats", perSeat: "£45.00/seat", label: "Ideal for larger organisations",
       priceMonthly: 450.00, priceAnnualMonthly: 360.00, priceAnnualYearly: 4320.00,
       badge: "coming" as const, badgeText: "Coming later this year",
       
       features: () => [
         { text: "Everything in Tier 1", ok: true },
-        { text: "Knowledge Base", ok: true },
+        { text: "Business Memory", ok: true },
         { text: formatLimit(t4.monthly_extractions, "document extractions"), ok: true },
         { text: formatLimit(t4.monthly_questions, "questions"), ok: true },
-        { text: "Workflow automation", ok: true },
-        { text: "Action memory", ok: true },
-        { text: "Monthly impact summaries", ok: true },
-        { text: "Personal shortcuts", ok: true },
+        { text: "Proactive Work", ok: true },
+        { text: "Learns How You Work", ok: true },
+        { text: "Monthly Activity Summary", ok: true },
+        { text: "Personal Working Preferences", ok: true },
       ],
       cta: "Join the waitlist", ctaStyle: "outline" as const, waitlist: true,
       muted: null,
@@ -299,7 +299,7 @@ const Pricing = () => {
               <span style={{ color: C.navy }}>Choose your </span>
               <span style={{ background: `linear-gradient(90deg, ${C.purple}, ${C.teal})`, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>plan</span>
             </h1>
-            <p className="text-base sm:text-lg text-muted-foreground mb-8 text-center">Tier 1 knows your documents. Tier 2 – 4 knows your business.</p>
+            <p className="text-base sm:text-lg text-muted-foreground mb-8 text-center">Every plan includes the complete Hobson experience. Choose the plan that best matches the size of your team and the amount of work you'd like Hobson to take care of.</p>
 
             {/* Billing toggle */}
             <div className="flex flex-wrap items-center justify-center gap-2 mb-8">
