@@ -24,7 +24,7 @@ const PERSISTENT: Specialist[] = [
   { name: "The Professor", owns: "Portfolio Knowledge", img: professorImg, tone: "persistent",
     blurb: "Maintains everything I know from your documents — leases, licences, plans, reports and every other record you entrust to me." },
   { name: "The Architect", owns: "Portfolio Structure", img: architectImg, tone: "persistent",
-    blurb: "Maintains everything I know from your documents — leases, licences, plans, reports and every other record you entrust to me." },
+    blurb: "Keeps the structure of your estate accurate — units, properties, hierarchies and groupings — so I always understand how everything fits together." },
   { name: "The Inspector", owns: "Compliance Position", img: inspectorImg, tone: "persistent",
     blurb: "Compares what is known against what is required, helping me understand your compliance position and identify anything that's missing." },
   { name: "The Broker", owns: "Relationships", img: brokerImg, tone: "persistent",
