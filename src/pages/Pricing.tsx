@@ -155,12 +155,13 @@ const Pricing = () => {
       tier: 3, seats: "5 seats", perSeat: "£50.00/seat", label: "Ideal for growing businesses",
       priceMonthly: 250.00, priceAnnualMonthly: 200.00, priceAnnualYearly: 2400.00,
       badge: "coming" as const, badgeText: "Coming later this year",
-      
       features: () => [
-        { text: "Everything in Tier 1", ok: true },
-        { text: "Business Memory", ok: true },
+        { text: "Multi-document AI reasoning", ok: true },
+        { text: "Plain English queries", ok: true },
+        { text: "Sourced, auditable answers", ok: true },
         { text: formatLimit(t3.monthly_extractions, "document extractions"), ok: true },
         { text: formatLimit(t3.monthly_questions, "questions"), ok: true },
+        { text: "Business Memory", ok: true },
         { text: "Proactive Work", ok: true },
         { text: "Learns How You Work", ok: true },
         { text: "Monthly Activity Summary", ok: true },
