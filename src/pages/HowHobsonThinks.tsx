@@ -212,47 +212,88 @@ const HowHobsonThinks: React.FC = () => {
         </div>
       </section>
 
-      {/* TWO TYPES */}
+      {/* TEAM — Hobson introduces his specialists in chat */}
       <section id="team" className="py-20 bg-gradient-to-b from-white to-purple-50/40">
-        <div className="container mx-auto px-6">
-          <div className="max-w-3xl">
+        <div className="container mx-auto px-6 max-w-3xl">
+          <div className="text-center mb-12">
             <p className="text-xs font-semibold tracking-[0.2em] text-purple-600 uppercase">The team</p>
-            <h2 className="mt-3 text-3xl sm:text-4xl font-bold text-slate-900">Two kinds of specialist.</h2>
-            <p className="mt-4 text-lg text-slate-600">
-              Some look after what Hobson knows about your portfolio over time. Others provide an expert service
-              the moment Hobson needs it. Together, they let him answer almost anything you put to him.
-            </p>
+            <h2 className="mt-3 text-3xl sm:text-4xl font-bold text-slate-900">Meet the specialists.</h2>
           </div>
 
-          {/* Persistent */}
-          <div className="mt-14">
-            <div className="flex items-end justify-between gap-4 mb-6">
-              <div>
-                <h3 className="text-2xl font-bold text-slate-900">Persistent portfolio domains</h3>
-                <p className="text-slate-600 text-sm mt-1">They quietly maintain Hobson's memory of your estate.</p>
+          <div className="space-y-4">
+            {/* User asks */}
+            <div className="flex justify-end" style={{ animation: "fade-up 0.5s ease both" }}>
+              <div className="max-w-[80%] rounded-2xl rounded-tr-sm bg-purple-700 text-white px-4 py-3 text-sm shadow">
+                Hobson — tell me about the team behind you.
               </div>
-              <span className="hidden sm:inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-purple-700 bg-white border border-purple-200 rounded-full px-3 py-1.5">
-                Always on
-              </span>
             </div>
-            <div className="grid md:grid-cols-2 gap-5">
-              {PERSISTENT.map((s, i) => <SpecialistCard key={s.name} s={s} index={i} />)}
-            </div>
-          </div>
 
-          {/* Services */}
-          <div className="mt-20">
-            <div className="flex items-end justify-between gap-4 mb-6">
-              <div>
-                <h3 className="text-2xl font-bold text-slate-900">Specialist services</h3>
-                <p className="text-slate-600 text-sm mt-1">Called on whenever their expertise is required.</p>
+            {/* Hobson opens */}
+            <div className="flex items-start gap-3" style={{ animation: "fade-up 0.5s ease 0.15s both" }}>
+              <img src={hobsonOwl} alt="Hobson" className="w-10 h-10 rounded-full bg-purple-100 p-1 border border-purple-200 shrink-0" />
+              <div className="rounded-2xl rounded-tl-sm bg-white border border-purple-100 px-4 py-3 text-sm text-slate-700 shadow-sm max-w-[85%]">
+                I work with eight specialists. Four maintain what I know about your estate — always working in the background. Four more I call on whenever a particular expertise is needed.
               </div>
-              <span className="hidden sm:inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-purple-700 bg-white border border-purple-200 rounded-full px-3 py-1.5">
-                On demand
-              </span>
             </div>
-            <div className="grid md:grid-cols-2 gap-5">
-              {SERVICES.map((s, i) => <SpecialistCard key={s.name} s={s} index={i} />)}
+
+            {/* Persistent specialists */}
+            <div className="pl-14 space-y-2" style={{ animation: "fade-up 0.5s ease 0.3s both" }}>
+              <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-purple-600 mb-1">Persistent portfolio domains — always on</p>
+              <div className="grid sm:grid-cols-2 gap-2">
+                {PERSISTENT.map((s, i) => (
+                  <div key={s.name} className="flex items-start gap-2.5 rounded-xl border border-purple-100 bg-white px-3 py-2.5 shadow-sm" style={{ animation: `fade-up 0.4s ease ${0.35 + i * 0.08}s both` }}>
+                    <div className="w-10 h-10 shrink-0 rounded-lg bg-purple-50 border border-purple-100 grid place-items-center">
+                      <img src={s.img} alt={s.name} className="w-8 h-8 object-contain" />
+                    </div>
+                    <div className="min-w-0">
+                      <div className="flex items-center gap-1.5 flex-wrap">
+                        <h4 className="text-xs font-bold text-slate-900">{s.name}</h4>
+                        <span className="px-1.5 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider text-white" style={{ background: "linear-gradient(135deg,#7c3aed,#a78bfa)" }}>Maintains</span>
+                      </div>
+                      <p className="text-[11px] font-medium text-purple-700">{s.owns}</p>
+                      <p className="text-[11px] text-slate-600 leading-snug">{s.blurb}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Hobson transitions */}
+            <div className="flex items-start gap-3" style={{ animation: "fade-up 0.5s ease 0.7s both" }}>
+              <img src={hobsonOwl} alt="Hobson" className="w-10 h-10 rounded-full bg-purple-100 p-1 border border-purple-200 shrink-0" />
+              <div className="rounded-2xl rounded-tl-sm bg-white border border-purple-100 px-4 py-3 text-sm text-slate-700 shadow-sm max-w-[85%]">
+                And these four I call upon when their particular skill is required.
+              </div>
+            </div>
+
+            {/* Service specialists */}
+            <div className="pl-14 space-y-2" style={{ animation: "fade-up 0.5s ease 0.85s both" }}>
+              <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-purple-600 mb-1">Specialist services — on demand</p>
+              <div className="grid sm:grid-cols-2 gap-2">
+                {SERVICES.map((s, i) => (
+                  <div key={s.name} className="flex items-start gap-2.5 rounded-xl border border-purple-100 bg-white px-3 py-2.5 shadow-sm" style={{ animation: `fade-up 0.4s ease ${0.9 + i * 0.08}s both` }}>
+                    <div className="w-10 h-10 shrink-0 rounded-lg bg-purple-50 border border-purple-100 grid place-items-center">
+                      <img src={s.img} alt={s.name} className="w-8 h-8 object-contain" />
+                    </div>
+                    <div className="min-w-0">
+                      <div className="flex items-center gap-1.5 flex-wrap">
+                        <h4 className="text-xs font-bold text-slate-900">{s.name}</h4>
+                        <span className="px-1.5 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider text-purple-700 bg-purple-50 border border-purple-200">Provides</span>
+                      </div>
+                      <p className="text-[11px] font-medium text-purple-700">{s.owns}</p>
+                      <p className="text-[11px] text-slate-600 leading-snug">{s.blurb}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Hobson closes */}
+            <div className="flex items-start gap-3" style={{ animation: "fade-up 0.5s ease 1.2s both" }}>
+              <img src={hobsonOwl} alt="Hobson" className="w-10 h-10 rounded-full bg-purple-100 p-1 border border-purple-200 shrink-0" />
+              <div className="rounded-2xl rounded-tl-sm bg-white border border-purple-100 px-4 py-3 text-sm text-slate-700 shadow-sm max-w-[85%]">
+                Together they let me answer almost anything you put to me — while you only ever speak to one person.
+              </div>
             </div>
           </div>
         </div>
