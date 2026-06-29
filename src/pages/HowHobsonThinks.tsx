@@ -294,7 +294,7 @@ const HowHobsonThinks: React.FC = () => {
       </section>
 
       {/* ORCHESTRATION DEMO */}
-      <section id="orchestration" className="py-24 bg-white">
+      <section id="orchestration" ref={orchestrationRef} className="py-24 bg-white">
         <div className="container mx-auto px-6">
           <div className="max-w-3xl mx-auto text-center">
             <p className="text-xs font-semibold tracking-[0.2em] text-purple-600 uppercase">See him at work</p>
