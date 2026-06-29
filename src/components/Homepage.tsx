@@ -6,8 +6,6 @@ import { SimpleButton } from "@/components/ui/simple-button";
 import { OptimizedImage } from "@/components/OptimizedImage";
 import { Helmet } from "react-helmet-async";
 import { OrchestrationDemo } from "@/components/homepage/OrchestrationDemo";
-import SeeHobsonInAction from "@/components/homepage/SeeHobsonInAction";
-
 
 
 
@@ -239,8 +237,6 @@ export const Homepage = () => {
           {/* Trust Strip */}
           <TrustStrip />
 
-
-          <SeeHobsonInAction />
 
           <PilotApplicationForm showForm={showPilotForm} setShowForm={setShowPilotForm} />
 
