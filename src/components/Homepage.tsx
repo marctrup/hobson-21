@@ -243,14 +243,34 @@ export const Homepage = () => {
           <TrustStrip />
 
           {/* Closing Statement */}
-          <section className="py-16 md:py-24 border-t bg-muted/30">
-            <div className="container mx-auto px-4 max-w-3xl text-center">
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground leading-tight tracking-tight mb-6">
-                One conversation. One orchestrator.
+          <section className="py-20 md:py-32 border-t bg-background relative overflow-hidden">
+            {/* Decorative gradient line at top */}
+            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
+            {/* Subtle radial glow behind text */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-primary/5 rounded-full blur-3xl pointer-events-none" />
+
+            <div className="container mx-auto px-4 max-w-4xl text-center relative">
+              <div className="mb-8 flex justify-center">
+                <OptimizedImage
+                  src={owlMascot}
+                  alt="Hobson"
+                  className="h-16 w-16 opacity-80"
+                />
+              </div>
+
+              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-foreground leading-[1.1] tracking-tight mb-8">
+                One conversation.
+                <br />
+                <span className="bg-gradient-to-r from-primary via-primary/80 to-accent-teal bg-clip-text text-transparent">
+                  One orchestrator.
+                </span>
                 <br />
                 Unlimited capabilities.
               </h2>
-              <p className="text-base sm:text-lg text-muted-foreground leading-relaxed max-w-xl mx-auto">
+
+              <div className="w-16 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent mx-auto mb-8" />
+
+              <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto">
                 That's how Hobson thinks. Quietly, methodically, and always on your behalf.
               </p>
             </div>
