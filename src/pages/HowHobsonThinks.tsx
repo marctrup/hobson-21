@@ -231,7 +231,6 @@ const HowHobsonThinks: React.FC = () => {
                 </span>
               </h1>
               <p className="mt-3 text-lg text-slate-600 max-w-xl leading-relaxed">
-                One conversation.<br />
                 <span className="text-purple-700 font-medium">A quiet team behind it.</span>
               </p>
               <p className="mt-4 text-lg text-slate-600 max-w-xl leading-relaxed">
