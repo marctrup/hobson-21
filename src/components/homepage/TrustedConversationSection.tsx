@@ -17,7 +17,7 @@ const points = [
   {
     icon: Users,
     title: "Eight specialists",
-    body: "Four help me maintain my understanding. Four provide specialist expertise whenever I need it.",
+    body: "Four quietly maintain everything I know about your portfolio. Four provide expert services whenever I need them.",
     tone: { icon: "text-accent-amber", bg: "bg-accent-amber/15" },
   },
 ];
