@@ -242,6 +242,20 @@ export const Homepage = () => {
           {/* Trust Strip */}
           <TrustStrip />
 
+          {/* Closing Statement */}
+          <section className="py-16 md:py-24 border-t bg-muted/30">
+            <div className="container mx-auto px-4 max-w-3xl text-center">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground leading-tight tracking-tight mb-6">
+                One conversation. One orchestrator.
+                <br />
+                Unlimited capabilities.
+              </h2>
+              <p className="text-base sm:text-lg text-muted-foreground leading-relaxed max-w-xl mx-auto">
+                That's how Hobson thinks. Quietly, methodically, and always on your behalf.
+              </p>
+            </div>
+          </section>
+
           <PilotApplicationForm showForm={showPilotForm} setShowForm={setShowPilotForm} />
 
           {/* Footer */}
