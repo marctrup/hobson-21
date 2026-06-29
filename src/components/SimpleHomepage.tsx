@@ -26,8 +26,8 @@ export const SimpleHomepage = () => {
             </div>
 
             <nav className="hidden md:flex items-center gap-6">
-              <Link to="/features" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                Features
+              <Link to="/how-hobson-thinks" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                How Hobson Thinks
               </Link>
               <Link to="/blog" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
                 Blog
