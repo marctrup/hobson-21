@@ -90,9 +90,6 @@ export const Homepage = () => {
 
               {/* Desktop Navigation */}
               <nav className="hidden md:flex items-center gap-6" role="navigation" aria-label="Main navigation">
-                <Link to="/how-hobson-thinks" className="text-base text-muted-foreground hover:text-foreground transition-colors">
-                  How Hobson Thinks
-                </Link>
                 <Link to="/pricing" className="text-base text-muted-foreground hover:text-foreground transition-colors">
                   Pricing
                 </Link>
@@ -128,9 +125,6 @@ export const Homepage = () => {
             {/* Mobile Navigation Menu */}
             {isMobileMenuOpen && <nav className="md:hidden mt-4 pb-4 border-t pt-4" role="navigation" aria-label="Mobile navigation">
                 <div className="flex flex-col gap-4">
-                  <Link to="/how-hobson-thinks" className="text-base text-muted-foreground hover:text-foreground transition-colors py-2" onClick={closeMobileMenu}>
-                    How Hobson Thinks
-                  </Link>
                   <Link to="/pricing" className="text-base text-muted-foreground hover:text-foreground transition-colors py-2" onClick={closeMobileMenu}>
                     Pricing
                   </Link>
@@ -351,7 +345,7 @@ export const Homepage = () => {
                 <div>
                   <h4 className="text-sm font-semibold uppercase tracking-wider text-foreground mb-5">{content.footer.company.title}</h4>
                   <div className="space-y-3">
-                    <Link to="/how-hobson-thinks" className="block text-sm text-muted-foreground hover:text-primary transition-colors">How Hobson Thinks</Link>
+                    
                     <Link to="/pricing" className="block text-sm text-muted-foreground hover:text-primary transition-colors">Pricing</Link>
                     <Link to="/founder" className="block text-sm text-muted-foreground hover:text-primary transition-colors">Founder</Link>
                     <Link to="/blog" className="block text-sm text-muted-foreground hover:text-primary transition-colors">Blog</Link>
