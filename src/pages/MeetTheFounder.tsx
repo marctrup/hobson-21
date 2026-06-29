@@ -60,18 +60,20 @@ const MeetTheFounder = () => {
             <div className="container mx-auto px-4 max-w-3xl">
               <div className="rounded-2xl bg-card border border-border p-8 sm:p-12 shadow-sm">
                 <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-6">
-                  Why I built Hobson
+                  Why I Built Hobson
                 </h2>
                 <div className="space-y-4 text-base sm:text-lg text-muted-foreground leading-relaxed">
                   <p>
-                    Property teams spend too much time chasing documents, dates,
-                    obligations and decisions across systems that were never
-                    designed to think with them.
+                    For over 30 years I've worked in property.
                   </p>
-                  <p>Hobson exists to change that.</p>
                   <p>
-                    One conversation. A quiet team behind it. Built specifically
-                    for the way property work actually happens.
+                    I didn't build Hobson because the world needed another property system.
+                  </p>
+                  <p>
+                    I built him because I believed property deserved a better way of working.
+                  </p>
+                  <p>
+                    One that thinks alongside people, quietly takes care of the routine work and gives professionals more time to focus on what really matters.
                   </p>
                 </div>
               </div>
