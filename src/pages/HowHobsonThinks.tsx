@@ -60,30 +60,6 @@ const RENT_REVIEW: { who: string; img: string; line: string }[] = [
   { who: "The Keeper", img: keeperImg, line: "Verifying permissions to send the notice…" },
 ];
 
-const SpecialistCard: React.FC<{ s: Specialist; index: number }> = ({ s, index }) => (
-  <article
-    className="group relative rounded-3xl bg-white border border-purple-100 p-6 shadow-[0_8px_30px_-12px_rgba(124,58,237,0.18)] hover:shadow-[0_20px_50px_-15px_rgba(124,58,237,0.35)] hover:-translate-y-1 transition-all duration-500"
-    style={{ animation: `fade-up 0.6s ease ${index * 80}ms both` }}
-  >
-    <div className="absolute -top-3 left-6 px-3 py-1 rounded-full text-[10px] font-semibold uppercase tracking-wider"
-      style={s.tone === "persistent"
-        ? { background: "linear-gradient(135deg,#7c3aed,#a78bfa)", color: "white" }
-        : { background: "#f5f3ff", color: "#6d28d9", border: "1px solid #ddd6fe" }}>
-      {s.tone === "persistent" ? "Maintains" : "Provides"}
-    </div>
-    <div className="flex items-start gap-4">
-      <div className="w-24 h-24 shrink-0 rounded-2xl bg-gradient-to-br from-purple-50 to-white border border-purple-100 grid place-items-center overflow-hidden">
-        <img src={s.img} alt={s.name} className="w-20 h-20 object-contain group-hover:scale-110 transition-transform duration-500" />
-      </div>
-      <div className="min-w-0">
-        <h3 className="text-lg font-bold text-slate-900">{s.name}</h3>
-        <p className="text-sm font-medium text-purple-700">{s.owns}</p>
-        <p className="mt-2 text-sm text-slate-600 leading-relaxed">{s.blurb}</p>
-      </div>
-    </div>
-  </article>
-);
-
 const HowHobsonThinks: React.FC = () => {
   // Orchestration demo state
   const [step, setStep] = useState(0);
@@ -126,7 +102,7 @@ const HowHobsonThinks: React.FC = () => {
       <section className="relative overflow-hidden hh-grid-bg">
         <div className="container mx-auto px-6 pt-16 pb-24 lg:pt-24 lg:pb-32">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div style={{ animation: "fade-up 0.7s ease both" }}>
+            <div>
               <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-purple-100 text-purple-700 text-xs font-semibold tracking-wide uppercase">
                 How Hobson thinks
               </div>
@@ -159,11 +135,11 @@ const HowHobsonThinks: React.FC = () => {
               </div>
               {/* Pulse */}
               <div className="absolute inset-0 grid place-items-center pointer-events-none">
-                <span className="absolute w-56 h-56 rounded-full bg-purple-400/20" style={{ animation: "pulse-ring 2.6s ease-out infinite" }} />
-                <span className="absolute w-56 h-56 rounded-full bg-purple-400/10" style={{ animation: "pulse-ring 2.6s ease-out 1.3s infinite" }} />
+                <span className="absolute w-56 h-56 rounded-full bg-purple-400/20" />
+                <span className="absolute w-56 h-56 rounded-full bg-purple-400/10" />
               </div>
               {/* Hobson */}
-              <div className="absolute inset-0 grid place-items-center" style={{ animation: "float-slow 6s ease-in-out infinite" }}>
+              <div className="absolute inset-0 grid place-items-center">
                 <img src={hobsonOwl} alt="Hobson" className="w-80 lg:w-[26rem] drop-shadow-[0_30px_40px_rgba(124,58,237,0.35)]" />
               </div>
               {/* Mini specialist orbs */}
@@ -212,47 +188,88 @@ const HowHobsonThinks: React.FC = () => {
         </div>
       </section>
 
-      {/* TWO TYPES */}
+      {/* TEAM — Hobson introduces his specialists in chat */}
       <section id="team" className="py-20 bg-gradient-to-b from-white to-purple-50/40">
-        <div className="container mx-auto px-6">
-          <div className="max-w-3xl">
+        <div className="container mx-auto px-6 max-w-3xl">
+          <div className="text-center mb-12">
             <p className="text-xs font-semibold tracking-[0.2em] text-purple-600 uppercase">The team</p>
-            <h2 className="mt-3 text-3xl sm:text-4xl font-bold text-slate-900">Two kinds of specialist.</h2>
-            <p className="mt-4 text-lg text-slate-600">
-              Some look after what Hobson knows about your portfolio over time. Others provide an expert service
-              the moment Hobson needs it. Together, they let him answer almost anything you put to him.
-            </p>
+            <h2 className="mt-3 text-3xl sm:text-4xl font-bold text-slate-900">Meet the specialists.</h2>
           </div>
 
-          {/* Persistent */}
-          <div className="mt-14">
-            <div className="flex items-end justify-between gap-4 mb-6">
-              <div>
-                <h3 className="text-2xl font-bold text-slate-900">Persistent portfolio domains</h3>
-                <p className="text-slate-600 text-sm mt-1">They quietly maintain Hobson's memory of your estate.</p>
+          <div className="space-y-4">
+            {/* User asks */}
+            <div className="flex justify-end">
+              <div className="max-w-[80%] rounded-2xl rounded-tr-sm bg-purple-700 text-white px-4 py-3 text-sm shadow">
+                Hobson — tell me about the team behind you.
               </div>
-              <span className="hidden sm:inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-purple-700 bg-white border border-purple-200 rounded-full px-3 py-1.5">
-                Always on
-              </span>
             </div>
-            <div className="grid md:grid-cols-2 gap-5">
-              {PERSISTENT.map((s, i) => <SpecialistCard key={s.name} s={s} index={i} />)}
-            </div>
-          </div>
 
-          {/* Services */}
-          <div className="mt-20">
-            <div className="flex items-end justify-between gap-4 mb-6">
-              <div>
-                <h3 className="text-2xl font-bold text-slate-900">Specialist services</h3>
-                <p className="text-slate-600 text-sm mt-1">Called on whenever their expertise is required.</p>
+            {/* Hobson opens */}
+            <div className="flex items-start gap-3">
+              <img src={hobsonOwl} alt="Hobson" className="w-10 h-10 rounded-full bg-purple-100 p-1 border border-purple-200 shrink-0" />
+              <div className="rounded-2xl rounded-tl-sm bg-white border border-purple-100 px-4 py-3 text-sm text-slate-700 shadow-sm max-w-[85%]">
+                I work with eight specialists. Four maintain what I know about your estate — always working in the background. Four more I call on whenever a particular expertise is needed.
               </div>
-              <span className="hidden sm:inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-purple-700 bg-white border border-purple-200 rounded-full px-3 py-1.5">
-                On demand
-              </span>
             </div>
-            <div className="grid md:grid-cols-2 gap-5">
-              {SERVICES.map((s, i) => <SpecialistCard key={s.name} s={s} index={i} />)}
+
+            {/* Persistent specialists */}
+            <div className="pl-14 space-y-2">
+              <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-purple-600 mb-1">Persistent portfolio domains — always on</p>
+              <div className="grid sm:grid-cols-2 gap-2">
+                {PERSISTENT.map((s, i) => (
+                  <div key={s.name} className="flex items-start gap-2.5 rounded-xl border border-purple-100 bg-white px-3 py-2.5 shadow-sm">
+                    <div className="w-10 h-10 shrink-0 rounded-lg bg-purple-50 border border-purple-100 grid place-items-center">
+                      <img src={s.img} alt={s.name} className="w-8 h-8 object-contain" />
+                    </div>
+                    <div className="min-w-0">
+                      <div className="flex items-center gap-1.5 flex-wrap">
+                        <h4 className="text-xs font-bold text-slate-900">{s.name}</h4>
+                        <span className="px-1.5 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider text-white" style={{ background: "linear-gradient(135deg,#7c3aed,#a78bfa)" }}>Maintains</span>
+                      </div>
+                      <p className="text-[11px] font-medium text-purple-700">{s.owns}</p>
+                      <p className="text-[11px] text-slate-600 leading-snug">{s.blurb}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Hobson transitions */}
+            <div className="flex items-start gap-3">
+              <img src={hobsonOwl} alt="Hobson" className="w-10 h-10 rounded-full bg-purple-100 p-1 border border-purple-200 shrink-0" />
+              <div className="rounded-2xl rounded-tl-sm bg-white border border-purple-100 px-4 py-3 text-sm text-slate-700 shadow-sm max-w-[85%]">
+                And these four I call upon when their particular skill is required.
+              </div>
+            </div>
+
+            {/* Service specialists */}
+            <div className="pl-14 space-y-2">
+              <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-purple-600 mb-1">Specialist services — on demand</p>
+              <div className="grid sm:grid-cols-2 gap-2">
+                {SERVICES.map((s, i) => (
+                  <div key={s.name} className="flex items-start gap-2.5 rounded-xl border border-purple-100 bg-white px-3 py-2.5 shadow-sm">
+                    <div className="w-10 h-10 shrink-0 rounded-lg bg-purple-50 border border-purple-100 grid place-items-center">
+                      <img src={s.img} alt={s.name} className="w-8 h-8 object-contain" />
+                    </div>
+                    <div className="min-w-0">
+                      <div className="flex items-center gap-1.5 flex-wrap">
+                        <h4 className="text-xs font-bold text-slate-900">{s.name}</h4>
+                        <span className="px-1.5 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider text-purple-700 bg-purple-50 border border-purple-200">Provides</span>
+                      </div>
+                      <p className="text-[11px] font-medium text-purple-700">{s.owns}</p>
+                      <p className="text-[11px] text-slate-600 leading-snug">{s.blurb}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Hobson closes */}
+            <div className="flex items-start gap-3">
+              <img src={hobsonOwl} alt="Hobson" className="w-10 h-10 rounded-full bg-purple-100 p-1 border border-purple-200 shrink-0" />
+              <div className="rounded-2xl rounded-tl-sm bg-white border border-purple-100 px-4 py-3 text-sm text-slate-700 shadow-sm max-w-[85%]">
+                Together they let me answer almost anything you put to me — while you only ever speak to one person.
+              </div>
             </div>
           </div>
         </div>
@@ -300,7 +317,7 @@ const HowHobsonThinks: React.FC = () => {
                     <div className="relative w-10 h-10 shrink-0 rounded-xl bg-white border border-purple-100 grid place-items-center overflow-hidden">
                       <img src={b.img} alt="" className="w-9 h-9 object-contain" />
                       {active && (
-                        <span className="absolute inset-0 rounded-xl ring-2 ring-purple-400" style={{ animation: "pulse-ring 1.6s ease-out infinite" }} />
+                        <span className="absolute inset-0 rounded-xl ring-2 ring-purple-400" />
                       )}
                     </div>
                     <div className="min-w-0 flex-1">
