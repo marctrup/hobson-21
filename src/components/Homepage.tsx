@@ -274,8 +274,8 @@ export const Homepage = () => {
                         <FileText className="w-6 h-6 text-primary" />
                       </div>
                       <div>
-                        <h3 className="text-lg font-semibold text-foreground mb-1.5">Answers from multiple documents</h3>
-                        <p className="text-muted-foreground leading-relaxed">Hobson reads every lease, schedule, and agreement you share, then connects the dots between them.</p>
+                        <h3 className="text-lg font-semibold text-foreground mb-1.5">Understanding built over time</h3>
+                        <p className="text-muted-foreground leading-relaxed">Every document you share becomes part of my understanding of your portfolio, allowing me to connect information across leases, plans, reports and every other record you entrust to me.</p>
                       </div>
                     </div>
 
@@ -284,8 +284,8 @@ export const Homepage = () => {
                         <CheckCircle className="w-6 h-6 text-primary" />
                       </div>
                       <div>
-                        <h3 className="text-lg font-semibold text-foreground mb-1.5">Every source cited</h3>
-                        <p className="text-muted-foreground leading-relaxed">Every response points back to the exact document and clause so you can verify with confidence.</p>
+                        <h3 className="text-lg font-semibold text-foreground mb-1.5">Evidence you can trust</h3>
+                        <p className="text-muted-foreground leading-relaxed">Every answer I give is supported by the evidence behind it, with clear references back to the relevant documents and clauses.</p>
                       </div>
                     </div>
 
@@ -294,8 +294,8 @@ export const Homepage = () => {
                         <Building2 className="w-6 h-6 text-primary" />
                       </div>
                       <div>
-                        <h3 className="text-lg font-semibold text-foreground mb-1.5">Property context on every reply</h3>
-                        <p className="text-muted-foreground leading-relaxed">Hobson understands your portfolio, your units, and your obligations — not just the words on the page.</p>
+                        <h3 className="text-lg font-semibold text-foreground mb-1.5">Understanding beyond the documents</h3>
+                        <p className="text-muted-foreground leading-relaxed">I build an understanding of your portfolio, your properties, your people and your obligations, so every answer reflects your business—not just the words in a document.</p>
                       </div>
                     </div>
                   </div>
