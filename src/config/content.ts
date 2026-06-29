@@ -23,7 +23,7 @@ export const CONTENT = {
     title: "Your property obligations,",
     titleHighlight: "managed automatically.",
     subtitle: "Hobson does the property work every business has, but nobody has time for. Purpose-built for property documents — not adapted from a generic AI tool.",
-    strapline: "ChatGPT may read a lease, but Hobson understands the unit.",
+    strapline: "ChatGPT may read a lease. Hobson understands your business.",
     ctaButton: "Start free — no card required",
     ctaSecondary: "Join the waitlist for Tier 2-4",
   },
