@@ -257,7 +257,7 @@ const Pricing = () => {
               <span style={{ color: C.navy }}>Choose your </span>
               <span style={{ background: `linear-gradient(90deg, ${C.purple}, ${C.teal})`, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>plan</span>
             </h1>
-            <p className="text-base sm:text-lg text-muted-foreground mb-8 text-center">Every plan includes the complete Hobson experience. Choose the plan that matches the size of your team and the amount of work you'd like Hobson to take care of.</p>
+            <p className="text-base sm:text-lg text-muted-foreground mb-8 text-center">Every plan includes the complete Hobson experience.<br />Choose the plan that matches the size of your team and the amount of work you'd like Hobson to take care of.</p>
 
             {/* Billing toggle */}
             <div className="flex flex-wrap items-center justify-center gap-2 mb-8">
