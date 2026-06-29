@@ -40,7 +40,7 @@ const Prototype = lazy(() => import("../pages/Prototype"));
 const PrototypeTesters = lazy(() => import("../pages/PrototypeTesters"));
 const PrototypeMobile = lazy(() => import("../pages/PrototypeMobile"));
 
-const Features = lazy(() => import("../pages/Features"));
+
 const HowHobsonThinks = lazy(() => import("../pages/HowHobsonThinks"));
 
 // CRM
