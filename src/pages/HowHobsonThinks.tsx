@@ -276,7 +276,7 @@ const HowHobsonThinks: React.FC = () => {
             Hobson's team grows with purpose
           </h2>
           <p className="mt-6 text-lg text-slate-600 leading-relaxed">
-            Hobson's team is designed to remain stable. As he learns new ways to help, he simply brings together the expertise of the right specialists to complete the task. That means Hobson can continually grow without becoming more complicated to use.
+            New specialists are introduced only when a genuinely new area of expertise is needed. Most new capabilities come from Hobson bringing together the expertise of the specialists he already has.
           </p>
           <div className="mt-10 grid sm:grid-cols-3 gap-4 text-left">
             {[
