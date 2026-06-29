@@ -37,7 +37,7 @@ const SERVICES: Specialist[] = [
   { name: "The Bookkeeper", owns: "Calculations & Finance", img: bookkeeperImg, tone: "service",
     blurb: "Performs calculations, reconciliations and financial analysis whenever I need accurate figures or statements." },
   { name: "The Communicator", owns: "Systems & Integrations", img: communicatorImg, tone: "service",
-    blurb: "Connects Hobson securely to the systems you already use, retrieving live information." },
+    blurb: "Connects securely to your existing systems whenever I need authorised information that's held elsewhere." },
   { name: "The Keeper", owns: "Access & Security", img: keeperImg, tone: "service",
     blurb: "Verifies permissions and protects confidential information. Usually invisible — always present." },
 ];
