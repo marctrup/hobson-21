@@ -3,7 +3,7 @@ import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
 import { HomepageHeader } from "@/components/homepage/HomepageHeader";
 import { HomepageFooter } from "@/components/homepage/HomepageFooter";
-import { ArrowRight, Sparkles, Check } from "lucide-react";
+import { ArrowRight, Check } from "lucide-react";
 
 import hobsonOwl from "@/assets/hobson-owl-hero.png";
 import professorImg from "@/assets/prototype/character-professor.png";
@@ -128,7 +128,7 @@ const HowHobsonThinks: React.FC = () => {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div style={{ animation: "fade-up 0.7s ease both" }}>
               <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-purple-100 text-purple-700 text-xs font-semibold tracking-wide uppercase">
-                <Sparkles className="w-3.5 h-3.5" /> How Hobson thinks
+                How Hobson thinks
               </div>
               <h1 className="mt-6 text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.05] tracking-tight text-slate-900">
                 One conversation.<br/>
