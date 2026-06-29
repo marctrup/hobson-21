@@ -42,6 +42,15 @@ export const OrchestrationDemo: React.FC = () => {
   const [finished, setFinished] = useState(false);
   const [hasStarted, setHasStarted] = useState(false);
   const orchestrationRef = useRef<HTMLDivElement>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const stickToBottomRef = useRef(true);
+
+  const handleScroll = () => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const distanceFromBottom = el.scrollHeight - el.scrollTop - el.clientHeight;
+    stickToBottomRef.current = distanceFromBottom < 48;
+  };
 
   const [introPhase, setIntroPhase] = useState(0);
   const [introUserIdx, setIntroUserIdx] = useState(0);
@@ -77,6 +86,12 @@ export const OrchestrationDemo: React.FC = () => {
       setCursor(INTRO_BEATS);
     }
   }, [introPhase, cursor]);
+
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el || !stickToBottomRef.current) return;
+    el.scrollTo({ top: el.scrollHeight, behavior: "smooth" });
+  }, [cursor, introUserIdx, introHobsonIdx, introPhase, finished]);
 
   useEffect(() => {
     if (!playing || finished || introPhase < 3) return;
@@ -127,9 +142,19 @@ export const OrchestrationDemo: React.FC = () => {
       <style>{`
         @keyframes fade-up { from { opacity: 0; transform: translateY(16px);} to { opacity: 1; transform: none;} }
         @keyframes pulse-ring { 0% { transform: scale(0.9); opacity:0.7;} 100% { transform: scale(1.6); opacity:0;} }
+        .hobson-scroll { scrollbar-width: thin; scrollbar-color: transparent transparent; }
+        .hobson-scroll::-webkit-scrollbar { width: 6px; }
+        .hobson-scroll::-webkit-scrollbar-thumb { background: transparent; border-radius: 9999px; }
+        .hobson-scroll:hover { scrollbar-color: rgba(124,58,237,0.35) transparent; }
+        .hobson-scroll:hover::-webkit-scrollbar-thumb { background: rgba(124,58,237,0.35); }
       `}</style>
 
-      <div className="rounded-3xl border border-purple-100 bg-gradient-to-b from-purple-50/40 to-white p-4 sm:p-6 shadow-[0_20px_60px_-30px_rgba(124,58,237,0.4)]">
+      <div className="rounded-3xl border border-purple-100 bg-gradient-to-b from-purple-50/40 to-white shadow-[0_20px_60px_-30px_rgba(124,58,237,0.4)] flex flex-col h-[600px] max-h-[80vh] overflow-hidden">
+        <div
+          ref={scrollRef}
+          onScroll={handleScroll}
+          className="hobson-scroll flex-1 overflow-y-auto p-4 sm:p-6"
+        >
         {/* User bubble */}
         <div
           className={`flex justify-start transition-all duration-500 ${hasStarted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"}`}
@@ -263,8 +288,9 @@ export const OrchestrationDemo: React.FC = () => {
             </div>
           </div>
         </div>
+        </div>
 
-        <div className="mt-5 flex items-center justify-between text-xs text-slate-500">
+        <div className="border-t border-purple-100 bg-white/70 backdrop-blur px-4 sm:px-6 py-3 flex items-center justify-between text-xs text-slate-500">
           <span>The user only ever speaks to Hobson.</span>
           <button
             onClick={() => {
