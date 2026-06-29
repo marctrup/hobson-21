@@ -247,7 +247,7 @@ const HowHobsonThinks: React.FC = () => {
               </div>
             </div>
 
-            <div className="relative h-[420px] lg:h-[520px]">
+            <div className="relative h-[420px] lg:h-[520px] overflow-hidden">
               {/* Orbit rings */}
               <div className="absolute inset-0 grid place-items-center">
                 <div className="absolute w-72 h-72 rounded-full border border-purple-200/70" />
