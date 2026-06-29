@@ -52,6 +52,9 @@ const SERVICES: Specialist[] = [
 
 // Rent review orchestration beats — each specialist has progressive sub-steps
 type Beat = { who: string; img: string; headline: string; steps: string[] };
+const USER_INTRO = "Hobson, please prepare my rent review for 32 Hamilton Gardens.";
+const HOBSON_INTRO = "Of course. I'll prepare the rent review for 32 Hamilton Gardens now — one moment while my team gathers what's needed.";
+
 const RENT_REVIEW: Beat[] = [
   { who: "The Professor", img: professorImg, headline: "Reviewing your lease…",
     steps: ["Locating the lease for 32 Hamilton Gardens", "Identifying the rent review clause", "Extracting review date & mechanism", "Noting assumptions and disregards"] },
@@ -104,8 +107,48 @@ const HowHobsonThinks: React.FC = () => {
   const [hasStarted, setHasStarted] = useState(false);
   const orchestrationRef = useRef<HTMLElement>(null);
 
+  const [introPhase, setIntroPhase] = useState(0); // 0=idle,1=typing-user,2=typing-hobson,3=done
+  const [introUserIdx, setIntroUserIdx] = useState(0);
+  const [introHobsonIdx, setIntroHobsonIdx] = useState(0);
+
+  // Kick off intro typing when play begins
   useEffect(() => {
-    if (!playing || finished) return;
+    if (!playing || introPhase !== 0) return;
+    setIntroPhase(1);
+  }, [playing, introPhase]);
+
+  // Type user message
+  useEffect(() => {
+    if (introPhase !== 1 || !playing) return;
+    if (introUserIdx >= USER_INTRO.length) {
+      const t = setTimeout(() => setIntroPhase(2), 500);
+      return () => clearTimeout(t);
+    }
+    const t = setTimeout(() => setIntroUserIdx((i) => i + 1), 30);
+    return () => clearTimeout(t);
+  }, [introPhase, introUserIdx, playing]);
+
+  // Type Hobson reply
+  useEffect(() => {
+    if (introPhase !== 2 || !playing) return;
+    if (introHobsonIdx >= HOBSON_INTRO.length) {
+      const t = setTimeout(() => setIntroPhase(3), 600);
+      return () => clearTimeout(t);
+    }
+    const t = setTimeout(() => setIntroHobsonIdx((i) => i + 1), 30);
+    return () => clearTimeout(t);
+  }, [introPhase, introHobsonIdx, playing]);
+
+  // Jump cursor to INTRO_BEATS once typing is finished so specialists begin
+  useEffect(() => {
+    if (introPhase === 3 && cursor < INTRO_BEATS) {
+      setCursor(INTRO_BEATS);
+    }
+  }, [introPhase, cursor]);
+
+  // Specialist + final progression
+  useEffect(() => {
+    if (!playing || finished || introPhase < 3) return;
     const id = setInterval(() => {
       setCursor((c) => {
         if (c >= endCursor) {
@@ -117,7 +160,7 @@ const HowHobsonThinks: React.FC = () => {
       });
     }, 700);
     return () => clearInterval(id);
-  }, [playing, finished, endCursor]);
+  }, [playing, finished, endCursor, introPhase]);
 
   // Start animation when "See him at work" scrolls into view
   useEffect(() => {
@@ -312,24 +355,26 @@ const HowHobsonThinks: React.FC = () => {
           {/* Chat surface */}
           <div className="mt-12 max-w-3xl mx-auto rounded-3xl border border-purple-100 bg-gradient-to-b from-purple-50/40 to-white p-4 sm:p-6 shadow-[0_20px_60px_-30px_rgba(124,58,237,0.4)]">
 
-            {/* User bubble — appears immediately as the conversation starts */}
+            {/* User bubble — types out character by character */}
             <div
               className={`flex justify-end transition-all duration-500 ${hasStarted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"}`}
               style={{ animation: hasStarted ? "fade-up 0.4s ease both" : undefined }}
             >
               <div className="max-w-[85%] rounded-2xl rounded-tr-sm bg-purple-700 text-white px-4 py-3 text-sm shadow">
-                Hobson, please prepare my rent review for 32 Hamilton Gardens.
+                {USER_INTRO.slice(0, introUserIdx)}
+                {introPhase === 1 && <span className="animate-pulse">|</span>}
               </div>
             </div>
 
-            {/* Hobson opening — appears after one beat, as if replying */}
+            {/* Hobson opening — types out character by character after user message */}
             <div
-              className={`mt-4 flex items-start gap-3 transition-all duration-500 ${cursor >= 1 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2 pointer-events-none h-0 overflow-hidden mt-0"}`}
-              style={{ animation: cursor >= 1 ? "fade-up 0.4s ease both" : undefined }}
+              className={`mt-4 flex items-start gap-3 transition-all duration-500 ${introPhase >= 2 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2 pointer-events-none h-0 overflow-hidden mt-0"}`}
+              style={{ animation: introPhase >= 2 ? "fade-up 0.4s ease both" : undefined }}
             >
               <img src={hobsonOwl} alt="Hobson" className="w-10 h-10 rounded-full bg-purple-100 p-1 border border-purple-200" />
               <div className="rounded-2xl rounded-tl-sm bg-white border border-purple-100 px-4 py-3 text-sm text-slate-700 shadow-sm">
-                Of course. I'll prepare the rent review for <span className="font-semibold text-slate-900">32 Hamilton Gardens</span> now — one moment while my team gathers what's needed.
+                {HOBSON_INTRO.slice(0, introHobsonIdx)}
+                {introPhase === 2 && <span className="animate-pulse">|</span>}
               </div>
             </div>
 
@@ -452,6 +497,9 @@ const HowHobsonThinks: React.FC = () => {
                     setCursor(0);
                     setFinished(false);
                     setPlaying(true);
+                    setIntroPhase(0);
+                    setIntroUserIdx(0);
+                    setIntroHobsonIdx(0);
                     orchestrationRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
                   } else {
                     setPlaying((p) => !p);
