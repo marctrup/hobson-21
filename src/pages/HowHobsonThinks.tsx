@@ -182,12 +182,14 @@ const HowHobsonThinks: React.FC = () => {
               <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-purple-100 text-purple-700 text-xs font-semibold tracking-wide uppercase">
                 How Hobson thinks
               </div>
-              <h1 className="mt-6 text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.05] tracking-tight text-slate-900">
-                One Trusted Conversation
+              <h1 className="mt-6 text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.05] tracking-tight">
+                <span className="bg-gradient-to-r from-purple-700 via-purple-600 to-teal-500 bg-clip-text text-transparent">
+                  One Trusted Conversation
+                </span>
               </h1>
               <p className="mt-3 text-lg text-slate-600 max-w-xl leading-relaxed">
                 One conversation.<br />
-                A quiet team behind it.
+                <span className="text-purple-700 font-medium">A quiet team behind it.</span>
               </p>
               <p className="mt-4 text-lg text-slate-600 max-w-xl leading-relaxed">
                 You only ever speak to Hobson. Behind him stands a small, carefully chosen team of specialists —
