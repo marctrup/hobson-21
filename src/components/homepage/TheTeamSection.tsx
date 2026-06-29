@@ -77,8 +77,7 @@ export const TheTeamSection = () => {
           <p className="text-xs font-semibold tracking-[0.2em] text-purple-600 uppercase">The team</p>
           <h2 className="mt-3 text-3xl sm:text-4xl font-bold text-slate-900">Two kinds of specialist.</h2>
           <p className="mt-4 text-lg text-slate-600">
-            Some help me maintain my understanding of your portfolio over time. Others provide expert services
-            whenever I need them. Together, they let me answer almost anything you put to me.
+            You'll only ever speak to me. Behind me is a carefully chosen team of specialists. Some quietly maintain my understanding of your portfolio over time. Others provide expert services whenever I need them. Together, they help me understand your business, complete work on your behalf and give you one clear answer.
           </p>
         </div>
 
