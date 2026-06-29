@@ -96,7 +96,8 @@ const HowHobsonThinks: React.FC = () => {
   // Orchestration demo: a single ticking cursor that walks through every sub-step of every specialist,
   // then reveals Hobson's final answer. Each beat = a specialist; cursor = which sub-step is active.
   const totalSteps = RENT_REVIEW.reduce((n, b) => n + b.steps.length, 0);
-  const endCursor = totalSteps + 4;
+  const INTRO_BEATS = 2; // user message, then Hobson reply
+  const endCursor = totalSteps + INTRO_BEATS + 4;
   const [cursor, setCursor] = useState(0); // 0..endCursor (endCursor = final answer fully shown)
   const [playing, setPlaying] = useState(false);
   const [finished, setFinished] = useState(false);
@@ -135,19 +136,19 @@ const HowHobsonThinks: React.FC = () => {
     return () => observer.disconnect();
   }, [hasStarted]);
 
-  // Map cursor to (beatIndex, stepIndex)
+  // Map cursor to (beatIndex, stepIndex) — offset by INTRO_BEATS so specialists start after the chat intro
   let runningTotal = 0;
   const beatProgress = RENT_REVIEW.map((b) => {
     const start = runningTotal;
     runningTotal += b.steps.length;
     const end = runningTotal;
-    const stepsDone = Math.max(0, Math.min(b.steps.length, cursor - start));
-    const isActive = cursor >= start && cursor < end;
-    const isDone = cursor >= end;
-    const visible = cursor >= start;
+    const stepsDone = Math.max(0, Math.min(b.steps.length, cursor - INTRO_BEATS - start));
+    const isActive = cursor >= INTRO_BEATS + start && cursor < INTRO_BEATS + end;
+    const isDone = cursor >= INTRO_BEATS + end;
+    const visible = cursor >= INTRO_BEATS + start;
     return { start, end, stepsDone, isActive, isDone, visible };
   });
-  const finalShown = cursor >= totalSteps;
+  const finalShown = cursor >= totalSteps + INTRO_BEATS;
 
 
   return (
