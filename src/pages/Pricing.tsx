@@ -495,50 +495,23 @@ const Pricing = () => {
 
         {/* VALUE LADDER CALLOUT */}
         <section className="py-10 sm:py-14 md:py-20 px-4 sm:px-6" style={{ background: `linear-gradient(135deg, ${C.amberSoft}, ${C.tealSoft})` }}>
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3" style={{ color: C.navy }}>
-              Why does each tier become more valuable?
+          <div className="max-w-4xl mx-auto text-center space-y-6">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold" style={{ color: C.navy }}>
+              Why do the plans change?
             </h2>
-            <p className="text-lg sm:text-xl font-medium mb-10" style={{ color: C.purple }}>
-              Tier 1 gives you Hobson with knowledge. Tiers 2–4 give Hobson an increasingly capable team.
-            </p>
-
-            {/* Universal truth pill */}
-            <div className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 mb-10" style={{ background: C.purpleBadgeBg, color: C.purple }}>
-              <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M10 1l2.5 6.5L19 8.5l-5 4.5 1.5 6.5-5.5-3.5-5.5 3.5L6 13 1 8.5l6.5-1L10 1z" fill="currentColor"/></svg>
-              <span className="text-sm font-semibold">Every Hobson plan includes Hobson himself</span>
-            </div>
-
-            {/* Tier journey */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-left mb-10">
-              {[
-                { tier: "Tier 1", label: "Hobson learns", body: "Hobson reads and understands your documents. You can ask anything and get sourced, accurate answers.", colour: C.amber, bg: C.amberSoft },
-                { tier: "Tiers 2 – 3", label: "Hobson understands", body: "Hobson begins to understand your portfolio structure, your compliance position, your people and how your business operates.", colour: C.purple, bg: C.callout },
-                { tier: "Tier 4", label: "Hobson coordinates", body: "Hobson can coordinate specialists, prepare work, monitor what matters and take on increasingly valuable responsibilities on your behalf.", colour: C.teal, bg: C.tealSoft },
-              ].map((step) => (
-                <div key={step.tier} className="rounded-xl p-5 sm:p-6" style={{ background: C.bg, border: `1px solid ${C.border}`, borderTop: `4px solid ${step.colour}` }}>
-                  <p className="text-xs font-bold uppercase tracking-wider mb-1" style={{ color: step.colour }}>{step.tier}</p>
-                  <p className="text-base font-bold mb-2" style={{ color: C.navy }}>{step.label}</p>
-                  <p className="text-sm leading-relaxed" style={{ color: C.muted }}>{step.body}</p>
-                </div>
-              ))}
-            </div>
-
-            <div className="max-w-2xl mx-auto space-y-6">
-              <p className="text-sm sm:text-base leading-relaxed" style={{ color: C.muted }}>
-                As you move through the tiers, Hobson gains access to more of his specialist team and a deeper understanding of your organisation.
+            <div className="space-y-4 text-sm sm:text-base leading-relaxed" style={{ color: C.muted }}>
+              <p>Every plan includes the same Hobson.</p>
+              <p>The same conversation.</p>
+              <p>The same specialist team.</p>
+              <p>The same intelligence.</p>
+              <p className="font-semibold" style={{ color: C.navy }}>
+                The difference between the plans isn't what Hobson can do—it's how much he can do.
               </p>
-              <p className="text-sm sm:text-base leading-relaxed" style={{ color: C.muted }}>
-                That means he doesn't simply answer questions. He can coordinate specialists, prepare work, monitor what matters and take on increasingly valuable responsibilities on your behalf.
+              <p>
+                As your team grows, Hobson can support more people, process more documents, answer more questions and take on more work each month.
               </p>
-              <p className="text-sm sm:text-base leading-relaxed font-semibold" style={{ color: C.navy }}>
-                The difference between the tiers isn't just more features. It's a more capable Hobson.
-              </p>
-            </div>
-
-            <div className="mt-10 rounded-xl p-6 sm:p-8 text-center" style={{ background: C.bg, border: `1px solid ${C.border}` }}>
-              <p className="text-sm sm:text-base leading-relaxed" style={{ color: C.muted }}>
-                A single hour of a property professional's time often costs more than an entire month's subscription. As Hobson's understanding grows and more specialists become available, so does the amount of work he can take care of for you.
+              <p>
+                Choose the plan that matches your organisation today. As your business grows, Hobson grows with you.
               </p>
             </div>
           </div>
