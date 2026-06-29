@@ -97,6 +97,9 @@ export const Homepage = () => {
                 <Link to="/pricing" className="text-base text-muted-foreground hover:text-foreground transition-colors">
                   Pricing
                 </Link>
+                <Link to="/founder" className="text-base text-muted-foreground hover:text-foreground transition-colors">
+                  Founder
+                </Link>
                 <Link to="/blog" className="text-base text-muted-foreground hover:text-foreground transition-colors">
                     {content.header.nav.blog}
                   </Link>
@@ -131,6 +134,9 @@ export const Homepage = () => {
                   </Link>
                   <Link to="/pricing" className="text-base text-muted-foreground hover:text-foreground transition-colors py-2" onClick={closeMobileMenu}>
                     Pricing
+                  </Link>
+                  <Link to="/founder" className="text-base text-muted-foreground hover:text-foreground transition-colors py-2" onClick={closeMobileMenu}>
+                    Founder
                   </Link>
                   <Link to="/blog" className="text-base text-muted-foreground hover:text-foreground transition-colors py-2" onClick={closeMobileMenu}>
                       {content.header.nav.blog}
@@ -202,11 +208,30 @@ export const Homepage = () => {
           {/* The Team */}
           <TheTeamSection />
 
-          {/* YouTube Explainer Video */}
-          <YouTubeVideoSection
-            videoId="MXutUHZFXIs"
-            title="Short Video Explaining our vision for Hobson"
-          />
+          {/* Founder CTA card */}
+          <section className="py-12 sm:py-16" aria-labelledby="founder-cta-heading">
+            <div className="container mx-auto px-4">
+              <div className="max-w-3xl mx-auto rounded-2xl border border-primary/15 bg-gradient-to-br from-primary/5 via-background to-background p-8 sm:p-10 shadow-sm">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
+                  <div className="space-y-2">
+                    <h2 id="founder-cta-heading" className="text-xl sm:text-2xl font-bold text-foreground">
+                      Built by property people
+                    </h2>
+                    <p className="text-muted-foreground text-base leading-relaxed max-w-xl">
+                      Hobson was created by people who understand the day-to-day reality of property work.
+                    </p>
+                  </div>
+                  <Link
+                    to="/founder"
+                    className="inline-flex items-center justify-center gap-2 rounded-md bg-primary px-5 py-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 whitespace-nowrap shrink-0"
+                  >
+                    Watch the founder story
+                    <ArrowRight className="h-4 w-4" />
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </section>
 
           {/* Audience Strip */}
           <AudienceStrip />
@@ -253,6 +278,7 @@ export const Homepage = () => {
                   <div className="space-y-3">
                     <Link to="/how-hobson-thinks" className="block text-sm text-muted-foreground hover:text-primary transition-colors">How Hobson Thinks</Link>
                     <Link to="/pricing" className="block text-sm text-muted-foreground hover:text-primary transition-colors">Pricing</Link>
+                    <Link to="/founder" className="block text-sm text-muted-foreground hover:text-primary transition-colors">Founder</Link>
                     <Link to="/blog" className="block text-sm text-muted-foreground hover:text-primary transition-colors">Blog</Link>
                     <Link to="/contact" className="block text-sm text-muted-foreground hover:text-primary transition-colors">Contact</Link>
                     <Link to="/privacy-policy" className="block text-sm text-muted-foreground hover:text-primary transition-colors">Privacy Policy</Link>

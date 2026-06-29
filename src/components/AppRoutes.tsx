@@ -42,6 +42,7 @@ const PrototypeMobile = lazy(() => import("../pages/PrototypeMobile"));
 
 
 const HowHobsonThinks = lazy(() => import("../pages/HowHobsonThinks"));
+const MeetTheFounder = lazy(() => import("../pages/MeetTheFounder"));
 
 // CRM
 const CrmGuard = lazy(() => import("./crm/CrmGuard").then(m => ({ default: m.CrmGuard })));
@@ -120,6 +121,8 @@ const AppContent = () => {
               <Route path="/" element={<Homepage />} />
               <Route path="/property-management-software" element={<Navigate to="/" replace />} />
               <Route path="/pricing" element={<Pricing />} />
+              <Route path="/founder" element={<MeetTheFounder />} />
+              <Route path="/meet-the-founder" element={<Navigate to="/founder" replace />} />
               <Route path="/blog" element={<Blog />} />
               <Route path="/blog/:slug" element={<BlogPost />} />
               <Route path="/contact" element={<ContactUs />} />
