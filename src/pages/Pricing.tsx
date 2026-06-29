@@ -434,7 +434,7 @@ const Pricing = () => {
               {/* Reason blocks */}
               <div className="space-y-4">
                 {[
-                  { title: "It is not a simple upload.", body: "When you add a document, Hobson reads it using AI — extracting meaning, relationships and obligations so it can answer questions accurately from day one.", accent: C.purple },
+                  { title: "It is not a simple upload.", body: "When you add a document, Hobson will ask the Professor to read, understand and store for later access.", accent: C.purple },
                   { title: "The work happens once.", body: "Every document is processed thoroughly on the way in. Once done, it is done. You will never pay for the same document again.", accent: C.teal },
                   { title: "The fee reflects the work.", body: "Leases are complex and take more processing. Simpler documents cost less. You only pay for what you bring in.", accent: C.amber },
                   { title: "You are in control.", body: "The more documents you have, the more you pay. The fewer you have, the less. Add more later at any time at the same rate.", accent: C.teal },
