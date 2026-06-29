@@ -241,7 +241,7 @@ export const Homepage = () => {
                     </span>
                   </h2>
                   <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
-                    Hobson reads every document you share, understands the relationships between them, and answers with confidence — always citing his sources.
+                    Every document you share becomes part of my understanding of your portfolio. When you ask me a question, I bring together the right knowledge and always show you the evidence behind my answer.
                   </p>
                 </div>
 
