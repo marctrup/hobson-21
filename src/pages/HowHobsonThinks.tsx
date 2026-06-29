@@ -192,7 +192,7 @@ const HowHobsonThinks: React.FC = () => {
                 each with one job. Hobson decides who is needed, in what order, and brings their work together as a single answer.
               </p>
               <div className="mt-8 flex flex-wrap gap-3">
-                <a href="#orchestration" className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-purple-700 hover:bg-purple-800 text-white font-semibold transition">
+                <a href="#orchestration" onClick={() => { setHasStarted(true); setPlaying(true); }} className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-purple-700 hover:bg-purple-800 text-white font-semibold transition validation">
                   See him at work <ArrowRight className="w-4 h-4" />
                 </a>
                 <a href="#team" className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-white border border-purple-200 text-purple-800 hover:bg-purple-50 font-semibold transition">
