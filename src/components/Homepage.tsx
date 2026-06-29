@@ -236,31 +236,43 @@ export const Homepage = () => {
           <AudienceStrip />
 
           {/* Product Screenshot — Document Q&A */}
-          <section className="py-16 sm:py-20 md:py-24 bg-background overflow-hidden" aria-labelledby="screenshot-heading">
+          <section className="py-16 sm:py-20 md:py-28 bg-gradient-to-b from-background via-muted/20 to-background overflow-hidden" aria-labelledby="screenshot-heading">
             <div className="container mx-auto px-4">
               <div className="max-w-6xl mx-auto">
-                <div className="max-w-2xl mb-12 md:mb-16">
+                <div className="max-w-3xl mx-auto text-center mb-14 md:mb-20">
+                  <span className="inline-block text-xs font-semibold tracking-[0.2em] text-primary uppercase mb-4">
+                    See Hobson in action
+                  </span>
                   <h2
                     id="screenshot-heading"
-                    className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4"
+                    className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-5 tracking-tight"
                   >
-                    Ask once. Get the full picture.
+                    Ask once.{" "}
+                    <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
+                      Get the full picture.
+                    </span>
                   </h2>
-                  <p className="text-lg sm:text-xl text-muted-foreground">
-                    Hobson reads every document you share, understands the relationships between them, and answers your questions with confidence — always citing his sources.
+                  <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
+                    Hobson reads every document you share, understands the relationships between them, and answers with confidence — always citing his sources.
                   </p>
                 </div>
 
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
-                  {/* Screenshot with creative framing */}
-                  <div className="lg:col-span-7">
-                    <div className="relative perspective-1000">
-                      <div className="absolute -inset-6 bg-gradient-to-br from-primary/15 via-transparent to-primary/5 rounded-[2rem] blur-2xl opacity-50" />
-                      <div className="relative rounded-2xl border border-border/60 bg-gradient-to-b from-background to-muted/20 shadow-2xl overflow-hidden">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+                  {/* Screenshot — tight, polished frame */}
+                  <div className="lg:col-span-6">
+                    <div className="relative mx-auto max-w-md lg:max-w-none">
+                      <div className="absolute -inset-8 bg-gradient-to-tr from-primary/20 via-primary/5 to-transparent rounded-[2.5rem] blur-3xl opacity-60" />
+                      <div className="relative rounded-2xl border border-border/60 bg-background shadow-[0_30px_80px_-20px_hsl(var(--primary)/0.25)] overflow-hidden">
+                        {/* faux browser chrome */}
+                        <div className="flex items-center gap-1.5 px-4 py-3 border-b border-border/50 bg-muted/40">
+                          <span className="w-2.5 h-2.5 rounded-full bg-red-400/70" />
+                          <span className="w-2.5 h-2.5 rounded-full bg-yellow-400/70" />
+                          <span className="w-2.5 h-2.5 rounded-full bg-green-400/70" />
+                        </div>
                         <img
-                          src="/hobson-document-answer-focused.png"
-                          alt="Hobson answering a property question by referencing uploaded tenancy documents, showing the complete response with cited sources"
-                          className="w-full h-auto"
+                          src="/hobson-answer-tight.png"
+                          alt="Hobson answering a rent question by referencing two uploaded tenancy documents and citing each source"
+                          className="w-full h-auto block"
                           loading="lazy"
                         />
                       </div>
@@ -268,13 +280,13 @@ export const Homepage = () => {
                   </div>
 
                   {/* Feature narrative */}
-                  <div className="lg:col-span-5 space-y-10">
+                  <div className="lg:col-span-6 space-y-8">
                     <div className="flex gap-5">
                       <div className="shrink-0 w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
                         <FileText className="w-6 h-6 text-primary" />
                       </div>
                       <div>
-                        <h3 className="text-lg font-semibold text-foreground mb-1">Answers from multiple documents</h3>
+                        <h3 className="text-lg font-semibold text-foreground mb-1.5">Answers from multiple documents</h3>
                         <p className="text-muted-foreground leading-relaxed">Hobson reads every lease, schedule, and agreement you share, then connects the dots between them.</p>
                       </div>
                     </div>
@@ -284,7 +296,7 @@ export const Homepage = () => {
                         <CheckCircle className="w-6 h-6 text-primary" />
                       </div>
                       <div>
-                        <h3 className="text-lg font-semibold text-foreground mb-1">Every source cited</h3>
+                        <h3 className="text-lg font-semibold text-foreground mb-1.5">Every source cited</h3>
                         <p className="text-muted-foreground leading-relaxed">Every response points back to the exact document and clause so you can verify with confidence.</p>
                       </div>
                     </div>
@@ -294,7 +306,7 @@ export const Homepage = () => {
                         <Building2 className="w-6 h-6 text-primary" />
                       </div>
                       <div>
-                        <h3 className="text-lg font-semibold text-foreground mb-1">Property context on every reply</h3>
+                        <h3 className="text-lg font-semibold text-foreground mb-1.5">Property context on every reply</h3>
                         <p className="text-muted-foreground leading-relaxed">Hobson understands your portfolio, your units, and your obligations — not just the words on the page.</p>
                       </div>
                     </div>
