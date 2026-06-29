@@ -235,6 +235,45 @@ export const Homepage = () => {
           {/* Audience Strip */}
           <AudienceStrip />
 
+          {/* Product Screenshot — Document Q&A */}
+          <section className="py-12 sm:py-16 md:py-20 bg-background" aria-labelledby="screenshot-heading">
+            <div className="container mx-auto px-4">
+              <div className="max-w-5xl mx-auto text-center">
+                <h2
+                  id="screenshot-heading"
+                  className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-4"
+                >
+                  Ask once. Get the full picture.
+                </h2>
+                <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto mb-10 sm:mb-14">
+                  Hobson reads every document you share, understands the relationships between them, and answers your questions with confidence — always citing his sources.
+                </p>
+                <div className="rounded-2xl border border-border/60 bg-gradient-to-b from-background to-muted/30 shadow-xl overflow-hidden">
+                  <img
+                    src="/__l5e/assets-v1/80e68880-31b4-4bff-956c-a11ba7fc2515/hobson-document-answer.png"
+                    alt="Hobson answering a rent review question by referencing two uploaded tenancy documents and showing the answer alongside a property map"
+                    className="w-full h-auto"
+                    loading="lazy"
+                  />
+                </div>
+                <div className="mt-6 flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-muted-foreground">
+                  <span className="inline-flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-primary" />
+                    Answers from multiple documents
+                  </span>
+                  <span className="inline-flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-primary" />
+                    Every source cited
+                  </span>
+                  <span className="inline-flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-primary" />
+                    Property context on every reply
+                  </span>
+                </div>
+              </div>
+            </div>
+          </section>
+
           {/* Trust Strip */}
           <TrustStrip />
 
