@@ -176,7 +176,7 @@ const HowHobsonThinks: React.FC = () => {
 
       {/* HERO */}
       <section className="relative overflow-hidden hh-grid-bg">
-        <div className="container mx-auto px-6 pt-16 pb-24 lg:pt-24 lg:pb-32">
+        <div className="container mx-auto px-6 pt-16 pb-12 lg:pt-24 lg:pb-16">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div style={{ animation: "fade-up 0.7s ease both" }}>
               <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-purple-100 text-purple-700 text-xs font-semibold tracking-wide uppercase">
@@ -227,7 +227,7 @@ const HowHobsonThinks: React.FC = () => {
       </section>
 
       {/* PRINCIPLE */}
-      <section className="py-20 bg-white">
+      <section className="py-12 bg-white">
         <div className="container mx-auto px-6 max-w-4xl text-center">
           <p className="text-xs font-semibold tracking-[0.2em] text-purple-600 uppercase">The guiding principle</p>
           <h2 className="mt-4 text-3xl sm:text-4xl font-bold text-slate-900 leading-tight">
@@ -252,7 +252,7 @@ const HowHobsonThinks: React.FC = () => {
       </section>
 
       {/* TWO TYPES */}
-      <section id="team" className="py-20 bg-gradient-to-b from-white to-purple-50/40">
+      <section id="team" className="py-12 bg-gradient-to-b from-white to-purple-50/40">
         <div className="container mx-auto px-6">
           <div className="max-w-3xl">
             <p className="text-xs font-semibold tracking-[0.2em] text-purple-600 uppercase">The team</p>
