@@ -8,8 +8,6 @@ import { ToastPortal } from "@/components/ToastPortal";
 import { AppRoutes } from "@/components/AppRoutes";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 
-const HobsonChatbot = lazy(() => import("@/components/HobsonChatbot").then(m => ({ default: m.HobsonChatbot })));
-
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -20,29 +18,6 @@ const queryClient = new QueryClient({
   },
 });
 
-// Component to conditionally render chatbot based on route - deferred loading
-const ChatbotWrapper = () => {
-  const location = useLocation();
-  const [shouldLoad, setShouldLoad] = useState(false);
-  const hideChatbotRoutes = ['/investment-carousel', '/investor-summary', '/prototype', '/prototype_testers'];
-
-  useEffect(() => {
-    // Defer chatbot loading until after initial paint + idle time
-    const timer = setTimeout(() => setShouldLoad(true), 3000);
-    return () => clearTimeout(timer);
-  }, []);
-  
-  if (!shouldLoad || hideChatbotRoutes.includes(location.pathname)) {
-    return null;
-  }
-  
-  return (
-    <Suspense fallback={null}>
-      <HobsonChatbot />
-    </Suspense>
-  );
-};
-
 export function AppProviders() {
   return (
     <HelmetProvider>
@@ -52,9 +27,6 @@ export function AppProviders() {
             <AuthProvider>
                 <ToastPortal />
                 <AppRoutes />
-                <ErrorBoundary>
-                  <ChatbotWrapper />
-              </ErrorBoundary>
             </AuthProvider>
           </QueryClientProvider>
         </ThemeProvider>
