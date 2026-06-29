@@ -142,11 +142,11 @@ export const OrchestrationDemo: React.FC = () => {
       <style>{`
         @keyframes fade-up { from { opacity: 0; transform: translateY(16px);} to { opacity: 1; transform: none;} }
         @keyframes pulse-ring { 0% { transform: scale(0.9); opacity:0.7;} 100% { transform: scale(1.6); opacity:0;} }
-        .hobson-scroll { scrollbar-width: thin; scrollbar-color: transparent transparent; }
-        .hobson-scroll::-webkit-scrollbar { width: 6px; }
-        .hobson-scroll::-webkit-scrollbar-thumb { background: transparent; border-radius: 9999px; }
-        .hobson-scroll:hover { scrollbar-color: rgba(124,58,237,0.35) transparent; }
-        .hobson-scroll:hover::-webkit-scrollbar-thumb { background: rgba(124,58,237,0.35); }
+        .hobson-scroll { scrollbar-width: thin; scrollbar-color: rgba(124,58,237,0.45) rgba(124,58,237,0.08); }
+        .hobson-scroll::-webkit-scrollbar { width: 10px; }
+        .hobson-scroll::-webkit-scrollbar-track { background: rgba(124,58,237,0.08); border-radius: 9999px; margin: 8px 0; }
+        .hobson-scroll::-webkit-scrollbar-thumb { background: rgba(124,58,237,0.45); border-radius: 9999px; border: 2px solid transparent; background-clip: padding-box; }
+        .hobson-scroll::-webkit-scrollbar-thumb:hover { background: rgba(124,58,237,0.7); background-clip: padding-box; border: 2px solid transparent; }
       `}</style>
 
       <div className="rounded-3xl border border-purple-100 bg-gradient-to-b from-purple-50/40 to-white shadow-[0_20px_60px_-30px_rgba(124,58,237,0.4)] flex flex-col h-[600px] max-h-[80vh] overflow-hidden">
