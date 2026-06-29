@@ -246,8 +246,8 @@ const HowHobsonThinks: React.FC = () => {
           <div className="mt-14">
             <div className="flex items-end justify-between gap-4 mb-6">
               <div>
-                <h3 className="text-2xl font-bold text-slate-900">Persistent portfolio domains</h3>
-                <p className="text-slate-600 text-sm mt-1">They quietly maintain Hobson's memory of your estate.</p>
+                <h3 className="text-2xl font-bold text-slate-900">Hobson's permanent memory</h3>
+                <p className="text-slate-600 text-sm mt-1">These four specialists quietly maintain everything Hobson knows about your estate.</p>
               </div>
               <span className="hidden sm:inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-purple-700 bg-white border border-purple-200 rounded-full px-3 py-1.5">
                 Always on
