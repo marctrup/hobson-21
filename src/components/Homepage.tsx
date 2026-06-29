@@ -92,12 +92,12 @@ export const Homepage = () => {
 
               {/* Desktop Navigation */}
               <nav className="hidden md:flex items-center gap-6" role="navigation" aria-label="Main navigation">
-                <Link to="/how-hobson-thinks" className="text-base text-muted-foreground hover:text-foreground transition-colors">
-                  How Hobson Thinks
-                </Link>
-                <Link to="/pricing" className="text-base text-muted-foreground hover:text-foreground transition-colors">
+                <a href="/#meet-hobson" className="text-base text-muted-foreground hover:text-foreground transition-colors">
+                  Meet Hobson
+                </a>
+                <a href="/#pricing-section" className="text-base text-muted-foreground hover:text-foreground transition-colors">
                   Pricing
-                </Link>
+                </a>
                 <Link to="/blog" className="text-base text-muted-foreground hover:text-foreground transition-colors">
                     {content.header.nav.blog}
                   </Link>
