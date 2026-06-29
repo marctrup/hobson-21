@@ -4,11 +4,6 @@ import { Link } from "react-router-dom";
 import { HomepageHeader } from "@/components/homepage/HomepageHeader";
 import { HomepageFooter } from "@/components/homepage/HomepageFooter";
 import { ArrowRight, Check } from "lucide-react";
-import {
-  TEAM_INTRO_LABEL,
-  TEAM_INTRO_HEADING,
-  TEAM_INTRO_BODY,
-} from "@/data/teamIntro";
 
 import hobsonOwl from "@/assets/hobson-owl-hero.png";
 import professorImg from "@/assets/prototype/character-professor.png";
@@ -236,6 +231,7 @@ const HowHobsonThinks: React.FC = () => {
                 </span>
               </h1>
               <p className="mt-3 text-lg text-slate-600 max-w-xl leading-relaxed">
+                One conversation.<br />
                 <span className="text-purple-700 font-medium">A quiet team behind it.</span>
               </p>
               <p className="mt-4 text-lg text-slate-600 max-w-xl leading-relaxed">
@@ -276,12 +272,12 @@ const HowHobsonThinks: React.FC = () => {
       {/* PRINCIPLE */}
       <section className="py-12 bg-white">
         <div className="container mx-auto px-6 max-w-4xl text-center">
-          <p className="text-xs font-semibold tracking-[0.2em] text-purple-600 uppercase">{TEAM_INTRO_LABEL}</p>
+          <p className="text-xs font-semibold tracking-[0.2em] text-purple-600 uppercase">The guiding principle</p>
           <h2 className="mt-4 text-3xl sm:text-4xl font-bold text-slate-900 leading-tight">
-            {TEAM_INTRO_HEADING}
+            Never another specialist for every new job.
           </h2>
           <p className="mt-6 text-lg text-slate-600 leading-relaxed">
-            {TEAM_INTRO_BODY}
+            Hobson's team is designed to remain stable. As he learns new ways to help, he simply brings together the expertise of the right specialists to complete the task. That means Hobson can continually grow without becoming more complicated to use.
           </p>
           <div className="mt-10 grid sm:grid-cols-3 gap-4 text-left">
             {[
@@ -302,9 +298,11 @@ const HowHobsonThinks: React.FC = () => {
       <section id="team" className="py-12 bg-gradient-to-b from-white to-purple-50/40">
         <div className="container mx-auto px-6">
           <div className="max-w-3xl">
-            <h2 className="text-3xl sm:text-4xl font-bold text-slate-900">Meet the specialists</h2>
+            <p className="text-xs font-semibold tracking-[0.2em] text-purple-600 uppercase">The team</p>
+            <h2 className="mt-3 text-3xl sm:text-4xl font-bold text-slate-900">Two kinds of specialist.</h2>
             <p className="mt-4 text-lg text-slate-600">
-              Each has one job. Hobson decides who is needed and brings their work together as a single answer.
+              Some look after what Hobson knows about your portfolio over time. Others provide an expert service
+              the moment Hobson needs it. Together, they let him answer almost anything you put to him.
             </p>
           </div>
 
