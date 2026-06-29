@@ -250,8 +250,7 @@ export const Homepage = () => {
                 <div>
                   <h4 className="text-sm font-semibold uppercase tracking-wider text-foreground mb-5">{content.footer.company.title}</h4>
                   <div className="space-y-3">
-                    <Link to="/features" className="block text-sm text-muted-foreground hover:text-primary transition-colors">Features</Link>
-                    <Link to="/in-practice" className="block text-sm text-muted-foreground hover:text-primary transition-colors">In Practice</Link>
+                    <Link to="/how-hobson-thinks" className="block text-sm text-muted-foreground hover:text-primary transition-colors">How Hobson Thinks</Link>
                     <Link to="/pricing" className="block text-sm text-muted-foreground hover:text-primary transition-colors">Pricing</Link>
                     <Link to="/blog" className="block text-sm text-muted-foreground hover:text-primary transition-colors">Blog</Link>
                     <Link to="/contact" className="block text-sm text-muted-foreground hover:text-primary transition-colors">Contact</Link>
