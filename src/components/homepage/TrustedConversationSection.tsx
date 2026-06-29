@@ -50,7 +50,7 @@ export const TrustedConversationSection = () => {
           {/* Intro paragraph */}
           <div className="max-w-3xl mx-auto text-center mb-10 sm:mb-14">
             <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
-              You'll only ever speak to me. Behind me is a carefully chosen team of agents, each responsible for one area of expertise. Some help me maintain my understanding of your portfolio, while others provide specialist services whenever I need them. I decide who to involve, quietly coordinate their work and bring everything together into one clear answer.
+              You'll only ever speak to me. Behind me is a carefully chosen team of agents who quietly help me look after your portfolio and get work done on your behalf. I'd like you to meet them.
             </p>
           </div>
 
