@@ -240,6 +240,8 @@ export const Homepage = () => {
           <TrustStrip />
 
 
+          <SeeHobsonInAction />
+
           <PilotApplicationForm showForm={showPilotForm} setShowForm={setShowPilotForm} />
 
           {/* Footer */}
