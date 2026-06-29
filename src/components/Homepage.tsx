@@ -5,7 +5,7 @@ import { Menu, X, ArrowRight } from "lucide-react";
 import { SimpleButton } from "@/components/ui/simple-button";
 import { OptimizedImage } from "@/components/OptimizedImage";
 import { Helmet } from "react-helmet-async";
-import { PropertyManagementVisualization } from "@/components/homepage/PropertyManagementVisualization";
+import { HobsonAtWorkVisualization } from "@/components/homepage/HobsonAtWorkVisualization";
 
 import { FeaturesSection } from "@/components/homepage/FeaturesSection";
 import MobileShowcase from "@/components/features/MobileShowcase";
@@ -16,6 +16,9 @@ import { AudienceStrip } from "@/components/homepage/AudienceStrip";
 import { TrustStrip } from "@/components/homepage/TrustStrip";
 
 import { YouTubeVideoSection } from "@/components/homepage/YouTubeVideoSection";
+import { MeetHobsonSection } from "@/components/homepage/MeetHobsonSection";
+import { HowHobsonWorksSection } from "@/components/homepage/HowHobsonWorksSection";
+import { PricingSection } from "@/components/homepage/PricingSection";
 
 import owlMascot from "@/assets/owl-mascot.png";
 import { structuredData } from "@/utils/seo-data";
@@ -89,12 +92,12 @@ export const Homepage = () => {
 
               {/* Desktop Navigation */}
               <nav className="hidden md:flex items-center gap-6" role="navigation" aria-label="Main navigation">
-                <Link to="/how-hobson-thinks" className="text-base text-muted-foreground hover:text-foreground transition-colors">
-                  How Hobson Thinks
-                </Link>
-                <Link to="/pricing" className="text-base text-muted-foreground hover:text-foreground transition-colors">
+                <a href="/#meet-hobson" className="text-base text-muted-foreground hover:text-foreground transition-colors">
+                  Meet Hobson
+                </a>
+                <a href="/#pricing-section" className="text-base text-muted-foreground hover:text-foreground transition-colors">
                   Pricing
-                </Link>
+                </a>
                 <Link to="/blog" className="text-base text-muted-foreground hover:text-foreground transition-colors">
                     {content.header.nav.blog}
                   </Link>
@@ -124,12 +127,12 @@ export const Homepage = () => {
             {/* Mobile Navigation Menu */}
             {isMobileMenuOpen && <nav className="md:hidden mt-4 pb-4 border-t pt-4" role="navigation" aria-label="Mobile navigation">
                 <div className="flex flex-col gap-4">
-                  <Link to="/how-hobson-thinks" className="text-base text-muted-foreground hover:text-foreground transition-colors py-2" onClick={closeMobileMenu}>
-                    How Hobson Thinks
-                  </Link>
-                  <Link to="/pricing" className="text-base text-muted-foreground hover:text-foreground transition-colors py-2" onClick={closeMobileMenu}>
+                  <a href="/#meet-hobson" className="text-base text-muted-foreground hover:text-foreground transition-colors py-2" onClick={closeMobileMenu}>
+                    Meet Hobson
+                  </a>
+                  <a href="/#pricing-section" className="text-base text-muted-foreground hover:text-foreground transition-colors py-2" onClick={closeMobileMenu}>
                     Pricing
-                  </Link>
+                  </a>
                   <Link to="/blog" className="text-base text-muted-foreground hover:text-foreground transition-colors py-2" onClick={closeMobileMenu}>
                       {content.header.nav.blog}
                     </Link>
@@ -179,19 +182,15 @@ export const Homepage = () => {
                   </h1>
                   <p className="text-muted-foreground leading-relaxed text-lg sm:text-xl">{content.hero.subtitle}</p>
                   <p className="text-base sm:text-lg leading-relaxed">
-                    <span className="text-muted-foreground">ChatGPT may read a lease.</span>{" "}
+                    <span className="text-muted-foreground">ChatGPT may read documents.</span>{" "}
                     <span className="text-primary font-medium">Hobson understands your business.</span>
                   </p>
                   
                 </div>
 
-                {/* Right Container - Document to Insights Visualization */}
-                <div className="relative mt-8 lg:mt-[5px] font-space border-[2px] sm:border-[3px] border-gray-500 rounded-lg" style={{
-                transform: 'perspective(1000px) rotateY(-10deg)',
-                transformStyle: 'preserve-3d',
-                boxShadow: '15px 15px 40px rgba(0, 0, 0, 0.06), 8px 8px 25px rgba(0, 0, 0, 0.04)',
-              }}>
-                  <PropertyManagementVisualization />
+                {/* Right Container - Hobson at work animation */}
+                <div className="relative mt-8 lg:mt-[5px]">
+                  <HobsonAtWorkVisualization />
                 </div>
 
               </div>
@@ -213,7 +212,14 @@ export const Homepage = () => {
           {/* Mobile App Showcase */}
           <MobileShowcase />
 
+          {/* Meet Hobson */}
+          <MeetHobsonSection />
 
+          {/* How Hobson Works */}
+          <HowHobsonWorksSection />
+
+          {/* Pricing */}
+          <PricingSection />
 
           {/* Trust Strip */}
           <TrustStrip />

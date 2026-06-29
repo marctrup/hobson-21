@@ -174,8 +174,8 @@ export const CONTENT = {
 
   // Features Section
   features: {
-    title: "Made for the day-to-day of property work",
-    subtitle: "Talk to your documents on the left. See your portfolio come alive on the right. No menus, just flow",
+    title: "One conversation. Everything you need.",
+    subtitle: "Talk naturally with Hobson while your portfolio stays in view. Chat, documents and your interactive property map work together in one experience, so everything you need is always within reach.",
     
     // Feature Showcase (Chat panel)
     showcase: {
