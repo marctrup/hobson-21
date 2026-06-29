@@ -118,7 +118,7 @@ const Pricing = () => {
     {
       tier: 1, seats: "1 seat", perSeat: null, label: "Ideal for individuals",
       priceMonthly: 19.50, priceAnnualMonthly: 15.60, priceAnnualYearly: 187.20,
-      badge: "live" as const, badgeText: "Live very soon",
+      badge: "coming" as const, badgeText: "Coming later this year",
       features: () => [
         { text: "Multi-document AI reasoning", ok: true },
         { text: "Plain English queries", ok: true },
