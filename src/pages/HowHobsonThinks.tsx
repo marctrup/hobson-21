@@ -98,8 +98,10 @@ const HowHobsonThinks: React.FC = () => {
   const totalSteps = RENT_REVIEW.reduce((n, b) => n + b.steps.length, 0);
   const endCursor = totalSteps + 4;
   const [cursor, setCursor] = useState(0); // 0..endCursor (endCursor = final answer fully shown)
-  const [playing, setPlaying] = useState(true);
+  const [playing, setPlaying] = useState(false);
   const [finished, setFinished] = useState(false);
+  const [hasStarted, setHasStarted] = useState(false);
+  const orchestrationRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     if (!playing || finished) return;
@@ -115,6 +117,23 @@ const HowHobsonThinks: React.FC = () => {
     }, 700);
     return () => clearInterval(id);
   }, [playing, finished, endCursor]);
+
+  // Start animation when "See him at work" scrolls into view
+  useEffect(() => {
+    const el = orchestrationRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !hasStarted) {
+          setHasStarted(true);
+          setPlaying(true);
+        }
+      },
+      { threshold: 0.25 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [hasStarted]);
 
   // Map cursor to (beatIndex, stepIndex)
   let runningTotal = 0;
