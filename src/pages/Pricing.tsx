@@ -119,11 +119,11 @@ const Pricing = () => {
       tier: 1, seats: "1 seat", perSeat: null, label: "Ideal for individuals",
       priceMonthly: 19.50, priceAnnualMonthly: 15.60, priceAnnualYearly: 187.20,
       badge: "live" as const, badgeText: "Live very soon",
-      features: (p: typeof pricing) => [
+      features: () => [
         { text: "Multi-document AI reasoning", ok: true },
         { text: "Plain English queries", ok: true },
         { text: "Sourced, auditable answers", ok: true },
-        { text: formatLimit(t1.monthly_extractions, "document extractions"), ok: true },
+        { text: `${t1.monthly_extractions} Read per month`, ok: true },
         { text: formatLimit(t1.monthly_questions, "questions"), ok: true },
         { text: "Business Memory", ok: true },
         { text: "Proactive Work", ok: true },
@@ -140,13 +140,11 @@ const Pricing = () => {
         { text: "Multi-document AI reasoning", ok: true },
         { text: "Plain English queries", ok: true },
         { text: "Sourced, auditable answers", ok: true },
-        { text: formatLimit(t2.monthly_extractions, "document extractions"), ok: true },
+        { text: `${t2.monthly_extractions} Read per month`, ok: true },
         { text: formatLimit(t2.monthly_questions, "questions"), ok: true },
         { text: "Business Memory", ok: true },
         { text: "Proactive Work", ok: true },
         { text: "Learns How You Work", ok: true },
-        { text: "Monthly Activity Summary", ok: true },
-        { text: "Personal Working Preferences", ok: true },
       ],
       cta: "Join the waitlist", ctaStyle: "outline" as const, waitlist: true,
       muted: null,
@@ -159,13 +157,11 @@ const Pricing = () => {
         { text: "Multi-document AI reasoning", ok: true },
         { text: "Plain English queries", ok: true },
         { text: "Sourced, auditable answers", ok: true },
-        { text: formatLimit(t3.monthly_extractions, "document extractions"), ok: true },
+        { text: `${t3.monthly_extractions} Read per month`, ok: true },
         { text: formatLimit(t3.monthly_questions, "questions"), ok: true },
         { text: "Business Memory", ok: true },
         { text: "Proactive Work", ok: true },
         { text: "Learns How You Work", ok: true },
-        { text: "Monthly Activity Summary", ok: true },
-        { text: "Personal Working Preferences", ok: true },
       ],
       cta: "Join the waitlist", ctaStyle: "outline" as const, waitlist: true,
       muted: null,
@@ -178,13 +174,11 @@ const Pricing = () => {
         { text: "Multi-document AI reasoning", ok: true },
         { text: "Plain English queries", ok: true },
         { text: "Sourced, auditable answers", ok: true },
-        { text: formatLimit(t4.monthly_extractions, "document extractions"), ok: true },
+        { text: `${t4.monthly_extractions} Read per month`, ok: true },
         { text: formatLimit(t4.monthly_questions, "questions"), ok: true },
         { text: "Business Memory", ok: true },
         { text: "Proactive Work", ok: true },
         { text: "Learns How You Work", ok: true },
-        { text: "Monthly Activity Summary", ok: true },
-        { text: "Personal Working Preferences", ok: true },
       ],
       cta: "Join the waitlist", ctaStyle: "outline" as const, waitlist: true,
       muted: null,
@@ -284,7 +278,7 @@ const Pricing = () => {
                   : tier.perSeat && tier.seats.includes("10") ? `£${(tier.priceAnnualMonthly / 10).toFixed(2)}/seat`
                   : null;
                 const displayPerSeat = hasAnnual ? perSeatAnnual : tier.perSeat;
-                const featureList = tier.features(pricing);
+                const featureList = tier.features();
                 const isLive = tier.badge === "live";
 
                 return (
