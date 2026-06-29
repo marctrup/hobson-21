@@ -30,7 +30,7 @@ const Announcements = lazy(() => import("../pages/Announcements"));
 const AnnouncementPost = lazy(() => import("../pages/AnnouncementPost"));
 const FeatureRequests = lazy(() => import("../pages/FeatureRequests"));
 const UseHobson = lazy(() => import("../pages/UseHobson").then(module => ({ default: module.UseHobson })));
-const InPractice = lazy(() => import("../pages/InPractice"));
+
 const Admin = lazy(() => import("../pages/Admin"));
 const FaqManagement = lazy(() => import("../pages/admin/FaqManagement"));
 const GlossaryManagement = lazy(() => import("../pages/admin/GlossaryManagement"));
