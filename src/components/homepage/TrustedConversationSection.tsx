@@ -5,19 +5,19 @@ const points = [
   {
     icon: MessageSquare,
     title: "One conversation",
-    body: "Always with Hobson. You never choose which AI to ask.",
+    body: "You'll always speak to me. There's never another AI to choose.",
     tone: { icon: "text-primary", bg: "bg-primary/10" },
   },
   {
     icon: GitBranch,
     title: "One orchestrator",
-    body: "Hobson decides who is needed and in what order.",
+    body: "I decide which specialists I need and quietly coordinate their work.",
     tone: { icon: "text-accent-teal", bg: "bg-accent-teal/10" },
   },
   {
     icon: Users,
     title: "Eight specialists",
-    body: "Four maintain his memory. Four bring expertise on demand.",
+    body: "Four help me maintain my understanding. Four provide specialist expertise whenever I need it.",
     tone: { icon: "text-accent-amber", bg: "bg-accent-amber/15" },
   },
 ];
