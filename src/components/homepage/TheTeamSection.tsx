@@ -86,7 +86,7 @@ export const TheTeamSection = () => {
           <div className="flex items-end justify-between gap-4 mb-6">
             <div>
               <h3 className="text-2xl font-bold text-slate-900">Hobson's Permanent Memory</h3>
-              <p className="text-slate-600 text-sm mt-1">These four specialists quietly maintain everything I know about your portfolio.</p>
+              <p className="text-slate-600 text-sm mt-1">These four agents quietly maintain everything I know about your portfolio.</p>
             </div>
             <span className="hidden sm:inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-purple-700 bg-white border border-purple-200 rounded-full px-3 py-1.5">
               Always on
