@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
 import { HomepageHeader } from "@/components/homepage/HomepageHeader";
@@ -98,8 +98,10 @@ const HowHobsonThinks: React.FC = () => {
   const totalSteps = RENT_REVIEW.reduce((n, b) => n + b.steps.length, 0);
   const endCursor = totalSteps + 4;
   const [cursor, setCursor] = useState(0); // 0..endCursor (endCursor = final answer fully shown)
-  const [playing, setPlaying] = useState(true);
+  const [playing, setPlaying] = useState(false);
   const [finished, setFinished] = useState(false);
+  const [hasStarted, setHasStarted] = useState(false);
+  const orchestrationRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     if (!playing || finished) return;
@@ -115,6 +117,23 @@ const HowHobsonThinks: React.FC = () => {
     }, 700);
     return () => clearInterval(id);
   }, [playing, finished, endCursor]);
+
+  // Start animation when "See him at work" scrolls into view
+  useEffect(() => {
+    const el = orchestrationRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !hasStarted) {
+          setHasStarted(true);
+          setPlaying(true);
+        }
+      },
+      { threshold: 0.25 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [hasStarted]);
 
   // Map cursor to (beatIndex, stepIndex)
   let runningTotal = 0;
@@ -173,7 +192,7 @@ const HowHobsonThinks: React.FC = () => {
                 each with one job. Hobson decides who is needed, in what order, and brings their work together as a single answer.
               </p>
               <div className="mt-8 flex flex-wrap gap-3">
-                <a href="#orchestration" className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-purple-700 hover:bg-purple-800 text-white font-semibold transition">
+                <a href="#orchestration" onClick={() => { setHasStarted(true); setPlaying(true); }} className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-purple-700 hover:bg-purple-800 text-white font-semibold transition">
                   See him at work <ArrowRight className="w-4 h-4" />
                 </a>
                 <a href="#team" className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-white border border-purple-200 text-purple-800 hover:bg-purple-50 font-semibold transition">
@@ -275,7 +294,7 @@ const HowHobsonThinks: React.FC = () => {
       </section>
 
       {/* ORCHESTRATION DEMO */}
-      <section id="orchestration" className="py-24 bg-white">
+      <section id="orchestration" ref={orchestrationRef} className="py-24 bg-white">
         <div className="container mx-auto px-6">
           <div className="max-w-3xl mx-auto text-center">
             <p className="text-xs font-semibold tracking-[0.2em] text-purple-600 uppercase">See him at work</p>
@@ -423,6 +442,7 @@ const HowHobsonThinks: React.FC = () => {
                     setCursor(0);
                     setFinished(false);
                     setPlaying(true);
+                    orchestrationRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
                   } else {
                     setPlaying((p) => !p);
                   }
