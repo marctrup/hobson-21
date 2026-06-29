@@ -227,7 +227,7 @@ const HowHobsonThinks: React.FC = () => {
       </section>
 
       {/* PRINCIPLE */}
-      <section className="py-20 bg-white">
+      <section className="py-12 bg-white">
         <div className="container mx-auto px-6 max-w-4xl text-center">
           <p className="text-xs font-semibold tracking-[0.2em] text-purple-600 uppercase">The guiding principle</p>
           <h2 className="mt-4 text-3xl sm:text-4xl font-bold text-slate-900 leading-tight">
