@@ -273,7 +273,7 @@ const HowHobsonThinks: React.FC = () => {
         <div className="container mx-auto px-6 max-w-4xl text-center">
           <p className="text-xs font-semibold tracking-[0.2em] text-purple-600 uppercase">The guiding principle</p>
           <h2 className="mt-4 text-3xl sm:text-4xl font-bold text-slate-900 leading-tight">
-            Never another specialist for every new job.
+            Hobson's team grows with purpose
           </h2>
           <p className="mt-6 text-lg text-slate-600 leading-relaxed">
             Hobson's team is designed to remain stable. As he learns new ways to help, he simply brings together the expertise of the right specialists to complete the task. That means Hobson can continually grow without becoming more complicated to use.
