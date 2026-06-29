@@ -195,6 +195,9 @@ export const Homepage = () => {
             </div>
           </section>
 
+          {/* One Trusted Conversation */}
+          <TrustedConversationSection />
+
           {/* YouTube Explainer Video */}
           <YouTubeVideoSection
             videoId="MXutUHZFXIs"
