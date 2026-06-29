@@ -12,7 +12,7 @@ export const SEGMENT_KEYS = [
 export type SegmentKey = (typeof SEGMENT_KEYS)[number];
 
 export const SEGMENT_LABELS: Record<string, string> = {
-  property_asset_manager: "Property and asset managers",
+  property_asset_manager: "Asset managers",
   retail_operator: "Retail operators",
   hospitality: "Hospitality businesses",
   corporate_occupier: "Corporate occupiers",
