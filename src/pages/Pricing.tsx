@@ -501,7 +501,7 @@ const Pricing = () => {
                 Why do the plans change?
               </h2>
               <p className="text-sm sm:text-base leading-relaxed" style={{ color: C.muted }}>
-                Every plan includes the same Hobson. The rest is up to you to fill in.
+                Every plan includes the same Hobson. The difference is how much work you'd like him to take care of.
               </p>
             </div>
 
