@@ -50,15 +50,23 @@ const SERVICES: Specialist[] = [
     blurb: "Verifies permissions and protects confidential information. Usually invisible — always present." },
 ];
 
-// Rent review orchestration beats
-const RENT_REVIEW: { who: string; img: string; line: string }[] = [
-  { who: "The Professor", img: professorImg, line: "Reviewing your lease and rent review provisions…" },
-  { who: "The Researcher", img: researcherImg, line: "Finding comparable evidence in the market…" },
-  { who: "The Bookkeeper", img: bookkeeperImg, line: "Preparing the rental analysis…" },
-  { who: "The Broker", img: brokerImg, line: "Identifying the relevant parties for the notice…" },
-  { who: "The Inspector", img: inspectorImg, line: "Confirming statutory requirements…" },
-  { who: "The Keeper", img: keeperImg, line: "Verifying permissions to send the notice…" },
+// Rent review orchestration beats — each specialist has progressive sub-steps
+type Beat = { who: string; img: string; headline: string; steps: string[] };
+const RENT_REVIEW: Beat[] = [
+  { who: "The Professor", img: professorImg, headline: "Reviewing your lease…",
+    steps: ["Locating the lease for 32 Hamilton Gardens", "Identifying the rent review clause", "Extracting review date & mechanism", "Noting assumptions and disregards"] },
+  { who: "The Researcher", img: researcherImg, headline: "Finding comparable evidence…",
+    steps: ["Searching nearby lettings within 0.5 mi", "Filtering for similar size & use", "Capturing three strong comparables", "Saving sources for the audit trail"] },
+  { who: "The Bookkeeper", img: bookkeeperImg, headline: "Preparing the rental analysis…",
+    steps: ["Calculating £/sq ft from comparables", "Applying review assumptions", "Producing the proposed new rent", "Drafting the figures table"] },
+  { who: "The Broker", img: brokerImg, headline: "Identifying the parties…",
+    steps: ["Locating the current tenant on file", "Confirming the service address", "Checking last contact and channel"] },
+  { who: "The Inspector", img: inspectorImg, headline: "Confirming statutory requirements…",
+    steps: ["Checking the correct notice form", "Verifying minimum notice period", "Validating service method"] },
+  { who: "The Keeper", img: keeperImg, headline: "Verifying permissions…",
+    steps: ["Confirming you may issue this notice", "Logging the action to the audit trail"] },
 ];
+
 
 const SpecialistCard: React.FC<{ s: Specialist; index: number }> = ({ s, index }) => (
   <article
@@ -85,19 +93,34 @@ const SpecialistCard: React.FC<{ s: Specialist; index: number }> = ({ s, index }
 );
 
 const HowHobsonThinks: React.FC = () => {
-  // Orchestration demo state
-  const [step, setStep] = useState(0);
+  // Orchestration demo: a single ticking cursor that walks through every sub-step of every specialist,
+  // then reveals Hobson's final answer. Each beat = a specialist; cursor = which sub-step is active.
+  const totalSteps = RENT_REVIEW.reduce((n, b) => n + b.steps.length, 0);
+  const [cursor, setCursor] = useState(0); // 0..totalSteps (totalSteps = final answer shown)
   const [playing, setPlaying] = useState(true);
 
   useEffect(() => {
     if (!playing) return;
     const id = setInterval(() => {
-      setStep((s) => (s + 1) % (RENT_REVIEW.length + 2));
-    }, 1800);
+      setCursor((c) => (c >= totalSteps + 4 ? 0 : c + 1));
+    }, 700);
     return () => clearInterval(id);
-  }, [playing]);
+  }, [playing, totalSteps]);
 
-  const finalShown = step >= RENT_REVIEW.length + 1;
+  // Map cursor to (beatIndex, stepIndex)
+  let runningTotal = 0;
+  const beatProgress = RENT_REVIEW.map((b) => {
+    const start = runningTotal;
+    runningTotal += b.steps.length;
+    const end = runningTotal;
+    const stepsDone = Math.max(0, Math.min(b.steps.length, cursor - start));
+    const isActive = cursor >= start && cursor < end;
+    const isDone = cursor >= end;
+    const visible = cursor >= start;
+    return { start, end, stepsDone, isActive, isDone, visible };
+  });
+  const finalShown = cursor >= totalSteps;
+
 
   return (
     <div className="min-h-screen bg-white text-slate-900">
@@ -262,19 +285,21 @@ const HowHobsonThinks: React.FC = () => {
       <section id="orchestration" className="py-24 bg-white">
         <div className="container mx-auto px-6">
           <div className="max-w-3xl mx-auto text-center">
-            <p className="text-xs font-semibold tracking-[0.2em] text-purple-600 uppercase">Hobson at work</p>
-            <h2 className="mt-3 text-3xl sm:text-4xl font-bold text-slate-900">A single request. Six specialists. One answer.</h2>
+            <p className="text-xs font-semibold tracking-[0.2em] text-purple-600 uppercase">See him at work</p>
+            <h2 className="mt-3 text-3xl sm:text-4xl font-bold text-slate-900">One conversation. A quiet team behind it.</h2>
             <p className="mt-4 text-lg text-slate-600">
-              You ask Hobson to prepare a rent review. Watch how the work unfolds behind the scenes —
-              without ever leaving your conversation with him.
+              You always speak to Hobson. When real work is needed, he quietly delegates — and shows you who is helping.
+              The specialists never reply, never ask questions, never become another chat.
             </p>
           </div>
 
-          <div className="mt-12 max-w-3xl mx-auto rounded-3xl border border-purple-100 bg-gradient-to-b from-purple-50/40 to-white p-6 sm:p-8 shadow-[0_20px_60px_-30px_rgba(124,58,237,0.4)]">
+          {/* Chat surface */}
+          <div className="mt-12 max-w-3xl mx-auto rounded-3xl border border-purple-100 bg-gradient-to-b from-purple-50/40 to-white p-4 sm:p-6 shadow-[0_20px_60px_-30px_rgba(124,58,237,0.4)]">
+
             {/* User bubble */}
             <div className="flex justify-end">
-              <div className="max-w-[80%] rounded-2xl rounded-tr-sm bg-purple-700 text-white px-4 py-3 text-sm shadow">
-                Hobson, please prepare my rent review.
+              <div className="max-w-[85%] rounded-2xl rounded-tr-sm bg-purple-700 text-white px-4 py-3 text-sm shadow">
+                Hobson, please prepare my rent review for 32 Hamilton Gardens.
               </div>
             </div>
 
@@ -282,61 +307,125 @@ const HowHobsonThinks: React.FC = () => {
             <div className="mt-4 flex items-start gap-3">
               <img src={hobsonOwl} alt="Hobson" className="w-10 h-10 rounded-full bg-purple-100 p-1 border border-purple-200" />
               <div className="rounded-2xl rounded-tl-sm bg-white border border-purple-100 px-4 py-3 text-sm text-slate-700 shadow-sm">
-                Of course. Allow me a moment to gather what's needed.
+                Of course. I'll prepare the rent review for <span className="font-semibold text-slate-900">32 Hamilton Gardens</span> now — one moment while my team gathers what's needed.
               </div>
             </div>
 
-            {/* Specialist sequence */}
-            <ol className="mt-6 space-y-3">
+            {/* Specialist sequence (one card per active/done beat) */}
+            <div className="mt-5 space-y-3">
               {RENT_REVIEW.map((b, i) => {
-                const active = step === i;
-                const done = step > i;
-                const visible = step >= i;
+                const p = beatProgress[i];
+                if (!p.visible) return null;
                 return (
-                  <li key={i}
-                    className={`flex items-center gap-3 rounded-2xl border px-4 py-3 transition-all duration-500 ${
-                      visible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-2"
-                    } ${active ? "bg-purple-50 border-purple-300 shadow-sm" : done ? "bg-white border-purple-100" : "bg-white border-purple-100"}`}>
-                    <div className="relative w-10 h-10 shrink-0 rounded-xl bg-white border border-purple-100 grid place-items-center overflow-hidden">
-                      <img src={b.img} alt="" className="w-9 h-9 object-contain" />
-                      {active && (
-                        <span className="absolute inset-0 rounded-xl ring-2 ring-purple-400" style={{ animation: "pulse-ring 1.6s ease-out infinite" }} />
+                  <div
+                    key={i}
+                    className={`rounded-2xl border bg-white shadow-sm overflow-hidden transition-all duration-500 ${
+                      p.isActive ? "border-purple-300 ring-1 ring-purple-200" : "border-purple-100"
+                    }`}
+                    style={{ animation: "fade-up 0.35s ease both" }}
+                  >
+                    <div className="flex items-center gap-3 px-4 py-3 bg-gradient-to-r from-purple-50/70 to-transparent border-b border-purple-100">
+                      <div className="relative w-9 h-9 shrink-0 rounded-xl bg-white border border-purple-100 grid place-items-center overflow-hidden">
+                        <img src={b.img} alt="" className="w-8 h-8 object-contain" />
+                        {p.isActive && (
+                          <span className="absolute inset-0 rounded-xl ring-2 ring-purple-400" style={{ animation: "pulse-ring 1.6s ease-out infinite" }} />
+                        )}
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <p className="text-[11px] font-semibold tracking-wide text-purple-700 uppercase">{b.who}</p>
+                        <p className="text-sm text-slate-800 truncate">{b.headline}</p>
+                      </div>
+                      {p.isDone ? (
+                        <span className="inline-flex items-center gap-1 text-xs font-semibold text-emerald-600">
+                          <Check className="w-4 h-4" /> Complete
+                        </span>
+                      ) : (
+                        <span className="text-xs font-semibold text-purple-700 flex items-center gap-1">
+                          <span className="w-1.5 h-1.5 rounded-full bg-purple-600 animate-pulse" />
+                          Working
+                        </span>
                       )}
                     </div>
-                    <div className="min-w-0 flex-1">
-                      <p className="text-xs font-semibold text-purple-700">{b.who}</p>
-                      <p className="text-sm text-slate-700 truncate">{b.line}</p>
-                    </div>
-                    {done ? (
-                      <span className="inline-flex items-center gap-1 text-xs font-semibold text-emerald-600">
-                        <Check className="w-4 h-4" /> Complete
-                      </span>
-                    ) : active ? (
-                      <span className="text-xs font-semibold text-purple-700 flex items-center gap-1">
-                        <span className="w-1.5 h-1.5 rounded-full bg-purple-600 animate-pulse" />
-                        Working
-                      </span>
-                    ) : (
-                      <span className="text-xs text-slate-400">Waiting</span>
-                    )}
-                  </li>
+                    <ul className="px-4 py-3 space-y-1.5">
+                      {b.steps.map((s, j) => {
+                        const stepDone = j < p.stepsDone;
+                        const stepActive = p.isActive && j === p.stepsDone;
+                        return (
+                          <li key={j} className={`flex items-center gap-2 text-sm transition-opacity ${stepDone || stepActive ? "opacity-100" : "opacity-40"}`}>
+                            {stepDone ? (
+                              <Check className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                            ) : stepActive ? (
+                              <span className="w-3.5 h-3.5 rounded-full border-2 border-purple-400 border-t-transparent animate-spin shrink-0" />
+                            ) : (
+                              <span className="w-3.5 h-3.5 rounded-full border border-slate-200 shrink-0" />
+                            )}
+                            <span className={stepDone ? "text-slate-500 line-through decoration-slate-300" : stepActive ? "text-slate-800" : "text-slate-400"}>{s}</span>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </div>
                 );
               })}
-            </ol>
+            </div>
 
-            {/* Hobson final */}
-            <div className={`mt-6 flex items-start gap-3 transition-all duration-500 ${finalShown ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"}`}>
-              <img src={hobsonOwl} alt="Hobson" className="w-10 h-10 rounded-full bg-purple-100 p-1 border border-purple-200" />
-              <div className="rounded-2xl rounded-tl-sm bg-white border border-purple-100 px-4 py-3 text-sm text-slate-700 shadow-sm max-w-[85%]">
-                I've prepared your rent review. A recommendation, the covering email, the notice and the reminder schedule
-                are ready for your approval whenever you wish.
+            {/* Hobson final answer */}
+            <div className={`mt-5 transition-all duration-500 ${finalShown ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2 pointer-events-none h-0 overflow-hidden"}`}>
+              <div className="flex items-start gap-3">
+                <img src={hobsonOwl} alt="Hobson" className="w-10 h-10 rounded-full bg-purple-100 p-1 border border-purple-200" />
+                <div className="rounded-2xl rounded-tl-sm bg-white border border-purple-100 px-4 py-3 text-sm text-slate-700 shadow-sm max-w-[90%]">
+                  <p>
+                    I've finished preparing your rent review for <span className="font-semibold text-slate-900">32 Hamilton Gardens</span>.
+                    Here is what I have for your approval:
+                  </p>
+
+                  <div className="mt-3 rounded-xl border border-purple-100 overflow-hidden">
+                    <div className="px-3 py-2 bg-purple-50/60 text-[11px] font-semibold tracking-wide text-purple-700 uppercase">Recommendation</div>
+                    <div className="px-3 py-3 grid grid-cols-3 gap-3 text-sm">
+                      <div>
+                        <div className="text-[11px] text-slate-500">Passing rent</div>
+                        <div className="font-semibold text-slate-900">£28,500 pa</div>
+                      </div>
+                      <div>
+                        <div className="text-[11px] text-slate-500">Proposed rent</div>
+                        <div className="font-semibold text-purple-700">£33,750 pa</div>
+                      </div>
+                      <div>
+                        <div className="text-[11px] text-slate-500">Uplift</div>
+                        <div className="font-semibold text-emerald-600">+18.4%</div>
+                      </div>
+                    </div>
+                    <div className="px-3 pb-3 text-xs text-slate-600">
+                      Based on 3 comparable lettings within 0.5&nbsp;mi (£44–£47 per&nbsp;sq&nbsp;ft).
+                    </div>
+                  </div>
+
+                  <div className="mt-3 grid sm:grid-cols-2 gap-2">
+                    {[
+                      { t: "Section 13 notice", s: "Drafted, ready to sign" },
+                      { t: "Covering email", s: "Addressed to the tenant on file" },
+                      { t: "Comparables pack", s: "3 sources, audit-trailed" },
+                      { t: "Reminder schedule", s: "Service + response windows set" },
+                    ].map((x) => (
+                      <div key={x.t} className="flex items-start gap-2 rounded-lg border border-purple-100 bg-white px-3 py-2">
+                        <Check className="w-4 h-4 text-emerald-600 mt-0.5 shrink-0" />
+                        <div>
+                          <div className="text-sm font-semibold text-slate-900">{x.t}</div>
+                          <div className="text-xs text-slate-500">{x.s}</div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  <p className="mt-3 text-xs text-slate-500">Nothing has been sent. Approve any item when you're ready.</p>
+                </div>
               </div>
             </div>
 
-            <div className="mt-6 flex items-center justify-between text-xs text-slate-500">
-              <span>Six specialists, one calm answer.</span>
+            <div className="mt-5 flex items-center justify-between text-xs text-slate-500">
+              <span>The user only ever speaks to Hobson.</span>
               <button
-                onClick={() => { setPlaying((p) => !p); setStep(0); }}
+                onClick={() => { setPlaying((p) => !p); setCursor(0); }}
                 className="px-3 py-1.5 rounded-full bg-white border border-purple-200 text-purple-700 hover:bg-purple-50 font-semibold">
                 {playing ? "Pause" : "Replay"}
               </button>
@@ -344,6 +433,8 @@ const HowHobsonThinks: React.FC = () => {
           </div>
         </div>
       </section>
+
+
 
       {/* OUTPUTS BELONG TO HOBSON */}
       <section className="py-20 bg-gradient-to-b from-purple-50/40 to-white">
