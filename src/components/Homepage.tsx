@@ -11,7 +11,7 @@ import { FeaturesSection } from "@/components/homepage/FeaturesSection";
 import MobileShowcase from "@/components/features/MobileShowcase";
 
 import { PilotApplicationForm } from "@/components/homepage/PilotApplicationForm";
-import { HobsonJourneySection } from "@/components/homepage/HobsonJourneySection";
+
 import { AudienceStrip } from "@/components/homepage/AudienceStrip";
 import { TrustStrip } from "@/components/homepage/TrustStrip";
 
@@ -206,9 +206,6 @@ export const Homepage = () => {
 
           {/* Audience Strip */}
           <AudienceStrip />
-
-          {/* The Hobson Journey */}
-          <HobsonJourneySection />
 
           {/* Features Section */}
           <FeaturesSection />
