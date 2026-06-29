@@ -96,16 +96,25 @@ const HowHobsonThinks: React.FC = () => {
   // Orchestration demo: a single ticking cursor that walks through every sub-step of every specialist,
   // then reveals Hobson's final answer. Each beat = a specialist; cursor = which sub-step is active.
   const totalSteps = RENT_REVIEW.reduce((n, b) => n + b.steps.length, 0);
-  const [cursor, setCursor] = useState(0); // 0..totalSteps (totalSteps = final answer shown)
+  const endCursor = totalSteps + 4;
+  const [cursor, setCursor] = useState(0); // 0..endCursor (endCursor = final answer fully shown)
   const [playing, setPlaying] = useState(true);
+  const [finished, setFinished] = useState(false);
 
   useEffect(() => {
-    if (!playing) return;
+    if (!playing || finished) return;
     const id = setInterval(() => {
-      setCursor((c) => (c >= totalSteps + 4 ? 0 : c + 1));
+      setCursor((c) => {
+        if (c >= endCursor) {
+          setFinished(true);
+          setPlaying(false);
+          return endCursor;
+        }
+        return c + 1;
+      });
     }, 700);
     return () => clearInterval(id);
-  }, [playing, totalSteps]);
+  }, [playing, finished, endCursor]);
 
   // Map cursor to (beatIndex, stepIndex)
   let runningTotal = 0;
@@ -411,9 +420,17 @@ const HowHobsonThinks: React.FC = () => {
             <div className="mt-5 flex items-center justify-between text-xs text-slate-500">
               <span>The user only ever speaks to Hobson.</span>
               <button
-                onClick={() => { setPlaying((p) => !p); setCursor(0); }}
+                onClick={() => {
+                  if (finished) {
+                    setCursor(0);
+                    setFinished(false);
+                    setPlaying(true);
+                  } else {
+                    setPlaying((p) => !p);
+                  }
+                }}
                 className="px-3 py-1.5 rounded-full bg-white border border-purple-200 text-purple-700 hover:bg-purple-50 font-semibold">
-                {playing ? "Pause" : "Replay"}
+                {finished ? "Replay" : playing ? "Pause" : "Resume"}
               </button>
             </div>
           </div>
