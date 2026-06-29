@@ -42,6 +42,21 @@ export const OrchestrationDemo: React.FC = () => {
   const [finished, setFinished] = useState(false);
   const [hasStarted, setHasStarted] = useState(false);
   const orchestrationRef = useRef<HTMLDivElement>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const stickToBottomRef = useRef(true);
+
+  const handleScroll = () => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const distanceFromBottom = el.scrollHeight - el.scrollTop - el.clientHeight;
+    stickToBottomRef.current = distanceFromBottom < 48;
+  };
+
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el || !stickToBottomRef.current) return;
+    el.scrollTo({ top: el.scrollHeight, behavior: "smooth" });
+  }, [cursor, introUserIdx, introHobsonIdx, introPhase, finished]);
 
   const [introPhase, setIntroPhase] = useState(0);
   const [introUserIdx, setIntroUserIdx] = useState(0);
