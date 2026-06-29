@@ -278,6 +278,7 @@ export const Homepage = () => {
                   <div className="space-y-3">
                     <Link to="/how-hobson-thinks" className="block text-sm text-muted-foreground hover:text-primary transition-colors">How Hobson Thinks</Link>
                     <Link to="/pricing" className="block text-sm text-muted-foreground hover:text-primary transition-colors">Pricing</Link>
+                    <Link to="/founder" className="block text-sm text-muted-foreground hover:text-primary transition-colors">Founder</Link>
                     <Link to="/blog" className="block text-sm text-muted-foreground hover:text-primary transition-colors">Blog</Link>
                     <Link to="/contact" className="block text-sm text-muted-foreground hover:text-primary transition-colors">Contact</Link>
                     <Link to="/privacy-policy" className="block text-sm text-muted-foreground hover:text-primary transition-colors">Privacy Policy</Link>
