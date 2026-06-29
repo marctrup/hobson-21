@@ -442,6 +442,7 @@ const HowHobsonThinks: React.FC = () => {
                     setCursor(0);
                     setFinished(false);
                     setPlaying(true);
+                    orchestrationRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
                   } else {
                     setPlaying((p) => !p);
                   }
