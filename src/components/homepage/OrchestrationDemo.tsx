@@ -88,6 +88,12 @@ export const OrchestrationDemo: React.FC = () => {
   }, [introPhase, cursor]);
 
   useEffect(() => {
+    const el = scrollRef.current;
+    if (!el || !stickToBottomRef.current) return;
+    el.scrollTo({ top: el.scrollHeight, behavior: "smooth" });
+  }, [cursor, introUserIdx, introHobsonIdx, introPhase, finished]);
+
+  useEffect(() => {
     if (!playing || finished || introPhase < 3) return;
     const id = setInterval(() => {
       setCursor((c) => {
