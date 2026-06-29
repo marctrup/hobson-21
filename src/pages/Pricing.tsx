@@ -263,7 +263,7 @@ const Pricing = () => {
                   : tier.perSeat && tier.seats.includes("10") ? `£${(tier.priceAnnualMonthly / 10).toFixed(2)}/seat`
                   : null;
                 const displayPerSeat = hasAnnual ? perSeatAnnual : tier.perSeat;
-                const featureList = tier.features(pricing);
+                const featureList = tier.features();
                 const isLive = tier.badge === "live";
 
                 return (
