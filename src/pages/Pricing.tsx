@@ -1,7 +1,7 @@
 import React from "react";
 import { Helmet } from "react-helmet-async";
 
-import { Check } from "lucide-react";
+import { Check, CalendarClock, ShieldCheck, KeyRound, DoorOpen, Banknote, ClipboardList, Wrench, Sparkles } from "lucide-react";
 import { GlobalHeader } from "@/components/GlobalHeader";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -194,28 +194,46 @@ export default function Pricing() {
                 </p>
               </div>
 
-              {/* Responsibility chips */}
-              <div className="mt-8 flex flex-wrap justify-center gap-2.5">
-                {[
-                  "📅 Lease Expiry Monitoring",
-                  "🛡️ Compliance Monitoring",
-                  "🔑 Starting a Tenancy",
-                  "🚪 Ending a Tenancy",
-                  "💷 Rent Reviews",
-                  "📋 Mid-Term Inventories",
-                  "🛠️ Tenant Reported Issues",
-                ].map((chip) => (
-                  <span
-                    key={chip}
-                    className="inline-flex items-center rounded-full bg-muted px-4 py-2 text-sm text-foreground/80 border border-border/40"
-                  >
-                    {chip}
+              {/* Responsibility showcase */}
+              <div className="mt-16">
+                <div className="text-center mb-8">
+                  <span className="inline-block text-xs font-semibold tracking-[0.2em] text-primary uppercase mb-3">
+                    A few of the things I can take care of
                   </span>
-                ))}
-                <span className="inline-flex items-center rounded-full bg-primary/10 px-4 py-2 text-sm text-primary font-medium border border-primary/20">
-                  + Many more
-                </span>
+                  <h3 className="text-2xl sm:text-3xl font-bold text-foreground tracking-tight">
+                    Responsibilities you can leave with me
+                  </h3>
+                </div>
+
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
+                  {[
+                    { icon: CalendarClock, label: "Lease Expiry Monitoring" },
+                    { icon: ShieldCheck, label: "Compliance Monitoring" },
+                    { icon: KeyRound, label: "Starting a Tenancy" },
+                    { icon: DoorOpen, label: "Ending a Tenancy" },
+                    { icon: Banknote, label: "Rent Reviews" },
+                    { icon: ClipboardList, label: "Mid-Term Inventories" },
+                    { icon: Wrench, label: "Tenant Reported Issues" },
+                  ].map(({ icon: Icon, label }) => (
+                    <div
+                      key={label}
+                      className="group flex items-center gap-3 rounded-xl border border-border/60 bg-background px-4 py-3.5 hover:border-primary/40 hover:bg-primary/[0.03] transition-all duration-200"
+                    >
+                      <div className="shrink-0 w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/15 transition-colors">
+                        <Icon className="w-4.5 h-4.5 text-primary" strokeWidth={2} />
+                      </div>
+                      <span className="text-sm font-medium text-foreground leading-tight">{label}</span>
+                    </div>
+                  ))}
+                  <div className="flex items-center gap-3 rounded-xl border border-dashed border-primary/30 bg-primary/[0.04] px-4 py-3.5">
+                    <div className="shrink-0 w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center">
+                      <Sparkles className="w-4.5 h-4.5 text-primary" strokeWidth={2} />
+                    </div>
+                    <span className="text-sm font-semibold text-primary leading-tight">And many more</span>
+                  </div>
+                </div>
               </div>
+
             </div>
           </div>
         </section>
