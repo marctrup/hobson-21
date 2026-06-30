@@ -289,6 +289,35 @@ export default function Pricing() {
                 </Card>
               ))}
             </div>
+
+            {/* Enterprise CTA */}
+            <div className="mt-8 max-w-3xl mx-auto">
+              <div className="relative overflow-hidden rounded-2xl border border-primary/20 bg-gradient-to-br from-primary/[0.04] via-background to-accent-teal/[0.04] p-8 sm:p-10 text-center">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full -translate-y-1/2 translate-x-1/2 blur-2xl" />
+                <div className="absolute bottom-0 left-0 w-24 h-24 bg-accent-teal/5 rounded-full translate-y-1/2 -translate-x-1/2 blur-2xl" />
+                <div className="relative">
+                  <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
+                    <Phone className="h-5 w-5 text-primary" />
+                  </div>
+                  <h3 className="text-xl sm:text-2xl font-bold text-foreground tracking-tight">Enterprise</h3>
+                  <p className="mt-2 text-base text-primary font-medium">Let's build something together</p>
+                  <p className="mt-3 text-sm text-muted-foreground leading-relaxed max-w-lg mx-auto">
+                    For larger organisations with bespoke needs. We'll design entirely new responsibilities around the way your business works.
+                  </p>
+                  <div className="mt-6 flex flex-col sm:flex-row items-center justify-center gap-3">
+                    <Button
+                      variant="outline"
+                      className="border-primary/30 hover:bg-primary/5 hover:border-primary/50"
+                      onClick={() => window.location.href = "/contact"}
+                    >
+                      <Phone className="h-4 w-4 mr-2" />
+                      Call us
+                    </Button>
+                    <span className="text-xs text-muted-foreground">or email enterprise@hobsonschoice.ai</span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
 
