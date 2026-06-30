@@ -80,9 +80,9 @@ const plans: Plan[] = [
     price: "£199",
     priceSuffix: "/month",
     responsibilities: "9 Responsibilities",
-    tagline: "Hobson becomes part of your operation.",
+    tagline: "I'll take care of even more.",
     description:
-      "Everything in Professional, plus choose any 9 responsibilities. Designed for organisations managing larger portfolios and multiple properties.",
+      "Everything in Professional, plus choose any nine responsibilities. Designed for organisations managing larger portfolios where there's even more work I can quietly take care of.",
     includes: [
       "Everything in Professional",
       "Choose 9 responsibilities",
@@ -231,8 +231,7 @@ export default function Pricing() {
                 <div>
                   <h3 className="text-xl font-bold text-foreground">Enterprise</h3>
                   <p className="text-sm text-muted-foreground mt-1 max-w-2xl">
-                    Unlimited standard responsibilities, plus bespoke responsibilities, workflow design, API
-                    integrations, white-glove onboarding and dedicated implementation.
+                    Every organisation works differently. I'll work alongside your team through bespoke responsibilities, tailored automations and integrations designed around the way your business already operates.
                   </p>
                 </div>
               </div>
@@ -253,8 +252,8 @@ export default function Pricing() {
                 Responsibilities I can take care of
               </h2>
               <p className="mt-4 text-lg text-muted-foreground leading-relaxed">
-                A responsibility is an area of work I continuously look after on your behalf.
-                You don't need to think about workflows or automation. Simply tell me what you'd like me to
+                A responsibility is an area of work you ask me to look after on your behalf.
+                You never need to think about workflows or automation. Simply tell me what you'd like me to
                 take care of.
               </p>
             </div>
@@ -269,7 +268,7 @@ export default function Pricing() {
                 </div>
               ))}
               <div className="px-4 py-2.5 rounded-full border border-dashed border-border text-sm italic text-muted-foreground">
-                + more as Hobson evolves
+                ...and many more as I continue to grow.
               </div>
             </div>
           </div>
