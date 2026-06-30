@@ -22,6 +22,7 @@ import { TheTeamSection } from "@/components/homepage/TheTeamSection";
 
 import { structuredData } from "@/utils/seo-data";
 import { CONTENT } from "@/config/content";
+import hobsonAnswerTight from "@/assets/hobson-answer-tight.png.asset.json";
 
 export const Homepage = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -258,7 +259,7 @@ export const Homepage = () => {
                           <span className="w-2.5 h-2.5 rounded-full bg-green-400/70" />
                         </div>
                         <img
-                          src="/hobson-answer-tight.png"
+                          src={hobsonAnswerTight.url}
                           alt="Hobson answering a rent question by referencing two uploaded tenancy documents and citing each source"
                           className="w-full h-auto block"
                           loading="lazy"
