@@ -137,13 +137,6 @@ const responsibilityCategories: ResponsibilityCategory[] = [
   },
 ];
 
-const sameHobson = [
-  "Every plan includes me",
-  "The same specialist team",
-  "The same intelligence",
-  "The same evidence-backed answers",
-  "Continuous product updates",
-];
 
 export default function Pricing() {
   return (
@@ -303,33 +296,6 @@ export default function Pricing() {
 
 
 
-        {/* Same Hobson */}
-        <section className="bg-foreground text-background">
-          <div className="container mx-auto px-4 py-16 sm:py-20">
-            <div className="max-w-3xl mx-auto text-center">
-              <h2 className="text-3xl sm:text-4xl font-bold">Every plan includes me.</h2>
-              <p className="mt-4 text-background/70 text-lg">Every plan includes:</p>
-
-              <ul className="mt-8 grid sm:grid-cols-2 gap-3 text-left max-w-xl mx-auto">
-                {sameHobson.map((item) => (
-                  <li
-                    key={item}
-                    className="flex items-start gap-3 rounded-lg border border-background/10 bg-background/5 px-4 py-3"
-                  >
-                    <Check className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
-                    <span className="text-sm font-medium">{item}</span>
-                  </li>
-                ))}
-              </ul>
-
-              <p className="mt-10 text-background/80 leading-relaxed">
-                The only thing that changes is how much responsibility you'd like me to take on.
-                As your business grows, I'll quietly take care of more of the work, leaving you free to
-                focus on the decisions that matter.
-              </p>
-            </div>
-          </div>
-        </section>
 
 
         {/* Fair Usage */}
