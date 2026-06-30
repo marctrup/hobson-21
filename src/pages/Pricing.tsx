@@ -18,7 +18,6 @@ type Plan = {
   includes: string[];
   cta: string;
   ctaHref: string;
-  featured?: boolean;
 };
 
 const plans: Plan[] = [
