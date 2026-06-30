@@ -137,13 +137,6 @@ const responsibilityCategories: ResponsibilityCategory[] = [
   },
 ];
 
-const sameHobson = [
-  "Every plan includes me",
-  "The same specialist team",
-  "The same intelligence",
-  "The same evidence-backed answers",
-  "Continuous product updates",
-];
 
 export default function Pricing() {
   return (
