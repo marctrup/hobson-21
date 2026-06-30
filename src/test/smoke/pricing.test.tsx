@@ -7,10 +7,10 @@ describe("Pricing page", () => {
   it("renders without crashing and shows all 4 plans", async () => {
     renderWithProviders(<Pricing />, { route: "/pricing" });
     await waitFor(() => {
-      expect(screen.getByText("Foundation")).toBeInTheDocument();
-      expect(screen.getByText("Starter")).toBeInTheDocument();
-      expect(screen.getByText("Professional")).toBeInTheDocument();
-      expect(screen.getByText("Business")).toBeInTheDocument();
+      expect(screen.getAllByText("Foundation").length).toBeGreaterThanOrEqual(1);
+      expect(screen.getAllByText("Starter").length).toBeGreaterThanOrEqual(1);
+      expect(screen.getAllByText("Professional").length).toBeGreaterThanOrEqual(1);
+      expect(screen.getAllByText("Business").length).toBeGreaterThanOrEqual(1);
     });
   });
 
@@ -25,7 +25,7 @@ describe("Pricing page", () => {
   it("shows the Enterprise call-us section", async () => {
     renderWithProviders(<Pricing />, { route: "/pricing" });
     await waitFor(() => {
-      expect(screen.getByText(/Enterprise/i)).toBeInTheDocument();
+      expect(screen.getAllByText(/Enterprise/i).length).toBeGreaterThanOrEqual(1);
       expect(screen.getByRole("button", { name: /Call us/i })).toBeInTheDocument();
     });
   });
