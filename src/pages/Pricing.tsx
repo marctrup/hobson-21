@@ -1,7 +1,7 @@
 import React from "react";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
-import { Check, Sparkles, ArrowRight, FileText, ShieldCheck, Receipt, Users } from "lucide-react";
+import { Check, FileText, ShieldCheck, Receipt, Users } from "lucide-react";
 import { GlobalHeader } from "@/components/GlobalHeader";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
