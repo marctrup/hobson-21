@@ -102,8 +102,6 @@ function ComingSoonBadge() {
   );
 }
 
-
-
 export default function Pricing() {
   return (
     <>
@@ -120,7 +118,7 @@ export default function Pricing() {
 
       <main id="main-content" className="min-h-screen bg-background">
         {/* Hero */}
-        <section className="relative overflow-hidden border-b border-border/40">
+        <section className="relative overflow-hidden border-b border-border/40 bg-background">
           <div className="absolute inset-0 bg-gradient-to-b from-primary/5 via-background to-background pointer-events-none" />
           <div className="container mx-auto px-4 py-16 sm:py-24 relative">
             <div className="max-w-3xl mx-auto text-center">
@@ -138,148 +136,146 @@ export default function Pricing() {
         </section>
 
         {/* What you're really choosing */}
-        <section className="container mx-auto px-4 pt-8 pb-4 sm:pt-12 sm:pb-6">
-          <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground tracking-tight">
-                What you're really choosing
-              </h2>
-              <p className="mt-5 text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-                Every plan includes me, my specialist team and the same intelligence. The only difference is how much of your day-to-day property work you'd like me to look after.
-              </p>
-            </div>
-
-            {/* Four progression cards */}
-            <div className="relative">
-              {/* Desktop connector line */}
-              <div className="hidden lg:block absolute top-6 left-[12%] right-[12%] h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-                {[
-                  { step: "1", name: "Foundation", title: "Ask me questions", desc: "Perfect if you'd simply like clear, evidence-backed answers about your portfolio." },
-                  { step: "2", name: "Starter", title: "Let me take care of a few things", desc: "Choose three areas of work for me to manage on your behalf." },
-                  { step: "3", name: "Professional", title: "Let me take care of even more", desc: "Choose six areas of work. I'll quietly become part of your day-to-day routine." },
-                  { step: "4", name: "Business", title: "Let me take care of much more", desc: "Choose nine areas of work. The larger your portfolio becomes, the more I'll quietly look after." },
-                ].map((card) => (
-                  <div key={card.name} className="flex flex-col items-center">
-                    <div className="relative z-10 mb-5">
-                      <div className="w-12 h-12 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center text-sm font-bold text-primary">
-                        {card.step}
-                      </div>
-                    </div>
-                    <Card className="w-full p-6 text-center border-border/60 hover:border-primary/30 transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
-                      <h3 className="text-lg font-bold text-foreground">{card.name}</h3>
-                      <p className="text-sm font-semibold text-primary mt-1.5 mb-3">{card.title}</p>
-                      <p className="text-sm text-muted-foreground leading-relaxed">{card.desc}</p>
-                    </Card>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Enterprise */}
-            <div className="mt-6 max-w-sm mx-auto">
-              <Card className="p-6 text-center border-primary/20 bg-primary/5 hover:bg-primary/10 transition-all duration-300">
-                <h3 className="text-lg font-bold text-foreground">Enterprise</h3>
-                <p className="text-sm font-semibold text-primary mt-1.5 mb-3">Let's work together</p>
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  We'll design entirely new responsibilities around the way your business works.
+        <section className="bg-muted/20 border-b border-border/30">
+          <div className="container mx-auto px-4 pt-8 pb-4 sm:pt-12 sm:pb-6">
+            <div className="max-w-6xl mx-auto">
+              <div className="text-center mb-12">
+                <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground tracking-tight">
+                  What you're really choosing
+                </h2>
+                <p className="mt-5 text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+                  Every plan includes me, my specialist team and the same intelligence. The only difference is how much of your day-to-day property work you'd like me to look after.
                 </p>
-              </Card>
-            </div>
+              </div>
 
-            {/* Key message */}
-            <div className="mt-14 text-center">
-              <p className="text-lg sm:text-xl text-foreground font-medium leading-relaxed max-w-2xl mx-auto">
-                You never pay for documents, questions or AI usage. You simply decide how much work you'd like me to take care of.
-              </p>
-            </div>
+              {/* Four progression cards */}
+              <div className="relative">
+                {/* Desktop connector line */}
+                <div className="hidden lg:block absolute top-6 left-[12%] right-[12%] h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
 
-            {/* Responsibility chips */}
-            <div className="mt-8 flex flex-wrap justify-center gap-2.5">
-              {[
-                "📅 Lease Expiry Monitoring",
-                "🛡️ Compliance Monitoring",
-                "🔑 Starting a Tenancy",
-                "🚪 Ending a Tenancy",
-                "💷 Rent Reviews",
-                "📋 Mid-Term Inventories",
-                "🛠️ Tenant Reported Issues",
-              ].map((chip) => (
-                <span
-                  key={chip}
-                  className="inline-flex items-center rounded-full bg-muted px-4 py-2 text-sm text-foreground/80 border border-border/40"
-                >
-                  {chip}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                  {[
+                    { step: "1", name: "Foundation", title: "Ask me questions", desc: "Perfect if you'd simply like clear, evidence-backed answers about your portfolio." },
+                    { step: "2", name: "Starter", title: "Let me take care of a few things", desc: "Choose three areas of work for me to manage on your behalf." },
+                    { step: "3", name: "Professional", title: "Let me take care of even more", desc: "Choose six areas of work. I'll quietly become part of your day-to-day routine." },
+                    { step: "4", name: "Business", title: "Let me take care of much more", desc: "Choose nine areas of work. The larger your portfolio becomes, the more I'll quietly look after." },
+                  ].map((card) => (
+                    <div key={card.name} className="flex flex-col items-center">
+                      <div className="relative z-10 mb-5">
+                        <div className="w-12 h-12 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center text-sm font-bold text-primary">
+                          {card.step}
+                        </div>
+                      </div>
+                      <Card className="w-full p-6 text-center border-border/60 hover:border-primary/30 transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
+                        <h3 className="text-lg font-bold text-foreground">{card.name}</h3>
+                        <p className="text-sm font-semibold text-primary mt-1.5 mb-3">{card.title}</p>
+                        <p className="text-sm text-muted-foreground leading-relaxed">{card.desc}</p>
+                      </Card>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Enterprise */}
+              <div className="mt-6 max-w-sm mx-auto">
+                <Card className="p-6 text-center border-primary/20 bg-primary/5 hover:bg-primary/10 transition-all duration-300">
+                  <h3 className="text-lg font-bold text-foreground">Enterprise</h3>
+                  <p className="text-sm font-semibold text-primary mt-1.5 mb-3">Let's work together</p>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    We'll design entirely new responsibilities around the way your business works.
+                  </p>
+                </Card>
+              </div>
+
+              {/* Key message */}
+              <div className="mt-14 text-center">
+                <p className="text-lg sm:text-xl text-foreground font-medium leading-relaxed max-w-2xl mx-auto">
+                  You never pay for documents, questions or AI usage. You simply decide how much work you'd like me to take care of.
+                </p>
+              </div>
+
+              {/* Responsibility chips */}
+              <div className="mt-8 flex flex-wrap justify-center gap-2.5">
+                {[
+                  "📅 Lease Expiry Monitoring",
+                  "🛡️ Compliance Monitoring",
+                  "🔑 Starting a Tenancy",
+                  "🚪 Ending a Tenancy",
+                  "💷 Rent Reviews",
+                  "📋 Mid-Term Inventories",
+                  "🛠️ Tenant Reported Issues",
+                ].map((chip) => (
+                  <span
+                    key={chip}
+                    className="inline-flex items-center rounded-full bg-muted px-4 py-2 text-sm text-foreground/80 border border-border/40"
+                  >
+                    {chip}
+                  </span>
+                ))}
+                <span className="inline-flex items-center rounded-full bg-primary/10 px-4 py-2 text-sm text-primary font-medium border border-primary/20">
+                  + Many more
                 </span>
-              ))}
-              <span className="inline-flex items-center rounded-full bg-primary/10 px-4 py-2 text-sm text-primary font-medium border border-primary/20">
-                + Many more
-              </span>
+              </div>
             </div>
           </div>
         </section>
 
         {/* Pricing Cards */}
-        <section className="container mx-auto px-4 py-16 sm:py-20">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 max-w-7xl mx-auto items-stretch">
-            {plans.map((plan) => (
-              <Card
-                key={plan.name}
-                className="relative flex flex-col p-6 transition-all duration-300 border border-border/60 hover:border-primary/40 hover:shadow-lg"
-              >
-                <ComingSoonBadge />
-
-                <div className="mb-4">
-                  <h3 className="text-xl font-bold text-foreground">{plan.name}</h3>
-                  <p className="text-sm text-primary mt-1 font-medium">{plan.tagline}</p>
-                </div>
-
-                <div className="mb-5">
-                  <div className="flex items-baseline gap-1">
-                    <span className="text-4xl font-bold text-foreground">{plan.price}</span>
-                    {plan.priceSuffix && (
-                      <span className="text-sm text-muted-foreground">{plan.priceSuffix}</span>
-                    )}
-                  </div>
-                  <div className="mt-3 inline-flex items-center rounded-full bg-muted px-3 py-1 text-xs font-semibold text-foreground/80">
-                    {plan.responsibilities}
-                  </div>
-                </div>
-
-                <p className="text-sm text-muted-foreground mb-5 leading-relaxed">
-                  {plan.description}
-                </p>
-
-                <ul className="space-y-2.5 mb-6 flex-grow">
-                  {plan.includes.map((item) => (
-                    <li key={item} className="flex items-start gap-2 text-sm">
-                      <Check className="h-4 w-4 text-primary flex-shrink-0 mt-0.5" />
-                      <span className="text-foreground/90">{item}</span>
-                    </li>
-                  ))}
-                </ul>
-
-                <Button
-                  className="w-full"
-                  variant="outline"
-                  onClick={() => window.open(plan.ctaHref, "_blank")}
+        <section className="bg-background border-b border-border/30">
+          <div className="container mx-auto px-4 py-16 sm:py-20">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 max-w-7xl mx-auto items-stretch">
+              {plans.map((plan) => (
+                <Card
+                  key={plan.name}
+                  className="relative flex flex-col p-6 transition-all duration-300 border border-border/60 hover:border-primary/40 hover:shadow-lg"
                 >
-                  {plan.cta}
-                </Button>
-              </Card>
-            ))}
-          </div>
+                  <ComingSoonBadge />
 
+                  <div className="mb-4">
+                    <h3 className="text-xl font-bold text-foreground">{plan.name}</h3>
+                    <p className="text-sm text-primary mt-1 font-medium">{plan.tagline}</p>
+                  </div>
+
+                  <div className="mb-5">
+                    <div className="flex items-baseline gap-1">
+                      <span className="text-4xl font-bold text-foreground">{plan.price}</span>
+                      {plan.priceSuffix && (
+                        <span className="text-sm text-muted-foreground">{plan.priceSuffix}</span>
+                      )}
+                    </div>
+                    <div className="mt-3 inline-flex items-center rounded-full bg-muted px-3 py-1 text-xs font-semibold text-foreground/80">
+                      {plan.responsibilities}
+                    </div>
+                  </div>
+
+                  <p className="text-sm text-muted-foreground mb-5 leading-relaxed">
+                    {plan.description}
+                  </p>
+
+                  <ul className="space-y-2.5 mb-6 flex-grow">
+                    {plan.includes.map((item) => (
+                      <li key={item} className="flex items-start gap-2 text-sm">
+                        <Check className="h-4 w-4 text-primary flex-shrink-0 mt-0.5" />
+                        <span className="text-foreground/90">{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  <Button
+                    className="w-full"
+                    variant="outline"
+                    onClick={() => window.open(plan.ctaHref, "_blank")}
+                  >
+                    {plan.cta}
+                  </Button>
+                </Card>
+              ))}
+            </div>
+          </div>
         </section>
 
-
-
-
-
-
         {/* Fair Usage */}
-        <section className="border-t border-border/40 bg-muted/30">
+        <section className="bg-muted/20">
           <div className="container mx-auto px-4 py-14 sm:py-16">
             <div className="max-w-3xl mx-auto text-center">
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground tracking-tight">Fair Usage</h2>
