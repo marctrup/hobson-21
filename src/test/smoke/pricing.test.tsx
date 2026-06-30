@@ -26,7 +26,7 @@ describe("Pricing page", () => {
     renderWithProviders(<Pricing />, { route: "/pricing" });
     await waitFor(() => {
       expect(screen.getByText(/Enterprise/i)).toBeInTheDocument();
-      expect(screen.getByRole("button", { name: /Call us/i })).toBeiBeInTheDocument();
+      expect(screen.getByRole("button", { name: /Call us/i })).toBeInTheDocument();
     });
   });
 });
