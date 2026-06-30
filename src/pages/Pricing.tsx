@@ -245,7 +245,7 @@ export default function Pricing() {
               {plans.map((plan) => (
                 <Card
                   key={plan.name}
-                  className="relative flex flex-col p-6 transition-all duration-300 border border-border/60 hover:border-primary/40 hover:shadow-lg"
+                  className="relative flex flex-col p-6 transition-all duration-300 border border-border/60 bg-primary/[0.03] hover:border-primary/40 hover:shadow-lg"
                 >
                   <ComingSoonBadge />
 
