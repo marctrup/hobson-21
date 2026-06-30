@@ -2,6 +2,7 @@ import React from "react";
 import { Helmet } from "react-helmet-async";
 import { GlobalHeader } from "@/components/GlobalHeader";
 import { YouTubeVideoSection } from "@/components/homepage/YouTubeVideoSection";
+import founderPhoto from "@/assets/founder-photo.jpg.asset.json";
 
 const MeetTheFounder = () => {
   return (
