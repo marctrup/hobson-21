@@ -207,20 +207,20 @@ export default function Pricing() {
 
                 <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
                   {[
-                    { icon: CalendarClock, label: "Lease Expiry Monitoring" },
-                    { icon: ShieldCheck, label: "Compliance Monitoring" },
-                    { icon: KeyRound, label: "Starting a Tenancy" },
-                    { icon: DoorOpen, label: "Ending a Tenancy" },
-                    { icon: Banknote, label: "Rent Reviews" },
-                    { icon: ClipboardList, label: "Mid-Term Inventories" },
-                    { icon: Wrench, label: "Tenant Reported Issues" },
-                  ].map(({ icon: Icon, label }) => (
+                    { icon: CalendarClock, label: "Lease Expiry Monitoring", bg: "bg-sky-100", hoverBg: "group-hover:bg-sky-200", text: "text-sky-600" },
+                    { icon: ShieldCheck, label: "Compliance Monitoring", bg: "bg-emerald-100", hoverBg: "group-hover:bg-emerald-200", text: "text-emerald-600" },
+                    { icon: KeyRound, label: "Starting a Tenancy", bg: "bg-amber-100", hoverBg: "group-hover:bg-amber-200", text: "text-amber-600" },
+                    { icon: DoorOpen, label: "Ending a Tenancy", bg: "bg-rose-100", hoverBg: "group-hover:bg-rose-200", text: "text-rose-600" },
+                    { icon: Banknote, label: "Rent Reviews", bg: "bg-violet-100", hoverBg: "group-hover:bg-violet-200", text: "text-violet-600" },
+                    { icon: ClipboardList, label: "Mid-Term Inventories", bg: "bg-cyan-100", hoverBg: "group-hover:bg-cyan-200", text: "text-cyan-600" },
+                    { icon: Wrench, label: "Tenant Reported Issues", bg: "bg-orange-100", hoverBg: "group-hover:bg-orange-200", text: "text-orange-600" },
+                  ].map(({ icon: Icon, label, bg, hoverBg, text }) => (
                     <div
                       key={label}
                       className="group flex items-center gap-3 rounded-xl border border-border/60 bg-background px-4 py-3.5 hover:border-primary/40 hover:bg-primary/[0.03] transition-all duration-200"
                     >
-                      <div className="shrink-0 w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/15 transition-colors">
-                        <Icon className="w-4.5 h-4.5 text-primary" strokeWidth={2} />
+                      <div className={`shrink-0 w-9 h-9 rounded-lg ${bg} flex items-center justify-center ${hoverBg} transition-colors`}>
+                        <Icon className={`w-4.5 h-4.5 ${text}`} strokeWidth={2} />
                       </div>
                       <span className="text-sm font-medium text-foreground leading-tight">{label}</span>
                     </div>
