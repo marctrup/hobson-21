@@ -27,9 +27,9 @@ const plans: Plan[] = [
     price: "£17.50",
     priceSuffix: "/month",
     responsibilities: "Questions & Answers",
-    tagline: "Hobson answers.",
+    tagline: "Get to know me.",
     description:
-      "Perfect for customers who want evidence-backed answers from their own portfolio.",
+      "Perfect if you'd like to ask questions about your portfolio and receive clear, evidence-backed answers.",
     includes: [
       "Hobson AI",
       "Complete specialist team",
@@ -37,7 +37,7 @@ const plans: Plan[] = [
       "Evidence-backed answers",
       "Fair usage",
     ],
-    cta: "Start with Foundation",
+    cta: "Choose Foundation",
     ctaHref: "https://app.hobsonschoice.ai/signup",
   },
   {
@@ -45,9 +45,9 @@ const plans: Plan[] = [
     price: "£39",
     priceSuffix: "/month",
     responsibilities: "3 Responsibilities",
-    tagline: "Hobson begins helping.",
+    tagline: "I'll begin taking work off your desk.",
     description:
-      "Everything in Foundation, plus choose any 3 responsibilities for Hobson to manage on your behalf.",
+      "Everything in Foundation, plus choose any three responsibilities for me to look after on your behalf.",
     includes: [
       "Everything in Foundation",
       "Choose 3 responsibilities",
@@ -62,9 +62,9 @@ const plans: Plan[] = [
     price: "£99",
     priceSuffix: "/month",
     responsibilities: "6 Responsibilities",
-    tagline: "Hobson becomes part of your team.",
+    tagline: "I'll become part of your team.",
     description:
-      "Everything in Starter, plus choose any 6 responsibilities. For growing businesses wanting Hobson to take care of more day-to-day work.",
+      "Everything in Starter, plus choose any six responsibilities. Ideal if you'd like me to take care of more of your day-to-day property work.",
     includes: [
       "Everything in Starter",
       "Choose 6 responsibilities",
@@ -80,9 +80,9 @@ const plans: Plan[] = [
     price: "£199",
     priceSuffix: "/month",
     responsibilities: "9 Responsibilities",
-    tagline: "Hobson becomes part of your operation.",
+    tagline: "I'll take care of even more.",
     description:
-      "Everything in Professional, plus choose any 9 responsibilities. Designed for organisations managing larger portfolios and multiple properties.",
+      "Everything in Professional, plus choose any nine responsibilities. Designed for organisations managing larger portfolios where there's even more work I can quietly take care of.",
     includes: [
       "Everything in Professional",
       "Choose 9 responsibilities",
@@ -110,7 +110,7 @@ const responsibilities = [
 ];
 
 const sameHobson = [
-  "The same Hobson",
+  "Every plan includes me",
   "The same specialist team",
   "The same intelligence",
   "The same evidence-backed answers",
@@ -124,7 +124,7 @@ export default function Pricing() {
         <title>Pricing | Hobson AI</title>
         <meta
           name="description"
-          content="Every plan includes the same Hobson. The only difference is how much responsibility you'd like him to take on."
+          content="Every plan includes me. The only difference is how much responsibility you'd like me to take on."
         />
         <link rel="canonical" href="https://hobsonschoice.ai/pricing" />
       </Helmet>
@@ -144,15 +144,15 @@ export default function Pricing() {
                 Choose your plan
               </h1>
               <p className="mt-6 text-lg sm:text-xl text-muted-foreground leading-relaxed">
-                Every plan includes the same Hobson.
+                Every plan includes me.
                 <br className="hidden sm:block" />
                 The only difference is how much responsibility you'd like me to take on.
               </p>
               <div className="mt-10 max-w-2xl mx-auto text-sm sm:text-base text-muted-foreground/90 space-y-3 leading-relaxed">
                 <p>Traditional software charges for usage. I don't.</p>
                 <p>
-                  Every plan includes exactly the same Hobson, the same specialist team and the same
-                  intelligence. As you move up the plans, you're simply asking me to take care of more of
+                  Every plan includes me, the same specialist team and the same
+                  intelligence. As you move through the plans, you're simply asking me to take care of more of
                   your business.
                 </p>
               </div>
@@ -231,8 +231,7 @@ export default function Pricing() {
                 <div>
                   <h3 className="text-xl font-bold text-foreground">Enterprise</h3>
                   <p className="text-sm text-muted-foreground mt-1 max-w-2xl">
-                    Unlimited standard responsibilities, plus bespoke responsibilities, workflow design, API
-                    integrations, white-glove onboarding and dedicated implementation.
+                    Every organisation works differently. I'll work alongside your team through bespoke responsibilities, tailored automations and integrations designed around the way your business already operates.
                   </p>
                 </div>
               </div>
@@ -253,8 +252,8 @@ export default function Pricing() {
                 Responsibilities I can take care of
               </h2>
               <p className="mt-4 text-lg text-muted-foreground leading-relaxed">
-                A responsibility is an area of work I continuously look after on your behalf.
-                You don't need to think about workflows or automation. Simply tell me what you'd like me to
+                A responsibility is an area of work you ask me to look after on your behalf.
+                You never need to think about workflows or automation. Simply tell me what you'd like me to
                 take care of.
               </p>
             </div>
@@ -269,7 +268,7 @@ export default function Pricing() {
                 </div>
               ))}
               <div className="px-4 py-2.5 rounded-full border border-dashed border-border text-sm italic text-muted-foreground">
-                + more as Hobson evolves
+                ...and many more as I continue to grow.
               </div>
             </div>
           </div>
@@ -283,7 +282,7 @@ export default function Pricing() {
                 What's the difference between a responsibility and a workflow?
               </h2>
               <p className="mt-4 text-lg text-muted-foreground">
-                Customers don't buy workflows. They buy outcomes.
+                You simply tell me what you'd like me to take care of.
               </p>
             </div>
 
@@ -300,7 +299,7 @@ export default function Pricing() {
 
                 <div>
                   <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3">
-                    Behind the scenes I may
+                    Behind the scenes, my specialists quietly coordinate everything that's needed.
                   </p>
                   <ul className="space-y-2 text-sm text-muted-foreground">
                     {[
@@ -327,7 +326,7 @@ export default function Pricing() {
                   Rent Reviews
                 </div>
                 <p className="mt-4 text-sm text-muted-foreground italic">
-                  Everything else happens quietly behind the scenes.
+                  I'll quietly take care of everything else.
                 </p>
               </div>
             </Card>
@@ -338,7 +337,7 @@ export default function Pricing() {
         <section className="bg-foreground text-background">
           <div className="container mx-auto px-4 py-16 sm:py-20">
             <div className="max-w-3xl mx-auto text-center">
-              <h2 className="text-3xl sm:text-4xl font-bold">The same Hobson.</h2>
+              <h2 className="text-3xl sm:text-4xl font-bold">Every plan includes me.</h2>
               <p className="mt-4 text-background/70 text-lg">Every plan includes:</p>
 
               <ul className="mt-8 grid sm:grid-cols-2 gap-3 text-left max-w-xl mx-auto">
@@ -354,8 +353,8 @@ export default function Pricing() {
               </ul>
 
               <p className="mt-10 text-background/80 leading-relaxed">
-                The only thing that changes is how much responsibility you'd like to trust me with.
-                As your business grows, I quietly take care of more of the work, leaving your team free to
+                The only thing that changes is how much responsibility you'd like me to take on.
+                As your business grows, I'll quietly take care of more of the work, leaving you free to
                 focus on the decisions that matter.
               </p>
             </div>
@@ -377,7 +376,7 @@ export default function Pricing() {
                 <div className="mt-6 max-w-2xl space-y-4 text-muted-foreground leading-relaxed">
                   <p>Large organisations work differently.</p>
                   <p>
-                    Rather than asking you to fit around Hobson, we'll work with you to design new
+                    Rather than asking you to fit around me, I'll work with you to design new
                     responsibilities, connect your existing systems and automate the work that's unique to
                     your organisation.
                   </p>
