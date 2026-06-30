@@ -138,7 +138,8 @@ export default function Pricing() {
         </section>
 
         {/* What you're really choosing */}
-        <section className="container mx-auto px-4 pt-8 pb-4 sm:pt-12 sm:pb-6">
+        <section className="bg-muted/20">
+          <div className="container mx-auto px-4 pt-8 pb-4 sm:pt-12 sm:pb-6">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-12">
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground tracking-tight">
