@@ -171,7 +171,7 @@ export default function Pricing() {
                   { step: "3", name: "Professional", title: "Let me take care of even more", desc: "Choose six areas of work. I'll quietly become part of your day-to-day routine." },
                   { step: "4", name: "Business", title: "Let me take care of much more", desc: "Choose nine areas of work. The larger your portfolio becomes, the more I'll quietly look after." },
                 ].map((card) => (
-                  <div key={card-} className="flex flex-col items-center">
+                  <div key={card.name} className="flex flex-col items-center">
                     <div className="relative z-10 mb-5">
                       <div className="w-12 h-12 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center text-sm font-bold text-primary">
                         {card.step}
