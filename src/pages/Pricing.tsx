@@ -155,7 +155,7 @@ export default function Pricing() {
                 key={plan.name}
                 className="relative flex flex-col p-6 transition-all duration-300 border border-border/60 hover:border-primary/40 hover:shadow-lg"
               >
-                {comingSoonBadge}
+                <ComingSoonBadge />
 
                 <div className="mb-4">
                   <h3 className="text-xl font-bold text-foreground">{plan.name}</h3>
