@@ -198,12 +198,13 @@ export default function Pricing() {
             {/* Responsibility chips */}
             <div className="mt-8 flex flex-wrap justify-center gap-2.5">
               {[
-                "🏢 Rent Reviews",
                 "📅 Lease Expiry Monitoring",
-                "📄 Break Clauses",
-                "🛡️ Compliance",
-                "💷 Service Charges",
-                "🏠 Vacant Units",
+                "🛡️ Compliance Monitoring",
+                "🔑 Starting a Tenancy",
+                "🚪 Ending a Tenancy",
+                "💷 Rent Reviews",
+                "📋 Mid-Term Inventories",
+                "🛠️ Tenant ReportedTransition Issues",
               ].map((chip) => (
                 <span
                   key={chip}
@@ -213,7 +214,7 @@ export default function Pricing() {
                 </span>
               ))}
               <span className="inline-flex items-center rounded-full bg-primary/10 px-4 py-2 text-sm text-primary font-medium border border-primary/20">
-                * Many more
+                + Many more
               </span>
             </div>
           </div>
