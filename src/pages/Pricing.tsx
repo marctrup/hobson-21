@@ -62,9 +62,9 @@ const plans: Plan[] = [
     price: "£99",
     priceSuffix: "/month",
     responsibilities: "6 Responsibilities",
-    tagline: "Hobson becomes part of your team.",
+    tagline: "I'll become part of your team.",
     description:
-      "Everything in Starter, plus choose any 6 responsibilities. For growing businesses wanting Hobson to take care of more day-to-day work.",
+      "Everything in Starter, plus choose any six responsibilities. Ideal if you'd like me to take care of more of your day-to-day property work.",
     includes: [
       "Everything in Starter",
       "Choose 6 responsibilities",
