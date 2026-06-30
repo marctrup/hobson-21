@@ -2,6 +2,7 @@ import React from "react";
 import { Helmet } from "react-helmet-async";
 import { GlobalHeader } from "@/components/GlobalHeader";
 import { YouTubeVideoSection } from "@/components/homepage/YouTubeVideoSection";
+import founderPhoto from "@/assets/founder-photo.jpg.asset.json";
 
 const MeetTheFounder = () => {
   return (
@@ -60,7 +61,14 @@ const MeetTheFounder = () => {
                 <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-6">
                   Why I Built Hobson
                 </h2>
-                <div className="space-y-4 text-base sm:text-lg text-muted-foreground leading-relaxed">
+              <div className="flex justify-center mb-6">
+                <img
+                  src={founderPhoto.url}
+                  alt="Marc Trup, Founder of Hobson"
+                  className="w-24 h-24 sm:w-32 sm:h-32 rounded-full object-cover border-2 border-primary/20 shadow-lg"
+                />
+              </div>
+              <div className="space-y-4 text-base sm:text-lg text-muted-foreground leading-relaxed">
                   <p>
                     For over 30 years I've worked in property.
                   </p>
