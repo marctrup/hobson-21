@@ -296,7 +296,7 @@ export default function Pricing() {
         <section className="bg-muted/20">
           <div className="container mx-auto px-4 py-14 sm:py-16">
             <div className="max-w-3xl mx-auto text-center">
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground tracking-tight">Fair Usage</h2>
+              <h2 className="text-2xl sm:text-3xl font-bold text-foreground tracking-tight">Fair Usage</h2>
               <div className="mt-5 space-y-3 text-muted-foreground leading-relaxed">
                 <p>Hobson is designed to be used every day.</p>
                 <p>
