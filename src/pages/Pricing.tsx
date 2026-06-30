@@ -110,7 +110,7 @@ const responsibilities = [
 ];
 
 const sameHobson = [
-  "The same Hobson",
+  "Every plan includes me",
   "The same specialist team",
   "The same intelligence",
   "The same evidence-backed answers",
@@ -282,7 +282,7 @@ export default function Pricing() {
                 What's the difference between a responsibility and a workflow?
               </h2>
               <p className="mt-4 text-lg text-muted-foreground">
-                Customers don't buy workflows. They buy outcomes.
+                You simply tell me what you'd like me to take care of.
               </p>
             </div>
 
@@ -299,7 +299,7 @@ export default function Pricing() {
 
                 <div>
                   <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3">
-                    Behind the scenes I may
+                    Behind the scenes, my specialists quietly coordinate everything that's needed.
                   </p>
                   <ul className="space-y-2 text-sm text-muted-foreground">
                     {[
@@ -326,7 +326,7 @@ export default function Pricing() {
                   Rent Reviews
                 </div>
                 <p className="mt-4 text-sm text-muted-foreground italic">
-                  Everything else happens quietly behind the scenes.
+                  I'll quietly take care of everything else.
                 </p>
               </div>
             </Card>
@@ -337,7 +337,7 @@ export default function Pricing() {
         <section className="bg-foreground text-background">
           <div className="container mx-auto px-4 py-16 sm:py-20">
             <div className="max-w-3xl mx-auto text-center">
-              <h2 className="text-3xl sm:text-4xl font-bold">The same Hobson.</h2>
+              <h2 className="text-3xl sm:text-4xl font-bold">Every plan includes me.</h2>
               <p className="mt-4 text-background/70 text-lg">Every plan includes:</p>
 
               <ul className="mt-8 grid sm:grid-cols-2 gap-3 text-left max-w-xl mx-auto">
@@ -353,8 +353,8 @@ export default function Pricing() {
               </ul>
 
               <p className="mt-10 text-background/80 leading-relaxed">
-                The only thing that changes is how much responsibility you'd like to trust me with.
-                As your business grows, I quietly take care of more of the work, leaving your team free to
+                The only thing that changes is how much responsibility you'd like me to take on.
+                As your business grows, I'll quietly take care of more of the work, leaving you free to
                 focus on the decisions that matter.
               </p>
             </div>
@@ -376,7 +376,7 @@ export default function Pricing() {
                 <div className="mt-6 max-w-2xl space-y-4 text-muted-foreground leading-relaxed">
                   <p>Large organisations work differently.</p>
                   <p>
-                    Rather than asking you to fit around Hobson, we'll work with you to design new
+                    Rather than asking you to fit around me, I'll work with you to design new
                     responsibilities, connect your existing systems and automate the work that's unique to
                     your organisation.
                   </p>
