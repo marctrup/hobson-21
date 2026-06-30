@@ -220,6 +220,7 @@ export default function Pricing() {
             </div>
           </div>
         </section>
+        </section>
 
         {/* Pricing Cards */}
         <section className="container mx-auto px-4 py-16 sm:py-20">
