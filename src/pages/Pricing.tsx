@@ -27,9 +27,9 @@ const plans: Plan[] = [
     price: "£17.50",
     priceSuffix: "/month",
     responsibilities: "Questions & Answers",
-    tagline: "Hobson answers.",
+    tagline: "Get to know me.",
     description:
-      "Perfect for customers who want evidence-backed answers from their own portfolio.",
+      "Perfect if you'd like to ask questions about your portfolio and receive clear, evidence-backed answers.",
     includes: [
       "Hobson AI",
       "Complete specialist team",
@@ -37,7 +37,7 @@ const plans: Plan[] = [
       "Evidence-backed answers",
       "Fair usage",
     ],
-    cta: "Start with Foundation",
+    cta: "Choose Foundation",
     ctaHref: "https://app.hobsonschoice.ai/signup",
   },
   {
@@ -45,9 +45,9 @@ const plans: Plan[] = [
     price: "£39",
     priceSuffix: "/month",
     responsibilities: "3 Responsibilities",
-    tagline: "Hobson begins helping.",
+    tagline: "I'll begin taking work off your desk.",
     description:
-      "Everything in Foundation, plus choose any 3 responsibilities for Hobson to manage on your behalf.",
+      "Everything in Foundation, plus choose any three responsibilities for me to look after on your behalf.",
     includes: [
       "Everything in Foundation",
       "Choose 3 responsibilities",
@@ -124,7 +124,7 @@ export default function Pricing() {
         <title>Pricing | Hobson AI</title>
         <meta
           name="description"
-          content="Every plan includes the same Hobson. The only difference is how much responsibility you'd like him to take on."
+          content="Every plan includes me. The only difference is how much responsibility you'd like me to take on."
         />
         <link rel="canonical" href="https://hobsonschoice.ai/pricing" />
       </Helmet>
@@ -144,15 +144,15 @@ export default function Pricing() {
                 Choose your plan
               </h1>
               <p className="mt-6 text-lg sm:text-xl text-muted-foreground leading-relaxed">
-                Every plan includes the same Hobson.
+                Every plan includes me.
                 <br className="hidden sm:block" />
                 The only difference is how much responsibility you'd like me to take on.
               </p>
               <div className="mt-10 max-w-2xl mx-auto text-sm sm:text-base text-muted-foreground/90 space-y-3 leading-relaxed">
                 <p>Traditional software charges for usage. I don't.</p>
                 <p>
-                  Every plan includes exactly the same Hobson, the same specialist team and the same
-                  intelligence. As you move up the plans, you're simply asking me to take care of more of
+                  Every plan includes me, the same specialist team and the same
+                  intelligence. As you move through the plans, you're simply asking me to take care of more of
                   your business.
                 </p>
               </div>
