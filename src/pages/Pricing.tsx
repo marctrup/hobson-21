@@ -207,20 +207,20 @@ export default function Pricing() {
 
                 <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
                   {[
-                    { icon: CalendarClock, label: "Lease Expiry Monitoring" },
-                    { icon: ShieldCheck, label: "Compliance Monitoring" },
-                    { icon: KeyRound, label: "Starting a Tenancy" },
-                    { icon: DoorOpen, label: "Ending a Tenancy" },
-                    { icon: Banknote, label: "Rent Reviews" },
-                    { icon: ClipboardList, label: "Mid-Term Inventories" },
-                    { icon: Wrench, label: "Tenant Reported Issues" },
-                  ].map(({ icon: Icon, label }) => (
+                    { icon: CalendarClock, label: "Lease Expiry Monitoring", color: "sky" },
+                    { icon: ShieldCheck, label: "Compliance Monitoring", color: "emerald" },
+                    { icon: KeyRound, label: "Starting a Tenancy", color: "amber" },
+                    { icon: DoorOpen, label: "Ending a Tenancy", color: "rose" },
+                    { icon: Banknote, label: "Rent Reviews", color: "violet" },
+                    { icon: ClipboardList, label: "Mid-Term Inventories", color: "cyan" },
+                    { icon: Wrench, label: "Tenant Reported Issues", color: "orange" },
+                  ].map(({ icon: Icon, label, color }) => (
                     <div
                       key={label}
                       className="group flex items-center gap-3 rounded-xl border border-border/60 bg-background px-4 py-3.5 hover:border-primary/40 hover:bg-primary/[0.03] transition-all duration-200"
                     >
-                      <div className="shrink-0 w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/15 transition-colors">
-                        <Icon className="w-4.5 h-4.5 text-primary" strokeWidth={2} />
+                      <div className={`shrink-0 w-9 h-9 rounded-lg bg-${color}-100 flex items-center justify-center group-hover:bg-${color}-200 transition-colors`}>
+                        <Icon className={`w-4.5 h-4.5 text-${color}-600`} strokeWidth={2} />
                       </div>
                       <span className="text-sm font-medium text-foreground leading-tight">{label}</span>
                     </div>
