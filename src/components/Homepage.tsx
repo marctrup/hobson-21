@@ -22,6 +22,7 @@ import { TheTeamSection } from "@/components/homepage/TheTeamSection";
 
 import { structuredData } from "@/utils/seo-data";
 import { CONTENT } from "@/config/content";
+import hobsonAnswerTight from "@/assets/hobson-answer-tight.png.asset.json";
 
 export const Homepage = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
