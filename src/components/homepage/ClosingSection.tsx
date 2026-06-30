@@ -4,9 +4,9 @@ import { ArrowRight } from "lucide-react";
 export const ClosingSection = () => (
   <section className="py-24 bg-white">
     <div className="container mx-auto px-6 max-w-3xl text-center">
-      <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 leading-tight">
+      <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground tracking-tight leading-tight">
         One conversation. One orchestrator.<br />
-        <span className="bg-gradient-to-r from-purple-700 to-fuchsia-600 bg-clip-text text-transparent">
+        <span className="bg-gradient-to-r from-primary to-accent-teal bg-clip-text text-transparent">
           Unlimited capabilities.
         </span>
       </h2>

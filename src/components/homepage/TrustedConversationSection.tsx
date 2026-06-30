@@ -31,7 +31,7 @@ export const TrustedConversationSection = () => {
           <div className="text-center mb-10 sm:mb-14">
             <h2
               id="trusted-heading"
-              className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-3"
+              className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground tracking-tight mb-3"
             >
               One Trusted Conversation
             </h2>
