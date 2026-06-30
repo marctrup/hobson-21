@@ -58,16 +58,16 @@ const MeetTheFounder = () => {
           <section className="pb-16 sm:pb-20">
             <div className="container mx-auto px-4 max-w-3xl">
               <div className="rounded-2xl bg-card border border-border p-8 sm:p-12 shadow-sm">
-                <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-6">
-                  Why I Built Hobson
-                </h2>
-              <div className="flex justify-center mb-6">
+              <div className="flex justify-center mb-4">
                 <img
                   src={founderPhoto.url}
                   alt="Marc Trup, Founder of Hobson"
-                  className="w-24 h-24 sm:w-32 sm:h-32 rounded-full object-cover border-2 border-primary/20 shadow-lg"
+                  className="w-16 h-16 sm:w-20 sm:h-20 rounded-full object-cover border-2 border-primary/20 shadow-lg"
                 />
               </div>
+                <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-6">
+                  Why I Built Hobson
+                </h2>
               <div className="space-y-4 text-base sm:text-lg text-muted-foreground leading-relaxed">
                   <p>
                     For over 30 years I've worked in property.
