@@ -302,7 +302,7 @@ export default function Pricing() {
                   <h3 className="text-xl sm:text-2xl font-bold text-foreground tracking-tight">Enterprise</h3>
                   <p className="mt-2 text-base text-primary font-medium">Let's build something together</p>
                   <p className="mt-3 text-sm text-muted-foreground leading-relaxed max-w-lg mx-auto">
-                    For larger organisations with bespoke needs. We'll design entirely new responsibilities around the way your business works.
+                    Every organisation is different. If there's work unique to your business, we'll teach me how you'd like it done.
                   </p>
                   <div className="mt-6 text-center">
                     <span className="text-sm text-muted-foreground">Email </span>
