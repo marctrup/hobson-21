@@ -204,7 +204,7 @@ export default function Pricing() {
                 "🚪 Ending a Tenancy",
                 "💷 Rent Reviews",
                 "📋 Mid-Term Inventories",
-                "🛠️ Tenant ReportedTransition Issues",
+                "🛠️ Tenant Reported Issues",
               ].map((chip) => (
                 <span
                   key={chip}
