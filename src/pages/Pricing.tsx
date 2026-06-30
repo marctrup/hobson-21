@@ -73,7 +73,6 @@ const plans: Plan[] = [
     ],
     cta: "Choose Professional",
     ctaHref: "https://app.hobsonschoice.ai/signup",
-    featured: true,
   },
   {
     name: "Business",
