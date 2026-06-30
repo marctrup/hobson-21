@@ -266,27 +266,6 @@ export default function Pricing() {
             ))}
           </div>
 
-          {/* Enterprise teaser bar */}
-          <div className="max-w-7xl mx-auto mt-6">
-            <Card className="p-6 sm:p-8 border border-border/60 bg-gradient-to-r from-foreground/[0.03] to-primary/[0.04] flex flex-col sm:flex-row sm:items-center sm:justify-between gap-5">
-              <div className="flex items-start gap-4">
-                <div className="hidden sm:flex h-12 w-12 rounded-full bg-primary/10 items-center justify-center flex-shrink-0">
-                  <Sparkles className="h-6 w-6 text-primary" />
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-foreground">Enterprise</h3>
-                  <p className="text-sm text-muted-foreground mt-1 max-w-2xl">
-                    Every organisation works differently. I'll work alongside your team through bespoke responsibilities, tailored automations and integrations designed around the way your business already operates.
-                  </p>
-                </div>
-              </div>
-              <Button asChild size="lg" className="flex-shrink-0">
-                <Link to="/contact">
-                  Contact us <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
-            </Card>
-          </div>
         </section>
 
         {/* Responsibilities */}
