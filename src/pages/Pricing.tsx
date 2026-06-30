@@ -130,19 +130,9 @@ export default function Pricing() {
               <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-foreground">
                 Choose your plan
               </h1>
-              <p className="mt-6 text-lg sm:text-xl text-muted-foreground leading-relaxed">
-                Every plan includes me.
-                <br className="hidden sm:block" />
-                The only difference is how much responsibility you'd like me to take on.
+              <p className="mt-6 text-lg sm:text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto">
+                Every business is different. Choose the level of support that's right for you today, and I'll grow with you as your needs evolve.
               </p>
-              <div className="mt-10 max-w-2xl mx-auto text-sm sm:text-base text-muted-foreground/90 space-y-3 leading-relaxed">
-                <p>Traditional software charges for usage. I don't.</p>
-                <p>
-                  Every plan includes me, the same specialist team and the same
-                  intelligence. As you move through the plans, you're simply asking me to take care of more of
-                  your business.
-                </p>
-              </div>
             </div>
           </div>
         </section>
