@@ -304,16 +304,11 @@ export default function Pricing() {
                   <p className="mt-3 text-sm text-muted-foreground leading-relaxed max-w-lg mx-auto">
                     For larger organisations with bespoke needs. We'll design entirely new responsibilities around the way your business works.
                   </p>
-                  <div className="mt-6 flex flex-col sm:flex-row items-center justify-center gap-3">
-                    <Button
-                      variant="outline"
-                      className="border-primary/30 hover:bg-primary/5 hover:border-primary/50"
-                      onClick={() => window.location.href = "/contact"}
-                    >
-                      <Phone className="h-4 w-4 mr-2" />
-                      Call us
-                    </Button>
-                    <span className="text-xs text-muted-foreground">or email enterprise@hobsonschoice.ai</span>
+                  <div className="mt-6 text-center">
+                    <span className="text-sm text-muted-foreground">Email </span>
+                    <a href="mailto:info@hobsonschoice.ai" className="text-sm font-medium text-primary hover:underline">
+                      info@hobsonschoice.ai
+                    </a>
                   </div>
                 </div>
               </div>
