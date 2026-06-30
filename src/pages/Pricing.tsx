@@ -18,7 +18,6 @@ type Plan = {
   includes: string[];
   cta: string;
   ctaHref: string;
-  featured?: boolean;
 };
 
 const plans: Plan[] = [
@@ -73,7 +72,6 @@ const plans: Plan[] = [
     ],
     cta: "Choose Professional",
     ctaHref: "https://app.hobsonschoice.ai/signup",
-    featured: true,
   },
   {
     name: "Business",
@@ -93,6 +91,16 @@ const plans: Plan[] = [
     ctaHref: "https://app.hobsonschoice.ai/signup",
   },
 ];
+
+function ComingSoonBadge() {
+  return (
+    <div className="absolute -top-3 left-1/2 -translate-x-1/2">
+      <Badge className="bg-primary text-primary-foreground px-3 py-1 shadow-md">
+        Coming soon
+      </Badge>
+    </div>
+  );
+}
 
 
 
@@ -145,19 +153,9 @@ export default function Pricing() {
             {plans.map((plan) => (
               <Card
                 key={plan.name}
-                className={`relative flex flex-col p-6 transition-all duration-300 ${
-                  plan.featured
-                    ? "border-2 border-primary shadow-xl bg-gradient-to-b from-primary/5 to-background lg:scale-[1.03]"
-                    : "border border-border/60 hover:border-primary/40 hover:shadow-lg"
-                }`}
+                className="relative flex flex-col p-6 transition-all duration-300 border border-border/60 hover:border-primary/40 hover:shadow-lg"
               >
-                {plan.featured && (
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                    <Badge className="bg-primary text-primary-foreground px-3 py-1 shadow-md">
-                      Most Popular
-                    </Badge>
-                  </div>
-                )}
+                <ComingSoonBadge />
 
                 <div className="mb-4">
                   <h3 className="text-xl font-bold text-foreground">{plan.name}</h3>
@@ -191,7 +189,7 @@ export default function Pricing() {
 
                 <Button
                   className="w-full"
-                  variant={plan.featured ? "default" : "outline"}
+                  variant="outline"
                   onClick={() => window.open(plan.ctaHref, "_blank")}
                 >
                   {plan.cta}
