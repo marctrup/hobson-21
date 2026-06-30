@@ -1,7 +1,7 @@
 import React from "react";
 import { Helmet } from "react-helmet-async";
-import { Link } from "react-router-dom";
-import { Check, Sparkles, ArrowRight, FileText, ShieldCheck, Receipt, Users } from "lucide-react";
+
+import { Check, FileText, ShieldCheck, Receipt, Users } from "lucide-react";
 import { GlobalHeader } from "@/components/GlobalHeader";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -266,27 +266,6 @@ export default function Pricing() {
             ))}
           </div>
 
-          {/* Enterprise teaser bar */}
-          <div className="max-w-7xl mx-auto mt-6">
-            <Card className="p-6 sm:p-8 border border-border/60 bg-gradient-to-r from-foreground/[0.03] to-primary/[0.04] flex flex-col sm:flex-row sm:items-center sm:justify-between gap-5">
-              <div className="flex items-start gap-4">
-                <div className="hidden sm:flex h-12 w-12 rounded-full bg-primary/10 items-center justify-center flex-shrink-0">
-                  <Sparkles className="h-6 w-6 text-primary" />
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-foreground">Enterprise</h3>
-                  <p className="text-sm text-muted-foreground mt-1 max-w-2xl">
-                    Every organisation works differently. I'll work alongside your team through bespoke responsibilities, tailored automations and integrations designed around the way your business already operates.
-                  </p>
-                </div>
-              </div>
-              <Button asChild size="lg" className="flex-shrink-0">
-                <Link to="/contact">
-                  Contact us <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
-            </Card>
-          </div>
         </section>
 
         {/* Responsibilities */}
@@ -494,54 +473,6 @@ export default function Pricing() {
           </div>
         </section>
 
-        {/* Enterprise */}
-        <section className="container mx-auto px-4 py-16 sm:py-24">
-          <div className="max-w-5xl mx-auto">
-            <Card className="relative overflow-hidden p-8 sm:p-14 border border-primary/20 bg-gradient-to-br from-primary/5 via-background to-background">
-              <div className="absolute top-0 right-0 -mr-20 -mt-20 h-64 w-64 rounded-full bg-primary/10 blur-3xl pointer-events-none" />
-              <div className="relative">
-                <Badge variant="outline" className="border-primary/40 text-primary mb-5">
-                  Enterprise
-                </Badge>
-                <h2 className="text-3xl sm:text-5xl font-bold text-foreground leading-tight">
-                  Built around your business.
-                </h2>
-                <div className="mt-6 max-w-2xl space-y-4 text-muted-foreground leading-relaxed">
-                  <p>Large organisations work differently.</p>
-                  <p>
-                    Rather than asking you to fit around me, I'll work with you to design new
-                    responsibilities, connect your existing systems and automate the work that's unique to
-                    your organisation.
-                  </p>
-                </div>
-
-                <div className="mt-8 grid sm:grid-cols-2 gap-3 max-w-2xl">
-                  {[
-                    "Bespoke responsibilities",
-                    "Workflow design",
-                    "API integrations",
-                    "White-glove onboarding",
-                    "Dedicated implementation",
-                    "Priority support",
-                  ].map((f) => (
-                    <div key={f} className="flex items-start gap-2 text-sm">
-                      <Check className="h-4 w-4 text-primary flex-shrink-0 mt-0.5" />
-                      <span className="text-foreground/90">{f}</span>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="mt-10">
-                  <Button asChild size="lg">
-                    <Link to="/contact">
-                      Talk to us <ArrowRight className="ml-2 h-4 w-4" />
-                    </Link>
-                  </Button>
-                </div>
-              </div>
-            </Card>
-          </div>
-        </section>
 
         {/* Fair Usage */}
         <section className="border-t border-border/40 bg-muted/30">
