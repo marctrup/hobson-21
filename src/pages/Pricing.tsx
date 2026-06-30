@@ -127,7 +127,7 @@ export default function Pricing() {
               <div className="flex justify-center mb-6">
                 <img src={owlMascot} alt="Hobson" className="w-16 h-16 sm:w-20 sm:h-20 object-contain" />
               </div>
-              <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-foreground">
+              <h1 className="font-bold leading-tight text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-foreground">
                 Simple, transparent pricing
               </h1>
               <p className="mt-6 text-lg sm:text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto">
@@ -141,10 +141,10 @@ export default function Pricing() {
         <section className="container mx-auto px-4 pt-8 pb-4 sm:pt-12 sm:pb-6">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-12">
-              <h2 className="text-3xl sm:text-4xl font-bold text-foreground tracking-tight">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground tracking-tight">
                 What you're really choosing
               </h2>
-              <p className="mt-5 text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+              <p className="mt-5 text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
                 Every plan includes me, my specialist team and the same intelligence. The only difference is how much of your day-to-day property work you'd like me to look after.
               </p>
             </div>
@@ -282,7 +282,7 @@ export default function Pricing() {
         <section className="border-t border-border/40 bg-muted/30">
           <div className="container mx-auto px-4 py-14 sm:py-16">
             <div className="max-w-3xl mx-auto text-center">
-              <h2 className="text-2xl sm:text-3xl font-bold text-foreground">Fair Usage</h2>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground tracking-tight">Fair Usage</h2>
               <div className="mt-5 space-y-3 text-muted-foreground leading-relaxed">
                 <p>Hobson is designed to be used every day.</p>
                 <p>
