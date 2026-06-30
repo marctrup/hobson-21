@@ -7,6 +7,23 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import owlMascot from "@/assets/owl-mascot.png";
+import professorImg from "@/assets/prototype/character-professor.png";
+import inspectorImg from "@/assets/prototype/character-inspector.png";
+import brokerImg from "@/assets/prototype/character-broker.png";
+import keeperImg from "@/assets/prototype/character-keeper.png";
+import researcherAsset from "@/assets/prototype/character-researcher.png.asset.json";
+import bookkeeperAsset from "@/assets/prototype/character-bookkeeper.png.asset.json";
+const researcherImg = (researcherAsset as { url: string }).url;
+const bookkeeperImg = (bookkeeperAsset as { url: string }).url;
+
+const rentReviewSpecialists = [
+  { name: "Professor", role: "Reviews the lease", img: professorImg },
+  { name: "Researcher", role: "Finds comparable evidence", img: researcherImg },
+  { name: "Bookkeeper", role: "Prepares the rental analysis", img: bookkeeperImg },
+  { name: "Broker", role: "Confirms the current parties", img: brokerImg },
+  { name: "Inspector", role: "Checks statutory requirements", img: inspectorImg },
+  { name: "Keeper", role: "Verifies permissions", img: keeperImg },
+];
 
 type Plan = {
   name: string;
