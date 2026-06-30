@@ -128,7 +128,7 @@ export default function Pricing() {
                 <img src={owlMascot} alt="Hobson" className="w-16 h-16 sm:w-20 sm:h-20 object-contain" />
               </div>
               <h1 className="font-bold leading-tight text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-foreground">
-                Simple, transparent pricing
+                Simple, transparent <span className="bg-gradient-to-r from-primary via-primary/80 to-accent-teal bg-clip-text text-transparent">pricing</span>
               </h1>
               <p className="mt-6 text-lg sm:text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto">
                 Every business is different. Choose the level of support that's right for you today, and I'll grow with you as your needs evolve.
