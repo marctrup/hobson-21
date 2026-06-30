@@ -147,6 +147,88 @@ export default function Pricing() {
           </div>
         </section>
 
+        {/* What you're really choosing */}
+        <section className="container mx-auto px-4 pt-8 pb-4 sm:pt-12 sm:pb-6">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl sm:text-4xl font-bold text-foreground tracking-tight">
+                What you're really choosing
+              </h2>
+              <p className="mt-5 text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+                Every plan includes me, my specialist team and the same intelligence. The only difference is how much of your day-to-day property work you'd like me to look after.
+              </p>
+            </div>
+
+            {/* Four progression cards */}
+            <div className="relative">
+              {/* Desktop connector line */}
+              <div className="hidden lg:block absolute top-6 left-[12%] right-[12%] h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                {[
+                  { step: "1", name: "Foundation", title: "Ask me questions", desc: "Perfect if you'd simply like clear, evidence-backed answers about your portfolio." },
+                  { step: "2", name: "Starter", title: "Let me take care of a few things", desc: "Choose three areas of work for me to manage on your behalf." },
+                  { step: "3", name: "Professional", title: "Let me take care of even more", desc: "Choose six areas of work. I'll quietly become part of your day-to-day routine." },
+                  { step: "4", name: "Business", title: "Let me take care of much more", desc: "Choose nine areas of work. The larger your portfolio becomes, the more I'll quietly look after." },
+                ].map((card) => (
+                  <div key={card.name} className="flex flex-col items-center">
+                    <div className="relative z-10 mb-5">
+                      <div className="w-12 h-12 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center text-sm font-bold text-primary">
+                        {card.step}
+                      </div>
+                    </div>
+                    <Card className="w-full p-6 text-center border-border/60 hover:border-primary/30 transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
+                      <h3 className="text-lg font-bold text-foreground">{card.name}</h3>
+                      <p className="text-sm font-semibold text-primary mt-1.5 mb-3">{card.title}</p>
+                      <p className="text-sm text-muted-foreground leading-relaxed">{card.desc}</p>
+                    </Card>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Enterprise */}
+            <div className="mt-6 max-w-sm mx-auto">
+              <Card className="p-6 text-center border-primary/20 bg-primary/5 hover:bg-primary/10 transition-all duration-300">
+                <h3 className="text-lg font-bold text-foreground">Enterprise</h3>
+                <p className="text-sm font-semibold text-primary mt-1.5 mb-3">Let's work together</p>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  We'll design entirely new responsibilities around the way your business works.
+                </p>
+              </Card>
+            </div>
+
+            {/* Key message */}
+            <div className="mt-14 text-center">
+              <p className="text-lg sm:text-xl text-foreground font-medium leading-relaxed max-w-2xl mx-auto">
+                You never pay for documents, questions or AI usage. You simply decide how much work you'd like me to take care of.
+              </p>
+            </div>
+
+            {/* Responsibility chips */}
+            <div className="mt-8 flex flex-wrap justify-center gap-2.5">
+              {[
+                "🏢 Rent Reviews",
+                "📅 Lease Expiry Monitoring",
+                "📄 Break Clauses",
+                "🛡️ Compliance",
+                "💷 Service Charges",
+                "🏠 Vacant Units",
+              ].map((chip) => (
+                <span
+                  key={chip}
+                  className="inline-flex items-center rounded-full bg-muted px-4 py-2 text-sm text-foreground/80 border border-border/40"
+                >
+                  {chip}
+                </span>
+              ))}
+              <span className="inline-flex items-center rounded-full bg-primary/10 px-4 py-2 text-sm text-primary font-medium border border-primary/20">
+                * Many more
+              </span>
+            </div>
+          </div>
+        </section>
+
         {/* Pricing Cards */}
         <section className="container mx-auto px-4 py-16 sm:py-20">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 max-w-7xl mx-auto items-stretch">
