@@ -92,13 +92,15 @@ const plans: Plan[] = [
   },
 ];
 
-const comingSoonBadge = (
-  <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-    <Badge className="bg-primary text-primary-foreground px-3 py-1 shadow-md">
-      Coming soon
-    </Badge>
-  </div>
-);
+function ComingSoonBadge() {
+  return (
+    <div className="absolute -top-3 left-1/2 -translate-x-1/2">
+      <Badge className="bg-primary text-primary-foreground px-3 py-1 shadow-md">
+        Coming soon
+      </Badge>
+    </div>
+  );
+}
 
 
 
