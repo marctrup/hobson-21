@@ -85,7 +85,7 @@ export const TheTeamSection = () => {
         <div className="mt-14 max-w-5xl mx-auto">
           <div className="flex items-end justify-between gap-4 mb-6">
             <div>
-              <h3 className="text-2xl font-bold text-slate-900">Hobson's Permanent Memory</h3>
+              <h3 className="text-2xl font-bold text-foreground">Hobson's Permanent Memory</h3>
               <p className="text-slate-600 text-sm mt-1">These four agents quietly maintain everything I know about your portfolio.</p>
             </div>
             <span className="hidden sm:inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-purple-700 bg-white border border-purple-200 rounded-full px-3 py-1.5">
@@ -101,7 +101,7 @@ export const TheTeamSection = () => {
         <div className="mt-20 max-w-5xl mx-auto">
           <div className="flex items-end justify-between gap-4 mb-6">
             <div>
-              <h3 className="text-2xl font-bold text-slate-900">Specialist Services</h3>
+              <h3 className="text-2xl font-bold text-foreground">Specialist Services</h3>
               <p className="text-slate-600 text-sm mt-1">Whenever Hobson needs specialist expertise, these are the agents he calls upon.</p>
             </div>
             <span className="hidden sm:inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-purple-700 bg-white border border-purple-200 rounded-full px-3 py-1.5">
