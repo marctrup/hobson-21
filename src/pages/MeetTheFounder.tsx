@@ -23,7 +23,7 @@ const MeetTheFounder = () => {
           <section className="pt-16 sm:pt-20 pb-8 sm:pb-12">
             <div className="container mx-auto px-4 max-w-3xl text-center">
               <h1 className="font-bold leading-tight text-4xl sm:text-5xl md:text-6xl text-foreground">
-                Meet the <span className="text-primary">Founder</span>
+                Meet the <span className="bg-gradient-to-r from-primary via-accent-teal via-accent-amber to-accent-rose bg-clip-text text-transparent">Founder</span>
               </h1>
               <p className="mt-6 text-lg sm:text-xl text-muted-foreground leading-relaxed">
                 Hobson was built by property people who believed there had to be
