@@ -4,29 +4,29 @@ import { renderWithProviders } from "../utils";
 import Pricing from "@/pages/Pricing";
 
 describe("Pricing page", () => {
-  it("renders without crashing and shows all 4 tiers", async () => {
+  it("renders without crashing and shows all 4 plans", async () => {
     renderWithProviders(<Pricing />, { route: "/pricing" });
     await waitFor(() => {
-      expect(screen.getAllByText(/Tier 1/i).length).toBeGreaterThan(0);
-      expect(screen.getAllByText(/Tier 2/i).length).toBeGreaterThan(0);
-      expect(screen.getAllByText(/Tier 3/i).length).toBeGreaterThan(0);
-      expect(screen.getAllByText(/Tier 4/i).length).toBeGreaterThan(0);
+      expect(screen.getByText("Foundation")).toBeInTheDocument();
+      expect(screen.getByText("Starter")).toBeInTheDocument();
+      expect(screen.getByText("Professional")).toBeInTheDocument();
+      expect(screen.getByText("Business")).toBeInTheDocument();
     });
   });
 
-
-  it("shows 'Join the waitlist' CTA on every tier", async () => {
+  it("shows plan CTA buttons", async () => {
     renderWithProviders(<Pricing />, { route: "/pricing" });
     await waitFor(() => {
-      const ctas = screen.getAllByRole("button", { name: /Join the waitlist/i });
+      const ctas = screen.getAllByRole("button", { name: /Choose /i });
       expect(ctas.length).toBeGreaterThanOrEqual(4);
     });
   });
 
-  it("does NOT show the 'no card required' CTA copy on Tier 1 card", async () => {
+  it("shows the Enterprise call-us section", async () => {
     renderWithProviders(<Pricing />, { route: "/pricing" });
     await waitFor(() => {
-      expect(screen.queryByText(/Free 3-day trial.*no card required/i)).not.toBeInTheDocument();
+      expect(screen.getByText(/Enterprise/i)).toBeInTheDocument();
+      expect(screen.getByRole("button", { name: /Call us/i })).toBeiBeInTheDocument();
     });
   });
 });
