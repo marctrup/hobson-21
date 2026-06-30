@@ -296,8 +296,8 @@ export default function Pricing() {
                 <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full -translate-y-1/2 translate-x-1/2 blur-2xl" />
                 <div className="absolute bottom-0 left-0 w-24 h-24 bg-accent-teal/5 rounded-full translate-y-1/2 -translate-x-1/2 blur-2xl" />
                 <div className="relative">
-                  <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
-                    <Phone className="h-5 w-5 text-primary" />
+                    <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
+                    <Mail className="h-5 w-5 text-primary" />
                   </div>
                   <h3 className="text-xl sm:text-2xl font-bold text-foreground tracking-tight">Enterprise</h3>
                   <p className="mt-2 text-base text-primary font-medium">Let's build something together</p>
