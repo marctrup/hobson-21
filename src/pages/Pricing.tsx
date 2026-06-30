@@ -7,6 +7,23 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import owlMascot from "@/assets/owl-mascot.png";
+import professorImg from "@/assets/prototype/character-professor.png";
+import inspectorImg from "@/assets/prototype/character-inspector.png";
+import brokerImg from "@/assets/prototype/character-broker.png";
+import keeperImg from "@/assets/prototype/character-keeper.png";
+import researcherAsset from "@/assets/prototype/character-researcher.png.asset.json";
+import bookkeeperAsset from "@/assets/prototype/character-bookkeeper.png.asset.json";
+const researcherImg = (researcherAsset as { url: string }).url;
+const bookkeeperImg = (bookkeeperAsset as { url: string }).url;
+
+const rentReviewSpecialists = [
+  { name: "Professor", role: "Reviews the lease", img: professorImg },
+  { name: "Researcher", role: "Finds comparable evidence", img: researcherImg },
+  { name: "Bookkeeper", role: "Prepares the rental analysis", img: bookkeeperImg },
+  { name: "Broker", role: "Confirms the current parties", img: brokerImg },
+  { name: "Inspector", role: "Checks statutory requirements", img: inspectorImg },
+  { name: "Keeper", role: "Verifies permissions", img: keeperImg },
+];
 
 type Plan = {
   name: string;
@@ -322,64 +339,132 @@ export default function Pricing() {
           </div>
         </section>
 
-        {/* What is a responsibility */}
-        <section className="container mx-auto px-4 py-16 sm:py-20">
-          <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-10">
-              <h2 className="text-3xl sm:text-4xl font-bold text-foreground">
-                What's the difference between a responsibility and a workflow?
+        {/* One request. Many specialists. One outcome. */}
+        <section className="relative overflow-hidden bg-gradient-to-b from-primary/5 via-background to-background">
+          <div className="container mx-auto px-4 py-16 sm:py-24">
+            <div className="max-w-3xl mx-auto text-center mb-14">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground tracking-tight">
+                One request. Many specialists. One outcome.
               </h2>
-              <p className="mt-4 text-lg text-muted-foreground">
-                You simply tell me what you'd like me to take care of.
+              <p className="mt-5 text-lg text-muted-foreground leading-relaxed">
+                You don't need to understand how the work gets done. Simply tell me what you'd
+                like me to take care of. I'll quietly bring together the right specialists,
+                coordinate their work and return one clear outcome.
               </p>
             </div>
 
-            <Card className="p-6 sm:p-10 border border-border/60">
-              <div className="grid md:grid-cols-2 gap-8 items-start">
-                <div>
-                  <p className="text-xs font-semibold uppercase tracking-wider text-primary mb-2">
-                    You ask
-                  </p>
-                  <p className="text-xl sm:text-2xl font-medium text-foreground leading-snug">
-                    "Please take care of my rent reviews."
-                  </p>
+            <div className="max-w-5xl mx-auto space-y-10">
+              {/* Stage 1 — You ask me */}
+              <div className="flex flex-col items-center">
+                <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-primary/80 mb-3">
+                  Stage 1 — You ask me
+                </span>
+                <div className="relative max-w-xl w-full">
+                  <div className="rounded-3xl rounded-bl-sm bg-foreground text-background px-6 py-5 shadow-lg">
+                    <p className="text-lg sm:text-xl font-medium leading-snug">
+                      "Please take care of my rent reviews."
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Connector */}
+              <div className="flex justify-center" aria-hidden="true">
+                <div className="h-10 w-px bg-gradient-to-b from-primary/40 to-primary/10" />
+              </div>
+
+              {/* Stage 2 — Behind the scenes */}
+              <div className="flex flex-col items-center">
+                <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-primary/80 mb-3">
+                  Stage 2 — Behind the scenes
+                </span>
+
+                {/* Hobson at the top — owns coordination */}
+                <Card className="relative w-full max-w-sm p-5 border-primary/30 bg-primary/5 shadow-md">
+                  <div className="flex items-center gap-4">
+                    <div className="h-14 w-14 rounded-full bg-background border border-primary/30 flex items-center justify-center flex-shrink-0 overflow-hidden">
+                      <img src={owlMascot} alt="Hobson" className="h-12 w-12 object-contain" />
+                    </div>
+                    <div>
+                      <p className="font-semibold text-foreground">Hobson</p>
+                      <p className="text-xs text-muted-foreground">
+                        Quietly coordinating the right specialists
+                      </p>
+                    </div>
+                  </div>
+                </Card>
+
+                {/* Lines fanning to specialists */}
+                <div className="h-8 w-px bg-gradient-to-b from-primary/40 to-primary/10" aria-hidden="true" />
+
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-4 w-full">
+                  {rentReviewSpecialists.map((s, i) => (
+                    <Card
+                      key={s.name}
+                      className="group p-4 border border-border/60 hover:border-primary/40 hover:shadow-md transition-all bg-card/80 backdrop-blur-sm animate-fade-in"
+                      style={{ animationDelay: `${i * 80}ms` }}
+                    >
+                      <div className="flex items-center gap-3">
+                        <div className="h-12 w-12 rounded-full bg-primary/5 border border-primary/20 flex items-center justify-center flex-shrink-0 overflow-hidden">
+                          <img src={s.img} alt={s.name} className="h-10 w-10 object-contain" />
+                        </div>
+                        <div className="min-w-0">
+                          <p className="text-sm font-semibold text-foreground">{s.name}</p>
+                          <p className="text-xs text-muted-foreground leading-snug">{s.role}</p>
+                        </div>
+                      </div>
+                    </Card>
+                  ))}
                 </div>
 
-                <div>
-                  <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3">
-                    Behind the scenes, my specialists quietly coordinate everything that's needed.
-                  </p>
-                  <ul className="space-y-2 text-sm text-muted-foreground">
+                <p className="mt-6 text-xs text-muted-foreground italic max-w-md text-center">
+                  Each specialist returns their work to me. You never see the handovers.
+                </p>
+              </div>
+
+              {/* Connector */}
+              <div className="flex justify-center" aria-hidden="true">
+                <div className="h-10 w-px bg-gradient-to-b from-primary/40 to-primary/10" />
+              </div>
+
+              {/* Stage 3 — What you see */}
+              <div className="flex flex-col items-center">
+                <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-primary/80 mb-3">
+                  Stage 3 — What you see
+                </span>
+                <Card className="w-full max-w-md p-6 border-primary/30 bg-background shadow-lg">
+                  <div className="flex items-center gap-2 mb-4">
+                    <div className="h-8 w-8 rounded-full bg-primary/10 border border-primary/30 flex items-center justify-center">
+                      <Check className="h-4 w-4 text-primary" />
+                    </div>
+                    <p className="font-semibold text-foreground text-lg">Rent Reviews</p>
+                  </div>
+                  <ul className="space-y-2.5">
                     {[
-                      "Monitor key dates",
-                      "Review leases",
-                      "Retrieve market evidence",
-                      "Perform calculations",
-                      "Prepare notices",
-                      "Draft emails",
-                      "Schedule reminders",
-                    ].map((s) => (
-                      <li key={s} className="flex items-start gap-2">
-                        <span className="mt-2 h-1 w-1 rounded-full bg-muted-foreground/60 flex-shrink-0" />
-                        {s}
+                      "Comparable evidence gathered",
+                      "Rental analysis prepared",
+                      "Draft notice ready",
+                      "Ready for your approval",
+                    ].map((item) => (
+                      <li key={item} className="flex items-start gap-2.5 text-sm text-foreground">
+                        <Check className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
+                        <span>{item}</span>
                       </li>
                     ))}
                   </ul>
-                </div>
-              </div>
-
-              <div className="mt-8 pt-6 border-t border-border/60 text-center">
-                <p className="text-sm text-muted-foreground mb-2">You'll simply see one responsibility</p>
-                <div className="inline-flex items-center rounded-full bg-primary/10 border border-primary/30 px-5 py-2 text-base font-semibold text-primary">
-                  Rent Reviews
-                </div>
-                <p className="mt-4 text-sm text-muted-foreground italic">
-                  I'll quietly take care of everything else.
+                </Card>
+                <p className="mt-5 text-sm text-muted-foreground italic text-center max-w-md">
+                  Everything else happens quietly behind the scenes.
                 </p>
               </div>
-            </Card>
+            </div>
+
+            <p className="mt-16 text-center text-base text-foreground/80 max-w-2xl mx-auto">
+              You ask once. I quietly take care of the rest.
+            </p>
           </div>
         </section>
+
 
         {/* Same Hobson */}
         <section className="bg-foreground text-background">
