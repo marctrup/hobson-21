@@ -166,7 +166,7 @@ export default function Pricing() {
                           {card.step}
                         </div>
                       </div>
-                      <Card className="w-full p-6 text-center border-border/60 hover:border-primary/30 transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
+                      <Card className="w-full h-full p-6 text-center border-border/60 hover:border-primary/30 transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
                         <h3 className="text-lg font-bold text-foreground">{card.name}</h3>
                         <p className="text-sm font-semibold text-primary mt-1.5 mb-3">{card.title}</p>
                         <p className="text-sm text-muted-foreground leading-relaxed">{card.desc}</p>
