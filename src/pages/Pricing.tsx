@@ -1,7 +1,7 @@
 import React from "react";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
-import { Check, Sparkles, ArrowRight } from "lucide-react";
+import { Check, Sparkles, ArrowRight, FileText, ShieldCheck, Receipt, Users } from "lucide-react";
 import { GlobalHeader } from "@/components/GlobalHeader";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -94,19 +94,47 @@ const plans: Plan[] = [
   },
 ];
 
-const responsibilities = [
-  "Rent Reviews",
-  "Break Clauses",
-  "Lease Expiry Monitoring",
-  "Key Date Monitoring",
-  "EPC Compliance",
-  "Insurance Renewals",
-  "Service Charge Monitoring",
-  "Compliance Monitoring",
-  "Tenant Communications",
-  "Vacant Unit Monitoring",
-  "Dilapidations",
-  "Licence Renewals",
+type ResponsibilityCategory = {
+  title: string;
+  icon: React.ElementType;
+  items: string[];
+};
+
+const responsibilityCategories: ResponsibilityCategory[] = [
+  {
+    title: "Leases",
+    icon: FileText,
+    items: [
+      "Rent Reviews",
+      "Break Clauses",
+      "Lease Expiry Monitoring",
+      "Key Date Monitoring",
+    ],
+  },
+  {
+    title: "Compliance",
+    icon: ShieldCheck,
+    items: [
+      "EPC Compliance",
+      "Insurance Renewals",
+      "Compliance Monitoring",
+    ],
+  },
+  {
+    title: "Financial",
+    icon: Receipt,
+    items: ["Service Charge Monitoring"],
+  },
+  {
+    title: "Occupiers",
+    icon: Users,
+    items: [
+      "Tenant Communications",
+      "Vacant Unit Monitoring",
+      "Dilapidations",
+      "Licence Renewals",
+    ],
+  },
 ];
 
 const sameHobson = [
@@ -249,27 +277,47 @@ export default function Pricing() {
           <div className="container mx-auto px-4 py-16 sm:py-20">
             <div className="max-w-3xl mx-auto text-center mb-12">
               <h2 className="text-3xl sm:text-4xl font-bold text-foreground">
-                Responsibilities I can take care of
+                What I'd like you to leave with me
               </h2>
               <p className="mt-4 text-lg text-muted-foreground leading-relaxed">
-                A responsibility is an area of work you ask me to look after on your behalf.
-                You never need to think about workflows or automation. Simply tell me what you'd like me to
-                take care of.
+                As you move through the plans, simply choose more areas of work for me to look after on your behalf. You never need to think about workflows or automation. Just tell me what you'd like me to take care of, and I'll quietly handle the rest.
               </p>
             </div>
 
-            <div className="max-w-5xl mx-auto flex flex-wrap justify-center gap-3">
-              {responsibilities.map((r) => (
-                <div
-                  key={r}
-                  className="px-4 py-2.5 rounded-full bg-background border border-border/70 text-sm font-medium text-foreground hover:border-primary/50 hover:bg-primary/5 transition-colors"
+            <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {responsibilityCategories.map((category) => (
+                <Card
+                  key={category.title}
+                  className="group relative border border-border/60 bg-background/80 backdrop-blur-sm p-6 sm:p-8 transition-all duration-300 hover:shadow-xl hover:shadow-primary/5 hover:border-primary/30 hover:-translate-y-1"
                 >
-                  {r}
-                </div>
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary/[0.06] to-transparent rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+                  <div className="relative">
+                    <div className="mb-5 inline-flex items-center justify-center h-12 w-12 rounded-xl bg-primary/10 text-primary">
+                      <category.icon className="h-6 w-6" />
+                    </div>
+                    <h3 className="text-xl font-bold text-foreground mb-4">
+                      {category.title}
+                    </h3>
+                    <ul className="space-y-2.5">
+                      {category.items.map((item) => (
+                        <li
+                          key={item}
+                          className="flex items-start gap-2 text-sm text-muted-foreground"
+                        >
+                          <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary/60 flex-shrink-0" />
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </Card>
               ))}
-              <div className="px-4 py-2.5 rounded-full border border-dashed border-border text-sm italic text-muted-foreground">
-                ...and many more as I continue to grow.
-              </div>
+            </div>
+
+            <div className="max-w-3xl mx-auto text-center mt-12">
+              <p className="text-muted-foreground italic leading-relaxed">
+                These are just a few examples. As I continue to learn, I'll be able to take care of even more on your behalf.
+              </p>
             </div>
           </div>
         </section>
