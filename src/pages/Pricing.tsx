@@ -190,7 +190,7 @@ export default function Pricing() {
               {/* Key message */}
               <div className="mt-14 text-center">
                 <p className="text-lg sm:text-xl text-foreground font-medium leading-relaxed max-w-2xl mx-auto">
-                  You never pay for documents, questions or AI usage. You simply decide how much work you'd like me to take care of.
+                  You never pay for documents, questions or AI usage. You simply choose how much of your property work you'd like me to look after.
                 </p>
               </div>
 
