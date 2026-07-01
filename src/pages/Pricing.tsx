@@ -198,7 +198,7 @@ export default function Pricing() {
               <div className="mt-16">
                 <div className="text-center mb-8">
                   <span className="inline-block text-xs font-semibold tracking-[0.2em] text-primary uppercase mb-3">
-                    A few of the things I can take care of
+                    Some of the work I can look after
                   </span>
                   <h3 className="text-2xl sm:text-3xl font-bold text-foreground tracking-tight">
                     Choose the areas of your property work you'd like me to look after. Everything else happens quietly behind the scenes.
