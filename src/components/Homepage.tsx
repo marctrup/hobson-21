@@ -155,7 +155,7 @@ export const Homepage = () => {
             <div
               className="pointer-events-none absolute inset-0"
               style={{
-                background: 'radial-gradient(circle at 30% 40%, hsl(var(--primary) / 0.05) 0%, transparent 55%)',
+                background: 'radial-gradient(circle at 30% 40%, hsl(var(--primary) / 0.08) 0%, transparent 55%)',
               }}
             />
             <div className="container mx-auto px-4 relative">
