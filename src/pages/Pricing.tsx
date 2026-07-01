@@ -49,7 +49,7 @@ const plans: Plan[] = [
       "Everything in Foundation, plus I'll look after 3 areas of your property work.",
     includes: [
       "Everything in Foundation",
-      "I'll look after 3 areas of your property work",
+      "Choose 3 areas of your property work",
       "Continuous monitoring",
       "Proactive updates",
     ],
@@ -66,7 +66,7 @@ const plans: Plan[] = [
       "Everything in Starter, plus I'll look after even more of your property work.",
     includes: [
       "Everything in Starter",
-      "I'll look after 6 areas of your property work",
+      "Choose 6 areas of your property work",
       "Day-to-day oversight",
       "Priority handling",
     ],
@@ -83,7 +83,7 @@ const plans: Plan[] = [
       "Everything in Professional, giving me even more of your property work to quietly look after.",
     includes: [
       "Everything in Professional",
-      "I'll look after 9 areas of your property work",
+      "Choose 9 areas of your property work",
       "Multi-property oversight",
       "Operational depth",
     ],
