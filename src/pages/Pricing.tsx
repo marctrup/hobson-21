@@ -156,7 +156,7 @@ export default function Pricing() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
                   {[
                     { step: "1", name: "Foundation", title: "Ask me questions", desc: "Perfect if you'd simply like clear, evidence-backed answers about your portfolio." },
-                    { step: "2", name: "Starter", title: "Let me take care of a few things", desc: "Choose three areas of work for me to manage on your behalf." },
+                    { step: "2", name: "Starter", title: "Let me look after a few areas", desc: "Choose three areas of work for me to manage on your behalf." },
                     { step: "3", name: "Professional", title: "Let me take care of even more", desc: "Choose six areas of work. I'll quietly become part of your day-to-day routine." },
                     { step: "4", name: "Business", title: "Let me take care of much more", desc: "Choose nine areas of work. The larger your portfolio becomes, the more I'll quietly look after." },
                   ].map((card) => (
