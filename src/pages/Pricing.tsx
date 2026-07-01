@@ -43,13 +43,13 @@ const plans: Plan[] = [
     name: "Starter",
     price: "£39",
     priceSuffix: "/month",
-    responsibilities: "Choose 3 things for me to look after.",
-    tagline: "I'll start looking after things.",
+    responsibilities: "I'll look after 3 areas of your property work",
+    tagline: "I'll start looking after your work.",
     description:
-      "Everything in Foundation, plus choose three areas of your property work for me to quietly look after.",
+      "Everything in Foundation, plus I'll look after 3 areas of your property work.",
     includes: [
       "Everything in Foundation",
-      "Choose 3 things for me to look after",
+      "I'll look after 3 areas of your property work",
       "Continuous monitoring",
       "Proactive updates",
     ],
@@ -60,13 +60,13 @@ const plans: Plan[] = [
     name: "Professional",
     price: "£99",
     priceSuffix: "/month",
-    responsibilities: "Choose 6 things for me to look after.",
+    responsibilities: "I'll look after 6 areas of your property work",
     tagline: "I'll become part of your team.",
     description:
-      "Everything in Starter, plus ask me to look after even more of your day-to-day property work.",
+      "Everything in Starter, plus I'll look after even more of your property work.",
     includes: [
       "Everything in Starter",
-      "Choose 6 things for me to look after",
+      "I'll look after 6 areas of your property work",
       "Day-to-day oversight",
       "Priority handling",
     ],
@@ -77,13 +77,13 @@ const plans: Plan[] = [
     name: "Business",
     price: "£199",
     priceSuffix: "/month",
-    responsibilities: "Choose 9 things for me to look after.",
+    responsibilities: "I'll look after 9 areas of your property work",
     tagline: "I'll look after even more.",
     description:
       "Everything in Professional, giving me even more of your property work to quietly look after.",
     includes: [
       "Everything in Professional",
-      "Choose 9 things for me to look after",
+      "I'll look after 9 areas of your property work",
       "Multi-property oversight",
       "Operational depth",
     ],
@@ -156,7 +156,7 @@ export default function Pricing() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
                   {[
                     { step: "1", name: "Foundation", title: "Ask me questions", desc: "Perfect if you'd simply like clear, evidence-backed answers about your portfolio." },
-                    { step: "2", name: "Starter", title: "Let me take care of a few things", desc: "Choose three areas of work for me to manage on your behalf." },
+                    { step: "2", name: "Starter", title: "Let me look after a few areas", desc: "Choose three areas of work for me to manage on your behalf." },
                     { step: "3", name: "Professional", title: "Let me take care of even more", desc: "Choose six areas of work. I'll quietly become part of your day-to-day routine." },
                     { step: "4", name: "Business", title: "Let me take care of much more", desc: "Choose nine areas of work. The larger your portfolio becomes, the more I'll quietly look after." },
                   ].map((card) => (
@@ -182,7 +182,7 @@ export default function Pricing() {
                   <h3 className="text-lg font-bold text-foreground">Enterprise</h3>
                   <p className="text-sm font-semibold text-primary mt-1.5 mb-3">Let's work together</p>
                   <p className="text-sm text-muted-foreground leading-relaxed">
-                    We'll design entirely new responsibilities around the way your business works.
+                    We'll design entirely new areas of work around the way your business works.
                   </p>
                 </Card>
               </div>
@@ -190,7 +190,7 @@ export default function Pricing() {
               {/* Key message */}
               <div className="mt-14 text-center">
                 <p className="text-lg sm:text-xl text-foreground font-medium leading-relaxed max-w-2xl mx-auto">
-                  You never pay for documents, questions or AI usage. You simply decide how much work you'd like me to take care of.
+                  You never pay for documents, questions or AI usage. You simply choose how much of your property work you'd like me to look after.
                 </p>
               </div>
 
@@ -198,10 +198,10 @@ export default function Pricing() {
               <div className="mt-16">
                 <div className="text-center mb-8">
                   <span className="inline-block text-xs font-semibold tracking-[0.2em] text-primary uppercase mb-3">
-                    A few of the things I can take care of
+                    Some of the work I can look after
                   </span>
                   <h3 className="text-2xl sm:text-3xl font-bold text-foreground tracking-tight">
-                    Responsibilities you can leave with me
+                    Choose the areas of your property work you'd like me to look after. Everything else happens quietly behind the scenes.
                   </h3>
                 </div>
 
