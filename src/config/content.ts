@@ -20,9 +20,9 @@ export const CONTENT = {
 
   // Hero Section
   hero: {
-    title: "Your property obligations,",
-    titleHighlight: "managed automatically.",
-    subtitle: "Hobson does the property work every business has, but nobody has time for. Purpose-built for property documents — not adapted from a generic AI tool.",
+    title: "The AI co-worker built for",
+    titleHighlight: "property.",
+    subtitle: "Every property business has work that needs doing. Ask me a question, ask me to take care of something, or simply leave the routine work with me. I'll quietly get on with it while you focus on the decisions that matter.",
     strapline: "ChatGPT may read a lease. Hobson understands your business.",
     ctaButton: "Start free — no card required",
     ctaSecondary: "Join the waitlist for Tier 2-4",

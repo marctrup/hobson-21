@@ -159,7 +159,7 @@ export const Homepage = () => {
                     <span className="text-foreground">{content.hero.title} </span>
                     {(() => {
                       const highlight = content.hero.titleHighlight;
-                      const lastWord = "automatically.";
+                      const lastWord = "property.";
                       const prefix = highlight.endsWith(lastWord)
                         ? highlight.slice(0, -lastWord.length)
                         : highlight + " ";
@@ -174,10 +174,6 @@ export const Homepage = () => {
                     })()}
                   </h1>
                   <p className="text-muted-foreground leading-relaxed text-lg sm:text-xl">{content.hero.subtitle}</p>
-                  <p className="text-base sm:text-lg leading-relaxed">
-                    <span className="text-muted-foreground">ChatGPT may read a lease.</span>{" "}
-                    <span className="text-primary font-medium">Hobson understands your business.</span>
-                  </p>
                   
                 </div>
 
