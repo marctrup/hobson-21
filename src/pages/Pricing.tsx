@@ -44,7 +44,7 @@ const plans: Plan[] = [
     price: "£39",
     priceSuffix: "/month",
     responsibilities: "I'll look after 3 areas of your property work",
-    tagline: "I'll start looking after things.",
+    tagline: "I'll start looking after your work.",
     description:
       "Everything in Foundation, plus I'll look after 3 areas of your property work.",
     includes: [
