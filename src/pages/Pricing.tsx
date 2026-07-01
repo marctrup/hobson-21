@@ -60,13 +60,13 @@ const plans: Plan[] = [
     name: "Professional",
     price: "£99",
     priceSuffix: "/month",
-    responsibilities: "Choose 6 things for me to look after.",
+    responsibilities: "I'll look after 6 areas of your property work",
     tagline: "I'll become part of your team.",
     description:
-      "Everything in Starter, plus ask me to look after even more of your day-to-day property work.",
+      "Everything in Starter, plus I'll look after even more of your property work.",
     includes: [
       "Everything in Starter",
-      "Choose 6 things for me to look after",
+      "I'll look after 6 areas of your property work",
       "Day-to-day oversight",
       "Priority handling",
     ],
