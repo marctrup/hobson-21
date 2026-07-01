@@ -201,7 +201,7 @@ export default function Pricing() {
                     A few of the things I can take care of
                   </span>
                   <h3 className="text-2xl sm:text-3xl font-bold text-foreground tracking-tight">
-                    Responsibilities you can leave with me
+                    Choose the areas of your property work you'd like me to look after. Everything else happens quietly behind the scenes.
                   </h3>
                 </div>
 
