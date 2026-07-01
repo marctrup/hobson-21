@@ -77,7 +77,7 @@ const plans: Plan[] = [
     name: "Business",
     price: "£199",
     priceSuffix: "/month",
-    responsibilities: "Choose 9 things for me to look after.",
+    responsibilities: "I'll look after 9 areas of your property work",
     tagline: "I'll look after even more.",
     description:
       "Everything in Professional, giving me even more of your property work to quietly look after.",
