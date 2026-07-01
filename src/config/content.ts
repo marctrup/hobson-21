@@ -23,7 +23,7 @@ export const CONTENT = {
     title: "The AI co-worker built for",
     titleHighlight: "property.",
     subtitle: "Every property business has work that needs doing. Ask me a question, ask me to take care of something, or simply leave the routine work with me. I'll quietly get on with it while you focus on the decisions that matter.",
-    strapline: "ChatGPT may read a lease. Hobson understands your business.",
+    strapline: "",
     ctaButton: "Start free — no card required",
     ctaSecondary: "Join the waitlist for Tier 2-4",
   },
