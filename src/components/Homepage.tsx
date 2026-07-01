@@ -40,7 +40,7 @@ export const Homepage = () => {
 
   return <>
       <Helmet>
-        <title>Homepage | Hobson AI — AI assistance to operators, occupiers and owners of real estate</title>
+        <title>Hobson AI — The AI co-worker built for property</title>
         <meta name="description" content={content.seo.description} />
         <meta name="keywords" content="AI property management, tenancy agreement analysis, property AI, document automation, real estate AI, property technology, AI document analysis" />
         
