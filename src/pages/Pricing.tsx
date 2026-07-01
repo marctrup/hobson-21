@@ -83,7 +83,7 @@ const plans: Plan[] = [
       "Everything in Professional, giving me even more of your property work to quietly look after.",
     includes: [
       "Everything in Professional",
-      "Choose 9 things for me to look after",
+      "I'll look after 9 areas of your property work",
       "Multi-property oversight",
       "Operational depth",
     ],
