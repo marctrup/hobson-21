@@ -182,7 +182,7 @@ export default function Pricing() {
                   <h3 className="text-lg font-bold text-foreground">Enterprise</h3>
                   <p className="text-sm font-semibold text-primary mt-1.5 mb-3">Let's work together</p>
                   <p className="text-sm text-muted-foreground leading-relaxed">
-                    We'll design entirely new responsibilities around the way your business works.
+                    We'll design entirely new areas of work around the way your business works.
                   </p>
                 </Card>
               </div>
