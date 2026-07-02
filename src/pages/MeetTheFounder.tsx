@@ -65,7 +65,7 @@ const MeetTheFounder = () => {
                   className="w-16 h-16 sm:w-20 sm:h-20 rounded-full object-cover border-2 border-primary/20 shadow-lg"
                 />
                 <h2 className="text-2xl sm:text-3xl font-bold text-foreground text-center">
-                  Why I Built Hobson
+                  Why we Built Hobson
                 </h2>
               </div>
               <div className="space-y-4 text-base sm:text-lg text-muted-foreground leading-relaxed">
