@@ -295,6 +295,10 @@ export default function Pricing() {
                   <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
                     <Mail className="h-5 w-5 text-primary" />
                   </div>
+                  <div className="inline-flex items-center gap-1.5 rounded-full border border-primary/20 bg-primary/5 px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wider text-primary mb-2">
+                    <span className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse" />
+                    Coming soon
+                  </div>
                   <h3 className="text-xl sm:text-2xl font-bold text-foreground tracking-tight">Enterprise</h3>
                   <p className="mt-2 text-base text-primary font-medium">Let's build something together</p>
 
