@@ -1,4 +1,5 @@
-import professorImg from "@/assets/prototype/character-professor.png";
+import professorAsset from "@/assets/prototype/character-professor.png.asset.json";
+const professorImg = professorAsset.url;
 import architectAsset from "@/assets/prototype/character-architect.png.asset.json";
 import inspectorAsset from "@/assets/prototype/character-inspector.png.asset.json";
 const inspectorImg = inspectorAsset.url;

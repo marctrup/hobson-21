@@ -1,6 +1,7 @@
 // Hobson's Back Office — helper config (extensible)
 // Adding/removing entries here adds/removes a door + room with no other code changes.
-import characterProfessor from "@/assets/prototype/character-professor.png";
+import characterProfessorAsset from "@/assets/prototype/character-professor.png.asset.json";
+const characterProfessor = characterProfessorAsset.url;
 import characterArchitectAsset from "@/assets/prototype/character-architect.png.asset.json";
 const characterArchitect = characterArchitectAsset.url;
 import characterInspectorAsset from "@/assets/prototype/character-inspector.png.asset.json";
