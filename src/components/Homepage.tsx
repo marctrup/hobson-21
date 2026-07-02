@@ -216,7 +216,7 @@ export const Homepage = () => {
                     to="/founder"
                     className="inline-flex items-center justify-center gap-2 rounded-md bg-primary px-5 py-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 whitespace-nowrap shrink-0"
                   >
-                    Watch the founder story
+                    Watch a co-founder's story
                     <ArrowRight className="h-4 w-4" />
                   </Link>
                 </div>
