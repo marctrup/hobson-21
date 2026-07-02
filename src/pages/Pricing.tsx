@@ -199,12 +199,17 @@ export default function Pricing() {
                   <div className="absolute top-0 left-0 w-20 h-20 bg-primary/5 rounded-full -translate-x-1/2 -translate-y-1/2 blur-xl" />
                   <div className="absolute bottom-0 right-0 w-16 h-16 bg-accent-teal/5 rounded-full translate-x-1/2 translate-y-1/2 blur-xl" />
                   <div className="relative">
-                    <div className="flex items-center justify-center gap-3">
-                      <Sparkles className="h-4 w-4 text-primary flex-shrink-0" />
-                      <p className="text-sm sm:text-base text-foreground/90 font-medium leading-snug">
-                        From <span className="font-bold text-primary">Starter</span> onwards, I bring together my full specialist team to help me look after your property work.
-                      </p>
-                      <Sparkles className="h-4 w-4 text-primary flex-shrink-0" />
+                    <div className="flex flex-col items-center gap-3">
+                      <div className="w-14 h-14 rounded-full border-2 border-primary/20 bg-primary/5 overflow-hidden flex items-center justify-center shadow-sm">
+                        <img src={owlMascot} alt="Hobson" className="w-12 h-12 object-contain" />
+                      </div>
+                      <div className="flex items-center justify-center gap-3">
+                        <Sparkles className="h-4 w-4 text-primary flex-shrink-0" />
+                        <p className="text-sm sm:text-base text-foreground/90 font-medium leading-snug">
+                          From <span className="font-bold text-primary">Starter</span> onwards, I bring together my full specialist team to help me look after your property work.
+                        </p>
+                        <Sparkles className="h-4 w-4 text-primary flex-shrink-0" />
+                      </div>
                     </div>
                   </div>
                 </div>
