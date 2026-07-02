@@ -191,9 +191,17 @@ export default function Pricing() {
                 >
                   <ComingSoonBadge />
 
-                  <div className="mb-4">
+                  <div className="mb-3">
                     <h3 className="text-xl font-bold text-foreground">{plan.name}</h3>
                     <p className="text-sm text-primary mt-1 font-medium">{plan.tagline}</p>
+                  </div>
+
+                  <div className="mb-3 flex flex-wrap gap-1.5">
+                    {plan.characters.map((c) => (
+                      <div key={c.alt} className="w-8 h-8 rounded-full border border-border/40 bg-background/80 overflow-hidden flex items-center justify-center">
+                        <img src={c.img} alt={c.alt} className="w-7 h-7 object-contain" />
+                      </div>
+                    ))}
                   </div>
 
                   <div className="mb-5">
