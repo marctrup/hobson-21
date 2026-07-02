@@ -58,30 +58,14 @@ const MeetTheFounder = () => {
           <section className="pb-16 sm:pb-20">
             <div className="container mx-auto px-4 max-w-3xl">
               <div className="rounded-2xl bg-card border border-border p-8 sm:p-12 shadow-sm">
-              <div className="flex flex-col items-center gap-4 mb-8">
-                <img
-                  src={founderPhoto.url}
-                  alt="Marc Trup, Founder of Hobson"
-                  className="w-16 h-16 sm:w-20 sm:h-20 rounded-full object-cover border-2 border-primary/20 shadow-lg"
-                />
-                <h2 className="text-2xl sm:text-3xl font-bold text-foreground text-center">
-                  Why I Built Hobson
-                </h2>
-              </div>
               <div className="space-y-4 text-base sm:text-lg text-muted-foreground leading-relaxed">
-                  <p>
-                    For over 30 years I've worked in property.
-                  </p>
-                  <p>
-                    I didn't build Hobson because the world needed another property system.
-                  </p>
-                  <p>
-                    I built him because I believed property deserved a better way of working.
-                  </p>
-                  <p>
-                    One that thinks alongside people, quietly takes care of the routine work and gives professionals more time to focus on what really matters.
-                  </p>
-                </div>
+                <p>
+                  Hobson AI was founded by a team with deep roots in property technology. Marc Trup co-founded Arthur Online, one of the UK's leading property management platforms, before its acquisition by Advent International and Aareon in 2021.
+                </p>
+                <p>
+                  In this short video, Marc shares what the team set out to build — and why they believe property deserves its own AI co-worker.
+                </p>
+              </div>
               </div>
             </div>
           </section>
