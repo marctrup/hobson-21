@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
-import characterProfessor from "@/assets/prototype/character-professor.png";
+import characterProfessorAsset from "@/assets/prototype/character-professor.png.asset.json";
+const characterProfessor = characterProfessorAsset.url;
 
 /* ---------------- Types ---------------- */
 

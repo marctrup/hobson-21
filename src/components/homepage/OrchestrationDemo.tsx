@@ -2,7 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 import { Check } from "lucide-react";
 
 import hobsonOwl from "@/assets/hobson-owl-hero.png";
-import professorImg from "@/assets/prototype/character-professor.png";
+import professorAsset from "@/assets/prototype/character-professor.png.asset.json";
+const professorImg = professorAsset.url;
 import inspectorAsset from "@/assets/prototype/character-inspector.png.asset.json";
 const inspectorImg = inspectorAsset.url;
 import brokerAsset from "@/assets/prototype/character-broker.png.asset.json";
