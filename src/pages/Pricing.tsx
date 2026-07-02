@@ -89,6 +89,7 @@ const plans: Plan[] = [
       "Everything in Foundation, plus I'll look after 3 areas of your property work.",
     includes: [
       "Everything in Foundation",
+      "All Specialist agents",
       "Choose 3 areas of your property work",
       "Continuous monitoring",
       "Proactive updates",
