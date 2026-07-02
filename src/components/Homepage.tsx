@@ -193,6 +193,19 @@ export const Homepage = () => {
             </div>
           </section>
 
+          {/* Competitive clarity banner */}
+          <section className="py-10 sm:py-14" aria-label="Why Hobson">
+            <div className="container mx-auto px-4">
+              <div className="max-w-4xl mx-auto text-center">
+                <p className="text-2xl sm:text-3xl md:text-4xl font-semibold leading-snug tracking-tight">
+                  <span className="text-muted-foreground">Claude reads your documents.</span>
+                  <br className="hidden sm:block" />
+                  <span className="text-foreground"> Hobson understands your business.</span>
+                </p>
+              </div>
+            </div>
+          </section>
+
           {/* One Trusted Conversation */}
           <TrustedConversationSection />
 
