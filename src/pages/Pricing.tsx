@@ -251,6 +251,15 @@ export default function Pricing() {
                   </div>
                   <h3 className="text-xl sm:text-2xl font-bold text-foreground tracking-tight">Enterprise</h3>
                   <p className="mt-2 text-base text-primary font-medium">Let's build something together</p>
+
+                  <div className="mt-3 flex flex-wrap justify-center gap-1.5">
+                    {FULL_TEAM_CHARACTERS.map((c) => (
+                      <div key={c.alt} className="w-8 h-8 rounded-full border border-border/40 bg-background/80 overflow-hidden flex items-center justify-center">
+                        <img src={c.img} alt={c.alt} className="w-7 h-7 object-contain" />
+                      </div>
+                    ))}
+                  </div>
+
                   <p className="mt-3 text-sm text-muted-foreground leading-relaxed max-w-lg mx-auto">
                     Every organisation is different. If there's work unique to your business, we'll teach me how you'd like it done.
                   </p>
