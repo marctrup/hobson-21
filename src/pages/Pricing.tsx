@@ -226,8 +226,8 @@ export default function Pricing() {
                       <div className="mb-4">
                         <h3 className="text-xl font-bold text-foreground">{plan.name}</h3>
                         <p className="text-sm text-primary mt-1 font-medium">{plan.tagline}</p>
-                        <div className="mt-2 inline-flex items-center gap-1.5 rounded-full border border-primary/20 bg-primary/5 px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wider text-primary">
-                          <span className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse" />
+                        <div className="mt-2 inline-flex items-center gap-1.5 rounded-full border border-amber-200 bg-amber-50 px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wider text-amber-700">
+                          <span className="h-1.5 w-1.5 rounded-full bg-amber-500 animate-pulse" />
                           Coming soon
                         </div>
                       </div>
@@ -275,7 +275,7 @@ export default function Pricing() {
                       <Button
                         className="w-full"
                         variant={isFoundation ? "outline" : "default"}
-                        onClick={() => window.open(plan.ctaHref, "_blank")}
+                        disabled
                       >
                         {plan.cta}
                       </Button>
@@ -295,8 +295,8 @@ export default function Pricing() {
                   <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
                     <Mail className="h-5 w-5 text-primary" />
                   </div>
-                  <div className="inline-flex items-center gap-1.5 rounded-full border border-primary/20 bg-primary/5 px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wider text-primary mb-2">
-                    <span className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse" />
+                  <div className="inline-flex items-center gap-1.5 rounded-full border border-amber-200 bg-amber-50 px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wider text-amber-700 mb-2">
+                    <span className="h-1.5 w-1.5 rounded-full bg-amber-500 animate-pulse" />
                     Coming soon
                   </div>
                   <h3 className="text-xl sm:text-2xl font-bold text-foreground tracking-tight">Enterprise</h3>
