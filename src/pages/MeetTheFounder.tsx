@@ -8,7 +8,7 @@ const MeetTheFounder = () => {
   return (
     <>
       <Helmet>
-        <title>Meet the Founder | Hobson AI</title>
+        <title>Meet a Co-Founder | Hobson AI</title>
         <meta
           name="description"
           content="Marc Trup on why he built Hobson — an AI co-worker designed specifically for property work."
@@ -24,7 +24,7 @@ const MeetTheFounder = () => {
           <section className="pt-16 sm:pt-20 pb-8 sm:pb-12">
             <div className="container mx-auto px-4 max-w-3xl text-center">
               <h1 className="font-bold leading-tight text-4xl sm:text-5xl md:text-6xl text-foreground">
-                Meet the <span className="bg-gradient-to-r from-primary via-accent-teal via-accent-amber to-accent-rose bg-clip-text text-transparent">Founder</span>
+                Meet a <span className="bg-gradient-to-r from-primary via-accent-teal via-accent-amber to-accent-rose bg-clip-text text-transparent">Co-Founder</span>
               </h1>
               <p className="mt-6 text-lg sm:text-xl text-muted-foreground leading-relaxed">
                 Hobson was built by property people who believed there had to be
@@ -61,7 +61,7 @@ const MeetTheFounder = () => {
               <div className="flex flex-col items-center gap-4 mb-8">
                 <img
                   src={founderPhoto.url}
-                  alt="Marc Trup, Founder of Hobson"
+                  alt="Marc Trup, Co-Founder of Hobson"
                   className="w-16 h-16 sm:w-20 sm:h-20 rounded-full object-cover border-2 border-primary/20 shadow-lg"
                 />
                 <h2 className="text-2xl sm:text-3xl font-bold text-foreground text-center">
