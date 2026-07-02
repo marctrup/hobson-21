@@ -181,6 +181,11 @@ export const Homepage = () => {
                     })()}
                   </h1>
                   <p className="text-muted-foreground leading-relaxed text-lg sm:text-xl">{content.hero.subtitle}</p>
+                  <p className="text-xl sm:text-2xl lg:text-3xl font-semibold leading-snug tracking-tight pt-4 sm:pt-6">
+                    <span className="text-muted-foreground">Claude reads your documents.</span>{" "}
+                    <span className="text-foreground">Hobson understands your business.</span>
+                  </p>
+                  
                   
                 </div>
 
