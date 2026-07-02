@@ -183,21 +183,21 @@ export default function Pricing() {
         {/* Pricing Cards */}
         <section className="bg-muted/20 border-b border-border/30">
           <div className="container mx-auto px-4 py-16 sm:py-20">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 max-w-7xl mx-auto items-stretch">
-              {plans.map((plan) => (
+            <div className="max-w-7xl mx-auto">
+              {/* Foundation — standalone on the left */}
+              <div className="grid grid-cols-1 lg:grid-cols-4 gap-5 items-stretch">
                 <Card
-                  key={plan.name}
                   className="relative flex flex-col p-6 transition-all duration-300 border border-border/60 bg-primary/[0.03] hover:border-primary/40 hover:shadow-lg"
                 >
                   <ComingSoonBadge />
 
                   <div className="mb-3">
-                    <h3 className="text-xl font-bold text-foreground">{plan.name}</h3>
-                    <p className="text-sm text-primary mt-1 font-medium">{plan.tagline}</p>
+                    <h3 className="text-xl font-bold text-foreground">{plans[0].name}</h3>
+                    <p className="text-sm text-primary mt-1 font-medium">{plans[0].tagline}</p>
                   </div>
 
                   <div className="mb-3 flex flex-wrap gap-1.5">
-                    {plan.characters.map((c) => (
+                    {plans[0].characters.map((c) => (
                       <div key={c.alt} className="w-8 h-8 rounded-full border border-border/40 bg-background/80 overflow-hidden flex items-center justify-center">
                         <img src={c.img} alt={c.alt} className="w-7 h-7 object-contain" />
                       </div>
@@ -206,22 +206,22 @@ export default function Pricing() {
 
                   <div className="mb-5">
                     <div className="flex items-baseline gap-1">
-                      <span className="text-4xl font-bold text-foreground">{plan.price}</span>
-                      {plan.priceSuffix && (
-                        <span className="text-sm text-muted-foreground">{plan.priceSuffix}</span>
+                      <span className="text-4xl font-bold text-foreground">{plans[0].price}</span>
+                      {plans[0].priceSuffix && (
+                        <span className="text-sm text-muted-foreground">{plans[0].priceSuffix}</span>
                       )}
                     </div>
                     <div className="mt-3 inline-flex items-center rounded-full bg-muted px-3 py-1 text-xs font-semibold text-foreground/80">
-                      {plan.responsibilities}
+                      {plans[0].responsibilities}
                     </div>
                   </div>
 
                   <p className="text-sm text-muted-foreground mb-5 leading-relaxed">
-                    {plan.description}
+                    {plans[0].description}
                   </p>
 
                   <ul className="space-y-2.5 mb-6 flex-grow">
-                    {plan.includes.map((item) => (
+                    {plans[0].includes.map((item) => (
                       <li key={item} className="flex items-start gap-2 text-sm">
                         <Check className="h-4 w-4 text-primary flex-shrink-0 mt-0.5" />
                         <span className="text-foreground/90">{item}</span>
@@ -232,12 +232,78 @@ export default function Pricing() {
                   <Button
                     className="w-full"
                     variant="outline"
-                    onClick={() => window.open(plan.ctaHref, "_blank")}
+                    onClick={() => window.open(plans[0].ctaHref, "_blank")}
                   >
-                    {plan.cta}
+                    {plans[0].cta}
                   </Button>
                 </Card>
-              ))}
+
+                {/* Starter+ group — banner + 3 cards */}
+                <div className="lg:col-span-3 flex flex-col">
+                  <div className="mb-4 rounded-xl border border-primary/20 bg-gradient-to-r from-primary/5 to-accent-teal/5 px-5 py-3.5 text-center">
+                    <p className="text-sm sm:text-base font-medium text-foreground/90 leading-snug">
+                      From Starter onwards, I bring together my full specialist team to help me look after your property work
+                    </p>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-5 items-stretch flex-grow">
+                    {plans.slice(1).map((plan) => (
+                      <Card
+                        key={plan.name}
+                        className="relative flex flex-col p-6 transition-all duration-300 border border-border/60 bg-primary/[0.03] hover:border-primary/40 hover:shadow-lg"
+                      >
+                        <ComingSoonBadge />
+
+                        <div className="mb-3">
+                          <h3 className="text-xl font-bold text-foreground">{plan.name}</h3>
+                          <p className="text-sm text-primary mt-1 font-medium">{plan.tagline}</p>
+                        </div>
+
+                        <div className="mb-3 flex flex-wrap gap-1.5">
+                          {plan.characters.map((c) => (
+                            <div key={c.alt} className="w-8 h-8 rounded-full border border-border/40 bg-background/80 overflow-hidden flex items-center justify-center">
+                              <img src={c.img} alt={c.alt} className="w-7 h-7 object-contain" />
+                            </div>
+                          ))}
+                        </div>
+
+                        <div className="mb-5">
+                          <div className="flex items-baseline gap-1">
+                            <span className="text-4xl font-bold text-foreground">{plan.price}</span>
+                            {plan.priceSuffix && (
+                              <span className="text-sm text-muted-foreground">{plan.priceSuffix}</span>
+                            )}
+                          </div>
+                          <div className="mt-3 inline-flex items-center rounded-full bg-muted px-3 py-1 text-xs font-semibold text-foreground/80">
+                            {plan.responsibilities}
+                          </div>
+                        </div>
+
+                        <p className="text-sm text-muted-foreground mb-5 leading-relaxed">
+                          {plan.description}
+                        </p>
+
+                        <ul className="space-y-2.5 mb-6 flex-grow">
+                          {plan.includes.map((item) => (
+                            <li key={item} className="flex items-start gap-2 text-sm">
+                              <Check className="h-4 w-4 text-primary flex-shrink-0 mt-0.5" />
+                              <span className="text-foreground/90">{item}</span>
+                            </li>
+                          ))}
+                        </ul>
+
+                        <Button
+                          className="w-full"
+                          variant="outline"
+                          onClick={() => window.open(plan.ctaHref, "_blank")}
+                        >
+                          {plan.cta}
+                        </Button>
+                      </Card>
+                    ))}
+                  </div>
+                </div>
+              </div>
             </div>
 
             {/* Enterprise CTA */}
