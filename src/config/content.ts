@@ -412,7 +412,7 @@ export const CONTENT = {
     links: [
       
       { to: "/pricing", label: "Pricing", title: "Hobson AI Pricing Plans" },
-      { to: "/founder", label: "Founder", title: "Meet the Founder of Hobson AI" },
+      { to: "/founder", label: "Co-Founder", title: "Meet a Co-Founder of Hobson AI" },
       { to: "/blog", label: "Blog", title: "Property Management Insights" },
     ],
     secondary: [
