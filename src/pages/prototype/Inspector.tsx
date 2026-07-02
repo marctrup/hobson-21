@@ -12,7 +12,8 @@
  * Scripted/simulated for the prototype. Resets with the prototype.
  */
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import characterInspector from "@/assets/prototype/character-inspector.png";
+import characterInspectorAsset from "@/assets/prototype/character-inspector.png.asset.json";
+const characterInspector = characterInspectorAsset.url;
 import owlDefault from "@/assets/prototype/owl-default.png";
 import type { ComplianceRow, SummaryScope } from "./summaryData";
 import { SUMMARY_PROPERTIES, occupationalForScope } from "./summaryData";
