@@ -199,11 +199,6 @@ export default function Pricing() {
                   <div className="absolute top-0 left-0 w-20 h-20 bg-primary/5 rounded-full -translate-x-1/2 -translate-y-1/2 blur-xl" />
                   <div className="absolute bottom-0 right-0 w-16 h-16 bg-accent-teal/5 rounded-full translate-x-1/2 translate-y-1/2 blur-xl" />
                   <div className="relative">
-                    <div className="mb-3 flex justify-center">
-                      <div className="h-10 w-10 rounded-full border-2 border-primary/20 bg-primary/5 overflow-hidden flex items-center justify-center ring-1 ring-border/40">
-                        <img src={owlMascot} alt="Hobson" className="w-9 h-9 object-contain" />
-                      </div>
-                    </div>
                     <div className="flex items-center justify-center gap-3">
                       <Sparkles className="h-4 w-4 text-primary flex-shrink-0" />
                       <p className="text-sm sm:text-base text-foreground/90 font-medium leading-snug">
