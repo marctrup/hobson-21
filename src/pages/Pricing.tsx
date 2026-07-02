@@ -45,7 +45,6 @@ type Plan = {
 };
 
 const FOUNDATION_CHARACTERS: CharacterPortrait[] = [
-  { img: owlMascot, alt: "Hobson" },
   { img: professorImg, alt: "The Professor" },
 ];
 
