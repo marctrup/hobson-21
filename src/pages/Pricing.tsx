@@ -152,12 +152,12 @@ function CharacterRow({ characters, overlap }: { characters: CharacterPortrait[]
 }
 
 export default function Pricing() {
-  // Progressive tint depth: Foundation lightest → Business richest
+  // All pricing cards white
   const tierStyles = [
     "bg-background border-border/60",
-    "bg-primary/[0.025] border-primary/15",
-    "bg-primary/[0.05] border-primary/25",
-    "bg-primary/[0.08] border-primary/35",
+    "bg-background border-border/60",
+    "bg-background border-border/60",
+    "bg-background border-border/60",
   ];
 
   return (
