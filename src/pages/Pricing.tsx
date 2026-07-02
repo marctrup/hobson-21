@@ -50,7 +50,6 @@ const FOUNDATION_CHARACTERS: CharacterPortrait[] = [
 ];
 
 const FULL_TEAM_CHARACTERS: CharacterPortrait[] = [
-  { img: owlMascot, alt: "Hobson" },
   { img: professorImg, alt: "The Professor" },
   { img: architectImg, alt: "The Architect" },
   { img: inspectorImg, alt: "The Inspector" },
