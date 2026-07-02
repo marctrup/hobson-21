@@ -206,7 +206,7 @@ export const Homepage = () => {
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
                   <div className="space-y-2">
                     <h2 id="founder-cta-heading" className="text-xl sm:text-2xl font-bold text-foreground">
-                      Built by property people
+                      Watch a co-founder's story
                     </h2>
                     <p className="text-muted-foreground text-base leading-relaxed max-w-xl">
                       Hobson was created by people who understand the day-to-day reality of property work.
