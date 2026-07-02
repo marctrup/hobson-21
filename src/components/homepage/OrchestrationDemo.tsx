@@ -5,7 +5,8 @@ import hobsonOwl from "@/assets/hobson-owl-hero.png";
 import professorImg from "@/assets/prototype/character-professor.png";
 import inspectorImg from "@/assets/prototype/character-inspector.png";
 import brokerImg from "@/assets/prototype/character-broker.png";
-import keeperImg from "@/assets/prototype/character-keeper.png";
+import keeperAsset from "@/assets/prototype/character-keeper.png.asset.json";
+const keeperImg = keeperAsset.url;
 
 import researcherAsset from "@/assets/prototype/character-researcher.png.asset.json";
 import bookkeeperAsset from "@/assets/prototype/character-bookkeeper.png.asset.json";

@@ -11,7 +11,8 @@ import characterBookkeeperAsset from "@/assets/prototype/character-bookkeeper.pn
 const characterBookkeeper = characterBookkeeperAsset.url;
 import characterCommunicatorAsset from "@/assets/prototype/character-communicator.png.asset.json";
 const characterCommunicator = characterCommunicatorAsset.url;
-import characterKeeper from "@/assets/prototype/character-keeper.png";
+import characterKeeperAsset from "@/assets/prototype/character-keeper.png.asset.json";
+const characterKeeper = characterKeeperAsset.url;
 export type BackOfficeHelperId =
   | "professor"
   | "architect"

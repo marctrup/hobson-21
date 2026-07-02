@@ -5,7 +5,8 @@ import brokerImg from "@/assets/prototype/character-broker.png";
 import researcherAsset from "@/assets/prototype/character-researcher.png.asset.json";
 import bookkeeperAsset from "@/assets/prototype/character-bookkeeper.png.asset.json";
 import communicatorAsset from "@/assets/prototype/character-communicator.png.asset.json";
-import keeperImg from "@/assets/prototype/character-keeper.png";
+import keeperAsset from "@/assets/prototype/character-keeper.png.asset.json";
+const keeperImg = keeperAsset.url;
 
 const architectImg = architectAsset.url;
 const researcherImg = researcherAsset.url;
