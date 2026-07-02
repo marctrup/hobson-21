@@ -42,8 +42,8 @@ export const TrustedConversationSection = () => {
 
           {/* Hobson avatar */}
           <div className="flex justify-center mb-6">
-            <div className="w-[88px] h-[88px] sm:w-[106px] sm:h-[106px] rounded-full bg-primary/10 border-2 border-primary/20 flex items-center justify-center shadow-sm">
-              <img src={owlMascot} alt="Hobson the owl" className="w-[70px] h-[70px] sm:w-[88px] sm:h-[88px] object-contain" />
+            <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-primary/10 border-2 border-primary/20 flex items-center justify-center shadow-sm">
+              <img src={owlMascot} alt="Hobson the owl" className="w-16 h-16 sm:w-20 sm:h-20 object-contain" />
             </div>
           </div>
 
