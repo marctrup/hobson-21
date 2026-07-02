@@ -179,7 +179,7 @@ export default function Pricing() {
         {/* Hero */}
         <section className="relative overflow-hidden border-b border-border/40 bg-background">
           <div className="absolute inset-0 bg-gradient-to-b from-primary/5 via-background to-background pointer-events-none" />
-          <div className="container mx-auto px-4 py-16 sm:py-24 relative">
+          <div className="container mx-auto px-4 py-14 sm:py-20 relative">
             <div className="max-w-3xl mx-auto text-center">
               <div className="flex justify-center mb-6">
                 <img src={owlMascot} alt="Hobson" className="w-16 h-16 sm:w-20 sm:h-20 object-contain rounded-full border-2 border-primary/20 bg-primary/5" />
@@ -196,7 +196,7 @@ export default function Pricing() {
 
         {/* Pricing Cards */}
         <section className="bg-muted/20 border-b border-border/30">
-          <div className="container mx-auto px-4 py-16 sm:py-20">
+          <div className="container mx-auto px-4 py-14 sm:py-16">
             <div className="max-w-7xl mx-auto">
               <div className="mb-10 max-w-2xl mx-auto">
                 <div className="relative overflow-hidden rounded-xl border border-primary/20 bg-gradient-to-br from-primary/[0.06] via-primary/[0.03] to-background p-5 sm:p-6 text-center shadow-sm">
