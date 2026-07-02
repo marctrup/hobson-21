@@ -8,6 +8,29 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import owlMascot from "@/assets/owl-mascot.png";
 
+import professorAsset from "@/assets/prototype/character-professor.png.asset.json";
+import architectAsset from "@/assets/prototype/character-architect.png.asset.json";
+import inspectorAsset from "@/assets/prototype/character-inspector.png.asset.json";
+import brokerAsset from "@/assets/prototype/character-broker.png.asset.json";
+import researcherAsset from "@/assets/prototype/character-researcher.png.asset.json";
+import bookkeeperAsset from "@/assets/prototype/character-bookkeeper.png.asset.json";
+import communicatorAsset from "@/assets/prototype/character-communicator.png.asset.json";
+import keeperAsset from "@/assets/prototype/character-keeper.png.asset.json";
+
+const professorImg = professorAsset.url;
+const architectImg = architectAsset.url;
+const inspectorImg = inspectorAsset.url;
+const brokerImg = brokerAsset.url;
+const researcherImg = researcherAsset.url;
+const bookkeeperImg = bookkeeperAsset.url;
+const communicatorImg = communicatorAsset.url;
+const keeperImg = keeperAsset.url;
+
+type CharacterPortrait = {
+  img: string;
+  alt: string;
+};
+
 type Plan = {
   name: string;
   price: string;
@@ -18,7 +41,25 @@ type Plan = {
   includes: string[];
   cta: string;
   ctaHref: string;
+  characters: CharacterPortrait[];
 };
+
+const FOUNDATION_CHARACTERS: CharacterPortrait[] = [
+  { img: owlMascot, alt: "Hobson" },
+  { img: professorImg, alt: "The Professor" },
+];
+
+const FULL_TEAM_CHARACTERS: CharacterPortrait[] = [
+  { img: owlMascot, alt: "Hobson" },
+  { img: professorImg, alt: "The Professor" },
+  { img: architectImg, alt: "The Architect" },
+  { img: inspectorImg, alt: "The Inspector" },
+  { img: brokerImg, alt: "The Broker" },
+  { img: researcherImg, alt: "The Researcher" },
+  { img: bookkeeperImg, alt: "The Bookkeeper" },
+  { img: communicatorImg, alt: "The Communicator" },
+  { img: keeperImg, alt: "The Keeper" },
+];
 
 const plans: Plan[] = [
   {
@@ -38,6 +79,7 @@ const plans: Plan[] = [
     ],
     cta: "Choose Foundation",
     ctaHref: "https://app.hobsonschoice.ai/signup",
+    characters: FOUNDATION_CHARACTERS,
   },
   {
     name: "Starter",
@@ -55,6 +97,7 @@ const plans: Plan[] = [
     ],
     cta: "Choose Starter",
     ctaHref: "https://app.hobsonschoice.ai/signup",
+    characters: FULL_TEAM_CHARACTERS,
   },
   {
     name: "Professional",
@@ -72,6 +115,7 @@ const plans: Plan[] = [
     ],
     cta: "Choose Professional",
     ctaHref: "https://app.hobsonschoice.ai/signup",
+    characters: FULL_TEAM_CHARACTERS,
   },
   {
     name: "Business",
@@ -89,6 +133,7 @@ const plans: Plan[] = [
     ],
     cta: "Choose Business",
     ctaHref: "https://app.hobsonschoice.ai/signup",
+    characters: FULL_TEAM_CHARACTERS,
   },
 ];
 
@@ -146,9 +191,17 @@ export default function Pricing() {
                 >
                   <ComingSoonBadge />
 
-                  <div className="mb-4">
+                  <div className="mb-3">
                     <h3 className="text-xl font-bold text-foreground">{plan.name}</h3>
                     <p className="text-sm text-primary mt-1 font-medium">{plan.tagline}</p>
+                  </div>
+
+                  <div className="mb-3 flex flex-wrap gap-1.5">
+                    {plan.characters.map((c) => (
+                      <div key={c.alt} className="w-8 h-8 rounded-full border border-border/40 bg-background/80 overflow-hidden flex items-center justify-center">
+                        <img src={c.img} alt={c.alt} className="w-7 h-7 object-contain" />
+                      </div>
+                    ))}
                   </div>
 
                   <div className="mb-5">
@@ -198,6 +251,15 @@ export default function Pricing() {
                   </div>
                   <h3 className="text-xl sm:text-2xl font-bold text-foreground tracking-tight">Enterprise</h3>
                   <p className="mt-2 text-base text-primary font-medium">Let's build something together</p>
+
+                  <div className="mt-3 flex flex-wrap justify-center gap-1.5">
+                    {FULL_TEAM_CHARACTERS.map((c) => (
+                      <div key={c.alt} className="w-8 h-8 rounded-full border border-border/40 bg-background/80 overflow-hidden flex items-center justify-center">
+                        <img src={c.img} alt={c.alt} className="w-7 h-7 object-contain" />
+                      </div>
+                    ))}
+                  </div>
+
                   <p className="mt-3 text-sm text-muted-foreground leading-relaxed max-w-lg mx-auto">
                     Every organisation is different. If there's work unique to your business, we'll teach me how you'd like it done.
                   </p>
