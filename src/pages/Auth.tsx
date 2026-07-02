@@ -4,7 +4,7 @@ import { Helmet } from "react-helmet-async";
 import { AuthForm } from "@/components/auth/AuthForm";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
-import hobsonOwl from "@/assets/hobson-owl.png";
+import hobsonOwl from "@/assets/owl-mascot.png";
 
 export default function Auth() {
   const [mode, setMode] = useState<"login" | "signup">("login");
