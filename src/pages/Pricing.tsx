@@ -8,6 +8,24 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import owlMascot from "@/assets/owl-mascot.png";
 
+import professorAsset from "@/assets/prototype/character-professor.png.asset.json";
+import architectAsset from "@/assets/prototype/character-architect.png.asset.json";
+import inspectorAsset from "@/assets/prototype/character-inspector.png.asset.json";
+import brokerAsset from "@/assets/prototype/character-broker.png.asset.json";
+import researcherAsset from "@/assets/prototype/character-researcher.png.asset.json";
+import bookkeeperAsset from "@/assets/prototype/character-bookkeeper.png.asset.json";
+import communicatorAsset from "@/assets/prototype/character-communicator.png.asset.json";
+import keeperAsset from "@/assets/prototype/character-keeper.png.asset.json";
+
+const professorImg = professorAsset.url;
+const architectImg = architectAsset.url;
+const inspectorImg = inspectorAsset.url;
+const brokerImg = brokerAsset.url;
+const researcherImg = researcherAsset.url;
+const bookkeeperImg = bookkeeperAsset.url;
+const communicatorImg = communicatorAsset.url;
+const keeperImg = keeperAsset.url;
+
 type Plan = {
   name: string;
   price: string;
