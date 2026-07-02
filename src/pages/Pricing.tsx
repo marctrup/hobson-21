@@ -180,9 +180,6 @@ export default function Pricing() {
           <div className="absolute inset-0 bg-gradient-to-b from-primary/5 via-background to-background pointer-events-none" />
           <div className="container mx-auto px-4 py-14 sm:py-20 relative">
             <div className="max-w-3xl mx-auto text-center">
-              <div className="flex justify-center mb-6">
-                <img src={owlMascot} alt="Hobson" className="w-16 h-16 sm:w-20 sm:h-20 object-contain rounded-full border-2 border-primary/20 bg-primary/5" />
-              </div>
               <h1 className="font-bold leading-tight text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-foreground">
                 Simple, transparent <span className="bg-gradient-to-r from-primary via-primary/80 to-accent-teal bg-clip-text text-transparent">pricing</span>
               </h1>
