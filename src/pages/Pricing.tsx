@@ -304,7 +304,7 @@ export default function Pricing() {
                   </div>
 
                   <p className="mt-4 text-sm text-muted-foreground leading-relaxed max-w-lg mx-auto">
-                    Every organisation is different. If there's work unique to your business, we'll teach me how you'd like it done.
+                    Every organisation works differently. Together, we'll shape me around the way your business works, so I can take care of the things that are unique to your organisation.
                   </p>
                   <div className="mt-6">
                     <span className="text-sm text-muted-foreground">Email </span>
