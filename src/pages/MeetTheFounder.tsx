@@ -65,18 +65,18 @@ const MeetTheFounder = () => {
                   className="w-16 h-16 sm:w-20 sm:h-20 rounded-full object-cover border-2 border-primary/20 shadow-lg"
                 />
                 <h2 className="text-2xl sm:text-3xl font-bold text-foreground text-center">
-                  Why I Built Hobson
+                  Why we Built Hobson
                 </h2>
               </div>
               <div className="space-y-4 text-base sm:text-lg text-muted-foreground leading-relaxed">
                   <p>
-                    For over 30 years I've worked in property.
+                    For over 30 years we've worked in property.
                   </p>
                   <p>
-                    I didn't build Hobson because the world needed another property system.
+                    We didn't build Hobson because the world needed another property system.
                   </p>
                   <p>
-                    I built him because I believed property deserved a better way of working.
+                    We built it because we believed property deserved a better way of working.
                   </p>
                   <p>
                     One that thinks alongside people, quietly takes care of the routine work and gives professionals more time to focus on what really matters.
