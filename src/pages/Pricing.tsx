@@ -198,12 +198,10 @@ export default function Pricing() {
         <section className="bg-muted/20 border-b border-border/30">
           <div className="container mx-auto px-4 py-16 sm:py-20">
             <div className="max-w-7xl mx-auto">
-              {/* Unified "Coming soon" ribbon */}
-              <div className="flex justify-center mb-8">
-                <div className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-primary">
-                  <span className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse" />
-                  Coming soon
-                </div>
+              <div className="text-center mb-8 max-w-2xl mx-auto">
+                <p className="text-sm text-foreground/80 leading-snug">
+                  From <span className="font-semibold text-foreground">Starter</span> onwards, I bring together my full specialist team to help me look after your property work.
+                </p>
               </div>
 
               {/* Equal 4-column grid */}
@@ -215,10 +213,13 @@ export default function Pricing() {
                       key={plan.name}
                       className={`relative flex flex-col p-6 transition-all duration-300 border ${tierStyles[idx]} hover:border-primary/50 hover:shadow-xl hover:-translate-y-0.5`}
                     >
-                      {/* Header: name + tagline */}
                       <div className="mb-4">
                         <h3 className="text-xl font-bold text-foreground">{plan.name}</h3>
                         <p className="text-sm text-primary mt-1 font-medium">{plan.tagline}</p>
+                        <div className="mt-2 inline-flex items-center gap-1.5 rounded-full border border-primary/20 bg-primary/5 px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wider text-primary">
+                          <span className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse" />
+                          Coming soon
+                        </div>
                       </div>
 
                       {/* Character cluster — Foundation shows pair; paid tiers overlap the full team */}
@@ -273,20 +274,6 @@ export default function Pricing() {
                 })}
               </div>
 
-              {/* Full-team callout — sits under the grid, spans Starter→Business visually */}
-              <div className="mt-6 hidden lg:grid grid-cols-4 gap-5">
-                <div />
-                <div className="col-span-3 rounded-lg border border-primary/15 bg-gradient-to-r from-primary/5 via-primary/[0.03] to-accent-teal/5 px-5 py-3 text-center">
-                  <p className="text-sm text-foreground/80 leading-snug">
-                    From <span className="font-semibold text-foreground">Starter</span> onwards, I bring together my full specialist team to help me look after your property work.
-                  </p>
-                </div>
-              </div>
-              <div className="mt-6 lg:hidden rounded-lg border border-primary/15 bg-gradient-to-r from-primary/5 to-accent-teal/5 px-5 py-3 text-center">
-                <p className="text-sm text-foreground/80 leading-snug">
-                  From <span className="font-semibold text-foreground">Starter</span> onwards, I bring together my full specialist team to help me look after your property work.
-                </p>
-              </div>
             </div>
 
             {/* Enterprise CTA */}
