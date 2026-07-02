@@ -26,6 +26,11 @@ const bookkeeperImg = bookkeeperAsset.url;
 const communicatorImg = communicatorAsset.url;
 const keeperImg = keeperAsset.url;
 
+type CharacterPortrait = {
+  img: string;
+  alt: string;
+};
+
 type Plan = {
   name: string;
   price: string;
@@ -36,7 +41,25 @@ type Plan = {
   includes: string[];
   cta: string;
   ctaHref: string;
+  characters: CharacterPortrait[];
 };
+
+const FOUNDATION_CHARACTERS: CharacterPortrait[] = [
+  { img: owlMascot, alt: "Hobson" },
+  { img: professorImg, alt: "The Professor" },
+];
+
+const FULL_TEAM_CHARACTERS: CharacterPortrait[] = [
+  { img: owlMascot, alt: "Hobson" },
+  { img: professorImg, alt: "The Professor" },
+  { img: architectImg, alt: "The Architect" },
+  { img: inspectorImg, alt: "The Inspector" },
+  { img: brokerImg, alt: "The Broker" },
+  { img: researcherImg, alt: "The Researcher" },
+  { img: bookkeeperImg, alt: "The Bookkeeper" },
+  { img: communicatorImg, alt: "The Communicator" },
+  { img: keeperImg, alt: "The Keeper" },
+];
 
 const plans: Plan[] = [
   {
@@ -56,6 +79,7 @@ const plans: Plan[] = [
     ],
     cta: "Choose Foundation",
     ctaHref: "https://app.hobsonschoice.ai/signup",
+    characters: FOUNDATION_CHARACTERS,
   },
   {
     name: "Starter",
@@ -73,6 +97,7 @@ const plans: Plan[] = [
     ],
     cta: "Choose Starter",
     ctaHref: "https://app.hobsonschoice.ai/signup",
+    characters: FULL_TEAM_CHARACTERS,
   },
   {
     name: "Professional",
@@ -90,6 +115,7 @@ const plans: Plan[] = [
     ],
     cta: "Choose Professional",
     ctaHref: "https://app.hobsonschoice.ai/signup",
+    characters: FULL_TEAM_CHARACTERS,
   },
   {
     name: "Business",
@@ -107,6 +133,7 @@ const plans: Plan[] = [
     ],
     cta: "Choose Business",
     ctaHref: "https://app.hobsonschoice.ai/signup",
+    characters: FULL_TEAM_CHARACTERS,
   },
 ];
 
