@@ -19,7 +19,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { useCrmAccess } from "@/hooks/crm/useCrmAccess";
 import { useWorkspaceName } from "@/hooks/crm/useWorkspaceName";
 import { cn } from "@/lib/utils";
-import hobsonOwl from "@/assets/hobson-owl.png";
+import hobsonOwl from "@/assets/owl-mascot.png";
 
 
 type NavItem = {
