@@ -234,8 +234,17 @@ export default function Pricing() {
                       </div>
 
                       {/* Character cluster */}
-                      <div className="mb-5 flex items-center">
-                        <CharacterRow characters={plan.characters} />
+                      <div className="mb-5 h-[5.5rem]">
+                        {isFoundation ? (
+                          <div className="h-full flex flex-col items-center justify-center gap-2">
+                            <CharacterRow characters={plan.characters} />
+                            <span className="text-xs text-muted-foreground font-medium">Access to the Professor Only</span>
+                          </div>
+                        ) : (
+                          <div className="h-full flex items-center justify-center">
+                            <CharacterRow characters={plan.characters} />
+                          </div>
+                        )}
                       </div>
 
                       {/* Price */}
