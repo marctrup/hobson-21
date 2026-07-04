@@ -138,14 +138,14 @@ const plans: Plan[] = [
 
 function CharacterRow({ characters, overlap }: { characters: CharacterPortrait[]; overlap?: boolean }) {
   return (
-    <div className={`flex ${overlap ? "-space-x-2" : "gap-1.5 flex-wrap"}`}>
+    <div className={`${overlap ? "flex -space-x-2" : "grid grid-cols-4 gap-2"}`}>
       {characters.map((c) => (
         <div
           key={c.alt}
-          className="w-8 h-8 rounded-full border-2 border-background bg-primary/5 overflow-hidden flex items-center justify-center ring-1 ring-border/40"
+          className="w-10 h-10 rounded-full border-2 border-background bg-primary/5 overflow-hidden flex items-center justify-center ring-1 ring-border/40"
           title={c.alt}
         >
-          <img src={c.img} alt={c.alt} className="w-7 h-7 object-contain" />
+          <img src={c.img} alt={c.alt} className="w-9 h-9 object-contain" />
         </div>
       ))}
     </div>
