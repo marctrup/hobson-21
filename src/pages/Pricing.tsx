@@ -136,9 +136,9 @@ const plans: Plan[] = [
   },
 ];
 
-function CharacterRow({ characters, overlap }: { characters: CharacterPortrait[]; overlap?: boolean }) {
+function CharacterRow({ characters }: { characters: CharacterPortrait[] }) {
   return (
-    <div className={`${overlap ? "flex -space-x-2" : "grid grid-cols-4 gap-2"}`}>
+    <div className="grid grid-cols-4 gap-2">
       {characters.map((c) => (
         <div
           key={c.alt}
@@ -233,9 +233,9 @@ export default function Pricing() {
                         </div>
                       </div>
 
-                      {/* Character cluster — Foundation shows pair; paid tiers overlap the full team */}
-                      <div className="mb-5 min-h-[2.5rem] flex items-center">
-                        <CharacterRow characters={plan.characters} overlap={!isFoundation} />
+                      {/* Character cluster */}
+                      <div className="mb-5 flex items-center">
+                        <CharacterRow characters={plan.characters} />
                       </div>
 
                       {/* Price */}
@@ -301,7 +301,7 @@ export default function Pricing() {
                   <p className="mt-2 text-base text-primary font-medium">Let's build something together</p>
 
                   <div className="mt-4 flex justify-center">
-                    <CharacterRow characters={FULL_TEAM_CHARACTERS} overlap />
+                    <CharacterRow characters={FULL_TEAM_CHARACTERS} />
                   </div>
 
                   <p className="mt-4 text-sm text-muted-foreground leading-relaxed max-w-lg mx-auto">
