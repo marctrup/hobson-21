@@ -136,9 +136,9 @@ const plans: Plan[] = [
   },
 ];
 
-function CharacterRow({ characters, overlap }: { characters: CharacterPortrait[]; overlap?: boolean }) {
+function CharacterRow({ characters }: { characters: CharacterPortrait[] }) {
   return (
-    <div className={`${overlap ? "flex -space-x-2" : "grid grid-cols-4 gap-2"}`}>
+    <div className="grid grid-cols-4 gap-2">
       {characters.map((c) => (
         <div
           key={c.alt}
