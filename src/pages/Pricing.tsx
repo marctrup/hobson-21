@@ -70,7 +70,7 @@ const plans: Plan[] = [
       "Perfect for asking questions about your portfolio and receiving clear, evidence-backed answers.",
     includes: [
       "Hobson",
-      "One Specialist Agent",
+      "The Professor only",
       "Portfolio understanding",
       "Evidence-backed answers",
       "Fair usage",
