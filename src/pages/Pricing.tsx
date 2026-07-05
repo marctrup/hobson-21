@@ -83,7 +83,7 @@ const plans: Plan[] = [
     name: "Starter",
     price: "£39",
     priceSuffix: "/month",
-    responsibilities: "I'll look after 3 areas of your property work",
+    responsibilities: "I'll look after 3 areas of work",
     tagline: "I'll start looking after your work.",
     description:
       "Everything in Foundation, plus I'll look after 3 areas of your property work.",
@@ -102,7 +102,7 @@ const plans: Plan[] = [
     name: "Professional",
     price: "£99",
     priceSuffix: "/month",
-    responsibilities: "I'll look after 6 areas of your property work",
+    responsibilities: "I'll look after 6 areas of work",
     tagline: "I'll become part of your team.",
     description:
       "Everything in Starter, plus I'll look after even more of your property work.",
@@ -120,7 +120,7 @@ const plans: Plan[] = [
     name: "Business",
     price: "£199",
     priceSuffix: "/month",
-    responsibilities: "I'll look after 9 areas of your property work",
+    responsibilities: "I'll look after 9 areas of work",
     tagline: "I'll look after even more.",
     description:
       "Everything in Professional, giving me even more of your property work to quietly look after.",
