@@ -238,7 +238,7 @@ export default function Pricing() {
                         {isFoundation ? (
                           <div className="h-full flex flex-col items-center justify-center gap-2">
                             <CharacterRow characters={plan.characters} />
-                            <span className="text-xs text-muted-foreground font-medium self-start">Access to the Professor Only</span>
+                            <span className="text-xs text-muted-foreground font-medium self-start">Access to the Professor</span>
                           </div>
                         ) : (
                           <div className="h-full flex items-center justify-center">
