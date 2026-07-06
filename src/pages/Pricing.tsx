@@ -70,6 +70,8 @@ const plans: Plan[] = [
       "Perfect for asking questions about your portfolio and receiving clear, evidence-backed answers.",
     includes: [
       "Hobson",
+      "1 person",
+      "50 credits",
       "The Professor only",
       "Portfolio understanding",
       "Evidence-backed answers",
@@ -89,6 +91,8 @@ const plans: Plan[] = [
       "Everything in Foundation, plus I'll look after 3 areas of your property work.",
     includes: [
       "Everything in Foundation",
+      "2 people",
+      "250 credits",
       "All Specialist agents",
       "Choose 3 areas of work",
       "Continuous monitoring",
@@ -108,6 +112,8 @@ const plans: Plan[] = [
       "Everything in Starter, plus I'll look after even more of your property work.",
     includes: [
       "Everything in Starter",
+      "5 people",
+      "800 credits",
       "Choose 6 areas of work",
       "Day-to-day oversight",
       "Priority handling",
@@ -126,6 +132,8 @@ const plans: Plan[] = [
       "Everything in Professional, giving me even more of your property work to quietly look after.",
     includes: [
       "Everything in Professional",
+      "10 people",
+      "2000 credits",
       "Choose 9 areas of work",
       "Multi-property oversight",
       "Operational depth",
