@@ -321,7 +321,7 @@ export default function Pricing() {
                   <h3 className="text-xl sm:text-2xl font-bold text-foreground tracking-tight">Enterprise</h3>
                   <p className="mt-2 text-base text-primary font-medium">Let's build something together</p>
 
-                  <div className="mt-4 flex justify-start">
+                  <div className="mt-4 flex justify-center">
                     <CharacterRow characters={FULL_TEAM_CHARACTERS} />
                   </div>
 
