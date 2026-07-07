@@ -244,11 +244,16 @@ export default function Pricing() {
                       {/* Character cluster */}
                       <div className="mb-5 h-[5.5rem]">
                         {isFoundation ? (
-                          <div className="h-full flex flex-col items-center justify-start gap-2 pt-1">
-                            <CharacterRow characters={plan.characters} />
+                          <div className="h-full flex items-center justify-end">
+                            <div
+                              className="w-10 h-10 rounded-full border-2 border-background bg-primary/5 overflow-hidden flex items-center justify-center ring-1 ring-border/40"
+                              title="The Professor"
+                            >
+                              <img src={professorImg} alt="The Professor" className="w-9 h-9 object-contain" />
+                            </div>
                           </div>
                         ) : (
-                          <div className="h-full flex items-center justify-center">
+                          <div className="h-full flex items-center justify-end">
                             <CharacterRow characters={plan.characters} />
                           </div>
                         )}
