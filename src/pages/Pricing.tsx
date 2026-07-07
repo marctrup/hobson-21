@@ -253,7 +253,7 @@ export default function Pricing() {
                             </div>
                           </div>
                         ) : (
-                          <div className="h-full flex items-center justify-end">
+                          <div className="h-full flex items-center justify-start">
                             <CharacterRow characters={plan.characters} />
                           </div>
                         )}
