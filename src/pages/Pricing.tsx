@@ -146,7 +146,7 @@ const plans: Plan[] = [
 
 function CharacterRow({ characters }: { characters: CharacterPortrait[] }) {
   return (
-    <div className="grid grid-cols-4 gap-2 w-max ml-auto">
+    <div className="grid grid-cols-4 gap-2 w-max">
       {characters.map((c) => (
         <div
           key={c.alt}
@@ -244,7 +244,7 @@ export default function Pricing() {
                       {/* Character cluster */}
                       <div className="mb-5 h-[5.5rem]">
                         {isFoundation ? (
-                          <div className="h-full flex items-center justify-end">
+                          <div className="h-full flex items-center justify-start">
                             <div
                               className="w-10 h-10 rounded-full border-2 border-background bg-primary/5 overflow-hidden flex items-center justify-center ring-1 ring-border/40"
                               title="The Professor"
@@ -253,7 +253,7 @@ export default function Pricing() {
                             </div>
                           </div>
                         ) : (
-                          <div className="h-full flex items-center justify-end">
+                          <div className="h-full flex items-center justify-start">
                             <CharacterRow characters={plan.characters} />
                           </div>
                         )}
@@ -321,7 +321,7 @@ export default function Pricing() {
                   <h3 className="text-xl sm:text-2xl font-bold text-foreground tracking-tight">Enterprise</h3>
                   <p className="mt-2 text-base text-primary font-medium">Let's build something together</p>
 
-                  <div className="mt-4 flex justify-end">
+                  <div className="mt-4 flex justify-start">
                     <CharacterRow characters={FULL_TEAM_CHARACTERS} />
                   </div>
 
