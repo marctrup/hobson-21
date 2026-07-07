@@ -146,7 +146,7 @@ const plans: Plan[] = [
 
 function CharacterRow({ characters }: { characters: CharacterPortrait[] }) {
   return (
-    <div className="grid grid-cols-4 gap-2 w-max ml-auto">
+    <div className="grid grid-cols-4 gap-2 w-max">
       {characters.map((c) => (
         <div
           key={c.alt}
