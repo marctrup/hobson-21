@@ -150,7 +150,7 @@ function CharacterRow({ characters }: { characters: CharacterPortrait[] }) {
       {characters.map((c) => (
         <div
           key={c.alt}
-          className="w-[3.63rem] h-[3.63rem] rounded-full border-2 border-background bg-primary/5 overflow-hidden flex items-center justify-center ring-1 ring-border/40"
+          className="w-[4rem] h-[4rem] rounded-full border-2 border-background bg-primary/5 overflow-hidden flex items-center justify-center ring-1 ring-border/40"
           title={c.alt}
         >
           <img src={c.img} alt={c.alt} className="w-[3.3rem] h-[3.3rem] object-contain" />
