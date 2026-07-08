@@ -246,10 +246,10 @@ export default function Pricing() {
                         {isFoundation ? (
                           <div className="h-full flex items-start pt-1 justify-start">
                             <div
-                              className="w-[3.63rem] h-[3.63rem] rounded-full border-2 border-background bg-primary/5 overflow-hidden flex items-center justify-center ring-1 ring-border/40"
+                              className="w-[4rem] h-[4rem] rounded-full border-2 border-background bg-primary/5 overflow-hidden flex items-center justify-center ring-1 ring-border/40"
                               title="The Professor"
                             >
-                              <img src={professorImg} alt="The Professor" className="w-[3.3rem] h-[3.3rem] object-contain" />
+                              <img src={professorImg} alt="The Professor" className="w-[3.63rem] h-[3.63rem] object-contain" />
                             </div>
                           </div>
                         ) : (
