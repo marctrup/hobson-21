@@ -242,7 +242,7 @@ export default function Pricing() {
                       </div>
 
                       {/* Character cluster */}
-                      <div className="mb-5 h-[7.75rem]">
+                      <div className="mb-5 h-[8.5rem]">
                         {isFoundation ? (
                           <div className="h-full flex items-start pt-1 justify-start">
                             <div
