@@ -205,6 +205,10 @@ export const Homepage = () => {
           {/* The Team */}
           <TheTeamSection />
 
+          {/* The work I look after */}
+          <WorkILookAfter />
+
+
           {/* Founder CTA card */}
           <section className="py-12 sm:py-16" aria-labelledby="founder-cta-heading">
             <div className="container mx-auto px-4">
