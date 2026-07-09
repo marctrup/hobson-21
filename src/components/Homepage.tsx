@@ -18,6 +18,7 @@ import { TrustStrip } from "@/components/homepage/TrustStrip";
 
 import { TrustedConversationSection } from "@/components/homepage/TrustedConversationSection";
 import { TheTeamSection } from "@/components/homepage/TheTeamSection";
+import { WorkILookAfter } from "@/components/homepage/WorkILookAfter";
 
 
 import { structuredData } from "@/utils/seo-data";
@@ -203,6 +204,10 @@ export const Homepage = () => {
 
           {/* The Team */}
           <TheTeamSection />
+
+          {/* The work I look after */}
+          <WorkILookAfter />
+
 
           {/* Founder CTA card */}
           <section className="py-12 sm:py-16" aria-labelledby="founder-cta-heading">
