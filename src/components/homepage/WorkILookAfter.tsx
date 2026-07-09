@@ -37,49 +37,7 @@ const RESPONSIBILITIES: Responsibility[] = [
   { label: "Licence Renewals", icon: FileSignature, tint: "bg-blue-50", iconColor: "text-blue-600" },
 ];
 
-type Step = {
-  agent: string;
-  avatar: string;
-  action: string;
-};
-
-const RENT_REVIEW_STEPS: Step[] = [
-  {
-    agent: "The Professor",
-    avatar: professorAsset.url,
-    action:
-      "Reads the lease, finds the rent review clause, and notes the review date, mechanism and notice requirements.",
-  },
-  {
-    agent: "The Researcher",
-    avatar: researcherAsset.url,
-    action:
-      "Gathers comparable market evidence and local rental trends to support a well-founded position.",
-  },
-  {
-    agent: "The Bookkeeper",
-    avatar: bookkeeperAsset.url,
-    action:
-      "Calculates the projected uplift, indexation figures and cash-flow impact across the remaining term.",
-  },
-  {
-    agent: "The Broker",
-    avatar: brokerAsset.url,
-    action:
-      "Prepares a negotiation brief with the recommended opening position, fallback and walk-away numbers.",
-  },
-  {
-    agent: "The Communicator",
-    avatar: communicatorAsset.url,
-    action:
-      "Drafts the notice to the tenant and the internal briefing for you, ready for review before anything is sent.",
-  },
-];
-
 export const WorkILookAfter = () => {
-  const [activeStep, setActiveStep] = useState(0);
-
-  return (
     <section
       className="py-16 sm:py-20 md:py-28 bg-gradient-to-b from-background via-muted/20 to-background overflow-hidden"
       aria-labelledby="work-heading"
