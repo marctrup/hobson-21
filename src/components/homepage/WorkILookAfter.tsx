@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Calendar,
   DoorOpen,
@@ -12,14 +12,8 @@ import {
   ClipboardCheck,
   Hammer,
   FileSignature,
-  ArrowRight,
   Sparkles,
 } from "lucide-react";
-import professorAsset from "@/assets/prototype/character-professor.png.asset.json";
-import researcherAsset from "@/assets/prototype/character-researcher.png.asset.json";
-import communicatorAsset from "@/assets/prototype/character-communicator.png.asset.json";
-import bookkeeperAsset from "@/assets/prototype/character-bookkeeper.png.asset.json";
-import brokerAsset from "@/assets/prototype/character-broker.png.asset.json";
 
 type Responsibility = {
   label: string;
