@@ -60,7 +60,7 @@ export const WorkILookAfter = () => {
               </span>
             </h2>
             <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
-              A responsibility is an area of your property work I continuously manage on your behalf. Here are some of the areas I already look after.
+              A responsibility is an area of your property work I continuously manage on your behalf. Here are some of the areas I can help with.
             </p>
           </div>
 
