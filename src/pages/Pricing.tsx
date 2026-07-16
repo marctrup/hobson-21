@@ -352,7 +352,6 @@ const Calculators: React.FC = () => {
             </div>
           </div>
         </div>
-        </div>
 
         {/* ============ TOGETHER STRIP ============ */}
         <div style={{ marginTop: 32, padding: "28px 32px", borderRadius: 20, background: `linear-gradient(135deg, rgba(249,115,22,0.08), rgba(139,92,246,0.06))`, border: `1px solid ${TOKENS.hairline}` }}>
