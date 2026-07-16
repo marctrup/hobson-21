@@ -4,29 +4,30 @@ import { renderWithProviders } from "../utils";
 import Pricing from "@/pages/Pricing";
 
 describe("Pricing page", () => {
-  it("renders without crashing and shows all 4 plans", async () => {
+  it("renders the hero headline", async () => {
     renderWithProviders(<Pricing />, { route: "/pricing" });
     await waitFor(() => {
-      expect(screen.getAllByText("Foundation").length).toBeGreaterThanOrEqual(1);
-      expect(screen.getAllByText("Starter").length).toBeGreaterThanOrEqual(1);
-      expect(screen.getAllByText("Professional").length).toBeGreaterThanOrEqual(1);
-      expect(screen.getAllByText("Business").length).toBeGreaterThanOrEqual(1);
+      expect(screen.getByText(/No plans\./i)).toBeInTheDocument();
+      expect(screen.getByText(/No credits\./i)).toBeInTheDocument();
+      expect(screen.getByText(/Nothing counted\./i)).toBeInTheDocument();
     });
   });
 
-  it("shows plan CTA buttons", async () => {
+  it("shows the two-costs section", async () => {
     renderWithProviders(<Pricing />, { route: "/pricing" });
     await waitFor(() => {
-      const ctas = screen.getAllByRole("button", { name: /Choose /i });
-      expect(ctas.length).toBeGreaterThanOrEqual(4);
+      expect(screen.getAllByText(/A seat for each person/i).length).toBeGreaterThan(0);
+      expect(screen.getAllByText(/Learning your documents/i).length).toBeGreaterThan(0);
     });
   });
 
-  it("shows the Enterprise call-us section", async () => {
+  it("renders the calculators and closing CTA", async () => {
     renderWithProviders(<Pricing />, { route: "/pricing" });
     await waitFor(() => {
-      expect(screen.getAllByText(/Enterprise/i).length).toBeGreaterThanOrEqual(1);
-      expect(screen.getByRole("button", { name: /Call us/i })).toBeInTheDocument();
+      expect(screen.getByLabelText(/People/i)).toBeInTheDocument();
+      expect(screen.getByLabelText(/Documents/i)).toBeInTheDocument();
+      expect(screen.getByRole("link", { name: /Work out your price/i })).toBeInTheDocument();
+      expect(screen.getByRole("link", { name: /Meet the team/i })).toBeInTheDocument();
     });
   });
 });
