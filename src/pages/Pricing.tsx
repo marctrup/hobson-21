@@ -374,15 +374,6 @@ const Calculators: React.FC = () => {
     </section>
   );
 };
-          .hp-seats-grid { grid-template-columns: 1fr !important; }
-          .hp-learning-grid { grid-template-columns: 1fr !important; }
-        }
-        .hp-slider-dark::-webkit-slider-runnable-track { background: rgba(255,255,255,0.18); }
-        .hp-slider-dark::-moz-range-track { background: rgba(255,255,255,0.18); }
-      `}</style>
-    </section>
-  );
-};
 
 // ============================================================================
 // FAQ
