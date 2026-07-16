@@ -116,10 +116,10 @@ const Slider: React.FC<{
 }> = ({ label, min, max, value, onChange, suffix, id }) => (
   <div>
     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 10 }}>
-      <label htmlFor={id} style={{ fontFamily: FONTS.mono, fontSize: 12, letterSpacing: "0.08em", textTransform: "uppercase", color: TOKENS.brassLight }}>
+      <label htmlFor={id} style={{ fontFamily: FONTS.mono, fontSize: 12, letterSpacing: "0.08em", textTransform: "uppercase", color: TOKENS.brass }}>
         {label}
       </label>
-      <span style={{ fontFamily: FONTS.mono, fontSize: 20, color: TOKENS.paper }}>
+      <span style={{ fontFamily: FONTS.mono, fontSize: 20, color: TOKENS.ink }}>
         {value}
         {suffix ? ` ${suffix}` : ""}
       </span>
@@ -137,12 +137,13 @@ const Slider: React.FC<{
       aria-valuemax={max}
       aria-valuenow={value}
     />
-    <div style={{ display: "flex", justifyContent: "space-between", fontFamily: FONTS.mono, fontSize: 11, color: "rgba(255,255,255,0.5)", marginTop: 6 }}>
+    <div style={{ display: "flex", justifyContent: "space-between", fontFamily: FONTS.mono, fontSize: 11, color: TOKENS.inkMuted, marginTop: 6 }}>
       <span>{min}</span>
       <span>{max}+</span>
     </div>
   </div>
 );
+
 
 // ============================================================================
 // Section 3 — Calculators
