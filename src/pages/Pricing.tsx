@@ -5,7 +5,7 @@ import { GlobalHeader } from "@/components/GlobalHeader";
 // ============================================================================
 // Tunable constants — update once real figures land.
 // ============================================================================
-const SEAT = 20; // £ per person per month
+const SEAT = 35; // £ per person per month
 const SIMPLE = 0.02; // £ per simple document
 const COMPLEX = 0.10; // £ per complex document
 const MIX_COMPLEX_RATIO = 1 / 5; // 1 complex in every 5 documents
@@ -262,7 +262,7 @@ const FAQS: Array<{ q: string; a: string }> = [
   { q: "Do I keep paying every time Hobson uses a document?", a: "No. Hobson reads each document once. After that he knows it for good — every question, calculation or check that touches it is free, forever. You pay for the one-time read, never for the knowing." },
   { q: "What happens when new documents arrive?", a: "They're just more learning, at the same 2–10p. A few new leases are handled without fuss. If a large batch arrives — a purchase, a data room — Hobson quotes it and waits for your approval before reading. It's never charged automatically." },
   { q: "Do I pay before I know the real cost?", a: "You approve a firm quote before the full read, and that quote always lands inside the range the estimate showed you. Hobson assesses your documents to price them accurately, but doesn't do the detailed, expensive read until you've said yes." },
-  { q: "Can I add or remove people?", a: "Any time. Each person is £20 a month for their own co-worker and unlimited use. Add seats as your team grows, remove them when it doesn't — no lock-in." },
+  { q: "Can I add or remove people?", a: "Any time. Each person is £35 a month for their own co-worker and unlimited use. Add seats as your team grows, remove them when it doesn't — no lock-in." },
 ];
 
 const TEAM: Array<{ name: string; role: string }> = [
@@ -348,7 +348,7 @@ export default function Pricing() {
                 Hobson is your AI co-worker for property. You pay for just two things: a seat for each person, and Hobson learning your documents.
               </p>
               <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginTop: 28 }}>
-                <Pill>£20 per person / month</Pill>
+                <Pill>£35 per person / month</Pill>
                 <Pill>Unlimited questions</Pill>
                 <Pill>Learning priced &amp; approved up front</Pill>
               </div>
@@ -371,7 +371,7 @@ export default function Pricing() {
                 <div style={{ fontFamily: FONTS.mono, fontSize: 11, letterSpacing: "0.2em", color: TOKENS.brassLight, textTransform: "uppercase" }}>Cost sheet</div>
               </div>
               {[
-                { k: "Seats", v: "£20 per person, per month — unlimited everything, the whole team" },
+                { k: "Seats", v: "£35 per person, per month — unlimited everything, the whole team" },
                 { k: "Learning", v: "2–10p a document, read once and known for good" },
                 { k: "Always", v: "You approve the cost of any reading before a page is turned" },
               ].map((row) => (
@@ -397,7 +397,7 @@ export default function Pricing() {
                 {
                   label: "Cost one",
                   h: "A seat for each person",
-                  price: "£20",
+                  price: "£35",
                   suffix: "per person / month",
                   body: "Every person who uses Hobson gets their own co-worker. He works alongside them, learns how they work, and gives them their own secure access, permissions and audit history. With it comes the complete Hobson: ask anything, as often as you like, across everything he's learned. We never count the questions. Add or remove people any time.",
                 },
