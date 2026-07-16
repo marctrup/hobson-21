@@ -252,7 +252,7 @@ const Calculators: React.FC = () => {
               <input
                 id="people"
                 type="range"
-                min={1}
+                min={MIN_SEATS}
                 max={30}
                 value={people}
                 onChange={(e) => setPeople(Number(e.target.value))}
@@ -260,12 +260,12 @@ const Calculators: React.FC = () => {
                 style={{ width: "100%" }}
               />
               <div style={{ display: "flex", justifyContent: "space-between", fontFamily: FONTS.mono, fontSize: 10.5, color: "rgba(255,255,255,0.55)", marginTop: 6 }}>
-                <span>1</span><span>30+</span>
+                <span>{MIN_SEATS}</span><span>30+</span>
               </div>
 
               <div style={{ marginTop: 22, paddingTop: 20, borderTop: "1px solid rgba(255,255,255,0.14)" }}>
                 <div style={{ fontFamily: FONTS.mono, fontSize: 10.5, color: "rgba(255,255,255,0.6)", marginBottom: 6, letterSpacing: "0.12em", textTransform: "uppercase" }}>
-                  {people} × £{SEAT} — every month
+                  {billedSeats} × £{SEAT} — every month{people <= MIN_SEATS ? " · Hobson starts at two seats" : ""}
                 </div>
                 <div style={{ display: "flex", alignItems: "baseline", gap: 10, flexWrap: "wrap" }}>
                   <div style={{ fontFamily: FONTS.serif, fontSize: "clamp(2.6rem, 4.8vw, 3.75rem)", lineHeight: 1, color: TOKENS.paper, letterSpacing: "-0.02em" }}>
