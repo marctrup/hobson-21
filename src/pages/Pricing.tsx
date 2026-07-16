@@ -153,7 +153,8 @@ const Calculators: React.FC = () => {
   const [people, setPeople] = useState(5);
   const [docs, setDocs] = useState(305);
 
-  const seatsMonthly = people * SEAT;
+  const billedSeats = Math.max(people, MIN_SEATS);
+  const seatsMonthly = billedSeats * SEAT;
   const overflow = docs >= HANDOFF;
 
   const blendedEst = docs * BLENDED;
