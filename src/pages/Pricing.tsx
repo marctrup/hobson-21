@@ -400,12 +400,8 @@ const TEAM: Array<{ name: string; role: string }> = [
   { name: "The Keeper", role: "Manages permissions & access" },
 ];
 
-const CERTAINTIES: Array<{ h: string; b: string }> = [
-  { h: "Nothing is charged automatically", b: "Reading new documents is always a decision you make, never a surprise. Hobson quotes it and waits for your yes." },
-  { h: "He confirms before he reads", b: "Hobson assesses your documents to price them, but only does the full, detailed read once you've approved and paid. No blind commitments." },
-  { h: "One read, known for good", b: "Once Hobson has learned a document, it's learned. You never pay to read the same thing twice, and every question about it afterwards is free." },
-  { h: "Questions are always unlimited", b: "Ask as much as you like, all day, every seat. We never count questions, so there's never a meter running while you think." },
-];
+
+
 
 // ============================================================================
 // Page
