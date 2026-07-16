@@ -18,7 +18,7 @@ import { TrustStrip } from "@/components/homepage/TrustStrip";
 
 import { TrustedConversationSection } from "@/components/homepage/TrustedConversationSection";
 import { TheTeamSection } from "@/components/homepage/TheTeamSection";
-import { WorkILookAfter } from "@/components/homepage/WorkILookAfter";
+
 
 
 import { structuredData } from "@/utils/seo-data";
