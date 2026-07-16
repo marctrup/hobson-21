@@ -19,6 +19,8 @@ const bookkeeperImg = bookkeeperAsset.url;
 
 type Beat = { who: string; img: string; headline: string; steps: string[] };
 
+const HOBSON_PROACTIVE = "You have a rent review in 60 days at 32 Hamilton Gardens, NW8. Would you like me to prepare this for you?";
+const USER_YES = "Yes";
 const USER_INTRO = "Hobson, please prepare my rent review for 32 Hamilton Gardens.";
 const HOBSON_INTRO = "Of course. I'll prepare the rent review for 32 Hamilton Gardens now — one moment while my team gathers what's needed.";
 
