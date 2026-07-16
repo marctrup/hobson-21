@@ -223,7 +223,7 @@ const Calculators: React.FC = () => {
             </p>
 
             <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginTop: 20, position: "relative" }}>
-              {["Unlimited questions", "Whole team", "Learns each person"].map((t) => (
+              {["Unlimited questions", "Learns each person"].map((t) => (
                 <span key={t} style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "5px 10px", borderRadius: 999, background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.18)", fontFamily: FONTS.mono, fontSize: 10.5, letterSpacing: "0.04em", color: "rgba(255,255,255,0.9)" }}>
                   <span style={{ width: 4, height: 4, borderRadius: "50%", background: TOKENS.brass }} /> {t}
                 </span>
