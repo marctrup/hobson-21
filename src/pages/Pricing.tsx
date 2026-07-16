@@ -389,7 +389,7 @@ const FAQS: Array<{ q: string; a: string }> = [
   { q: "Do I keep paying every time Hobson uses a document?", a: "No. Hobson reads each document once. After that he knows it for good — every question, calculation or check that touches it is free, forever. You pay for the one-time read, never for the knowing." },
   { q: "What happens when new documents arrive?", a: "They're just more learning, at the same 2–10p. A few new leases are handled without fuss. If a large batch arrives — a purchase, a data room — Hobson quotes it and waits for your approval before reading. It's never charged automatically." },
   { q: "Do I pay before I know the real cost?", a: "You approve a firm quote before the full read, and that quote always lands inside the range the estimate showed you. Hobson assesses your documents to price them accurately, but doesn't do the detailed, expensive read until you've said yes." },
-  { q: "Can I add or remove people?", a: "Any time. Each person is £35 a month for their own co-worker and unlimited use. Add seats as your team grows, remove them when it doesn't — no lock-in." },
+  { q: "Can I add or remove people?", a: "Any time. Hobson starts at two seats (£70/month), then it's £35 for each additional person for their own co-worker and unlimited use. Add seats as your team grows, remove them when it doesn't — no lock-in." },
 ];
 
 const TEAM: Array<{ name: string; role: string }> = [
