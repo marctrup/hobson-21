@@ -122,7 +122,7 @@ export const OrchestrationDemo: React.FC = () => {
   }, [cursor, introUserIdx, introHobsonIdx, introProactiveIdx, introPhase, finished]);
 
   useEffect(() => {
-    if (!playing || finished || introPhase < 3) return;
+    if (!playing || finished || introPhase < 5) return;
     const id = setInterval(() => {
       setCursor((c) => {
         if (c >= endCursor) {
