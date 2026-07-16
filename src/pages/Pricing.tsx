@@ -453,28 +453,8 @@ export default function Pricing() {
         {/* ---------------- Section 3 — Calculators ---------------- */}
         <Calculators />
 
-        {/* ---------------- Section 4 — Team (dark) ---------------- */}
-        <section style={{ background: TOKENS.ink, color: TOKENS.paper, padding: "clamp(72px, 10vw, 140px) 24px", borderTop: `1px solid ${TOKENS.hairlineDark}` }}>
-          <div style={{ maxWidth: 1120, margin: "0 auto" }}>
-            <div style={{ maxWidth: 720, marginBottom: 56 }}>
-              <SectionLabel dark>Section 4</SectionLabel>
-              <H2 dark>Your whole back-office team.<br />For every person, every seat.</H2>
-            </div>
 
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 1, background: TOKENS.hairlineDark, border: `1px solid ${TOKENS.hairlineDark}`, borderRadius: 16, overflow: "hidden" }}>
-              {TEAM.map((t) => (
-                <div key={t.name} style={{ background: TOKENS.ink, padding: "28px 24px" }}>
-                  <div style={{ fontFamily: FONTS.serif, fontSize: 20, color: TOKENS.paper, marginBottom: 8 }}>{t.name}</div>
-                  <div style={{ fontFamily: FONTS.sans, fontSize: 14, lineHeight: 1.5, color: "rgba(255,255,255,0.65)" }}>{t.role}</div>
-                </div>
-              ))}
-            </div>
 
-            <p style={{ fontFamily: FONTS.serif, fontStyle: "italic", fontSize: "clamp(1.15rem, 2vw, 1.4rem)", lineHeight: 1.5, color: TOKENS.brassLight, marginTop: 48, maxWidth: 720 }}>
-              You never choose a specialist. Hobson coordinates the team behind the scenes — you just ask him, and the right people go to work.
-            </p>
-          </div>
-        </section>
 
         {/* ---------------- Section 5 — Budget certainty ---------------- */}
         <section style={{ padding: "clamp(72px, 10vw, 140px) 24px" }}>
