@@ -330,7 +330,7 @@ export default function Pricing() {
         }
       `}</style>
 
-      <DraftBar />
+      
       <GlobalHeader />
 
       <main className="hp-page">
