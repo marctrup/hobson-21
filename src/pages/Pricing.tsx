@@ -6,6 +6,7 @@ import { GlobalHeader } from "@/components/GlobalHeader";
 // Tunable constants — update once real figures land.
 // ============================================================================
 const SEAT = 35; // £ per person per month
+const MIN_SEATS = 2;
 const SIMPLE = 0.02; // £ per simple document
 const COMPLEX = 0.10; // £ per complex document
 const MIX_COMPLEX_RATIO = 1 / 5; // 1 complex in every 5 documents
@@ -152,7 +153,8 @@ const Calculators: React.FC = () => {
   const [people, setPeople] = useState(5);
   const [docs, setDocs] = useState(305);
 
-  const seatsMonthly = people * SEAT;
+  const billedSeats = Math.max(people, MIN_SEATS);
+  const seatsMonthly = billedSeats * SEAT;
   const overflow = docs >= HANDOFF;
 
   const blendedEst = docs * BLENDED;
@@ -250,7 +252,7 @@ const Calculators: React.FC = () => {
               <input
                 id="people"
                 type="range"
-                min={1}
+                min={MIN_SEATS}
                 max={30}
                 value={people}
                 onChange={(e) => setPeople(Number(e.target.value))}
@@ -258,12 +260,12 @@ const Calculators: React.FC = () => {
                 style={{ width: "100%" }}
               />
               <div style={{ display: "flex", justifyContent: "space-between", fontFamily: FONTS.mono, fontSize: 10.5, color: "rgba(255,255,255,0.55)", marginTop: 6 }}>
-                <span>1</span><span>30+</span>
+                <span>{MIN_SEATS}</span><span>30+</span>
               </div>
 
               <div style={{ marginTop: 22, paddingTop: 20, borderTop: "1px solid rgba(255,255,255,0.14)" }}>
                 <div style={{ fontFamily: FONTS.mono, fontSize: 10.5, color: "rgba(255,255,255,0.6)", marginBottom: 6, letterSpacing: "0.12em", textTransform: "uppercase" }}>
-                  {people} × £{SEAT} — every month
+                  {billedSeats} × £{SEAT} — every month{people <= MIN_SEATS ? " · Hobson starts at two seats" : ""}
                 </div>
                 <div style={{ display: "flex", alignItems: "baseline", gap: 10, flexWrap: "wrap" }}>
                   <div style={{ fontFamily: FONTS.serif, fontSize: "clamp(2.6rem, 4.8vw, 3.75rem)", lineHeight: 1, color: TOKENS.paper, letterSpacing: "-0.02em" }}>
@@ -387,7 +389,7 @@ const FAQS: Array<{ q: string; a: string }> = [
   { q: "Do I keep paying every time Hobson uses a document?", a: "No. Hobson reads each document once. After that he knows it for good — every question, calculation or check that touches it is free, forever. You pay for the one-time read, never for the knowing." },
   { q: "What happens when new documents arrive?", a: "They're just more learning, at the same 2–10p. A few new leases are handled without fuss. If a large batch arrives — a purchase, a data room — Hobson quotes it and waits for your approval before reading. It's never charged automatically." },
   { q: "Do I pay before I know the real cost?", a: "You approve a firm quote before the full read, and that quote always lands inside the range the estimate showed you. Hobson assesses your documents to price them accurately, but doesn't do the detailed, expensive read until you've said yes." },
-  { q: "Can I add or remove people?", a: "Any time. Each person is £35 a month for their own co-worker and unlimited use. Add seats as your team grows, remove them when it doesn't — no lock-in." },
+  { q: "Can I add or remove people?", a: "Any time. Hobson starts at two seats (£70/month), then it's £35 for each additional person for their own co-worker and unlimited use. Add seats as your team grows, remove them when it doesn't — no lock-in." },
 ];
 
 const TEAM: Array<{ name: string; role: string }> = [
