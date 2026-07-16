@@ -491,29 +491,8 @@ export default function Pricing() {
 
 
 
-        {/* ---------------- Section 5 — Budget certainty ---------------- */}
-        <section style={{ padding: "clamp(36px, 5vw, 64px) 24px clamp(72px, 10vw, 140px)" }}>
-          <div style={{ maxWidth: 1120, margin: "0 auto" }}>
-            <div style={{ maxWidth: 640, marginBottom: 56 }}>
-              
-              <H2>You always know what you'll pay.</H2>
-            </div>
 
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 20 }}>
-              {CERTAINTIES.map((c, i) => (
-                <div
-                  key={c.h}
-                  className="hp-lift"
-                  style={{ background: TOKENS.card, borderRadius: 16, padding: "32px 28px", border: `1px solid ${TOKENS.hairline}`, position: "relative" }}
-                >
-                  <div style={{ fontFamily: FONTS.mono, fontSize: 11, color: TOKENS.brass, marginBottom: 16 }}>0{i + 1}</div>
-                  <h3 style={{ fontFamily: FONTS.serif, fontSize: "1.25rem", fontWeight: 400, color: TOKENS.ink, margin: 0, marginBottom: 12, lineHeight: 1.3 }}>{c.h}</h3>
-                  <p style={{ fontFamily: FONTS.sans, fontSize: 15, lineHeight: 1.6, color: TOKENS.inkSoft, margin: 0 }}>{c.b}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
+
 
         {/* ---------------- Section 6 — FAQ ---------------- */}
         <section style={{ padding: "clamp(72px, 10vw, 140px) 24px", background: TOKENS.card, borderTop: `1px solid ${TOKENS.hairline}`, borderBottom: `1px solid ${TOKENS.hairline}` }}>
