@@ -434,6 +434,27 @@ export default function Pricing() {
         {/* ---------------- Section 3 — Calculators ---------------- */}
         <Calculators />
 
+        {/* ---------------- Section 4 — Enterprise talk-to-us ---------------- */}
+        <section style={{ padding: "clamp(72px, 10vw, 140px) 24px", borderTop: `1px solid ${TOKENS.hairline}` }}>
+          <div style={{ maxWidth: 820, margin: "0 auto", textAlign: "center" }}>
+            <div style={{ fontFamily: FONTS.mono, fontSize: 12, letterSpacing: "0.14em", color: TOKENS.brass, marginBottom: 20 }}>
+              ENTERPRISE
+            </div>
+            <h2 style={{ fontFamily: FONTS.serif, fontSize: "clamp(1.75rem, 3.5vw, 2.5rem)", fontWeight: 400, color: TOKENS.ink, margin: 0, marginBottom: 24, lineHeight: 1.15 }}>
+              Bigger, or more complex? Let's talk.
+            </h2>
+            <p style={{ fontFamily: FONTS.sans, fontSize: 17, lineHeight: 1.65, color: TOKENS.inkSoft, margin: "0 auto 32px", maxWidth: 680 }}>
+              The calculators above cover most firms perfectly. But if you're running a large or unusual portfolio, operating across multiple entities, or need something shaped around how your organisation actually works — a bespoke setup, tailored onboarding, or specific security and access arrangements — we'd rather design it with you than guess. You still get the complete Hobson; we just fit the details around you.
+            </p>
+            <a href="mailto:info@hobsonschoice.ai" className="hp-btn hp-btn-brass">Talk to us</a>
+            <p style={{ fontFamily: FONTS.sans, fontSize: 13, lineHeight: 1.6, color: TOKENS.inkSoft, opacity: 0.75, margin: "24px auto 0", maxWidth: 560 }}>
+              Typically for portfolios beyond what a quick estimate can price, or organisations with particular compliance, security or integration needs.
+            </p>
+          </div>
+        </section>
+
+
+
 
 
 
