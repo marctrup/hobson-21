@@ -459,7 +459,7 @@ export default function Pricing() {
 
 
         {/* ---------------- Section 5 — Budget certainty ---------------- */}
-        <section style={{ padding: "clamp(72px, 10vw, 140px) 24px" }}>
+        <section style={{ padding: "clamp(36px, 5vw, 64px) 24px clamp(72px, 10vw, 140px)" }}>
           <div style={{ maxWidth: 1120, margin: "0 auto" }}>
             <div style={{ maxWidth: 640, marginBottom: 56 }}>
               <SectionLabel>Section 5</SectionLabel>
