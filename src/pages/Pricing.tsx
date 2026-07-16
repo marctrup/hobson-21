@@ -400,12 +400,8 @@ const TEAM: Array<{ name: string; role: string }> = [
   { name: "The Keeper", role: "Manages permissions & access" },
 ];
 
-const CERTAINTIES: Array<{ h: string; b: string }> = [
-  { h: "Nothing is charged automatically", b: "Reading new documents is always a decision you make, never a surprise. Hobson quotes it and waits for your yes." },
-  { h: "He confirms before he reads", b: "Hobson assesses your documents to price them, but only does the full, detailed read once you've approved and paid. No blind commitments." },
-  { h: "One read, known for good", b: "Once Hobson has learned a document, it's learned. You never pay to read the same thing twice, and every question about it afterwards is free." },
-  { h: "Questions are always unlimited", b: "Ask as much as you like, all day, every seat. We never count questions, so there's never a meter running while you think." },
-];
+
+
 
 // ============================================================================
 // Page
@@ -491,29 +487,8 @@ export default function Pricing() {
 
 
 
-        {/* ---------------- Section 5 — Budget certainty ---------------- */}
-        <section style={{ padding: "clamp(36px, 5vw, 64px) 24px clamp(72px, 10vw, 140px)" }}>
-          <div style={{ maxWidth: 1120, margin: "0 auto" }}>
-            <div style={{ maxWidth: 640, marginBottom: 56 }}>
-              
-              <H2>You always know what you'll pay.</H2>
-            </div>
 
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 20 }}>
-              {CERTAINTIES.map((c, i) => (
-                <div
-                  key={c.h}
-                  className="hp-lift"
-                  style={{ background: TOKENS.card, borderRadius: 16, padding: "32px 28px", border: `1px solid ${TOKENS.hairline}`, position: "relative" }}
-                >
-                  <div style={{ fontFamily: FONTS.mono, fontSize: 11, color: TOKENS.brass, marginBottom: 16 }}>0{i + 1}</div>
-                  <h3 style={{ fontFamily: FONTS.serif, fontSize: "1.25rem", fontWeight: 400, color: TOKENS.ink, margin: 0, marginBottom: 12, lineHeight: 1.3 }}>{c.h}</h3>
-                  <p style={{ fontFamily: FONTS.sans, fontSize: 15, lineHeight: 1.6, color: TOKENS.inkSoft, margin: 0 }}>{c.b}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
+
 
         {/* ---------------- Section 6 — FAQ ---------------- */}
         <section style={{ padding: "clamp(72px, 10vw, 140px) 24px", background: TOKENS.card, borderTop: `1px solid ${TOKENS.hairline}`, borderBottom: `1px solid ${TOKENS.hairline}` }}>
