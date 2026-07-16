@@ -213,7 +213,7 @@ const Calculators: React.FC = () => {
                 <span style={{ fontFamily: FONTS.mono, fontSize: 14, color: TOKENS.brassLight, marginLeft: 8 }}>/mo</span>
               </div>
               <p style={{ fontFamily: FONTS.sans, fontSize: 14, color: "rgba(255,255,255,0.7)", marginTop: 16, lineHeight: 1.5 }}>
-                {people} {people === 1 ? "person" : "people"} × £{SEAT} each. Unlimited questions, the whole team, every month.
+                {people} {people === 1 ? "person" : "people"} × £{SEAT} each. Unlimited questions, your own personal co-worker.
               </p>
             </div>
           </div>
