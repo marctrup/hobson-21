@@ -205,16 +205,6 @@ export const OrchestrationDemo: React.FC = () => {
           )}
         </div>
 
-        {/* User full request */}
-        <div
-          className={`mt-4 flex justify-end transition-all duration-500 ${introPhase >= 3 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2 pointer-events-none h-0 overflow-hidden mt-0"}`}
-          style={{ animation: introPhase >= 3 ? "fade-up 0.4s ease both" : undefined }}
-        >
-          <div className="max-w-[85%] rounded-2xl rounded-tr-sm bg-purple-700 text-white px-4 py-3 text-sm shadow">
-            {USER_INTRO.slice(0, introUserIdx)}
-            {introPhase === 3 && <span className="animate-pulse">|</span>}
-          </div>
-        </div>
 
         {/* Hobson opening */}
         <div
