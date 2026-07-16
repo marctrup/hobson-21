@@ -359,6 +359,7 @@ export const OrchestrationDemo: React.FC = () => {
                 setFinished(false);
                 setPlaying(true);
                 setIntroPhase(0);
+                setIntroProactiveIdx(0);
                 setIntroUserIdx(0);
                 setIntroHobsonIdx(0);
                 orchestrationRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
