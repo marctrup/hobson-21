@@ -19,6 +19,8 @@ const bookkeeperImg = bookkeeperAsset.url;
 
 type Beat = { who: string; img: string; headline: string; steps: string[] };
 
+const HOBSON_PROACTIVE = "You have a rent review in 60 days at 32 Hamilton Gardens, NW8. Would you like me to prepare this for you?";
+const USER_YES = "Yes";
 const USER_INTRO = "Hobson, please prepare my rent review for 32 Hamilton Gardens.";
 const HOBSON_INTRO = "Of course. I'll prepare the rent review for 32 Hamilton Gardens now — one moment while my team gathers what's needed.";
 
@@ -57,28 +59,50 @@ export const OrchestrationDemo: React.FC = () => {
   };
 
   const [introPhase, setIntroPhase] = useState(0);
+  const [introProactiveIdx, setIntroProactiveIdx] = useState(0);
   const [introUserIdx, setIntroUserIdx] = useState(0);
   const [introHobsonIdx, setIntroHobsonIdx] = useState(0);
 
+  // Phase 0 -> 1: start Hobson proactive
   useEffect(() => {
     if (!playing || introPhase !== 0) return;
     setIntroPhase(1);
   }, [playing, introPhase]);
 
+  // Phase 1: type Hobson proactive message
   useEffect(() => {
     if (introPhase !== 1 || !playing) return;
+    if (introProactiveIdx >= HOBSON_PROACTIVE.length) {
+      const t = setTimeout(() => setIntroPhase(2), 700);
+      return () => clearTimeout(t);
+    }
+    const t = setTimeout(() => setIntroProactiveIdx((i) => i + 1), 30);
+    return () => clearTimeout(t);
+  }, [introPhase, introProactiveIdx, playing]);
+
+  // Phase 2: show Yes button, auto-confirm after brief pause
+  useEffect(() => {
+    if (introPhase !== 2 || !playing) return;
+    const t = setTimeout(() => setIntroPhase(3), 1400);
+    return () => clearTimeout(t);
+  }, [introPhase, playing]);
+
+  // Phase 3: type user long request
+  useEffect(() => {
+    if (introPhase !== 3 || !playing) return;
     if (introUserIdx >= USER_INTRO.length) {
-      const t = setTimeout(() => setIntroPhase(2), 500);
+      const t = setTimeout(() => setIntroPhase(4), 500);
       return () => clearTimeout(t);
     }
     const t = setTimeout(() => setIntroUserIdx((i) => i + 1), 30);
     return () => clearTimeout(t);
   }, [introPhase, introUserIdx, playing]);
 
+  // Phase 4: type Hobson intro
   useEffect(() => {
-    if (introPhase !== 2 || !playing) return;
+    if (introPhase !== 4 || !playing) return;
     if (introHobsonIdx >= HOBSON_INTRO.length) {
-      const t = setTimeout(() => setIntroPhase(3), 600);
+      const t = setTimeout(() => setIntroPhase(5), 600);
       return () => clearTimeout(t);
     }
     const t = setTimeout(() => setIntroHobsonIdx((i) => i + 1), 30);
@@ -86,7 +110,7 @@ export const OrchestrationDemo: React.FC = () => {
   }, [introPhase, introHobsonIdx, playing]);
 
   useEffect(() => {
-    if (introPhase === 3 && cursor < INTRO_BEATS) {
+    if (introPhase === 5 && cursor < INTRO_BEATS) {
       setCursor(INTRO_BEATS);
     }
   }, [introPhase, cursor]);
@@ -95,10 +119,10 @@ export const OrchestrationDemo: React.FC = () => {
     const el = scrollRef.current;
     if (!el || !stickToBottomRef.current) return;
     el.scrollTo({ top: el.scrollHeight, behavior: "smooth" });
-  }, [cursor, introUserIdx, introHobsonIdx, introPhase, finished]);
+  }, [cursor, introUserIdx, introHobsonIdx, introProactiveIdx, introPhase, finished]);
 
   useEffect(() => {
-    if (!playing || finished || introPhase < 3) return;
+    if (!playing || finished || introPhase < 5) return;
     const id = setInterval(() => {
       setCursor((c) => {
         if (c >= endCursor) {
@@ -159,26 +183,58 @@ export const OrchestrationDemo: React.FC = () => {
           onScroll={handleScroll}
           className="hobson-scroll flex-1 overflow-y-auto p-4 sm:p-6"
         >
-        {/* User bubble */}
+        {/* Hobson proactive opener */}
         <div
-          className={`flex justify-start transition-all duration-500 ${hasStarted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"}`}
+          className={`flex items-start gap-3 transition-all duration-500 ${hasStarted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"}`}
           style={{ animation: hasStarted ? "fade-up 0.4s ease both" : undefined }}
+        >
+          <img src={hobsonOwl} alt="Hobson" className="w-10 h-10 rounded-full bg-purple-100 p-1 border border-purple-200" />
+          <div className="rounded-2xl rounded-tl-sm bg-white border border-purple-100 px-4 py-3 text-sm text-slate-700 shadow-sm max-w-[85%]">
+            {HOBSON_PROACTIVE.slice(0, introProactiveIdx)}
+            {introPhase === 1 && <span className="animate-pulse">|</span>}
+          </div>
+        </div>
+
+        {/* User "Yes" confirmation */}
+        <div
+          className={`mt-4 flex justify-end transition-all duration-500 ${introPhase >= 2 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2 pointer-events-none h-0 overflow-hidden mt-0"}`}
+          style={{ animation: introPhase >= 2 ? "fade-up 0.4s ease both" : undefined }}
+        >
+          {introPhase === 2 ? (
+            <button
+              type="button"
+              onClick={() => setIntroPhase(3)}
+              className="rounded-full bg-purple-700 hover:bg-purple-800 text-white px-5 py-2 text-sm font-semibold shadow transition-colors"
+            >
+              Yes
+            </button>
+          ) : (
+            <div className="max-w-[85%] rounded-2xl rounded-tr-sm bg-purple-700 text-white px-4 py-2 text-sm shadow">
+              {USER_YES}
+            </div>
+          )}
+        </div>
+
+        {/* User full request */}
+        <div
+          className={`mt-4 flex justify-end transition-all duration-500 ${introPhase >= 3 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2 pointer-events-none h-0 overflow-hidden mt-0"}`}
+          style={{ animation: introPhase >= 3 ? "fade-up 0.4s ease both" : undefined }}
         >
           <div className="max-w-[85%] rounded-2xl rounded-tr-sm bg-purple-700 text-white px-4 py-3 text-sm shadow">
             {USER_INTRO.slice(0, introUserIdx)}
-            {introPhase === 1 && <span className="animate-pulse">|</span>}
+            {introPhase === 3 && <span className="animate-pulse">|</span>}
           </div>
         </div>
 
         {/* Hobson opening */}
         <div
-          className={`mt-4 flex items-start gap-3 transition-all duration-500 ${introPhase >= 2 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2 pointer-events-none h-0 overflow-hidden mt-0"}`}
-          style={{ animation: introPhase >= 2 ? "fade-up 0.4s ease both" : undefined }}
+          className={`mt-4 flex items-start gap-3 transition-all duration-500 ${introPhase >= 4 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2 pointer-events-none h-0 overflow-hidden mt-0"}`}
+          style={{ animation: introPhase >= 4 ? "fade-up 0.4s ease both" : undefined }}
         >
           <img src={hobsonOwl} alt="Hobson" className="w-10 h-10 rounded-full bg-purple-100 p-1 border border-purple-200" />
           <div className="rounded-2xl rounded-tl-sm bg-white border border-purple-100 px-4 py-3 text-sm text-slate-700 shadow-sm">
             {HOBSON_INTRO.slice(0, introHobsonIdx)}
-            {introPhase === 2 && <span className="animate-pulse">|</span>}
+            {introPhase === 4 && <span className="animate-pulse">|</span>}
           </div>
         </div>
 
@@ -303,6 +359,7 @@ export const OrchestrationDemo: React.FC = () => {
                 setFinished(false);
                 setPlaying(true);
                 setIntroPhase(0);
+                setIntroProactiveIdx(0);
                 setIntroUserIdx(0);
                 setIntroHobsonIdx(0);
                 orchestrationRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
