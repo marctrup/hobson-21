@@ -187,7 +187,7 @@ const Calculators: React.FC = () => {
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "minmax(0, 1.15fr) minmax(0, 1fr)",
+            gridTemplateColumns: "minmax(0, 1fr) minmax(0, 1fr)",
             gap: "clamp(20px, 2.5vw, 32px)",
             alignItems: "stretch",
           }}
