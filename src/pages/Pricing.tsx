@@ -174,7 +174,7 @@ const Calculators: React.FC = () => {
     >
       <div style={{ maxWidth: 1040, margin: "0 auto" }}>
         <div style={{ maxWidth: 640, marginBottom: 64 }}>
-          <SectionLabel>Section 3</SectionLabel>
+          
           <H2>See what Hobson would cost.</H2>
           <p style={{ fontFamily: FONTS.sans, fontSize: 17, lineHeight: 1.6, color: TOKENS.inkSoft, marginTop: 16 }}>
             Slide, and see. Nothing is submitted, nothing is stored. Just an honest picture of what Hobson would cost your firm.
@@ -426,7 +426,7 @@ export default function Pricing() {
         <section style={{ padding: "clamp(72px, 10vw, 140px) 24px" }}>
           <div style={{ maxWidth: 1120, margin: "0 auto" }}>
             <div style={{ maxWidth: 640, marginBottom: 56 }}>
-              <SectionLabel>Section 2</SectionLabel>
+              
               <H2>Two costs. That's it.</H2>
             </div>
 
@@ -500,7 +500,7 @@ export default function Pricing() {
         <section style={{ padding: "clamp(36px, 5vw, 64px) 24px clamp(72px, 10vw, 140px)" }}>
           <div style={{ maxWidth: 1120, margin: "0 auto" }}>
             <div style={{ maxWidth: 640, marginBottom: 56 }}>
-              <SectionLabel>Section 5</SectionLabel>
+              
               <H2>You always know what you'll pay.</H2>
             </div>
 
@@ -524,7 +524,7 @@ export default function Pricing() {
         <section style={{ padding: "clamp(72px, 10vw, 140px) 24px", background: TOKENS.card, borderTop: `1px solid ${TOKENS.hairline}`, borderBottom: `1px solid ${TOKENS.hairline}` }}>
           <div style={{ maxWidth: 820, margin: "0 auto" }}>
             <div style={{ marginBottom: 40 }}>
-              <SectionLabel>Section 6</SectionLabel>
+              
               <H2>Questions, answered plainly.</H2>
             </div>
             <div>
