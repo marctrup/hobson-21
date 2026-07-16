@@ -181,59 +181,92 @@ const Calculators: React.FC = () => {
           </p>
         </div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(340px, 1fr))", gap: 32 }}>
-          {/* Seats */}
-          <div style={{ background: TOKENS.paper, borderRadius: 20, padding: "40px 36px", border: `1px solid ${TOKENS.hairline}` }}>
-            <div style={{ fontFamily: FONTS.mono, fontSize: 11, letterSpacing: "0.2em", color: TOKENS.brass, textTransform: "uppercase", marginBottom: 28 }}>
-              Seats
+        {/* Sequenced: Learning first (one-off, upfront), then Seats (monthly, ongoing) */}
+        <div style={{ display: "flex", flexDirection: "column", gap: 0, position: "relative" }}>
+
+          {/* STEP 1 — Learning (one-off, upfront) */}
+          <div style={{ display: "grid", gridTemplateColumns: "auto 1fr", gap: 24, alignItems: "stretch" }}>
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 12 }}>
+              <div style={{ width: 44, height: 44, borderRadius: "50%", background: TOKENS.brass, color: TOKENS.paper, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: FONTS.serif, fontSize: 22, lineHeight: 1, fontWeight: 500, boxShadow: "0 4px 12px -4px rgba(251,146,60,0.5)" }}>1</div>
+              <div style={{ flex: 1, width: 2, background: `linear-gradient(to bottom, ${TOKENS.brass}, ${TOKENS.hairline})`, minHeight: 24 }} />
             </div>
-            <Slider id="people" label="People" min={1} max={30} value={people} onChange={setPeople} suffix={people === 1 ? "person" : "people"} />
-            <div style={{ marginTop: 36, paddingTop: 28, borderTop: `1px solid ${TOKENS.hairline}` }}>
-              <div style={{ fontFamily: FONTS.mono, fontSize: 12, color: TOKENS.inkMuted, marginBottom: 8 }}>
-                {people} × £{SEAT}
+            <div style={{ background: TOKENS.paper, borderRadius: 20, padding: "40px 36px", border: `1px solid ${TOKENS.hairline}`, borderLeft: `3px solid ${TOKENS.brass}` }}>
+              <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: 16, flexWrap: "wrap", marginBottom: 28 }}>
+                <div style={{ fontFamily: FONTS.mono, fontSize: 11, letterSpacing: "0.2em", color: TOKENS.brass, textTransform: "uppercase" }}>
+                  First — Learning
+                </div>
+                <div style={{ fontFamily: FONTS.mono, fontSize: 11, letterSpacing: "0.14em", color: TOKENS.inkMuted, textTransform: "uppercase" }}>
+                  One-off · paid once, upfront
+                </div>
               </div>
-              <div style={{ fontFamily: FONTS.serif, fontSize: "clamp(2.5rem, 5vw, 3.25rem)", lineHeight: 1, color: TOKENS.ink }}>
-                {fmtGBP(seatsMonthly)}
-                <span style={{ fontFamily: FONTS.mono, fontSize: 14, color: TOKENS.brass, marginLeft: 8 }}>/mo</span>
+              <Slider id="docs" label="Documents" min={10} max={600} value={docs} onChange={setDocs} suffix="docs" />
+              <div style={{ marginTop: 36, paddingTop: 28, borderTop: `1px solid ${TOKENS.hairline}` }}>
+                {overflow ? (
+                  <>
+                    <div style={{ fontFamily: FONTS.serif, fontSize: "clamp(1.6rem, 3vw, 2rem)", lineHeight: 1.15, color: TOKENS.ink, fontStyle: "italic" }}>
+                      Let's confirm together.
+                    </div>
+                    <p style={{ fontFamily: FONTS.sans, fontSize: 14, color: TOKENS.inkSoft, marginTop: 16, lineHeight: 1.55 }}>
+                      Above roughly {HANDOFF} documents we confirm the details with you personally before quoting — this is where a tailored onboarding conversation begins.
+                    </p>
+                  </>
+                ) : (
+                  <>
+                    <div style={{ fontFamily: FONTS.mono, fontSize: 12, color: TOKENS.inkMuted, marginBottom: 8 }}>
+                      Estimate — one-off, upfront
+                    </div>
+                    <div style={{ fontFamily: FONTS.serif, fontSize: "clamp(2.5rem, 5vw, 3.25rem)", lineHeight: 1, color: TOKENS.ink }}>
+                      around {fmtGBP(roundNice(blendedEst))}
+                    </div>
+                    <p style={{ fontFamily: FONTS.mono, fontSize: 12, color: TOKENS.brass, marginTop: 12 }}>
+                      Firm price will fall between {fmtGBP2(low)} and {fmtGBP2(high)}
+                    </p>
+                    <p style={{ fontFamily: FONTS.sans, fontSize: 14, color: TOKENS.inkSoft, marginTop: 16, lineHeight: 1.55 }}>
+                      Based on a typical mix of about 1 complex document in every 5. Hobson confirms the exact figure once he's assessed how many are complex — and you approve it before the full read begins.
+                    </p>
+                  </>
+                )}
               </div>
-              <p style={{ fontFamily: FONTS.sans, fontSize: 14, color: TOKENS.inkSoft, marginTop: 16, lineHeight: 1.55 }}>
-                {people} {people === 1 ? "person" : "people"} × £{SEAT} each. Unlimited questions, your own personal co-worker.
-              </p>
             </div>
           </div>
 
-          {/* Documents */}
-          <div style={{ background: TOKENS.paper, borderRadius: 20, padding: "40px 36px", border: `1px solid ${TOKENS.hairline}` }}>
-            <div style={{ fontFamily: FONTS.mono, fontSize: 11, letterSpacing: "0.2em", color: TOKENS.brass, textTransform: "uppercase", marginBottom: 28 }}>
-              Learning
+          {/* Connector label */}
+          <div style={{ display: "grid", gridTemplateColumns: "auto 1fr", gap: 24, alignItems: "center" }}>
+            <div style={{ width: 44, display: "flex", justifyContent: "center" }}>
+              <div style={{ width: 2, height: 48, background: TOKENS.hairline }} />
             </div>
-            <Slider id="docs" label="Documents" min={10} max={600} value={docs} onChange={setDocs} suffix="docs" />
-            <div style={{ marginTop: 36, paddingTop: 28, borderTop: `1px solid ${TOKENS.hairline}` }}>
-              {overflow ? (
-                <>
-                  <div style={{ fontFamily: FONTS.serif, fontSize: "clamp(1.6rem, 3vw, 2rem)", lineHeight: 1.15, color: TOKENS.ink, fontStyle: "italic" }}>
-                    Let's confirm together.
-                  </div>
-                  <p style={{ fontFamily: FONTS.sans, fontSize: 14, color: TOKENS.inkSoft, marginTop: 16, lineHeight: 1.55 }}>
-                    Above roughly {HANDOFF} documents we confirm the details with you personally before quoting — this is where a tailored onboarding conversation begins.
-                  </p>
-                </>
-              ) : (
-                <>
-                  <div style={{ fontFamily: FONTS.mono, fontSize: 12, color: TOKENS.inkMuted, marginBottom: 8 }}>
-                    Estimate — one-off
-                  </div>
-                  <div style={{ fontFamily: FONTS.serif, fontSize: "clamp(2.5rem, 5vw, 3.25rem)", lineHeight: 1, color: TOKENS.ink }}>
-                    around {fmtGBP(roundNice(blendedEst))}
-                  </div>
-                  <p style={{ fontFamily: FONTS.mono, fontSize: 12, color: TOKENS.brass, marginTop: 12 }}>
-                    Firm price will fall between {fmtGBP2(low)} and {fmtGBP2(high)}
-                  </p>
-                  <p style={{ fontFamily: FONTS.sans, fontSize: 14, color: TOKENS.inkSoft, marginTop: 16, lineHeight: 1.55 }}>
-                    Based on a typical mix of about 1 complex document in every 5. Hobson confirms the exact figure once he's assessed how many are complex — and you approve it before the full read begins.
-                  </p>
-                </>
-              )}
+            <div style={{ padding: "16px 0", fontFamily: FONTS.mono, fontSize: 11, letterSpacing: "0.2em", color: TOKENS.inkMuted, textTransform: "uppercase" }}>
+              Then, ongoing —
+            </div>
+          </div>
+
+          {/* STEP 2 — Seats (monthly) */}
+          <div style={{ display: "grid", gridTemplateColumns: "auto 1fr", gap: 24, alignItems: "stretch" }}>
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+              <div style={{ width: 44, height: 44, borderRadius: "50%", background: TOKENS.paper, color: TOKENS.ink, border: `2px solid ${TOKENS.ink}`, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: FONTS.serif, fontSize: 22, lineHeight: 1, fontWeight: 500 }}>2</div>
+            </div>
+            <div style={{ background: TOKENS.paper, borderRadius: 20, padding: "40px 36px", border: `1px solid ${TOKENS.hairline}` }}>
+              <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: 16, flexWrap: "wrap", marginBottom: 28 }}>
+                <div style={{ fontFamily: FONTS.mono, fontSize: 11, letterSpacing: "0.2em", color: TOKENS.ink, textTransform: "uppercase" }}>
+                  Then — Seats
+                </div>
+                <div style={{ fontFamily: FONTS.mono, fontSize: 11, letterSpacing: "0.14em", color: TOKENS.inkMuted, textTransform: "uppercase" }}>
+                  Monthly · per person
+                </div>
+              </div>
+              <Slider id="people" label="People" min={1} max={30} value={people} onChange={setPeople} suffix={people === 1 ? "person" : "people"} />
+              <div style={{ marginTop: 36, paddingTop: 28, borderTop: `1px solid ${TOKENS.hairline}` }}>
+                <div style={{ fontFamily: FONTS.mono, fontSize: 12, color: TOKENS.inkMuted, marginBottom: 8 }}>
+                  {people} × £{SEAT} · per month
+                </div>
+                <div style={{ fontFamily: FONTS.serif, fontSize: "clamp(2.5rem, 5vw, 3.25rem)", lineHeight: 1, color: TOKENS.ink }}>
+                  {fmtGBP(seatsMonthly)}
+                  <span style={{ fontFamily: FONTS.mono, fontSize: 14, color: TOKENS.brass, marginLeft: 8 }}>/mo</span>
+                </div>
+                <p style={{ fontFamily: FONTS.sans, fontSize: 14, color: TOKENS.inkSoft, marginTop: 16, lineHeight: 1.55 }}>
+                  {people} {people === 1 ? "person" : "people"} × £{SEAT} each. Unlimited questions, your own personal co-worker.
+                </p>
+              </div>
             </div>
           </div>
         </div>
@@ -246,7 +279,8 @@ const Calculators: React.FC = () => {
           <p style={{ fontFamily: FONTS.serif, fontSize: "clamp(1.25rem, 2.2vw, 1.6rem)", lineHeight: 1.45, color: TOKENS.ink, margin: 0 }}>
             A <span style={{ color: TOKENS.brass }}>{people}-person</span> firm with{" "}
             <span style={{ color: TOKENS.brass }}>{docs}{overflow ? "+" : ""} documents</span>:{" "}
-            <span style={{ fontFamily: FONTS.mono, fontSize: "0.9em" }}>{fmtGBP(seatsMonthly)}/mo</span>, plus a one-off of {oneOffDisplay} to get started.
+            a one-off of {oneOffDisplay} to get started, then{" "}
+            <span style={{ fontFamily: FONTS.mono, fontSize: "0.9em" }}>{fmtGBP(seatsMonthly)}/mo</span> ongoing.
           </p>
         </div>
       </div>
