@@ -193,6 +193,81 @@ const Calculators: React.FC = () => {
           }}
           className="hp-calc-grid"
         >
+          {/* ---------- LEARNING (light supporting) ---------- */}
+          <div
+            style={{
+              position: "relative",
+              borderRadius: 28,
+              padding: "clamp(32px, 3.5vw, 48px)",
+              background: TOKENS.paper,
+              border: `1px solid ${TOKENS.hairline}`,
+              boxShadow: "0 8px 24px -16px rgba(42,23,88,0.15)",
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
+            <div style={{ position: "absolute", top: 0, left: 0, width: "100%", height: 4, background: TOKENS.brass, borderRadius: "28px 28px 0 0" }} />
+
+            <div style={{ fontFamily: FONTS.mono, fontSize: 11, letterSpacing: "0.24em", color: TOKENS.brass, textTransform: "uppercase", marginBottom: 16 }}>
+              Learning · one-off · upfront
+            </div>
+            <h3 style={{ fontFamily: FONTS.serif, fontWeight: 400, fontSize: "clamp(1.75rem, 2.8vw, 2.4rem)", lineHeight: 1.05, letterSpacing: "-0.02em", margin: 0, color: TOKENS.ink }}>
+              Teach Hobson your documents.{" "}
+              <span style={{ fontStyle: "italic", color: TOKENS.brass }}>Once.</span>
+            </h3>
+            <p style={{ fontFamily: FONTS.sans, fontSize: 15, lineHeight: 1.6, color: TOKENS.inkSoft, marginTop: 16 }}>
+              2–10p a document, read once and known for good. You approve a firm quote before the full read.
+            </p>
+
+            <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginTop: 20 }}>
+              {["Read once", "Known for good", "Firm quote first"].map((t) => (
+                <span key={t} style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "5px 10px", borderRadius: 999, background: "rgba(249,115,22,0.08)", border: `1px solid ${TOKENS.hairline}`, fontFamily: FONTS.mono, fontSize: 10.5, letterSpacing: "0.04em", color: TOKENS.ink }}>
+                  <span style={{ width: 4, height: 4, borderRadius: "50%", background: TOKENS.brass }} /> {t}
+                </span>
+              ))}
+            </div>
+
+            {/* Calculator block */}
+            <div
+              style={{
+                marginTop: 28,
+                background: TOKENS.paperSoft,
+                border: `1px solid ${TOKENS.hairline}`,
+                borderRadius: 18,
+                padding: "clamp(22px, 2.4vw, 30px)",
+              }}
+            >
+              <Slider id="docs" label="Documents" min={10} max={600} value={docs} onChange={setDocs} suffix="docs" />
+              <div style={{ marginTop: 22, paddingTop: 20, borderTop: `1px solid ${TOKENS.hairline}` }}>
+                {overflow ? (
+                  <>
+                    <div style={{ fontFamily: FONTS.serif, fontSize: "clamp(1.5rem, 2.6vw, 1.9rem)", lineHeight: 1.15, color: TOKENS.ink, fontStyle: "italic" }}>
+                      Let's confirm together.
+                    </div>
+                    <p style={{ fontFamily: FONTS.sans, fontSize: 13, color: TOKENS.inkSoft, marginTop: 10, lineHeight: 1.55 }}>
+                      Above roughly {HANDOFF} documents we confirm the details with you personally.
+                    </p>
+                  </>
+                ) : (
+                  <>
+                    <div style={{ fontFamily: FONTS.mono, fontSize: 10.5, color: TOKENS.inkMuted, marginBottom: 6, letterSpacing: "0.12em", textTransform: "uppercase" }}>
+                      Estimate — one-off
+                    </div>
+                    <div style={{ display: "flex", alignItems: "baseline", gap: 10, flexWrap: "wrap" }}>
+                      <div style={{ fontFamily: FONTS.serif, fontSize: "clamp(2.6rem, 4.8vw, 3.75rem)", lineHeight: 1, color: TOKENS.ink, letterSpacing: "-0.02em" }}>
+                        {fmtGBP(roundNice(blendedEst))}
+                      </div>
+                      <span style={{ fontFamily: FONTS.mono, fontSize: 14, color: TOKENS.brass }}>one-off</span>
+                    </div>
+                    <p style={{ fontFamily: FONTS.mono, fontSize: 11, color: TOKENS.inkMuted, marginTop: 10 }}>
+                      Range: {fmtGBP2(low)} — {fmtGBP2(high)}
+                    </p>
+                  </>
+                )}
+              </div>
+            </div>
+          </div>
+
           {/* ---------- SEATS (dark hero) ---------- */}
           <div
             style={{
@@ -276,81 +351,7 @@ const Calculators: React.FC = () => {
               </div>
             </div>
           </div>
-
-          {/* ---------- LEARNING (light supporting) ---------- */}
-          <div
-            style={{
-              position: "relative",
-              borderRadius: 28,
-              padding: "clamp(32px, 3.5vw, 48px)",
-              background: TOKENS.paper,
-              border: `1px solid ${TOKENS.hairline}`,
-              boxShadow: "0 8px 24px -16px rgba(42,23,88,0.15)",
-              display: "flex",
-              flexDirection: "column",
-            }}
-          >
-            <div style={{ position: "absolute", top: 0, left: 0, width: "100%", height: 4, background: TOKENS.brass, borderRadius: "28px 28px 0 0" }} />
-
-            <div style={{ fontFamily: FONTS.mono, fontSize: 11, letterSpacing: "0.24em", color: TOKENS.brass, textTransform: "uppercase", marginBottom: 16 }}>
-              Learning · one-off · upfront
-            </div>
-            <h3 style={{ fontFamily: FONTS.serif, fontWeight: 400, fontSize: "clamp(1.75rem, 2.8vw, 2.4rem)", lineHeight: 1.05, letterSpacing: "-0.02em", margin: 0, color: TOKENS.ink }}>
-              Teach Hobson your documents.{" "}
-              <span style={{ fontStyle: "italic", color: TOKENS.brass }}>Once.</span>
-            </h3>
-            <p style={{ fontFamily: FONTS.sans, fontSize: 15, lineHeight: 1.6, color: TOKENS.inkSoft, marginTop: 16 }}>
-              2–10p a document, read once and known for good. You approve a firm quote before the full read.
-            </p>
-
-            <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginTop: 20 }}>
-              {["Read once", "Known for good", "Firm quote first"].map((t) => (
-                <span key={t} style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "5px 10px", borderRadius: 999, background: "rgba(249,115,22,0.08)", border: `1px solid ${TOKENS.hairline}`, fontFamily: FONTS.mono, fontSize: 10.5, letterSpacing: "0.04em", color: TOKENS.ink }}>
-                  <span style={{ width: 4, height: 4, borderRadius: "50%", background: TOKENS.brass }} /> {t}
-                </span>
-              ))}
-            </div>
-
-            {/* Calculator block */}
-            <div
-              style={{
-                marginTop: 28,
-                background: TOKENS.paperSoft,
-                border: `1px solid ${TOKENS.hairline}`,
-                borderRadius: 18,
-                padding: "clamp(22px, 2.4vw, 30px)",
-              }}
-            >
-              <Slider id="docs" label="Documents" min={10} max={600} value={docs} onChange={setDocs} suffix="docs" />
-              <div style={{ marginTop: 22, paddingTop: 20, borderTop: `1px solid ${TOKENS.hairline}` }}>
-                {overflow ? (
-                  <>
-                    <div style={{ fontFamily: FONTS.serif, fontSize: "clamp(1.5rem, 2.6vw, 1.9rem)", lineHeight: 1.15, color: TOKENS.ink, fontStyle: "italic" }}>
-                      Let's confirm together.
-                    </div>
-                    <p style={{ fontFamily: FONTS.sans, fontSize: 13, color: TOKENS.inkSoft, marginTop: 10, lineHeight: 1.55 }}>
-                      Above roughly {HANDOFF} documents we confirm the details with you personally.
-                    </p>
-                  </>
-                ) : (
-                  <>
-                    <div style={{ fontFamily: FONTS.mono, fontSize: 10.5, color: TOKENS.inkMuted, marginBottom: 6, letterSpacing: "0.12em", textTransform: "uppercase" }}>
-                      Estimate — one-off
-                    </div>
-                    <div style={{ display: "flex", alignItems: "baseline", gap: 10, flexWrap: "wrap" }}>
-                      <div style={{ fontFamily: FONTS.serif, fontSize: "clamp(2.6rem, 4.8vw, 3.75rem)", lineHeight: 1, color: TOKENS.ink, letterSpacing: "-0.02em" }}>
-                        {fmtGBP(roundNice(blendedEst))}
-                      </div>
-                      <span style={{ fontFamily: FONTS.mono, fontSize: 14, color: TOKENS.brass }}>one-off</span>
-                    </div>
-                    <p style={{ fontFamily: FONTS.mono, fontSize: 11, color: TOKENS.inkMuted, marginTop: 10 }}>
-                      Range: {fmtGBP2(low)} — {fmtGBP2(high)}
-                    </p>
-                  </>
-                )}
-              </div>
-            </div>
-          </div>
+        </div>
         </div>
 
         {/* ============ TOGETHER STRIP ============ */}
