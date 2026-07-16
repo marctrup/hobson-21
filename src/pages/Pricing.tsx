@@ -165,118 +165,189 @@ const Calculators: React.FC = () => {
     <section
       id="calculator"
       style={{
-        background: TOKENS.paperSoft,
+        background: `radial-gradient(1200px 600px at 15% -10%, rgba(139,92,246,0.10), transparent 60%), radial-gradient(900px 500px at 100% 110%, rgba(249,115,22,0.10), transparent 60%), ${TOKENS.paperSoft}`,
         color: TOKENS.ink,
         padding: "clamp(72px, 9vw, 128px) 24px",
         borderTop: `1px solid ${TOKENS.hairline}`,
         borderBottom: `1px solid ${TOKENS.hairline}`,
       }}
     >
-      <div style={{ maxWidth: 1040, margin: "0 auto" }}>
-        <div style={{ maxWidth: 640, marginBottom: 64 }}>
-          
+      <div style={{ maxWidth: 1120, margin: "0 auto" }}>
+        <div style={{ maxWidth: 720, marginBottom: 56 }}>
           <H2>See what Hobson would cost.</H2>
           <p style={{ fontFamily: FONTS.sans, fontSize: 17, lineHeight: 1.6, color: TOKENS.inkSoft, marginTop: 16 }}>
             Slide, and see. Nothing is submitted, nothing is stored. Just an honest picture of what Hobson would cost your firm.
           </p>
         </div>
 
-        {/* Sequenced: Learning first (one-off, upfront), then Seats (monthly, ongoing) */}
-        <div style={{ display: "flex", flexDirection: "column", gap: 0, position: "relative" }}>
+        {/* ============ HERO PANEL — SEATS (the recurring value) ============ */}
+        <div
+          style={{
+            position: "relative",
+            borderRadius: 28,
+            padding: "clamp(36px, 5vw, 64px)",
+            background: `linear-gradient(135deg, ${TOKENS.ink} 0%, #3B1F7A 60%, #4C2A9E 100%)`,
+            color: TOKENS.paper,
+            boxShadow: "0 40px 80px -30px rgba(42,23,88,0.45), 0 8px 24px -12px rgba(42,23,88,0.35)",
+            overflow: "hidden",
+          }}
+        >
+          {/* corner accent */}
+          <div style={{ position: "absolute", top: 0, right: 0, width: 240, height: 240, background: `radial-gradient(circle at top right, rgba(249,115,22,0.35), transparent 70%)`, pointerEvents: "none" }} />
+          <div style={{ position: "absolute", top: 0, left: 0, width: "100%", height: 4, background: `linear-gradient(90deg, ${TOKENS.brass}, ${TOKENS.primaryLight}, ${TOKENS.brass})` }} />
 
-          {/* STEP 1 — Learning (one-off, upfront) */}
-          <div style={{ display: "grid", gridTemplateColumns: "auto 1fr", gap: 24, alignItems: "stretch" }}>
-            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 12 }}>
-              <div style={{ width: 44, height: 44, borderRadius: "50%", background: TOKENS.brass, color: TOKENS.paper, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: FONTS.serif, fontSize: 22, lineHeight: 1, fontWeight: 500, boxShadow: "0 4px 12px -4px rgba(251,146,60,0.5)" }}>1</div>
-              <div style={{ flex: 1, width: 2, background: `linear-gradient(to bottom, ${TOKENS.brass}, ${TOKENS.hairline})`, minHeight: 24 }} />
-            </div>
-            <div style={{ background: TOKENS.paper, borderRadius: 20, padding: "40px 36px", border: `1px solid ${TOKENS.hairline}`, borderLeft: `3px solid ${TOKENS.brass}` }}>
-              <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: 16, flexWrap: "wrap", marginBottom: 28 }}>
-                <div style={{ fontFamily: FONTS.mono, fontSize: 11, letterSpacing: "0.2em", color: TOKENS.brass, textTransform: "uppercase" }}>
-                  First — Learning
-                </div>
-                <div style={{ fontFamily: FONTS.mono, fontSize: 11, letterSpacing: "0.14em", color: TOKENS.inkMuted, textTransform: "uppercase" }}>
-                  One-off · paid once, upfront
-                </div>
+          <div style={{ display: "grid", gridTemplateColumns: "minmax(0, 1fr) minmax(0, 1.05fr)", gap: "clamp(32px, 5vw, 72px)", alignItems: "center", position: "relative" }} className="hp-seats-grid">
+            {/* LEFT — the promise */}
+            <div>
+              <div style={{ fontFamily: FONTS.mono, fontSize: 11, letterSpacing: "0.24em", color: TOKENS.brassLight, textTransform: "uppercase", marginBottom: 20 }}>
+                What a seat gives you
               </div>
-              <Slider id="docs" label="Documents" min={10} max={600} value={docs} onChange={setDocs} suffix="docs" />
-              <div style={{ marginTop: 36, paddingTop: 28, borderTop: `1px solid ${TOKENS.hairline}` }}>
-                {overflow ? (
-                  <>
-                    <div style={{ fontFamily: FONTS.serif, fontSize: "clamp(1.6rem, 3vw, 2rem)", lineHeight: 1.15, color: TOKENS.ink, fontStyle: "italic" }}>
-                      Let's confirm together.
-                    </div>
-                    <p style={{ fontFamily: FONTS.sans, fontSize: 14, color: TOKENS.inkSoft, marginTop: 16, lineHeight: 1.55 }}>
-                      Above roughly {HANDOFF} documents we confirm the details with you personally before quoting — this is where a tailored onboarding conversation begins.
-                    </p>
-                  </>
-                ) : (
-                  <>
-                    <div style={{ fontFamily: FONTS.mono, fontSize: 12, color: TOKENS.inkMuted, marginBottom: 8 }}>
-                      Estimate — one-off, upfront
-                    </div>
-                    <div style={{ fontFamily: FONTS.serif, fontSize: "clamp(2.5rem, 5vw, 3.25rem)", lineHeight: 1, color: TOKENS.ink }}>
-                      around {fmtGBP(roundNice(blendedEst))}
-                    </div>
-                    <p style={{ fontFamily: FONTS.mono, fontSize: 12, color: TOKENS.brass, marginTop: 12 }}>
-                      Firm price will fall between {fmtGBP2(low)} and {fmtGBP2(high)}
-                    </p>
-                    <p style={{ fontFamily: FONTS.sans, fontSize: 14, color: TOKENS.inkSoft, marginTop: 16, lineHeight: 1.55 }}>
-                      Based on a typical mix of about 1 complex document in every 5. Hobson confirms the exact figure once he's assessed how many are complex — and you approve it before the full read begins.
-                    </p>
-                  </>
-                )}
+              <h3 style={{ fontFamily: FONTS.serif, fontWeight: 400, fontSize: "clamp(2rem, 4vw, 3rem)", lineHeight: 1.05, letterSpacing: "-0.02em", margin: 0, color: TOKENS.paper }}>
+                Every person gets{" "}
+                <span style={{ fontStyle: "italic", color: TOKENS.brassLight }}>their own</span>{" "}
+                personal co-worker.
+              </h3>
+              <p style={{ fontFamily: FONTS.sans, fontSize: 16, lineHeight: 1.65, color: "rgba(255,255,255,0.85)", marginTop: 24, maxWidth: 460 }}>
+                One Hobson per person. He learns how they work, remembers what matters to them, and stays ready — quietly, in the background — for whatever they ask next.
+              </p>
+              <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginTop: 28 }}>
+                {["Unlimited questions", "Whole team, every month", "Learns each person", "No usage meter"].map((t) => (
+                  <span key={t} style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "6px 12px", borderRadius: 999, background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.18)", fontFamily: FONTS.mono, fontSize: 11, letterSpacing: "0.04em", color: "rgba(255,255,255,0.9)" }}>
+                    <span style={{ width: 5, height: 5, borderRadius: "50%", background: TOKENS.brass }} /> {t}
+                  </span>
+                ))}
               </div>
             </div>
-          </div>
 
-          {/* Connector label */}
-          <div style={{ display: "grid", gridTemplateColumns: "auto 1fr", gap: 24, alignItems: "center" }}>
-            <div style={{ width: 44, display: "flex", justifyContent: "center" }}>
-              <div style={{ width: 2, height: 48, background: TOKENS.hairline }} />
-            </div>
-            <div style={{ padding: "16px 0", fontFamily: FONTS.mono, fontSize: 11, letterSpacing: "0.2em", color: TOKENS.inkMuted, textTransform: "uppercase" }}>
-              Then, ongoing —
-            </div>
-          </div>
-
-          {/* STEP 2 — Seats (monthly) */}
-          <div style={{ display: "grid", gridTemplateColumns: "auto 1fr", gap: 24, alignItems: "stretch" }}>
-            <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-              <div style={{ width: 44, height: 44, borderRadius: "50%", background: TOKENS.paper, color: TOKENS.ink, border: `2px solid ${TOKENS.ink}`, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: FONTS.serif, fontSize: 22, lineHeight: 1, fontWeight: 500 }}>2</div>
-            </div>
-            <div style={{ background: TOKENS.paper, borderRadius: 20, padding: "40px 36px", border: `1px solid ${TOKENS.hairline}` }}>
-              <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: 16, flexWrap: "wrap", marginBottom: 28 }}>
-                <div style={{ fontFamily: FONTS.mono, fontSize: 11, letterSpacing: "0.2em", color: TOKENS.ink, textTransform: "uppercase" }}>
-                  Then — Seats
+            {/* RIGHT — the calculator */}
+            <div
+              style={{
+                background: "rgba(255,255,255,0.06)",
+                border: "1px solid rgba(255,255,255,0.14)",
+                borderRadius: 20,
+                padding: "clamp(28px, 3vw, 40px)",
+                backdropFilter: "blur(6px)",
+              }}
+            >
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 20 }}>
+                <div style={{ fontFamily: FONTS.mono, fontSize: 11, letterSpacing: "0.2em", color: TOKENS.brassLight, textTransform: "uppercase" }}>
+                  Seats · monthly
                 </div>
-                <div style={{ fontFamily: FONTS.mono, fontSize: 11, letterSpacing: "0.14em", color: TOKENS.inkMuted, textTransform: "uppercase" }}>
-                  Monthly · per person
+                <div style={{ fontFamily: FONTS.mono, fontSize: 11, color: "rgba(255,255,255,0.6)" }}>
+                  £{SEAT} per person
                 </div>
               </div>
-              <Slider id="people" label="People" min={1} max={30} value={people} onChange={setPeople} suffix={people === 1 ? "person" : "people"} />
-              <div style={{ marginTop: 36, paddingTop: 28, borderTop: `1px solid ${TOKENS.hairline}` }}>
-                <div style={{ fontFamily: FONTS.mono, fontSize: 12, color: TOKENS.inkMuted, marginBottom: 8 }}>
-                  {people} × £{SEAT} · per month
+
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 12 }}>
+                <label htmlFor="people" style={{ fontFamily: FONTS.mono, fontSize: 12, letterSpacing: "0.08em", textTransform: "uppercase", color: TOKENS.brassLight }}>
+                  How many people
+                </label>
+                <span style={{ fontFamily: FONTS.mono, fontSize: 22, color: TOKENS.paper }}>
+                  {people} {people === 1 ? "person" : "people"}
+                </span>
+              </div>
+              <input
+                id="people"
+                type="range"
+                min={1}
+                max={30}
+                value={people}
+                onChange={(e) => setPeople(Number(e.target.value))}
+                className="hp-slider hp-slider-dark"
+                style={{ width: "100%" }}
+              />
+              <div style={{ display: "flex", justifyContent: "space-between", fontFamily: FONTS.mono, fontSize: 11, color: "rgba(255,255,255,0.55)", marginTop: 6 }}>
+                <span>1</span><span>30+</span>
+              </div>
+
+              <div style={{ marginTop: 32, paddingTop: 28, borderTop: "1px solid rgba(255,255,255,0.14)" }}>
+                <div style={{ fontFamily: FONTS.mono, fontSize: 11, color: "rgba(255,255,255,0.6)", marginBottom: 8, letterSpacing: "0.12em", textTransform: "uppercase" }}>
+                  {people} × £{SEAT} — every month
                 </div>
-                <div style={{ fontFamily: FONTS.serif, fontSize: "clamp(2.5rem, 5vw, 3.25rem)", lineHeight: 1, color: TOKENS.ink }}>
-                  {fmtGBP(seatsMonthly)}
-                  <span style={{ fontFamily: FONTS.mono, fontSize: 14, color: TOKENS.brass, marginLeft: 8 }}>/mo</span>
+                <div style={{ display: "flex", alignItems: "baseline", gap: 12, flexWrap: "wrap" }}>
+                  <div style={{ fontFamily: FONTS.serif, fontSize: "clamp(3rem, 6vw, 4.25rem)", lineHeight: 1, color: TOKENS.paper, letterSpacing: "-0.02em" }}>
+                    {fmtGBP(seatsMonthly)}
+                  </div>
+                  <span style={{ fontFamily: FONTS.mono, fontSize: 15, color: TOKENS.brassLight }}>/ month</span>
                 </div>
-                <p style={{ fontFamily: FONTS.sans, fontSize: 14, color: TOKENS.inkSoft, marginTop: 16, lineHeight: 1.55 }}>
-                  {people} {people === 1 ? "person" : "people"} × £{SEAT} each. Unlimited questions, your own personal co-worker.
+                <p style={{ fontFamily: FONTS.sans, fontSize: 13, color: "rgba(255,255,255,0.7)", marginTop: 14, lineHeight: 1.55 }}>
+                  {people === 1 ? "One person, one Hobson." : `${people} people, ${people} personal co-workers`} — all working from the same shared understanding of your business.
                 </p>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Total strip */}
-        <div style={{ marginTop: 48, padding: "32px 36px", borderRadius: 20, background: TOKENS.paper, border: `1px solid ${TOKENS.hairline}`, borderLeft: `3px solid ${TOKENS.brass}` }}>
-          <div style={{ fontFamily: FONTS.mono, fontSize: 11, letterSpacing: "0.2em", color: TOKENS.brass, textTransform: "uppercase", marginBottom: 12 }}>
+        {/* ============ SUPPORTING CARD — LEARNING (one-off) ============ */}
+        <div style={{ display: "flex", alignItems: "center", gap: 16, margin: "40px 0 16px" }}>
+          <div style={{ flex: 1, height: 1, background: TOKENS.hairline }} />
+          <div style={{ fontFamily: FONTS.mono, fontSize: 11, letterSpacing: "0.24em", color: TOKENS.inkMuted, textTransform: "uppercase" }}>
+            Plus a one-off to get him started
+          </div>
+          <div style={{ flex: 1, height: 1, background: TOKENS.hairline }} />
+        </div>
+
+        <div
+          style={{
+            background: TOKENS.paper,
+            borderRadius: 20,
+            padding: "clamp(28px, 3.5vw, 44px)",
+            border: `1px solid ${TOKENS.hairline}`,
+            borderTop: `3px solid ${TOKENS.brass}`,
+            display: "grid",
+            gridTemplateColumns: "minmax(0, 1fr) minmax(0, 1fr)",
+            gap: "clamp(24px, 4vw, 56px)",
+            alignItems: "center",
+          }}
+          className="hp-learning-grid"
+        >
+          <div>
+            <div style={{ fontFamily: FONTS.mono, fontSize: 11, letterSpacing: "0.2em", color: TOKENS.brass, textTransform: "uppercase", marginBottom: 12 }}>
+              Learning · one-off, upfront
+            </div>
+            <h3 style={{ fontFamily: FONTS.serif, fontWeight: 400, fontSize: "clamp(1.4rem, 2.2vw, 1.85rem)", lineHeight: 1.2, letterSpacing: "-0.01em", color: TOKENS.ink, margin: 0 }}>
+              Teach Hobson your documents. Once.
+            </h3>
+            <p style={{ fontFamily: FONTS.sans, fontSize: 15, lineHeight: 1.6, color: TOKENS.inkSoft, marginTop: 16 }}>
+              2–10p a document, read once and known for good. You approve a firm quote before the full read — always inside the estimated range.
+            </p>
+          </div>
+
+          <div>
+            <Slider id="docs" label="Documents" min={10} max={600} value={docs} onChange={setDocs} suffix="docs" />
+            <div style={{ marginTop: 24, paddingTop: 20, borderTop: `1px solid ${TOKENS.hairline}` }}>
+              {overflow ? (
+                <>
+                  <div style={{ fontFamily: FONTS.serif, fontSize: "clamp(1.4rem, 2.4vw, 1.75rem)", lineHeight: 1.15, color: TOKENS.ink, fontStyle: "italic" }}>
+                    Let's confirm together.
+                  </div>
+                  <p style={{ fontFamily: FONTS.sans, fontSize: 13, color: TOKENS.inkSoft, marginTop: 10, lineHeight: 1.55 }}>
+                    Above roughly {HANDOFF} documents we confirm the details with you personally before quoting.
+                  </p>
+                </>
+              ) : (
+                <>
+                  <div style={{ fontFamily: FONTS.mono, fontSize: 11, color: TOKENS.inkMuted, marginBottom: 6, letterSpacing: "0.12em", textTransform: "uppercase" }}>
+                    Estimate — one-off
+                  </div>
+                  <div style={{ fontFamily: FONTS.serif, fontSize: "clamp(2rem, 3.6vw, 2.5rem)", lineHeight: 1, color: TOKENS.ink }}>
+                    around {fmtGBP(roundNice(blendedEst))}
+                  </div>
+                  <p style={{ fontFamily: FONTS.mono, fontSize: 11, color: TOKENS.brass, marginTop: 10 }}>
+                    Range: {fmtGBP2(low)} — {fmtGBP2(high)}
+                  </p>
+                </>
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* ============ TOGETHER STRIP ============ */}
+        <div style={{ marginTop: 40, padding: "28px 32px", borderRadius: 20, background: `linear-gradient(135deg, rgba(249,115,22,0.08), rgba(139,92,246,0.06))`, border: `1px solid ${TOKENS.hairline}` }}>
+          <div style={{ fontFamily: FONTS.mono, fontSize: 11, letterSpacing: "0.24em", color: TOKENS.brass, textTransform: "uppercase", marginBottom: 10 }}>
             Together
           </div>
-          <p style={{ fontFamily: FONTS.serif, fontSize: "clamp(1.25rem, 2.2vw, 1.6rem)", lineHeight: 1.45, color: TOKENS.ink, margin: 0 }}>
+          <p style={{ fontFamily: FONTS.serif, fontSize: "clamp(1.2rem, 2.1vw, 1.55rem)", lineHeight: 1.5, color: TOKENS.ink, margin: 0 }}>
             A <span style={{ color: TOKENS.brass }}>{people}-person</span> firm with{" "}
             <span style={{ color: TOKENS.brass }}>{docs}{overflow ? "+" : ""} documents</span>:{" "}
             a one-off of {oneOffDisplay} to get started, then{" "}
@@ -284,8 +355,16 @@ const Calculators: React.FC = () => {
           </p>
         </div>
       </div>
-    </section>
 
+      <style>{`
+        @media (max-width: 840px) {
+          .hp-seats-grid { grid-template-columns: 1fr !important; }
+          .hp-learning-grid { grid-template-columns: 1fr !important; }
+        }
+        .hp-slider-dark::-webkit-slider-runnable-track { background: rgba(255,255,255,0.18); }
+        .hp-slider-dark::-moz-range-track { background: rgba(255,255,255,0.18); }
+      `}</style>
+    </section>
   );
 };
 
