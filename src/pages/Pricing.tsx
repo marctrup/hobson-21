@@ -150,7 +150,7 @@ const Slider: React.FC<{
 // ============================================================================
 const Calculators: React.FC = () => {
   const [people, setPeople] = useState(5);
-  const [docs, setDocs] = useState(120);
+  const [docs, setDocs] = useState(305);
 
   const seatsMonthly = people * SEAT;
   const overflow = docs >= HANDOFF;
