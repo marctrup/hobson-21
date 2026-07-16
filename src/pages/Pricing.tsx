@@ -514,7 +514,7 @@ export default function Pricing() {
               Add up your seats, estimate your library, and see exactly where you stand. No plans, no credits, no surprises.
             </p>
             <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: 12 }}>
-              <a href="#calculator" className="hp-btn hp-btn-brass">Work out your price</a>
+              <a href="#calculator" className="hp-btn hp-btn-brass">Register your interest</a>
               
             </div>
           </div>
