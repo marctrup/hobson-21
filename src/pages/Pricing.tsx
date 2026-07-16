@@ -345,7 +345,7 @@ export default function Pricing() {
                 <em style={{ color: TOKENS.brass, fontStyle: "italic" }}>Nothing counted.</em>
               </h1>
               <p style={{ fontFamily: FONTS.sans, fontSize: 18, lineHeight: 1.6, color: TOKENS.inkSoft, marginTop: 28, maxWidth: 520 }}>
-                Hobson is your AI co-worker for property — a full back-office team in one place. Everyone gets all of him. You pay for just two things: a seat for each person, and Hobson learning your documents.
+                Hobson is your AI co-worker for property. You pay for just two things: a seat for each person, and Hobson learning your documents.
               </p>
               <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginTop: 28 }}>
                 <Pill>£20 per person / month</Pill>
