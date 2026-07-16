@@ -25,8 +25,8 @@ const TOKENS = {
   primary: "#8B5CF6", // brand primary purple
   primaryLight: "#A78BFA",
   card: "#FFFFFF",
-  inkSoft: "rgba(42,23,88,0.72)",
-  inkMuted: "rgba(42,23,88,0.55)",
+  inkSoft: "rgba(42,23,88,0.85)",
+  inkMuted: "rgba(42,23,88,0.75)",
   hairline: "rgba(42,23,88,0.12)",
   hairlineDark: "rgba(251,146,60,0.28)",
 };
