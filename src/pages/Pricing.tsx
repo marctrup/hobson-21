@@ -458,55 +458,8 @@ export default function Pricing() {
       <GlobalHeader />
 
       <main className="hp-page">
-        {/* ---------------- Section 1 — Hero ---------------- */}
-        <section style={{ padding: "clamp(64px, 9vw, 120px) 24px 0" }}>
-          <div style={{ maxWidth: 1120, margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: 48, alignItems: "center" }}>
-            <div className="hp-reveal">
-              <SectionLabel>Pricing</SectionLabel>
-              <h1 style={{ fontFamily: FONTS.serif, fontWeight: 400, fontSize: "clamp(2.4rem, 5.2vw, 4rem)", lineHeight: 1.05, letterSpacing: "-0.015em", color: TOKENS.ink, margin: 0 }}>
-                No plans.<br />
-                No credits.<br />
-                <em style={{ color: TOKENS.brass, fontStyle: "italic" }}>Nothing counted.</em>
-              </h1>
-              <p style={{ fontFamily: FONTS.sans, fontSize: 18, lineHeight: 1.6, color: TOKENS.inkSoft, marginTop: 28, maxWidth: 520 }}>
-                Hobson is your AI co-worker for property. You pay for just two things: a seat for each person, and Hobson learning your documents.
-              </p>
-              <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginTop: 28 }}>
-                <Pill>£35 per person / month</Pill>
-                <Pill>Unlimited questions</Pill>
-                <Pill>Learning priced &amp; approved up front</Pill>
-              </div>
-            </div>
 
-            {/* Hobson card */}
-            <div
-              className="hp-reveal"
-              style={{
-                background: TOKENS.ink,
-                color: TOKENS.paper,
-                borderRadius: 20,
-                padding: "36px 32px",
-                border: `1px solid ${TOKENS.hairlineDark}`,
-                animationDelay: ".1s",
-              }}
-            >
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 28, paddingBottom: 20, borderBottom: `1px solid ${TOKENS.hairlineDark}` }}>
-                <div style={{ fontFamily: FONTS.serif, fontSize: 22, color: TOKENS.paper }}>Hobson</div>
-                <div style={{ fontFamily: FONTS.mono, fontSize: 11, letterSpacing: "0.2em", color: TOKENS.brassLight, textTransform: "uppercase" }}>Cost sheet</div>
-              </div>
-              {[
-                { k: "Seats", v: "£35 per person, per month — unlimited everything, the whole team" },
-                { k: "Learning", v: "2–10p a document, read once and known for good" },
-                { k: "Always", v: "You approve the cost of any reading before a page is turned" },
-              ].map((row) => (
-                <div key={row.k} style={{ display: "grid", gridTemplateColumns: "110px 1fr", gap: 16, padding: "16px 0", borderBottom: `1px dashed ${TOKENS.hairlineDark}` }}>
-                  <div style={{ fontFamily: FONTS.mono, fontSize: 11, letterSpacing: "0.18em", color: TOKENS.brassLight, textTransform: "uppercase", paddingTop: 2 }}>{row.k}</div>
-                  <div style={{ fontFamily: FONTS.sans, fontSize: 15, lineHeight: 1.55, color: "rgba(255,255,255,0.85)" }}>{row.v}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
+
 
 
 
