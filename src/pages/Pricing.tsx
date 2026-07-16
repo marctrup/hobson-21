@@ -508,52 +508,8 @@ export default function Pricing() {
           </div>
         </section>
 
-        {/* ---------------- Section 2 — Two costs ---------------- */}
-        <section style={{ padding: "clamp(72px, 10vw, 140px) 24px" }}>
-          <div style={{ maxWidth: 1120, margin: "0 auto" }}>
-            <div style={{ maxWidth: 640, marginBottom: 56 }}>
-              
-              <H2>Two costs. That's it.</H2>
-            </div>
 
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: 24 }}>
-              {[
-                {
-                  label: "Cost one",
-                  h: "A seat for each person",
-                  price: "£35",
-                  suffix: "per person / month",
-                  body: "Every person who uses Hobson gets their own co-worker. He works alongside them, learns how they work, and gives them their own secure access, permissions and audit history. With it comes the complete Hobson: ask anything, as often as you like, across everything he's learned. We never count the questions. Add or remove people any time.",
-                },
-                {
-                  label: "Cost two",
-                  h: "Learning your documents",
-                  price: "2–10p",
-                  suffix: "per document, once",
-                  body: "The one thing we ever price is Hobson reading a document he hasn't seen. Simple documents cost less, complex ones more. He reads each one just once — after that he knows it for good, and every question about it is free forever. He assesses the mix, confirms the price, and you approve before any real reading begins.",
-                },
-              ].map((c) => (
-                <div
-                  key={c.h}
-                  className="hp-lift"
-                  style={{ background: TOKENS.card, borderRadius: 20, padding: "40px 36px", border: `1px solid ${TOKENS.hairline}` }}
-                >
-                  <div style={{ fontFamily: FONTS.mono, fontSize: 11, letterSpacing: "0.2em", color: TOKENS.brass, textTransform: "uppercase", marginBottom: 20 }}>
-                    {c.label}
-                  </div>
-                  <h3 style={{ fontFamily: FONTS.serif, fontWeight: 400, fontSize: "clamp(1.5rem, 2.4vw, 1.9rem)", color: TOKENS.ink, margin: 0, lineHeight: 1.2 }}>
-                    {c.h}
-                  </h3>
-                  <div style={{ marginTop: 24, marginBottom: 24, paddingBottom: 24, borderBottom: `1px solid ${TOKENS.hairline}` }}>
-                    <span style={{ fontFamily: FONTS.serif, fontSize: "clamp(2.4rem, 4.5vw, 3rem)", color: TOKENS.brass, lineHeight: 1 }}>{c.price}</span>
-                    <span style={{ fontFamily: FONTS.mono, fontSize: 13, color: TOKENS.inkMuted, marginLeft: 12 }}>{c.suffix}</span>
-                  </div>
-                  <p style={{ fontFamily: FONTS.sans, fontSize: 16, lineHeight: 1.65, color: TOKENS.inkSoft, margin: 0 }}>{c.body}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
+
 
         {/* ---------------- Section 3 — Calculators ---------------- */}
         <Calculators />
