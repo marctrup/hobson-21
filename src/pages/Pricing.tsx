@@ -513,7 +513,7 @@ export default function Pricing() {
             </p>
             <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: 12 }}>
               <a href="#calculator" className="hp-btn hp-btn-brass">Work out your price</a>
-              <a href="#team" className="hp-btn hp-btn-ghost">Meet the team</a>
+              
             </div>
           </div>
         </section>
