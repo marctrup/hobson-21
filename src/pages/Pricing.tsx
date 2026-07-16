@@ -172,7 +172,7 @@ const Calculators: React.FC = () => {
       <div style={{ maxWidth: 1120, margin: "0 auto" }}>
         <div style={{ maxWidth: 640, marginBottom: 56 }}>
           <SectionLabel dark>Section 3</SectionLabel>
-          <H2 dark>Work out your price.</H2>
+          <H2 dark>Register your interest.</H2>
           <p style={{ fontFamily: FONTS.sans, fontSize: 17, lineHeight: 1.6, color: "rgba(255,255,255,0.75)", marginTop: 16 }}>
             Slide, and see. Nothing is submitted, nothing is stored. Just an honest picture of what Hobson would cost your firm.
           </p>
