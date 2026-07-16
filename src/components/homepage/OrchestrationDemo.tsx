@@ -59,28 +59,50 @@ export const OrchestrationDemo: React.FC = () => {
   };
 
   const [introPhase, setIntroPhase] = useState(0);
+  const [introProactiveIdx, setIntroProactiveIdx] = useState(0);
   const [introUserIdx, setIntroUserIdx] = useState(0);
   const [introHobsonIdx, setIntroHobsonIdx] = useState(0);
 
+  // Phase 0 -> 1: start Hobson proactive
   useEffect(() => {
     if (!playing || introPhase !== 0) return;
     setIntroPhase(1);
   }, [playing, introPhase]);
 
+  // Phase 1: type Hobson proactive message
   useEffect(() => {
     if (introPhase !== 1 || !playing) return;
+    if (introProactiveIdx >= HOBSON_PROACTIVE.length) {
+      const t = setTimeout(() => setIntroPhase(2), 700);
+      return () => clearTimeout(t);
+    }
+    const t = setTimeout(() => setIntroProactiveIdx((i) => i + 1), 30);
+    return () => clearTimeout(t);
+  }, [introPhase, introProactiveIdx, playing]);
+
+  // Phase 2: show Yes button, auto-confirm after brief pause
+  useEffect(() => {
+    if (introPhase !== 2 || !playing) return;
+    const t = setTimeout(() => setIntroPhase(3), 1400);
+    return () => clearTimeout(t);
+  }, [introPhase, playing]);
+
+  // Phase 3: type user long request
+  useEffect(() => {
+    if (introPhase !== 3 || !playing) return;
     if (introUserIdx >= USER_INTRO.length) {
-      const t = setTimeout(() => setIntroPhase(2), 500);
+      const t = setTimeout(() => setIntroPhase(4), 500);
       return () => clearTimeout(t);
     }
     const t = setTimeout(() => setIntroUserIdx((i) => i + 1), 30);
     return () => clearTimeout(t);
   }, [introPhase, introUserIdx, playing]);
 
+  // Phase 4: type Hobson intro
   useEffect(() => {
-    if (introPhase !== 2 || !playing) return;
+    if (introPhase !== 4 || !playing) return;
     if (introHobsonIdx >= HOBSON_INTRO.length) {
-      const t = setTimeout(() => setIntroPhase(3), 600);
+      const t = setTimeout(() => setIntroPhase(5), 600);
       return () => clearTimeout(t);
     }
     const t = setTimeout(() => setIntroHobsonIdx((i) => i + 1), 30);
@@ -88,7 +110,7 @@ export const OrchestrationDemo: React.FC = () => {
   }, [introPhase, introHobsonIdx, playing]);
 
   useEffect(() => {
-    if (introPhase === 3 && cursor < INTRO_BEATS) {
+    if (introPhase === 5 && cursor < INTRO_BEATS) {
       setCursor(INTRO_BEATS);
     }
   }, [introPhase, cursor]);
@@ -97,7 +119,7 @@ export const OrchestrationDemo: React.FC = () => {
     const el = scrollRef.current;
     if (!el || !stickToBottomRef.current) return;
     el.scrollTo({ top: el.scrollHeight, behavior: "smooth" });
-  }, [cursor, introUserIdx, introHobsonIdx, introPhase, finished]);
+  }, [cursor, introUserIdx, introHobsonIdx, introProactiveIdx, introPhase, finished]);
 
   useEffect(() => {
     if (!playing || finished || introPhase < 3) return;
