@@ -6,6 +6,7 @@ import { GlobalHeader } from "@/components/GlobalHeader";
 // Tunable constants — update once real figures land.
 // ============================================================================
 const SEAT = 35; // £ per person per month
+const MIN_SEATS = 2;
 const SIMPLE = 0.02; // £ per simple document
 const COMPLEX = 0.10; // £ per complex document
 const MIX_COMPLEX_RATIO = 1 / 5; // 1 complex in every 5 documents
