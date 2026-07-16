@@ -193,7 +193,7 @@ export const OrchestrationDemo: React.FC = () => {
           {introPhase === 2 ? (
             <button
               type="button"
-              onClick={() => setIntroPhase(3)}
+              onClick={() => setIntroPhase(4)}
               className="rounded-full bg-purple-700 hover:bg-purple-800 text-white px-5 py-2 text-sm font-semibold shadow transition-colors"
             >
               Yes
