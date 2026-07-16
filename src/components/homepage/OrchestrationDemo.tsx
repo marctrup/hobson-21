@@ -80,23 +80,13 @@ export const OrchestrationDemo: React.FC = () => {
     return () => clearTimeout(t);
   }, [introPhase, introProactiveIdx, playing]);
 
-  // Phase 2: show Yes button, auto-confirm after brief pause
+  // Phase 2: show Yes button, auto-confirm after brief pause (skips straight to Hobson intro)
   useEffect(() => {
     if (introPhase !== 2 || !playing) return;
-    const t = setTimeout(() => setIntroPhase(3), 1400);
+    const t = setTimeout(() => setIntroPhase(4), 1400);
     return () => clearTimeout(t);
   }, [introPhase, playing]);
 
-  // Phase 3: type user long request
-  useEffect(() => {
-    if (introPhase !== 3 || !playing) return;
-    if (introUserIdx >= USER_INTRO.length) {
-      const t = setTimeout(() => setIntroPhase(4), 500);
-      return () => clearTimeout(t);
-    }
-    const t = setTimeout(() => setIntroUserIdx((i) => i + 1), 30);
-    return () => clearTimeout(t);
-  }, [introPhase, introUserIdx, playing]);
 
   // Phase 4: type Hobson intro
   useEffect(() => {
