@@ -80,23 +80,13 @@ export const OrchestrationDemo: React.FC = () => {
     return () => clearTimeout(t);
   }, [introPhase, introProactiveIdx, playing]);
 
-  // Phase 2: show Yes button, auto-confirm after brief pause
+  // Phase 2: show Yes button, auto-confirm after brief pause (skips straight to Hobson intro)
   useEffect(() => {
     if (introPhase !== 2 || !playing) return;
-    const t = setTimeout(() => setIntroPhase(3), 1400);
+    const t = setTimeout(() => setIntroPhase(4), 1400);
     return () => clearTimeout(t);
   }, [introPhase, playing]);
 
-  // Phase 3: type user long request
-  useEffect(() => {
-    if (introPhase !== 3 || !playing) return;
-    if (introUserIdx >= USER_INTRO.length) {
-      const t = setTimeout(() => setIntroPhase(4), 500);
-      return () => clearTimeout(t);
-    }
-    const t = setTimeout(() => setIntroUserIdx((i) => i + 1), 30);
-    return () => clearTimeout(t);
-  }, [introPhase, introUserIdx, playing]);
 
   // Phase 4: type Hobson intro
   useEffect(() => {
@@ -203,7 +193,7 @@ export const OrchestrationDemo: React.FC = () => {
           {introPhase === 2 ? (
             <button
               type="button"
-              onClick={() => setIntroPhase(3)}
+              onClick={() => setIntroPhase(4)}
               className="rounded-full bg-purple-700 hover:bg-purple-800 text-white px-5 py-2 text-sm font-semibold shadow transition-colors"
             >
               Yes
@@ -215,16 +205,6 @@ export const OrchestrationDemo: React.FC = () => {
           )}
         </div>
 
-        {/* User full request */}
-        <div
-          className={`mt-4 flex justify-end transition-all duration-500 ${introPhase >= 3 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2 pointer-events-none h-0 overflow-hidden mt-0"}`}
-          style={{ animation: introPhase >= 3 ? "fade-up 0.4s ease both" : undefined }}
-        >
-          <div className="max-w-[85%] rounded-2xl rounded-tr-sm bg-purple-700 text-white px-4 py-3 text-sm shadow">
-            {USER_INTRO.slice(0, introUserIdx)}
-            {introPhase === 3 && <span className="animate-pulse">|</span>}
-          </div>
-        </div>
 
         {/* Hobson opening */}
         <div
