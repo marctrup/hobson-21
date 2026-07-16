@@ -1,362 +1,536 @@
-import React from "react";
+import React, { useMemo, useState } from "react";
 import { Helmet } from "react-helmet-async";
-
-import { Check, CalendarClock, ShieldCheck, KeyRound, DoorOpen, Banknote, ClipboardList, Wrench, Sparkles } from "lucide-react";
 import { GlobalHeader } from "@/components/GlobalHeader";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import owlMascot from "@/assets/owl-mascot.png";
 
-import professorAsset from "@/assets/prototype/character-professor.png.asset.json";
-import architectAsset from "@/assets/prototype/character-architect.png.asset.json";
-import inspectorAsset from "@/assets/prototype/character-inspector.png.asset.json";
-import brokerAsset from "@/assets/prototype/character-broker.png.asset.json";
-import researcherAsset from "@/assets/prototype/character-researcher.png.asset.json";
-import bookkeeperAsset from "@/assets/prototype/character-bookkeeper.png.asset.json";
-import communicatorAsset from "@/assets/prototype/character-communicator.png.asset.json";
-import keeperAsset from "@/assets/prototype/character-keeper.png.asset.json";
+// ============================================================================
+// Tunable constants — update once real figures land.
+// ============================================================================
+const SEAT = 20; // £ per person per month
+const SIMPLE = 0.02; // £ per simple document
+const COMPLEX = 0.10; // £ per complex document
+const MIX_COMPLEX_RATIO = 1 / 5; // 1 complex in every 5 documents
+const BLENDED = SIMPLE * (1 - MIX_COMPLEX_RATIO) + COMPLEX * MIX_COMPLEX_RATIO; // ~£0.036
+const HANDOFF = 500; // documents threshold for personal quote
 
-const professorImg = professorAsset.url;
-const architectImg = architectAsset.url;
-const inspectorImg = inspectorAsset.url;
-const brokerImg = brokerAsset.url;
-const researcherImg = researcherAsset.url;
-const bookkeeperImg = bookkeeperAsset.url;
-const communicatorImg = communicatorAsset.url;
-const keeperImg = keeperAsset.url;
-
-type CharacterPortrait = {
-  img: string;
-  alt: string;
+// ============================================================================
+// Design tokens (scoped to this page via inline style vars).
+// Deep pine-ink, paper, antique brass — calm British professional-services feel.
+// ============================================================================
+const TOKENS = {
+  ink: "#16302B",
+  paper: "#EEF0E9",
+  brass: "#A9793C",
+  brassLight: "#CDA05C",
+  card: "#FBFBF7",
+  inkSoft: "rgba(22,48,43,0.72)",
+  inkMuted: "rgba(22,48,43,0.55)",
+  hairline: "rgba(22,48,43,0.12)",
+  hairlineDark: "rgba(205,160,92,0.22)",
 };
 
-type Plan = {
-  name: string;
-  price: string;
-  priceSuffix?: string;
-  responsibilities: string;
-  tagline: string;
-  description: string;
-  includes: string[];
-  cta: string;
-  ctaHref: string;
-  characters: CharacterPortrait[];
+const FONTS = {
+  serif: "'Fraunces', 'Cormorant Garamond', Georgia, serif",
+  sans: "'Hanken Grotesk', 'Inter', system-ui, sans-serif",
+  mono: "'IBM Plex Mono', 'JetBrains Mono', ui-monospace, monospace",
 };
 
-const FOUNDATION_CHARACTERS: CharacterPortrait[] = [
-  { img: professorImg, alt: "The Professor" },
-];
+// ---- helpers ----------------------------------------------------------------
+const fmtGBP = (n: number) => `£${Math.round(n).toLocaleString("en-GB")}`;
+const fmtGBP2 = (n: number) =>
+  `£${n.toLocaleString("en-GB", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 
-const FULL_TEAM_CHARACTERS: CharacterPortrait[] = [
-  { img: professorImg, alt: "The Professor" },
-  { img: architectImg, alt: "The Architect" },
-  { img: inspectorImg, alt: "The Inspector" },
-  { img: brokerImg, alt: "The Broker" },
-  { img: researcherImg, alt: "The Researcher" },
-  { img: bookkeeperImg, alt: "The Bookkeeper" },
-  { img: communicatorImg, alt: "The Communicator" },
-  { img: keeperImg, alt: "The Keeper" },
-];
+const roundNice = (n: number) => {
+  if (n < 20) return Math.round(n);
+  if (n < 100) return Math.round(n);
+  return Math.round(n / 5) * 5;
+};
 
-const plans: Plan[] = [
-  {
-    name: "Foundation",
-    price: "£17.50",
-    priceSuffix: "/month",
-    responsibilities: "Ask me anything",
-    tagline: "Get to know me.",
-    description:
-      "Perfect for asking questions about your portfolio and receiving clear, evidence-backed answers.",
-    includes: [
-      "Hobson",
-      "1 person",
-      "50 credits",
-      "The Professor only",
-      "Portfolio understanding",
-      "Evidence-backed answers",
-      "Fair usage",
-    ],
-    cta: "Choose Foundation",
-    ctaHref: "https://app.hobsonschoice.ai/signup",
-    characters: FOUNDATION_CHARACTERS,
-  },
-  {
-    name: "Starter",
-    price: "£39",
-    priceSuffix: "/month",
-    responsibilities: "I'll look after 3 areas of work",
-    tagline: "I'll start looking after your work.",
-    description:
-      "Everything in Foundation, plus I'll look after 3 areas of your property work.",
-    includes: [
-      "Everything in Foundation",
-      "2 people",
-      "250 credits",
-      "All Specialist agents",
-      "Choose 3 areas of work",
-      "Continuous monitoring",
-      "Proactive updates",
-    ],
-    cta: "Choose Starter",
-    ctaHref: "https://app.hobsonschoice.ai/signup",
-    characters: FULL_TEAM_CHARACTERS,
-  },
-  {
-    name: "Professional",
-    price: "£99",
-    priceSuffix: "/month",
-    responsibilities: "I'll look after 6 areas of work",
-    tagline: "I'll become part of your team.",
-    description:
-      "Everything in Starter, plus I'll look after even more of your property work.",
-    includes: [
-      "Everything in Starter",
-      "5 people",
-      "800 credits",
-      "Choose 6 areas of work",
-      "Day-to-day oversight",
-      "Priority handling",
-    ],
-    cta: "Choose Professional",
-    ctaHref: "https://app.hobsonschoice.ai/signup",
-    characters: FULL_TEAM_CHARACTERS,
-  },
-  {
-    name: "Business",
-    price: "£199",
-    priceSuffix: "/month",
-    responsibilities: "I'll look after 9 areas of work",
-    tagline: "I'll look after even more.",
-    description:
-      "Everything in Professional, giving me even more of your property work to quietly look after.",
-    includes: [
-      "Everything in Professional",
-      "10 people",
-      "2000 credits",
-      "Choose 9 areas of work",
-      "Multi-property oversight",
-      "Operational depth",
-    ],
-    cta: "Choose Business",
-    ctaHref: "https://app.hobsonschoice.ai/signup",
-    characters: FULL_TEAM_CHARACTERS,
-  },
-];
+// ============================================================================
+// Draft bar — delete this component before publishing.
+// ============================================================================
+const DraftBar: React.FC = () => (
+  <div
+    style={{
+      background: TOKENS.ink,
+      color: TOKENS.brassLight,
+      fontFamily: FONTS.mono,
+      fontSize: 12,
+      letterSpacing: "0.02em",
+      padding: "8px 16px",
+      textAlign: "center",
+      borderBottom: `1px solid ${TOKENS.hairlineDark}`,
+    }}
+  >
+    Draft — seat price (£20) and document rates (2–10p) are working figures pending final cost data. Remove before publishing.
+  </div>
+);
 
-function CharacterRow({ characters }: { characters: CharacterPortrait[] }) {
-  return (
-    <div className="grid grid-cols-4 gap-2 w-max">
-      {characters.map((c) => (
-        <div
-          key={c.alt}
-          className="w-[4rem] h-[4rem] rounded-full border-2 border-background bg-primary/5 overflow-hidden flex items-center justify-center ring-1 ring-border/40"
-          title={c.alt}
-        >
-          <img src={c.img} alt={c.alt} className="w-[3.63rem] h-[3.63rem] object-contain" />
-        </div>
-      ))}
+// ============================================================================
+// Reusable bits
+// ============================================================================
+const Pill: React.FC<{ children: React.ReactNode; dark?: boolean }> = ({ children, dark }) => (
+  <span
+    style={{
+      display: "inline-flex",
+      alignItems: "center",
+      padding: "6px 12px",
+      borderRadius: 999,
+      border: `1px solid ${dark ? TOKENS.hairlineDark : TOKENS.hairline}`,
+      background: dark ? "rgba(205,160,92,0.08)" : "rgba(255,255,255,0.6)",
+      color: dark ? TOKENS.brassLight : TOKENS.ink,
+      fontFamily: FONTS.mono,
+      fontSize: 12,
+      letterSpacing: "0.02em",
+    }}
+  >
+    {children}
+  </span>
+);
+
+const SectionLabel: React.FC<{ children: React.ReactNode; dark?: boolean }> = ({ children, dark }) => (
+  <div
+    style={{
+      fontFamily: FONTS.mono,
+      fontSize: 11,
+      letterSpacing: "0.2em",
+      textTransform: "uppercase",
+      color: dark ? TOKENS.brassLight : TOKENS.brass,
+      marginBottom: 12,
+    }}
+  >
+    {children}
+  </div>
+);
+
+const H2: React.FC<{ children: React.ReactNode; dark?: boolean }> = ({ children, dark }) => (
+  <h2
+    style={{
+      fontFamily: FONTS.serif,
+      fontWeight: 400,
+      fontSize: "clamp(1.9rem, 3.6vw, 2.75rem)",
+      lineHeight: 1.1,
+      letterSpacing: "-0.01em",
+      color: dark ? TOKENS.paper : TOKENS.ink,
+      margin: 0,
+    }}
+  >
+    {children}
+  </h2>
+);
+
+// ============================================================================
+// Slider — accessible, brass thumb, monospace value.
+// ============================================================================
+const Slider: React.FC<{
+  label: string;
+  min: number;
+  max: number;
+  value: number;
+  onChange: (v: number) => void;
+  suffix?: string;
+  id: string;
+}> = ({ label, min, max, value, onChange, suffix, id }) => (
+  <div>
+    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 10 }}>
+      <label htmlFor={id} style={{ fontFamily: FONTS.mono, fontSize: 12, letterSpacing: "0.08em", textTransform: "uppercase", color: TOKENS.brassLight }}>
+        {label}
+      </label>
+      <span style={{ fontFamily: FONTS.mono, fontSize: 20, color: TOKENS.paper }}>
+        {value}
+        {suffix ? ` ${suffix}` : ""}
+      </span>
     </div>
-  );
-}
+    <input
+      id={id}
+      type="range"
+      min={min}
+      max={max}
+      value={value}
+      onChange={(e) => onChange(Number(e.target.value))}
+      className="hp-slider"
+      style={{ width: "100%" }}
+      aria-valuemin={min}
+      aria-valuemax={max}
+      aria-valuenow={value}
+    />
+    <div style={{ display: "flex", justifyContent: "space-between", fontFamily: FONTS.mono, fontSize: 11, color: "rgba(238,240,233,0.5)", marginTop: 6 }}>
+      <span>{min}</span>
+      <span>{max}+</span>
+    </div>
+  </div>
+);
 
-export default function Pricing() {
-  // All pricing cards white
-  const tierStyles = [
-    "bg-background border-border/60",
-    "bg-background border-border/60",
-    "bg-background border-border/60",
-    "bg-background border-border/60",
-  ];
+// ============================================================================
+// Section 3 — Calculators
+// ============================================================================
+const Calculators: React.FC = () => {
+  const [people, setPeople] = useState(5);
+  const [docs, setDocs] = useState(120);
+
+  const seatsMonthly = people * SEAT;
+  const overflow = docs >= HANDOFF;
+
+  const blendedEst = docs * BLENDED;
+  const low = docs * SIMPLE;
+  const high = docs * COMPLEX;
+
+  const oneOffDisplay = overflow ? "a quote we'll confirm with you" : `around ${fmtGBP(roundNice(blendedEst))}`;
 
   return (
-    <>
-      <Helmet>
-        <title>Pricing | Hobson AI</title>
-        <meta
-          name="description"
-          content="Every plan includes me. The only difference is how much responsibility you'd like me to take on."
-        />
-        <link rel="canonical" href="https://hobsonschoice.ai/pricing" />
-      </Helmet>
+    <section
+      id="calculator"
+      style={{
+        background: TOKENS.ink,
+        color: TOKENS.paper,
+        padding: "clamp(64px, 8vw, 120px) 24px",
+      }}
+    >
+      <div style={{ maxWidth: 1120, margin: "0 auto" }}>
+        <div style={{ maxWidth: 640, marginBottom: 56 }}>
+          <SectionLabel dark>Section 3</SectionLabel>
+          <H2 dark>Work out your price.</H2>
+          <p style={{ fontFamily: FONTS.sans, fontSize: 17, lineHeight: 1.6, color: "rgba(238,240,233,0.75)", marginTop: 16 }}>
+            Slide, and see. Nothing is submitted, nothing is stored. Just an honest picture of what Hobson would cost your firm.
+          </p>
+        </div>
 
-      <GlobalHeader />
-
-      <main id="main-content" className="min-h-screen bg-background">
-        {/* Hero */}
-        <section className="relative overflow-hidden border-b border-border/40 bg-background">
-          <div className="absolute inset-0 bg-gradient-to-b from-primary/5 via-background to-background pointer-events-none" />
-          <div className="container mx-auto px-4 py-14 sm:py-20 relative">
-            <div className="max-w-3xl mx-auto text-center">
-              <h1 className="font-bold leading-tight text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-foreground">
-                Simple, transparent <span className="bg-gradient-to-r from-primary via-primary/80 to-accent-teal bg-clip-text text-transparent">pricing</span>
-              </h1>
-              <p className="mt-6 text-lg sm:text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto">
-                Every business is different. Choose the level of support that's right for you today, and I'll grow with you as your needs evolve.
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: 24 }}>
+          {/* Seats */}
+          <div style={{ border: `1px solid ${TOKENS.hairlineDark}`, borderRadius: 16, padding: "32px 28px", background: "rgba(205,160,92,0.03)" }}>
+            <div style={{ fontFamily: FONTS.mono, fontSize: 11, letterSpacing: "0.2em", color: TOKENS.brassLight, textTransform: "uppercase", marginBottom: 24 }}>
+              Seats
+            </div>
+            <Slider id="people" label="People" min={1} max={30} value={people} onChange={setPeople} suffix={people === 1 ? "person" : "people"} />
+            <div style={{ marginTop: 32, paddingTop: 24, borderTop: `1px solid ${TOKENS.hairlineDark}` }}>
+              <div style={{ fontFamily: FONTS.mono, fontSize: 12, color: "rgba(238,240,233,0.6)", marginBottom: 8 }}>
+                {people} × £{SEAT}
+              </div>
+              <div style={{ fontFamily: FONTS.serif, fontSize: "clamp(2.5rem, 5vw, 3.25rem)", lineHeight: 1, color: TOKENS.paper }}>
+                {fmtGBP(seatsMonthly)}
+                <span style={{ fontFamily: FONTS.mono, fontSize: 14, color: TOKENS.brassLight, marginLeft: 8 }}>/mo</span>
+              </div>
+              <p style={{ fontFamily: FONTS.sans, fontSize: 14, color: "rgba(238,240,233,0.7)", marginTop: 16, lineHeight: 1.5 }}>
+                {people} {people === 1 ? "person" : "people"} × £{SEAT} each. Unlimited questions, the whole team, every month.
               </p>
             </div>
           </div>
-        </section>
 
-        {/* Pricing Cards */}
-        <section className="bg-muted/20 border-b border-border/30">
-          <div className="container mx-auto px-4 py-14 sm:py-16">
-            <div className="max-w-7xl mx-auto">
-              <div className="mb-10 max-w-2xl mx-auto">
-                <div className="relative overflow-hidden rounded-xl border border-primary/20 bg-gradient-to-br from-primary/[0.06] via-primary/[0.03] to-background p-5 sm:p-6 text-center shadow-sm">
-                  <div className="absolute top-0 left-0 w-20 h-20 bg-primary/5 rounded-full -translate-x-1/2 -translate-y-1/2 blur-xl" />
-                  <div className="absolute bottom-0 right-0 w-16 h-16 bg-accent-teal/5 rounded-full translate-x-1/2 translate-y-1/2 blur-xl" />
-                  <div className="relative">
-                    <div className="flex flex-col items-center gap-3">
-                      <div className="w-14 h-14 rounded-full border-2 border-primary/20 bg-primary/5 overflow-hidden flex items-center justify-center shadow-sm">
-                        <img src={owlMascot} alt="Hobson" className="w-12 h-12 object-contain" />
-                      </div>
-                      <div className="flex items-center justify-center gap-3">
-                        <Sparkles className="h-4 w-4 text-primary flex-shrink-0" />
-                        <p className="text-sm sm:text-base text-foreground/90 font-medium leading-snug">
-                          From <span className="font-bold text-primary">Starter</span> onwards, I bring together my full specialist team to help me look after your property work.
-                        </p>
-                        <Sparkles className="h-4 w-4 text-primary flex-shrink-0" />
-                      </div>
-                    </div>
+          {/* Documents */}
+          <div style={{ border: `1px solid ${TOKENS.hairlineDark}`, borderRadius: 16, padding: "32px 28px", background: "rgba(205,160,92,0.03)" }}>
+            <div style={{ fontFamily: FONTS.mono, fontSize: 11, letterSpacing: "0.2em", color: TOKENS.brassLight, textTransform: "uppercase", marginBottom: 24 }}>
+              Learning
+            </div>
+            <Slider id="docs" label="Documents" min={10} max={600} value={docs} onChange={setDocs} suffix="docs" />
+            <div style={{ marginTop: 32, paddingTop: 24, borderTop: `1px solid ${TOKENS.hairlineDark}` }}>
+              {overflow ? (
+                <>
+                  <div style={{ fontFamily: FONTS.serif, fontSize: "clamp(1.6rem, 3vw, 2rem)", lineHeight: 1.15, color: TOKENS.paper, fontStyle: "italic" }}>
+                    Let's confirm together.
                   </div>
-                </div>
+                  <p style={{ fontFamily: FONTS.sans, fontSize: 14, color: "rgba(238,240,233,0.7)", marginTop: 16, lineHeight: 1.55 }}>
+                    Above roughly {HANDOFF} documents we confirm the details with you personally before quoting — this is where a tailored onboarding conversation begins.
+                  </p>
+                </>
+              ) : (
+                <>
+                  <div style={{ fontFamily: FONTS.mono, fontSize: 12, color: "rgba(238,240,233,0.6)", marginBottom: 8 }}>
+                    Estimate — one-off
+                  </div>
+                  <div style={{ fontFamily: FONTS.serif, fontSize: "clamp(2.5rem, 5vw, 3.25rem)", lineHeight: 1, color: TOKENS.paper }}>
+                    around {fmtGBP(roundNice(blendedEst))}
+                  </div>
+                  <p style={{ fontFamily: FONTS.mono, fontSize: 12, color: TOKENS.brassLight, marginTop: 12 }}>
+                    Firm price will fall between {fmtGBP2(low)} and {fmtGBP2(high)}
+                  </p>
+                  <p style={{ fontFamily: FONTS.sans, fontSize: 14, color: "rgba(238,240,233,0.7)", marginTop: 16, lineHeight: 1.55 }}>
+                    Based on a typical mix of about 1 complex document in every 5. Hobson confirms the exact figure once he's assessed how many are complex — and you approve it before the full read begins.
+                  </p>
+                </>
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* Total strip */}
+        <div style={{ marginTop: 40, padding: "28px 32px", border: `1px solid ${TOKENS.brassLight}`, borderRadius: 16, background: "rgba(205,160,92,0.06)" }}>
+          <div style={{ fontFamily: FONTS.mono, fontSize: 11, letterSpacing: "0.2em", color: TOKENS.brassLight, textTransform: "uppercase", marginBottom: 10 }}>
+            Together
+          </div>
+          <p style={{ fontFamily: FONTS.serif, fontSize: "clamp(1.25rem, 2.2vw, 1.6rem)", lineHeight: 1.4, color: TOKENS.paper, margin: 0 }}>
+            A <span style={{ color: TOKENS.brassLight }}>{people}-person</span> firm with{" "}
+            <span style={{ color: TOKENS.brassLight }}>{docs}{overflow ? "+" : ""} documents</span>:{" "}
+            <span style={{ fontFamily: FONTS.mono, fontSize: "0.9em" }}>{fmtGBP(seatsMonthly)}/mo</span>, plus a one-off of {oneOffDisplay} to get started.
+          </p>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+// ============================================================================
+// FAQ
+// ============================================================================
+const FAQS: Array<{ q: string; a: string }> = [
+  { q: "Do you charge per question?", a: "No. Every seat comes with unlimited questions — ask Hobson as much as you like, across everything he's learned. We don't count what he does, so there's no meter running while you think." },
+  { q: "Why is there no plan to choose?", a: "Because everyone gets the complete Hobson — there's no smaller version to sell. Your price is simply built from how many people use him and how many documents he learns. Nothing to compare, nothing to outgrow." },
+  { q: "What does each person actually get?", a: "Their own co-worker. Hobson works alongside each person, learns how they like to work, and keeps their access, permissions and history separate and secure. It's one Hobson with one shared understanding of your documents — but he knows each of your people individually." },
+  { q: "Why is the document price a range?", a: "Because a three-page notice and a three-hundred-page lease aren't the same job. Simple documents cost 2p, complex ones up to 10p. We estimate on a typical mix, then Hobson confirms the exact figure once he's seen how many of yours are complex — always inside the range you were shown." },
+  { q: "Do I keep paying every time Hobson uses a document?", a: "No. Hobson reads each document once. After that he knows it for good — every question, calculation or check that touches it is free, forever. You pay for the one-time read, never for the knowing." },
+  { q: "What happens when new documents arrive?", a: "They're just more learning, at the same 2–10p. A few new leases are handled without fuss. If a large batch arrives — a purchase, a data room — Hobson quotes it and waits for your approval before reading. It's never charged automatically." },
+  { q: "Do I pay before I know the real cost?", a: "You approve a firm quote before the full read, and that quote always lands inside the range the estimate showed you. Hobson assesses your documents to price them accurately, but doesn't do the detailed, expensive read until you've said yes." },
+  { q: "Can I add or remove people?", a: "Any time. Each person is £20 a month for their own co-worker and unlimited use. Add seats as your team grows, remove them when it doesn't — no lock-in." },
+];
+
+const TEAM: Array<{ name: string; role: string }> = [
+  { name: "The Professor", role: "Understands leases & documents" },
+  { name: "The Architect", role: "Understands the portfolio's structure" },
+  { name: "The Inspector", role: "Keeps on top of compliance" },
+  { name: "The Broker", role: "Understands people & organisations" },
+  { name: "The Researcher", role: "Finds trusted external information" },
+  { name: "The Bookkeeper", role: "Runs calculations & financial analysis" },
+  { name: "The Communicator", role: "Connects to your other systems" },
+  { name: "The Keeper", role: "Manages permissions & access" },
+];
+
+const CERTAINTIES: Array<{ h: string; b: string }> = [
+  { h: "Nothing is charged automatically", b: "Reading new documents is always a decision you make, never a surprise. Hobson quotes it and waits for your yes." },
+  { h: "He confirms before he reads", b: "Hobson assesses your documents to price them, but only does the full, detailed read once you've approved and paid. No blind commitments." },
+  { h: "One read, known for good", b: "Once Hobson has learned a document, it's learned. You never pay to read the same thing twice, and every question about it afterwards is free." },
+  { h: "Questions are always unlimited", b: "Ask as much as you like, all day, every seat. We never count questions, so there's never a meter running while you think." },
+];
+
+// ============================================================================
+// Page
+// ============================================================================
+export default function Pricing() {
+  return (
+    <>
+      <Helmet>
+        <title>Pricing — Hobson</title>
+        <meta name="description" content="No plans. No credits. Nothing counted. Pay for seats and document learning — that's it." />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..600&family=Hanken+Grotesk:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap"
+        />
+      </Helmet>
+
+      {/* Page-scoped styles */}
+      <style>{`
+        .hp-page { background: ${TOKENS.paper}; color: ${TOKENS.ink}; font-family: ${FONTS.sans}; }
+        .hp-page * { box-sizing: border-box; }
+        .hp-reveal { opacity: 0; transform: translateY(12px); animation: hpRise .7s ease-out forwards; }
+        @keyframes hpRise { to { opacity: 1; transform: none; } }
+        .hp-lift { transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease; }
+        .hp-lift:hover { transform: translateY(-2px); box-shadow: 0 12px 32px -18px rgba(22,48,43,0.35); }
+        .hp-slider { -webkit-appearance: none; appearance: none; height: 4px; background: rgba(205,160,92,0.22); border-radius: 999px; outline: none; }
+        .hp-slider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 22px; height: 22px; border-radius: 50%; background: ${TOKENS.brassLight}; border: 3px solid ${TOKENS.ink}; box-shadow: 0 2px 6px rgba(0,0,0,0.3); cursor: pointer; }
+        .hp-slider::-moz-range-thumb { width: 22px; height: 22px; border-radius: 50%; background: ${TOKENS.brassLight}; border: 3px solid ${TOKENS.ink}; cursor: pointer; }
+        .hp-slider:focus-visible::-webkit-slider-thumb { outline: 2px solid ${TOKENS.brassLight}; outline-offset: 3px; }
+        .hp-btn { font-family: ${FONTS.mono}; font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase; padding: 14px 28px; border-radius: 999px; cursor: pointer; transition: all .25s ease; border: 1px solid transparent; display: inline-flex; align-items: center; gap: 8px; text-decoration: none; }
+        .hp-btn-brass { background: ${TOKENS.brass}; color: ${TOKENS.paper}; }
+        .hp-btn-brass:hover { background: ${TOKENS.brassLight}; }
+        .hp-btn-ghost { background: transparent; color: ${TOKENS.paper}; border-color: ${TOKENS.brassLight}; }
+        .hp-btn-ghost:hover { background: rgba(205,160,92,0.1); }
+        .hp-btn:focus-visible { outline: 2px solid ${TOKENS.brassLight}; outline-offset: 3px; }
+        details.hp-faq { border-top: 1px solid ${TOKENS.hairline}; padding: 22px 0; }
+        details.hp-faq:last-of-type { border-bottom: 1px solid ${TOKENS.hairline}; }
+        details.hp-faq summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 24px; font-family: ${FONTS.serif}; font-size: 1.15rem; color: ${TOKENS.ink}; }
+        details.hp-faq summary::-webkit-details-marker { display: none; }
+        details.hp-faq summary .hp-plus { font-family: ${FONTS.mono}; color: ${TOKENS.brass}; transition: transform .25s ease; flex-shrink: 0; }
+        details.hp-faq[open] summary .hp-plus { transform: rotate(45deg); }
+        details.hp-faq p { font-family: ${FONTS.sans}; font-size: 15.5px; line-height: 1.65; color: ${TOKENS.inkSoft}; margin: 16px 0 0; max-width: 68ch; }
+        @media (prefers-reduced-motion: reduce) {
+          .hp-reveal, .hp-lift, details.hp-faq summary .hp-plus { animation: none !important; transition: none !important; transform: none !important; }
+        }
+      `}</style>
+
+      <DraftBar />
+      <GlobalHeader />
+
+      <main className="hp-page">
+        {/* ---------------- Section 1 — Hero ---------------- */}
+        <section style={{ padding: "clamp(64px, 9vw, 120px) 24px 0" }}>
+          <div style={{ maxWidth: 1120, margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: 48, alignItems: "center" }}>
+            <div className="hp-reveal">
+              <SectionLabel>Pricing</SectionLabel>
+              <h1 style={{ fontFamily: FONTS.serif, fontWeight: 400, fontSize: "clamp(2.4rem, 5.2vw, 4rem)", lineHeight: 1.05, letterSpacing: "-0.015em", color: TOKENS.ink, margin: 0 }}>
+                No plans.<br />
+                No credits.<br />
+                <em style={{ color: TOKENS.brass, fontStyle: "italic" }}>Nothing counted.</em>
+              </h1>
+              <p style={{ fontFamily: FONTS.sans, fontSize: 18, lineHeight: 1.6, color: TOKENS.inkSoft, marginTop: 28, maxWidth: 520 }}>
+                Hobson is your AI co-worker for property — a full back-office team in one place. Everyone gets all of him. You pay for just two things: a seat for each person, and Hobson learning your documents.
+              </p>
+              <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginTop: 28 }}>
+                <Pill>£20 per person / month</Pill>
+                <Pill>Unlimited questions</Pill>
+                <Pill>Learning priced &amp; approved up front</Pill>
               </div>
-
-              {/* Equal 4-column grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 items-stretch">
-                {plans.map((plan, idx) => {
-                  const isFoundation = idx === 0;
-                  return (
-                    <Card
-                      key={plan.name}
-                      className={`relative flex flex-col p-6 transition-all duration-300 border ${tierStyles[idx]} hover:border-primary/50 hover:shadow-xl hover:-translate-y-0.5`}
-                    >
-                      <div className="mb-4">
-                        <h3 className="text-xl font-bold text-foreground">{plan.name}</h3>
-                        <p className="text-sm text-primary mt-1 font-medium">{plan.tagline}</p>
-                        <div className="mt-2 inline-flex items-center gap-1.5 rounded-full border border-amber-200 bg-amber-50 px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wider text-amber-700">
-                          <span className="h-1.5 w-1.5 rounded-full bg-amber-500 animate-pulse" />
-                          Coming soon
-                        </div>
-                      </div>
-
-                      {/* Character cluster */}
-                      <div className="mb-5 h-[8.5rem]">
-                        {isFoundation ? (
-                          <div className="h-full flex items-start pt-1 justify-start">
-                            <div
-                              className="w-[4rem] h-[4rem] rounded-full border-2 border-background bg-primary/5 overflow-hidden flex items-center justify-center ring-1 ring-border/40"
-                              title="The Professor"
-                            >
-                              <img src={professorImg} alt="The Professor" className="w-[3.63rem] h-[3.63rem] object-contain" />
-                            </div>
-                          </div>
-                        ) : (
-                          <div className="h-full flex items-center justify-start">
-                            <CharacterRow characters={plan.characters} />
-                          </div>
-                        )}
-                      </div>
-
-                      {/* Price */}
-                      <div className="mb-4">
-                        <div className="flex items-baseline gap-1">
-                          <span className="text-4xl font-bold text-foreground tracking-tight">{plan.price}</span>
-                          {plan.priceSuffix && (
-                            <span className="text-sm text-muted-foreground">{plan.priceSuffix}</span>
-                          )}
-                        </div>
-                      </div>
-
-                      {/* Responsibilities pill */}
-                      <div className="mb-4">
-                        <div className="inline-flex items-center rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
-                          {plan.responsibilities}
-                        </div>
-                      </div>
-
-                      {/* Description */}
-                      <p className="text-sm text-muted-foreground mb-5 leading-relaxed">
-                        {plan.description}
-                      </p>
-
-                      {/* Divider before features for rhythm */}
-                      <div className="h-px bg-border/50 mb-4" />
-
-                      {/* Features grow to align CTAs */}
-                      <ul className="space-y-2.5 mb-6 flex-grow">
-                        {plan.includes.map((item) => (
-                          <li key={item} className="flex items-start gap-2 text-sm">
-                            <Check className="h-4 w-4 text-primary flex-shrink-0 mt-0.5" />
-                            <span className="text-foreground/90">{item}</span>
-                          </li>
-                        ))}
-                      </ul>
-
-                      <Button
-                        className="w-full"
-                        variant={isFoundation ? "outline" : "default"}
-                        disabled
-                      >
-                        {plan.cta}
-                      </Button>
-                    </Card>
-                  );
-                })}
-              </div>
-
             </div>
 
-            {/* Enterprise CTA */}
-            <div className="mt-10 max-w-3xl mx-auto">
-              <div className="relative overflow-hidden rounded-2xl border border-primary/20 bg-gradient-to-br from-primary/[0.04] via-background to-accent-teal/[0.04] p-8 sm:p-10 text-center">
-                <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full -translate-y-1/2 translate-x-1/2 blur-2xl" />
-                <div className="absolute bottom-0 left-0 w-24 h-24 bg-accent-teal/5 rounded-full translate-y-1/2 -translate-x-1/2 blur-2xl" />
-                <div className="relative">
-                  <div className="inline-flex items-center gap-1.5 rounded-full border border-amber-200 bg-amber-50 px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wider text-amber-700 mb-2">
-                    <span className="h-1.5 w-1.5 rounded-full bg-amber-500 animate-pulse" />
-                    Coming soon
-                  </div>
-                  <h3 className="text-xl sm:text-2xl font-bold text-foreground tracking-tight">Enterprise</h3>
-                  <p className="mt-2 text-base text-primary font-medium">Let's build something together</p>
-
-                  <div className="mt-4 flex justify-center">
-                    <CharacterRow characters={FULL_TEAM_CHARACTERS} />
-                  </div>
-
-                  <p className="mt-4 text-sm text-muted-foreground leading-relaxed max-w-lg mx-auto">
-                    Every organisation works differently. Together, we'll shape me around the way your business works, so I can take care of the things that are unique to your organisation.
-                  </p>
-                  <div className="mt-6">
-                    <span className="text-sm text-muted-foreground">Email </span>
-                    <a href="mailto:info@hobsonschoice.ai" className="text-sm font-medium text-primary hover:underline">
-                      info@hobsonschoice.ai
-                    </a>
-                  </div>
-                </div>
+            {/* Hobson card */}
+            <div
+              className="hp-reveal"
+              style={{
+                background: TOKENS.ink,
+                color: TOKENS.paper,
+                borderRadius: 20,
+                padding: "36px 32px",
+                border: `1px solid ${TOKENS.hairlineDark}`,
+                animationDelay: ".1s",
+              }}
+            >
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 28, paddingBottom: 20, borderBottom: `1px solid ${TOKENS.hairlineDark}` }}>
+                <div style={{ fontFamily: FONTS.serif, fontSize: 22, color: TOKENS.paper }}>Hobson</div>
+                <div style={{ fontFamily: FONTS.mono, fontSize: 11, letterSpacing: "0.2em", color: TOKENS.brassLight, textTransform: "uppercase" }}>Cost sheet</div>
               </div>
+              {[
+                { k: "Seats", v: "£20 per person, per month — unlimited everything, the whole team" },
+                { k: "Learning", v: "2–10p a document, read once and known for good" },
+                { k: "Always", v: "You approve the cost of any reading before a page is turned" },
+              ].map((row) => (
+                <div key={row.k} style={{ display: "grid", gridTemplateColumns: "110px 1fr", gap: 16, padding: "16px 0", borderBottom: `1px dashed ${TOKENS.hairlineDark}` }}>
+                  <div style={{ fontFamily: FONTS.mono, fontSize: 11, letterSpacing: "0.18em", color: TOKENS.brassLight, textTransform: "uppercase", paddingTop: 2 }}>{row.k}</div>
+                  <div style={{ fontFamily: FONTS.sans, fontSize: 15, lineHeight: 1.55, color: "rgba(238,240,233,0.85)" }}>{row.v}</div>
+                </div>
+              ))}
             </div>
           </div>
         </section>
 
+        {/* ---------------- Section 2 — Two costs ---------------- */}
+        <section style={{ padding: "clamp(72px, 10vw, 140px) 24px" }}>
+          <div style={{ maxWidth: 1120, margin: "0 auto" }}>
+            <div style={{ maxWidth: 640, marginBottom: 56 }}>
+              <SectionLabel>Section 2</SectionLabel>
+              <H2>Two costs. That's it.</H2>
+            </div>
 
-        {/* Fair Usage */}
-        <section className="bg-muted/20">
-          <div className="container mx-auto px-4 py-14 sm:py-16">
-            <div className="max-w-3xl mx-auto text-center">
-              <h2 className="text-2xl sm:text-3xl font-bold text-foreground tracking-tight">Fair Usage</h2>
-              <div className="mt-5 space-y-3 text-muted-foreground leading-relaxed">
-                <p>Hobson is designed to be used every day.</p>
-                <p>
-                  Every plan includes fair usage across conversations, documents and portfolio activity.
-                  Our Fair Usage Policy exists simply to prevent abuse while ensuring every customer enjoys
-                  a consistently fast and reliable service.
-                </p>
-                <p className="text-sm italic">
-                  The overwhelming majority of customers will never encounter these limits.
-                </p>
-              </div>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: 24 }}>
+              {[
+                {
+                  label: "Cost one",
+                  h: "A seat for each person",
+                  price: "£20",
+                  suffix: "per person / month",
+                  body: "Every person who uses Hobson gets their own co-worker. He works alongside them, learns how they work, and gives them their own secure access, permissions and audit history. With it comes the complete Hobson: ask anything, as often as you like, across everything he's learned. We never count the questions. Add or remove people any time.",
+                },
+                {
+                  label: "Cost two",
+                  h: "Learning your documents",
+                  price: "2–10p",
+                  suffix: "per document, once",
+                  body: "The one thing we ever price is Hobson reading a document he hasn't seen. Simple documents cost less, complex ones more. He reads each one just once — after that he knows it for good, and every question about it is free forever. He assesses the mix, confirms the price, and you approve before any real reading begins.",
+                },
+              ].map((c) => (
+                <div
+                  key={c.h}
+                  className="hp-lift"
+                  style={{ background: TOKENS.card, borderRadius: 20, padding: "40px 36px", border: `1px solid ${TOKENS.hairline}` }}
+                >
+                  <div style={{ fontFamily: FONTS.mono, fontSize: 11, letterSpacing: "0.2em", color: TOKENS.brass, textTransform: "uppercase", marginBottom: 20 }}>
+                    {c.label}
+                  </div>
+                  <h3 style={{ fontFamily: FONTS.serif, fontWeight: 400, fontSize: "clamp(1.5rem, 2.4vw, 1.9rem)", color: TOKENS.ink, margin: 0, lineHeight: 1.2 }}>
+                    {c.h}
+                  </h3>
+                  <div style={{ marginTop: 24, marginBottom: 24, paddingBottom: 24, borderBottom: `1px solid ${TOKENS.hairline}` }}>
+                    <span style={{ fontFamily: FONTS.serif, fontSize: "clamp(2.4rem, 4.5vw, 3rem)", color: TOKENS.brass, lineHeight: 1 }}>{c.price}</span>
+                    <span style={{ fontFamily: FONTS.mono, fontSize: 13, color: TOKENS.inkMuted, marginLeft: 12 }}>{c.suffix}</span>
+                  </div>
+                  <p style={{ fontFamily: FONTS.sans, fontSize: 16, lineHeight: 1.65, color: TOKENS.inkSoft, margin: 0 }}>{c.body}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ---------------- Section 3 — Calculators ---------------- */}
+        <Calculators />
+
+        {/* ---------------- Section 4 — Team (dark) ---------------- */}
+        <section style={{ background: TOKENS.ink, color: TOKENS.paper, padding: "clamp(72px, 10vw, 140px) 24px", borderTop: `1px solid ${TOKENS.hairlineDark}` }}>
+          <div style={{ maxWidth: 1120, margin: "0 auto" }}>
+            <div style={{ maxWidth: 720, marginBottom: 56 }}>
+              <SectionLabel dark>Section 4</SectionLabel>
+              <H2 dark>Your whole back-office team.<br />For every person, every seat.</H2>
+            </div>
+
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 1, background: TOKENS.hairlineDark, border: `1px solid ${TOKENS.hairlineDark}`, borderRadius: 16, overflow: "hidden" }}>
+              {TEAM.map((t) => (
+                <div key={t.name} style={{ background: TOKENS.ink, padding: "28px 24px" }}>
+                  <div style={{ fontFamily: FONTS.serif, fontSize: 20, color: TOKENS.paper, marginBottom: 8 }}>{t.name}</div>
+                  <div style={{ fontFamily: FONTS.sans, fontSize: 14, lineHeight: 1.5, color: "rgba(238,240,233,0.65)" }}>{t.role}</div>
+                </div>
+              ))}
+            </div>
+
+            <p style={{ fontFamily: FONTS.serif, fontStyle: "italic", fontSize: "clamp(1.15rem, 2vw, 1.4rem)", lineHeight: 1.5, color: TOKENS.brassLight, marginTop: 48, maxWidth: 720 }}>
+              You never choose a specialist. Hobson coordinates the team behind the scenes — you just ask him, and the right people go to work.
+            </p>
+          </div>
+        </section>
+
+        {/* ---------------- Section 5 — Budget certainty ---------------- */}
+        <section style={{ padding: "clamp(72px, 10vw, 140px) 24px" }}>
+          <div style={{ maxWidth: 1120, margin: "0 auto" }}>
+            <div style={{ maxWidth: 640, marginBottom: 56 }}>
+              <SectionLabel>Section 5</SectionLabel>
+              <H2>You always know what you'll pay.</H2>
+            </div>
+
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 20 }}>
+              {CERTAINTIES.map((c, i) => (
+                <div
+                  key={c.h}
+                  className="hp-lift"
+                  style={{ background: TOKENS.card, borderRadius: 16, padding: "32px 28px", border: `1px solid ${TOKENS.hairline}`, position: "relative" }}
+                >
+                  <div style={{ fontFamily: FONTS.mono, fontSize: 11, color: TOKENS.brass, marginBottom: 16 }}>0{i + 1}</div>
+                  <h3 style={{ fontFamily: FONTS.serif, fontSize: "1.25rem", fontWeight: 400, color: TOKENS.ink, margin: 0, marginBottom: 12, lineHeight: 1.3 }}>{c.h}</h3>
+                  <p style={{ fontFamily: FONTS.sans, fontSize: 15, lineHeight: 1.6, color: TOKENS.inkSoft, margin: 0 }}>{c.b}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ---------------- Section 6 — FAQ ---------------- */}
+        <section style={{ padding: "clamp(72px, 10vw, 140px) 24px", background: TOKENS.card, borderTop: `1px solid ${TOKENS.hairline}`, borderBottom: `1px solid ${TOKENS.hairline}` }}>
+          <div style={{ maxWidth: 820, margin: "0 auto" }}>
+            <div style={{ marginBottom: 40 }}>
+              <SectionLabel>Section 6</SectionLabel>
+              <H2>Questions, answered plainly.</H2>
+            </div>
+            <div>
+              {FAQS.map((f, i) => (
+                <details key={f.q} className="hp-faq" open={i === 0}>
+                  <summary>
+                    <span>{f.q}</span>
+                    <span className="hp-plus" aria-hidden>+</span>
+                  </summary>
+                  <p>{f.a}</p>
+                </details>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ---------------- Section 7 — Closing CTA ---------------- */}
+        <section style={{ background: TOKENS.ink, color: TOKENS.paper, padding: "clamp(72px, 10vw, 140px) 24px", textAlign: "center" }}>
+          <div style={{ maxWidth: 720, margin: "0 auto" }}>
+            <SectionLabel dark>Ready</SectionLabel>
+            <h2 style={{ fontFamily: FONTS.serif, fontWeight: 400, fontSize: "clamp(2.2rem, 4.5vw, 3.25rem)", lineHeight: 1.1, letterSpacing: "-0.01em", color: TOKENS.paper, margin: 0 }}>
+              Ready to meet <em style={{ color: TOKENS.brassLight, fontStyle: "italic" }}>Hobson?</em>
+            </h2>
+            <p style={{ fontFamily: FONTS.sans, fontSize: 18, lineHeight: 1.6, color: "rgba(238,240,233,0.75)", marginTop: 20, marginBottom: 40 }}>
+              Add up your seats, estimate your library, and see exactly where you stand. No plans, no credits, no surprises.
+            </p>
+            <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: 12 }}>
+              <a href="#calculator" className="hp-btn hp-btn-brass">Work out your price</a>
+              <a href="#team" className="hp-btn hp-btn-ghost">Meet the team</a>
             </div>
           </div>
         </section>
