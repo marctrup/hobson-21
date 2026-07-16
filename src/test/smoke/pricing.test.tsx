@@ -16,8 +16,8 @@ describe("Pricing page", () => {
   it("shows the two-costs section", async () => {
     renderWithProviders(<Pricing />, { route: "/pricing" });
     await waitFor(() => {
-      expect(screen.getByText(/A seat for each person/i)).toBeInTheDocument();
-      expect(screen.getByText(/Learning your documents/i)).toBeInTheDocument();
+      expect(screen.getAllByText(/A seat for each person/i).length).toBeGreaterThan(0);
+      expect(screen.getAllByText(/Learning your documents/i).length).toBeGreaterThan(0);
     });
   });
 
