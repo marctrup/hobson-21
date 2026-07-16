@@ -48,25 +48,6 @@ const roundNice = (n: number) => {
   return Math.round(n / 5) * 5;
 };
 
-// ============================================================================
-// Draft bar — delete this component before publishing.
-// ============================================================================
-const DraftBar: React.FC = () => (
-  <div
-    style={{
-      background: TOKENS.ink,
-      color: TOKENS.brassLight,
-      fontFamily: FONTS.mono,
-      fontSize: 12,
-      letterSpacing: "0.02em",
-      padding: "8px 16px",
-      textAlign: "center",
-      borderBottom: `1px solid ${TOKENS.hairlineDark}`,
-    }}
-  >
-    Draft — seat price (£20) and document rates (2–10p) are working figures pending final cost data. Remove before publishing.
-  </div>
-);
 
 // ============================================================================
 // Reusable bits
@@ -349,7 +330,7 @@ export default function Pricing() {
         }
       `}</style>
 
-      <DraftBar />
+      
       <GlobalHeader />
 
       <main className="hp-page">
