@@ -569,7 +569,7 @@ const Calculators: React.FC = () => {
     <section
       style={{
         padding: "clamp(56px, 8vw, 112px) 24px",
-        background: `radial-gradient(900px 480px at 15% 0%, rgba(124,58,237,0.05), transparent 60%), ${TOKENS.paper}`,
+        background: TOKENS.paper,
         borderTop: `1px solid ${TOKENS.hairline}`,
       }}
     >
