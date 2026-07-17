@@ -342,14 +342,14 @@ const Calculators: React.FC = () => {
   const oneOffDisplay = overflow ? "a quote we'll confirm with you" : `around ${fmtGBP(roundNice(blendedEst))}`;
 
   return (
+    <>
     <section
       id="calculator"
       style={{
         background: TOKENS.paper,
         color: TOKENS.ink,
-        padding: "clamp(72px, 9vw, 128px) 24px",
+        padding: "clamp(72px, 9vw, 128px) 24px clamp(56px, 7vw, 96px)",
         borderTop: `1px solid ${TOKENS.hairline}`,
-        borderBottom: `1px solid ${TOKENS.hairline}`,
       }}
     >
       <div style={{ maxWidth: 1120, margin: "0 auto" }}>
