@@ -359,15 +359,15 @@ const Calculators: React.FC = () => {
         </div>
 
         {/* ============ TOGETHER STRIP ============ */}
-        <div style={{ marginTop: 32, padding: "28px 32px", borderRadius: 20, background: `linear-gradient(135deg, rgba(249,115,22,0.08), rgba(139,92,246,0.06))`, border: `1px solid ${TOKENS.hairline}` }}>
-          <div style={{ fontFamily: FONTS.mono, fontSize: 11, letterSpacing: "0.24em", color: TOKENS.brass, textTransform: "uppercase", marginBottom: 10 }}>
+        <div style={{ marginTop: 32, padding: "40px 44px", borderRadius: 20, background: `linear-gradient(135deg, rgba(249,115,22,0.08), rgba(139,92,246,0.06))`, border: `1px solid ${TOKENS.hairline}` }}>
+          <div style={{ fontFamily: FONTS.mono, fontSize: 11, letterSpacing: "0.24em", color: TOKENS.brass, textTransform: "uppercase", marginBottom: 16 }}>
             Together
           </div>
-          <p style={{ fontFamily: FONTS.sans, fontSize: "clamp(1rem, 1.5vw, 1.15rem)", lineHeight: 1.65, color: TOKENS.inkSoft, margin: 0, fontWeight: 400, letterSpacing: "-0.005em" }}>
-            For a <span style={{ color: TOKENS.ink, fontWeight: 600 }}>{people}-person</span> firm with more than{" "}
-            <span style={{ color: TOKENS.ink, fontWeight: 600 }}>{docs}{overflow ? "+" : ""} documents</span>:{" "}
+          <p style={{ fontFamily: FONTS.serif, fontSize: "clamp(1.5rem, 2.6vw, 2.1rem)", lineHeight: 1.35, color: TOKENS.ink, margin: 0, fontWeight: 400, letterSpacing: "-0.015em" }}>
+            For a <span style={{ fontWeight: 600 }}>{people}-person</span> firm with more than{" "}
+            <span style={{ fontWeight: 600 }}>{docs}{overflow ? "+" : ""} documents</span>:{" "}
             a one-off setup price, confirmed before we begin, followed by{" "}
-            <span style={{ color: TOKENS.ink, fontWeight: 600 }}>{fmtGBP(seatsMonthly)} per month</span>.
+            <span style={{ fontWeight: 600 }}>{fmtGBP(seatsMonthly)} per month</span>.
           </p>
         </div>
       </div>
