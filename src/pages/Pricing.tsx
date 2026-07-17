@@ -268,7 +268,7 @@ const TogetherCard: React.FC<{ people: number; docEstimate: number; seatsMonthly
 // Section 3 — Calculators
 // ============================================================================
 
-const HERO_MESSAGE = "Tell me about your business. I will show you what it costs to have me working alongside your team, and give you an estimate for what my Professor will need to read your documents. The final document price is confirmed once I know what you hold — nothing begins until you approve it.";
+const HERO_MESSAGE = "\u201CTell me about your business. I will show you the seat cost for your team and an estimate for my Professor to read your documents. Nothing begins until you approve it.\u201D";
 
 const TypewriterText: React.FC<{ text: string; speed?: number; startDelay?: number }> = ({
   text,
