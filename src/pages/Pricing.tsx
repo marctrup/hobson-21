@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { GlobalHeader } from "@/components/GlobalHeader";
+import { InterestModal } from "@/components/InterestModal";
 
 // ============================================================================
 // Tunable constants — update once real figures land.
