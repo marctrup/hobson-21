@@ -430,13 +430,6 @@ const Calculators: React.FC = () => {
               £0.25–£1.00 per document, depending on its complexity. I read it once and remember it for good. You approve a fixed quote before I begin the full read.
             </p>
 
-            <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginTop: 20 }}>
-              {["Read once", "Known for good", "Firm quote first"].map((t) => (
-                <span key={t} style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "5px 10px", borderRadius: 999, background: "rgba(249,115,22,0.08)", border: `1px solid ${TOKENS.hairline}`, fontFamily: FONTS.mono, fontSize: 10.5, letterSpacing: "0.04em", color: TOKENS.ink }}>
-                  <span style={{ width: 4, height: 4, borderRadius: "50%", background: TOKENS.brass }} /> {t}
-                </span>
-              ))}
-            </div>
 
             {/* Calculator block */}
             <div
