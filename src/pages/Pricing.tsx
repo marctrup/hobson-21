@@ -179,7 +179,7 @@ const Calculators: React.FC = () => {
         <div style={{ maxWidth: 720, marginBottom: 56, marginLeft: "auto", marginRight: "auto", textAlign: "center" }}>
           <H2>See what I would cost your business.</H2>
           <p style={{ fontFamily: FONTS.sans, fontSize: 17, lineHeight: 1.6, color: TOKENS.inkSoft, marginTop: 16 }}>
-            Tell me a little about your firm, and I'll give you a clear estimate.
+            Tell me a little about your business, and I'll give you a clear estimate.
           </p>
         </div>
 
@@ -364,7 +364,7 @@ const Calculators: React.FC = () => {
             Together
           </div>
           <p style={{ fontFamily: FONTS.serif, fontSize: "clamp(1.5rem, 2.6vw, 2.1rem)", lineHeight: 1.35, color: TOKENS.ink, margin: 0, fontWeight: 400, letterSpacing: "-0.015em" }}>
-            For a <span style={{ fontWeight: 600 }}>{people}-person</span> firm with more than{" "}
+            For a <span style={{ fontWeight: 600 }}>{people}-person</span> business with more than{" "}
             <span style={{ fontWeight: 600 }}>{docs}{overflow ? "+" : ""} documents</span>:{" "}
             a one-off setup price, confirmed before we begin, followed by{" "}
             <span style={{ fontWeight: 600 }}>{fmtGBP(seatsMonthly)} per month</span>.
@@ -531,7 +531,7 @@ export default function Pricing() {
               Bigger, or more complex? Let's talk.
             </h2>
             <p style={{ fontFamily: FONTS.sans, fontSize: 17, lineHeight: 1.65, color: TOKENS.inkSoft, margin: "0 auto 20px", maxWidth: 680 }}>
-              The calculators above will suit most firms. But if you manage a large or unusual portfolio, work across multiple entities, or need me shaped around the way your organisation works, let's design it together.
+              The calculators above will suit most businesses. But if you manage a large or unusual portfolio, work across multiple entities, or need me shaped around the way your organisation works, let's design it together.
             </p>
             <p style={{ fontFamily: FONTS.sans, fontSize: 17, lineHeight: 1.65, color: TOKENS.inkSoft, margin: "0 auto 32px", maxWidth: 680 }}>
               Whether you need tailored onboarding, a bespoke setup, or specific security and access arrangements, you will still get the complete Hobson. I'll simply be fitted around your organisation.
