@@ -268,9 +268,22 @@ const TogetherCard: React.FC<{ people: number; docEstimate: number; seatsMonthly
 // Section 3 — Calculators
 // ============================================================================
 
+const HERO_MESSAGE = "Tell me about your business. I will show you what it costs to have me working alongside your team, and give you an estimate for what my Professor will need to read your documents. The final document price is confirmed once I know what you hold — nothing begins until you approve it.";
+
 const Calculators: React.FC = () => {
   const [people, setPeople] = useState(5);
   const [docs, setDocs] = useState(305);
+  const [speaking, setSpeaking] = useState(false);
+  const abortRef = useRef<AbortController | null>(null);
+  const handleListen = async () => {
+    if (speaking) { abortRef.current?.abort(); setSpeaking(false); return; }
+    const ctrl = new AbortController();
+    abortRef.current = ctrl;
+    setSpeaking(true);
+    try { await streamHobsonSpeech(HERO_MESSAGE, ctrl.signal); }
+    catch (e) { console.error(e); }
+    finally { setSpeaking(false); }
+  };
 
   const billedSeats = Math.max(people, MIN_SEATS);
   const seatsMonthly = billedSeats * SEAT;
