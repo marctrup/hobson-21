@@ -751,12 +751,8 @@ export default function Pricing() {
                 <p style={{ fontFamily: FONTS.sans, fontSize: 17, lineHeight: 1.7, color: TOKENS.inkSoft, margin: "0 0 32px", maxWidth: 620 }}>
                   If your portfolio is large, your structure complex, or your requirements particular, the calculator will only take us so far. I am happy to understand your organisation properly and design something around it. The complete Hobson, fitted to you.
                 </p>
-                <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", gap: 14 }}>
+                <div>
                   <a href="mailto:info@hobsonschoice.ai" className="hp-btn hp-btn-brass">Talk to me</a>
-                  <div style={{ display: "flex", alignItems: "center", gap: 8, fontFamily: FONTS.serif, fontSize: 14, fontStyle: "italic", color: TOKENS.inkSoft }}>
-                    <img src={owlMascot} alt="" style={{ width: 20, height: 20 }} />
-                    <span>“A quiet conversation, no obligation.”</span>
-                  </div>
                 </div>
               </div>
             </div>
