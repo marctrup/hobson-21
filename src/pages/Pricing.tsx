@@ -364,10 +364,10 @@ const Calculators: React.FC = () => {
             Together
           </div>
           <p style={{ fontFamily: FONTS.serif, fontSize: "clamp(1.2rem, 2.1vw, 1.55rem)", lineHeight: 1.5, color: TOKENS.ink, margin: 0 }}>
-            A <span style={{ color: TOKENS.brass }}>{people}-person</span> firm with{" "}
+            For a <span style={{ color: TOKENS.brass }}>{people}-person</span> firm with more than{" "}
             <span style={{ color: TOKENS.brass }}>{docs}{overflow ? "+" : ""} documents</span>:{" "}
-            a one-off of {oneOffDisplay} to get started, then{" "}
-            <span style={{ fontFamily: FONTS.mono, fontSize: "0.9em" }}>{fmtGBP(seatsMonthly)}/month</span> ongoing.
+            a one-off setup price, confirmed before we begin, followed by{" "}
+            <span style={{ fontFamily: FONTS.mono, fontSize: "0.9em" }}>{fmtGBP(seatsMonthly)} per month</span>.
           </p>
         </div>
       </div>
