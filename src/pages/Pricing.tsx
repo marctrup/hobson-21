@@ -367,7 +367,7 @@ const Calculators: React.FC = () => {
             A <span style={{ color: TOKENS.brass }}>{people}-person</span> firm with{" "}
             <span style={{ color: TOKENS.brass }}>{docs}{overflow ? "+" : ""} documents</span>:{" "}
             a one-off of {oneOffDisplay} to get started, then{" "}
-            <span style={{ fontFamily: FONTS.mono, fontSize: "0.9em" }}>{fmtGBP(seatsMonthly)}/mo</span> ongoing.
+            <span style={{ fontFamily: FONTS.mono, fontSize: "0.9em" }}>{fmtGBP(seatsMonthly)}/month</span> ongoing.
           </p>
         </div>
       </div>
