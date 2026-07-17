@@ -687,12 +687,14 @@ export default function Pricing() {
         .hp-btn-ghost { background: transparent; color: ${TOKENS.paper}; border-color: ${TOKENS.brassLight}; }
         .hp-btn-ghost:hover { background: rgba(251,146,60,0.1); }
         .hp-btn:focus-visible { outline: 2px solid ${TOKENS.brassLight}; outline-offset: 3px; }
-        details.hp-faq { border-top: 1px solid ${TOKENS.hairline}; padding: 22px 0; }
-        details.hp-faq:last-of-type { border-bottom: 1px solid ${TOKENS.hairline}; }
+        details.hp-faq { background: ${TOKENS.paper}; border: 1px solid ${TOKENS.hairline}; border-radius: 14px; padding: 22px 26px; transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease; }
+        details.hp-faq + details.hp-faq { margin-top: 12px; }
+        details.hp-faq:hover { border-color: rgba(249,115,22,0.35); box-shadow: 0 6px 24px -12px rgba(42,23,88,0.18); }
+        details.hp-faq[open] { border-color: rgba(249,115,22,0.45); box-shadow: 0 10px 30px -14px rgba(42,23,88,0.22); }
         details.hp-faq summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 24px; font-family: ${FONTS.serif}; font-size: 1.15rem; color: ${TOKENS.ink}; }
         details.hp-faq summary::-webkit-details-marker { display: none; }
-        details.hp-faq summary .hp-plus { font-family: ${FONTS.mono}; color: ${TOKENS.brass}; transition: transform .25s ease; flex-shrink: 0; }
-        details.hp-faq[open] summary .hp-plus { transform: rotate(45deg); }
+        details.hp-faq summary .hp-plus { display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; border-radius: 999px; background: rgba(249,115,22,0.10); font-family: ${FONTS.mono}; font-size: 18px; line-height: 1; color: ${TOKENS.brass}; transition: transform .25s ease, background .25s ease; flex-shrink: 0; }
+        details.hp-faq[open] summary .hp-plus { transform: rotate(45deg); background: rgba(249,115,22,0.18); }
         details.hp-faq p { font-family: ${FONTS.sans}; font-size: 15.5px; line-height: 1.65; color: ${TOKENS.inkSoft}; margin: 16px 0 0; max-width: 68ch; }
         @media (prefers-reduced-motion: reduce) {
           .hp-reveal, .hp-lift, details.hp-faq summary .hp-plus { animation: none !important; transition: none !important; transform: none !important; }
