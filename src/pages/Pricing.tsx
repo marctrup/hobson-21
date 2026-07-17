@@ -391,18 +391,12 @@ const Calculators: React.FC = () => {
           </div>
         </div>
 
-        {/* ============ TOGETHER STRIP ============ */}
-        <div style={{ marginTop: 32, padding: "40px 44px", borderRadius: 20, background: `linear-gradient(135deg, rgba(249,115,22,0.08), rgba(139,92,246,0.06))`, border: `1px solid ${TOKENS.hairline}` }}>
-          <div style={{ fontFamily: FONTS.mono, fontSize: 11, letterSpacing: "0.24em", color: TOKENS.brass, textTransform: "uppercase", marginBottom: 16 }}>
-            Together
-          </div>
-          <p style={{ fontFamily: FONTS.serif, fontSize: "clamp(1.5rem, 2.6vw, 2.1rem)", lineHeight: 1.35, color: TOKENS.ink, margin: 0, fontWeight: 400, letterSpacing: "-0.015em" }}>
-            For a <span style={{ fontWeight: 600 }}>{people}-person</span> business with more than{" "}
-            <span style={{ fontWeight: 600 }}>{docs}{overflow ? "+" : ""} documents</span>:{" "}
-            a one-off setup price, confirmed before we begin, followed by{" "}
-            <span style={{ fontWeight: 600 }}>{fmtGBP(seatsMonthly)} per month</span>.
-          </p>
-        </div>
+        {/* ============ TOGETHER CARD ============ */}
+        <TogetherCard
+          people={people}
+          docEstimate={roundNice(blendedEst)}
+          seatsMonthly={seatsMonthly}
+        />
       </div>
 
       <style>{`
