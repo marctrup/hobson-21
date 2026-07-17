@@ -270,20 +270,66 @@ const TogetherCard: React.FC<{ people: number; docEstimate: number; seatsMonthly
 
 const HERO_MESSAGE = "Tell me about your business. I will show you what it costs to have me working alongside your team, and give you an estimate for what my Professor will need to read your documents. The final document price is confirmed once I know what you hold — nothing begins until you approve it.";
 
+const TypewriterText: React.FC<{ text: string; speed?: number; startDelay?: number }> = ({
+  text,
+  speed = 22,
+  startDelay = 350,
+}) => {
+  const [shown, setShown] = useState(0);
+  const [done, setDone] = useState(false);
+  React.useEffect(() => {
+    setShown(0);
+    setDone(false);
+    let i = 0;
+    let raf = 0;
+    const start = window.setTimeout(() => {
+      const tick = () => {
+        i += 1;
+        setShown(i);
+        if (i >= text.length) {
+          setDone(true);
+          return;
+        }
+        // Natural pauses on punctuation.
+        const ch = text[i - 1];
+        const pause =
+          ch === "." || ch === "!" || ch === "?" ? 260 :
+          ch === "," || ch === ";" || ch === "—" ? 140 :
+          speed;
+        raf = window.setTimeout(tick, pause);
+      };
+      raf = window.setTimeout(tick, speed);
+    }, startDelay);
+    return () => {
+      window.clearTimeout(start);
+      window.clearTimeout(raf);
+    };
+  }, [text, speed, startDelay]);
+  return (
+    <span aria-label={text}>
+      <span aria-hidden={done ? "true" : "false"}>{text.slice(0, shown)}</span>
+      <span
+        aria-hidden="true"
+        style={{
+          display: "inline-block",
+          width: "0.55ch",
+          marginLeft: 2,
+          borderRight: `2px solid currentColor`,
+          animation: "hpCaretBlink 1s steps(1) infinite",
+          opacity: done ? 0 : 1,
+          transition: "opacity .4s ease .3s",
+          verticalAlign: "-2px",
+          height: "1em",
+        }}
+      />
+    </span>
+  );
+};
+
 const Calculators: React.FC = () => {
   const [people, setPeople] = useState(5);
   const [docs, setDocs] = useState(305);
-  const [speaking, setSpeaking] = useState(false);
-  const abortRef = useRef<AbortController | null>(null);
-  const handleListen = async () => {
-    if (speaking) { abortRef.current?.abort(); setSpeaking(false); return; }
-    const ctrl = new AbortController();
-    abortRef.current = ctrl;
-    setSpeaking(true);
-    try { await streamHobsonSpeech(HERO_MESSAGE, ctrl.signal); }
-    catch (e) { console.error(e); }
-    finally { setSpeaking(false); }
-  };
+
 
   const billedSeats = Math.max(people, MIN_SEATS);
   const seatsMonthly = billedSeats * SEAT;
