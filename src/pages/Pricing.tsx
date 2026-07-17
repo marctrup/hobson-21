@@ -346,7 +346,7 @@ const Calculators: React.FC = () => {
     <section
       id="calculator"
       style={{
-        background: TOKENS.paper,
+        background: "#F3EEF9",
         color: TOKENS.ink,
         padding: "clamp(72px, 9vw, 128px) 24px clamp(56px, 7vw, 96px)",
         borderTop: `1px solid ${TOKENS.hairline}`,
@@ -569,7 +569,7 @@ const Calculators: React.FC = () => {
     <section
       style={{
         padding: "clamp(56px, 8vw, 112px) 24px",
-        background: `radial-gradient(900px 480px at 15% 0%, rgba(124,58,237,0.05), transparent 60%), ${TOKENS.paper}`,
+        background: TOKENS.paper,
         borderTop: `1px solid ${TOKENS.hairline}`,
       }}
     >
@@ -726,7 +726,7 @@ export default function Pricing() {
         <Calculators />
 
         {/* ---------------- Section 4 — Enterprise talk-to-us ---------------- */}
-        <section style={{ padding: "clamp(56px, 8vw, 112px) 24px", background: `linear-gradient(180deg, ${TOKENS.paper} 0%, ${TOKENS.paperSoft} 100%)`, borderTop: `1px solid ${TOKENS.hairline}` }}>
+        <section style={{ padding: "clamp(56px, 8vw, 112px) 24px", background: "#E6DBF5", borderTop: `1px solid ${TOKENS.hairline}` }}>
           <div style={{ maxWidth: 980, margin: "0 auto" }}>
             <div
               style={{
