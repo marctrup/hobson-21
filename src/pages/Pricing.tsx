@@ -190,8 +190,8 @@ const TogetherCard: React.FC<{ people: number; docEstimate: number; seatsMonthly
             Commit to Professor. I'll give you the first month on me.
           </h3>
           <p style={{ fontFamily: FONTS.sans, fontSize: 15.5, lineHeight: 1.65, color: TOKENS.inkSoft, marginTop: 16 }}>
-            Once you approve Professor's reading fee, I will work with your{" "}
-            <span style={{ fontWeight: 600, color: TOKENS.ink }}>{people}-person</span> team for the first month at no charge for seats. You experience the complete Hobson before a single monthly payment is made.
+            Once you approve Professor's reading fee, I will work with your team for the first month at no charge for seats. You experience the complete Hobson before a single monthly payment is made.
+
           </p>
 
           <div style={{ height: 1, background: TOKENS.hairline, margin: "24px 0" }} />
