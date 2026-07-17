@@ -565,7 +565,7 @@ export default function Pricing() {
                     <span>{f.q}</span>
                     <span className="hp-plus" aria-hidden>+</span>
                   </summary>
-                  <p>{f.a}</p>
+                  {f.a.map((para, j) => <p key={j}>{para}</p>)}
                 </details>
               ))}
             </div>
