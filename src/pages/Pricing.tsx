@@ -386,15 +386,64 @@ const Calculators: React.FC = () => {
 // ============================================================================
 // FAQ
 // ============================================================================
-const FAQS: Array<{ q: string; a: string }> = [
-  { q: "Do you charge per question?", a: "No. Every seat comes with unlimited questions — ask Hobson as much as you like, across everything he's learned. We don't count what he does, so there's no meter running while you think." },
-  { q: "Why is there no plan to choose?", a: "Because everyone gets the complete Hobson — there's no smaller version to sell. Your price is simply built from how many people use him and how many documents he learns. Nothing to compare, nothing to outgrow." },
-  { q: "What does each person actually get?", a: "Their own co-worker. Hobson works alongside each person, learns how they like to work, and keeps their access, permissions and history separate and secure. It's one Hobson with one shared understanding of your documents — but he knows each of your people individually." },
-  { q: "Why is the document price a range?", a: "Because a three-page notice and a three-hundred-page lease aren't the same job. Simple documents cost 2p, complex ones up to 10p. We estimate on a typical mix, then Hobson confirms the exact figure once he's seen how many of yours are complex — always inside the range you were shown." },
-  { q: "Do I keep paying every time Hobson uses a document?", a: "No. Hobson reads each document once. After that he knows it for good — every question, calculation or check that touches it is free, forever. You pay for the one-time read, never for the knowing." },
-  { q: "What happens when new documents arrive?", a: "They're just more learning, at the same 2–10p. A few new leases are handled without fuss. If a large batch arrives — a purchase, a data room — Hobson quotes it and waits for your approval before reading. It's never charged automatically." },
-  { q: "Do I pay before I know the real cost?", a: "You approve a firm quote before the full read, and that quote always lands inside the range the estimate showed you. Hobson assesses your documents to price them accurately, but doesn't do the detailed, expensive read until you've said yes." },
-  { q: "Can I add or remove people?", a: "Any time. Hobson starts at two seats (£70/month), then it's £35 for each additional person for their own co-worker and unlimited use. Add seats as your team grows, remove them when it doesn't — no lock-in." },
+const FAQS: Array<{ q: string; a: string[] }> = [
+  {
+    q: "Do you charge per question?",
+    a: [
+      "No. Every person can ask me as many questions as they need about everything I have learned. I do not count questions or keep a meter running while you work, although I may occasionally let you know if I need a short rest before continuing.",
+    ],
+  },
+  {
+    q: "Why is there no plan to choose?",
+    a: [
+      "Because everyone gets the complete Hobson and my full back-office team. There is no smaller version of me.",
+      "Your price is based simply on how many people use me and how many documents my Professor needs to read. There is nothing complicated to compare and no restricted version to outgrow.",
+    ],
+  },
+  {
+    q: "What does each person actually get?",
+    a: [
+      "Their own personal Hobson, supported by my complete back-office team.",
+      "I learn how each person works and keep their access, permissions and history separate and secure. Everyone draws on the same shared understanding of your documents, but I get to know each member of your team individually.",
+    ],
+  },
+  {
+    q: "Why is the document price a range?",
+    a: [
+      "Because a three-page notice and a 300-page lease are not the same job.",
+      "Straightforward documents may cost around £2 to read, while longer or more complex documents may cost up to £10. I first assess your mix of documents, then confirm a fixed quote within the range you were shown.",
+    ],
+  },
+  {
+    q: "Do I keep paying whenever you use a document?",
+    a: [
+      "No. My Professor reads each document once and stores what matters for me to draw on whenever you need it.",
+      "You pay for the initial read, not every future question, calculation or check involving that document.",
+    ],
+  },
+  {
+    q: "What happens when new documents arrive?",
+    a: [
+      "My Professor reads them in the same way, at the same £2–£10 per-document range.",
+      "A few new documents can be added as they arrive. When you have a large batch — perhaps following an acquisition or the opening of a data room — I will confirm the cost and wait for your approval before the full read begins.",
+      "Nothing is charged automatically.",
+    ],
+  },
+  {
+    q: "Do I pay before I know the final cost?",
+    a: [
+      "No. I assess the number and complexity of your documents first, then give you a fixed quote within the range shown by the calculator.",
+      "The detailed read only begins after you approve that quote.",
+    ],
+  },
+  {
+    q: "Can I add or remove people?",
+    a: [
+      "Yes, at any time.",
+      "I start with two people for £70 per month. Each additional person costs £35 per month and receives their own personal Hobson, supported by my complete back-office team.",
+      "You can add people as your team grows and remove them when circumstances change, without being locked in.",
+    ],
+  },
 ];
 
 const TEAM: Array<{ name: string; role: string }> = [
@@ -516,29 +565,13 @@ export default function Pricing() {
                     <span>{f.q}</span>
                     <span className="hp-plus" aria-hidden>+</span>
                   </summary>
-                  <p>{f.a}</p>
+                  {f.a.map((para, j) => <p key={j}>{para}</p>)}
                 </details>
               ))}
             </div>
           </div>
         </section>
 
-        {/* ---------------- Section 7 — Closing CTA ---------------- */}
-        <section style={{ background: TOKENS.ink, color: TOKENS.paper, padding: "clamp(72px, 10vw, 140px) 24px", textAlign: "center" }}>
-          <div style={{ maxWidth: 720, margin: "0 auto" }}>
-            <SectionLabel dark>Ready</SectionLabel>
-            <h2 style={{ fontFamily: FONTS.serif, fontWeight: 400, fontSize: "clamp(2.2rem, 4.5vw, 3.25rem)", lineHeight: 1.1, letterSpacing: "-0.01em", color: TOKENS.paper, margin: 0 }}>
-              Ready to meet <em style={{ color: TOKENS.brassLight, fontStyle: "italic" }}>Hobson?</em>
-            </h2>
-            <p style={{ fontFamily: FONTS.sans, fontSize: 18, lineHeight: 1.6, color: "rgba(255,255,255,0.75)", marginTop: 20, marginBottom: 40 }}>
-              Add up your seats, estimate your library, and see exactly where you stand. No plans, no credits, no surprises.
-            </p>
-            <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: 12 }}>
-              <button type="button" onClick={() => setInterestOpen(true)} className="hp-btn hp-btn-brass">Register your interest</button>
-              
-            </div>
-          </div>
-        </section>
       </main>
       <InterestModal open={interestOpen} onClose={() => setInterestOpen(false)} source="pricing-register-interest" />
     </>
