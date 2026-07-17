@@ -178,7 +178,7 @@ const Calculators: React.FC = () => {
         <div style={{ maxWidth: 720, marginBottom: 56, marginLeft: "auto", marginRight: "auto", textAlign: "center" }}>
           <H2>See what Hobson would cost.</H2>
           <p style={{ fontFamily: FONTS.sans, fontSize: 17, lineHeight: 1.6, color: TOKENS.inkSoft, marginTop: 16 }}>
-            Slide, and see. Just an honest picture of what Hobson would cost your firm.
+            Tell me a little about your firm, and I'll show you what I would cost.
           </p>
         </div>
 
