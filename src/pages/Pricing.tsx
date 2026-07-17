@@ -411,7 +411,23 @@ const Calculators: React.FC = () => {
         }
         .hp-slider-dark::-webkit-slider-runnable-track { background: rgba(255,255,255,0.18); }
         .hp-slider-dark::-moz-range-track { background: rgba(255,255,255,0.18); }
+        .hp-hero-bubble::before {
+          content: "";
+          position: absolute;
+          left: -10px;
+          top: 32px;
+          width: 18px;
+          height: 18px;
+          background: ${TOKENS.paper};
+          border-left: 1px solid ${TOKENS.hairline};
+          border-bottom: 1px solid ${TOKENS.hairline};
+          transform: rotate(45deg);
+        }
+        @media (max-width: 640px) {
+          .hp-hero-bubble::before { left: 50%; top: -10px; transform: translateX(-50%) rotate(135deg); }
+        }
       `}</style>
+
     </section>
   );
 };
