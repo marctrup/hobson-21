@@ -777,7 +777,7 @@ export default function Pricing() {
         <section
           style={{
             padding: "clamp(80px, 11vw, 150px) 24px",
-            background: `radial-gradient(1100px 500px at 100% 0%, rgba(249,115,22,0.10), transparent 60%), radial-gradient(900px 500px at 0% 100%, rgba(139,92,246,0.14), transparent 60%), ${TOKENS.paperSoft}`,
+            background: `radial-gradient(1100px 500px at 100% 0%, rgba(139,92,246,0.14), transparent 60%), radial-gradient(900px 500px at 0% 100%, rgba(249,115,22,0.08), transparent 60%), #ECE4F5`,
             borderTop: `1px solid ${TOKENS.hairline}`,
           }}
         >
