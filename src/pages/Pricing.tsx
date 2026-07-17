@@ -763,11 +763,39 @@ export default function Pricing() {
 
 
         {/* ---------------- Section 6 — FAQ ---------------- */}
-        <section style={{ padding: "clamp(72px, 10vw, 140px) 24px", background: TOKENS.card, borderTop: `1px solid ${TOKENS.hairline}`, borderBottom: `1px solid ${TOKENS.hairline}` }}>
-          <div style={{ maxWidth: 820, margin: "0 auto" }}>
-            <div style={{ marginBottom: 40 }}>
-              
+        <section
+          style={{
+            padding: "clamp(80px, 11vw, 150px) 24px",
+            background: `radial-gradient(1100px 500px at 100% 0%, rgba(249,115,22,0.10), transparent 60%), radial-gradient(900px 500px at 0% 100%, rgba(139,92,246,0.14), transparent 60%), ${TOKENS.paperSoft}`,
+            borderTop: `1px solid ${TOKENS.hairline}`,
+          }}
+        >
+          <div style={{ maxWidth: 880, margin: "0 auto" }}>
+            <div style={{ textAlign: "center", marginBottom: 56 }}>
+              <div
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: 10,
+                  padding: "6px 14px",
+                  borderRadius: 999,
+                  background: TOKENS.paper,
+                  border: `1px solid ${TOKENS.hairline}`,
+                  fontFamily: FONTS.mono,
+                  fontSize: 11,
+                  letterSpacing: "0.18em",
+                  textTransform: "uppercase",
+                  color: TOKENS.brass,
+                  marginBottom: 20,
+                }}
+              >
+                <span style={{ width: 6, height: 6, borderRadius: 999, background: TOKENS.brass }} />
+                Frequently asked
+              </div>
               <H2>Questions, answered plainly.</H2>
+              <p style={{ fontFamily: FONTS.serif, fontStyle: "italic", fontSize: 17, color: TOKENS.inkSoft, marginTop: 14, maxWidth: 560, marginLeft: "auto", marginRight: "auto" }}>
+                The things I'm most often asked — answered in my own words.
+              </p>
             </div>
             <div>
               {FAQS.map((f, i) => (
@@ -787,6 +815,7 @@ export default function Pricing() {
             </div>
           </div>
         </section>
+
 
       </main>
       <InterestModal open={interestOpen} onClose={() => setInterestOpen(false)} source="pricing-register-interest" />
