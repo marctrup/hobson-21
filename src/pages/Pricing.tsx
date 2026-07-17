@@ -363,11 +363,11 @@ const Calculators: React.FC = () => {
           <div style={{ fontFamily: FONTS.mono, fontSize: 11, letterSpacing: "0.24em", color: TOKENS.brass, textTransform: "uppercase", marginBottom: 10 }}>
             Together
           </div>
-          <p style={{ fontFamily: FONTS.serif, fontSize: "clamp(1.2rem, 2.1vw, 1.55rem)", lineHeight: 1.5, color: TOKENS.ink, margin: 0 }}>
-            For a <span style={{ color: TOKENS.brass }}>{people}-person</span> firm with more than{" "}
-            <span style={{ color: TOKENS.brass }}>{docs}{overflow ? "+" : ""} documents</span>:{" "}
+          <p style={{ fontFamily: FONTS.sans, fontSize: "clamp(1rem, 1.5vw, 1.15rem)", lineHeight: 1.65, color: TOKENS.inkSoft, margin: 0, fontWeight: 400, letterSpacing: "-0.005em" }}>
+            For a <span style={{ color: TOKENS.ink, fontWeight: 600 }}>{people}-person</span> firm with more than{" "}
+            <span style={{ color: TOKENS.ink, fontWeight: 600 }}>{docs}{overflow ? "+" : ""} documents</span>:{" "}
             a one-off setup price, confirmed before we begin, followed by{" "}
-            <span style={{ fontFamily: FONTS.mono, fontSize: "0.9em" }}>{fmtGBP(seatsMonthly)} per month</span>.
+            <span style={{ color: TOKENS.ink, fontWeight: 600 }}>{fmtGBP(seatsMonthly)} per month</span>.
           </p>
         </div>
       </div>
