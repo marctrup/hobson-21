@@ -216,7 +216,7 @@ const Calculators: React.FC = () => {
               <span style={{ fontStyle: "italic", color: TOKENS.brass }}>Once.</span>
             </h3>
             <p style={{ fontFamily: FONTS.sans, fontSize: 15, lineHeight: 1.6, color: TOKENS.inkSoft, marginTop: 16 }}>
-              2–10p a document, read once and known for good. You approve a firm quote before the full read.
+              2–10p a document, depending on its complexity, read once and known for good. You approve a firm quote before the full read.
             </p>
 
             <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginTop: 20 }}>
