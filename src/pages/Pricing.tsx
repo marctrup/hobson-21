@@ -1,9 +1,9 @@
-import React, { useMemo, useRef, useState } from "react";
+import React, { useMemo, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { GlobalHeader } from "@/components/GlobalHeader";
 import { InterestModal } from "@/components/InterestModal";
 import owlMascot from "@/assets/owl-mascot.png";
-import { streamHobsonSpeech } from "@/lib/hobsonSpeech";
+
 
 
 
@@ -270,20 +270,66 @@ const TogetherCard: React.FC<{ people: number; docEstimate: number; seatsMonthly
 
 const HERO_MESSAGE = "Tell me about your business. I will show you what it costs to have me working alongside your team, and give you an estimate for what my Professor will need to read your documents. The final document price is confirmed once I know what you hold — nothing begins until you approve it.";
 
+const TypewriterText: React.FC<{ text: string; speed?: number; startDelay?: number }> = ({
+  text,
+  speed = 22,
+  startDelay = 350,
+}) => {
+  const [shown, setShown] = useState(0);
+  const [done, setDone] = useState(false);
+  React.useEffect(() => {
+    setShown(0);
+    setDone(false);
+    let i = 0;
+    let raf = 0;
+    const start = window.setTimeout(() => {
+      const tick = () => {
+        i += 1;
+        setShown(i);
+        if (i >= text.length) {
+          setDone(true);
+          return;
+        }
+        // Natural pauses on punctuation.
+        const ch = text[i - 1];
+        const pause =
+          ch === "." || ch === "!" || ch === "?" ? 260 :
+          ch === "," || ch === ";" || ch === "—" ? 140 :
+          speed;
+        raf = window.setTimeout(tick, pause);
+      };
+      raf = window.setTimeout(tick, speed);
+    }, startDelay);
+    return () => {
+      window.clearTimeout(start);
+      window.clearTimeout(raf);
+    };
+  }, [text, speed, startDelay]);
+  return (
+    <span aria-label={text}>
+      <span aria-hidden={done ? "true" : "false"}>{text.slice(0, shown)}</span>
+      <span
+        aria-hidden="true"
+        style={{
+          display: "inline-block",
+          width: "0.55ch",
+          marginLeft: 2,
+          borderRight: `2px solid currentColor`,
+          animation: "hpCaretBlink 1s steps(1) infinite",
+          opacity: done ? 0 : 1,
+          transition: "opacity .4s ease .3s",
+          verticalAlign: "-2px",
+          height: "1em",
+        }}
+      />
+    </span>
+  );
+};
+
 const Calculators: React.FC = () => {
   const [people, setPeople] = useState(5);
   const [docs, setDocs] = useState(305);
-  const [speaking, setSpeaking] = useState(false);
-  const abortRef = useRef<AbortController | null>(null);
-  const handleListen = async () => {
-    if (speaking) { abortRef.current?.abort(); setSpeaking(false); return; }
-    const ctrl = new AbortController();
-    abortRef.current = ctrl;
-    setSpeaking(true);
-    try { await streamHobsonSpeech(HERO_MESSAGE, ctrl.signal); }
-    catch (e) { console.error(e); }
-    finally { setSpeaking(false); }
-  };
+
 
   const billedSeats = Math.max(people, MIN_SEATS);
   const seatsMonthly = billedSeats * SEAT;
@@ -338,34 +384,8 @@ const Calculators: React.FC = () => {
               }}
               className="hp-hero-bubble"
             >
-              {HERO_MESSAGE}
-              <div style={{ marginTop: 14, display: "flex", alignItems: "center", gap: 10 }}>
-                <button
-                  type="button"
-                  onClick={handleListen}
-                  aria-label={speaking ? "Stop Hobson" : "Listen to Hobson"}
-                  style={{
-                    display: "inline-flex", alignItems: "center", gap: 8,
-                    padding: "8px 14px", borderRadius: 999,
-                    border: `1px solid ${TOKENS.brass}`,
-                    background: speaking ? TOKENS.brass : "transparent",
-                    color: speaking ? "#fff" : TOKENS.brass,
-                    fontFamily: FONTS.mono, fontSize: 11, letterSpacing: "0.12em",
-                    textTransform: "uppercase", cursor: "pointer",
-                    transition: "all .2s ease",
-                  }}
-                >
-                  <span aria-hidden="true" style={{ fontSize: 13, lineHeight: 1 }}>
-                    {speaking ? "■" : "▶"}
-                  </span>
-                  {speaking ? "Stop" : "Hear Hobson"}
-                </button>
-                {speaking && (
-                  <span style={{ fontFamily: FONTS.mono, fontSize: 11, color: TOKENS.inkMuted, letterSpacing: "0.08em" }}>
-                    speaking…
-                  </span>
-                )}
-              </div>
+              <TypewriterText text={HERO_MESSAGE} />
+
             </div>
           </div>
         </div>
@@ -683,6 +703,7 @@ export default function Pricing() {
         .hp-page * { box-sizing: border-box; }
         .hp-reveal { opacity: 0; transform: translateY(12px); animation: hpRise .7s ease-out forwards; }
         @keyframes hpRise { to { opacity: 1; transform: none; } }
+        @keyframes hpCaretBlink { 50% { border-color: transparent; } }
         .hp-lift { transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease; }
         .hp-lift:hover { transform: translateY(-2px); box-shadow: 0 12px 32px -18px rgba(42,23,88,0.35); }
         .hp-slider { -webkit-appearance: none; appearance: none; height: 4px; background: rgba(251,146,60,0.22); border-radius: 999px; outline: none; }
