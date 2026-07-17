@@ -562,41 +562,52 @@ const Calculators: React.FC = () => {
             </div>
           </div>
         </div>
+      </div>
+    </section>
 
-        {/* ============ TOGETHER CARD ============ */}
+    {/* ============ TOGETHER — warm cream band ============ */}
+    <section
+      style={{
+        padding: "clamp(56px, 8vw, 112px) 24px",
+        background: `radial-gradient(1100px 500px at 0% 0%, rgba(249,115,22,0.10), transparent 60%), radial-gradient(900px 500px at 100% 100%, rgba(249,115,22,0.06), transparent 60%), #FBF6EE`,
+        borderTop: `1px solid ${TOKENS.hairline}`,
+      }}
+    >
+      <div style={{ maxWidth: 1120, margin: "0 auto" }}>
         <TogetherCard
           people={people}
           docEstimate={roundNice(blendedEst)}
           seatsMonthly={seatsMonthly}
         />
       </div>
-
-      <style>{`
-        @media (max-width: 960px) {
-          .hp-calc-grid { grid-template-columns: 1fr !important; }
-        }
-        .hp-slider-dark::-webkit-slider-runnable-track { background: rgba(255,255,255,0.18); }
-        .hp-slider-dark::-moz-range-track { background: rgba(255,255,255,0.18); }
-        .hp-hero-bubble::before {
-          content: "";
-          position: absolute;
-          left: -10px;
-          top: 32px;
-          width: 18px;
-          height: 18px;
-          background: #6D28D9;
-          border-left: 1px solid #5B21B6;
-          border-bottom: 1px solid #5B21B6;
-          transform: rotate(45deg);
-        }
-        @media (max-width: 640px) {
-          .hp-hero-bubble::before { left: 50%; top: -10px; transform: translateX(-50%) rotate(135deg); }
-        }
-      `}</style>
-
     </section>
+
+    <style>{`
+      @media (max-width: 960px) {
+        .hp-calc-grid { grid-template-columns: 1fr !important; }
+      }
+      .hp-slider-dark::-webkit-slider-runnable-track { background: rgba(255,255,255,0.18); }
+      .hp-slider-dark::-moz-range-track { background: rgba(255,255,255,0.18); }
+      .hp-hero-bubble::before {
+        content: "";
+        position: absolute;
+        left: -10px;
+        top: 32px;
+        width: 18px;
+        height: 18px;
+        background: #6D28D9;
+        border-left: 1px solid #5B21B6;
+        border-bottom: 1px solid #5B21B6;
+        transform: rotate(45deg);
+      }
+      @media (max-width: 640px) {
+        .hp-hero-bubble::before { left: 50%; top: -10px; transform: translateX(-50%) rotate(135deg); }
+      }
+    `}</style>
+    </>
   );
 };
+
 
 // ============================================================================
 // FAQ
