@@ -218,7 +218,7 @@ const Calculators: React.FC = () => {
               , so I can draw on them whenever you need me.
             </h3>
             <p style={{ fontFamily: FONTS.sans, fontSize: 15, lineHeight: 1.6, color: TOKENS.inkSoft, marginTop: 16 }}>
-              £2–£10 per document, depending on its complexity. I read it once and remember it for good. You approve a fixed quote before I begin the full read.
+              £0.25–£1.00 per document, depending on its complexity. I read it once and remember it for good. You approve a fixed quote before I begin the full read.
             </p>
 
             <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginTop: 20 }}>
