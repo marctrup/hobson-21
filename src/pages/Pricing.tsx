@@ -742,7 +742,7 @@ export default function Pricing() {
         <Calculators />
 
         {/* ---------------- Section 4 — Enterprise talk-to-us ---------------- */}
-        <section style={{ padding: "clamp(72px, 10vw, 140px) 24px clamp(36px, 5vw, 64px)" }}>
+        <section style={{ padding: "clamp(48px, 7vw, 96px) 24px clamp(72px, 10vw, 140px)", background: `radial-gradient(900px 500px at 100% -10%, rgba(249,115,22,0.10), transparent 60%), radial-gradient(1200px 600px at 15% 110%, rgba(139,92,246,0.10), transparent 60%), ${TOKENS.paperSoft}` }}>
           <div style={{ maxWidth: 980, margin: "0 auto" }}>
             <div
               style={{
