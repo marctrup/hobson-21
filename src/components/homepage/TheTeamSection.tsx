@@ -26,13 +26,13 @@ type Specialist = {
 
 const PERSISTENT: Specialist[] = [
   { name: "The Professor", owns: "Portfolio Knowledge", img: professorImg, tone: "persistent",
-    blurb: "I maintain everything Hobson knows from your documents — leases, licences, plans, reports and every other record you entrust to him." },
+    blurb: "I maintain everything Hobson knows from your documents — leases, licences, plans, reports and every other record you entrust to us." },
   { name: "The Architect", owns: "Portfolio Structure", img: architectImg, tone: "persistent",
     blurb: "I keep the structure of your estate accurate — units, properties, hierarchies and groupings — so Hobson always understands how everything fits together." },
   { name: "The Inspector", owns: "Compliance Position", img: inspectorImg, tone: "persistent",
     blurb: "I compare what is known against what is required, helping Hobson understand your compliance position and quietly identifying anything that's missing." },
   { name: "The Broker", owns: "Relationships", img: brokerImg, tone: "persistent",
-    blurb: "I maintain Hobson's understanding of the people and organisations connected to your portfolio, so he always knows who he's working with." },
+    blurb: "I maintain Hobson's understanding of the people and organisations connected to your portfolio, so Hobson always knows who's involved in your work." },
 ];
 
 const SERVICES: Specialist[] = [
@@ -106,7 +106,7 @@ export const TheTeamSection = () => {
           <div className="flex items-end justify-between gap-4 mb-6">
             <div>
               <h3 className="text-2xl font-bold text-foreground">Specialist Services</h3>
-              <p className="text-slate-600 text-sm mt-1">Whenever Hobson needs specialist expertise, these are the agents he calls upon.</p>
+              <p className="text-slate-600 text-sm mt-1">Whenever specialist expertise is needed, these are the agents Hobson calls upon.</p>
             </div>
             <span className="hidden sm:inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-purple-700 bg-white border border-purple-200 rounded-full px-3 py-1.5">
               On demand
