@@ -608,63 +608,38 @@ const Calculators: React.FC = () => {
 // ============================================================================
 // FAQ
 // ============================================================================
-const FAQS: Array<{ q: string; a: string[] }> = [
+const FAQS: Array<{ q: string; a: string }> = [
   {
     q: "Do you charge per question?",
-    a: [
-      "No. Every person can ask me as many questions as they need about everything I have learned. I do not count questions or keep a meter running while you work, although I may occasionally let you know if I need a short rest before continuing.",
-    ],
+    a: "No. Every person may ask as many questions as they need, about anything I have learned. I do not count questions or keep a meter running. I may occasionally ask for a brief pause before continuing — but that is all.",
   },
   {
     q: "Why is there no plan to choose?",
-    a: [
-      "Because everyone gets the complete Hobson and my full back-office team. There is no smaller version of me.",
-      "Your price is based simply on how many people use me and how many documents my Professor needs to read. There is nothing complicated to compare and no restricted version to outgrow.",
-    ],
+    a: "Because there is no smaller version of me. Everyone receives the complete Hobson and my full back-office team. Your price is based simply on how many people use me and how many documents my Professor needs to read. Nothing to compare, nothing to outgrow.",
   },
   {
     q: "What does each person actually get?",
-    a: [
-      "Their own personal Hobson, supported by my complete back-office team.",
-      "I learn how each person works and keep their access, permissions and history separate and secure. Everyone draws on the same shared understanding of your documents, but I get to know each member of your team individually.",
-    ],
+    a: "Their own Hobson, supported by my complete back-office team. I learn how each person works and keep their access, permissions and history separate and secure. Everyone draws on the same understanding of your documents — but I take the time to know each member of your team individually.",
   },
   {
     q: "Why is the document price a range?",
-    a: [
-      "Because a three-page notice and a 300-page lease are not the same job.",
-      "Straightforward documents may cost around £0.25p to read, while longer or more complex documents may cost up to £1.00. I first assess your mix of documents, then confirm a fixed quote within the range you were shown.",
-    ],
+    a: "Because a three-page notice and a 300-page lease are not the same job. A straightforward document may cost as little as £0.25 to read; a longer or more complex one, up to £1.00. I will assess your documents first and confirm a fixed quote within that range before anything begins.",
   },
   {
     q: "Do I keep paying whenever you use a document?",
-    a: [
-      "No. My Professor reads each document once and stores what matters for me to draw on whenever you need it.",
-      "You pay for the initial read, not every future question, calculation or check involving that document.",
-    ],
+    a: "No. Professor reads each document once and retains what matters. You pay for that initial read — not for every future question, calculation or check that draws on it.",
   },
   {
     q: "What happens when new documents arrive?",
-    a: [
-      "My Professor reads them in the same way, at the same £2–£10 per-document range.",
-      "A few new documents can be added as they arrive. When you have a large batch — perhaps following an acquisition or the opening of a data room — I will confirm the cost and wait for your approval before the full read begins.",
-      "Nothing is charged automatically.",
-    ],
+    a: "Professor reads them in the same way, at the same per-document rate. A few documents can be added as they arrive without any fuss. When a larger batch comes — perhaps after an acquisition or the opening of a data room — I will confirm the cost and wait for your approval before beginning. Nothing is ever charged automatically.",
   },
   {
     q: "Do I pay before I know the final cost?",
-    a: [
-      "No. I assess the number and complexity of your documents first, then give you a fixed quote within the range shown by the calculator.",
-      "The detailed read only begins after you approve that quote.",
-    ],
+    a: "No. I assess your documents first and give you a fixed quote within the range shown by the calculator. The read begins only once you have approved it.",
   },
   {
     q: "Can I add or remove people?",
-    a: [
-      "Yes, at any time.",
-      "I start with two people for £70 per month. Each additional person costs £35 per month and receives their own personal Hobson, supported by my complete back-office team.",
-      "You can add people as your team grows and remove them when circumstances change, without being locked in.",
-    ],
+    a: "Yes, at any time. The minimum is two people at £70 per month. Each additional person costs £35 per month and receives their own Hobson, with the complete back-office team behind them. Add people as your team grows; remove them when circumstances change. There is no lock-in.",
   },
 ];
 
