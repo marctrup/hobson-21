@@ -785,7 +785,12 @@ export default function Pricing() {
                     <span>{f.q}</span>
                     <span className="hp-plus" aria-hidden>+</span>
                   </summary>
-                  {f.a.map((para, j) => <p key={j}>{para}</p>)}
+                  <div style={{ display: "flex", alignItems: "flex-start", gap: 12, paddingTop: 4 }}>
+                    <img src={owlMascot} alt="" style={{ width: 30, height: 30, flexShrink: 0, marginTop: 2 }} />
+                    <p style={{ fontFamily: FONTS.serif, fontStyle: "italic", margin: 0, lineHeight: 1.65, color: TOKENS.inkSoft }}>
+                      &ldquo;{f.a}&rdquo;
+                    </p>
+                  </div>
                 </details>
               ))}
             </div>
