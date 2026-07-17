@@ -384,7 +384,7 @@ const Calculators: React.FC = () => {
               }}
               className="hp-hero-bubble"
             >
-              <TypewriterText text={HERO_MESSAGE} />
+              <span style={{ fontStyle: "italic" }}>{HERO_MESSAGE}</span>
 
             </div>
           </div>
