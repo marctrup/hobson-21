@@ -325,10 +325,38 @@ const Calculators: React.FC = () => {
               }}
               className="hp-hero-bubble"
             >
-              Tell me about your business. I will show you what it costs to have me working alongside your team, and give you an estimate for what my Professor will need to read your documents. The final document price is confirmed once I know what you hold — nothing begins until you approve it.
+              {HERO_MESSAGE}
+              <div style={{ marginTop: 14, display: "flex", alignItems: "center", gap: 10 }}>
+                <button
+                  type="button"
+                  onClick={handleListen}
+                  aria-label={speaking ? "Stop Hobson" : "Listen to Hobson"}
+                  style={{
+                    display: "inline-flex", alignItems: "center", gap: 8,
+                    padding: "8px 14px", borderRadius: 999,
+                    border: `1px solid ${TOKENS.brass}`,
+                    background: speaking ? TOKENS.brass : "transparent",
+                    color: speaking ? "#fff" : TOKENS.brass,
+                    fontFamily: FONTS.mono, fontSize: 11, letterSpacing: "0.12em",
+                    textTransform: "uppercase", cursor: "pointer",
+                    transition: "all .2s ease",
+                  }}
+                >
+                  <span aria-hidden="true" style={{ fontSize: 13, lineHeight: 1 }}>
+                    {speaking ? "■" : "▶"}
+                  </span>
+                  {speaking ? "Stop" : "Hear Hobson"}
+                </button>
+                {speaking && (
+                  <span style={{ fontFamily: FONTS.mono, fontSize: 11, color: TOKENS.inkMuted, letterSpacing: "0.08em" }}>
+                    speaking…
+                  </span>
+                )}
+              </div>
             </div>
           </div>
         </div>
+
 
 
 
