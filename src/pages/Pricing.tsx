@@ -179,12 +179,42 @@ const Calculators: React.FC = () => {
       }}
     >
       <div style={{ maxWidth: 1120, margin: "0 auto" }}>
-        <div style={{ maxWidth: 720, marginBottom: 56, marginLeft: "auto", marginRight: "auto", textAlign: "center" }}>
-          <H2>{PRICING_HEADING}</H2>
-          <p style={{ fontFamily: FONTS.sans, fontSize: 17, lineHeight: 1.6, color: TOKENS.inkSoft, marginTop: 16 }}>
-            Tell me a little about your business, and I'll give you a clear estimate.
-          </p>
+        <div style={{ maxWidth: 820, marginBottom: 56, marginLeft: "auto", marginRight: "auto" }}>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "clamp(16px, 3vw, 28px)",
+              justifyContent: "center",
+              flexWrap: "wrap",
+            }}
+          >
+            <img
+              src={owlMascot}
+              alt="Hobson"
+              style={{ width: "clamp(88px, 12vw, 128px)", height: "auto", flexShrink: 0 }}
+            />
+            <div
+              style={{
+                position: "relative",
+                background: TOKENS.paper,
+                border: `1px solid ${TOKENS.hairline}`,
+                borderRadius: 20,
+                padding: "20px 24px",
+                maxWidth: 520,
+                fontFamily: FONTS.serif,
+                fontSize: "clamp(1.05rem, 1.6vw, 1.25rem)",
+                lineHeight: 1.5,
+                color: TOKENS.ink,
+                boxShadow: "0 6px 24px rgba(42,23,88,0.08)",
+              }}
+              className="hp-hero-bubble"
+            >
+              Tell me a little about your business. I'll show you my monthly price and estimate what it will cost my Professor to learn your documents.
+            </div>
+          </div>
         </div>
+
 
 
         {/* ============ SIDE-BY-SIDE: SEATS (hero) + LEARNING (supporting) ============ */}
