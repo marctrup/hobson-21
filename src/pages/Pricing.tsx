@@ -568,7 +568,7 @@ const Calculators: React.FC = () => {
     {/* ============ TOGETHER — same paper, faint primary wash ============ */}
     <section
       style={{
-        padding: "clamp(56px, 8vw, 112px) 24px",
+        padding: "clamp(32px, 4.5vw, 64px) 24px",
         background: TOKENS.paper,
         borderTop: `1px solid ${TOKENS.hairline}`,
       }}
