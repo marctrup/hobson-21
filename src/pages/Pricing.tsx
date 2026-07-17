@@ -1,8 +1,10 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useRef, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { GlobalHeader } from "@/components/GlobalHeader";
 import { InterestModal } from "@/components/InterestModal";
 import owlMascot from "@/assets/owl-mascot.png";
+import { streamHobsonSpeech } from "@/lib/hobsonSpeech";
+
 
 
 // ============================================================================
