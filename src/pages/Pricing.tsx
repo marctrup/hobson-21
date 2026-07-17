@@ -412,6 +412,7 @@ const TEAM: Array<{ name: string; role: string }> = [
 // Page
 // ============================================================================
 export default function Pricing() {
+  const [interestOpen, setInterestOpen] = useState(false);
   return (
     <>
       <Helmet>
