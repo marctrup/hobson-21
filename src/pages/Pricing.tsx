@@ -210,7 +210,7 @@ const Calculators: React.FC = () => {
               }}
               className="hp-hero-bubble"
             >
-              Tell me a little about your business. I'll show you my monthly price and estimate what it will cost my Professor to learn your documents.
+              Tell me a little about your business. I'll show you what it will cost for me to work alongside you and estimate what it will cost my Professor to learn your documents. I'll confirm the final document price once I've reviewed them.
             </div>
           </div>
         </div>
