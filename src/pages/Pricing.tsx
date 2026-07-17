@@ -565,11 +565,11 @@ const Calculators: React.FC = () => {
       </div>
     </section>
 
-    {/* ============ TOGETHER — warm cream band ============ */}
+    {/* ============ TOGETHER — same paper, faint primary wash ============ */}
     <section
       style={{
         padding: "clamp(56px, 8vw, 112px) 24px",
-        background: `radial-gradient(1100px 500px at 0% 0%, rgba(249,115,22,0.10), transparent 60%), radial-gradient(900px 500px at 100% 100%, rgba(249,115,22,0.06), transparent 60%), #FBF6EE`,
+        background: `radial-gradient(900px 480px at 15% 0%, rgba(124,58,237,0.05), transparent 60%), ${TOKENS.paper}`,
         borderTop: `1px solid ${TOKENS.hairline}`,
       }}
     >
