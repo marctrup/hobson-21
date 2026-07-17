@@ -572,22 +572,6 @@ export default function Pricing() {
           </div>
         </section>
 
-        {/* ---------------- Section 7 — Closing CTA ---------------- */}
-        <section style={{ background: TOKENS.ink, color: TOKENS.paper, padding: "clamp(72px, 10vw, 140px) 24px", textAlign: "center" }}>
-          <div style={{ maxWidth: 720, margin: "0 auto" }}>
-            <SectionLabel dark>Ready</SectionLabel>
-            <h2 style={{ fontFamily: FONTS.serif, fontWeight: 400, fontSize: "clamp(2.2rem, 4.5vw, 3.25rem)", lineHeight: 1.1, letterSpacing: "-0.01em", color: TOKENS.paper, margin: 0 }}>
-              Ready to meet <em style={{ color: TOKENS.brassLight, fontStyle: "italic" }}>Hobson?</em>
-            </h2>
-            <p style={{ fontFamily: FONTS.sans, fontSize: 18, lineHeight: 1.6, color: "rgba(255,255,255,0.75)", marginTop: 20, marginBottom: 40 }}>
-              Add up your seats, estimate your library, and see exactly where you stand. No plans, no credits, no surprises.
-            </p>
-            <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: 12 }}>
-              <button type="button" onClick={() => setInterestOpen(true)} className="hp-btn hp-btn-brass">Register your interest</button>
-              
-            </div>
-          </div>
-        </section>
       </main>
       <InterestModal open={interestOpen} onClose={() => setInterestOpen(false)} source="pricing-register-interest" />
     </>
