@@ -565,11 +565,11 @@ const Calculators: React.FC = () => {
       </div>
     </section>
 
-    {/* ============ TOGETHER — warm cream band ============ */}
+    {/* ============ TOGETHER — same paper, faint primary wash ============ */}
     <section
       style={{
         padding: "clamp(56px, 8vw, 112px) 24px",
-        background: `radial-gradient(1100px 500px at 0% 0%, rgba(249,115,22,0.10), transparent 60%), radial-gradient(900px 500px at 100% 100%, rgba(249,115,22,0.06), transparent 60%), #FBF6EE`,
+        background: `radial-gradient(900px 480px at 15% 0%, rgba(124,58,237,0.05), transparent 60%), ${TOKENS.paper}`,
         borderTop: `1px solid ${TOKENS.hairline}`,
       }}
     >
@@ -726,7 +726,7 @@ export default function Pricing() {
         <Calculators />
 
         {/* ---------------- Section 4 — Enterprise talk-to-us ---------------- */}
-        <section style={{ padding: "clamp(56px, 8vw, 112px) 24px", background: `radial-gradient(900px 500px at 100% 0%, rgba(249,115,22,0.09), transparent 60%), radial-gradient(1200px 600px at 15% 110%, rgba(139,92,246,0.16), transparent 60%), #F3EEF9`, borderTop: `1px solid ${TOKENS.hairline}` }}>
+        <section style={{ padding: "clamp(56px, 8vw, 112px) 24px", background: `linear-gradient(180deg, ${TOKENS.paper} 0%, ${TOKENS.paperSoft} 100%)`, borderTop: `1px solid ${TOKENS.hairline}` }}>
           <div style={{ maxWidth: 980, margin: "0 auto" }}>
             <div
               style={{
@@ -777,7 +777,7 @@ export default function Pricing() {
         <section
           style={{
             padding: "clamp(80px, 11vw, 150px) 24px",
-            background: `radial-gradient(1100px 500px at 100% 0%, rgba(139,92,246,0.14), transparent 60%), radial-gradient(900px 500px at 0% 100%, rgba(249,115,22,0.08), transparent 60%), #ECE4F5`,
+            background: `radial-gradient(900px 480px at 85% 0%, rgba(124,58,237,0.06), transparent 60%), ${TOKENS.paperSoft}`,
             borderTop: `1px solid ${TOKENS.hairline}`,
           }}
         >
