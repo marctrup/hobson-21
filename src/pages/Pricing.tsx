@@ -633,7 +633,7 @@ const FAQS: Array<{ q: string; a: string[] }> = [
     q: "Why is the document price a range?",
     a: [
       "Because a three-page notice and a 300-page lease are not the same job.",
-      "Straightforward documents may cost around £2 to read, while longer or more complex documents may cost up to £10. I first assess your mix of documents, then confirm a fixed quote within the range you were shown.",
+      "Straightforward documents may cost around £0.25p to read, while longer or more complex documents may cost up to £1.00. I first assess your mix of documents, then confirm a fixed quote within the range you were shown.",
     ],
   },
   {
