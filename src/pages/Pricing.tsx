@@ -775,9 +775,9 @@ export default function Pricing() {
                 </p>
                 <div style={{ display: "flex", alignItems: "center", gap: 20, flexWrap: "wrap" }}>
                   <a href="mailto:info@hobsonschoice.ai" className="hp-btn hp-btn-brass">Talk to me</a>
-                  <div style={{ display: "flex", alignItems: "center", gap: 10, fontFamily: FONTS.sans, fontSize: 14, color: TOKENS.inkSoft }}>
-                    <img src={owlMascot} alt="" style={{ width: 28, height: 28 }} />
-                    <span>A quiet conversation, no obligation.</span>
+                  <div style={{ display: "flex", alignItems: "center", gap: 12, fontFamily: FONTS.serif, fontSize: 18, fontStyle: "italic", color: TOKENS.inkSoft }}>
+                    <img src={owlMascot} alt="" style={{ width: 32, height: 32 }} />
+                    <span>“A quiet conversation, no obligation.”</span>
                   </div>
                 </div>
               </div>
