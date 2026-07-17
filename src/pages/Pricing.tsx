@@ -212,8 +212,9 @@ const Calculators: React.FC = () => {
               Learning · one-off · upfront
             </div>
             <h3 style={{ fontFamily: FONTS.serif, fontWeight: 400, fontSize: "clamp(1.75rem, 2.8vw, 2.4rem)", lineHeight: 1.05, letterSpacing: "-0.02em", margin: 0, color: TOKENS.ink }}>
-              Teach Hobson your documents.{" "}
-              <span style={{ fontStyle: "italic", color: TOKENS.brass }}>Once.</span>
+              My Professor reads your documents{" "}
+              <span style={{ fontStyle: "italic", color: TOKENS.brass }}>once</span>
+              , so I can draw on them whenever you need me.
             </h3>
             <p style={{ fontFamily: FONTS.sans, fontSize: 15, lineHeight: 1.6, color: TOKENS.inkSoft, marginTop: 16 }}>
               £2–£10 per document, depending on its complexity. I read it once and remember it for good. You approve a fixed quote before I begin the full read.
