@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { GlobalHeader } from "@/components/GlobalHeader";
+import { InterestModal } from "@/components/InterestModal";
 
 // ============================================================================
 // Tunable constants — update once real figures land.
@@ -411,6 +412,7 @@ const TEAM: Array<{ name: string; role: string }> = [
 // Page
 // ============================================================================
 export default function Pricing() {
+  const [interestOpen, setInterestOpen] = useState(false);
   return (
     <>
       <Helmet>
@@ -526,12 +528,13 @@ export default function Pricing() {
               Add up your seats, estimate your library, and see exactly where you stand. No plans, no credits, no surprises.
             </p>
             <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: 12 }}>
-              <a href="#calculator" className="hp-btn hp-btn-brass">Register your interest</a>
+              <button type="button" onClick={() => setInterestOpen(true)} className="hp-btn hp-btn-brass">Register your interest</button>
               
             </div>
           </div>
         </section>
       </main>
+      <InterestModal open={interestOpen} onClose={() => setInterestOpen(false)} source="pricing-register-interest" />
     </>
   );
 }
