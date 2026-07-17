@@ -726,7 +726,7 @@ export default function Pricing() {
         <Calculators />
 
         {/* ---------------- Section 4 — Enterprise talk-to-us ---------------- */}
-        <section style={{ padding: "clamp(56px, 8vw, 112px) 24px", background: "#E6DBF5", borderTop: `1px solid ${TOKENS.hairline}` }}>
+        <section style={{ padding: "clamp(56px, 8vw, 112px) 24px", background: TOKENS.paper, borderTop: `1px solid ${TOKENS.hairline}` }}>
           <div style={{ maxWidth: 980, margin: "0 auto" }}>
             <div
               style={{
