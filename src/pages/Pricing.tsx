@@ -294,7 +294,7 @@ const Calculators: React.FC = () => {
               personal co-worker.
             </h3>
             <p style={{ fontFamily: FONTS.sans, fontSize: 15, lineHeight: 1.6, color: "rgba(255,255,255,0.82)", marginTop: 16, position: "relative" }}>
-              One Hobson per person. I learn how you work, remember what matters, and is ready for whatever you need next.
+              One Hobson per person. I learn how you work, remember what matters, and stay ready for whatever you need next.
             </p>
 
             <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginTop: 20, position: "relative" }}>
