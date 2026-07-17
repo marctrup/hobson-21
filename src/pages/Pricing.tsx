@@ -742,24 +742,46 @@ export default function Pricing() {
         <Calculators />
 
         {/* ---------------- Section 4 — Enterprise talk-to-us ---------------- */}
-        <section style={{ padding: "clamp(72px, 10vw, 140px) 24px clamp(36px, 5vw, 64px)", borderTop: `1px solid ${TOKENS.hairline}` }}>
-          <div style={{ maxWidth: 820, margin: "0 auto", textAlign: "center" }}>
-            <div style={{ fontFamily: FONTS.mono, fontSize: 12, letterSpacing: "0.14em", color: TOKENS.brass, marginBottom: 20 }}>
-              ENTERPRISE
+        <section style={{ padding: "clamp(72px, 10vw, 140px) 24px clamp(36px, 5vw, 64px)" }}>
+          <div style={{ maxWidth: 980, margin: "0 auto" }}>
+            <div
+              style={{
+                position: "relative",
+                background: TOKENS.paper,
+                border: `1px solid ${TOKENS.hairline}`,
+                borderTop: `3px solid ${TOKENS.brass}`,
+                borderRadius: 20,
+                padding: "clamp(36px, 5vw, 64px)",
+                boxShadow: "0 24px 60px -30px rgba(20, 14, 40, 0.18)",
+                display: "grid",
+                gridTemplateColumns: "minmax(0, 1fr)",
+                gap: "clamp(28px, 4vw, 48px)",
+                alignItems: "center",
+              }}
+              className="hp-enterprise-card"
+            >
+              <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
+                <div style={{ display: "inline-flex", alignItems: "center", gap: 10, marginBottom: 20 }}>
+                  <span style={{ width: 28, height: 1, background: TOKENS.brass }} />
+                  <span style={{ fontFamily: FONTS.mono, fontSize: 12, letterSpacing: "0.18em", color: TOKENS.brass }}>
+                    ENTERPRISE
+                  </span>
+                </div>
+                <h2 style={{ fontFamily: FONTS.serif, fontSize: "clamp(1.9rem, 3.6vw, 2.6rem)", fontWeight: 400, color: TOKENS.ink, margin: 0, marginBottom: 24, lineHeight: 1.15 }}>
+                  Some things are better discussed.
+                </h2>
+                <p style={{ fontFamily: FONTS.sans, fontSize: 17, lineHeight: 1.7, color: TOKENS.inkSoft, margin: "0 0 32px", maxWidth: 620 }}>
+                  If your portfolio is large, your structure complex, or your requirements particular, the calculator will only take us so far. I am happy to understand your organisation properly and design something around it. The complete Hobson, fitted to you.
+                </p>
+                <div style={{ display: "flex", alignItems: "center", gap: 20, flexWrap: "wrap" }}>
+                  <a href="mailto:info@hobsonschoice.ai" className="hp-btn hp-btn-brass">Talk to me</a>
+                  <div style={{ display: "flex", alignItems: "center", gap: 10, fontFamily: FONTS.sans, fontSize: 14, color: TOKENS.inkSoft }}>
+                    <img src={owlMascot} alt="" style={{ width: 28, height: 28 }} />
+                    <span>A quiet conversation, no obligation.</span>
+                  </div>
+                </div>
+              </div>
             </div>
-            <h2 style={{ fontFamily: FONTS.serif, fontSize: "clamp(1.75rem, 3.5vw, 2.5rem)", fontWeight: 400, color: TOKENS.ink, margin: 0, marginBottom: 24, lineHeight: 1.15 }}>
-              Bigger, or more complex? Let's talk.
-            </h2>
-            <p style={{ fontFamily: FONTS.sans, fontSize: 17, lineHeight: 1.65, color: TOKENS.inkSoft, margin: "0 auto 20px", maxWidth: 680 }}>
-              The calculators above will suit most businesses. But if you manage a large or unusual portfolio, work across multiple entities, or need me shaped around the way your organisation works, let's design it together.
-            </p>
-            <p style={{ fontFamily: FONTS.sans, fontSize: 17, lineHeight: 1.65, color: TOKENS.inkSoft, margin: "0 auto 32px", maxWidth: 680 }}>
-              Whether you need tailored onboarding, a bespoke setup, or specific security and access arrangements, you will still get the complete Hobson. I'll simply be fitted around your organisation.
-            </p>
-            <a href="mailto:info@hobsonschoice.ai" className="hp-btn hp-btn-brass">Talk to me</a>
-            <p style={{ fontFamily: FONTS.sans, fontSize: 13, lineHeight: 1.6, color: TOKENS.inkSoft, opacity: 0.75, margin: "24px auto 0", maxWidth: 560 }}>
-              Typically for portfolios beyond what a quick estimate can price, or organisations with particular compliance, security or integration needs.
-            </p>
           </div>
         </section>
 
