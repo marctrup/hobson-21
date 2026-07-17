@@ -338,34 +338,8 @@ const Calculators: React.FC = () => {
               }}
               className="hp-hero-bubble"
             >
-              {HERO_MESSAGE}
-              <div style={{ marginTop: 14, display: "flex", alignItems: "center", gap: 10 }}>
-                <button
-                  type="button"
-                  onClick={handleListen}
-                  aria-label={speaking ? "Stop Hobson" : "Listen to Hobson"}
-                  style={{
-                    display: "inline-flex", alignItems: "center", gap: 8,
-                    padding: "8px 14px", borderRadius: 999,
-                    border: `1px solid ${TOKENS.brass}`,
-                    background: speaking ? TOKENS.brass : "transparent",
-                    color: speaking ? "#fff" : TOKENS.brass,
-                    fontFamily: FONTS.mono, fontSize: 11, letterSpacing: "0.12em",
-                    textTransform: "uppercase", cursor: "pointer",
-                    transition: "all .2s ease",
-                  }}
-                >
-                  <span aria-hidden="true" style={{ fontSize: 13, lineHeight: 1 }}>
-                    {speaking ? "■" : "▶"}
-                  </span>
-                  {speaking ? "Stop" : "Hear Hobson"}
-                </button>
-                {speaking && (
-                  <span style={{ fontFamily: FONTS.mono, fontSize: 11, color: TOKENS.inkMuted, letterSpacing: "0.08em" }}>
-                    speaking…
-                  </span>
-                )}
-              </div>
+              <TypewriterText text={HERO_MESSAGE} />
+
             </div>
           </div>
         </div>
