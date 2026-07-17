@@ -151,8 +151,121 @@ const Slider: React.FC<{
 
 
 // ============================================================================
+// Together card (commit-to-Professor offer)
+// ============================================================================
+const TogetherCard: React.FC<{ people: number; docEstimate: number; seatsMonthly: number }> = ({
+  people,
+  docEstimate,
+  seatsMonthly,
+}) => {
+  const [open, setOpen] = useState(false);
+  return (
+    <div
+      style={{
+        marginTop: 32,
+        padding: "clamp(28px, 3.5vw, 44px)",
+        borderRadius: 24,
+        background: TOKENS.paper,
+        border: `2px solid ${TOKENS.brass}`,
+        boxShadow: "0 12px 40px -20px rgba(249,115,22,0.35)",
+      }}
+    >
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "minmax(0, 1.35fr) minmax(0, 1fr)",
+          gap: "clamp(24px, 3.5vw, 48px)",
+          alignItems: "stretch",
+        }}
+        className="hp-together-grid"
+      >
+        {/* LEFT column */}
+        <div style={{ display: "flex", flexDirection: "column" }}>
+          <div style={{ fontFamily: FONTS.mono, fontSize: 11, letterSpacing: "0.24em", color: TOKENS.brass, textTransform: "uppercase", marginBottom: 14 }}>
+            Together
+          </div>
+          <h3 style={{ fontFamily: FONTS.serif, fontWeight: 400, fontSize: "clamp(1.6rem, 2.6vw, 2.15rem)", lineHeight: 1.15, letterSpacing: "-0.02em", margin: 0, color: TOKENS.ink }}>
+            Commit to Professor. I'll give you the first month on me.
+          </h3>
+          <p style={{ fontFamily: FONTS.sans, fontSize: 15.5, lineHeight: 1.65, color: TOKENS.inkSoft, marginTop: 16 }}>
+            Once you approve Professor's reading fee, I will work with your{" "}
+            <span style={{ fontWeight: 600, color: TOKENS.ink }}>{people}-person</span> team for the first month at no charge for seats. You experience the complete Hobson before a single monthly payment is made.
+          </p>
+
+          <div style={{ height: 1, background: TOKENS.hairline, margin: "24px 0" }} />
+
+          <div style={{ display: "flex", alignItems: "flex-start", gap: 14 }}>
+            <img src={owlMascot} alt="" style={{ width: 44, height: 44, flexShrink: 0, marginTop: 2 }} />
+            <p style={{ fontFamily: FONTS.serif, fontStyle: "italic", fontSize: "clamp(0.98rem, 1.4vw, 1.1rem)", lineHeight: 1.55, color: TOKENS.ink, margin: 0 }}>
+              &ldquo;I would rather you experience me properly before deciding. Once Professor knows your documents, the first month is mine to prove my worth.&rdquo;
+            </p>
+          </div>
+        </div>
+
+        {/* RIGHT column */}
+        <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", gap: 16 }}>
+          <div
+            style={{
+              padding: "22px 24px",
+              borderRadius: 16,
+              background: "rgba(249,115,22,0.06)",
+              border: `1px solid rgba(249,115,22,0.28)`,
+            }}
+          >
+            <div style={{ fontFamily: FONTS.mono, fontSize: 10.5, letterSpacing: "0.18em", color: TOKENS.brass, textTransform: "uppercase", marginBottom: 8 }}>
+              One-off document read
+            </div>
+            <div style={{ display: "flex", alignItems: "baseline", gap: 8 }}>
+              <div style={{ fontFamily: FONTS.serif, fontSize: "clamp(2rem, 3.6vw, 2.75rem)", lineHeight: 1, color: TOKENS.ink, letterSpacing: "-0.02em" }}>
+                {fmtGBP(docEstimate)}
+              </div>
+              <span style={{ fontFamily: FONTS.mono, fontSize: 13, color: TOKENS.inkMuted }}>est.</span>
+            </div>
+            <div style={{ fontFamily: FONTS.sans, fontSize: 13.5, color: TOKENS.inkSoft, marginTop: 10 }}>
+              then <span style={{ fontWeight: 600, color: TOKENS.ink }}>{fmtGBP(seatsMonthly)}/month</span> from month two
+            </div>
+          </div>
+
+          <button
+            type="button"
+            onClick={() => setOpen(true)}
+            style={{
+              padding: "14px 22px",
+              borderRadius: 12,
+              border: "none",
+              background: TOKENS.brass,
+              color: "#fff",
+              fontFamily: FONTS.sans,
+              fontSize: 15,
+              fontWeight: 600,
+              letterSpacing: "0.01em",
+              cursor: "pointer",
+              boxShadow: "0 8px 20px -10px rgba(249,115,22,0.6)",
+            }}
+          >
+            Get my firm quote
+          </button>
+          <div style={{ fontFamily: FONTS.sans, fontSize: 12.5, color: TOKENS.inkMuted, textAlign: "center" }}>
+            No charge until you approve the document estimate
+          </div>
+        </div>
+      </div>
+
+      <style>{`
+        @media (max-width: 820px) {
+          .hp-together-grid { grid-template-columns: 1fr !important; }
+        }
+      `}</style>
+
+      <InterestModal open={open} onClose={() => setOpen(false)} source="pricing-together-quote" />
+    </div>
+  );
+};
+
+// ============================================================================
 // Section 3 — Calculators
 // ============================================================================
+
 const Calculators: React.FC = () => {
   const [people, setPeople] = useState(5);
   const [docs, setDocs] = useState(305);
