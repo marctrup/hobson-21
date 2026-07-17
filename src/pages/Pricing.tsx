@@ -13,6 +13,7 @@ const COMPLEX = 0.10; // £ per complex document
 const MIX_COMPLEX_RATIO = 1 / 5; // 1 complex in every 5 documents
 const BLENDED = SIMPLE * (1 - MIX_COMPLEX_RATIO) + COMPLEX * MIX_COMPLEX_RATIO; // ~£0.036
 const HANDOFF = 500; // documents threshold for personal quote
+const PRICING_HEADING = "See what I cost.";
 
 // ============================================================================
 // Design tokens (scoped to this page via inline style vars).
@@ -177,7 +178,7 @@ const Calculators: React.FC = () => {
     >
       <div style={{ maxWidth: 1120, margin: "0 auto" }}>
         <div style={{ maxWidth: 720, marginBottom: 56, marginLeft: "auto", marginRight: "auto", textAlign: "center" }}>
-          <H2>See what I cost.</H2>
+          <H2>{PRICING_HEADING}</H2>
           <p style={{ fontFamily: FONTS.sans, fontSize: 17, lineHeight: 1.6, color: TOKENS.inkSoft, marginTop: 16 }}>
             Tell me a little about your business, and I'll give you a clear estimate.
           </p>

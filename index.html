@@ -138,13 +138,19 @@
     <!-- Standard CSS loading -->
     <link rel="stylesheet" href="/src/index.css" />
 
-    <!-- Clear any legacy Service Worker/cache so Lovable preview always shows current content -->
+    <!-- Clear legacy app-shell Service Worker/cache so Lovable preview always shows current content -->
     <script>
+      function isLegacyHobsonCache(name) {
+        return name.indexOf('hobson-ai-') === 0 || /(^|-)precache-v\d+-|(^|-)runtime-|(^|-)googleAnalytics-/.test(name);
+      }
+
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', function () {
           navigator.serviceWorker.getRegistrations().then(function (registrations) {
             registrations.forEach(function (registration) {
-              registration.unregister();
+              if (registration.scope === window.location.origin + '/') {
+                registration.unregister();
+              }
             });
           });
         });
@@ -154,7 +160,9 @@
         window.addEventListener('load', function () {
           caches.keys().then(function (names) {
             names.forEach(function (name) {
-              caches.delete(name);
+              if (isLegacyHobsonCache(name)) {
+                caches.delete(name);
+              }
             });
           });
         });
