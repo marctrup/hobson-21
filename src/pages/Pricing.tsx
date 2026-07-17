@@ -534,6 +534,7 @@ export default function Pricing() {
           </div>
         </section>
       </main>
+      <InterestModal open={interestOpen} onClose={() => setInterestOpen(false)} source="pricing-register-interest" />
     </>
   );
 }
