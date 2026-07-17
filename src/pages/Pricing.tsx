@@ -290,9 +290,9 @@ const Calculators: React.FC = () => {
               Seats · monthly · what a seat gives you
             </div>
             <h3 style={{ fontFamily: FONTS.serif, fontWeight: 400, fontSize: "clamp(1.75rem, 2.8vw, 2.4rem)", lineHeight: 1.05, letterSpacing: "-0.02em", margin: 0, color: TOKENS.paper, position: "relative" }}>
-              Every person gets{" "}
-              <span style={{ fontStyle: "italic", color: TOKENS.brassLight }}>their own</span>{" "}
-              personal co-worker.
+              Everyone gets{" "}
+              <span style={{ fontStyle: "italic", color: TOKENS.brassLight }}>their own Hobson</span>
+              , supported by his complete back-office team.
             </h3>
             <p style={{ fontFamily: FONTS.sans, fontSize: 15, lineHeight: 1.6, color: "rgba(255,255,255,0.82)", marginTop: 16, position: "relative" }}>
               One Hobson per person. I learn how you work, remember what matters, and stay ready for whatever you need next.
