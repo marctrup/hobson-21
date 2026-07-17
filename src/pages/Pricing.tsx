@@ -371,16 +371,16 @@ const Calculators: React.FC = () => {
             <div
               style={{
                 position: "relative",
-                background: TOKENS.paper,
-                border: `1px solid ${TOKENS.hairline}`,
+                background: "#6D28D9",
+                border: "1px solid #5B21B6",
                 borderRadius: 20,
                 padding: "20px 24px",
                 maxWidth: 520,
                 fontFamily: FONTS.serif,
                 fontSize: "clamp(1.05rem, 1.6vw, 1.25rem)",
                 lineHeight: 1.5,
-                color: TOKENS.ink,
-                boxShadow: "0 6px 24px rgba(42,23,88,0.08)",
+                color: "#FFFFFF",
+                boxShadow: "0 20px 60px -30px rgba(124,58,237,0.55)",
               }}
               className="hp-hero-bubble"
             >
