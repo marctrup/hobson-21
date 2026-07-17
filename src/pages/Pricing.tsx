@@ -346,7 +346,7 @@ const Calculators: React.FC = () => {
     <section
       id="calculator"
       style={{
-        background: TOKENS.paper,
+        background: "#F3EEF9",
         color: TOKENS.ink,
         padding: "clamp(72px, 9vw, 128px) 24px clamp(56px, 7vw, 96px)",
         borderTop: `1px solid ${TOKENS.hairline}`,
