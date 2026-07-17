@@ -292,13 +292,13 @@ const Calculators: React.FC = () => {
       }}
     >
       <div style={{ maxWidth: 1120, margin: "0 auto" }}>
-        <div style={{ maxWidth: 820, marginBottom: 56, marginLeft: "auto", marginRight: "auto" }}>
+        <div style={{ maxWidth: 820, marginBottom: 56, marginLeft: 0, marginRight: "auto" }}>
           <div
             style={{
               display: "flex",
               alignItems: "center",
               gap: "clamp(16px, 3vw, 28px)",
-              justifyContent: "center",
+              justifyContent: "flex-start",
               flexWrap: "wrap",
             }}
           >
