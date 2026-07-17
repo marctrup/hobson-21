@@ -473,9 +473,12 @@ const Calculators: React.FC = () => {
                     <p style={{ fontFamily: FONTS.mono, fontSize: 11, color: TOKENS.inkMuted, marginTop: 10 }}>
                       Range: {fmtGBP2(low)} — {fmtGBP2(high)}
                     </p>
-                    <p style={{ fontFamily: FONTS.sans, fontSize: 12.5, fontStyle: "italic", color: TOKENS.inkSoft, marginTop: 14, lineHeight: 1.5, borderTop: `1px solid ${TOKENS.hairline}`, paddingTop: 12 }}>
-                      This is an estimate — until I know the make-up of your documents, I can't firm up the price.
-                    </p>
+                    <div style={{ display: "flex", alignItems: "flex-start", gap: 10, marginTop: 14, borderTop: `1px solid ${TOKENS.hairline}`, paddingTop: 12 }}>
+                      <img src={owlMascot} alt="" style={{ width: 24, height: 24, flexShrink: 0, marginTop: 1 }} />
+                      <p style={{ fontFamily: FONTS.serif, fontSize: 14, fontStyle: "italic", color: TOKENS.inkSoft, margin: 0, lineHeight: 1.5 }}>
+                        &ldquo;This is an estimate — until I know the make-up of your documents, I can&rsquo;t firm up the price.&rdquo;
+                      </p>
+                    </div>
                   </>
                 )}
               </div>
