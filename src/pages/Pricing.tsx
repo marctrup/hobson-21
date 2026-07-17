@@ -584,9 +584,9 @@ const Calculators: React.FC = () => {
           top: 32px;
           width: 18px;
           height: 18px;
-          background: ${TOKENS.paper};
-          border-left: 1px solid ${TOKENS.hairline};
-          border-bottom: 1px solid ${TOKENS.hairline};
+          background: #6D28D9;
+          border-left: 1px solid #5B21B6;
+          border-bottom: 1px solid #5B21B6;
           transform: rotate(45deg);
         }
         @media (max-width: 640px) {
