@@ -177,7 +177,7 @@ const Calculators: React.FC = () => {
     >
       <div style={{ maxWidth: 1120, margin: "0 auto" }}>
         <div style={{ maxWidth: 720, marginBottom: 56, marginLeft: "auto", marginRight: "auto", textAlign: "center" }}>
-          <H2>See what I would cost your business.</H2>
+          <H2>See what I cost.</H2>
           <p style={{ fontFamily: FONTS.sans, fontSize: 17, lineHeight: 1.6, color: TOKENS.inkSoft, marginTop: 16 }}>
             Tell me a little about your business, and I'll give you a clear estimate.
           </p>
