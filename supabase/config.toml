@@ -69,3 +69,6 @@ verify_jwt = false
 [functions.crm-rotate-ingest-secret]
 verify_jwt = false
 
+
+[functions.hobson-tts]
+verify_jwt = false
