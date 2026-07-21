@@ -1,9 +1,8 @@
 import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
-import { Search, Plus } from "lucide-react";
+import { Plus } from "lucide-react";
 import { GlobalHeader } from "@/components/GlobalHeader";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -168,26 +167,13 @@ And where a future rate isn't yet fixed, Hobson tells you it's not yet establish
 ];
 
 const Learn = () => {
-  const [query, setQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState<string>("All");
 
-  const normalisedQuery = query.trim().toLowerCase();
-
   const filtered = useMemo(() => {
-    return CATEGORIES.map((cat) => ({
-      ...cat,
-      items: cat.items.filter((item) => {
-        const inCategory =
-          activeCategory === "All" || activeCategory === cat.name;
-        if (!inCategory) return false;
-        if (!normalisedQuery) return true;
-        return (
-          item.q.toLowerCase().includes(normalisedQuery) ||
-          item.a.toLowerCase().includes(normalisedQuery)
-        );
-      }),
-    })).filter((cat) => cat.items.length > 0);
-  }, [normalisedQuery, activeCategory]);
+    return CATEGORIES.filter(
+      (cat) => activeCategory === "All" || activeCategory === cat.name
+    );
+  }, [activeCategory]);
 
   const noResults = filtered.length === 0;
 
@@ -210,21 +196,6 @@ const Learn = () => {
               your property documents — and why its answers can be trusted.
             </p>
 
-            {/* Search */}
-            <div className="mt-8 relative max-w-xl mx-auto">
-              <Search
-                className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none"
-                aria-hidden
-              />
-              <Input
-                type="search"
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                placeholder="Search questions and answers…"
-                aria-label="Search FAQs"
-                className="pl-11 h-12 rounded-full bg-background border-border focus-visible:ring-primary"
-              />
-            </div>
           </div>
 
           {/* Sticky category chips */}
