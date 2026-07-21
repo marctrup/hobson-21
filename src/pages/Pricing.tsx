@@ -68,7 +68,7 @@ const Pill: React.FC<{ children: React.ReactNode; dark?: boolean }> = ({ childre
       padding: "6px 12px",
       borderRadius: 999,
       border: `1px solid ${dark ? TOKENS.hairlineDark : TOKENS.hairline}`,
-      background: dark ? "rgba(251,146,60,0.08)" : "rgba(255,255,255,0.6)",
+      background: dark ? "rgba(201,168,104,0.10)" : "rgba(255,255,255,0.6)",
       color: dark ? TOKENS.brassLight : TOKENS.ink,
       fontFamily: FONTS.mono,
       fontSize: 12,
@@ -170,7 +170,7 @@ const TogetherCard: React.FC<{ people: number; docEstimate: number; seatsMonthly
         borderRadius: 24,
         background: TOKENS.paper,
         border: `2px solid ${TOKENS.brass}`,
-        boxShadow: "0 12px 40px -20px rgba(249,115,22,0.35)",
+        boxShadow: "0 12px 40px -20px rgba(180,145,79,0.35)",
       }}
     >
       <div
@@ -211,8 +211,8 @@ const TogetherCard: React.FC<{ people: number; docEstimate: number; seatsMonthly
             style={{
               padding: "22px 24px",
               borderRadius: 16,
-              background: "rgba(249,115,22,0.06)",
-              border: `1px solid rgba(249,115,22,0.28)`,
+              background: "rgba(180,145,79,0.06)",
+              border: `1px solid rgba(180,145,79,0.28)`,
             }}
           >
             <div style={{ fontFamily: FONTS.mono, fontSize: 10.5, letterSpacing: "0.18em", color: TOKENS.brass, textTransform: "uppercase", marginBottom: 8 }}>
@@ -243,7 +243,7 @@ const TogetherCard: React.FC<{ people: number; docEstimate: number; seatsMonthly
               fontWeight: 600,
               letterSpacing: "0.01em",
               cursor: "pointer",
-              boxShadow: "0 8px 20px -10px rgba(249,115,22,0.6)",
+              boxShadow: "0 8px 20px -10px rgba(180,145,79,0.5)",
             }}
           >
             Get my firm quote
@@ -689,7 +689,7 @@ export default function Pricing() {
         @keyframes hpCaretBlink { 50% { border-color: transparent; } }
         .hp-lift { transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease; }
         .hp-lift:hover { transform: translateY(-2px); box-shadow: 0 12px 32px -18px rgba(42,23,88,0.35); }
-        .hp-slider { -webkit-appearance: none; appearance: none; height: 4px; background: rgba(251,146,60,0.22); border-radius: 999px; outline: none; }
+        .hp-slider { -webkit-appearance: none; appearance: none; height: 4px; background: rgba(201,168,104,0.25); border-radius: 999px; outline: none; }
         .hp-slider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 22px; height: 22px; border-radius: 50%; background: ${TOKENS.brassLight}; border: 3px solid ${TOKENS.ink}; box-shadow: 0 2px 6px rgba(0,0,0,0.3); cursor: pointer; }
         .hp-slider::-moz-range-thumb { width: 22px; height: 22px; border-radius: 50%; background: ${TOKENS.brassLight}; border: 3px solid ${TOKENS.ink}; cursor: pointer; }
         .hp-slider:focus-visible::-webkit-slider-thumb { outline: 2px solid ${TOKENS.brassLight}; outline-offset: 3px; }
@@ -697,16 +697,16 @@ export default function Pricing() {
         .hp-btn-brass { background: ${TOKENS.brass}; color: ${TOKENS.paper}; }
         .hp-btn-brass:hover { background: ${TOKENS.brassLight}; }
         .hp-btn-ghost { background: transparent; color: ${TOKENS.paper}; border-color: ${TOKENS.brassLight}; }
-        .hp-btn-ghost:hover { background: rgba(251,146,60,0.1); }
+        .hp-btn-ghost:hover { background: rgba(201,168,104,0.12); }
         .hp-btn:focus-visible { outline: 2px solid ${TOKENS.brassLight}; outline-offset: 3px; }
         details.hp-faq { background: ${TOKENS.paper}; border: 1px solid ${TOKENS.hairline}; border-radius: 14px; padding: 22px 26px; transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease; }
         details.hp-faq + details.hp-faq { margin-top: 12px; }
-        details.hp-faq:hover { border-color: rgba(249,115,22,0.35); box-shadow: 0 6px 24px -12px rgba(42,23,88,0.18); }
-        details.hp-faq[open] { border-color: rgba(249,115,22,0.45); box-shadow: 0 10px 30px -14px rgba(42,23,88,0.22); }
+        details.hp-faq:hover { border-color: rgba(180,145,79,0.35); box-shadow: 0 6px 24px -12px rgba(45,45,45,0.14); }
+        details.hp-faq[open] { border-color: rgba(180,145,79,0.45); box-shadow: 0 10px 30px -14px rgba(45,45,45,0.18); }
         details.hp-faq summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 24px; font-family: ${FONTS.serif}; font-size: 1.15rem; color: ${TOKENS.ink}; }
         details.hp-faq summary::-webkit-details-marker { display: none; }
-        details.hp-faq summary .hp-plus { display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; border-radius: 999px; background: rgba(249,115,22,0.10); font-family: ${FONTS.mono}; font-size: 18px; line-height: 1; color: ${TOKENS.brass}; transition: transform .25s ease, background .25s ease; flex-shrink: 0; }
-        details.hp-faq[open] summary .hp-plus { transform: rotate(45deg); background: rgba(249,115,22,0.18); }
+        details.hp-faq summary .hp-plus { display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; border-radius: 999px; background: rgba(180,145,79,0.12); font-family: ${FONTS.mono}; font-size: 18px; line-height: 1; color: ${TOKENS.brass}; transition: transform .25s ease, background .25s ease; flex-shrink: 0; }
+        details.hp-faq[open] summary .hp-plus { transform: rotate(45deg); background: rgba(180,145,79,0.22); }
         details.hp-faq p { font-family: ${FONTS.sans}; font-size: 15.5px; line-height: 1.65; color: ${TOKENS.inkSoft}; margin: 16px 0 0; max-width: 68ch; }
         @media (prefers-reduced-motion: reduce) {
           .hp-reveal, .hp-lift, details.hp-faq summary .hp-plus { animation: none !important; transition: none !important; transform: none !important; }
