@@ -372,22 +372,23 @@ const Calculators: React.FC = () => {
             <div
               style={{
                 position: "relative",
-                background: "#2D2D2D",
-                border: "1px solid #1F1F1F",
+                background: TOKENS.paper,
+                border: `1px solid ${TOKENS.hairline}`,
                 borderRadius: 20,
                 padding: "20px 24px",
                 maxWidth: 520,
                 fontFamily: FONTS.serif,
                 fontSize: "clamp(1.05rem, 1.6vw, 1.25rem)",
                 lineHeight: 1.5,
-                color: "#FCFAF7",
-                boxShadow: "0 20px 60px -30px rgba(45,45,45,0.5)",
+                color: TOKENS.ink,
+                boxShadow: "0 20px 60px -30px rgba(45,45,45,0.25)",
               }}
               className="hp-hero-bubble"
             >
               <span style={{ fontStyle: "italic" }}>{HERO_MESSAGE}</span>
 
             </div>
+
           </div>
         </div>
 
