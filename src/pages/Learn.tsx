@@ -286,7 +286,7 @@ const Learn = () => {
                   size="lg"
                   className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-8"
                 >
-                  <Link to="/contact">Email us</Link>
+                  <a href="mailto:info@hobsonschoice.ai?subject=Hobson%20enquiry">Email us</a>
                 </Button>
               </div>
             </div>
