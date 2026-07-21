@@ -169,7 +169,7 @@ And where a future rate isn't yet fixed, Hobson tells you it's not yet establish
   },
 ];
 
-const Learn = () => {
+const LearnFaq = () => {
   const [activeCategory, setActiveCategory] = useState<string>("All");
 
   const filtered = useMemo(() => {
@@ -180,11 +180,39 @@ const Learn = () => {
 
   const noResults = filtered.length === 0;
 
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: CATEGORIES.flatMap((cat) =>
+      cat.items.map((item) => ({
+        "@type": "Question",
+        name: item.q,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: item.a,
+        },
+      }))
+    ),
+  };
+
   return (
     <div className="min-h-screen bg-background flex flex-col">
+      <Helmet>
+        <title>Hobson AI FAQ — questions, answered</title>
+        <meta
+          name="description"
+          content="Answers to the most common questions about Hobson: how it reads property documents, how accuracy is tested, and how it stays in your control."
+        />
+        <link rel="canonical" href="https://hobson-21.lovable.app/learn/faq" />
+        <meta property="og:title" content="Hobson AI FAQ — questions, answered" />
+        <meta property="og:url" content="https://hobson-21.lovable.app/learn/faq" />
+        <meta property="og:type" content="website" />
+        <script type="application/ld+json">{JSON.stringify(faqJsonLd)}</script>
+      </Helmet>
       <GlobalHeader />
 
       <main className="flex-1">
+
         {/* Hero */}
         <section className="border-b border-border/60 bg-muted/30">
           <div className="mx-auto max-w-3xl px-6 pt-16 pb-10 text-center">
