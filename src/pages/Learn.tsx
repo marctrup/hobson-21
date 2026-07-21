@@ -67,6 +67,24 @@ Working in one place also makes made-up answers far less likely. Mistakes and in
 
 And that's only the first safeguard. On top of it, Hobson backs every figure with wording that actually contains it, reports silence as silence rather than guessing, and produces every calculated number in one place. Getting you to the right unit makes the answer far more likely to be correct; the other checks catch anything that slips through.`,
       },
+      {
+        q: "How do you know Hobson's answers are accurate — and not just confident-sounding?",
+        a: `Because we measure it rather than assume it. AI that sounds sure of itself is easy to build; AI you can actually trust has to be tested. So Hobson's document-reading is checked against a library of real leases that property experts have gone through by hand, line by line, to establish the correct answer for every detail. Whenever we change how Hobson reads documents, we run it back over that expert-verified set and measure how closely it matches.
+
+That turns accuracy into something we can see and improve, not a claim we simply hope is true. And because the test leases run from a simple residential tenancy all the way to long, complex commercial leases with formula-driven rents, we're proving Hobson on the hard cases, not just the easy ones.`,
+      },
+      {
+        q: `How does Hobson guard against AI "making things up"?`,
+        a: `This is the risk we take most seriously, because a confident wrong answer is far more dangerous than an honest "I'm not sure." Left unchecked, AI models can produce a figure, a quote, even a precise page reference for something that simply isn't in the document.
+
+So Hobson is built to distrust its own first draft. Every figure it reports has to be backed by wording from the document that genuinely contains it — if the supporting text doesn't say what the answer claims, the answer doesn't stand. Beyond that, we actively test for invented answers: checking that the evidence behind each fact really exists and really says what's claimed, that nothing from one tenancy has been applied to another, and that Hobson keeps a clear line between what a document actually says and what it doesn't. Catching those patterns on purpose is how we keep them out of your answers.`,
+      },
+      {
+        q: "Hobson keeps improving — how do you stop an update from breaking something that already worked?",
+        a: `Because nothing changes in the dark. Behind the scenes, every answer Hobson gives is recorded step by step — which documents it read, which checks it ran, how it reached the result. If something is ever wrong, the team can see exactly where it happened and fix that precise step, rather than guessing.
+
+That same record becomes a growing library of test cases. Whenever we improve how Hobson works, the new version has to prove itself against that whole library first — compared question by question with the current one — and it doesn't go live if it makes anything worse. So Hobson gets sharper over time without the "fixed one thing, broke another" problem that catches out software which isn't tested this way. Real answers your own team flags feed straight back into that test library, so the system keeps learning from live use.`,
+      },
     ],
   },
   {
