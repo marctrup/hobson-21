@@ -412,7 +412,7 @@ const Calculators: React.FC = () => {
               padding: "clamp(32px, 3.5vw, 48px)",
               background: TOKENS.paper,
               border: `1px solid ${TOKENS.hairline}`,
-              boxShadow: "0 8px 24px -16px rgba(42,23,88,0.15)",
+              boxShadow: "0 8px 24px -16px rgba(45,45,45,0.12)",
               display: "flex",
               flexDirection: "column",
             }}
@@ -688,7 +688,7 @@ export default function Pricing() {
         @keyframes hpRise { to { opacity: 1; transform: none; } }
         @keyframes hpCaretBlink { 50% { border-color: transparent; } }
         .hp-lift { transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease; }
-        .hp-lift:hover { transform: translateY(-2px); box-shadow: 0 12px 32px -18px rgba(42,23,88,0.35); }
+        .hp-lift:hover { transform: translateY(-2px); box-shadow: 0 12px 32px -18px rgba(45,45,45,0.25); }
         .hp-slider { -webkit-appearance: none; appearance: none; height: 4px; background: rgba(201,168,104,0.25); border-radius: 999px; outline: none; }
         .hp-slider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 22px; height: 22px; border-radius: 50%; background: ${TOKENS.brassLight}; border: 3px solid ${TOKENS.ink}; box-shadow: 0 2px 6px rgba(0,0,0,0.3); cursor: pointer; }
         .hp-slider::-moz-range-thumb { width: 22px; height: 22px; border-radius: 50%; background: ${TOKENS.brassLight}; border: 3px solid ${TOKENS.ink}; cursor: pointer; }
