@@ -1,7 +1,5 @@
 import { useMemo, useState } from "react";
-import { Link } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
-import { Plus } from "lucide-react";
 import { Helmet } from "react-helmet-async";
 import { GlobalHeader } from "@/components/GlobalHeader";
 import { Button } from "@/components/ui/button";
@@ -12,6 +10,8 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import owlMascot from "@/assets/owl-mascot.png";
+
 
 type FAQ = { q: string; a: string; mostAsked?: boolean };
 type Category = { name: string; items: FAQ[] };
