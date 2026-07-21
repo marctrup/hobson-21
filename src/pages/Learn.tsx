@@ -30,6 +30,50 @@ const CATEGORIES = [
   "Leases, money & the fine print",
 ] as const;
 
+// Accent colour per category — pulled from the existing brand palette
+// (primary purple + accent-amber / accent-teal / accent-rose tokens).
+const CATEGORY_STYLES: Record<
+  string,
+  { dot: string; text: string; chipActive: string; ring: string; tint: string }
+> = {
+  "Hobson vs. other AI": {
+    dot: "bg-primary",
+    text: "text-primary",
+    chipActive: "bg-primary text-primary-foreground border-primary",
+    ring: "before:bg-primary",
+    tint: "from-primary/[0.06]",
+  },
+  "Trust, accuracy & control": {
+    dot: "bg-accent-teal",
+    text: "text-accent-teal",
+    chipActive: "bg-accent-teal text-accent-teal-foreground border-accent-teal",
+    ring: "before:bg-accent-teal",
+    tint: "from-accent-teal/[0.06]",
+  },
+  "Your portfolio, organised": {
+    dot: "bg-accent-amber",
+    text: "text-accent-amber",
+    chipActive: "bg-accent-amber text-accent-amber-foreground border-accent-amber",
+    ring: "before:bg-accent-amber",
+    tint: "from-accent-amber/[0.08]",
+  },
+  "Understanding your documents": {
+    dot: "bg-brand-orange",
+    text: "text-brand-orange",
+    chipActive: "bg-brand-orange text-brand-orange-foreground border-brand-orange",
+    ring: "before:bg-brand-orange",
+    tint: "from-brand-orange/[0.06]",
+  },
+  "Leases, money & the fine print": {
+    dot: "bg-accent-rose",
+    text: "text-accent-rose",
+    chipActive: "bg-accent-rose text-accent-rose-foreground border-accent-rose",
+    ring: "before:bg-accent-rose",
+    tint: "from-accent-rose/[0.06]",
+  },
+};
+
+
 const FAQS: Faq[] = [
   {
     id: "vs-chatgpt",
@@ -217,14 +261,25 @@ const Learn: React.FC = () => {
 
       <GlobalHeader />
 
-      {/* Hero */}
-      <section className="pt-16 pb-10 md:pt-24 md:pb-14">
+      {/* Hero with soft brand wash */}
+      <section className="relative pt-16 pb-10 md:pt-24 md:pb-14 overflow-hidden">
+        {/* palette wash */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 -z-10"
+          style={{
+            background:
+              "radial-gradient(60% 55% at 15% 0%, hsl(var(--primary) / 0.10), transparent 60%), radial-gradient(50% 45% at 85% 10%, hsl(var(--accent-teal) / 0.09), transparent 65%), radial-gradient(55% 50% at 50% 100%, hsl(var(--accent-amber) / 0.08), transparent 70%)",
+          }}
+        />
         <div className="mx-auto max-w-3xl px-4 text-center">
-          <p className="text-xs md:text-sm tracking-[0.2em] uppercase text-muted-foreground mb-4">
+          <p className="inline-flex items-center gap-2 text-xs md:text-sm tracking-[0.2em] uppercase text-primary/90 mb-4">
+            <span className="h-px w-8 bg-primary/60" />
             Frequently asked questions
+            <span className="h-px w-8 bg-primary/60" />
           </p>
           <h1 className="font-serif text-4xl md:text-6xl font-semibold text-foreground leading-tight">
-            Questions, answered.
+            Questions, <span className="text-primary">answered.</span>
           </h1>
           <p className="mt-5 text-base md:text-lg text-muted-foreground max-w-2xl mx-auto">
             Everything you might want to know about how Hobson understands your property
@@ -233,25 +288,29 @@ const Learn: React.FC = () => {
 
           {/* Search */}
           <div className="relative mt-8 max-w-xl mx-auto">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground pointer-events-none" />
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-primary pointer-events-none" />
             <Input
               type="search"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Search questions…"
               aria-label="Search questions"
-              className="pl-12 h-12 rounded-full border-border bg-card shadow-sm focus-visible:ring-primary"
+              className="pl-12 h-12 rounded-full border-primary/20 bg-card shadow-sm focus-visible:ring-primary"
             />
           </div>
         </div>
       </section>
 
       {/* Sticky category chips */}
-      <div className="sticky top-16 z-30 bg-background/95 backdrop-blur border-b border-border">
+      <div className="sticky top-16 z-30 bg-background/90 backdrop-blur border-y border-border">
         <div className="mx-auto max-w-3xl px-4 py-3">
           <div className="flex flex-wrap gap-2 justify-center">
             {(["All", ...CATEGORIES] as string[]).map((cat) => {
               const active = activeCategory === cat;
+              const style = CATEGORY_STYLES[cat];
+              const activeClass = style
+                ? style.chipActive
+                : "bg-primary text-primary-foreground border-primary";
               return (
                 <button
                   key={cat}
@@ -260,7 +319,7 @@ const Learn: React.FC = () => {
                   className={
                     "px-4 py-1.5 rounded-full text-sm font-medium border transition-colors " +
                     (active
-                      ? "bg-primary text-primary-foreground border-primary"
+                      ? activeClass
                       : "bg-card text-foreground border-border hover:border-primary/40 hover:text-primary")
                   }
                 >
@@ -274,7 +333,7 @@ const Learn: React.FC = () => {
 
       {/* FAQ list */}
       <section className="py-12 md:py-16">
-        <div className="mx-auto max-w-3xl px-4 space-y-12">
+        <div className="mx-auto max-w-3xl px-4 space-y-14">
           {grouped.length === 0 && (
             <div className="text-center py-16">
               <p className="text-lg text-muted-foreground">
@@ -283,70 +342,90 @@ const Learn: React.FC = () => {
             </div>
           )}
 
-          {grouped.map(([category, items]) => (
-            <div key={category}>
-              <h2 className="text-sm uppercase tracking-widest text-muted-foreground mb-4">
-                {category}
-              </h2>
-              <Accordion type="multiple" className="space-y-3">
-                {items.map((f) => (
-                  <AccordionItem
-                    key={f.id}
-                    value={f.id}
-                    className="group border border-border bg-card rounded-2xl shadow-sm hover:shadow-md transition-shadow data-[state=open]:shadow-md overflow-hidden"
-                  >
-                    <AccordionTrigger className="px-5 md:px-6 py-5 text-left hover:no-underline [&>svg]:hidden">
-                      <div className="flex items-start justify-between gap-4 w-full">
-                        <div className="flex-1">
-                          <div className="flex items-center gap-2 flex-wrap">
-                            <span className="text-base md:text-lg font-medium text-foreground">
-                              {f.question}
-                            </span>
-                            {f.mostAsked && (
-                              <Badge className="bg-primary text-primary-foreground hover:bg-primary rounded-full text-[10px] tracking-wide uppercase">
-                                Most asked
-                              </Badge>
-                            )}
+          {grouped.map(([category, items]) => {
+            const style = CATEGORY_STYLES[category];
+            return (
+              <div key={category}>
+                <h2 className={`flex items-center gap-3 text-sm uppercase tracking-widest mb-4 ${style?.text ?? "text-primary"}`}>
+                  <span className={`h-2 w-2 rounded-full ${style?.dot ?? "bg-primary"}`} />
+                  {category}
+                </h2>
+                <Accordion type="multiple" className="space-y-3">
+                  {items.map((f) => (
+                    <AccordionItem
+                      key={f.id}
+                      value={f.id}
+                      className={`group relative border border-border bg-card rounded-2xl shadow-sm hover:shadow-md transition-shadow data-[state=open]:shadow-md overflow-hidden before:content-[''] before:absolute before:left-0 before:top-0 before:bottom-0 before:w-1 ${style?.ring ?? "before:bg-primary"} before:opacity-70`}
+                    >
+                      <AccordionTrigger className="pl-6 pr-5 md:pl-7 md:pr-6 py-5 text-left hover:no-underline [&>svg]:hidden">
+                        <div className="flex items-start justify-between gap-4 w-full">
+                          <div className="flex-1">
+                            <div className="flex items-center gap-2 flex-wrap">
+                              <span className="text-base md:text-lg font-medium text-foreground">
+                                {f.question}
+                              </span>
+                              {f.mostAsked && (
+                                <Badge className="bg-primary text-primary-foreground hover:bg-primary rounded-full text-[10px] tracking-wide uppercase">
+                                  Most asked
+                                </Badge>
+                              )}
+                            </div>
                           </div>
+                          <Plus
+                            className={`h-5 w-5 shrink-0 transition-transform duration-300 group-data-[state=open]:rotate-45 ${style?.text ?? "text-primary"}`}
+                            aria-hidden
+                          />
                         </div>
-                        <Plus
-                          className="h-5 w-5 shrink-0 text-primary transition-transform duration-300 group-data-[state=open]:rotate-45"
-                          aria-hidden
-                        />
-                      </div>
-                    </AccordionTrigger>
-                    <AccordionContent className="px-5 md:px-6 pb-6 pt-0">
-                      <div className="prose prose-sm md:prose-base max-w-none text-muted-foreground prose-strong:text-foreground prose-em:text-foreground/90 prose-p:leading-relaxed">
-                        <ReactMarkdown>{f.answer}</ReactMarkdown>
-                      </div>
-                    </AccordionContent>
-                  </AccordionItem>
-                ))}
-              </Accordion>
-            </div>
-          ))}
+                      </AccordionTrigger>
+                      <AccordionContent className="pl-6 pr-5 md:pl-7 md:pr-6 pb-6 pt-0">
+                        <div className="prose prose-sm md:prose-base max-w-none text-muted-foreground prose-strong:text-foreground prose-em:text-foreground/90 prose-p:leading-relaxed">
+                          <ReactMarkdown>{f.answer}</ReactMarkdown>
+                        </div>
+                      </AccordionContent>
+                    </AccordionItem>
+                  ))}
+                </Accordion>
+              </div>
+            );
+          })}
         </div>
       </section>
 
       {/* CTA */}
       <section className="pb-24">
         <div className="mx-auto max-w-3xl px-4">
-          <div className="rounded-2xl bg-foreground text-background p-8 md:p-12 text-center shadow-lg">
-            <h3 className="font-serif text-2xl md:text-3xl font-semibold">
-              Still have a question?
-            </h3>
-            <p className="mt-3 text-background/80 max-w-xl mx-auto">
-              If there's something we haven't covered, we'd be glad to walk you through it —
-              and show you Hobson on your own documents.
-            </p>
-            <div className="mt-6">
-              <Button
-                asChild
-                size="lg"
-                className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-8"
-              >
-                <Link to="/contact">Email us</Link>
-              </Button>
+          <div
+            className="relative rounded-3xl p-8 md:p-12 text-center shadow-xl overflow-hidden"
+            style={{
+              background:
+                "linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(258 70% 40%) 60%, hsl(222 60% 12%) 100%)",
+            }}
+          >
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-0"
+              style={{
+                background:
+                  "radial-gradient(40% 60% at 85% 20%, hsl(var(--accent-amber) / 0.35), transparent 60%), radial-gradient(50% 60% at 10% 100%, hsl(var(--accent-teal) / 0.28), transparent 65%)",
+              }}
+            />
+            <div className="relative">
+              <h3 className="font-serif text-2xl md:text-3xl font-semibold text-primary-foreground">
+                Still have a question?
+              </h3>
+              <p className="mt-3 text-primary-foreground/85 max-w-xl mx-auto">
+                If there's something we haven't covered, we'd be glad to walk you through it —
+                and show you Hobson on your own documents.
+              </p>
+              <div className="mt-6">
+                <Button
+                  asChild
+                  size="lg"
+                  className="bg-background text-primary hover:bg-background/90 rounded-full px-8 shadow-md"
+                >
+                  <Link to="/contact">Email us</Link>
+                </Button>
+              </div>
             </div>
           </div>
         </div>
@@ -356,3 +435,4 @@ const Learn: React.FC = () => {
 };
 
 export default Learn;
+
