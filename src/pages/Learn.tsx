@@ -167,26 +167,13 @@ And where a future rate isn't yet fixed, Hobson tells you it's not yet establish
 ];
 
 const Learn = () => {
-  const [query, setQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState<string>("All");
 
-  const normalisedQuery = query.trim().toLowerCase();
-
   const filtered = useMemo(() => {
-    return CATEGORIES.map((cat) => ({
-      ...cat,
-      items: cat.items.filter((item) => {
-        const inCategory =
-          activeCategory === "All" || activeCategory === cat.name;
-        if (!inCategory) return false;
-        if (!normalisedQuery) return true;
-        return (
-          item.q.toLowerCase().includes(normalisedQuery) ||
-          item.a.toLowerCase().includes(normalisedQuery)
-        );
-      }),
-    })).filter((cat) => cat.items.length > 0);
-  }, [normalisedQuery, activeCategory]);
+    return CATEGORIES.filter(
+      (cat) => activeCategory === "All" || activeCategory === cat.name
+    );
+  }, [activeCategory]);
 
   const noResults = filtered.length === 0;
 
