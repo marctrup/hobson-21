@@ -25,6 +25,7 @@ const DataProtection = lazy(() => import("../pages/DataProtection"));
 const BreachProtocol = lazy(() => import("../pages/BreachProtocol"));
 const RefundPolicy = lazy(() => import("../pages/RefundPolicy"));
 const Learn = lazy(() => import("../pages/Learn"));
+const LearnFaq = lazy(() => import("../pages/LearnFaq"));
 const Status = lazy(() => import("../pages/Status"));
 const Announcements = lazy(() => import("../pages/Announcements"));
 const AnnouncementPost = lazy(() => import("../pages/AnnouncementPost"));
