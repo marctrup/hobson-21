@@ -1,7 +1,5 @@
 import { useMemo, useState } from "react";
-import { Link } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
-import { Plus } from "lucide-react";
 import { Helmet } from "react-helmet-async";
 import { GlobalHeader } from "@/components/GlobalHeader";
 import { Button } from "@/components/ui/button";
@@ -12,6 +10,8 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import owlMascot from "@/assets/owl-mascot.png";
+
 
 type FAQ = { q: string; a: string; mostAsked?: boolean };
 type Category = { name: string; items: FAQ[] };
@@ -203,7 +203,7 @@ const LearnFaq = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background flex flex-col">
+    <div className="min-h-screen flex flex-col" style={{ backgroundColor: "#FCFAF7" }}>
       <Helmet>
         <title>Hobson AI FAQ — questions, answered</title>
         <meta
@@ -219,27 +219,43 @@ const LearnFaq = () => {
       <GlobalHeader />
 
       <main className="flex-1">
-
         {/* Hero */}
-        <section className="border-b border-border/60 bg-muted/30">
-          <div className="mx-auto max-w-3xl px-6 pt-16 pb-10 text-center">
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary">
+        <section>
+          <div className="mx-auto max-w-3xl px-6 pt-20 pb-10 text-center">
+            <div
+              className="inline-flex items-center justify-center w-16 h-16 mb-7 rounded-full"
+              style={{ backgroundColor: "#F3F0FF", border: "1px solid #E8E4F0" }}
+            >
+              <img src={owlMascot} alt="" className="w-10 h-10" />
+            </div>
+            <p
+              className="text-[11px] font-semibold uppercase tracking-[0.24em]"
+              style={{ color: "#B4914F" }}
+            >
               Frequently asked questions
             </p>
-            <h1 className="mt-3 font-serif text-4xl sm:text-5xl md:text-6xl font-normal tracking-tight text-foreground">
+            <h1
+              className="mt-4 font-serif text-4xl sm:text-5xl md:text-6xl font-normal tracking-tight"
+              style={{ color: "#2D2D2D" }}
+            >
               Questions, answered.
             </h1>
-            <p className="mt-5 text-base sm:text-lg text-muted-foreground leading-relaxed">
+            <p
+              className="mt-5 text-base sm:text-lg leading-relaxed max-w-xl mx-auto"
+              style={{ color: "#6B6B6B" }}
+            >
               Everything you might want to know about how Hobson understands
               your property documents — and why its answers can be trusted.
             </p>
-
           </div>
 
           {/* Sticky category chips */}
-          <div className="sticky top-16 z-30 bg-muted/70 backdrop-blur-md border-t border-border/60">
-            <div className="mx-auto max-w-3xl px-6 py-3">
-              <div className="flex flex-wrap justify-center gap-2">
+          <div
+            className="sticky top-16 z-30 backdrop-blur-md"
+            style={{ backgroundColor: "rgba(252,250,247,0.85)", borderTop: "1px solid #EDE7DA", borderBottom: "1px solid #EDE7DA" }}
+          >
+            <div className="mx-auto max-w-4xl px-6 py-4">
+              <div className="flex flex-wrap justify-center gap-2.5">
                 {["All", ...CATEGORIES.map((c) => c.name)].map((label) => {
                   const active = activeCategory === label;
                   return (
@@ -247,13 +263,12 @@ const LearnFaq = () => {
                       key={label}
                       onClick={() => setActiveCategory(label)}
                       aria-pressed={active}
-                      className={[
-                        "px-4 py-1.5 text-sm rounded-full border transition-colors",
-                        "focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+                      className="px-5 py-2 rounded-full text-sm font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+                      style={
                         active
-                          ? "bg-primary text-primary-foreground border-primary"
-                          : "bg-background text-foreground border-border hover:border-primary/50 hover:text-primary",
-                      ].join(" ")}
+                          ? { backgroundColor: "#2D2D2D", color: "#FFFFFF", border: "1px solid #2D2D2D" }
+                          : { backgroundColor: "#F3F0FF", color: "#2D2D2D", border: "1px solid #E8E4F0" }
+                      }
                     >
                       {label}
                     </button>
@@ -265,52 +280,91 @@ const LearnFaq = () => {
         </section>
 
         {/* FAQ list */}
-        <section className="mx-auto max-w-3xl px-6 py-14">
+        <section className="mx-auto max-w-3xl px-6 py-16">
           {noResults ? (
             <div className="text-center py-16">
-              <p className="text-muted-foreground">
+              <p style={{ color: "#6B6B6B" }}>
                 No questions match your search. Try a different word.
               </p>
             </div>
           ) : (
-            <div className="space-y-12">
-              {filtered.map((cat) => (
+            <div className="space-y-14">
+              {filtered.map((cat, catIdx) => (
                 <div key={cat.name}>
-                  <h2 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-4">
-                    {cat.name}
-                  </h2>
-                  <Accordion type="multiple" className="space-y-3">
+                  <div className="flex items-baseline gap-4 mb-6">
+                    <span
+                      className="font-serif italic text-xl"
+                      style={{ color: "#B4914F" }}
+                    >
+                      {String(catIdx + 1).padStart(2, "0")}.
+                    </span>
+                    <h2
+                      className="font-serif text-2xl sm:text-[1.75rem] font-normal tracking-tight"
+                      style={{ color: "#2D2D2D" }}
+                    >
+                      {cat.name}
+                    </h2>
+                    <div className="flex-1 h-px" style={{ backgroundColor: "#EDE7DA" }} />
+                  </div>
+                  <Accordion type="multiple" className="space-y-4">
                     {cat.items.map((item, idx) => {
                       const value = `${cat.name}-${idx}`;
                       return (
                         <AccordionItem
                           key={value}
                           value={value}
-                          className="group border border-border rounded-2xl bg-card shadow-sm data-[state=open]:shadow-md transition-shadow overflow-hidden"
+                          className="group rounded-xl overflow-hidden bg-white transition-all duration-300 data-[state=open]:shadow-[0_8px_20px_-6px_rgba(180,145,79,0.18)]"
+                          style={{
+                            border: "1px solid #E8E4F0",
+                          }}
                         >
-                          <AccordionTrigger className="px-5 sm:px-6 py-5 hover:no-underline [&>svg]:hidden text-left">
-                            <div className="flex items-start gap-4 flex-1">
+                          <AccordionTrigger className="px-6 py-6 hover:no-underline [&>svg]:hidden text-left group-data-[state=open]:border-b group-data-[state=open]:border-[#F3F0FF]">
+                            <div className="flex items-center gap-4 flex-1">
                               <div className="flex-1">
                                 <div className="flex flex-wrap items-center gap-2">
-                                  <span className="text-base sm:text-lg font-medium text-foreground">
+                                  <span
+                                    className="font-serif text-lg sm:text-xl font-medium"
+                                    style={{ color: "#2D2D2D" }}
+                                  >
                                     {item.q}
                                   </span>
                                   {item.mostAsked && (
-                                    <Badge className="bg-primary/10 text-primary hover:bg-primary/10 border-0 font-medium">
+                                    <Badge
+                                      className="border-0 font-medium"
+                                      style={{ backgroundColor: "#F3F0FF", color: "#B4914F" }}
+                                    >
                                       Most asked
                                     </Badge>
                                   )}
                                 </div>
                               </div>
-                              <Plus
-                                className="h-5 w-5 text-primary shrink-0 mt-1 transition-transform duration-300 group-data-[state=open]:rotate-45"
-                                aria-hidden
-                              />
+                              {/* Brass +/× glyph */}
+                              <span className="relative flex-shrink-0 ml-4 w-6 h-6" aria-hidden>
+                                <span
+                                  className="absolute top-1/2 left-0 w-6 h-[2px] -translate-y-1/2 transition-transform duration-300"
+                                  style={{ backgroundColor: "#B4914F" }}
+                                />
+                                <span
+                                  className="absolute top-1/2 left-0 w-6 h-[2px] -translate-y-1/2 rotate-90 transition-all duration-300 group-data-[state=open]:rotate-0 group-data-[state=open]:opacity-0"
+                                  style={{ backgroundColor: "#B4914F" }}
+                                />
+                              </span>
                             </div>
                           </AccordionTrigger>
-                          <AccordionContent className="px-5 sm:px-6 pb-6 pt-0">
-                            <div className="prose prose-neutral max-w-none text-[15px] leading-relaxed text-muted-foreground prose-strong:text-foreground prose-strong:font-semibold prose-em:italic prose-p:my-3">
-                              <ReactMarkdown>{item.a}</ReactMarkdown>
+                          <AccordionContent className="px-6 pb-8 pt-6">
+                            <div
+                              className="prose max-w-none text-[15px] leading-relaxed prose-p:my-3 prose-strong:font-semibold prose-em:italic"
+                              style={{ color: "#555555" }}
+                            >
+                              <ReactMarkdown
+                                components={{
+                                  strong: ({ node, ...props }) => (
+                                    <strong style={{ color: "#2D2D2D" }} {...props} />
+                                  ),
+                                }}
+                              >
+                                {item.a}
+                              </ReactMarkdown>
                             </div>
                           </AccordionContent>
                         </AccordionItem>
@@ -324,33 +378,51 @@ const LearnFaq = () => {
         </section>
 
         {/* CTA */}
-        <section className="px-6 pb-20">
+        <section className="px-6 pb-24">
           <div className="mx-auto max-w-3xl">
-            <div className="rounded-2xl bg-foreground text-background p-8 sm:p-12 text-center shadow-lg">
+            <div
+              className="rounded-2xl p-10 sm:p-14 text-center"
+              style={{
+                backgroundColor: "#2D2D2D",
+                color: "#FCFAF7",
+                boxShadow: "0 20px 40px -20px rgba(45,45,45,0.35)",
+              }}
+            >
+              <div
+                className="inline-flex items-center justify-center w-14 h-14 mb-6 rounded-full"
+                style={{ backgroundColor: "rgba(180,145,79,0.15)", border: "1px solid rgba(180,145,79,0.35)" }}
+              >
+                <img src={owlMascot} alt="" className="w-9 h-9" />
+              </div>
               <h3 className="font-serif text-2xl sm:text-3xl font-normal">
                 Still have a question?
               </h3>
-              <p className="mt-3 text-background/70 max-w-xl mx-auto leading-relaxed">
+              <p
+                className="mt-3 max-w-xl mx-auto leading-relaxed italic"
+                style={{ color: "rgba(252,250,247,0.7)" }}
+              >
                 If there's something we haven't covered, we'd be glad to walk
                 you through it — and show you Hobson on your own documents.
               </p>
-              <div className="mt-7">
+              <div className="mt-8">
                 <Button
                   asChild
                   size="lg"
-                  className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-8"
+                  className="rounded-full px-8 font-semibold"
+                  style={{ backgroundColor: "#B4914F", color: "#2D2D2D" }}
                 >
-                  <a href="mailto:info@hobsonschoice.ai?subject=Hobson%20enquiry">Email us</a>
+                  <a href="mailto:info@hobsonschoice.ai?subject=Hobson%20enquiry">
+                    Email us
+                  </a>
                 </Button>
               </div>
             </div>
           </div>
         </section>
       </main>
-
-      
     </div>
   );
 };
+
 
 export default LearnFaq;
