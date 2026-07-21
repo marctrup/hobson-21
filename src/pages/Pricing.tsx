@@ -372,8 +372,9 @@ const Calculators: React.FC = () => {
             <div
               style={{
                 position: "relative",
-                background: TOKENS.paper,
-                border: `1px solid ${TOKENS.hairline}`,
+                background: "#F3EFFA",
+                border: "1px solid #E4DAF3",
+
                 borderRadius: 20,
                 padding: "20px 24px",
                 maxWidth: 520,
