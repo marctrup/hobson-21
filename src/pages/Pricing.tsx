@@ -24,19 +24,20 @@ const PRICING_HEADING = "See what I cost.";
 // Deep pine-ink, paper, antique brass — calm British professional-services feel.
 // ============================================================================
 const TOKENS = {
-  ink: "#2A1758", // deep brand purple (replaces pine-ink)
-  paper: "#FFFFFF",
-  paperSoft: "#FAF8FF",
-  brass: "#F97316", // brand-orange
-  brassLight: "#FB923C",
-  primary: "#8B5CF6", // brand primary purple
-  primaryLight: "#A78BFA",
+  ink: "#2D2D2D", // deep charcoal (matches /learn)
+  paper: "#FCFAF7", // warm cream paper
+  paperSoft: "#FFFFFF",
+  brass: "#B4914F", // antique brass
+  brassLight: "#C9A868",
+  primary: "#B4914F",
+  primaryLight: "#C9A868",
   card: "#FFFFFF",
-  inkSoft: "rgba(42,23,88,0.85)",
-  inkMuted: "rgba(42,23,88,0.75)",
-  hairline: "rgba(42,23,88,0.12)",
-  hairlineDark: "rgba(251,146,60,0.28)",
+  inkSoft: "rgba(45,45,45,0.82)",
+  inkMuted: "rgba(45,45,45,0.65)",
+  hairline: "#EDE7DA",
+  hairlineDark: "rgba(201,168,104,0.4)",
 };
+
 
 const FONTS = {
   serif: "'Fraunces', 'Cormorant Garamond', Georgia, serif",
