@@ -130,18 +130,9 @@ const AppContent = () => {
               <Route path="/data-protection" element={<DataProtection />} />
               <Route path="/breach-protocol" element={<BreachProtocol />} />
               <Route path="/refund-policy" element={<RefundPolicy />} />
-              <Route path="/learn" element={<Navigate to="/learn/smart-navigation" replace />} />
-              <Route path="/learn/introduction" element={<Navigate to="/learn/faq" replace />} />
-              <Route path="/learn/getting-started" element={<Navigate to="/learn/faq" replace />} />
-              <Route path="/learn/Positioning-Statement" element={<Navigate to="/learn/faq" replace />} />
-              <Route path="/learn/positioning-statement" element={<Navigate to="/learn/faq" replace />} />
-              <Route path="/learn/integrations" element={<Navigate to="/learn/available-integrations" replace />} />
-              <Route path="/learn/setup-guide" element={<Navigate to="/learn/faq" replace />} />
-              <Route path="/learn/api-reference" element={<Navigate to="/learn/faq" replace />} />
-              <Route path="/learn/troubleshooting" element={<Navigate to="/learn/faq" replace />} />
-              <Route path="/learn/fundamentals" element={<Navigate to="/learn/prompt-engineering" replace />} />
-              <Route path="/learn/plans-credits" element={<Navigate to="/learn/faq" replace />} />
-              <Route path="/learn/:section" element={<Learn />} />
+              <Route path="/learn" element={<Learn />} />
+              <Route path="/learn/*" element={<Navigate to="/learn" replace />} />
+
               <Route path="/status" element={<Status />} />
               <Route path="/announcements" element={<Announcements />} />
               <Route path="/announcement/:slug" element={<AnnouncementPost />} />
