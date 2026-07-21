@@ -80,8 +80,8 @@ Hobson proposes; you decide; the record only changes when you confirm it. When i
 Two things follow. Nothing Hobson proposes is taken on trust: every claim traces back to a document and a rule it can prove. And Hobson always separates "nothing to report" from "I couldn't check" — a green light means it looked and you're clear, never that it quietly gave up.`,
       },
       {
-        q: "How is Hobson built — what actually does the work?",
-        a: `Everything Hobson does falls into three kinds of work, and knowing which is which tells you exactly what to trust it with.
+        q: "How does Hobson know when to follow a fixed rule and when to use judgment?",
+        a: `It comes down to three kinds of work — and Hobson treats each differently, which is exactly what tells you when it's following a fixed rule and when it's using judgment.
 
 **Answering** applies fixed rules to your recorded documents. Ask the same thing tomorrow with nothing changed and the answer is identical — every time. It never guesses, and if something it needs is missing, it says so and stops.
 
@@ -99,10 +99,10 @@ The first two are reliable and predictable; the third is perceptive and proactiv
     name: "Your portfolio, organised",
     items: [
       {
-        q: "How does Hobson organise my properties — and can I ask at any level?",
-        a: `Around one thing: the **Unit** — a single occupiable space, whether that's an office suite, a shop, a warehouse, a flat or a parking space. Everything legal and tenancy-related lives at Unit level, because that's where it actually applies.
+        q: "Why does Hobson organise everything around the unit?",
+        a: `Because the unit is where the truth of a tenancy actually lives. A **Unit** — a single occupiable space, whether an office suite, a shop, a warehouse, a flat or a parking space — is what every lease, tenant and obligation attaches to, so it's what Hobson builds everything around.
 
-A **Property** groups related units — the floors of a building, the shops in a parade, or even units held under one lease across different addresses. A **Portfolio** sits at the top and gives the estate-wide view. A Property is *optional*: a single house sits directly in your portfolio with no building layer, while a multi-let tower groups dozens of units under one Property. Same underlying model — so a landlord with one flat and a fund with a thousand units both work exactly the same way.
+Above it, a **Property** groups related units — the floors of a building, the shops in a parade, or even units held under one lease across different addresses — and a **Portfolio** sits at the top with the estate-wide view. A Property is *optional*: a single house sits directly in your portfolio with no building layer, while a multi-let tower groups dozens of units under one Property. Same underlying model — so a landlord with one flat and a fund with a thousand units both work exactly the same way.
 
 And you can ask at whichever level you need. Ask about a **single unit** and you get the detail — who the tenant is, what rent is payable, when the lease expires, whether there's a break clause or deposit. Ask about a **Property** and you get the building's picture — its rent roll, which units are vacant, which leases expire. Ask across the whole **Portfolio** and you get the estate view — total contracted rent, occupancy rate, which reviews are due this year.
 
@@ -114,7 +114,7 @@ Because these are all the same information seen at different heights, the portfo
     name: "Understanding your documents",
     items: [
       {
-        q: "What documents can Hobson work with, and how does it make sense of them?",
+        q: "How does Hobson make sense of all the documents on a property?",
         a: `Hobson sorts every document into one of three kinds, because each plays a different role in the story of a property.
 
 There's the document that **creates a tenancy** — the lease, licence or tenancy agreement. There are the documents that **change that tenancy over time** — deeds of variation, assignments, licences to alter, rent reviews, notices — each linked back to the lease it belongs to. And there are documents **about the building itself** — EPCs, fire risk assessments, valuations, certificates — which stand on their own.
@@ -122,10 +122,8 @@ There's the document that **creates a tenancy** — the lease, licence or tenanc
 Knowing which kind a document is means Hobson knows what to do with it: build it into the story of a tenancy, or file it against the building. You don't have to tell it — it works this out as each document arrives.`,
       },
       {
-        q: "My leases get varied, assigned and re-negotiated over the years. Does Hobson keep up?",
-        a: `Yes — this is exactly what it's built for.
-
-Hobson doesn't treat your documents as a flat pile where the newest wins. It reads the original lease, then applies every later document that changed it — in the order they happened — to work out where things stand today. A rent set at £50,000 and later raised to £60,000 by a deed of variation shows as £60,000, with both documents cited.
+        q: "After years of variations and assignments, how does Hobson know where a lease actually stands?",
+        a: `By reading the whole story, not just the latest page. Hobson takes the original lease, then applies every later document that changed it — in the order they happened — to work out where things stand today. A rent set at £50,000 and later raised to £60,000 by a deed of variation shows as £60,000, with both documents cited.
 
 Two things make this trustworthy over a long tenancy. **Nothing is ever thrown away** — a replaced position becomes history, kept permanently, so you can always ask what was true at an earlier date. And **every related document is always taken into account**, so the answer is never just what one document says.
 
@@ -147,8 +145,8 @@ So Hobson never treats a date passing as an event in its own right. It reports a
 That's the philosophy in a line: Hobson tells you what the documents establish and what they don't — and never guesses at the difference.`,
       },
       {
-        q: "A lease has several different kinds of money in it. Does Hobson keep them straight?",
-        a: `Yes — and this matters more than it sounds, because treating one kind of money as another is a classic source of wrong numbers.
+        q: "How does Hobson think about the different kinds of money in a lease?",
+        a: `It treats them as genuinely different things — because treating one kind of money as another is a classic source of wrong numbers.
 
 Hobson separates four things that are easy to confuse: **the price of being there** (rent or a licence fee, recurring); **reimbursing the landlord's costs** (service charge, insurance — kept apart from rent); **one-off deal money** (a premium, a fit-out contribution, a surrender payment); and **money that may never be paid** (overage, clawback, profit share — due only if a future event happens).
 
@@ -236,8 +234,8 @@ const LearnFaq = () => {
               className="mt-5 text-base sm:text-lg leading-relaxed max-w-xl mx-auto"
               style={{ color: "#6B6B6B" }}
             >
-              Everything you might want to know about how Hobson understands
-              your property documents — and why its answers can be trusted.
+              How Hobson thinks about your property documents — and why you
+              can trust the answers it gives.
             </p>
           </div>
 
