@@ -372,16 +372,16 @@ const Calculators: React.FC = () => {
             <div
               style={{
                 position: "relative",
-                background: "#6D28D9",
-                border: "1px solid #5B21B6",
+                background: "#2D2D2D",
+                border: "1px solid #1F1F1F",
                 borderRadius: 20,
                 padding: "20px 24px",
                 maxWidth: 520,
                 fontFamily: FONTS.serif,
                 fontSize: "clamp(1.05rem, 1.6vw, 1.25rem)",
                 lineHeight: 1.5,
-                color: "#FFFFFF",
-                boxShadow: "0 20px 60px -30px rgba(124,58,237,0.55)",
+                color: "#FCFAF7",
+                boxShadow: "0 20px 60px -30px rgba(45,45,45,0.5)",
               }}
               className="hp-hero-bubble"
             >
