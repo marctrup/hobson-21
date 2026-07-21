@@ -345,7 +345,7 @@ const Learn: React.FC = () => {
                 size="lg"
                 className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-8"
               >
-                <Link to="/contact">Book a demo</Link>
+                <Link to="/contact">Email us</Link>
               </Button>
             </div>
           </div>
