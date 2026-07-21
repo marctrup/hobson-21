@@ -101,6 +101,9 @@ export const Homepage = () => {
                 <Link to="/blog" className="text-base text-muted-foreground hover:text-foreground transition-colors">
                     {content.header.nav.blog}
                   </Link>
+                <Link to="/learn" className="text-base text-muted-foreground hover:text-foreground transition-colors">
+                  Learn
+                </Link>
                 <Link to="/contact" className="text-base text-muted-foreground hover:text-foreground transition-colors">
                   Contact
                 </Link>
