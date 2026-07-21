@@ -99,10 +99,10 @@ The first two are reliable and predictable; the third is perceptive and proactiv
     name: "Your portfolio, organised",
     items: [
       {
-        q: "How does Hobson organise my properties — and can I ask at any level?",
-        a: `Around one thing: the **Unit** — a single occupiable space, whether that's an office suite, a shop, a warehouse, a flat or a parking space. Everything legal and tenancy-related lives at Unit level, because that's where it actually applies.
+        q: "Why does Hobson organise everything around the unit?",
+        a: `Because the unit is where the truth of a tenancy actually lives. A **Unit** — a single occupiable space, whether an office suite, a shop, a warehouse, a flat or a parking space — is what every lease, tenant and obligation attaches to, so it's what Hobson builds everything around.
 
-A **Property** groups related units — the floors of a building, the shops in a parade, or even units held under one lease across different addresses. A **Portfolio** sits at the top and gives the estate-wide view. A Property is *optional*: a single house sits directly in your portfolio with no building layer, while a multi-let tower groups dozens of units under one Property. Same underlying model — so a landlord with one flat and a fund with a thousand units both work exactly the same way.
+Above it, a **Property** groups related units — the floors of a building, the shops in a parade, or even units held under one lease across different addresses — and a **Portfolio** sits at the top with the estate-wide view. A Property is *optional*: a single house sits directly in your portfolio with no building layer, while a multi-let tower groups dozens of units under one Property. Same underlying model — so a landlord with one flat and a fund with a thousand units both work exactly the same way.
 
 And you can ask at whichever level you need. Ask about a **single unit** and you get the detail — who the tenant is, what rent is payable, when the lease expires, whether there's a break clause or deposit. Ask about a **Property** and you get the building's picture — its rent roll, which units are vacant, which leases expire. Ask across the whole **Portfolio** and you get the estate view — total contracted rent, occupancy rate, which reviews are due this year.
 
