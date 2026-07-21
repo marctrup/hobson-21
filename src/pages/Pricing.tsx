@@ -778,7 +778,7 @@ export default function Pricing() {
         <section
           style={{
             padding: "clamp(80px, 11vw, 150px) 24px",
-            background: "#F4F4F6",
+            background: "#F1EEE7",
             borderTop: `1px solid ${TOKENS.hairline}`,
           }}
         >
