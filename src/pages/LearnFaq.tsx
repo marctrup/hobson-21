@@ -236,8 +236,8 @@ const LearnFaq = () => {
               className="mt-5 text-base sm:text-lg leading-relaxed max-w-xl mx-auto"
               style={{ color: "#6B6B6B" }}
             >
-              Everything you might want to know about how Hobson understands
-              your property documents — and why its answers can be trusted.
+              How Hobson thinks about your property documents — and why you
+              can trust the answers it gives.
             </p>
           </div>
 
