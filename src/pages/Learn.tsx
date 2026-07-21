@@ -210,21 +210,6 @@ const Learn = () => {
               your property documents — and why its answers can be trusted.
             </p>
 
-            {/* Search */}
-            <div className="mt-8 relative max-w-xl mx-auto">
-              <Search
-                className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none"
-                aria-hidden
-              />
-              <Input
-                type="search"
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                placeholder="Search questions and answers…"
-                aria-label="Search FAQs"
-                className="pl-11 h-12 rounded-full bg-background border-border focus-visible:ring-primary"
-              />
-            </div>
           </div>
 
           {/* Sticky category chips */}
