@@ -346,4 +346,4 @@ const LearnFaq = () => {
   );
 };
 
-export default Learn;
+export default LearnFaq;
