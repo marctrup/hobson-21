@@ -222,7 +222,7 @@ const Learn = () => {
         </section>
       </main>
 
-      <Footer />
+      <HomepageFooter />
     </div>
   );
 };
