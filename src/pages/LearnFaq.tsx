@@ -114,7 +114,7 @@ Because these are all the same information seen at different heights, the portfo
     name: "Understanding your documents",
     items: [
       {
-        q: "What documents can Hobson work with, and how does it make sense of them?",
+        q: "How does Hobson make sense of all the documents on a property?",
         a: `Hobson sorts every document into one of three kinds, because each plays a different role in the story of a property.
 
 There's the document that **creates a tenancy** — the lease, licence or tenancy agreement. There are the documents that **change that tenancy over time** — deeds of variation, assignments, licences to alter, rent reviews, notices — each linked back to the lease it belongs to. And there are documents **about the building itself** — EPCs, fire risk assessments, valuations, certificates — which stand on their own.
