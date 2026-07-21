@@ -30,6 +30,50 @@ const CATEGORIES = [
   "Leases, money & the fine print",
 ] as const;
 
+// Accent colour per category — pulled from the existing brand palette
+// (primary purple + accent-amber / accent-teal / accent-rose tokens).
+const CATEGORY_STYLES: Record<
+  string,
+  { dot: string; text: string; chipActive: string; ring: string; tint: string }
+> = {
+  "Hobson vs. other AI": {
+    dot: "bg-primary",
+    text: "text-primary",
+    chipActive: "bg-primary text-primary-foreground border-primary",
+    ring: "before:bg-primary",
+    tint: "from-primary/[0.06]",
+  },
+  "Trust, accuracy & control": {
+    dot: "bg-accent-teal",
+    text: "text-accent-teal",
+    chipActive: "bg-accent-teal text-accent-teal-foreground border-accent-teal",
+    ring: "before:bg-accent-teal",
+    tint: "from-accent-teal/[0.06]",
+  },
+  "Your portfolio, organised": {
+    dot: "bg-accent-amber",
+    text: "text-accent-amber",
+    chipActive: "bg-accent-amber text-accent-amber-foreground border-accent-amber",
+    ring: "before:bg-accent-amber",
+    tint: "from-accent-amber/[0.08]",
+  },
+  "Understanding your documents": {
+    dot: "bg-brand-orange",
+    text: "text-brand-orange",
+    chipActive: "bg-brand-orange text-brand-orange-foreground border-brand-orange",
+    ring: "before:bg-brand-orange",
+    tint: "from-brand-orange/[0.06]",
+  },
+  "Leases, money & the fine print": {
+    dot: "bg-accent-rose",
+    text: "text-accent-rose",
+    chipActive: "bg-accent-rose text-accent-rose-foreground border-accent-rose",
+    ring: "before:bg-accent-rose",
+    tint: "from-accent-rose/[0.06]",
+  },
+};
+
+
 const FAQS: Faq[] = [
   {
     id: "vs-chatgpt",
