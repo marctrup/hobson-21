@@ -1,55 +1,73 @@
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-import { ArrowRight, HelpCircle } from "lucide-react";
+import {
+  ArrowRight,
+  MessageCircleQuestion,
+  TrendingUp,
+  PlayCircle,
+  type LucideIcon,
+} from "lucide-react";
 import { GlobalHeader } from "@/components/GlobalHeader";
-import { Button } from "@/components/ui/button";
+import { HomepageFooter } from "@/components/homepage/HomepageFooter";
+import owlMascot from "@/assets/owl-mascot.png";
 
 type HubCard = {
   to?: string;
-  href?: string;
-  eyebrow: string;
+  icon: LucideIcon;
   title: string;
   description: string;
   cta: string;
+  status: string;
   available: boolean;
 };
 
 const CARDS: HubCard[] = [
   {
     to: "/learn/faq",
-    eyebrow: "Frequently asked questions",
-    title: "Questions, answered.",
+    icon: MessageCircleQuestion,
+    title: "Frequently asked questions",
     description:
-      "How Hobson understands your property documents, how accuracy is tested, and how it stays in your control.",
+      "Straight answers on how Hobson works, how its accuracy is tested, and how it stays in your control.",
     cta: "Read the FAQ",
+    status: "Available now",
     available: true,
   },
   {
-    eyebrow: "Coming soon",
-    title: "Glossary",
+    icon: TrendingUp,
+    title: "Case studies",
     description:
-      "Plain-English definitions of the property, lease and compliance terms Hobson works with every day.",
+      "Real property teams on what changed when Hobson took on their documents — the time saved and the risks caught.",
     cta: "In preparation",
+    status: "Coming soon",
     available: false,
   },
   {
-    eyebrow: "Coming soon",
-    title: "Guides",
+    icon: PlayCircle,
+    title: "Tutorials",
     description:
-      "Short walkthroughs — rent reviews, break clauses, service charge — showing how Hobson helps you handle each one.",
+      "Short video walkthroughs showing Hobson in action — from uploading a lease to getting a cited answer.",
     cta: "In preparation",
+    status: "Coming soon",
     available: false,
   },
 ];
 
+const BRASS = "#B4914F";
+const INK = "#2D2D2D";
+const MUTED = "#6B6B6B";
+const LAVENDER_BG = "#F3F0FF";
+const LAVENDER_BORDER = "#E8E4F0";
+const PAPER = "#FCFAF7";
+const RULE = "#EDE7DA";
+
 const Learn = () => {
   return (
-    <div className="min-h-screen bg-background flex flex-col">
+    <div className="min-h-screen flex flex-col" style={{ backgroundColor: PAPER }}>
       <Helmet>
-        <title>Learn about Hobson AI — FAQ, guides and glossary</title>
+        <title>Learn about Hobson AI — FAQ, case studies and tutorials</title>
         <meta
           name="description"
-          content="Learn how Hobson works — start with the FAQ, and find guides and a glossary of property terms as they're published."
+          content="Get to know Hobson — straight answers, real customer stories and short walkthroughs showing how it reads your property documents and helps you act on them."
         />
         <link rel="canonical" href="https://hobson-21.lovable.app/learn" />
         <meta property="og:title" content="Learn about Hobson AI" />
@@ -60,52 +78,122 @@ const Learn = () => {
 
       <main className="flex-1">
         {/* Hero */}
-        <section className="border-b border-border/60 bg-muted/30">
-          <div className="mx-auto max-w-3xl px-6 pt-16 pb-14 text-center">
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary">
+        <section>
+          <div className="mx-auto max-w-3xl px-6 pt-20 pb-12 text-center">
+            <div
+              className="inline-flex items-center justify-center w-16 h-16 mb-7 rounded-full"
+              style={{ backgroundColor: LAVENDER_BG, border: `1px solid ${LAVENDER_BORDER}` }}
+            >
+              <img src={owlMascot} alt="" className="w-10 h-10" />
+            </div>
+            <p
+              className="text-[11px] font-semibold uppercase tracking-[0.24em]"
+              style={{ color: BRASS }}
+            >
               Learn
             </p>
-            <h1 className="mt-3 font-serif text-4xl sm:text-5xl md:text-6xl font-normal tracking-tight text-foreground">
-              Understand how Hobson thinks.
+            <h1
+              className="mt-4 font-serif text-4xl sm:text-5xl md:text-6xl font-normal tracking-tight"
+              style={{ color: INK }}
+            >
+              Get to know Hobson.
             </h1>
-            <p className="mt-5 text-base sm:text-lg text-muted-foreground leading-relaxed">
-              A growing library of answers, guides and definitions — so you can
-              see exactly how Hobson reads your documents, keeps its answers
-              accurate, and stays in your control.
+            <p
+              className="mt-5 text-base sm:text-lg leading-relaxed max-w-xl mx-auto"
+              style={{ color: MUTED }}
+            >
+              Straight answers, real customer stories, and short walkthroughs —
+              everything you need to see how Hobson reads your property
+              documents and helps you act on them.
             </p>
+            <div
+              className="mx-auto mt-10 h-px w-24"
+              style={{ backgroundColor: RULE }}
+            />
           </div>
         </section>
 
         {/* Cards */}
-        <section className="mx-auto max-w-5xl px-6 py-16">
+        <section className="mx-auto max-w-6xl px-6 pb-20">
           <div className="grid gap-6 md:grid-cols-3">
             {CARDS.map((card) => {
+              const Icon = card.icon;
+
+              const statusPill = card.available ? (
+                <span
+                  className="inline-flex items-center rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em]"
+                  style={{ backgroundColor: LAVENDER_BG, color: BRASS, border: `1px solid ${LAVENDER_BORDER}` }}
+                >
+                  {card.status}
+                </span>
+              ) : (
+                <span
+                  className="inline-flex items-center rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em]"
+                  style={{ backgroundColor: "#EFEFEF", color: "#8A8A8A", border: "1px dashed #C9C9C9" }}
+                >
+                  {card.status}
+                </span>
+              );
+
               const inner = (
                 <div
                   className={[
-                    "h-full rounded-2xl border border-border bg-card p-6 sm:p-7 shadow-sm transition-all",
+                    "group h-full rounded-[20px] p-7 sm:p-8 transition-all duration-300 flex flex-col",
                     card.available
-                      ? "hover:shadow-md hover:border-primary/40 hover:-translate-y-0.5"
-                      : "opacity-70",
+                      ? "bg-white shadow-sm hover:shadow-[0_12px_28px_-10px_rgba(180,145,79,0.28)] hover:-translate-y-0.5"
+                      : "",
                   ].join(" ")}
+                  style={
+                    card.available
+                      ? { border: `1px solid ${LAVENDER_BORDER}` }
+                      : { backgroundColor: "#F5F3EF", border: "1px dashed #D6D2C8" }
+                  }
                 >
-                  <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary">
-                    {card.eyebrow}
-                  </p>
-                  <h2 className="mt-3 font-serif text-2xl font-normal text-foreground">
+                  <div className="flex items-start justify-between gap-3">
+                    <div
+                      className="inline-flex items-center justify-center w-12 h-12 rounded-xl"
+                      style={
+                        card.available
+                          ? { backgroundColor: LAVENDER_BG, border: `1px solid ${LAVENDER_BORDER}` }
+                          : { backgroundColor: "#ECEAE5", border: "1px dashed #D6D2C8" }
+                      }
+                    >
+                      <Icon
+                        className="h-5 w-5"
+                        style={{ color: card.available ? BRASS : "#A5A5A5" }}
+                      />
+                    </div>
+                    {statusPill}
+                  </div>
+
+                  <h2
+                    className="mt-6 font-serif text-2xl font-normal tracking-tight"
+                    style={{ color: card.available ? INK : "#8A8A8A" }}
+                  >
                     {card.title}
                   </h2>
-                  <p className="mt-3 text-[15px] leading-relaxed text-muted-foreground">
+                  <p
+                    className="mt-3 text-[15px] leading-relaxed"
+                    style={{ color: card.available ? MUTED : "#A5A5A5" }}
+                  >
                     {card.description}
                   </p>
+
+                  <div className="flex-1" />
+
                   <div
-                    className={[
-                      "mt-6 inline-flex items-center gap-2 text-sm font-medium",
-                      card.available ? "text-primary" : "text-muted-foreground",
-                    ].join(" ")}
+                    className="mt-8 pt-5 flex items-center justify-between text-sm font-medium"
+                    style={{ borderTop: `1px solid ${card.available ? RULE : "#E4E1DA"}` }}
                   >
-                    {card.cta}
-                    {card.available && <ArrowRight className="h-4 w-4" />}
+                    <span style={{ color: card.available ? BRASS : "#A5A5A5" }}>
+                      {card.cta}
+                    </span>
+                    {card.available && (
+                      <ArrowRight
+                        className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"
+                        style={{ color: BRASS }}
+                      />
+                    )}
                   </div>
                 </div>
               );
@@ -114,46 +202,27 @@ const Learn = () => {
                 <Link
                   key={card.title}
                   to={card.to}
-                  className="block focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-2xl"
+                  aria-label={card.title}
+                  className="block rounded-[20px] focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+                  style={{ ["--tw-ring-color" as any]: BRASS }}
                 >
                   {inner}
                 </Link>
               ) : (
-                <div key={card.title}>{inner}</div>
+                <div
+                  key={card.title}
+                  aria-disabled="true"
+                  className="block rounded-[20px]"
+                >
+                  {inner}
+                </div>
               );
             })}
           </div>
         </section>
-
-        {/* CTA */}
-        <section className="px-6 pb-20">
-          <div className="mx-auto max-w-3xl">
-            <div className="rounded-2xl bg-foreground text-background p-8 sm:p-12 text-center shadow-lg">
-              <div className="inline-flex items-center justify-center h-12 w-12 rounded-full bg-background/10 mb-4">
-                <HelpCircle className="h-6 w-6" />
-              </div>
-              <h3 className="font-serif text-2xl sm:text-3xl font-normal">
-                Can't find what you're looking for?
-              </h3>
-              <p className="mt-3 text-background/70 max-w-xl mx-auto leading-relaxed">
-                We'd be glad to walk you through it — and show you Hobson on
-                your own documents.
-              </p>
-              <div className="mt-7">
-                <Button
-                  asChild
-                  size="lg"
-                  className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-8"
-                >
-                  <a href="mailto:info@hobsonschoice.ai?subject=Hobson%20enquiry">
-                    Email us
-                  </a>
-                </Button>
-              </div>
-            </div>
-          </div>
-        </section>
       </main>
+
+      <HomepageFooter />
     </div>
   );
 };
