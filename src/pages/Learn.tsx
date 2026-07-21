@@ -8,7 +8,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { GlobalHeader } from "@/components/GlobalHeader";
-import { HomepageFooter } from "@/components/homepage/HomepageFooter";
+
 import owlMascot from "@/assets/owl-mascot.png";
 
 type HubCard = {
@@ -222,7 +222,6 @@ const Learn = () => {
         </section>
       </main>
 
-      <HomepageFooter />
     </div>
   );
 };
