@@ -155,14 +155,14 @@ Hobson separates four things that are easy to confuse: **the price of being ther
 Because Hobson knows which is which, it won't report a one-off premium as though it were recurring rent, or present a "might-never-happen" overage as a certain liability. Each kind is handled by its own rules, so the figures you see mean exactly what they say.`,
       },
       {
-        q: "Does Hobson just tell me the rent today, or also how it will change?",
-        a: `Both — and it deliberately keeps the two separate, because they answer different questions.
+        q: "Will Hobson ever guess a rent it can't yet work out?",
+        a: `No — and this points to a principle at the heart of how Hobson works: it reports what the documents establish, and stays honest about what they don't.
 
-The rent *figure* is what's payable right now. How that figure *gets changed over time* is another thing entirely — and a lease usually contains both. Your rent might be £2,000 a month today, but alongside it could be a five-yearly market review, an annual index-linked uplift, or a step like "doubles every fifth year."
+Your rent really has two parts — the figure payable now, and the rule that will change it later (a market review, an index-linked uplift, a fixed step). Hobson keeps them distinct, because they're different kinds of fact: one is a printed amount, the other is a mechanism for reaching a future one. It records both.
 
-Hobson captures the current amount and the rule that will move it — including whether that change is one somebody *decides* (a market review, an expert determination) or one that arrives *automatically* (an inflation index, a fixed formula). So you can see what's coming, how it's set, and when it kicks in.
+But where that mechanism hasn't yet produced a number — a review that hasn't happened, an index not yet applied — Hobson tells you the future rate isn't established, rather than quietly carrying today's figure forward. It would rather show you a known gap than a confident guess.
 
-And where a future rate isn't yet fixed, Hobson tells you it's not yet established rather than assuming it'll stay the same. It won't invent a number the documents don't support.`,
+That's the same principle you'll find everywhere in Hobson: say what's established, flag what isn't, and never fill the space with an assumption.`,
       },
     ],
   },
