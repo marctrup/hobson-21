@@ -122,10 +122,8 @@ There's the document that **creates a tenancy** — the lease, licence or tenanc
 Knowing which kind a document is means Hobson knows what to do with it: build it into the story of a tenancy, or file it against the building. You don't have to tell it — it works this out as each document arrives.`,
       },
       {
-        q: "My leases get varied, assigned and re-negotiated over the years. Does Hobson keep up?",
-        a: `Yes — this is exactly what it's built for.
-
-Hobson doesn't treat your documents as a flat pile where the newest wins. It reads the original lease, then applies every later document that changed it — in the order they happened — to work out where things stand today. A rent set at £50,000 and later raised to £60,000 by a deed of variation shows as £60,000, with both documents cited.
+        q: "After years of variations and assignments, how does Hobson know where a lease actually stands?",
+        a: `By reading the whole story, not just the latest page. Hobson takes the original lease, then applies every later document that changed it — in the order they happened — to work out where things stand today. A rent set at £50,000 and later raised to £60,000 by a deed of variation shows as £60,000, with both documents cited.
 
 Two things make this trustworthy over a long tenancy. **Nothing is ever thrown away** — a replaced position becomes history, kept permanently, so you can always ask what was true at an earlier date. And **every related document is always taken into account**, so the answer is never just what one document says.
 
