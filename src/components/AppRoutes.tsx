@@ -132,6 +132,7 @@ const AppContent = () => {
               <Route path="/breach-protocol" element={<BreachProtocol />} />
               <Route path="/refund-policy" element={<RefundPolicy />} />
               <Route path="/learn" element={<Learn />} />
+              <Route path="/learn/faq" element={<LearnFaq />} />
               <Route path="/learn/*" element={<Navigate to="/learn" replace />} />
 
               <Route path="/status" element={<Status />} />
