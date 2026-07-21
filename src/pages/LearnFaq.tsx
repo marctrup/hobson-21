@@ -36,7 +36,7 @@ In short: ChatGPT predicts a likely answer. Hobson extracts the *actual* one fro
     ],
   },
   {
-    name: "Trust, accuracy & control",
+    name: "Staying in control",
     items: [
       {
         q: "Will Hobson ever act on its own? How much control do I keep?",
@@ -58,6 +58,11 @@ Two things follow. Nothing Hobson proposes is taken on trust: every claim traces
 
 The first two are reliable and predictable; the third is perceptive and proactive; and Hobson uses each for exactly what it's good at.`,
       },
+    ],
+  },
+  {
+    name: "Accuracy you can trust",
+    items: [
       {
         q: "How does Hobson stay accurate across a big portfolio without mixing units up?",
         a: `By answering your question in one exact place, rather than reaching across everything at once.
@@ -88,6 +93,7 @@ That same record becomes a growing library of test cases. Whenever we improve ho
       },
     ],
   },
+
   {
     name: "Your portfolio, organised",
     items: [
