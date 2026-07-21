@@ -145,8 +145,8 @@ So Hobson never treats a date passing as an event in its own right. It reports a
 That's the philosophy in a line: Hobson tells you what the documents establish and what they don't — and never guesses at the difference.`,
       },
       {
-        q: "A lease has several different kinds of money in it. Does Hobson keep them straight?",
-        a: `Yes — and this matters more than it sounds, because treating one kind of money as another is a classic source of wrong numbers.
+        q: "How does Hobson think about the different kinds of money in a lease?",
+        a: `It treats them as genuinely different things — because treating one kind of money as another is a classic source of wrong numbers.
 
 Hobson separates four things that are easy to confuse: **the price of being there** (rent or a licence fee, recurring); **reimbursing the landlord's costs** (service charge, insurance — kept apart from rent); **one-off deal money** (a premium, a fit-out contribution, a surrender payment); and **money that may never be paid** (overage, clawback, profit share — due only if a future event happens).
 
