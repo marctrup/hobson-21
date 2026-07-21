@@ -36,31 +36,6 @@ In short: ChatGPT predicts a likely answer. Hobson extracts the *actual* one fro
     ],
   },
   {
-    name: "Staying in control",
-    items: [
-      {
-        q: "Will Hobson ever act on its own? How much control do I keep?",
-        a: `Complete control. Hobson is built so that it *cannot* take an action you haven't approved — not as a rule it's asked to follow, but as a hard limit in how it's made.
-
-Hobson proposes; you decide; the record only changes when you confirm it. When it spots a dangerous defect and says "tell them today," it prepares the message — but the send button is yours. It doesn't *choose* not to serve a notice on its own; it's simply never given the ability to. An instruction can be overridden in a moment that feels urgent — a limit built into how it works can't.
-
-Two things follow. Nothing Hobson proposes is taken on trust: every claim traces back to a document and a rule it can prove. And Hobson always separates "nothing to report" from "I couldn't check" — a green light means it looked and you're clear, never that it quietly gave up.`,
-      },
-      {
-        q: "How is Hobson built — what actually does the work?",
-        a: `Everything Hobson does falls into three kinds of work, and knowing which is which tells you exactly what to trust it with.
-
-**Answering** applies fixed rules to your recorded documents. Ask the same thing tomorrow with nothing changed and the answer is identical — every time. It never guesses, and if something it needs is missing, it says so and stops.
-
-**Recording** changes the record — and only ever after a person decides. It never erases: the old position is kept, bounded by date, so you can always ask what was true at an earlier point and get a real answer.
-
-**Noticing and proposing** is where Hobson behaves like a co-worker — researching what the law requires, spotting what's missing, judging which few things out of ninety actually matter, and recommending what to do next.
-
-The first two are reliable and predictable; the third is perceptive and proactive; and Hobson uses each for exactly what it's good at.`,
-      },
-    ],
-  },
-  {
     name: "Accuracy you can trust",
     items: [
       {
@@ -93,6 +68,32 @@ That same record becomes a growing library of test cases. Whenever we improve ho
       },
     ],
   },
+  {
+    name: "Staying in control",
+    items: [
+      {
+        q: "Will Hobson ever act on its own? How much control do I keep?",
+        a: `Complete control. Hobson is built so that it *cannot* take an action you haven't approved — not as a rule it's asked to follow, but as a hard limit in how it's made.
+
+Hobson proposes; you decide; the record only changes when you confirm it. When it spots a dangerous defect and says "tell them today," it prepares the message — but the send button is yours. It doesn't *choose* not to serve a notice on its own; it's simply never given the ability to. An instruction can be overridden in a moment that feels urgent — a limit built into how it works can't.
+
+Two things follow. Nothing Hobson proposes is taken on trust: every claim traces back to a document and a rule it can prove. And Hobson always separates "nothing to report" from "I couldn't check" — a green light means it looked and you're clear, never that it quietly gave up.`,
+      },
+      {
+        q: "How is Hobson built — what actually does the work?",
+        a: `Everything Hobson does falls into three kinds of work, and knowing which is which tells you exactly what to trust it with.
+
+**Answering** applies fixed rules to your recorded documents. Ask the same thing tomorrow with nothing changed and the answer is identical — every time. It never guesses, and if something it needs is missing, it says so and stops.
+
+**Recording** changes the record — and only ever after a person decides. It never erases: the old position is kept, bounded by date, so you can always ask what was true at an earlier point and get a real answer.
+
+**Noticing and proposing** is where Hobson behaves like a co-worker — researching what the law requires, spotting what's missing, judging which few things out of ninety actually matter, and recommending what to do next.
+
+The first two are reliable and predictable; the third is perceptive and proactive; and Hobson uses each for exactly what it's good at.`,
+      },
+    ],
+  },
+
 
   {
     name: "Your portfolio, organised",
