@@ -8,7 +8,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { GlobalHeader } from "@/components/GlobalHeader";
-import Footer from "@/components/Footer";
+import { HomepageFooter } from "@/components/homepage/HomepageFooter";
 import owlMascot from "@/assets/owl-mascot.png";
 
 type HubCard = {
