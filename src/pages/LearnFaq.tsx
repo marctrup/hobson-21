@@ -137,22 +137,14 @@ That's the difference between a Hobson answer and reading the lease yourself: th
     name: "Leases, money & the fine print",
     items: [
       {
-        q: "My lease has passed its end date — does Hobson treat the tenancy as finished?",
-        a: `No — and this is deliberate, because assuming it would be dangerous.
+        q: "When a lease reaches its end date, does Hobson assume the tenancy is over?",
+        a: `No — and that reflects a principle that runs through everything Hobson does: documents record what should happen; only real events record what did.
 
-A lease's end date marks when the *contractual term* runs out. It does not prove the tenancy has ended, that the tenant has left, or that the rent has stopped. Tenants routinely stay on after a term expires — holding over, continuing under statutory protection, or by agreement. A lease can expire on paper while the tenancy is very much still live.
+A term end date is a milestone on paper. On its own it isn't proof that the tenancy has ended or that the tenant has left — those are separate things, they happen on their own dates, and often they don't happen when the term runs out at all. Tenants routinely stay on after a term expires.
 
-Hobson treats a tenancy as ended only when a real, confirmed event says so — not because a date passed, and not because a notice is sitting in the file. Notices are intentions, not confirmations: a notice to vacate doesn't mean the tenant left. Where the documents only show an intention, Hobson tells you the ending isn't confirmed rather than quietly assuming it happened.`,
-      },
-      {
-        q: "If a tenant's lease has run out, do I still have compliance obligations on that unit?",
-        a: `Very possibly yes — and this is exactly the trap Hobson is built to keep you out of.
+So Hobson never treats a date passing as an event in its own right. It reports a tenancy as ended, or a unit as empty, only when something actually confirms it — not because the calendar moved, and not because a notice is sitting in the file (a notice records an intention, not an outcome). Where nothing confirms it, Hobson says so plainly and marks it unconfirmed, rather than quietly filling the silence with an assumption.
 
-"The term has ended" and "the tenant has gone" are two completely different facts, on two different dates, in either order. And compliance follows **occupation**, not the contract: if someone is still using the space, the gas, fire and electrical obligations are all live — no matter what the lease end date says.
-
-Ordinary systems collapse these into one: a lease expires, the unit gets quietly marked empty, and the safety duties fall off — while somebody is still inside. Hobson refuses to make that leap. It marks a unit vacant only when something confirms the tenant has actually gone, and where a move-out was expected but never confirmed, it flags it as an open question rather than a settled fact.
-
-The result: Hobson won't let a safety obligation silently disappear off an occupied unit — precisely the kind of gap that turns into a fine or a serious incident.`,
+That's the philosophy in a line: Hobson tells you what the documents establish and what they don't — and never guesses at the difference.`,
       },
       {
         q: "A lease has several different kinds of money in it. Does Hobson keep them straight?",
