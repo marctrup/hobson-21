@@ -80,8 +80,8 @@ Hobson proposes; you decide; the record only changes when you confirm it. When i
 Two things follow. Nothing Hobson proposes is taken on trust: every claim traces back to a document and a rule it can prove. And Hobson always separates "nothing to report" from "I couldn't check" — a green light means it looked and you're clear, never that it quietly gave up.`,
       },
       {
-        q: "How is Hobson built — what actually does the work?",
-        a: `Everything Hobson does falls into three kinds of work, and knowing which is which tells you exactly what to trust it with.
+        q: "How does Hobson know when to follow a fixed rule and when to use judgment?",
+        a: `It comes down to three kinds of work — and Hobson treats each differently, which is exactly what tells you when it's following a fixed rule and when it's using judgment.
 
 **Answering** applies fixed rules to your recorded documents. Ask the same thing tomorrow with nothing changed and the answer is identical — every time. It never guesses, and if something it needs is missing, it says so and stops.
 
