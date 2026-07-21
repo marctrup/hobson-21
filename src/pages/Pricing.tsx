@@ -597,9 +597,10 @@ const Calculators: React.FC = () => {
         top: 32px;
         width: 18px;
         height: 18px;
-        background: #2D2D2D;
-        border-left: 1px solid #1F1F1F;
-        border-bottom: 1px solid #1F1F1F;
+        background: #FCFAF7;
+        border-left: 1px solid #EDE7DA;
+        border-bottom: 1px solid #EDE7DA;
+
         transform: rotate(45deg);
       }
       @media (max-width: 640px) {
