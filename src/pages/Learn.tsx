@@ -58,14 +58,14 @@ Two things follow. Nothing Hobson proposes is taken on trust: every claim traces
 The first two are reliable and predictable; the third is perceptive and proactive; and Hobson uses each for exactly what it's good at.`,
       },
       {
-        q: "Does answering at the exact unit make Hobson more accurate — and less likely to make things up?",
-        a: `Yes, on both counts — and for the same reason.
+        q: "How does Hobson stay accurate across a big portfolio without mixing units up?",
+        a: `By answering your question in one exact place, rather than reaching across everything at once.
 
-Mistakes happen when there's too much lookalike material to sift through. In a property portfolio that's a real risk: the figure "£50,000" might appear in twenty different leases, and the hard part isn't finding *a* rent — it's being sure it's *this* unit's rent and not the one next door. When Hobson answers at the exact unit, that whole class of mix-up disappears. There's only one rent in the room.
+Ask "what's the rent?" across hundreds of units and there's no honest single answer — rent of *which* unit? A system could reach across the whole lot and hand you one figure anyway, but to do that it has to quietly pick a winner from hundreds of candidates. That's a guess — exactly what you don't want behind a number you're about to act on. So Hobson first works out which unit you mean, goes there, and answers from that one lease, where there's only ever one correct figure, provably from one document. And it shows you where it went, because with a big estate the real danger isn't a wrong number — it's a right number attached to the wrong unit.
 
-It also makes made-up answers far less likely. AI tends to invent things when it's uncertain and still under pressure to produce a result — and uncertainty comes from noise and too many plausible-but-wrong candidates. Narrowing to the exact unit strips the noise away.
+Working in one place also makes made-up answers far less likely. Mistakes and invented figures both thrive on noise: the amount "£50,000" might appear in twenty different leases, and an AI under pressure to answer can grab the wrong one. With only one unit's documents in play, that whole class of mix-up disappears — there's only one rent in the room.
 
-Focusing on the exact unit is only the first safeguard. On top of it, Hobson requires every figure to be backed by wording that actually contains it, reports silence as silence, and produces every calculated number in one place. Getting you to the right door makes the answer far more likely to be correct; the other checks catch anything that slips through.`,
+And that's only the first safeguard. On top of it, Hobson backs every figure with wording that actually contains it, reports silence as silence rather than guessing, and produces every calculated number in one place. Getting you to the right unit makes the answer far more likely to be correct; the other checks catch anything that slips through.`,
       },
     ],
   },
@@ -73,30 +73,14 @@ Focusing on the exact unit is only the first safeguard. On top of it, Hobson req
     name: "Your portfolio, organised",
     items: [
       {
-        q: "How does Hobson organise my properties?",
+        q: "How does Hobson organise my properties — and can I ask at any level?",
         a: `Around one thing: the **Unit** — a single occupiable space, whether that's an office suite, a shop, a warehouse, a flat or a parking space. Everything legal and tenancy-related lives at Unit level, because that's where it actually applies.
 
-A **Property** groups related units — the floors of a building, the shops in a parade, or even units held under one lease across different addresses. A **Portfolio** sits at the top and gives you the estate-wide view.
+A **Property** groups related units — the floors of a building, the shops in a parade, or even units held under one lease across different addresses. A **Portfolio** sits at the top and gives the estate-wide view. A Property is *optional*: a single house sits directly in your portfolio with no building layer, while a multi-let tower groups dozens of units under one Property. Same underlying model — so a landlord with one flat and a fund with a thousand units both work exactly the same way.
 
-Crucially, a Property is *optional*. A single house sits directly in your portfolio with no building layer at all, while a multi-let tower groups dozens of units under one Property. Same underlying model — so a landlord with one flat and a fund with a thousand units both work exactly the same way.`,
-      },
-      {
-        q: "Can I ask about my whole estate, or only one property at a time?",
-        a: `Either — because Hobson captures everything at Unit level and then rolls it up.
+And you can ask at whichever level you need. Ask about a **single unit** and you get the detail — who the tenant is, what rent is payable, when the lease expires, whether there's a break clause or deposit. Ask about a **Property** and you get the building's picture — its rent roll, which units are vacant, which leases expire. Ask across the whole **Portfolio** and you get the estate view — total contracted rent, occupancy rate, which reviews are due this year.
 
-Ask about a single unit and you get the detail: who the tenant is, what rent is payable, when the lease expires, whether there's a break clause or deposit. Ask about a Property and you get the building's picture: its rent roll, which units are vacant, which leases expire. Ask across the whole Portfolio and you get the estate view: total contracted rent, occupancy rate, which reviews are due this year.
-
-Because it's all the same information viewed at different heights, the portfolio numbers are never separately maintained figures that can drift out of date — they're built directly from the units beneath them, so the top always reconciles with the detail underneath.`,
-      },
-      {
-        q: "Why does Hobson take me to a specific unit instead of answering from wherever I am?",
-        a: `Because for most questions, *where* you're asking is half the question.
-
-Ask "what's the rent?" across a portfolio of hundreds of units and there's no honest single answer — rent of which unit? A system could reach across everything and hand you one figure anyway, but to do that it has to quietly pick a winner from hundreds of candidates. That's a guess — exactly what you don't want behind a number you're about to act on.
-
-So Hobson does the opposite. It establishes which unit you mean, goes there, and answers from that one lease — where there's only ever one correct figure, provably from one document. The move is shown, not hidden, because with a large estate the real danger isn't a wrong number — it's a right number attached to the wrong unit.
-
-And when your question genuinely belongs at portfolio level, nothing moves at all — that view is already the right place to answer.`,
+Because these are all the same information seen at different heights, the portfolio totals are never separately kept figures that can drift out of date — they're built from the units beneath them, so the headline always reconciles with the detail underneath.`,
       },
     ],
   },
@@ -302,7 +286,7 @@ const Learn = () => {
                   size="lg"
                   className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-8"
                 >
-                  <Link to="/contact">Email us</Link>
+                  <a href="mailto:info@hobsonschoice.ai?subject=Hobson%20enquiry">Email us</a>
                 </Button>
               </div>
             </div>
