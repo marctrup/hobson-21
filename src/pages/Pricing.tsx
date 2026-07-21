@@ -598,9 +598,10 @@ const Calculators: React.FC = () => {
         top: 32px;
         width: 18px;
         height: 18px;
-        background: #FCFAF7;
-        border-left: 1px solid #EDE7DA;
-        border-bottom: 1px solid #EDE7DA;
+        background: #F3EFFA;
+        border-left: 1px solid #E4DAF3;
+        border-bottom: 1px solid #E4DAF3;
+
 
         transform: rotate(45deg);
       }
