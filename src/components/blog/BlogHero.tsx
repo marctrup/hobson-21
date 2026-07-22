@@ -1,7 +1,7 @@
 export const BlogHero = () => {
   return (
     <section
-      className="blog-hero relative overflow-hidden py-2 md:py-8 pb-4 md:pb-16"
+      className="blog-hero relative overflow-hidden py-2 md:py-6 pb-2 md:pb-4"
       style={{ background: '#FCFAF7' }}
     >
       <div
