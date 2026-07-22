@@ -33,14 +33,16 @@ const CARDS: HubCard[] = [
     available: true,
   },
   {
+    to: "/learn/case-studies",
     icon: TrendingUp,
     title: "Case studies",
     description:
       "Real property teams on what changed when Hobson took on their documents — the time saved and the risks caught.",
-    cta: "In preparation",
-    status: "Coming soon",
-    available: false,
+    cta: "Read the stories",
+    status: "Available now",
+    available: true,
   },
+
   {
     icon: PlayCircle,
     title: "Tutorials",
