@@ -1,0 +1,1 @@
+UPDATE public.blog_posts SET title = 'If God Had Used AI To Write The Commandments, Moses Would Have Come Down With A Back Ache' WHERE id = '8c547cb5-77ec-44ec-ae45-f7ddc8d0bffc';
