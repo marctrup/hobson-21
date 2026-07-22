@@ -78,9 +78,9 @@ export const GlobalHeader = () => {
             aria-label="Toggle mobile menu"
           >
             {isMobileMenuOpen ? (
-              <X className="h-6 w-6 text-purple-500" strokeWidth={1.5} />
+              <X className="h-6 w-6" style={{ color: "#2D2D2D" }} strokeWidth={1.5} />
             ) : (
-              <Menu className="h-6 w-6 text-purple-500" strokeWidth={1.5} />
+              <Menu className="h-6 w-6" style={{ color: "#2D2D2D" }} strokeWidth={1.5} />
             )}
           </Button>
         </div>
