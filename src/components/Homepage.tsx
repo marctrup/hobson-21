@@ -121,7 +121,7 @@ export const Homepage = () => {
 
               {/* Mobile Menu Button */}
               <SimpleButton variant="ghost" size="icon" className="md:hidden bg-gray-100 hover:bg-gray-200 border border-gray-200 rounded-md" onClick={toggleMobileMenu} aria-label="Toggle mobile menu">
-                {isMobileMenuOpen ? <X className="h-6 w-6 text-purple-500" strokeWidth={1.5} /> : <Menu className="h-6 w-6 text-purple-500" strokeWidth={1.5} />}
+                {isMobileMenuOpen ? <X className="h-6 w-6" style={{ color: "#2D2D2D" }} strokeWidth={1.5} /> : <Menu className="h-6 w-6" style={{ color: "#2D2D2D" }} strokeWidth={1.5} />}
               </SimpleButton>
             </div>
 
