@@ -179,12 +179,10 @@ export const Homepage = () => {
                         : highlight + " ";
                       return (
                         <>
-                          <span className="text-primary">{prefix}</span>
-                          <span className="bg-gradient-to-r from-primary via-primary/80 to-accent-teal bg-clip-text text-transparent">
-                            {lastWord}
-                          </span>
+                          <span className="text-primary">{prefix}{lastWord}</span>
                         </>
                       );
+
                     })()}
                   </h1>
                   <p className="text-muted-foreground leading-relaxed text-lg sm:text-xl">{content.hero.subtitle}</p>
