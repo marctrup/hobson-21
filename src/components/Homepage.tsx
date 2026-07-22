@@ -157,12 +157,12 @@ export const Homepage = () => {
 
         <main id="main-content" className="min-h-screen bg-background overflow-x-hidden" role="main">
           {/* Hero Section - Two Column Layout */}
-          <section className="relative pt-12 sm:pt-16 pb-4 overflow-hidden" aria-labelledby="hero-heading">
-            {/* Subtle radial glow behind the headline */}
+          <section className="relative pt-12 sm:pt-16 pb-4 overflow-hidden" aria-labelledby="hero-heading" style={{ background: "#FCFAF7" }}>
+            {/* Subtle brass glow behind the headline */}
             <div
               className="pointer-events-none absolute inset-0"
               style={{
-                background: 'radial-gradient(circle at 30% 40%, hsl(var(--primary) / 0.08) 0%, transparent 55%)',
+                background: 'radial-gradient(circle at 30% 40%, rgba(180,145,79,0.08) 0%, transparent 55%)',
               }}
             />
             <div className="container mx-auto px-4 relative">
@@ -215,19 +215,23 @@ export const Homepage = () => {
           {/* Founder CTA card */}
           <section className="py-12 sm:py-16" aria-labelledby="founder-cta-heading">
             <div className="container mx-auto px-4">
-              <div className="max-w-3xl mx-auto rounded-2xl border border-primary/15 bg-gradient-to-br from-primary/5 via-background to-background p-8 sm:p-10 shadow-sm">
+              <div
+                className="max-w-3xl mx-auto rounded-2xl p-8 sm:p-10 shadow-sm"
+                style={{ background: "#FCFAF7", border: "1px solid #E4D9BE" }}
+              >
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
                   <div className="space-y-2">
-                    <h2 id="founder-cta-heading" className="text-xl sm:text-2xl font-bold text-foreground">
+                    <h2 id="founder-cta-heading" className="text-xl sm:text-2xl font-bold" style={{ color: "#2D2D2D" }}>
                       Watch a co-founder's story
                     </h2>
-                    <p className="text-muted-foreground text-base leading-relaxed max-w-xl">
+                    <p className="text-base leading-relaxed max-w-xl" style={{ color: "#5a5a5a" }}>
                       Hobson was created by people who understand the day-to-day reality of property work.
                     </p>
                   </div>
                   <Link
                     to="/founder"
-                    className="inline-flex items-center justify-center gap-2 rounded-md bg-primary px-5 py-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 whitespace-nowrap shrink-0"
+                    className="inline-flex items-center justify-center gap-2 rounded-md px-5 py-3 text-sm font-medium transition-opacity hover:opacity-90 whitespace-nowrap shrink-0"
+                    style={{ background: "#2D2D2D", color: "#FCFAF7" }}
                   >
                     Watch a co-founder's story
                     <ArrowRight className="h-4 w-4" />
