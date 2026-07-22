@@ -123,17 +123,17 @@ const CaseStudyMixedUseOwner = () => {
 
           <Section title="The moment">
             {md(
-              `A commercial tenant was challenging their service charge. To hold the line, the owner had to be *precise* — the right apportionment percentage and the exact clause it came from. And that percentage wasn't the one in the lease, because a later deed of variation had changed it.
+              `A commercial tenant had started treating the service charge like a menu — paying some items, refusing others, and asking, line by line, *what exactly is this for?* One recurring charge they said they'd never understood. Another they insisted a signed settlement years earlier had already taken off. A large roof-and-structural bill they argued had only grown because the work was left too long. And they'd raised statute — a consultation requirement — and asked why there were no comparison quotes, and whether costs from the wider building were even theirs to share.
 
-So they were going back and forth between the two documents, cross-checking figure against wording, trying to be *sure enough* to quote it to the tenant and stand behind it. Nearly right is no good when someone is arguing with you.`
+Every point needed a precise, evidenced answer, pulled from the right place: this clause of the lease, that deed of variation, the earlier settlement, the trail of correspondence. Concede the wrong item and it comes straight off the bill; misread a clause and the whole position wobbles. So the owner was going back and forth across documents to answer each challenge accurately enough to hold the line — fairly, but firmly — because *nearly right* is no good when a tenant is questioning every figure.`
             )}
           </Section>
 
           <Section title="What Hobson does today">
             {md(
-              `Hobson has read the whole document set — lease and deed of variation together — and resolves them to the current position. So the owner doesn't have to work the figure out and hope it's right: they ask, and get the service charge percentage *as varied*, the clause it rests on, and both documents cited — ready to put to the tenant and defend.
+              `Hobson has read the whole document set — lease, deeds of variation, the earlier settlement, the correspondence — and resolves it to the current position. So the owner can answer each challenge from the right source: *is this item recoverable under the lease? did a variation or a past settlement change it? does this clause even apply to this unit?* — with the exact wording and the document behind every point.
 
-There's no cross-checking two documents to be sure the deed hasn't moved the figure; the answer already accounts for that. And it isn't only service charge — **current rent, key dates, repair responsibility, what a clause means** all come back the same way, with the evidence attached.`
+A disputed figure comes back *as it currently stands* — the amount as varied, the clause it rests on, both documents cited — ready to put to the tenant and defend, with no doubt about whether a later deed moved it. And it isn't only service charge: **current rent, key dates, repair responsibility, what a clause means** all come back the same way, with the evidence attached. Point by point, the owner can hold the line — fairly, and without conceding money to uncertainty.`
             )}
           </Section>
 
