@@ -1,0 +1,1 @@
+UPDATE public.blog_posts SET slug = 'if-god-had-used-ai-to-write-the-commandments' WHERE id = '8c547cb5-77ec-44ec-ae45-f7ddc8d0bffc';
