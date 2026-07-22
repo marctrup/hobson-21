@@ -77,8 +77,17 @@ So Hobson is built to distrust its own first draft. Every figure it reports has 
 
 That same record becomes a growing library of test cases. Whenever we improve how Hobson works, the new version has to prove itself against that whole library first — compared question by question with the current one — and it doesn't go live if it makes anything worse. So Hobson gets sharper over time without the "fixed one thing, broke another" problem that catches out software which isn't tested this way. Real answers your own team flags feed straight back into that test library, so the system keeps learning from live use.`,
       },
+      {
+        q: "When Hobson works out a figure, can I see how it reached it?",
+        a: `Always. Any number Hobson calculates for you — a reviewed rent, a deadline, a notice date — never arrives on its own. Its workings come with it: the figures it started from and when they applied, the rules it followed, and any cap or floor that changed the result, set out in order.
+
+So you're never asked to take a calculated number on trust. You can see exactly how it was reached and check it yourself — and if the workings can't be shown for some reason, Hobson tells you that rather than handing you a bare figure.
+
+There's one more quiet safeguard behind this: every calculation across the whole system is done in a single place, one consistent way. **One method to rely on, and one place to check** — so the same question always produces the same, showable answer.`,
+      },
     ],
   },
+
   {
     name: "Staying in control",
     items: [
