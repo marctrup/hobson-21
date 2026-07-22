@@ -211,7 +211,7 @@ const Blog = () => {
         <GlobalHeader />
         <BlogHero />
         
-        <div className="container mx-auto px-4 py-4 md:-mt-20">
+        <div className="container mx-auto px-4 py-4">
           <CategoryFilter 
             categories={categories} 
             selectedCategory={selectedCategory}
