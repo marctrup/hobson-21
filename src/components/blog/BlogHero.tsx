@@ -18,7 +18,7 @@ export const BlogHero = () => {
             <span style={{ color: '#B4914F' }}>Insights</span>
           </h1>
         </div>
-        <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto mb-6 md:mb-8">
+        <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto mb-2 md:mb-4">
           Expert perspectives on AI-powered property management, industry trends,
           and best practices for property operators, occupiers and owners.
         </p>
