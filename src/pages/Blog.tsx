@@ -163,7 +163,7 @@ const Blog = () => {
 
   return (
     <HelmetProvider>
-      <div className="min-h-screen bg-background">
+      <div className="min-h-screen" style={{ background: '#FCFAF7' }}>
         <Helmet>
           <title>Blog | Hobson AI — AI assistance to operators, occupiers and owners of real estate</title>
           <meta name="description" content="Latest insights, updates, and expert tips for property management professionals using AI-powered document intelligence and automation tools." />
