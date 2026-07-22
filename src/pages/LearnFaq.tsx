@@ -77,8 +77,17 @@ So Hobson is built to distrust its own first draft. Every figure it reports has 
 
 That same record becomes a growing library of test cases. Whenever we improve how Hobson works, the new version has to prove itself against that whole library first — compared question by question with the current one — and it doesn't go live if it makes anything worse. So Hobson gets sharper over time without the "fixed one thing, broke another" problem that catches out software which isn't tested this way. Real answers your own team flags feed straight back into that test library, so the system keeps learning from live use.`,
       },
+      {
+        q: "When Hobson works out a figure, can I see how it reached it?",
+        a: `Always. Any number Hobson calculates for you — a reviewed rent, a deadline, a notice date — never arrives on its own. Its workings come with it: the figures it started from and when they applied, the rules it followed, and any cap or floor that changed the result, set out in order.
+
+So you're never asked to take a calculated number on trust. You can see exactly how it was reached and check it yourself — and if the workings can't be shown for some reason, Hobson tells you that rather than handing you a bare figure.
+
+There's one more quiet safeguard behind this: every calculation across the whole system is done in a single place, one consistent way. **One method to rely on, and one place to check** — so the same question always produces the same, showable answer.`,
+      },
     ],
   },
+
   {
     name: "Staying in control",
     items: [
@@ -102,8 +111,17 @@ Two things follow. Nothing Hobson proposes is taken on trust: every claim traces
 
 The first two are reliable and predictable; the third is perceptive and proactive; and Hobson uses each for exactly what it's good at.`,
       },
+      {
+        q: "Will Hobson tell me things I didn't think to ask?",
+        a: `Where it genuinely helps, yes — but never to pad an answer.
+
+A good co-worker doesn't just answer the narrow question; they mention the thing you'd have wanted to know but didn't think to ask — a deadline coming up, a consequence that follows, the sensible next step. Hobson does the same, briefly and proportionately, when something like that sits alongside your answer.
+
+Two limits keep this useful rather than noisy. It only raises something that genuinely matters — it won't lecture, speculate, or invent a worry to look helpful. And it only mentions what your documents actually establish; it never manufactures a risk or a fact that isn't there. So when Hobson flags something, it's worth reading — and when your answer is simply the answer, that's all you get.`,
+      },
     ],
   },
+
 
 
   {
@@ -173,8 +191,19 @@ But where that mechanism hasn't yet produced a number — a review that hasn't h
 
 That's the same principle you'll find everywhere in Hobson: say what's established, flag what isn't, and never fill the space with an assumption.`,
       },
+      {
+        q: "What does Hobson do when my documents contradict each other?",
+        a: `It shows you both sides — it never quietly picks one.
+
+Property documents disagree more often than you'd expect: a lease sets one break date and a later deed sets another; a figure is stated one way in one place and differently in another. When that happens, Hobson doesn't hide the mess by choosing a winner, and it doesn't split the difference into a vague middle — a blurred answer is more dangerous than either clear position.
+
+Instead it sets out both positions plainly, each with the document and wording it came from, and tells you the documents conflict. Where one position is the safer one to rely on until the matter is settled, it will say so — but it leaves both facts in full view, so you can see exactly what you're deciding between.
+
+That's the difference between an answer you can act on and one that only looks tidy.`,
+      },
     ],
   },
+
 ];
 
 const LearnFaq = () => {
