@@ -32,7 +32,7 @@ export const BlogPostCard = ({ post }: BlogPostCardProps) => {
 
   return (
     <Card className="overflow-hidden hover:shadow-md transition-shadow h-full flex flex-col">
-      <Link to={href} className="bg-muted block overflow-hidden flex items-center justify-center" style={{ height: '170px' }}>
+      <Link to={href} className="block overflow-hidden flex items-center justify-center" style={{ height: '170px', background: '#FCFAF7' }}>
         {post.featured_image_url ? (
           <LazyImage
             src={post.featured_image_url}
