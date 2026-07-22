@@ -244,11 +244,11 @@ export const Homepage = () => {
           <AudienceStrip />
 
           {/* Product Screenshot — Document Q&A */}
-          <section className="py-16 sm:py-20 md:py-28 bg-gradient-to-b from-background via-muted/20 to-background overflow-hidden" aria-labelledby="screenshot-heading">
+          <section className="py-16 sm:py-20 md:py-28 overflow-hidden" aria-labelledby="screenshot-heading" style={{ background: '#FCFAF7' }}>
             <div className="container mx-auto px-4">
               <div className="max-w-6xl mx-auto">
                 <div className="max-w-3xl mx-auto text-center mb-14 md:mb-20">
-                  <span className="inline-block text-xs font-semibold tracking-[0.2em] text-primary uppercase mb-4">
+                  <span className="inline-block text-xs font-semibold tracking-[0.2em] uppercase mb-4" style={{ color: '#B4914F' }}>
                     See Hobson in action
                   </span>
                   <h2
@@ -256,7 +256,7 @@ export const Homepage = () => {
                     className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-5 tracking-tight"
                   >
                     Ask once.{" "}
-                    <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
+                    <span style={{ color: '#B4914F' }}>
                       Get the full picture.
                     </span>
                   </h2>
@@ -269,10 +269,10 @@ export const Homepage = () => {
                   {/* Screenshot — tight, polished frame */}
                   <div className="lg:col-span-6">
                     <div className="relative mx-auto max-w-md lg:max-w-none">
-                      <div className="absolute -inset-8 bg-gradient-to-tr from-primary/20 via-primary/5 to-transparent rounded-[2.5rem] blur-3xl opacity-60" />
-                      <div className="relative rounded-2xl border border-border/60 bg-background shadow-[0_30px_80px_-20px_hsl(var(--primary)/0.25)] overflow-hidden">
+                      <div className="absolute -inset-8 rounded-[2.5rem] blur-3xl opacity-60" style={{ background: 'radial-gradient(circle at 30% 30%, rgba(180,145,79,0.20), transparent 70%)' }} />
+                      <div className="relative rounded-2xl overflow-hidden" style={{ border: '1px solid #EDE7DA', background: '#FFFFFF', boxShadow: '0 30px 80px -20px rgba(45,45,45,0.20)' }}>
                         {/* faux browser chrome */}
-                        <div className="flex items-center gap-1.5 px-4 py-3 border-b border-border/50 bg-muted/40">
+                        <div className="flex items-center gap-1.5 px-4 py-3 border-b" style={{ borderColor: '#EDE7DA', background: '#FCFAF7' }}>
                           <span className="w-2.5 h-2.5 rounded-full bg-red-400/70" />
                           <span className="w-2.5 h-2.5 rounded-full bg-yellow-400/70" />
                           <span className="w-2.5 h-2.5 rounded-full bg-green-400/70" />
@@ -290,8 +290,8 @@ export const Homepage = () => {
                   {/* Feature narrative */}
                   <div className="lg:col-span-6 space-y-8">
                     <div className="flex gap-5">
-                      <div className="shrink-0 w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
-                        <FileText className="w-6 h-6 text-primary" />
+                      <div className="shrink-0 w-12 h-12 rounded-xl flex items-center justify-center" style={{ background: '#FCFAF7', border: '1px solid #EDE7DA' }}>
+                        <FileText className="w-6 h-6" style={{ color: '#B4914F' }} />
                       </div>
                       <div>
                         <h3 className="text-lg font-semibold text-foreground mb-1.5">Understanding built over time</h3>
@@ -300,8 +300,8 @@ export const Homepage = () => {
                     </div>
 
                     <div className="flex gap-5">
-                      <div className="shrink-0 w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
-                        <CheckCircle className="w-6 h-6 text-primary" />
+                      <div className="shrink-0 w-12 h-12 rounded-xl flex items-center justify-center" style={{ background: '#FCFAF7', border: '1px solid #EDE7DA' }}>
+                        <CheckCircle className="w-6 h-6" style={{ color: '#B4914F' }} />
                       </div>
                       <div>
                         <h3 className="text-lg font-semibold text-foreground mb-1.5">Evidence you can trust</h3>
@@ -310,8 +310,8 @@ export const Homepage = () => {
                     </div>
 
                     <div className="flex gap-5">
-                      <div className="shrink-0 w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
-                        <Building2 className="w-6 h-6 text-primary" />
+                      <div className="shrink-0 w-12 h-12 rounded-xl flex items-center justify-center" style={{ background: '#FCFAF7', border: '1px solid #EDE7DA' }}>
+                        <Building2 className="w-6 h-6" style={{ color: '#B4914F' }} />
                       </div>
                       <div>
                         <h3 className="text-lg font-semibold text-foreground mb-1.5">Understanding beyond the documents</h3>
@@ -323,6 +323,7 @@ export const Homepage = () => {
               </div>
             </div>
           </section>
+
 
           {/* Trust Strip */}
           <TrustStrip />
