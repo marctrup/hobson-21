@@ -167,7 +167,7 @@ export const OrchestrationDemo: React.FC = () => {
         .hobson-scroll::-webkit-scrollbar-thumb:hover { background: rgba(124,58,237,0.7); background-clip: padding-box; border: 2px solid transparent; }
       `}</style>
 
-      <div className="rounded-3xl border border-purple-100 bg-gradient-to-b from-purple-50/40 to-white shadow-[0_20px_60px_-30px_rgba(124,58,237,0.4)] flex flex-col h-[600px] max-h-[80vh] overflow-hidden">
+      <div className="rounded-3xl flex flex-col h-[600px] max-h-[80vh] overflow-hidden" style={{ border: '1px solid #EDE7DA', background: 'linear-gradient(to bottom, #FCFAF7, #FFFFFF)', boxShadow: '0 30px 80px -20px rgba(45,45,45,0.20)' }}>
         <div
           ref={scrollRef}
           onScroll={handleScroll}
