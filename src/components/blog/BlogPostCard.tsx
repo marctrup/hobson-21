@@ -31,47 +31,38 @@ export const BlogPostCard = ({ post }: BlogPostCardProps) => {
   const href = `/blog/${finalSlug}`;
 
   return (
-    <Card className="overflow-hidden hover:shadow-md transition-shadow">
-      <div className="grid md:grid-cols-4 gap-0">
-        <Link to={href} className="aspect-[3/2] bg-muted block">
-          {post.featured_image_url ? (
-            <LazyImage
-              src={post.featured_image_url}
-              alt={post.title}
-              className="w-full h-full object-contain"
-              width={243}
-              height={162}
-              sizes="(max-width: 640px) 180px, (max-width: 768px) 220px, 243px"
-            />
-          ) : (
-            <div className="w-full h-full flex items-center justify-center">
-              <Tag className="w-8 h-8 text-muted-foreground" />
-            </div>
-          )}
-        </Link>
-        <div className="md:col-span-3 p-4 flex flex-col justify-center">
-          <div className="flex items-center gap-2 mb-3 text-sm text-muted-foreground">
-            <Calendar className="w-4 h-4" />
-            {format(new Date(post.published_at), 'MMM dd')}
+    <Card className="overflow-hidden hover:shadow-md transition-shadow h-full flex flex-col">
+      <Link to={href} className="aspect-[16/10] bg-muted block overflow-hidden">
+        {post.featured_image_url ? (
+          <LazyImage
+            src={post.featured_image_url}
+            alt={post.title}
+            className="w-full h-full object-cover"
+            width={480}
+            height={300}
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          />
+        ) : (
+          <div className="w-full h-full flex items-center justify-center">
+            <Tag className="w-8 h-8 text-muted-foreground" />
           </div>
-          
-          <h3 className="text-lg font-semibold mb-1 line-clamp-2 leading-tight">
-            <Link to={href} className="hover:text-primary transition-colors">{post.title}</Link>
-          </h3>
-          <p className="text-muted-foreground mb-2 text-sm line-clamp-2">{post.excerpt}</p>
-          
-          <div className="flex items-center justify-end mb-3">
-            <Link
-              to={href}
-              className="inline-flex items-center gap-2 px-4 py-2 text-sm border border-border rounded-md hover:bg-accent hover:text-accent-foreground transition-colors"
-            >
-              Read More <ArrowRight className="w-3 h-3" />
-            </Link>
-          </div>
-          
-          {post.categories.length > 0 && (
-            <div className="flex flex-wrap gap-1 -mt-1">
-              {post.categories.slice(0, 2).map((category, i) => {
+        )}
+      </Link>
+      <div className="p-5 flex flex-col flex-1">
+        <div className="flex items-center gap-2 mb-3 text-xs text-muted-foreground">
+          <Calendar className="w-3.5 h-3.5" />
+          {format(new Date(post.published_at), 'MMM dd, yyyy')}
+        </div>
+
+        <h3 className="text-lg font-semibold mb-2 line-clamp-2 leading-snug">
+          <Link to={href} className="hover:text-primary transition-colors">{post.title}</Link>
+        </h3>
+        <p className="text-muted-foreground mb-4 text-sm line-clamp-3">{post.excerpt}</p>
+
+        <div className="mt-auto flex items-center justify-between gap-2">
+          {post.categories.length > 0 ? (
+            <div className="flex flex-wrap gap-1">
+              {post.categories.slice(0, 1).map((category, i) => {
                 const palette = [
                   "border-primary/40 text-primary",
                   "border-accent-teal/40 text-accent-teal",
@@ -86,7 +77,14 @@ export const BlogPostCard = ({ post }: BlogPostCardProps) => {
                 );
               })}
             </div>
-          )}
+          ) : <span />}
+          <Link
+            to={href}
+            className="inline-flex items-center gap-1 text-sm font-medium hover:opacity-80 transition-opacity"
+            style={{ color: '#B4914F' }}
+          >
+            Read <ArrowRight className="w-3.5 h-3.5" />
+          </Link>
         </div>
       </div>
     </Card>
