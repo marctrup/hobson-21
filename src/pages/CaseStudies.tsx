@@ -54,7 +54,7 @@ const CARDS: Card[] = [
   {
     status: "Coming soon",
     live: false,
-    categories: ["Property guardians", "High turnover"],
+    categories: ["Licensees", "High turnover"],
     headline: "The paperwork never sits still.",
     description:
       "A property-guardian business where licensees come and go constantly and document management is relentless — a portfolio that never stops moving.",
