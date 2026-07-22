@@ -16,7 +16,7 @@ const MeetTheFounder = () => {
         <link rel="canonical" href="https://hobsonschoice.ai/founder" />
       </Helmet>
 
-      <div className="min-h-screen bg-background">
+      <div className="min-h-screen" style={{ background: '#FCFAF7' }}>
         <GlobalHeader />
 
         <main id="main-content" className="overflow-x-hidden">
@@ -24,7 +24,7 @@ const MeetTheFounder = () => {
           <section className="pt-16 sm:pt-20 pb-8 sm:pb-12">
             <div className="container mx-auto px-4 max-w-3xl text-center">
               <h1 className="font-bold leading-tight text-4xl sm:text-5xl md:text-6xl text-foreground">
-                Meet a <span className="bg-gradient-to-r from-primary via-accent-teal via-accent-amber to-accent-rose bg-clip-text text-transparent">Co-Founder</span>
+                Meet a <span style={{ color: '#B4914F' }}>Co-Founder</span>
               </h1>
               <p className="mt-6 text-lg sm:text-xl text-muted-foreground leading-relaxed">
                 Hobson was built by property people who believed there had to be
@@ -40,10 +40,18 @@ const MeetTheFounder = () => {
           {/* Video */}
           <section className="pb-12 sm:pb-16">
             <div className="container mx-auto px-4">
-              <div className="max-w-[1000px] mx-auto">
+              <div className="max-w-[1000px] mx-auto relative">
                 <div
-                  className="rounded-2xl bg-card p-3 sm:p-5 border border-border"
-                  style={{ boxShadow: "0 30px 60px -30px hsl(var(--primary) / 0.35), 0 10px 30px -15px hsl(var(--primary) / 0.2)" }}
+                  className="absolute -inset-8 rounded-[2.5rem] blur-3xl opacity-60 pointer-events-none"
+                  style={{ background: 'radial-gradient(circle at 30% 30%, rgba(180,145,79,0.18), transparent 70%)' }}
+                />
+                <div
+                  className="relative rounded-2xl p-3 sm:p-5"
+                  style={{
+                    background: '#FFFFFF',
+                    border: '1px solid #EDE7DA',
+                    boxShadow: '0 30px 60px -30px rgba(45,45,45,0.30), 0 10px 30px -15px rgba(45,45,45,0.18)',
+                  }}
                 >
                   <YouTubeVideoSection
                     videoId="MXutUHZFXIs"
@@ -57,12 +65,20 @@ const MeetTheFounder = () => {
           {/* Below video copy */}
           <section className="pb-16 sm:pb-20">
             <div className="container mx-auto px-4 max-w-3xl">
-              <div className="rounded-2xl bg-card border border-border p-8 sm:p-12 shadow-sm">
+              <div
+                className="rounded-2xl p-8 sm:p-12"
+                style={{
+                  background: '#FFFFFF',
+                  border: '1px solid #EDE7DA',
+                  boxShadow: '0 10px 30px -20px rgba(45,45,45,0.15)',
+                }}
+              >
               <div className="flex flex-col items-center gap-4 mb-8">
                 <img
                   src={founderPhoto.url}
                   alt="Marc Trup, Co-Founder of Hobson"
-                  className="w-16 h-16 sm:w-20 sm:h-20 rounded-full object-cover border-2 border-primary/20 shadow-lg"
+                  className="w-16 h-16 sm:w-20 sm:h-20 rounded-full object-cover shadow-lg"
+                  style={{ border: '2px solid #B4914F' }}
                 />
                 <h2 className="text-2xl sm:text-3xl font-bold text-foreground text-center">
                   Why we Built Hobson
@@ -85,6 +101,7 @@ const MeetTheFounder = () => {
               </div>
             </div>
           </section>
+
 
         </main>
       </div>
