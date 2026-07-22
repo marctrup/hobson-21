@@ -219,18 +219,15 @@ const Blog = () => {
           />
           
           {posts.length > 0 ? (
-            <div className="grid grid-cols-1 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {featuredPost && (
-                <FeaturedPost post={featuredPost} />
+                <div className="sm:col-span-2 lg:col-span-3">
+                  <FeaturedPost post={featuredPost} />
+                </div>
               )}
-              
-              {remainingPosts.length > 0 && (
-                <>
-                  {remainingPosts.map((post) => (
-                    <BlogPostCard key={post.id} post={post} />
-                  ))}
-                </>
-              )}
+              {remainingPosts.map((post) => (
+                <BlogPostCard key={post.id} post={post} />
+              ))}
             </div>
           ) : (
             <div className="text-center py-12">
