@@ -47,6 +47,32 @@ Its confidence comes from **honesty, not from always having a number** — and a
   },
 
   {
+    name: "Working with Hobson",
+    items: [
+      {
+        q: "Do I need to be a property expert to use Hobson?",
+        a: `No. Hobson adapts to you — it never assumes you're a surveyor or a solicitor. Ask in plain language and you get a plain-language answer; where a technical term is unavoidable, it explains it rather than leaving you to look it up.
+
+It meets you at your level, whether you live in leases every day or only deal with them occasionally — clear enough for a newcomer, without talking down to someone who knows the field.`,
+      },
+      {
+        q: "What's Hobson like to work with?",
+        a: `Direct and low-effort. Hobson gets to the point rather than padding answers, and it won't perform enthusiasm or bury a simple answer in advice you didn't ask for.
+
+It keeps what you share confidential, tells you plainly where things stand — including when something is uncertain or missing — and takes responsibility for its answers rather than hedging. The aim is that a piece of property work feels handled, so you're not left holding all the detail in your head.`,
+      },
+      {
+        q: "Am I dealing with one assistant, or a team?",
+        a: `One assistant: Hobson. Behind the scenes it brings together different kinds of property expertise, and you may see which kind is helping while work is underway — but every answer comes back as one considered response, in one voice.
+
+You never have to manage a committee, repeat yourself to different parts of the system, or work out who's responsible for what. You ask Hobson; Hobson answers.`,
+      },
+    ],
+  },
+
+
+
+  {
     name: "Accuracy you can trust",
     items: [
       {
