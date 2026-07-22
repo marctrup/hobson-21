@@ -36,30 +36,31 @@ const CARDS: Card[] = [
   {
     status: "Coming soon",
     live: false,
-    categories: ["In preparation"],
-    headline: "Another owner, another situation.",
+    categories: ["Enterprise", "Commercial & ground rent"],
+    headline: "Documents written over 100 years ago — can AI really read them?",
     description:
-      "A second story we're writing up now — a different set of properties, a different worry you might recognise.",
-    cta: "In preparation",
+      "A large Central London enterprise with major commercial and ground-rent portfolios, and a big team across the business — where some leases are more than a century old. The hardest test there is.",
+    cta: "Story in preparation",
   },
   {
     status: "Coming soon",
     live: false,
-    categories: ["In preparation"],
-    headline: "A manager's point of view.",
+    categories: ["Residential", "Small team"],
+    headline: "A very large portfolio. A team of two.",
     description:
-      "How the picture looks for someone managing property day to day, rather than owning it.",
-    cta: "In preparation",
+      "A large private residential portfolio run by just two people — one on finance, one on management — carrying far more than any pair should have to hold in their heads.",
+    cta: "Story in preparation",
   },
   {
     status: "Coming soon",
     live: false,
-    categories: ["In preparation"],
-    headline: "A larger, busier portfolio.",
+    categories: ["Property guardians", "High turnover"],
+    headline: "The paperwork never sits still.",
     description:
-      "What changes when there's simply more to keep track of than any one person can hold.",
-    cta: "In preparation",
+      "A property-guardian business where licensees come and go constantly and document management is relentless — a portfolio that never stops moving.",
+    cta: "Story in preparation",
   },
+
 ];
 
 const CaseStudies = () => {
