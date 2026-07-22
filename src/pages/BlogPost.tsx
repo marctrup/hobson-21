@@ -333,7 +333,7 @@ const BlogPost = () => {
 
           {/* Featured Image */}
           {post.featured_image_url && (
-            <div className="mb-6 md:mb-8 rounded-lg overflow-hidden bg-muted">
+            <div className="mb-6 md:mb-8 rounded-lg overflow-hidden bg-background">
               <OptimizedImage
                 src={post.featured_image_url}
                 alt={post.featured_image_alt || post.title}
