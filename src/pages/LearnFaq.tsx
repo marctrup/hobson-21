@@ -51,7 +51,7 @@ Its confidence comes from **honesty, not from always having a number** — and a
     items: [
       {
         q: "Do I need to be a property expert to use Hobson?",
-        a: `No. Hobson adapts to you — it never assumes you're a surveyor or a solicitor. Ask in plain language and you get a plain-language answer; where a technical term is unavoidable, it explains it rather than leaving you to look it up.
+        a: `No. Hobson adapts to you — it never assumes your job title or knowledge. Ask in plain language and you get a plain-language answer; where a technical term is unavoidable, it explains it rather than leaving you to look it up.
 
 It meets you at your level, whether you live in leases every day or only deal with them occasionally — clear enough for a newcomer, without talking down to someone who knows the field.`,
       },
