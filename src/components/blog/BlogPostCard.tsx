@@ -32,16 +32,17 @@ export const BlogPostCard = ({ post }: BlogPostCardProps) => {
 
   return (
     <Card className="overflow-hidden hover:shadow-md transition-shadow h-full flex flex-col">
-      <Link to={href} className="aspect-[16/7] bg-muted block overflow-hidden">
+      <Link to={href} className="bg-muted block overflow-hidden flex items-center justify-center" style={{ height: '170px' }}>
         {post.featured_image_url ? (
           <LazyImage
             src={post.featured_image_url}
             alt={post.title}
-            className="w-full h-full object-cover"
+            className="max-w-full max-h-full w-auto h-auto object-contain"
             width={480}
-            height={300}
+            height={170}
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
           />
+
         ) : (
           <div className="w-full h-full flex items-center justify-center">
             <Tag className="w-8 h-8 text-muted-foreground" />
