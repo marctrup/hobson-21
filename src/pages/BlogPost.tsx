@@ -317,12 +317,12 @@ const BlogPost = () => {
         </script>
       </Helmet>
 
-      <div className="min-h-screen bg-background">
+      <div className="min-h-screen" style={{ background: '#FCFAF7' }}>
         <HomepageHeader />
         
-        <article className="container mx-auto px-4 py-8 max-w-4xl">
+        <div className="container mx-auto px-4 py-8 max-w-4xl">
           {/* Back Button */}
-          <div className="mb-8">
+          <div className="mb-6">
             <Button variant="outline" asChild>
               <Link to="/blog">
                 <ArrowLeft className="w-4 h-4 mr-2" />
@@ -331,64 +331,70 @@ const BlogPost = () => {
             </Button>
           </div>
 
-          {/* Featured Image */}
-          {post.featured_image_url && (
-            <div className="mb-6 md:mb-8 rounded-lg overflow-hidden bg-background">
-              <OptimizedImage
-                src={post.featured_image_url}
-                alt={post.featured_image_alt || post.title}
-                className="w-full h-auto object-contain"
-                width={800}
-                height={450}
-                priority={true}
-                fetchPriority="high"
-                sizes="(max-width: 480px) 100vw, (max-width: 768px) 95vw, (max-width: 1200px) 80vw, 800px"
+          <article
+            className="bg-background rounded-2xl p-6 md:p-12 lg:p-16"
+            style={{ boxShadow: '0 10px 40px -20px rgba(180, 145, 79, 0.25), 0 2px 8px -2px rgba(45, 45, 45, 0.06)' }}
+          >
+            {/* Featured Image */}
+            {post.featured_image_url && (
+              <div className="mb-6 md:mb-8 rounded-lg overflow-hidden bg-background">
+                <OptimizedImage
+                  src={post.featured_image_url}
+                  alt={post.featured_image_alt || post.title}
+                  className="w-full h-auto object-contain"
+                  width={800}
+                  height={450}
+                  priority={true}
+                  fetchPriority="high"
+                  sizes="(max-width: 480px) 100vw, (max-width: 768px) 95vw, (max-width: 1200px) 80vw, 800px"
+                />
+              </div>
+            )}
+
+            {/* Article Header */}
+            <header className="mb-8">
+              <div className="flex flex-wrap gap-2 mb-4">
+                {post.categories.map((category) => (
+                  <Badge key={category.slug} variant="secondary">
+                    {category.name}
+                  </Badge>
+                ))}
+              </div>
+              
+              <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4 md:mb-6">
+                {post.title}
+              </h1>
+              
+              <div className="flex items-center gap-6 text-muted-foreground">
+                <div className="flex items-center gap-2">
+                  <Calendar className="w-4 h-4" />
+                  {format(new Date(post.published_at), 'MMMM dd, yyyy')}
+                </div>
+              </div>
+            </header>
+
+            {/* Article Content */}
+            <div ref={contentRef}>
+              <MarkdownRenderer
+                content={post.content}
+                className="prose-headings:text-foreground prose-strong:text-foreground text-foreground text-lg max-w-none"
               />
             </div>
-          )}
 
-          {/* Article Header */}
-          <header className="mb-8">
-            <div className="flex flex-wrap gap-2 mb-4">
-              {post.categories.map((category) => (
-                <Badge key={category.slug} variant="secondary">
-                  {category.name}
-                </Badge>
-              ))}
-            </div>
-            
-            <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4 md:mb-6">
-              {post.title}
-            </h1>
-            
-            <div className="flex items-center gap-6 text-muted-foreground">
-              <div className="flex items-center gap-2">
-                <Calendar className="w-4 h-4" />
-                {format(new Date(post.published_at), 'MMMM dd, yyyy')}
+            {/* Article Footer */}
+            <footer className="mt-12 pt-8 border-t">
+              <div className="flex justify-center">
+                <Button asChild>
+                  <Link to="/blog">
+                    More Articles
+                  </Link>
+                </Button>
               </div>
-            </div>
-          </header>
-
-          {/* Article Content */}
-          <div ref={contentRef}>
-            <MarkdownRenderer
-              content={post.content}
-              className="prose-headings:text-foreground prose-strong:text-foreground text-foreground text-lg max-w-none"
-            />
-          </div>
-
-          {/* Article Footer */}
-          <footer className="mt-12 pt-8 border-t">
-            <div className="flex justify-center">
-              <Button asChild>
-                <Link to="/blog">
-                  More Articles
-                </Link>
-              </Button>
-            </div>
-          </footer>
-        </article>
+            </footer>
+          </article>
+        </div>
       </div>
+
     </>
   );
 };
