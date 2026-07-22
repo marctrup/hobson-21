@@ -102,8 +102,17 @@ Two things follow. Nothing Hobson proposes is taken on trust: every claim traces
 
 The first two are reliable and predictable; the third is perceptive and proactive; and Hobson uses each for exactly what it's good at.`,
       },
+      {
+        q: "Will Hobson tell me things I didn't think to ask?",
+        a: `Where it genuinely helps, yes — but never to pad an answer.
+
+A good co-worker doesn't just answer the narrow question; they mention the thing you'd have wanted to know but didn't think to ask — a deadline coming up, a consequence that follows, the sensible next step. Hobson does the same, briefly and proportionately, when something like that sits alongside your answer.
+
+Two limits keep this useful rather than noisy. It only raises something that genuinely matters — it won't lecture, speculate, or invent a worry to look helpful. And it only mentions what your documents actually establish; it never manufactures a risk or a fact that isn't there. So when Hobson flags something, it's worth reading — and when your answer is simply the answer, that's all you get.`,
+      },
     ],
   },
+
 
 
   {
