@@ -137,11 +137,6 @@ A disputed figure comes back *as it currently stands* — the amount as varied, 
             )}
           </Section>
 
-          <Section title="Why it matters more now">
-            {md(
-              `The **Renters' Rights Act 2025** is reshaping the rules on the residential side of the portfolio as we speak, and the cost of misreading a right or missing a date has risen sharply. Being certain of your position — and *defensible* on it — has gone from useful to essential.`
-            )}
-          </Section>
 
           {/* Pull quote */}
           <figure
@@ -214,7 +209,7 @@ A disputed figure comes back *as it currently stands* — the amount as varied, 
               <p className="mt-2 text-[15px] leading-relaxed" style={{ color: "#A5A5A5" }}>
                 A co-worker that watches the deadlines and obligations across the
                 portfolio and flags a review, renewal or notice before it falls
-                due — so nothing slips as the rules keep changing.
+                due — so nothing is ever missed.
               </p>
             </div>
           </div>
@@ -243,10 +238,10 @@ A disputed figure comes back *as it currently stands* — the amount as varied, 
                 style={{ color: "rgba(252,250,247,0.85)" }}
               >
                 <strong style={{ color: PAPER }}>If this is you</strong> — you
-                own a few properties, you sometimes have to be exactly right in
-                front of a tenant or adviser, and the rules are shifting under
-                you — Phase 1 gives you that certainty today, and it's the start
-                of a co-worker built to keep you ahead.
+                own a few properties and sometimes have to be exactly right in
+                front of a tenant or adviser, with money riding on the detail —
+                Phase 1 gives you that certainty today, and it's the start of a
+                co-worker built to keep you ahead.
               </p>
               <div className="mt-8">
                 <Button

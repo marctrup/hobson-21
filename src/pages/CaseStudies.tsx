@@ -30,7 +30,7 @@ const CARDS: Card[] = [
     categories: ["Property owner", "Mixed-use"],
     headline: "You have to be exactly right — in front of a tenant.",
     description:
-      "A hands-on owner of a few mixed-use properties, mid-dispute over a service charge, needing the precise figure and the clause to back it up — with the rules changing around them.",
+      "A hands-on owner of a few mixed-use properties, mid-dispute over a service charge, answering a tenant's challenges point by point — each one needing the right figure and the clause to back it up.",
     cta: "Read this story",
   },
   {
