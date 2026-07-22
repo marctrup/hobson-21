@@ -191,8 +191,19 @@ But where that mechanism hasn't yet produced a number — a review that hasn't h
 
 That's the same principle you'll find everywhere in Hobson: say what's established, flag what isn't, and never fill the space with an assumption.`,
       },
+      {
+        q: "What does Hobson do when my documents contradict each other?",
+        a: `It shows you both sides — it never quietly picks one.
+
+Property documents disagree more often than you'd expect: a lease sets one break date and a later deed sets another; a figure is stated one way in one place and differently in another. When that happens, Hobson doesn't hide the mess by choosing a winner, and it doesn't split the difference into a vague middle — a blurred answer is more dangerous than either clear position.
+
+Instead it sets out both positions plainly, each with the document and wording it came from, and tells you the documents conflict. Where one position is the safer one to rely on until the matter is settled, it will say so — but it leaves both facts in full view, so you can see exactly what you're deciding between.
+
+That's the difference between an answer you can act on and one that only looks tidy.`,
+      },
     ],
   },
+
 ];
 
 const LearnFaq = () => {
