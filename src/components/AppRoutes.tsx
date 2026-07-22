@@ -26,6 +26,9 @@ const BreachProtocol = lazy(() => import("../pages/BreachProtocol"));
 const RefundPolicy = lazy(() => import("../pages/RefundPolicy"));
 const Learn = lazy(() => import("../pages/Learn"));
 const LearnFaq = lazy(() => import("../pages/LearnFaq"));
+const CaseStudies = lazy(() => import("../pages/CaseStudies"));
+const CaseStudyMixedUseOwner = lazy(() => import("../pages/CaseStudyMixedUseOwner"));
+
 const Status = lazy(() => import("../pages/Status"));
 const Announcements = lazy(() => import("../pages/Announcements"));
 const AnnouncementPost = lazy(() => import("../pages/AnnouncementPost"));
@@ -133,7 +136,10 @@ const AppContent = () => {
               <Route path="/refund-policy" element={<RefundPolicy />} />
               <Route path="/learn" element={<Learn />} />
               <Route path="/learn/faq" element={<LearnFaq />} />
+              <Route path="/learn/case-studies" element={<CaseStudies />} />
+              <Route path="/learn/case-studies/mixed-use-owner" element={<CaseStudyMixedUseOwner />} />
               <Route path="/learn/*" element={<Navigate to="/learn" replace />} />
+
 
               <Route path="/status" element={<Status />} />
               <Route path="/announcements" element={<Announcements />} />
