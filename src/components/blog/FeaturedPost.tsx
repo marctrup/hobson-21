@@ -34,7 +34,7 @@ export const FeaturedPost = ({ post }: FeaturedPostProps) => {
     <div>
       <Card className="overflow-hidden">
         <div className="grid md:grid-cols-4 gap-0">
-          <Link to={href} className="aspect-[3/2] bg-muted block">
+          <Link to={href} className="aspect-[3/2] bg-background block">
             {post.featured_image_url ? (
                <LazyImage
                 src={post.featured_image_url}
