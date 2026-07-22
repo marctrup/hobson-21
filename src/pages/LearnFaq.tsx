@@ -33,8 +33,19 @@ const CATEGORIES: Category[] = [
 
 In short: ChatGPT predicts a likely answer. Hobson extracts the *actual* one from your documents, tracks how they change over time, and shows you the proof.`,
       },
+      {
+        q: "Is Hobson ever afraid to say it doesn't know?",
+        a: `Never — and it's one of the biggest differences between Hobson and a general AI.
+
+Most AI tools are built to always produce an answer, so when they don't know something they tend to fill the gap with a confident guess. Hobson does the opposite. Where the documents don't settle a question, or a piece of information it needs is missing, it says so plainly — what it can tell you, what it can't, and why. It treats "I don't have enough to answer that yet" as a proper, finished answer, not a failure to cover up.
+
+That includes telling you when something simply isn't in your documents at all — "the lease records no rent deposit" is a real, checked finding, stated plainly, not an apology. And where a fact is missing, Hobson explains what it would need to get you the answer, rather than pretending it already has it.
+
+Its confidence comes from **honesty, not from always having a number** — and an answer you can trust is worth far more than one that only sounds sure.`,
+      },
     ],
   },
+
   {
     name: "Accuracy you can trust",
     items: [
