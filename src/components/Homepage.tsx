@@ -111,7 +111,8 @@ export const Homepage = () => {
                 {/* Login button */}
                 <button
                   onClick={() => setIsLoginModalOpen(true)}
-                  className="inline-flex h-9 items-center justify-center rounded-md border border-primary/20 bg-primary/10 px-4 py-2 text-sm font-medium text-primary transition-colors hover:bg-primary/15"
+                  className="inline-flex h-9 items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-opacity hover:opacity-90"
+                  style={{ background: "#2D2D2D", color: "#FCFAF7" }}
                 >
                   Login
                 </button>
