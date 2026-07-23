@@ -850,9 +850,14 @@ const Calculators: React.FC = () => {
         @media (max-width: 1120px) {
           .hp-price-row { grid-template-columns: 1fr !important; }
         }
+        @media (max-width: 900px) {
+          .hp-includes-grid { grid-template-columns: 1fr !important; }
+          .hp-concierge-prices { grid-template-columns: 1fr !important; }
+        }
         @media (max-width: 720px) {
           .hp-ai-inner { grid-template-columns: 1fr !important; }
         }
+
         .hp-slider-dark::-webkit-slider-runnable-track { background: rgba(255,255,255,0.18); }
         .hp-slider-dark::-moz-range-track { background: rgba(255,255,255,0.18); }
         .hp-hero-bubble::before {
