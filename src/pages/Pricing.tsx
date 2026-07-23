@@ -335,9 +335,21 @@ const Calculators: React.FC = () => {
   const [docs, setDocs] = useState(305);
   const [quoteOpen, setQuoteOpen] = useState(false);
   const [conciergeDocs, setConciergeDocs] = useState(300);
-  const [conciergePeople, setConciergePeople] = useState(3);
-  const [conciergeOpen, setConciergeOpen] = useState(false);
+  const [conciergeBandId, setConciergeBandId] = useState<string>("5");
+  
 
+  const CONCIERGE_BANDS: Array<{ id: string; label: string; ceiling: number | null; price: number | null }> = [
+    { id: "2", label: "Up to 2", ceiling: 2, price: 250 },
+    { id: "5", label: "Up to 5", ceiling: 5, price: 500 },
+    { id: "10", label: "Up to 10", ceiling: 10, price: 900 },
+    { id: "20", label: "Up to 20", ceiling: 20, price: 1500 },
+    { id: "20+", label: "More than 20", ceiling: null, price: null },
+  ];
+  const conciergeBand = CONCIERGE_BANDS.find((b) => b.id === conciergeBandId)!;
+  const conciergeIsOverflow = conciergeBand.price === null;
+  const conciergePerPerson = conciergeBand.price && conciergeBand.ceiling
+    ? Math.round(conciergeBand.price / conciergeBand.ceiling)
+    : null;
 
   const billedSeats = Math.max(people, MIN_SEATS);
   const seatsMonthly = billedSeats * SEAT;
@@ -348,7 +360,11 @@ const Calculators: React.FC = () => {
   const high = docs * COMPLEX;
 
   const conciergeOnboard = conciergeDocs * 3.5;
-  const conciergeMonthly = conciergePeople * 80;
+
+  const scrollToEnterprise = () => {
+    const el = document.getElementById("enterprise");
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
 
 
 
@@ -699,15 +715,52 @@ const Calculators: React.FC = () => {
                   onChange={setConciergeDocs}
                   suffix="docs"
                 />
-                <Slider
-                  id="concierge-people"
-                  label="People with a named contact"
-                  min={1}
-                  max={30}
-                  value={conciergePeople}
-                  onChange={setConciergePeople}
-                  suffix={conciergePeople === 1 ? "person" : "people"}
-                />
+
+                <div>
+                  <div style={{ marginBottom: 10 }}>
+                    <label style={{ fontFamily: FONTS.mono, fontSize: 12, letterSpacing: "0.08em", textTransform: "uppercase", color: TOKENS.brass }}>
+                      How big is your team
+                    </label>
+                  </div>
+                  <div
+                    role="radiogroup"
+                    aria-label="How big is your team"
+                    style={{ display: "flex", flexWrap: "wrap", gap: 8 }}
+                  >
+                    {CONCIERGE_BANDS.map((b) => {
+                      const active = b.id === conciergeBandId;
+                      return (
+                        <button
+                          key={b.id}
+                          type="button"
+                          role="radio"
+                          aria-checked={active}
+                          onClick={() => {
+                            setConciergeBandId(b.id);
+                            if (b.price === null) {
+                              setTimeout(scrollToEnterprise, 60);
+                            }
+                          }}
+                          style={{
+                            padding: "8px 14px",
+                            borderRadius: 999,
+                            border: `1px solid ${active ? TOKENS.brass : TOKENS.hairline}`,
+                            background: active ? "rgba(180,145,79,0.12)" : "#fff",
+                            color: active ? TOKENS.ink : TOKENS.inkSoft,
+                            fontFamily: FONTS.mono,
+                            fontSize: 11,
+                            letterSpacing: "0.1em",
+                            textTransform: "uppercase",
+                            cursor: "pointer",
+                            transition: "all .15s ease",
+                          }}
+                        >
+                          {b.label}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
 
                 <div style={{ borderTop: `1px solid ${TOKENS.hairline}`, paddingTop: 18, display: "flex", flexDirection: "column", gap: 14 }}>
                   <div>
@@ -727,22 +780,44 @@ const Calculators: React.FC = () => {
                     <div style={{ fontFamily: FONTS.mono, fontSize: 10.5, color: TOKENS.inkMuted, marginBottom: 4, letterSpacing: "0.14em", textTransform: "uppercase" }}>
                       Then, every month
                     </div>
-                    <div style={{ display: "flex", alignItems: "baseline", gap: 8 }}>
-                      <div style={{ fontFamily: FONTS.serif, fontSize: "clamp(1.9rem, 3.2vw, 2.4rem)", lineHeight: 1, color: TOKENS.ink, letterSpacing: "-0.02em" }}>
-                        {fmtGBP2(conciergeMonthly)}
+                    {conciergeIsOverflow ? (
+                      <div style={{ fontFamily: FONTS.serif, fontStyle: "italic", fontSize: "clamp(1.3rem, 2.2vw, 1.7rem)", lineHeight: 1.2, color: TOKENS.ink }}>
+                        Let&rsquo;s talk —{" "}
+                        <button
+                          type="button"
+                          onClick={scrollToEnterprise}
+                          style={{
+                            background: "none",
+                            border: "none",
+                            padding: 0,
+                            color: TOKENS.brass,
+                            font: "inherit",
+                            textDecoration: "underline",
+                            cursor: "pointer",
+                          }}
+                        >
+                          see below
+                        </button>
                       </div>
-                      <span style={{ fontFamily: FONTS.mono, fontSize: 13, color: TOKENS.brass }}>/ month</span>
-                    </div>
-                    <div style={{ fontFamily: FONTS.mono, fontSize: 11, color: TOKENS.inkMuted, marginTop: 6 }}>
-                      {conciergePeople} × (£35 seat + £45 personal support)
-                    </div>
+                    ) : (
+                      <>
+                        <div style={{ display: "flex", alignItems: "baseline", gap: 8 }}>
+                          <div style={{ fontFamily: FONTS.serif, fontSize: "clamp(1.9rem, 3.2vw, 2.4rem)", lineHeight: 1, color: TOKENS.ink, letterSpacing: "-0.02em" }}>
+                            {fmtGBP(conciergeBand.price!)}
+                          </div>
+                          <span style={{ fontFamily: FONTS.mono, fontSize: 13, color: TOKENS.brass }}>/ month</span>
+                        </div>
+                        <div style={{ fontFamily: FONTS.mono, fontSize: 11, color: TOKENS.inkMuted, marginTop: 6 }}>
+                          £{conciergePerPerson} per person, seats included — a standard seat is £35
+                        </div>
+                      </>
+                    )}
                   </div>
                 </div>
               </div>
 
-              <button
-                type="button"
-                onClick={() => setConciergeOpen(true)}
+              <a
+                href="mailto:info@hobsonschoice.ai"
                 style={{
                   padding: "14px 22px",
                   borderRadius: 12,
@@ -755,10 +830,13 @@ const Calculators: React.FC = () => {
                   letterSpacing: "0.01em",
                   cursor: "pointer",
                   boxShadow: "0 8px 20px -10px rgba(180,145,79,0.5)",
+                  textAlign: "center",
+                  textDecoration: "none",
+                  display: "block",
                 }}
               >
                 Book a consultation
-              </button>
+              </a>
               <div style={{ fontFamily: FONTS.sans, fontSize: 12.5, color: TOKENS.inkMuted, textAlign: "center" }}>
                 Nothing is charged until we have spoken and you have approved the scope.
               </div>
@@ -769,7 +847,7 @@ const Calculators: React.FC = () => {
     </section>
 
     <InterestModal open={quoteOpen} onClose={() => setQuoteOpen(false)} source="pricing-firm-quote" />
-    <InterestModal open={conciergeOpen} onClose={() => setConciergeOpen(false)} source="pricing-concierge" />
+    
 
 
     <style>{`
@@ -922,7 +1000,7 @@ export default function Pricing() {
         <Calculators />
 
         {/* ---------------- Section 4 — Enterprise talk-to-us ---------------- */}
-        <section style={{ padding: "clamp(56px, 8vw, 112px) 24px", background: TOKENS.paper, borderTop: `1px solid ${TOKENS.hairline}` }}>
+        <section id="enterprise" style={{ padding: "clamp(56px, 8vw, 112px) 24px", background: TOKENS.paper, borderTop: `1px solid ${TOKENS.hairline}`, scrollMarginTop: 80 }}>
           <div style={{ maxWidth: 980, margin: "0 auto" }}>
             <div
               style={{
@@ -952,7 +1030,7 @@ export default function Pricing() {
                 </h2>
 
                 <p style={{ fontFamily: FONTS.sans, fontSize: 17, lineHeight: 1.7, color: TOKENS.inkSoft, margin: "0 0 32px", maxWidth: 620 }}>
-                  If your portfolio is large, your structure complex, or your requirements particular, the calculator will only take us so far. I am happy to understand your organisation properly and design something around it. The complete Hobson, fitted to you.
+                  If your portfolio is large, your structure complex, your team above twenty, or your requirements particular, the calculator will only take us so far. I am happy to understand your organisation properly and design something around it. The complete Hobson, fitted to you.
                 </p>
                 <div>
                   <a href="mailto:info@hobsonschoice.ai" className="hp-btn hp-btn-brass">Talk to me</a>
