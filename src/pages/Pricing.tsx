@@ -880,6 +880,7 @@ const Calculators: React.FC = () => {
                 Nothing is charged until we have spoken and you have approved the scope.
               </div>
             </div>
+            </div>
           </div>
         </div>
       </section>
