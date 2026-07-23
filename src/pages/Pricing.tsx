@@ -684,7 +684,7 @@ const Calculators: React.FC = () => {
                     Professor alone
                   </div>
                   <div style={{ fontFamily: FONTS.serif, fontSize: "clamp(1.4rem, 2.2vw, 1.9rem)", color: TOKENS.inkSoft, letterSpacing: "-0.02em" }}>
-                    50p<span style={{ fontFamily: FONTS.mono, fontSize: 11, color: TOKENS.inkMuted, marginLeft: 4 }}>/ doc</span>
+                    ~50p<span style={{ fontFamily: FONTS.mono, fontSize: 11, color: TOKENS.inkMuted, marginLeft: 4 }}>/ doc</span>
                   </div>
                 </div>
                 <div aria-hidden="true" style={{ fontFamily: FONTS.mono, color: TOKENS.brass, fontSize: 18 }}>→</div>
@@ -712,7 +712,7 @@ const Calculators: React.FC = () => {
                   {
                     n: "02",
                     h: "A person checks the work",
-                    b: "Before anything reaches you, a colleague confirms every title and every address. Nothing filed against the wrong property, ever.",
+                    b: "Before anything reaches you, a colleague confirms every title and every address, and geolocation. Nothing filed against the wrong property, ever.",
                   },
                   {
                     n: "03",
