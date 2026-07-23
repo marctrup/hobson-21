@@ -942,7 +942,10 @@ const Calculators: React.FC = () => {
       }
       @media (max-width: 900px) {
         .hp-concierge-grid { grid-template-columns: 1fr !important; }
+        .hp-concierge-hero { grid-template-columns: 1fr !important; text-align: center; }
+        .hp-concierge-hero img { margin: 0 auto; }
       }
+
 
       .hp-slider-dark::-webkit-slider-runnable-track { background: rgba(255,255,255,0.18); }
       .hp-slider-dark::-moz-range-track { background: rgba(255,255,255,0.18); }
