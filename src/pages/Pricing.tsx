@@ -488,7 +488,7 @@ const Calculators: React.FC = () => {
                     flexDirection: "column",
                   }}
                 >
-                  <img src={owlMascot} alt="" className="hp-owl-solo" style={{ width: "auto", height: 56, marginBottom: 12 }} />
+                  
                   <Eyebrow color={T.gold}>Learning · one-off</Eyebrow>
                   <h3
                     style={{
