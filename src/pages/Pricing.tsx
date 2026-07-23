@@ -577,7 +577,7 @@ const Calculators: React.FC = () => {
                 />
               </div>
 
-              </div>
+
 
             {/* ============ RIGHT: Human option ============ */}
             <div
