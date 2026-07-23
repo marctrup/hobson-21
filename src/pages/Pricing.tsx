@@ -430,8 +430,9 @@ const Calculators: React.FC = () => {
               . Everything learned is carried forward.
             </h3>
             <p style={{ fontFamily: FONTS.sans, fontSize: 15, lineHeight: 1.6, color: TOKENS.inkSoft, marginTop: 16 }}>
-              £0.25–£1.00 per document, depending on its complexity. I read it once and remember it for good. You approve a fixed quote before I begin the full read.
+              £0.25–£1.00 per document depending on complexity. A typical mix averages 50p. I read each one once and remember it for good. You approve a fixed quote before I begin the full read.
             </p>
+
 
 
             {/* Calculator block */}
