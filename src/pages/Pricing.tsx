@@ -315,23 +315,20 @@ const TypewriterText: React.FC<{ text: string; speed?: number; startDelay?: numb
 // ============================================================================
 const Calculators: React.FC = () => {
   const [docs, setDocs] = useState(300);
+  const [conciergeDocs, setConciergeDocs] = useState(300);
   const [people, setPeople] = useState(5);
-  const conciergeDocs = docs;
-  const setConciergeDocs = setDocs;
 
-  const [conciergeBandId, setConciergeBandId] = useState<string>("5");
-
-  const BANDS: Array<{ id: string; label: string; ceiling: number | null; price: number | null }> = [
-    { id: "2", label: "2", ceiling: 2, price: 130 },
-    { id: "5", label: "5", ceiling: 5, price: 300 },
-    { id: "10", label: "10", ceiling: 10, price: 550 },
-    { id: "20", label: "20", ceiling: 20, price: 1000 },
-    { id: "20+", label: "More", ceiling: null, price: null },
+  // Concierge monthly — charged on actual headcount, cheapest across all tiers.
+  const CONCIERGE_TIERS = [
+    { floor: 2, rate: 65 },
+    { floor: 5, rate: 60 },
+    { floor: 10, rate: 55 },
+    { floor: 20, rate: 50 },
   ];
-  const band = BANDS.find((b) => b.id === conciergeBandId)!;
-  const bandOverflow = band.price === null;
-  const perPerson = band.price && band.ceiling ? Math.round(band.price / band.ceiling) : null;
-
+  const conciergeMonthly = Math.min(
+    ...CONCIERGE_TIERS.map((t) => Math.max(people, t.floor) * t.rate)
+  );
+  const conciergePerPerson = Math.round(conciergeMonthly / people);
 
   const readEstimate = docs * 0.5;
   const readLow = docs * 0.35;
@@ -339,11 +336,6 @@ const Calculators: React.FC = () => {
   const seatsMonthly = people * 35;
   const conciergeBelowMin = conciergeDocs < 100;
   const conciergeOneOff = conciergeBelowMin ? 350 : conciergeDocs * 3.5;
-
-  const scrollToEnterprise = () => {
-    const el = document.getElementById("enterprise");
-    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-  };
 
   // Token shortcuts scoped to this section
   const T = {
@@ -696,43 +688,22 @@ const Calculators: React.FC = () => {
                   onChange={setConciergeDocs}
                   suffix="docs"
                 />
+                <p style={{ fontFamily: FONTS.sans, fontSize: 12, lineHeight: 1.5, color: T.muted, margin: "8px 0 0" }}>
+                  You need not onboard everything — a person can check the documents that matter most.
+                </p>
               </div>
 
-              <div style={{ marginTop: 14 }}>
-                <Eyebrow color={T.gold} style={{ marginBottom: 8, fontWeight: 700 }}>How big is your team (up to)</Eyebrow>
-                <div role="radiogroup" aria-label="How big is your team" style={{ display: "flex", gap: 6 }}>
-                  {BANDS.map((b) => {
-                    const active = b.id === conciergeBandId;
-                    return (
-                      <button
-                        key={b.id}
-                        type="button"
-                        role="radio"
-                        aria-checked={active}
-                        onClick={() => {
-                          setConciergeBandId(b.id);
-                          if (b.price === null) setTimeout(scrollToEnterprise, 60);
-                        }}
-                        style={{
-                          flex: 1,
-                          padding: "6px 6px",
-                          borderRadius: 999,
-                          border: `1px solid ${active ? T.gold : T.line}`,
-                          background: active ? "rgba(180,145,79,0.14)" : "#fff",
-                          color: active ? T.ink : T.muted,
-                          fontFamily: FONTS.mono,
-                          fontSize: 11,
-                          letterSpacing: "0.08em",
-                          textTransform: "uppercase",
-                          cursor: "pointer",
-                          textAlign: "center",
-                        }}
-                      >
-                        {b.label}
-                      </button>
-                    );
-                  })}
-                </div>
+              <div style={{ marginTop: 18 }}>
+                <Slider
+                  id="concierge-people"
+                  label="People"
+                  min={2}
+                  max={30}
+                  step={1}
+                  value={people}
+                  onChange={setPeople}
+                  suffix={people === 1 ? "person" : "people"}
+                />
               </div>
 
               {/* Prices — side by side */}
@@ -770,34 +741,24 @@ const Calculators: React.FC = () => {
 
                 <div>
                   <Eyebrow color={T.faint} style={{ marginBottom: 4 }}>Then, every month</Eyebrow>
-                  {bandOverflow ? (
-                    <div style={{ fontFamily: FONTS.serif, fontStyle: "italic", fontSize: 22, color: T.ink }}>
-                      Let&rsquo;s talk — see below
-                    </div>
-                  ) : (
-                    <>
-                      <div style={{ fontFamily: FONTS.serif, fontSize: 26, lineHeight: 1, color: T.ink, letterSpacing: "-0.02em" }}>
-                        {fmtGBP(band.price!)}
-                      </div>
-                      {perPerson !== null && (
-                        <div
-                          style={{
-                            display: "inline-block",
-                            marginTop: 6,
-                            padding: "4px 10px",
-                            borderRadius: 999,
-                            background: T.wash,
-                            fontFamily: FONTS.mono,
-                            fontSize: 10.5,
-                            color: T.goldInk,
-                            letterSpacing: "0.06em",
-                          }}
-                        >
-                          £{perPerson} a person, seats included — a seat is £35
-                        </div>
-                      )}
-                    </>
-                  )}
+                  <div style={{ fontFamily: FONTS.serif, fontSize: 26, lineHeight: 1, color: T.ink, letterSpacing: "-0.02em" }}>
+                    {fmtGBP(conciergeMonthly)}
+                  </div>
+                  <div
+                    style={{
+                      display: "inline-block",
+                      marginTop: 6,
+                      padding: "4px 10px",
+                      borderRadius: 999,
+                      background: T.wash,
+                      fontFamily: FONTS.mono,
+                      fontSize: 10.5,
+                      color: T.goldInk,
+                      letterSpacing: "0.06em",
+                    }}
+                  >
+                    £{conciergePerPerson} a person, seats included — a standard seat is £35
+                  </div>
                 </div>
               </div>
 
@@ -805,21 +766,13 @@ const Calculators: React.FC = () => {
               {/* Together row */}
               <div style={{ marginTop: 16 }}>
                 <TogetherRow>
-                  {bandOverflow ? (
-                    <>
-                      <span style={{ color: T.ink }}>{fmtGBP2(conciergeOneOff)} today</span>
-                      <span style={{ color: T.muted, fontStyle: "italic" }}>, then let&rsquo;s talk</span>
-                    </>
-                  ) : (
-                    <>
-                      <span style={{ color: T.ink }}>{fmtGBP2(conciergeOneOff)} today</span>
-                      <span style={{ color: T.muted, fontStyle: "italic" }}>, then </span>
-                      <span style={{ color: T.ink }}>{fmtGBP(band.price!)} a month</span>
-                    </>
-
-                  )}
+                  <span style={{ color: T.ink }}>{fmtGBP2(conciergeOneOff)} today</span>
+                  <span style={{ color: T.muted, fontStyle: "italic" }}>, then </span>
+                  <span style={{ color: T.ink }}>{fmtGBP(conciergeMonthly)} a month</span>
                 </TogetherRow>
               </div>
+
+
 
               <a
                 href="mailto:info@hobsonschoice.ai"
