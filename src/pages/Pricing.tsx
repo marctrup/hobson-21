@@ -509,7 +509,7 @@ const Calculators: React.FC = () => {
                     £0.25–£1.00 per document depending on complexity. A typical mix averages 50p. Read once, remembered for good.
                   </p>
 
-                  <Slider id="docs" label="Documents" min={10} max={600} value={docs} onChange={setDocs} suffix="docs" />
+                  <Slider id="docs" label="Documents" min={10} max={2000} step={10} value={docs} onChange={setDocs} suffix="docs" />
                   <div style={{ marginTop: 16 }}>
                     <Eyebrow color={T.faint} style={{ marginBottom: 4, fontWeight: 700 }}>Estimate — one-off</Eyebrow>
                     <div style={{ fontFamily: FONTS.serif, fontSize: 30, lineHeight: 1, color: T.ink, letterSpacing: "-0.02em" }}>
