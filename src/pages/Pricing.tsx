@@ -719,6 +719,9 @@ const Calculators: React.FC = () => {
                         {fmtGBP2(conciergeOnboard)}
                       </div>
                     </div>
+                    <div style={{ fontFamily: FONTS.mono, fontSize: 11, color: TOKENS.inkMuted, marginTop: 6 }}>
+                      £3.50 per document — Professor working alone is 50p
+                    </div>
                   </div>
                   <div>
                     <div style={{ fontFamily: FONTS.mono, fontSize: 10.5, color: TOKENS.inkMuted, marginBottom: 4, letterSpacing: "0.14em", textTransform: "uppercase" }}>
