@@ -921,13 +921,51 @@ export default function Pricing() {
 
       <main className="hp-page">
 
-
-
-
-
+        {/* ---------------- Hero ---------------- */}
+        <section
+          className="hero"
+          style={{
+            background: TOKENS.paper,
+            padding: "48px 32px 0",
+            textAlign: "center",
+          }}
+        >
+          <div style={{ maxWidth: 720, margin: "0 auto" }}>
+            <h1
+              style={{
+                fontFamily: FONTS.serif,
+                fontWeight: 400,
+                fontSize: "clamp(30px, 3.4vw, 44px)",
+                lineHeight: 1.15,
+                letterSpacing: "-0.01em",
+                color: TOKENS.ink,
+                margin: "0 auto",
+                maxWidth: "20ch",
+              }}
+            >
+              I work alone —{" "}
+              <span style={{ fontStyle: "italic", color: TOKENS.brass }}>
+                unless you would rather I did not.
+              </span>
+            </h1>
+            <p
+              style={{
+                fontFamily: FONTS.sans,
+                fontSize: 16,
+                lineHeight: 1.5,
+                color: TOKENS.inkMuted,
+                margin: "20px auto 0",
+                maxWidth: "58ch",
+              }}
+            >
+              One price for me on my own. One for me with a colleague beside me. Nothing begins until you approve what you see.
+            </p>
+          </div>
+        </section>
 
         {/* ---------------- Section 3 — Calculators ---------------- */}
         <Calculators />
+
 
         {/* ---------------- Section 4 — Enterprise talk-to-us ---------------- */}
         <section id="enterprise" style={{ padding: "clamp(56px, 8vw, 112px) 24px", background: TOKENS.paper, borderTop: `1px solid ${TOKENS.hairline}`, scrollMarginTop: 80 }}>
