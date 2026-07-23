@@ -524,7 +524,7 @@ const Calculators: React.FC = () => {
 
                 {/* ---- Section B: seats ---- */}
                 <div style={{ display: "flex", flexDirection: "column" }}>
-                  <Eyebrow color={T.gold}>Seats · monthly</Eyebrow>
+                  <Eyebrow color={T.gold} style={{ fontWeight: 700 }}>Seats · monthly</Eyebrow>
                   <p style={{ fontFamily: FONTS.sans, fontSize: 13, lineHeight: 1.5, color: T.muted, margin: "10px 0 14px" }}>
                     One Hobson per person, at £35 each per month. I learn how each person works and stay ready for what they need next.
                   </p>
