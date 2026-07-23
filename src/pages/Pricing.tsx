@@ -330,6 +330,10 @@ const TypewriterText: React.FC<{ text: string; speed?: number; startDelay?: numb
 const Calculators: React.FC = () => {
   const [people, setPeople] = useState(5);
   const [docs, setDocs] = useState(305);
+  const [quoteOpen, setQuoteOpen] = useState(false);
+  const [conciergeDocs, setConciergeDocs] = useState(300);
+  const [conciergePeople, setConciergePeople] = useState(3);
+  const [conciergeOpen, setConciergeOpen] = useState(false);
 
 
   const billedSeats = Math.max(people, MIN_SEATS);
@@ -340,7 +344,10 @@ const Calculators: React.FC = () => {
   const low = docs * SIMPLE;
   const high = docs * COMPLEX;
 
-  const oneOffDisplay = overflow ? "a quote we'll confirm with you" : `around ${fmtGBP(roundNice(blendedEst))}`;
+  const conciergeOnboard = conciergeDocs * 3.5;
+  const conciergeMonthly = conciergePeople * 80;
+
+
 
   return (
     <>
