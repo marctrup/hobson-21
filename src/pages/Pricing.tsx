@@ -319,16 +319,16 @@ const Calculators: React.FC = () => {
   const [conciergeBandId, setConciergeBandId] = useState<string>("5");
 
   const BANDS: Array<{ id: string; label: string; ceiling: number | null; price: number | null }> = [
-    { id: "2", label: "2", ceiling: 2, price: 125 },
-    { id: "5", label: "5", ceiling: 5, price: 250 },
-    { id: "10", label: "10", ceiling: 10, price: 450 },
-    { id: "20", label: "20", ceiling: 20, price: 750 },
+    { id: "2", label: "2", ceiling: 2, price: 130 },
+    { id: "5", label: "5", ceiling: 5, price: 300 },
+    { id: "10", label: "10", ceiling: 10, price: 550 },
+    { id: "20", label: "20", ceiling: 20, price: 1000 },
     { id: "20+", label: "More", ceiling: null, price: null },
   ];
   const band = BANDS.find((b) => b.id === conciergeBandId)!;
   const bandOverflow = band.price === null;
-  const perPerson = band.price && band.ceiling ? band.price / band.ceiling : null;
-  const showPerPerson = perPerson !== null && perPerson >= 45;
+  const perPerson = band.price && band.ceiling ? Math.round(band.price / band.ceiling) : null;
+
 
   const readEstimate = docs * 0.5;
   const readLow = docs * 0.35;
@@ -802,7 +802,7 @@ const Calculators: React.FC = () => {
                       <div style={{ fontFamily: FONTS.serif, fontSize: 30, lineHeight: 1, color: T.ink, letterSpacing: "-0.02em" }}>
                         {fmtGBP(band.price!)}
                       </div>
-                      {showPerPerson && (
+                      {perPerson !== null && (
                         <div
                           style={{
                             display: "inline-block",
@@ -819,6 +819,7 @@ const Calculators: React.FC = () => {
                           £{perPerson} per person, seats included — a standard seat is £35
                         </div>
                       )}
+
                     </>
                   )}
                 </div>
