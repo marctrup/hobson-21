@@ -234,28 +234,6 @@ const TogetherCard: React.FC<{ people: number; docEstimate: number; seatsMonthly
             </div>
           </div>
 
-          <button
-            type="button"
-            onClick={() => setOpen(true)}
-            style={{
-              padding: "14px 22px",
-              borderRadius: 12,
-              border: "none",
-              background: TOKENS.brass,
-              color: "#fff",
-              fontFamily: FONTS.sans,
-              fontSize: 15,
-              fontWeight: 600,
-              letterSpacing: "0.01em",
-              cursor: "pointer",
-              boxShadow: "0 8px 20px -10px rgba(180,145,79,0.5)",
-            }}
-          >
-            Get my firm quote
-          </button>
-          <div style={{ fontFamily: FONTS.sans, fontSize: 12.5, color: TOKENS.inkMuted, textAlign: "center" }}>
-            No charge until you approve the document estimate
-          </div>
         </div>
       </div>
 
@@ -377,7 +355,7 @@ const Calculators: React.FC = () => {
       style={{
         background: "#FCFAF7",
         color: TOKENS.ink,
-        padding: "clamp(72px, 9vw, 128px) 24px clamp(56px, 7vw, 96px)",
+        padding: "clamp(72px, 9vw, 128px) 24px clamp(32px, 4vw, 56px)",
         borderTop: `1px solid ${TOKENS.hairline}`,
       }}
     >
@@ -596,31 +574,6 @@ const Calculators: React.FC = () => {
           </div>
         </div>
 
-        {/* CTA under cards */}
-        <div style={{ marginTop: 36, display: "flex", flexDirection: "column", alignItems: "center", gap: 10 }}>
-          <button
-            type="button"
-            onClick={() => setQuoteOpen(true)}
-            style={{
-              padding: "16px 44px",
-              borderRadius: 12,
-              border: "none",
-              background: TOKENS.brass,
-              color: "#fff",
-              fontFamily: FONTS.sans,
-              fontSize: 15,
-              fontWeight: 600,
-              letterSpacing: "0.01em",
-              cursor: "pointer",
-              boxShadow: "0 8px 20px -10px rgba(180,145,79,0.5)",
-            }}
-          >
-            Get my firm quote
-          </button>
-          <div style={{ fontFamily: FONTS.sans, fontSize: 12.5, color: TOKENS.inkMuted }}>
-            No charge until you approve the document estimate
-          </div>
-        </div>
       </div>
     </section>
 
