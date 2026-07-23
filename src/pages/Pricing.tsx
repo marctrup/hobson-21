@@ -680,7 +680,7 @@ const Calculators: React.FC = () => {
           >
             {/* LEFT */}
             <div style={{ display: "flex", flexDirection: "column" }}>
-              <div style={{ paddingTop: 0 }}>
+
 
 
               <div style={{ marginTop: 22, paddingTop: 18, borderTop: `1px solid ${TOKENS.brass}` }}>
