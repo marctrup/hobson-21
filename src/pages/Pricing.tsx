@@ -791,7 +791,7 @@ const Calculators: React.FC = () => {
                             letterSpacing: "0.06em",
                           }}
                         >
-                          £{perPerson} a person, seats in — a seat is £35
+                          £{perPerson} a person, seats included — a seat is £35
                         </div>
                       )}
                     </>
