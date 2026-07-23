@@ -49,7 +49,7 @@ Hobson uses a model like that for what models are genuinely good at — reading 
 
 **It answers only from your documents.** A general model's vast training knowledge can quietly import another lease's wording or a generic assumption. Hobson is bounded to your documents and defined property rules.
 
-**Its accuracy is measured.** Hobson is tested continuously against answers verified by property experts, so how right it is is known — and improving. A general model just gives you an answer.
+**Its accuracy is measured.** We test Hobson against a library of real leases where property experts have established the correct answer for every detail, and re-run that test whenever we change how it works — so how accurate it is is known, and improving. That's a benchmark built behind the scenes, not a person checking your answers: day to day, Hobson runs on its own. A general model just gives you an answer, with no measure of whether it's right.
 
 And the model isn't the hard part — frontier models are becoming a commodity anyone can call. The hard part is everything wrapped around it: capturing how property actually works, building the deterministic tools and the single calculation engine, and above all the validation framework that proves each answer against leases checked by hand by property experts. That takes a rare combination — property expertise, AI engineering and testing discipline in one team — and a long, deliberate build to get right. It's the part that can't be shortcut. Hobson is that layer, already built and being proven on real portfolios, so you get a system you can trust your portfolio to — not a raw tool you'd have to construct and fact-check yourself.`,
       },
