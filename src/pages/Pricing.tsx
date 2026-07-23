@@ -596,6 +596,16 @@ const Calculators: React.FC = () => {
             boxShadow: "0 12px 40px -20px rgba(180,145,79,0.35)",
           }}
         >
+          {/* Section heading — above hero image */}
+          <div style={{ marginBottom: "clamp(20px, 2.5vw, 32px)" }}>
+            <div style={{ fontFamily: FONTS.mono, fontSize: 11, letterSpacing: "0.24em", color: TOKENS.brass, textTransform: "uppercase", marginBottom: 14 }}>
+              With a human · one-off + monthly
+            </div>
+            <h3 style={{ fontFamily: FONTS.serif, fontWeight: 400, fontSize: "clamp(1.75rem, 2.8vw, 2.4rem)", lineHeight: 1.1, letterSpacing: "-0.02em", margin: 0, color: TOKENS.ink }}>
+              Everything above — <span style={{ fontStyle: "italic", color: TOKENS.brass }}>with a person behind it.</span>
+            </h3>
+          </div>
+
           {/* Hero image — AI + human, together */}
           <div
             className="hp-concierge-hero"
@@ -604,9 +614,10 @@ const Calculators: React.FC = () => {
               gridTemplateColumns: "auto minmax(0, 1fr)",
               alignItems: "center",
               gap: "clamp(16px, 2.5vw, 32px)",
-              margin: "clamp(-16px, -2vw, -32px) 0 clamp(8px, 1vw, 14px)",
+              margin: "0 0 clamp(16px, 2vw, 28px)",
             }}
           >
+
             <img
               src={owlHumanHighfive.url}
               alt="Hobson and a human colleague, working together"
@@ -669,12 +680,8 @@ const Calculators: React.FC = () => {
           >
             {/* LEFT */}
             <div style={{ display: "flex", flexDirection: "column" }}>
-              <div style={{ fontFamily: FONTS.mono, fontSize: 11, letterSpacing: "0.24em", color: TOKENS.brass, textTransform: "uppercase", marginBottom: 14 }}>
-                With a human · one-off + monthly
-              </div>
-              <h3 style={{ fontFamily: FONTS.serif, fontWeight: 400, fontSize: "clamp(1.75rem, 2.8vw, 2.4rem)", lineHeight: 1.1, letterSpacing: "-0.02em", margin: 0, color: TOKENS.ink }}>
-                Everything above — <span style={{ fontStyle: "italic", color: TOKENS.brass }}>with a person behind it.</span>
-              </h3>
+
+
 
               <div style={{ marginTop: 22, paddingTop: 18, borderTop: `1px solid ${TOKENS.brass}` }}>
                 <p style={{ fontFamily: FONTS.serif, fontStyle: "italic", fontSize: "clamp(1.05rem, 1.5vw, 1.2rem)", lineHeight: 1.55, color: TOKENS.ink, margin: 0 }}>
