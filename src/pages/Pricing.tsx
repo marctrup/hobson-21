@@ -764,7 +764,7 @@ const Calculators: React.FC = () => {
                       letterSpacing: "0.06em",
                     }}
                   >
-                    £3.50 a document — alone it is 50p
+                    {conciergeBelowMin ? "Minimum 100 documents" : "£3.50 a document — alone it is 50p"}
                   </div>
                 </div>
 
