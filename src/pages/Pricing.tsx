@@ -234,28 +234,6 @@ const TogetherCard: React.FC<{ people: number; docEstimate: number; seatsMonthly
             </div>
           </div>
 
-          <button
-            type="button"
-            onClick={() => setOpen(true)}
-            style={{
-              padding: "14px 22px",
-              borderRadius: 12,
-              border: "none",
-              background: TOKENS.brass,
-              color: "#fff",
-              fontFamily: FONTS.sans,
-              fontSize: 15,
-              fontWeight: 600,
-              letterSpacing: "0.01em",
-              cursor: "pointer",
-              boxShadow: "0 8px 20px -10px rgba(180,145,79,0.5)",
-            }}
-          >
-            Get my firm quote
-          </button>
-          <div style={{ fontFamily: FONTS.sans, fontSize: 12.5, color: TOKENS.inkMuted, textAlign: "center" }}>
-            No charge until you approve the document estimate
-          </div>
         </div>
       </div>
 
