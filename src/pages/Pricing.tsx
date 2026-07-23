@@ -734,8 +734,8 @@ const Calculators: React.FC = () => {
               </div>
 
               <div style={{ marginTop: 14 }}>
-                <Eyebrow color={T.gold} style={{ marginBottom: 8 }}>How big is your team</Eyebrow>
-                <div role="radiogroup" aria-label="How big is your team" style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+                <Eyebrow color={T.gold} style={{ marginBottom: 8 }}>How big is your team (up to)</Eyebrow>
+                <div role="radiogroup" aria-label="How big is your team" style={{ display: "flex", gap: 6 }}>
                   {BANDS.map((b) => {
                     const active = b.id === conciergeBandId;
                     return (
@@ -749,16 +749,18 @@ const Calculators: React.FC = () => {
                           if (b.price === null) setTimeout(scrollToEnterprise, 60);
                         }}
                         style={{
-                          padding: "6px 10px",
+                          flex: 1,
+                          padding: "6px 6px",
                           borderRadius: 999,
                           border: `1px solid ${active ? T.gold : T.line}`,
                           background: active ? "rgba(180,145,79,0.14)" : "#fff",
                           color: active ? T.ink : T.muted,
                           fontFamily: FONTS.mono,
-                          fontSize: 10.5,
+                          fontSize: 11,
                           letterSpacing: "0.08em",
                           textTransform: "uppercase",
                           cursor: "pointer",
+                          textAlign: "center",
                         }}
                       >
                         {b.label}
@@ -769,7 +771,7 @@ const Calculators: React.FC = () => {
               </div>
 
               {/* Prices */}
-              <div style={{ marginTop: 16, display: "flex", flexDirection: "column", gap: 12 }}>
+              <div style={{ marginTop: "auto", paddingTop: 20, display: "flex", flexDirection: "column", gap: 12 }}>
                 <div>
                   <Eyebrow color={T.faint} style={{ marginBottom: 4 }}>Onboarding — one-off</Eyebrow>
                   <div style={{ fontFamily: FONTS.serif, fontSize: 30, lineHeight: 1, color: T.ink, letterSpacing: "-0.02em" }}>
