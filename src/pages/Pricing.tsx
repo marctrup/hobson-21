@@ -459,6 +459,7 @@ const Calculators: React.FC = () => {
                       fontSize: 15,
                       lineHeight: 1.5,
                       color: T.ink,
+                      maxWidth: 260,
                     }}
                   >
                     Give me your documents, and a seat for each person who needs me. That is all it takes to put me to work — quietly, and on your side.
