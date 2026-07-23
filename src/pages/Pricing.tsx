@@ -443,6 +443,65 @@ const Calculators: React.FC = () => {
               alignItems: "stretch",
             }}
           >
+            {/* ============ LEFT column wrapper ============ */}
+            <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+              {/* Owl + quote, above the AI container (mirrors the right) */}
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "auto 1fr",
+                  alignItems: "center",
+                  gap: 18,
+                  padding: "4px 2px",
+                }}
+              >
+                <img
+                  src={owlMascot}
+                  alt="Hobson"
+                  style={{ width: 130, height: "auto", display: "block" }}
+                />
+                <blockquote style={{ margin: 0, position: "relative", paddingLeft: 22 }}>
+                  <span
+                    aria-hidden
+                    style={{
+                      position: "absolute",
+                      left: 0,
+                      top: -6,
+                      fontFamily: FONTS.serif,
+                      fontSize: 42,
+                      lineHeight: 1,
+                      color: T.gold,
+                    }}
+                  >
+                    “
+                  </span>
+                  <p
+                    style={{
+                      margin: 0,
+                      fontFamily: FONTS.serif,
+                      fontStyle: "italic",
+                      fontSize: 15,
+                      lineHeight: 1.5,
+                      color: T.ink,
+                    }}
+                  >
+                    Give me your documents, and a seat for each person who needs me. That is all it takes to put me to work — quietly, and on your side.
+                  </p>
+                  <div
+                    style={{
+                      marginTop: 8,
+                      fontFamily: FONTS.mono,
+                      fontSize: 10.5,
+                      letterSpacing: "0.18em",
+                      textTransform: "uppercase",
+                      color: T.gold,
+                    }}
+                  >
+                    — Hobson
+                  </div>
+                </blockquote>
+              </div>
+
             {/* ============ LEFT: AI container ============ */}
             <div
               style={{
@@ -617,6 +676,9 @@ const Calculators: React.FC = () => {
                 No charge until you approve the document estimate.
               </p>
             </div>
+            </div>
+
+
 
             {/* ============ RIGHT column wrapper ============ */}
             <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
