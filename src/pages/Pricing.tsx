@@ -463,7 +463,8 @@ const Calculators: React.FC = () => {
                     </div>
                     <div style={{ display: "flex", alignItems: "baseline", gap: 10, flexWrap: "wrap" }}>
                       <div style={{ fontFamily: FONTS.serif, fontSize: "clamp(2.6rem, 4.8vw, 3.75rem)", lineHeight: 1, color: TOKENS.ink, letterSpacing: "-0.02em" }}>
-                        {fmtGBP(roundNice(blendedEst))}
+                        {fmtGBP2(blendedEst)}
+
                       </div>
                       <span style={{ fontFamily: FONTS.mono, fontSize: 14, color: TOKENS.brass }}>one-off</span>
                     </div>
