@@ -509,7 +509,7 @@ const Calculators: React.FC = () => {
 
                   <Slider id="docs" label="Documents" min={10} max={600} value={docs} onChange={setDocs} suffix="docs" />
                   <div style={{ marginTop: 16 }}>
-                    <Eyebrow color={T.faint} style={{ marginBottom: 4 }}>Estimate — one-off</Eyebrow>
+                    <Eyebrow color={T.faint} style={{ marginBottom: 4, fontWeight: 700 }}>Estimate — one-off</Eyebrow>
                     <div style={{ fontFamily: FONTS.serif, fontSize: 30, lineHeight: 1, color: T.ink, letterSpacing: "-0.02em" }}>
                       {fmtGBP2(readEstimate)}
                     </div>
@@ -531,7 +531,7 @@ const Calculators: React.FC = () => {
 
                   <Slider id="people" label="People" min={2} max={30} value={people} onChange={setPeople} suffix={people === 1 ? "person" : "people"} />
                   <div style={{ marginTop: 16 }}>
-                    <Eyebrow color={T.faint} style={{ marginBottom: 4 }}>{people} × £35 — every month</Eyebrow>
+                    <Eyebrow color={T.faint} style={{ marginBottom: 4, fontWeight: 700 }}>{people} × £35 — every month</Eyebrow>
                     <div style={{ fontFamily: FONTS.serif, fontSize: 30, lineHeight: 1, color: T.ink, letterSpacing: "-0.02em" }}>
                       {fmtGBP(seatsMonthly)}
                     </div>
