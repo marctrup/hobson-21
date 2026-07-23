@@ -406,31 +406,6 @@ const Calculators: React.FC = () => {
         }}
       >
         <div style={{ maxWidth: 1280, margin: "0 auto" }}>
-          {/* Hero speech bubble — kept above the row */}
-          <div style={{ maxWidth: 820, marginBottom: 40 }}>
-            <div style={{ display: "flex", alignItems: "center", gap: "clamp(16px, 3vw, 28px)", flexWrap: "wrap" }}>
-              <img src={owlMascot} alt="Hobson" style={{ width: "clamp(72px, 10vw, 108px)", height: "auto", flexShrink: 0 }} />
-              <div
-                className="hp-hero-bubble"
-                style={{
-                  position: "relative",
-                  background: "#F3EFFA",
-                  border: "1px solid #E4DAF3",
-                  borderRadius: 20,
-                  padding: "18px 22px",
-                  maxWidth: 520,
-                  fontFamily: FONTS.serif,
-                  fontStyle: "italic",
-                  fontSize: "clamp(1rem, 1.5vw, 1.2rem)",
-                  lineHeight: 1.5,
-                  color: T.ink,
-                  boxShadow: "0 20px 60px -30px rgba(45,45,45,0.25)",
-                }}
-              >
-                {HERO_MESSAGE}
-              </div>
-            </div>
-          </div>
 
           {/* Two-column top-level grid: AI container (left) + Human box (right) */}
           <div
@@ -458,8 +433,9 @@ const Calculators: React.FC = () => {
                 <img
                   src={owlMascot}
                   alt="Hobson"
-                  style={{ width: 130, height: "auto", display: "block" }}
+                  style={{ width: 200, height: "auto", display: "block" }}
                 />
+
                 <blockquote style={{ margin: 0, position: "relative", paddingLeft: 22 }}>
                   <span
                     aria-hidden
