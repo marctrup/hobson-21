@@ -2,8 +2,9 @@ import React, { useMemo, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { GlobalHeader } from "@/components/GlobalHeader";
 import { InterestModal } from "@/components/InterestModal";
-import owlMascot from "@/assets/owl-mascot.png";
+import owlMascot from "@/assets/hobson-owl-5.png.asset.json";
 import owlHumanHighfive from "@/assets/owl-human-highfive-cutout.png.asset.json";
+
 
 
 
@@ -437,7 +438,7 @@ const Calculators: React.FC = () => {
               {/* Mascot inside box */}
               <div style={{ display: "flex", justifyContent: "center", alignItems: "flex-end", height: 120, marginBottom: 6 }}>
                 <img
-                  src={owlMascot}
+                  src={owlMascot.url}
                   alt="Hobson"
                   style={{ width: 110, height: 110, display: "block", objectFit: "contain" }}
                 />
