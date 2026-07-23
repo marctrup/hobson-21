@@ -3,6 +3,8 @@ import { Helmet } from "react-helmet-async";
 import { GlobalHeader } from "@/components/GlobalHeader";
 import { InterestModal } from "@/components/InterestModal";
 import owlMascot from "@/assets/owl-mascot.png";
+import owlHumanHighfive from "@/assets/owl-human-highfive.png.asset.json";
+
 
 
 
@@ -641,7 +643,44 @@ const Calculators: React.FC = () => {
             boxShadow: "0 12px 40px -20px rgba(180,145,79,0.35)",
           }}
         >
+          {/* Hero band — AI + human, together */}
           <div
+            className="hp-concierge-hero"
+
+            style={{
+              margin: "clamp(-28px, -3.5vw, -56px) clamp(-28px, -3.5vw, -56px) clamp(24px, 3vw, 40px)",
+              padding: "clamp(20px, 3vw, 36px) clamp(28px, 3.5vw, 56px)",
+              borderTopLeftRadius: 22,
+              borderTopRightRadius: 22,
+              background: `radial-gradient(120% 140% at 30% 40%, ${TOKENS.paperSoft} 0%, ${TOKENS.paper} 55%, #F2EAD9 100%)`,
+              borderBottom: `1px solid ${TOKENS.hairline}`,
+              display: "grid",
+              gridTemplateColumns: "minmax(0, 1fr) auto",
+              gap: "clamp(20px, 3vw, 40px)",
+              alignItems: "center",
+            }}
+          >
+            <div>
+              <div style={{ fontFamily: FONTS.mono, fontSize: 10.5, letterSpacing: "0.24em", color: TOKENS.brass, textTransform: "uppercase", marginBottom: 10 }}>
+                In the loop, together
+              </div>
+              <p style={{ fontFamily: FONTS.serif, fontStyle: "italic", fontSize: "clamp(1.15rem, 1.7vw, 1.4rem)", lineHeight: 1.4, color: TOKENS.ink, margin: 0, maxWidth: 460 }}>
+                Speed of a machine. Judgement of a person. The two, working as one.
+              </p>
+            </div>
+            <img
+              src={owlHumanHighfive.url}
+              alt="Hobson and a human colleague, working together"
+              style={{
+                width: "clamp(180px, 22vw, 280px)",
+                height: "auto",
+                display: "block",
+                filter: "drop-shadow(0 12px 24px rgba(45,45,45,0.12))",
+              }}
+            />
+          </div>
+          <div
+
             className="hp-concierge-grid"
             style={{
               display: "grid",
@@ -905,7 +944,10 @@ const Calculators: React.FC = () => {
       }
       @media (max-width: 900px) {
         .hp-concierge-grid { grid-template-columns: 1fr !important; }
+        .hp-concierge-hero { grid-template-columns: 1fr !important; text-align: center; }
+        .hp-concierge-hero img { margin: 0 auto; }
       }
+
 
       .hp-slider-dark::-webkit-slider-runnable-track { background: rgba(255,255,255,0.18); }
       .hp-slider-dark::-moz-range-track { background: rgba(255,255,255,0.18); }
