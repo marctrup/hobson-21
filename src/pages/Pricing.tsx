@@ -437,7 +437,7 @@ const Calculators: React.FC = () => {
                 />
               </div>
 
-              </div>
+
 
             {/* ============ LEFT: single box, two sections ============ */}
             <div
