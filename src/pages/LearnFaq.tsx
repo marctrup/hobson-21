@@ -34,6 +34,27 @@ const CATEGORIES: Category[] = [
 In short: ChatGPT predicts a likely answer. Hobson extracts the *actual* one from your documents, tracks how they change over time, and shows you the proof.`,
       },
       {
+        q: "How is Hobson different from an AI co-worker like Claude?",
+        a: `Claude and other AI co-workers are powerful — they can already read a document, cite it and remember, so this is a fair question. The difference is that Claude is a model, and Hobson is a system built around one.
+
+A model is brilliant but probabilistic: ask it the same question twice and you can get two answers; it can transpose a figure, miss the seventh variation in a stack, or produce a confident citation for wording that isn't quite there. Reading, citing and remembering are things it usually does well — but each is a behaviour you're trusting to be right this time, with no way to know if it wasn't.
+
+Hobson uses a model like that for what models are genuinely good at — reading and extracting — and deliberately doesn't trust it for the rest:
+
+**It computes with fixed rules, not the model.** Every figure, date and calculation is produced by deterministic code and a single calculation engine, so once a document is in the record, the same question gives the same, checkable answer every time.
+
+**It turns documents into records, not recollection.** Hobson extracts each document into structured fields — every value with its source — held permanently and queryable across your whole portfolio. That's a database you can trust for "total rent across 500 units," not a summary the model is recalling.
+
+**Its citations are captured, not generated.** The source travels with the fact from extraction and is checked to actually contain the figure — so a reference can't be a plausible invention.
+
+**It answers only from your documents.** A general model's vast training knowledge can quietly import another lease's wording or a generic assumption. Hobson is bounded to your documents and defined property rules.
+
+**Its accuracy is measured.** Hobson is tested continuously against answers verified by property experts, so how right it is is known — and improving. A general model just gives you an answer.
+
+And the model isn't the hard part — frontier models are becoming a commodity anyone can call. The hard part is everything wrapped around it: capturing how property actually works, building the deterministic tools and the single calculation engine, and above all the validation framework that proves each answer against leases checked by hand by property experts. That takes a rare combination — property expertise, AI engineering and testing discipline in one team — and a long, deliberate build to get right. It's the part that can't be shortcut. Hobson is that layer, already built and being proven on real portfolios, so you get a system you can trust your portfolio to — not a raw tool you'd have to construct and fact-check yourself.`,
+      },
+      {
+
         q: "Is Hobson ever afraid to say it doesn't know?",
         a: `Never — and it's one of the biggest differences between Hobson and a general AI.
 
