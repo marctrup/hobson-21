@@ -697,7 +697,7 @@ const Calculators: React.FC = () => {
               </div>
 
               <div style={{ marginTop: 14 }}>
-                <Eyebrow color={T.gold} style={{ marginBottom: 8 }}>How big is your team (up to)</Eyebrow>
+                <Eyebrow color={T.gold} style={{ marginBottom: 8, fontWeight: 700 }}>How big is your team (up to)</Eyebrow>
                 <div role="radiogroup" aria-label="How big is your team" style={{ display: "flex", gap: 6 }}>
                   {BANDS.map((b) => {
                     const active = b.id === conciergeBandId;
