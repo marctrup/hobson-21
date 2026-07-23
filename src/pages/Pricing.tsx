@@ -402,7 +402,7 @@ const Calculators: React.FC = () => {
         style={{
           background: T.cream,
           color: T.ink,
-          padding: "120px 24px 56px",
+          padding: "200px 24px 56px",
           borderTop: `1px solid ${T.line}`,
         }}
       >
@@ -621,8 +621,9 @@ const Calculators: React.FC = () => {
                 }}
                 className="hp-card-h"
               >
-                Everything to the left — but{" "}
+                Everything to the left —{" "}
                 <span style={{ fontStyle: "italic", color: T.gold }}>with a person behind it.</span>
+
               </h3>
               <p style={{ fontFamily: FONTS.sans, fontSize: 13.5, lineHeight: 1.55, color: T.muted, margin: 0 }} className="hp-card-blurb">
                 That box is me, working on my own. This one is me, working with one of my colleagues.
