@@ -618,6 +618,65 @@ const Calculators: React.FC = () => {
               </p>
             </div>
 
+            {/* ============ RIGHT column wrapper ============ */}
+            <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+              {/* Owl + quote, above the human card */}
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "auto 1fr",
+                  alignItems: "center",
+                  gap: 18,
+                  padding: "4px 2px",
+                }}
+              >
+                <img
+                  src={owlHumanHighfive.url}
+                  alt="Hobson high-fiving a person"
+                  style={{ width: 130, height: "auto", display: "block" }}
+                />
+                <blockquote style={{ margin: 0, position: "relative", paddingLeft: 22 }}>
+                  <span
+                    aria-hidden
+                    style={{
+                      position: "absolute",
+                      left: 0,
+                      top: -6,
+                      fontFamily: FONTS.serif,
+                      fontSize: 42,
+                      lineHeight: 1,
+                      color: T.gold,
+                    }}
+                  >
+                    “
+                  </span>
+                  <p
+                    style={{
+                      margin: 0,
+                      fontFamily: FONTS.serif,
+                      fontStyle: "italic",
+                      fontSize: 15,
+                      lineHeight: 1.5,
+                      color: T.ink,
+                    }}
+                  >
+                    I am fast, and I am accurate. But accurate and certain are not the same thing, and when you need certain, you need a person. I keep several on hand for exactly that reason.
+                  </p>
+                  <div
+                    style={{
+                      marginTop: 8,
+                      fontFamily: FONTS.mono,
+                      fontSize: 10.5,
+                      letterSpacing: "0.18em",
+                      textTransform: "uppercase",
+                      color: T.gold,
+                    }}
+                  >
+                    — Hobson
+                  </div>
+                </blockquote>
+              </div>
+
             {/* ============ RIGHT: Human option ============ */}
             <div
               style={{
