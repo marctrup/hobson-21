@@ -749,7 +749,7 @@ const Calculators: React.FC = () => {
               {/* Bullets */}
               <ul style={{ listStyle: "none", padding: 0, margin: "14px 0 0" }} className="hp-bullets">
                 {[
-                  { h: "Professor's full read", b: "Every document read, understood and stored." },
+                  
                   { h: "A person checks the work", b: "Every title and every address confirmed before it reaches you." },
                   { h: "That colleague stays", b: "A named contact, for as long as you want them." },
                 ].map((item, i) => (
