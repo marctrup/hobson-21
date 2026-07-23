@@ -809,14 +809,6 @@ const Calculators: React.FC = () => {
               </ol>
 
 
-              <div style={{ height: 1, background: TOKENS.hairline, margin: "24px 0" }} />
-
-              <div style={{ display: "flex", alignItems: "flex-start", gap: 14 }}>
-                <img src={owlMascot} alt="" style={{ width: 44, height: 44, flexShrink: 0, marginTop: 2 }} />
-                <p style={{ fontFamily: FONTS.serif, fontStyle: "italic", fontSize: "clamp(0.98rem, 1.4vw, 1.1rem)", lineHeight: 1.55, color: TOKENS.ink, margin: 0 }}>
-                  &ldquo;I am fast, and I am accurate. But accurate and certain are not the same thing, and when you need certain, you need a person. I keep several on hand for exactly that reason.&rdquo;
-                </p>
-              </div>
             </div>
 
             {/* RIGHT */}
