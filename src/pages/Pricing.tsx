@@ -637,21 +637,41 @@ const Calculators: React.FC = () => {
             {/* LEFT */}
             <div style={{ display: "flex", flexDirection: "column" }}>
               <div style={{ fontFamily: FONTS.mono, fontSize: 11, letterSpacing: "0.24em", color: TOKENS.brass, textTransform: "uppercase", marginBottom: 14 }}>
-                Human · one-off + monthly
+                With a human · one-off + monthly
               </div>
               <h3 style={{ fontFamily: FONTS.serif, fontWeight: 400, fontSize: "clamp(1.75rem, 2.8vw, 2.4rem)", lineHeight: 1.1, letterSpacing: "-0.02em", margin: 0, color: TOKENS.ink }}>
-                A person checks my reading.
+                Everything above — with a person behind it.
               </h3>
-              <p style={{ fontFamily: FONTS.sans, fontSize: 15.5, lineHeight: 1.65, color: TOKENS.inkSoft, marginTop: 18 }}>
-                £3.50 per document. My colleagues confirm every document is correctly titled and every address correctly labelled before it reaches you — no document filed against the wrong property. Then one of them stays with you.
+
+              <div style={{ marginTop: 22, paddingTop: 18, borderTop: `1px solid ${TOKENS.brass}` }}>
+                <p style={{ fontFamily: FONTS.serif, fontStyle: "italic", fontSize: "clamp(1.05rem, 1.5vw, 1.2rem)", lineHeight: 1.55, color: TOKENS.ink, margin: 0 }}>
+                  The two options above are me, working on my own. This one is me, working with one of my colleagues.
+                </p>
+              </div>
+
+              <p style={{ fontFamily: FONTS.sans, fontSize: 15.5, lineHeight: 1.65, color: TOKENS.inkSoft, marginTop: 20 }}>
+                £3.50 per document rather than 50p. The difference is a person&rsquo;s time. Before anything reaches you, one of my colleagues confirms every document is correctly titled and every address correctly labelled — nothing filed against the wrong property, ever. Then they stay: a named contact, for as long as you want them.
               </p>
+
+              <ul style={{ listStyle: "none", padding: 0, margin: "18px 0 0", display: "flex", flexDirection: "column", gap: 8 }}>
+                {[
+                  "Professor's full read, exactly as above",
+                  "Every title and every address confirmed by a person",
+                  "A named colleague who stays with you, month after month",
+                ].map((item) => (
+                  <li key={item} style={{ display: "flex", alignItems: "flex-start", gap: 10, fontFamily: FONTS.sans, fontSize: 14.5, lineHeight: 1.5, color: TOKENS.ink }}>
+                    <span aria-hidden="true" style={{ color: TOKENS.brass, fontFamily: FONTS.mono, fontSize: 14, lineHeight: 1.5, flexShrink: 0 }}>—</span>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
 
               <div style={{ height: 1, background: TOKENS.hairline, margin: "24px 0" }} />
 
               <div style={{ display: "flex", alignItems: "flex-start", gap: 14 }}>
                 <img src={owlMascot} alt="" style={{ width: 44, height: 44, flexShrink: 0, marginTop: 2 }} />
                 <p style={{ fontFamily: FONTS.serif, fontStyle: "italic", fontSize: "clamp(0.98rem, 1.4vw, 1.1rem)", lineHeight: 1.55, color: TOKENS.ink, margin: 0 }}>
-                  &ldquo;I am quick, and I am careful. But I am not a person, and some things you would rather a person had looked at. I understand that entirely.&rdquo;
+                  &ldquo;I am fast, and I am accurate. But accurate and certain are not the same thing, and when you need certain, you need a person. I keep several on hand for exactly that reason.&rdquo;
                 </p>
               </div>
             </div>
