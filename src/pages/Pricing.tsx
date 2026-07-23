@@ -640,7 +640,7 @@ const Calculators: React.FC = () => {
                 With a human · one-off + monthly
               </div>
               <h3 style={{ fontFamily: FONTS.serif, fontWeight: 400, fontSize: "clamp(1.75rem, 2.8vw, 2.4rem)", lineHeight: 1.1, letterSpacing: "-0.02em", margin: 0, color: TOKENS.ink }}>
-                Everything above — with a person behind it.
+                Everything above — <span style={{ fontStyle: "italic", color: TOKENS.brass }}>with a person behind it.</span>
               </h3>
 
               <div style={{ marginTop: 22, paddingTop: 18, borderTop: `1px solid ${TOKENS.brass}` }}>
