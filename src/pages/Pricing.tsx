@@ -1000,7 +1000,7 @@ export default function Pricing() {
         <Calculators />
 
         {/* ---------------- Section 4 — Enterprise talk-to-us ---------------- */}
-        <section style={{ padding: "clamp(56px, 8vw, 112px) 24px", background: TOKENS.paper, borderTop: `1px solid ${TOKENS.hairline}` }}>
+        <section id="enterprise" style={{ padding: "clamp(56px, 8vw, 112px) 24px", background: TOKENS.paper, borderTop: `1px solid ${TOKENS.hairline}`, scrollMarginTop: 80 }}>
           <div style={{ maxWidth: 980, margin: "0 auto" }}>
             <div
               style={{
@@ -1030,7 +1030,7 @@ export default function Pricing() {
                 </h2>
 
                 <p style={{ fontFamily: FONTS.sans, fontSize: 17, lineHeight: 1.7, color: TOKENS.inkSoft, margin: "0 0 32px", maxWidth: 620 }}>
-                  If your portfolio is large, your structure complex, or your requirements particular, the calculator will only take us so far. I am happy to understand your organisation properly and design something around it. The complete Hobson, fitted to you.
+                  If your portfolio is large, your structure complex, your team above twenty, or your requirements particular, the calculator will only take us so far. I am happy to understand your organisation properly and design something around it. The complete Hobson, fitted to you.
                 </p>
                 <div>
                   <a href="mailto:info@hobsonschoice.ai" className="hp-btn hp-btn-brass">Talk to me</a>
