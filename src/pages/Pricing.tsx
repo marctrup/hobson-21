@@ -502,7 +502,7 @@ const Calculators: React.FC = () => {
               >
                 {/* ---- Section A: reading ---- */}
                 <div style={{ display: "flex", flexDirection: "column" }}>
-                  <Eyebrow color={T.gold}>Reading · one-off</Eyebrow>
+                  <Eyebrow color={T.gold} style={{ fontWeight: 700 }}>Reading · one-off</Eyebrow>
                   <p style={{ fontFamily: FONTS.sans, fontSize: 13, lineHeight: 1.5, color: T.muted, margin: "10px 0 14px" }}>
                     £0.25–£1.00 per document depending on complexity. A typical mix averages 50p. Read once, remembered for good.
                   </p>
