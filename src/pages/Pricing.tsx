@@ -202,8 +202,7 @@ const TogetherCard: React.FC<{ people: number; docEstimate: number; seatsMonthly
 
           <div style={{ height: 1, background: TOKENS.hairline, margin: "24px 0" }} />
 
-          <div style={{ display: "flex", alignItems: "flex-start", gap: 14 }}>
-            <img src={owlMascot} alt="" style={{ width: 44, height: 44, flexShrink: 0, marginTop: 2 }} />
+          <div>
             <p style={{ fontFamily: FONTS.serif, fontStyle: "italic", fontSize: "clamp(0.98rem, 1.4vw, 1.1rem)", lineHeight: 1.55, color: TOKENS.ink, margin: 0 }}>
               &ldquo;I would rather you experience me properly before deciding. Once Professor knows your documents, the first month is mine to prove my worth.&rdquo;
             </p>
