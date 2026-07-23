@@ -690,7 +690,7 @@ const Calculators: React.FC = () => {
                 <div aria-hidden="true" style={{ fontFamily: FONTS.mono, color: TOKENS.brass, fontSize: 18 }}>→</div>
                 <div style={{ textAlign: "center" }}>
                   <div style={{ fontFamily: FONTS.mono, fontSize: 10, letterSpacing: "0.18em", color: TOKENS.brass, textTransform: "uppercase", marginBottom: 4 }}>
-                    With a colleague
+                    With a person
                   </div>
                   <div style={{ fontFamily: FONTS.serif, fontSize: "clamp(1.4rem, 2.2vw, 1.9rem)", color: TOKENS.ink, letterSpacing: "-0.02em", fontWeight: 500 }}>
                     £3.50<span style={{ fontFamily: FONTS.mono, fontSize: 11, color: TOKENS.inkMuted, marginLeft: 4 }}>/ doc</span>
