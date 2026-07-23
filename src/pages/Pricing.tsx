@@ -12,11 +12,11 @@ import owlMascot from "@/assets/owl-mascot.png";
 // ============================================================================
 const SEAT = 35; // £ per person per month
 const MIN_SEATS = 2;
-const SIMPLE = 0.02; // £ per simple document
-const COMPLEX = 0.10; // £ per complex document
-const MIX_COMPLEX_RATIO = 1 / 5; // 1 complex in every 5 documents
-const BLENDED = SIMPLE * (1 - MIX_COMPLEX_RATIO) + COMPLEX * MIX_COMPLEX_RATIO; // ~£0.036
-const HANDOFF = 500; // documents threshold for personal quote
+const SIMPLE = 0.35; // £ per document — low end of range
+const COMPLEX = 0.75; // £ per document — high end of range
+const BLENDED = 0.50; // £ per document — typical portfolio average
+const HANDOFF = 600; // documents threshold for personal quote
+
 const PRICING_HEADING = "See what I cost.";
 
 // ============================================================================
