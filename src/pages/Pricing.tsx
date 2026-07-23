@@ -688,10 +688,10 @@ const Calculators: React.FC = () => {
               <div style={{ marginTop: 16 }}>
                 <Slider
                   id="concierge-docs"
-                  label="Documents to onboard"
-                  min={100}
+                  label="Documents"
+                  min={10}
                   max={2000}
-                  step={100}
+                  step={10}
                   value={conciergeDocs}
                   onChange={setConciergeDocs}
                   suffix="docs"
