@@ -772,7 +772,7 @@ const Calculators: React.FC = () => {
                         {fmtGBP2(conciergeOnboard)}
                       </div>
                     </div>
-                    <div style={{ display: "inline-flex", alignItems: "baseline", flexWrap: "wrap", gap: 8, marginTop: 10, padding: "8px 14px", background: TOKENS.cream, border: `1px solid ${TOKENS.brass}55`, borderRadius: 999 }}>
+                    <div style={{ display: "inline-flex", alignItems: "baseline", flexWrap: "wrap", gap: 8, marginTop: 10, padding: "8px 14px", background: TOKENS.paper, border: `1px solid ${TOKENS.brass}55`, borderRadius: 999 }}>
                       <span style={{ fontFamily: FONTS.serif, fontSize: 15, fontWeight: 600, color: TOKENS.brass, letterSpacing: "-0.01em" }}>£3.50 per document</span>
                       <span style={{ fontFamily: FONTS.mono, fontSize: 11, color: TOKENS.inkMuted }}>Professor alone · 50p</span>
                     </div>
