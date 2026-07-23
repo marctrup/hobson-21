@@ -567,8 +567,35 @@ const Calculators: React.FC = () => {
             </div>
           </div>
         </div>
+
+        {/* CTA under cards */}
+        <div style={{ marginTop: 36, display: "flex", flexDirection: "column", alignItems: "center", gap: 10 }}>
+          <button
+            type="button"
+            onClick={() => setQuoteOpen(true)}
+            style={{
+              padding: "16px 44px",
+              borderRadius: 12,
+              border: "none",
+              background: TOKENS.brass,
+              color: "#fff",
+              fontFamily: FONTS.sans,
+              fontSize: 15,
+              fontWeight: 600,
+              letterSpacing: "0.01em",
+              cursor: "pointer",
+              boxShadow: "0 8px 20px -10px rgba(180,145,79,0.5)",
+            }}
+          >
+            Get my firm quote
+          </button>
+          <div style={{ fontFamily: FONTS.sans, fontSize: 12.5, color: TOKENS.inkMuted }}>
+            No charge until you approve the document estimate
+          </div>
+        </div>
       </div>
     </section>
+
 
     {/* ============ TOGETHER — same paper, faint primary wash ============ */}
     <section
