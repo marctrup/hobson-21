@@ -335,9 +335,21 @@ const Calculators: React.FC = () => {
   const [docs, setDocs] = useState(305);
   const [quoteOpen, setQuoteOpen] = useState(false);
   const [conciergeDocs, setConciergeDocs] = useState(300);
-  const [conciergePeople, setConciergePeople] = useState(3);
+  const [conciergeBandId, setConciergeBandId] = useState<string>("5");
   const [conciergeOpen, setConciergeOpen] = useState(false);
 
+  const CONCIERGE_BANDS: Array<{ id: string; label: string; ceiling: number | null; price: number | null }> = [
+    { id: "2", label: "Up to 2", ceiling: 2, price: 250 },
+    { id: "5", label: "Up to 5", ceiling: 5, price: 500 },
+    { id: "10", label: "Up to 10", ceiling: 10, price: 900 },
+    { id: "20", label: "Up to 20", ceiling: 20, price: 1500 },
+    { id: "20+", label: "More than 20", ceiling: null, price: null },
+  ];
+  const conciergeBand = CONCIERGE_BANDS.find((b) => b.id === conciergeBandId)!;
+  const conciergeIsOverflow = conciergeBand.price === null;
+  const conciergePerPerson = conciergeBand.price && conciergeBand.ceiling
+    ? Math.round(conciergeBand.price / conciergeBand.ceiling)
+    : null;
 
   const billedSeats = Math.max(people, MIN_SEATS);
   const seatsMonthly = billedSeats * SEAT;
@@ -348,7 +360,11 @@ const Calculators: React.FC = () => {
   const high = docs * COMPLEX;
 
   const conciergeOnboard = conciergeDocs * 3.5;
-  const conciergeMonthly = conciergePeople * 80;
+
+  const scrollToEnterprise = () => {
+    const el = document.getElementById("enterprise");
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
 
 
 
