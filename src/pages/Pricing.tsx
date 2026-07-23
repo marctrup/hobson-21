@@ -402,7 +402,7 @@ const Calculators: React.FC = () => {
         style={{
           background: T.cream,
           color: T.ink,
-          padding: "56px 24px",
+          padding: "120px 24px 56px",
           borderTop: `1px solid ${T.line}`,
         }}
       >
@@ -469,7 +469,7 @@ const Calculators: React.FC = () => {
               }}
             >
               {/* Mascot inside box */}
-              <div style={{ display: "flex", justifyContent: "center", alignItems: "flex-end", height: 120, marginBottom: 6 }}>
+              <div style={{ display: "flex", justifyContent: "flex-start", alignItems: "flex-end", height: 120, marginBottom: 6 }}>
                 <img
                   src={owlMascot.url}
                   alt="Hobson"
@@ -600,7 +600,7 @@ const Calculators: React.FC = () => {
               }}
             >
               {/* Mascot inside box */}
-              <div style={{ display: "flex", justifyContent: "center", alignItems: "flex-end", height: 120, marginBottom: 6 }}>
+              <div style={{ display: "flex", justifyContent: "flex-start", alignItems: "flex-end", height: 120, marginBottom: 6 }}>
                 <img
                   src={owlHumanHighfive.url}
                   alt="Hobson high-fiving a person"
