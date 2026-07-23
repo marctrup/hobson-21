@@ -2,8 +2,9 @@ import React, { useMemo, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { GlobalHeader } from "@/components/GlobalHeader";
 import { InterestModal } from "@/components/InterestModal";
-import owlMascot from "@/assets/owl-mascot.png";
+import owlMascot from "@/assets/hobson-owl-5.png.asset.json";
 import owlHumanHighfive from "@/assets/owl-human-highfive-cutout.png.asset.json";
+
 
 
 
