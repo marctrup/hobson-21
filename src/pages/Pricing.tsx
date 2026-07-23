@@ -465,7 +465,7 @@ const Calculators: React.FC = () => {
                       maxWidth: 260,
                     }}
                   >
-                    Give me your documents, and a seat for each person who needs me. That is all it takes to put me to work — quietly, and on your side.
+                    Give me your documents and a seat for each person. After that it is me on my own — no meetings, nobody to wait for. For most of what you do, that is enough.
                   </p>
                   <div
                     style={{
