@@ -680,12 +680,8 @@ const Calculators: React.FC = () => {
           >
             {/* LEFT */}
             <div style={{ display: "flex", flexDirection: "column" }}>
-              <div style={{ fontFamily: FONTS.mono, fontSize: 11, letterSpacing: "0.24em", color: TOKENS.brass, textTransform: "uppercase", marginBottom: 14 }}>
-                With a human · one-off + monthly
-              </div>
-              <h3 style={{ fontFamily: FONTS.serif, fontWeight: 400, fontSize: "clamp(1.75rem, 2.8vw, 2.4rem)", lineHeight: 1.1, letterSpacing: "-0.02em", margin: 0, color: TOKENS.ink }}>
-                Everything above — <span style={{ fontStyle: "italic", color: TOKENS.brass }}>with a person behind it.</span>
-              </h3>
+              <div style={{ paddingTop: 0 }}>
+
 
               <div style={{ marginTop: 22, paddingTop: 18, borderTop: `1px solid ${TOKENS.brass}` }}>
                 <p style={{ fontFamily: FONTS.serif, fontStyle: "italic", fontSize: "clamp(1.05rem, 1.5vw, 1.2rem)", lineHeight: 1.55, color: TOKENS.ink, margin: 0 }}>
