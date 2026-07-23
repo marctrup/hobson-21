@@ -733,11 +733,20 @@ const Calculators: React.FC = () => {
                 </div>
               </div>
 
-              {/* Prices */}
-              <div style={{ marginTop: "auto", paddingTop: 20, display: "flex", flexDirection: "column", gap: 12 }}>
+              {/* Prices — side by side */}
+              <div
+                className="hp-concierge-prices"
+                style={{
+                  marginTop: "auto",
+                  paddingTop: 20,
+                  display: "grid",
+                  gridTemplateColumns: "1fr 1fr",
+                  gap: 16,
+                }}
+              >
                 <div>
                   <Eyebrow color={T.faint} style={{ marginBottom: 4 }}>Onboarding — one-off</Eyebrow>
-                  <div style={{ fontFamily: FONTS.serif, fontSize: 30, lineHeight: 1, color: T.ink, letterSpacing: "-0.02em" }}>
+                  <div style={{ fontFamily: FONTS.serif, fontSize: 26, lineHeight: 1, color: T.ink, letterSpacing: "-0.02em" }}>
                     {fmtGBP2(conciergeOneOff)}
                   </div>
                   <div
@@ -753,19 +762,19 @@ const Calculators: React.FC = () => {
                       letterSpacing: "0.06em",
                     }}
                   >
-                    £3.50 per document — Professor alone is 50p
+                    £3.50 a document — alone it is 50p
                   </div>
                 </div>
 
                 <div>
                   <Eyebrow color={T.faint} style={{ marginBottom: 4 }}>Then, every month</Eyebrow>
                   {bandOverflow ? (
-                    <div style={{ fontFamily: FONTS.serif, fontStyle: "italic", fontSize: 24, color: T.ink }}>
+                    <div style={{ fontFamily: FONTS.serif, fontStyle: "italic", fontSize: 22, color: T.ink }}>
                       Let&rsquo;s talk — see below
                     </div>
                   ) : (
                     <>
-                      <div style={{ fontFamily: FONTS.serif, fontSize: 30, lineHeight: 1, color: T.ink, letterSpacing: "-0.02em" }}>
+                      <div style={{ fontFamily: FONTS.serif, fontSize: 26, lineHeight: 1, color: T.ink, letterSpacing: "-0.02em" }}>
                         {fmtGBP(band.price!)}
                       </div>
                       {perPerson !== null && (
@@ -782,13 +791,14 @@ const Calculators: React.FC = () => {
                             letterSpacing: "0.06em",
                           }}
                         >
-                          £{perPerson} per person, seats included — a standard seat is £35
+                          £{perPerson} a person, seats in — a seat is £35
                         </div>
                       )}
                     </>
                   )}
                 </div>
               </div>
+
 
               {/* Together row */}
               <div style={{ marginTop: 16 }}>
