@@ -316,7 +316,8 @@ const TypewriterText: React.FC<{ text: string; speed?: number; startDelay?: numb
 const Calculators: React.FC = () => {
   const [docs, setDocs] = useState(300);
   const [people, setPeople] = useState(5);
-  const [conciergeDocs, setConciergeDocs] = useState(300);
+  const conciergeDocs = docs;
+  const setConciergeDocs = setDocs;
 
   const [conciergeBandId, setConciergeBandId] = useState<string>("5");
 
@@ -336,7 +337,8 @@ const Calculators: React.FC = () => {
   const readLow = docs * 0.35;
   const readHigh = docs * 0.75;
   const seatsMonthly = people * 35;
-  const conciergeOneOff = conciergeDocs * 3.5;
+  const conciergeBelowMin = conciergeDocs < 100;
+  const conciergeOneOff = conciergeBelowMin ? 350 : conciergeDocs * 3.5;
 
   const scrollToEnterprise = () => {
     const el = document.getElementById("enterprise");
