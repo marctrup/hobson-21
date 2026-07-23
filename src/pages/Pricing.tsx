@@ -336,7 +336,7 @@ const Calculators: React.FC = () => {
   const [quoteOpen, setQuoteOpen] = useState(false);
   const [conciergeDocs, setConciergeDocs] = useState(300);
   const [conciergeBandId, setConciergeBandId] = useState<string>("5");
-  const [conciergeOpen, setConciergeOpen] = useState(false);
+  
 
   const CONCIERGE_BANDS: Array<{ id: string; label: string; ceiling: number | null; price: number | null }> = [
     { id: "2", label: "Up to 2", ceiling: 2, price: 250 },
