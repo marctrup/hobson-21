@@ -433,7 +433,7 @@ const Calculators: React.FC = () => {
                 <img
                   src={owlMascot}
                   alt="Hobson"
-                  style={{ width: 130, height: "auto", display: "block" }}
+                  style={{ width: 117, height: "auto", display: "block" }}
                 />
 
                 <blockquote style={{ margin: 0, position: "relative", paddingLeft: 22 }}>
