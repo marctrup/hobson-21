@@ -408,6 +408,39 @@ const Calculators: React.FC = () => {
       >
         <div style={{ maxWidth: 1280, margin: "0 auto" }}>
 
+          {/* Section intro */}
+          <div style={{ textAlign: "center", maxWidth: 720, margin: "0 auto 36px", maxHeight: 140 }}>
+            <h2
+              style={{
+                fontFamily: FONTS.serif,
+                fontWeight: 400,
+                fontSize: 40,
+                lineHeight: 1.15,
+                letterSpacing: "-0.01em",
+                color: T.ink,
+                margin: "0 auto 14px",
+                maxWidth: "16ch",
+              }}
+            >
+              I work alone —{" "}
+              <span style={{ fontStyle: "italic", color: T.gold }}>unless you would rather I did not.</span>
+            </h2>
+            <p
+              style={{
+                fontFamily: FONTS.sans,
+                fontSize: 16,
+                lineHeight: 1.5,
+                color: T.muted,
+                margin: "0 auto",
+                maxWidth: "58ch",
+              }}
+            >
+              One price for me on my own. One for me with a colleague beside me. Nothing begins until you approve what you see.
+            </p>
+          </div>
+
+
+
           {/* Two-column top-level grid: AI container (left) + Human box (right) */}
           <div
             className="hp-price-row"
