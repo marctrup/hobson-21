@@ -315,23 +315,20 @@ const TypewriterText: React.FC<{ text: string; speed?: number; startDelay?: numb
 // ============================================================================
 const Calculators: React.FC = () => {
   const [docs, setDocs] = useState(300);
+  const [conciergeDocs, setConciergeDocs] = useState(300);
   const [people, setPeople] = useState(5);
-  const conciergeDocs = docs;
-  const setConciergeDocs = setDocs;
 
-  const [conciergeBandId, setConciergeBandId] = useState<string>("5");
-
-  const BANDS: Array<{ id: string; label: string; ceiling: number | null; price: number | null }> = [
-    { id: "2", label: "2", ceiling: 2, price: 130 },
-    { id: "5", label: "5", ceiling: 5, price: 300 },
-    { id: "10", label: "10", ceiling: 10, price: 550 },
-    { id: "20", label: "20", ceiling: 20, price: 1000 },
-    { id: "20+", label: "More", ceiling: null, price: null },
+  // Concierge monthly — charged on actual headcount, cheapest across all tiers.
+  const CONCIERGE_TIERS = [
+    { floor: 2, rate: 65 },
+    { floor: 5, rate: 60 },
+    { floor: 10, rate: 55 },
+    { floor: 20, rate: 50 },
   ];
-  const band = BANDS.find((b) => b.id === conciergeBandId)!;
-  const bandOverflow = band.price === null;
-  const perPerson = band.price && band.ceiling ? Math.round(band.price / band.ceiling) : null;
-
+  const conciergeMonthly = Math.min(
+    ...CONCIERGE_TIERS.map((t) => Math.max(people, t.floor) * t.rate)
+  );
+  const conciergePerPerson = Math.round(conciergeMonthly / people);
 
   const readEstimate = docs * 0.5;
   const readLow = docs * 0.35;
@@ -339,11 +336,6 @@ const Calculators: React.FC = () => {
   const seatsMonthly = people * 35;
   const conciergeBelowMin = conciergeDocs < 100;
   const conciergeOneOff = conciergeBelowMin ? 350 : conciergeDocs * 3.5;
-
-  const scrollToEnterprise = () => {
-    const el = document.getElementById("enterprise");
-    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-  };
 
   // Token shortcuts scoped to this section
   const T = {
