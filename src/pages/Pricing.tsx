@@ -202,8 +202,7 @@ const TogetherCard: React.FC<{ people: number; docEstimate: number; seatsMonthly
 
           <div style={{ height: 1, background: TOKENS.hairline, margin: "24px 0" }} />
 
-          <div style={{ display: "flex", alignItems: "flex-start", gap: 14 }}>
-            <img src={owlMascot} alt="" style={{ width: 44, height: 44, flexShrink: 0, marginTop: 2 }} />
+          <div>
             <p style={{ fontFamily: FONTS.serif, fontStyle: "italic", fontSize: "clamp(0.98rem, 1.4vw, 1.1rem)", lineHeight: 1.55, color: TOKENS.ink, margin: 0 }}>
               &ldquo;I would rather you experience me properly before deciding. Once Professor knows your documents, the first month is mine to prove my worth.&rdquo;
             </p>
@@ -489,7 +488,7 @@ const Calculators: React.FC = () => {
                     flexDirection: "column",
                   }}
                 >
-                  <img src={owlMascot} alt="" className="hp-owl-solo" style={{ width: "auto", height: 56, marginBottom: 12 }} />
+                  
                   <Eyebrow color={T.gold}>Learning · one-off</Eyebrow>
                   <h3
                     style={{
@@ -536,7 +535,7 @@ const Calculators: React.FC = () => {
                     flexDirection: "column",
                   }}
                 >
-                  <img src={owlMascot} alt="" className="hp-owl-solo" style={{ width: "auto", height: 56, marginBottom: 12, filter: "brightness(0) invert(1)" }} />
+                  
                   <Eyebrow color="#D9B978">Seats · monthly</Eyebrow>
                   <h3
                     style={{
@@ -1069,8 +1068,7 @@ export default function Pricing() {
                     <span>{f.q}</span>
                     <span className="hp-plus" aria-hidden>+</span>
                   </summary>
-                  <div style={{ display: "flex", alignItems: "flex-start", gap: 12, paddingTop: 4 }}>
-                    <img src={owlMascot} alt="" style={{ width: 30, height: 30, flexShrink: 0, marginTop: 2 }} />
+                  <div style={{ paddingTop: 4 }}>
                     <p style={{ fontFamily: FONTS.serif, fontStyle: "italic", margin: 0, lineHeight: 1.65, color: TOKENS.inkSoft }}>
                       &ldquo;{f.a}&rdquo;
                     </p>
