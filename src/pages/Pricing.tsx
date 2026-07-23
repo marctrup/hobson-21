@@ -314,9 +314,10 @@ const TypewriterText: React.FC<{ text: string; speed?: number; startDelay?: numb
 // New pricing row — one row, three boxes: [AI container: read + seats] + [human]
 // ============================================================================
 const Calculators: React.FC = () => {
-  const [docs, setDocs] = useState(212);
+  const [docs, setDocs] = useState(300);
   const [people, setPeople] = useState(5);
   const [conciergeDocs, setConciergeDocs] = useState(300);
+
   const [conciergeBandId, setConciergeBandId] = useState<string>("5");
 
   const BANDS: Array<{ id: string; label: string; ceiling: number | null; price: number | null }> = [
@@ -538,7 +539,59 @@ const Calculators: React.FC = () => {
                 </div>
               </div>
 
+              {/* Every seat includes */}
+              <div
+                className="hp-includes"
+                style={{
+                  background: "#FBF8F3",
+                  border: "1px solid rgba(35,33,29,0.08)",
+                  borderRadius: 10,
+                  padding: "18px 20px",
+                  marginTop: 22,
+                }}
+              >
+                <div
+                  style={{
+                    fontFamily: FONTS.mono,
+                    fontSize: 9.5,
+                    letterSpacing: "0.18em",
+                    textTransform: "uppercase",
+                    color: T.muted,
+                    marginBottom: 12,
+                  }}
+                >
+                  Every seat includes
+                </div>
+                <div
+                  className="hp-includes-grid"
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns: "1fr 1fr 1fr",
+                    gap: 24,
+                  }}
+                >
+                  {[
+                    { h: "Everything I can do", b: "No tiers and nothing held back. Every seat gets all of me." },
+                    { h: "Support by email", b: "Ask my team anything. Answers usually the same day." },
+                    { h: "The Knowledgebase", b: "Guides and answers, open to you whenever you need them." },
+                  ].map((item) => (
+                    <div key={item.h} style={{ display: "grid", gridTemplateColumns: "auto 1fr", gap: 8 }}>
+                      <span style={{ color: T.gold, fontSize: 13, lineHeight: 1.4 }}>✦</span>
+                      <div>
+                        <div style={{ fontFamily: FONTS.sans, fontSize: 13.5, fontWeight: 500, color: "#23211D", lineHeight: 1.3 }}>
+                          {item.h}
+                        </div>
+                        <div style={{ fontFamily: FONTS.sans, fontSize: 12.5, color: "#6E6A63", lineHeight: 1.5, marginTop: 3 }}>
+                          {item.b}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
               {/* Together row */}
+
               <div style={{ marginTop: "auto", paddingTop: 20 }}>
                 <TogetherRow>
                   <span style={{ color: T.ink }}>{fmtGBP2(readEstimate)} today</span>
@@ -680,11 +733,20 @@ const Calculators: React.FC = () => {
                 </div>
               </div>
 
-              {/* Prices */}
-              <div style={{ marginTop: "auto", paddingTop: 20, display: "flex", flexDirection: "column", gap: 12 }}>
+              {/* Prices — side by side */}
+              <div
+                className="hp-concierge-prices"
+                style={{
+                  marginTop: "auto",
+                  paddingTop: 20,
+                  display: "grid",
+                  gridTemplateColumns: "1fr 1fr",
+                  gap: 16,
+                }}
+              >
                 <div>
                   <Eyebrow color={T.faint} style={{ marginBottom: 4 }}>Onboarding — one-off</Eyebrow>
-                  <div style={{ fontFamily: FONTS.serif, fontSize: 30, lineHeight: 1, color: T.ink, letterSpacing: "-0.02em" }}>
+                  <div style={{ fontFamily: FONTS.serif, fontSize: 26, lineHeight: 1, color: T.ink, letterSpacing: "-0.02em" }}>
                     {fmtGBP2(conciergeOneOff)}
                   </div>
                   <div
@@ -700,19 +762,19 @@ const Calculators: React.FC = () => {
                       letterSpacing: "0.06em",
                     }}
                   >
-                    £3.50 per document — Professor alone is 50p
+                    £3.50 a document — alone it is 50p
                   </div>
                 </div>
 
                 <div>
                   <Eyebrow color={T.faint} style={{ marginBottom: 4 }}>Then, every month</Eyebrow>
                   {bandOverflow ? (
-                    <div style={{ fontFamily: FONTS.serif, fontStyle: "italic", fontSize: 24, color: T.ink }}>
+                    <div style={{ fontFamily: FONTS.serif, fontStyle: "italic", fontSize: 22, color: T.ink }}>
                       Let&rsquo;s talk — see below
                     </div>
                   ) : (
                     <>
-                      <div style={{ fontFamily: FONTS.serif, fontSize: 30, lineHeight: 1, color: T.ink, letterSpacing: "-0.02em" }}>
+                      <div style={{ fontFamily: FONTS.serif, fontSize: 26, lineHeight: 1, color: T.ink, letterSpacing: "-0.02em" }}>
                         {fmtGBP(band.price!)}
                       </div>
                       {perPerson !== null && (
@@ -729,13 +791,14 @@ const Calculators: React.FC = () => {
                             letterSpacing: "0.06em",
                           }}
                         >
-                          £{perPerson} per person, seats included — a standard seat is £35
+                          £{perPerson} a person, seats in — a seat is £35
                         </div>
                       )}
                     </>
                   )}
                 </div>
               </div>
+
 
               {/* Together row */}
               <div style={{ marginTop: 16 }}>
@@ -787,9 +850,14 @@ const Calculators: React.FC = () => {
         @media (max-width: 1120px) {
           .hp-price-row { grid-template-columns: 1fr !important; }
         }
+        @media (max-width: 900px) {
+          .hp-includes-grid { grid-template-columns: 1fr !important; }
+          .hp-concierge-prices { grid-template-columns: 1fr !important; }
+        }
         @media (max-width: 720px) {
           .hp-ai-inner { grid-template-columns: 1fr !important; }
         }
+
         .hp-slider-dark::-webkit-slider-runnable-track { background: rgba(255,255,255,0.18); }
         .hp-slider-dark::-moz-range-track { background: rgba(255,255,255,0.18); }
         .hp-hero-bubble::before {
