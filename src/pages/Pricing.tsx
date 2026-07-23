@@ -339,10 +339,11 @@ const Calculators: React.FC = () => {
   
 
   const CONCIERGE_BANDS: Array<{ id: string; label: string; ceiling: number | null; price: number | null }> = [
-    { id: "2", label: "Up to 2", ceiling: 2, price: 250 },
-    { id: "5", label: "Up to 5", ceiling: 5, price: 500 },
-    { id: "10", label: "Up to 10", ceiling: 10, price: 900 },
-    { id: "20", label: "Up to 20", ceiling: 20, price: 1500 },
+    { id: "2", label: "Up to 2", ceiling: 2, price: 125 },
+    { id: "5", label: "Up to 5", ceiling: 5, price: 250 },
+    { id: "10", label: "Up to 10", ceiling: 10, price: 450 },
+    { id: "20", label: "Up to 20", ceiling: 20, price: 750 },
+
     { id: "20+", label: "More than 20", ceiling: null, price: null },
   ];
   const conciergeBand = CONCIERGE_BANDS.find((b) => b.id === conciergeBandId)!;
