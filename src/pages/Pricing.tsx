@@ -319,11 +319,11 @@ const Calculators: React.FC = () => {
   const [conciergeBandId, setConciergeBandId] = useState<string>("5");
 
   const BANDS: Array<{ id: string; label: string; ceiling: number | null; price: number | null }> = [
-    { id: "2", label: "Up to 2", ceiling: 2, price: 125 },
-    { id: "5", label: "Up to 5", ceiling: 5, price: 250 },
-    { id: "10", label: "Up to 10", ceiling: 10, price: 450 },
-    { id: "20", label: "Up to 20", ceiling: 20, price: 750 },
-    { id: "20+", label: "More than 20", ceiling: null, price: null },
+    { id: "2", label: "2", ceiling: 2, price: 125 },
+    { id: "5", label: "5", ceiling: 5, price: 250 },
+    { id: "10", label: "10", ceiling: 10, price: 450 },
+    { id: "20", label: "20", ceiling: 20, price: 750 },
+    { id: "20+", label: "More", ceiling: null, price: null },
   ];
   const band = BANDS.find((b) => b.id === conciergeBandId)!;
   const bandOverflow = band.price === null;
