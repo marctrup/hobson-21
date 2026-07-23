@@ -3,6 +3,8 @@ import { Helmet } from "react-helmet-async";
 import { GlobalHeader } from "@/components/GlobalHeader";
 import { InterestModal } from "@/components/InterestModal";
 import owlMascot from "@/assets/owl-mascot.png";
+import owlHumanHighfive from "@/assets/owl-human-highfive.png.asset.json";
+
 
 
 
