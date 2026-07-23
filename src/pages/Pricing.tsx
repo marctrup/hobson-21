@@ -402,60 +402,62 @@ const Calculators: React.FC = () => {
         style={{
           background: T.cream,
           color: T.ink,
-          padding: "200px 24px 56px",
+          padding: "44px 32px 80px",
           borderTop: `1px solid ${T.line}`,
         }}
       >
         <div style={{ maxWidth: 1280, margin: "0 auto" }}>
 
-          {/* Section intro */}
-          <div style={{ textAlign: "center", maxWidth: 720, margin: "0 auto 36px", maxHeight: 140 }}>
-            <h2
-              style={{
-                fontFamily: FONTS.serif,
-                fontWeight: 400,
-                fontSize: 40,
-                lineHeight: 1.15,
-                letterSpacing: "-0.01em",
-                color: T.ink,
-                margin: "0 auto 14px",
-                maxWidth: "16ch",
-              }}
-            >
-              I work alone —{" "}
-              <span style={{ fontStyle: "italic", color: T.gold }}>unless you would rather I did not.</span>
-            </h2>
-            <p
-              style={{
-                fontFamily: FONTS.sans,
-                fontSize: 16,
-                lineHeight: 1.5,
-                color: T.muted,
-                margin: "0 auto",
-                maxWidth: "58ch",
-              }}
-            >
-              One price for me on my own. One for me with a colleague beside me. Nothing begins until you approve what you see.
-            </p>
-          </div>
-
-
-
-          {/* Two-column top-level grid: AI container (left) + Human box (right) */}
+          {/* Grid: row 1 = quote blocks with images, row 2 = pricing boxes */}
           <div
             className="hp-price-row"
             aria-live="polite"
             style={{
               display: "grid",
               gridTemplateColumns: "2.1fr 1.3fr",
-              gap: 34,
+              gridTemplateRows: "auto 1fr",
+              columnGap: 34,
+              rowGap: 26,
               alignItems: "stretch",
             }}
           >
-            {/* ============ LEFT column wrapper ============ */}
-            <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+            {/* ---------- ROW 1: quote blocks ---------- */}
+            {/* Left quote */}
+            <div style={{ display: "flex", alignItems: "flex-end", gap: 18 }}>
+              <img
+                src={owlMascot.url}
+                alt="Hobson"
+                style={{ height: 104, width: "auto", flexShrink: 0, display: "block", objectFit: "contain" }}
+              />
+              <blockquote style={{ margin: 0, maxWidth: 380 }}>
+                <p style={{ fontFamily: FONTS.serif, fontStyle: "italic", fontSize: 16, lineHeight: 1.5, color: T.ink, margin: 0 }}>
+                  &ldquo;Give me your documents and a seat for each person. After that it is me on my own — no meetings, nobody to wait for. For most of what you do, that is enough.&rdquo;
+                </p>
+                <footer style={{ fontFamily: FONTS.mono, fontSize: 10.5, letterSpacing: "0.2em", textTransform: "uppercase", color: T.gold, marginTop: 8 }}>
+                  — Hobson
+                </footer>
+              </blockquote>
+            </div>
 
-            {/* ============ LEFT: single box, two sections ============ */}
+            {/* Right quote */}
+            <div style={{ display: "flex", alignItems: "flex-end", gap: 18 }}>
+              <img
+                src={owlHumanHighfive.url}
+                alt="Hobson high-fiving a person"
+                style={{ height: 104, width: "auto", flexShrink: 0, display: "block", objectFit: "contain" }}
+              />
+              <blockquote style={{ margin: 0, maxWidth: 320 }}>
+                <p style={{ fontFamily: FONTS.serif, fontStyle: "italic", fontSize: 15, lineHeight: 1.5, color: T.ink, margin: 0 }}>
+                  &ldquo;I am fast, and I am accurate. But accurate and certain are not the same thing, and when you need certain, you need a person. I keep several on hand for exactly that reason.&rdquo;
+                </p>
+                <footer style={{ fontFamily: FONTS.mono, fontSize: 10.5, letterSpacing: "0.2em", textTransform: "uppercase", color: T.gold, marginTop: 8 }}>
+                  — Hobson
+                </footer>
+              </blockquote>
+            </div>
+
+            {/* ---------- ROW 2: pricing boxes ---------- */}
+            {/* LEFT: single box, two sections side-by-side */}
             <div
               style={{
                 background: T.paperSoft,
@@ -465,18 +467,8 @@ const Calculators: React.FC = () => {
                 display: "flex",
                 flexDirection: "column",
                 height: "100%",
-                flex: 1,
               }}
             >
-              {/* Mascot inside box */}
-              <div style={{ display: "flex", justifyContent: "flex-start", alignItems: "flex-end", height: 120, marginBottom: 6 }}>
-                <img
-                  src={owlMascot.url}
-                  alt="Hobson"
-                  style={{ width: 110, height: 110, display: "block", objectFit: "contain" }}
-                />
-              </div>
-
               <Eyebrow color={T.faint}>Just me · no people involved</Eyebrow>
               <h3
                 style={{
@@ -497,12 +489,12 @@ const Calculators: React.FC = () => {
                 One to teach me your documents. One a month for each person who uses me. Not a choice between — the two halves of what I cost.
               </p>
 
-              {/* Two sections divided by a hairline */}
+              {/* Two sections side-by-side, divided by a vertical hairline */}
               <div
                 className="hp-ai-inner"
                 style={{
                   display: "grid",
-                  gridTemplateColumns: "1fr",
+                  gridTemplateColumns: "1fr 1px 1fr",
                   gap: 20,
                   alignItems: "stretch",
                 }}
@@ -526,8 +518,8 @@ const Calculators: React.FC = () => {
                   </div>
                 </div>
 
-                {/* ---- Horizontal hairline ---- */}
-                <div aria-hidden style={{ background: "rgba(35,33,29,0.08)", height: 1, width: "100%" }} />
+                {/* ---- Vertical hairline ---- */}
+                <div aria-hidden style={{ background: "rgba(35,33,29,0.08)", width: 1, height: "100%" }} />
 
                 {/* ---- Section B: seats ---- */}
                 <div style={{ display: "flex", flexDirection: "column" }}>
@@ -545,7 +537,6 @@ const Calculators: React.FC = () => {
                   </div>
                 </div>
               </div>
-
 
               {/* Together row */}
               <div style={{ marginTop: "auto", paddingTop: 20 }}>
@@ -579,14 +570,8 @@ const Calculators: React.FC = () => {
                 No charge until you approve the document estimate.
               </div>
             </div>
-            </div>
 
-
-
-            {/* ============ RIGHT column wrapper ============ */}
-            <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
-
-            {/* ============ RIGHT: Human option ============ */}
+            {/* RIGHT: Human option */}
             <div
               style={{
                 background: `linear-gradient(180deg, ${T.paperGrad} 0%, ${T.cream} 100%)`,
@@ -596,18 +581,8 @@ const Calculators: React.FC = () => {
                 display: "flex",
                 flexDirection: "column",
                 height: "100%",
-                flex: 1,
               }}
             >
-              {/* Mascot inside box */}
-              <div style={{ display: "flex", justifyContent: "flex-start", alignItems: "flex-end", height: 120, marginBottom: 6 }}>
-                <img
-                  src={owlHumanHighfive.url}
-                  alt="Hobson high-fiving a person"
-                  style={{ width: 110, height: 110, display: "block", objectFit: "contain" }}
-                />
-              </div>
-
               <Eyebrow color={T.gold}>Me and a person · one-off + monthly</Eyebrow>
               <h3
                 style={{
@@ -623,7 +598,6 @@ const Calculators: React.FC = () => {
               >
                 Everything to the left —{" "}
                 <span style={{ fontStyle: "italic", color: T.gold }}>with a person behind it.</span>
-
               </h3>
               <p style={{ fontFamily: FONTS.sans, fontSize: 13.5, lineHeight: 1.55, color: T.muted, margin: 0 }} className="hp-card-blurb">
                 That box is me, working on my own. This one is me, working with one of my colleagues.
@@ -632,7 +606,7 @@ const Calculators: React.FC = () => {
               {/* Bullets */}
               <ul style={{ listStyle: "none", padding: 0, margin: "14px 0 0" }} className="hp-bullets">
                 {[
-                  
+                  { h: "Professor's full read", b: "Every document read, understood and stored." },
                   { h: "A person checks the work", b: "Every title and every address confirmed before it reaches you." },
                   { h: "That colleague stays", b: "A named contact, for as long as you want them." },
                 ].map((item, i) => (
@@ -758,7 +732,6 @@ const Calculators: React.FC = () => {
                           £{perPerson} per person, seats included — a standard seat is £35
                         </div>
                       )}
-
                     </>
                   )}
                 </div>
@@ -778,6 +751,7 @@ const Calculators: React.FC = () => {
                       <span style={{ color: T.muted, fontStyle: "italic" }}>, then </span>
                       <span style={{ color: T.ink }}>{fmtGBP(band.price!)} a month</span>
                     </>
+
                   )}
                 </TogetherRow>
               </div>
