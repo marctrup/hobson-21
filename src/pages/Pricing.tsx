@@ -676,6 +676,9 @@ const Calculators: React.FC = () => {
                 No charge until you approve the document estimate.
               </p>
             </div>
+            </div>
+
+
 
             {/* ============ RIGHT column wrapper ============ */}
             <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
