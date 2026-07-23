@@ -402,7 +402,7 @@ const Calculators: React.FC = () => {
         style={{
           background: T.cream,
           color: T.ink,
-          padding: "120px 24px 56px",
+          padding: "200px 24px 56px",
           borderTop: `1px solid ${T.line}`,
         }}
       >
