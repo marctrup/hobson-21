@@ -517,56 +517,53 @@ const Calculators: React.FC = () => {
                 className="hp-ai-inner"
                 style={{
                   display: "grid",
-                  gridTemplateColumns: "1fr 1px 1fr",
-                  gap: 24,
+                  gridTemplateColumns: "1fr",
+                  gap: 20,
                   alignItems: "stretch",
                 }}
               >
                 {/* ---- Section A: reading ---- */}
                 <div style={{ display: "flex", flexDirection: "column" }}>
                   <Eyebrow color={T.gold}>Reading · one-off</Eyebrow>
-                  <p style={{ fontFamily: FONTS.sans, fontSize: 13, lineHeight: 1.5, color: T.muted, margin: "10px 0 0" }}>
+                  <p style={{ fontFamily: FONTS.sans, fontSize: 13, lineHeight: 1.5, color: T.muted, margin: "10px 0 14px" }}>
                     £0.25–£1.00 per document depending on complexity. A typical mix averages 50p. Read once, remembered for good.
                   </p>
 
-                  <div style={{ marginTop: "auto", paddingTop: 20 }}>
-                    <Slider id="docs" label="Documents" min={10} max={600} value={docs} onChange={setDocs} suffix="docs" />
-                    <div style={{ marginTop: 16 }}>
-                      <Eyebrow color={T.faint} style={{ marginBottom: 4 }}>Estimate — one-off</Eyebrow>
-                      <div style={{ fontFamily: FONTS.serif, fontSize: 30, lineHeight: 1, color: T.ink, letterSpacing: "-0.02em" }}>
-                        {fmtGBP2(readEstimate)}
-                      </div>
-                      <div style={{ fontFamily: FONTS.mono, fontSize: 11, color: T.faint, marginTop: 6 }}>
-                        {fmtGBP2(readLow)} – {fmtGBP2(readHigh)}
-                      </div>
+                  <Slider id="docs" label="Documents" min={10} max={600} value={docs} onChange={setDocs} suffix="docs" />
+                  <div style={{ marginTop: 16 }}>
+                    <Eyebrow color={T.faint} style={{ marginBottom: 4 }}>Estimate — one-off</Eyebrow>
+                    <div style={{ fontFamily: FONTS.serif, fontSize: 30, lineHeight: 1, color: T.ink, letterSpacing: "-0.02em" }}>
+                      {fmtGBP2(readEstimate)}
+                    </div>
+                    <div style={{ fontFamily: FONTS.mono, fontSize: 11, color: T.faint, marginTop: 6 }}>
+                      {fmtGBP2(readLow)} – {fmtGBP2(readHigh)}
                     </div>
                   </div>
                 </div>
 
-                {/* ---- Vertical hairline ---- */}
-                <div aria-hidden style={{ background: "rgba(35,33,29,0.08)", width: 1, height: "100%" }} />
+                {/* ---- Horizontal hairline ---- */}
+                <div aria-hidden style={{ background: "rgba(35,33,29,0.08)", height: 1, width: "100%" }} />
 
                 {/* ---- Section B: seats ---- */}
                 <div style={{ display: "flex", flexDirection: "column" }}>
                   <Eyebrow color={T.gold}>Seats · monthly</Eyebrow>
-                  <p style={{ fontFamily: FONTS.sans, fontSize: 13, lineHeight: 1.5, color: T.muted, margin: "10px 0 0" }}>
+                  <p style={{ fontFamily: FONTS.sans, fontSize: 13, lineHeight: 1.5, color: T.muted, margin: "10px 0 14px" }}>
                     One Hobson per person, at £35 each per month. I learn how each person works and stay ready for what they need next.
                   </p>
 
-                  <div style={{ marginTop: "auto", paddingTop: 20 }}>
-                    <Slider id="people" label="People" min={2} max={30} value={people} onChange={setPeople} suffix={people === 1 ? "person" : "people"} />
-                    <div style={{ marginTop: 16 }}>
-                      <Eyebrow color={T.faint} style={{ marginBottom: 4 }}>{people} × £35 — every month</Eyebrow>
-                      <div style={{ fontFamily: FONTS.serif, fontSize: 30, lineHeight: 1, color: T.ink, letterSpacing: "-0.02em" }}>
-                        {fmtGBP(seatsMonthly)}
-                      </div>
+                  <Slider id="people" label="People" min={2} max={30} value={people} onChange={setPeople} suffix={people === 1 ? "person" : "people"} />
+                  <div style={{ marginTop: 16 }}>
+                    <Eyebrow color={T.faint} style={{ marginBottom: 4 }}>{people} × £35 — every month</Eyebrow>
+                    <div style={{ fontFamily: FONTS.serif, fontSize: 30, lineHeight: 1, color: T.ink, letterSpacing: "-0.02em" }}>
+                      {fmtGBP(seatsMonthly)}
                     </div>
                   </div>
                 </div>
               </div>
 
+
               {/* Together row */}
-              <div style={{ marginTop: 20 }}>
+              <div style={{ marginTop: "auto", paddingTop: 20 }}>
                 <TogetherRow>
                   <span style={{ color: T.ink }}>{fmtGBP2(readEstimate)} today</span>
                   <span style={{ color: T.muted, fontStyle: "italic" }}>, then </span>
