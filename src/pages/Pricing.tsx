@@ -428,8 +428,10 @@ const Calculators: React.FC = () => {
                   alignItems: "center",
                   gap: 18,
                   padding: "4px 2px",
+                  minHeight: 170,
                 }}
               >
+
                 <img
                   src={owlMascot}
                   alt="Hobson"
@@ -608,8 +610,10 @@ const Calculators: React.FC = () => {
                   alignItems: "center",
                   gap: 18,
                   padding: "4px 2px",
+                  minHeight: 170,
                 }}
               >
+
                 <img
                   src={owlHumanHighfive.url}
                   alt="Hobson high-fiving a person"
