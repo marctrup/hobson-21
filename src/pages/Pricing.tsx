@@ -629,12 +629,6 @@ const Calculators: React.FC = () => {
                 flexDirection: "column",
               }}
             >
-              <img
-                src={owlHumanHighfive.url}
-                alt="Hobson working with a person"
-                className="hp-owl-highfive"
-                style={{ width: "auto", height: 88, marginBottom: 12 }}
-              />
               <Eyebrow color={T.gold}>Me and a person · one-off + monthly</Eyebrow>
               <h3
                 style={{
