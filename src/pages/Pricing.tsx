@@ -665,22 +665,85 @@ const Calculators: React.FC = () => {
                 </p>
               </div>
 
-              <p style={{ fontFamily: FONTS.sans, fontSize: 15.5, lineHeight: 1.65, color: TOKENS.inkSoft, marginTop: 20 }}>
-                £3.50 per document rather than 50p. The difference is a person&rsquo;s time. Before anything reaches you, one of my colleagues confirms every document is correctly titled and every address correctly labelled — nothing filed against the wrong property, ever. Then they stay: a named contact, for as long as you want them.
+              {/* Price contrast */}
+              <div
+                style={{
+                  marginTop: 22,
+                  display: "grid",
+                  gridTemplateColumns: "1fr auto 1fr",
+                  alignItems: "center",
+                  gap: 14,
+                  padding: "18px 20px",
+                  background: TOKENS.paperSoft,
+                  border: `1px solid ${TOKENS.hairline}`,
+                  borderRadius: 12,
+                }}
+              >
+                <div style={{ textAlign: "center" }}>
+                  <div style={{ fontFamily: FONTS.mono, fontSize: 10, letterSpacing: "0.18em", color: TOKENS.inkMuted, textTransform: "uppercase", marginBottom: 4 }}>
+                    Professor alone
+                  </div>
+                  <div style={{ fontFamily: FONTS.serif, fontSize: "clamp(1.4rem, 2.2vw, 1.9rem)", color: TOKENS.inkSoft, letterSpacing: "-0.02em" }}>
+                    50p<span style={{ fontFamily: FONTS.mono, fontSize: 11, color: TOKENS.inkMuted, marginLeft: 4 }}>/ doc</span>
+                  </div>
+                </div>
+                <div aria-hidden="true" style={{ fontFamily: FONTS.mono, color: TOKENS.brass, fontSize: 18 }}>→</div>
+                <div style={{ textAlign: "center" }}>
+                  <div style={{ fontFamily: FONTS.mono, fontSize: 10, letterSpacing: "0.18em", color: TOKENS.brass, textTransform: "uppercase", marginBottom: 4 }}>
+                    With a colleague
+                  </div>
+                  <div style={{ fontFamily: FONTS.serif, fontSize: "clamp(1.4rem, 2.2vw, 1.9rem)", color: TOKENS.ink, letterSpacing: "-0.02em", fontWeight: 500 }}>
+                    £3.50<span style={{ fontFamily: FONTS.mono, fontSize: 11, color: TOKENS.inkMuted, marginLeft: 4 }}>/ doc</span>
+                  </div>
+                </div>
+              </div>
+              <p style={{ fontFamily: FONTS.sans, fontSize: 13.5, lineHeight: 1.55, color: TOKENS.inkMuted, margin: "10px 2px 0", textAlign: "center" }}>
+                The difference is a person&rsquo;s time.
               </p>
 
-              <ul style={{ listStyle: "none", padding: 0, margin: "18px 0 0", display: "flex", flexDirection: "column", gap: 8 }}>
+              {/* Promise ladder */}
+              <ol style={{ listStyle: "none", padding: 0, margin: "24px 0 0", display: "flex", flexDirection: "column", gap: 14 }}>
                 {[
-                  "Professor's full read, exactly as above",
-                  "Every title and every address confirmed by a person",
-                  "A named colleague who stays with you, month after month",
-                ].map((item) => (
-                  <li key={item} style={{ display: "flex", alignItems: "flex-start", gap: 10, fontFamily: FONTS.sans, fontSize: 14.5, lineHeight: 1.5, color: TOKENS.ink }}>
-                    <span aria-hidden="true" style={{ color: TOKENS.brass, fontFamily: FONTS.mono, fontSize: 14, lineHeight: 1.5, flexShrink: 0 }}>—</span>
-                    <span>{item}</span>
+                  {
+                    n: "01",
+                    h: "Professor's full read",
+                    b: "Exactly as in the option above — every document read, understood and stored.",
+                  },
+                  {
+                    n: "02",
+                    h: "A person checks the work",
+                    b: "Before anything reaches you, a colleague confirms every title and every address. Nothing filed against the wrong property, ever.",
+                  },
+                  {
+                    n: "03",
+                    h: "That colleague stays",
+                    b: "A named contact for your account, month after month, for as long as you want them.",
+                  },
+                ].map((step) => (
+                  <li key={step.n} style={{ display: "grid", gridTemplateColumns: "auto 1fr", gap: 14, alignItems: "start" }}>
+                    <span
+                      style={{
+                        fontFamily: FONTS.mono,
+                        fontSize: 11,
+                        letterSpacing: "0.14em",
+                        color: TOKENS.brass,
+                        padding: "4px 8px",
+                        border: `1px solid ${TOKENS.brass}`,
+                        borderRadius: 4,
+                        lineHeight: 1,
+                        marginTop: 3,
+                      }}
+                    >
+                      {step.n}
+                    </span>
+                    <div>
+                      <div style={{ fontFamily: FONTS.serif, fontSize: 16, color: TOKENS.ink, fontWeight: 500, letterSpacing: "-0.01em" }}>{step.h}</div>
+                      <div style={{ fontFamily: FONTS.sans, fontSize: 14, lineHeight: 1.55, color: TOKENS.inkSoft, marginTop: 3 }}>{step.b}</div>
+                    </div>
                   </li>
                 ))}
-              </ul>
+              </ol>
+
 
               <div style={{ height: 1, background: TOKENS.hairline, margin: "24px 0" }} />
 
