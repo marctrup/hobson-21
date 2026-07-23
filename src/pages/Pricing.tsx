@@ -739,7 +739,7 @@ const Calculators: React.FC = () => {
                 }}
                 className="hp-card-h"
               >
-                Everything to the left —{" "}
+                Everything to the left — but{" "}
                 <span style={{ fontStyle: "italic", color: T.gold }}>with a person behind it.</span>
               </h3>
               <p style={{ fontFamily: FONTS.sans, fontSize: 13.5, lineHeight: 1.55, color: T.muted, margin: 0 }} className="hp-card-blurb">
