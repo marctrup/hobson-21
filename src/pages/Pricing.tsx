@@ -1005,7 +1005,7 @@ export default function Pricing() {
                   </span>
                 </div>
                 <h2 style={{ fontFamily: FONTS.serif, fontSize: "clamp(1.9rem, 3.6vw, 2.6rem)", fontWeight: 400, color: TOKENS.ink, margin: 0, marginBottom: 24, lineHeight: 1.15 }}>
-                  Larger portfolios, larger teams, unusual structures.
+                  Larger portfolios, unusual structures.
                 </h2>
 
                 <p style={{ fontFamily: FONTS.sans, fontSize: 17, lineHeight: 1.7, color: TOKENS.inkSoft, margin: "0 0 32px", maxWidth: 620 }}>
