@@ -369,6 +369,10 @@ const Calculators: React.FC = () => {
   );
 
   const TogetherRow: React.FC<{ children: React.ReactNode }> = ({ children }) => (
+    <div style={{ marginTop: "auto" }}>
+    </div>
+  );
+  const TogetherRowInner: React.FC<{ children: React.ReactNode }> = ({ children }) => (
     <div
       style={{
         marginTop: 18,
