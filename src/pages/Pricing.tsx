@@ -647,9 +647,11 @@ const Calculators: React.FC = () => {
           <div
             className="hp-concierge-hero"
             style={{
-              display: "flex",
-              justifyContent: "flex-start",
-              margin: "clamp(-16px, -2vw, -32px) 0 clamp(4px, 0.75vw, 10px)",
+              display: "grid",
+              gridTemplateColumns: "auto minmax(0, 1fr)",
+              alignItems: "center",
+              gap: "clamp(16px, 2.5vw, 32px)",
+              margin: "clamp(-16px, -2vw, -32px) 0 clamp(8px, 1vw, 14px)",
             }}
           >
             <img
@@ -662,6 +664,45 @@ const Calculators: React.FC = () => {
                 background: "transparent",
               }}
             />
+            <figure style={{ margin: 0, maxWidth: 560 }}>
+              <span
+                aria-hidden
+                style={{
+                  fontFamily: FONTS.serif,
+                  fontSize: "clamp(2.5rem, 4vw, 3.5rem)",
+                  lineHeight: 0.8,
+                  color: TOKENS.brass,
+                  display: "block",
+                  marginBottom: -6,
+                }}
+              >
+                “
+              </span>
+              <blockquote
+                style={{
+                  margin: 0,
+                  fontFamily: FONTS.serif,
+                  fontStyle: "italic",
+                  fontSize: "clamp(1rem, 1.4vw, 1.15rem)",
+                  lineHeight: 1.5,
+                  color: TOKENS.ink,
+                }}
+              >
+                I am fast, and I am accurate. But accurate and certain are not the same thing, and when you need certain, you need a person. I keep several on hand for exactly that reason.
+              </blockquote>
+              <figcaption
+                style={{
+                  marginTop: 10,
+                  fontFamily: FONTS.mono,
+                  fontSize: 10.5,
+                  letterSpacing: "0.24em",
+                  textTransform: "uppercase",
+                  color: TOKENS.brass,
+                }}
+              >
+                — Hobson
+              </figcaption>
+            </figure>
           </div>
           <div
 
