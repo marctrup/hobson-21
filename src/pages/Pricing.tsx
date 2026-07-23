@@ -925,8 +925,9 @@ export default function Pricing() {
                   </span>
                 </div>
                 <h2 style={{ fontFamily: FONTS.serif, fontSize: "clamp(1.9rem, 3.6vw, 2.6rem)", fontWeight: 400, color: TOKENS.ink, margin: 0, marginBottom: 24, lineHeight: 1.15 }}>
-                  Some things are better discussed.
+                  Larger portfolios, unusual structures.
                 </h2>
+
                 <p style={{ fontFamily: FONTS.sans, fontSize: 17, lineHeight: 1.7, color: TOKENS.inkSoft, margin: "0 0 32px", maxWidth: 620 }}>
                   If your portfolio is large, your structure complex, or your requirements particular, the calculator will only take us so far. I am happy to understand your organisation properly and design something around it. The complete Hobson, fitted to you.
                 </p>
