@@ -669,6 +669,8 @@ const Calculators: React.FC = () => {
                 padding: 26,
                 display: "flex",
                 flexDirection: "column",
+                height: "100%",
+                flex: 1,
               }}
             >
               <Eyebrow color={T.gold}>Me and a person · one-off + monthly</Eyebrow>
