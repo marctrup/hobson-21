@@ -372,21 +372,29 @@ const Calculators: React.FC = () => {
     <div
       style={{
         marginTop: "auto",
-        paddingTop: 14,
-        borderTop: `1px solid ${T.line}`,
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "baseline",
-        gap: 12,
-        flexWrap: "wrap",
+        paddingTop: 18,
       }}
     >
-      <span style={{ fontFamily: FONTS.mono, fontSize: 11, letterSpacing: "0.2em", textTransform: "uppercase", color: T.faint }}>
-        Together
-      </span>
-      <span style={{ fontFamily: FONTS.serif, fontSize: 19, color: T.ink, textAlign: "right" }}>
-        {children}
-      </span>
+      <div
+        style={{
+          padding: "14px 16px",
+          background: T.wash,
+          border: `1px solid ${T.line}`,
+          borderRadius: 10,
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "baseline",
+          gap: 12,
+          flexWrap: "wrap",
+        }}
+      >
+        <span style={{ fontFamily: FONTS.mono, fontSize: 11, fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: T.goldInk }}>
+          Together
+        </span>
+        <span style={{ fontFamily: FONTS.serif, fontSize: 19, color: T.ink, textAlign: "right" }}>
+          {children}
+        </span>
+      </div>
     </div>
   );
 
