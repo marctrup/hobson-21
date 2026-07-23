@@ -604,22 +604,147 @@ const Calculators: React.FC = () => {
     </section>
 
 
-    {/* ============ TOGETHER — same paper, faint primary wash ============ */}
+    {/* ============ CONCIERGE — human review + named contact ============ */}
     <section
       style={{
-        padding: "clamp(32px, 4.5vw, 64px) 24px",
+        padding: "clamp(48px, 6vw, 88px) 24px",
         background: TOKENS.paper,
         borderTop: `1px solid ${TOKENS.hairline}`,
       }}
     >
       <div style={{ maxWidth: 1120, margin: "0 auto" }}>
-        <TogetherCard
-          people={people}
-          docEstimate={roundNice(blendedEst)}
-          seatsMonthly={seatsMonthly}
-        />
+        <div
+          style={{
+            padding: "clamp(28px, 3.5vw, 56px)",
+            borderRadius: 24,
+            background: TOKENS.paper,
+            border: `2px solid ${TOKENS.brass}`,
+            boxShadow: "0 12px 40px -20px rgba(180,145,79,0.35)",
+          }}
+        >
+          <div
+            className="hp-concierge-grid"
+            style={{
+              display: "grid",
+              gridTemplateColumns: "minmax(0, 1.22fr) minmax(0, 1fr)",
+              gap: "clamp(28px, 4vw, 56px)",
+              alignItems: "stretch",
+            }}
+          >
+            {/* LEFT */}
+            <div style={{ display: "flex", flexDirection: "column" }}>
+              <div style={{ fontFamily: FONTS.mono, fontSize: 11, letterSpacing: "0.24em", color: TOKENS.brass, textTransform: "uppercase", marginBottom: 14 }}>
+                Human · one-off + monthly
+              </div>
+              <h3 style={{ fontFamily: FONTS.serif, fontWeight: 400, fontSize: "clamp(1.75rem, 2.8vw, 2.4rem)", lineHeight: 1.1, letterSpacing: "-0.02em", margin: 0, color: TOKENS.ink }}>
+                A person checks my reading.
+              </h3>
+              <p style={{ fontFamily: FONTS.sans, fontSize: 15.5, lineHeight: 1.65, color: TOKENS.inkSoft, marginTop: 18 }}>
+                £3.50 per document. My colleagues confirm every document is correctly titled and every address correctly labelled before it reaches you — no document filed against the wrong property. Then one of them stays with you.
+              </p>
+
+              <div style={{ height: 1, background: TOKENS.hairline, margin: "24px 0" }} />
+
+              <div style={{ display: "flex", alignItems: "flex-start", gap: 14 }}>
+                <img src={owlMascot} alt="" style={{ width: 44, height: 44, flexShrink: 0, marginTop: 2 }} />
+                <p style={{ fontFamily: FONTS.serif, fontStyle: "italic", fontSize: "clamp(0.98rem, 1.4vw, 1.1rem)", lineHeight: 1.55, color: TOKENS.ink, margin: 0 }}>
+                  &ldquo;I am quick, and I am careful. But I am not a person, and some things you would rather a person had looked at. I understand that entirely.&rdquo;
+                </p>
+              </div>
+            </div>
+
+            {/* RIGHT */}
+            <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+              <div
+                style={{
+                  background: TOKENS.paperSoft,
+                  border: `1px solid ${TOKENS.hairline}`,
+                  borderRadius: 18,
+                  padding: "clamp(20px, 2.2vw, 28px)",
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 22,
+                }}
+              >
+                <Slider
+                  id="concierge-docs"
+                  label="Documents to onboard"
+                  min={100}
+                  max={2000}
+                  step={100}
+                  value={conciergeDocs}
+                  onChange={setConciergeDocs}
+                  suffix="docs"
+                />
+                <Slider
+                  id="concierge-people"
+                  label="People with a named contact"
+                  min={1}
+                  max={30}
+                  value={conciergePeople}
+                  onChange={setConciergePeople}
+                  suffix={conciergePeople === 1 ? "person" : "people"}
+                />
+
+                <div style={{ borderTop: `1px solid ${TOKENS.hairline}`, paddingTop: 18, display: "flex", flexDirection: "column", gap: 14 }}>
+                  <div>
+                    <div style={{ fontFamily: FONTS.mono, fontSize: 10.5, color: TOKENS.inkMuted, marginBottom: 4, letterSpacing: "0.14em", textTransform: "uppercase" }}>
+                      Onboarding — one-off
+                    </div>
+                    <div style={{ display: "flex", alignItems: "baseline", gap: 8 }}>
+                      <div style={{ fontFamily: FONTS.serif, fontSize: "clamp(1.9rem, 3.2vw, 2.4rem)", lineHeight: 1, color: TOKENS.ink, letterSpacing: "-0.02em" }}>
+                        {fmtGBP2(conciergeOnboard)}
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <div style={{ fontFamily: FONTS.mono, fontSize: 10.5, color: TOKENS.inkMuted, marginBottom: 4, letterSpacing: "0.14em", textTransform: "uppercase" }}>
+                      Then, every month
+                    </div>
+                    <div style={{ display: "flex", alignItems: "baseline", gap: 8 }}>
+                      <div style={{ fontFamily: FONTS.serif, fontSize: "clamp(1.9rem, 3.2vw, 2.4rem)", lineHeight: 1, color: TOKENS.ink, letterSpacing: "-0.02em" }}>
+                        {fmtGBP2(conciergeMonthly)}
+                      </div>
+                      <span style={{ fontFamily: FONTS.mono, fontSize: 13, color: TOKENS.brass }}>/ month</span>
+                    </div>
+                    <div style={{ fontFamily: FONTS.mono, fontSize: 11, color: TOKENS.inkMuted, marginTop: 6 }}>
+                      {conciergePeople} × (£35 seat + £45 personal support)
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => setConciergeOpen(true)}
+                style={{
+                  padding: "14px 22px",
+                  borderRadius: 12,
+                  border: "none",
+                  background: TOKENS.brass,
+                  color: "#fff",
+                  fontFamily: FONTS.sans,
+                  fontSize: 15,
+                  fontWeight: 600,
+                  letterSpacing: "0.01em",
+                  cursor: "pointer",
+                  boxShadow: "0 8px 20px -10px rgba(180,145,79,0.5)",
+                }}
+              >
+                Book a consultation
+              </button>
+              <div style={{ fontFamily: FONTS.sans, fontSize: 12.5, color: TOKENS.inkMuted, textAlign: "center" }}>
+                Nothing is charged until we have spoken and you have approved the scope.
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
+
+    <InterestModal open={quoteOpen} onClose={() => setQuoteOpen(false)} source="pricing-firm-quote" />
+    <InterestModal open={conciergeOpen} onClose={() => setConciergeOpen(false)} source="pricing-concierge" />
+
 
     <style>{`
       @media (max-width: 960px) {
