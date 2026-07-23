@@ -310,480 +310,380 @@ const TypewriterText: React.FC<{ text: string; speed?: number; startDelay?: numb
   );
 };
 
+// ============================================================================
+// New pricing row — one row, three boxes: [AI container: read + seats] + [human]
+// ============================================================================
 const Calculators: React.FC = () => {
+  const [docs, setDocs] = useState(212);
   const [people, setPeople] = useState(5);
-  const [docs, setDocs] = useState(305);
-  const [quoteOpen, setQuoteOpen] = useState(false);
   const [conciergeDocs, setConciergeDocs] = useState(300);
   const [conciergeBandId, setConciergeBandId] = useState<string>("5");
-  
 
-  const CONCIERGE_BANDS: Array<{ id: string; label: string; ceiling: number | null; price: number | null }> = [
-    { id: "2", label: "Up to 2", ceiling: 2, price: 250 },
-    { id: "5", label: "Up to 5", ceiling: 5, price: 500 },
-    { id: "10", label: "Up to 10", ceiling: 10, price: 900 },
-    { id: "20", label: "Up to 20", ceiling: 20, price: 1500 },
+  const BANDS: Array<{ id: string; label: string; ceiling: number | null; price: number | null }> = [
+    { id: "2", label: "Up to 2", ceiling: 2, price: 125 },
+    { id: "5", label: "Up to 5", ceiling: 5, price: 250 },
+    { id: "10", label: "Up to 10", ceiling: 10, price: 450 },
+    { id: "20", label: "Up to 20", ceiling: 20, price: 750 },
     { id: "20+", label: "More than 20", ceiling: null, price: null },
   ];
-  const conciergeBand = CONCIERGE_BANDS.find((b) => b.id === conciergeBandId)!;
-  const conciergeIsOverflow = conciergeBand.price === null;
-  const conciergePerPerson = conciergeBand.price && conciergeBand.ceiling
-    ? Math.round(conciergeBand.price / conciergeBand.ceiling)
-    : null;
+  const band = BANDS.find((b) => b.id === conciergeBandId)!;
+  const bandOverflow = band.price === null;
+  const perPerson = band.price && band.ceiling ? band.price / band.ceiling : null;
+  const showPerPerson = perPerson !== null && perPerson >= 45;
 
-  const billedSeats = Math.max(people, MIN_SEATS);
-  const seatsMonthly = billedSeats * SEAT;
-  const overflow = docs >= HANDOFF;
-
-  const blendedEst = docs * BLENDED;
-  const low = docs * SIMPLE;
-  const high = docs * COMPLEX;
-
-  const conciergeOnboard = conciergeDocs * 3.5;
+  const readEstimate = docs * 0.5;
+  const readLow = docs * 0.35;
+  const readHigh = docs * 0.75;
+  const seatsMonthly = people * 35;
+  const conciergeOneOff = conciergeDocs * 3.5;
 
   const scrollToEnterprise = () => {
     const el = document.getElementById("enterprise");
     if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
+  // Token shortcuts scoped to this section
+  const T = {
+    cream: "#FCFAF7",
+    tint: "#F5F1E9",
+    ink: "#23211D",
+    muted: "#6E6A63",
+    faint: "#96918A",
+    gold: "#B4914F",
+    goldInk: "#8C6F38",
+    wash: "#F7F1E5",
+    line: "rgba(35,33,29,0.12)",
+    dark: "#313131",
+    paperSoft: "#FFFDFA",
+    paperGrad: "#FFFDF9",
+  };
 
+  const Eyebrow: React.FC<{ children: React.ReactNode; color?: string; style?: React.CSSProperties }> = ({ children, color, style }) => (
+    <div
+      style={{
+        fontFamily: FONTS.mono,
+        fontSize: 11,
+        letterSpacing: "0.2em",
+        textTransform: "uppercase",
+        color: color ?? T.faint,
+        ...style,
+      }}
+    >
+      {children}
+    </div>
+  );
+
+  const TogetherRow: React.FC<{ children: React.ReactNode }> = ({ children }) => (
+    <div
+      style={{
+        marginTop: "auto",
+        paddingTop: 14,
+        borderTop: `1px solid ${T.line}`,
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "baseline",
+        gap: 12,
+        flexWrap: "wrap",
+      }}
+    >
+      <span style={{ fontFamily: FONTS.mono, fontSize: 11, letterSpacing: "0.2em", textTransform: "uppercase", color: T.faint }}>
+        Together
+      </span>
+      <span style={{ fontFamily: FONTS.serif, fontSize: 19, color: T.ink, textAlign: "right" }}>
+        {children}
+      </span>
+    </div>
+  );
 
   return (
     <>
-    <section
-      id="calculator"
-      style={{
-        background: "#FCFAF7",
-        color: TOKENS.ink,
-        padding: "clamp(72px, 9vw, 128px) 24px clamp(32px, 4vw, 56px)",
-        borderTop: `1px solid ${TOKENS.hairline}`,
-      }}
-    >
-      <div style={{ maxWidth: 1120, margin: "0 auto" }}>
-        <div style={{ maxWidth: 820, marginBottom: 56, marginLeft: 0, marginRight: "auto" }}>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "clamp(16px, 3vw, 28px)",
-              justifyContent: "flex-start",
-              flexWrap: "wrap",
-            }}
-          >
-            <img
-              src={owlMascot}
-              alt="Hobson"
-              style={{ width: "clamp(88px, 12vw, 128px)", height: "auto", flexShrink: 0 }}
-            />
-            <div
-              style={{
-                position: "relative",
-                background: "#F3EFFA",
-                border: "1px solid #E4DAF3",
-
-                borderRadius: 20,
-                padding: "20px 24px",
-                maxWidth: 520,
-                fontFamily: FONTS.serif,
-                fontSize: "clamp(1.05rem, 1.6vw, 1.25rem)",
-                lineHeight: 1.5,
-                color: TOKENS.ink,
-                boxShadow: "0 20px 60px -30px rgba(45,45,45,0.25)",
-              }}
-              className="hp-hero-bubble"
-            >
-              <span style={{ fontStyle: "italic" }}>{HERO_MESSAGE}</span>
-
-            </div>
-
-          </div>
-        </div>
-
-
-
-
-        {/* ============ SIDE-BY-SIDE: SEATS (hero) + LEARNING (supporting) ============ */}
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "minmax(0, 1fr) minmax(0, 1fr)",
-            gap: "clamp(20px, 2.5vw, 32px)",
-            alignItems: "stretch",
-          }}
-          className="hp-calc-grid"
-        >
-          {/* ---------- LEARNING (light supporting) ---------- */}
-          <div
-            style={{
-              position: "relative",
-              borderRadius: 28,
-              padding: "clamp(32px, 3.5vw, 48px)",
-              background: TOKENS.paper,
-              border: `1px solid ${TOKENS.hairline}`,
-              boxShadow: "0 8px 24px -16px rgba(45,45,45,0.12)",
-              display: "flex",
-              flexDirection: "column",
-            }}
-          >
-            <div style={{ position: "absolute", top: 0, left: 0, width: "100%", height: 4, background: TOKENS.brass, borderRadius: "28px 28px 0 0" }} />
-
-            <div style={{ fontFamily: FONTS.mono, fontSize: 11, letterSpacing: "0.24em", color: TOKENS.brass, textTransform: "uppercase", marginBottom: 16 }}>
-              Learning · one-off · upfront
-            </div>
-            <h3 style={{ fontFamily: FONTS.serif, fontWeight: 400, fontSize: "clamp(1.75rem, 2.8vw, 2.4rem)", lineHeight: 1.05, letterSpacing: "-0.02em", margin: 0, color: TOKENS.ink }}>
-              Professor reads your documents{" "}
-              <span style={{ fontStyle: "italic", color: TOKENS.brass }}>once</span>
-              . Everything learned is carried forward.
-            </h3>
-            <p style={{ fontFamily: FONTS.sans, fontSize: 15, lineHeight: 1.6, color: TOKENS.inkSoft, marginTop: 16 }}>
-              £0.25–£1.00 per document depending on complexity. A typical mix averages 50p. I read each one once and remember it for good. You approve a fixed quote before I begin the full read.
-            </p>
-
-
-
-            {/* Calculator block */}
-            <div
-              style={{
-                marginTop: 28,
-                background: TOKENS.paperSoft,
-                border: `1px solid ${TOKENS.hairline}`,
-                borderRadius: 18,
-                padding: "clamp(22px, 2.4vw, 30px)",
-              }}
-            >
-              <Slider id="docs" label="Documents" min={10} max={600} value={docs} onChange={setDocs} suffix="docs" />
-              <div style={{ marginTop: 22, paddingTop: 20, borderTop: `1px solid ${TOKENS.hairline}` }}>
-                {overflow ? (
-                  <>
-                    <div style={{ fontFamily: FONTS.serif, fontSize: "clamp(1.5rem, 2.6vw, 1.9rem)", lineHeight: 1.15, color: TOKENS.ink, fontStyle: "italic" }}>
-                      Let's confirm together.
-                    </div>
-                    <p style={{ fontFamily: FONTS.sans, fontSize: 13, color: TOKENS.inkSoft, marginTop: 10, lineHeight: 1.55 }}>
-                      Above roughly {HANDOFF} documents we confirm the details with you personally.
-                    </p>
-                  </>
-                ) : (
-                  <>
-                    <div style={{ fontFamily: FONTS.mono, fontSize: 10.5, color: TOKENS.inkMuted, marginBottom: 6, letterSpacing: "0.12em", textTransform: "uppercase" }}>
-                      Estimate — one-off
-                    </div>
-                    <div style={{ display: "flex", alignItems: "baseline", gap: 10, flexWrap: "wrap" }}>
-                      <div style={{ fontFamily: FONTS.serif, fontSize: "clamp(2.6rem, 4.8vw, 3.75rem)", lineHeight: 1, color: TOKENS.ink, letterSpacing: "-0.02em" }}>
-                        {fmtGBP2(blendedEst)}
-
-                      </div>
-                      <span style={{ fontFamily: FONTS.mono, fontSize: 14, color: TOKENS.brass }}>one-off</span>
-                    </div>
-                    <p style={{ fontFamily: FONTS.mono, fontSize: 11, color: TOKENS.inkMuted, marginTop: 10 }}>
-                      Range: {fmtGBP2(low)} — {fmtGBP2(high)}
-                    </p>
-                    <div style={{ display: "flex", alignItems: "flex-start", gap: 10, marginTop: 14, borderTop: `1px solid ${TOKENS.hairline}`, paddingTop: 12 }}>
-                      <img src={owlMascot} alt="" style={{ width: 24, height: 24, flexShrink: 0, marginTop: 1 }} />
-                      <p style={{ fontFamily: FONTS.serif, fontSize: 14, fontStyle: "italic", color: TOKENS.inkSoft, margin: 0, lineHeight: 1.5 }}>
-                        &ldquo;This is an estimate — until I know the make-up of your documents, I can&rsquo;t firm up the price.&rdquo;
-                      </p>
-                    </div>
-                  </>
-                )}
-              </div>
-            </div>
-          </div>
-
-          {/* ---------- SEATS (dark hero) ---------- */}
-          <div
-            style={{
-              position: "relative",
-              borderRadius: 28,
-              padding: "clamp(32px, 3.5vw, 48px)",
-              background: `linear-gradient(135deg, #2D2D2D 0%, #3A3A3A 60%, #262626 100%)`,
-              color: TOKENS.paper,
-              boxShadow: "0 40px 80px -30px rgba(45,45,45,0.45), 0 8px 24px -12px rgba(45,45,45,0.35)",
-              overflow: "hidden",
-              display: "flex",
-              flexDirection: "column",
-            }}
-          >
-            <div style={{ position: "absolute", top: 0, right: 0, width: 240, height: 240, background: `radial-gradient(circle at top right, rgba(201,168,104,0.28), transparent 70%)`, pointerEvents: "none" }} />
-            <div style={{ position: "absolute", top: 0, left: 0, width: "100%", height: 4, background: `linear-gradient(90deg, ${TOKENS.brass}, ${TOKENS.primaryLight}, ${TOKENS.brass})` }} />
-
-            <div style={{ fontFamily: FONTS.mono, fontSize: 11, letterSpacing: "0.24em", color: TOKENS.brassLight, textTransform: "uppercase", marginBottom: 16, position: "relative" }}>
-              Seats · monthly · what a seat gives you
-            </div>
-            <h3 style={{ fontFamily: FONTS.serif, fontWeight: 400, fontSize: "clamp(1.75rem, 2.8vw, 2.4rem)", lineHeight: 1.05, letterSpacing: "-0.02em", margin: 0, color: TOKENS.paper, position: "relative" }}>
-              Everyone gets{" "}
-              <span style={{ fontStyle: "italic", color: TOKENS.brassLight }}>their own Hobson</span>
-              , supported by the complete back-office team.
-            </h3>
-            <p style={{ fontFamily: FONTS.sans, fontSize: 15, lineHeight: 1.6, color: "rgba(255,255,255,0.82)", marginTop: 16, position: "relative" }}>
-              One Hobson per person. I learn how you work, remember what matters, and stay ready for whatever you need next.
-            </p>
-
-            <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginTop: 20, position: "relative" }}>
-              {["Learns from each person"].map((t) => (
-                <span key={t} style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "5px 10px", borderRadius: 999, background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.18)", fontFamily: FONTS.mono, fontSize: 10.5, letterSpacing: "0.04em", color: "rgba(255,255,255,0.9)" }}>
-                  <span style={{ width: 4, height: 4, borderRadius: "50%", background: TOKENS.brass }} /> {t}
-                </span>
-              ))}
-            </div>
-
-            {/* Calculator block */}
-            <div
-              style={{
-                marginTop: 28,
-                background: "rgba(255,255,255,0.06)",
-                border: "1px solid rgba(255,255,255,0.14)",
-                borderRadius: 18,
-                padding: "clamp(22px, 2.4vw, 30px)",
-                position: "relative",
-              }}
-            >
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 12 }}>
-                <label htmlFor="people" style={{ fontFamily: FONTS.mono, fontSize: 11, letterSpacing: "0.08em", textTransform: "uppercase", color: TOKENS.brassLight }}>
-                  How many people
-                </label>
-                <span style={{ fontFamily: FONTS.mono, fontSize: 20, color: TOKENS.paper }}>
-                  {people} {people === 1 ? "person" : "people"}
-                </span>
-              </div>
-              <input
-                id="people"
-                type="range"
-                min={MIN_SEATS}
-                max={30}
-                value={people}
-                onChange={(e) => setPeople(Number(e.target.value))}
-                className="hp-slider hp-slider-dark"
-                style={{ width: "100%" }}
-              />
-              <div style={{ display: "flex", justifyContent: "space-between", fontFamily: FONTS.mono, fontSize: 10.5, color: "rgba(255,255,255,0.55)", marginTop: 6 }}>
-                <span>{MIN_SEATS}</span><span>30+</span>
-              </div>
-
-              <div style={{ marginTop: 22, paddingTop: 20, borderTop: "1px solid rgba(255,255,255,0.14)" }}>
-                <div style={{ fontFamily: FONTS.mono, fontSize: 10.5, color: "rgba(255,255,255,0.6)", marginBottom: 6, letterSpacing: "0.12em", textTransform: "uppercase" }}>
-                  {billedSeats} × £{SEAT} — every month{people <= MIN_SEATS ? " · Hobson starts at two seats" : ""}
-                </div>
-                <div style={{ display: "flex", alignItems: "baseline", gap: 10, flexWrap: "wrap" }}>
-                  <div style={{ fontFamily: FONTS.serif, fontSize: "clamp(2.6rem, 4.8vw, 3.75rem)", lineHeight: 1, color: TOKENS.paper, letterSpacing: "-0.02em" }}>
-                    {fmtGBP(seatsMonthly)}
-                  </div>
-                  <span style={{ fontFamily: FONTS.mono, fontSize: 14, color: TOKENS.brassLight }}>/ month</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-
-    {/* ============ CONCIERGE — human review + named contact ============ */}
-    <section
-      style={{
-        padding: "clamp(48px, 6vw, 88px) 24px",
-        background: TOKENS.paper,
-        borderTop: `1px solid ${TOKENS.hairline}`,
-      }}
-    >
-      <div style={{ maxWidth: 1120, margin: "0 auto" }}>
-        <div
-          style={{
-            padding: "clamp(28px, 3.5vw, 56px)",
-            borderRadius: 24,
-            background: TOKENS.paper,
-            border: `2px solid ${TOKENS.brass}`,
-            boxShadow: "0 12px 40px -20px rgba(180,145,79,0.35)",
-          }}
-        >
-          {/* Section heading — above hero image */}
-          <div style={{ marginBottom: "clamp(20px, 2.5vw, 32px)" }}>
-            <div style={{ fontFamily: FONTS.mono, fontSize: 11, letterSpacing: "0.24em", color: TOKENS.brass, textTransform: "uppercase", marginBottom: 14 }}>
-              With a human · one-off + monthly
-            </div>
-            <h3 style={{ fontFamily: FONTS.serif, fontWeight: 400, fontSize: "clamp(1.75rem, 2.8vw, 2.4rem)", lineHeight: 1.1, letterSpacing: "-0.02em", margin: 0, color: TOKENS.ink }}>
-              Everything above — <span style={{ fontStyle: "italic", color: TOKENS.brass }}>with a person behind it.</span>
-            </h3>
-          </div>
-
-          {/* Hero image — AI + human, together */}
-          <div
-            className="hp-concierge-hero"
-            style={{
-              display: "grid",
-              gridTemplateColumns: "auto minmax(0, 1fr)",
-              alignItems: "center",
-              gap: "clamp(16px, 2.5vw, 32px)",
-              margin: "0 0 clamp(16px, 2vw, 28px)",
-            }}
-          >
-
-            <img
-              src={owlHumanHighfive.url}
-              alt="Hobson and a human colleague, working together"
-              style={{
-                width: "clamp(160px, 20vw, 240px)",
-                height: "auto",
-                display: "block",
-                background: "transparent",
-              }}
-            />
-            <figure style={{ margin: 0, maxWidth: 560 }}>
-              <span
-                aria-hidden
+      <section
+        id="calculator"
+        style={{
+          background: T.cream,
+          color: T.ink,
+          padding: "56px 24px",
+          borderTop: `1px solid ${T.line}`,
+        }}
+      >
+        <div style={{ maxWidth: 1280, margin: "0 auto" }}>
+          {/* Hero speech bubble — kept above the row */}
+          <div style={{ maxWidth: 820, marginBottom: 40 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "clamp(16px, 3vw, 28px)", flexWrap: "wrap" }}>
+              <img src={owlMascot} alt="Hobson" style={{ width: "clamp(72px, 10vw, 108px)", height: "auto", flexShrink: 0 }} />
+              <div
+                className="hp-hero-bubble"
                 style={{
-                  fontFamily: FONTS.serif,
-                  fontSize: "clamp(2.5rem, 4vw, 3.5rem)",
-                  lineHeight: 0.8,
-                  color: TOKENS.brass,
-                  display: "block",
-                  marginBottom: -6,
-                }}
-              >
-                “
-              </span>
-              <blockquote
-                style={{
-                  margin: 0,
+                  position: "relative",
+                  background: "#F3EFFA",
+                  border: "1px solid #E4DAF3",
+                  borderRadius: 20,
+                  padding: "18px 22px",
+                  maxWidth: 520,
                   fontFamily: FONTS.serif,
                   fontStyle: "italic",
-                  fontSize: "clamp(1rem, 1.4vw, 1.15rem)",
+                  fontSize: "clamp(1rem, 1.5vw, 1.2rem)",
                   lineHeight: 1.5,
-                  color: TOKENS.ink,
+                  color: T.ink,
+                  boxShadow: "0 20px 60px -30px rgba(45,45,45,0.25)",
                 }}
               >
-                I am fast, and I am accurate. But accurate and certain are not the same thing, and when you need certain, you need a person. I keep several on hand for exactly that reason.
-              </blockquote>
-              <figcaption
-                style={{
-                  marginTop: 10,
-                  fontFamily: FONTS.mono,
-                  fontSize: 10.5,
-                  letterSpacing: "0.24em",
-                  textTransform: "uppercase",
-                  color: TOKENS.brass,
-                }}
-              >
-                — Hobson
-              </figcaption>
-            </figure>
+                {HERO_MESSAGE}
+              </div>
+            </div>
           </div>
-          <div
 
-            className="hp-concierge-grid"
+          {/* Two-column top-level grid: AI container (left) + Human box (right) */}
+          <div
+            className="hp-price-row"
+            aria-live="polite"
             style={{
               display: "grid",
-              gridTemplateColumns: "minmax(0, 1.22fr) minmax(0, 1fr)",
-              gap: "clamp(28px, 4vw, 56px)",
+              gridTemplateColumns: "2.1fr 1.3fr",
+              gap: 34,
               alignItems: "stretch",
             }}
           >
-            {/* LEFT */}
-            <div style={{ display: "flex", flexDirection: "column" }}>
-
-
-
-              <div style={{ marginTop: 22, paddingTop: 18, borderTop: `1px solid ${TOKENS.brass}` }}>
-                <p style={{ fontFamily: FONTS.serif, fontStyle: "italic", fontSize: "clamp(1.05rem, 1.5vw, 1.2rem)", lineHeight: 1.55, color: TOKENS.ink, margin: 0 }}>
-                  The two options above are me, working on my own. This one is me, working with one of my colleagues.
-                </p>
-              </div>
-
-              {/* Price contrast */}
-              <div
+            {/* ============ LEFT: AI container ============ */}
+            <div
+              style={{
+                background: T.tint,
+                border: `1px solid ${T.line}`,
+                borderRadius: 16,
+                padding: 22,
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
+              <Eyebrow color={T.faint} style={{ marginBottom: 10 }}>Just me · no people involved</Eyebrow>
+              <p
                 style={{
-                  marginTop: 22,
-                  display: "grid",
-                  gridTemplateColumns: "1fr auto 1fr",
-                  alignItems: "center",
-                  gap: 14,
-                  padding: "18px 20px",
-                  background: TOKENS.paperSoft,
-                  border: `1px solid ${TOKENS.hairline}`,
-                  borderRadius: 12,
+                  fontFamily: FONTS.serif,
+                  fontSize: 16.5,
+                  lineHeight: 1.5,
+                  color: T.ink,
+                  margin: "0 0 18px",
                 }}
               >
-                <div style={{ textAlign: "center" }}>
-                  <div style={{ fontFamily: FONTS.mono, fontSize: 10, letterSpacing: "0.18em", color: TOKENS.inkMuted, textTransform: "uppercase", marginBottom: 4 }}>
-                    Professor alone
+                <strong style={{ fontWeight: 600 }}>One payment to teach me your documents. One a month for each person who uses me.</strong>{" "}
+                <span style={{ color: T.muted }}>These are not a choice between — they are the two halves of what I cost.</span>
+              </p>
+
+              {/* Inner cards side by side */}
+              <div
+                className="hp-ai-inner"
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "1fr 1fr",
+                  gap: 18,
+                  alignItems: "stretch",
+                }}
+              >
+                {/* ---- Card A: the read ---- */}
+                <div
+                  style={{
+                    background: T.paperSoft,
+                    borderRadius: 12,
+                    padding: "22px 20px",
+                    display: "flex",
+                    flexDirection: "column",
+                  }}
+                >
+                  <img src={owlMascot} alt="" className="hp-owl-solo" style={{ width: "auto", height: 56, marginBottom: 12 }} />
+                  <Eyebrow color={T.gold}>Learning · one-off</Eyebrow>
+                  <h3
+                    style={{
+                      fontFamily: FONTS.serif,
+                      fontWeight: 400,
+                      fontSize: 22,
+                      lineHeight: 1.15,
+                      letterSpacing: "-0.01em",
+                      margin: "8px 0 10px",
+                      color: T.ink,
+                    }}
+                    className="hp-card-h"
+                  >
+                    Professor reads your documents{" "}
+                    <span style={{ fontStyle: "italic", color: T.gold }}>once</span>.
+                  </h3>
+                  <p style={{ fontFamily: FONTS.sans, fontSize: 13.5, lineHeight: 1.55, color: T.muted, margin: 0 }} className="hp-card-blurb">
+                    £0.25–£1.00 per document depending on complexity. A typical mix averages 50p. I read each one once and remember it for good.
+                  </p>
+
+                  <div style={{ marginTop: 18 }}>
+                    <Slider id="docs" label="Documents" min={10} max={600} value={docs} onChange={setDocs} suffix="docs" />
                   </div>
-                  <div style={{ fontFamily: FONTS.serif, fontSize: "clamp(1.4rem, 2.2vw, 1.9rem)", color: TOKENS.inkSoft, letterSpacing: "-0.02em" }}>
-                    ~50p<span style={{ fontFamily: FONTS.mono, fontSize: 11, color: TOKENS.inkMuted, marginLeft: 4 }}>/ doc</span>
+
+                  <div style={{ marginTop: "auto", paddingTop: 16 }}>
+                    <Eyebrow color={T.faint} style={{ marginBottom: 4 }}>Estimate — one-off</Eyebrow>
+                    <div style={{ fontFamily: FONTS.serif, fontSize: 33, lineHeight: 1, color: T.ink, letterSpacing: "-0.02em" }}>
+                      {fmtGBP2(readEstimate)}
+                    </div>
+                    <div style={{ fontFamily: FONTS.mono, fontSize: 11, color: T.faint, marginTop: 6 }}>
+                      {fmtGBP2(readLow)} – {fmtGBP2(readHigh)}
+                    </div>
                   </div>
                 </div>
-                <div aria-hidden="true" style={{ fontFamily: FONTS.mono, color: TOKENS.brass, fontSize: 18 }}>→</div>
-                <div style={{ textAlign: "center" }}>
-                  <div style={{ fontFamily: FONTS.mono, fontSize: 10, letterSpacing: "0.18em", color: TOKENS.brass, textTransform: "uppercase", marginBottom: 4 }}>
-                    With a person
+
+                {/* ---- Card B: the seats ---- */}
+                <div
+                  style={{
+                    background: T.dark,
+                    color: T.cream,
+                    borderRadius: 12,
+                    padding: "22px 20px",
+                    display: "flex",
+                    flexDirection: "column",
+                  }}
+                >
+                  <img src={owlMascot} alt="" className="hp-owl-solo" style={{ width: "auto", height: 56, marginBottom: 12, filter: "brightness(0) invert(1)" }} />
+                  <Eyebrow color="#D9B978">Seats · monthly</Eyebrow>
+                  <h3
+                    style={{
+                      fontFamily: FONTS.serif,
+                      fontWeight: 400,
+                      fontSize: 22,
+                      lineHeight: 1.15,
+                      letterSpacing: "-0.01em",
+                      margin: "8px 0 10px",
+                      color: T.cream,
+                    }}
+                    className="hp-card-h"
+                  >
+                    Everyone gets{" "}
+                    <span style={{ fontStyle: "italic", color: "#D9B978" }}>their own Hobson</span>.
+                  </h3>
+                  <p style={{ fontFamily: FONTS.sans, fontSize: 13.5, lineHeight: 1.55, color: "rgba(255,255,255,0.75)", margin: 0 }} className="hp-card-blurb">
+                    One Hobson per person. I learn how you work, remember what matters, and stay ready for whatever you need next.
+                  </p>
+
+                  <div style={{ marginTop: 12 }}>
+                    <span
+                      style={{
+                        display: "inline-block",
+                        padding: "4px 10px",
+                        borderRadius: 999,
+                        border: "1px solid rgba(217,185,120,0.5)",
+                        color: "#D9B978",
+                        fontFamily: FONTS.mono,
+                        fontSize: 10,
+                        letterSpacing: "0.14em",
+                        textTransform: "uppercase",
+                      }}
+                    >
+                      Learns from each person
+                    </span>
                   </div>
-                  <div style={{ fontFamily: FONTS.serif, fontSize: "clamp(1.4rem, 2.2vw, 1.9rem)", color: TOKENS.ink, letterSpacing: "-0.02em", fontWeight: 500 }}>
-                    £3.50<span style={{ fontFamily: FONTS.mono, fontSize: 11, color: TOKENS.inkMuted, marginLeft: 4 }}>/ doc</span>
+
+                  <div style={{ marginTop: 14 }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 8 }}>
+                      <label htmlFor="people" style={{ fontFamily: FONTS.mono, fontSize: 11, letterSpacing: "0.14em", textTransform: "uppercase", color: "#D9B978" }}>
+                        How many people
+                      </label>
+                      <span style={{ fontFamily: FONTS.mono, fontSize: 18, color: T.cream }}>{people}</span>
+                    </div>
+                    <input
+                      id="people"
+                      type="range"
+                      min={2}
+                      max={30}
+                      value={people}
+                      onChange={(e) => setPeople(Number(e.target.value))}
+                      className="hp-slider hp-slider-dark"
+                      style={{ width: "100%" }}
+                    />
+                  </div>
+
+                  <div style={{ marginTop: "auto", paddingTop: 16 }}>
+                    <Eyebrow color="rgba(255,255,255,0.55)" style={{ marginBottom: 4 }}>
+                      {people} × £35 — every month
+                    </Eyebrow>
+                    <div style={{ fontFamily: FONTS.serif, fontSize: 33, lineHeight: 1, color: T.cream, letterSpacing: "-0.02em" }}>
+                      {fmtGBP(seatsMonthly)}
+                    </div>
                   </div>
                 </div>
               </div>
-              <p style={{ fontFamily: FONTS.sans, fontSize: 13.5, lineHeight: 1.55, color: TOKENS.inkMuted, margin: "10px 2px 0", textAlign: "center" }}>
-                The difference is a person&rsquo;s time.
+
+              {/* Container Together row */}
+              <div style={{ marginTop: 20 }}>
+                <TogetherRow>
+                  <span style={{ color: T.ink }}>{fmtGBP2(readEstimate)} today</span>
+                  <span style={{ color: T.muted, fontStyle: "italic" }}>, then </span>
+                  <span style={{ color: T.ink }}>{fmtGBP(seatsMonthly)} a month</span>
+                </TogetherRow>
+              </div>
+
+              <p style={{ fontFamily: FONTS.sans, fontSize: 12.5, color: T.muted, margin: "12px 2px 0" }}>
+                No charge until you approve the document estimate.
+              </p>
+            </div>
+
+            {/* ============ RIGHT: Human option ============ */}
+            <div
+              style={{
+                background: `linear-gradient(180deg, ${T.paperGrad} 0%, ${T.cream} 100%)`,
+                border: `1px solid ${T.gold}`,
+                borderRadius: 16,
+                padding: 26,
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
+              <img
+                src={owlHumanHighfive.url}
+                alt="Hobson working with a person"
+                className="hp-owl-highfive"
+                style={{ width: "auto", height: 88, marginBottom: 12 }}
+              />
+              <Eyebrow color={T.gold}>Me and a person · one-off + monthly</Eyebrow>
+              <h3
+                style={{
+                  fontFamily: FONTS.serif,
+                  fontWeight: 400,
+                  fontSize: 22,
+                  lineHeight: 1.15,
+                  letterSpacing: "-0.01em",
+                  margin: "8px 0 10px",
+                  color: T.ink,
+                }}
+                className="hp-card-h"
+              >
+                Everything to the left —{" "}
+                <span style={{ fontStyle: "italic", color: T.gold }}>with a person behind it.</span>
+              </h3>
+              <p style={{ fontFamily: FONTS.sans, fontSize: 13.5, lineHeight: 1.55, color: T.muted, margin: 0 }} className="hp-card-blurb">
+                That box is me, working on my own. This one is me, working with one of my colleagues.
               </p>
 
-              {/* Promise ladder */}
-              <ol style={{ listStyle: "none", padding: 0, margin: "24px 0 0", display: "flex", flexDirection: "column", gap: 14 }}>
+              {/* Bullets */}
+              <ul style={{ listStyle: "none", padding: 0, margin: "14px 0 0" }} className="hp-bullets">
                 {[
-                  {
-                    n: "01",
-                    h: "Professor's full read",
-                    b: "Exactly as in the option above — every document read, understood and stored.",
-                  },
-                  {
-                    n: "02",
-                    h: "A person checks the work",
-                    b: "Before anything reaches you, a colleague confirms every title and every address, and geolocation. Nothing filed against the wrong property, ever.",
-                  },
-                  {
-                    n: "03",
-                    h: "That colleague stays",
-                    b: "A named contact for your account, month after month, for as long as you want them.",
-                  },
-                ].map((step) => (
-                  <li key={step.n} style={{ display: "grid", gridTemplateColumns: "auto 1fr", gap: 14, alignItems: "start" }}>
-                    <span
-                      style={{
-                        fontFamily: FONTS.mono,
-                        fontSize: 11,
-                        letterSpacing: "0.14em",
-                        color: TOKENS.brass,
-                        padding: "4px 8px",
-                        border: `1px solid ${TOKENS.brass}`,
-                        borderRadius: 4,
-                        lineHeight: 1,
-                        marginTop: 3,
-                      }}
-                    >
-                      {step.n}
-                    </span>
+                  { h: "Professor's full read", b: "Every document read, understood and stored." },
+                  { h: "A person checks the work", b: "Every title and every address confirmed before it reaches you." },
+                  { h: "That colleague stays", b: "A named contact, for as long as you want them." },
+                ].map((item, i) => (
+                  <li
+                    key={item.h}
+                    style={{
+                      display: "grid",
+                      gridTemplateColumns: "auto 1fr",
+                      gap: 10,
+                      padding: "10px 0",
+                      borderTop: i === 0 ? "none" : `1px solid ${T.line}`,
+                    }}
+                  >
+                    <span style={{ color: T.gold, fontSize: 14, lineHeight: 1.4 }}>✦</span>
                     <div>
-                      <div style={{ fontFamily: FONTS.serif, fontSize: 16, color: TOKENS.ink, fontWeight: 500, letterSpacing: "-0.01em" }}>{step.h}</div>
-                      <div style={{ fontFamily: FONTS.sans, fontSize: 14, lineHeight: 1.55, color: TOKENS.inkSoft, marginTop: 3 }}>{step.b}</div>
+                      <div style={{ fontFamily: FONTS.sans, fontSize: 13.5, fontWeight: 600, color: T.ink }}>{item.h}</div>
+                      <div style={{ fontFamily: FONTS.sans, fontSize: 12.5, lineHeight: 1.45, color: T.muted }}>{item.b}</div>
                     </div>
                   </li>
                 ))}
-              </ol>
+              </ul>
 
-
-            </div>
-
-            {/* RIGHT */}
-            <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
-              <div
-                style={{
-                  background: TOKENS.paperSoft,
-                  border: `1px solid ${TOKENS.hairline}`,
-                  borderRadius: 18,
-                  padding: "clamp(20px, 2.2vw, 28px)",
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: 22,
-                }}
-              >
+              {/* Controls */}
+              <div style={{ marginTop: 16 }}>
                 <Slider
                   id="concierge-docs"
                   label="Documents to onboard"
@@ -794,107 +694,129 @@ const Calculators: React.FC = () => {
                   onChange={setConciergeDocs}
                   suffix="docs"
                 />
+              </div>
 
+              <div style={{ marginTop: 14 }}>
+                <Eyebrow color={T.gold} style={{ marginBottom: 8 }}>How big is your team</Eyebrow>
+                <div role="radiogroup" aria-label="How big is your team" style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+                  {BANDS.map((b) => {
+                    const active = b.id === conciergeBandId;
+                    return (
+                      <button
+                        key={b.id}
+                        type="button"
+                        role="radio"
+                        aria-checked={active}
+                        onClick={() => {
+                          setConciergeBandId(b.id);
+                          if (b.price === null) setTimeout(scrollToEnterprise, 60);
+                        }}
+                        style={{
+                          padding: "6px 10px",
+                          borderRadius: 999,
+                          border: `1px solid ${active ? T.gold : T.line}`,
+                          background: active ? "rgba(180,145,79,0.14)" : "#fff",
+                          color: active ? T.ink : T.muted,
+                          fontFamily: FONTS.mono,
+                          fontSize: 10.5,
+                          letterSpacing: "0.08em",
+                          textTransform: "uppercase",
+                          cursor: "pointer",
+                        }}
+                      >
+                        {b.label}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Prices */}
+              <div style={{ marginTop: 16, display: "flex", flexDirection: "column", gap: 12 }}>
                 <div>
-                  <div style={{ marginBottom: 10 }}>
-                    <label style={{ fontFamily: FONTS.mono, fontSize: 12, letterSpacing: "0.08em", textTransform: "uppercase", color: TOKENS.brass }}>
-                      How big is your team
-                    </label>
+                  <Eyebrow color={T.faint} style={{ marginBottom: 4 }}>Onboarding — one-off</Eyebrow>
+                  <div style={{ fontFamily: FONTS.serif, fontSize: 30, lineHeight: 1, color: T.ink, letterSpacing: "-0.02em" }}>
+                    {fmtGBP2(conciergeOneOff)}
                   </div>
                   <div
-                    role="radiogroup"
-                    aria-label="How big is your team"
-                    style={{ display: "flex", flexWrap: "wrap", gap: 8 }}
+                    style={{
+                      display: "inline-block",
+                      marginTop: 6,
+                      padding: "4px 10px",
+                      borderRadius: 999,
+                      background: T.wash,
+                      fontFamily: FONTS.mono,
+                      fontSize: 10.5,
+                      color: T.goldInk,
+                      letterSpacing: "0.06em",
+                    }}
                   >
-                    {CONCIERGE_BANDS.map((b) => {
-                      const active = b.id === conciergeBandId;
-                      return (
-                        <button
-                          key={b.id}
-                          type="button"
-                          role="radio"
-                          aria-checked={active}
-                          onClick={() => {
-                            setConciergeBandId(b.id);
-                            if (b.price === null) {
-                              setTimeout(scrollToEnterprise, 60);
-                            }
-                          }}
+                    £3.50 per document — Professor alone is 50p
+                  </div>
+                </div>
+
+                <div>
+                  <Eyebrow color={T.faint} style={{ marginBottom: 4 }}>Then, every month</Eyebrow>
+                  {bandOverflow ? (
+                    <div style={{ fontFamily: FONTS.serif, fontStyle: "italic", fontSize: 24, color: T.ink }}>
+                      Let&rsquo;s talk — see below
+                    </div>
+                  ) : (
+                    <>
+                      <div style={{ fontFamily: FONTS.serif, fontSize: 30, lineHeight: 1, color: T.ink, letterSpacing: "-0.02em" }}>
+                        {fmtGBP(band.price!)}
+                      </div>
+                      {showPerPerson && (
+                        <div
                           style={{
-                            padding: "8px 14px",
+                            display: "inline-block",
+                            marginTop: 6,
+                            padding: "4px 10px",
                             borderRadius: 999,
-                            border: `1px solid ${active ? TOKENS.brass : TOKENS.hairline}`,
-                            background: active ? "rgba(180,145,79,0.12)" : "#fff",
-                            color: active ? TOKENS.ink : TOKENS.inkSoft,
+                            background: T.wash,
                             fontFamily: FONTS.mono,
-                            fontSize: 11,
-                            letterSpacing: "0.1em",
-                            textTransform: "uppercase",
-                            cursor: "pointer",
-                            transition: "all .15s ease",
+                            fontSize: 10.5,
+                            color: T.goldInk,
+                            letterSpacing: "0.06em",
                           }}
                         >
-                          {b.label}
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                <div style={{ borderTop: `1px solid ${TOKENS.hairline}`, paddingTop: 18, display: "flex", flexDirection: "column", gap: 14 }}>
-                  <div>
-                    <div style={{ fontFamily: FONTS.mono, fontSize: 10.5, color: TOKENS.inkMuted, marginBottom: 4, letterSpacing: "0.14em", textTransform: "uppercase" }}>
-                      Onboarding — one-off
-                    </div>
-                    <div style={{ display: "flex", alignItems: "baseline", gap: 8 }}>
-                      <div style={{ fontFamily: FONTS.serif, fontSize: "clamp(1.9rem, 3.2vw, 2.4rem)", lineHeight: 1, color: TOKENS.ink, letterSpacing: "-0.02em" }}>
-                        {fmtGBP2(conciergeOnboard)}
-                      </div>
-                    </div>
-                    <div style={{ display: "inline-flex", alignItems: "baseline", flexWrap: "wrap", gap: 8, marginTop: 10, padding: "8px 14px", background: TOKENS.paper, border: `1px solid ${TOKENS.brass}55`, borderRadius: 999 }}>
-                      <span style={{ fontFamily: FONTS.serif, fontSize: 15, fontWeight: 600, color: TOKENS.brass, letterSpacing: "-0.01em" }}>£3.50 per document</span>
-                      <span style={{ fontFamily: FONTS.mono, fontSize: 11, color: TOKENS.inkMuted }}>Professor alone · 50p</span>
-                    </div>
-
-                  </div>
-                  {!conciergeIsOverflow && (
-                    <div>
-                      <div style={{ fontFamily: FONTS.mono, fontSize: 10.5, color: TOKENS.inkMuted, marginBottom: 4, letterSpacing: "0.14em", textTransform: "uppercase" }}>
-                        Then, every month
-                      </div>
-                      <div style={{ display: "flex", alignItems: "baseline", gap: 8 }}>
-                        <div style={{ fontFamily: FONTS.serif, fontSize: "clamp(1.9rem, 3.2vw, 2.4rem)", lineHeight: 1, color: TOKENS.ink, letterSpacing: "-0.02em" }}>
-                          {fmtGBP(conciergeBand.price!)}
+                          £{perPerson} per person, seats included — a standard seat is £35
                         </div>
-                        <span style={{ fontFamily: FONTS.mono, fontSize: 13, color: TOKENS.brass }}>/ month</span>
-                      </div>
-                        <div style={{ display: "inline-flex", alignItems: "baseline", flexWrap: "wrap", gap: 8, marginTop: 10, padding: "8px 14px", background: TOKENS.paper, border: `1px solid ${TOKENS.brass}55`, borderRadius: 999 }}>
-                          <span style={{ fontFamily: FONTS.serif, fontSize: 15, fontWeight: 600, color: TOKENS.brass, letterSpacing: "-0.01em" }}>£{conciergePerPerson} per person</span>
-                          <span style={{ fontFamily: FONTS.serif, fontSize: 13, fontWeight: 600, fontStyle: "italic", color: TOKENS.ink }}>seats included</span>
-                          <span style={{ fontFamily: FONTS.mono, fontSize: 11, color: TOKENS.inkMuted }}>· standard seat £35</span>
-
-                        </div>
-
-                    </div>
+                      )}
+                    </>
                   )}
-
                 </div>
+              </div>
+
+              {/* Together row */}
+              <div style={{ marginTop: 16 }}>
+                <TogetherRow>
+                  {bandOverflow ? (
+                    <>
+                      <span style={{ color: T.ink }}>{fmtGBP2(conciergeOneOff)} today</span>
+                      <span style={{ color: T.muted, fontStyle: "italic" }}>, then let&rsquo;s talk</span>
+                    </>
+                  ) : (
+                    <>
+                      <span style={{ color: T.ink }}>{fmtGBP2(conciergeOneOff)} today</span>
+                      <span style={{ color: T.muted, fontStyle: "italic" }}>, then </span>
+                      <span style={{ color: T.ink }}>{fmtGBP(band.price!)} a month</span>
+                    </>
+                  )}
+                </TogetherRow>
               </div>
 
               <a
                 href="mailto:info@hobsonschoice.ai"
                 style={{
-                  padding: "14px 22px",
-                  borderRadius: 12,
-                  border: "none",
-                  background: TOKENS.brass,
+                  marginTop: 14,
+                  padding: "12px 18px",
+                  borderRadius: 10,
+                  background: T.gold,
                   color: "#fff",
                   fontFamily: FONTS.sans,
-                  fontSize: 15,
+                  fontSize: 14,
                   fontWeight: 600,
-                  letterSpacing: "0.01em",
-                  cursor: "pointer",
-                  boxShadow: "0 8px 20px -10px rgba(180,145,79,0.5)",
                   textAlign: "center",
                   textDecoration: "none",
                   display: "block",
@@ -902,50 +824,39 @@ const Calculators: React.FC = () => {
               >
                 Book a consultation
               </a>
-              <div style={{ fontFamily: FONTS.sans, fontSize: 12.5, color: TOKENS.inkMuted, textAlign: "center" }}>
+              <div style={{ fontFamily: FONTS.sans, fontSize: 11.5, color: T.muted, textAlign: "center", marginTop: 8 }}>
                 Nothing is charged until we have spoken and you have approved the scope.
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <InterestModal open={quoteOpen} onClose={() => setQuoteOpen(false)} source="pricing-firm-quote" />
-    
-
-
-    <style>{`
-      @media (max-width: 960px) {
-        .hp-calc-grid { grid-template-columns: 1fr !important; }
-      }
-      @media (max-width: 900px) {
-        .hp-concierge-grid { grid-template-columns: 1fr !important; }
-        .hp-concierge-hero { grid-template-columns: 1fr !important; text-align: center; }
-        .hp-concierge-hero img { margin: 0 auto; }
-      }
-
-
-      .hp-slider-dark::-webkit-slider-runnable-track { background: rgba(255,255,255,0.18); }
-      .hp-slider-dark::-moz-range-track { background: rgba(255,255,255,0.18); }
-      .hp-hero-bubble::before {
-        content: "";
-        position: absolute;
-        left: -10px;
-        top: 32px;
-        width: 18px;
-        height: 18px;
-        background: #F3EFFA;
-        border-left: 1px solid #E4DAF3;
-        border-bottom: 1px solid #E4DAF3;
-
-
-        transform: rotate(45deg);
-      }
-      @media (max-width: 640px) {
-        .hp-hero-bubble::before { left: 50%; top: -10px; transform: translateX(-50%) rotate(135deg); }
-      }
-    `}</style>
+      <style>{`
+        @media (max-width: 1120px) {
+          .hp-price-row { grid-template-columns: 1fr !important; }
+        }
+        @media (max-width: 720px) {
+          .hp-ai-inner { grid-template-columns: 1fr !important; }
+        }
+        .hp-slider-dark::-webkit-slider-runnable-track { background: rgba(255,255,255,0.18); }
+        .hp-slider-dark::-moz-range-track { background: rgba(255,255,255,0.18); }
+        .hp-hero-bubble::before {
+          content: "";
+          position: absolute;
+          left: -10px;
+          top: 32px;
+          width: 18px;
+          height: 18px;
+          background: #F3EFFA;
+          border-left: 1px solid #E4DAF3;
+          border-bottom: 1px solid #E4DAF3;
+          transform: rotate(45deg);
+        }
+        @media (max-width: 640px) {
+          .hp-hero-bubble::before { left: 50%; top: -10px; transform: translateX(-50%) rotate(135deg); }
+        }
+      `}</style>
     </>
   );
 };
@@ -1094,7 +1005,7 @@ export default function Pricing() {
                   </span>
                 </div>
                 <h2 style={{ fontFamily: FONTS.serif, fontSize: "clamp(1.9rem, 3.6vw, 2.6rem)", fontWeight: 400, color: TOKENS.ink, margin: 0, marginBottom: 24, lineHeight: 1.15 }}>
-                  Larger portfolios, larger teams, unusual structures.
+                  Larger portfolios, unusual structures.
                 </h2>
 
                 <p style={{ fontFamily: FONTS.sans, fontSize: 17, lineHeight: 1.7, color: TOKENS.inkSoft, margin: "0 0 32px", maxWidth: 620 }}>
