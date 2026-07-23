@@ -645,6 +645,8 @@ const Calculators: React.FC = () => {
         >
           {/* Hero band — AI + human, together */}
           <div
+            className="hp-concierge-hero"
+
             style={{
               margin: "clamp(-28px, -3.5vw, -56px) clamp(-28px, -3.5vw, -56px) clamp(24px, 3vw, 40px)",
               padding: "clamp(20px, 3vw, 36px) clamp(28px, 3.5vw, 56px)",
