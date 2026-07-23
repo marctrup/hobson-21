@@ -451,7 +451,7 @@ const Calculators: React.FC = () => {
               />
               <blockquote style={{ margin: 0, maxWidth: 320 }}>
                 <p style={{ fontFamily: FONTS.serif, fontStyle: "italic", fontSize: 15, lineHeight: 1.5, color: T.ink, margin: 0 }}>
-                  &ldquo;I am fast, and I am accurate. But accurate and certain are not the same thing, and when you need certain, you need a person. I keep several on hand for exactly that reason.&rdquo;
+                  &ldquo;I do not guess. When a document will not say plainly which property it belongs to, I set it aside rather than file it wrongly — and one of my colleagues works out where it goes.&rdquo;
                 </p>
                 <footer style={{ fontFamily: FONTS.mono, fontSize: 10.5, letterSpacing: "0.2em", textTransform: "uppercase", color: T.gold, marginTop: 8 }}>
                   — Hobson
@@ -652,18 +652,18 @@ const Calculators: React.FC = () => {
                 className="hp-card-h"
               >
                 Everything to the left —{" "}
-                <span style={{ fontStyle: "italic", color: T.gold }}>with a person behind it.</span>
+                <span style={{ fontStyle: "italic", color: T.gold }}>but you do not lift a finger.</span>
               </h3>
               <p style={{ fontFamily: FONTS.sans, fontSize: 13.5, lineHeight: 1.55, color: T.muted, margin: 0 }} className="hp-card-blurb">
-                That box is me, working on my own. This one is me, working with one of my colleagues.
+                Onboarding takes time you may not have. Hand it to us and my colleagues do the whole thing — including the documents I cannot read clearly.
               </p>
 
               {/* Bullets */}
               <ul style={{ listStyle: "none", padding: 0, margin: "14px 0 0" }} className="hp-bullets">
                 {[
-                  { h: "Professor's full read", b: "Every document read, understood and stored." },
-                  { h: "A person checks the work", b: "Every title and every address confirmed before it reaches you." },
-                  { h: "That colleague stays", b: "A named contact, for as long as you want them." },
+                  { h: "We do the onboarding", b: "Send us your documents and we take it from there. No uploading, no sorting, no evenings lost to it." },
+                  { h: "Someone sorts out the unclear ones", b: "I never guess. Where a document does not say plainly which property it belongs to, I set it aside — and a colleague works out where it goes." },
+                  { h: "That person stays", b: "A named contact who already knows your portfolio, for as long as you want them." },
                 ].map((item, i) => (
                   <li
                     key={item.h}
@@ -743,7 +743,7 @@ const Calculators: React.FC = () => {
                       letterSpacing: "0.06em",
                     }}
                   >
-                    {conciergeBelowMin ? "Minimum 100 documents" : "£3.50 a document — alone it is 50p"}
+                    {conciergeBelowMin ? "Minimum 100 documents" : "£3.50 a document — the unclear ones take a person"}
                   </div>
                 </div>
 
