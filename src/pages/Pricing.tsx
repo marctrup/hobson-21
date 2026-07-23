@@ -355,7 +355,7 @@ const Calculators: React.FC = () => {
       style={{
         background: "#FCFAF7",
         color: TOKENS.ink,
-        padding: "clamp(72px, 9vw, 128px) 24px clamp(56px, 7vw, 96px)",
+        padding: "clamp(72px, 9vw, 128px) 24px clamp(32px, 4vw, 56px)",
         borderTop: `1px solid ${TOKENS.hairline}`,
       }}
     >
