@@ -753,6 +753,10 @@ const Calculators: React.FC = () => {
       @media (max-width: 960px) {
         .hp-calc-grid { grid-template-columns: 1fr !important; }
       }
+      @media (max-width: 900px) {
+        .hp-concierge-grid { grid-template-columns: 1fr !important; }
+      }
+
       .hp-slider-dark::-webkit-slider-runnable-track { background: rgba(255,255,255,0.18); }
       .hp-slider-dark::-moz-range-track { background: rgba(255,255,255,0.18); }
       .hp-hero-bubble::before {
