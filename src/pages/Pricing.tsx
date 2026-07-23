@@ -319,11 +319,11 @@ const Calculators: React.FC = () => {
   const [conciergeBandId, setConciergeBandId] = useState<string>("5");
 
   const BANDS: Array<{ id: string; label: string; ceiling: number | null; price: number | null }> = [
-    { id: "2", label: "Up to 2", ceiling: 2, price: 125 },
-    { id: "5", label: "Up to 5", ceiling: 5, price: 250 },
-    { id: "10", label: "Up to 10", ceiling: 10, price: 450 },
-    { id: "20", label: "Up to 20", ceiling: 20, price: 750 },
-    { id: "20+", label: "More than 20", ceiling: null, price: null },
+    { id: "2", label: "2", ceiling: 2, price: 125 },
+    { id: "5", label: "5", ceiling: 5, price: 250 },
+    { id: "10", label: "10", ceiling: 10, price: 450 },
+    { id: "20", label: "20", ceiling: 20, price: 750 },
+    { id: "20+", label: "More", ceiling: null, price: null },
   ];
   const band = BANDS.find((b) => b.id === conciergeBandId)!;
   const bandOverflow = band.price === null;
@@ -479,168 +479,93 @@ const Calculators: React.FC = () => {
                 </blockquote>
               </div>
 
-            {/* ============ LEFT: AI container ============ */}
+            {/* ============ LEFT: single box, two sections ============ */}
             <div
               style={{
-                background: T.tint,
-                border: `1px solid ${T.line}`,
+                background: T.paperSoft,
+                border: `1px solid rgba(35,33,29,0.13)`,
                 borderRadius: 16,
-                padding: 22,
+                padding: 26,
                 display: "flex",
                 flexDirection: "column",
+                height: "100%",
+                flex: 1,
               }}
             >
-              <Eyebrow color={T.faint} style={{ marginBottom: 10 }}>Just me · no people involved</Eyebrow>
-              <p
+              <Eyebrow color={T.faint}>Just me · no people involved</Eyebrow>
+              <h3
                 style={{
                   fontFamily: FONTS.serif,
-                  fontSize: 16.5,
-                  lineHeight: 1.5,
+                  fontWeight: 400,
+                  fontSize: 29,
+                  lineHeight: 1.15,
+                  letterSpacing: "-0.01em",
+                  margin: "10px 0 10px",
                   color: T.ink,
-                  margin: "0 0 18px",
                 }}
+                className="hp-card-h"
               >
-                <strong style={{ fontWeight: 600 }}>One payment to teach me your documents. One a month for each person who uses me.</strong>{" "}
-                <span style={{ color: T.muted }}>These are not a choice between — they are the two halves of what I cost.</span>
+                Two payments,{" "}
+                <span style={{ fontStyle: "italic", color: T.gold }}>and I am yours.</span>
+              </h3>
+              <p style={{ fontFamily: FONTS.sans, fontSize: 13.5, lineHeight: 1.55, color: T.muted, margin: "0 0 18px" }} className="hp-card-blurb">
+                One to teach me your documents. One a month for each person who uses me. Not a choice between — the two halves of what I cost.
               </p>
 
-              {/* Inner cards side by side */}
+              {/* Two sections divided by a hairline */}
               <div
                 className="hp-ai-inner"
                 style={{
                   display: "grid",
-                  gridTemplateColumns: "1fr 1fr",
-                  gap: 18,
+                  gridTemplateColumns: "1fr 1px 1fr",
+                  gap: 24,
                   alignItems: "stretch",
                 }}
               >
-                {/* ---- Card A: the read ---- */}
-                <div
-                  style={{
-                    background: T.paperSoft,
-                    borderRadius: 12,
-                    padding: "22px 20px",
-                    display: "flex",
-                    flexDirection: "column",
-                  }}
-                >
-                  
-                  <Eyebrow color={T.gold}>Learning · one-off</Eyebrow>
-                  <h3
-                    style={{
-                      fontFamily: FONTS.serif,
-                      fontWeight: 400,
-                      fontSize: 22,
-                      lineHeight: 1.15,
-                      letterSpacing: "-0.01em",
-                      margin: "8px 0 10px",
-                      color: T.ink,
-                    }}
-                    className="hp-card-h"
-                  >
-                    Professor reads your documents{" "}
-                    <span style={{ fontStyle: "italic", color: T.gold }}>once</span>.
-                  </h3>
-                  <p style={{ fontFamily: FONTS.sans, fontSize: 13.5, lineHeight: 1.55, color: T.muted, margin: 0 }} className="hp-card-blurb">
-                    £0.25–£1.00 per document depending on complexity. A typical mix averages 50p. I read each one once and remember it for good.
+                {/* ---- Section A: reading ---- */}
+                <div style={{ display: "flex", flexDirection: "column" }}>
+                  <Eyebrow color={T.gold}>Reading · one-off</Eyebrow>
+                  <p style={{ fontFamily: FONTS.sans, fontSize: 13, lineHeight: 1.5, color: T.muted, margin: "10px 0 0" }}>
+                    £0.25–£1.00 per document depending on complexity. A typical mix averages 50p. Read once, remembered for good.
                   </p>
 
-                  <div style={{ marginTop: 18 }}>
+                  <div style={{ marginTop: "auto", paddingTop: 20 }}>
                     <Slider id="docs" label="Documents" min={10} max={600} value={docs} onChange={setDocs} suffix="docs" />
-                  </div>
-
-                  <div style={{ marginTop: "auto", paddingTop: 16 }}>
-                    <Eyebrow color={T.faint} style={{ marginBottom: 4 }}>Estimate — one-off</Eyebrow>
-                    <div style={{ fontFamily: FONTS.serif, fontSize: 33, lineHeight: 1, color: T.ink, letterSpacing: "-0.02em" }}>
-                      {fmtGBP2(readEstimate)}
-                    </div>
-                    <div style={{ fontFamily: FONTS.mono, fontSize: 11, color: T.faint, marginTop: 6 }}>
-                      {fmtGBP2(readLow)} – {fmtGBP2(readHigh)}
+                    <div style={{ marginTop: 16 }}>
+                      <Eyebrow color={T.faint} style={{ marginBottom: 4 }}>Estimate — one-off</Eyebrow>
+                      <div style={{ fontFamily: FONTS.serif, fontSize: 30, lineHeight: 1, color: T.ink, letterSpacing: "-0.02em" }}>
+                        {fmtGBP2(readEstimate)}
+                      </div>
+                      <div style={{ fontFamily: FONTS.mono, fontSize: 11, color: T.faint, marginTop: 6 }}>
+                        {fmtGBP2(readLow)} – {fmtGBP2(readHigh)}
+                      </div>
                     </div>
                   </div>
                 </div>
 
-                {/* ---- Card B: the seats ---- */}
-                <div
-                  style={{
-                    background: T.dark,
-                    color: T.cream,
-                    borderRadius: 12,
-                    padding: "22px 20px",
-                    display: "flex",
-                    flexDirection: "column",
-                  }}
-                >
-                  
-                  <Eyebrow color="#D9B978">Seats · monthly</Eyebrow>
-                  <h3
-                    style={{
-                      fontFamily: FONTS.serif,
-                      fontWeight: 400,
-                      fontSize: 22,
-                      lineHeight: 1.15,
-                      letterSpacing: "-0.01em",
-                      margin: "8px 0 10px",
-                      color: T.cream,
-                    }}
-                    className="hp-card-h"
-                  >
-                    Everyone gets{" "}
-                    <span style={{ fontStyle: "italic", color: "#D9B978" }}>their own Hobson</span>.
-                  </h3>
-                  <p style={{ fontFamily: FONTS.sans, fontSize: 13.5, lineHeight: 1.55, color: "rgba(255,255,255,0.75)", margin: 0 }} className="hp-card-blurb">
-                    One Hobson per person. I learn how you work, remember what matters, and stay ready for whatever you need next.
+                {/* ---- Vertical hairline ---- */}
+                <div aria-hidden style={{ background: "rgba(35,33,29,0.08)", width: 1, height: "100%" }} />
+
+                {/* ---- Section B: seats ---- */}
+                <div style={{ display: "flex", flexDirection: "column" }}>
+                  <Eyebrow color={T.gold}>Seats · monthly</Eyebrow>
+                  <p style={{ fontFamily: FONTS.sans, fontSize: 13, lineHeight: 1.5, color: T.muted, margin: "10px 0 0" }}>
+                    One Hobson per person, at £35 each per month. I learn how each person works and stay ready for what they need next.
                   </p>
 
-                  <div style={{ marginTop: 12 }}>
-                    <span
-                      style={{
-                        display: "inline-block",
-                        padding: "4px 10px",
-                        borderRadius: 999,
-                        border: "1px solid rgba(217,185,120,0.5)",
-                        color: "#D9B978",
-                        fontFamily: FONTS.mono,
-                        fontSize: 10,
-                        letterSpacing: "0.14em",
-                        textTransform: "uppercase",
-                      }}
-                    >
-                      Learns from each person
-                    </span>
-                  </div>
-
-                  <div style={{ marginTop: 14 }}>
-                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 8 }}>
-                      <label htmlFor="people" style={{ fontFamily: FONTS.mono, fontSize: 11, letterSpacing: "0.14em", textTransform: "uppercase", color: "#D9B978" }}>
-                        How many people
-                      </label>
-                      <span style={{ fontFamily: FONTS.mono, fontSize: 18, color: T.cream }}>{people}</span>
-                    </div>
-                    <input
-                      id="people"
-                      type="range"
-                      min={2}
-                      max={30}
-                      value={people}
-                      onChange={(e) => setPeople(Number(e.target.value))}
-                      className="hp-slider hp-slider-dark"
-                      style={{ width: "100%" }}
-                    />
-                  </div>
-
-                  <div style={{ marginTop: "auto", paddingTop: 16 }}>
-                    <Eyebrow color="rgba(255,255,255,0.55)" style={{ marginBottom: 4 }}>
-                      {people} × £35 — every month
-                    </Eyebrow>
-                    <div style={{ fontFamily: FONTS.serif, fontSize: 33, lineHeight: 1, color: T.cream, letterSpacing: "-0.02em" }}>
-                      {fmtGBP(seatsMonthly)}
+                  <div style={{ marginTop: "auto", paddingTop: 20 }}>
+                    <Slider id="people" label="People" min={2} max={30} value={people} onChange={setPeople} suffix={people === 1 ? "person" : "people"} />
+                    <div style={{ marginTop: 16 }}>
+                      <Eyebrow color={T.faint} style={{ marginBottom: 4 }}>{people} × £35 — every month</Eyebrow>
+                      <div style={{ fontFamily: FONTS.serif, fontSize: 30, lineHeight: 1, color: T.ink, letterSpacing: "-0.02em" }}>
+                        {fmtGBP(seatsMonthly)}
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
 
-              {/* Container Together row */}
+              {/* Together row */}
               <div style={{ marginTop: 20 }}>
                 <TogetherRow>
                   <span style={{ color: T.ink }}>{fmtGBP2(readEstimate)} today</span>
@@ -649,9 +574,28 @@ const Calculators: React.FC = () => {
                 </TogetherRow>
               </div>
 
-              <p style={{ fontFamily: FONTS.sans, fontSize: 12.5, color: T.muted, margin: "12px 2px 0" }}>
+              <a
+                href="mailto:info@hobsonschoice.ai"
+                style={{
+                  marginTop: 14,
+                  padding: "12px 18px",
+                  borderRadius: 10,
+                  background: "transparent",
+                  color: T.gold,
+                  border: `1px solid ${T.gold}`,
+                  fontFamily: FONTS.sans,
+                  fontSize: 14,
+                  fontWeight: 600,
+                  textAlign: "center",
+                  textDecoration: "none",
+                  display: "block",
+                }}
+              >
+                Get my firm quote
+              </a>
+              <div style={{ fontFamily: FONTS.sans, fontSize: 11.5, color: T.muted, textAlign: "center", marginTop: 8 }}>
                 No charge until you approve the document estimate.
-              </p>
+              </div>
             </div>
             </div>
 
@@ -725,6 +669,8 @@ const Calculators: React.FC = () => {
                 padding: 26,
                 display: "flex",
                 flexDirection: "column",
+                height: "100%",
+                flex: 1,
               }}
             >
               <Eyebrow color={T.gold}>Me and a person · one-off + monthly</Eyebrow>
@@ -788,8 +734,8 @@ const Calculators: React.FC = () => {
               </div>
 
               <div style={{ marginTop: 14 }}>
-                <Eyebrow color={T.gold} style={{ marginBottom: 8 }}>How big is your team</Eyebrow>
-                <div role="radiogroup" aria-label="How big is your team" style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+                <Eyebrow color={T.gold} style={{ marginBottom: 8 }}>How big is your team (up to)</Eyebrow>
+                <div role="radiogroup" aria-label="How big is your team" style={{ display: "flex", gap: 6 }}>
                   {BANDS.map((b) => {
                     const active = b.id === conciergeBandId;
                     return (
@@ -803,16 +749,18 @@ const Calculators: React.FC = () => {
                           if (b.price === null) setTimeout(scrollToEnterprise, 60);
                         }}
                         style={{
-                          padding: "6px 10px",
+                          flex: 1,
+                          padding: "6px 6px",
                           borderRadius: 999,
                           border: `1px solid ${active ? T.gold : T.line}`,
                           background: active ? "rgba(180,145,79,0.14)" : "#fff",
                           color: active ? T.ink : T.muted,
                           fontFamily: FONTS.mono,
-                          fontSize: 10.5,
+                          fontSize: 11,
                           letterSpacing: "0.08em",
                           textTransform: "uppercase",
                           cursor: "pointer",
+                          textAlign: "center",
                         }}
                       >
                         {b.label}
@@ -823,7 +771,7 @@ const Calculators: React.FC = () => {
               </div>
 
               {/* Prices */}
-              <div style={{ marginTop: 16, display: "flex", flexDirection: "column", gap: 12 }}>
+              <div style={{ marginTop: "auto", paddingTop: 20, display: "flex", flexDirection: "column", gap: 12 }}>
                 <div>
                   <Eyebrow color={T.faint} style={{ marginBottom: 4 }}>Onboarding — one-off</Eyebrow>
                   <div style={{ fontFamily: FONTS.serif, fontSize: 30, lineHeight: 1, color: T.ink, letterSpacing: "-0.02em" }}>
