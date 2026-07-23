@@ -314,9 +314,10 @@ const TypewriterText: React.FC<{ text: string; speed?: number; startDelay?: numb
 // New pricing row — one row, three boxes: [AI container: read + seats] + [human]
 // ============================================================================
 const Calculators: React.FC = () => {
-  const [docs, setDocs] = useState(212);
+  const [docs, setDocs] = useState(300);
   const [people, setPeople] = useState(5);
   const [conciergeDocs, setConciergeDocs] = useState(300);
+
   const [conciergeBandId, setConciergeBandId] = useState<string>("5");
 
   const BANDS: Array<{ id: string; label: string; ceiling: number | null; price: number | null }> = [
