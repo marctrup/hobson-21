@@ -316,7 +316,8 @@ const TypewriterText: React.FC<{ text: string; speed?: number; startDelay?: numb
 const Calculators: React.FC = () => {
   const [docs, setDocs] = useState(300);
   const [people, setPeople] = useState(5);
-  const [conciergeDocs, setConciergeDocs] = useState(300);
+  const conciergeDocs = docs;
+  const setConciergeDocs = setDocs;
 
   const [conciergeBandId, setConciergeBandId] = useState<string>("5");
 
@@ -336,7 +337,8 @@ const Calculators: React.FC = () => {
   const readLow = docs * 0.35;
   const readHigh = docs * 0.75;
   const seatsMonthly = people * 35;
-  const conciergeOneOff = conciergeDocs * 3.5;
+  const conciergeBelowMin = conciergeDocs < 100;
+  const conciergeOneOff = conciergeBelowMin ? 350 : conciergeDocs * 3.5;
 
   const scrollToEnterprise = () => {
     const el = document.getElementById("enterprise");
@@ -507,7 +509,7 @@ const Calculators: React.FC = () => {
                     £0.25–£1.00 per document depending on complexity. A typical mix averages 50p. Read once, remembered for good.
                   </p>
 
-                  <Slider id="docs" label="Documents" min={10} max={600} value={docs} onChange={setDocs} suffix="docs" />
+                  <Slider id="docs" label="Documents" min={10} max={2000} step={10} value={docs} onChange={setDocs} suffix="docs" />
                   <div style={{ marginTop: 16 }}>
                     <Eyebrow color={T.faint} style={{ marginBottom: 4, fontWeight: 700 }}>Estimate — one-off</Eyebrow>
                     <div style={{ fontFamily: FONTS.serif, fontSize: 30, lineHeight: 1, color: T.ink, letterSpacing: "-0.02em" }}>
@@ -686,10 +688,10 @@ const Calculators: React.FC = () => {
               <div style={{ marginTop: 16 }}>
                 <Slider
                   id="concierge-docs"
-                  label="Documents to onboard"
-                  min={100}
+                  label="Documents"
+                  min={10}
                   max={2000}
-                  step={100}
+                  step={10}
                   value={conciergeDocs}
                   onChange={setConciergeDocs}
                   suffix="docs"
@@ -762,7 +764,7 @@ const Calculators: React.FC = () => {
                       letterSpacing: "0.06em",
                     }}
                   >
-                    £3.50 a document — alone it is 50p
+                    {conciergeBelowMin ? "Minimum 100 documents" : "£3.50 a document — alone it is 50p"}
                   </div>
                 </div>
 
