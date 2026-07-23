@@ -539,7 +539,59 @@ const Calculators: React.FC = () => {
                 </div>
               </div>
 
+              {/* Every seat includes */}
+              <div
+                className="hp-includes"
+                style={{
+                  background: "#FBF8F3",
+                  border: "1px solid rgba(35,33,29,0.08)",
+                  borderRadius: 10,
+                  padding: "18px 20px",
+                  marginTop: 22,
+                }}
+              >
+                <div
+                  style={{
+                    fontFamily: FONTS.mono,
+                    fontSize: 9.5,
+                    letterSpacing: "0.18em",
+                    textTransform: "uppercase",
+                    color: T.muted,
+                    marginBottom: 12,
+                  }}
+                >
+                  Every seat includes
+                </div>
+                <div
+                  className="hp-includes-grid"
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns: "1fr 1fr 1fr",
+                    gap: 24,
+                  }}
+                >
+                  {[
+                    { h: "Everything I can do", b: "No tiers and nothing held back. Every seat gets all of me." },
+                    { h: "Support by email", b: "Ask my team anything. Answers usually the same day." },
+                    { h: "The Knowledgebase", b: "Guides and answers, open to you whenever you need them." },
+                  ].map((item) => (
+                    <div key={item.h} style={{ display: "grid", gridTemplateColumns: "auto 1fr", gap: 8 }}>
+                      <span style={{ color: T.gold, fontSize: 13, lineHeight: 1.4 }}>✦</span>
+                      <div>
+                        <div style={{ fontFamily: FONTS.sans, fontSize: 13.5, fontWeight: 500, color: "#23211D", lineHeight: 1.3 }}>
+                          {item.h}
+                        </div>
+                        <div style={{ fontFamily: FONTS.sans, fontSize: 12.5, color: "#6E6A63", lineHeight: 1.5, marginTop: 3 }}>
+                          {item.b}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
               {/* Together row */}
+
               <div style={{ marginTop: "auto", paddingTop: 20 }}>
                 <TogetherRow>
                   <span style={{ color: T.ink }}>{fmtGBP2(readEstimate)} today</span>
