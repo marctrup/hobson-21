@@ -420,24 +420,6 @@ const Calculators: React.FC = () => {
           >
             {/* ============ LEFT column wrapper ============ */}
             <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
-              {/* Owl image above the AI container */}
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "flex-end",
-                  justifyContent: "center",
-                  padding: "4px 2px",
-                  minHeight: 170,
-                }}
-              >
-                <img
-                  src={owlMascot}
-                  alt="Hobson"
-                  style={{ width: 130, height: "auto", display: "block", objectFit: "contain" }}
-                />
-              </div>
-
-
 
             {/* ============ LEFT: single box, two sections ============ */}
             <div
@@ -452,6 +434,15 @@ const Calculators: React.FC = () => {
                 flex: 1,
               }}
             >
+              {/* Mascot inside box */}
+              <div style={{ display: "flex", justifyContent: "center", alignItems: "flex-end", height: 120, marginBottom: 6 }}>
+                <img
+                  src={owlMascot}
+                  alt="Hobson"
+                  style={{ width: 110, height: 110, display: "block", objectFit: "contain" }}
+                />
+              </div>
+
               <Eyebrow color={T.faint}>Just me · no people involved</Eyebrow>
               <h3
                 style={{
