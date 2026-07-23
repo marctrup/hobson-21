@@ -451,7 +451,7 @@ const Calculators: React.FC = () => {
               />
               <blockquote style={{ margin: 0, maxWidth: 320 }}>
                 <p style={{ fontFamily: FONTS.serif, fontStyle: "italic", fontSize: 15, lineHeight: 1.5, color: T.ink, margin: 0 }}>
-                  &ldquo;I am fast, and I am accurate. But accurate and certain are not the same thing, and when you need certain, you need a person. I keep several on hand for exactly that reason.&rdquo;
+                  &ldquo;I do not guess. When a document will not say plainly which property it belongs to, I set it aside rather than file it wrongly — and one of my colleagues works out where it goes.&rdquo;
                 </p>
                 <footer style={{ fontFamily: FONTS.mono, fontSize: 10.5, letterSpacing: "0.2em", textTransform: "uppercase", color: T.gold, marginTop: 8 }}>
                   — Hobson
