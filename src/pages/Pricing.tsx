@@ -438,7 +438,7 @@ const Calculators: React.FC = () => {
               {/* Mascot inside box */}
               <div style={{ display: "flex", justifyContent: "center", alignItems: "flex-end", height: 120, marginBottom: 6 }}>
                 <img
-                  src={owlMascot}
+                  src={owlMascot.url}
                   alt="Hobson"
                   style={{ width: 110, height: 110, display: "block", objectFit: "contain" }}
                 />
