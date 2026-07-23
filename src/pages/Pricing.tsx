@@ -420,67 +420,24 @@ const Calculators: React.FC = () => {
           >
             {/* ============ LEFT column wrapper ============ */}
             <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
-              {/* Owl + quote, above the AI container (mirrors the right) */}
+              {/* Owl image above the AI container */}
               <div
                 style={{
-                  display: "grid",
-                  gridTemplateColumns: "auto 1fr",
-                  alignItems: "end",
-                  gap: 18,
+                  display: "flex",
+                  alignItems: "flex-end",
+                  justifyContent: "center",
                   padding: "4px 2px",
                   minHeight: 170,
                 }}
               >
-
-
                 <img
                   src={owlMascot}
                   alt="Hobson"
-                  style={{ width: 94, height: "auto", display: "block" }}
+                  style={{ width: 130, height: "auto", display: "block", objectFit: "contain" }}
                 />
-
-                <blockquote style={{ margin: 0, position: "relative", paddingLeft: 22 }}>
-                  <span
-                    aria-hidden
-                    style={{
-                      position: "absolute",
-                      left: 0,
-                      top: -6,
-                      fontFamily: FONTS.serif,
-                      fontSize: 42,
-                      lineHeight: 1,
-                      color: T.gold,
-                    }}
-                  >
-                    “
-                  </span>
-                  <p
-                    style={{
-                      margin: 0,
-                      fontFamily: FONTS.serif,
-                      fontStyle: "italic",
-                      fontSize: 15,
-                      lineHeight: 1.5,
-                      color: T.ink,
-                      maxWidth: 260,
-                    }}
-                  >
-                    Give me your documents and a seat for each person. After that it is me on my own — no meetings, nobody to wait for. For most of what you do, that is enough.
-                  </p>
-                  <div
-                    style={{
-                      marginTop: 8,
-                      fontFamily: FONTS.mono,
-                      fontSize: 10.5,
-                      letterSpacing: "0.18em",
-                      textTransform: "uppercase",
-                      color: T.gold,
-                    }}
-                  >
-                    — Hobson
-                  </div>
-                </blockquote>
               </div>
+
+
 
             {/* ============ LEFT: single box, two sections ============ */}
             <div
@@ -603,65 +560,24 @@ const Calculators: React.FC = () => {
 
             {/* ============ RIGHT column wrapper ============ */}
             <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
-              {/* Owl + quote, above the human card */}
+              {/* Image above the human card */}
               <div
                 style={{
-                  display: "grid",
-                  gridTemplateColumns: "auto 1fr",
-                  alignItems: "end",
-                  gap: 18,
+                  display: "flex",
+                  alignItems: "flex-end",
+                  justifyContent: "center",
                   padding: "4px 2px",
                   minHeight: 170,
                 }}
               >
-
-
                 <img
                   src={owlHumanHighfive.url}
                   alt="Hobson high-fiving a person"
-                  style={{ width: 130, height: "auto", display: "block" }}
+                  style={{ width: 130, height: "auto", display: "block", objectFit: "contain" }}
                 />
-                <blockquote style={{ margin: 0, position: "relative", paddingLeft: 22 }}>
-                  <span
-                    aria-hidden
-                    style={{
-                      position: "absolute",
-                      left: 0,
-                      top: -6,
-                      fontFamily: FONTS.serif,
-                      fontSize: 42,
-                      lineHeight: 1,
-                      color: T.gold,
-                    }}
-                  >
-                    “
-                  </span>
-                  <p
-                    style={{
-                      margin: 0,
-                      fontFamily: FONTS.serif,
-                      fontStyle: "italic",
-                      fontSize: 15,
-                      lineHeight: 1.5,
-                      color: T.ink,
-                    }}
-                  >
-                    I am fast, and I am accurate. But accurate and certain are not the same thing, and when you need certain, you need a person. I keep several on hand for exactly that reason.
-                  </p>
-                  <div
-                    style={{
-                      marginTop: 8,
-                      fontFamily: FONTS.mono,
-                      fontSize: 10.5,
-                      letterSpacing: "0.18em",
-                      textTransform: "uppercase",
-                      color: T.gold,
-                    }}
-                  >
-                    — Hobson
-                  </div>
-                </blockquote>
               </div>
+
+
 
             {/* ============ RIGHT: Human option ============ */}
             <div
