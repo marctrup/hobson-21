@@ -425,12 +425,13 @@ const Calculators: React.FC = () => {
                 style={{
                   display: "grid",
                   gridTemplateColumns: "auto 1fr",
-                  alignItems: "center",
+                  alignItems: "end",
                   gap: 18,
                   padding: "4px 2px",
                   minHeight: 170,
                 }}
               >
+
 
                 <img
                   src={owlMascot}
@@ -607,12 +608,13 @@ const Calculators: React.FC = () => {
                 style={{
                   display: "grid",
                   gridTemplateColumns: "auto 1fr",
-                  alignItems: "center",
+                  alignItems: "end",
                   gap: 18,
                   padding: "4px 2px",
                   minHeight: 170,
                 }}
               >
+
 
                 <img
                   src={owlHumanHighfive.url}
