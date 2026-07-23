@@ -128,7 +128,7 @@ const Slider: React.FC<{
 }> = ({ label, min, max, value, onChange, suffix, id, step }) => (
   <div>
     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 10 }}>
-      <label htmlFor={id} style={{ fontFamily: FONTS.mono, fontSize: 12, letterSpacing: "0.08em", textTransform: "uppercase", color: TOKENS.brass }}>
+      <label htmlFor={id} style={{ fontFamily: FONTS.mono, fontSize: 12, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: TOKENS.brass }}>
         {label}
       </label>
       <span style={{ fontFamily: FONTS.mono, fontSize: 20, color: TOKENS.ink }}>
