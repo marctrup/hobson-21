@@ -643,33 +643,20 @@ const Calculators: React.FC = () => {
             boxShadow: "0 12px 40px -20px rgba(180,145,79,0.35)",
           }}
         >
-          {/* Hero band — AI + human, together */}
+          {/* Hero image — AI + human, together */}
           <div
             className="hp-concierge-hero"
-
             style={{
-              margin: "clamp(-8px, -1vw, -16px) 0 clamp(20px, 2.5vw, 32px)",
-              padding: "clamp(8px, 1.5vw, 16px) 0",
-              background: "transparent",
-              display: "grid",
-              gridTemplateColumns: "minmax(0, 1fr) auto",
-              gap: "clamp(20px, 3vw, 40px)",
-              alignItems: "center",
+              display: "flex",
+              justifyContent: "flex-end",
+              margin: "clamp(-16px, -2vw, -32px) 0 clamp(4px, 0.75vw, 10px)",
             }}
           >
-            <div>
-              <div style={{ fontFamily: FONTS.mono, fontSize: 10.5, letterSpacing: "0.24em", color: TOKENS.brass, textTransform: "uppercase", marginBottom: 10 }}>
-                In the loop, together
-              </div>
-              <p style={{ fontFamily: FONTS.serif, fontStyle: "italic", fontSize: "clamp(1.15rem, 1.7vw, 1.4rem)", lineHeight: 1.4, color: TOKENS.ink, margin: 0, maxWidth: 460 }}>
-                Speed of a machine. Judgement of a person. The two, working as one.
-              </p>
-            </div>
             <img
               src={owlHumanHighfive.url}
               alt="Hobson and a human colleague, working together"
               style={{
-                width: "clamp(180px, 22vw, 280px)",
+                width: "clamp(160px, 20vw, 240px)",
                 height: "auto",
                 display: "block",
                 background: "transparent",
