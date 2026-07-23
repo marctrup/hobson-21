@@ -563,7 +563,7 @@ const Calculators: React.FC = () => {
 
 
               {/* Together row */}
-              <div style={{ marginTop: 20 }}>
+              <div style={{ marginTop: "auto", paddingTop: 20 }}>
                 <TogetherRow>
                   <span style={{ color: T.ink }}>{fmtGBP2(readEstimate)} today</span>
                   <span style={{ color: T.muted, fontStyle: "italic" }}>, then </span>
