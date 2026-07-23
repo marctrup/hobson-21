@@ -3,7 +3,7 @@ import { Helmet } from "react-helmet-async";
 import { GlobalHeader } from "@/components/GlobalHeader";
 import { InterestModal } from "@/components/InterestModal";
 import owlMascot from "@/assets/owl-mascot.png";
-import owlHumanHighfive from "@/assets/owl-human-highfive.png.asset.json";
+import owlHumanHighfive from "@/assets/owl-human-highfive-cutout.png.asset.json";
 
 
 
@@ -648,12 +648,9 @@ const Calculators: React.FC = () => {
             className="hp-concierge-hero"
 
             style={{
-              margin: "clamp(-28px, -3.5vw, -56px) clamp(-28px, -3.5vw, -56px) clamp(24px, 3vw, 40px)",
-              padding: "clamp(20px, 3vw, 36px) clamp(28px, 3.5vw, 56px)",
-              borderTopLeftRadius: 22,
-              borderTopRightRadius: 22,
-              background: `radial-gradient(120% 140% at 30% 40%, ${TOKENS.paperSoft} 0%, ${TOKENS.paper} 55%, #F2EAD9 100%)`,
-              borderBottom: `1px solid ${TOKENS.hairline}`,
+              margin: "clamp(-8px, -1vw, -16px) 0 clamp(20px, 2.5vw, 32px)",
+              padding: "clamp(8px, 1.5vw, 16px) 0",
+              background: "transparent",
               display: "grid",
               gridTemplateColumns: "minmax(0, 1fr) auto",
               gap: "clamp(20px, 3vw, 40px)",
@@ -675,7 +672,7 @@ const Calculators: React.FC = () => {
                 width: "clamp(180px, 22vw, 280px)",
                 height: "auto",
                 display: "block",
-                filter: "drop-shadow(0 12px 24px rgba(45,45,45,0.12))",
+                background: "transparent",
               }}
             />
           </div>
