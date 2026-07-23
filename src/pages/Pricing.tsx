@@ -776,43 +776,23 @@ const Calculators: React.FC = () => {
                       £3.50 per document — Professor working alone is 50p
                     </div>
                   </div>
-                  <div>
-                    <div style={{ fontFamily: FONTS.mono, fontSize: 10.5, color: TOKENS.inkMuted, marginBottom: 4, letterSpacing: "0.14em", textTransform: "uppercase" }}>
-                      Then, every month
-                    </div>
-                    {conciergeIsOverflow ? (
-                      <div style={{ fontFamily: FONTS.serif, fontStyle: "italic", fontSize: "clamp(1.3rem, 2.2vw, 1.7rem)", lineHeight: 1.2, color: TOKENS.ink }}>
-                        Let&rsquo;s talk —{" "}
-                        <button
-                          type="button"
-                          onClick={scrollToEnterprise}
-                          style={{
-                            background: "none",
-                            border: "none",
-                            padding: 0,
-                            color: TOKENS.brass,
-                            font: "inherit",
-                            textDecoration: "underline",
-                            cursor: "pointer",
-                          }}
-                        >
-                          see below
-                        </button>
+                  {!conciergeIsOverflow && (
+                    <div>
+                      <div style={{ fontFamily: FONTS.mono, fontSize: 10.5, color: TOKENS.inkMuted, marginBottom: 4, letterSpacing: "0.14em", textTransform: "uppercase" }}>
+                        Then, every month
                       </div>
-                    ) : (
-                      <>
-                        <div style={{ display: "flex", alignItems: "baseline", gap: 8 }}>
-                          <div style={{ fontFamily: FONTS.serif, fontSize: "clamp(1.9rem, 3.2vw, 2.4rem)", lineHeight: 1, color: TOKENS.ink, letterSpacing: "-0.02em" }}>
-                            {fmtGBP(conciergeBand.price!)}
-                          </div>
-                          <span style={{ fontFamily: FONTS.mono, fontSize: 13, color: TOKENS.brass }}>/ month</span>
+                      <div style={{ display: "flex", alignItems: "baseline", gap: 8 }}>
+                        <div style={{ fontFamily: FONTS.serif, fontSize: "clamp(1.9rem, 3.2vw, 2.4rem)", lineHeight: 1, color: TOKENS.ink, letterSpacing: "-0.02em" }}>
+                          {fmtGBP(conciergeBand.price!)}
                         </div>
-                        <div style={{ fontFamily: FONTS.mono, fontSize: 11, color: TOKENS.inkMuted, marginTop: 6 }}>
-                          £{conciergePerPerson} per person, seats included — a standard seat is £35
-                        </div>
-                      </>
-                    )}
-                  </div>
+                        <span style={{ fontFamily: FONTS.mono, fontSize: 13, color: TOKENS.brass }}>/ month</span>
+                      </div>
+                      <div style={{ fontFamily: FONTS.mono, fontSize: 11, color: TOKENS.inkMuted, marginTop: 6 }}>
+                        £{conciergePerPerson} per person, seats included — a standard seat is £35
+                      </div>
+                    </div>
+                  )}
+
                 </div>
               </div>
 
