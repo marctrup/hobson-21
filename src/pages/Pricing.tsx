@@ -128,7 +128,7 @@ const Slider: React.FC<{
 }> = ({ label, min, max, value, onChange, suffix, id, step }) => (
   <div>
     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 10 }}>
-      <label htmlFor={id} style={{ fontFamily: FONTS.mono, fontSize: 12, letterSpacing: "0.08em", textTransform: "uppercase", color: TOKENS.brass }}>
+      <label htmlFor={id} style={{ fontFamily: FONTS.mono, fontSize: 12, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: TOKENS.brass }}>
         {label}
       </label>
       <span style={{ fontFamily: FONTS.mono, fontSize: 20, color: TOKENS.ink }}>
@@ -502,7 +502,7 @@ const Calculators: React.FC = () => {
               >
                 {/* ---- Section A: reading ---- */}
                 <div style={{ display: "flex", flexDirection: "column" }}>
-                  <Eyebrow color={T.gold}>Reading · one-off</Eyebrow>
+                  <Eyebrow color={T.gold} style={{ fontWeight: 700 }}>Reading · one-off</Eyebrow>
                   <p style={{ fontFamily: FONTS.sans, fontSize: 13, lineHeight: 1.5, color: T.muted, margin: "10px 0 14px" }}>
                     £0.25–£1.00 per document depending on complexity. A typical mix averages 50p. Read once, remembered for good.
                   </p>
@@ -524,7 +524,7 @@ const Calculators: React.FC = () => {
 
                 {/* ---- Section B: seats ---- */}
                 <div style={{ display: "flex", flexDirection: "column" }}>
-                  <Eyebrow color={T.gold}>Seats · monthly</Eyebrow>
+                  <Eyebrow color={T.gold} style={{ fontWeight: 700 }}>Seats · monthly</Eyebrow>
                   <p style={{ fontFamily: FONTS.sans, fontSize: 13, lineHeight: 1.5, color: T.muted, margin: "10px 0 14px" }}>
                     One Hobson per person, at £35 each per month. I learn how each person works and stay ready for what they need next.
                   </p>
