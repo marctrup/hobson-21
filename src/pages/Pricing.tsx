@@ -791,7 +791,9 @@ const Calculators: React.FC = () => {
                       </div>
                         <div style={{ display: "inline-flex", alignItems: "baseline", flexWrap: "wrap", gap: 8, marginTop: 10, padding: "8px 14px", background: TOKENS.paper, border: `1px solid ${TOKENS.brass}55`, borderRadius: 999 }}>
                           <span style={{ fontFamily: FONTS.serif, fontSize: 15, fontWeight: 600, color: TOKENS.brass, letterSpacing: "-0.01em" }}>£{conciergePerPerson} per person</span>
-                          <span style={{ fontFamily: FONTS.mono, fontSize: 11, color: TOKENS.inkMuted }}>seats included · standard seat £35</span>
+                          <span style={{ fontFamily: FONTS.serif, fontSize: 13, fontWeight: 600, fontStyle: "italic", color: TOKENS.ink }}>seats included</span>
+                          <span style={{ fontFamily: FONTS.mono, fontSize: 11, color: TOKENS.inkMuted }}>· standard seat £35</span>
+
                         </div>
 
                     </div>
