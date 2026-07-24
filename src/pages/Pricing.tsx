@@ -1004,7 +1004,7 @@ export default function Pricing() {
               }}
             >
               Pricing,{" "}
-              <span style={{ fontStyle: "italic", color: TOKENS.brass }}>
+              <span style={{ fontStyle: "italic", color: TOKENS.brass, fontFamily: "'Space Grotesk', system-ui, sans-serif" }}>
                 with or without humans in the loop.
               </span>
             </h1>
