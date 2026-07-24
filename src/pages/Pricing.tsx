@@ -675,16 +675,18 @@ const Calculators: React.FC = () => {
               }}
             >
               <p style={{ fontFamily: FONTS.sans, fontSize: 13.5, lineHeight: 1.55, color: T.muted, margin: 0 }} className="hp-card-blurb">
-                Onboarding takes time you may not have. Hand it to us and my colleagues do the whole thing — including the documents I cannot read clearly.
+                Two things, both done by people. We prepare your documents before Professor reads them, and one of us stays with you afterwards.
               </p>
 
               {/* Bullets */}
               <ul style={{ listStyle: "none", padding: 0, margin: "14px 0 0" }} className="hp-bullets">
                 {[
-                  { h: "We do the onboarding", b: "Send us your documents and we take it from there. No uploading, no sorting, no evenings lost to it." },
-                  { h: "Someone sorts out the unclear ones", b: "I never guess. Where a document does not say plainly which property it belongs to, I set it aside — and a colleague works out where it goes." },
-                  { h: "That person stays", b: "A named contact who already knows your portfolio, for as long as you want them." },
+                  { h: "We go through your folders", b: "Every document opened, every type identified, everything checked that it can actually be read." },
+                  { h: "We make the addresses clear", b: "So each document lands on the right property. Hobson needs a clean address for the map to work." },
+                  { h: "Then Professor reads them", b: "He is only ever as good as what he is given. Prepared properly, he has everything he needs." },
+                  { h: "Your relationship manager stays", b: "To guide you, advise you, or simply be there — for as long as you need them." },
                 ].map((item, i) => (
+
                   <li
                     key={item.h}
                     style={{
