@@ -411,6 +411,91 @@ const Calculators: React.FC = () => {
       >
         <div style={{ maxWidth: 1280, margin: "0 auto" }}>
 
+          {/* Header row: labels above each pricing box */}
+          <div
+            className="hp-price-heads"
+            style={{
+              display: "grid",
+              gridTemplateColumns: "2.1fr 1.3fr",
+              columnGap: 34,
+              alignItems: "end",
+              marginBottom: 14,
+            }}
+          >
+            {/* LEFT heading */}
+            <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+              <div
+                style={{
+                  fontFamily: FONTS.mono,
+                  fontSize: 11,
+                  letterSpacing: "0.22em",
+                  textTransform: "uppercase",
+                  color: T.faint,
+                }}
+              >
+                Option one
+              </div>
+              <h2
+                style={{
+                  fontFamily: FONTS.serif,
+                  fontWeight: 400,
+                  fontSize: "clamp(24px, 2.4vw, 32px)",
+                  lineHeight: 1.15,
+                  letterSpacing: "-0.01em",
+                  color: T.ink,
+                  margin: 0,
+                }}
+              >
+                Hobson
+                <span style={{ color: T.faint, fontStyle: "italic", fontSize: "0.7em", marginLeft: 10 }}>
+                  on his own
+                </span>
+              </h2>
+            </div>
+
+            {/* RIGHT heading */}
+            <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+              <div
+                style={{
+                  fontFamily: FONTS.mono,
+                  fontSize: 11,
+                  letterSpacing: "0.22em",
+                  textTransform: "uppercase",
+                  color: T.gold,
+                }}
+              >
+                Option two
+              </div>
+              <h2
+                style={{
+                  fontFamily: FONTS.serif,
+                  fontWeight: 400,
+                  fontSize: "clamp(24px, 2.4vw, 32px)",
+                  lineHeight: 1.15,
+                  letterSpacing: "-0.01em",
+                  color: T.ink,
+                  margin: 0,
+                }}
+              >
+                Hobson
+                <span style={{ color: T.gold, fontStyle: "italic" }}> + a person</span>
+                <div
+                  style={{
+                    fontFamily: FONTS.sans,
+                    fontSize: 12.5,
+                    letterSpacing: 0,
+                    textTransform: "none",
+                    color: T.muted,
+                    marginTop: 4,
+                    fontStyle: "normal",
+                  }}
+                >
+                  Onboarding team + relationship manager
+                </div>
+              </h2>
+            </div>
+          </div>
+
           {/* Grid: row 1 = quote blocks with images, row 2 = pricing boxes */}
           <div
             className="hp-price-row"
@@ -424,6 +509,7 @@ const Calculators: React.FC = () => {
               alignItems: "stretch",
             }}
           >
+
             {/* ---------- ROW: pricing boxes ---------- */}
 
             {/* LEFT: single box, two sections side-by-side */}
