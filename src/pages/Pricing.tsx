@@ -335,7 +335,7 @@ const Calculators: React.FC = () => {
   const readHigh = docs * 0.30;
   const seatsMonthly = people * 35;
   const conciergeBelowMin = conciergeDocs < 100;
-  const conciergeOneOff = conciergeBelowMin ? 350 : conciergeDocs * 3.5;
+  const conciergeOneOff = conciergeBelowMin ? 200 : conciergeDocs * 2.0;
 
   // Token shortcuts scoped to this section
   const T = {
@@ -768,7 +768,7 @@ const Calculators: React.FC = () => {
                       letterSpacing: "0.06em",
                     }}
                   >
-                    {conciergeBelowMin ? "Minimum 100 documents" : "£3.50 a document — folders opened, addresses checked, then read"}
+                    {conciergeBelowMin ? "Minimum 100 documents" : "£2.00 a document — folders opened, addresses checked, then read"}
                   </div>
                 </div>
 
