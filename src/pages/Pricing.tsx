@@ -478,7 +478,7 @@ const Calculators: React.FC = () => {
                 }}
               >
                 Hobson
-                <span style={{ color: T.gold, fontStyle: "italic", fontFamily: "'Space Grotesk', system-ui, sans-serif" }}> + people</span>
+                <span style={{ color: T.gold, fontStyle: "italic" }}> + people</span>
                 <div
                   style={{
                     fontFamily: FONTS.sans,
@@ -1004,7 +1004,7 @@ export default function Pricing() {
               }}
             >
               Pricing,{" "}
-              <span style={{ fontStyle: "italic", color: TOKENS.brass, fontFamily: "'Space Grotesk', system-ui, sans-serif" }}>
+              <span style={{ fontStyle: "italic", color: TOKENS.brass }}>
                 with or without humans in the loop.
               </span>
             </h1>
