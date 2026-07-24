@@ -448,7 +448,7 @@ const Calculators: React.FC = () => {
               >
                 Hobson
                 <span style={{ color: T.faint, fontStyle: "italic", fontSize: "0.7em", marginLeft: 10 }}>
-                  on their own
+                  on its own
                 </span>
               </h2>
             </div>
