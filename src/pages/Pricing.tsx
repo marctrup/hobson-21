@@ -418,48 +418,14 @@ const Calculators: React.FC = () => {
             style={{
               display: "grid",
               gridTemplateColumns: "2.1fr 1.3fr",
-              gridTemplateRows: "auto 1fr",
+              gridTemplateRows: "1fr",
               columnGap: 34,
               rowGap: 26,
               alignItems: "stretch",
             }}
           >
-            {/* ---------- ROW 1: quote blocks ---------- */}
-            {/* Left quote */}
-            <div style={{ display: "flex", alignItems: "flex-end", gap: 18 }}>
-              <img
-                src={owlMascot.url}
-                alt="Hobson"
-                style={{ height: 104, width: "auto", flexShrink: 0, display: "block", objectFit: "contain" }}
-              />
-              <blockquote style={{ margin: 0, maxWidth: 380 }}>
-                <p style={{ fontFamily: FONTS.serif, fontStyle: "italic", fontSize: 16, lineHeight: 1.5, color: T.ink, margin: 0 }}>
-                  &ldquo;Give me your documents and a seat for each person. After that it is me on my own — no meetings, nobody to wait for. For most of what you do, that is enough.&rdquo;
-                </p>
-                <footer style={{ fontFamily: FONTS.mono, fontSize: 10.5, letterSpacing: "0.2em", textTransform: "uppercase", color: T.gold, marginTop: 8 }}>
-                  — Hobson
-                </footer>
-              </blockquote>
-            </div>
+            {/* ---------- ROW: pricing boxes ---------- */}
 
-            {/* Right quote */}
-            <div style={{ display: "flex", alignItems: "flex-end", gap: 18 }}>
-              <img
-                src={owlHumanHighfive.url}
-                alt="Hobson high-fiving a person"
-                style={{ height: 104, width: "auto", flexShrink: 0, display: "block", objectFit: "contain" }}
-              />
-              <blockquote style={{ margin: 0, maxWidth: 320 }}>
-                <p style={{ fontFamily: FONTS.serif, fontStyle: "italic", fontSize: 15, lineHeight: 1.5, color: T.ink, margin: 0 }}>
-                  &ldquo;I do not guess. When a document will not say plainly which property it belongs to, I set it aside rather than file it wrongly — and one of my colleagues works out where it goes.&rdquo;
-                </p>
-                <footer style={{ fontFamily: FONTS.mono, fontSize: 10.5, letterSpacing: "0.2em", textTransform: "uppercase", color: T.gold, marginTop: 8 }}>
-                  — Hobson
-                </footer>
-              </blockquote>
-            </div>
-
-            {/* ---------- ROW 2: pricing boxes ---------- */}
             {/* LEFT: single box, two sections side-by-side */}
             <div
               style={{
