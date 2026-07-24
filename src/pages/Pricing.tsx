@@ -330,9 +330,9 @@ const Calculators: React.FC = () => {
   );
   const conciergePerPerson = Math.round(conciergeMonthly / people);
 
-  const readEstimate = docs * 0.5;
-  const readLow = docs * 0.35;
-  const readHigh = docs * 0.75;
+  const readEstimate = docs * 0.15;
+  const readLow = docs * 0.05;
+  const readHigh = docs * 0.30;
   const seatsMonthly = people * 35;
   const conciergeBelowMin = conciergeDocs < 100;
   const conciergeOneOff = conciergeBelowMin ? 350 : conciergeDocs * 3.5;
