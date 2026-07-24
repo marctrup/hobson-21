@@ -542,7 +542,7 @@ const Calculators: React.FC = () => {
                 <div style={{ display: "flex", flexDirection: "column" }}>
                   <Eyebrow color={T.gold} style={{ fontWeight: 700 }}>Reading · one-off</Eyebrow>
                   <p style={{ fontFamily: FONTS.sans, fontSize: 13, lineHeight: 1.5, color: T.muted, margin: "10px 0 14px" }}>
-                    5p–50p per document depending on complexity. A typical mix averages 15p. Read once, remembered for good.
+                    10p–60p per document depending on complexity. A typical mix averages 25p. Read once, remembered for good.
                   </p>
 
                   <Slider id="docs" label="Documents" min={10} max={2000} step={10} value={docs} onChange={setDocs} suffix="docs" />
@@ -553,6 +553,9 @@ const Calculators: React.FC = () => {
                     </div>
                     <div style={{ fontFamily: FONTS.mono, fontSize: 11, color: T.faint, marginTop: 6 }}>
                       {fmtGBP2(readLow)} – {fmtGBP2(readHigh)}
+                    </div>
+                    <div style={{ fontFamily: FONTS.sans, fontSize: 10, lineHeight: 1.45, color: "#96918A", marginTop: 6 }}>
+                      Estimated at 25p a document — the average for a mixed portfolio. The firm quote follows once the documents have been seen.
                     </div>
                   </div>
                 </div>
