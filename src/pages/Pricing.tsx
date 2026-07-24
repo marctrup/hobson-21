@@ -609,9 +609,9 @@ const Calculators: React.FC = () => {
                   }}
                 >
                   {[
-                    { h: "Everything I can do", b: "No tiers and nothing held back. Every seat gets all of me." },
-                    { h: "Support by email", b: "Ask my team anything. Answers usually the same day." },
-                    { h: "The Knowledgebase", b: "Guides and answers, open to you whenever you need them." },
+                    { h: "Everything Hobson can do", b: "No tiers, nothing held back. Every seat gets the full product." },
+                    { h: "Support by email", b: "Ask the team anything. Answers usually the same day." },
+                    { h: "The Knowledgebase", b: "Guides and answers, available whenever you need them." },
                   ].map((item) => (
                     <div key={item.h} style={{ display: "grid", gridTemplateColumns: "auto 1fr", gap: 8 }}>
                       <span style={{ color: T.gold, fontSize: 13, lineHeight: 1.4 }}>✦</span>
