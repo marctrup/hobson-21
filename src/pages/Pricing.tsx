@@ -525,7 +525,7 @@ const Calculators: React.FC = () => {
               }}
             >
               <p style={{ fontFamily: FONTS.sans, fontSize: 13.5, lineHeight: 1.55, color: T.muted, margin: "0 0 18px" }} className="hp-card-blurb">
-                One to teach me your documents. One a month for each person who uses me. Not a choice between — the two halves of what I cost.
+                Reading your documents is the heavy lifting — done once, then never again. So it is charged once. After that you pay for seats, and there is no limit on how much you use me.
               </p>
 
               {/* Two sections side-by-side, divided by a vertical hairline */}
