@@ -864,6 +864,7 @@ const Calculators: React.FC = () => {
       <style>{`
         @media (max-width: 1120px) {
           .hp-price-row { grid-template-columns: 1fr !important; }
+          .hp-price-heads { grid-template-columns: 1fr !important; row-gap: 18px; }
         }
         @media (max-width: 900px) {
           .hp-includes-grid { grid-template-columns: 1fr !important; }
