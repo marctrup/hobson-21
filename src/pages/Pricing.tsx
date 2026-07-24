@@ -604,22 +604,25 @@ const Calculators: React.FC = () => {
                   className="hp-includes-grid"
                   style={{
                     display: "grid",
-                    gridTemplateColumns: "1fr",
-                    gap: 14,
+                    gridTemplateColumns: "1fr 1fr 1fr",
+                    gap: "16px 24px",
                   }}
                 >
                   {[
+                    { h: "Ask anything, any time", b: "Every document Hobson has read, searchable in plain questions. No limit on how often you ask." },
+                    { h: "Your portfolio on a map", b: "Every property placed by address, every document attached to the right one." },
+                    { h: "Learns how you work", b: "Each seat has its own Hobson. It remembers what that person cares about and gets quicker over time." },
                     { h: "Everything Hobson can do", b: "No tiers, nothing held back. Every seat gets the full product." },
-                    { h: "Support by email", b: "Ask the team anything. Answers usually the same day." },
-                    { h: "The Knowledgebase", b: "Guides and answers, available whenever you need them." },
+                    { h: "Add or remove people any time", b: "Seats are monthly. Change the number as your team changes." },
+                    { h: "Support and Knowledgebase", b: "Email the team, or find the answer yourself in the guides." },
                   ].map((item) => (
                     <div key={item.h} style={{ display: "grid", gridTemplateColumns: "auto 1fr", gap: 8 }}>
                       <span style={{ color: T.gold, fontSize: 13, lineHeight: 1.4 }}>✦</span>
                       <div>
-                        <div style={{ fontFamily: FONTS.sans, fontSize: 13.5, fontWeight: 500, color: "#23211D", lineHeight: 1.3 }}>
+                        <div style={{ fontFamily: FONTS.sans, fontSize: 13, fontWeight: 500, color: "#23211D", lineHeight: 1.3 }}>
                           {item.h}
                         </div>
-                        <div style={{ fontFamily: FONTS.sans, fontSize: 12.5, color: "#6E6A63", lineHeight: 1.5, marginTop: 3 }}>
+                        <div style={{ fontFamily: FONTS.sans, fontSize: 12, color: "#6E6A63", lineHeight: 1.5, marginTop: 3 }}>
                           {item.b}
                         </div>
                       </div>
