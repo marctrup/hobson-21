@@ -330,9 +330,9 @@ const Calculators: React.FC = () => {
   );
   const conciergePerPerson = Math.round(conciergeMonthly / people);
 
-  const readEstimate = docs * 0.5;
-  const readLow = docs * 0.35;
-  const readHigh = docs * 0.75;
+  const readEstimate = docs * 0.15;
+  const readLow = docs * 0.05;
+  const readHigh = docs * 0.30;
   const seatsMonthly = people * 35;
   const conciergeBelowMin = conciergeDocs < 100;
   const conciergeOneOff = conciergeBelowMin ? 350 : conciergeDocs * 3.5;
@@ -542,7 +542,7 @@ const Calculators: React.FC = () => {
                 <div style={{ display: "flex", flexDirection: "column" }}>
                   <Eyebrow color={T.gold} style={{ fontWeight: 700 }}>Reading · one-off</Eyebrow>
                   <p style={{ fontFamily: FONTS.sans, fontSize: 13, lineHeight: 1.5, color: T.muted, margin: "10px 0 14px" }}>
-                    £0.25–£1.00 per document depending on complexity. A typical mix averages 50p. Read once, remembered for good.
+                    5p–50p per document depending on complexity. A typical mix averages 15p. Read once, remembered for good.
                   </p>
 
                   <Slider id="docs" label="Documents" min={10} max={2000} step={10} value={docs} onChange={setDocs} suffix="docs" />
@@ -768,7 +768,7 @@ const Calculators: React.FC = () => {
                       letterSpacing: "0.06em",
                     }}
                   >
-                    {conciergeBelowMin ? "Minimum 100 documents" : "£3.50 a document — the unclear ones take a person"}
+                    {conciergeBelowMin ? "Minimum 100 documents" : "£3.50 a document — folders opened, addresses checked, then read"}
                   </div>
                 </div>
 
