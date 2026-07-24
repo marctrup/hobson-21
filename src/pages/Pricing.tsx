@@ -771,7 +771,7 @@ const Calculators: React.FC = () => {
                       letterSpacing: "0.06em",
                     }}
                   >
-                    {conciergeBelowMin ? "Minimum 100 documents" : "£2.00 a document — folders opened, addresses checked, then read"}
+                    {conciergeBelowMin ? "Minimum 10 documents" : "£2.00 a document — folders opened, addresses checked, then read"}
                   </div>
                 </div>
 
