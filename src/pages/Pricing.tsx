@@ -940,9 +940,9 @@ export default function Pricing() {
                 maxWidth: "20ch",
               }}
             >
-              I work alone —{" "}
+              Pricing,{" "}
               <span style={{ fontStyle: "italic", color: TOKENS.brass }}>
-                unless you would rather I did not.
+                with or without a person.
               </span>
             </h1>
             <p
@@ -955,7 +955,7 @@ export default function Pricing() {
                 maxWidth: "58ch",
               }}
             >
-              One price for me on my own. One for me with a colleague beside me. Nothing begins until you approve what you see.
+              Some teams are happy with Hobson on his own. Others would rather a person did the onboarding and stayed on afterwards. Both are priced below — move the sliders to see what each costs.
             </p>
           </div>
         </section>
