@@ -335,7 +335,7 @@ const Calculators: React.FC = () => {
   const readHigh = docs * 0.40;
   const seatsMonthly = people * 35;
   const conciergeBelowMin = conciergeDocs < 10;
-  const conciergeOneOff = conciergeBelowMin ? 20 : conciergeDocs * 2.0;
+  const conciergeOneOff = conciergeBelowMin ? 25 : conciergeDocs * 2.5;
 
   // Token shortcuts scoped to this section
   const T = {
