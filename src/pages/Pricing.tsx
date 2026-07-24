@@ -1005,7 +1005,7 @@ export default function Pricing() {
             >
               Pricing,{" "}
               <span style={{ fontStyle: "italic", color: TOKENS.brass }}>
-                with or without a person.
+                with or without humans in the loop.
               </span>
             </h1>
             <p
