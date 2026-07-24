@@ -1018,7 +1018,7 @@ export default function Pricing() {
                 maxWidth: "58ch",
               }}
             >
-              Some teams are happy with Hobson on their own. Others would rather a person did the onboarding and stayed on afterwards. Both are priced below — move the sliders to see what each costs.
+              Some teams are happy with Hobson on its own. Others would rather a person did the onboarding and stayed on afterwards. Both are priced below — move the sliders to see what each costs.
             </p>
           </div>
         </section>
