@@ -690,22 +690,6 @@ const Calculators: React.FC = () => {
                 height: "100%",
               }}
             >
-              <Eyebrow color={T.gold}>Me and a person · one-off + monthly</Eyebrow>
-              <h3
-                style={{
-                  fontFamily: FONTS.serif,
-                  fontWeight: 400,
-                  fontSize: 22,
-                  lineHeight: 1.15,
-                  letterSpacing: "-0.01em",
-                  margin: "8px 0 10px",
-                  color: T.ink,
-                }}
-                className="hp-card-h"
-              >
-                Everything to the left —{" "}
-                <span style={{ fontStyle: "italic", color: T.gold }}>but you do not lift a finger.</span>
-              </h3>
               <p style={{ fontFamily: FONTS.sans, fontSize: 13.5, lineHeight: 1.55, color: T.muted, margin: 0 }} className="hp-card-blurb">
                 Onboarding takes time you may not have. Hand it to us and my colleagues do the whole thing — including the documents I cannot read clearly.
               </p>
