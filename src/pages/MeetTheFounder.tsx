@@ -52,7 +52,7 @@ const MeetTheFounder = () => {
 
 
           {/* Video */}
-          <section className="pb-12 sm:pb-16">
+          <section className="pt-16 sm:pt-20 pb-12 sm:pb-16">
             <div className="container mx-auto px-4">
               <div className="max-w-[1000px] mx-auto relative">
                 <div

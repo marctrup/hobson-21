@@ -1,7 +1,7 @@
 export const BlogHero = () => {
   return (
     <section
-      className="blog-hero relative overflow-hidden pt-16 sm:pt-20 pb-12 sm:pb-14"
+      className="blog-hero relative overflow-hidden pt-10 sm:pt-12 pb-8 sm:pb-10"
       style={{
         backgroundColor: '#F1EBDE',
         borderBottom: '1px solid rgba(180,145,79,0.2)',
