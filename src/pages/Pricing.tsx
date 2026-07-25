@@ -1024,7 +1024,7 @@ export default function Pricing() {
                 maxWidth: "66ch",
               }}
             >
-              With our team, we do the setup for you. With Hobson only, you do the setup yourself. Move the sliders below to see what each costs.
+              Hobson supports you either way — our team can do the setup for you, or Hobson guides you through doing it yourself. Move the sliders to see what each costs.
             </p>
 
           </div>
