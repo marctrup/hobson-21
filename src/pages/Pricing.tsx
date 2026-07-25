@@ -681,7 +681,7 @@ const Calculators: React.FC = () => {
               }}
             >
               <p style={{ fontFamily: FONTS.sans, fontSize: 13.5, lineHeight: 1.55, color: T.muted, margin: 0 }} className="hp-card-blurb">
-                Two things, both done by people. We prepare your documents before Professor reads them, and one of us stays with you afterwards.
+                We prepare your documents before Professor reads them, and one of us stays with you afterwards.
               </p>
 
               {/* Bullets */}
