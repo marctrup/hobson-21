@@ -1003,10 +1003,7 @@ export default function Pricing() {
                 maxWidth: "20ch",
               }}
             >
-              Pricing,{" "}
-              <span style={{ fontStyle: "italic", color: TOKENS.brass }}>
-                with or without humans in the loop.
-              </span>
+              Choose Hobson on its own, or Hobson with a helping hand.
             </h1>
             <p
               style={{
@@ -1015,11 +1012,12 @@ export default function Pricing() {
                 lineHeight: 1.5,
                 color: TOKENS.inkMuted,
                 margin: "20px auto 0",
-                maxWidth: "58ch",
+                maxWidth: "66ch",
               }}
             >
-              Some teams are happy with Hobson on its own. Others would rather a person did the onboarding and stayed on afterwards. Both are priced below — move the sliders to see what each costs.
+              With a person, we do the setup for you — getting your documents in, sorting them, and fixing anything unclear — and you get someone to call whenever you need them. On its own, you do the setup yourself. Move the sliders below to see what each costs.
             </p>
+
           </div>
         </section>
 
