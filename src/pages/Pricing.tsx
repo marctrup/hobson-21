@@ -478,7 +478,7 @@ const Calculators: React.FC = () => {
                 }}
               >
                 Hobson
-                <span style={{ color: T.gold, fontSize: "0.7em", marginLeft: 10 }}>+ helping hand</span>
+                <span style={{ color: T.gold, fontSize: "0.7em", marginLeft: 10 }}>+ helping hands</span>
                 <div
                   style={{
                     fontFamily: FONTS.sans,
@@ -1003,7 +1003,7 @@ export default function Pricing() {
                 maxWidth: "20ch",
               }}
             >
-              Choose Hobson <span style={{ color: TOKENS.brass }}>on its own</span>, or Hobson with a <span style={{ color: TOKENS.brass }}>helping hand</span>.
+              Choose Hobson <span style={{ color: TOKENS.brass }}>on its own</span>, or Hobson with <span style={{ color: TOKENS.brass }}>helping hands</span>.
             </h1>
             <p
               style={{
