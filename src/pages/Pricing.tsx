@@ -891,7 +891,7 @@ const FAQS: Array<{ q: string; a: string }> = [
   },
   {
     q: "Why is the document price a range?",
-    a: "Because a three-page notice and a 300-page lease are not the same job. A straightforward document may cost as little as £0.25 to read; a longer or more complex one, up to £1.00. I will assess your documents first and confirm a fixed quote within that range before anything begins.",
+    a: "Because a three-page notice and a 300-page lease are not the same job. A straightforward document may cost as little as £0.10 to read; a longer or more complex one, up to £0.60. I will assess your documents first and confirm a fixed quote within that range before anything begins.",
   },
   {
     q: "Do I keep paying whenever you use a document?",
