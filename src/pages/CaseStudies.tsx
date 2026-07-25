@@ -86,16 +86,6 @@ const CaseStudies = () => {
             borderBottom: `1px solid rgba(180,145,79,0.2)`,
           }}
         >
-          <div className="mx-auto max-w-3xl px-6 pt-10 pb-3">
-            <Link
-              to="/learn"
-              className="inline-flex items-center gap-2 text-sm font-medium hover:opacity-70 transition-opacity"
-              style={{ color: BRASS }}
-            >
-              <ArrowLeft className="h-4 w-4" />
-              Back to Learn
-            </Link>
-          </div>
           <div className="mx-auto max-w-3xl px-6 pt-6 pb-12 text-center">
             <div
               className="inline-flex items-center justify-center w-14 h-14 mb-6 rounded-full"
