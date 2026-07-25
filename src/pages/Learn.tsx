@@ -87,12 +87,6 @@ const Learn = () => {
           }}
         >
           <div className="mx-auto max-w-3xl px-6 pt-20 pb-12 text-center">
-            <div
-              className="inline-flex items-center justify-center w-16 h-16 mb-7 rounded-full"
-              style={{ backgroundColor: LAVENDER_BG, border: `1px solid ${LAVENDER_BORDER}` }}
-            >
-              <img src={owlMascot} alt="" className="w-10 h-10" />
-            </div>
             <p
               className="text-[11px] font-semibold uppercase tracking-[0.24em]"
               style={{ color: BRASS }}
