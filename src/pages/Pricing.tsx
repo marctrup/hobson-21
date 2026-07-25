@@ -413,7 +413,7 @@ const Calculators: React.FC = () => {
 
           {/* Header row: labels above each pricing box */}
           <div
-            className="hp-price-heads"
+            className="hp-price-heads hp-price-heads-desktop"
             style={{
               display: "grid",
               gridTemplateColumns: "2.1fr 1.3fr",
@@ -524,6 +524,12 @@ const Calculators: React.FC = () => {
                 height: "100%",
               }}
             >
+              <div className="hp-head-mobile" style={{ display: "none", marginBottom: 16 }}>
+                <div style={{ fontFamily: FONTS.mono, fontSize: 11, letterSpacing: "0.22em", textTransform: "uppercase", color: T.faint, marginBottom: 6 }}>Option one</div>
+                <h2 style={{ fontFamily: FONTS.serif, fontWeight: 400, fontSize: 26, lineHeight: 1.15, letterSpacing: "-0.01em", color: T.ink, margin: 0 }}>
+                  Hobson<span style={{ color: TOKENS.brass, fontSize: "0.7em", marginLeft: 10 }}>on its own</span>
+                </h2>
+              </div>
               <p style={{ fontFamily: FONTS.sans, fontSize: 13.5, lineHeight: 1.55, color: T.muted, margin: "0 0 18px" }} className="hp-card-blurb">
                 Reading your documents is the heavy lifting — done once, then never again. So it is charged once. After that you pay for seats, and there is no limit on how much you use me.
               </p>
@@ -680,6 +686,13 @@ const Calculators: React.FC = () => {
                 height: "100%",
               }}
             >
+              <div className="hp-head-mobile" style={{ display: "none", marginBottom: 16 }}>
+                <div style={{ fontFamily: FONTS.mono, fontSize: 11, letterSpacing: "0.22em", textTransform: "uppercase", color: T.gold, marginBottom: 6 }}>Option two</div>
+                <h2 style={{ fontFamily: FONTS.serif, fontWeight: 400, fontSize: 26, lineHeight: 1.15, letterSpacing: "-0.01em", color: T.ink, margin: 0 }}>
+                  Hobson<span style={{ color: T.gold, fontSize: "0.7em", marginLeft: 10 }}>+ helping hands</span>
+                </h2>
+                <div style={{ fontFamily: FONTS.sans, fontSize: 12.5, color: T.muted, marginTop: 4 }}>Onboarding team + relationship manager</div>
+              </div>
               <p style={{ fontFamily: FONTS.sans, fontSize: 13.5, lineHeight: 1.55, color: T.muted, margin: 0 }} className="hp-card-blurb">
                 We prepare your documents before Professor reads them, and one of us stays with you afterwards.
               </p>
@@ -841,6 +854,8 @@ const Calculators: React.FC = () => {
         @media (max-width: 1120px) {
           .hp-price-row { grid-template-columns: 1fr !important; }
           .hp-price-heads { grid-template-columns: 1fr !important; row-gap: 18px; }
+          .hp-price-heads-desktop { display: none !important; }
+          .hp-head-mobile { display: block !important; }
         }
         @media (max-width: 900px) {
           .hp-includes-grid { grid-template-columns: 1fr !important; }
@@ -848,6 +863,7 @@ const Calculators: React.FC = () => {
         }
         @media (max-width: 720px) {
           .hp-ai-inner { grid-template-columns: 1fr !important; }
+          #calculator { padding: 32px 18px 56px !important; }
         }
 
         .hp-slider-dark::-webkit-slider-runnable-track { background: rgba(255,255,255,0.18); }
