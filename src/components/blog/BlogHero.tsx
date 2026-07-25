@@ -14,7 +14,7 @@ export const BlogHero = () => {
         >
           Blog
         </p>
-        <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-foreground leading-tight">
+        <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl font-normal tracking-tight text-foreground leading-tight">
           Industry <span style={{ color: '#B4914F' }}>Insights</span>
         </h1>
         <p className="mt-5 text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
