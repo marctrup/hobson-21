@@ -131,7 +131,7 @@ const CaseStudies = () => {
         </section>
 
 
-        <section className="mx-auto max-w-5xl px-6 pb-24">
+        <section className="mx-auto max-w-5xl px-6 pt-20 pb-24">
           <div className="grid gap-6 md:grid-cols-2">
             {CARDS.map((card, i) => {
               const statusPill = card.live ? (
