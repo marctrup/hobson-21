@@ -447,7 +447,7 @@ const Calculators: React.FC = () => {
                 }}
               >
                 Hobson
-                <span style={{ color: T.faint, fontStyle: "italic", fontSize: "0.7em", marginLeft: 10 }}>
+                <span style={{ color: TOKENS.brass, fontSize: "0.7em", marginLeft: 10 }}>
                   on its own
                 </span>
               </h2>
