@@ -21,8 +21,20 @@ const MeetTheFounder = () => {
 
         <main id="main-content" className="overflow-x-hidden">
           {/* Hero */}
-          <section className="pt-16 sm:pt-20 pb-8 sm:pb-12">
+          <section
+            className="pt-16 sm:pt-20 pb-10 sm:pb-14"
+            style={{
+              backgroundColor: '#F1EBDE',
+              borderBottom: '1px solid rgba(180,145,79,0.2)',
+            }}
+          >
             <div className="container mx-auto px-4 max-w-3xl text-center">
+              <p
+                className="text-[11px] font-semibold uppercase tracking-[0.24em] mb-4"
+                style={{ color: '#B4914F' }}
+              >
+                Founder
+              </p>
               <h1 className="font-bold leading-tight text-4xl sm:text-5xl md:text-6xl text-foreground">
                 Meet a <span style={{ color: '#B4914F' }}>Co-Founder</span>
               </h1>
@@ -34,8 +46,10 @@ const MeetTheFounder = () => {
                 In this short video, Marc Trup explains the vision behind Hobson
                 and why property deserves its own AI co-worker.
               </p>
+              <div className="mx-auto mt-10 h-px w-24" style={{ backgroundColor: '#EDE7DA' }} />
             </div>
           </section>
+
 
           {/* Video */}
           <section className="pb-12 sm:pb-16">
