@@ -686,6 +686,13 @@ const Calculators: React.FC = () => {
                 height: "100%",
               }}
             >
+              <div className="hp-head-mobile" style={{ display: "none", marginBottom: 16 }}>
+                <div style={{ fontFamily: FONTS.mono, fontSize: 11, letterSpacing: "0.22em", textTransform: "uppercase", color: T.gold, marginBottom: 6 }}>Option two</div>
+                <h2 style={{ fontFamily: FONTS.serif, fontWeight: 400, fontSize: 26, lineHeight: 1.15, letterSpacing: "-0.01em", color: T.ink, margin: 0 }}>
+                  Hobson<span style={{ color: T.gold, fontSize: "0.7em", marginLeft: 10 }}>+ helping hands</span>
+                </h2>
+                <div style={{ fontFamily: FONTS.sans, fontSize: 12.5, color: T.muted, marginTop: 4 }}>Onboarding team + relationship manager</div>
+              </div>
               <p style={{ fontFamily: FONTS.sans, fontSize: 13.5, lineHeight: 1.55, color: T.muted, margin: 0 }} className="hp-card-blurb">
                 We prepare your documents before Professor reads them, and one of us stays with you afterwards.
               </p>
