@@ -1003,7 +1003,7 @@ export default function Pricing() {
                 maxWidth: "20ch",
               }}
             >
-              Choose Hobson on its own, or Hobson with a helping hand.
+              Choose Hobson <span style={{ color: TOKENS.brass }}>on its own</span>, or Hobson with a <span style={{ color: TOKENS.brass }}>helping hand</span>.
             </h1>
             <p
               style={{
