@@ -297,22 +297,27 @@ const LearnFaq = () => {
 
       <main className="flex-1">
         {/* Hero */}
-        <section>
-          <div className="mx-auto max-w-3xl px-6 pt-20 pb-10 text-center">
+        <section
+          style={{
+            backgroundColor: "#F1EBDE",
+            borderBottom: "1px solid rgba(180,145,79,0.2)",
+          }}
+        >
+          <div className="mx-auto max-w-3xl px-6 pt-16 pb-12 text-center">
             <div
-              className="inline-flex items-center justify-center w-16 h-16 mb-7 rounded-full"
+              className="inline-flex items-center justify-center w-14 h-14 mb-6 rounded-full"
               style={{ backgroundColor: "#F3F0FF", border: "1px solid #E8E4F0" }}
             >
-              <img src={owlMascot} alt="" className="w-10 h-10" />
+              <img src={owlMascot} alt="" className="w-9 h-9" />
             </div>
             <p
               className="text-[11px] font-semibold uppercase tracking-[0.24em]"
               style={{ color: "#B4914F" }}
             >
-              Frequently asked questions
+              Learn <span style={{ color: "#B4914F", opacity: 0.5 }}>/</span> FAQ
             </p>
             <h1
-              className="mt-4 font-serif text-4xl sm:text-5xl md:text-6xl font-normal tracking-tight"
+              className="mt-4 font-serif text-3xl sm:text-4xl md:text-5xl font-normal tracking-tight"
               style={{ color: "#2D2D2D" }}
             >
               Questions, answered.
@@ -324,7 +329,12 @@ const LearnFaq = () => {
               How Hobson thinks about your property documents — and why you
               can trust the answers it gives.
             </p>
+            <div className="mx-auto mt-8 h-px w-24" style={{ backgroundColor: "#EDE7DA" }} />
           </div>
+        </section>
+
+        <section>
+
 
           {/* Sticky category chips */}
           <div
