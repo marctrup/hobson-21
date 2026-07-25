@@ -80,7 +80,12 @@ const Learn = () => {
 
       <main className="flex-1">
         {/* Hero */}
-        <section>
+        <section
+          style={{
+            backgroundColor: "#F1EBDE",
+            borderBottom: `1px solid rgba(180,145,79,0.2)`,
+          }}
+        >
           <div className="mx-auto max-w-3xl px-6 pt-20 pb-12 text-center">
             <div
               className="inline-flex items-center justify-center w-16 h-16 mb-7 rounded-full"
@@ -116,7 +121,8 @@ const Learn = () => {
         </section>
 
         {/* Cards */}
-        <section className="mx-auto max-w-6xl px-6 pb-20">
+        <section className="mx-auto max-w-6xl px-6 pt-20 pb-20">
+
           <div className="grid gap-6 md:grid-cols-3">
             {CARDS.map((card) => {
               const Icon = card.icon;
