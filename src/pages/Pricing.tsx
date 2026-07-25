@@ -993,16 +993,8 @@ export default function Pricing() {
         >
           <div style={{ maxWidth: 720, margin: "0 auto" }}>
             <h1
-              style={{
-                fontFamily: FONTS.serif,
-                fontWeight: 400,
-                fontSize: "clamp(30px, 3.4vw, 44px)",
-                lineHeight: 1.15,
-                letterSpacing: "-0.01em",
-                color: TOKENS.ink,
-                margin: "0 auto",
-                maxWidth: "20ch",
-              }}
+              className="font-serif text-4xl sm:text-5xl md:text-6xl font-normal tracking-tight"
+              style={{ color: TOKENS.ink, lineHeight: 1.15 }}
             >
               Choose Hobson <span style={{ color: TOKENS.brass }}>on its own</span>, or Hobson with <span style={{ color: TOKENS.brass }}>helping hands</span>.
             </h1>
