@@ -35,9 +35,10 @@ const MeetTheFounder = () => {
               >
                 Founder
               </p>
-              <h1 className="font-bold leading-tight text-4xl sm:text-5xl md:text-6xl text-foreground">
+              <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl font-normal tracking-tight text-foreground">
                 Meet a <span style={{ color: '#B4914F' }}>Co-Founder</span>
               </h1>
+
               <p className="mt-6 text-lg sm:text-xl text-muted-foreground leading-relaxed">
                 Hobson was built by property people who believed there had to be
                 a better way to manage property work.
