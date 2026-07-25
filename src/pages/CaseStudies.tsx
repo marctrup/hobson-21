@@ -110,11 +110,7 @@ const CaseStudies = () => {
               style={{ color: MUTED }}
             >
               These aren't finished success stories — they're real partnerships
-              underway. <strong style={{ color: INK }}>Phase 1</strong>, where
-              Hobson answers questions across your documents, is live today;{" "}
-              <strong style={{ color: INK }}>Phase 2</strong>, where it starts
-              doing the work, is coming. Pick the situation that feels like
-              yours.
+              underway.
             </p>
             <div className="mx-auto mt-8 h-px w-24" style={{ backgroundColor: RULE }} />
           </div>
