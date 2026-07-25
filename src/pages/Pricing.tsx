@@ -985,8 +985,9 @@ export default function Pricing() {
         <section
           className="hero"
           style={{
-            background: TOKENS.paper,
-            padding: "48px 32px 0",
+            background: "#F1EBDE",
+            borderBottom: `1px solid rgba(180, 145, 79, 0.2)`,
+            padding: "56px 32px 64px",
             textAlign: "center",
           }}
         >
