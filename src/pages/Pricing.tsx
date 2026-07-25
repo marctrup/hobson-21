@@ -679,6 +679,7 @@ const Calculators: React.FC = () => {
               style={{
                 background: `linear-gradient(180deg, ${T.paperGrad} 0%, ${T.cream} 100%)`,
                 border: `1px solid ${T.gold}`,
+                borderTop: `2px solid ${T.gold}`,
                 borderRadius: 16,
                 padding: 26,
                 display: "flex",
