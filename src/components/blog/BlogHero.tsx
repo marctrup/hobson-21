@@ -7,7 +7,7 @@ export const BlogHero = () => {
         borderBottom: '1px solid rgba(180,145,79,0.2)',
       }}
     >
-      <div className="mx-auto px-4 text-center relative" style={{ maxWidth: 720 }}>
+      <div className="mx-auto max-w-3xl px-6 text-center relative">
         <p
           className="text-[11px] font-semibold uppercase tracking-[0.24em] mb-4"
           style={{ color: '#B4914F' }}
