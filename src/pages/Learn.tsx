@@ -98,7 +98,7 @@ const Learn = () => {
               className="mt-4 font-serif text-4xl sm:text-5xl md:text-6xl font-normal tracking-tight"
               style={{ color: INK }}
             >
-              Get to know Hobson.
+              Get to know <span style={{ color: BRASS }}>Hobson</span>.
             </h1>
             <p
               className="mt-5 text-base sm:text-lg leading-relaxed max-w-xl mx-auto"
