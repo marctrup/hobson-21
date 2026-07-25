@@ -478,7 +478,7 @@ const Calculators: React.FC = () => {
                 }}
               >
                 Hobson
-                <span style={{ color: T.gold }}> + helping hand</span>
+                <span style={{ color: T.gold, fontSize: "0.7em", marginLeft: 10 }}>+ helping hand</span>
                 <div
                   style={{
                     fontFamily: FONTS.sans,
