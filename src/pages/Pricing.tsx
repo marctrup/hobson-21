@@ -524,6 +524,12 @@ const Calculators: React.FC = () => {
                 height: "100%",
               }}
             >
+              <div className="hp-head-mobile" style={{ display: "none", marginBottom: 16 }}>
+                <div style={{ fontFamily: FONTS.mono, fontSize: 11, letterSpacing: "0.22em", textTransform: "uppercase", color: T.faint, marginBottom: 6 }}>Option one</div>
+                <h2 style={{ fontFamily: FONTS.serif, fontWeight: 400, fontSize: 26, lineHeight: 1.15, letterSpacing: "-0.01em", color: T.ink, margin: 0 }}>
+                  Hobson<span style={{ color: TOKENS.brass, fontSize: "0.7em", marginLeft: 10 }}>on its own</span>
+                </h2>
+              </div>
               <p style={{ fontFamily: FONTS.sans, fontSize: 13.5, lineHeight: 1.55, color: T.muted, margin: "0 0 18px" }} className="hp-card-blurb">
                 Reading your documents is the heavy lifting — done once, then never again. So it is charged once. After that you pay for seats, and there is no limit on how much you use me.
               </p>
