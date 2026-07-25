@@ -1015,7 +1015,7 @@ export default function Pricing() {
                 maxWidth: "66ch",
               }}
             >
-              With a person, we do the setup for you — getting your documents in, sorting them, and fixing anything unclear — and you get someone to call whenever you need them. On its own, you do the setup yourself. Move the sliders below to see what each costs.
+              With our team, we do the setup for you — getting your documents in, sorting them, and fixing anything unclear — and you get someone to call whenever you need them. With Hobson only, you do the setup yourself. Move the sliders below to see what each costs.
             </p>
 
           </div>
