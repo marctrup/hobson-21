@@ -413,7 +413,7 @@ const Calculators: React.FC = () => {
 
           {/* Header row: labels above each pricing box */}
           <div
-            className="hp-price-heads"
+            className="hp-price-heads hp-price-heads-desktop"
             style={{
               display: "grid",
               gridTemplateColumns: "2.1fr 1.3fr",
