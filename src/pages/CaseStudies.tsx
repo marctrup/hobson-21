@@ -80,8 +80,13 @@ const CaseStudies = () => {
       <GlobalHeader />
 
       <main className="flex-1">
-        <section>
-          <div className="mx-auto max-w-3xl px-6 pt-12 pb-4">
+        <section
+          style={{
+            backgroundColor: "#F1EBDE",
+            borderBottom: `1px solid rgba(180,145,79,0.2)`,
+          }}
+        >
+          <div className="mx-auto max-w-3xl px-6 pt-10 pb-3">
             <Link
               to="/learn"
               className="inline-flex items-center gap-2 text-sm font-medium hover:opacity-70 transition-opacity"
@@ -91,21 +96,21 @@ const CaseStudies = () => {
               Back to Learn
             </Link>
           </div>
-          <div className="mx-auto max-w-3xl px-6 pt-8 pb-12 text-center">
+          <div className="mx-auto max-w-3xl px-6 pt-6 pb-12 text-center">
             <div
-              className="inline-flex items-center justify-center w-16 h-16 mb-7 rounded-full"
+              className="inline-flex items-center justify-center w-14 h-14 mb-6 rounded-full"
               style={{ backgroundColor: LAVENDER_BG, border: `1px solid ${LAVENDER_BORDER}` }}
             >
-              <img src={owlMascot} alt="" className="w-10 h-10" />
+              <img src={owlMascot} alt="" className="w-9 h-9" />
             </div>
             <p
               className="text-[11px] font-semibold uppercase tracking-[0.24em]"
               style={{ color: BRASS }}
             >
-              Case studies
+              Learn <span style={{ color: BRASS, opacity: 0.5 }}>/</span> Case studies
             </p>
             <h1
-              className="mt-4 font-serif text-4xl sm:text-5xl md:text-6xl font-normal tracking-tight"
+              className="mt-4 font-serif text-3xl sm:text-4xl md:text-5xl font-normal tracking-tight"
               style={{ color: INK }}
             >
               Find the one that sounds like you.
@@ -121,9 +126,10 @@ const CaseStudies = () => {
               doing the work, is coming. Pick the situation that feels like
               yours.
             </p>
-            <div className="mx-auto mt-10 h-px w-24" style={{ backgroundColor: RULE }} />
+            <div className="mx-auto mt-8 h-px w-24" style={{ backgroundColor: RULE }} />
           </div>
         </section>
+
 
         <section className="mx-auto max-w-5xl px-6 pb-24">
           <div className="grid gap-6 md:grid-cols-2">
