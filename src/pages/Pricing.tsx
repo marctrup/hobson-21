@@ -854,6 +854,8 @@ const Calculators: React.FC = () => {
         @media (max-width: 1120px) {
           .hp-price-row { grid-template-columns: 1fr !important; }
           .hp-price-heads { grid-template-columns: 1fr !important; row-gap: 18px; }
+          .hp-price-heads-desktop { display: none !important; }
+          .hp-head-mobile { display: block !important; }
         }
         @media (max-width: 900px) {
           .hp-includes-grid { grid-template-columns: 1fr !important; }
@@ -861,6 +863,7 @@ const Calculators: React.FC = () => {
         }
         @media (max-width: 720px) {
           .hp-ai-inner { grid-template-columns: 1fr !important; }
+          #calculator { padding: 32px 18px 56px !important; }
         }
 
         .hp-slider-dark::-webkit-slider-runnable-track { background: rgba(255,255,255,0.18); }
