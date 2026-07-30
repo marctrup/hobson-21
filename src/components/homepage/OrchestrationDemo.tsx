@@ -224,29 +224,27 @@ export const OrchestrationDemo: React.FC = () => {
             return (
               <div
                 key={i}
-                className={`rounded-2xl border bg-white shadow-sm overflow-hidden transition-all duration-500 ${
-                  p.isActive ? "border-[#B4914F] ring-1 ring-[#E8E1D4]" : "border-[#EDE7DA]"
-                }`}
-                style={{ animation: "fade-up 0.35s ease both" }}
+                className="rounded-2xl overflow-hidden transition-all duration-500"
+                style={{ animation: "fade-up 0.35s ease both", background: 'var(--paper)', border: `1px solid ${p.isActive ? 'var(--brass)' : 'var(--bone)'}` }}
               >
-                <div className="flex items-center gap-3 px-4 py-3 bg-gradient-to-r from-[#F1EBDE]/70 to-transparent border-b border-[#EDE7DA]">
-                  <div className="relative w-9 h-9 shrink-0 rounded-xl bg-white border border-[#EDE7DA] grid place-items-center overflow-hidden">
+                <div className="flex items-center gap-3 px-4 py-3" style={{ background: 'var(--bone-wash)', borderBottom: '1px solid var(--bone)' }}>
+                  <div className="relative w-9 h-9 shrink-0 rounded-xl grid place-items-center overflow-hidden" style={{ background: 'var(--paper)', border: '1px solid var(--bone)' }}>
                     <img src={b.img} alt="" className="w-8 h-8 object-contain" />
                     {p.isActive && (
                       <span className="absolute inset-0 rounded-xl ring-2 ring-[#B4914F]" style={{ animation: "pulse-ring 1.6s ease-out infinite" }} />
                     )}
                   </div>
                   <div className="min-w-0 flex-1">
-                    <p className="text-[11px] font-semibold tracking-wide text-[#B4914F] uppercase">{b.who}</p>
-                    <p className="text-sm text-[#3A3A3A] truncate">{b.headline}</p>
+                    <p className="text-[11px] font-semibold tracking-wide uppercase" style={{ color: 'var(--brass)' }}>{b.who}</p>
+                    <p className="text-sm truncate" style={{ color: 'var(--ink)' }}>{b.headline}</p>
                   </div>
                   {p.isDone ? (
-                    <span className="inline-flex items-center gap-1 text-xs font-semibold text-[#B4914F]">
-                      <Check className="w-4 h-4" /> Complete
+                    <span className="inline-flex items-center gap-1 text-xs font-semibold" style={{ color: 'var(--ink-muted)' }}>
+                      <Check className="w-4 h-4" style={{ color: 'var(--brass)' }} /> Complete
                     </span>
                   ) : (
-                    <span className="text-xs font-semibold text-[#B4914F] flex items-center gap-1">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#B4914F] animate-pulse" />
+                    <span className="text-xs font-semibold flex items-center gap-1" style={{ color: 'var(--ink-muted)' }}>
+                      <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: 'var(--brass)' }} />
                       Working
                     </span>
                   )}
@@ -258,16 +256,17 @@ export const OrchestrationDemo: React.FC = () => {
                     return (
                       <li key={j} className={`flex items-center gap-2 text-sm transition-opacity ${stepDone || stepActive ? "opacity-100" : "opacity-40"}`}>
                         {stepDone ? (
-                          <Check className="w-3.5 h-3.5 text-[#B4914F] shrink-0" />
+                          <Check className="w-3.5 h-3.5 shrink-0" style={{ color: 'var(--brass)' }} />
                         ) : stepActive ? (
-                          <span className="w-3.5 h-3.5 rounded-full border-2 border-[#B4914F] border-t-transparent animate-spin shrink-0" />
+                          <span className="w-3.5 h-3.5 rounded-full border-2 border-t-transparent animate-spin shrink-0" style={{ borderColor: 'var(--brass)', borderTopColor: 'transparent' }} />
                         ) : (
-                          <span className="w-3.5 h-3.5 rounded-full border border-[#E8E1D4] shrink-0" />
+                          <span className="w-3.5 h-3.5 rounded-full shrink-0" style={{ border: '1px solid var(--bone)' }} />
                         )}
-                        <span className={stepDone ? "text-[#7C7669] line-through decoration-[#C9C1B2]" : stepActive ? "text-[#3A3A3A]" : "text-[#A19A8C]"}>{s}</span>
+                        <span style={{ color: 'var(--ink-muted)', textDecoration: stepDone ? 'line-through' : undefined, textDecorationColor: stepDone ? 'var(--bone-strong)' : undefined }}>{s}</span>
                       </li>
                     );
                   })}
+
                 </ul>
               </div>
             );
