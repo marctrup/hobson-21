@@ -225,7 +225,7 @@ export const OrchestrationDemo: React.FC = () => {
                   <div className="relative w-9 h-9 shrink-0 grid place-items-center">
                     <img src={b.img} alt="" className="w-9 h-9 object-contain" />
                     {p.isActive && (
-                      <span className="absolute inset-0 rounded-xl ring-2 ring-[#B4914F]" style={{ animation: "pulse-ring 1.6s ease-out infinite" }} />
+                      <span className="absolute inset-0 rounded-xl ring-2 ring-[#7C3AED]" style={{ animation: "pulse-ring 1.6s ease-out infinite" }} />
                     )}
                   </div>
                   <div className="min-w-0 flex-1">
