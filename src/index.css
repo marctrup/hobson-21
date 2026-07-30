@@ -257,3 +257,30 @@ br {
     transition-duration: 0.01ms !important;
   }
 }
+html,
+.hobson-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: #D8CDB6 #F1EBDE;
+}
+
+html::-webkit-scrollbar,
+.hobson-scroll::-webkit-scrollbar {
+  width: 8px;
+}
+
+html::-webkit-scrollbar-track,
+.hobson-scroll::-webkit-scrollbar-track {
+  background: #F1EBDE;
+  border-radius: 4px;
+}
+
+html::-webkit-scrollbar-thumb,
+.hobson-scroll::-webkit-scrollbar-thumb {
+  background: #D8CDB6;
+  border-radius: 4px;
+}
+
+html::-webkit-scrollbar-thumb:hover,
+.hobson-scroll::-webkit-scrollbar-thumb:hover {
+  background: #B4914F;
+}
