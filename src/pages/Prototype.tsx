@@ -4054,7 +4054,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                 }}
                 className={`flex items-center gap-2 px-4 py-2.5 rounded-full border bg-white focus-within:border-[#56514A] focus-within:ring-2 focus-within:ring-[#56514A]/20 transition ${
                   chipVisible
-                    ? "border-[#56514A] ring-2 ring-[#56514A]/40 bg-[#F1EBDE] shadow-[0_0_0_4px_rgba(124,58,237,0.12)] animate-[pulse_1.6s_ease-in-out_infinite]"
+                    ? "border-[#56514A] ring-2 ring-[#56514A]/40 bg-[#F1EBDE] shadow-[0_0_0_4px_rgba(180,145,79,0.12)] animate-[pulse_1.6s_ease-in-out_infinite]"
                     : "border-bone"
                 }`}
               >
@@ -10952,7 +10952,7 @@ function StyleTag() {
       /* Overlap spiderfy: pin keeps its true identity & count; thin connector shows true location */
       .hp-marker.is-overlap-spread .hp-cluster,
       .hp-marker.is-overlap-spread .hp-pin {
-        box-shadow: 0 0 0 2px rgba(148,163,184,0.45), 0 2px 6px rgba(0,0,0,0.18);
+        box-shadow: 0 0 0 2px rgba(138,132,120,0.45), 0 2px 6px rgba(0,0,0,0.18);
       }
       .hp-pin {
         width: 28px; height: 38px; position: relative;
@@ -10971,7 +10971,7 @@ function StyleTag() {
       .hp-cluster {
         width: 38px; height: 38px; border-radius: 999px;
         background: #56514A; color: #fff; display: grid; place-items: center;
-        font-weight: 700; font-size: 14px; box-shadow: 0 2px 6px rgba(124,58,237,0.4);
+        font-weight: 700; font-size: 14px; box-shadow: 0 2px 6px rgba(180,145,79,0.4);
         border: 3px solid #fff;
         transition: transform .2s;
       }
@@ -10987,11 +10987,11 @@ function StyleTag() {
       .hp-marker.is-spread .hp-pin,
       .hp-marker.is-spread .hp-cluster {
         animation: spreadPulse 1.8s ease-in-out infinite;
-        box-shadow: 0 0 0 0 rgba(124,58,237,0.5);
+        box-shadow: 0 0 0 0 rgba(180,145,79,0.5);
       }
       @keyframes spreadPulse {
-        0% { box-shadow: 0 0 0 0 rgba(124,58,237,0.55); }
-        100% { box-shadow: 0 0 0 18px rgba(124,58,237,0); }
+        0% { box-shadow: 0 0 0 0 rgba(180,145,79,0.55); }
+        100% { box-shadow: 0 0 0 18px rgba(180,145,79,0); }
       }
       .hp-marker.has-doc::after {
         content: "📄"; position: absolute; top: -6px; right: -10px;
@@ -11022,14 +11022,14 @@ function StyleTag() {
         cursor: pointer;
       }
       .hp-unit.is-vacant { border-color: #8A8478; color: #2D2D2D; }
-      .hp-unit:hover { transform: scale(1.08); box-shadow: 0 3px 8px rgba(124,58,237,0.35); }
+      .hp-unit:hover { transform: scale(1.08); box-shadow: 0 3px 8px rgba(180,145,79,0.35); }
       .hp-unit-marker.is-active .hp-unit {
         background: #56514A; color: #fff; border-color: #56514A;
-        box-shadow: 0 0 0 4px rgba(124,58,237,0.25);
+        box-shadow: 0 0 0 4px rgba(180,145,79,0.25);
       }
       .hp-marker.is-match .hp-pin,
       .hp-marker.is-match .hp-cluster {
-        filter: drop-shadow(0 0 6px rgba(124,58,237,0.55));
+        filter: drop-shadow(0 0 6px rgba(180,145,79,0.55));
         transform: scale(1.12);
         transition: transform .2s, filter .2s;
       }

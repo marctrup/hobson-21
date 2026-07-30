@@ -38,7 +38,7 @@ const TOKENS = {
   inkSoft: "rgba(45,45,45,0.82)",
   inkMuted: "rgba(45,45,45,0.65)",
   hairline: "#F7EDDC",
-  hairlineDark: "rgba(201,168,104,0.4)",
+  hairlineDark: "rgba(180,145,79,0.4)",
 };
 
 
@@ -71,7 +71,7 @@ const Pill: React.FC<{ children: React.ReactNode; dark?: boolean }> = ({ childre
       padding: "6px 12px",
       borderRadius: 999,
       border: `1px solid ${dark ? TOKENS.hairlineDark : TOKENS.hairline}`,
-      background: dark ? "rgba(201,168,104,0.10)" : "rgba(255,255,255,0.6)",
+      background: dark ? "rgba(180,145,79,0.10)" : "rgba(255,255,255,0.6)",
       color: dark ? TOKENS.brassLight : TOKENS.ink,
       fontFamily: FONTS.mono,
       fontSize: 12,
@@ -347,7 +347,7 @@ const Calculators: React.FC = () => {
     gold: "#B4914F",
     goldInk: "#8F5A14",
     wash: "#F7EDDC",
-    line: "rgba(35,33,29,0.12)",
+    line: "rgba(45,45,45,0.12)",
     dark: "#2D2D2D",
     paperSoft: "#FFFDFA",
     paperGrad: "#F7EDDC",
@@ -516,7 +516,7 @@ const Calculators: React.FC = () => {
             <div
               style={{
                 background: T.paperSoft,
-                border: `1px solid rgba(35,33,29,0.13)`,
+                border: `1px solid rgba(45,45,45,0.13)`,
                 borderRadius: 16,
                 padding: 26,
                 display: "flex",
@@ -567,7 +567,7 @@ const Calculators: React.FC = () => {
                 </div>
 
                 {/* ---- Vertical hairline ---- */}
-                <div aria-hidden style={{ background: "rgba(35,33,29,0.08)", width: 1, height: "100%" }} />
+                <div aria-hidden style={{ background: "rgba(45,45,45,0.08)", width: 1, height: "100%" }} />
 
                 {/* ---- Section B: seats ---- */}
                 <div style={{ display: "flex", flexDirection: "column" }}>
@@ -591,7 +591,7 @@ const Calculators: React.FC = () => {
                 className="hp-includes"
                 style={{
                   background: "#F7EDDC",
-                  border: "1px solid rgba(35,33,29,0.08)",
+                  border: "1px solid rgba(45,45,45,0.08)",
                   borderRadius: 10,
                   padding: "18px 20px",
                   marginTop: 22,
@@ -969,7 +969,7 @@ export default function Pricing() {
         @keyframes hpCaretBlink { 50% { border-color: transparent; } }
         .hp-lift { transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease; }
         .hp-lift:hover { transform: translateY(-2px); box-shadow: 0 12px 32px -18px rgba(45,45,45,0.25); }
-        .hp-slider { -webkit-appearance: none; appearance: none; height: 4px; background: rgba(201,168,104,0.25); border-radius: 999px; outline: none; }
+        .hp-slider { -webkit-appearance: none; appearance: none; height: 4px; background: rgba(180,145,79,0.25); border-radius: 999px; outline: none; }
         .hp-slider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 22px; height: 22px; border-radius: 50%; background: ${TOKENS.brassLight}; border: 3px solid ${TOKENS.ink}; box-shadow: 0 2px 6px rgba(0,0,0,0.3); cursor: pointer; }
         .hp-slider::-moz-range-thumb { width: 22px; height: 22px; border-radius: 50%; background: ${TOKENS.brassLight}; border: 3px solid ${TOKENS.ink}; cursor: pointer; }
         .hp-slider:focus-visible::-webkit-slider-thumb { outline: 2px solid ${TOKENS.brassLight}; outline-offset: 3px; }
@@ -977,7 +977,7 @@ export default function Pricing() {
         .hp-btn-brass { background: ${TOKENS.brass}; color: ${TOKENS.paper}; }
         .hp-btn-brass:hover { background: ${TOKENS.brassLight}; }
         .hp-btn-ghost { background: transparent; color: ${TOKENS.paper}; border-color: ${TOKENS.brassLight}; }
-        .hp-btn-ghost:hover { background: rgba(201,168,104,0.12); }
+        .hp-btn-ghost:hover { background: rgba(180,145,79,0.12); }
         .hp-btn:focus-visible { outline: 2px solid ${TOKENS.brassLight}; outline-offset: 3px; }
         details.hp-faq { background: ${TOKENS.paper}; border: 1px solid ${TOKENS.hairline}; border-radius: 14px; padding: 22px 26px; transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease; }
         details.hp-faq + details.hp-faq { margin-top: 12px; }
