@@ -190,12 +190,13 @@ export const OrchestrationDemo: React.FC = () => {
             <button
               type="button"
               onClick={() => setIntroPhase(4)}
-              className="rounded-full bg-[#2D2D2D] hover:bg-[#1F1F1F] text-white px-5 py-2 text-sm font-semibold shadow transition-colors"
+              className="rounded-full px-5 py-2 text-sm font-semibold transition-colors"
+              style={{ background: 'var(--charcoal)', color: 'var(--paper)' }}
             >
               Yes
             </button>
           ) : (
-            <div className="max-w-[85%] rounded-2xl rounded-tr-sm bg-[#2D2D2D] text-white px-4 py-2 text-sm shadow">
+            <div className="max-w-[85%] rounded-2xl rounded-tr-sm px-4 py-2 text-sm" style={{ background: 'var(--charcoal)', color: 'var(--paper)' }}>
               {USER_YES}
             </div>
           )}
@@ -207,8 +208,9 @@ export const OrchestrationDemo: React.FC = () => {
           className={`mt-4 flex items-start gap-3 transition-all duration-500 ${introPhase >= 4 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2 pointer-events-none h-0 overflow-hidden mt-0"}`}
           style={{ animation: introPhase >= 4 ? "fade-up 0.4s ease both" : undefined }}
         >
-          <img src={hobsonOwl} alt="Hobson" className="w-10 h-10 rounded-full bg-[#F1EBDE] p-1 border border-[#E8E1D4]" />
-          <div className="rounded-2xl rounded-tl-sm bg-[#FBF8F2] border border-[#DED5C4] px-4 py-3 text-sm text-[#2D2D2D] shadow-sm">
+          <img src={hobsonOwl} alt="Hobson" className="w-10 h-10 rounded-full p-1" style={{ background: 'var(--bone-wash)' }} />
+          <div className="rounded-2xl rounded-tl-sm px-4 py-3 text-sm" style={{ background: 'var(--bone-wash)', color: 'var(--ink)', border: '1px solid #E4DAC6' }}>
+
             {HOBSON_INTRO.slice(0, introHobsonIdx)}
             {introPhase === 4 && <span className="animate-pulse">|</span>}
           </div>
