@@ -328,7 +328,7 @@ export const OrchestrationDemo: React.FC = () => {
         </div>
         </div>
 
-        <div className="border-t border-[#EDE7DA] bg-white/70 backdrop-blur px-4 sm:px-6 py-3 flex items-center justify-between text-xs text-[#7C7669]">
+        <div className="px-4 sm:px-6 py-3 flex items-center justify-between text-xs" style={{ borderTop: '1px solid var(--bone)', background: 'var(--paper)', color: 'var(--ink-muted)' }}>
           <span>The user only ever speaks to Hobson.</span>
           <button
             onClick={() => {
