@@ -159,7 +159,7 @@ export const Homepage = () => {
 
         <main id="main-content" className="min-h-screen bg-background overflow-x-hidden" role="main">
           {/* Hero Section - Two Column Layout */}
-          <section className="relative pt-12 sm:pt-16 pb-4 overflow-hidden" aria-labelledby="hero-heading" style={{ background: "#FCFAF7" }}>
+          <section className="relative pt-12 sm:pt-16 pb-4 overflow-hidden" aria-labelledby="hero-heading" style={{ background: "#F1EBDE" }}>
             {/* Subtle brass glow behind the headline */}
             <div
               className="pointer-events-none absolute inset-0"
