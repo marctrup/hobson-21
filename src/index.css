@@ -317,3 +317,19 @@ html::-webkit-scrollbar-thumb:hover,
 .hobson-scroll::-webkit-scrollbar-thumb:hover {
   background: #B4914F;
 }
+
+/* Any internally scrolling container inherits the same warm scrollbar */
+*::-webkit-scrollbar { width: 10px; height: 10px; }
+*::-webkit-scrollbar-track { background: #F1EBDE; }
+*::-webkit-scrollbar-thumb { background: #D8CDB6; border-radius: 5px; }
+*::-webkit-scrollbar-thumb:hover { background: #B4914F; }
+
+::selection { background: #E8E1D4; color: #2D2D2D; }
+
+:focus-visible {
+  outline: 2px solid #B4914F;
+  outline-offset: 2px;
+}
+
+html { caret-color: #2D2D2D; }
+
