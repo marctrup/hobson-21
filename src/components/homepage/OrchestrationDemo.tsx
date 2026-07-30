@@ -162,7 +162,7 @@ export const OrchestrationDemo: React.FC = () => {
         @keyframes pulse-ring { 0% { transform: scale(0.9); opacity:0.7;} 100% { transform: scale(1.6); opacity:0;} }
       `}</style>
 
-      <div className="rounded-3xl flex flex-col h-[600px] max-h-[80vh] overflow-hidden" style={{ border: '1px solid var(--bone)', background: 'var(--paper)' }}>
+      <div className="rounded-3xl flex flex-col h-[600px] max-h-[80vh] overflow-hidden" style={{ border: '1px solid var(--bone)', background: 'var(--paper)', boxShadow: '0 24px 60px -24px rgba(45,45,45,0.18)' }}>
         <div
           ref={scrollRef}
           onScroll={handleScroll}
