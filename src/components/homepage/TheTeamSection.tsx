@@ -58,9 +58,7 @@ const SpecialistCard: React.FC<{ s: Specialist; index: number }> = ({ s, index }
       {s.tone === "persistent" ? "Maintains" : "Provides"}
     </div>
     <div className="flex items-start gap-4">
-      <div className="w-24 h-24 shrink-0 rounded-2xl grid place-items-center overflow-hidden" style={{ background: "#FCFAF7", border: "1px solid #EDE7DA" }}>
-        <img src={s.img} alt={s.name} className="w-20 h-20 object-contain group-hover:scale-110 transition-transform duration-500" />
-      </div>
+      <img src={s.img} alt={s.name} className="w-24 h-24 shrink-0 object-contain group-hover:scale-110 transition-transform duration-500" />
       <div className="min-w-0">
         <h3 className="text-lg font-bold" style={{ color: "#2D2D2D" }}>{s.name}</h3>
         <p className="text-sm font-medium" style={{ color: "#B4914F" }}>{s.owns}</p>

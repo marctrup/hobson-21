@@ -228,8 +228,8 @@ export const OrchestrationDemo: React.FC = () => {
                 style={{ animation: "fade-up 0.35s ease both", background: 'var(--paper)', border: `1px solid ${p.isActive ? 'var(--brass)' : 'var(--bone)'}` }}
               >
                 <div className="flex items-center gap-3 px-4 py-3" style={{ background: 'var(--bone-wash)', borderBottom: '1px solid var(--bone)' }}>
-                  <div className="relative w-9 h-9 shrink-0 rounded-xl grid place-items-center overflow-hidden" style={{ background: 'var(--paper)', border: '1px solid var(--bone)' }}>
-                    <img src={b.img} alt="" className="w-8 h-8 object-contain" />
+                  <div className="relative w-9 h-9 shrink-0 grid place-items-center">
+                    <img src={b.img} alt="" className="w-9 h-9 object-contain" />
                     {p.isActive && (
                       <span className="absolute inset-0 rounded-xl ring-2 ring-[#B4914F]" style={{ animation: "pulse-ring 1.6s ease-out infinite" }} />
                     )}
