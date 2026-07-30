@@ -1046,7 +1046,7 @@ export default function Pricing() {
                 borderTop: `3px solid ${TOKENS.brass}`,
                 borderRadius: 20,
                 padding: "clamp(36px, 5vw, 64px)",
-                boxShadow: "0 24px 60px -30px rgba(20, 14, 40, 0.18)",
+                boxShadow: "0 24px 60px -30px rgba(45, 45, 45, 0.08)",
                 display: "grid",
                 gridTemplateColumns: "minmax(0, 1fr)",
                 gap: "clamp(28px, 4vw, 48px)",
