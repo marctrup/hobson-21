@@ -160,14 +160,9 @@ export const OrchestrationDemo: React.FC = () => {
       <style>{`
         @keyframes fade-up { from { opacity: 0; transform: translateY(16px);} to { opacity: 1; transform: none;} }
         @keyframes pulse-ring { 0% { transform: scale(0.9); opacity:0.7;} 100% { transform: scale(1.6); opacity:0;} }
-        .hobson-scroll { scrollbar-width: thin; scrollbar-color: rgba(124,58,237,0.45) rgba(124,58,237,0.08); }
-        .hobson-scroll::-webkit-scrollbar { width: 10px; }
-        .hobson-scroll::-webkit-scrollbar-track { background: rgba(124,58,237,0.08); border-radius: 9999px; margin: 8px 0; }
-        .hobson-scroll::-webkit-scrollbar-thumb { background: rgba(124,58,237,0.45); border-radius: 9999px; border: 2px solid transparent; background-clip: padding-box; }
-        .hobson-scroll::-webkit-scrollbar-thumb:hover { background: rgba(124,58,237,0.7); background-clip: padding-box; border: 2px solid transparent; }
       `}</style>
 
-      <div className="rounded-3xl flex flex-col h-[600px] max-h-[80vh] overflow-hidden" style={{ border: '1px solid #EDE7DA', background: 'linear-gradient(to bottom, #FCFAF7, #FFFFFF)', boxShadow: '0 30px 80px -20px rgba(45,45,45,0.20)' }}>
+      <div className="rounded-3xl flex flex-col h-[600px] max-h-[80vh] overflow-hidden" style={{ border: '1px solid var(--bone)', background: 'var(--paper)' }}>
         <div
           ref={scrollRef}
           onScroll={handleScroll}
@@ -178,12 +173,13 @@ export const OrchestrationDemo: React.FC = () => {
           className={`flex items-start gap-3 transition-all duration-500 ${hasStarted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"}`}
           style={{ animation: hasStarted ? "fade-up 0.4s ease both" : undefined }}
         >
-          <img src={hobsonOwl} alt="Hobson" className="w-10 h-10 rounded-full bg-[#F1EBDE] p-1 border border-[#E8E1D4]" />
-          <div className="rounded-2xl rounded-tl-sm bg-[#FBF8F2] border border-[#DED5C4] px-4 py-3 text-sm text-[#2D2D2D] shadow-sm max-w-[85%]">
+          <img src={hobsonOwl} alt="Hobson" className="w-10 h-10 rounded-full p-1" style={{ background: 'var(--bone-wash)' }} />
+          <div className="rounded-2xl rounded-tl-sm px-4 py-3 text-sm max-w-[85%]" style={{ background: 'var(--bone-wash)', color: 'var(--ink)', border: '1px solid #E4DAC6' }}>
             {HOBSON_PROACTIVE.slice(0, introProactiveIdx)}
             {introPhase === 1 && <span className="animate-pulse">|</span>}
           </div>
         </div>
+
 
         {/* User "Yes" confirmation */}
         <div
