@@ -58,10 +58,21 @@ All colors MUST be HSL.
     --brass-text: #8E7133;
     /* Purple is identity only: owl avatar, logo, favicon */
     --purple: #8B5CF6;
+    --purple-deep: #7C3AED;
     /* Evidence provenance only */
     --lavender-highlight: #EDE3FB;
     --lavender-wash: #F3EFFA;
     --purple-marker: #5B3A96;
+
+    /* Extended warm neutrals */
+    --document-white: #FFFFFF;
+    --vellum: #FFFDFA;
+    --zebra: #FAF7F2;
+    --code-surface: #F7F3EC;
+    --row-hover: #F4EFE4;
+    --disabled: #F4F0E9;
+    --faint-rule: #EDE5D6;
+
 
     /* Semantic (warm, palette-compatible) */
     --danger: #9C4A38;
