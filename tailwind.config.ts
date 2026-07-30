@@ -75,6 +75,7 @@ export default {
 					6: '#7A5C8A'
 				},
 
+				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
 				ring: 'hsl(var(--ring))',
 				background: 'hsl(var(--background))',
