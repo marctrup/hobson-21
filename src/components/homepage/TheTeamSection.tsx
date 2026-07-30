@@ -1,20 +1,12 @@
-import professorAsset from "@/assets/prototype/character-professor.png.asset.json";
-const professorImg = professorAsset.url;
-import architectAsset from "@/assets/prototype/character-architect.png.asset.json";
-import inspectorAsset from "@/assets/prototype/character-inspector.png.asset.json";
-const inspectorImg = inspectorAsset.url;
-import brokerAsset from "@/assets/prototype/character-broker.png.asset.json";
-const brokerImg = brokerAsset.url;
-import researcherAsset from "@/assets/prototype/character-researcher.png.asset.json";
-import bookkeeperAsset from "@/assets/prototype/character-bookkeeper.png.asset.json";
-import communicatorAsset from "@/assets/prototype/character-communicator.png.asset.json";
-import keeperAsset from "@/assets/prototype/character-keeper.png.asset.json";
-const keeperImg = keeperAsset.url;
+import professorImg from "@/assets/prototype/character-professor-transparent.png";
+import architectImg from "@/assets/prototype/character-architect-transparent.png";
+import inspectorImg from "@/assets/prototype/character-inspector-transparent.png";
+import brokerImg from "@/assets/prototype/character-broker-transparent.png";
+import researcherImg from "@/assets/prototype/character-researcher-transparent.png";
+import bookkeeperImg from "@/assets/prototype/character-bookkeeper-transparent.png";
+import communicatorImg from "@/assets/prototype/character-communicator-transparent.png";
+import keeperImg from "@/assets/prototype/character-keeper-transparent.png";
 
-const architectImg = architectAsset.url;
-const researcherImg = researcherAsset.url;
-const bookkeeperImg = bookkeeperAsset.url;
-const communicatorImg = communicatorAsset.url;
 
 type Specialist = {
   name: string;

@@ -2,20 +2,14 @@ import React, { useEffect, useRef, useState } from "react";
 import { Check } from "lucide-react";
 
 import hobsonOwl from "@/assets/hobson-owl-hero.png";
-import professorAsset from "@/assets/prototype/character-professor.png.asset.json";
-const professorImg = professorAsset.url;
-import inspectorAsset from "@/assets/prototype/character-inspector.png.asset.json";
-const inspectorImg = inspectorAsset.url;
-import brokerAsset from "@/assets/prototype/character-broker.png.asset.json";
-const brokerImg = brokerAsset.url;
-import keeperAsset from "@/assets/prototype/character-keeper.png.asset.json";
-const keeperImg = keeperAsset.url;
+import professorImg from "@/assets/prototype/character-professor-transparent.png";
+import inspectorImg from "@/assets/prototype/character-inspector-transparent.png";
+import brokerImg from "@/assets/prototype/character-broker-transparent.png";
+import keeperImg from "@/assets/prototype/character-keeper-transparent.png";
 
-import researcherAsset from "@/assets/prototype/character-researcher.png.asset.json";
-import bookkeeperAsset from "@/assets/prototype/character-bookkeeper.png.asset.json";
+import researcherImg from "@/assets/prototype/character-researcher-transparent.png";
+import bookkeeperImg from "@/assets/prototype/character-bookkeeper-transparent.png";
 
-const researcherImg = researcherAsset.url;
-const bookkeeperImg = bookkeeperAsset.url;
 
 type Beat = { who: string; img: string; headline: string; steps: string[] };
 
