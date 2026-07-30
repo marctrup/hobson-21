@@ -345,7 +345,9 @@ export const OrchestrationDemo: React.FC = () => {
                 setPlaying((p) => !p);
               }
             }}
-            className="px-3 py-1.5 rounded-full bg-white border border-[#E8E1D4] text-[#B4914F] hover:bg-[#F1EBDE] font-semibold"
+            className="px-3 py-1.5 rounded-full font-semibold transition-colors"
+            style={{ background: 'var(--paper)', border: '1px solid var(--bone)', color: 'var(--brass-text)' }}
+
           >
             {finished ? "Replay" : playing ? "Pause" : "Resume"}
           </button>
