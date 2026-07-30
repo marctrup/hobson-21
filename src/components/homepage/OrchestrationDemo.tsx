@@ -179,7 +179,7 @@ export const OrchestrationDemo: React.FC = () => {
           style={{ animation: hasStarted ? "fade-up 0.4s ease both" : undefined }}
         >
           <img src={hobsonOwl} alt="Hobson" className="w-10 h-10 rounded-full bg-[#F1EBDE] p-1 border border-[#E8E1D4]" />
-          <div className="rounded-2xl rounded-tl-sm bg-white border border-[#EDE7DA] px-4 py-3 text-sm text-[#4A4A4A] shadow-sm max-w-[85%]">
+          <div className="rounded-2xl rounded-tl-sm bg-[#FBF8F2] border border-[#DED5C4] px-4 py-3 text-sm text-[#2D2D2D] shadow-sm max-w-[85%]">
             {HOBSON_PROACTIVE.slice(0, introProactiveIdx)}
             {introPhase === 1 && <span className="animate-pulse">|</span>}
           </div>
@@ -212,7 +212,7 @@ export const OrchestrationDemo: React.FC = () => {
           style={{ animation: introPhase >= 4 ? "fade-up 0.4s ease both" : undefined }}
         >
           <img src={hobsonOwl} alt="Hobson" className="w-10 h-10 rounded-full bg-[#F1EBDE] p-1 border border-[#E8E1D4]" />
-          <div className="rounded-2xl rounded-tl-sm bg-white border border-[#EDE7DA] px-4 py-3 text-sm text-[#4A4A4A] shadow-sm">
+          <div className="rounded-2xl rounded-tl-sm bg-[#FBF8F2] border border-[#DED5C4] px-4 py-3 text-sm text-[#2D2D2D] shadow-sm">
             {HOBSON_INTRO.slice(0, introHobsonIdx)}
             {introPhase === 4 && <span className="animate-pulse">|</span>}
           </div>
@@ -280,7 +280,7 @@ export const OrchestrationDemo: React.FC = () => {
         <div className={`mt-5 transition-all duration-500 ${finalShown ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2 pointer-events-none h-0 overflow-hidden"}`}>
           <div className="flex items-start gap-3">
             <img src={hobsonOwl} alt="Hobson" className="w-10 h-10 rounded-full bg-[#F1EBDE] p-1 border border-[#E8E1D4]" />
-            <div className="rounded-2xl rounded-tl-sm bg-white border border-[#EDE7DA] px-4 py-3 text-sm text-[#4A4A4A] shadow-sm max-w-[90%]">
+            <div className="rounded-2xl rounded-tl-sm bg-[#FBF8F2] border border-[#DED5C4] px-4 py-3 text-sm text-[#2D2D2D] shadow-sm max-w-[90%]">
               <p>
                 I've finished preparing your rent review for <span className="font-semibold text-[#2D2D2D]">32 Hamilton Gardens</span>.
                 Here is what I have for your approval:
