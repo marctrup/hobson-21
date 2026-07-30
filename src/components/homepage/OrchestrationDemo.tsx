@@ -276,30 +276,30 @@ export const OrchestrationDemo: React.FC = () => {
         {/* Hobson final answer */}
         <div className={`mt-5 transition-all duration-500 ${finalShown ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2 pointer-events-none h-0 overflow-hidden"}`}>
           <div className="flex items-start gap-3">
-            <img src={hobsonOwl} alt="Hobson" className="w-10 h-10 rounded-full bg-[#F1EBDE] p-1 border border-[#E8E1D4]" />
-            <div className="rounded-2xl rounded-tl-sm bg-[#FBF8F2] border border-[#DED5C4] px-4 py-3 text-sm text-[#2D2D2D] shadow-sm max-w-[90%]">
+            <img src={hobsonOwl} alt="Hobson" className="w-10 h-10 rounded-full p-1" style={{ background: 'var(--bone-wash)' }} />
+            <div className="rounded-2xl rounded-tl-sm px-4 py-3 text-sm max-w-[90%]" style={{ background: 'var(--bone-wash)', color: 'var(--ink)', border: '1px solid #E4DAC6' }}>
               <p>
-                I've finished preparing your rent review for <span className="font-semibold text-[#2D2D2D]">32 Hamilton Gardens</span>.
+                I've finished preparing your rent review for <span className="font-semibold" style={{ color: 'var(--ink)' }}>32 Hamilton Gardens</span>.
                 Here is what I have for your approval:
               </p>
 
-              <div className="mt-3 rounded-xl border border-[#EDE7DA] overflow-hidden">
-                <div className="px-3 py-2 bg-[#F1EBDE]/60 text-[11px] font-semibold tracking-wide text-[#B4914F] uppercase">Recommendation</div>
+              <div className="mt-3 rounded-xl overflow-hidden" style={{ background: 'var(--paper)', border: '1px solid var(--bone)' }}>
+                <div className="px-3 py-2 text-[11px] font-semibold tracking-wide uppercase" style={{ color: 'var(--brass)', borderBottom: '1px solid var(--bone)' }}>Recommendation</div>
                 <div className="px-3 py-3 grid grid-cols-3 gap-3 text-sm">
                   <div>
-                    <div className="text-[11px] text-[#7C7669]">Passing rent</div>
-                    <div className="font-semibold text-[#2D2D2D]">£28,500 pa</div>
+                    <div className="text-[11px]" style={{ color: 'var(--ink-muted)' }}>Passing rent</div>
+                    <div className="font-semibold" style={{ color: 'var(--ink)' }}>£28,500 pa</div>
                   </div>
                   <div>
-                    <div className="text-[11px] text-[#7C7669]">Proposed rent</div>
-                    <div className="font-semibold text-[#B4914F]">£33,750 pa</div>
+                    <div className="text-[11px]" style={{ color: 'var(--ink-muted)' }}>Proposed rent</div>
+                    <div className="font-semibold" style={{ color: 'var(--ink)' }}>£33,750 pa</div>
                   </div>
                   <div>
-                    <div className="text-[11px] text-[#7C7669]">Uplift</div>
-                    <div className="font-semibold text-[#B4914F]">+18.4%</div>
+                    <div className="text-[11px]" style={{ color: 'var(--ink-muted)' }}>Uplift</div>
+                    <div className="font-semibold" style={{ color: 'var(--ink)' }}>+18.4%</div>
                   </div>
                 </div>
-                <div className="px-3 pb-3 text-xs text-[#5A5A5A]">
+                <div className="px-3 pb-3 text-xs" style={{ color: 'var(--ink-muted)' }}>
                   Based on 3 comparable lettings within 0.5&nbsp;mi (£44–£47 per&nbsp;sq&nbsp;ft).
                 </div>
               </div>
@@ -311,17 +311,18 @@ export const OrchestrationDemo: React.FC = () => {
                   { t: "Comparables pack", s: "3 sources, audit-trailed" },
                   { t: "Reminder schedule", s: "Service + response windows set" },
                 ].map((x) => (
-                  <div key={x.t} className="flex items-start gap-2 rounded-lg border border-[#EDE7DA] bg-white px-3 py-2">
-                    <Check className="w-4 h-4 text-[#B4914F] mt-0.5 shrink-0" />
+                  <div key={x.t} className="flex items-start gap-2 rounded-lg px-3 py-2" style={{ background: 'var(--paper)', border: '1px solid var(--bone)' }}>
+                    <Check className="w-4 h-4 mt-0.5 shrink-0" style={{ color: 'var(--brass)' }} />
                     <div>
-                      <div className="text-sm font-semibold text-[#2D2D2D]">{x.t}</div>
-                      <div className="text-xs text-[#7C7669]">{x.s}</div>
+                      <div className="text-sm font-semibold" style={{ color: 'var(--ink)' }}>{x.t}</div>
+                      <div className="text-xs" style={{ color: 'var(--ink-muted)' }}>{x.s}</div>
                     </div>
                   </div>
                 ))}
               </div>
 
-              <p className="mt-3 text-xs text-[#7C7669]">Nothing has been sent. Approve any item when you're ready.</p>
+              <p className="mt-3 text-xs" style={{ color: 'var(--ink-muted)' }}>Nothing has been sent. Approve any item when you're ready.</p>
+
             </div>
           </div>
         </div>
