@@ -45,6 +45,19 @@ All colors MUST be HSL.
   }
 
   :root {
+    /* Editorial stationery tokens */
+    --paper: #FCFAF7;
+    --bone-wash: #F1EBDE;
+    --bone: #E8E1D4;
+    --bone-strong: #D8CDB6;
+    --ink: #2D2D2D;
+    --ink-muted: #6E6A62;
+    --ink-faint: #8A8478;
+    --charcoal: #56514A;
+    --brass: #B4914F;
+    --brass-text: #8E7133;
+    --purple: #8B5CF6;
+
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
 
@@ -243,4 +256,31 @@ br {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+}
+html,
+.hobson-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: #D8CDB6 #F1EBDE;
+}
+
+html::-webkit-scrollbar,
+.hobson-scroll::-webkit-scrollbar {
+  width: 8px;
+}
+
+html::-webkit-scrollbar-track,
+.hobson-scroll::-webkit-scrollbar-track {
+  background: #F1EBDE;
+  border-radius: 4px;
+}
+
+html::-webkit-scrollbar-thumb,
+.hobson-scroll::-webkit-scrollbar-thumb {
+  background: #D8CDB6;
+  border-radius: 4px;
+}
+
+html::-webkit-scrollbar-thumb:hover,
+.hobson-scroll::-webkit-scrollbar-thumb:hover {
+  background: #B4914F;
 }
