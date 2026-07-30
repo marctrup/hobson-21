@@ -56,60 +56,93 @@ All colors MUST be HSL.
     --charcoal: #56514A;
     --brass: #B4914F;
     --brass-text: #8E7133;
+    /* Purple is identity only: owl avatar, logo, favicon */
     --purple: #8B5CF6;
+    /* Evidence provenance only */
+    --lavender-highlight: #EDE3FB;
+    --lavender-wash: #F3EFFA;
+    --purple-marker: #5B3A96;
 
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Semantic (warm, palette-compatible) */
+    --danger: #9C4A38;
+    --danger-bg: #F7EAE5;
+    --danger-border: #E4C6BD;
+    --success: #5E6B33;
+    --success-bg: #EDEFE0;
+    --success-border: #D2D8BC;
+    --warning: #8F5A14;
+    --warning-bg: #F7EDDC;
+    --warning-border: #E6D2AE;
+    --info: var(--ink);
+    --info-bg: var(--bone-wash);
+    --info-border: var(--bone);
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    /* Categorical chart ramp */
+    --chart-1: #B4914F;
+    --chart-2: #56514A;
+    --chart-3: #5E6B33;
+    --chart-4: #9C4A38;
+    --chart-5: #8A8478;
+    --chart-6: #7A5C8A;
+    /* Sequential brass ramp */
+    --ramp-1: #F5EEDF;
+    --ramp-2: #E7D6B4;
+    --ramp-3: #D2B57E;
+    --ramp-4: #B4914F;
+    --ramp-5: #8E7133;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    /* shadcn tokens mapped onto Editorial Stationery */
+    --background: 36 46% 98%;   /* paper */
+    --foreground: 0 0% 18%;     /* ink */
 
-    /* Hobson brand colors — primary = #8B5CF6 (brand purple) */
-    --primary: 258 90% 66%;
-    --primary-foreground: 0 0% 100%;
-    --primary-light: 258 90% 78%;
-    /* Pale purple accent for subtle row/chip tints — use as bg-primary/10 too */
-    --primary-soft: 258 100% 97%;
-    --primary-soft-foreground: 258 60% 30%;
+    --card: 36 46% 98%;
+    --card-foreground: 0 0% 18%;
 
-    /* Orange CTA brand color */
-    --brand-orange: 25 95% 53%;
-    --brand-orange-foreground: 0 0% 100%;
+    --popover: 40 100% 99%;     /* #FFFDFA */
+    --popover-foreground: 0 0% 18%;
 
-    /* Complementary accent palette */
-    --accent-amber: 38 92% 55%;
-    --accent-amber-foreground: 30 60% 15%;
-    --accent-teal: 168 76% 38%;
-    --accent-teal-foreground: 0 0% 100%;
-    --accent-rose: 340 75% 55%;
-    --accent-rose-foreground: 0 0% 100%;
+    --primary: 0 0% 18%;        /* ink */
+    --primary-foreground: 36 46% 98%;
+    --primary-light: 35 8% 31%;
+    --primary-soft: 41 40% 91%;
+    --primary-soft-foreground: 0 0% 18%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 258 90% 40%;
+    /* Retired orange CTA — now brass */
+    --brand-orange: 39 40% 51%;
+    --brand-orange-foreground: 0 0% 18%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    /* Legacy accent aliases remapped to the palette */
+    --accent-amber: 39 40% 51%;
+    --accent-amber-foreground: 0 0% 18%;
+    --accent-teal: 74 35% 31%;
+    --accent-teal-foreground: 36 46% 98%;
+    --accent-rose: 12 48% 42%;
+    --accent-rose-foreground: 36 46% 98%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 258 90% 40%;
-    
-    /* Filter button highlighting - light grey */
-    --filter-active: 210 20% 92%;
-    --filter-active-foreground: 222.2 84% 4.9%;
+    --secondary: 41 40% 91%;    /* bone-wash */
+    --secondary-foreground: 0 0% 18%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --muted: 41 40% 91%;
+    --muted-foreground: 40 6% 41%;  /* ink-muted */
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 258 90% 66%;
+    --accent: 39 30% 87%;       /* bone */
+    --accent-foreground: 0 0% 18%;
+
+    /* Filter button highlighting */
+    --filter-active: 39 30% 87%;
+    --filter-active-foreground: 0 0% 18%;
+
+    --destructive: 12 48% 42%;  /* #9C4A38 */
+    --destructive-foreground: 36 46% 98%;
+
+    --border: 39 30% 87%;
+    --input: 39 30% 87%;
+    --ring: 39 40% 51%;         /* brass */
 
     --radius: 0.5rem;
 
   }
+
 
   .dark {
     --background: 222.2 84% 4.9%;
