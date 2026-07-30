@@ -94,7 +94,7 @@ const LandingPageC = () => {
                         className="w-16 h-16 bg-bone rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition-transform"
                         aria-label="Play video"
                       >
-                        <div className="w-0 h-0 border-l-[16px] border-l-purple-600 border-y-[12px] border-y-transparent ml-1"></div>
+                        <div className="w-0 h-0 border-l-[16px] border-l-ink border-y-[12px] border-y-transparent ml-1"></div>
                       </button>
                     </div>
                   </div>

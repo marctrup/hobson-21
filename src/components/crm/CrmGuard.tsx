@@ -21,7 +21,7 @@ export const CrmGuard = ({ children }: CrmGuardProps) => {
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-paper">
-        <div className="size-8 border-2 border-bone border-t-slate-900 rounded-full animate-spin" />
+        <div className="size-8 border-2 border-bone border-t-brass rounded-full animate-spin" />
       </div>
     );
   }

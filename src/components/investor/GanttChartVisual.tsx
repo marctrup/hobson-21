@@ -78,10 +78,10 @@ export const GanttChartVisual: React.FC = () => {
           key={section.year}
           className={`bg-background border border-border rounded-lg overflow-hidden ${
             index === 0
-              ? "border-l-4 border-l-purple-500"
+              ? "border-l-4 border-l-brass"
               : index === 1
-              ? "border-l-4 border-l-blue-500"
-              : "border-l-4 border-l-green-500"
+              ? "border-l-4 border-l-charcoal"
+              : "border-l-4 border-l-success"
           }`}
         >
           {/* Year Header */}

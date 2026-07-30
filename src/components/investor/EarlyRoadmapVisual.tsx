@@ -104,9 +104,9 @@ export const EarlyRoadmapVisual: React.FC = () => {
     return <Rocket className="w-5 h-5 text-charcoal" />;
   };
   const getStatusColor = (status: string, index: number) => {
-    if (status === "completed") return "border-l-green-500 bg-success-bg/50";
-    if (status === "in-progress") return "border-l-amber-500 bg-warning-bg/50";
-    return "border-l-purple-500 bg-paper/50";
+    if (status === "completed") return "border-l-success bg-success-bg/50";
+    if (status === "in-progress") return "border-l-warning bg-warning-bg/50";
+    return "border-l-brass bg-paper/50";
   };
   return <div className="w-full space-y-8">
 
