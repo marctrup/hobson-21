@@ -173,7 +173,7 @@ export const OrchestrationDemo: React.FC = () => {
           className={`flex items-start gap-3 transition-all duration-500 ${hasStarted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"}`}
           style={{ animation: hasStarted ? "fade-up 0.4s ease both" : undefined }}
         >
-          <img src={hobsonOwl} alt="Hobson" className="w-10 h-10 rounded-full p-1" style={{ background: 'var(--bone-wash)' }} />
+          <img src={hobsonOwl} alt="Hobson" className="w-10 h-10 object-contain" />
           <div className="rounded-2xl rounded-tl-sm px-4 py-3 text-sm max-w-[85%]" style={{ background: 'var(--bone-wash)', color: 'var(--ink)', border: '1px solid #E4DAC6' }}>
             {HOBSON_PROACTIVE.slice(0, introProactiveIdx)}
             {introPhase === 1 && <span className="animate-pulse">|</span>}
@@ -208,7 +208,7 @@ export const OrchestrationDemo: React.FC = () => {
           className={`mt-4 flex items-start gap-3 transition-all duration-500 ${introPhase >= 4 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2 pointer-events-none h-0 overflow-hidden mt-0"}`}
           style={{ animation: introPhase >= 4 ? "fade-up 0.4s ease both" : undefined }}
         >
-          <img src={hobsonOwl} alt="Hobson" className="w-10 h-10 rounded-full p-1" style={{ background: 'var(--bone-wash)' }} />
+          <img src={hobsonOwl} alt="Hobson" className="w-10 h-10 object-contain" />
           <div className="rounded-2xl rounded-tl-sm px-4 py-3 text-sm" style={{ background: 'var(--bone-wash)', color: 'var(--ink)', border: '1px solid #E4DAC6' }}>
 
             {HOBSON_INTRO.slice(0, introHobsonIdx)}
@@ -276,7 +276,7 @@ export const OrchestrationDemo: React.FC = () => {
         {/* Hobson final answer */}
         <div className={`mt-5 transition-all duration-500 ${finalShown ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2 pointer-events-none h-0 overflow-hidden"}`}>
           <div className="flex items-start gap-3">
-            <img src={hobsonOwl} alt="Hobson" className="w-10 h-10 rounded-full p-1" style={{ background: 'var(--bone-wash)' }} />
+            <img src={hobsonOwl} alt="Hobson" className="w-10 h-10 object-contain" />
             <div className="rounded-2xl rounded-tl-sm px-4 py-3 text-sm max-w-[90%]" style={{ background: 'var(--bone-wash)', color: 'var(--ink)', border: '1px solid #E4DAC6' }}>
               <p>
                 I've finished preparing your rent review for <span className="font-semibold" style={{ color: 'var(--ink)' }}>32 Hamilton Gardens</span>.
