@@ -45,6 +45,19 @@ All colors MUST be HSL.
   }
 
   :root {
+    /* Editorial stationery tokens */
+    --paper: #FCFAF7;
+    --bone-wash: #F1EBDE;
+    --bone: #E8E1D4;
+    --bone-strong: #D8CDB6;
+    --ink: #2D2D2D;
+    --ink-muted: #6E6A62;
+    --ink-faint: #8A8478;
+    --charcoal: #56514A;
+    --brass: #B4914F;
+    --brass-text: #8E7133;
+    --purple: #8B5CF6;
+
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
 
