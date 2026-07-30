@@ -17,11 +17,11 @@ export const InvitationSlide = () => {
           />
         </div>
         
-        <h2 className="text-lg sm:text-2xl md:text-3xl font-bold text-[#1e293b] leading-tight px-2">
+        <h2 className="text-lg sm:text-2xl md:text-3xl font-bold text-[#2D2D2D] leading-tight px-2">
           Let's Build the Future of<br />Real Estate Intelligence
         </h2>
 
-        <p className="text-sm sm:text-base md:text-lg text-[#475569] leading-relaxed font-light max-w-lg mx-auto px-4">
+        <p className="text-sm sm:text-base md:text-lg text-[#2D2D2D] leading-relaxed font-light max-w-lg mx-auto px-4">
           If you're exploring early opportunities in this space, we'd love to talk.
         </p>
 

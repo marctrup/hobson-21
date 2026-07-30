@@ -134,26 +134,26 @@ const Announcements = () => {
   const getTypeColor = (type: string) => {
     switch (type) {
       case 'feature':
-        return 'text-blue-600 bg-blue-50 border-blue-200';
+        return 'text-charcoal bg-paper border-bone';
       case 'security':
-        return 'text-red-600 bg-red-50 border-red-200';
+        return 'text-danger bg-danger-bg border-danger-border';
       case 'product':
-        return 'text-green-600 bg-green-50 border-green-200';
+        return 'text-success bg-success-bg border-success-border';
       default:
-        return 'text-gray-600 bg-gray-50 border-gray-200';
+        return 'text-charcoal bg-paper border-bone';
     }
   };
 
   const getPriorityColor = (priority: string) => {
     switch (priority) {
       case 'high':
-        return 'text-red-600 bg-red-50 border-red-200';
+        return 'text-danger bg-danger-bg border-danger-border';
       case 'medium':
-        return 'text-yellow-600 bg-yellow-50 border-yellow-200';
+        return 'text-warning bg-warning-bg border-warning-border';
       case 'low':
-        return 'text-green-600 bg-green-50 border-green-200';
+        return 'text-success bg-success-bg border-success-border';
       default:
-        return 'text-gray-600 bg-gray-50 border-gray-200';
+        return 'text-charcoal bg-paper border-bone';
     }
   };
 
@@ -224,7 +224,7 @@ const Announcements = () => {
               {announcements.map((announcement) => (
                 <div 
                   key={announcement.id} 
-                  className="bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900/20 dark:to-slate-800/30 border border-slate-200/50 dark:border-slate-700/30 rounded-lg p-4 md:p-6 cursor-pointer hover:shadow-lg hover:scale-[1.02] transition-all duration-200 flex flex-col"
+                  className="bg-gradient-to-br from-paper to-bone-wash dark:from-ink/20 dark:to-ink/30 border border-bone/50 dark:border-charcoal/30 rounded-lg p-4 md:p-6 cursor-pointer hover:shadow-lg hover:scale-[1.02] transition-all duration-200 flex flex-col"
                   onClick={() => handleAnnouncementClick(announcement.slug)}
                 >
                   <div className="flex-1">

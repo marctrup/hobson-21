@@ -21,7 +21,7 @@ export const BlogHero = () => {
           Expert perspectives on AI-powered property management, industry trends,
           and best practices for property operators, occupiers and owners.
         </p>
-        <div className="mx-auto mt-10 h-px w-24" style={{ backgroundColor: '#EDE7DA' }} />
+        <div className="mx-auto mt-10 h-px w-24" style={{ backgroundColor: '#F7EDDC' }} />
       </div>
     </section>
   );

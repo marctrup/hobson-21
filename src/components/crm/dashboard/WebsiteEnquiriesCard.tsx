@@ -43,16 +43,16 @@ export const WebsiteEnquiriesCard = () => {
   return (
     <Link
       to="/crm/reports"
-      className="block bg-white border border-slate-200 rounded-lg p-4 hover:border-slate-300 transition-colors"
+      className="block bg-white border border-bone rounded-lg p-4 hover:border-bone transition-colors"
     >
-      <div className="flex items-center gap-2 text-slate-500 text-xs font-medium uppercase tracking-wide">
+      <div className="flex items-center gap-2 text-ink-muted text-xs font-medium uppercase tracking-wide">
         <Globe className="size-4" />
         Website enquiries this week
       </div>
-      <div className="mt-2 text-2xl font-semibold text-slate-900">
+      <div className="mt-2 text-2xl font-semibold text-ink">
         {isLoading ? "…" : value}
       </div>
-      <div className="text-xs text-slate-500 mt-1">
+      <div className="text-xs text-ink-muted mt-1">
         {isLoading ? "…" : deltaLabel}
       </div>
     </Link>

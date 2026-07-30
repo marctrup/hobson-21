@@ -22,20 +22,20 @@ const isOverdue = (row: IssueRow): boolean => {
 
 export const IssueList = ({ rows, isLoading, showClient, onSelect }: Props) => {
   if (isLoading) {
-    return <div className="p-6 text-sm text-slate-500">Loading…</div>;
+    return <div className="p-6 text-sm text-ink-muted">Loading…</div>;
   }
   if (!rows.length) {
     return (
-      <div className="p-10 text-center text-sm text-slate-500 bg-white border border-slate-200 rounded-lg">
+      <div className="p-10 text-center text-sm text-ink-muted bg-white border border-bone rounded-lg">
         No issues match these filters.
       </div>
     );
   }
 
   return (
-    <div className="bg-white border border-slate-200 rounded-lg overflow-hidden">
+    <div className="bg-white border border-bone rounded-lg overflow-hidden">
       <table className="w-full text-sm">
-        <thead className="bg-slate-50 text-slate-600 text-xs uppercase tracking-wide">
+        <thead className="bg-paper text-charcoal text-xs uppercase tracking-wide">
           <tr>
             <th className="text-left font-medium px-3 py-2 w-10"></th>
             <th className="text-left font-medium px-3 py-2">Title</th>
@@ -48,47 +48,47 @@ export const IssueList = ({ rows, isLoading, showClient, onSelect }: Props) => {
             <th className="text-left font-medium px-3 py-2">Updated</th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-slate-100">
+        <tbody className="divide-y divide-faint-rule">
           {rows.map((r) => {
             const overdue = isOverdue(r);
             return (
               <tr
                 key={r.id}
                 onClick={() => onSelect(r.id)}
-                className="hover:bg-slate-50 cursor-pointer"
+                className="hover:bg-paper cursor-pointer"
               >
                 <td className="px-3 py-2 align-top">
                   <IssuePriorityDot priority={r.priority} />
                 </td>
                 <td className="px-3 py-2">
-                  <div className="font-medium text-slate-900 line-clamp-1">
+                  <div className="font-medium text-ink line-clamp-1">
                     {r.title}
                   </div>
                   {r.description && (
-                    <div className="text-xs text-slate-500 line-clamp-1 mt-0.5">
+                    <div className="text-xs text-ink-muted line-clamp-1 mt-0.5">
                       {r.description}
                     </div>
                   )}
                 </td>
                 {showClient && (
-                  <td className="px-3 py-2 text-slate-700">
+                  <td className="px-3 py-2 text-charcoal">
                     {r.client_name ? (
                       <Link
                         to={`/crm/clients/${r.client_id}`}
                         onClick={(e) => e.stopPropagation()}
-                        className="hover:text-slate-900 hover:underline"
+                        className="hover:text-ink hover:underline"
                       >
                         {r.client_name}
                       </Link>
                     ) : (
-                      <span className="text-slate-400">—</span>
+                      <span className="text-ink-muted">—</span>
                     )}
                   </td>
                 )}
                 <td className="px-3 py-2">
                   <IssueStatusPill status={r.status} />
                 </td>
-                <td className="px-3 py-2 text-slate-700">
+                <td className="px-3 py-2 text-charcoal">
                   {ISSUE_CATEGORY_LABELS[r.category]}
                 </td>
                 <td className="px-3 py-2">
@@ -96,17 +96,17 @@ export const IssueList = ({ rows, isLoading, showClient, onSelect }: Props) => {
                     <span
                       className={cn(
                         "inline-flex items-center gap-1 text-xs",
-                        overdue ? "text-rose-600 font-medium" : "text-slate-600",
+                        overdue ? "text-danger font-medium" : "text-charcoal",
                       )}
                     >
                       {overdue && <CalendarClock className="size-3.5" />}
                       {formatDateUK(r.due_date)}
                     </span>
                   ) : (
-                    <span className="text-slate-400 text-xs">—</span>
+                    <span className="text-ink-muted text-xs">—</span>
                   )}
                 </td>
-                <td className="px-3 py-2 text-xs text-slate-500">
+                <td className="px-3 py-2 text-xs text-ink-muted">
                   {formatDateUK(r.updated_at)}
                 </td>
               </tr>

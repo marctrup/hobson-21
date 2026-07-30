@@ -45,14 +45,14 @@ export const FoundingLeadershipVisual = () => {
       {/* Founding Leadership Experience */}
       <div className="space-y-4">
         <div className="flex items-center gap-3">
-          <div className="flex items-center justify-center w-8 h-8 rounded-full bg-blue-100 dark:bg-blue-950/50 text-blue-700 dark:text-blue-400 font-bold text-sm">1</div>
+          <div className="flex items-center justify-center w-8 h-8 rounded-full bg-bone-wash dark:bg-ink/50 text-charcoal dark:text-ink-muted font-bold text-sm">1</div>
           <h4 className="font-semibold text-foreground">The founding leadership has:</h4>
         </div>
         
         <div className="ml-11 space-y-2">
           {foundingExperience.map((item, idx) => (
             <div key={idx} className="flex items-start gap-2">
-              <CheckCircle2 className="w-4 h-4 text-blue-600 mt-0.5 flex-shrink-0" />
+              <CheckCircle2 className="w-4 h-4 text-charcoal mt-0.5 flex-shrink-0" />
               <span className="text-sm text-foreground">{item}</span>
             </div>
           ))}
@@ -62,11 +62,11 @@ export const FoundingLeadershipVisual = () => {
       {/* Arthur & Aareon Experience */}
       <div className="space-y-4">
         <div className="flex items-center gap-3">
-          <div className="flex items-center justify-center w-8 h-8 rounded-full bg-emerald-100 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-400 font-bold text-sm">2</div>
+          <div className="flex items-center justify-center w-8 h-8 rounded-full bg-success-bg dark:bg-success-solid/50 text-success dark:text-success font-bold text-sm">2</div>
           <h4 className="font-semibold text-foreground">Arthur & Aareon Experience</h4>
         </div>
         
-        <div className="ml-11 p-4 rounded-xl bg-emerald-50/50 dark:bg-emerald-950/20 border border-emerald-100 dark:border-emerald-900/30">
+        <div className="ml-11 p-4 rounded-xl bg-success-bg/50 dark:bg-success-solid/20 border border-success-border dark:border-success/30">
           <p className="text-sm text-foreground leading-relaxed mb-3">
             Most notably, the team previously founded and scaled <span className="font-semibold text-primary">Arthur</span>, a category-leading property management platform that <span className="font-semibold text-primary">Advent International and Aareon ultimately acquired in 2021</span>.
           </p>
@@ -76,7 +76,7 @@ export const FoundingLeadershipVisual = () => {
           <div className="space-y-2">
             {aareonExperience.map((item, idx) => (
               <div key={idx} className="flex items-start gap-2">
-                <Building2 className="w-4 h-4 text-emerald-600 mt-0.5 flex-shrink-0" />
+                <Building2 className="w-4 h-4 text-success mt-0.5 flex-shrink-0" />
                 <span className="text-sm text-foreground">{item}</span>
               </div>
             ))}
@@ -87,11 +87,11 @@ export const FoundingLeadershipVisual = () => {
       {/* Key Insight */}
       <div className="space-y-4">
         <div className="flex items-center gap-3">
-          <div className="flex items-center justify-center w-8 h-8 rounded-full bg-amber-100 dark:bg-amber-950/50 text-amber-700 dark:text-amber-400 font-bold text-sm">3</div>
+          <div className="flex items-center justify-center w-8 h-8 rounded-full bg-warning-bg dark:bg-warning-solid/50 text-warning dark:text-warning font-bold text-sm">3</div>
           <h4 className="font-semibold text-foreground">This experience gives Hobson something few startups ever possess:</h4>
         </div>
         
-        <div className="ml-11 p-4 rounded-xl bg-gradient-to-r from-amber-50 to-orange-50 dark:from-amber-950/30 dark:to-orange-950/30 border border-amber-200 dark:border-amber-800/30">
+        <div className="ml-11 p-4 rounded-xl bg-gradient-to-r from-warning-bg to-warning-bg dark:from-warning-solid/30 dark:to-warning-solid/30 border border-warning-border dark:border-warning/30">
           <p className="text-foreground font-medium">
             Direct, operational knowledge of how to build, scale, integrate, and exit Real Estate technology businesses.
           </p>
@@ -101,14 +101,14 @@ export const FoundingLeadershipVisual = () => {
       {/* What Team Has Navigated */}
       <div className="space-y-4">
         <div className="flex items-center gap-3">
-          <div className="flex items-center justify-center w-8 h-8 rounded-full bg-purple-100 dark:bg-purple-950/50 text-purple-700 dark:text-purple-400 font-bold text-sm">4</div>
+          <div className="flex items-center justify-center w-8 h-8 rounded-full bg-bone-wash dark:bg-ink/50 text-charcoal dark:text-ink-muted font-bold text-sm">4</div>
           <h4 className="font-semibold text-foreground">Hobson's team has already navigated:</h4>
         </div>
         
         <div className="ml-11 grid sm:grid-cols-2 gap-2">
           {teamNavigated.map((item, idx) => (
-            <div key={idx} className="flex items-start gap-2 p-3 rounded-lg bg-purple-50/50 dark:bg-purple-950/20 border border-purple-100 dark:border-purple-900/30">
-              <TrendingUp className="w-4 h-4 text-purple-600 mt-0.5 flex-shrink-0" />
+            <div key={idx} className="flex items-start gap-2 p-3 rounded-lg bg-paper/50 dark:bg-ink/20 border border-faint-rule dark:border-charcoal/30">
+              <TrendingUp className="w-4 h-4 text-charcoal mt-0.5 flex-shrink-0" />
               <span className="text-sm text-foreground">{item}</span>
             </div>
           ))}
@@ -116,9 +116,9 @@ export const FoundingLeadershipVisual = () => {
       </div>
 
       {/* Conclusion */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-green-500/10 via-emerald-500/10 to-teal-500/10 p-6 border border-green-200 dark:border-green-800/30">
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-success/10 via-success/10 to-ink-faint/10 p-6 border border-success-border dark:border-success/30">
         <div className="flex items-start gap-3">
-          <Shield className="w-6 h-6 text-green-600 flex-shrink-0 mt-0.5" />
+          <Shield className="w-6 h-6 text-success flex-shrink-0 mt-0.5" />
           <p className="text-foreground leading-relaxed font-medium">
             Hobson enters the market with <span className="text-primary font-bold">dramatically reduced execution risk</span> and a clear blueprint for both scale and exit.
           </p>

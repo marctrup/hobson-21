@@ -10,7 +10,7 @@ export const ClosingSection = () => (
           Unlimited capabilities.
         </span>
       </h2>
-      <p className="mt-6 text-lg" style={{ color: "#5a5a5a" }}>
+      <p className="mt-6 text-lg" style={{ color: "#56514A" }}>
         That's how Hobson thinks. Quietly, methodically, and always on your behalf.
       </p>
       <div className="mt-8 flex flex-wrap justify-center gap-3">
@@ -23,7 +23,7 @@ export const ClosingSection = () => (
         </Link>
         <Link
           to="/contact"
-          className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold transition hover:bg-[#FBF7EE]"
+          className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold transition hover:bg-[#F7EDDC]"
           style={{ background: "#FCFAF7", border: "1px solid #B4914F", color: "#2D2D2D" }}
         >
           Talk to us

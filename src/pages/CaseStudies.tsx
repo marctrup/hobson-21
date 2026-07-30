@@ -6,11 +6,11 @@ import owlMascot from "@/assets/owl-mascot.png";
 
 const BRASS = "#B4914F";
 const INK = "#2D2D2D";
-const MUTED = "#6B6B6B";
-const LAVENDER_BG = "#F3F0FF";
-const LAVENDER_BORDER = "#E8E4F0";
+const MUTED = "#6E6A62";
+const LAVENDER_BG = "#F1EBDE";
+const LAVENDER_BORDER = "#E8E1D4";
 const PAPER = "#FCFAF7";
-const RULE = "#EDE7DA";
+const RULE = "#F7EDDC";
 
 type Card = {
   to?: string;
@@ -130,7 +130,7 @@ const CaseStudies = () => {
               ) : (
                 <span
                   className="inline-flex items-center rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em]"
-                  style={{ backgroundColor: "#EFEFEF", color: "#8A8A8A", border: "1px dashed #C9C9C9" }}
+                  style={{ backgroundColor: "#F1EBDE", color: "#6E6A62", border: "1px dashed #D8CDB6" }}
                 >
                   {card.status}
                 </span>
@@ -147,7 +147,7 @@ const CaseStudies = () => {
                   style={
                     card.live
                       ? { border: `1px solid ${LAVENDER_BORDER}` }
-                      : { backgroundColor: "#F5F3EF", border: "1px dashed #D6D2C8" }
+                      : { backgroundColor: "#F7EDDC", border: "1px dashed #E6D2AE" }
                   }
                 >
                   <div className="flex items-start justify-between gap-3">
@@ -159,7 +159,7 @@ const CaseStudies = () => {
                           style={
                             card.live
                               ? { backgroundColor: PAPER, color: MUTED, border: `1px solid ${RULE}` }
-                              : { backgroundColor: "#ECEAE5", color: "#8A8A8A", border: "1px dashed #D6D2C8" }
+                              : { backgroundColor: "#F7EDDC", color: "#6E6A62", border: "1px dashed #E6D2AE" }
                           }
                         >
                           {c}
@@ -171,13 +171,13 @@ const CaseStudies = () => {
 
                   <h2
                     className="mt-6 font-serif text-2xl font-normal tracking-tight"
-                    style={{ color: card.live ? INK : "#8A8A8A" }}
+                    style={{ color: card.live ? INK : "#6E6A62" }}
                   >
                     {card.headline}
                   </h2>
                   <p
                     className="mt-3 text-[15px] leading-relaxed"
-                    style={{ color: card.live ? MUTED : "#A5A5A5" }}
+                    style={{ color: card.live ? MUTED : "#8A8478" }}
                   >
                     {card.description}
                   </p>
@@ -186,9 +186,9 @@ const CaseStudies = () => {
 
                   <div
                     className="mt-8 pt-5 flex items-center justify-between text-sm font-medium"
-                    style={{ borderTop: `1px solid ${card.live ? RULE : "#E4E1DA"}` }}
+                    style={{ borderTop: `1px solid ${card.live ? RULE : "#E6D2AE"}` }}
                   >
-                    <span style={{ color: card.live ? BRASS : "#A5A5A5" }}>{card.cta}</span>
+                    <span style={{ color: card.live ? BRASS : "#8A8478" }}>{card.cta}</span>
                     {card.live && (
                       <ArrowRight
                         className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"

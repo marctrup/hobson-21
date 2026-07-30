@@ -512,8 +512,8 @@ export default function GlossaryManagement() {
                     <span
                       className={
                         item.is_active
-                          ? "text-green-600"
-                          : "text-gray-400"
+                          ? "text-success"
+                          : "text-ink-muted"
                       }
                     >
                       {item.is_active ? "Active" : "Inactive"}

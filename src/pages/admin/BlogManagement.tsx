@@ -411,7 +411,7 @@ const BlogManagement = () => {
                       <TableCell>
                         <div className="flex items-center gap-2">
                           {post.status === 'published' && (
-                            <Button variant="outline" size="sm" asChild className="border-blue-500 text-blue-600 hover:bg-blue-50">
+                            <Button variant="outline" size="sm" asChild className="border-bone-strong text-charcoal hover:bg-paper">
                               <Link 
                                 to={post.link_location === 'announcements' ? `/announcement/${encodeURIComponent(post.slug.trim())}` : `/blog/${encodeURIComponent(post.slug.trim())}`} 
                                 target="_blank"

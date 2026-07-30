@@ -203,15 +203,15 @@ const SCRIPTED_ANSWERS: { match: (q: string, scope: Scope) => boolean; reply: (s
    ──────────────────────────────────────────────────────────────── */
 
 const URGENCY_META: Record<Urgency, { label: string; ring: string; bg: string; dot: string }> = {
-  now:   { label: "Now",   ring: "ring-rose-200",    bg: "bg-rose-50",    dot: "bg-rose-500" },
-  week:  { label: "Week",  ring: "ring-amber-200",   bg: "bg-amber-50",   dot: "bg-amber-500" },
-  watch: { label: "Watch", ring: "ring-slate-200",   bg: "bg-slate-50",   dot: "bg-slate-400" },
+  now:   { label: "Now",   ring: "ring-danger-border",    bg: "bg-danger-bg",    dot: "bg-danger" },
+  week:  { label: "Week",  ring: "ring-warning-border",   bg: "bg-warning-bg",   dot: "bg-warning" },
+  watch: { label: "Watch", ring: "ring-bone",   bg: "bg-paper",   dot: "bg-ink-faint" },
 };
 
 const STATE_META: Record<ActionCard["state"], { label: string; tone: string }> = {
-  not_started:      { label: "Not started",      tone: "text-slate-600 bg-slate-100" },
-  in_progress:      { label: "In progress",      tone: "text-amber-800 bg-amber-100" },
-  ready_to_approve: { label: "Ready to approve", tone: "text-emerald-800 bg-emerald-100" },
+  not_started:      { label: "Not started",      tone: "text-charcoal bg-bone-wash" },
+  in_progress:      { label: "In progress",      tone: "text-warning bg-warning-bg" },
+  ready_to_approve: { label: "Ready to approve", tone: "text-success bg-success-bg" },
 };
 
 function scopeToSummaryScope(s: Scope): SummaryScope {
@@ -343,7 +343,7 @@ export default function PrototypeMobile() {
   };
 
   return (
-    <div className="min-h-[100dvh] flex flex-col bg-slate-50 text-slate-900">
+    <div className="min-h-[100dvh] flex flex-col bg-paper text-ink">
       <Helmet>
         <title>Hobson — Mobile companion</title>
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
@@ -406,18 +406,18 @@ export default function PrototypeMobile() {
 
 function Header({ onReset }: { onReset: () => void }) {
   return (
-    <header className="sticky top-0 z-30 bg-white border-b border-slate-200 px-4 py-3 flex items-center justify-between">
+    <header className="sticky top-0 z-30 bg-white border-b border-bone px-4 py-3 flex items-center justify-between">
       <div className="flex items-center gap-2">
-        <div className="w-7 h-7 rounded-full bg-gradient-to-br from-violet-500 to-indigo-600 flex items-center justify-center text-white text-xs font-semibold">H</div>
+        <div className="w-7 h-7 rounded-full bg-gradient-to-br from-ink-faint to-charcoal flex items-center justify-center text-white text-xs font-semibold">H</div>
         <div>
           <div className="text-sm font-semibold leading-tight">Hobson</div>
-          <div className="text-[10px] uppercase tracking-wide text-slate-500 leading-tight">Mobile companion</div>
+          <div className="text-[10px] uppercase tracking-wide text-ink-muted leading-tight">Mobile companion</div>
         </div>
       </div>
       <button
         type="button"
         onClick={onReset}
-        className="text-xs text-slate-600 hover:text-slate-900 flex items-center gap-1 px-2 py-1 rounded-md hover:bg-slate-100"
+        className="text-xs text-charcoal hover:text-ink flex items-center gap-1 px-2 py-1 rounded-md hover:bg-bone-wash"
         aria-label="Reset demo"
       >
         <RotateCcw className="w-3.5 h-3.5" /> Reset
@@ -428,7 +428,7 @@ function Header({ onReset }: { onReset: () => void }) {
 
 function ScopeBar({ scope, setScope }: { scope: Scope; setScope: (s: Scope) => void }) {
   return (
-    <div className="sticky top-[57px] z-20 bg-white border-b border-slate-200 px-4 py-2.5 space-y-2">
+    <div className="sticky top-[57px] z-20 bg-white border-b border-bone px-4 py-2.5 space-y-2">
       <div className="flex items-center gap-1.5 text-xs">
         <ScopeChip
           active={scope.level === "portfolio"}
@@ -436,7 +436,7 @@ function ScopeBar({ scope, setScope }: { scope: Scope; setScope: (s: Scope) => v
           label="Portfolio"
           onClick={() => setScope({ level: "portfolio" })}
         />
-        <ChevronRight className="w-3 h-3 text-slate-300" />
+        <ChevronRight className="w-3 h-3 text-ink-faint" />
         <select
           value={scope.level !== "portfolio" ? scope.propertyId : ""}
           onChange={(e) => {
@@ -444,7 +444,7 @@ function ScopeBar({ scope, setScope }: { scope: Scope; setScope: (s: Scope) => v
             if (!v) setScope({ level: "portfolio" });
             else setScope({ level: "property", propertyId: v });
           }}
-          className="flex-1 min-w-0 text-xs border border-slate-200 rounded-md px-2 py-1.5 bg-white"
+          className="flex-1 min-w-0 text-xs border border-bone rounded-md px-2 py-1.5 bg-white"
           aria-label="Select property"
         >
           <option value="">— Property —</option>
@@ -454,7 +454,7 @@ function ScopeBar({ scope, setScope }: { scope: Scope; setScope: (s: Scope) => v
         </select>
         {scope.level !== "portfolio" && (
           <>
-            <ChevronRight className="w-3 h-3 text-slate-300" />
+            <ChevronRight className="w-3 h-3 text-ink-faint" />
             <select
               value={scope.level === "unit" ? scope.unitId : ""}
               onChange={(e) => {
@@ -465,7 +465,7 @@ function ScopeBar({ scope, setScope }: { scope: Scope; setScope: (s: Scope) => v
                   setScope({ level: "unit", propertyId: scope.propertyId, unitId: v, unitLabel: u?.label ?? v });
                 }
               }}
-              className="flex-1 min-w-0 text-xs border border-slate-200 rounded-md px-2 py-1.5 bg-white"
+              className="flex-1 min-w-0 text-xs border border-bone rounded-md px-2 py-1.5 bg-white"
               aria-label="Select unit"
             >
               <option value="">— Unit —</option>
@@ -476,8 +476,8 @@ function ScopeBar({ scope, setScope }: { scope: Scope; setScope: (s: Scope) => v
           </>
         )}
       </div>
-      <div className="text-[11px] text-slate-500 flex items-center gap-1.5">
-        <span className="font-medium text-slate-700">Scoped to:</span> {scopeLabel(scope)}
+      <div className="text-[11px] text-ink-muted flex items-center gap-1.5">
+        <span className="font-medium text-charcoal">Scoped to:</span> {scopeLabel(scope)}
       </div>
     </div>
   );
@@ -490,7 +490,7 @@ function ScopeChip({ active, icon, label, onClick }: { active: boolean; icon: Re
       onClick={onClick}
       className={
         "px-2 py-1.5 rounded-md flex items-center gap-1 border " +
-        (active ? "bg-violet-50 border-violet-200 text-violet-800" : "border-slate-200 text-slate-600")
+        (active ? "bg-paper border-bone text-ink" : "border-bone text-charcoal")
       }
     >
       {icon} {label}
@@ -533,7 +533,7 @@ function DeskTab({
       {/* Property → unit tiles (collapsible pinned section parity) */}
       {scope.level === "property" && units.length > 0 && (
         <section>
-          <h2 className="text-[11px] uppercase tracking-wide text-slate-500 font-semibold mb-2">
+          <h2 className="text-[11px] uppercase tracking-wide text-ink-muted font-semibold mb-2">
             Units in this building
           </h2>
           <div className="grid grid-cols-2 gap-2">
@@ -548,10 +548,10 @@ function DeskTab({
                   });
                   window.dispatchEvent(ev);
                 }}
-                className="text-left p-2.5 rounded-lg border border-slate-200 bg-white hover:border-violet-300"
+                className="text-left p-2.5 rounded-lg border border-bone bg-white hover:border-bone"
               >
-                <div className="text-xs font-semibold text-slate-900">{u.label}</div>
-                <div className="text-[10px] text-slate-500 truncate">
+                <div className="text-xs font-semibold text-ink">{u.label}</div>
+                <div className="text-[10px] text-ink-muted truncate">
                   {u.status === "Vacant" ? "Vacant" : u.tenant}
                 </div>
               </button>
@@ -562,11 +562,11 @@ function DeskTab({
 
       {/* On your desk */}
       <section>
-        <h2 className="text-[11px] uppercase tracking-wide text-slate-500 font-semibold mb-2 flex items-center gap-1.5">
+        <h2 className="text-[11px] uppercase tracking-wide text-ink-muted font-semibold mb-2 flex items-center gap-1.5">
           <ClipboardList className="w-3.5 h-3.5" /> On your desk · {scoped.length}
         </h2>
         {scoped.length === 0 ? (
-          <div className="text-xs text-slate-500 italic px-3 py-6 bg-white rounded-lg border border-dashed border-slate-200 text-center">
+          <div className="text-xs text-ink-muted italic px-3 py-6 bg-white rounded-lg border border-dashed border-bone text-center">
             Nothing on your desk for this scope. You're up to date.
           </div>
         ) : (
@@ -585,23 +585,23 @@ function DeskTab({
 
       {/* Quick overviews */}
       <section>
-        <h2 className="text-[11px] uppercase tracking-wide text-slate-500 font-semibold mb-2">
+        <h2 className="text-[11px] uppercase tracking-wide text-ink-muted font-semibold mb-2">
           Quick overviews
         </h2>
         <div className="flex flex-wrap gap-2">
           <button
             type="button"
             onClick={() => handleSummary("occupational")}
-            className="text-xs px-3 py-2 rounded-lg border border-slate-200 bg-white hover:border-violet-300 flex items-center gap-1.5"
+            className="text-xs px-3 py-2 rounded-lg border border-bone bg-white hover:border-bone flex items-center gap-1.5"
           >
-            <Users className="w-3.5 h-3.5 text-violet-600" /> Occupational summary
+            <Users className="w-3.5 h-3.5 text-charcoal" /> Occupational summary
           </button>
           <button
             type="button"
             onClick={() => handleSummary("compliance")}
-            className="text-xs px-3 py-2 rounded-lg border border-slate-200 bg-white hover:border-violet-300 flex items-center gap-1.5"
+            className="text-xs px-3 py-2 rounded-lg border border-bone bg-white hover:border-bone flex items-center gap-1.5"
           >
-            <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" /> Compliance summary
+            <ShieldCheck className="w-3.5 h-3.5 text-success" /> Compliance summary
           </button>
         </div>
       </section>
@@ -616,33 +616,33 @@ function ActionCardView({ card, onPerform, onReview }: { card: ActionCard; onPer
   const u = URGENCY_META[card.urgency];
   const s = STATE_META[card.state];
   return (
-    <article className={`bg-white rounded-xl border border-slate-200 p-3 ring-1 ${u.ring}`}>
+    <article className={`bg-white rounded-xl border border-bone p-3 ring-1 ${u.ring}`}>
       <div className="flex items-start gap-2">
         <span className={`mt-1 w-2 h-2 rounded-full ${u.dot}`} aria-hidden />
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-1.5 flex-wrap mb-1">
-            <span className={`text-[10px] uppercase tracking-wide px-1.5 py-0.5 rounded ${u.bg} text-slate-700 font-semibold`}>
+            <span className={`text-[10px] uppercase tracking-wide px-1.5 py-0.5 rounded ${u.bg} text-charcoal font-semibold`}>
               {u.label}
             </span>
             <span className={`text-[10px] uppercase tracking-wide px-1.5 py-0.5 rounded ${s.tone} font-semibold`}>
               {s.label}
             </span>
-            <span className="text-[10px] text-slate-500">{card.due}</span>
+            <span className="text-[10px] text-ink-muted">{card.due}</span>
           </div>
-          <h3 className="text-sm font-semibold text-slate-900 leading-snug">{card.title}</h3>
-          <p className="text-xs text-slate-600 mt-1 leading-relaxed">{card.reason}</p>
+          <h3 className="text-sm font-semibold text-ink leading-snug">{card.title}</h3>
+          <p className="text-xs text-charcoal mt-1 leading-relaxed">{card.reason}</p>
           <div className="flex gap-2 mt-2.5">
             <button
               type="button"
               onClick={onPerform}
-              className="flex-1 text-xs font-medium px-2.5 py-1.5 rounded-md bg-violet-600 text-white hover:bg-violet-700 flex items-center justify-center gap-1"
+              className="flex-1 text-xs font-medium px-2.5 py-1.5 rounded-md bg-charcoal text-white hover:bg-charcoal flex items-center justify-center gap-1"
             >
               <Sparkles className="w-3.5 h-3.5" /> Perform
             </button>
             <button
               type="button"
               onClick={onReview}
-              className="flex-1 text-xs font-medium px-2.5 py-1.5 rounded-md bg-white border border-slate-300 text-slate-700 hover:bg-slate-50 flex items-center justify-center gap-1"
+              className="flex-1 text-xs font-medium px-2.5 py-1.5 rounded-md bg-white border border-bone text-charcoal hover:bg-paper flex items-center justify-center gap-1"
             >
               <Check className="w-3.5 h-3.5" /> Review & approve
             </button>
@@ -698,14 +698,14 @@ function ChatTab({
         ))}
       </div>
 
-      <div className="fixed bottom-16 left-0 right-0 bg-white border-t border-slate-200 px-3 pt-2 pb-2 space-y-2">
+      <div className="fixed bottom-16 left-0 right-0 bg-white border-t border-bone px-3 pt-2 pb-2 space-y-2">
         <div className="flex gap-1.5 overflow-x-auto -mx-1 px-1 pb-1 scrollbar-none">
           {chips.map((c) => (
             <button
               key={c}
               type="button"
               onClick={() => send(c)}
-              className="shrink-0 text-[11px] px-2.5 py-1.5 rounded-full bg-violet-50 border border-violet-200 text-violet-800 hover:bg-violet-100"
+              className="shrink-0 text-[11px] px-2.5 py-1.5 rounded-full bg-paper border border-bone text-ink hover:bg-bone-wash"
             >
               {c}
             </button>
@@ -713,20 +713,20 @@ function ChatTab({
         </div>
         <form
           onSubmit={(e) => { e.preventDefault(); send(input); }}
-          className="flex items-center gap-2 bg-slate-100 border border-slate-200 rounded-full px-3 py-1.5"
+          className="flex items-center gap-2 bg-bone-wash border border-bone rounded-full px-3 py-1.5"
         >
-          <Lock className="w-3.5 h-3.5 text-slate-400" aria-hidden />
+          <Lock className="w-3.5 h-3.5 text-ink-muted" aria-hidden />
           <input
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Use a suggestion above (chat locked for demo)"
-            className="flex-1 bg-transparent text-sm outline-none placeholder:text-slate-400 min-w-0"
+            className="flex-1 bg-transparent text-sm outline-none placeholder:text-ink-muted min-w-0"
             disabled
           />
           <button
             type="submit"
             disabled
-            className="w-8 h-8 rounded-full bg-slate-300 text-white flex items-center justify-center disabled:opacity-60"
+            className="w-8 h-8 rounded-full bg-bone-strong text-white flex items-center justify-center disabled:opacity-60"
           >
             <Send className="w-3.5 h-3.5" />
           </button>
@@ -740,7 +740,7 @@ function MessageBubble({ msg }: { msg: ChatMsg }) {
   if (msg.from === "user") {
     return (
       <div className="flex justify-end">
-        <div className="max-w-[85%] bg-violet-600 text-white text-sm rounded-2xl rounded-br-md px-3.5 py-2.5">
+        <div className="max-w-[85%] bg-charcoal text-white text-sm rounded-2xl rounded-br-md px-3.5 py-2.5">
           {msg.text}
         </div>
       </div>
@@ -748,15 +748,15 @@ function MessageBubble({ msg }: { msg: ChatMsg }) {
   }
   return (
     <div className="flex items-start gap-2">
-      <div className="w-7 h-7 rounded-full bg-gradient-to-br from-violet-500 to-indigo-600 flex items-center justify-center text-white text-[10px] font-semibold shrink-0 mt-0.5">H</div>
+      <div className="w-7 h-7 rounded-full bg-gradient-to-br from-ink-faint to-charcoal flex items-center justify-center text-white text-[10px] font-semibold shrink-0 mt-0.5">H</div>
       <div className="flex-1 min-w-0 space-y-1.5">
         {msg.text && (
-          <div className="text-sm text-slate-800 leading-relaxed">
+          <div className="text-sm text-ink leading-relaxed">
             <Markdownish text={msg.text} />
           </div>
         )}
         {msg.summary && (
-          <div className="rounded-xl bg-white border border-slate-200 p-2 overflow-x-auto">
+          <div className="rounded-xl bg-white border border-bone p-2 overflow-x-auto">
             <SummaryCard kind={msg.summary.kind} scope={msg.summary.scope} />
           </div>
         )}
@@ -772,7 +772,7 @@ function Markdownish({ text }: { text: string }) {
     <>
       {parts.map((p, i) =>
         p.startsWith("**") && p.endsWith("**") ? (
-          <strong key={i} className="font-semibold text-slate-900">{p.slice(2, -2)}</strong>
+          <strong key={i} className="font-semibold text-ink">{p.slice(2, -2)}</strong>
         ) : (
           <span key={i}>{p}</span>
         )
@@ -788,19 +788,19 @@ function Markdownish({ text }: { text: string }) {
 function DoneTab({ log }: { log: WorkLog[] }) {
   return (
     <div className="px-4 py-4 space-y-3">
-      <h2 className="text-[11px] uppercase tracking-wide text-slate-500 font-semibold flex items-center gap-1.5">
+      <h2 className="text-[11px] uppercase tracking-wide text-ink-muted font-semibold flex items-center gap-1.5">
         <ListChecks className="w-3.5 h-3.5" /> What I've done
       </h2>
       {log.length === 0 ? (
-        <div className="text-xs text-slate-500 italic px-3 py-6 bg-white rounded-lg border border-dashed border-slate-200 text-center">
+        <div className="text-xs text-ink-muted italic px-3 py-6 bg-white rounded-lg border border-dashed border-bone text-center">
           Nothing logged yet. Perform an action on the Desk tab and I'll record it here.
         </div>
       ) : (
         log.map((entry) => (
-          <article key={entry.id} className="bg-white rounded-xl border border-slate-200 p-3">
-            <div className="text-[10px] uppercase tracking-wide text-slate-500 font-semibold">{entry.when}</div>
-            <h3 className="text-sm font-semibold text-slate-900 mt-0.5">{entry.title}</h3>
-            <p className="text-xs text-slate-600 mt-1 leading-relaxed">{entry.detail}</p>
+          <article key={entry.id} className="bg-white rounded-xl border border-bone p-3">
+            <div className="text-[10px] uppercase tracking-wide text-ink-muted font-semibold">{entry.when}</div>
+            <h3 className="text-sm font-semibold text-ink mt-0.5">{entry.title}</h3>
+            <p className="text-xs text-charcoal mt-1 leading-relaxed">{entry.detail}</p>
           </article>
         ))
       )}
@@ -825,42 +825,42 @@ function PerformSheet({ card, onClose, onComplete }: { card: ActionCard; onClose
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-slate-900/40 flex flex-col">
+    <div className="fixed inset-0 z-50 bg-ink/40 flex flex-col">
       <div className="mt-auto bg-white rounded-t-2xl flex flex-col max-h-[92dvh]">
-        <div className="px-4 py-3 border-b border-slate-200 flex items-center justify-between">
+        <div className="px-4 py-3 border-b border-bone flex items-center justify-between">
           <div className="min-w-0">
-            <div className="text-[10px] uppercase tracking-wide text-violet-700 font-semibold">Performing · step {step + 1} of {beats.length}</div>
-            <div className="text-sm font-semibold text-slate-900 truncate">{card.title}</div>
+            <div className="text-[10px] uppercase tracking-wide text-charcoal font-semibold">Performing · step {step + 1} of {beats.length}</div>
+            <div className="text-sm font-semibold text-ink truncate">{card.title}</div>
           </div>
-          <button onClick={onClose} className="p-1.5 rounded-md hover:bg-slate-100" aria-label="Close">
-            <X className="w-4 h-4 text-slate-600" />
+          <button onClick={onClose} className="p-1.5 rounded-md hover:bg-bone-wash" aria-label="Close">
+            <X className="w-4 h-4 text-charcoal" />
           </button>
         </div>
         <div className="flex-1 overflow-y-auto px-4 py-4 space-y-3">
           {visible.map((b, i) => (
             <div key={i} className="flex items-start gap-2">
-              <div className="w-7 h-7 rounded-full bg-gradient-to-br from-violet-500 to-indigo-600 flex items-center justify-center text-white text-[10px] font-semibold shrink-0">H</div>
+              <div className="w-7 h-7 rounded-full bg-gradient-to-br from-ink-faint to-charcoal flex items-center justify-center text-white text-[10px] font-semibold shrink-0">H</div>
               <div className="flex-1">
-                <div className="text-sm text-slate-800 leading-relaxed">{b.text}</div>
-                {b.note && <div className="text-[11px] text-slate-500 italic mt-1">{b.note}</div>}
+                <div className="text-sm text-ink leading-relaxed">{b.text}</div>
+                {b.note && <div className="text-[11px] text-ink-muted italic mt-1">{b.note}</div>}
               </div>
             </div>
           ))}
         </div>
-        <div className="border-t border-slate-200 px-4 py-3 bg-white">
+        <div className="border-t border-bone px-4 py-3 bg-white">
           {current?.approve ? (
             <div className="space-y-2">
-              <p className="text-[11px] text-slate-500 text-center">Decision is yours — preparation is mine.</p>
+              <p className="text-[11px] text-ink-muted text-center">Decision is yours — preparation is mine.</p>
               <div className="flex gap-2">
                 <button
                   onClick={onClose}
-                  className="flex-1 text-sm py-2.5 rounded-md border border-slate-300 text-slate-700 font-medium hover:bg-slate-50"
+                  className="flex-1 text-sm py-2.5 rounded-md border border-bone text-charcoal font-medium hover:bg-paper"
                 >
                   Not yet
                 </button>
                 <button
                   onClick={advance}
-                  className="flex-1 text-sm py-2.5 rounded-md bg-violet-600 text-white font-medium hover:bg-violet-700 flex items-center justify-center gap-1.5"
+                  className="flex-1 text-sm py-2.5 rounded-md bg-charcoal text-white font-medium hover:bg-charcoal flex items-center justify-center gap-1.5"
                 >
                   <Check className="w-4 h-4" /> {current.approve}
                 </button>
@@ -869,7 +869,7 @@ function PerformSheet({ card, onClose, onComplete }: { card: ActionCard; onClose
           ) : (
             <button
               onClick={advance}
-              className="w-full text-sm py-2.5 rounded-md bg-slate-900 text-white font-medium hover:bg-slate-800 flex items-center justify-center gap-1.5"
+              className="w-full text-sm py-2.5 rounded-md bg-ink text-white font-medium hover:bg-ink flex items-center justify-center gap-1.5"
             >
               {atEnd ? "Mark as done" : "Continue"} <ArrowRight className="w-4 h-4" />
             </button>
@@ -893,7 +893,7 @@ function BottomNav({ tab, setTab }: { tab: Tab; setTab: (t: Tab) => void }) {
     { id: "done", label: "Done", icon: <ListChecks className="w-4 h-4" /> },
   ];
   return (
-    <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 z-40 pb-[env(safe-area-inset-bottom)]">
+    <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-bone z-40 pb-[env(safe-area-inset-bottom)]">
       <div className="grid grid-cols-3">
         {items.map((it) => {
           const active = tab === it.id;
@@ -904,10 +904,10 @@ function BottomNav({ tab, setTab }: { tab: Tab; setTab: (t: Tab) => void }) {
               onClick={() => setTab(it.id)}
               className={
                 "flex flex-col items-center gap-0.5 py-2.5 text-[11px] " +
-                (active ? "text-violet-700 font-semibold" : "text-slate-500")
+                (active ? "text-charcoal font-semibold" : "text-ink-muted")
               }
             >
-              <span className={active ? "text-violet-700" : "text-slate-500"}>{it.icon}</span>
+              <span className={active ? "text-charcoal" : "text-ink-muted"}>{it.icon}</span>
               {it.label}
             </button>
           );

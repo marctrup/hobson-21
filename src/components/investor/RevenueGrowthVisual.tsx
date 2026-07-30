@@ -38,16 +38,16 @@ const RevenueGrowthVisual = () => {
   return (
     <div className="space-y-8">
       {/* Executive Summary */}
-      <div className="bg-gradient-to-r from-sky-50 to-amber-50 border border-sky-200 rounded-xl p-6">
-        <h3 className="text-lg font-bold text-sky-800 mb-3 flex items-center gap-2">
+      <div className="bg-gradient-to-r from-paper to-warning-bg border border-bone rounded-xl p-6">
+        <h3 className="text-lg font-bold text-ink mb-3 flex items-center gap-2">
           <TrendingUp className="w-5 h-5" />
           Commercial Trajectory: Key Conclusions
         </h3>
-        <p className="text-gray-700 leading-relaxed">
-          Hobson projects <span className="font-semibold text-sky-700">£99.7M ARR by 2031</span> with 
-          <span className="font-semibold text-sky-700"> 166,000+ customers</span> across UK and global markets. 
-          The model is anchored on <span className="font-semibold text-amber-700">conservative penetration rates</span> (1.8% UK, 0.8% global) 
-          within a vast addressable market of <span className="font-semibold text-amber-700">4.5M operators</span>. 
+        <p className="text-charcoal leading-relaxed">
+          Hobson projects <span className="font-semibold text-charcoal">£99.7M ARR by 2031</span> with 
+          <span className="font-semibold text-charcoal"> 166,000+ customers</span> across UK and global markets. 
+          The model is anchored on <span className="font-semibold text-warning">conservative penetration rates</span> (1.8% UK, 0.8% global) 
+          within a vast addressable market of <span className="font-semibold text-warning">4.5M operators</span>. 
           Revenue growth is driven by a land-and-expand strategy with UK launch in 2027 and global expansion from 2028.
           Churn stabilises at 8% as the platform matures, supporting predictable recurring revenue.
         </p>
@@ -64,7 +64,7 @@ const RevenueGrowthVisual = () => {
         <CardContent>
           <ResponsiveContainer width="100%" height={320}>
             <BarChart data={revenueData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+              <CartesianGrid strokeDasharray="3 3" stroke="#E8E1D4" />
               <XAxis dataKey="year" tick={{ fontSize: 12 }} />
               <YAxis 
                 tick={{ fontSize: 11 }} 
@@ -74,19 +74,19 @@ const RevenueGrowthVisual = () => {
               <Tooltip 
                 formatter={(value: number, name: string) => [formatCurrency(value), name]}
                 labelStyle={{ fontWeight: "bold" }}
-                contentStyle={{ borderRadius: "8px", border: "1px solid #e5e7eb" }}
+                contentStyle={{ borderRadius: "8px", border: "1px solid #E8E1D4" }}
               />
               <Legend wrapperStyle={{ paddingTop: "10px" }} />
-              <Bar dataKey="uk" name="UK Revenue" fill="#D97706" stackId="revenue" radius={[0, 0, 0, 0]} />
-              <Bar dataKey="global" name="Global Revenue" fill="#0EA5E9" stackId="revenue" radius={[4, 4, 0, 0]} />
+              <Bar dataKey="uk" name="UK Revenue" fill="#8F5A14" stackId="revenue" radius={[0, 0, 0, 0]} />
+              <Bar dataKey="global" name="Global Revenue" fill="#56514A" stackId="revenue" radius={[4, 4, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
           <div className="flex justify-center gap-6 mt-2 text-xs text-muted-foreground">
             <span className="flex items-center gap-1">
-              <span className="w-3 h-3 rounded bg-amber-600"></span> UK Market (launch 2027)
+              <span className="w-3 h-3 rounded bg-warning"></span> UK Market (launch 2027)
             </span>
             <span className="flex items-center gap-1">
-              <span className="w-3 h-3 rounded bg-sky-500"></span> Global Markets (launch 2028)
+              <span className="w-3 h-3 rounded bg-ink-faint"></span> Global Markets (launch 2028)
             </span>
           </div>
         </CardContent>
@@ -94,29 +94,29 @@ const RevenueGrowthVisual = () => {
 
       {/* Key Investor Metrics */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 text-center">
-          <DollarSign className="w-6 h-6 text-amber-600 mx-auto mb-2" />
-          <div className="text-amber-600 font-semibold text-sm mb-1">2031 ARR</div>
-          <div className="text-2xl font-bold text-amber-700">£99.7M</div>
-          <div className="text-xs text-amber-600/80">total revenue</div>
+        <div className="bg-warning-bg border border-warning-border rounded-lg p-4 text-center">
+          <DollarSign className="w-6 h-6 text-warning mx-auto mb-2" />
+          <div className="text-warning font-semibold text-sm mb-1">2031 ARR</div>
+          <div className="text-2xl font-bold text-warning">£99.7M</div>
+          <div className="text-xs text-warning/80">total revenue</div>
         </div>
-        <div className="bg-sky-50 border border-sky-200 rounded-lg p-4 text-center">
-          <Users className="w-6 h-6 text-sky-600 mx-auto mb-2" />
-          <div className="text-sky-600 font-semibold text-sm mb-1">Customers</div>
-          <div className="text-2xl font-bold text-sky-700">166k</div>
-          <div className="text-xs text-sky-600/80">by 2031</div>
+        <div className="bg-paper border border-bone rounded-lg p-4 text-center">
+          <Users className="w-6 h-6 text-charcoal mx-auto mb-2" />
+          <div className="text-charcoal font-semibold text-sm mb-1">Customers</div>
+          <div className="text-2xl font-bold text-charcoal">166k</div>
+          <div className="text-xs text-charcoal/80">by 2031</div>
         </div>
-        <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-4 text-center">
-          <Zap className="w-6 h-6 text-emerald-600 mx-auto mb-2" />
-          <div className="text-emerald-600 font-semibold text-sm mb-1">MRR 2031</div>
-          <div className="text-2xl font-bold text-emerald-700">£8.3M</div>
-          <div className="text-xs text-emerald-600/80">monthly recurring</div>
+        <div className="bg-success-bg border border-success-border rounded-lg p-4 text-center">
+          <Zap className="w-6 h-6 text-success mx-auto mb-2" />
+          <div className="text-success font-semibold text-sm mb-1">MRR 2031</div>
+          <div className="text-2xl font-bold text-success">£8.3M</div>
+          <div className="text-xs text-success/80">monthly recurring</div>
         </div>
-        <div className="bg-violet-50 border border-violet-200 rounded-lg p-4 text-center">
-          <Target className="w-6 h-6 text-violet-600 mx-auto mb-2" />
-          <div className="text-violet-600 font-semibold text-sm mb-1">Blended ARPU</div>
-          <div className="text-2xl font-bold text-violet-700">~£600</div>
-          <div className="text-xs text-violet-600/80">per customer/year</div>
+        <div className="bg-paper border border-bone rounded-lg p-4 text-center">
+          <Target className="w-6 h-6 text-charcoal mx-auto mb-2" />
+          <div className="text-charcoal font-semibold text-sm mb-1">Blended ARPU</div>
+          <div className="text-2xl font-bold text-charcoal">~£600</div>
+          <div className="text-xs text-charcoal/80">per customer/year</div>
         </div>
       </div>
 
@@ -144,15 +144,15 @@ const RevenueGrowthVisual = () => {
               </thead>
               <tbody>
                 <tr className="border-b">
-                  <td className="p-3 font-medium text-amber-700">UK Revenue</td>
+                  <td className="p-3 font-medium text-warning">UK Revenue</td>
                   {revenueData.map((d, i) => (
-                    <td key={i} className="text-right p-3 text-amber-700">{formatCurrency(d.uk)}</td>
+                    <td key={i} className="text-right p-3 text-warning">{formatCurrency(d.uk)}</td>
                   ))}
                 </tr>
                 <tr className="border-b">
-                  <td className="p-3 font-medium text-sky-700">Global Revenue</td>
+                  <td className="p-3 font-medium text-charcoal">Global Revenue</td>
                   {revenueData.map((d, i) => (
-                    <td key={i} className="text-right p-3 text-sky-700">{formatCurrency(d.global)}</td>
+                    <td key={i} className="text-right p-3 text-charcoal">{formatCurrency(d.global)}</td>
                   ))}
                 </tr>
                 <tr className="border-b bg-primary/5">
@@ -164,25 +164,25 @@ const RevenueGrowthVisual = () => {
                 <tr className="border-b">
                   <td className="p-3 font-medium">Total Customers</td>
                   {revenueData.map((d, i) => (
-                    <td key={i} className="text-right p-3 text-gray-600">{d.customers.toLocaleString()}</td>
+                    <td key={i} className="text-right p-3 text-charcoal">{d.customers.toLocaleString()}</td>
                   ))}
                 </tr>
                 <tr className="border-b">
                   <td className="p-3 font-medium">MRR</td>
                   {revenueData.map((d, i) => (
-                    <td key={i} className="text-right p-3 text-gray-600">{formatLargeCurrency(d.mrr)}</td>
+                    <td key={i} className="text-right p-3 text-charcoal">{formatLargeCurrency(d.mrr)}</td>
                   ))}
                 </tr>
                 <tr className="border-b">
                   <td className="p-3 font-medium">Blended ARPU</td>
                   {revenueData.map((d, i) => (
-                    <td key={i} className="text-right p-3 text-gray-600">{d.arpu ? `£${d.arpu}` : "—"}</td>
+                    <td key={i} className="text-right p-3 text-charcoal">{d.arpu ? `£${d.arpu}` : "—"}</td>
                   ))}
                 </tr>
                 <tr className="border-b">
                   <td className="p-3 font-medium">Churn Rate</td>
                   {revenueData.map((d, i) => (
-                    <td key={i} className="text-right p-3 text-gray-600">{d.churn ? `${d.churn}%` : "—"}</td>
+                    <td key={i} className="text-right p-3 text-charcoal">{d.churn ? `${d.churn}%` : "—"}</td>
                   ))}
                 </tr>
               </tbody>
@@ -196,7 +196,7 @@ const RevenueGrowthVisual = () => {
         <Card className="border border-border/50">
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-semibold flex items-center gap-2">
-              <Target className="w-4 h-4 text-amber-600" />
+              <Target className="w-4 h-4 text-warning" />
               UK Market
             </CardTitle>
           </CardHeader>
@@ -207,7 +207,7 @@ const RevenueGrowthVisual = () => {
             </div>
             <div className="flex justify-between items-center py-2 border-b border-border/30">
               <span className="text-sm text-muted-foreground">Penetration by 2031</span>
-              <span className="font-semibold text-amber-600">1.8%</span>
+              <span className="font-semibold text-warning">1.8%</span>
             </div>
             <div className="flex justify-between items-center py-2 border-b border-border/30">
               <span className="text-sm text-muted-foreground">UK customers 2031</span>
@@ -215,7 +215,7 @@ const RevenueGrowthVisual = () => {
             </div>
             <div className="flex justify-between items-center py-2">
               <span className="text-sm text-muted-foreground">UK revenue 2031</span>
-              <span className="font-bold text-amber-600">£9.1M</span>
+              <span className="font-bold text-warning">£9.1M</span>
             </div>
           </CardContent>
         </Card>
@@ -223,7 +223,7 @@ const RevenueGrowthVisual = () => {
         <Card className="border border-border/50">
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-semibold flex items-center gap-2">
-              <Globe className="w-4 h-4 text-sky-600" />
+              <Globe className="w-4 h-4 text-charcoal" />
               Global Market
             </CardTitle>
           </CardHeader>
@@ -234,7 +234,7 @@ const RevenueGrowthVisual = () => {
             </div>
             <div className="flex justify-between items-center py-2 border-b border-border/30">
               <span className="text-sm text-muted-foreground">Penetration by 2031</span>
-              <span className="font-semibold text-sky-600">0.8%</span>
+              <span className="font-semibold text-charcoal">0.8%</span>
             </div>
             <div className="flex justify-between items-center py-2 border-b border-border/30">
               <span className="text-sm text-muted-foreground">Global customers 2031</span>
@@ -242,7 +242,7 @@ const RevenueGrowthVisual = () => {
             </div>
             <div className="flex justify-between items-center py-2">
               <span className="text-sm text-muted-foreground">Global revenue 2031</span>
-              <span className="font-bold text-sky-600">£90.6M</span>
+              <span className="font-bold text-charcoal">£90.6M</span>
             </div>
           </CardContent>
         </Card>
@@ -258,43 +258,43 @@ const RevenueGrowthVisual = () => {
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="bg-violet-50 border border-violet-200 rounded-lg p-4">
-              <div className="text-violet-700 font-semibold mb-1">Enterprise (Large)</div>
-              <div className="text-2xl font-bold text-violet-800">£1,782/yr</div>
-              <div className="text-xs text-violet-600">10% of customer base</div>
+            <div className="bg-paper border border-bone rounded-lg p-4">
+              <div className="text-charcoal font-semibold mb-1">Enterprise (Large)</div>
+              <div className="text-2xl font-bold text-ink">£1,782/yr</div>
+              <div className="text-xs text-charcoal">10% of customer base</div>
             </div>
-            <div className="bg-sky-50 border border-sky-200 rounded-lg p-4">
-              <div className="text-sky-700 font-semibold mb-1">Enterprise Plus (Medium)</div>
-              <div className="text-2xl font-bold text-sky-800">£597/yr</div>
-              <div className="text-xs text-sky-600">60% of customer base</div>
+            <div className="bg-paper border border-bone rounded-lg p-4">
+              <div className="text-charcoal font-semibold mb-1">Enterprise Plus (Medium)</div>
+              <div className="text-2xl font-bold text-ink">£597/yr</div>
+              <div className="text-xs text-charcoal">60% of customer base</div>
             </div>
-            <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-4">
-              <div className="text-emerald-700 font-semibold mb-1">Essential (Small)</div>
-              <div className="text-2xl font-bold text-emerald-800">£234/yr</div>
-              <div className="text-xs text-emerald-600">30% of customer base</div>
+            <div className="bg-success-bg border border-success-border rounded-lg p-4">
+              <div className="text-success font-semibold mb-1">Essential (Small)</div>
+              <div className="text-2xl font-bold text-success">£234/yr</div>
+              <div className="text-xs text-success">30% of customer base</div>
             </div>
           </div>
         </CardContent>
       </Card>
 
       {/* Why This Works */}
-      <div className="bg-gradient-to-r from-primary/10 to-violet-100 border border-primary/20 rounded-xl p-6">
+      <div className="bg-gradient-to-r from-primary/10 to-bone-wash border border-primary/20 rounded-xl p-6">
         <h4 className="font-bold text-primary mb-2">Why This Trajectory Is Achievable</h4>
-        <ul className="space-y-2 text-sm text-gray-700">
+        <ul className="space-y-2 text-sm text-charcoal">
           <li className="flex items-start gap-2">
-            <span className="text-emerald-600 font-bold">✓</span>
+            <span className="text-success font-bold">✓</span>
             <span><strong>Conservative penetration:</strong> Only 1.8% UK and 0.8% global by 2031 in a market of 4.5M operators.</span>
           </li>
           <li className="flex items-start gap-2">
-            <span className="text-emerald-600 font-bold">✓</span>
+            <span className="text-success font-bold">✓</span>
             <span><strong>Proven SaaS economics:</strong> Blended ARPU of ~£600 with simple, predictable pricing tiers.</span>
           </li>
           <li className="flex items-start gap-2">
-            <span className="text-emerald-600 font-bold">✓</span>
+            <span className="text-success font-bold">✓</span>
             <span><strong>Manageable churn:</strong> 8% annual churn at maturity is competitive for SMB SaaS.</span>
           </li>
           <li className="flex items-start gap-2">
-            <span className="text-emerald-600 font-bold">✓</span>
+            <span className="text-success font-bold">✓</span>
             <span><strong>Land and expand:</strong> UK-first strategy builds playbook before global rollout in 2028.</span>
           </li>
         </ul>

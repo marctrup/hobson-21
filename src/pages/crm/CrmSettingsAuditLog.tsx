@@ -61,7 +61,7 @@ function CopyButton({ value }: { value: string }) {
     <button
       type="button"
       onClick={handle}
-      className="text-slate-400 hover:text-slate-700"
+      className="text-ink-muted hover:text-charcoal"
       aria-label="Copy"
       title="Copy"
     >
@@ -92,12 +92,12 @@ function AuditRow({ row }: { row: AuditLogRow }) {
 
   return (
     <>
-      <tr className="border-t border-slate-200 hover:bg-slate-50/60">
+      <tr className="border-t border-bone hover:bg-paper/60">
         <td className="py-2 pl-3 pr-2 align-top w-8">
           <button
             type="button"
             onClick={() => setExpanded((e) => !e)}
-            className="text-slate-500 hover:text-slate-800"
+            className="text-ink-muted hover:text-ink"
             aria-label={expanded ? "Collapse" : "Expand"}
           >
             {expanded ? (
@@ -107,32 +107,32 @@ function AuditRow({ row }: { row: AuditLogRow }) {
             )}
           </button>
         </td>
-        <td className="py-2 px-2 align-top text-xs text-slate-600 whitespace-nowrap">
+        <td className="py-2 px-2 align-top text-xs text-charcoal whitespace-nowrap">
           {formatDate(row.created_at)}
         </td>
         <td className="py-2 px-2 align-top text-sm">
           {row.user_id ? (
             <>
-              <div className="font-medium text-slate-800 truncate max-w-[200px]">
+              <div className="font-medium text-ink truncate max-w-[200px]">
                 {row.actor_display_name ?? row.actor_email ?? shortId(row.user_id)}
               </div>
               {row.actor_email && row.actor_display_name && row.actor_display_name !== row.actor_email && (
-                <div className="text-xs text-slate-500 truncate max-w-[200px]">
+                <div className="text-xs text-ink-muted truncate max-w-[200px]">
                   {row.actor_email}
                 </div>
               )}
             </>
           ) : (
-            <span className="text-xs text-slate-400 italic">system</span>
+            <span className="text-xs text-ink-muted italic">system</span>
           )}
         </td>
-        <td className="py-2 px-2 align-top text-xs font-mono text-slate-700">
+        <td className="py-2 px-2 align-top text-xs font-mono text-charcoal">
           {row.action}
         </td>
-        <td className="py-2 px-2 align-top text-xs font-mono text-slate-600">
+        <td className="py-2 px-2 align-top text-xs font-mono text-charcoal">
           {row.table_name}
         </td>
-        <td className="py-2 pl-2 pr-3 align-top text-xs font-mono text-slate-600 whitespace-nowrap">
+        <td className="py-2 pl-2 pr-3 align-top text-xs font-mono text-charcoal whitespace-nowrap">
           {row.record_id ? (
             <span className="inline-flex items-center gap-1.5">
               {shortId(row.record_id)}
@@ -144,31 +144,31 @@ function AuditRow({ row }: { row: AuditLogRow }) {
         </td>
       </tr>
       {expanded && (
-        <tr className="bg-slate-50/60">
+        <tr className="bg-paper/60">
           <td colSpan={6} className="px-3 py-3">
             <div className="grid gap-3 md:grid-cols-2">
               <div>
-                <div className="text-xs font-medium text-slate-500 mb-1">
+                <div className="text-xs font-medium text-ink-muted mb-1">
                   Old values
                 </div>
                 {oldJson ? (
-                  <pre className="text-xs bg-white border border-slate-200 rounded-md p-3 overflow-x-auto max-h-72 whitespace-pre-wrap break-all">
+                  <pre className="text-xs bg-white border border-bone rounded-md p-3 overflow-x-auto max-h-72 whitespace-pre-wrap break-all">
                     {oldJson}
                   </pre>
                 ) : (
-                  <div className="text-xs text-slate-400 italic">—</div>
+                  <div className="text-xs text-ink-muted italic">—</div>
                 )}
               </div>
               <div>
-                <div className="text-xs font-medium text-slate-500 mb-1">
+                <div className="text-xs font-medium text-ink-muted mb-1">
                   New values
                 </div>
                 {newJson ? (
-                  <pre className="text-xs bg-white border border-slate-200 rounded-md p-3 overflow-x-auto max-h-72 whitespace-pre-wrap break-all">
+                  <pre className="text-xs bg-white border border-bone rounded-md p-3 overflow-x-auto max-h-72 whitespace-pre-wrap break-all">
                     {newJson}
                   </pre>
                 ) : (
-                  <div className="text-xs text-slate-400 italic">—</div>
+                  <div className="text-xs text-ink-muted italic">—</div>
                 )}
               </div>
             </div>
@@ -229,7 +229,7 @@ export default function CrmSettingsAuditLog() {
   const hasFilters = Boolean(actionFilter || fromDate || toDate || search);
 
   if (isLoading) {
-    return <div className="p-6 text-sm text-slate-500">Loading…</div>;
+    return <div className="p-6 text-sm text-ink-muted">Loading…</div>;
   }
   if (!isAdmin) return <NotFound />;
 
@@ -242,20 +242,20 @@ export default function CrmSettingsAuditLog() {
 
       <Link
         to="/crm/settings"
-        className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-slate-700"
+        className="inline-flex items-center gap-1 text-sm text-ink-muted hover:text-charcoal"
       >
         <ChevronLeft className="size-4" /> Back to settings
       </Link>
 
       <h1 className="mt-3 text-2xl font-semibold tracking-tight">Audit log</h1>
-      <p className="text-sm text-slate-500 mt-1 max-w-2xl">
+      <p className="text-sm text-ink-muted mt-1 max-w-2xl">
         Security-relevant actions across the workspace. Read-only.
       </p>
 
       {/* Filters */}
-      <div className="mt-5 bg-white border border-slate-200 rounded-lg p-4 grid gap-3 md:grid-cols-[200px_160px_160px_1fr_auto] items-end">
+      <div className="mt-5 bg-white border border-bone rounded-lg p-4 grid gap-3 md:grid-cols-[200px_160px_160px_1fr_auto] items-end">
         <div>
-          <label className="text-xs font-medium text-slate-600 mb-1 block">
+          <label className="text-xs font-medium text-charcoal mb-1 block">
             Action
           </label>
           <Select
@@ -279,7 +279,7 @@ export default function CrmSettingsAuditLog() {
           </Select>
         </div>
         <div>
-          <label className="text-xs font-medium text-slate-600 mb-1 block">
+          <label className="text-xs font-medium text-charcoal mb-1 block">
             From
           </label>
           <Input
@@ -293,7 +293,7 @@ export default function CrmSettingsAuditLog() {
           />
         </div>
         <div>
-          <label className="text-xs font-medium text-slate-600 mb-1 block">
+          <label className="text-xs font-medium text-charcoal mb-1 block">
             To
           </label>
           <Input
@@ -307,11 +307,11 @@ export default function CrmSettingsAuditLog() {
           />
         </div>
         <div>
-          <label className="text-xs font-medium text-slate-600 mb-1 block">
+          <label className="text-xs font-medium text-charcoal mb-1 block">
             Search action
           </label>
           <div className="relative">
-            <SearchIcon className="size-3.5 text-slate-400 absolute left-2.5 top-1/2 -translate-y-1/2" />
+            <SearchIcon className="size-3.5 text-ink-muted absolute left-2.5 top-1/2 -translate-y-1/2" />
             <Input
               value={searchInput}
               onChange={(e) => setSearchInput(e.target.value)}
@@ -339,10 +339,10 @@ export default function CrmSettingsAuditLog() {
       </div>
 
       {/* Table */}
-      <div className="mt-4 bg-white border border-slate-200 rounded-lg overflow-hidden">
+      <div className="mt-4 bg-white border border-bone rounded-lg overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
-            <thead className="bg-slate-50 text-xs uppercase tracking-wide text-slate-500">
+            <thead className="bg-paper text-xs uppercase tracking-wide text-ink-muted">
               <tr>
                 <th className="py-2 pl-3 pr-2 w-8" />
                 <th className="py-2 px-2 text-left">Timestamp</th>
@@ -355,14 +355,14 @@ export default function CrmSettingsAuditLog() {
             <tbody>
               {rowsLoading && (
                 <tr>
-                  <td colSpan={6} className="py-6 text-center text-sm text-slate-500">
+                  <td colSpan={6} className="py-6 text-center text-sm text-ink-muted">
                     Loading…
                   </td>
                 </tr>
               )}
               {!rowsLoading && rows.length === 0 && (
                 <tr>
-                  <td colSpan={6} className="py-10 text-center text-sm text-slate-500">
+                  <td colSpan={6} className="py-10 text-center text-sm text-ink-muted">
                     {hasFilters
                       ? "No audit entries match the current filters."
                       : "No audit entries yet."}
@@ -380,7 +380,7 @@ export default function CrmSettingsAuditLog() {
       {/* Pagination */}
       {total > 0 && (
         <div className="mt-3 flex items-center justify-between text-sm">
-          <div className="text-slate-500">
+          <div className="text-ink-muted">
             Showing {(page - 1) * PAGE_SIZE + 1}–
             {Math.min(page * PAGE_SIZE, total)} of {total.toLocaleString("en-GB")}
           </div>
@@ -393,7 +393,7 @@ export default function CrmSettingsAuditLog() {
             >
               Previous
             </Button>
-            <span className="text-slate-600">
+            <span className="text-charcoal">
               Page {page} of {totalPages}
             </span>
             <Button

@@ -71,7 +71,7 @@ export const TaskSidePanel = ({ open, onOpenChange, taskId }: Props) => {
         className="w-full sm:max-w-2xl overflow-y-auto"
       >
         {isLoading || !data ? (
-          <div className="text-sm text-slate-500">Loading…</div>
+          <div className="text-sm text-ink-muted">Loading…</div>
         ) : (
           <PanelBody
             data={data}
@@ -145,7 +145,7 @@ const PanelBody = ({
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 flex-wrap">
               <TaskStatusPill status={t.status} />
-              <span className="inline-flex items-center gap-1 text-xs text-slate-600">
+              <span className="inline-flex items-center gap-1 text-xs text-charcoal">
                 <TaskPriorityDot priority={t.priority} />
                 {TASK_PRIORITY_LABELS[t.priority]}
               </span>
@@ -188,7 +188,7 @@ const PanelBody = ({
               <SheetTitle
                 className={cn(
                   "mt-2 text-base leading-snug",
-                  t.status === "done" && "line-through text-slate-500",
+                  t.status === "done" && "line-through text-ink-muted",
                 )}
                 onClick={() => canWrite && setEditingTitle(true)}
                 role={canWrite ? "button" : undefined}
@@ -196,11 +196,11 @@ const PanelBody = ({
                 {t.title}
               </SheetTitle>
             )}
-            <div className="text-xs text-slate-500 mt-1">
+            <div className="text-xs text-ink-muted mt-1">
               {t.client_name && t.client_id && (
                 <Link
                   to={`/crm/clients/${t.client_id}`}
-                  className="hover:text-slate-900 hover:underline"
+                  className="hover:text-ink hover:underline"
                 >
                   {t.client_name}
                 </Link>
@@ -214,7 +214,7 @@ const PanelBody = ({
           </div>
           <button
             onClick={onClose}
-            className="text-slate-400 hover:text-slate-600"
+            className="text-ink-muted hover:text-charcoal"
             aria-label="Close"
           >
             <X className="size-4" />
@@ -312,7 +312,7 @@ const PanelBody = ({
               <span
                 className={cn(
                   "text-sm inline-flex items-center gap-1",
-                  isOverdue ? "text-rose-600 font-medium" : "",
+                  isOverdue ? "text-danger font-medium" : "",
                 )}
               >
                 {isOverdue && <CalendarClock className="size-3.5" />}
@@ -322,7 +322,7 @@ const PanelBody = ({
           </Field>
 
           <Field label="Completed at">
-            <span className="text-sm text-slate-700">
+            <span className="text-sm text-charcoal">
               {t.completed_at ? formatDateTimeUK(t.completed_at) : "—"}
             </span>
           </Field>
@@ -331,7 +331,7 @@ const PanelBody = ({
         {/* Notes */}
         <section>
           <div className="flex items-center justify-between mb-1">
-            <h3 className="text-xs uppercase tracking-wide text-slate-500">
+            <h3 className="text-xs uppercase tracking-wide text-ink-muted">
               Notes
             </h3>
             {canWrite && !editingNotes && (
@@ -340,7 +340,7 @@ const PanelBody = ({
                   setNotesDraft(t.notes ?? "");
                   setEditingNotes(true);
                 }}
-                className="text-xs text-slate-500 hover:text-slate-900"
+                className="text-xs text-ink-muted hover:text-ink"
               >
                 Edit
               </button>
@@ -374,25 +374,25 @@ const PanelBody = ({
               </div>
             </div>
           ) : t.notes ? (
-            <p className="text-sm text-slate-800 whitespace-pre-wrap bg-slate-50 border border-slate-200 rounded-md p-3">
+            <p className="text-sm text-ink whitespace-pre-wrap bg-paper border border-bone rounded-md p-3">
               {t.notes}
             </p>
           ) : (
-            <p className="text-sm text-slate-400 italic">No notes.</p>
+            <p className="text-sm text-ink-muted italic">No notes.</p>
           )}
         </section>
 
         {/* Tags */}
         {t.tags && t.tags.length > 0 && (
           <section>
-            <h3 className="text-xs uppercase tracking-wide text-slate-500 mb-1">
+            <h3 className="text-xs uppercase tracking-wide text-ink-muted mb-1">
               Tags
             </h3>
             <div className="flex flex-wrap gap-1">
               {t.tags.map((tag) => (
                 <span
                   key={tag}
-                  className="inline-block text-[11px] px-2 py-0.5 rounded-md bg-slate-100 border border-slate-200 text-slate-700"
+                  className="inline-block text-[11px] px-2 py-0.5 rounded-md bg-bone-wash border border-bone text-charcoal"
                 >
                   {tag}
                 </span>
@@ -403,9 +403,9 @@ const PanelBody = ({
 
         {/* Source communication (backfill / ad-hoc) */}
         {isBackfilled && (
-          <section className="text-sm bg-slate-50 border border-slate-200 rounded-md px-3 py-2 flex items-center gap-2">
-            <ExternalLink className="size-3.5 text-slate-500 shrink-0" />
-            <span className="text-slate-600">
+          <section className="text-sm bg-paper border border-bone rounded-md px-3 py-2 flex items-center gap-2">
+            <ExternalLink className="size-3.5 text-ink-muted shrink-0" />
+            <span className="text-charcoal">
               Created from a communication
               {t.source_communication_subject
                 ? `: "${t.source_communication_subject}"`
@@ -413,7 +413,7 @@ const PanelBody = ({
               .{" "}
               <Link
                 to={`/crm/communications?focus=${t.source_communication_id}`}
-                className="text-slate-900 hover:underline"
+                className="text-ink hover:underline"
               >
                 View original note
               </Link>
@@ -423,9 +423,9 @@ const PanelBody = ({
 
         {/* Linked issue */}
         {t.linked_issue_id && (
-          <section className="text-sm bg-slate-50 border border-slate-200 rounded-md px-3 py-2 flex items-center gap-2">
-            <ExternalLink className="size-3.5 text-slate-500 shrink-0" />
-            <span className="text-slate-600">
+          <section className="text-sm bg-paper border border-bone rounded-md px-3 py-2 flex items-center gap-2">
+            <ExternalLink className="size-3.5 text-ink-muted shrink-0" />
+            <span className="text-charcoal">
               Linked to issue
               {t.linked_issue_title ? `: "${t.linked_issue_title}"` : ""}.
             </span>
@@ -433,10 +433,10 @@ const PanelBody = ({
         )}
 
         {canDelete && (
-          <div className="pt-4 border-t border-slate-200">
+          <div className="pt-4 border-t border-bone">
             <AlertDialog>
               <AlertDialogTrigger asChild>
-                <Button variant="outline" size="sm" className="text-rose-600">
+                <Button variant="outline" size="sm" className="text-danger">
                   <Trash2 className="size-4 mr-1" /> Delete
                 </Button>
               </AlertDialogTrigger>
@@ -470,7 +470,7 @@ const Field = ({
   children: React.ReactNode;
 }) => (
   <div>
-    <div className="text-xs text-slate-500 mb-1">{label}</div>
+    <div className="text-xs text-ink-muted mb-1">{label}</div>
     {children}
   </div>
 );

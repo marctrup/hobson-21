@@ -120,7 +120,7 @@ const CapitalRaiseStrategyVisual = () => {
           <h3 className="text-lg font-semibold text-foreground">Burn & Runway Strategy</h3>
         </div>
 
-        <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-4 mb-4">
+        <div className="bg-warning/10 border border-warning/30 rounded-lg p-4 mb-4">
           <p className="text-foreground font-semibold text-center">
             Pre-raise operating losses funded by founders until £5.0M raise closes
           </p>

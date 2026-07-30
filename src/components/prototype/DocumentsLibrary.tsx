@@ -284,7 +284,7 @@ function StatusMarker({ status }: { status: Status }) {
   if (status === "current") {
     return (
       <span
-        className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-semibold uppercase tracking-wide bg-emerald-50 text-emerald-800 border border-emerald-200"
+        className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-semibold uppercase tracking-wide bg-success-bg text-success border border-success-border"
         aria-label="Current document"
       >
         <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
@@ -296,7 +296,7 @@ function StatusMarker({ status }: { status: Status }) {
   }
   return (
     <span
-      className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-semibold uppercase tracking-wide bg-slate-100 text-slate-600 border border-slate-300"
+      className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-semibold uppercase tracking-wide bg-bone-wash text-charcoal border border-bone"
       aria-label="Superseded document"
     >
       <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" aria-hidden>
@@ -310,8 +310,8 @@ function StatusMarker({ status }: { status: Status }) {
 function FamilyTag({ family }: { family: Family }) {
   const cls =
     family === "Tenancy"
-      ? "bg-violet-50 text-violet-700 border-violet-200"
-      : "bg-sky-50 text-sky-700 border-sky-200";
+      ? "bg-paper text-charcoal border-bone"
+      : "bg-paper text-charcoal border-bone";
   return (
     <span className={`inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-medium border ${cls}`}>
       {family}
@@ -338,19 +338,19 @@ function DocRow({
     <div
       className={`flex items-center gap-3 py-2 px-3 rounded-md border ${
         doc.status === "current"
-          ? "border-slate-200 bg-white"
-          : "border-dashed border-slate-200 bg-slate-50"
+          ? "border-bone bg-white"
+          : "border-dashed border-bone bg-paper"
       } ${dim ? "opacity-70" : ""}`}
     >
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2 flex-wrap">
-          <span className={`text-sm font-medium ${doc.status === "current" ? "text-slate-900" : "text-slate-500 line-through decoration-slate-300"}`}>
+          <span className={`text-sm font-medium ${doc.status === "current" ? "text-ink" : "text-ink-muted line-through decoration-ink-faint"}`}>
             {doc.title}
           </span>
           <StatusMarker status={doc.status} />
           <FamilyTag family={doc.family} />
         </div>
-        <div className="mt-0.5 text-[11px] text-slate-500 flex flex-wrap gap-x-2">
+        <div className="mt-0.5 text-[11px] text-ink-muted flex flex-wrap gap-x-2">
           <span>{doc.type}</span>
           <span>·</span>
           <span>{fmtDate(doc.date)}</span>
@@ -360,7 +360,7 @@ function DocRow({
               <span>·</span>
               <button
                 onClick={() => onJumpToCurrent(doc.supersededBy!)}
-                className="text-[#7C3AED] hover:underline focus:outline-none focus:ring-2 focus:ring-[#7C3AED] rounded"
+                className="text-[#56514A] hover:underline focus:outline-none focus:ring-2 focus:ring-[#56514A] rounded"
               >
                 superseded by →
               </button>
@@ -371,13 +371,13 @@ function DocRow({
       <div className="flex items-center gap-1 shrink-0">
         <button
           onClick={() => onView(doc)}
-          className="px-2 py-1 text-[11px] font-medium rounded border border-slate-200 text-slate-700 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]"
+          className="px-2 py-1 text-[11px] font-medium rounded border border-bone text-charcoal hover:bg-paper focus:outline-none focus:ring-2 focus:ring-[#56514A]"
         >
           View
         </button>
         <button
           onClick={() => onDownload(doc)}
-          className="px-2 py-1 text-[11px] font-medium rounded border border-slate-200 text-slate-700 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]"
+          className="px-2 py-1 text-[11px] font-medium rounded border border-bone text-charcoal hover:bg-paper focus:outline-none focus:ring-2 focus:ring-[#56514A]"
         >
           Download
         </button>
@@ -405,36 +405,36 @@ function TenancyChain({
   const olderCount = sorted.length - 1;
 
   return (
-    <div className="rounded-lg border border-slate-200 bg-white">
+    <div className="rounded-lg border border-bone bg-white">
       <button
         onClick={() => setOpen((o) => !o)}
-        className="w-full flex items-center justify-between gap-3 px-3 py-2.5 hover:bg-slate-50 rounded-t-lg focus:outline-none focus:ring-2 focus:ring-[#7C3AED]"
+        className="w-full flex items-center justify-between gap-3 px-3 py-2.5 hover:bg-paper rounded-t-lg focus:outline-none focus:ring-2 focus:ring-[#56514A]"
         aria-expanded={open}
       >
         <div className="flex items-center gap-2 min-w-0">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
-               className={`text-slate-400 transition-transform ${open ? "rotate-90" : ""}`} aria-hidden>
+               className={`text-ink-muted transition-transform ${open ? "rotate-90" : ""}`} aria-hidden>
             <path d="M9 6l6 6-6 6" />
           </svg>
-          <span className="text-sm font-semibold text-slate-900 truncate">
+          <span className="text-sm font-semibold text-ink truncate">
             {current.type} — {current.party}
           </span>
           <StatusMarker status="current" />
           <FamilyTag family="Tenancy" />
         </div>
-        <span className="text-[11px] text-slate-500 shrink-0">
+        <span className="text-[11px] text-ink-muted shrink-0">
           {olderCount > 0 ? `current position · ${olderCount} archived beneath` : "single entry on record"}
         </span>
       </button>
       {open && (
         <div className="px-3 pb-3 pt-1">
-          <ol className="relative border-l border-slate-200 ml-2 space-y-2 pl-4">
+          <ol className="relative border-l border-bone ml-2 space-y-2 pl-4">
             {sorted.map((d) => {
               if (!includeSuperseded && d.status === "superseded") return null;
               return (
                 <li key={d.id} className="relative">
                   <span className={`absolute -left-[21px] top-3 w-2.5 h-2.5 rounded-full border-2 ${
-                    d.status === "current" ? "bg-emerald-500 border-emerald-600" : "bg-white border-slate-400"
+                    d.status === "current" ? "bg-success border-success" : "bg-white border-bone-strong"
                   }`} aria-hidden />
                   <DocRow
                     doc={d}
@@ -479,7 +479,7 @@ function AcdGroup({
         <div className="pl-3">
           <button
             onClick={() => setOpenPrev((o) => !o)}
-            className="text-[11px] text-slate-500 hover:text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#7C3AED] rounded"
+            className="text-[11px] text-ink-muted hover:text-ink focus:outline-none focus:ring-2 focus:ring-[#56514A] rounded"
             aria-expanded={openPrev}
           >
             {openPrev ? "▾" : "▸"} previous versions ({previous.length})
@@ -550,8 +550,8 @@ function AssetSection({
       <button
         onClick={() => setOpen((o) => !o)}
         className={`w-full flex items-center gap-2 py-1.5 ${
-          level === "property" ? "text-[13px] font-semibold text-slate-900" : "text-[12px] font-medium text-slate-700"
-        } hover:text-[#7C3AED] focus:outline-none focus:ring-2 focus:ring-[#7C3AED] rounded`}
+          level === "property" ? "text-[13px] font-semibold text-ink" : "text-[12px] font-medium text-charcoal"
+        } hover:text-[#56514A] focus:outline-none focus:ring-2 focus:ring-[#56514A] rounded`}
         aria-expanded={open}
       >
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"
@@ -559,15 +559,15 @@ function AssetSection({
           <path d="M9 6l6 6-6 6" />
         </svg>
         <Tag className="m-0">{title}</Tag>
-        <span className="text-[11px] font-normal text-slate-500">· {docs.length} {docs.length === 1 ? "document" : "documents"}</span>
+        <span className="text-[11px] font-normal text-ink-muted">· {docs.length} {docs.length === 1 ? "document" : "documents"}</span>
       </button>
 
       {open && (
-        <div className="mt-3 space-y-4 pl-5 border-l border-slate-100">
+        <div className="mt-3 space-y-4 pl-5 border-l border-faint-rule">
 
           {chains.length > 0 && (
             <div className="space-y-2">
-              <div className="text-[10px] font-semibold uppercase tracking-wide text-slate-500">Tenancy documents</div>
+              <div className="text-[10px] font-semibold uppercase tracking-wide text-ink-muted">Tenancy documents</div>
               {chains.map((c) => (
                 <TenancyChain
                   key={c[0].chainId || c[0].id}
@@ -581,7 +581,7 @@ function AssetSection({
           )}
           {acdByType.length > 0 && (
             <div className="space-y-2">
-              <div className="text-[10px] font-semibold uppercase tracking-wide text-slate-500">Asset & compliance</div>
+              <div className="text-[10px] font-semibold uppercase tracking-wide text-ink-muted">Asset & compliance</div>
               {acdByType.map(([type, ds]) => (
                 <AcdGroup
                   key={type}
@@ -595,7 +595,7 @@ function AssetSection({
             </div>
           )}
           {chains.length === 0 && acdByType.length === 0 && (
-            <div className="text-[11px] text-slate-400 italic">No documents at this level.</div>
+            <div className="text-[11px] text-ink-muted italic">No documents at this level.</div>
           )}
         </div>
       )}
@@ -611,28 +611,28 @@ function DocViewer({ doc, onClose }: { doc: DocItem; onClose: () => void }) {
       role="dialog"
       aria-modal="true"
       aria-label={`Preview: ${doc.title}`}
-      className="fixed inset-0 z-[600] bg-slate-900/50 grid place-items-center p-6"
+      className="fixed inset-0 z-[600] bg-ink/50 grid place-items-center p-6"
       onClick={onClose}
     >
       <div
         className="bg-white rounded-xl shadow-2xl max-w-3xl w-full max-h-[85vh] flex flex-col overflow-hidden"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="px-5 py-3 border-b border-slate-100 flex items-center justify-between">
+        <div className="px-5 py-3 border-b border-faint-rule flex items-center justify-between">
           <div className="min-w-0">
             <div className="flex items-center gap-2">
-              <span className="text-sm font-semibold text-slate-900 truncate">{doc.title}</span>
+              <span className="text-sm font-semibold text-ink truncate">{doc.title}</span>
               <StatusMarker status={doc.status} />
               <FamilyTag family={doc.family} />
             </div>
-            <div className="text-[11px] text-slate-500 mt-0.5">
+            <div className="text-[11px] text-ink-muted mt-0.5">
               {doc.propertyName}{doc.unitLabel ? ` · ${doc.unitLabel}` : ""} · {fmtDate(doc.date)}
             </div>
           </div>
           <button
             onClick={onClose}
             autoFocus
-            className="p-1.5 text-slate-400 hover:text-slate-700 focus:outline-none focus:ring-2 focus:ring-[#7C3AED] rounded"
+            className="p-1.5 text-ink-muted hover:text-charcoal focus:outline-none focus:ring-2 focus:ring-[#56514A] rounded"
             aria-label="Close preview"
           >
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -640,19 +640,19 @@ function DocViewer({ doc, onClose }: { doc: DocItem; onClose: () => void }) {
             </svg>
           </button>
         </div>
-        <div className="flex-1 grid place-items-center bg-slate-50 p-10 overflow-auto">
+        <div className="flex-1 grid place-items-center bg-paper p-10 overflow-auto">
           <div className="text-center max-w-md">
-            <div className="w-16 h-20 mx-auto rounded-md bg-white border border-slate-200 shadow-sm grid place-items-center mb-3">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" strokeWidth="1.6" aria-hidden>
+            <div className="w-16 h-20 mx-auto rounded-md bg-white border border-bone shadow-sm grid place-items-center mb-3">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#8A8478" strokeWidth="1.6" aria-hidden>
                 <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
                 <path d="M14 2v6h6" />
               </svg>
             </div>
-            <p className="text-sm text-slate-600">
+            <p className="text-sm text-charcoal">
               Document preview — prototype placeholder. In the live product this opens the actual file inline.
             </p>
             {doc.targetsDescription && (
-              <p className="text-[12px] text-slate-500 mt-2 italic">{doc.targetsDescription}</p>
+              <p className="text-[12px] text-ink-muted mt-2 italic">{doc.targetsDescription}</p>
             )}
           </div>
         </div>
@@ -804,7 +804,7 @@ export function DocumentsLibrary({
   return (
     <div className="absolute inset-0 z-[450] bg-white flex flex-col">
       {/* Top bar — The Professor presents his library */}
-      <header className="px-6 py-4 border-b border-slate-200 flex items-start gap-4 bg-gradient-to-b from-[#FAF8FF] to-white">
+      <header className="px-6 py-4 border-b border-bone flex items-start gap-4 bg-gradient-to-b from-[#F1EBDE] to-white">
         <div className="relative shrink-0">
           <img
             src={characterProfessor}
@@ -814,10 +814,10 @@ export function DocumentsLibrary({
         </div>
         <div className="flex-1 min-w-0">
           {/* Breadcrumb */}
-          <nav aria-label="Breadcrumb" className="text-[11px] text-slate-500 mb-1 flex items-center gap-1 flex-wrap">
+          <nav aria-label="Breadcrumb" className="text-[11px] text-ink-muted mb-1 flex items-center gap-1 flex-wrap">
             <button
               onClick={() => { onNavigatePortfolio?.(); }}
-              className="hover:text-[#7C3AED] focus:outline-none focus:ring-2 focus:ring-[#7C3AED] rounded"
+              className="hover:text-[#56514A] focus:outline-none focus:ring-2 focus:ring-[#56514A] rounded"
             >
               Portfolio
             </button>
@@ -826,7 +826,7 @@ export function DocumentsLibrary({
                 <span aria-hidden>›</span>
                 <button
                   onClick={() => { onNavigateProperty?.(scopePropertyAsset.propertyId); }}
-                  className="hover:text-[#7C3AED] focus:outline-none focus:ring-2 focus:ring-[#7C3AED] rounded"
+                  className="hover:text-[#56514A] focus:outline-none focus:ring-2 focus:ring-[#56514A] rounded"
                 >
                   {scopePropertyAsset.propertyName}
                 </button>
@@ -839,30 +839,30 @@ export function DocumentsLibrary({
               </>
             )}
             <span aria-hidden>›</span>
-            <span className="text-slate-700 font-medium">Documents</span>
+            <span className="text-charcoal font-medium">Documents</span>
           </nav>
 
           <div className="flex items-center gap-2 flex-wrap">
-            <h2 className="text-base font-semibold text-slate-900">The Professor's library</h2>
-            <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-semibold uppercase tracking-wide bg-[#EDE9FE] text-[#5B21B6] border border-[#7C3AED]/20">
+            <h2 className="text-base font-semibold text-ink">The Professor's library</h2>
+            <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-semibold uppercase tracking-wide bg-[#F1EBDE] text-[#56514A] border border-[#56514A]/20">
               Curated by The Professor
             </span>
           </div>
-          <div className="text-[12px] text-slate-500 mt-0.5">
+          <div className="text-[12px] text-ink-muted mt-0.5">
             {filtered.length} of {isScoped ? scopedTotal : DOCS.length} documents{scopeLabel ? ` for ${scopeLabel}` : ""} · {chainsCount} tenancy chains · {assetCount} asset records
           </div>
           <p
-            className="text-[12px] text-slate-700 mt-1.5 min-h-[1.25rem] italic"
+            className="text-[12px] text-charcoal mt-1.5 min-h-[1.25rem] italic"
             aria-live="polite"
           >
             &ldquo;{typed}
-            {!greetingDone && <span className="inline-block w-1 h-3 ml-0.5 bg-[#7C3AED] align-middle animate-pulse" aria-hidden />}
+            {!greetingDone && <span className="inline-block w-1 h-3 ml-0.5 bg-[#56514A] align-middle animate-pulse" aria-hidden />}
             {greetingDone && <span>&rdquo;</span>}
           </p>
         </div>
         <button
           onClick={onClose}
-          className="p-1.5 text-slate-400 hover:text-slate-700 focus:outline-none focus:ring-2 focus:ring-[#7C3AED] rounded"
+          className="p-1.5 text-ink-muted hover:text-charcoal focus:outline-none focus:ring-2 focus:ring-[#56514A] rounded"
           aria-label="Close documents"
         >
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -874,12 +874,12 @@ export function DocumentsLibrary({
 
       {/* Scope chips */}
       {(scopePropertyAsset || scopeUnitNode) && (
-        <div className="px-6 py-2 border-b border-slate-100 flex flex-wrap items-center gap-2 bg-[#FAF8FF]">
-          <span className="text-[11px] uppercase tracking-wide font-semibold text-slate-500">Scope</span>
+        <div className="px-6 py-2 border-b border-faint-rule flex flex-wrap items-center gap-2 bg-[#F1EBDE]">
+          <span className="text-[11px] uppercase tracking-wide font-semibold text-ink-muted">Scope</span>
           {scopePropertyAsset && (
             <button
               onClick={clearScope}
-              className="inline-flex items-center gap-1.5 pl-2.5 pr-1.5 py-1 rounded-full bg-white border border-[#7C3AED]/30 text-[12px] text-[#5B21B6] font-medium hover:bg-[#EDE9FE] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]"
+              className="inline-flex items-center gap-1.5 pl-2.5 pr-1.5 py-1 rounded-full bg-white border border-[#56514A]/30 text-[12px] text-[#56514A] font-medium hover:bg-[#F1EBDE] focus:outline-none focus:ring-2 focus:ring-[#56514A]"
               aria-label={`Remove ${scopePropertyAsset.propertyName} scope`}
             >
               <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" aria-hidden><rect x="4" y="4" width="16" height="16" rx="2"/></svg>
@@ -887,9 +887,9 @@ export function DocumentsLibrary({
                 ? scopePropertyAsset.propertyName
                 : scopePropertyAsset.propertyName}
               {scopeUnitNode && !scopePropertyAsset.standalone && (
-                <span className="text-slate-500">› {scopeUnitNode.label}</span>
+                <span className="text-ink-muted">› {scopeUnitNode.label}</span>
               )}
-              <span className="ml-1 inline-flex items-center justify-center w-4 h-4 rounded-full hover:bg-[#7C3AED] hover:text-white" aria-hidden>
+              <span className="ml-1 inline-flex items-center justify-center w-4 h-4 rounded-full hover:bg-[#56514A] hover:text-white" aria-hidden>
                 <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M6 6l12 12M18 6L6 18"/></svg>
               </span>
             </button>
@@ -897,14 +897,14 @@ export function DocumentsLibrary({
           {scopePropertyAsset && scopeUnitNode && !scopePropertyAsset.standalone && (
             <button
               onClick={clearUnitScope}
-              className="text-[11px] text-slate-500 hover:text-[#5B21B6] underline focus:outline-none focus:ring-2 focus:ring-[#7C3AED] rounded"
+              className="text-[11px] text-ink-muted hover:text-[#56514A] underline focus:outline-none focus:ring-2 focus:ring-[#56514A] rounded"
             >
               widen to whole property
             </button>
           )}
           <button
             onClick={clearScope}
-            className="text-[11px] text-slate-500 hover:text-[#5B21B6] underline focus:outline-none focus:ring-2 focus:ring-[#7C3AED] rounded"
+            className="text-[11px] text-ink-muted hover:text-[#56514A] underline focus:outline-none focus:ring-2 focus:ring-[#56514A] rounded"
           >
             show all documents
           </button>
@@ -916,23 +916,23 @@ export function DocumentsLibrary({
         <div
           role="status"
           aria-live="polite"
-          className="px-6 py-2 border-b border-[#7C3AED]/15 bg-[#F5F3FF] flex items-center gap-3"
+          className="px-6 py-2 border-b border-[#56514A]/15 bg-[#F1EBDE] flex items-center gap-3"
         >
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#5B21B6" strokeWidth="2" aria-hidden>
-            <circle cx="12" cy="12" r="9"/><path d="M12 8v5"/><circle cx="12" cy="16.5" r="0.9" fill="#5B21B6"/>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#56514A" strokeWidth="2" aria-hidden>
+            <circle cx="12" cy="12" r="9"/><path d="M12 8v5"/><circle cx="12" cy="16.5" r="0.9" fill="#56514A"/>
           </svg>
-          <p className="text-[12px] text-[#3F2A8A] flex-1">
+          <p className="text-[12px] text-[#2D2D2D] flex-1">
             Showing documents for <span className="font-semibold">{scopeLabel}</span> — because that's where you are.{" "}
             <button
               onClick={clearScope}
-              className="underline font-medium hover:text-[#5B21B6] focus:outline-none focus:ring-2 focus:ring-[#7C3AED] rounded"
+              className="underline font-medium hover:text-[#56514A] focus:outline-none focus:ring-2 focus:ring-[#56514A] rounded"
             >
               Show all documents
             </button>
           </p>
           <button
             onClick={() => setScopeBannerDismissed(true)}
-            className="p-1 text-[#5B21B6]/60 hover:text-[#5B21B6] focus:outline-none focus:ring-2 focus:ring-[#7C3AED] rounded"
+            className="p-1 text-[#56514A]/60 hover:text-[#56514A] focus:outline-none focus:ring-2 focus:ring-[#56514A] rounded"
             aria-label="Dismiss scope notice"
           >
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M6 6l12 12M18 6L6 18"/></svg>
@@ -941,14 +941,14 @@ export function DocumentsLibrary({
       )}
 
       {/* Filters */}
-      <div className="px-6 py-3 border-b border-slate-100 flex flex-wrap items-center gap-2">
-        <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-slate-200 bg-white focus-within:ring-2 focus-within:ring-[#7C3AED]/30">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#64748B" strokeWidth="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+      <div className="px-6 py-3 border-b border-faint-rule flex flex-wrap items-center gap-2">
+        <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-bone bg-white focus-within:ring-2 focus-within:ring-[#56514A]/30">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#56514A" strokeWidth="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
           <input
             value={q}
             onChange={(e) => setQ(e.target.value)}
             placeholder="Search name, type, tenant, date…"
-            className="text-sm bg-transparent outline-none w-64 placeholder:text-slate-400"
+            className="text-sm bg-transparent outline-none w-64 placeholder:text-ink-muted"
             aria-label="Search documents"
           />
         </div>
@@ -963,7 +963,7 @@ export function DocumentsLibrary({
         <select
           value={type}
           onChange={(e) => setType(e.target.value as any)}
-          className="text-[12px] px-2.5 py-1.5 rounded-md border border-slate-200 bg-white text-slate-700 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]"
+          className="text-[12px] px-2.5 py-1.5 rounded-md border border-bone bg-white text-charcoal focus:outline-none focus:ring-2 focus:ring-[#56514A]"
           aria-label="Filter by type"
         >
           <option value="all">All types</option>
@@ -977,7 +977,7 @@ export function DocumentsLibrary({
             if (v === "all") { setScopeProperty(null); setScopeUnit(null); }
             else { setScopeProperty(v); setScopeUnit(null); }
           }}
-          className="text-[12px] px-2.5 py-1.5 rounded-md border border-slate-200 bg-white text-slate-700 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]"
+          className="text-[12px] px-2.5 py-1.5 rounded-md border border-bone bg-white text-charcoal focus:outline-none focus:ring-2 focus:ring-[#56514A]"
           aria-label="Filter by property"
         >
           <option value="all">All properties</option>
@@ -988,7 +988,7 @@ export function DocumentsLibrary({
           <select
             value={scopeUnit ?? "all"}
             onChange={(e) => setScopeUnit(e.target.value === "all" ? null : e.target.value)}
-            className="text-[12px] px-2.5 py-1.5 rounded-md border border-slate-200 bg-white text-slate-700 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]"
+            className="text-[12px] px-2.5 py-1.5 rounded-md border border-bone bg-white text-charcoal focus:outline-none focus:ring-2 focus:ring-[#56514A]"
             aria-label="Filter by unit"
           >
             <option value="all">All units</option>
@@ -998,27 +998,27 @@ export function DocumentsLibrary({
           </select>
         )}
 
-        <label className="text-[12px] text-slate-700 flex items-center gap-1.5 px-2 py-1.5 rounded-md hover:bg-slate-50">
+        <label className="text-[12px] text-charcoal flex items-center gap-1.5 px-2 py-1.5 rounded-md hover:bg-paper">
           <input
             type="checkbox"
             checked={includeSuperseded}
             onChange={(e) => setIncludeSuperseded(e.target.checked)}
-            className="accent-[#7C3AED]"
+            className="accent-[#56514A]"
           />
           Include superseded
         </label>
 
-        <div className="ml-auto inline-flex rounded-md border border-slate-200 overflow-hidden">
+        <div className="ml-auto inline-flex rounded-md border border-bone overflow-hidden">
           <button
             onClick={() => setMode("tree")}
-            className={`px-3 py-1.5 text-[12px] font-medium ${mode === "tree" ? "bg-slate-900 text-white" : "bg-white text-slate-700 hover:bg-slate-50"} focus:outline-none focus:ring-2 focus:ring-[#7C3AED]`}
+            className={`px-3 py-1.5 text-[12px] font-medium ${mode === "tree" ? "bg-ink text-white" : "bg-white text-charcoal hover:bg-paper"} focus:outline-none focus:ring-2 focus:ring-[#56514A]`}
             aria-pressed={mode === "tree"}
           >
             By asset
           </button>
           <button
             onClick={() => setMode("all")}
-            className={`px-3 py-1.5 text-[12px] font-medium border-l border-slate-200 ${mode === "all" ? "bg-slate-900 text-white" : "bg-white text-slate-700 hover:bg-slate-50"} focus:outline-none focus:ring-2 focus:ring-[#7C3AED]`}
+            className={`px-3 py-1.5 text-[12px] font-medium border-l border-bone ${mode === "all" ? "bg-ink text-white" : "bg-white text-charcoal hover:bg-paper"} focus:outline-none focus:ring-2 focus:ring-[#56514A]`}
             aria-pressed={mode === "all"}
           >
             All documents
@@ -1056,7 +1056,7 @@ export function DocumentsLibrary({
         <div
           role="status"
           aria-live="polite"
-          className="absolute left-1/2 -translate-x-1/2 bottom-6 bg-slate-900 text-white text-sm px-4 py-2 rounded-lg shadow-lg"
+          className="absolute left-1/2 -translate-x-1/2 bottom-6 bg-ink text-white text-sm px-4 py-2 rounded-lg shadow-lg"
         >
           {flash}
         </div>
@@ -1074,15 +1074,15 @@ function SegBar<T extends string>({
   onChange: (v: T) => void;
 }) {
   return (
-    <div className="inline-flex items-center gap-1 rounded-md border border-slate-200 bg-white p-0.5" role="group" aria-label={label}>
+    <div className="inline-flex items-center gap-1 rounded-md border border-bone bg-white p-0.5" role="group" aria-label={label}>
       {options.map((o) => (
         <button
           key={o.v}
           onClick={() => onChange(o.v)}
           aria-pressed={value === o.v}
           className={`px-2.5 py-1 text-[12px] rounded ${
-            value === o.v ? "bg-[#EDE9FE] text-[#5B21B6] font-medium" : "text-slate-600 hover:bg-slate-50"
-          } focus:outline-none focus:ring-2 focus:ring-[#7C3AED]`}
+            value === o.v ? "bg-[#F1EBDE] text-[#56514A] font-medium" : "text-charcoal hover:bg-paper"
+          } focus:outline-none focus:ring-2 focus:ring-[#56514A]`}
         >
           {o.l}
         </button>
@@ -1130,7 +1130,7 @@ function TreeView({
         }
 
         return (
-          <div key={a.propertyId} className="rounded-lg border border-slate-200 bg-white p-3">
+          <div key={a.propertyId} className="rounded-lg border border-bone bg-white p-3">
             <AssetSection
               title={`${a.propertyName} · ${a.postcode}`}
               level="property"
@@ -1160,7 +1160,7 @@ function TreeView({
         );
       })}
       {docs.length === 0 && (
-        <div className="text-sm text-slate-500 italic">No documents match your filters.</div>
+        <div className="text-sm text-ink-muted italic">No documents match your filters.</div>
       )}
     </div>
   );
@@ -1179,7 +1179,7 @@ function FlatList({
     <div className="space-y-1.5 max-w-3xl">
       {sorted.map((d) => (
         <div key={d.id} className="flex flex-col">
-          <div className="text-[11px] text-slate-500 px-1 mb-0.5">
+          <div className="text-[11px] text-ink-muted px-1 mb-0.5">
             {d.propertyName}{d.unitLabel ? ` · ${d.unitLabel}` : ""}
           </div>
           <DocRow
@@ -1192,7 +1192,7 @@ function FlatList({
         </div>
       ))}
       {sorted.length === 0 && (
-        <div className="text-sm text-slate-500 italic">No documents match your filters.</div>
+        <div className="text-sm text-ink-muted italic">No documents match your filters.</div>
       )}
     </div>
   );

@@ -234,7 +234,7 @@ const AnnouncementPost = () => {
                 </header>
 
                 {/* Article Content */}
-                <Card className="p-4 md:p-6 flex-1 bg-gray-50 dark:bg-gray-900/20">
+                <Card className="p-4 md:p-6 flex-1 bg-paper dark:bg-ink/20">
                   <MarkdownRenderer
                     content={post.content}
                     className="prose prose-sm md:prose-lg max-w-none dark:prose-invert"

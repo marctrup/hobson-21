@@ -168,7 +168,7 @@ export const OrchestrationDemo: React.FC = () => {
           style={{ animation: hasStarted ? "fade-up 0.4s ease both" : undefined }}
         >
           <img src={hobsonOwl} alt="Hobson" className="w-10 h-10 object-contain" />
-          <div className="rounded-2xl rounded-tl-sm px-4 py-3 text-sm max-w-[85%]" style={{ background: 'var(--bone-wash)', color: 'var(--ink)', border: '1px solid #E4DAC6' }}>
+          <div className="rounded-2xl rounded-tl-sm px-4 py-3 text-sm max-w-[85%]" style={{ background: 'var(--bone-wash)', color: 'var(--ink)', border: '1px solid #E6D2AE' }}>
             {HOBSON_PROACTIVE.slice(0, introProactiveIdx)}
             {introPhase === 1 && <span className="animate-pulse">|</span>}
           </div>
@@ -203,7 +203,7 @@ export const OrchestrationDemo: React.FC = () => {
           style={{ animation: introPhase >= 4 ? "fade-up 0.4s ease both" : undefined }}
         >
           <img src={hobsonOwl} alt="Hobson" className="w-10 h-10 object-contain" />
-          <div className="rounded-2xl rounded-tl-sm px-4 py-3 text-sm" style={{ background: 'var(--bone-wash)', color: 'var(--ink)', border: '1px solid #E4DAC6' }}>
+          <div className="rounded-2xl rounded-tl-sm px-4 py-3 text-sm" style={{ background: 'var(--bone-wash)', color: 'var(--ink)', border: '1px solid #E6D2AE' }}>
 
             {HOBSON_INTRO.slice(0, introHobsonIdx)}
             {introPhase === 4 && <span className="animate-pulse">|</span>}
@@ -271,7 +271,7 @@ export const OrchestrationDemo: React.FC = () => {
         <div className={`mt-5 transition-all duration-500 ${finalShown ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2 pointer-events-none h-0 overflow-hidden"}`}>
           <div className="flex items-start gap-3">
             <img src={hobsonOwl} alt="Hobson" className="w-10 h-10 object-contain" />
-            <div className="rounded-2xl rounded-tl-sm px-4 py-3 text-sm max-w-[90%]" style={{ background: 'var(--bone-wash)', color: 'var(--ink)', border: '1px solid #E4DAC6' }}>
+            <div className="rounded-2xl rounded-tl-sm px-4 py-3 text-sm max-w-[90%]" style={{ background: 'var(--bone-wash)', color: 'var(--ink)', border: '1px solid #E6D2AE' }}>
               <p>
                 I've finished preparing your rent review for <span className="font-semibold" style={{ color: 'var(--ink)' }}>32 Hamilton Gardens</span>.
                 Here is what I have for your approval:

@@ -3,52 +3,52 @@ import { Target, Users, Zap, Shield, Clock, Globe, FileText, TrendingUp, CheckCi
 
 const GoToMarketSummaryVisual = () => {
   return (
-    <div className="space-y-8 p-6 bg-gradient-to-br from-slate-50 to-white rounded-xl">
+    <div className="space-y-8 p-6 bg-gradient-to-br from-paper to-white rounded-xl">
       {/* Header */}
       <div className="text-center mb-8">
-        <div className="inline-flex items-center gap-2 px-4 py-2 bg-teal-100 text-teal-700 rounded-full text-sm font-medium mb-4">
+        <div className="inline-flex items-center gap-2 px-4 py-2 bg-bone-wash text-charcoal rounded-full text-sm font-medium mb-4">
           <FileText className="w-4 h-4" />
           SOSTAC Framework
         </div>
-        <p className="text-slate-600 max-w-3xl mx-auto">
+        <p className="text-charcoal max-w-3xl mx-auto">
           Hobson — Investor Summary. A full SOSTAC-based Marketing Strategy document is available on request.
         </p>
       </div>
 
       {/* What We're Building */}
-      <div className="bg-white rounded-xl border border-slate-200 p-6 shadow-sm">
+      <div className="bg-white rounded-xl border border-bone p-6 shadow-sm">
         <div className="flex items-center gap-3 mb-4">
-          <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
-            <Target className="w-5 h-5 text-blue-600" />
+          <div className="w-10 h-10 bg-bone-wash rounded-lg flex items-center justify-center">
+            <Target className="w-5 h-5 text-charcoal" />
           </div>
-          <h3 className="text-xl font-bold text-slate-900">What We're Building</h3>
+          <h3 className="text-xl font-bold text-ink">What We're Building</h3>
         </div>
-        <p className="text-slate-700 mb-4">
+        <p className="text-charcoal mb-4">
           Hobson is an AI assistant for real estate teams that turns existing documents into fast, accurate, referenced answers.
         </p>
-        <p className="text-slate-600 mb-4">
+        <p className="text-charcoal mb-4">
           Real estate organisations are overwhelmed by leases, agreements, and compliance documents spread across CRMs, shared drives, and email. Finding simple information is slow, manual, and risky.
         </p>
-        <div className="bg-blue-50 border border-blue-100 rounded-lg p-4">
-          <p className="text-blue-800 font-medium">
+        <div className="bg-paper border border-faint-rule rounded-lg p-4">
+          <p className="text-ink font-medium">
             Hobson does not replace existing systems. It works with them — acting as a lightweight AI layer that reads the documents teams already rely on and delivers instant, source-backed answers.
           </p>
         </div>
         <div className="mt-4 text-center">
-          <span className="text-sm font-semibold text-slate-500 uppercase tracking-wider">Positioning:</span>
-          <span className="ml-2 text-lg font-bold text-blue-600">Disruption Without Displacement</span>
+          <span className="text-sm font-semibold text-ink-muted uppercase tracking-wider">Positioning:</span>
+          <span className="ml-2 text-lg font-bold text-charcoal">Disruption Without Displacement</span>
         </div>
       </div>
 
       {/* The Problem */}
-      <div className="bg-white rounded-xl border border-slate-200 p-6 shadow-sm">
+      <div className="bg-white rounded-xl border border-bone p-6 shadow-sm">
         <div className="flex items-center gap-3 mb-4">
-          <div className="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center">
-            <Zap className="w-5 h-5 text-red-600" />
+          <div className="w-10 h-10 bg-danger-bg rounded-lg flex items-center justify-center">
+            <Zap className="w-5 h-5 text-danger" />
           </div>
-          <h3 className="text-xl font-bold text-slate-900">The Problem</h3>
+          <h3 className="text-xl font-bold text-ink">The Problem</h3>
         </div>
-        <p className="text-slate-600 mb-4">Across real estate organisations of all sizes:</p>
+        <p className="text-charcoal mb-4">Across real estate organisations of all sizes:</p>
         <div className="grid md:grid-cols-2 gap-3">
           {[
             "Critical information lives inside unstructured documents",
@@ -56,31 +56,31 @@ const GoToMarketSummaryVisual = () => {
             "Compliance, investor reporting, and audit pressure is increasing",
             "Teams are leaner, but expectations are higher",
           ].map((item, index) => (
-            <div key={index} className="flex items-start gap-2 bg-red-50 rounded-lg p-3">
-              <div className="w-2 h-2 bg-red-400 rounded-full mt-2" />
-              <span className="text-slate-700">{item}</span>
+            <div key={index} className="flex items-start gap-2 bg-danger-bg rounded-lg p-3">
+              <div className="w-2 h-2 bg-danger-border rounded-full mt-2" />
+              <span className="text-charcoal">{item}</span>
             </div>
           ))}
         </div>
-        <p className="text-slate-600 mt-4">
+        <p className="text-charcoal mt-4">
           Legacy PropTech systems are expensive, slow to change, and difficult to implement. Most AI competitors focus on leasing, CRM, or analytics — not document accuracy.
         </p>
-        <div className="mt-4 bg-amber-50 border border-amber-200 rounded-lg p-4">
-          <p className="text-amber-800 font-semibold">
+        <div className="mt-4 bg-warning-bg border border-warning-border rounded-lg p-4">
+          <p className="text-warning font-semibold">
             The gap: fast, trustworthy document intelligence that fits into existing workflows.
           </p>
         </div>
       </div>
 
       {/* The Solution */}
-      <div className="bg-white rounded-xl border border-slate-200 p-6 shadow-sm">
+      <div className="bg-white rounded-xl border border-bone p-6 shadow-sm">
         <div className="flex items-center gap-3 mb-4">
-          <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
-            <CheckCircle className="w-5 h-5 text-green-600" />
+          <div className="w-10 h-10 bg-success-bg rounded-lg flex items-center justify-center">
+            <CheckCircle className="w-5 h-5 text-success" />
           </div>
-          <h3 className="text-xl font-bold text-slate-900">The Solution</h3>
+          <h3 className="text-xl font-bold text-ink">The Solution</h3>
         </div>
-        <p className="text-slate-700 mb-4">Hobson turns documents into a usable knowledge layer.</p>
+        <p className="text-charcoal mb-4">Hobson turns documents into a usable knowledge layer.</p>
         <div className="grid md:grid-cols-2 gap-4 mb-4">
           {[
             { title: "Document-native", desc: "Works directly from leases and agreements" },
@@ -88,24 +88,24 @@ const GoToMarketSummaryVisual = () => {
             { title: "No system replacement", desc: "Zero integration by default" },
             { title: "Low friction", desc: "No onboarding, no process change" },
           ].map((item, index) => (
-            <div key={index} className="bg-green-50 rounded-lg p-4 border border-green-100">
-              <h4 className="font-semibold text-green-800 mb-1">{item.title}</h4>
-              <p className="text-sm text-slate-600">{item.desc}</p>
+            <div key={index} className="bg-success-bg rounded-lg p-4 border border-success-border">
+              <h4 className="font-semibold text-success mb-1">{item.title}</h4>
+              <p className="text-sm text-charcoal">{item.desc}</p>
             </div>
           ))}
         </div>
-        <p className="text-slate-600 italic">
+        <p className="text-charcoal italic">
           This makes Hobson safe to adopt in a risk-averse industry where accuracy and trust matter more than novelty.
         </p>
       </div>
 
       {/* Who We Target */}
-      <div className="bg-white rounded-xl border border-slate-200 p-6 shadow-sm">
+      <div className="bg-white rounded-xl border border-bone p-6 shadow-sm">
         <div className="flex items-center gap-3 mb-4">
-          <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
-            <Users className="w-5 h-5 text-purple-600" />
+          <div className="w-10 h-10 bg-bone-wash rounded-lg flex items-center justify-center">
+            <Users className="w-5 h-5 text-charcoal" />
           </div>
-          <h3 className="text-xl font-bold text-slate-900">Who We Target (Phased)</h3>
+          <h3 className="text-xl font-bold text-ink">Who We Target (Phased)</h3>
         </div>
         <div className="space-y-4">
           {[
@@ -146,14 +146,14 @@ const GoToMarketSummaryVisual = () => {
                   {item.phase}
                 </span>
                 {item.label && (
-                  <span className="text-xs text-slate-500 uppercase">{item.label}</span>
+                  <span className="text-xs text-ink-muted uppercase">{item.label}</span>
                 )}
               </div>
-              <h4 className="font-semibold text-slate-800 mb-2">{item.title}</h4>
+              <h4 className="font-semibold text-ink mb-2">{item.title}</h4>
               <ul className="space-y-1">
                 {item.points.map((point, idx) => (
-                  <li key={idx} className="flex items-start gap-2 text-sm text-slate-600">
-                    <ArrowRight className="w-3 h-3 mt-1 text-slate-400" />
+                  <li key={idx} className="flex items-start gap-2 text-sm text-charcoal">
+                    <ArrowRight className="w-3 h-3 mt-1 text-ink-muted" />
                     {point}
                   </li>
                 ))}
@@ -164,14 +164,14 @@ const GoToMarketSummaryVisual = () => {
       </div>
 
       {/* Why We Win */}
-      <div className="bg-white rounded-xl border border-slate-200 p-6 shadow-sm">
+      <div className="bg-white rounded-xl border border-bone p-6 shadow-sm">
         <div className="flex items-center gap-3 mb-4">
-          <div className="w-10 h-10 bg-amber-100 rounded-lg flex items-center justify-center">
-            <Shield className="w-5 h-5 text-amber-600" />
+          <div className="w-10 h-10 bg-warning-bg rounded-lg flex items-center justify-center">
+            <Shield className="w-5 h-5 text-warning" />
           </div>
-          <h3 className="text-xl font-bold text-slate-900">Why We Win</h3>
+          <h3 className="text-xl font-bold text-ink">Why We Win</h3>
         </div>
-        <p className="text-slate-600 mb-4">Hobson is differentiated by:</p>
+        <p className="text-charcoal mb-4">Hobson is differentiated by:</p>
         <div className="grid md:grid-cols-2 gap-3">
           {[
             "Accuracy over automation (answers you can trust)",
@@ -179,24 +179,24 @@ const GoToMarketSummaryVisual = () => {
             "Non-disruptive adoption (works alongside MRI, Yardi, etc.)",
             "Cost efficiency (no heavy implementations)",
           ].map((item, index) => (
-            <div key={index} className="flex items-start gap-2 bg-amber-50 rounded-lg p-3 border border-amber-100">
-              <CheckCircle className="w-4 h-4 text-amber-600 mt-0.5" />
-              <span className="text-slate-700">{item}</span>
+            <div key={index} className="flex items-start gap-2 bg-warning-bg rounded-lg p-3 border border-warning-border">
+              <CheckCircle className="w-4 h-4 text-warning mt-0.5" />
+              <span className="text-charcoal">{item}</span>
             </div>
           ))}
         </div>
-        <p className="mt-4 text-center font-medium text-amber-700">
+        <p className="mt-4 text-center font-medium text-warning">
           This positions Hobson as a category creator in AI document intelligence for real estate.
         </p>
       </div>
 
       {/* Go-to-Market Approach */}
-      <div className="bg-white rounded-xl border border-slate-200 p-6 shadow-sm">
+      <div className="bg-white rounded-xl border border-bone p-6 shadow-sm">
         <div className="flex items-center gap-3 mb-4">
-          <div className="w-10 h-10 bg-teal-100 rounded-lg flex items-center justify-center">
-            <TrendingUp className="w-5 h-5 text-teal-600" />
+          <div className="w-10 h-10 bg-bone-wash rounded-lg flex items-center justify-center">
+            <TrendingUp className="w-5 h-5 text-charcoal" />
           </div>
-          <h3 className="text-xl font-bold text-slate-900">Go-to-Market Approach</h3>
+          <h3 className="text-xl font-bold text-ink">Go-to-Market Approach</h3>
         </div>
         <div className="grid md:grid-cols-2 gap-3 mb-4">
           {[
@@ -205,22 +205,22 @@ const GoToMarketSummaryVisual = () => {
             "Early proof through time saved, accuracy, and reduced risk",
             "Gradual expansion from pilots → paid adoption → scale",
           ].map((item, index) => (
-            <div key={index} className="flex items-start gap-2 bg-teal-50 rounded-lg p-3 border border-teal-100">
-              <ArrowRight className="w-4 h-4 text-teal-600 mt-0.5" />
-              <span className="text-slate-700">{item}</span>
+            <div key={index} className="flex items-start gap-2 bg-paper rounded-lg p-3 border border-faint-rule">
+              <ArrowRight className="w-4 h-4 text-charcoal mt-0.5" />
+              <span className="text-charcoal">{item}</span>
             </div>
           ))}
         </div>
-        <p className="text-center font-semibold text-teal-700">Trust and clarity come before growth.</p>
+        <p className="text-center font-semibold text-charcoal">Trust and clarity come before growth.</p>
       </div>
 
       {/* Timeline & Milestones */}
-      <div className="bg-white rounded-xl border border-slate-200 p-6 shadow-sm">
+      <div className="bg-white rounded-xl border border-bone p-6 shadow-sm">
         <div className="flex items-center gap-3 mb-4">
-          <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
-            <Clock className="w-5 h-5 text-blue-600" />
+          <div className="w-10 h-10 bg-bone-wash rounded-lg flex items-center justify-center">
+            <Clock className="w-5 h-5 text-charcoal" />
           </div>
-          <h3 className="text-xl font-bold text-slate-900">Timeline & Milestones</h3>
+          <h3 className="text-xl font-bold text-ink">Timeline & Milestones</h3>
         </div>
         <div className="space-y-4">
           {[
@@ -260,13 +260,13 @@ const GoToMarketSummaryVisual = () => {
           ].map((milestone, index) => (
             <div key={index} className="flex gap-4">
               <div className="w-32 flex-shrink-0">
-                <span className="text-sm font-bold text-blue-600">{milestone.period}</span>
+                <span className="text-sm font-bold text-charcoal">{milestone.period}</span>
               </div>
               <div className="flex-1">
                 <ul className="space-y-1">
                   {milestone.items.map((item, idx) => (
-                    <li key={idx} className="flex items-start gap-2 text-sm text-slate-600">
-                      <div className="w-1.5 h-1.5 bg-blue-400 rounded-full mt-2" />
+                    <li key={idx} className="flex items-start gap-2 text-sm text-charcoal">
+                      <div className="w-1.5 h-1.5 bg-ink-faint rounded-full mt-2" />
                       {item}
                     </li>
                   ))}
@@ -278,28 +278,28 @@ const GoToMarketSummaryVisual = () => {
       </div>
 
       {/* Long-Term Vision */}
-      <div className="bg-gradient-to-r from-blue-50 to-blue-100 rounded-xl p-6 border border-blue-200">
+      <div className="bg-gradient-to-r from-paper to-bone-wash rounded-xl p-6 border border-bone">
         <div className="flex items-center gap-3 mb-4">
-          <div className="w-10 h-10 bg-blue-200 rounded-lg flex items-center justify-center">
-            <Globe className="w-5 h-5 text-blue-700" />
+          <div className="w-10 h-10 bg-bone rounded-lg flex items-center justify-center">
+            <Globe className="w-5 h-5 text-charcoal" />
           </div>
-          <h3 className="text-xl font-bold text-slate-900">Long-Term Vision</h3>
+          <h3 className="text-xl font-bold text-ink">Long-Term Vision</h3>
         </div>
-        <p className="text-slate-600 mb-4">
+        <p className="text-charcoal mb-4">
           Hobson evolves from answering questions to anticipating risk and opportunity — surfacing renewals, obligations, anomalies, and portfolio patterns automatically.
         </p>
-        <p className="text-slate-800 font-medium mb-4">
+        <p className="text-ink font-medium mb-4">
           The end goal is to become the trusted clarity layer for real estate organisations worldwide.
         </p>
-        <div className="bg-white rounded-lg p-4 border border-blue-200">
-          <p className="text-blue-800 font-semibold text-center">
+        <div className="bg-white rounded-lg p-4 border border-bone">
+          <p className="text-ink font-semibold text-center">
             In short: Hobson solves a growing, painful problem with a simple, defensible approach — delivering immediate value today, while building toward a much larger AI-driven future.
           </p>
         </div>
       </div>
 
       {/* Document Request Note */}
-      <div className="text-center text-sm text-slate-500 italic">
+      <div className="text-center text-sm text-ink-muted italic">
         A comprehensive Marketing Strategy document based on the SOSTAC framework is available on request.
       </div>
     </div>

@@ -295,17 +295,17 @@ const AssumptionsVisual = () => {
         <div className="mt-6 border-t border-border pt-4">
           <h4 className="font-semibold text-foreground mb-3">AI Reading in Document Cost Per Client (One-Off)</h4>
           <div className="grid grid-cols-3 gap-4">
-            <div className="bg-green-50 border border-green-200 rounded-lg p-4 text-center">
-              <div className="text-xl font-bold text-green-700">£3–4</div>
-              <div className="text-xs text-green-600">Small (5 units)</div>
+            <div className="bg-success-bg border border-success-border rounded-lg p-4 text-center">
+              <div className="text-xl font-bold text-success">£3–4</div>
+              <div className="text-xs text-success">Small (5 units)</div>
             </div>
-            <div className="bg-green-50 border border-green-200 rounded-lg p-4 text-center">
-              <div className="text-xl font-bold text-green-700">£60</div>
-              <div className="text-xs text-green-600">Medium (100 units)</div>
+            <div className="bg-success-bg border border-success-border rounded-lg p-4 text-center">
+              <div className="text-xl font-bold text-success">£60</div>
+              <div className="text-xs text-success">Medium (100 units)</div>
             </div>
-            <div className="bg-green-50 border border-green-200 rounded-lg p-4 text-center">
-              <div className="text-xl font-bold text-green-700">£600</div>
-              <div className="text-xs text-green-600">Large (1,000 units)</div>
+            <div className="bg-success-bg border border-success-border rounded-lg p-4 text-center">
+              <div className="text-xl font-bold text-success">£600</div>
+              <div className="text-xs text-success">Large (1,000 units)</div>
             </div>
           </div>
           <p className="text-xs text-muted-foreground mt-2 text-center">
@@ -416,9 +416,9 @@ const AssumptionsVisual = () => {
       </Card>
 
       {/* Why Assumptions Are Credible */}
-      <Card className="p-6 bg-gradient-to-br from-green-50 to-green-100/50 border-green-200">
+      <Card className="p-6 bg-gradient-to-br from-success-bg to-success-bg/50 border-success-border">
         <h3 className="text-lg font-bold text-foreground mb-4 flex items-center gap-2">
-          <CheckCircle className="w-5 h-5 text-green-600" />
+          <CheckCircle className="w-5 h-5 text-success" />
           Why These Assumptions Are Credible
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -433,7 +433,7 @@ const AssumptionsVisual = () => {
             "No integration teams, no onboarding teams required",
           ].map((item, idx) => (
             <div key={idx} className="flex items-start gap-2">
-              <CheckCircle className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
+              <CheckCircle className="w-4 h-4 text-success flex-shrink-0 mt-0.5" />
               <span className="text-sm text-foreground">{item}</span>
             </div>
           ))}
@@ -441,9 +441,9 @@ const AssumptionsVisual = () => {
       </Card>
 
       {/* Investor Disclosure */}
-      <Card className="p-4 bg-amber-50 border-amber-200">
-        <h4 className="text-sm font-semibold text-amber-800 mb-2">Investor Disclosure Notes</h4>
-        <ul className="text-xs text-amber-700 space-y-1">
+      <Card className="p-4 bg-warning-bg border-warning-border">
+        <h4 className="text-sm font-semibold text-warning mb-2">Investor Disclosure Notes</h4>
+        <ul className="text-xs text-warning space-y-1">
           <li>• Model excludes working capital timing adjustments for clarity</li>
           <li>• Flat 20% tax rate applied; no NOL modelling</li>
           <li>• Cash-basis forecast with no AR/AP/deferred revenue recognition</li>

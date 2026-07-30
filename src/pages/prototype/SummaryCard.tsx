@@ -30,49 +30,49 @@ type Props = {
 };
 
 const ND = (
-  <span className="italic text-slate-400">Not determined</span>
+  <span className="italic text-ink-muted">Not determined</span>
 );
 
 const VacantChip = () => (
-  <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wide bg-amber-100 text-amber-800 border border-amber-200">
+  <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wide bg-warning-bg text-warning border border-warning-border">
     Vacant
   </span>
 );
 
 const MissingChip = () => (
-  <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wide bg-rose-50 text-rose-700 border border-rose-200">
+  <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wide bg-danger-bg text-danger border border-danger-border">
     No document on file
   </span>
 );
 
 const LegallyRequiredChip = () => (
-  <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wide bg-rose-100 text-rose-800 border border-rose-300">
+  <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wide bg-danger-bg text-danger border border-danger-border">
     <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" aria-hidden><circle cx="12" cy="12" r="10"/><path d="M12 8v5"/><circle cx="12" cy="17" r="0.8" fill="currentColor"/></svg>
     Legally required
   </span>
 );
 
 const BusinessRequiredChip = () => (
-  <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wide bg-amber-50 text-amber-800 border border-amber-300" title="Your own / contractual standard — not law">
+  <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wide bg-warning-bg text-warning border border-warning-border" title="Your own / contractual standard — not law">
     Required
   </span>
 );
 
 function valOrND(v?: string | null) {
   if (v === null || v === undefined || v === "") return ND;
-  return <span className="text-slate-800">{v}</span>;
+  return <span className="text-ink">{v}</span>;
 }
 
 export default function SummaryCard({ kind, scope, onOpenUnit, augmentCompliance }: Props) {
   const title = scopeTitle(scope, kind);
   return (
-    <div className="w-full bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden">
-      <header className="flex items-center justify-between gap-3 px-4 py-3 border-b border-slate-100">
+    <div className="w-full bg-white border border-bone rounded-2xl shadow-sm overflow-hidden">
+      <header className="flex items-center justify-between gap-3 px-4 py-3 border-b border-faint-rule">
         <div className="min-w-0">
-          <div className="text-[11px] uppercase tracking-wide text-slate-500 font-semibold">
+          <div className="text-[11px] uppercase tracking-wide text-ink-muted font-semibold">
             {kind === "occupational" ? "Occupational summary" : "Compliance summary"}
           </div>
-          <h3 className="text-sm font-semibold text-slate-900 truncate">{title}</h3>
+          <h3 className="text-sm font-semibold text-ink truncate">{title}</h3>
         </div>
         <ExportButton kind={kind} scope={scope} />
       </header>
@@ -103,10 +103,10 @@ function OccupationalView({ scope, onOpenUnit }: { scope: SummaryScope; onOpenUn
       ["Next Break Date",  valOrND(r.nextBreakDate)],
     ];
     return (
-      <dl className="divide-y divide-slate-100">
+      <dl className="divide-y divide-faint-rule">
         {kv.map(([k, v]) => (
           <div key={k} className="grid grid-cols-[180px_1fr] gap-3 px-4 py-2.5 text-sm">
-            <dt className="text-slate-500">{k}</dt>
+            <dt className="text-ink-muted">{k}</dt>
             <dd>{v}</dd>
           </div>
         ))}
@@ -134,10 +134,10 @@ function OccupationalView({ scope, onOpenUnit }: { scope: SummaryScope; onOpenUn
           onOpenUnit?.(r.propertyId, r.unitId);
         }
       }}
-      className="cursor-pointer border-b border-slate-100 last:border-b-0 hover:bg-[#F5F3FF] focus:bg-[#EDE9FE] focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#7C3AED]/40"
+      className="cursor-pointer border-b border-faint-rule last:border-b-0 hover:bg-[#F1EBDE] focus:bg-[#F1EBDE] focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#56514A]/40"
     >
       <td className="px-3 py-2 align-middle truncate">
-        <span className="text-slate-900 font-medium">{r.unitLabel}</span>
+        <span className="text-ink font-medium">{r.unitLabel}</span>
         {r.status === "Vacant" && <span className="ml-2"><VacantChip /></span>}
       </td>
       <td className="px-3 py-2 align-middle truncate">{r.status === "Vacant" ? ND : valOrND(r.tenantName)}</td>
@@ -153,7 +153,7 @@ function OccupationalView({ scope, onOpenUnit }: { scope: SummaryScope; onOpenUn
       <colgroup>
         {colWidths.map((w, i) => <col key={i} style={{ width: w }} />)}
       </colgroup>
-      <thead className="bg-slate-50 text-slate-500 text-[11px] uppercase tracking-wide">
+      <thead className="bg-paper text-ink-muted text-[11px] uppercase tracking-wide">
         <tr>
           {headers.map((h) => (
             <th key={h} className="px-3 py-2 text-left font-medium">{h}</th>
@@ -167,8 +167,8 @@ function OccupationalView({ scope, onOpenUnit }: { scope: SummaryScope; onOpenUn
               const pc = occupationalCounts(prows);
               return (
                 <React.Fragment key={p.id}>
-                  <tr className="bg-slate-100/80">
-                    <td colSpan={headers.length} className="px-3 py-2 text-[11px] font-semibold uppercase tracking-wide text-slate-700">
+                  <tr className="bg-bone-wash/80">
+                    <td colSpan={headers.length} className="px-3 py-2 text-[11px] font-semibold uppercase tracking-wide text-charcoal">
                       {p.name} · {p.area} · {p.unitsTotal} units · {pc.let} let · {pc.vacant} vacant
                     </td>
                   </tr>
@@ -180,7 +180,7 @@ function OccupationalView({ scope, onOpenUnit }: { scope: SummaryScope; onOpenUn
       </tbody>
       <tfoot>
         <tr>
-          <td colSpan={headers.length} className="px-3 py-2 text-[11px] text-slate-500 bg-white border-t border-slate-100">
+          <td colSpan={headers.length} className="px-3 py-2 text-[11px] text-ink-muted bg-white border-t border-faint-rule">
             {scope.level === "portfolio"
               ? `${SUMMARY_PROPERTIES.length} properties · ${counts.total} units · ${counts.let} let · ${counts.vacant} vacant`
               : `${counts.total} units · ${counts.let} let · ${counts.vacant} vacant`}
@@ -208,7 +208,7 @@ function ComplianceView({ scope, onOpenUnit, augmentCompliance }: { scope: Summa
           <col style={{ width: "28%" }} />
           <col style={{ width: "28%" }} />
         </colgroup>
-        <thead className="bg-slate-50 text-slate-500 text-[11px] uppercase tracking-wide">
+        <thead className="bg-paper text-ink-muted text-[11px] uppercase tracking-wide">
           <tr>
             <th className="px-3 py-2 text-left font-medium">Document</th>
             <th className="px-3 py-2 text-left font-medium">Effective</th>
@@ -241,8 +241,8 @@ function ComplianceView({ scope, onOpenUnit, augmentCompliance }: { scope: Summa
     return (
       <React.Fragment key={propertyId}>
         {grouped && (
-          <tr className="bg-slate-100/80">
-            <td colSpan={headers.length} className="px-3 py-2 text-[11px] font-semibold uppercase tracking-wide text-slate-700">
+          <tr className="bg-bone-wash/80">
+            <td colSpan={headers.length} className="px-3 py-2 text-[11px] font-semibold uppercase tracking-wide text-charcoal">
               {p?.name} · {p?.area} · {p?.unitsTotal} units
             </td>
           </tr>
@@ -271,7 +271,7 @@ function ComplianceView({ scope, onOpenUnit, augmentCompliance }: { scope: Summa
       <colgroup>
         {colWidths.map((w, i) => <col key={i} style={{ width: w }} />)}
       </colgroup>
-      <thead className="bg-slate-50 text-slate-500 text-[11px] uppercase tracking-wide">
+      <thead className="bg-paper text-ink-muted text-[11px] uppercase tracking-wide">
         <tr>
           {headers.map((h) => (
             <th key={h} className="px-3 py-2 text-left font-medium">{h}</th>
@@ -285,11 +285,11 @@ function ComplianceView({ scope, onOpenUnit, augmentCompliance }: { scope: Summa
       </tbody>
       <tfoot>
         <tr>
-          <td colSpan={headers.length} className="px-3 py-2 text-[11px] text-slate-500 bg-white border-t border-slate-100">
+          <td colSpan={headers.length} className="px-3 py-2 text-[11px] text-ink-muted bg-white border-t border-faint-rule">
             {rows.length} records
-            {missingLegal > 0 && <> · <span className="text-rose-700 font-medium">{missingLegal} missing — legally required</span></>}
-            {missingBusiness > 0 && <> · <span className="text-amber-800 font-medium">{missingBusiness} missing — required</span></>}
-            {missingOther > 0 && <> · <span className="text-slate-600">{missingOther} not determined</span></>}
+            {missingLegal > 0 && <> · <span className="text-danger font-medium">{missingLegal} missing — legally required</span></>}
+            {missingBusiness > 0 && <> · <span className="text-warning font-medium">{missingBusiness} missing — required</span></>}
+            {missingOther > 0 && <> · <span className="text-charcoal">{missingOther} not determined</span></>}
           </td>
         </tr>
       </tfoot>
@@ -312,10 +312,10 @@ function ComplianceTr({
   };
   const bg = r.missing
     ? r.legallyRequired
-      ? "bg-rose-100/40"
+      ? "bg-danger-bg/40"
       : r.businessRequired
-        ? "bg-amber-50/60"
-        : "bg-rose-50/30"
+        ? "bg-warning-bg/60"
+        : "bg-danger-bg/30"
     : "";
   return (
     <tr
@@ -328,26 +328,26 @@ function ComplianceTr({
           onClick();
         }
       }}
-      className={`border-b border-slate-100 last:border-b-0 ${clickable ? "cursor-pointer hover:bg-[#F5F3FF] focus:bg-[#EDE9FE] focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#7C3AED]/40" : ""} ${bg}`}
+      className={`border-b border-faint-rule last:border-b-0 ${clickable ? "cursor-pointer hover:bg-[#F1EBDE] focus:bg-[#F1EBDE] focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#56514A]/40" : ""} ${bg}`}
     >
       {showUnit && unitColumn && (
-        <td className="px-3 py-2 align-middle text-slate-700 truncate">
-          {unitLabelVisible ? <span className="font-medium text-slate-800">{r.unitLabel}</span> : <span className="text-slate-300">·</span>}
+        <td className="px-3 py-2 align-middle text-charcoal truncate">
+          {unitLabelVisible ? <span className="font-medium text-ink">{r.unitLabel}</span> : <span className="text-ink-faint">·</span>}
         </td>
       )}
       <td className="px-3 py-2 align-middle truncate">
         {r.missing
           ? r.legallyRequired
             ? <span className="inline-flex items-center gap-2 min-w-0">
-                <span className="text-rose-800 font-medium truncate">{r.documentName ?? "Required document"} — missing</span>
+                <span className="text-danger font-medium truncate">{r.documentName ?? "Required document"} — missing</span>
                 <LegallyRequiredChip />
               </span>
             : r.businessRequired
               ? <span className="inline-flex items-center gap-2 min-w-0">
-                  <span className="text-amber-900 font-medium truncate">{r.documentName ?? "Required document"} — missing</span>
+                  <span className="text-warning font-medium truncate">{r.documentName ?? "Required document"} — missing</span>
                   <BusinessRequiredChip />
                 </span>
-              : <span className="inline-flex items-center gap-2 min-w-0"><span className="italic text-slate-400 truncate">Not determined</span><MissingChip /></span>
+              : <span className="inline-flex items-center gap-2 min-w-0"><span className="italic text-ink-muted truncate">Not determined</span><MissingChip /></span>
           : valOrND(r.documentName)}
       </td>
       <td className="px-3 py-2 align-middle truncate">{r.missing ? ND : valOrND(r.effectiveDate)}</td>
@@ -357,7 +357,7 @@ function ComplianceTr({
 }
 
 function Empty({ label }: { label: string }) {
-  return <div className="px-4 py-6 text-sm text-slate-500 italic">{label}</div>;
+  return <div className="px-4 py-6 text-sm text-ink-muted italic">{label}</div>;
 }
 
 /* ---------- CSV export ---------- */
@@ -392,7 +392,7 @@ function ExportButton({ kind, scope }: { kind: Kind; scope: SummaryScope }) {
     <button
       type="button"
       onClick={onClick}
-      className="text-[12px] text-[#7C3AED] hover:underline inline-flex items-center gap-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]/40 rounded px-1"
+      className="text-[12px] text-[#56514A] hover:underline inline-flex items-center gap-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#56514A]/40 rounded px-1"
     >
       ↓ Export CSV
     </button>
@@ -427,9 +427,9 @@ export function SummaryActions({
   return (
     <section
       aria-label="Quick overviews from Hobson"
-      className="bg-white/70 border border-slate-200 rounded-xl p-3 space-y-2"
+      className="bg-white/70 border border-bone rounded-xl p-3 space-y-2"
     >
-      <div className="text-[11px] uppercase tracking-wide text-slate-500 font-semibold">
+      <div className="text-[11px] uppercase tracking-wide text-ink-muted font-semibold">
         Quick overviews
       </div>
       <div className="flex flex-wrap gap-2">
@@ -451,7 +451,7 @@ export function SummaryActions({
         )}
       </div>
       {(!showOcc || !showCom) && (
-        <p className="text-[11px] text-slate-500 italic">
+        <p className="text-[11px] text-ink-muted italic">
           {!showOcc && "Occupational summary "}
           {!showOcc && !showCom && " and "}
           {!showCom && "Compliance summary "}
@@ -469,11 +469,11 @@ function OverviewChip({
     <button
       type="button"
       onClick={onClick}
-      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[12px] font-medium border border-[#C4B5FD] bg-[#F5F3FF] text-[#5B21B6] hover:bg-[#EDE9FE] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]/40"
+      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[12px] font-medium border border-[#E8E1D4] bg-[#F1EBDE] text-[#56514A] hover:bg-[#F1EBDE] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#56514A]/40"
     >
-      <span className="text-[#7C3AED]">{icon}</span>
+      <span className="text-[#56514A]">{icon}</span>
       <span>{name}</span>
-      <span className="text-slate-500 font-normal">· {hint}</span>
+      <span className="text-ink-muted font-normal">· {hint}</span>
     </button>
   );
 }

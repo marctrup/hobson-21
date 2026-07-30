@@ -200,7 +200,7 @@ const LandingPageA = () => {
         <div className="container mx-auto px-4 relative z-10">
           <div className="grid lg:grid-cols-2 gap-12 items-center max-w-7xl mx-auto">
             <div className="relative">
-              <div className="aspect-[4/5] overflow-hidden rounded-lg bg-gray-50 shadow-2xl max-w-md mx-auto">
+              <div className="aspect-[4/5] overflow-hidden rounded-lg bg-paper shadow-2xl max-w-md mx-auto">
                 <OptimizedImage 
                   src="/lovable-uploads/d7b9dc02-8d5c-4362-8105-30f1cbe9cebf.png" 
                   alt="A tenancy document that can now talk" 
@@ -371,7 +371,7 @@ const LandingPageA = () => {
                 <div className="relative group">
                   <div className="text-center">
                     <div className="relative mb-6">
-                      <div className="w-24 h-24 mx-auto bg-gradient-to-br from-green-500 to-green-600 rounded-full flex items-center justify-center text-2xl font-bold text-white shadow-lg group-hover:scale-110 transition-transform duration-300">
+                      <div className="w-24 h-24 mx-auto bg-gradient-to-br from-success to-success rounded-full flex items-center justify-center text-2xl font-bold text-white shadow-lg group-hover:scale-110 transition-transform duration-300">
                         4
                       </div>
                     </div>
@@ -688,7 +688,7 @@ const LandingPageA = () => {
       <Dialog open={showSuccessDialog} onOpenChange={setShowSuccessDialog}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle className="text-center text-green-600">
+            <DialogTitle className="text-center text-success">
               {CONTENT.dialogs.success.title}
             </DialogTitle>
           </DialogHeader>

@@ -69,39 +69,39 @@ export function IngestSecretCard() {
   };
 
   return (
-    <div className="bg-white border border-slate-200 rounded-lg p-5">
+    <div className="bg-white border border-bone rounded-lg p-5">
       <div className="text-sm font-medium">Website ingest secret</div>
-      <p className="text-sm text-slate-500 mt-0.5">
+      <p className="text-sm text-ink-muted mt-0.5">
         Used by the public website to authenticate lead/contact submissions.
       </p>
 
       <dl className="mt-4 grid grid-cols-1 gap-2 text-sm">
         <div className="flex items-center justify-between">
-          <dt className="text-slate-500">Status</dt>
+          <dt className="text-ink-muted">Status</dt>
           <dd className="font-medium">
             {isLoading
               ? "—"
               : isConfigured
-              ? <span className="text-emerald-700">Configured</span>
-              : <span className="text-amber-700">Not configured</span>}
+              ? <span className="text-success">Configured</span>
+              : <span className="text-warning">Not configured</span>}
           </dd>
         </div>
         <div className="flex items-center justify-between">
-          <dt className="text-slate-500">Last rotated</dt>
+          <dt className="text-ink-muted">Last rotated</dt>
           <dd className="font-medium">
             {formatDate(settings?.website_ingest_secret_rotated_at ?? null)}
           </dd>
         </div>
         <div className="flex items-center justify-between">
-          <dt className="text-slate-500">System user</dt>
-          <dd className="font-mono text-xs text-slate-600 truncate max-w-[180px]">
+          <dt className="text-ink-muted">System user</dt>
+          <dd className="font-mono text-xs text-charcoal truncate max-w-[180px]">
             {settings?.website_system_user_id ?? "—"}
           </dd>
         </div>
       </dl>
 
       {!isConfigured && (
-        <div className="mt-3 rounded-md border border-amber-300 bg-amber-50 px-3 py-2 text-xs text-amber-900">
+        <div className="mt-3 rounded-md border border-warning-border bg-warning-bg px-3 py-2 text-xs text-warning">
           Generate the first secret to activate the website ingest.
         </div>
       )}
@@ -131,10 +131,10 @@ export function IngestSecretCard() {
         <DialogContent>
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2">
-              <AlertTriangle className="size-5 text-amber-600" />
+              <AlertTriangle className="size-5 text-warning" />
               {isConfigured ? "Rotate website ingest secret?" : "Generate website ingest secret?"}
             </DialogTitle>
-            <DialogDescription className="space-y-2 pt-2 text-slate-700">
+            <DialogDescription className="space-y-2 pt-2 text-charcoal">
               <span className="block">
                 {isConfigured
                   ? "Rotating immediately invalidates the current secret. The website will stop submitting leads until you paste the new value into the Lovable Cloud secrets panel for the website project."
@@ -146,7 +146,7 @@ export function IngestSecretCard() {
             </DialogDescription>
           </DialogHeader>
 
-          <label className="flex items-start gap-2 text-sm text-slate-800 mt-2">
+          <label className="flex items-start gap-2 text-sm text-ink mt-2">
             <Checkbox
               checked={acknowledged}
               onCheckedChange={(v) => setAcknowledged(Boolean(v))}
@@ -191,7 +191,7 @@ export function IngestSecretCard() {
             </DialogDescription>
           </DialogHeader>
 
-          <div className="mt-2 rounded-md border border-slate-200 bg-slate-50 px-3 py-3 font-mono text-xs break-all">
+          <div className="mt-2 rounded-md border border-bone bg-paper px-3 py-3 font-mono text-xs break-all">
             {revealed}
           </div>
 

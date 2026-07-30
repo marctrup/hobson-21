@@ -61,7 +61,7 @@ export default function CrmSettingsTeam() {
   const revokeInvite = useRevokeInvitation();
 
   if (isLoading) {
-    return <div className="p-6 text-sm text-slate-500">Loading…</div>;
+    return <div className="p-6 text-sm text-ink-muted">Loading…</div>;
   }
   if (!isAdmin) return <NotFound />;
 
@@ -77,7 +77,7 @@ export default function CrmSettingsTeam() {
       <div className="mb-2">
         <Link
           to="/crm/settings"
-          className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-slate-700"
+          className="inline-flex items-center gap-1 text-sm text-ink-muted hover:text-charcoal"
         >
           <ArrowLeft className="size-3.5" /> Settings
         </Link>
@@ -86,7 +86,7 @@ export default function CrmSettingsTeam() {
       <div className="flex items-center justify-between gap-4 mb-6">
         <div>
           <h1 className="text-2xl font-semibold tracking-tight">Team & roles</h1>
-          <p className="text-sm text-slate-500 mt-1">
+          <p className="text-sm text-ink-muted mt-1">
             Invite teammates and manage who can access the CRM.
           </p>
         </div>
@@ -96,21 +96,21 @@ export default function CrmSettingsTeam() {
       </div>
 
       {/* Members table */}
-      <section className="bg-white border border-slate-200 rounded-lg overflow-hidden">
-        <header className="px-5 py-3 border-b border-slate-200 flex items-center justify-between">
+      <section className="bg-white border border-bone rounded-lg overflow-hidden">
+        <header className="px-5 py-3 border-b border-bone flex items-center justify-between">
           <h2 className="text-sm font-medium">Active team members</h2>
-          <span className="text-xs text-slate-500">
+          <span className="text-xs text-ink-muted">
             {members.length} {members.length === 1 ? "member" : "members"}
           </span>
         </header>
 
         {loadingMembers ? (
-          <div className="p-6 text-sm text-slate-500">Loading members…</div>
+          <div className="p-6 text-sm text-ink-muted">Loading members…</div>
         ) : members.length === 0 ? (
-          <div className="p-6 text-sm text-slate-500">No team members yet.</div>
+          <div className="p-6 text-sm text-ink-muted">No team members yet.</div>
         ) : (
           <table className="w-full text-sm">
-            <thead className="bg-slate-50 text-xs uppercase tracking-wide text-slate-500">
+            <thead className="bg-paper text-xs uppercase tracking-wide text-ink-muted">
               <tr>
                 <th className="text-left px-5 py-2 font-medium">Email</th>
                 <th className="text-left px-5 py-2 font-medium">Name</th>
@@ -119,18 +119,18 @@ export default function CrmSettingsTeam() {
                 <th className="px-5 py-2"></th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100">
+            <tbody className="divide-y divide-faint-rule">
               {members.map((m) => {
                 const isSelf = m.user_id === user?.id;
                 return (
-                  <tr key={m.user_id} className="hover:bg-slate-50/50">
+                  <tr key={m.user_id} className="hover:bg-paper/50">
                     <td className="px-5 py-3">
                       <span className="font-medium">{m.email}</span>
                       {isSelf && (
-                        <span className="ml-2 text-xs text-slate-400">(you)</span>
+                        <span className="ml-2 text-xs text-ink-muted">(you)</span>
                       )}
                     </td>
-                    <td className="px-5 py-3 text-slate-600">
+                    <td className="px-5 py-3 text-charcoal">
                       {m.display_name ?? "—"}
                     </td>
                     <td className="px-5 py-3">
@@ -154,7 +154,7 @@ export default function CrmSettingsTeam() {
                         </SelectContent>
                       </Select>
                     </td>
-                    <td className="px-5 py-3 text-slate-500">
+                    <td className="px-5 py-3 text-ink-muted">
                       {formatDate(m.granted_at)}
                     </td>
                     <td className="px-5 py-3 text-right">
@@ -163,7 +163,7 @@ export default function CrmSettingsTeam() {
                           <Button
                             size="sm"
                             variant="ghost"
-                            className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                            className="text-danger hover:text-danger hover:bg-danger-bg"
                           >
                             <Trash2 className="size-3.5" />
                           </Button>
@@ -176,7 +176,7 @@ export default function CrmSettingsTeam() {
                               access immediately. They'll keep their normal user
                               account. You can re-invite them later.
                               {isSelf && (
-                                <span className="block mt-2 text-amber-700">
+                                <span className="block mt-2 text-warning">
                                   Note: this will revoke your own access.
                                 </span>
                               )}
@@ -185,7 +185,7 @@ export default function CrmSettingsTeam() {
                           <AlertDialogFooter>
                             <AlertDialogCancel>Cancel</AlertDialogCancel>
                             <AlertDialogAction
-                              className="bg-red-600 hover:bg-red-700"
+                              className="bg-danger hover:bg-danger"
                               onClick={() =>
                                 revokeRole.mutate({ user_id: m.user_id })
                               }
@@ -205,22 +205,22 @@ export default function CrmSettingsTeam() {
       </section>
 
       {/* Pending invitations */}
-      <section className="bg-white border border-slate-200 rounded-lg overflow-hidden mt-6">
-        <header className="px-5 py-3 border-b border-slate-200 flex items-center justify-between">
+      <section className="bg-white border border-bone rounded-lg overflow-hidden mt-6">
+        <header className="px-5 py-3 border-b border-bone flex items-center justify-between">
           <h2 className="text-sm font-medium">Pending invitations</h2>
-          <span className="text-xs text-slate-500">
+          <span className="text-xs text-ink-muted">
             {pendingInvites.length}
           </span>
         </header>
         {loadingInvites ? (
-          <div className="p-6 text-sm text-slate-500">Loading…</div>
+          <div className="p-6 text-sm text-ink-muted">Loading…</div>
         ) : pendingInvites.length === 0 ? (
-          <div className="p-6 text-sm text-slate-500">
+          <div className="p-6 text-sm text-ink-muted">
             No pending invitations.
           </div>
         ) : (
           <table className="w-full text-sm">
-            <thead className="bg-slate-50 text-xs uppercase tracking-wide text-slate-500">
+            <thead className="bg-paper text-xs uppercase tracking-wide text-ink-muted">
               <tr>
                 <th className="text-left px-5 py-2 font-medium">Email</th>
                 <th className="text-left px-5 py-2 font-medium">Role</th>
@@ -229,22 +229,22 @@ export default function CrmSettingsTeam() {
                 <th className="px-5 py-2"></th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100">
+            <tbody className="divide-y divide-faint-rule">
               {pendingInvites.map((inv) => (
-                <tr key={inv.id} className="hover:bg-slate-50/50">
+                <tr key={inv.id} className="hover:bg-paper/50">
                   <td className="px-5 py-3 font-medium">{inv.email}</td>
                   <td className="px-5 py-3">{ROLE_LABEL[inv.role]}</td>
-                  <td className="px-5 py-3 text-slate-500">
+                  <td className="px-5 py-3 text-ink-muted">
                     {formatDate(inv.created_at)}
                   </td>
-                  <td className="px-5 py-3 text-slate-500">
+                  <td className="px-5 py-3 text-ink-muted">
                     {formatDate(inv.expires_at)}
                   </td>
                   <td className="px-5 py-3 text-right">
                     <Button
                       size="sm"
                       variant="ghost"
-                      className="text-slate-600"
+                      className="text-charcoal"
                       disabled={revokeInvite.isPending}
                       onClick={() => revokeInvite.mutate(inv.id)}
                     >

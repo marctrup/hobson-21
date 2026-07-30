@@ -8,11 +8,11 @@ import owlMascot from "@/assets/owl-mascot.png";
 
 const BRASS = "#B4914F";
 const INK = "#2D2D2D";
-const MUTED = "#6B6B6B";
-const LAVENDER_BG = "#F3F0FF";
-const LAVENDER_BORDER = "#E8E4F0";
+const MUTED = "#6E6A62";
+const LAVENDER_BG = "#F1EBDE";
+const LAVENDER_BORDER = "#E8E1D4";
 const PAPER = "#FCFAF7";
-const RULE = "#EDE7DA";
+const RULE = "#F7EDDC";
 
 const META = ["Property owner", "Mixed-use", "A few properties"];
 
@@ -24,7 +24,7 @@ const Section = ({ title, children }: { title: string; children: React.ReactNode
     >
       {title}
     </h2>
-    <div className="prose max-w-none text-[17px] leading-relaxed" style={{ color: "#3d3d3d" }}>
+    <div className="prose max-w-none text-[17px] leading-relaxed" style={{ color: "#2D2D2D" }}>
       {children}
     </div>
   </section>
@@ -192,21 +192,21 @@ A disputed figure comes back *as it currently stands* — the amount as varied, 
             </div>
             <div
               className="rounded-2xl p-6"
-              style={{ backgroundColor: "#F5F3EF", border: "1px dashed #D6D2C8" }}
+              style={{ backgroundColor: "#F7EDDC", border: "1px dashed #E6D2AE" }}
             >
               <span
                 className="inline-flex items-center rounded-full px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.14em]"
-                style={{ backgroundColor: "#EFEFEF", color: "#8A8A8A", border: "1px dashed #C9C9C9" }}
+                style={{ backgroundColor: "#F1EBDE", color: "#6E6A62", border: "1px dashed #D8CDB6" }}
               >
                 Phase 2 · coming
               </span>
               <h3
                 className="mt-4 font-serif text-xl font-normal"
-                style={{ color: "#8A8A8A" }}
+                style={{ color: "#6E6A62" }}
               >
                 Staying ahead of it
               </h3>
-              <p className="mt-2 text-[15px] leading-relaxed" style={{ color: "#A5A5A5" }}>
+              <p className="mt-2 text-[15px] leading-relaxed" style={{ color: "#8A8478" }}>
                 A co-worker that watches the deadlines and obligations across the
                 portfolio and flags a review, renewal or notice before it falls
                 due — so nothing is ever missed.

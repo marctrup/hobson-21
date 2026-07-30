@@ -500,7 +500,7 @@ const FeatureRequests = () => {
                     return (
                        <div 
                          key={post.id} 
-                         className="bg-card border border-border rounded-lg p-4 sm:p-6 hover:shadow-md hover:bg-purple-100/50 transition-all duration-200 cursor-pointer relative"
+                         className="bg-card border border-border rounded-lg p-4 sm:p-6 hover:shadow-md hover:bg-bone-wash/50 transition-all duration-200 cursor-pointer relative"
                          onClick={() => handlePostClick(post)}
                        >
                          {/* Vote Button - Top Right */}
@@ -514,7 +514,7 @@ const FeatureRequests = () => {
                               disabled={!user}
                             >
                               <ThumbsUp className={`w-4 h-4 transition-all duration-200 ${
-                                user ? 'text-yellow-500 group-hover:text-yellow-400 group-hover:scale-110' : 'text-yellow-300'
+                                user ? 'text-warning group-hover:text-warning group-hover:scale-110' : 'text-warning'
                               }`} />
                             </button>
                             <span className="text-sm font-medium text-foreground min-w-[16px] text-center transition-all duration-200">

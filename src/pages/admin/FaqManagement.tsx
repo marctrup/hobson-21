@@ -554,8 +554,8 @@ export default function FaqManagement() {
                     <span
                       className={
                         faq.is_active
-                          ? "text-green-600"
-                          : "text-gray-400"
+                          ? "text-success"
+                          : "text-ink-muted"
                       }
                     >
                       {faq.is_active ? "Active" : "Inactive"}

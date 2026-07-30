@@ -36,9 +36,9 @@ export const COMM_DIRECTION_LABELS: Record<CommDirection, string> = {
 };
 
 export const COMM_DIRECTION_BADGE: Record<CommDirection, string> = {
-  inbound: "bg-blue-100 text-blue-800 border-blue-200",
-  outbound: "bg-emerald-100 text-emerald-800 border-emerald-200",
-  internal: "bg-slate-100 text-slate-700 border-slate-200",
+  inbound: "bg-bone-wash text-ink border-bone",
+  outbound: "bg-success-bg text-success border-success-border",
+  internal: "bg-bone-wash text-charcoal border-bone",
 };
 
 export const COMM_SENTIMENTS = ["positive", "neutral", "negative"] as const;

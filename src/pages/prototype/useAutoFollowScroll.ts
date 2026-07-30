@@ -119,6 +119,6 @@ export function useAutoFollowScroll(
  */
 export const JUMP_BUTTON_CLASS =
   "absolute bottom-3 left-1/2 -translate-x-1/2 z-10 inline-flex items-center gap-1.5 " +
-  "px-3 py-1.5 rounded-full text-[12px] font-medium border border-[#C4B5FD] " +
-  "bg-white/95 text-[#5B21B6] shadow-sm hover:bg-[#F5F3FF] " +
-  "focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]/40";
+  "px-3 py-1.5 rounded-full text-[12px] font-medium border border-[#E8E1D4] " +
+  "bg-white/95 text-[#56514A] shadow-sm hover:bg-[#F1EBDE] " +
+  "focus:outline-none focus-visible:ring-2 focus-visible:ring-[#56514A]/40";

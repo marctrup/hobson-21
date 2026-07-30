@@ -31,9 +31,9 @@ export const CustomerPersonasVisual = () => {
       role: "COO, Large Portfolio Operator",
       segment: "Primary Target",
       icon: Building2,
-      color: "from-blue-500/10 to-blue-600/10",
-      borderColor: "border-blue-200/50 dark:border-blue-800/30",
-      iconColor: "text-blue-600 dark:text-blue-400",
+      color: "from-ink-faint/10 to-charcoal/10",
+      borderColor: "border-bone/50 dark:border-charcoal/30",
+      iconColor: "text-charcoal dark:text-ink-muted",
       description: "Responsible for operational efficiency, compliance, and reporting across an extensive, complex property portfolio to streamline information access across the organisation.",
       goals: [
         "Increase team efficiency without adding complexity or headcount",
@@ -75,9 +75,9 @@ export const CustomerPersonasVisual = () => {
       role: "Head of Asset Management, Medium-Sized Company",
       segment: "Secondary Target",
       icon: Briefcase,
-      color: "from-purple-500/10 to-purple-600/10",
-      borderColor: "border-purple-200/50 dark:border-purple-800/30",
-      iconColor: "text-purple-600 dark:text-purple-400",
+      color: "from-ink-faint/10 to-charcoal/10",
+      borderColor: "border-bone/50 dark:border-charcoal/30",
+      iconColor: "text-charcoal dark:text-ink-muted",
       description: "Head of Asset Management at a mid-sized, agile property company, managing a growing portfolio with a lean team.",
       goals: [
         "Enable lean growth without proportional increases in headcount",
@@ -123,9 +123,9 @@ export const CustomerPersonasVisual = () => {
       role: "Owner-Manager, Small Portfolio",
       segment: "Future Target",
       icon: User,
-      color: "from-emerald-500/10 to-emerald-600/10",
-      borderColor: "border-emerald-200/50 dark:border-emerald-800/30",
-      iconColor: "text-emerald-600 dark:text-emerald-400",
+      color: "from-success/10 to-success/10",
+      borderColor: "border-success-border/50 dark:border-success/30",
+      iconColor: "text-success dark:text-success",
       description: "Owner-Manager responsible for every operational, legal, and financial aspect of a small property portfolio.",
       goals: [
         "Stay organised with minimal effort and minimal tools",
@@ -169,10 +169,10 @@ export const CustomerPersonasVisual = () => {
   return (
     <div className="space-y-8">
       {/* Header */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-teal-500/10 via-teal-500/5 to-teal-500/10 p-6 border border-teal-200/50 dark:border-teal-800/30">
-        <div className="absolute top-0 right-0 w-32 h-32 bg-teal-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-ink-faint/10 via-ink-faint/5 to-ink-faint/10 p-6 border border-bone/50 dark:border-charcoal/30">
+        <div className="absolute top-0 right-0 w-32 h-32 bg-ink-faint/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
         <div className="relative flex items-start gap-4">
-          <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-teal-500/10 text-teal-600 dark:text-teal-400">
+          <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-ink-faint/10 text-charcoal dark:text-ink-muted">
             <UserCircle className="w-6 h-6" />
           </div>
           <div>
@@ -183,7 +183,7 @@ export const CustomerPersonasVisual = () => {
       </div>
 
       {/* Intro */}
-      <div className="p-5 rounded-xl bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900/50 dark:to-slate-800/30 border border-slate-200 dark:border-slate-700/50">
+      <div className="p-5 rounded-xl bg-gradient-to-br from-paper to-bone-wash dark:from-ink/50 dark:to-ink/30 border border-bone dark:border-charcoal/50">
         <p className="text-foreground leading-relaxed">
           Building on the three segments defined, the following personas translate those organisational types into 
           <span className="font-bold text-primary"> individual decision-makers and users</span>. Each persona is based on 
@@ -229,9 +229,9 @@ export const CustomerPersonasVisual = () => {
 
             <div className="grid sm:grid-cols-2 gap-4 mb-4">
               {/* Frustrations */}
-              <div className="p-4 rounded-xl bg-red-50/50 dark:bg-red-950/20 border border-red-200/50 dark:border-red-800/30">
+              <div className="p-4 rounded-xl bg-danger-bg/50 dark:bg-danger-solid/20 border border-danger-border/50 dark:border-danger/30">
                 <div className="flex items-center gap-2 mb-2">
-                  <AlertTriangle className="w-4 h-4 text-red-600 dark:text-red-400" />
+                  <AlertTriangle className="w-4 h-4 text-danger dark:text-danger" />
                   <span className="font-semibold text-sm text-foreground">Frustrations</span>
                 </div>
                 <ul className="space-y-1">
@@ -242,7 +242,7 @@ export const CustomerPersonasVisual = () => {
               </div>
 
               {/* Workflows */}
-              <div className="p-4 rounded-xl bg-slate-50/50 dark:bg-slate-950/20 border border-slate-200/50 dark:border-slate-800/30">
+              <div className="p-4 rounded-xl bg-paper/50 dark:bg-ink/20 border border-bone/50 dark:border-charcoal/30">
                 <div className="flex items-center gap-2 mb-2">
                   <Zap className={`w-4 h-4 ${persona.iconColor}`} />
                   <span className="font-semibold text-sm text-foreground">Typical Workflows</span>
@@ -277,7 +277,7 @@ export const CustomerPersonasVisual = () => {
 
               {/* Objections (if any) */}
               {persona.objections && (
-                <div className="p-4 rounded-xl bg-amber-50/50 dark:bg-amber-950/20 border border-amber-200/50 dark:border-amber-800/30">
+                <div className="p-4 rounded-xl bg-warning-bg/50 dark:bg-warning-solid/20 border border-warning-border/50 dark:border-warning/30">
                   <span className="font-semibold text-sm text-foreground block mb-2">Objections</span>
                   <ul className="space-y-1">
                     {persona.objections.map((item, idx) => (
@@ -289,9 +289,9 @@ export const CustomerPersonasVisual = () => {
             </div>
 
             {/* Success */}
-            <div className="p-4 rounded-xl bg-emerald-50/50 dark:bg-emerald-950/20 border border-emerald-200/50 dark:border-emerald-800/30">
+            <div className="p-4 rounded-xl bg-success-bg/50 dark:bg-success-solid/20 border border-success-border/50 dark:border-success/30">
               <div className="flex items-center gap-2 mb-2">
-                <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+                <CheckCircle2 className="w-4 h-4 text-success dark:text-success" />
                 <span className="font-semibold text-sm text-foreground">What "Success" Looks Like</span>
               </div>
               <ul className="space-y-1">

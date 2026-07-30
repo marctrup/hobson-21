@@ -87,7 +87,7 @@ export const CommunicationSidePanel = ({
         className="w-full sm:max-w-xl overflow-y-auto"
       >
         {isLoading || !data ? (
-          <div className="text-sm text-slate-500">Loading…</div>
+          <div className="text-sm text-ink-muted">Loading…</div>
         ) : (
           <PanelBody
             data={data}
@@ -174,7 +174,7 @@ const PanelBody = ({
     <>
       <SheetHeader>
         <div className="flex items-start gap-3">
-          <div className="mt-1 size-9 rounded-md bg-slate-100 text-slate-600 flex items-center justify-center shrink-0">
+          <div className="mt-1 size-9 rounded-md bg-bone-wash text-charcoal flex items-center justify-center shrink-0">
             <ChannelIcon channel={channel} className="size-4" />
           </div>
           <div className="flex-1 min-w-0">
@@ -187,14 +187,14 @@ const PanelBody = ({
               >
                 {COMM_DIRECTION_LABELS[c.direction]}
               </span>
-              <span className="text-xs text-slate-500">
+              <span className="text-xs text-ink-muted">
                 {COMM_CHANNEL_LABELS[channel]}
               </span>
               {c.is_important && (
-                <Star className="size-4 text-amber-500 fill-amber-400" />
+                <Star className="size-4 text-warning fill-warning" />
               )}
               {c.needs_review && (
-                <span className="text-[10px] uppercase tracking-wide text-rose-600">
+                <span className="text-[10px] uppercase tracking-wide text-danger">
                   Needs review
                 </span>
               )}
@@ -202,7 +202,7 @@ const PanelBody = ({
             <SheetTitle className="mt-1 text-base">
               {c.subject || c.summary || "(no subject)"}
             </SheetTitle>
-            <div className="text-xs text-slate-500 mt-1">
+            <div className="text-xs text-ink-muted mt-1">
               {formatDateTimeUK(c.occurred_at)}
               {c.sentiment && ` · ${COMM_SENTIMENT_LABELS[c.sentiment as keyof typeof COMM_SENTIMENT_LABELS]}`}
             </div>
@@ -210,7 +210,7 @@ const PanelBody = ({
               <div className="mt-1">
                 <Link
                   to={`/crm/clients/${c.client_id}?tab=communications&focusComm=${c.id}`}
-                  className="text-xs text-slate-600 hover:text-slate-900 underline"
+                  className="text-xs text-charcoal hover:text-ink underline"
                 >
                   View on client →
                 </Link>
@@ -219,7 +219,7 @@ const PanelBody = ({
           </div>
           <button
             onClick={onClose}
-            className="text-slate-400 hover:text-slate-600"
+            className="text-ink-muted hover:text-charcoal"
             aria-label="Close"
           >
             <X className="size-4" />
@@ -231,18 +231,18 @@ const PanelBody = ({
         {/* Participants */}
         {grouped.length > 0 && (
           <section>
-            <h3 className="text-xs uppercase tracking-wide text-slate-500 mb-1">
+            <h3 className="text-xs uppercase tracking-wide text-ink-muted mb-1">
               Participants
             </h3>
             <div className="space-y-1.5">
               {grouped.map((g) => (
                 <div key={g.role} className="flex items-start gap-2 text-sm">
-                  <span className="w-20 text-slate-500 shrink-0">
+                  <span className="w-20 text-ink-muted shrink-0">
                     {PARTICIPANT_ROLE_LABELS[g.role]}
                   </span>
                   <div className="flex-1">
                     {g.list.map((p) => (
-                      <div key={p.id} className="text-slate-800">
+                      <div key={p.id} className="text-ink">
                         <ParticipantLine p={p} />
                       </div>
                     ))}
@@ -256,8 +256,8 @@ const PanelBody = ({
         {/* Channel-specific */}
         {channel === "call" && c.call_duration_seconds != null && (
           <section className="text-sm">
-            <span className="text-slate-500">Duration: </span>
-            <span className="text-slate-800">
+            <span className="text-ink-muted">Duration: </span>
+            <span className="text-ink">
               {Math.round(c.call_duration_seconds / 60)} min
             </span>
           </section>
@@ -265,18 +265,18 @@ const PanelBody = ({
         {(channel === "meeting" || channel === "video_call") &&
           c.meeting_location && (
             <section className="text-sm">
-              <span className="text-slate-500">Location: </span>
-              <span className="text-slate-800">{c.meeting_location}</span>
+              <span className="text-ink-muted">Location: </span>
+              <span className="text-ink">{c.meeting_location}</span>
             </section>
           )}
 
         {/* Summary */}
         {c.summary && (
           <section>
-            <h3 className="text-xs uppercase tracking-wide text-slate-500 mb-1">
+            <h3 className="text-xs uppercase tracking-wide text-ink-muted mb-1">
               Summary
             </h3>
-            <p className="text-sm text-slate-800 whitespace-pre-wrap">
+            <p className="text-sm text-ink whitespace-pre-wrap">
               {c.summary}
             </p>
           </section>
@@ -285,17 +285,17 @@ const PanelBody = ({
         {/* Body */}
         {(cleanHtml || c.body_plain) && (
           <section>
-            <h3 className="text-xs uppercase tracking-wide text-slate-500 mb-1">
+            <h3 className="text-xs uppercase tracking-wide text-ink-muted mb-1">
               {channel === "email" ? "Email body" : "Body"}
             </h3>
             {cleanHtml ? (
               <div
-                className="prose prose-sm max-w-none bg-slate-50 border border-slate-200 rounded-md p-4 text-slate-800"
+                className="prose prose-sm max-w-none bg-paper border border-bone rounded-md p-4 text-ink"
                 // eslint-disable-next-line react/no-danger
                 dangerouslySetInnerHTML={{ __html: cleanHtml }}
               />
             ) : (
-              <pre className="text-sm text-slate-800 whitespace-pre-wrap font-sans bg-slate-50 border border-slate-200 rounded-md p-3">
+              <pre className="text-sm text-ink whitespace-pre-wrap font-sans bg-paper border border-bone rounded-md p-3">
                 {c.body_plain}
               </pre>
             )}
@@ -305,7 +305,7 @@ const PanelBody = ({
         {/* Attachments */}
         {data.attachments.length > 0 && (
           <section>
-            <h3 className="text-xs uppercase tracking-wide text-slate-500 mb-1">
+            <h3 className="text-xs uppercase tracking-wide text-ink-muted mb-1">
               Attachments ({data.attachments.length})
             </h3>
             <ul className="space-y-1">
@@ -318,9 +318,9 @@ const PanelBody = ({
 
         {/* Linked task indicator (replaces the old amber pending-follow-up banner) */}
         {c.linked_task_id && (
-          <section className="text-sm bg-emerald-50 border border-emerald-200 rounded-md px-3 py-2 flex items-center gap-2">
-            <CheckSquare className="size-4 text-emerald-700 shrink-0" />
-            <span className="text-emerald-900">
+          <section className="text-sm bg-success-bg border border-success-border rounded-md px-3 py-2 flex items-center gap-2">
+            <CheckSquare className="size-4 text-success shrink-0" />
+            <span className="text-success">
               A task has been created from this communication.{" "}
               <Link
                 to={`/crm/tasks?focus=${c.linked_task_id}`}
@@ -334,7 +334,7 @@ const PanelBody = ({
 
         {/* Actions */}
         {(canWrite || canDelete) && (
-          <div className="pt-4 border-t border-slate-200 flex flex-wrap gap-2">
+          <div className="pt-4 border-t border-bone flex flex-wrap gap-2">
             {canWrite && !c.linked_task_id && (
               <Button
                 variant="outline"
@@ -356,7 +356,7 @@ const PanelBody = ({
             {canDelete && (
               <AlertDialog>
                 <AlertDialogTrigger asChild>
-                  <Button variant="outline" size="sm" className="text-rose-600">
+                  <Button variant="outline" size="sm" className="text-danger">
                     <Trash2 className="size-4 mr-1" /> Delete
                   </Button>
                 </AlertDialogTrigger>
@@ -417,16 +417,16 @@ const ParticipantLine = ({ p }: { p: any }) => {
   return (
     <span>
       {name ? (
-        <span className="text-slate-800">{name}</span>
+        <span className="text-ink">{name}</span>
       ) : (
-        <span className="text-slate-700">{kindLabel}</span>
+        <span className="text-charcoal">{kindLabel}</span>
       )}
-      {email && <span className="text-slate-500"> · {email}</span>}
+      {email && <span className="text-ink-muted"> · {email}</span>}
       {kind === "external" && (
-        <span className="text-slate-400 text-xs ml-1">(external)</span>
+        <span className="text-ink-muted text-xs ml-1">(external)</span>
       )}
       {name && kind !== "external" && (
-        <span className="text-slate-400 text-xs ml-1">({kindLabel})</span>
+        <span className="text-ink-muted text-xs ml-1">({kindLabel})</span>
       )}
     </span>
   );
@@ -454,10 +454,10 @@ const AttachmentItem = ({ a }: { a: any }) => {
   };
 
   return (
-    <li className="flex items-center justify-between text-sm border border-slate-200 rounded-md px-3 py-1.5 bg-white">
+    <li className="flex items-center justify-between text-sm border border-bone rounded-md px-3 py-1.5 bg-white">
       <div className="min-w-0">
-        <div className="truncate text-slate-800">{a.file_name}</div>
-        <div className="text-xs text-slate-500">
+        <div className="truncate text-ink">{a.file_name}</div>
+        <div className="text-xs text-ink-muted">
           {a.mime_type ?? "—"} · {formatBytes(a.size_bytes)}
         </div>
       </div>

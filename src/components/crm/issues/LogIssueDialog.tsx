@@ -301,7 +301,7 @@ export const LogIssueDialog = ({
           </div>
 
           {defaultCommunicationId && (
-            <div className="text-xs text-slate-500 bg-slate-50 border border-slate-200 rounded-md px-3 py-2">
+            <div className="text-xs text-ink-muted bg-paper border border-bone rounded-md px-3 py-2">
               Linked to the communication this issue was raised from.
             </div>
           )}

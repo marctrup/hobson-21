@@ -8,7 +8,7 @@ export const IntegrationCards = ({ showWishlistBadge = false }: IntegrationCards
       <div className="bg-card border rounded-lg p-4 pt-8 text-center relative">
         {showWishlistBadge && (
           <div className="absolute top-2 right-2">
-            <span className="text-xs bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 px-2 py-1 rounded-full">Wish list</span>
+            <span className="text-xs bg-warning-bg dark:bg-warning-solid/30 text-warning dark:text-warning px-2 py-1 rounded-full">Wish list</span>
           </div>
         )}
         <div className="text-2xl mb-2">📅</div>
@@ -18,7 +18,7 @@ export const IntegrationCards = ({ showWishlistBadge = false }: IntegrationCards
       <div className="bg-card border rounded-lg p-4 pt-8 text-center relative">
         {showWishlistBadge && (
           <div className="absolute top-2 right-2">
-            <span className="text-xs bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 px-2 py-1 rounded-full">Wish list</span>
+            <span className="text-xs bg-warning-bg dark:bg-warning-solid/30 text-warning dark:text-warning px-2 py-1 rounded-full">Wish list</span>
           </div>
         )}
         <div className="text-2xl mb-2">✉️</div>
@@ -28,7 +28,7 @@ export const IntegrationCards = ({ showWishlistBadge = false }: IntegrationCards
       <div className="bg-card border rounded-lg p-4 pt-8 text-center relative">
         {showWishlistBadge && (
           <div className="absolute top-2 right-2">
-            <span className="text-xs bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 px-2 py-1 rounded-full">Wish list</span>
+            <span className="text-xs bg-warning-bg dark:bg-warning-solid/30 text-warning dark:text-warning px-2 py-1 rounded-full">Wish list</span>
           </div>
         )}
         <div className="text-2xl mb-2">📂</div>
@@ -38,7 +38,7 @@ export const IntegrationCards = ({ showWishlistBadge = false }: IntegrationCards
       <div className="bg-card border rounded-lg p-4 pt-8 text-center relative">
         {showWishlistBadge && (
           <div className="absolute top-2 right-2">
-            <span className="text-xs bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 px-2 py-1 rounded-full">Wish list</span>
+            <span className="text-xs bg-warning-bg dark:bg-warning-solid/30 text-warning dark:text-warning px-2 py-1 rounded-full">Wish list</span>
           </div>
         )}
         <div className="text-2xl mb-2">📂</div>
@@ -48,7 +48,7 @@ export const IntegrationCards = ({ showWishlistBadge = false }: IntegrationCards
       <div className="bg-card border rounded-lg p-4 pt-8 text-center relative">
         {showWishlistBadge && (
           <div className="absolute top-2 right-2">
-            <span className="text-xs bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 px-2 py-1 rounded-full">Wish list</span>
+            <span className="text-xs bg-warning-bg dark:bg-warning-solid/30 text-warning dark:text-warning px-2 py-1 rounded-full">Wish list</span>
           </div>
         )}
         <div className="text-2xl mb-2">📂</div>
@@ -58,7 +58,7 @@ export const IntegrationCards = ({ showWishlistBadge = false }: IntegrationCards
       <div className="bg-card border rounded-lg p-4 pt-8 text-center relative">
         {showWishlistBadge && (
           <div className="absolute top-2 right-2">
-            <span className="text-xs bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 px-2 py-1 rounded-full">Wish list</span>
+            <span className="text-xs bg-warning-bg dark:bg-warning-solid/30 text-warning dark:text-warning px-2 py-1 rounded-full">Wish list</span>
           </div>
         )}
         <div className="text-2xl mb-2">➕</div>

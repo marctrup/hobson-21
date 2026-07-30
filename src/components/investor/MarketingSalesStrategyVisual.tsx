@@ -7,33 +7,33 @@ export const MarketingSalesStrategyVisual = () => {
       icon: Users, 
       title: "Direct Sales", 
       description: "Targeted outreach to property management companies and landlords",
-      color: "from-blue-500/10 to-blue-600/10",
-      borderColor: "border-blue-200/50 dark:border-blue-800/30",
-      iconColor: "text-blue-600 dark:text-blue-400"
+      color: "from-ink-faint/10 to-charcoal/10",
+      borderColor: "border-bone/50 dark:border-charcoal/30",
+      iconColor: "text-charcoal dark:text-ink-muted"
     },
     { 
       icon: Handshake, 
       title: "Strategic Partnerships", 
       description: "Integrations with property management platforms and estate agents",
-      color: "from-purple-500/10 to-purple-600/10",
-      borderColor: "border-purple-200/50 dark:border-purple-800/30",
-      iconColor: "text-purple-600 dark:text-purple-400"
+      color: "from-ink-faint/10 to-charcoal/10",
+      borderColor: "border-bone/50 dark:border-charcoal/30",
+      iconColor: "text-charcoal dark:text-ink-muted"
     },
     { 
       icon: Globe, 
       title: "Digital Marketing", 
       description: "SEO, content marketing, and targeted campaigns for real estate professionals",
-      color: "from-emerald-500/10 to-emerald-600/10",
-      borderColor: "border-emerald-200/50 dark:border-emerald-800/30",
-      iconColor: "text-emerald-600 dark:text-emerald-400"
+      color: "from-success/10 to-success/10",
+      borderColor: "border-success-border/50 dark:border-success/30",
+      iconColor: "text-success dark:text-success"
     },
     { 
       icon: Megaphone, 
       title: "Industry Events", 
       description: "PropTech conferences, trade shows, and networking events",
-      color: "from-amber-500/10 to-amber-600/10",
-      borderColor: "border-amber-200/50 dark:border-amber-800/30",
-      iconColor: "text-amber-600 dark:text-amber-400"
+      color: "from-warning/10 to-warning/10",
+      borderColor: "border-warning-border/50 dark:border-warning/30",
+      iconColor: "text-warning dark:text-warning"
     },
   ];
 
@@ -101,7 +101,7 @@ export const MarketingSalesStrategyVisual = () => {
         <div className="flex flex-col sm:flex-row gap-3">
           {salesProcess.map((item, idx) => (
             <React.Fragment key={idx}>
-              <div className="flex-1 p-4 rounded-xl bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900/50 dark:to-slate-800/30 border border-slate-200 dark:border-slate-700/50">
+              <div className="flex-1 p-4 rounded-xl bg-gradient-to-br from-paper to-bone-wash dark:from-ink/50 dark:to-ink/30 border border-bone dark:border-charcoal/50">
                 <div className="flex items-center gap-2 mb-2">
                   <div className="flex items-center justify-center w-6 h-6 rounded-full bg-primary/10 text-primary text-xs font-bold">
                     {idx + 1}
@@ -141,12 +141,12 @@ export const MarketingSalesStrategyVisual = () => {
       </div>
 
       {/* Conclusion */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-emerald-500/10 via-emerald-500/5 to-emerald-500/10 p-6 border border-emerald-200/50 dark:border-emerald-800/30">
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-success/10 via-success/5 to-success/10 p-6 border border-success-border/50 dark:border-success/30">
         <div className="flex items-start gap-3">
-          <CheckCircle2 className="w-6 h-6 text-emerald-600 flex-shrink-0 mt-0.5" />
+          <CheckCircle2 className="w-6 h-6 text-success flex-shrink-0 mt-0.5" />
           <div className="space-y-2">
             <p className="text-foreground font-medium">
-              Our strategy combines <span className="text-emerald-600 dark:text-emerald-400 font-bold">low-touch self-service</span> for smaller operators with <span className="text-emerald-600 dark:text-emerald-400 font-bold">high-touch enterprise sales</span> for larger portfolios.
+              Our strategy combines <span className="text-success dark:text-success font-bold">low-touch self-service</span> for smaller operators with <span className="text-success dark:text-success font-bold">high-touch enterprise sales</span> for larger portfolios.
             </p>
             <p className="text-muted-foreground text-sm">
               This dual approach maximises market coverage while optimising customer acquisition costs.

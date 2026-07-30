@@ -71,9 +71,9 @@ export const CustomerOnlineBehaviourVisual = () => {
 
   const getColorClasses = (color: string) => {
     const colors: Record<string, { bg: string; border: string; text: string }> = {
-      blue: { bg: "from-blue-500/10 to-blue-600/10", border: "border-blue-200/50 dark:border-blue-800/30", text: "text-blue-600 dark:text-blue-400" },
-      purple: { bg: "from-purple-500/10 to-purple-600/10", border: "border-purple-200/50 dark:border-purple-800/30", text: "text-purple-600 dark:text-purple-400" },
-      emerald: { bg: "from-emerald-500/10 to-emerald-600/10", border: "border-emerald-200/50 dark:border-emerald-800/30", text: "text-emerald-600 dark:text-emerald-400" },
+      blue: { bg: "from-ink-faint/10 to-charcoal/10", border: "border-bone/50 dark:border-charcoal/30", text: "text-charcoal dark:text-ink-muted" },
+      purple: { bg: "from-ink-faint/10 to-charcoal/10", border: "border-bone/50 dark:border-charcoal/30", text: "text-charcoal dark:text-ink-muted" },
+      emerald: { bg: "from-success/10 to-success/10", border: "border-success-border/50 dark:border-success/30", text: "text-success dark:text-success" },
     };
     return colors[color] || colors.blue;
   };
@@ -81,12 +81,12 @@ export const CustomerOnlineBehaviourVisual = () => {
   return (
     <div className="space-y-6">
       {/* Introduction */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-blue-500/10 via-blue-500/5 to-blue-500/10 p-6 border border-blue-200/50 dark:border-blue-800/30">
-        <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-ink-faint/10 via-ink-faint/5 to-ink-faint/10 p-6 border border-bone/50 dark:border-charcoal/30">
+        <div className="absolute top-0 right-0 w-32 h-32 bg-ink-faint/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
         <div className="relative">
           <div className="flex items-start gap-4 mb-4">
-            <div className="w-12 h-12 rounded-xl bg-blue-500/10 flex items-center justify-center flex-shrink-0">
-              <Globe className="w-6 h-6 text-blue-600 dark:text-blue-400" />
+            <div className="w-12 h-12 rounded-xl bg-ink-faint/10 flex items-center justify-center flex-shrink-0">
+              <Globe className="w-6 h-6 text-charcoal dark:text-ink-muted" />
             </div>
             <div>
               <h3 className="text-xl font-bold text-foreground">Customer Online Behaviour</h3>
@@ -100,9 +100,9 @@ export const CustomerOnlineBehaviourVisual = () => {
       </div>
 
       {/* Where Customers Research Tools */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900/50 dark:to-slate-800/30 p-6 border border-slate-200 dark:border-slate-700/50">
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-paper to-bone-wash dark:from-ink/50 dark:to-ink/30 p-6 border border-bone dark:border-charcoal/50">
         <h4 className="font-semibold text-foreground mb-4 flex items-center gap-2">
-          <Search className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+          <Search className="w-5 h-5 text-charcoal dark:text-ink-muted" />
           Where Customers Research Tools
         </h4>
         <div className="space-y-4">
@@ -134,9 +134,9 @@ export const CustomerOnlineBehaviourVisual = () => {
       </div>
 
       {/* What Content They Trust */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-emerald-500/10 via-emerald-500/5 to-emerald-500/10 p-6 border border-emerald-200/50 dark:border-emerald-800/30">
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-success/10 via-success/5 to-success/10 p-6 border border-success-border/50 dark:border-success/30">
         <h4 className="font-semibold text-foreground mb-4 flex items-center gap-2">
-          <CheckCircle2 className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
+          <CheckCircle2 className="w-5 h-5 text-success dark:text-success" />
           What Content They Trust
         </h4>
         <p className="text-muted-foreground text-sm mb-4">
@@ -156,9 +156,9 @@ export const CustomerOnlineBehaviourVisual = () => {
       </div>
 
       {/* How Customers Evaluate AI Solutions */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-purple-500/10 via-purple-500/5 to-purple-500/10 p-6 border border-purple-200/50 dark:border-purple-800/30">
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-ink-faint/10 via-ink-faint/5 to-ink-faint/10 p-6 border border-bone/50 dark:border-charcoal/30">
         <h4 className="font-semibold text-foreground mb-4 flex items-center gap-2">
-          <Search className="w-5 h-5 text-purple-600 dark:text-purple-400" />
+          <Search className="w-5 h-5 text-charcoal dark:text-ink-muted" />
           How Customers Evaluate AI Solutions
         </h4>
         <p className="text-muted-foreground text-sm mb-4">
@@ -168,7 +168,7 @@ export const CustomerOnlineBehaviourVisual = () => {
           {evaluationCriteria.map((item, idx) => (
             <div key={idx} className="bg-background/60 rounded-xl p-4 border border-border/50">
               <div className="flex items-center gap-2 mb-2">
-                <item.icon className="w-4 h-4 text-purple-600 dark:text-purple-400" />
+                <item.icon className="w-4 h-4 text-charcoal dark:text-ink-muted" />
                 <p className="text-sm font-medium text-foreground">{item.title}</p>
               </div>
               <p className="text-xs text-muted-foreground">{item.description}</p>
@@ -178,9 +178,9 @@ export const CustomerOnlineBehaviourVisual = () => {
       </div>
 
       {/* What Triggers Distrust */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-red-500/10 via-red-500/5 to-red-500/10 p-6 border border-red-200/50 dark:border-red-800/30">
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-danger/10 via-danger/5 to-danger/10 p-6 border border-danger-border/50 dark:border-danger/30">
         <h4 className="font-semibold text-foreground mb-4 flex items-center gap-2">
-          <AlertTriangle className="w-5 h-5 text-red-600 dark:text-red-400" />
+          <AlertTriangle className="w-5 h-5 text-danger dark:text-danger" />
           What Triggers Distrust or Hesitation
         </h4>
         <p className="text-muted-foreground text-sm mb-4">
@@ -189,7 +189,7 @@ export const CustomerOnlineBehaviourVisual = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
           {distrustTriggers.map((trigger, idx) => (
             <div key={idx} className="flex items-start gap-2 bg-background/60 rounded-lg p-3 border border-border/50">
-              <AlertTriangle className="w-4 h-4 text-red-600 dark:text-red-400 flex-shrink-0 mt-0.5" />
+              <AlertTriangle className="w-4 h-4 text-danger dark:text-danger flex-shrink-0 mt-0.5" />
               <p className="text-sm text-muted-foreground">{trigger}</p>
             </div>
           ))}
@@ -197,22 +197,22 @@ export const CustomerOnlineBehaviourVisual = () => {
       </div>
 
       {/* Search Habits */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-amber-500/10 via-amber-500/5 to-amber-500/10 p-6 border border-amber-200/50 dark:border-amber-800/30">
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-warning/10 via-warning/5 to-warning/10 p-6 border border-warning-border/50 dark:border-warning/30">
         <h4 className="font-semibold text-foreground mb-4 flex items-center gap-2">
-          <Search className="w-5 h-5 text-amber-600 dark:text-amber-400" />
+          <Search className="w-5 h-5 text-warning dark:text-warning" />
           Search Habits (Google, LinkedIn, Communities, Influencers)
         </h4>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* Google */}
           <div className="bg-background/60 rounded-xl p-4 border border-border/50">
             <div className="flex items-center gap-2 mb-3">
-              <Search className="w-5 h-5 text-amber-600 dark:text-amber-400" />
+              <Search className="w-5 h-5 text-warning dark:text-warning" />
               <p className="font-medium text-foreground">Google</p>
             </div>
             <p className="text-xs text-muted-foreground mb-2">Used by SMBs and mid-size operators for problem-led searches:</p>
             <div className="flex flex-wrap gap-1 mb-2">
               {["AI for property documents", "Lease summary tool", "Automate real estate admin", "Reduce property workload AI"].map((term, i) => (
-                <span key={i} className="text-xs px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-700 dark:text-amber-400">"{term}"</span>
+                <span key={i} className="text-xs px-2 py-0.5 rounded-full bg-warning/10 text-warning dark:text-warning">"{term}"</span>
               ))}
             </div>
             <p className="text-xs text-muted-foreground">Search intent spikes during: renewals, annual reports, audits, new staff onboarding, manual bottlenecks</p>
@@ -221,14 +221,14 @@ export const CustomerOnlineBehaviourVisual = () => {
           {/* LinkedIn */}
           <div className="bg-background/60 rounded-xl p-4 border border-border/50">
             <div className="flex items-center gap-2 mb-3">
-              <Linkedin className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+              <Linkedin className="w-5 h-5 text-charcoal dark:text-ink-muted" />
               <p className="font-medium text-foreground">LinkedIn</p>
             </div>
             <p className="text-xs text-muted-foreground mb-2">Primary channel for senior and enterprise buyers:</p>
             <ul className="space-y-1">
               {["Follow thought leaders", "Read company updates", "Watch product demos", "Compare vendor credibility", "Discover PropTech trends"].map((item, i) => (
                 <li key={i} className="text-xs text-muted-foreground flex items-start gap-1">
-                  <span className="text-blue-600 dark:text-blue-400">•</span>{item}
+                  <span className="text-charcoal dark:text-ink-muted">•</span>{item}
                 </li>
               ))}
             </ul>
@@ -237,13 +237,13 @@ export const CustomerOnlineBehaviourVisual = () => {
           {/* Communities */}
           <div className="bg-background/60 rounded-xl p-4 border border-border/50">
             <div className="flex items-center gap-2 mb-3">
-              <Users className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
+              <Users className="w-5 h-5 text-success dark:text-success" />
               <p className="font-medium text-foreground">Communities</p>
             </div>
             <ul className="space-y-1">
               {["Facebook landlord groups", "UK PropTech groups", "WhatsApp groups for asset managers", "Meetup groups and local property networks"].map((item, i) => (
                 <li key={i} className="text-xs text-muted-foreground flex items-start gap-1">
-                  <span className="text-emerald-600 dark:text-emerald-400">•</span>{item}
+                  <span className="text-success dark:text-success">•</span>{item}
                 </li>
               ))}
             </ul>
@@ -253,14 +253,14 @@ export const CustomerOnlineBehaviourVisual = () => {
           {/* Influencers */}
           <div className="bg-background/60 rounded-xl p-4 border border-border/50">
             <div className="flex items-center gap-2 mb-3">
-              <MessageSquare className="w-5 h-5 text-purple-600 dark:text-purple-400" />
+              <MessageSquare className="w-5 h-5 text-charcoal dark:text-ink-muted" />
               <p className="font-medium text-foreground">Influencers</p>
             </div>
             <p className="text-xs text-muted-foreground mb-2">Real estate professionals follow:</p>
             <ul className="space-y-1">
               {["PropTech founders", "Asset management advisors", "Industry journalists", "Operations experts", "YouTube channels"].map((item, i) => (
                 <li key={i} className="text-xs text-muted-foreground flex items-start gap-1">
-                  <span className="text-purple-600 dark:text-purple-400">•</span>{item}
+                  <span className="text-charcoal dark:text-ink-muted">•</span>{item}
                 </li>
               ))}
             </ul>
@@ -290,7 +290,7 @@ export const CustomerOnlineBehaviourVisual = () => {
               </div>
             ))}
           </div>
-          <div className="mt-4 bg-emerald-50/50 dark:bg-emerald-950/20 rounded-xl p-4 border border-emerald-200/50 dark:border-emerald-800/30">
+          <div className="mt-4 bg-success-bg/50 dark:bg-success-solid/20 rounded-xl p-4 border border-success-border/50 dark:border-success/30">
             <p className="text-sm text-foreground font-medium">
               This behavioural understanding directly informs our Tactics, Channel Mix, and Brand Messaging later in the strategy.
             </p>

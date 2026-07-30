@@ -64,12 +64,12 @@ function FailureRow({ row }: { row: CrmIngestFailure }) {
 
   return (
     <>
-      <tr className="border-t border-slate-200 hover:bg-slate-50/60">
+      <tr className="border-t border-bone hover:bg-paper/60">
         <td className="py-2 pl-3 pr-2 align-top">
           <button
             type="button"
             onClick={() => setExpanded((e) => !e)}
-            className="text-slate-500 hover:text-slate-800"
+            className="text-ink-muted hover:text-ink"
             aria-label={expanded ? "Collapse" : "Expand"}
           >
             {expanded ? (
@@ -79,26 +79,26 @@ function FailureRow({ row }: { row: CrmIngestFailure }) {
             )}
           </button>
         </td>
-        <td className="py-2 px-2 align-top text-xs font-mono text-slate-700">
+        <td className="py-2 px-2 align-top text-xs font-mono text-charcoal">
           {row.source}
         </td>
-        <td className="py-2 px-2 align-top text-sm text-slate-800 max-w-md">
+        <td className="py-2 px-2 align-top text-sm text-ink max-w-md">
           <div className="line-clamp-2">{row.error_message ?? "—"}</div>
         </td>
-        <td className="py-2 px-2 align-top text-sm text-slate-600 text-center">
+        <td className="py-2 px-2 align-top text-sm text-charcoal text-center">
           {row.retry_count}
         </td>
-        <td className="py-2 px-2 align-top text-xs text-slate-500 whitespace-nowrap">
+        <td className="py-2 px-2 align-top text-xs text-ink-muted whitespace-nowrap">
           {formatDate(row.created_at)}
         </td>
         <td className="py-2 px-2 align-top text-xs whitespace-nowrap">
           {isResolved ? (
-            <span className="inline-flex items-center gap-1 text-emerald-700">
+            <span className="inline-flex items-center gap-1 text-success">
               <CheckCircle2 className="size-3.5" />
               {formatDate(row.resolved_at)}
             </span>
           ) : (
-            <span className="text-amber-700">Open</span>
+            <span className="text-warning">Open</span>
           )}
         </td>
         <td className="py-2 pl-2 pr-3 align-top text-right">
@@ -119,12 +119,12 @@ function FailureRow({ row }: { row: CrmIngestFailure }) {
         </td>
       </tr>
       {expanded && (
-        <tr className="bg-slate-50/60">
+        <tr className="bg-paper/60">
           <td colSpan={7} className="px-3 py-3">
-            <div className="text-xs font-medium text-slate-500 mb-1">
+            <div className="text-xs font-medium text-ink-muted mb-1">
               Payload
             </div>
-            <pre className="text-xs bg-white border border-slate-200 rounded-md p-3 overflow-x-auto max-h-72 whitespace-pre-wrap break-all">
+            <pre className="text-xs bg-white border border-bone rounded-md p-3 overflow-x-auto max-h-72 whitespace-pre-wrap break-all">
               {payloadJson}
             </pre>
           </td>
@@ -141,7 +141,7 @@ export default function CrmSettingsIngestFailures() {
     useIngestFailures(filter);
 
   if (isLoading) {
-    return <div className="p-6 text-sm text-slate-500">Loading…</div>;
+    return <div className="p-6 text-sm text-ink-muted">Loading…</div>;
   }
   if (!isAdmin) return <NotFound />;
 
@@ -154,7 +154,7 @@ export default function CrmSettingsIngestFailures() {
 
       <Link
         to="/crm/settings"
-        className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-slate-700"
+        className="inline-flex items-center gap-1 text-sm text-ink-muted hover:text-charcoal"
       >
         <ChevronLeft className="size-4" /> Back to settings
       </Link>
@@ -164,7 +164,7 @@ export default function CrmSettingsIngestFailures() {
           <h1 className="text-2xl font-semibold tracking-tight">
             Failed ingests
           </h1>
-          <p className="text-sm text-slate-500 mt-1 max-w-2xl">
+          <p className="text-sm text-ink-muted mt-1 max-w-2xl">
             Submissions from the public website that could not be saved. Review
             the payload, fix the underlying issue, then mark as resolved.
           </p>
@@ -182,7 +182,7 @@ export default function CrmSettingsIngestFailures() {
         </Button>
       </div>
 
-      <div className="mt-5 inline-flex rounded-md border border-slate-200 bg-white p-0.5">
+      <div className="mt-5 inline-flex rounded-md border border-bone bg-white p-0.5">
         {FILTERS.map((f) => (
           <button
             key={f.key}
@@ -190,8 +190,8 @@ export default function CrmSettingsIngestFailures() {
             onClick={() => setFilter(f.key)}
             className={`px-3 py-1.5 text-sm rounded-[5px] transition ${
               filter === f.key
-                ? "bg-slate-900 text-white"
-                : "text-slate-600 hover:text-slate-900"
+                ? "bg-ink text-white"
+                : "text-charcoal hover:text-ink"
             }`}
           >
             {f.label}
@@ -199,10 +199,10 @@ export default function CrmSettingsIngestFailures() {
         ))}
       </div>
 
-      <div className="mt-4 bg-white border border-slate-200 rounded-lg overflow-hidden">
+      <div className="mt-4 bg-white border border-bone rounded-lg overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
-            <thead className="bg-slate-50 text-xs uppercase tracking-wide text-slate-500">
+            <thead className="bg-paper text-xs uppercase tracking-wide text-ink-muted">
               <tr>
                 <th className="py-2 pl-3 pr-2 w-8" />
                 <th className="py-2 px-2 text-left">Source</th>
@@ -216,14 +216,14 @@ export default function CrmSettingsIngestFailures() {
             <tbody>
               {rowsLoading && (
                 <tr>
-                  <td colSpan={7} className="py-6 text-center text-sm text-slate-500">
+                  <td colSpan={7} className="py-6 text-center text-sm text-ink-muted">
                     Loading…
                   </td>
                 </tr>
               )}
               {!rowsLoading && rows.length === 0 && (
                 <tr>
-                  <td colSpan={7} className="py-8 text-center text-sm text-slate-500">
+                  <td colSpan={7} className="py-8 text-center text-sm text-ink-muted">
                     No {filter === "all" ? "" : filter} ingest failures.
                   </td>
                 </tr>

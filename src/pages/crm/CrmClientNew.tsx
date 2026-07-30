@@ -66,8 +66,8 @@ const ClientSchema = z.object({
 });
 
 const Section = ({ title, children }: { title: string; children: React.ReactNode }) => (
-  <div className="bg-white border border-slate-200 rounded-lg">
-    <div className="px-4 py-2 border-b border-slate-200 text-sm font-medium text-slate-700">
+  <div className="bg-white border border-bone rounded-lg">
+    <div className="px-4 py-2 border-b border-bone text-sm font-medium text-charcoal">
       {title}
     </div>
     <div className="p-4 grid grid-cols-1 md:grid-cols-2 gap-4">{children}</div>
@@ -86,9 +86,9 @@ const Field = ({
   full?: boolean;
 }) => (
   <div className={full ? "md:col-span-2" : ""}>
-    <Label className="text-xs font-medium text-slate-600">{label}</Label>
+    <Label className="text-xs font-medium text-charcoal">{label}</Label>
     <div className="mt-1">{children}</div>
-    {error && <p className="text-xs text-rose-600 mt-1">{error}</p>}
+    {error && <p className="text-xs text-danger mt-1">{error}</p>}
   </div>
 );
 
@@ -248,7 +248,7 @@ export default function CrmClientNew() {
 
   if (!canWrite) {
     return (
-      <div className="p-6 text-sm text-slate-600">
+      <div className="p-6 text-sm text-charcoal">
         You don't have permission to create clients.
       </div>
     );
@@ -264,7 +264,7 @@ export default function CrmClientNew() {
       {/* ============== Mobile form ============== */}
       <div className="md:hidden p-4 pb-28 max-w-xl mx-auto">
         <h1 className="text-xl font-semibold tracking-tight">New client</h1>
-        <p className="text-sm text-slate-500 mt-1">
+        <p className="text-sm text-ink-muted mt-1">
           Just the basics. You can add more details later on desktop.
         </p>
 
@@ -276,7 +276,7 @@ export default function CrmClientNew() {
               value={form.name}
               onChange={(e) => set("name", e.target.value)}
             />
-            {errors.name && <p className="text-xs text-rose-600 mt-1">{errors.name}</p>}
+            {errors.name && <p className="text-xs text-danger mt-1">{errors.name}</p>}
           </div>
 
           <div>
@@ -376,7 +376,7 @@ export default function CrmClientNew() {
 
         {/* Sticky create bar */}
         <div
-          className="fixed bottom-0 inset-x-0 z-30 bg-white border-t border-slate-200 p-3 flex gap-2"
+          className="fixed bottom-0 inset-x-0 z-30 bg-white border-t border-bone p-3 flex gap-2"
           style={{ paddingBottom: "calc(0.75rem + env(safe-area-inset-bottom))" }}
         >
           <Button
@@ -401,7 +401,7 @@ export default function CrmClientNew() {
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-2xl font-semibold tracking-tight">New client</h1>
-            <p className="text-sm text-slate-500 mt-1">
+            <p className="text-sm text-ink-muted mt-1">
               Capture as much or as little as you have. You can edit anytime.
             </p>
           </div>
@@ -530,7 +530,7 @@ export default function CrmClientNew() {
         </Section>
 
         <Section title="Subscription">
-          <div className="md:col-span-2 -mt-1 mb-1 text-xs text-slate-500">
+          <div className="md:col-span-2 -mt-1 mb-1 text-xs text-ink-muted">
             Contract details are typically only needed for Custom enterprise plans. Tier 1–4 customers can leave these blank.
           </div>
           <Field label="Plan">

@@ -88,10 +88,10 @@ export const GanttChartVisual: React.FC = () => {
           <div
             className={`px-4 py-3 ${
               index === 0
-                ? "bg-purple-50 dark:bg-purple-950/30"
+                ? "bg-paper dark:bg-ink/30"
                 : index === 1
-                ? "bg-blue-50 dark:bg-blue-950/30"
-                : "bg-green-50 dark:bg-green-950/30"
+                ? "bg-paper dark:bg-ink/30"
+                : "bg-success-bg dark:bg-success-solid/30"
             }`}
           >
             <h3 className="text-lg font-semibold text-foreground">
@@ -123,10 +123,10 @@ export const GanttChartVisual: React.FC = () => {
                     <span
                       className={`mt-1.5 w-1.5 h-1.5 rounded-full flex-shrink-0 ${
                         index === 0
-                          ? "bg-purple-500"
+                          ? "bg-ink-faint"
                           : index === 1
-                          ? "bg-blue-500"
-                          : "bg-green-500"
+                          ? "bg-ink-faint"
+                          : "bg-success"
                       }`}
                     />
                     <span>{formatText(objective)}</span>

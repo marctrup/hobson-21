@@ -65,7 +65,7 @@ export const UseHobson2 = () => {
         particleCount: 100,
         spread: 70,
         origin: { y: 0.6 },
-        colors: ['#8B5CF6', '#A855F7', '#C084FC', '#DDD6FE']
+        colors: ['#8B5CF6', '#8A8478', '#8A8478', '#E8E1D4']
       });
     } else {
       setShowResult(true);
@@ -284,23 +284,23 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                     </div>
 
                     {showResult && (
-                      <div className={`p-4 rounded-lg mb-4 ${isCorrect ? 'bg-green-50 border border-green-200' : 'bg-red-50 border border-red-200'}`}>
+                      <div className={`p-4 rounded-lg mb-4 ${isCorrect ? 'bg-success-bg border border-success-border' : 'bg-danger-bg border border-danger-border'}`}>
                         {isCorrect ? (
                           <div className="text-center">
-                            <div className="flex items-center justify-center gap-2 text-green-700 font-semibold mb-2">
+                            <div className="flex items-center justify-center gap-2 text-success font-semibold mb-2">
                               <Trophy className="w-5 h-5" />
                               Congratulations! You're a property expert!
                             </div>
-                            <p className="text-green-600 text-sm leading-relaxed">
+                            <p className="text-success text-sm leading-relaxed">
                               Congratulations! You got the right answer.
                             </p>
                           </div>
                         ) : (
                           <div className="text-center">
-                            <p className="text-red-700 font-semibold mb-1">
+                            <p className="text-danger font-semibold mb-1">
                               Not quite right. Try again!
                             </p>
-                            <p className="text-red-600 text-sm">
+                            <p className="text-danger text-sm">
                               Keep trying - you'll get it!
                             </p>
                           </div>
@@ -341,9 +341,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                       </DialogTitle>
                     </DialogHeader>
                     <div className="space-y-4 py-4">
-                      <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                        <p className="text-blue-800 font-medium mb-2">What it refers to in leases:</p>
-                        <p className="text-blue-700 text-sm leading-relaxed">
+                      <div className="bg-paper border border-bone rounded-lg p-4">
+                        <p className="text-ink font-medium mb-2">What it refers to in leases:</p>
+                        <p className="text-charcoal text-sm leading-relaxed">
                           {wrongAnswerExplanation}
                         </p>
                       </div>
@@ -370,9 +370,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                       </DialogTitle>
                     </DialogHeader>
                      <div className="space-y-4 py-4">
-                       <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 sm:p-4 mb-4">
-                         <p className="text-blue-800 font-medium mb-2 text-sm sm:text-base">Correct Answer!</p>
-                         <p className="text-blue-700 text-xs sm:text-sm leading-relaxed">
+                       <div className="bg-paper border border-bone rounded-lg p-3 sm:p-4 mb-4">
+                         <p className="text-ink font-medium mb-2 text-sm sm:text-base">Correct Answer!</p>
+                         <p className="text-charcoal text-xs sm:text-sm leading-relaxed">
                            <strong>"Casement"</strong> refers to a type of window, not a property lease term. A casement is a type of window that is attached to its frame by side hinges. It swings open like a door, usually outwards.
                          </p>
                        </div>

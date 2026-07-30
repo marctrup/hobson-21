@@ -99,14 +99,14 @@ const commercialImpact = [{
 }];
 export const EarlyRoadmapVisual: React.FC = () => {
   const getStatusIcon = (status: string) => {
-    if (status === "completed") return <CheckCircle className="w-5 h-5 text-green-600" />;
-    if (status === "in-progress") return <Clock className="w-5 h-5 text-amber-600" />;
-    return <Rocket className="w-5 h-5 text-purple-600" />;
+    if (status === "completed") return <CheckCircle className="w-5 h-5 text-success" />;
+    if (status === "in-progress") return <Clock className="w-5 h-5 text-warning" />;
+    return <Rocket className="w-5 h-5 text-charcoal" />;
   };
   const getStatusColor = (status: string, index: number) => {
-    if (status === "completed") return "border-l-green-500 bg-green-50/50";
-    if (status === "in-progress") return "border-l-amber-500 bg-amber-50/50";
-    return "border-l-purple-500 bg-purple-50/50";
+    if (status === "completed") return "border-l-green-500 bg-success-bg/50";
+    if (status === "in-progress") return "border-l-amber-500 bg-warning-bg/50";
+    return "border-l-purple-500 bg-paper/50";
   };
   return <div className="w-full space-y-8">
 
@@ -125,7 +125,7 @@ export const EarlyRoadmapVisual: React.FC = () => {
                   <span className="text-sm text-muted-foreground">{section.phase}</span>
                 </div>
               </div>
-              <span className={`text-xs font-medium px-2 py-1 rounded-full ${section.status === "completed" ? "bg-green-100 text-green-700" : section.status === "in-progress" ? "bg-amber-100 text-amber-700" : "bg-purple-100 text-purple-700"}`}>
+              <span className={`text-xs font-medium px-2 py-1 rounded-full ${section.status === "completed" ? "bg-success-bg text-success" : section.status === "in-progress" ? "bg-warning-bg text-warning" : "bg-bone-wash text-charcoal"}`}>
                 {section.status === "completed" ? "Completed" : section.status === "in-progress" ? "In Progress" : "Upcoming"}
               </span>
             </div>
@@ -151,13 +151,13 @@ export const EarlyRoadmapVisual: React.FC = () => {
       </div>
 
       {/* 2026 Product Pillars */}
-      <div className="bg-gradient-to-br from-primary/5 to-purple-50 rounded-xl p-6 border border-primary/20">
+      <div className="bg-gradient-to-br from-primary/5 to-paper rounded-xl p-6 border border-primary/20">
         <h3 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
           <Zap className="w-5 h-5 text-primary" />
           2026 Product Pillars - Mapped to Industry Operations
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-          {productPillars.map((pillar, index) => <div key={index} className="bg-white rounded-lg p-3 border border-gray-200 flex items-start gap-3">
+          {productPillars.map((pillar, index) => <div key={index} className="bg-white rounded-lg p-3 border border-bone flex items-start gap-3">
               <pillar.icon className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
               <div>
                 <span className="text-sm font-medium text-foreground">{pillar.workflow}</span>
@@ -177,7 +177,7 @@ export const EarlyRoadmapVisual: React.FC = () => {
           2026–2028: Scale, Monetise, Dominate
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {businessTimeline.map((phase, index) => <div key={index} className="bg-white border border-gray-200 rounded-lg p-4 shadow-sm">
+          {businessTimeline.map((phase, index) => <div key={index} className="bg-white border border-bone rounded-lg p-4 shadow-sm">
               <div className="flex items-center gap-2 mb-3">
                 <span className="px-2 py-1 bg-primary text-white text-xs font-bold rounded">
                   {phase.year}
@@ -195,7 +195,7 @@ export const EarlyRoadmapVisual: React.FC = () => {
       </div>
 
       {/* Commercial Impact */}
-      <div className="bg-gray-50 rounded-xl p-6 border border-gray-200">
+      <div className="bg-paper rounded-xl p-6 border border-bone">
         <h3 className="text-lg font-semibold text-foreground mb-4">Commercial Impact for Operators</h3>
         <p className="text-sm text-muted-foreground mb-4">Hobson enables:</p>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">

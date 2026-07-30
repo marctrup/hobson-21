@@ -112,14 +112,14 @@ export const HomepageABTest = () => {
               <SimpleButton
                 variant="ghost"
                 size="icon"
-                className="md:hidden bg-gray-100 hover:bg-gray-200 border border-gray-200 rounded-md"
+                className="md:hidden bg-bone-wash hover:bg-bone border border-bone rounded-md"
                 onClick={toggleMobileMenu}
                 aria-label="Toggle mobile menu"
               >
                 {isMobileMenuOpen ? (
-                  <X className="h-6 w-6 text-purple-500" strokeWidth={1.5} />
+                  <X className="h-6 w-6 text-ink-muted" strokeWidth={1.5} />
                 ) : (
-                  <Menu className="h-6 w-6 text-purple-500" strokeWidth={1.5} />
+                  <Menu className="h-6 w-6 text-ink-muted" strokeWidth={1.5} />
                 )}
               </SimpleButton>
             </div>
@@ -180,10 +180,10 @@ export const HomepageABTest = () => {
 
                   <Link
                     to="/pricing"
-                    className="bg-purple-50 border border-purple-200 rounded-xl px-6 py-3 inline-block hover:bg-purple-100 hover:border-purple-300 hover:scale-105 hover:shadow-lg transition-all duration-200 group"
+                    className="bg-paper border border-bone rounded-xl px-6 py-3 inline-block hover:bg-bone-wash hover:border-bone hover:scale-105 hover:shadow-lg transition-all duration-200 group"
                     id="homepage-hero-pricing-cta"
                   >
-                    <div className="inline-flex items-center gap-3 text-purple-600 hover:text-purple-700 font-medium text-base">
+                    <div className="inline-flex items-center gap-3 text-charcoal hover:text-charcoal font-medium text-base">
                       See pricing
                       <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
                     </div>
@@ -192,7 +192,7 @@ export const HomepageABTest = () => {
 
                 {/* Right Container - Document to Insights Visualization */}
                 <div
-                  className="relative mt-8 lg:mt-[5px] font-space transition-transform duration-300 border-[2px] sm:border-[3px] border-gray-500 rounded-lg"
+                  className="relative mt-8 lg:mt-[5px] font-space transition-transform duration-300 border-[2px] sm:border-[3px] border-bone-strong rounded-lg"
                   style={{
                     transform: "perspective(1000px) rotateY(-10deg)",
                     transformStyle: "preserve-3d",
@@ -286,9 +286,9 @@ export const HomepageABTest = () => {
                 {/* Right Content - Georgia Video */}
                 <div className="mt-6 lg:mt-0">
                   <div
-                    className="aspect-[3/2] bg-gray-100 rounded-xl overflow-hidden relative"
+                    className="aspect-[3/2] bg-bone-wash rounded-xl overflow-hidden relative"
                     style={{
-                      border: "6px solid #f0f0f0",
+                      border: "6px solid #F1EBDE",
                     }}
                   >
                     <HomepageGeorgiaVideo />

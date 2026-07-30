@@ -29,7 +29,7 @@ export const IssueBoard = ({ rows, isLoading, showClient, onSelect }: Props) => 
   }, [rows]);
 
   if (isLoading) {
-    return <div className="p-6 text-sm text-slate-500">Loading…</div>;
+    return <div className="p-6 text-sm text-ink-muted">Loading…</div>;
   }
 
   return (
@@ -39,24 +39,24 @@ export const IssueBoard = ({ rows, isLoading, showClient, onSelect }: Props) => 
         return (
           <div
             key={status}
-            className="bg-slate-50 border border-slate-200 rounded-lg flex flex-col min-h-[180px]"
+            className="bg-paper border border-bone rounded-lg flex flex-col min-h-[180px]"
           >
-            <div className="px-3 py-2 border-b border-slate-200 flex items-center justify-between">
-              <span className="text-xs font-semibold text-slate-700 uppercase tracking-wide">
+            <div className="px-3 py-2 border-b border-bone flex items-center justify-between">
+              <span className="text-xs font-semibold text-charcoal uppercase tracking-wide">
                 {ISSUE_STATUS_LABELS[status]}
               </span>
-              <span className="text-xs text-slate-500">{list.length}</span>
+              <span className="text-xs text-ink-muted">{list.length}</span>
             </div>
             <div className="p-2 space-y-2 flex-1">
               {list.length === 0 ? (
-                <div className="text-xs text-slate-400 text-center py-6">—</div>
+                <div className="text-xs text-ink-muted text-center py-6">—</div>
               ) : (
                 list.map((r) => (
                   <button
                     key={r.id}
                     onClick={() => onSelect(r.id)}
                     className={cn(
-                      "block w-full text-left bg-white border border-slate-200 rounded-md p-2.5 hover:border-slate-400 transition-colors",
+                      "block w-full text-left bg-white border border-bone rounded-md p-2.5 hover:border-bone-strong transition-colors",
                     )}
                   >
                     <div className="flex items-start gap-2">
@@ -65,20 +65,20 @@ export const IssueBoard = ({ rows, isLoading, showClient, onSelect }: Props) => 
                         className="mt-1.5"
                       />
                       <div className="flex-1 min-w-0">
-                        <div className="text-sm font-medium text-slate-900 line-clamp-2">
+                        <div className="text-sm font-medium text-ink line-clamp-2">
                           {r.title}
                         </div>
                         {showClient && r.client_name && (
                           <Link
                             to={`/crm/clients/${r.client_id}`}
                             onClick={(e) => e.stopPropagation()}
-                            className="text-xs text-slate-500 hover:text-slate-900 hover:underline mt-0.5 inline-block"
+                            className="text-xs text-ink-muted hover:text-ink hover:underline mt-0.5 inline-block"
                           >
                             {r.client_name}
                           </Link>
                         )}
                         {r.due_date && (
-                          <div className="text-xs text-slate-500 mt-1">
+                          <div className="text-xs text-ink-muted mt-1">
                             Due {formatDateUK(r.due_date)}
                           </div>
                         )}

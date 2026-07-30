@@ -7,14 +7,14 @@ const EmailPreview = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-100 p-4">
+    <div className="min-h-screen bg-bone-wash p-4">
       <Helmet>
         <meta name="robots" content="noindex, nofollow" />
       </Helmet>
       <div className="max-w-4xl mx-auto">
         <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
-          <h1 className="text-2xl font-bold text-gray-800 mb-4">Email Template Preview</h1>
-          <p className="text-gray-600 mb-4">This is how your email will look to recipients:</p>
+          <h1 className="text-2xl font-bold text-ink mb-4">Email Template Preview</h1>
+          <p className="text-charcoal mb-4">This is how your email will look to recipients:</p>
         </div>
         
         <div className="bg-white rounded-lg shadow-lg overflow-hidden">

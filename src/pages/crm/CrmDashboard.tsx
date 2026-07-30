@@ -54,13 +54,13 @@ const SummaryCard = ({
   value: string | number;
   hint?: string;
 }) => (
-  <div className="bg-white border border-slate-200 rounded-lg p-4">
-    <div className="flex items-center gap-2 text-slate-500 text-xs font-medium uppercase tracking-wide">
+  <div className="bg-white border border-bone rounded-lg p-4">
+    <div className="flex items-center gap-2 text-ink-muted text-xs font-medium uppercase tracking-wide">
       <Icon className="size-4" />
       {label}
     </div>
-    <div className="mt-2 text-2xl font-semibold text-slate-900">{value}</div>
-    {hint && <div className="text-xs text-slate-500 mt-1">{hint}</div>}
+    <div className="mt-2 text-2xl font-semibold text-ink">{value}</div>
+    {hint && <div className="text-xs text-ink-muted mt-1">{hint}</div>}
   </div>
 );
 
@@ -198,7 +198,7 @@ export default function CrmDashboard() {
       </Helmet>
       <div className="p-6 max-w-7xl mx-auto">
         <h1 className="text-2xl font-semibold tracking-tight">Dashboard</h1>
-        <p className="text-sm text-slate-500 mt-1">
+        <p className="text-sm text-ink-muted mt-1">
           Snapshot of your client portfolio and recent activity.
         </p>
 
@@ -292,34 +292,34 @@ export default function CrmDashboard() {
           <OutboundEmailsCard />
         </div>
 
-        <div className="mt-8 bg-white border border-slate-200 rounded-lg">
-          <div className="px-4 py-3 border-b border-slate-200 flex items-center justify-between">
+        <div className="mt-8 bg-white border border-bone rounded-lg">
+          <div className="px-4 py-3 border-b border-bone flex items-center justify-between">
             <h2 className="font-medium">Recently updated clients</h2>
-            <Link to="/crm/clients" className="text-sm text-slate-600 hover:text-slate-900">
+            <Link to="/crm/clients" className="text-sm text-charcoal hover:text-ink">
               View all →
             </Link>
           </div>
           {isLoading ? (
-            <div className="p-6 text-sm text-slate-500">Loading…</div>
+            <div className="p-6 text-sm text-ink-muted">Loading…</div>
           ) : !data?.recent.length ? (
-            <div className="p-8 text-center text-sm text-slate-500">
+            <div className="p-8 text-center text-sm text-ink-muted">
               No clients yet.{" "}
-              <Link to="/crm/clients/new" className="text-slate-900 underline">
+              <Link to="/crm/clients/new" className="text-ink underline">
                 Add your first client
               </Link>
               .
             </div>
           ) : (
-            <ul className="divide-y divide-slate-100">
+            <ul className="divide-y divide-faint-rule">
               {data.recent.map((c) => (
                 <li key={c.id}>
                   <Link
                     to={`/crm/clients/${c.id}`}
-                    className="flex items-center justify-between px-4 py-3 hover:bg-slate-50"
+                    className="flex items-center justify-between px-4 py-3 hover:bg-paper"
                   >
                     <div>
                       <div className="font-medium text-sm">{c.name}</div>
-                      <div className="text-xs text-slate-500">
+                      <div className="text-xs text-ink-muted">
                         Updated {formatDateUK(c.updated_at)}
                       </div>
                     </div>
@@ -360,44 +360,44 @@ const MyOpenCard = ({
   emptyLabel: string;
   emptyHref: string;
 }) => (
-  <div className="bg-white border border-slate-200 rounded-lg">
-    <div className="px-4 py-3 border-b border-slate-200 flex items-center justify-between">
+  <div className="bg-white border border-bone rounded-lg">
+    <div className="px-4 py-3 border-b border-bone flex items-center justify-between">
       <h2 className="font-medium">{title}</h2>
-      <Link to={href} className="text-sm text-slate-600 hover:text-slate-900">
+      <Link to={href} className="text-sm text-charcoal hover:text-ink">
         View all →
       </Link>
     </div>
     {isLoading ? (
-      <div className="p-6 text-sm text-slate-500">Loading…</div>
+      <div className="p-6 text-sm text-ink-muted">Loading…</div>
     ) : rows.length === 0 ? (
-      <div className="p-8 text-center text-sm text-slate-500">
+      <div className="p-8 text-center text-sm text-ink-muted">
         {emptyLabel}{" "}
-        <Link to={emptyHref} className="text-slate-900 underline">
+        <Link to={emptyHref} className="text-ink underline">
           Open {title.toLowerCase().replace("my open ", "")}
         </Link>
         .
       </div>
     ) : (
-      <ul className="divide-y divide-slate-100">
+      <ul className="divide-y divide-faint-rule">
         {rows.map((r) => {
           const overdue = isPastDue(r.dueDate);
           return (
             <li key={r.id}>
               <Link
                 to={r.link}
-                className="flex items-center gap-3 px-4 py-3 hover:bg-slate-50"
+                className="flex items-center gap-3 px-4 py-3 hover:bg-paper"
               >
                 <div className="shrink-0">{r.left}</div>
                 <div className="flex-1 min-w-0">
-                  <div className="font-medium text-sm text-slate-900 truncate">
+                  <div className="font-medium text-sm text-ink truncate">
                     {r.title}
                   </div>
-                  <div className="text-xs text-slate-500 mt-0.5 inline-flex items-center gap-1">
+                  <div className="text-xs text-ink-muted mt-0.5 inline-flex items-center gap-1">
                     {r.dueDate ? (
                       <span
                         className={cn(
                           "inline-flex items-center gap-1",
-                          overdue && "text-rose-600 font-medium",
+                          overdue && "text-danger font-medium",
                         )}
                       >
                         {overdue && <CalendarClock className="size-3.5" />}

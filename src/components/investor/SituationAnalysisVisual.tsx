@@ -7,9 +7,9 @@ export const SituationAnalysisVisual = () => {
       id: 1,
       title: "Large Portfolio Operators with Heavy Administration",
       icon: Building2,
-      color: "from-blue-500/10 to-blue-600/10",
-      borderColor: "border-blue-200/50 dark:border-blue-800/30",
-      iconColor: "text-blue-600 dark:text-blue-400",
+      color: "from-ink-faint/10 to-charcoal/10",
+      borderColor: "border-bone/50 dark:border-charcoal/30",
+      iconColor: "text-charcoal dark:text-ink-muted",
       description: "Organisations managing hundreds of assets with layered approval structures and multiple document repositories (legacy CRMs, shared drives, email archives). Their systems are complex, decentralised, and historically built.",
       hobsonValue: "Hobson behaves like a rapid information assistant. It retrieves clauses, dates, terms, and summaries from large volumes of documents in seconds.",
       useCases: [
@@ -25,9 +25,9 @@ export const SituationAnalysisVisual = () => {
       id: 2,
       title: "Medium-Sized Real Estate Companies with Agile Workflows",
       icon: Briefcase,
-      color: "from-purple-500/10 to-purple-600/10",
-      borderColor: "border-purple-200/50 dark:border-purple-800/30",
-      iconColor: "text-purple-600 dark:text-purple-400",
+      color: "from-ink-faint/10 to-charcoal/10",
+      borderColor: "border-bone/50 dark:border-charcoal/30",
+      iconColor: "text-charcoal dark:text-ink-muted",
       description: "Lean, fast-moving teams managing mid-sized portfolios. These organisations often lack centralised knowledge systems and rely on shared drives, email threads, and informal knowledge.",
       hobsonValue: "Hobson provides clarity and structure without requiring a system overhaul. It acts as an instant-access layer over existing files.",
       useCases: [
@@ -43,9 +43,9 @@ export const SituationAnalysisVisual = () => {
       id: 3,
       title: "Small Portfolio Owners / Owner-Managers",
       icon: User,
-      color: "from-emerald-500/10 to-emerald-600/10",
-      borderColor: "border-emerald-200/50 dark:border-emerald-800/30",
-      iconColor: "text-emerald-600 dark:text-emerald-400",
+      color: "from-success/10 to-success/10",
+      borderColor: "border-success-border/50 dark:border-success/30",
+      iconColor: "text-success dark:text-success",
       description: "Hands-on owner-operators running small portfolios with limited administrative support and minimal technology infrastructure. They rely on manual workflows, email, paper files, and spreadsheets.",
       hobsonValue: "Hobson becomes a simple, intelligent digital assistant that finds and summarises lease terms, deadlines, and answers without requiring training.",
       useCases: [
@@ -62,10 +62,10 @@ export const SituationAnalysisVisual = () => {
   return (
     <div className="space-y-8">
       {/* Header */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-teal-500/10 via-teal-500/5 to-teal-500/10 p-6 border border-teal-200/50 dark:border-teal-800/30">
-        <div className="absolute top-0 right-0 w-32 h-32 bg-teal-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-ink-faint/10 via-ink-faint/5 to-ink-faint/10 p-6 border border-bone/50 dark:border-charcoal/30">
+        <div className="absolute top-0 right-0 w-32 h-32 bg-ink-faint/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
         <div className="relative flex items-start gap-4">
-          <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-teal-500/10 text-teal-600 dark:text-teal-400">
+          <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-ink-faint/10 text-charcoal dark:text-ink-muted">
             <Users className="w-6 h-6" />
           </div>
           <div>
@@ -76,7 +76,7 @@ export const SituationAnalysisVisual = () => {
       </div>
 
       {/* Intro */}
-      <div className="p-5 rounded-xl bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900/50 dark:to-slate-800/30 border border-slate-200 dark:border-slate-700/50">
+      <div className="p-5 rounded-xl bg-gradient-to-br from-paper to-bone-wash dark:from-ink/50 dark:to-ink/30 border border-bone dark:border-charcoal/50">
         <p className="text-foreground leading-relaxed">
           Hobson serves Real Estate organisations that manage operational documents such as leases, agreements, and compliance files. 
           Through discovery interviews and early product testing, <span className="font-bold text-primary">three distinct segments</span> emerged. 
@@ -97,9 +97,9 @@ export const SituationAnalysisVisual = () => {
                 <div className="flex items-center gap-3 flex-wrap">
                   <h4 className="font-bold text-foreground">Segment {segment.id}:</h4>
                   <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${
-                    segment.targetLevel === "Primary" ? "bg-blue-100 text-blue-700 dark:bg-blue-900/50 dark:text-blue-300" :
-                    segment.targetLevel === "Secondary" ? "bg-purple-100 text-purple-700 dark:bg-purple-900/50 dark:text-purple-300" :
-                    "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/50 dark:text-emerald-300"
+                    segment.targetLevel === "Primary" ? "bg-bone-wash text-charcoal dark:bg-ink/50 dark:text-ink-faint" :
+                    segment.targetLevel === "Secondary" ? "bg-bone-wash text-charcoal dark:bg-ink/50 dark:text-ink-faint" :
+                    "bg-success-bg text-success dark:bg-success-solid/50 dark:text-success"
                   }`}>
                     {segment.targetLevel} Target
                   </span>
@@ -139,7 +139,7 @@ export const SituationAnalysisVisual = () => {
       {/* Targeting Strategy */}
       <div className="space-y-4">
         <h4 className="font-semibold text-foreground flex items-center gap-2">
-          <Target className="w-5 h-5 text-teal-600" />
+          <Target className="w-5 h-5 text-charcoal" />
           Targeting Strategy
         </h4>
         <p className="text-muted-foreground text-sm">

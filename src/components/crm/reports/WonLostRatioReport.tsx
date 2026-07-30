@@ -11,9 +11,9 @@ import { useWonLostRatio } from "@/hooks/crm/reports/usePipelineReports";
 import { downloadCsv } from "@/lib/crm/reportsExport";
 
 const COLORS: Record<string, string> = {
-  Won: "#10b981",
-  Lost: "#f43f5e",
-  Open: "#94a3b8",
+  Won: "#5E6B33",
+  Lost: "#9C4A38",
+  Open: "#8A8478",
 };
 
 export const WonLostRatioReport = () => {
@@ -50,7 +50,7 @@ export const WonLostRatioReport = () => {
       footer={
         wonRate !== null ? (
           <span>
-            <span className="font-medium text-slate-700">{wonRate}%</span> win
+            <span className="font-medium text-charcoal">{wonRate}%</span> win
             rate (closed deals only).
           </span>
         ) : (

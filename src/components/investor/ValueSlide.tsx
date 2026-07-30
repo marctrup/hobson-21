@@ -5,11 +5,11 @@ export const ValueSlide = () => {
   return (
     <div className="h-full flex items-center justify-center px-4 sm:px-6 pb-16 sm:pb-20">
       <div className="text-center max-w-3xl space-y-3 sm:space-y-4">
-        <h2 className="text-lg sm:text-2xl md:text-3xl font-bold text-[#1e293b] leading-tight px-2">
+        <h2 className="text-lg sm:text-2xl md:text-3xl font-bold text-[#2D2D2D] leading-tight px-2">
           Transparent, Low-Cost Pricing
         </h2>
 
-        <p className="text-xs sm:text-sm md:text-base text-[#475569] max-w-lg mx-auto px-2">
+        <p className="text-xs sm:text-sm md:text-base text-[#2D2D2D] max-w-lg mx-auto px-2">
           Pay only for what you use with Hobson Energy Units
         </p>
 

@@ -46,8 +46,8 @@ export const MarketDescriptionVisual = () => {
   return (
     <div className="space-y-6">
       {/* Introduction */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-blue-500/10 via-blue-500/5 to-blue-500/10 p-6 border border-blue-200/50 dark:border-blue-800/30">
-        <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-ink-faint/10 via-ink-faint/5 to-ink-faint/10 p-6 border border-bone/50 dark:border-charcoal/30">
+        <div className="absolute top-0 right-0 w-32 h-32 bg-ink-faint/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
         <div className="relative">
           <h3 className="text-xl font-bold text-foreground mb-4">Market Description</h3>
           <p className="text-foreground leading-relaxed">
@@ -57,9 +57,9 @@ export const MarketDescriptionVisual = () => {
       </div>
 
       {/* Key Actionable Trends */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900/50 dark:to-slate-800/30 p-6 border border-slate-200 dark:border-slate-700/50">
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-paper to-bone-wash dark:from-ink/50 dark:to-ink/30 p-6 border border-bone dark:border-charcoal/50">
         <h4 className="font-semibold text-foreground mb-4 flex items-center gap-2">
-          <TrendingUp className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+          <TrendingUp className="w-5 h-5 text-charcoal dark:text-ink-muted" />
           Key Actionable Trends in Real Estate Data Use
         </h4>
         <p className="text-muted-foreground mb-4">
@@ -74,7 +74,7 @@ export const MarketDescriptionVisual = () => {
             "Greater expectations for real-time insight, especially during portfolio reviews or negotiations",
           ].map((item, idx) => (
             <li key={idx} className="text-sm text-muted-foreground flex items-start gap-2">
-              <span className="text-blue-600 dark:text-blue-400 mt-1">•</span>
+              <span className="text-charcoal dark:text-ink-muted mt-1">•</span>
               {item}
             </li>
           ))}
@@ -85,9 +85,9 @@ export const MarketDescriptionVisual = () => {
       </div>
 
       {/* Market Statistics */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-purple-500/10 via-purple-500/5 to-purple-500/10 p-6 border border-purple-200/50 dark:border-purple-800/30">
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-ink-faint/10 via-ink-faint/5 to-ink-faint/10 p-6 border border-bone/50 dark:border-charcoal/30">
         <h4 className="font-semibold text-foreground mb-4 flex items-center gap-2">
-          <Zap className="w-5 h-5 text-purple-600 dark:text-purple-400" />
+          <Zap className="w-5 h-5 text-charcoal dark:text-ink-muted" />
           Growing Demand for Automation
         </h4>
         <p className="text-muted-foreground mb-4">
@@ -96,7 +96,7 @@ export const MarketDescriptionVisual = () => {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
           {marketStats.map((stat, idx) => (
             <div key={idx} className="bg-background/60 rounded-xl p-4 border border-border/50 text-center">
-              <p className="text-2xl font-bold text-purple-600 dark:text-purple-400">{stat.value}</p>
+              <p className="text-2xl font-bold text-charcoal dark:text-ink-muted">{stat.value}</p>
               <p className="text-xs text-muted-foreground mt-1">{stat.label}</p>
               <p className="text-xs text-muted-foreground/60 mt-1">Ref: {stat.source}</p>
             </div>
@@ -108,9 +108,9 @@ export const MarketDescriptionVisual = () => {
       </div>
 
       {/* Document Overload */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-amber-500/10 via-amber-500/5 to-amber-500/10 p-6 border border-amber-200/50 dark:border-amber-800/30">
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-warning/10 via-warning/5 to-warning/10 p-6 border border-warning-border/50 dark:border-warning/30">
         <h4 className="font-semibold text-foreground mb-4 flex items-center gap-2">
-          <AlertTriangle className="w-5 h-5 text-amber-600 dark:text-amber-400" />
+          <AlertTriangle className="w-5 h-5 text-warning dark:text-warning" />
           Document Overload in Transactions and Portfolio Management
         </h4>
         <p className="text-muted-foreground mb-4">
@@ -125,7 +125,7 @@ export const MarketDescriptionVisual = () => {
             "Staff shortages amplify the impact — fewer people must do more work, faster",
           ].map((item, idx) => (
             <li key={idx} className="text-sm text-muted-foreground flex items-start gap-2">
-              <span className="text-amber-600 dark:text-amber-400 mt-1">•</span>
+              <span className="text-warning dark:text-warning mt-1">•</span>
               {item}
             </li>
           ))}
@@ -136,9 +136,9 @@ export const MarketDescriptionVisual = () => {
       </div>
 
       {/* Speed, Compliance, Accuracy */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-emerald-500/10 via-emerald-500/5 to-emerald-500/10 p-6 border border-emerald-200/50 dark:border-emerald-800/30">
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-success/10 via-success/5 to-success/10 p-6 border border-success-border/50 dark:border-success/30">
         <h4 className="font-semibold text-foreground mb-4 flex items-center gap-2">
-          <Clock className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
+          <Clock className="w-5 h-5 text-success dark:text-success" />
           Pressure for Speed, Compliance, and Accuracy
         </h4>
         <p className="text-muted-foreground mb-4">
@@ -155,7 +155,7 @@ export const MarketDescriptionVisual = () => {
                 "Investors expect rapid, evidence-backed answers in meetings and board reviews",
               ].map((item, idx) => (
                 <li key={idx} className="text-sm text-muted-foreground flex items-start gap-2">
-                  <span className="text-emerald-600 dark:text-emerald-400 mt-1">•</span>
+                  <span className="text-success dark:text-success mt-1">•</span>
                   {item}
                 </li>
               ))}
@@ -171,7 +171,7 @@ export const MarketDescriptionVisual = () => {
                 "Reduced risk of human error",
               ].map((item, idx) => (
                 <li key={idx} className="text-sm text-muted-foreground flex items-start gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="w-4 h-4 text-success dark:text-success mt-0.5 flex-shrink-0" />
                   {item}
                 </li>
               ))}
@@ -187,16 +187,16 @@ export const MarketDescriptionVisual = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {actionableInsights.map((item, idx) => {
           const colorClasses = {
-            blue: "from-blue-500/10 to-blue-600/10 border-blue-200/50 dark:border-blue-800/30 text-blue-600 dark:text-blue-400",
-            purple: "from-purple-500/10 to-purple-600/10 border-purple-200/50 dark:border-purple-800/30 text-purple-600 dark:text-purple-400",
-            amber: "from-amber-500/10 to-amber-600/10 border-amber-200/50 dark:border-amber-800/30 text-amber-600 dark:text-amber-400",
-            emerald: "from-emerald-500/10 to-emerald-600/10 border-emerald-200/50 dark:border-emerald-800/30 text-emerald-600 dark:text-emerald-400",
+            blue: "from-ink-faint/10 to-charcoal/10 border-bone/50 dark:border-charcoal/30 text-charcoal dark:text-ink-muted",
+            purple: "from-ink-faint/10 to-charcoal/10 border-bone/50 dark:border-charcoal/30 text-charcoal dark:text-ink-muted",
+            amber: "from-warning/10 to-warning/10 border-warning-border/50 dark:border-warning/30 text-warning dark:text-warning",
+            emerald: "from-success/10 to-success/10 border-success-border/50 dark:border-success/30 text-success dark:text-success",
           }[item.color];
           const iconColor = {
-            blue: "text-blue-600 dark:text-blue-400",
-            purple: "text-purple-600 dark:text-purple-400",
-            amber: "text-amber-600 dark:text-amber-400",
-            emerald: "text-emerald-600 dark:text-emerald-400",
+            blue: "text-charcoal dark:text-ink-muted",
+            purple: "text-charcoal dark:text-ink-muted",
+            amber: "text-warning dark:text-warning",
+            emerald: "text-success dark:text-success",
           }[item.color];
           return (
             <div key={idx} className={`relative overflow-hidden rounded-xl bg-gradient-to-br ${colorClasses} p-4 border`}>
@@ -213,9 +213,9 @@ export const MarketDescriptionVisual = () => {
       </div>
 
       {/* Why Now */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-red-500/10 via-red-500/5 to-red-500/10 p-6 border border-red-200/50 dark:border-red-800/30">
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-danger/10 via-danger/5 to-danger/10 p-6 border border-danger-border/50 dark:border-danger/30">
         <h4 className="font-semibold text-foreground mb-4 flex items-center gap-2">
-          <Target className="w-5 h-5 text-red-600 dark:text-red-400" />
+          <Target className="w-5 h-5 text-danger dark:text-danger" />
           Why the Problem Matters Now
         </h4>
         <p className="text-muted-foreground mb-4">
@@ -225,7 +225,7 @@ export const MarketDescriptionVisual = () => {
           {convergencePressures.map((pressure, idx) => (
             <div key={idx} className="bg-background/60 rounded-lg p-3 border border-border/50">
               <p className="text-sm text-foreground flex items-start gap-2">
-                <span className="text-red-600 dark:text-red-400 font-bold">{idx + 1}.</span>
+                <span className="text-danger dark:text-danger font-bold">{idx + 1}.</span>
                 {pressure}
               </p>
             </div>
@@ -244,7 +244,7 @@ export const MarketDescriptionVisual = () => {
           <p className="text-foreground leading-relaxed mb-4">
             Hobson is positioned precisely at this intersection — enabling Real Estate teams to retrieve accurate, referenced answers instantly, using the documents they already rely on. Its lightweight, low-friction design makes it uniquely suited to a market that needs automation without disruption.
           </p>
-          <div className="bg-emerald-50/50 dark:bg-emerald-950/20 rounded-xl p-4 border border-emerald-200/50 dark:border-emerald-800/30">
+          <div className="bg-success-bg/50 dark:bg-success-solid/20 rounded-xl p-4 border border-success-border/50 dark:border-success/30">
             <p className="text-foreground font-medium">
               Hobson's solution is not just relevant — it is timely, strategically aligned, and driven by immediate market need.
             </p>

@@ -104,21 +104,21 @@ export const SegmentationStrategyVisual = () => {
       <div className="space-y-3">
         <h3 className="text-base font-bold text-foreground">Positioning Across the Customer Journey</h3>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
-          <div className="rounded-lg bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 p-3 text-center">
-            <p className="text-xs font-bold text-blue-700 dark:text-blue-400 mb-1">Awareness</p>
-            <p className="text-[10px] text-blue-600 dark:text-blue-300">A practical AI option built for property operations</p>
+          <div className="rounded-lg bg-paper dark:bg-ink/30 border border-bone dark:border-charcoal p-3 text-center">
+            <p className="text-xs font-bold text-charcoal dark:text-ink-muted mb-1">Awareness</p>
+            <p className="text-[10px] text-charcoal dark:text-ink-faint">A practical AI option built for property operations</p>
           </div>
-          <div className="rounded-lg bg-purple-50 dark:bg-purple-950/30 border border-purple-200 dark:border-purple-800 p-3 text-center">
-            <p className="text-xs font-bold text-purple-700 dark:text-purple-400 mb-1">Consideration</p>
-            <p className="text-[10px] text-purple-600 dark:text-purple-300">A simple way to access document insight quickly</p>
+          <div className="rounded-lg bg-paper dark:bg-ink/30 border border-bone dark:border-charcoal p-3 text-center">
+            <p className="text-xs font-bold text-charcoal dark:text-ink-muted mb-1">Consideration</p>
+            <p className="text-[10px] text-charcoal dark:text-ink-faint">A simple way to access document insight quickly</p>
           </div>
-          <div className="rounded-lg bg-green-50 dark:bg-green-950/30 border border-green-200 dark:border-green-800 p-3 text-center">
-            <p className="text-xs font-bold text-green-700 dark:text-green-400 mb-1">Conversion</p>
-            <p className="text-[10px] text-green-600 dark:text-green-300">A low-effort tool suitable for pilot use</p>
+          <div className="rounded-lg bg-success-bg dark:bg-success-solid/30 border border-success-border dark:border-success p-3 text-center">
+            <p className="text-xs font-bold text-success dark:text-success mb-1">Conversion</p>
+            <p className="text-[10px] text-success dark:text-success">A low-effort tool suitable for pilot use</p>
           </div>
-          <div className="rounded-lg bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 p-3 text-center">
-            <p className="text-xs font-bold text-amber-700 dark:text-amber-400 mb-1">Retention</p>
-            <p className="text-[10px] text-amber-600 dark:text-amber-300">A dependable part of recurring workflows</p>
+          <div className="rounded-lg bg-warning-bg dark:bg-warning-solid/30 border border-warning-border dark:border-warning p-3 text-center">
+            <p className="text-xs font-bold text-warning dark:text-warning mb-1">Retention</p>
+            <p className="text-[10px] text-warning dark:text-warning">A dependable part of recurring workflows</p>
           </div>
         </div>
       </div>
@@ -212,81 +212,81 @@ export const SegmentationStrategyVisual = () => {
         </h3>
         
         {/* Phase 1 */}
-        <div className="rounded-lg bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 p-4">
+        <div className="rounded-lg bg-paper dark:bg-ink/30 border border-bone dark:border-charcoal p-4">
           <div className="flex items-center gap-2 mb-2">
-            <div className="w-6 h-6 rounded-full bg-blue-200 border border-blue-400 flex items-center justify-center">
-              <span className="text-[10px] font-bold text-blue-800">1</span>
+            <div className="w-6 h-6 rounded-full bg-bone border border-bone-strong flex items-center justify-center">
+              <span className="text-[10px] font-bold text-ink">1</span>
             </div>
-            <h4 className="font-semibold text-sm text-blue-700 dark:text-blue-400">Validation & MVP Readiness (Q1 2026)</h4>
+            <h4 className="font-semibold text-sm text-charcoal dark:text-ink-muted">Validation & MVP Readiness (Q1 2026)</h4>
           </div>
-          <p className="text-xs text-blue-600 dark:text-blue-300 mb-2">Target: Existing partners and up to 5 new non-paying pilot organisations</p>
+          <p className="text-xs text-charcoal dark:text-ink-faint mb-2">Target: Existing partners and up to 5 new non-paying pilot organisations</p>
           <ul className="space-y-1 text-xs text-muted-foreground">
             <li className="flex items-start gap-2">
-              <ArrowRight className="w-3 h-3 text-blue-500 flex-shrink-0 mt-0.5" />
+              <ArrowRight className="w-3 h-3 text-ink-muted flex-shrink-0 mt-0.5" />
               <span>Finalise the MVP for Q1 2026</span>
             </li>
             <li className="flex items-start gap-2">
-              <ArrowRight className="w-3 h-3 text-blue-500 flex-shrink-0 mt-0.5" />
+              <ArrowRight className="w-3 h-3 text-ink-muted flex-shrink-0 mt-0.5" />
               <span>Build trust through early testing</span>
             </li>
             <li className="flex items-start gap-2">
-              <ArrowRight className="w-3 h-3 text-blue-500 flex-shrink-0 mt-0.5" />
+              <ArrowRight className="w-3 h-3 text-ink-muted flex-shrink-0 mt-0.5" />
               <span>Validate accuracy, referencing, and core workflows</span>
             </li>
           </ul>
-          <p className="text-[10px] text-blue-600 dark:text-blue-400 mt-2 italic">Brand Role: Hobson acts as the Sage, a calm, intelligent guide helping teams see through document complexity.</p>
+          <p className="text-[10px] text-charcoal dark:text-ink-muted mt-2 italic">Brand Role: Hobson acts as the Sage, a calm, intelligent guide helping teams see through document complexity.</p>
         </div>
 
         {/* Phase 2 */}
-        <div className="rounded-lg bg-purple-50 dark:bg-purple-950/30 border border-purple-200 dark:border-purple-800 p-4">
+        <div className="rounded-lg bg-paper dark:bg-ink/30 border border-bone dark:border-charcoal p-4">
           <div className="flex items-center gap-2 mb-2">
-            <div className="w-6 h-6 rounded-full bg-purple-200 border border-purple-400 flex items-center justify-center">
-              <span className="text-[10px] font-bold text-purple-800">2</span>
+            <div className="w-6 h-6 rounded-full bg-bone border border-bone-strong flex items-center justify-center">
+              <span className="text-[10px] font-bold text-ink">2</span>
             </div>
-            <h4 className="font-semibold text-sm text-purple-700 dark:text-purple-400">Pilot Expansion & Evidence Building (Q2-Q3 2026)</h4>
+            <h4 className="font-semibold text-sm text-charcoal dark:text-ink-muted">Pilot Expansion & Evidence Building (Q2-Q3 2026)</h4>
           </div>
-          <p className="text-xs text-purple-600 dark:text-purple-300 mb-2">Target: Medium-sized Real Estate firms, small professional portfolios, selective large operators</p>
+          <p className="text-xs text-charcoal dark:text-ink-faint mb-2">Target: Medium-sized Real Estate firms, small professional portfolios, selective large operators</p>
           <ul className="space-y-1 text-xs text-muted-foreground">
             <li className="flex items-start gap-2">
-              <ArrowRight className="w-3 h-3 text-purple-500 flex-shrink-0 mt-0.5" />
+              <ArrowRight className="w-3 h-3 text-ink-muted flex-shrink-0 mt-0.5" />
               <span>Reach 10 active pilot organisations</span>
             </li>
             <li className="flex items-start gap-2">
-              <ArrowRight className="w-3 h-3 text-purple-500 flex-shrink-0 mt-0.5" />
+              <ArrowRight className="w-3 h-3 text-ink-muted flex-shrink-0 mt-0.5" />
               <span>Produce segment-specific proof points and case studies</span>
             </li>
             <li className="flex items-start gap-2">
-              <ArrowRight className="w-3 h-3 text-purple-500 flex-shrink-0 mt-0.5" />
+              <ArrowRight className="w-3 h-3 text-ink-muted flex-shrink-0 mt-0.5" />
               <span>Convert 3–5 pilots to paid accounts</span>
             </li>
           </ul>
-          <p className="text-[10px] text-purple-600 dark:text-purple-400 mt-2 italic">Brand Role: A trusted, lightweight companion that delivers clarity without requiring system change.</p>
+          <p className="text-[10px] text-charcoal dark:text-ink-muted mt-2 italic">Brand Role: A trusted, lightweight companion that delivers clarity without requiring system change.</p>
         </div>
 
         {/* Phase 3 */}
-        <div className="rounded-lg bg-green-50 dark:bg-green-950/30 border border-green-200 dark:border-green-800 p-4">
+        <div className="rounded-lg bg-success-bg dark:bg-success-solid/30 border border-success-border dark:border-success p-4">
           <div className="flex items-center gap-2 mb-2">
-            <div className="w-6 h-6 rounded-full bg-green-200 border border-green-400 flex items-center justify-center">
-              <span className="text-[10px] font-bold text-green-800">3</span>
+            <div className="w-6 h-6 rounded-full bg-success-bg border border-success-border flex items-center justify-center">
+              <span className="text-[10px] font-bold text-success">3</span>
             </div>
-            <h4 className="font-semibold text-sm text-green-700 dark:text-green-400">Commercialisation & UK Market Entry (2027)</h4>
+            <h4 className="font-semibold text-sm text-success dark:text-success">Commercialisation & UK Market Entry (2027)</h4>
           </div>
-          <p className="text-xs text-green-600 dark:text-green-300 mb-2">Target: Pilot-to-paid conversions and new inbound paying customers</p>
+          <p className="text-xs text-success dark:text-success mb-2">Target: Pilot-to-paid conversions and new inbound paying customers</p>
           <ul className="space-y-1 text-xs text-muted-foreground">
             <li className="flex items-start gap-2">
-              <ArrowRight className="w-3 h-3 text-green-500 flex-shrink-0 mt-0.5" />
+              <ArrowRight className="w-3 h-3 text-success flex-shrink-0 mt-0.5" />
               <span>Launch public website and onboarding flows in Q1 2027</span>
             </li>
             <li className="flex items-start gap-2">
-              <ArrowRight className="w-3 h-3 text-green-500 flex-shrink-0 mt-0.5" />
+              <ArrowRight className="w-3 h-3 text-success flex-shrink-0 mt-0.5" />
               <span>Establish predictable acquisition → activation → retention funnels</span>
             </li>
             <li className="flex items-start gap-2">
-              <ArrowRight className="w-3 h-3 text-green-500 flex-shrink-0 mt-0.5" />
+              <ArrowRight className="w-3 h-3 text-success flex-shrink-0 mt-0.5" />
               <span>Build the ARR foundation for scale</span>
             </li>
           </ul>
-          <p className="text-[10px] text-green-600 dark:text-green-400 mt-2 italic">Brand Role: A dependable, intelligent assistant that enhances existing systems.</p>
+          <p className="text-[10px] text-success dark:text-success mt-2 italic">Brand Role: A dependable, intelligent assistant that enhances existing systems.</p>
         </div>
       </div>
 

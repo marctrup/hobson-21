@@ -45,9 +45,9 @@ export function WorkspaceNameField() {
   };
 
   return (
-    <div className="bg-white border border-slate-200 rounded-lg p-5">
+    <div className="bg-white border border-bone rounded-lg p-5">
       <div className="text-sm font-medium">Workspace name</div>
-      <p className="text-sm text-slate-500 mt-0.5">
+      <p className="text-sm text-ink-muted mt-0.5">
         Shown in the sidebar and across the CRM.
       </p>
 
@@ -99,7 +99,7 @@ export function WorkspaceNameField() {
           </div>
         ) : (
           <div className="flex items-center gap-3">
-            <span className="text-sm text-slate-900 font-medium">
+            <span className="text-sm text-ink font-medium">
               {isLoading ? "Loading…" : name}
             </span>
             <Button
@@ -107,7 +107,7 @@ export function WorkspaceNameField() {
               variant="ghost"
               onClick={() => setEditing(true)}
               disabled={isLoading}
-              className="gap-1 text-slate-600"
+              className="gap-1 text-charcoal"
             >
               <Pencil className="size-3.5" />
               Edit

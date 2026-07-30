@@ -29,11 +29,11 @@ const ChatCostExample = () => {
 
         {/* Hobson Response */}
         <div className="flex items-start gap-3">
-          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center flex-shrink-0">
+          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-ink-faint to-charcoal flex items-center justify-center flex-shrink-0">
             <Bot className="w-4 h-4 text-white" />
           </div>
           <div className="flex-1">
-            <div className="bg-gradient-to-br from-blue-50 to-purple-50 border border-blue-200 rounded-lg px-3 py-2 max-w-md">
+            <div className="bg-gradient-to-br from-paper to-paper border border-bone rounded-lg px-3 py-2 max-w-md">
               <p className="text-sm text-foreground mb-2">
                 Based on the lease agreement for 30 River Road, the next rent review is scheduled for <strong>15th March 2025</strong>.
               </p>
@@ -94,12 +94,12 @@ const ChatCostExample = () => {
             </div>
             
             <div className="space-y-4">
-              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+              <div className="bg-paper border border-bone rounded-lg p-4">
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm font-medium text-blue-900">HEU Cost</span>
-                  <span className="text-lg font-bold text-blue-900">0.05</span>
+                  <span className="text-sm font-medium text-ink">HEU Cost</span>
+                  <span className="text-lg font-bold text-ink">0.05</span>
                 </div>
-                <p className="text-xs text-blue-700">Simple query - finds and returns one fact</p>
+                <p className="text-xs text-charcoal">Simple query - finds and returns one fact</p>
               </div>
               
               <div className="space-y-2 text-sm">

@@ -120,7 +120,7 @@ export const Homepage = () => {
               </nav>
 
               {/* Mobile Menu Button */}
-              <SimpleButton variant="ghost" size="icon" className="md:hidden bg-gray-100 hover:bg-gray-200 border border-gray-200 rounded-md" onClick={toggleMobileMenu} aria-label="Toggle mobile menu">
+              <SimpleButton variant="ghost" size="icon" className="md:hidden bg-bone-wash hover:bg-bone border border-bone rounded-md" onClick={toggleMobileMenu} aria-label="Toggle mobile menu">
                 {isMobileMenuOpen ? <X className="h-6 w-6" style={{ color: "#2D2D2D" }} strokeWidth={1.5} /> : <Menu className="h-6 w-6" style={{ color: "#2D2D2D" }} strokeWidth={1.5} />}
               </SimpleButton>
             </div>
@@ -218,14 +218,14 @@ export const Homepage = () => {
             <div className="container mx-auto px-4">
               <div
                 className="max-w-3xl mx-auto rounded-2xl p-8 sm:p-10 shadow-sm"
-                style={{ background: "#FCFAF7", border: "1px solid #E4D9BE" }}
+                style={{ background: "#FCFAF7", border: "1px solid #E6D2AE" }}
               >
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
                   <div className="space-y-2">
                     <h2 id="founder-cta-heading" className="text-xl sm:text-2xl font-bold" style={{ color: "#2D2D2D" }}>
                       Watch a co-founder's story
                     </h2>
-                    <p className="text-base leading-relaxed max-w-xl" style={{ color: "#5a5a5a" }}>
+                    <p className="text-base leading-relaxed max-w-xl" style={{ color: "#56514A" }}>
                       Hobson was created by people who understand the day-to-day reality of property work.
                     </p>
                   </div>
@@ -272,12 +272,12 @@ export const Homepage = () => {
                   <div className="lg:col-span-6">
                     <div className="relative mx-auto max-w-md lg:max-w-none">
                       <div className="absolute -inset-8 rounded-[2.5rem] blur-3xl opacity-60" style={{ background: 'radial-gradient(circle at 30% 30%, rgba(180,145,79,0.20), transparent 70%)' }} />
-                      <div className="relative rounded-2xl overflow-hidden" style={{ border: '1px solid #EDE7DA', background: '#FFFFFF', boxShadow: '0 30px 80px -20px rgba(45,45,45,0.20)' }}>
+                      <div className="relative rounded-2xl overflow-hidden" style={{ border: '1px solid #F7EDDC', background: '#FFFFFF', boxShadow: '0 30px 80px -20px rgba(45,45,45,0.20)' }}>
                         {/* faux browser chrome */}
-                        <div className="flex items-center gap-1.5 px-4 py-3 border-b" style={{ borderColor: '#EDE7DA', background: '#FCFAF7' }}>
-                          <span className="w-2.5 h-2.5 rounded-full bg-red-400/70" />
-                          <span className="w-2.5 h-2.5 rounded-full bg-yellow-400/70" />
-                          <span className="w-2.5 h-2.5 rounded-full bg-green-400/70" />
+                        <div className="flex items-center gap-1.5 px-4 py-3 border-b" style={{ borderColor: '#F7EDDC', background: '#FCFAF7' }}>
+                          <span className="w-2.5 h-2.5 rounded-full bg-danger-border/70" />
+                          <span className="w-2.5 h-2.5 rounded-full bg-warning-border/70" />
+                          <span className="w-2.5 h-2.5 rounded-full bg-success-border/70" />
                         </div>
                         <img
                           src={hobsonAnswerTight.url}
@@ -292,7 +292,7 @@ export const Homepage = () => {
                   {/* Feature narrative */}
                   <div className="lg:col-span-6 space-y-8">
                     <div className="flex gap-5">
-                      <div className="shrink-0 w-12 h-12 rounded-xl flex items-center justify-center" style={{ background: '#FCFAF7', border: '1px solid #EDE7DA' }}>
+                      <div className="shrink-0 w-12 h-12 rounded-xl flex items-center justify-center" style={{ background: '#FCFAF7', border: '1px solid #F7EDDC' }}>
                         <FileText className="w-6 h-6" style={{ color: '#B4914F' }} />
                       </div>
                       <div>
@@ -302,7 +302,7 @@ export const Homepage = () => {
                     </div>
 
                     <div className="flex gap-5">
-                      <div className="shrink-0 w-12 h-12 rounded-xl flex items-center justify-center" style={{ background: '#FCFAF7', border: '1px solid #EDE7DA' }}>
+                      <div className="shrink-0 w-12 h-12 rounded-xl flex items-center justify-center" style={{ background: '#FCFAF7', border: '1px solid #F7EDDC' }}>
                         <CheckCircle className="w-6 h-6" style={{ color: '#B4914F' }} />
                       </div>
                       <div>
@@ -312,7 +312,7 @@ export const Homepage = () => {
                     </div>
 
                     <div className="flex gap-5">
-                      <div className="shrink-0 w-12 h-12 rounded-xl flex items-center justify-center" style={{ background: '#FCFAF7', border: '1px solid #EDE7DA' }}>
+                      <div className="shrink-0 w-12 h-12 rounded-xl flex items-center justify-center" style={{ background: '#FCFAF7', border: '1px solid #F7EDDC' }}>
                         <Building2 className="w-6 h-6" style={{ color: '#B4914F' }} />
                       </div>
                       <div>

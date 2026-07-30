@@ -55,12 +55,12 @@ export const IssueCommentsThread = ({ issueId, comments, canWrite }: Props) => {
 
   return (
     <section>
-      <h3 className="text-xs uppercase tracking-wide text-slate-500 mb-2">
+      <h3 className="text-xs uppercase tracking-wide text-ink-muted mb-2">
         Activity
       </h3>
 
       {comments.length === 0 ? (
-        <p className="text-sm text-slate-500 italic">No activity yet.</p>
+        <p className="text-sm text-ink-muted italic">No activity yet.</p>
       ) : (
         <ol className="space-y-3">
           {comments.map((c) => {
@@ -72,16 +72,16 @@ export const IssueCommentsThread = ({ issueId, comments, canWrite }: Props) => {
               return (
                 <li
                   key={c.id}
-                  className="flex items-center gap-2 text-xs text-slate-500"
+                  className="flex items-center gap-2 text-xs text-ink-muted"
                 >
-                  <span className="inline-block size-1.5 rounded-full bg-slate-300" />
+                  <span className="inline-block size-1.5 rounded-full bg-bone-strong" />
                   <span>
-                    <span className="text-slate-700">
+                    <span className="text-charcoal">
                       {c.author_name ?? "Someone"}
                     </span>{" "}
                     changed status:{" "}
                     {from ? (
-                      <span className="font-medium text-slate-700">
+                      <span className="font-medium text-charcoal">
                         {ISSUE_STATUS_LABELS[from]}
                       </span>
                     ) : (
@@ -89,14 +89,14 @@ export const IssueCommentsThread = ({ issueId, comments, canWrite }: Props) => {
                     )}{" "}
                     →{" "}
                     {to ? (
-                      <span className="font-medium text-slate-700">
+                      <span className="font-medium text-charcoal">
                         {ISSUE_STATUS_LABELS[to]}
                       </span>
                     ) : (
                       "—"
                     )}
                   </span>
-                  <span className="text-slate-400">
+                  <span className="text-ink-muted">
                     · {formatDateTimeUK(c.created_at)}
                   </span>
                 </li>
@@ -106,22 +106,22 @@ export const IssueCommentsThread = ({ issueId, comments, canWrite }: Props) => {
               <li
                 key={c.id}
                 className={cn(
-                  "bg-white border border-slate-200 rounded-md p-3",
+                  "bg-white border border-bone rounded-md p-3",
                 )}
               >
                 <div className="flex items-baseline justify-between gap-2">
-                  <div className="text-sm font-medium text-slate-800">
+                  <div className="text-sm font-medium text-ink">
                     {c.author_name ?? "Unknown"}
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="text-xs text-slate-500">
+                    <span className="text-xs text-ink-muted">
                       {formatDateTimeUK(c.created_at)}
                     </span>
                     {canDelete && (
                       <AlertDialog>
                         <AlertDialogTrigger asChild>
                           <button
-                            className="text-slate-400 hover:text-rose-600"
+                            className="text-ink-muted hover:text-danger"
                             aria-label="Delete comment"
                           >
                             <Trash2 className="size-3.5" />
@@ -147,7 +147,7 @@ export const IssueCommentsThread = ({ issueId, comments, canWrite }: Props) => {
                     )}
                   </div>
                 </div>
-                <p className="mt-1 text-sm text-slate-700 whitespace-pre-wrap">
+                <p className="mt-1 text-sm text-charcoal whitespace-pre-wrap">
                   {c.body}
                 </p>
               </li>

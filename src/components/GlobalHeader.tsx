@@ -73,7 +73,7 @@ export const GlobalHeader = () => {
           <Button
             variant="ghost"
             size="icon"
-            className="md:hidden bg-gray-100 hover:bg-gray-200 border border-gray-200 rounded-md"
+            className="md:hidden bg-bone-wash hover:bg-bone border border-bone rounded-md"
             onClick={toggleMobileMenu}
             aria-label="Toggle mobile menu"
           >

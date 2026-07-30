@@ -78,19 +78,19 @@ export default function CrmAcceptInvite() {
   }, [token, user, authLoading, navigate]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-slate-50 p-4">
+    <div className="min-h-screen flex items-center justify-center bg-paper p-4">
       <Helmet>
         <title>Accept CRM invitation | Hobson</title>
         <meta name="robots" content="noindex,nofollow" />
       </Helmet>
 
-      <div className="w-full max-w-md bg-white border border-slate-200 rounded-lg p-6 shadow-sm">
+      <div className="w-full max-w-md bg-white border border-bone rounded-lg p-6 shadow-sm">
         <h1 className="text-xl font-semibold tracking-tight mb-1">
           CRM invitation
         </h1>
 
         {state.kind === "loading" && (
-          <div className="flex items-center gap-2 text-sm text-slate-600 mt-4">
+          <div className="flex items-center gap-2 text-sm text-charcoal mt-4">
             <Loader2 className="size-4 animate-spin" />
             Verifying your invitation…
           </div>
@@ -98,7 +98,7 @@ export default function CrmAcceptInvite() {
 
         {state.kind === "needs_signin" && (
           <>
-            <p className="text-sm text-slate-600 mt-2">
+            <p className="text-sm text-charcoal mt-2">
               You need to sign in (or create an account with the same email
               the invite was sent to) before you can accept this invitation.
             </p>
@@ -119,11 +119,11 @@ export default function CrmAcceptInvite() {
 
         {state.kind === "email_mismatch" && (
           <>
-            <div className="mt-4 flex items-start gap-2 text-amber-800 bg-amber-50 border border-amber-200 rounded-md p-3 text-sm">
+            <div className="mt-4 flex items-start gap-2 text-warning bg-warning-bg border border-warning-border rounded-md p-3 text-sm">
               <AlertTriangle className="size-4 mt-0.5 shrink-0" />
               <span>{state.message}</span>
             </div>
-            <p className="text-xs text-slate-500 mt-3">
+            <p className="text-xs text-ink-muted mt-3">
               You're currently signed in as <strong>{user?.email}</strong>.
             </p>
             <Button
@@ -145,7 +145,7 @@ export default function CrmAcceptInvite() {
 
         {state.kind === "error" && (
           <>
-            <div className="mt-4 flex items-start gap-2 text-red-800 bg-red-50 border border-red-200 rounded-md p-3 text-sm">
+            <div className="mt-4 flex items-start gap-2 text-danger bg-danger-bg border border-danger-border rounded-md p-3 text-sm">
               <AlertTriangle className="size-4 mt-0.5 shrink-0" />
               <span>{state.message}</span>
             </div>
@@ -160,7 +160,7 @@ export default function CrmAcceptInvite() {
         )}
 
         {state.kind === "success" && (
-          <div className="mt-4 flex items-center gap-2 text-emerald-700 bg-emerald-50 border border-emerald-200 rounded-md p-3 text-sm">
+          <div className="mt-4 flex items-center gap-2 text-success bg-success-bg border border-success-border rounded-md p-3 text-sm">
             <CheckCircle2 className="size-4" />
             Invitation accepted. Redirecting to the CRM…
           </div>

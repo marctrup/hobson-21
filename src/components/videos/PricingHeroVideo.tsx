@@ -38,7 +38,7 @@ export const PricingHeroVideo = () => {
               className={`cursor-pointer relative w-full aspect-video bg-black rounded-lg overflow-hidden shadow-lg transition-all duration-700 transform ${
                 isHovered ? 'scale-105 shadow-2xl' : 'scale-100 opacity-100'
               }`}
-              style={{ border: '10px solid #f0f0f0' }}
+              style={{ border: '10px solid #F1EBDE' }}
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
               id="pricing-hero-video-container"

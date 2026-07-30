@@ -20,8 +20,8 @@ export const CommercialisationStrategyVisual = () => {
   return (
     <div className="space-y-8">
       {/* Header - Inflexion Point */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-amber-500/10 via-orange-500/10 to-amber-500/5 p-6 border border-amber-200/50 dark:border-amber-800/30">
-        <div className="absolute top-0 right-0 w-32 h-32 bg-amber-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-warning/10 via-warning/10 to-warning/5 p-6 border border-warning-border/50 dark:border-warning/30">
+        <div className="absolute top-0 right-0 w-32 h-32 bg-warning/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
         <div className="relative">
           <h3 className="text-xl font-bold text-foreground">The Real Estate industry is at an inflexion point.</h3>
         </div>
@@ -30,20 +30,20 @@ export const CommercialisationStrategyVisual = () => {
       {/* Section 1: Operators Are Facing */}
       <div className="space-y-4">
         <div className="flex items-center gap-3">
-          <div className="flex items-center justify-center w-8 h-8 rounded-full bg-red-100 dark:bg-red-950/50 text-red-700 dark:text-red-400 font-bold text-sm">1</div>
+          <div className="flex items-center justify-center w-8 h-8 rounded-full bg-danger-bg dark:bg-danger-solid/50 text-danger dark:text-danger font-bold text-sm">1</div>
           <h4 className="font-semibold text-foreground">Operators are facing:</h4>
         </div>
         
         <div className="ml-11 space-y-3">
           {operatorChallenges.map((challenge, idx) => (
-            <div key={idx} className="flex items-center gap-3 p-3 rounded-lg bg-red-50/50 dark:bg-red-950/20 border border-red-100 dark:border-red-900/30">
-              <challenge.icon className="w-5 h-5 text-red-600 dark:text-red-400 flex-shrink-0" />
+            <div key={idx} className="flex items-center gap-3 p-3 rounded-lg bg-danger-bg/50 dark:bg-danger-solid/20 border border-danger-border dark:border-danger/30">
+              <challenge.icon className="w-5 h-5 text-danger dark:text-danger flex-shrink-0" />
               <span className="text-foreground">{challenge.text}</span>
             </div>
           ))}
         </div>
         
-        <div className="ml-11 mt-4 p-4 rounded-xl bg-gradient-to-r from-slate-50 to-slate-100 dark:from-slate-900/50 dark:to-slate-800/30 border border-slate-200 dark:border-slate-700/50">
+        <div className="ml-11 mt-4 p-4 rounded-xl bg-gradient-to-r from-paper to-bone-wash dark:from-ink/50 dark:to-ink/30 border border-bone dark:border-charcoal/50">
           <p className="text-foreground font-medium">
             They cannot wait for incremental tools. They need a <span className="text-primary font-bold">structural operating upgrade</span>.
           </p>
@@ -53,14 +53,14 @@ export const CommercialisationStrategyVisual = () => {
       {/* Section 2: Hobson's Product */}
       <div className="space-y-4">
         <div className="flex items-center gap-3">
-          <div className="flex items-center justify-center w-8 h-8 rounded-full bg-emerald-100 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-400 font-bold text-sm">2</div>
+          <div className="flex items-center justify-center w-8 h-8 rounded-full bg-success-bg dark:bg-success-solid/50 text-success dark:text-success font-bold text-sm">2</div>
           <h4 className="font-semibold text-foreground">Hobson's product is already solving existential problems:</h4>
         </div>
         
         <div className="ml-11 grid sm:grid-cols-2 gap-3">
           {problemsSolved.map((problem, idx) => (
-            <div key={idx} className="flex items-start gap-3 p-4 rounded-xl bg-gradient-to-br from-emerald-50/80 to-emerald-100/50 dark:from-emerald-950/30 dark:to-emerald-900/20 border border-emerald-200 dark:border-emerald-800/30">
-              <CheckCircle2 className="w-5 h-5 text-emerald-600 mt-0.5 flex-shrink-0" />
+            <div key={idx} className="flex items-start gap-3 p-4 rounded-xl bg-gradient-to-br from-success-bg/80 to-success-bg/50 dark:from-success-solid/30 dark:to-success-solid/20 border border-success-border dark:border-success/30">
+              <CheckCircle2 className="w-5 h-5 text-success mt-0.5 flex-shrink-0" />
               <span className="text-foreground">{problem}</span>
             </div>
           ))}

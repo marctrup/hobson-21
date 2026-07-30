@@ -94,7 +94,7 @@ export default function CrmCommunications() {
             <h1 className="text-2xl font-semibold tracking-tight">
               Communications
             </h1>
-            <p className="text-sm text-slate-500 mt-1">
+            <p className="text-sm text-ink-muted mt-1">
               Master timeline across every client. {total} record
               {total === 1 ? "" : "s"} loaded
               {hasNextPage ? " (more available)" : ""}.

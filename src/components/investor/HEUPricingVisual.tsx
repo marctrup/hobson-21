@@ -36,11 +36,11 @@ export const HEUPricingVisual = () => {
       {/* Section 1: What HEUs Measure */}
       <div className="space-y-4">
         <div className="flex items-center gap-3">
-          <div className="flex items-center justify-center w-8 h-8 rounded-full bg-blue-100 dark:bg-blue-950/50 text-blue-700 dark:text-blue-400 font-bold text-sm">1</div>
+          <div className="flex items-center justify-center w-8 h-8 rounded-full bg-bone-wash dark:bg-ink/50 text-charcoal dark:text-ink-muted font-bold text-sm">1</div>
           <h4 className="font-semibold text-foreground">Hobson Energy Units (HEUs) measure AI effort:</h4>
         </div>
         
-        <div className="ml-11 p-4 rounded-xl bg-blue-50/50 dark:bg-blue-950/20 border border-blue-100 dark:border-blue-900/30">
+        <div className="ml-11 p-4 rounded-xl bg-paper/50 dark:bg-ink/20 border border-faint-rule dark:border-charcoal/30">
           <p className="text-foreground leading-relaxed">
             Every document read, lease abstracted, compliance workflow executed, risk model run, or report built consumes HEUs.
           </p>
@@ -50,20 +50,20 @@ export const HEUPricingVisual = () => {
       {/* Section 2: What Hobson Monetises */}
       <div className="space-y-4">
         <div className="flex items-center gap-3">
-          <div className="flex items-center justify-center w-8 h-8 rounded-full bg-emerald-100 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-400 font-bold text-sm">2</div>
+          <div className="flex items-center justify-center w-8 h-8 rounded-full bg-success-bg dark:bg-success-solid/50 text-success dark:text-success font-bold text-sm">2</div>
           <h4 className="font-semibold text-foreground">This means Hobson monetises:</h4>
         </div>
         
         <div className="ml-11 grid sm:grid-cols-2 gap-3">
           {monetises.map((item, idx) => (
-            <div key={idx} className="flex items-center gap-3 p-3 rounded-lg bg-emerald-50/50 dark:bg-emerald-950/20 border border-emerald-100 dark:border-emerald-900/30">
-              <CheckCircle2 className="w-5 h-5 text-emerald-600 flex-shrink-0" />
+            <div key={idx} className="flex items-center gap-3 p-3 rounded-lg bg-success-bg/50 dark:bg-success-solid/20 border border-success-border dark:border-success/30">
+              <CheckCircle2 className="w-5 h-5 text-success flex-shrink-0" />
               <span className="text-foreground font-medium">{item}</span>
             </div>
           ))}
         </div>
         
-        <div className="ml-11 p-3 rounded-lg bg-slate-100 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700">
+        <div className="ml-11 p-3 rounded-lg bg-bone-wash dark:bg-ink/50 border border-bone dark:border-charcoal">
           <p className="text-muted-foreground text-sm">
             <span className="font-semibold text-foreground">not</span> headcount or asset count
           </p>
@@ -71,9 +71,9 @@ export const HEUPricingVisual = () => {
       </div>
 
       {/* Key Insight */}
-      <div className="relative overflow-hidden rounded-xl bg-gradient-to-r from-amber-50 to-orange-50 dark:from-amber-950/30 dark:to-orange-950/30 border border-amber-200 dark:border-amber-800/30 p-5">
+      <div className="relative overflow-hidden rounded-xl bg-gradient-to-r from-warning-bg to-warning-bg dark:from-warning-solid/30 dark:to-warning-solid/30 border border-warning-border dark:border-warning/30 p-5">
         <div className="flex items-start gap-3">
-          <TrendingUp className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
+          <TrendingUp className="w-5 h-5 text-warning flex-shrink-0 mt-0.5" />
           <p className="text-foreground leading-relaxed">
             Traditional property software caps revenue. <span className="font-semibold text-primary">Hobson's model scales automatically with operational stress.</span> The more complex the operator's world becomes, the more valuable and profitable Hobson becomes.
           </p>
@@ -112,9 +112,9 @@ export const HEUPricingVisual = () => {
       </div>
 
       {/* Footer - No Fees */}
-      <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-green-500/10 via-emerald-500/10 to-teal-500/10 p-5 border border-green-200 dark:border-green-800/30">
+      <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-success/10 via-success/10 to-ink-faint/10 p-5 border border-success-border dark:border-success/30">
         <div className="flex items-center justify-center gap-2">
-          <Target className="w-5 h-5 text-green-600" />
+          <Target className="w-5 h-5 text-success" />
           <p className="text-foreground font-bold text-lg">
             No per-user fees. No per-asset fees. Unlimited scale.
           </p>

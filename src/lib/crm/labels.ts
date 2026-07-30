@@ -52,14 +52,14 @@ export const PIPELINE_STAGE_LABELS: Record<string, string> = {
 };
 
 export const PIPELINE_STAGE_COLOURS: Record<string, string> = {
-  new_enquiry: "bg-slate-100 text-slate-800 border-slate-200",
-  contacted: "bg-blue-100 text-blue-800 border-blue-200",
-  qualified: "bg-indigo-100 text-indigo-800 border-indigo-200",
-  in_discussion: "bg-purple-100 text-purple-800 border-purple-200",
-  proposal_sent: "bg-amber-100 text-amber-900 border-amber-200",
-  won: "bg-emerald-100 text-emerald-800 border-emerald-200",
-  lost: "bg-rose-100 text-rose-800 border-rose-200",
-  on_hold: "bg-zinc-100 text-zinc-700 border-zinc-200",
+  new_enquiry: "bg-bone-wash text-ink border-bone",
+  contacted: "bg-bone-wash text-ink border-bone",
+  qualified: "bg-bone-wash text-ink border-bone",
+  in_discussion: "bg-bone-wash text-ink border-bone",
+  proposal_sent: "bg-warning-bg text-warning border-warning-border",
+  won: "bg-success-bg text-success border-success-border",
+  lost: "bg-danger-bg text-danger border-danger-border",
+  on_hold: "bg-bone-wash text-charcoal border-bone",
 };
 
 export const INTEREST_LEVELS = ["cold", "warm", "hot"] as const;
@@ -69,9 +69,9 @@ export const INTEREST_LEVEL_LABELS: Record<string, string> = {
   hot: "Hot",
 };
 export const INTEREST_LEVEL_COLOURS: Record<string, string> = {
-  cold: "bg-blue-100 text-blue-800 border-blue-200",
-  warm: "bg-amber-100 text-amber-900 border-amber-200",
-  hot: "bg-rose-100 text-rose-800 border-rose-200",
+  cold: "bg-bone-wash text-ink border-bone",
+  warm: "bg-warning-bg text-warning border-warning-border",
+  hot: "bg-danger-bg text-danger border-danger-border",
 };
 
 export const CLIENT_STATUSES = [

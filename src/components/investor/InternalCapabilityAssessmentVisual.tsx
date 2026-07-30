@@ -6,10 +6,10 @@ export const InternalCapabilityAssessmentVisual = () => {
     {
       title: "Team Skills Across Real Estate, Software, and AI",
       icon: Users,
-      color: "from-blue-500/10 to-blue-600/10",
-      borderColor: "border-blue-200/50 dark:border-blue-800/30",
-      iconColor: "text-blue-600 dark:text-blue-400",
-      bgCircle: "bg-blue-100 dark:bg-blue-900/30",
+      color: "from-ink-faint/10 to-charcoal/10",
+      borderColor: "border-bone/50 dark:border-charcoal/30",
+      iconColor: "text-charcoal dark:text-ink-muted",
+      bgCircle: "bg-bone-wash dark:bg-ink/30",
       subsections: [
         {
           subtitle: "Real Estate Expertise",
@@ -32,10 +32,10 @@ export const InternalCapabilityAssessmentVisual = () => {
     {
       title: "Technical Capabilities",
       icon: Cpu,
-      color: "from-purple-500/10 to-purple-600/10",
-      borderColor: "border-purple-200/50 dark:border-purple-800/30",
-      iconColor: "text-purple-600 dark:text-purple-400",
-      bgCircle: "bg-purple-100 dark:bg-purple-900/30",
+      color: "from-ink-faint/10 to-charcoal/10",
+      borderColor: "border-bone/50 dark:border-charcoal/30",
+      iconColor: "text-charcoal dark:text-ink-muted",
+      bgCircle: "bg-bone-wash dark:bg-ink/30",
       subsections: [
         {
           subtitle: "Document-First Architecture",
@@ -53,10 +53,10 @@ export const InternalCapabilityAssessmentVisual = () => {
     {
       title: "Brand Maturity and Positioning Strength",
       icon: Eye,
-      color: "from-emerald-500/10 to-emerald-600/10",
-      borderColor: "border-emerald-200/50 dark:border-emerald-800/30",
-      iconColor: "text-emerald-600 dark:text-emerald-400",
-      bgCircle: "bg-emerald-100 dark:bg-emerald-900/30",
+      color: "from-success/10 to-success/10",
+      borderColor: "border-success-border/50 dark:border-success/30",
+      iconColor: "text-success dark:text-success",
+      bgCircle: "bg-success-bg dark:bg-success-solid/30",
       intro: "Despite being early-stage, Hobson's brand is already clear and distinctive:",
       items: [
         "The owl signals wisdom, clarity, and trusted guidance",
@@ -68,10 +68,10 @@ export const InternalCapabilityAssessmentVisual = () => {
     {
       title: "Access to Customers",
       icon: Handshake,
-      color: "from-amber-500/10 to-amber-600/10",
-      borderColor: "border-amber-200/50 dark:border-amber-800/30",
-      iconColor: "text-amber-600 dark:text-amber-400",
-      bgCircle: "bg-amber-100 dark:bg-amber-900/30",
+      color: "from-warning/10 to-warning/10",
+      borderColor: "border-warning-border/50 dark:border-warning/30",
+      iconColor: "text-warning dark:text-warning",
+      bgCircle: "bg-warning-bg dark:bg-warning-solid/30",
       intro: "Hobson benefits from:",
       items: [
         "Direct relationships with large portfolio operators",
@@ -84,10 +84,10 @@ export const InternalCapabilityAssessmentVisual = () => {
     {
       title: "Clear Differentiators",
       icon: Zap,
-      color: "from-rose-500/10 to-rose-600/10",
-      borderColor: "border-rose-200/50 dark:border-rose-800/30",
-      iconColor: "text-rose-600 dark:text-rose-400",
-      bgCircle: "bg-rose-100 dark:bg-rose-900/30",
+      color: "from-danger/10 to-danger/10",
+      borderColor: "border-danger-border/50 dark:border-danger/30",
+      iconColor: "text-danger dark:text-danger",
+      bgCircle: "bg-danger-bg dark:bg-danger-solid/30",
       intro: "Hobson stands out through:",
       items: [
         "Document-Native AI: Focused on extracting clarity from documents themselves, rather than primarily automating communication or CRM workflows",
@@ -149,7 +149,7 @@ export const InternalCapabilityAssessmentVisual = () => {
       </div>
 
       {/* Key Message */}
-      <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900/50 dark:to-slate-800/30 p-5 border border-slate-200 dark:border-slate-700/50">
+      <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-paper to-bone-wash dark:from-ink/50 dark:to-ink/30 p-5 border border-bone dark:border-charcoal/50">
         <p className="text-sm text-foreground font-medium">
           Hobson is well-placed to deliver innovation without disruption in a sector that urgently needs clarity and efficiency in document management.
         </p>
@@ -161,7 +161,7 @@ export const InternalCapabilityAssessmentVisual = () => {
       {/* Strengths Section */}
       <div className="space-y-4">
         <h4 className="font-semibold text-foreground flex items-center gap-2">
-          <CheckCircle2 className="w-5 h-5 text-emerald-600" />
+          <CheckCircle2 className="w-5 h-5 text-success" />
           Strengths
         </h4>
         
@@ -218,7 +218,7 @@ export const InternalCapabilityAssessmentVisual = () => {
       {/* Gaps Section */}
       <div className="space-y-4">
         <h4 className="font-semibold text-foreground flex items-center gap-2">
-          <AlertTriangle className="w-5 h-5 text-amber-600" />
+          <AlertTriangle className="w-5 h-5 text-warning" />
           Limitations & Gaps
         </h4>
         <p className="text-sm text-muted-foreground">Despite strong foundations, several gaps must be addressed:</p>
@@ -227,18 +227,18 @@ export const InternalCapabilityAssessmentVisual = () => {
           {gaps.map((gap, idx) => (
             <div 
               key={idx}
-              className="relative overflow-hidden rounded-xl bg-gradient-to-br from-amber-500/10 to-amber-600/10 p-4 border border-amber-200/50 dark:border-amber-800/30"
+              className="relative overflow-hidden rounded-xl bg-gradient-to-br from-warning/10 to-warning/10 p-4 border border-warning-border/50 dark:border-warning/30"
             >
               <h5 className="font-semibold text-foreground text-sm mb-2">{gap.title}</h5>
               <ul className="space-y-1 mb-3">
                 {gap.items.map((item, itemIdx) => (
                   <li key={itemIdx} className="flex items-start gap-2 text-xs text-muted-foreground">
-                    <span className="w-1.5 h-1.5 rounded-full bg-amber-500 mt-1 flex-shrink-0" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-warning mt-1 flex-shrink-0" />
                     <span>{item}</span>
                   </li>
                 ))}
               </ul>
-              <div className="pt-2 border-t border-amber-200/50 dark:border-amber-700/30">
+              <div className="pt-2 border-t border-warning-border/50 dark:border-warning/30">
                 <p className="text-xs">
                   <span className="font-medium text-foreground">Need: </span>
                   <span className="text-muted-foreground">{gap.need}</span>

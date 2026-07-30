@@ -31,13 +31,13 @@ const TOKENS = {
   paper: "#FCFAF7", // warm cream paper
   paperSoft: "#FFFFFF",
   brass: "#B4914F", // antique brass
-  brassLight: "#C9A868",
+  brassLight: "#8F5A14",
   primary: "#B4914F",
-  primaryLight: "#C9A868",
+  primaryLight: "#8F5A14",
   card: "#FFFFFF",
   inkSoft: "rgba(45,45,45,0.82)",
   inkMuted: "rgba(45,45,45,0.65)",
-  hairline: "#EDE7DA",
+  hairline: "#F7EDDC",
   hairlineDark: "rgba(201,168,104,0.4)",
 };
 
@@ -340,17 +340,17 @@ const Calculators: React.FC = () => {
   // Token shortcuts scoped to this section
   const T = {
     cream: "#FCFAF7",
-    tint: "#F5F1E9",
-    ink: "#23211D",
-    muted: "#6E6A63",
-    faint: "#96918A",
+    tint: "#F7EDDC",
+    ink: "#2D2D2D",
+    muted: "#6E6A62",
+    faint: "#8A8478",
     gold: "#B4914F",
-    goldInk: "#8C6F38",
-    wash: "#F7F1E5",
+    goldInk: "#8F5A14",
+    wash: "#F7EDDC",
     line: "rgba(35,33,29,0.12)",
-    dark: "#313131",
+    dark: "#2D2D2D",
     paperSoft: "#FFFDFA",
-    paperGrad: "#FFFDF9",
+    paperGrad: "#F7EDDC",
   };
 
   const Eyebrow: React.FC<{ children: React.ReactNode; color?: string; style?: React.CSSProperties }> = ({ children, color, style }) => (
@@ -560,7 +560,7 @@ const Calculators: React.FC = () => {
                     <div style={{ fontFamily: FONTS.mono, fontSize: 11, color: T.faint, marginTop: 6 }}>
                       {fmtGBP2(readLow)} – {fmtGBP2(readHigh)}
                     </div>
-                    <div style={{ fontFamily: FONTS.sans, fontSize: 10, lineHeight: 1.45, color: "#96918A", marginTop: 6 }}>
+                    <div style={{ fontFamily: FONTS.sans, fontSize: 10, lineHeight: 1.45, color: "#8A8478", marginTop: 6 }}>
                       Estimated at 25p a document — the average for a mixed portfolio. The firm quote follows once the documents have been seen.
                     </div>
                   </div>
@@ -590,7 +590,7 @@ const Calculators: React.FC = () => {
               <div
                 className="hp-includes"
                 style={{
-                  background: "#FBF8F3",
+                  background: "#F7EDDC",
                   border: "1px solid rgba(35,33,29,0.08)",
                   borderRadius: 10,
                   padding: "18px 20px",
@@ -628,10 +628,10 @@ const Calculators: React.FC = () => {
                     <div key={item.h} style={{ display: "grid", gridTemplateColumns: "auto 1fr", gap: 8 }}>
                       <span style={{ color: T.gold, fontSize: 13, lineHeight: 1.4 }}>✦</span>
                       <div>
-                        <div style={{ fontFamily: FONTS.sans, fontSize: 13, fontWeight: 500, color: "#23211D", lineHeight: 1.3 }}>
+                        <div style={{ fontFamily: FONTS.sans, fontSize: 13, fontWeight: 500, color: "#2D2D2D", lineHeight: 1.3 }}>
                           {item.h}
                         </div>
-                        <div style={{ fontFamily: FONTS.sans, fontSize: 12, color: "#6E6A63", lineHeight: 1.5, marginTop: 3 }}>
+                        <div style={{ fontFamily: FONTS.sans, fontSize: 12, color: "#6E6A62", lineHeight: 1.5, marginTop: 3 }}>
                           {item.b}
                         </div>
                       </div>
@@ -877,8 +877,8 @@ const Calculators: React.FC = () => {
           width: 18px;
           height: 18px;
           background: #F3EFFA;
-          border-left: 1px solid #E4DAF3;
-          border-bottom: 1px solid #E4DAF3;
+          border-left: 1px solid #E8E1D4;
+          border-bottom: 1px solid #E8E1D4;
           transform: rotate(45deg);
         }
         @media (max-width: 640px) {
@@ -1088,7 +1088,7 @@ export default function Pricing() {
         <section
           style={{
             padding: "clamp(80px, 11vw, 150px) 24px",
-            background: "#F1EEE7",
+            background: "#F7EDDC",
             borderTop: `1px solid ${TOKENS.hairline}`,
           }}
         >

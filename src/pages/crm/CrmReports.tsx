@@ -15,7 +15,7 @@ import { TasksFlowReport } from "@/components/crm/reports/TasksFlowReport";
 import { WorkspaceScoreboardReport } from "@/components/crm/reports/WorkspaceScoreboardReport";
 
 const SectionTitle = ({ children }: { children: React.ReactNode }) => (
-  <h2 className="text-sm font-semibold text-slate-500 uppercase tracking-wide mt-8 mb-3">
+  <h2 className="text-sm font-semibold text-ink-muted uppercase tracking-wide mt-8 mb-3">
     {children}
   </h2>
 );
@@ -33,7 +33,7 @@ export default function CrmReports() {
       <ReportsFiltersProvider>
         <div className="p-6 max-w-7xl mx-auto">
           <h1 className="text-2xl font-semibold tracking-tight">Reports</h1>
-          <p className="text-sm text-slate-500 mt-1">
+          <p className="text-sm text-ink-muted mt-1">
             Operational analytics across the CRM. Filters apply to every report
             on the page.
           </p>
@@ -79,7 +79,7 @@ export default function CrmReports() {
             </>
           )}
 
-          <p className="mt-10 text-xs text-slate-400">
+          <p className="mt-10 text-xs text-ink-muted">
             Reports are point-in-time on page load. Refresh the page to recompute.
           </p>
         </div>

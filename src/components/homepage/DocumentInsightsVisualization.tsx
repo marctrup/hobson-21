@@ -81,19 +81,19 @@ export const DocumentInsightsVisualization = () => {
               </p>
               <div className="space-y-2">
                 <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                  <CheckCircle className="w-3 h-3 text-green-600" />
+                  <CheckCircle className="w-3 h-3 text-success" />
                   <span>Source: Lease Agreement (Page 3, Section 2.1)</span>
                 </div>
                 <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                  <CheckCircle className="w-3 h-3 text-green-600" />
+                  <CheckCircle className="w-3 h-3 text-success" />
                   <span>Source: Deed of Variation (Page 2, Section 1.3)</span>
                 </div>
                 <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                  <CheckCircle className="w-3 h-3 text-green-600" />
+                  <CheckCircle className="w-3 h-3 text-success" />
                   <span>Source: Property Valuation Report (Page 1)</span>
                 </div>
                 <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                  <CheckCircle className="w-3 h-3 text-green-600" />
+                  <CheckCircle className="w-3 h-3 text-success" />
                   <span>Source: Financial Statement (Q3 2024)</span>
                 </div>
               </div>

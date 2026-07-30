@@ -155,20 +155,20 @@ export default function CrmIssues() {
         <div className="flex items-center justify-between flex-wrap gap-3">
           <div>
             <h1 className="text-2xl font-semibold tracking-tight">Issues</h1>
-            <p className="text-sm text-slate-500 mt-1">
+            <p className="text-sm text-ink-muted mt-1">
               Track problems and requests across every client. {total} loaded
               {hasNextPage ? " (more available)" : ""}.
             </p>
           </div>
           <div className="flex items-center gap-2">
-            <div className="inline-flex rounded-md border border-slate-200 bg-white overflow-hidden">
+            <div className="inline-flex rounded-md border border-bone bg-white overflow-hidden">
               <button
                 onClick={() => setView("list")}
                 className={cn(
                   "px-2.5 py-1.5 text-sm flex items-center gap-1",
                   view === "list"
-                    ? "bg-slate-900 text-white"
-                    : "text-slate-700 hover:bg-slate-50",
+                    ? "bg-ink text-white"
+                    : "text-charcoal hover:bg-paper",
                 )}
                 aria-pressed={view === "list"}
               >
@@ -177,10 +177,10 @@ export default function CrmIssues() {
               <button
                 onClick={() => setView("board")}
                 className={cn(
-                  "px-2.5 py-1.5 text-sm flex items-center gap-1 border-l border-slate-200",
+                  "px-2.5 py-1.5 text-sm flex items-center gap-1 border-l border-bone",
                   view === "board"
-                    ? "bg-slate-900 text-white"
-                    : "text-slate-700 hover:bg-slate-50",
+                    ? "bg-ink text-white"
+                    : "text-charcoal hover:bg-paper",
                 )}
                 aria-pressed={view === "board"}
               >
@@ -208,7 +208,7 @@ export default function CrmIssues() {
                 "text-xs px-2.5 py-1 rounded-full border transition-colors",
                 activeQuickView === qv
                   ? "bg-primary/10 text-primary border-primary/30"
-                  : "bg-white text-slate-700 border-slate-200 hover:bg-slate-50",
+                  : "bg-white text-charcoal border-bone hover:bg-paper",
               )}
             >
               {ISSUE_QUICK_VIEW_LABELS[qv]}

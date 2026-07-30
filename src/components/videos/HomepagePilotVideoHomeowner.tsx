@@ -38,7 +38,7 @@ export const HomepagePilotVideoHomeowner = () => {
               className={`cursor-pointer relative w-full aspect-video bg-black rounded-lg overflow-hidden shadow-lg transition-all duration-700 transform ${
                 isHovered ? 'scale-105 shadow-2xl' : 'scale-100 opacity-100'
               }`}
-              style={{ border: '10px solid #f0f0f0', maxWidth: '640px' }}
+              style={{ border: '10px solid #F1EBDE', maxWidth: '640px' }}
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
               id="homepage-pilot-video-container-homeowner"

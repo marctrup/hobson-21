@@ -26,20 +26,20 @@ export const TaskList = ({ rows, isLoading, showClient, onSelect }: Props) => {
   const { canWrite } = useCrmAccess();
 
   if (isLoading) {
-    return <div className="p-6 text-sm text-slate-500">Loading…</div>;
+    return <div className="p-6 text-sm text-ink-muted">Loading…</div>;
   }
   if (!rows.length) {
     return (
-      <div className="p-10 text-center text-sm text-slate-500 bg-white border border-slate-200 rounded-lg">
+      <div className="p-10 text-center text-sm text-ink-muted bg-white border border-bone rounded-lg">
         No tasks match these filters.
       </div>
     );
   }
 
   return (
-    <div className="bg-white border border-slate-200 rounded-lg overflow-hidden">
+    <div className="bg-white border border-bone rounded-lg overflow-hidden">
       <table className="w-full text-sm">
-        <thead className="bg-slate-50 text-slate-600 text-xs uppercase tracking-wide">
+        <thead className="bg-paper text-charcoal text-xs uppercase tracking-wide">
           <tr>
             <th className="text-left font-medium px-3 py-2 w-10"></th>
             <th className="text-left font-medium px-3 py-2 w-10"></th>
@@ -52,7 +52,7 @@ export const TaskList = ({ rows, isLoading, showClient, onSelect }: Props) => {
             <th className="text-left font-medium px-3 py-2">Updated</th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-slate-100">
+        <tbody className="divide-y divide-faint-rule">
           {rows.map((r) => {
             const overdue = isOverdue(r);
             const isDone = r.status === "done";
@@ -60,7 +60,7 @@ export const TaskList = ({ rows, isLoading, showClient, onSelect }: Props) => {
               <tr
                 key={r.id}
                 onClick={() => onSelect(r.id)}
-                className="hover:bg-slate-50 cursor-pointer"
+                className="hover:bg-paper cursor-pointer"
               >
                 <td className="px-3 py-2 align-top">
                   {canWrite ? (
@@ -73,8 +73,8 @@ export const TaskList = ({ rows, isLoading, showClient, onSelect }: Props) => {
                       className={cn(
                         "size-4 rounded border flex items-center justify-center transition-colors",
                         isDone
-                          ? "bg-emerald-500 border-emerald-500 text-white"
-                          : "border-slate-300 hover:border-slate-500",
+                          ? "bg-success border-success text-white"
+                          : "border-bone hover:border-bone-strong",
                       )}
                     >
                       {isDone && <Check className="size-3" strokeWidth={3} />}
@@ -85,8 +85,8 @@ export const TaskList = ({ rows, isLoading, showClient, onSelect }: Props) => {
                       className={cn(
                         "size-4 rounded border inline-flex items-center justify-center",
                         isDone
-                          ? "bg-emerald-500 border-emerald-500 text-white"
-                          : "border-slate-300",
+                          ? "bg-success border-success text-white"
+                          : "border-bone",
                       )}
                     >
                       {isDone && <Check className="size-3" strokeWidth={3} />}
@@ -100,29 +100,29 @@ export const TaskList = ({ rows, isLoading, showClient, onSelect }: Props) => {
                   <div
                     className={cn(
                       "font-medium line-clamp-1",
-                      isDone ? "text-slate-500 line-through" : "text-slate-900",
+                      isDone ? "text-ink-muted line-through" : "text-ink",
                     )}
                   >
                     {r.title}
                   </div>
                   {r.notes && (
-                    <div className="text-xs text-slate-500 line-clamp-1 mt-0.5">
+                    <div className="text-xs text-ink-muted line-clamp-1 mt-0.5">
                       {r.notes}
                     </div>
                   )}
                 </td>
                 {showClient && (
-                  <td className="px-3 py-2 text-slate-700">
+                  <td className="px-3 py-2 text-charcoal">
                     {r.client_id && r.client_name ? (
                       <Link
                         to={`/crm/clients/${r.client_id}`}
                         onClick={(e) => e.stopPropagation()}
-                        className="hover:text-slate-900 hover:underline"
+                        className="hover:text-ink hover:underline"
                       >
                         {r.client_name}
                       </Link>
                     ) : (
-                      <span className="text-slate-400 italic">Standalone</span>
+                      <span className="text-ink-muted italic">Standalone</span>
                     )}
                   </td>
                 )}
@@ -135,18 +135,18 @@ export const TaskList = ({ rows, isLoading, showClient, onSelect }: Props) => {
                       className={cn(
                         "inline-flex items-center gap-1 text-xs",
                         overdue
-                          ? "text-rose-600 font-medium"
-                          : "text-slate-600",
+                          ? "text-danger font-medium"
+                          : "text-charcoal",
                       )}
                     >
                       {overdue && <CalendarClock className="size-3.5" />}
                       {formatDateUK(r.due_date)}
                     </span>
                   ) : (
-                    <span className="text-slate-400 text-xs">—</span>
+                    <span className="text-ink-muted text-xs">—</span>
                   )}
                 </td>
-                <td className="px-3 py-2 text-xs text-slate-500">
+                <td className="px-3 py-2 text-xs text-ink-muted">
                   {formatDateUK(r.updated_at)}
                 </td>
               </tr>

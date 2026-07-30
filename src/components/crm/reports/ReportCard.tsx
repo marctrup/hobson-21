@@ -25,20 +25,20 @@ export const ReportCard = ({
   className,
 }: Props) => (
   <div
-    className={`bg-white border border-slate-200 rounded-lg p-4 flex flex-col ${className ?? ""}`}
+    className={`bg-white border border-bone rounded-lg p-4 flex flex-col ${className ?? ""}`}
   >
     <div className="flex items-start justify-between gap-3">
       <div>
-        <h3 className="text-sm font-semibold text-slate-900">{title}</h3>
+        <h3 className="text-sm font-semibold text-ink">{title}</h3>
         {description && (
-          <p className="text-xs text-slate-500 mt-0.5">{description}</p>
+          <p className="text-xs text-ink-muted mt-0.5">{description}</p>
         )}
       </div>
       {onExport && (
         <button
           onClick={onExport}
           disabled={isLoading || isEmpty}
-          className="text-xs text-slate-500 hover:text-slate-900 disabled:opacity-40 inline-flex items-center gap-1"
+          className="text-xs text-ink-muted hover:text-ink disabled:opacity-40 inline-flex items-center gap-1"
           title="Download CSV"
         >
           <Download className="size-3.5" />
@@ -48,15 +48,15 @@ export const ReportCard = ({
     </div>
     <div className="mt-3 flex-1 min-h-[200px]">
       {isLoading ? (
-        <div className="text-sm text-slate-500">Loading…</div>
+        <div className="text-sm text-ink-muted">Loading…</div>
       ) : isEmpty ? (
-        <div className="h-full min-h-[180px] flex items-center justify-center text-sm text-slate-500">
+        <div className="h-full min-h-[180px] flex items-center justify-center text-sm text-ink-muted">
           {emptyLabel}
         </div>
       ) : (
         children
       )}
     </div>
-    {footer && <div className="mt-2 text-xs text-slate-500">{footer}</div>}
+    {footer && <div className="mt-2 text-xs text-ink-muted">{footer}</div>}
   </div>
 );

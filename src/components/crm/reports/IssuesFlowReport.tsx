@@ -33,7 +33,7 @@ export const IssuesFlowReport = () => {
     >
       <ResponsiveContainer width="100%" height={240}>
         <LineChart data={points} margin={{ top: 8, right: 12, left: 0, bottom: 4 }}>
-          <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+          <CartesianGrid strokeDasharray="3 3" stroke="#E8E1D4" />
           <XAxis dataKey="label" tick={{ fontSize: 11 }} />
           <YAxis tick={{ fontSize: 11 }} allowDecimals={false} />
           <Tooltip />
@@ -42,7 +42,7 @@ export const IssuesFlowReport = () => {
             type="monotone"
             dataKey="opened"
             name="Opened"
-            stroke="#f43f5e"
+            stroke="#9C4A38"
             strokeWidth={2}
             dot={{ r: 3 }}
           />
@@ -50,7 +50,7 @@ export const IssuesFlowReport = () => {
             type="monotone"
             dataKey="resolved"
             name="Resolved"
-            stroke="#10b981"
+            stroke="#5E6B33"
             strokeWidth={2}
             dot={{ r: 3 }}
           />

@@ -37,7 +37,7 @@ export const WorkspaceScoreboardReport = ({ enabled }: { enabled: boolean }) => 
     >
       <div className="overflow-x-auto">
         <table className="w-full text-sm">
-          <thead className="text-xs text-slate-500 uppercase tracking-wide">
+          <thead className="text-xs text-ink-muted uppercase tracking-wide">
             <tr className="text-left">
               <th className="py-2 pr-4 font-medium">Member</th>
               <th className="py-2 pr-4 font-medium text-right">Clients owned</th>
@@ -46,12 +46,12 @@ export const WorkspaceScoreboardReport = ({ enabled }: { enabled: boolean }) => 
               <th className="py-2 pr-4 font-medium text-right">Tasks completed</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-100">
+          <tbody className="divide-y divide-faint-rule">
             {rows.map((r) => (
               <tr key={r.user_id}>
                 <td className="py-2 pr-4">
-                  <div className="font-medium text-slate-900">{r.display_name}</div>
-                  <div className="text-xs text-slate-500">{r.email}</div>
+                  <div className="font-medium text-ink">{r.display_name}</div>
+                  <div className="text-xs text-ink-muted">{r.email}</div>
                 </td>
                 <td className="py-2 pr-4 text-right tabular-nums">{r.clients_owned}</td>
                 <td className="py-2 pr-4 text-right tabular-nums">{r.comms_logged}</td>

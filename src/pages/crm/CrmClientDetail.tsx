@@ -140,10 +140,10 @@ export default function CrmClientDetail() {
 
 
   if (clientQ.isLoading) {
-    return <div className="p-6 text-sm text-slate-500">Loading…</div>;
+    return <div className="p-6 text-sm text-ink-muted">Loading…</div>;
   }
   if (clientQ.error || !clientQ.data) {
-    return <div className="p-6 text-sm text-rose-600">Client not found.</div>;
+    return <div className="p-6 text-sm text-danger">Client not found.</div>;
   }
 
   const c = clientQ.data;
@@ -160,14 +160,14 @@ export default function CrmClientDetail() {
 
       {/* ============== Desktop view ============== */}
       <div className="hidden md:block p-6 max-w-7xl mx-auto">
-        <Link to="/crm/clients" className="inline-flex items-center gap-1 text-sm text-slate-600 hover:text-slate-900">
+        <Link to="/crm/clients" className="inline-flex items-center gap-1 text-sm text-charcoal hover:text-ink">
           <ArrowLeft className="size-4" /> Back to clients
         </Link>
 
         <div className="mt-3 flex flex-wrap items-start justify-between gap-4">
           <div>
             <h1 className="text-2xl font-semibold tracking-tight">{c.name}</h1>
-            <div className="mt-1 flex flex-wrap items-center gap-2 text-sm text-slate-500">
+            <div className="mt-1 flex flex-wrap items-center gap-2 text-sm text-ink-muted">
               <span>{SEGMENT_LABELS[c.segment] ?? c.segment}</span>
             </div>
             <ClientSubSectorChips clientId={id} />
@@ -214,7 +214,7 @@ export default function CrmClientDetail() {
         </div>
 
         {/* Tabs */}
-        <div className="mt-6 border-b border-slate-200 flex gap-1">
+        <div className="mt-6 border-b border-bone flex gap-1">
           {TABS.map((t) => (
             <button
               key={t.key}
@@ -223,7 +223,7 @@ export default function CrmClientDetail() {
                 "px-3 py-2 text-sm font-medium border-b-2 -mb-px",
                 tab === t.key
                   ? "border-primary text-primary"
-                  : "border-transparent text-slate-500 hover:text-slate-900",
+                  : "border-transparent text-ink-muted hover:text-ink",
               )}
             >
               {t.label}
@@ -255,15 +255,15 @@ export default function CrmClientDetail() {
 /* ----------------------------- Overview tab ----------------------------- */
 
 const Row = ({ label, value }: { label: string; value: React.ReactNode }) => (
-  <div className="flex items-baseline justify-between gap-4 py-1.5 text-sm border-b border-slate-100 last:border-0">
-    <span className="text-slate-500">{label}</span>
-    <span className="text-slate-900 text-right">{value ?? "—"}</span>
+  <div className="flex items-baseline justify-between gap-4 py-1.5 text-sm border-b border-faint-rule last:border-0">
+    <span className="text-ink-muted">{label}</span>
+    <span className="text-ink text-right">{value ?? "—"}</span>
   </div>
 );
 
 const Card = ({ title, children }: { title: string; children: React.ReactNode }) => (
-  <div className="bg-white border border-slate-200 rounded-lg">
-    <div className="px-4 py-2 border-b border-slate-200 text-sm font-medium">{title}</div>
+  <div className="bg-white border border-bone rounded-lg">
+    <div className="px-4 py-2 border-b border-bone text-sm font-medium">{title}</div>
     <div className="p-4">{children}</div>
   </div>
 );
@@ -332,7 +332,7 @@ const OverviewTab = ({
       </Card>
 
       {canWrite && (
-        <div className="lg:col-span-2 bg-white border border-slate-200 rounded-lg p-4">
+        <div className="lg:col-span-2 bg-white border border-bone rounded-lg p-4">
           <div className="text-sm font-medium mb-2">Quick status update</div>
           <div className="flex flex-wrap gap-2 items-center">
             <Select value={c.status} onValueChange={(v) => onSave({ status: v })}>
@@ -343,7 +343,7 @@ const OverviewTab = ({
                 ))}
               </SelectContent>
             </Select>
-            <span className="text-xs text-slate-500">
+            <span className="text-xs text-ink-muted">
               Changes are logged in the activity log automatically.
             </span>
           </div>
@@ -369,7 +369,7 @@ const ClientSubSectorChips = ({ clientId }: { clientId: string }) => {
       {labels.map((l) => (
         <span
           key={l}
-          className="inline-flex items-center rounded-full border border-slate-200 bg-slate-50 px-2 py-0.5 text-xs font-medium text-slate-700"
+          className="inline-flex items-center rounded-full border border-bone bg-paper px-2 py-0.5 text-xs font-medium text-charcoal"
         >
           {l}
         </span>
@@ -433,7 +433,7 @@ const SectorEditorCard = ({
     <Card title="Sector & sub-sectors">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
-          <Label className="text-xs font-medium text-slate-600">Sector</Label>
+          <Label className="text-xs font-medium text-charcoal">Sector</Label>
           <div className="mt-1">
             {canWrite ? (
               <Select value={client.segment} onValueChange={onSectorChange}>
@@ -445,7 +445,7 @@ const SectorEditorCard = ({
                 </SelectContent>
               </Select>
             ) : (
-              <div className="text-sm text-slate-800">
+              <div className="text-sm text-ink">
                 {SEGMENT_LABELS[client.segment] ?? client.segment}
               </div>
             )}
@@ -454,7 +454,7 @@ const SectorEditorCard = ({
 
         {sectorHasSubSectors(client.segment) && (
           <div>
-            <Label className="text-xs font-medium text-slate-600">Sub-sectors</Label>
+            <Label className="text-xs font-medium text-charcoal">Sub-sectors</Label>
             <div className="mt-1">
               {canWrite ? (
                 <SubSectorMultiSelect
@@ -464,7 +464,7 @@ const SectorEditorCard = ({
                   disabled={linksLoading}
                 />
               ) : (
-                <div className="text-sm text-slate-800">
+                <div className="text-sm text-ink">
                   {(allSubSectors ?? [])
                     .filter((s) => links.includes(s.id))
                     .map((s) => s.label)
@@ -557,7 +557,7 @@ const ContactsTab = ({ clientId, canWrite, isAdmin }: { clientId: string; canWri
   return (
     <div className="space-y-4">
       <div className="flex justify-between items-center">
-        <div className="text-sm text-slate-500">
+        <div className="text-sm text-ink-muted">
           The people you talk to about the commercial relationship.
         </div>
         {canWrite && (
@@ -606,14 +606,14 @@ const ContactsTab = ({ clientId, canWrite, isAdmin }: { clientId: string; canWri
         )}
       </div>
 
-      <div className="bg-white border border-slate-200 rounded-lg overflow-hidden">
+      <div className="bg-white border border-bone rounded-lg overflow-hidden">
         {list.isLoading ? (
-          <div className="p-6 text-sm text-slate-500">Loading…</div>
+          <div className="p-6 text-sm text-ink-muted">Loading…</div>
         ) : !list.data?.length ? (
-          <div className="p-8 text-center text-sm text-slate-500">No contacts yet.</div>
+          <div className="p-8 text-center text-sm text-ink-muted">No contacts yet.</div>
         ) : (
           <table className="w-full text-sm">
-            <thead className="bg-slate-50 text-slate-600 text-xs uppercase">
+            <thead className="bg-paper text-charcoal text-xs uppercase">
               <tr>
                 <th className="text-left px-4 py-2 font-medium">Name</th>
                 <th className="text-left px-4 py-2 font-medium">Job title</th>
@@ -622,13 +622,13 @@ const ContactsTab = ({ clientId, canWrite, isAdmin }: { clientId: string; canWri
                 {isAdmin && <th />}
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100">
+            <tbody className="divide-y divide-faint-rule">
               {list.data.map((p) => (
-                <tr key={p.id} className="hover:bg-slate-50">
+                <tr key={p.id} className="hover:bg-paper">
                   <td className="px-4 py-2 font-medium">
                     {p.full_name}{" "}
                     {p.is_primary && (
-                      <span className="ml-1 text-[10px] text-amber-700 bg-amber-100 px-1.5 py-0.5 rounded border border-amber-200">
+                      <span className="ml-1 text-[10px] text-warning bg-warning-bg px-1.5 py-0.5 rounded border border-warning-border">
                         Primary
                       </span>
                     )}
@@ -641,7 +641,7 @@ const ContactsTab = ({ clientId, canWrite, isAdmin }: { clientId: string; canWri
                       <AlertDialog>
                         <AlertDialogTrigger asChild>
                           <button
-                            className="text-slate-400 hover:text-rose-600"
+                            className="text-ink-muted hover:text-danger"
                             title="Delete contact"
                           >
                             <Trash2 className="size-4" />
@@ -660,7 +660,7 @@ const ContactsTab = ({ clientId, canWrite, isAdmin }: { clientId: string; canWri
                             <AlertDialogCancel>Cancel</AlertDialogCancel>
                             <AlertDialogAction
                               onClick={() => remove.mutate(p.id)}
-                              className="bg-rose-600 hover:bg-rose-700"
+                              className="bg-danger hover:bg-danger"
                             >
                               Delete
                             </AlertDialogAction>
@@ -761,7 +761,7 @@ const UsersTab = ({ clientId, canWrite }: { clientId: string; canWrite: boolean 
   return (
     <div className="space-y-4">
       <div className="flex justify-between items-center">
-        <div className="text-sm text-slate-500">
+        <div className="text-sm text-ink-muted">
           End-users of the AI platform at this client. Mark one as the primary admin.
         </div>
         {canWrite && (
@@ -831,14 +831,14 @@ const UsersTab = ({ clientId, canWrite }: { clientId: string; canWrite: boolean 
         )}
       </div>
 
-      <div className="bg-white border border-slate-200 rounded-lg overflow-hidden">
+      <div className="bg-white border border-bone rounded-lg overflow-hidden">
         {list.isLoading ? (
-          <div className="p-6 text-sm text-slate-500">Loading…</div>
+          <div className="p-6 text-sm text-ink-muted">Loading…</div>
         ) : !list.data?.length ? (
-          <div className="p-8 text-center text-sm text-slate-500">No platform users yet.</div>
+          <div className="p-8 text-center text-sm text-ink-muted">No platform users yet.</div>
         ) : (
           <table className="w-full text-sm">
-            <thead className="bg-slate-50 text-slate-600 text-xs uppercase">
+            <thead className="bg-paper text-charcoal text-xs uppercase">
               <tr>
                 <th className="text-left px-4 py-2 font-medium">Name</th>
                 <th className="text-left px-4 py-2 font-medium">Job title</th>
@@ -848,17 +848,17 @@ const UsersTab = ({ clientId, canWrite }: { clientId: string; canWrite: boolean 
                 {canWrite && <th />}
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100">
+            <tbody className="divide-y divide-faint-rule">
               {list.data.map((u) => (
-                <tr key={u.id} className="hover:bg-slate-50">
+                <tr key={u.id} className="hover:bg-paper">
                   <td className="px-4 py-2 font-medium">
                     <div className="flex items-center gap-1.5">
                       {u.is_primary_admin && (
-                        <Star className="size-3.5 fill-amber-400 text-amber-500" aria-label="Primary admin" />
+                        <Star className="size-3.5 fill-warning text-warning" aria-label="Primary admin" />
                       )}
                       <span>{u.full_name}</span>
                     </div>
-                    <div className="text-xs text-slate-500">{u.email}</div>
+                    <div className="text-xs text-ink-muted">{u.email}</div>
                   </td>
                   <td className="px-4 py-2">{u.job_title ?? "—"}</td>
                   <td className="px-4 py-2">{u.department ? DEPARTMENT_LABELS[u.department] : "—"}</td>
@@ -869,14 +869,14 @@ const UsersTab = ({ clientId, canWrite }: { clientId: string; canWrite: boolean 
                       {!u.is_primary_admin && (
                         <button
                           onClick={() => setPrimary.mutate(u.id)}
-                          className="text-xs text-slate-600 hover:text-slate-900 mr-2"
+                          className="text-xs text-charcoal hover:text-ink mr-2"
                         >
                           Make primary
                         </button>
                       )}
                       <button
                         onClick={() => remove.mutate(u.id)}
-                        className="text-slate-400 hover:text-rose-600"
+                        className="text-ink-muted hover:text-danger"
                         title="Delete"
                       >
                         <Trash2 className="size-4 inline" />
@@ -950,7 +950,7 @@ const NotesTab = ({
   return (
     <div className="space-y-4">
       {canWrite && (
-        <div className="bg-white border border-slate-200 rounded-lg p-3">
+        <div className="bg-white border border-bone rounded-lg p-3">
           <Textarea
             rows={3}
             placeholder="Add a note…"
@@ -966,28 +966,28 @@ const NotesTab = ({
       )}
 
       {list.isLoading ? (
-        <div className="text-sm text-slate-500">Loading…</div>
+        <div className="text-sm text-ink-muted">Loading…</div>
       ) : !list.data?.length ? (
-        <div className="text-sm text-slate-500 bg-white border border-slate-200 rounded-lg p-8 text-center">
+        <div className="text-sm text-ink-muted bg-white border border-bone rounded-lg p-8 text-center">
           No notes yet.
         </div>
       ) : (
         <ul className="space-y-2">
           {list.data.map((n) => (
-            <li key={n.id} className="bg-white border border-slate-200 rounded-lg p-3">
+            <li key={n.id} className="bg-white border border-bone rounded-lg p-3">
               <div className="flex items-start justify-between gap-3">
-                <div className="text-sm text-slate-800 whitespace-pre-wrap">{n.content}</div>
+                <div className="text-sm text-ink whitespace-pre-wrap">{n.content}</div>
                 {canWrite && n.created_by === userId && (
                   <button
                     onClick={() => remove.mutate(n.id)}
-                    className="text-slate-400 hover:text-rose-600"
+                    className="text-ink-muted hover:text-danger"
                     title="Delete"
                   >
                     <Trash2 className="size-4" />
                   </button>
                 )}
               </div>
-              <div className="text-xs text-slate-500 mt-1">{formatDateUK(n.created_at)}</div>
+              <div className="text-xs text-ink-muted mt-1">{formatDateUK(n.created_at)}</div>
             </li>
           ))}
         </ul>
@@ -1014,22 +1014,22 @@ const ActivityTab = ({ clientId }: { clientId: string }) => {
   });
 
   return (
-    <div className="bg-white border border-slate-200 rounded-lg overflow-hidden">
+    <div className="bg-white border border-bone rounded-lg overflow-hidden">
       {list.isLoading ? (
-        <div className="p-6 text-sm text-slate-500">Loading…</div>
+        <div className="p-6 text-sm text-ink-muted">Loading…</div>
       ) : !list.data?.length ? (
-        <div className="p-8 text-center text-sm text-slate-500">
+        <div className="p-8 text-center text-sm text-ink-muted">
           No activity recorded yet.
         </div>
       ) : (
-        <ul className="divide-y divide-slate-100">
+        <ul className="divide-y divide-faint-rule">
           {list.data.map((a) => (
             <li key={a.id} className="px-4 py-3 text-sm">
               <div className="flex items-baseline justify-between gap-3">
-                <div className="font-medium text-slate-900">{a.description ?? a.action_type}</div>
-                <div className="text-xs text-slate-500 shrink-0">{formatDateTimeUK(a.created_at)}</div>
+                <div className="font-medium text-ink">{a.description ?? a.action_type}</div>
+                <div className="text-xs text-ink-muted shrink-0">{formatDateTimeUK(a.created_at)}</div>
               </div>
-              <div className="text-xs text-slate-500 mt-0.5">
+              <div className="text-xs text-ink-muted mt-0.5">
                 {a.entity_type} · {a.action_type}
               </div>
             </li>
@@ -1055,16 +1055,16 @@ const MobileClientDetail = ({ clientId, client }: { clientId: string; client: an
 
   return (
     <div className="md:hidden p-4 pb-24 max-w-xl mx-auto">
-      <Link to="/crm/clients" className="inline-flex items-center gap-1 text-sm text-slate-600 min-h-[44px]">
+      <Link to="/crm/clients" className="inline-flex items-center gap-1 text-sm text-charcoal min-h-[44px]">
         <ArrowLeft className="size-4" /> Back to clients
       </Link>
 
       <h1 className="mt-2 text-2xl font-semibold tracking-tight leading-tight">{client.name}</h1>
 
-      <div className="mt-2 flex flex-wrap items-center gap-2 text-sm text-slate-600">
+      <div className="mt-2 flex flex-wrap items-center gap-2 text-sm text-charcoal">
         <span>{SEGMENT_LABELS[client.segment] ?? client.segment ?? "—"}</span>
         {statusLabel && (
-          <span className="inline-flex items-center rounded-full border border-slate-200 bg-slate-50 px-2 py-0.5 text-xs font-medium text-slate-700">
+          <span className="inline-flex items-center rounded-full border border-bone bg-paper px-2 py-0.5 text-xs font-medium text-charcoal">
             {statusLabel}
           </span>
         )}
@@ -1075,7 +1075,7 @@ const MobileClientDetail = ({ clientId, client }: { clientId: string; client: an
           {subLabels.map((l) => (
             <span
               key={l}
-              className="inline-flex items-center rounded-full border border-slate-200 bg-slate-50 px-2 py-0.5 text-xs font-medium text-slate-700"
+              className="inline-flex items-center rounded-full border border-bone bg-paper px-2 py-0.5 text-xs font-medium text-charcoal"
             >
               {l}
             </span>
@@ -1083,28 +1083,28 @@ const MobileClientDetail = ({ clientId, client }: { clientId: string; client: an
         </div>
       )}
 
-      <div className="mt-5 bg-white border border-slate-200 rounded-lg divide-y divide-slate-100">
+      <div className="mt-5 bg-white border border-bone rounded-lg divide-y divide-faint-rule">
         <div className="flex items-center justify-between px-4 py-3 text-sm">
-          <span className="text-slate-500">Pipeline stage</span>
-          <span className="text-slate-900 font-medium">{stageLabel}</span>
+          <span className="text-ink-muted">Pipeline stage</span>
+          <span className="text-ink font-medium">{stageLabel}</span>
         </div>
         <div className="flex items-center justify-between px-4 py-3 text-sm">
-          <span className="text-slate-500">Last contact</span>
-          <span className="text-slate-900">{formatDateUK(client.last_contact_date)}</span>
+          <span className="text-ink-muted">Last contact</span>
+          <span className="text-ink">{formatDateUK(client.last_contact_date)}</span>
         </div>
       </div>
 
-      <div className="mt-4 bg-white border border-slate-200 rounded-lg overflow-hidden">
-        <div className="px-4 py-2 border-b border-slate-200 text-sm font-medium">
+      <div className="mt-4 bg-white border border-bone rounded-lg overflow-hidden">
+        <div className="px-4 py-2 border-b border-bone text-sm font-medium">
           Primary contact
         </div>
-        <div className="divide-y divide-slate-100">
+        <div className="divide-y divide-faint-rule">
           <div className="px-4 py-3 text-sm">
-            <div className="text-xs text-slate-500">Name</div>
-            <div className="mt-0.5 text-slate-900">{client.primary_contact_name || "—"}</div>
+            <div className="text-xs text-ink-muted">Name</div>
+            <div className="mt-0.5 text-ink">{client.primary_contact_name || "—"}</div>
           </div>
           <div className="px-4 py-3 text-sm">
-            <div className="text-xs text-slate-500">Email</div>
+            <div className="text-xs text-ink-muted">Email</div>
             <div className="mt-0.5">
               {client.primary_contact_email ? (
                 <a
@@ -1114,12 +1114,12 @@ const MobileClientDetail = ({ clientId, client }: { clientId: string; client: an
                   {client.primary_contact_email}
                 </a>
               ) : (
-                <span className="text-slate-900">—</span>
+                <span className="text-ink">—</span>
               )}
             </div>
           </div>
           <div className="px-4 py-3 text-sm">
-            <div className="text-xs text-slate-500">Phone</div>
+            <div className="text-xs text-ink-muted">Phone</div>
             <div className="mt-0.5">
               {client.primary_contact_phone ? (
                 <a
@@ -1129,14 +1129,14 @@ const MobileClientDetail = ({ clientId, client }: { clientId: string; client: an
                   {client.primary_contact_phone}
                 </a>
               ) : (
-                <span className="text-slate-900">—</span>
+                <span className="text-ink">—</span>
               )}
             </div>
           </div>
         </div>
       </div>
 
-      <div className="mt-6 rounded-lg border border-primary/20 bg-primary/5 px-4 py-3 text-sm text-slate-700">
+      <div className="mt-6 rounded-lg border border-primary/20 bg-primary/5 px-4 py-3 text-sm text-charcoal">
         Open this client on a larger screen to edit details, log communications and manage tasks.
       </div>
     </div>

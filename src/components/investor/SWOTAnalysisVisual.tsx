@@ -188,50 +188,50 @@ export const SWOTAnalysisVisual = () => {
       {/* Strengths */}
       <div className="space-y-4">
         <h4 className="font-semibold text-foreground flex items-center gap-2">
-          <CheckCircle2 className="w-5 h-5 text-emerald-600" />
+          <CheckCircle2 className="w-5 h-5 text-success" />
           Strengths
         </h4>
         
         <div className="grid md:grid-cols-2 gap-4">
-          <div className="rounded-xl bg-gradient-to-br from-emerald-500/10 to-emerald-600/10 p-4 border border-emerald-200/50 dark:border-emerald-800/30">
+          <div className="rounded-xl bg-gradient-to-br from-success/10 to-success/10 p-4 border border-success-border/50 dark:border-success/30">
             <h5 className="font-medium text-foreground text-sm mb-2">Product & Technical</h5>
             <ul className="space-y-1">
               {strengths.productTechnical.map((item, idx) => (
                 <li key={idx} className="flex items-start gap-2 text-xs text-muted-foreground">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-1 flex-shrink-0" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-success mt-1 flex-shrink-0" />
                   <span>{item}</span>
                 </li>
               ))}
             </ul>
           </div>
-          <div className="rounded-xl bg-gradient-to-br from-emerald-500/10 to-emerald-600/10 p-4 border border-emerald-200/50 dark:border-emerald-800/30">
+          <div className="rounded-xl bg-gradient-to-br from-success/10 to-success/10 p-4 border border-success-border/50 dark:border-success/30">
             <h5 className="font-medium text-foreground text-sm mb-2">Brand & Positioning</h5>
             <ul className="space-y-1">
               {strengths.brandPositioning.map((item, idx) => (
                 <li key={idx} className="flex items-start gap-2 text-xs text-muted-foreground">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-1 flex-shrink-0" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-success mt-1 flex-shrink-0" />
                   <span>{item}</span>
                 </li>
               ))}
             </ul>
           </div>
-          <div className="rounded-xl bg-gradient-to-br from-emerald-500/10 to-emerald-600/10 p-4 border border-emerald-200/50 dark:border-emerald-800/30">
+          <div className="rounded-xl bg-gradient-to-br from-success/10 to-success/10 p-4 border border-success-border/50 dark:border-success/30">
             <h5 className="font-medium text-foreground text-sm mb-2">Customer Alignment</h5>
             <ul className="space-y-1">
               {strengths.customerAlignment.map((item, idx) => (
                 <li key={idx} className="flex items-start gap-2 text-xs text-muted-foreground">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-1 flex-shrink-0" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-success mt-1 flex-shrink-0" />
                   <span>{item}</span>
                 </li>
               ))}
             </ul>
           </div>
-          <div className="rounded-xl bg-gradient-to-br from-emerald-500/10 to-emerald-600/10 p-4 border border-emerald-200/50 dark:border-emerald-800/30">
+          <div className="rounded-xl bg-gradient-to-br from-success/10 to-success/10 p-4 border border-success-border/50 dark:border-success/30">
             <h5 className="font-medium text-foreground text-sm mb-2">Market Fit & Timing</h5>
             <ul className="space-y-1">
               {strengths.marketFitTiming.map((item, idx) => (
                 <li key={idx} className="flex items-start gap-2 text-xs text-muted-foreground">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-1 flex-shrink-0" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-success mt-1 flex-shrink-0" />
                   <span>{item}</span>
                 </li>
               ))}
@@ -243,10 +243,10 @@ export const SWOTAnalysisVisual = () => {
       {/* Pillars Evaluation Matrix */}
       <div className="space-y-3">
         <h5 className="font-medium text-foreground text-sm">Pillars Evaluation Matrix</h5>
-        <div className="rounded-xl bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900/50 dark:to-slate-800/30 p-4 border border-slate-200 dark:border-slate-700/50 overflow-x-auto">
+        <div className="rounded-xl bg-gradient-to-br from-paper to-bone-wash dark:from-ink/50 dark:to-ink/30 p-4 border border-bone dark:border-charcoal/50 overflow-x-auto">
           <table className="w-full text-xs table-fixed">
             <thead>
-              <tr className="border-b border-slate-200 dark:border-slate-700">
+              <tr className="border-b border-bone dark:border-charcoal">
                 <th className="text-left py-2 font-medium text-foreground w-[100px]">Pillar</th>
                 <th className="text-left py-2 font-medium text-foreground w-[80px]">Rating</th>
                 <th className="text-left py-2 font-medium text-foreground">Explanation</th>
@@ -254,7 +254,7 @@ export const SWOTAnalysisVisual = () => {
             </thead>
             <tbody>
               {pillarsData.map((row, idx) => (
-                <tr key={idx} className="border-b border-slate-100 dark:border-slate-800 last:border-0 align-top">
+                <tr key={idx} className="border-b border-faint-rule dark:border-charcoal last:border-0 align-top">
                   <td className="py-2 font-medium text-foreground whitespace-nowrap">{row.pillar}</td>
                   <td className="py-2 whitespace-nowrap">
                     <div className="flex items-center gap-2">
@@ -273,39 +273,39 @@ export const SWOTAnalysisVisual = () => {
       {/* Weaknesses */}
       <div className="space-y-4">
         <h4 className="font-semibold text-foreground flex items-center gap-2">
-          <XCircle className="w-5 h-5 text-rose-600" />
+          <XCircle className="w-5 h-5 text-danger" />
           Weaknesses
         </h4>
         
         <div className="grid md:grid-cols-3 gap-4">
-          <div className="rounded-xl bg-gradient-to-br from-rose-500/10 to-rose-600/10 p-4 border border-rose-200/50 dark:border-rose-800/30">
+          <div className="rounded-xl bg-gradient-to-br from-danger/10 to-danger/10 p-4 border border-danger-border/50 dark:border-danger/30">
             <h5 className="font-medium text-foreground text-sm mb-2">Product</h5>
             <ul className="space-y-1">
               {weaknesses.product.map((item, idx) => (
                 <li key={idx} className="flex items-start gap-2 text-xs text-muted-foreground">
-                  <span className="w-1.5 h-1.5 rounded-full bg-rose-500 mt-1 flex-shrink-0" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-danger mt-1 flex-shrink-0" />
                   <span>{item}</span>
                 </li>
               ))}
             </ul>
           </div>
-          <div className="rounded-xl bg-gradient-to-br from-rose-500/10 to-rose-600/10 p-4 border border-rose-200/50 dark:border-rose-800/30">
+          <div className="rounded-xl bg-gradient-to-br from-danger/10 to-danger/10 p-4 border border-danger-border/50 dark:border-danger/30">
             <h5 className="font-medium text-foreground text-sm mb-2">Brand & Communication</h5>
             <ul className="space-y-1">
               {weaknesses.brandCommunication.map((item, idx) => (
                 <li key={idx} className="flex items-start gap-2 text-xs text-muted-foreground">
-                  <span className="w-1.5 h-1.5 rounded-full bg-rose-500 mt-1 flex-shrink-0" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-danger mt-1 flex-shrink-0" />
                   <span>{item}</span>
                 </li>
               ))}
             </ul>
           </div>
-          <div className="rounded-xl bg-gradient-to-br from-rose-500/10 to-rose-600/10 p-4 border border-rose-200/50 dark:border-rose-800/30">
+          <div className="rounded-xl bg-gradient-to-br from-danger/10 to-danger/10 p-4 border border-danger-border/50 dark:border-danger/30">
             <h5 className="font-medium text-foreground text-sm mb-2">Commercial</h5>
             <ul className="space-y-1">
               {weaknesses.commercial.map((item, idx) => (
                 <li key={idx} className="flex items-start gap-2 text-xs text-muted-foreground">
-                  <span className="w-1.5 h-1.5 rounded-full bg-rose-500 mt-1 flex-shrink-0" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-danger mt-1 flex-shrink-0" />
                   <span>{item}</span>
                 </li>
               ))}
@@ -317,50 +317,50 @@ export const SWOTAnalysisVisual = () => {
       {/* Opportunities */}
       <div className="space-y-4">
         <h4 className="font-semibold text-foreground flex items-center gap-2">
-          <TrendingUp className="w-5 h-5 text-blue-600" />
+          <TrendingUp className="w-5 h-5 text-charcoal" />
           Opportunities
         </h4>
         
         <div className="grid md:grid-cols-2 gap-4">
-          <div className="rounded-xl bg-gradient-to-br from-blue-500/10 to-blue-600/10 p-4 border border-blue-200/50 dark:border-blue-800/30">
+          <div className="rounded-xl bg-gradient-to-br from-ink-faint/10 to-charcoal/10 p-4 border border-bone/50 dark:border-charcoal/30">
             <h5 className="font-medium text-foreground text-sm mb-2">Market & Industry</h5>
             <ul className="space-y-1">
               {opportunities.marketIndustry.map((item, idx) => (
                 <li key={idx} className="flex items-start gap-2 text-xs text-muted-foreground">
-                  <span className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-1 flex-shrink-0" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-ink-faint mt-1 flex-shrink-0" />
                   <span>{item}</span>
                 </li>
               ))}
             </ul>
           </div>
-          <div className="rounded-xl bg-gradient-to-br from-blue-500/10 to-blue-600/10 p-4 border border-blue-200/50 dark:border-blue-800/30">
+          <div className="rounded-xl bg-gradient-to-br from-ink-faint/10 to-charcoal/10 p-4 border border-bone/50 dark:border-charcoal/30">
             <h5 className="font-medium text-foreground text-sm mb-2">Brand Expansion</h5>
             <ul className="space-y-1">
               {opportunities.brandExpansion.map((item, idx) => (
                 <li key={idx} className="flex items-start gap-2 text-xs text-muted-foreground">
-                  <span className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-1 flex-shrink-0" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-ink-faint mt-1 flex-shrink-0" />
                   <span>{item}</span>
                 </li>
               ))}
             </ul>
           </div>
-          <div className="rounded-xl bg-gradient-to-br from-blue-500/10 to-blue-600/10 p-4 border border-blue-200/50 dark:border-blue-800/30">
+          <div className="rounded-xl bg-gradient-to-br from-ink-faint/10 to-charcoal/10 p-4 border border-bone/50 dark:border-charcoal/30">
             <h5 className="font-medium text-foreground text-sm mb-2">Product & Capability</h5>
             <ul className="space-y-1">
               {opportunities.productCapability.map((item, idx) => (
                 <li key={idx} className="flex items-start gap-2 text-xs text-muted-foreground">
-                  <span className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-1 flex-shrink-0" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-ink-faint mt-1 flex-shrink-0" />
                   <span>{item}</span>
                 </li>
               ))}
             </ul>
           </div>
-          <div className="rounded-xl bg-gradient-to-br from-blue-500/10 to-blue-600/10 p-4 border border-blue-200/50 dark:border-blue-800/30">
+          <div className="rounded-xl bg-gradient-to-br from-ink-faint/10 to-charcoal/10 p-4 border border-bone/50 dark:border-charcoal/30">
             <h5 className="font-medium text-foreground text-sm mb-2">Marketing & Growth</h5>
             <ul className="space-y-1">
               {opportunities.marketingGrowth.map((item, idx) => (
                 <li key={idx} className="flex items-start gap-2 text-xs text-muted-foreground">
-                  <span className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-1 flex-shrink-0" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-ink-faint mt-1 flex-shrink-0" />
                   <span>{item}</span>
                 </li>
               ))}
@@ -372,39 +372,39 @@ export const SWOTAnalysisVisual = () => {
       {/* Threats */}
       <div className="space-y-4">
         <h4 className="font-semibold text-foreground flex items-center gap-2">
-          <AlertTriangle className="w-5 h-5 text-amber-600" />
+          <AlertTriangle className="w-5 h-5 text-warning" />
           Threats
         </h4>
         
         <div className="grid md:grid-cols-3 gap-4">
-          <div className="rounded-xl bg-gradient-to-br from-amber-500/10 to-amber-600/10 p-4 border border-amber-200/50 dark:border-amber-800/30">
+          <div className="rounded-xl bg-gradient-to-br from-warning/10 to-warning/10 p-4 border border-warning-border/50 dark:border-warning/30">
             <h5 className="font-medium text-foreground text-sm mb-2">Competitive</h5>
             <ul className="space-y-1">
               {threats.competitive.map((item, idx) => (
                 <li key={idx} className="flex items-start gap-2 text-xs text-muted-foreground">
-                  <span className="w-1.5 h-1.5 rounded-full bg-amber-500 mt-1 flex-shrink-0" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-warning mt-1 flex-shrink-0" />
                   <span>{item}</span>
                 </li>
               ))}
             </ul>
           </div>
-          <div className="rounded-xl bg-gradient-to-br from-amber-500/10 to-amber-600/10 p-4 border border-amber-200/50 dark:border-amber-800/30">
+          <div className="rounded-xl bg-gradient-to-br from-warning/10 to-warning/10 p-4 border border-warning-border/50 dark:border-warning/30">
             <h5 className="font-medium text-foreground text-sm mb-2">Market & Technology</h5>
             <ul className="space-y-1">
               {threats.marketTechnology.map((item, idx) => (
                 <li key={idx} className="flex items-start gap-2 text-xs text-muted-foreground">
-                  <span className="w-1.5 h-1.5 rounded-full bg-amber-500 mt-1 flex-shrink-0" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-warning mt-1 flex-shrink-0" />
                   <span>{item}</span>
                 </li>
               ))}
             </ul>
           </div>
-          <div className="rounded-xl bg-gradient-to-br from-amber-500/10 to-amber-600/10 p-4 border border-amber-200/50 dark:border-amber-800/30">
+          <div className="rounded-xl bg-gradient-to-br from-warning/10 to-warning/10 p-4 border border-warning-border/50 dark:border-warning/30">
             <h5 className="font-medium text-foreground text-sm mb-2">Brand & Trust</h5>
             <ul className="space-y-1">
               {threats.brandTrust.map((item, idx) => (
                 <li key={idx} className="flex items-start gap-2 text-xs text-muted-foreground">
-                  <span className="w-1.5 h-1.5 rounded-full bg-amber-500 mt-1 flex-shrink-0" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-warning mt-1 flex-shrink-0" />
                   <span>{item}</span>
                 </li>
               ))}

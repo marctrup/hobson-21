@@ -43,9 +43,9 @@ const NAV: NavItem[] = [
 ];
 
 const ROLE_BADGE: Record<string, { label: string; cls: string }> = {
-  admin: { label: "Admin", cls: "bg-purple-100 text-purple-800 border-purple-200" },
-  crm_write: { label: "Editor", cls: "bg-blue-100 text-blue-800 border-blue-200" },
-  crm_read: { label: "Read-only", cls: "bg-slate-100 text-slate-700 border-slate-200" },
+  admin: { label: "Admin", cls: "bg-bone-wash text-ink border-bone" },
+  crm_write: { label: "Editor", cls: "bg-bone-wash text-ink border-bone" },
+  crm_read: { label: "Read-only", cls: "bg-bone-wash text-charcoal border-bone" },
 };
 
 export const CrmLayout = ({ children }: { children?: ReactNode }) => {
@@ -61,7 +61,7 @@ export const CrmLayout = ({ children }: { children?: ReactNode }) => {
 
   const SidebarInner = ({ onNavigate }: { onNavigate?: () => void }) => (
     <>
-      <div className="h-14 flex items-center gap-2 px-4 border-b border-slate-200">
+      <div className="h-14 flex items-center gap-2 px-4 border-b border-bone">
         <img
           src={hobsonOwl}
           alt="Hobson"
@@ -73,7 +73,7 @@ export const CrmLayout = ({ children }: { children?: ReactNode }) => {
           </span>
           {showWorkspaceSubtitle && (
             <span
-              className="text-[11px] text-slate-500 leading-tight truncate"
+              className="text-[11px] text-ink-muted leading-tight truncate"
               title={workspaceName}
             >
               {workspaceName}
@@ -95,14 +95,14 @@ export const CrmLayout = ({ children }: { children?: ReactNode }) => {
                   "flex items-center gap-2 px-3 py-2 rounded-md text-sm font-medium transition-colors min-h-[44px]",
                   isActive
                     ? "bg-primary text-primary-foreground"
-                    : "text-slate-700 hover:bg-primary/10 hover:text-primary",
+                    : "text-charcoal hover:bg-primary/10 hover:text-primary",
                 )
               }
             >
               <Icon className="size-4" />
               <span className="flex-1">{item.label}</span>
               {item.soon && (
-                <span className="text-[10px] uppercase tracking-wide text-slate-400">
+                <span className="text-[10px] uppercase tracking-wide text-ink-muted">
                   Soon
                 </span>
               )}
@@ -110,7 +110,7 @@ export const CrmLayout = ({ children }: { children?: ReactNode }) => {
           );
         })}
       </nav>
-      <div className="border-t border-slate-200 p-3 text-xs text-slate-500">
+      <div className="border-t border-bone p-3 text-xs text-ink-muted">
         <div className="truncate">{user?.email}</div>
         {badge && (
           <span
@@ -128,7 +128,7 @@ export const CrmLayout = ({ children }: { children?: ReactNode }) => {
             await signOut();
             navigate("/auth");
           }}
-          className="mt-3 flex items-center gap-2 text-slate-600 hover:text-slate-900"
+          className="mt-3 flex items-center gap-2 text-charcoal hover:text-ink"
         >
           <LogOut className="size-3.5" /> Sign out
         </button>
@@ -137,9 +137,9 @@ export const CrmLayout = ({ children }: { children?: ReactNode }) => {
   );
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 flex">
+    <div className="min-h-screen bg-paper text-ink flex">
       {/* Desktop sidebar */}
-      <aside className="hidden md:flex w-60 shrink-0 bg-white border-r border-slate-200 flex-col">
+      <aside className="hidden md:flex w-60 shrink-0 bg-white border-r border-bone flex-col">
         <SidebarInner />
       </aside>
 
@@ -152,7 +152,7 @@ export const CrmLayout = ({ children }: { children?: ReactNode }) => {
 
       {/* Main */}
       <div className="flex-1 flex flex-col min-w-0">
-        <header className="h-14 bg-white border-b border-slate-200 flex items-center justify-between px-4 md:px-6 gap-2">
+        <header className="h-14 bg-white border-b border-bone flex items-center justify-between px-4 md:px-6 gap-2">
           {/* Mobile: hamburger + brand */}
           <div className="flex md:hidden items-center gap-2 min-w-0">
             <SheetTriggerButton onClick={() => setMobileOpen(true)} />
@@ -160,7 +160,7 @@ export const CrmLayout = ({ children }: { children?: ReactNode }) => {
             <span className="font-semibold tracking-tight truncate">Hobson CRM</span>
           </div>
           {/* Desktop subtitle */}
-          <div className="hidden md:block text-sm text-slate-500">Internal CRM · Hobson's Choice</div>
+          <div className="hidden md:block text-sm text-ink-muted">Internal CRM · Hobson's Choice</div>
           {canWrite && (
             <Button
               size="sm"
@@ -182,7 +182,7 @@ const SheetTriggerButton = ({ onClick }: { onClick: () => void }) => (
     type="button"
     onClick={onClick}
     aria-label="Open navigation"
-    className="inline-flex items-center justify-center h-11 w-11 -ml-2 rounded-md text-slate-700 hover:bg-slate-100"
+    className="inline-flex items-center justify-center h-11 w-11 -ml-2 rounded-md text-charcoal hover:bg-bone-wash"
   >
     <Menu className="size-5" />
   </button>
