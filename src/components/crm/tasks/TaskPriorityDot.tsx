@@ -20,7 +20,7 @@ export const TaskPriorityDot = ({
       className={cn("size-2 rounded-full", TASK_PRIORITY_DOT[priority])}
     />
     {withLabel && (
-      <span className="text-xs text-slate-700">
+      <span className="text-xs text-charcoal">
         {TASK_PRIORITY_LABELS[priority]}
       </span>
     )}

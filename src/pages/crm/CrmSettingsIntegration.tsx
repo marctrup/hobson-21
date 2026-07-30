@@ -10,7 +10,7 @@ export default function CrmSettingsIntegration() {
   const { isAdmin, isLoading } = useCrmAccess();
 
   if (isLoading) {
-    return <div className="p-6 text-sm text-slate-500">Loading…</div>;
+    return <div className="p-6 text-sm text-ink-muted">Loading…</div>;
   }
   if (!isAdmin) return <NotFound />;
 
@@ -23,7 +23,7 @@ export default function CrmSettingsIntegration() {
 
       <Link
         to="/crm/settings"
-        className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-slate-700"
+        className="inline-flex items-center gap-1 text-sm text-ink-muted hover:text-charcoal"
       >
         <ChevronLeft className="size-4" /> Back to settings
       </Link>
@@ -31,7 +31,7 @@ export default function CrmSettingsIntegration() {
       <h1 className="mt-3 text-2xl font-semibold tracking-tight">
         Website integration
       </h1>
-      <p className="text-sm text-slate-500 mt-1 max-w-2xl">
+      <p className="text-sm text-ink-muted mt-1 max-w-2xl">
         Configure the default owner for new website-generated leads and rotate
         the shared secret used by the public website to submit them.
       </p>

@@ -30,7 +30,7 @@ export const WhyNowSpeedVisual = () => {
   return (
     <div className="w-full space-y-6 lg:space-y-8">
       {/* Header */}
-      <div className="p-4 lg:p-5 rounded-xl bg-gradient-to-r from-slate-50 to-slate-100/80 dark:from-slate-900/50 dark:to-slate-800/30 border border-slate-200/50 dark:border-slate-700/30">
+      <div className="p-4 lg:p-5 rounded-xl bg-gradient-to-r from-paper to-bone-wash/80 dark:from-ink/50 dark:to-ink/30 border border-bone/50 dark:border-charcoal/30">
         <h3 className="text-sm lg:text-base font-semibold text-primary text-left">
           The Real Estate industry is now choosing its intelligence layer
         </h3>
@@ -58,9 +58,9 @@ export const WhyNowSpeedVisual = () => {
       </div>
 
       {/* Market Reset */}
-      <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-4 lg:p-5">
+      <div className="bg-warning/10 border border-warning/30 rounded-lg p-4 lg:p-5">
         <div className="flex items-center gap-2 mb-3">
-          <AlertTriangle className="w-5 h-5 text-amber-500" />
+          <AlertTriangle className="w-5 h-5 text-warning" />
           <h4 className="text-sm lg:text-base font-semibold text-foreground">When forces converge, markets reset</h4>
         </div>
         <div className="space-y-2 text-xs lg:text-sm text-muted-foreground">

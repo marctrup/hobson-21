@@ -56,11 +56,11 @@ const CARDS: HubCard[] = [
 
 const BRASS = "#B4914F";
 const INK = "#2D2D2D";
-const MUTED = "#6B6B6B";
-const LAVENDER_BG = "#F3F0FF";
-const LAVENDER_BORDER = "#E8E4F0";
+const MUTED = "#6E6A62";
+const LAVENDER_BG = "#F1EBDE";
+const LAVENDER_BORDER = "#E8E1D4";
 const PAPER = "#FCFAF7";
-const RULE = "#EDE7DA";
+const RULE = "#F7EDDC";
 
 const Learn = () => {
   return (
@@ -131,7 +131,7 @@ const Learn = () => {
               ) : (
                 <span
                   className="inline-flex items-center rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em]"
-                  style={{ backgroundColor: "#EFEFEF", color: "#8A8A8A", border: "1px dashed #C9C9C9" }}
+                  style={{ backgroundColor: "#F1EBDE", color: "#6E6A62", border: "1px dashed #D8CDB6" }}
                 >
                   {card.status}
                 </span>
@@ -148,7 +148,7 @@ const Learn = () => {
                   style={
                     card.available
                       ? { border: `1px solid ${LAVENDER_BORDER}` }
-                      : { backgroundColor: "#F5F3EF", border: "1px dashed #D6D2C8" }
+                      : { backgroundColor: "#F7EDDC", border: "1px dashed #E6D2AE" }
                   }
                 >
                   <div className="flex items-start justify-between gap-3">
@@ -157,12 +157,12 @@ const Learn = () => {
                       style={
                         card.available
                           ? { backgroundColor: LAVENDER_BG, border: `1px solid ${LAVENDER_BORDER}` }
-                          : { backgroundColor: "#ECEAE5", border: "1px dashed #D6D2C8" }
+                          : { backgroundColor: "#F7EDDC", border: "1px dashed #E6D2AE" }
                       }
                     >
                       <Icon
                         className="h-5 w-5"
-                        style={{ color: card.available ? BRASS : "#A5A5A5" }}
+                        style={{ color: card.available ? BRASS : "#8A8478" }}
                       />
                     </div>
                     {statusPill}
@@ -170,13 +170,13 @@ const Learn = () => {
 
                   <h2
                     className="mt-6 font-serif text-2xl font-normal tracking-tight"
-                    style={{ color: card.available ? INK : "#8A8A8A" }}
+                    style={{ color: card.available ? INK : "#6E6A62" }}
                   >
                     {card.title}
                   </h2>
                   <p
                     className="mt-3 text-[15px] leading-relaxed"
-                    style={{ color: card.available ? MUTED : "#A5A5A5" }}
+                    style={{ color: card.available ? MUTED : "#8A8478" }}
                   >
                     {card.description}
                   </p>
@@ -185,9 +185,9 @@ const Learn = () => {
 
                   <div
                     className="mt-8 pt-5 flex items-center justify-between text-sm font-medium"
-                    style={{ borderTop: `1px solid ${card.available ? RULE : "#E4E1DA"}` }}
+                    style={{ borderTop: `1px solid ${card.available ? RULE : "#E6D2AE"}` }}
                   >
-                    <span style={{ color: card.available ? BRASS : "#A5A5A5" }}>
+                    <span style={{ color: card.available ? BRASS : "#8A8478" }}>
                       {card.cta}
                     </span>
                     {card.available && (

@@ -36,7 +36,7 @@ export const RaiseVisual = () => {
       {/* Use of Funds */}
       <div className="space-y-4">
         <div className="flex items-center gap-3">
-          <div className="flex items-center justify-center w-8 h-8 rounded-full bg-emerald-100 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-400">
+          <div className="flex items-center justify-center w-8 h-8 rounded-full bg-success-bg dark:bg-success-solid/50 text-success dark:text-success">
             <Rocket className="w-4 h-4" />
           </div>
           <h4 className="font-semibold text-foreground">Use of Funds</h4>
@@ -44,8 +44,8 @@ export const RaiseVisual = () => {
         
         <div className="ml-11 space-y-3">
           {useOfFunds.map((item, idx) => (
-            <div key={idx} className="flex items-start gap-3 p-4 rounded-xl bg-gradient-to-br from-emerald-50/80 to-emerald-100/50 dark:from-emerald-950/30 dark:to-emerald-900/20 border border-emerald-200 dark:border-emerald-800/30">
-              <item.icon className="w-5 h-5 text-emerald-600 mt-0.5 flex-shrink-0" />
+            <div key={idx} className="flex items-start gap-3 p-4 rounded-xl bg-gradient-to-br from-success-bg/80 to-success-bg/50 dark:from-success-solid/30 dark:to-success-solid/20 border border-success-border dark:border-success/30">
+              <item.icon className="w-5 h-5 text-success mt-0.5 flex-shrink-0" />
               <span className="text-sm text-foreground">{item.text}</span>
             </div>
           ))}

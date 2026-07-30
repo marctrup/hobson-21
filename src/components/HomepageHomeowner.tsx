@@ -67,8 +67,8 @@ export const HomepageHomeowner = () => {
               </nav>
 
               {/* Mobile Menu Button */}
-              <SimpleButton variant="ghost" size="icon" className="md:hidden bg-gray-100 hover:bg-gray-200 border border-gray-200 rounded-md" onClick={toggleMobileMenu} aria-label="Toggle mobile menu">
-                {isMobileMenuOpen ? <X className="h-6 w-6 text-purple-500" strokeWidth={1.5} /> : <Menu className="h-6 w-6 text-purple-500" strokeWidth={1.5} />}
+              <SimpleButton variant="ghost" size="icon" className="md:hidden bg-bone-wash hover:bg-bone border border-bone rounded-md" onClick={toggleMobileMenu} aria-label="Toggle mobile menu">
+                {isMobileMenuOpen ? <X className="h-6 w-6 text-ink-muted" strokeWidth={1.5} /> : <Menu className="h-6 w-6 text-ink-muted" strokeWidth={1.5} />}
               </SimpleButton>
             </div>
 
@@ -104,8 +104,8 @@ export const HomepageHomeowner = () => {
                     Your personal AI assistant for home documents
                   </p>
                   
-                  <a href="#pilot-section" className="bg-purple-50 border border-purple-200 rounded-lg p-4 inline-block hover:bg-purple-100 hover:border-purple-300 hover:scale-105 hover:shadow-sm transition-all duration-200 group" id="homepage-hero-assistant-cta">
-                    <div className="inline-flex items-center gap-2 text-purple-600 hover:text-purple-700 font-medium text-lg">
+                  <a href="#pilot-section" className="bg-paper border border-bone rounded-lg p-4 inline-block hover:bg-bone-wash hover:border-bone hover:scale-105 hover:shadow-sm transition-all duration-200 group" id="homepage-hero-assistant-cta">
+                    <div className="inline-flex items-center gap-2 text-charcoal hover:text-charcoal font-medium text-lg">
                       Your Free AI Property Assistant
                       <ArrowRight className="h-5 w-5 transition-transform duration-200 group-hover:translate-x-1" />
                     </div>
@@ -114,7 +114,7 @@ export const HomepageHomeowner = () => {
                 </div>
 
                 {/* Right Container - Document to Insights Visualization */}
-                <div className="relative mt-[5px] font-space transition-transform duration-300 border-[3px] border-gray-500 rounded-lg" style={{
+                <div className="relative mt-[5px] font-space transition-transform duration-300 border-[3px] border-bone-strong rounded-lg" style={{
                 transform: 'perspective(1000px) rotateY(-10deg)',
                 transformStyle: 'preserve-3d',
                 boxShadow: '25px 25px 60px rgba(0, 0, 0, 0.08), 15px 15px 40px rgba(0, 0, 0, 0.05), 8px 8px 25px rgba(0, 0, 0, 0.04), 0 -10px 30px rgba(0, 0, 0, 0.04), 0 20px 40px rgba(0, 0, 0, 0.06)',
@@ -183,8 +183,8 @@ export const HomepageHomeowner = () => {
 
                 {/* Right Content - Georgia Video */}
                 <div>
-                  <div className="aspect-[3/2] bg-gray-100 rounded-xl overflow-hidden relative" style={{
-                  border: '10px solid #f0f0f0'
+                  <div className="aspect-[3/2] bg-bone-wash rounded-xl overflow-hidden relative" style={{
+                  border: '10px solid #F1EBDE'
                 }}>
                      <HomepageGeorgiaVideoHomeowner />
                   </div>

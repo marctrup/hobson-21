@@ -118,7 +118,7 @@ export default function CrmClients() {
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-2xl font-semibold tracking-tight">Clients</h1>
-            <p className="text-sm text-slate-500 mt-1 hidden md:block">
+            <p className="text-sm text-ink-muted mt-1 hidden md:block">
               Every business and individual you work with.
             </p>
           </div>
@@ -155,7 +155,7 @@ export default function CrmClients() {
                   "px-3 py-1.5 rounded-full text-xs font-medium border transition-colors " +
                   (active
                     ? "bg-primary/10 text-primary border-primary/30"
-                    : "bg-white text-slate-700 border-slate-200 hover:bg-slate-50")
+                    : "bg-white text-charcoal border-bone hover:bg-paper")
                 }
                 aria-pressed={active}
               >
@@ -167,7 +167,7 @@ export default function CrmClients() {
 
         <div className="mt-3 flex flex-wrap items-center gap-2">
           <div className="relative flex-1 min-w-[220px] max-w-sm">
-            <Search className="absolute left-2 top-1/2 -translate-y-1/2 size-4 text-slate-400" />
+            <Search className="absolute left-2 top-1/2 -translate-y-1/2 size-4 text-ink-muted" />
             <Input
               value={search}
               onChange={(e) => setSearch(e.target.value)}
@@ -222,9 +222,9 @@ export default function CrmClients() {
           </Select>
         </div>
 
-        <div className="mt-4 bg-white border border-slate-200 rounded-lg overflow-hidden">
+        <div className="mt-4 bg-white border border-bone rounded-lg overflow-hidden">
           <table className="w-full text-sm">
-            <thead className="bg-slate-50 text-slate-600 text-xs uppercase tracking-wide">
+            <thead className="bg-paper text-charcoal text-xs uppercase tracking-wide">
               <tr>
                 <th className="text-left px-4 py-2 font-medium">Name</th>
                 <th className="text-left px-4 py-2 font-medium">Sector</th>
@@ -234,20 +234,20 @@ export default function CrmClients() {
                 <th className="text-left px-4 py-2 font-medium">Last contact</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100">
+            <tbody className="divide-y divide-faint-rule">
               {isLoading ? (
                 <tr>
-                  <td colSpan={6} className="p-6 text-center text-slate-500">
+                  <td colSpan={6} className="p-6 text-center text-ink-muted">
                     Loading…
                   </td>
                 </tr>
               ) : !clients?.length ? (
                 <tr>
-                  <td colSpan={6} className="p-8 text-center text-slate-500">
+                  <td colSpan={6} className="p-8 text-center text-ink-muted">
                     No clients match your filters.{" "}
                     <Link
                       to="/crm/clients/new"
-                      className="text-slate-900 underline ml-1"
+                      className="text-ink underline ml-1"
                     >
                       Add a client
                     </Link>
@@ -265,27 +265,27 @@ export default function CrmClients() {
                     .sort((a, b) => a.sort_order - b.sort_order || a.label.localeCompare(b.label))
                     .map((v) => v.label);
                   return (
-                    <tr key={c.id} className="hover:bg-slate-50">
+                    <tr key={c.id} className="hover:bg-paper">
                       <td className="px-4 py-3">
                         <Link
                           to={`/crm/clients/${c.id}`}
-                          className="font-medium text-slate-900 hover:underline"
+                          className="font-medium text-ink hover:underline"
                         >
                           {c.name}
                         </Link>
                       </td>
-                      <td className="px-4 py-3 text-slate-700">
+                      <td className="px-4 py-3 text-charcoal">
                         {SEGMENT_LABELS[c.segment] ?? c.segment}
                       </td>
                       <td className="px-4 py-3">
                         {labels.length === 0 ? (
-                          <span className="text-slate-400">—</span>
+                          <span className="text-ink-muted">—</span>
                         ) : (
                           <div className="flex flex-wrap gap-1">
                             {labels.map((l) => (
                               <span
                                 key={l}
-                                className="inline-flex items-center rounded-full border border-slate-200 bg-slate-50 px-2 py-0.5 text-xs font-medium text-slate-700"
+                                className="inline-flex items-center rounded-full border border-bone bg-paper px-2 py-0.5 text-xs font-medium text-charcoal"
                               >
                                 {l}
                               </span>
@@ -299,7 +299,7 @@ export default function CrmClients() {
                       <td className="px-4 py-3">
                         <InterestBadge level={c.interest_level} />
                       </td>
-                      <td className="px-4 py-3 text-slate-500">
+                      <td className="px-4 py-3 text-ink-muted">
                         {formatDateUK(c.last_contact_date)}
                       </td>
                     </tr>
@@ -377,7 +377,7 @@ function SubSectorFilter({ options, value, onChange, scopedToSector }: FilterPro
               <button
                 type="button"
                 onClick={() => onChange([])}
-                className="w-full text-left px-2 py-1.5 text-xs text-slate-500 hover:bg-accent rounded-sm"
+                className="w-full text-left px-2 py-1.5 text-xs text-ink-muted hover:bg-accent rounded-sm"
               >
                 Clear selection
               </button>
@@ -385,7 +385,7 @@ function SubSectorFilter({ options, value, onChange, scopedToSector }: FilterPro
             {grouped.map(({ sector, items }) => (
               <div key={sector} className="py-1">
                 {!scopedToSector && (
-                  <div className="px-2 py-1 text-[10px] font-semibold uppercase tracking-wide text-slate-400">
+                  <div className="px-2 py-1 text-[10px] font-semibold uppercase tracking-wide text-ink-muted">
                     {SEGMENT_LABELS[sector] ?? sector}
                   </div>
                 )}
@@ -431,7 +431,7 @@ function MobileClientsList({ search, setSearch, clients, isLoading, canWrite, on
   return (
     <div className="md:hidden">
       <div className="mt-3 relative">
-        <Search className="absolute left-2 top-1/2 -translate-y-1/2 size-4 text-slate-400" />
+        <Search className="absolute left-2 top-1/2 -translate-y-1/2 size-4 text-ink-muted" />
         <Input
           value={search}
           onChange={(e) => setSearch(e.target.value)}
@@ -441,27 +441,27 @@ function MobileClientsList({ search, setSearch, clients, isLoading, canWrite, on
         />
       </div>
 
-      <div className="mt-3 bg-white border border-slate-200 rounded-lg overflow-hidden">
+      <div className="mt-3 bg-white border border-bone rounded-lg overflow-hidden">
         {isLoading ? (
-          <div className="p-6 text-center text-sm text-slate-500">Loading…</div>
+          <div className="p-6 text-center text-sm text-ink-muted">Loading…</div>
         ) : !clients.length ? (
-          <div className="p-6 text-center text-sm text-slate-500">No clients found.</div>
+          <div className="p-6 text-center text-sm text-ink-muted">No clients found.</div>
         ) : (
-          <ul className="divide-y divide-slate-100">
+          <ul className="divide-y divide-faint-rule">
             {clients.map((c: any) => (
               <li key={c.id}>
                 <Link
                   to={`/crm/clients/${c.id}`}
-                  className="flex flex-col gap-1 px-4 py-3 min-h-[60px] active:bg-slate-50"
+                  className="flex flex-col gap-1 px-4 py-3 min-h-[60px] active:bg-paper"
                 >
-                  <span className="font-medium text-base text-slate-900 leading-snug">
+                  <span className="font-medium text-base text-ink leading-snug">
                     {c.name}
                   </span>
-                  <span className="text-xs text-slate-500">
+                  <span className="text-xs text-ink-muted">
                     {SEGMENT_LABELS[c.segment] ?? c.segment ?? "—"}
                     {c.status ? (
                       <>
-                        <span className="mx-1.5 text-slate-300">•</span>
+                        <span className="mx-1.5 text-ink-faint">•</span>
                         {CLIENT_STATUS_LABELS[c.status] ?? c.status}
                       </>
                     ) : null}

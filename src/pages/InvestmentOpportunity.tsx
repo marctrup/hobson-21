@@ -112,8 +112,8 @@ const sections = [
     title: "Executive Summary",
     subtitle: "Strategic Approach",
     icon: Target,
-    color: "from-blue-500/10 to-blue-600/10",
-    iconColor: "text-blue-600",
+    color: "from-ink-faint/10 to-charcoal/10",
+    iconColor: "text-charcoal",
     pages: [
       {
         title: "Executive Summary",
@@ -176,8 +176,8 @@ const sections = [
     title: "Customers & Market",
     subtitle: "UK & Global opportunities",
     icon: Users,
-    color: "from-purple-500/10 to-purple-600/10",
-    iconColor: "text-purple-600",
+    color: "from-ink-faint/10 to-charcoal/10",
+    iconColor: "text-charcoal",
     pages: [
       {
         title: "Sector Scale & Opportunity",
@@ -425,8 +425,8 @@ const sections = [
     title: "Product Vision & Roadmap",
     subtitle: "Timeline & Innovation",
     icon: Map,
-    color: "from-green-500/10 to-green-600/10",
-    iconColor: "text-green-600",
+    color: "from-success/10 to-success/10",
+    iconColor: "text-success",
     pages: [
       {
         title: "Product Vision",
@@ -531,8 +531,8 @@ const sections = [
     title: "Commercials",
     subtitle: "Pricing transparency",
     icon: DollarSign,
-    color: "from-amber-500/10 to-amber-600/10",
-    iconColor: "text-amber-600",
+    color: "from-warning/10 to-warning/10",
+    iconColor: "text-warning",
     pages: [
       {
         title: "Commercialisation Strategy",
@@ -577,8 +577,8 @@ const sections = [
     title: "Leadership & Team",
     subtitle: "Leadership & Key Personnel",
     icon: Briefcase,
-    color: "from-indigo-500/10 to-indigo-600/10",
-    iconColor: "text-indigo-600",
+    color: "from-ink-faint/10 to-charcoal/10",
+    iconColor: "text-charcoal",
     pages: [
       {
         title: "Founding & Leadership",
@@ -605,8 +605,8 @@ const sections = [
     title: "Marketing Strategy",
     subtitle: "Marketing & Branding",
     icon: Target,
-    color: "from-teal-500/10 to-teal-600/10",
-    iconColor: "text-teal-600",
+    color: "from-ink-faint/10 to-charcoal/10",
+    iconColor: "text-charcoal",
     pages: [
       {
         title: "Go To Market Summary",
@@ -750,8 +750,8 @@ const sections = [
     title: "Acquisition & Sales Strategy",
     subtitle: "Customer Acquisition Plan",
     icon: TrendingUp,
-    color: "from-cyan-500/10 to-cyan-600/10",
-    iconColor: "text-cyan-600",
+    color: "from-ink-faint/10 to-charcoal/10",
+    iconColor: "text-charcoal",
     pages: [
       {
         title: "Executive Summary",
@@ -796,8 +796,8 @@ const sections = [
     title: "Financial Overview & Assumptions",
     subtitle: "Forecasts & Assumptions",
     icon: PieChart,
-    color: "from-red-500/10 to-red-600/10",
-    iconColor: "text-red-600",
+    color: "from-danger/10 to-danger/10",
+    iconColor: "text-danger",
     pages: [
       {
         title: "Executive Summary",
@@ -869,8 +869,8 @@ const sections = [
     title: "Financial Modeling Downloads",
     subtitle: "Detailed Financial Spreadsheets",
     icon: FileSpreadsheet,
-    color: "from-emerald-500/10 to-emerald-600/10",
-    iconColor: "text-emerald-600",
+    color: "from-success/10 to-success/10",
+    iconColor: "text-success",
     pages: [
       {
         title: "Available Downloads",
@@ -1154,7 +1154,7 @@ const InvestmentOpportunity = () => {
                           "Financial Overview & Assumptions"
                         ].map((title) => (
                           <li key={title} className="flex items-center gap-2 text-sm text-muted-foreground">
-                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                            <span className="w-1.5 h-1.5 rounded-full bg-success" />
                             {title}
                           </li>
                         ))}
@@ -1685,20 +1685,20 @@ const InvestmentOpportunity = () => {
                           return (
                             <div className={`relative overflow-hidden rounded-xl border p-6 sm:p-8 ${
                               isAdvisoryPage 
-                                ? "bg-gradient-to-r from-sky-50 via-sky-100/50 to-sky-50 border-sky-300/40" 
+                                ? "bg-gradient-to-r from-paper via-bone-wash/50 to-paper border-bone/40" 
                                 : "bg-gradient-to-r from-primary/5 via-primary/10 to-primary/5 border-primary/20"
                             }`}>
                               <div className={`absolute top-0 right-0 w-32 h-32 rounded-full -translate-y-1/2 translate-x-1/2 ${
-                                isAdvisoryPage ? "bg-sky-200/30" : "bg-primary/5"
+                                isAdvisoryPage ? "bg-bone/30" : "bg-primary/5"
                               }`} />
                               <div className={`absolute bottom-0 left-0 w-24 h-24 rounded-full translate-y-1/2 -translate-x-1/2 ${
-                                isAdvisoryPage ? "bg-sky-200/30" : "bg-primary/5"
+                                isAdvisoryPage ? "bg-bone/30" : "bg-primary/5"
                               }`} />
                               <div className="relative flex items-center gap-4">
                                 <div className={`hidden sm:flex w-12 h-12 rounded-xl items-center justify-center flex-shrink-0 ${
-                                  isAdvisoryPage ? "bg-sky-200/50" : "bg-primary/10"
+                                  isAdvisoryPage ? "bg-bone/50" : "bg-primary/10"
                                 }`}>
-                                  <Users className={`w-6 h-6 ${isAdvisoryPage ? "text-sky-700" : "text-primary"}`} />
+                                  <Users className={`w-6 h-6 ${isAdvisoryPage ? "text-charcoal" : "text-primary"}`} />
                                 </div>
                                 <div className="text-sm sm:text-base md:text-lg text-foreground leading-relaxed font-medium space-y-4">
                                   {selectedSection.pages[currentPageIndex].content.overview.split('\n\n').map((paragraph, idx) => (
@@ -1799,18 +1799,18 @@ const InvestmentOpportunity = () => {
                                         key={memberIdx}
                                         className={`border-2 rounded-lg bg-white transition-colors overflow-hidden ${
                                           isAdvisory 
-                                            ? "border-sky-300/50 hover:border-sky-400" 
+                                            ? "border-bone/50 hover:border-bone-strong" 
                                             : "border-primary/30 hover:border-primary"
                                         }`}
                                       >
                                         <div className="text-center">
                                           <div className={`px-4 py-3 ${
                                             isAdvisory 
-                                              ? "bg-gradient-to-r from-sky-100 to-sky-50" 
+                                              ? "bg-gradient-to-r from-bone-wash to-paper" 
                                               : "bg-primary/20"
                                           }`}>
                                             <span className={`text-xs sm:text-sm font-semibold uppercase tracking-wide ${
-                                              isAdvisory ? "text-slate-800" : "text-primary"
+                                              isAdvisory ? "text-ink" : "text-primary"
                                             }`}>
                                               {member.role}
                                             </span>
@@ -1826,8 +1826,8 @@ const InvestmentOpportunity = () => {
                                                 rel="noopener noreferrer"
                                                 className={`text-xs sm:text-sm underline inline-flex items-center gap-1 transition-colors ${
                                                   isAdvisory 
-                                                    ? "text-sky-700 hover:text-sky-800" 
-                                                    : "text-purple-800 hover:text-purple-900"
+                                                    ? "text-charcoal hover:text-ink" 
+                                                    : "text-ink hover:text-ink"
                                                 }`}
                                               >
                                                 <span>LinkedIn Profile</span>

@@ -35,7 +35,7 @@ export function CollapsibleSection({
   const panelId = useId();
 
   return (
-    <section className={className ?? "rounded-xl border border-slate-200 bg-white"}>
+    <section className={className ?? "rounded-xl border border-bone bg-white"}>
       <button
         type="button"
         aria-expanded={open}
@@ -44,11 +44,11 @@ export function CollapsibleSection({
         onClick={() => setOpen((v) => !v)}
         className={
           headerClassName ??
-          "w-full flex items-center gap-3 px-4 py-3 text-left hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED] rounded-xl"
+          "w-full flex items-center gap-3 px-4 py-3 text-left hover:bg-paper focus:outline-none focus-visible:ring-2 focus-visible:ring-[#56514A] rounded-xl"
         }
       >
         <svg
-          className={`w-4 h-4 text-[#5B21B6] shrink-0 transition-transform ${open ? "rotate-90" : ""}`}
+          className={`w-4 h-4 text-[#56514A] shrink-0 transition-transform ${open ? "rotate-90" : ""}`}
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
@@ -60,7 +60,7 @@ export function CollapsibleSection({
         <div className="min-w-0 flex-1">{summary}</div>
       </button>
       {open && (
-        <div id={panelId} className={contentClassName ?? "px-4 pb-4 pt-1 border-t border-slate-100"}>
+        <div id={panelId} className={contentClassName ?? "px-4 pb-4 pt-1 border-t border-faint-rule"}>
           {children}
         </div>
       )}

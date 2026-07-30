@@ -75,8 +75,8 @@ const WhyNowVisual: React.FC = () => {
     <div className="bg-white rounded-lg p-6 space-y-8">
       {/* Header */}
       <div className="text-center mb-10">
-        <h3 className="text-2xl font-bold text-gray-900 mb-3">Why Now?</h3>
-        <p className="text-lg text-purple-600 font-medium">
+        <h3 className="text-2xl font-bold text-ink mb-3">Why Now?</h3>
+        <p className="text-lg text-charcoal font-medium">
           The Perfect Moment for AI Clarity in Real Estate
         </p>
       </div>
@@ -86,42 +86,42 @@ const WhyNowVisual: React.FC = () => {
         {sections.map((section, index) => (
           <div
             key={index}
-            className="relative bg-gradient-to-br from-purple-50 to-white border border-purple-100 rounded-xl p-6 hover:shadow-lg transition-shadow"
+            className="relative bg-gradient-to-br from-paper to-white border border-faint-rule rounded-xl p-6 hover:shadow-lg transition-shadow"
           >
             {/* Section Number Badge */}
-            <div className="absolute -top-3 -left-3 w-10 h-10 bg-purple-100 border-2 border-purple-300 rounded-full flex items-center justify-center text-purple-700 font-bold text-lg shadow-md">
+            <div className="absolute -top-3 -left-3 w-10 h-10 bg-bone-wash border-2 border-bone rounded-full flex items-center justify-center text-charcoal font-bold text-lg shadow-md">
               {section.number}
             </div>
 
             {/* Section Header */}
             <div className="flex items-start gap-4 mb-4 ml-4">
-              <div className="p-2 bg-purple-100 rounded-lg shrink-0">
-                <section.icon className="w-5 h-5 text-purple-600" />
+              <div className="p-2 bg-bone-wash rounded-lg shrink-0">
+                <section.icon className="w-5 h-5 text-charcoal" />
               </div>
-              <h4 className="text-lg font-semibold text-gray-900 leading-tight">
+              <h4 className="text-lg font-semibold text-ink leading-tight">
                 {section.title}
               </h4>
             </div>
 
             {/* Intro */}
-            <p className="text-gray-600 mb-4 ml-4">{section.intro}</p>
+            <p className="text-charcoal mb-4 ml-4">{section.intro}</p>
 
             {/* Bullets */}
             <ul className="space-y-2 mb-5 ml-4">
               {section.bullets.map((bullet, bulletIndex) => (
                 <li
                   key={bulletIndex}
-                  className="text-gray-700 flex items-start gap-3"
+                  className="text-charcoal flex items-start gap-3"
                 >
-                  <span className="text-purple-500 mt-1.5 text-xs">●</span>
+                  <span className="text-ink-muted mt-1.5 text-xs">●</span>
                   <span>{bullet}</span>
                 </li>
               ))}
             </ul>
 
             {/* Conclusion */}
-            <div className="ml-4 p-3 bg-purple-600/5 border-l-4 border-purple-500 rounded-r-lg">
-              <p className="text-gray-800 font-medium italic">
+            <div className="ml-4 p-3 bg-charcoal/5 border-l-4 border-bone-strong rounded-r-lg">
+              <p className="text-ink font-medium italic">
                 {section.conclusion}
               </p>
             </div>
@@ -130,16 +130,16 @@ const WhyNowVisual: React.FC = () => {
       </div>
 
       {/* The Convergence */}
-      <div className="mt-12 bg-white rounded-xl p-6 sm:p-8 border-2 border-purple-200 shadow-sm">
+      <div className="mt-12 bg-white rounded-xl p-6 sm:p-8 border-2 border-bone shadow-sm">
         <div className="flex items-center justify-center gap-3 mb-4 sm:mb-6">
-          <h4 className="text-lg sm:text-xl font-bold text-purple-600">The Convergence</h4>
+          <h4 className="text-lg sm:text-xl font-bold text-charcoal">The Convergence</h4>
         </div>
 
         <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-6 sm:mb-8">
           {convergencePoints.map((point, index) => (
             <span
               key={index}
-              className="px-3 sm:px-4 py-1.5 sm:py-2 bg-purple-50 border border-purple-200 rounded-full text-xs sm:text-sm font-medium text-purple-600"
+              className="px-3 sm:px-4 py-1.5 sm:py-2 bg-paper border border-bone rounded-full text-xs sm:text-sm font-medium text-charcoal"
             >
               {point}
             </span>
@@ -147,13 +147,13 @@ const WhyNowVisual: React.FC = () => {
         </div>
 
         <div className="text-center space-y-2 sm:space-y-3">
-          <p className="text-sm sm:text-lg font-medium text-gray-600">
+          <p className="text-sm sm:text-lg font-medium text-charcoal">
             This is the exact moment the industry shifts from
           </p>
-          <p className="text-base sm:text-xl font-bold text-purple-600">
+          <p className="text-base sm:text-xl font-bold text-charcoal">
             'documents everywhere' → 'answers instantly.'
           </p>
-          <p className="text-sm sm:text-lg font-semibold text-gray-700 mt-3 sm:mt-4">
+          <p className="text-sm sm:text-lg font-semibold text-charcoal mt-3 sm:mt-4">
             And Hobson is positioned to lead that shift.
           </p>
         </div>

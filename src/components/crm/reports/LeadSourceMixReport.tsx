@@ -11,7 +11,7 @@ import { ReportCard } from "./ReportCard";
 import { useLeadSourceMix } from "@/hooks/crm/reports/useLeadReports";
 import { downloadCsv } from "@/lib/crm/reportsExport";
 
-const PALETTE = ["#3b82f6", "#10b981", "#f59e0b", "#a855f7", "#f43f5e", "#64748b", "#0ea5e9", "#22c55e"];
+const PALETTE = ["#56514A", "#5E6B33", "#8F5A14", "#8A8478", "#9C4A38", "#56514A", "#56514A", "#5E6B33"];
 
 export const LeadSourceMixReport = () => {
   const { data, isLoading } = useLeadSourceMix();

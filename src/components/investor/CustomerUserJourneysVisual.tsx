@@ -145,8 +145,8 @@ export const CustomerUserJourneysVisual = () => {
   return (
     <div className="space-y-6">
       {/* Introduction */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-blue-500/10 via-blue-500/5 to-blue-500/10 p-6 border border-blue-200/50 dark:border-blue-800/30">
-        <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-ink-faint/10 via-ink-faint/5 to-ink-faint/10 p-6 border border-bone/50 dark:border-charcoal/30">
+        <div className="absolute top-0 right-0 w-32 h-32 bg-ink-faint/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
         <p className="text-foreground leading-relaxed mb-4 relative">
           The Customer journey maps focus on the MVP journey by one of our pilots. It demonstrates how an adopter moves from first contact to sustained engagement.
         </p>
@@ -157,24 +157,24 @@ export const CustomerUserJourneysVisual = () => {
           </p>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="text-center">
-              <User className="w-8 h-8 mx-auto text-blue-600 dark:text-blue-400 mb-2" />
+              <User className="w-8 h-8 mx-auto text-charcoal dark:text-ink-muted mb-2" />
               <p className="text-xs text-muted-foreground">Name</p>
               <p className="text-sm font-medium text-foreground">Leigh X</p>
             </div>
             <div className="text-center">
-              <Target className="w-8 h-8 mx-auto text-blue-600 dark:text-blue-400 mb-2" />
+              <Target className="w-8 h-8 mx-auto text-charcoal dark:text-ink-muted mb-2" />
               <p className="text-xs text-muted-foreground">Role</p>
               <p className="text-sm font-medium text-foreground">COO</p>
             </div>
             <div className="text-center">
-              <svg className="w-8 h-8 mx-auto text-blue-600 dark:text-blue-400 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-8 h-8 mx-auto text-charcoal dark:text-ink-muted mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
               </svg>
               <p className="text-xs text-muted-foreground">Organisation</p>
               <p className="text-sm font-medium text-foreground">Large Property Mgmt</p>
             </div>
             <div className="text-center">
-              <TrendingUp className="w-8 h-8 mx-auto text-blue-600 dark:text-blue-400 mb-2" />
+              <TrendingUp className="w-8 h-8 mx-auto text-charcoal dark:text-ink-muted mb-2" />
               <p className="text-xs text-muted-foreground">Primary Goal</p>
               <p className="text-sm font-medium text-foreground">Quick info retrieval</p>
             </div>
@@ -185,13 +185,13 @@ export const CustomerUserJourneysVisual = () => {
       {/* Journey Stages */}
       <div className="space-y-4">
         {stages.map((stage, index) => (
-          <div key={index} className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900/50 dark:to-slate-800/30 p-5 border border-slate-200 dark:border-slate-700/50 hover:border-blue-300 dark:hover:border-blue-700/50 transition-colors">
+          <div key={index} className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-paper to-bone-wash dark:from-ink/50 dark:to-ink/30 p-5 border border-bone dark:border-charcoal/50 hover:border-bone dark:hover:border-charcoal/50 transition-colors">
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 rounded-full bg-blue-500/10 flex items-center justify-center">
-                <span className="text-blue-600 dark:text-blue-400 font-bold text-sm">{index + 1}</span>
+              <div className="w-10 h-10 rounded-full bg-ink-faint/10 flex items-center justify-center">
+                <span className="text-charcoal dark:text-ink-muted font-bold text-sm">{index + 1}</span>
               </div>
               <div>
-                <p className="text-xs text-blue-600 dark:text-blue-400 uppercase tracking-wider">{stage.stage}</p>
+                <p className="text-xs text-charcoal dark:text-ink-muted uppercase tracking-wider">{stage.stage}</p>
                 <h3 className="text-lg font-semibold text-foreground">{stage.title}</h3>
               </div>
             </div>
@@ -202,13 +202,13 @@ export const CustomerUserJourneysVisual = () => {
                 {/* Touchpoints */}
                 <div className="bg-background/60 rounded-xl p-3 border border-border/50">
                   <div className="flex items-center gap-2 mb-2">
-                    <MessageSquare className="w-4 h-4 text-blue-600 dark:text-blue-400" />
-                    <span className="text-xs font-medium text-blue-600 dark:text-blue-400 uppercase">Touchpoints</span>
+                    <MessageSquare className="w-4 h-4 text-charcoal dark:text-ink-muted" />
+                    <span className="text-xs font-medium text-charcoal dark:text-ink-muted uppercase">Touchpoints</span>
                   </div>
                   <ul className="space-y-1">
                     {stage.touchpoints.map((tp, i) => (
                       <li key={i} className="text-sm text-muted-foreground flex items-start gap-2">
-                        <span className="text-blue-600 dark:text-blue-400 mt-1">•</span>
+                        <span className="text-charcoal dark:text-ink-muted mt-1">•</span>
                         {tp}
                       </li>
                     ))}
@@ -216,22 +216,22 @@ export const CustomerUserJourneysVisual = () => {
                 </div>
 
                 {/* What Leigh Thinks */}
-                <div className="bg-amber-50/50 dark:bg-amber-950/20 rounded-xl p-3 border border-amber-200/50 dark:border-amber-800/30">
+                <div className="bg-warning-bg/50 dark:bg-warning-solid/20 rounded-xl p-3 border border-warning-border/50 dark:border-warning/30">
                   <div className="flex items-center gap-2 mb-2">
-                    <span className="text-xs font-medium text-amber-700 dark:text-amber-400 uppercase">💭 What Leigh Thinks</span>
+                    <span className="text-xs font-medium text-warning dark:text-warning uppercase">💭 What Leigh Thinks</span>
                   </div>
                   <p className="text-sm text-foreground italic">"{stage.thinks}"</p>
                 </div>
 
                 {/* What Leigh Does */}
-                <div className="bg-emerald-50/50 dark:bg-emerald-950/20 rounded-xl p-3 border border-emerald-200/50 dark:border-emerald-800/30">
+                <div className="bg-success-bg/50 dark:bg-success-solid/20 rounded-xl p-3 border border-success-border/50 dark:border-success/30">
                   <div className="flex items-center gap-2 mb-2">
-                    <span className="text-xs font-medium text-emerald-700 dark:text-emerald-400 uppercase">✓ What Leigh Does</span>
+                    <span className="text-xs font-medium text-success dark:text-success uppercase">✓ What Leigh Does</span>
                   </div>
                   <ul className="space-y-1">
                     {stage.does.map((action, i) => (
                       <li key={i} className="text-sm text-muted-foreground flex items-start gap-2">
-                        <span className="text-emerald-600 dark:text-emerald-400 mt-1">•</span>
+                        <span className="text-success dark:text-success mt-1">•</span>
                         {action}
                       </li>
                     ))}
@@ -242,27 +242,27 @@ export const CustomerUserJourneysVisual = () => {
               {/* Right Column */}
               <div className="space-y-3">
                 {/* What Leigh Feels */}
-                <div className="bg-pink-50/50 dark:bg-pink-950/20 rounded-xl p-3 border border-pink-200/50 dark:border-pink-800/30">
+                <div className="bg-danger-bg/50 dark:bg-danger-solid/20 rounded-xl p-3 border border-danger-border/50 dark:border-danger/30">
                   <div className="flex items-center gap-2 mb-2">
-                    <span className="text-xs font-medium text-pink-700 dark:text-pink-400 uppercase">❤️ What Leigh Feels</span>
+                    <span className="text-xs font-medium text-danger dark:text-danger uppercase">❤️ What Leigh Feels</span>
                   </div>
                   <p className="text-sm text-foreground">{stage.feels}</p>
                 </div>
 
                 {/* Blocks */}
-                <div className="bg-red-50/50 dark:bg-red-950/20 rounded-xl p-3 border border-red-200/50 dark:border-red-800/30">
+                <div className="bg-danger-bg/50 dark:bg-danger-solid/20 rounded-xl p-3 border border-danger-border/50 dark:border-danger/30">
                   <div className="flex items-center gap-2 mb-2">
-                    <AlertCircle className="w-4 h-4 text-red-600 dark:text-red-400" />
-                    <span className="text-xs font-medium text-red-700 dark:text-red-400 uppercase">Blocks</span>
+                    <AlertCircle className="w-4 h-4 text-danger dark:text-danger" />
+                    <span className="text-xs font-medium text-danger dark:text-danger uppercase">Blocks</span>
                   </div>
                   <p className="text-sm text-muted-foreground">{stage.blocks}</p>
                 </div>
 
                 {/* Improvement Opportunity */}
-                <div className="bg-emerald-50/50 dark:bg-emerald-950/20 rounded-xl p-3 border border-emerald-200/50 dark:border-emerald-800/30">
+                <div className="bg-success-bg/50 dark:bg-success-solid/20 rounded-xl p-3 border border-success-border/50 dark:border-success/30">
                   <div className="flex items-center gap-2 mb-2">
-                    <Lightbulb className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
-                    <span className="text-xs font-medium text-emerald-700 dark:text-emerald-400 uppercase">Improvement Opportunity</span>
+                    <Lightbulb className="w-4 h-4 text-success dark:text-success" />
+                    <span className="text-xs font-medium text-success dark:text-success uppercase">Improvement Opportunity</span>
                   </div>
                   <p className="text-sm text-muted-foreground">{stage.improvement}</p>
                 </div>
@@ -295,7 +295,7 @@ export const CustomerUserJourneysVisual = () => {
             </div>
           </div>
 
-          <div className="bg-emerald-50/50 dark:bg-emerald-950/20 rounded-xl p-4 border border-emerald-200/50 dark:border-emerald-800/30">
+          <div className="bg-success-bg/50 dark:bg-success-solid/20 rounded-xl p-4 border border-success-border/50 dark:border-success/30">
             <p className="text-foreground font-medium">
               Hobson now enters MVP deployment with stronger trust foundations, deeper document coverage, and clearer alignment with enterprise workflows.
             </p>

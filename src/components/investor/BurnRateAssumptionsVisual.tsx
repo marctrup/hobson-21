@@ -9,7 +9,7 @@ const BurnRateAssumptionsVisual = () => {
       </div>
 
       {/* Funding Requirement - HERO SECTION */}
-      <div className="bg-gradient-to-r from-primary/10 to-purple-600/10 border-2 border-primary/30 rounded-xl p-6">
+      <div className="bg-gradient-to-r from-primary/10 to-charcoal/10 border-2 border-primary/30 rounded-xl p-6">
         <div className="flex items-center gap-3 mb-4">
           <div className="p-3 bg-primary/20 rounded-full">
             <PoundSterling className="h-6 w-6 text-primary" />
@@ -44,7 +44,7 @@ const BurnRateAssumptionsVisual = () => {
           </div>
         </div>
 
-        <div className="bg-amber-50 dark:bg-amber-100 border border-amber-200 rounded-lg p-3 mt-4">
+        <div className="bg-warning-bg dark:bg-warning-bg border border-warning-border rounded-lg p-3 mt-4">
           <p className="text-sm text-black text-center">
             <strong>Key:</strong> You avoid unnecessary dilution because the operating model is profitable from Year 1.
           </p>
@@ -52,7 +52,7 @@ const BurnRateAssumptionsVisual = () => {
       </div>
 
       {/* Explainer */}
-      <div className="bg-sky-50 dark:bg-sky-100 border border-sky-200 rounded-lg p-4">
+      <div className="bg-paper dark:bg-bone-wash border border-bone rounded-lg p-4">
         <div className="flex items-start gap-3">
           <Info className="h-5 w-5 text-black mt-0.5 shrink-0" />
           <p className="text-sm text-black">

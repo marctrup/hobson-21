@@ -36,13 +36,13 @@ export const HEUBarVisualization: React.FC<HEUBarVisualizationProps> = ({
         <div className="relative h-8 bg-muted rounded-full overflow-hidden">
           {/* Used HEUs (Grey) */}
           <div 
-            className="absolute left-0 top-0 h-full bg-gray-400 transition-all duration-300 ease-out"
+            className="absolute left-0 top-0 h-full bg-ink-faint transition-all duration-300 ease-out"
             style={{ width: `${usedPercentage}%` }}
           />
           
           {/* Remaining HEUs (Blue) */}
           <div 
-            className="absolute right-0 top-0 h-full bg-blue-500 transition-all duration-300 ease-out"
+            className="absolute right-0 top-0 h-full bg-ink-faint transition-all duration-300 ease-out"
             style={{ width: `${remainingPercentage}%` }}
           />
           
@@ -69,11 +69,11 @@ export const HEUBarVisualization: React.FC<HEUBarVisualizationProps> = ({
         {/* Legend */}
         <div className="flex items-center gap-6 text-sm">
           <div className="flex items-center gap-2">
-            <div className="w-3 h-3 bg-gray-400 rounded-sm"></div>
+            <div className="w-3 h-3 bg-ink-faint rounded-sm"></div>
             <span className="text-muted-foreground">Used HEUs</span>
           </div>
           <div className="flex items-center gap-2">
-            <div className="w-3 h-3 bg-blue-500 rounded-sm"></div>
+            <div className="w-3 h-3 bg-ink-faint rounded-sm"></div>
             <span className="text-muted-foreground">Remaining HEUs</span>
           </div>
         </div>

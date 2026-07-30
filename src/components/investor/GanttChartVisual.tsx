@@ -78,20 +78,20 @@ export const GanttChartVisual: React.FC = () => {
           key={section.year}
           className={`bg-background border border-border rounded-lg overflow-hidden ${
             index === 0
-              ? "border-l-4 border-l-purple-500"
+              ? "border-l-4 border-l-brass"
               : index === 1
-              ? "border-l-4 border-l-blue-500"
-              : "border-l-4 border-l-green-500"
+              ? "border-l-4 border-l-charcoal"
+              : "border-l-4 border-l-success"
           }`}
         >
           {/* Year Header */}
           <div
             className={`px-4 py-3 ${
               index === 0
-                ? "bg-purple-50 dark:bg-purple-950/30"
+                ? "bg-paper dark:bg-ink/30"
                 : index === 1
-                ? "bg-blue-50 dark:bg-blue-950/30"
-                : "bg-green-50 dark:bg-green-950/30"
+                ? "bg-paper dark:bg-ink/30"
+                : "bg-success-bg dark:bg-success-solid/30"
             }`}
           >
             <h3 className="text-lg font-semibold text-foreground">
@@ -123,10 +123,10 @@ export const GanttChartVisual: React.FC = () => {
                     <span
                       className={`mt-1.5 w-1.5 h-1.5 rounded-full flex-shrink-0 ${
                         index === 0
-                          ? "bg-purple-500"
+                          ? "bg-ink-faint"
                           : index === 1
-                          ? "bg-blue-500"
-                          : "bg-green-500"
+                          ? "bg-ink-faint"
+                          : "bg-success"
                       }`}
                     />
                     <span>{formatText(objective)}</span>

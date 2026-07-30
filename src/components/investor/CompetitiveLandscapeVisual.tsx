@@ -29,15 +29,15 @@ export const CompetitiveLandscapeVisual = () => {
       </div>
 
       {/* Market Gaps */}
-      <div className="bg-amber-500/5 border border-amber-500/20 rounded-lg p-4 lg:p-5">
+      <div className="bg-warning/5 border border-warning/20 rounded-lg p-4 lg:p-5">
         <div className="flex items-center gap-2 mb-4">
-          <AlertTriangle className="w-5 h-5 text-amber-600" />
+          <AlertTriangle className="w-5 h-5 text-warning" />
           <h4 className="text-sm lg:text-base font-semibold text-foreground">Current Market Gaps</h4>
         </div>
         <div className="space-y-2">
           {marketGaps.map((gap, index) => (
             <div key={index} className="flex items-start gap-2 bg-background/50 rounded-lg p-2 border border-border/50">
-              <span className="w-2 h-2 rounded-full bg-amber-500 mt-1.5 flex-shrink-0"></span>
+              <span className="w-2 h-2 rounded-full bg-warning mt-1.5 flex-shrink-0"></span>
               <span className="text-sm lg:text-base text-foreground">{gap}</span>
             </div>
           ))}
@@ -60,15 +60,15 @@ export const CompetitiveLandscapeVisual = () => {
       </div>
 
       {/* AI-Native Features */}
-      <div className="bg-green-500/5 border border-green-500/20 rounded-lg p-4 lg:p-5">
+      <div className="bg-success/5 border border-success/20 rounded-lg p-4 lg:p-5">
         <div className="flex items-center gap-2 mb-4">
-          <Sparkles className="w-5 h-5 text-green-600" />
+          <Sparkles className="w-5 h-5 text-success" />
           <h4 className="text-sm lg:text-base font-semibold text-foreground">The After: AI-Native Intelligence Layers</h4>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           {aiNativeFeatures.map((feature, index) => (
             <div key={index} className="flex items-center gap-2 bg-background/50 rounded-lg p-3 border border-border/50">
-              <CheckCircle className="w-4 h-4 text-green-600 flex-shrink-0" />
+              <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
               <span className="text-sm lg:text-base text-foreground">{feature}</span>
             </div>
           ))}

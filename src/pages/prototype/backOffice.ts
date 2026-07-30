@@ -48,7 +48,7 @@ export const BACK_OFFICE_HELPERS: BackOfficeHelper[] = [
     footerLine: "Maintains my knowledge of your portfolio.",
     triggers: ["document", "documents", "lease", "library", "upload", "read", "certificate", "notice", "correspondence", "knowledge", "professor"],
     narration: "Of course — let me open the document library.",
-    themeAccent: "text-amber-700 border-amber-200",
+    themeAccent: "text-warning border-warning-border",
     status: "ready",
   },
   {
@@ -62,7 +62,7 @@ export const BACK_OFFICE_HELPERS: BackOfficeHelper[] = [
     footerLine: "Maintains my understanding of compliance.",
     triggers: ["compliance", "regulation", "legal", "requirement", "inspect", "inspector", "rules"],
     narration: "Let me take you to the Inspector's compliance board.",
-    themeAccent: "text-rose-700 border-rose-200",
+    themeAccent: "text-danger border-danger-border",
     status: "ready",
   },
   {
@@ -76,7 +76,7 @@ export const BACK_OFFICE_HELPERS: BackOfficeHelper[] = [
     footerLine: "Maintains the structure of your portfolio.",
     triggers: ["property", "properties", "unit", "units", "portfolio structure", "add property", "add unit", "architect"],
     narration: "The Architect is just unrolling his plans — that room is being prepared.",
-    themeAccent: "text-violet-700 border-violet-200",
+    themeAccent: "text-charcoal border-bone",
     status: "ready",
   },
   {
@@ -90,7 +90,7 @@ export const BACK_OFFICE_HELPERS: BackOfficeHelper[] = [
     footerLine: "Maintains my understanding of your relationships.",
     triggers: ["contact", "contacts", "people", "relationship", "tenant", "landlord", "contractor", "agent", "broker"],
     narration: "Let me take you to the Broker's black book.",
-    themeAccent: "text-emerald-700 border-emerald-200",
+    themeAccent: "text-success border-success-border",
     status: "ready",
   },
   {
@@ -104,7 +104,7 @@ export const BACK_OFFICE_HELPERS: BackOfficeHelper[] = [
     footerLine: "Finds trusted information whenever I need it.",
     triggers: [],
     narration: "The Researcher is standing by whenever I need evidence.",
-    themeAccent: "text-cyan-700 border-cyan-200",
+    themeAccent: "text-charcoal border-bone",
     status: "ready",
   },
   {
@@ -118,7 +118,7 @@ export const BACK_OFFICE_HELPERS: BackOfficeHelper[] = [
     footerLine: "Performs calculations whenever I need them.",
     triggers: [],
     narration: "The Bookkeeper has his ledger ready.",
-    themeAccent: "text-blue-700 border-blue-200",
+    themeAccent: "text-charcoal border-bone",
     status: "ready",
   },
   {
@@ -132,7 +132,7 @@ export const BACK_OFFICE_HELPERS: BackOfficeHelper[] = [
     footerLine: "Connects to your systems whenever required.",
     triggers: [],
     narration: "The Communicator is watching the connections.",
-    themeAccent: "text-indigo-700 border-indigo-200",
+    themeAccent: "text-charcoal border-bone",
     status: "ready",
   },
   {
@@ -146,7 +146,7 @@ export const BACK_OFFICE_HELPERS: BackOfficeHelper[] = [
     footerLine: "Protects your information and permissions.",
     triggers: [],
     narration: "The Keeper is at his post.",
-    themeAccent: "text-stone-700 border-stone-200",
+    themeAccent: "text-charcoal border-bone",
     status: "ready",
   },
 ];

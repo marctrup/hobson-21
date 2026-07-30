@@ -144,7 +144,7 @@ export default function CrmTasks() {
         <div className="flex items-center justify-between flex-wrap gap-3">
           <div>
             <h1 className="text-2xl font-semibold tracking-tight">Tasks</h1>
-            <p className="text-sm text-slate-500 mt-1">
+            <p className="text-sm text-ink-muted mt-1">
               Personal and client-linked to-dos. {total} loaded
               {hasNextPage ? " (more available)" : ""}.
             </p>
@@ -171,7 +171,7 @@ export default function CrmTasks() {
                 "text-xs px-2.5 py-1 rounded-full border transition-colors",
                 activeQuickView === qv
                   ? "bg-primary/10 text-primary border-primary/30"
-                  : "bg-white text-slate-700 border-slate-200 hover:bg-slate-50",
+                  : "bg-white text-charcoal border-bone hover:bg-paper",
               )}
             >
               {TASK_QUICK_VIEW_LABELS[qv]}

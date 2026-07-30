@@ -106,26 +106,26 @@ const Status = () => {
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'operational':
-        return 'text-green-600 bg-green-50 border-green-200';
+        return 'text-success bg-success-bg border-success-border';
       case 'degraded':
-        return 'text-yellow-600 bg-yellow-50 border-yellow-200';
+        return 'text-warning bg-warning-bg border-warning-border';
       case 'outage':
-        return 'text-red-600 bg-red-50 border-red-200';
+        return 'text-danger bg-danger-bg border-danger-border';
       default:
-        return 'text-gray-600 bg-gray-50 border-gray-200';
+        return 'text-charcoal bg-paper border-bone';
     }
   };
 
   const getStatusIcon = (status: string) => {
     switch (status) {
       case 'operational':
-        return <CheckCircle className="w-5 h-5 text-green-600" />;
+        return <CheckCircle className="w-5 h-5 text-success" />;
       case 'degraded':
-        return <Clock className="w-5 h-5 text-yellow-600" />;
+        return <Clock className="w-5 h-5 text-warning" />;
       case 'outage':
-        return <Activity className="w-5 h-5 text-red-600" />;
+        return <Activity className="w-5 h-5 text-danger" />;
       default:
-        return <Activity className="w-5 h-5 text-gray-600" />;
+        return <Activity className="w-5 h-5 text-charcoal" />;
     }
   };
 
@@ -159,9 +159,9 @@ const Status = () => {
           <div className="text-center mb-8">
             <div className="flex items-center justify-center gap-3 mb-4">
               {allOperational ? (
-                <CheckCircle className="w-8 h-8 text-green-600" />
+                <CheckCircle className="w-8 h-8 text-success" />
               ) : (
-                <Activity className="w-8 h-8 text-yellow-600" />
+                <Activity className="w-8 h-8 text-warning" />
               )}
               <h1 className="text-3xl font-bold text-foreground">
                 {allOperational ? 'All Systems Operational' : 'Some Systems Experiencing Issues'}

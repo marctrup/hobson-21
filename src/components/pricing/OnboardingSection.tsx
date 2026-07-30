@@ -116,7 +116,7 @@ export default function OnboardingSection() {
                 <label className="text-sm font-semibold text-foreground">How many leases?</label>
                 <span className="text-xs text-muted-foreground">£{pricing.cost_per_lease.toFixed(2)} each</span>
               </div>
-              <p className="text-xs text-muted-foreground mb-2"><p className="text-xs text-muted-foreground mb-2"><p className="text-xs text-muted-foreground mb-2">Complex documents - Leases and occupational licences <span className="text-orange-500 font-semibold">only</span></p></p></p>
+              <p className="text-xs text-muted-foreground mb-2"><p className="text-xs text-muted-foreground mb-2"><p className="text-xs text-muted-foreground mb-2">Complex documents - Leases and occupational licences <span className="text-warning font-semibold">only</span></p></p></p>
               <div className="flex items-center gap-3">
                 <button
                   type="button"
@@ -131,7 +131,7 @@ export default function OnboardingSection() {
                   value={leases}
                   onChange={(e) => setLeases(Math.max(0, parseInt(e.target.value) || 0))}
                   className="w-20 text-center rounded-lg border border-border px-3 py-2 text-sm appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none focus:outline-none focus:ring-2 focus:ring-primary/30"
-                  style={{ backgroundColor: '#ffffff', color: '#1a1a1a', colorScheme: 'light', WebkitTextFillColor: '#1a1a1a' }}
+                  style={{ backgroundColor: '#ffffff', color: '#2D2D2D', colorScheme: 'light', WebkitTextFillColor: '#2D2D2D' }}
                 />
                 <button
                   type="button"
@@ -164,7 +164,7 @@ export default function OnboardingSection() {
                   value={documents}
                   onChange={(e) => setDocuments(Math.max(0, parseInt(e.target.value) || 0))}
                   className="w-20 text-center rounded-lg border border-border px-3 py-2 text-sm appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none focus:outline-none focus:ring-2 focus:ring-primary/30"
-                  style={{ backgroundColor: '#ffffff', color: '#1a1a1a', colorScheme: 'light', WebkitTextFillColor: '#1a1a1a' }}
+                  style={{ backgroundColor: '#ffffff', color: '#2D2D2D', colorScheme: 'light', WebkitTextFillColor: '#2D2D2D' }}
                 />
                 <button
                   type="button"

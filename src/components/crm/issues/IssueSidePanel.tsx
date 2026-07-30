@@ -75,7 +75,7 @@ export const IssueSidePanel = ({ open, onOpenChange, issueId }: Props) => {
         className="w-full sm:max-w-2xl overflow-y-auto"
       >
         {isLoading || !data ? (
-          <div className="text-sm text-slate-500">Loading…</div>
+          <div className="text-sm text-ink-muted">Loading…</div>
         ) : (
           <PanelBody
             data={data}
@@ -151,18 +151,18 @@ const PanelBody = ({
             <div className="flex items-center gap-2 flex-wrap">
               <IssueStatusPill status={i.status} />
               <IssuePriorityPill priority={i.priority} />
-              <span className="text-xs text-slate-500">
+              <span className="text-xs text-ink-muted">
                 {ISSUE_CATEGORY_LABELS[i.category]}
               </span>
             </div>
             <SheetTitle className="mt-2 text-base leading-snug">
               {i.title}
             </SheetTitle>
-            <div className="text-xs text-slate-500 mt-1">
+            <div className="text-xs text-ink-muted mt-1">
               {i.client_name && (
                 <Link
                   to={`/crm/clients/${i.client_id}`}
-                  className="hover:text-slate-900 hover:underline"
+                  className="hover:text-ink hover:underline"
                 >
                   {i.client_name}
                 </Link>
@@ -177,7 +177,7 @@ const PanelBody = ({
           </div>
           <button
             onClick={onClose}
-            className="text-slate-400 hover:text-slate-600"
+            className="text-ink-muted hover:text-charcoal"
             aria-label="Close"
           >
             <X className="size-4" />
@@ -296,7 +296,7 @@ const PanelBody = ({
               <span
                 className={cn(
                   "text-sm inline-flex items-center gap-1",
-                  isOverdue ? "text-rose-600 font-medium" : "",
+                  isOverdue ? "text-danger font-medium" : "",
                 )}
               >
                 {isOverdue && <CalendarClock className="size-3.5" />}
@@ -306,7 +306,7 @@ const PanelBody = ({
           </Field>
 
           <Field label="Resolved at">
-            <span className="text-sm text-slate-700">
+            <span className="text-sm text-charcoal">
               {i.resolved_at ? formatDateTimeUK(i.resolved_at) : "—"}
             </span>
           </Field>
@@ -315,7 +315,7 @@ const PanelBody = ({
         {/* Description */}
         <section>
           <div className="flex items-center justify-between mb-1">
-            <h3 className="text-xs uppercase tracking-wide text-slate-500">
+            <h3 className="text-xs uppercase tracking-wide text-ink-muted">
               Description
             </h3>
             {canWrite && !editingDesc && (
@@ -324,7 +324,7 @@ const PanelBody = ({
                   setDescDraft(i.description ?? "");
                   setEditingDesc(true);
                 }}
-                className="text-xs text-slate-500 hover:text-slate-900"
+                className="text-xs text-ink-muted hover:text-ink"
               >
                 Edit
               </button>
@@ -358,11 +358,11 @@ const PanelBody = ({
               </div>
             </div>
           ) : i.description ? (
-            <p className="text-sm text-slate-800 whitespace-pre-wrap bg-slate-50 border border-slate-200 rounded-md p-3">
+            <p className="text-sm text-ink whitespace-pre-wrap bg-paper border border-bone rounded-md p-3">
               {i.description}
             </p>
           ) : (
-            <p className="text-sm text-slate-400 italic">No description.</p>
+            <p className="text-sm text-ink-muted italic">No description.</p>
           )}
         </section>
 
@@ -370,7 +370,7 @@ const PanelBody = ({
         {isResolvedOrClosed && (
           <section>
             <div className="flex items-center justify-between mb-1">
-              <h3 className="text-xs uppercase tracking-wide text-slate-500">
+              <h3 className="text-xs uppercase tracking-wide text-ink-muted">
                 Resolution note
               </h3>
               {canWrite && !editingResolution && (
@@ -379,7 +379,7 @@ const PanelBody = ({
                     setResolutionDraft(i.resolution_note ?? "");
                     setEditingResolution(true);
                   }}
-                  className="text-xs text-slate-500 hover:text-slate-900"
+                  className="text-xs text-ink-muted hover:text-ink"
                 >
                   Edit
                 </button>
@@ -414,11 +414,11 @@ const PanelBody = ({
                 </div>
               </div>
             ) : i.resolution_note ? (
-              <p className="text-sm text-slate-800 whitespace-pre-wrap bg-emerald-50 border border-emerald-200 rounded-md p-3">
+              <p className="text-sm text-ink whitespace-pre-wrap bg-success-bg border border-success-border rounded-md p-3">
                 {i.resolution_note}
               </p>
             ) : (
-              <p className="text-sm text-slate-400 italic">
+              <p className="text-sm text-ink-muted italic">
                 No resolution note recorded.
               </p>
             )}
@@ -428,14 +428,14 @@ const PanelBody = ({
         {/* Tags */}
         {i.tags && i.tags.length > 0 && (
           <section>
-            <h3 className="text-xs uppercase tracking-wide text-slate-500 mb-1">
+            <h3 className="text-xs uppercase tracking-wide text-ink-muted mb-1">
               Tags
             </h3>
             <div className="flex flex-wrap gap-1">
               {i.tags.map((t) => (
                 <span
                   key={t}
-                  className="inline-block text-[11px] px-2 py-0.5 rounded-md bg-slate-100 border border-slate-200 text-slate-700"
+                  className="inline-block text-[11px] px-2 py-0.5 rounded-md bg-bone-wash border border-bone text-charcoal"
                 >
                   {t}
                 </span>
@@ -446,13 +446,13 @@ const PanelBody = ({
 
         {/* Linked communication */}
         {i.reported_via_communication_id && (
-          <section className="text-sm bg-slate-50 border border-slate-200 rounded-md px-3 py-2 flex items-center gap-2">
-            <ExternalLink className="size-3.5 text-slate-500 shrink-0" />
-            <span className="text-slate-600">
+          <section className="text-sm bg-paper border border-bone rounded-md px-3 py-2 flex items-center gap-2">
+            <ExternalLink className="size-3.5 text-ink-muted shrink-0" />
+            <span className="text-charcoal">
               Raised from a communication.{" "}
               <Link
                 to={`/crm/communications?focus=${i.reported_via_communication_id}`}
-                className="text-slate-900 hover:underline"
+                className="text-ink hover:underline"
               >
                 Open communications
               </Link>
@@ -469,10 +469,10 @@ const PanelBody = ({
 
         {/* Delete */}
         {canDelete && (
-          <div className="pt-4 border-t border-slate-200">
+          <div className="pt-4 border-t border-bone">
             <AlertDialog>
               <AlertDialogTrigger asChild>
-                <Button variant="outline" size="sm" className="text-rose-600">
+                <Button variant="outline" size="sm" className="text-danger">
                   <Trash2 className="size-4 mr-1" /> Delete
                 </Button>
               </AlertDialogTrigger>
@@ -506,7 +506,7 @@ const Field = ({
   children: React.ReactNode;
 }) => (
   <div>
-    <div className="text-xs uppercase tracking-wide text-slate-500 mb-1">
+    <div className="text-xs uppercase tracking-wide text-ink-muted mb-1">
       {label}
     </div>
     {children}

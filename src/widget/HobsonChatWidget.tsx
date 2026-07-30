@@ -289,7 +289,7 @@ export function HobsonChatWidget() {
                       className={`max-w-[85%] rounded-lg px-4 py-2 ${
                         message.role === 'user'
                           ? 'bg-primary text-white'
-                          : 'bg-gray-100 text-gray-900'
+                          : 'bg-bone-wash text-ink'
                       }`}
                     >
                       <div className="text-sm whitespace-pre-wrap break-words">
@@ -316,7 +316,7 @@ export function HobsonChatWidget() {
               ))}
               {isLoading && (
                 <div className="flex justify-start">
-                  <div className="bg-gray-100 rounded-lg px-4 py-2">
+                  <div className="bg-bone-wash rounded-lg px-4 py-2">
                     <Loader2 className="h-5 w-5 animate-spin text-primary" />
                   </div>
                 </div>
@@ -348,7 +348,7 @@ export function HobsonChatWidget() {
                   onChange={(e) => setInput(e.target.value)}
                   onKeyPress={handleKeyPress}
                   placeholder="Ask me anything..."
-                  className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-gray-900"
+                  className="flex-1 px-4 py-2 border border-bone rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-ink"
                   disabled={isLoading}
                 />
                 <button

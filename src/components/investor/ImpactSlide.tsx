@@ -11,17 +11,17 @@ export const ImpactSlide = () => {
   return (
     <div className="h-full flex items-center justify-center px-6 sm:px-8 pb-20">
       <div className="text-center max-w-2xl space-y-4">
-        <h2 className="text-2xl sm:text-3xl font-bold text-[#1e293b] leading-tight">
+        <h2 className="text-2xl sm:text-3xl font-bold text-[#2D2D2D] leading-tight">
           Efficiency Without<br />Upheaval
         </h2>
 
         <div className="space-y-2 py-3">
           {impacts.map((item, idx) => (
-            <div key={idx} className="flex items-center gap-3 p-2.5 rounded-lg bg-[#f8fafc] border-l-4 border-[#7c3aed]">
+            <div key={idx} className="flex items-center gap-3 p-2.5 rounded-lg bg-[#F1EBDE] border-l-4 border-[#56514A]">
               <div className="w-9 h-9 rounded-full bg-white flex items-center justify-center shadow-sm">
-                <item.icon className="w-4.5 h-4.5 text-[#7c3aed]" />
+                <item.icon className="w-4.5 h-4.5 text-[#56514A]" />
               </div>
-              <span className="text-sm text-[#1e293b] font-medium">
+              <span className="text-sm text-[#2D2D2D] font-medium">
                 {item.text}
               </span>
             </div>

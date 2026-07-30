@@ -509,7 +509,7 @@ const useReducedMotion = () =>
 
 function CharacterAvatar({ src, alt }: { src: string; alt: string }) {
   return (
-    <div className="w-10 h-10 shrink-0 rounded-full overflow-hidden bg-[#F5F3FF] ring-1 ring-slate-200 grid place-items-center">
+    <div className="w-10 h-10 shrink-0 rounded-full overflow-hidden bg-[#F1EBDE] ring-1 ring-bone grid place-items-center">
       <img src={src} alt={alt} className="w-[120%] h-[120%] object-contain object-center" />
     </div>
   );
@@ -518,7 +518,7 @@ function CharacterAvatar({ src, alt }: { src: string; alt: string }) {
 // In the left chat, Hobson is the only voice. The Inspector is seen working on the right.
 function HobsonAvatar() {
   return (
-    <div className="w-10 h-10 shrink-0 rounded-full overflow-hidden bg-[#EDE9FE] ring-1 ring-slate-200 grid place-items-center">
+    <div className="w-10 h-10 shrink-0 rounded-full overflow-hidden bg-[#F1EBDE] ring-1 ring-bone grid place-items-center">
       <img src={owlDefault} alt="" aria-hidden className="w-full h-full object-contain" />
     </div>
   );
@@ -554,9 +554,9 @@ function InspectorBubble({
       {showAvatar
         ? <HobsonAvatar />
         : <div aria-hidden className="w-10 h-10 shrink-0" />}
-      <div className="max-w-[460px] bg-[#EDE9FE] text-[#1F2330] text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-bl-md whitespace-pre-line">
+      <div className="max-w-[460px] bg-[#F1EBDE] text-[#2D2D2D] text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-bl-md whitespace-pre-line">
         {shown}
-        {!done && <span className="inline-block w-1.5 h-3.5 ml-0.5 bg-[#7C3AED] align-middle animate-pulse" />}
+        {!done && <span className="inline-block w-1.5 h-3.5 ml-0.5 bg-[#56514A] align-middle animate-pulse" />}
       </div>
     </div>
   );
@@ -565,7 +565,7 @@ function InspectorBubble({
 function UserBubble({ text }: { text: string }) {
   return (
     <div className="flex justify-end">
-      <div className="max-w-[460px] bg-[#7C3AED] text-white text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-br-md">
+      <div className="max-w-[460px] bg-[#56514A] text-white text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-br-md">
         {text}
       </div>
     </div>
@@ -576,12 +576,12 @@ function ResearchingBubble() {
   return (
     <div className="flex items-end gap-2" aria-live="polite">
       <HobsonAvatar />
-      <div className="max-w-[460px] bg-[#EDE9FE] text-[#1F2330] text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-bl-md">
+      <div className="max-w-[460px] bg-[#F1EBDE] text-[#2D2D2D] text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-bl-md">
         <span className="inline-flex items-center gap-2">
           <span className="inline-flex gap-1">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#7C3AED] animate-pulse" style={{ animationDelay: "0ms" }} />
-            <span className="w-1.5 h-1.5 rounded-full bg-[#7C3AED] animate-pulse" style={{ animationDelay: "150ms" }} />
-            <span className="w-1.5 h-1.5 rounded-full bg-[#7C3AED] animate-pulse" style={{ animationDelay: "300ms" }} />
+            <span className="w-1.5 h-1.5 rounded-full bg-[#56514A] animate-pulse" style={{ animationDelay: "0ms" }} />
+            <span className="w-1.5 h-1.5 rounded-full bg-[#56514A] animate-pulse" style={{ animationDelay: "150ms" }} />
+            <span className="w-1.5 h-1.5 rounded-full bg-[#56514A] animate-pulse" style={{ animationDelay: "300ms" }} />
           </span>
           <span className="italic">Looking up gov.uk and HSE guidance for residential lettings…</span>
         </span>
@@ -722,28 +722,28 @@ function AreaPickCard({ onPick }: { onPick: (a: ComplianceArea, label: string) =
   const [otherDraft, setOtherDraft] = useState("");
   const [showOther, setShowOther] = useState(false);
   return (
-    <div className="ml-12 max-w-[520px] rounded-xl border border-[#7C3AED]/25 bg-white p-3 space-y-2">
-      <div className="text-[11px] uppercase tracking-wide text-[#5B21B6] font-semibold">Your compliance list · choose an area to set up</div>
+    <div className="ml-12 max-w-[520px] rounded-xl border border-[#56514A]/25 bg-white p-3 space-y-2">
+      <div className="text-[11px] uppercase tracking-wide text-[#56514A] font-semibold">Your compliance list · choose an area to set up</div>
       <div className="grid grid-cols-1 gap-1.5">
         {AREA_OPTIONS.map((o) => (
           <button
             key={o.id}
             type="button"
             onClick={() => onPick(o.id, o.label)}
-            className="flex items-center justify-between gap-3 text-left px-3 py-2 rounded-lg border border-slate-200 bg-white hover:bg-[#F5F3FF] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]"
+            className="flex items-center justify-between gap-3 text-left px-3 py-2 rounded-lg border border-bone bg-white hover:bg-[#F1EBDE] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#56514A]"
           >
-            <span className="text-[13px] font-medium text-slate-800">{o.label}</span>
-            <span className="text-[11px] text-slate-500">{o.hint}</span>
+            <span className="text-[13px] font-medium text-ink">{o.label}</span>
+            <span className="text-[11px] text-ink-muted">{o.hint}</span>
           </button>
         ))}
         <button
           type="button"
           onClick={() => setShowOther((v) => !v)}
-          className="flex items-center justify-between gap-3 text-left px-3 py-2 rounded-lg border border-dashed border-[#7C3AED]/40 bg-[#FAF8FF] hover:bg-[#F5F3FF] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]"
+          className="flex items-center justify-between gap-3 text-left px-3 py-2 rounded-lg border border-dashed border-[#56514A]/40 bg-[#F1EBDE] hover:bg-[#F1EBDE] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#56514A]"
           aria-expanded={showOther}
         >
-          <span className="text-[13px] font-medium text-[#5B21B6]">＋ Add your own area</span>
-          <span className="text-[11px] text-[#5B21B6]/70">free text</span>
+          <span className="text-[13px] font-medium text-[#56514A]">＋ Add your own area</span>
+          <span className="text-[11px] text-[#56514A]/70">free text</span>
         </button>
       </div>
       {showOther && (
@@ -761,10 +761,10 @@ function AreaPickCard({ onPick }: { onPick: (a: ComplianceArea, label: string) =
             value={otherDraft}
             onChange={(e) => setOtherDraft(e.target.value)}
             placeholder="Name your area (e.g. Lift maintenance)"
-            className="flex-1 px-3 py-1.5 rounded-md border border-slate-300 text-[13px] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]"
+            className="flex-1 px-3 py-1.5 rounded-md border border-bone text-[13px] focus:outline-none focus:ring-2 focus:ring-[#56514A]"
             aria-label="Name your compliance area"
           />
-          <button type="submit" disabled={!otherDraft.trim()} className="px-3 py-1.5 rounded-md bg-[#7C3AED] text-white text-[12px] font-semibold disabled:bg-slate-200 disabled:text-slate-400">Add</button>
+          <button type="submit" disabled={!otherDraft.trim()} className="px-3 py-1.5 rounded-md bg-[#56514A] text-white text-[12px] font-semibold disabled:bg-bone disabled:text-ink-muted">Add</button>
         </form>
       )}
     </div>
@@ -773,17 +773,17 @@ function AreaPickCard({ onPick }: { onPick: (a: ComplianceArea, label: string) =
 
 function ConsentCard({ onYes, onNo, areaLabel }: { onYes: () => void; onNo: () => void; areaLabel: string }) {
   return (
-    <div className="ml-12 max-w-[480px] rounded-xl border border-[#7C3AED]/25 bg-white p-3 space-y-2">
-      <div className="text-[11px] uppercase tracking-wide text-[#5B21B6] font-semibold">Consent to research · {areaLabel}</div>
-      <div className="text-[12.5px] text-slate-700">
+    <div className="ml-12 max-w-[480px] rounded-xl border border-[#56514A]/25 bg-white p-3 space-y-2">
+      <div className="text-[11px] uppercase tracking-wide text-[#56514A] font-semibold">Consent to research · {areaLabel}</div>
+      <div className="text-[12.5px] text-charcoal">
         Should I check for any <span className="font-semibold">legally required</span> requirements?
         I'll cite my sources so you can see what marks something as law.
       </div>
       <div className="flex items-center gap-2 pt-1">
-        <button type="button" onClick={onYes} className="px-3 py-1.5 rounded-md bg-[#7C3AED] text-white text-[12px] font-semibold hover:bg-[#6D28D9] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]">
+        <button type="button" onClick={onYes} className="px-3 py-1.5 rounded-md bg-[#56514A] text-white text-[12px] font-semibold hover:bg-[#56514A] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#56514A]">
           Yes — check the law
         </button>
-        <button type="button" onClick={onNo} className="px-3 py-1.5 rounded-md border border-slate-300 bg-white text-[12px] font-medium text-slate-700 hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-400">
+        <button type="button" onClick={onNo} className="px-3 py-1.5 rounded-md border border-bone bg-white text-[12px] font-medium text-charcoal hover:bg-paper focus:outline-none focus-visible:ring-2 focus-visible:ring-bone-strong">
           No — I'll define it myself
         </button>
       </div>
@@ -796,19 +796,19 @@ function DescribeForm({ onSubmit, placeholder }: { onSubmit: (text: string) => v
   return (
     <form
       onSubmit={(e) => { e.preventDefault(); const t = v.trim(); if (!t) return; onSubmit(t); setV(""); }}
-      className="ml-12 max-w-[480px] rounded-xl border border-[#7C3AED]/25 bg-white p-3 space-y-2"
+      className="ml-12 max-w-[480px] rounded-xl border border-[#56514A]/25 bg-white p-3 space-y-2"
     >
-      <label className="text-[11px] uppercase tracking-wide text-[#5B21B6] font-semibold block">Describe the area</label>
+      <label className="text-[11px] uppercase tracking-wide text-[#56514A] font-semibold block">Describe the area</label>
       <div className="flex items-center gap-2">
         <input
           autoFocus
           value={v}
           onChange={(e) => setV(e.target.value)}
           placeholder={placeholder}
-          className="flex-1 px-3 py-1.5 rounded-md border border-slate-300 text-[13px] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]"
+          className="flex-1 px-3 py-1.5 rounded-md border border-bone text-[13px] focus:outline-none focus:ring-2 focus:ring-[#56514A]"
           aria-label="Describe the area"
         />
-        <button type="submit" disabled={!v.trim()} className="px-3 py-1.5 rounded-md bg-[#7C3AED] text-white text-[12px] font-semibold disabled:bg-slate-200 disabled:text-slate-400">Send</button>
+        <button type="submit" disabled={!v.trim()} className="px-3 py-1.5 rounded-md bg-[#56514A] text-white text-[12px] font-semibold disabled:bg-bone disabled:text-ink-muted">Send</button>
       </div>
     </form>
   );
@@ -818,7 +818,7 @@ function DescribeForm({ onSubmit, placeholder }: { onSubmit: (text: string) => v
 function BasisBadge({ basis }: { basis: RequirementBasis }) {
   if (basis === "required") {
     return (
-      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wide bg-rose-50 text-rose-700 border border-rose-200">
+      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wide bg-danger-bg text-danger border border-danger-border">
         <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" aria-hidden><path d="M12 8v5"/><circle cx="12" cy="17" r="0.8" fill="currentColor"/><circle cx="12" cy="12" r="10"/></svg>
         Legally required
       </span>
@@ -826,14 +826,14 @@ function BasisBadge({ basis }: { basis: RequirementBasis }) {
   }
   if (basis === "business") {
     return (
-      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wide bg-amber-50 text-amber-800 border border-amber-300" title="Your own / contractual standard — not law">
+      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wide bg-warning-bg text-warning border border-warning-border" title="Your own / contractual standard — not law">
         <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden><path d="M3 21h18M5 21V8l7-5 7 5v13M9 21v-6h6v6"/></svg>
         Business requirement
       </span>
     );
   }
   return (
-    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wide bg-slate-100 text-slate-700 border border-slate-300">
+    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wide bg-bone-wash text-charcoal border border-bone">
       Where applicable
     </span>
   );
@@ -843,28 +843,28 @@ function RequirementEditor({
   req, onChange, onRemove,
 }: { req: ComplianceRequirement; onChange: (patch: Partial<ComplianceRequirement>) => void; onRemove: () => void }) {
   return (
-    <div className="rounded-lg border border-slate-200 bg-white p-3">
+    <div className="rounded-lg border border-bone bg-white p-3">
       <div className="flex items-start justify-between gap-2">
         <div className="min-w-0">
-          <div className="text-[13px] font-semibold text-slate-900 truncate">{req.docType}</div>
-          <div className="text-[11px] text-slate-500 mt-0.5">Anchor: {req.anchor} · scope: {req.appliesTo === "building" ? "building" : "per unit"}</div>
+          <div className="text-[13px] font-semibold text-ink truncate">{req.docType}</div>
+          <div className="text-[11px] text-ink-muted mt-0.5">Anchor: {req.anchor} · scope: {req.appliesTo === "building" ? "building" : "per unit"}</div>
         </div>
         <BasisBadge basis={req.basis} />
       </div>
       <div className="mt-2 flex flex-wrap items-center gap-2">
-        <label className="text-[11px] text-slate-600">Renew every</label>
+        <label className="text-[11px] text-charcoal">Renew every</label>
         <input
           type="number"
           min={1}
           value={req.durationValue}
           onChange={(e) => onChange({ durationValue: Math.max(1, Number(e.target.value) || 1) })}
-          className="w-16 px-2 py-1 rounded-md border border-slate-300 text-[13px] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]"
+          className="w-16 px-2 py-1 rounded-md border border-bone text-[13px] focus:outline-none focus:ring-2 focus:ring-[#56514A]"
           aria-label={`Renewal duration for ${req.docType}`}
         />
         <select
           value={req.durationUnit}
           onChange={(e) => onChange({ durationUnit: e.target.value as DurationUnit })}
-          className="px-2 py-1 rounded-md border border-slate-300 text-[13px] bg-white focus:outline-none focus:ring-2 focus:ring-[#7C3AED]"
+          className="px-2 py-1 rounded-md border border-bone text-[13px] bg-white focus:outline-none focus:ring-2 focus:ring-[#56514A]"
           aria-label={`Renewal unit for ${req.docType}`}
         >
           <option value="Years">Years</option>
@@ -873,7 +873,7 @@ function RequirementEditor({
         <select
           value={req.basis}
           onChange={(e) => onChange({ basis: e.target.value as RequirementBasis })}
-          className="px-2 py-1 rounded-md border border-slate-300 text-[13px] bg-white focus:outline-none focus:ring-2 focus:ring-[#7C3AED]"
+          className="px-2 py-1 rounded-md border border-bone text-[13px] bg-white focus:outline-none focus:ring-2 focus:ring-[#56514A]"
           aria-label={`Legal basis for ${req.docType}`}
         >
           <option value="required">Legally required</option>
@@ -884,14 +884,14 @@ function RequirementEditor({
         <button
           type="button"
           onClick={onRemove}
-          className="text-[11px] text-rose-700 hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-rose-300 rounded px-1"
+          className="text-[11px] text-danger hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-danger-border rounded px-1"
         >Remove</button>
       </div>
       {req.category !== "certification" && (
         <VersionSourcePicker req={req} onChange={onChange} />
       )}
       {req.description && (
-        <div className="mt-2 text-[11px] text-slate-500 italic">{req.description}</div>
+        <div className="mt-2 text-[11px] text-ink-muted italic">{req.description}</div>
       )}
     </div>
   );
@@ -907,14 +907,14 @@ function VersionSourcePicker({
   const fileRef = React.useRef<HTMLInputElement | null>(null);
   const source = req.versionSource ?? "hobson";
   return (
-    <div className={(compact ? "mt-1.5 " : "mt-2 ") + "flex flex-wrap items-center gap-2 text-[11px] text-slate-600"}>
-      <span className="text-slate-500">Version held:</span>
+    <div className={(compact ? "mt-1.5 " : "mt-2 ") + "flex flex-wrap items-center gap-2 text-[11px] text-charcoal"}>
+      <span className="text-ink-muted">Version held:</span>
       <span
         className={
           "inline-flex items-center gap-1 px-2 py-0.5 rounded-full border " +
           (source === "hobson"
-            ? "bg-[#F5F3FF] border-[#7C3AED]/30 text-[#5B21B6]"
-            : "bg-amber-50 border-amber-200 text-amber-800")
+            ? "bg-[#F1EBDE] border-[#56514A]/30 text-[#56514A]"
+            : "bg-warning-bg border-warning-border text-warning")
         }
       >
         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
@@ -929,13 +929,13 @@ function VersionSourcePicker({
         <button
           type="button"
           onClick={() => fileRef.current?.click()}
-          className="px-2 py-0.5 rounded-md border border-slate-300 bg-white hover:bg-slate-50 text-[11px] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]"
+          className="px-2 py-0.5 rounded-md border border-bone bg-white hover:bg-paper text-[11px] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#56514A]"
         >Upload my own</button>
       ) : (
         <button
           type="button"
           onClick={() => onChange({ versionSource: "hobson", uploadedFileName: undefined })}
-          className="px-2 py-0.5 rounded-md border border-slate-300 bg-white hover:bg-slate-50 text-[11px] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]"
+          className="px-2 py-0.5 rounded-md border border-bone bg-white hover:bg-paper text-[11px] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#56514A]"
         >Use mine</button>
 
       )}
@@ -966,7 +966,7 @@ function AddRequirementForm({ onAdd }: { onAdd: (req: Omit<ComplianceRequirement
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="inline-flex items-center gap-1.5 text-[12px] text-[#7C3AED] hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED] rounded px-1"
+        className="inline-flex items-center gap-1.5 text-[12px] text-[#56514A] hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-[#56514A] rounded px-1"
       >
         <span aria-hidden>＋</span> Add another requirement
       </button>
@@ -992,30 +992,30 @@ function AddRequirementForm({ onAdd }: { onAdd: (req: Omit<ComplianceRequirement
         reset();
         setOpen(false);
       }}
-      className="rounded-lg border border-dashed border-[#7C3AED]/40 bg-[#F5F3FF] p-3 space-y-2"
+      className="rounded-lg border border-dashed border-[#56514A]/40 bg-[#F1EBDE] p-3 space-y-2"
     >
-      <div className="text-[11px] uppercase tracking-wide text-[#5B21B6] font-semibold">Add a requirement</div>
+      <div className="text-[11px] uppercase tracking-wide text-[#56514A] font-semibold">Add a requirement</div>
       <input
         value={name}
         onChange={(e) => setName(e.target.value)}
         placeholder="Document type (e.g. Legionella risk assessment)"
-        className="w-full px-2 py-1.5 rounded-md border border-slate-300 text-[13px] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]"
+        className="w-full px-2 py-1.5 rounded-md border border-bone text-[13px] focus:outline-none focus:ring-2 focus:ring-[#56514A]"
       />
       <div className="flex items-center gap-2 flex-wrap">
-        <span className="text-[11px] text-slate-600">Renew every</span>
-        <input type="number" min={1} value={value} onChange={(e) => setValue(Math.max(1, Number(e.target.value) || 1))} className="w-16 px-2 py-1 rounded-md border border-slate-300 text-[13px]" />
-        <select value={unit} onChange={(e) => setUnit(e.target.value as DurationUnit)} className="px-2 py-1 rounded-md border border-slate-300 text-[13px] bg-white">
+        <span className="text-[11px] text-charcoal">Renew every</span>
+        <input type="number" min={1} value={value} onChange={(e) => setValue(Math.max(1, Number(e.target.value) || 1))} className="w-16 px-2 py-1 rounded-md border border-bone text-[13px]" />
+        <select value={unit} onChange={(e) => setUnit(e.target.value as DurationUnit)} className="px-2 py-1 rounded-md border border-bone text-[13px] bg-white">
           <option value="Years">Years</option>
           <option value="Months">Months</option>
         </select>
-        <select value={basis} onChange={(e) => setBasis(e.target.value as RequirementBasis)} className="px-2 py-1 rounded-md border border-slate-300 text-[13px] bg-white">
+        <select value={basis} onChange={(e) => setBasis(e.target.value as RequirementBasis)} className="px-2 py-1 rounded-md border border-bone text-[13px] bg-white">
           <option value="required">Legally required</option>
           <option value="applicable">Where applicable</option>
           <option value="business">Business requirement</option>
         </select>
         <div className="flex-1" />
-        <button type="button" onClick={() => { reset(); setOpen(false); }} className="text-[12px] text-slate-600 hover:underline px-1">Cancel</button>
-        <button type="submit" disabled={!name.trim()} className="px-3 py-1.5 rounded-md bg-[#7C3AED] text-white text-[12px] font-semibold disabled:bg-slate-200 disabled:text-slate-400">Add</button>
+        <button type="button" onClick={() => { reset(); setOpen(false); }} className="text-[12px] text-charcoal hover:underline px-1">Cancel</button>
+        <button type="submit" disabled={!name.trim()} className="px-3 py-1.5 rounded-md bg-[#56514A] text-white text-[12px] font-semibold disabled:bg-bone disabled:text-ink-muted">Add</button>
       </div>
     </form>
   );
@@ -1030,7 +1030,7 @@ function SourceLink({ url, label }: { url?: string; label?: string }) {
       href={url}
       target="_blank"
       rel="noopener noreferrer"
-      className="inline-flex items-center gap-1 text-[11px] text-[#5B21B6] hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED] rounded px-0.5"
+      className="inline-flex items-center gap-1 text-[11px] text-[#56514A] hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-[#56514A] rounded px-0.5"
     >
       <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
         <path d="M10 14L21 3M15 3h6v6M21 14v6a1 1 0 01-1 1H4a1 1 0 01-1-1V4a1 1 0 011-1h6"/>
@@ -1044,33 +1044,33 @@ function ResearchedItemRow({
   req, onChange, onRemove,
 }: { req: ComplianceRequirement; onChange: (patch: Partial<ComplianceRequirement>) => void; onRemove: () => void }) {
   return (
-    <div className="rounded-lg border border-rose-200 bg-rose-50/40 p-3">
+    <div className="rounded-lg border border-danger-border bg-danger-bg/40 p-3">
       <div className="flex items-start justify-between gap-2">
         <div className="min-w-0">
-          <div className="text-[13px] font-semibold text-slate-900 truncate">{req.docType}</div>
+          <div className="text-[13px] font-semibold text-ink truncate">{req.docType}</div>
           <div className="mt-0.5"><SourceLink url={req.sourceUrl} label={req.sourceLabel} /></div>
         </div>
         <BasisBadge basis="required" />
       </div>
       <div className="mt-2 flex flex-wrap items-center gap-2">
-        <label className="text-[11px] text-slate-600">Every</label>
+        <label className="text-[11px] text-charcoal">Every</label>
         <input
           type="number" min={1} value={req.durationValue}
           onChange={(e) => onChange({ durationValue: Math.max(1, Number(e.target.value) || 1) })}
-          className="w-16 px-2 py-1 rounded-md border border-slate-300 text-[13px] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]"
+          className="w-16 px-2 py-1 rounded-md border border-bone text-[13px] focus:outline-none focus:ring-2 focus:ring-[#56514A]"
           aria-label={`Frequency for ${req.docType}`}
         />
         <select
           value={req.durationUnit}
           onChange={(e) => onChange({ durationUnit: e.target.value as DurationUnit })}
-          className="px-2 py-1 rounded-md border border-slate-300 text-[13px] bg-white focus:outline-none focus:ring-2 focus:ring-[#7C3AED]"
+          className="px-2 py-1 rounded-md border border-bone text-[13px] bg-white focus:outline-none focus:ring-2 focus:ring-[#56514A]"
           aria-label={`Unit for ${req.docType}`}
         >
           <option value="Years">Years</option>
           <option value="Months">Months</option>
         </select>
         <div className="flex-1" />
-        <button type="button" onClick={onRemove} className="text-[11px] text-rose-700 hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-rose-300 rounded px-1">Remove</button>
+        <button type="button" onClick={onRemove} className="text-[11px] text-danger hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-danger-border rounded px-1">Remove</button>
       </div>
     </div>
   );
@@ -1080,31 +1080,31 @@ function BusinessItemRow({
   req, onChange, onRemove,
 }: { req: ComplianceRequirement; onChange: (patch: Partial<ComplianceRequirement>) => void; onRemove: () => void }) {
   return (
-    <div className="rounded-lg border border-amber-200 bg-amber-50/40 p-3">
+    <div className="rounded-lg border border-warning-border bg-warning-bg/40 p-3">
       <div className="flex items-start justify-between gap-2">
         <div className="min-w-0">
-          <div className="text-[13px] font-semibold text-slate-900 truncate">{req.docType}</div>
-          <div className="text-[11px] text-amber-800 mt-0.5">added by you · your standard</div>
+          <div className="text-[13px] font-semibold text-ink truncate">{req.docType}</div>
+          <div className="text-[11px] text-warning mt-0.5">added by you · your standard</div>
         </div>
         <BasisBadge basis="business" />
       </div>
       <div className="mt-2 flex flex-wrap items-center gap-2">
-        <label className="text-[11px] text-slate-600">Every</label>
+        <label className="text-[11px] text-charcoal">Every</label>
         <input
           type="number" min={1} value={req.durationValue}
           onChange={(e) => onChange({ durationValue: Math.max(1, Number(e.target.value) || 1) })}
-          className="w-16 px-2 py-1 rounded-md border border-slate-300 text-[13px] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]"
+          className="w-16 px-2 py-1 rounded-md border border-bone text-[13px] focus:outline-none focus:ring-2 focus:ring-[#56514A]"
         />
         <select
           value={req.durationUnit}
           onChange={(e) => onChange({ durationUnit: e.target.value as DurationUnit })}
-          className="px-2 py-1 rounded-md border border-slate-300 text-[13px] bg-white focus:outline-none focus:ring-2 focus:ring-[#7C3AED]"
+          className="px-2 py-1 rounded-md border border-bone text-[13px] bg-white focus:outline-none focus:ring-2 focus:ring-[#56514A]"
         >
           <option value="Years">Years</option>
           <option value="Months">Months</option>
         </select>
         <div className="flex-1" />
-        <button type="button" onClick={onRemove} className="text-[11px] text-rose-700 hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-rose-300 rounded px-1">Remove</button>
+        <button type="button" onClick={onRemove} className="text-[11px] text-danger hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-danger-border rounded px-1">Remove</button>
       </div>
     </div>
   );
@@ -1122,32 +1122,32 @@ function AddBusinessRow({ onAdd }: { onAdd: (name: string, value: number, unit: 
         onAdd(t, value, unit);
         setName(""); setValue(1); setUnit("Years");
       }}
-      className="rounded-lg border border-dashed border-amber-300 bg-amber-50/30 p-3 flex flex-wrap items-center gap-2"
+      className="rounded-lg border border-dashed border-warning-border bg-warning-bg/30 p-3 flex flex-wrap items-center gap-2"
     >
       <input
         value={name}
         onChange={(e) => setName(e.target.value)}
         placeholder="Inspection name (e.g. Heat pump service)"
-        className="flex-1 min-w-[180px] px-2 py-1.5 rounded-md border border-slate-300 text-[13px] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]"
+        className="flex-1 min-w-[180px] px-2 py-1.5 rounded-md border border-bone text-[13px] focus:outline-none focus:ring-2 focus:ring-[#56514A]"
         aria-label="Add a business requirement"
       />
-      <span className="text-[11px] text-slate-600">Every</span>
+      <span className="text-[11px] text-charcoal">Every</span>
       <input
         type="number" min={1} value={value}
         onChange={(e) => setValue(Math.max(1, Number(e.target.value) || 1))}
-        className="w-16 px-2 py-1 rounded-md border border-slate-300 text-[13px]"
+        className="w-16 px-2 py-1 rounded-md border border-bone text-[13px]"
         aria-label="Frequency value"
       />
       <select
         value={unit}
         onChange={(e) => setUnit(e.target.value as DurationUnit)}
-        className="px-2 py-1 rounded-md border border-slate-300 text-[13px] bg-white"
+        className="px-2 py-1 rounded-md border border-bone text-[13px] bg-white"
         aria-label="Frequency unit"
       >
         <option value="Years">Years</option>
         <option value="Months">Months</option>
       </select>
-      <button type="submit" disabled={!name.trim()} className="px-3 py-1.5 rounded-md bg-[#7C3AED] text-white text-[12px] font-semibold disabled:bg-slate-200 disabled:text-slate-400">Add</button>
+      <button type="submit" disabled={!name.trim()} className="px-3 py-1.5 rounded-md bg-[#56514A] text-white text-[12px] font-semibold disabled:bg-bone disabled:text-ink-muted">Add</button>
     </form>
   );
 }
@@ -1169,20 +1169,20 @@ function BuildCard({
 }) {
   const total = build.researched.length + build.additions.length;
   return (
-    <div className="ml-12 max-w-[600px] rounded-xl border border-[#7C3AED]/25 bg-white p-3 space-y-3">
+    <div className="ml-12 max-w-[600px] rounded-xl border border-[#56514A]/25 bg-white p-3 space-y-3">
       <header>
-        <div className="text-[11px] uppercase tracking-wide text-[#5B21B6] font-semibold">
+        <div className="text-[11px] uppercase tracking-wide text-[#56514A] font-semibold">
           Building your list · {build.areaLabel}{build.description ? ` · ${build.description}` : ""}
         </div>
-        <div className="text-[12px] text-slate-600 mt-0.5">
-          Researched items are sourced and labelled <span className="font-semibold text-rose-700">Legally required</span>. Anything you add becomes a <span className="font-semibold text-amber-800">Business requirement</span>.
+        <div className="text-[12px] text-charcoal mt-0.5">
+          Researched items are sourced and labelled <span className="font-semibold text-danger">Legally required</span>. Anything you add becomes a <span className="font-semibold text-warning">Business requirement</span>.
         </div>
       </header>
 
       {build.researched.length > 0 && (
         <section className="space-y-2">
-          <div className="text-[11px] uppercase tracking-wide font-semibold text-rose-700 flex items-center gap-1.5">
-            <span className="inline-block w-1.5 h-1.5 rounded-full bg-rose-500" />
+          <div className="text-[11px] uppercase tracking-wide font-semibold text-danger flex items-center gap-1.5">
+            <span className="inline-block w-1.5 h-1.5 rounded-full bg-danger" />
             Legally required · sourced
           </div>
           <div className="space-y-2">
@@ -1194,8 +1194,8 @@ function BuildCard({
       )}
 
       <section className="space-y-2">
-        <div className="text-[11px] uppercase tracking-wide font-semibold text-amber-800 flex items-center gap-1.5">
-          <span className="inline-block w-1.5 h-1.5 rounded-full bg-amber-500" />
+        <div className="text-[11px] uppercase tracking-wide font-semibold text-warning flex items-center gap-1.5">
+          <span className="inline-block w-1.5 h-1.5 rounded-full bg-warning" />
           Your additions · business required
         </div>
         {build.additions.length > 0 && (
@@ -1208,14 +1208,14 @@ function BuildCard({
         <AddBusinessRow onAdd={onAddAddition} />
       </section>
 
-      <footer className="flex items-center justify-end gap-2 pt-2 border-t border-slate-100">
+      <footer className="flex items-center justify-end gap-2 pt-2 border-t border-faint-rule">
         <button
           type="button" onClick={onCancel}
-          className="px-3 py-1.5 rounded-md text-[12px] font-medium text-slate-600 hover:bg-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-300"
+          className="px-3 py-1.5 rounded-md text-[12px] font-medium text-charcoal hover:bg-bone-wash focus:outline-none focus-visible:ring-2 focus-visible:ring-bone"
         >Cancel</button>
         <button
           type="button" onClick={onConfirm} disabled={total === 0}
-          className="px-3 py-1.5 rounded-md text-[12px] font-semibold bg-[#7C3AED] text-white hover:bg-[#6D28D9] disabled:bg-slate-200 disabled:text-slate-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]"
+          className="px-3 py-1.5 rounded-md text-[12px] font-semibold bg-[#56514A] text-white hover:bg-[#56514A] disabled:bg-bone disabled:text-ink-muted focus:outline-none focus-visible:ring-2 focus-visible:ring-[#56514A]"
         >Confirm {build.areaLabel} list</button>
       </footer>
     </div>
@@ -1225,9 +1225,9 @@ function BuildCard({
 
 function ConfirmedRecap({ count }: { count: number }) {
   return (
-    <div className="ml-12 max-w-[460px] rounded-xl border border-emerald-200 bg-emerald-50 p-3">
-      <div className="text-[11px] uppercase tracking-wide text-emerald-800 font-semibold mb-1">Rules recorded</div>
-      <div className="text-[12px] text-slate-700">
+    <div className="ml-12 max-w-[460px] rounded-xl border border-success-border bg-success-bg p-3">
+      <div className="text-[11px] uppercase tracking-wide text-success font-semibold mb-1">Rules recorded</div>
+      <div className="text-[12px] text-charcoal">
         {count} compliance requirement{count === 1 ? "" : "s"} are now active. They drive the Compliance summary across every let unit.
       </div>
     </div>
@@ -1277,10 +1277,10 @@ function ShowMeBubble({
   return (
     <div className="flex items-end gap-2">
       <HobsonAvatar />
-      <div className="max-w-[640px] w-full bg-[#EDE9FE] text-[#1F2330] text-sm leading-relaxed px-4 py-3 rounded-2xl rounded-bl-md">
+      <div className="max-w-[640px] w-full bg-[#F1EBDE] text-[#2D2D2D] text-sm leading-relaxed px-4 py-3 rounded-2xl rounded-bl-md">
         <div className="whitespace-pre-line">
           {introShown}
-          {!introDone && <span className="inline-block w-1.5 h-3.5 ml-0.5 bg-[#7C3AED] align-middle animate-pulse" />}
+          {!introDone && <span className="inline-block w-1.5 h-3.5 ml-0.5 bg-[#56514A] align-middle animate-pulse" />}
         </div>
         {introDone && (
           <ShowMeTable
@@ -1319,7 +1319,7 @@ function ShowMeTable({
   }
 
   return (
-    <div className="mt-3 rounded-lg border border-[#7C3AED]/20 bg-white overflow-hidden">
+    <div className="mt-3 rounded-lg border border-[#56514A]/20 bg-white overflow-hidden">
       <table className="w-full text-[12px] text-left" style={{ tableLayout: "fixed" }}>
         <colgroup>
           <col style={{ width: "38%" }} />
@@ -1328,7 +1328,7 @@ function ShowMeTable({
           <col style={{ width: "14%" }} />
         </colgroup>
         <thead>
-          <tr className="bg-slate-50 border-b border-slate-200 text-[11px] uppercase tracking-wide text-slate-500">
+          <tr className="bg-paper border-b border-bone text-[11px] uppercase tracking-wide text-ink-muted">
             <th className="px-3 py-2 font-semibold">Requirement</th>
             <th className="px-3 py-2 font-semibold">Renews</th>
             <th className="px-3 py-2 font-semibold">Document on file</th>
@@ -1337,26 +1337,26 @@ function ShowMeTable({
         </thead>
         <tbody>
           {rules.length === 0 && (
-            <tr><td colSpan={4} className="px-3 py-4 text-center text-slate-500 italic">No {meta.label.toLowerCase()} yet.</td></tr>
+            <tr><td colSpan={4} className="px-3 py-4 text-center text-ink-muted italic">No {meta.label.toLowerCase()} yet.</td></tr>
           )}
           {rules.map((r) => {
             const hasDoc = !!r.documentOnFile;
             const isOpen = openRowId === r.id && rowMode !== null;
             return (
               <React.Fragment key={r.id}>
-                <tr className="border-b border-slate-100 align-top">
+                <tr className="border-b border-faint-rule align-top">
                   <td className="px-3 py-2.5">
-                    <div className="font-semibold text-slate-900 break-words">{r.docType}</div>
+                    <div className="font-semibold text-ink break-words">{r.docType}</div>
                     <div className="mt-1"><BasisBadge basis={r.basis} /></div>
                   </td>
-                  <td className="px-3 py-2.5 text-slate-700">
+                  <td className="px-3 py-2.5 text-charcoal">
                     Every {r.durationValue} {r.durationUnit.toLowerCase()}
                   </td>
                   <td className="px-3 py-2.5">
                     {hasDoc ? (
-                      <span className="text-slate-800 break-words">{r.documentOnFile}</span>
+                      <span className="text-ink break-words">{r.documentOnFile}</span>
                     ) : (
-                      <span className="text-slate-400 italic">None on file</span>
+                      <span className="text-ink-muted italic">None on file</span>
                     )}
                   </td>
                   <td className="px-3 py-2.5">
@@ -1397,7 +1397,7 @@ function ShowMeTable({
                   </td>
                 </tr>
                 {isOpen && (
-                  <tr className="bg-[#FAF8FF] border-b border-slate-100">
+                  <tr className="bg-[#F1EBDE] border-b border-faint-rule">
                     <td colSpan={4} className="px-3 py-3">
                       {rowMode === "view" && hasDoc && (
                         <ViewPanel filename={r.documentOnFile!} onClose={() => { setOpenRowId(null); setRowMode(null); }} />
@@ -1424,7 +1424,7 @@ function ShowMeTable({
           })}
         </tbody>
       </table>
-      <div className="px-3 py-3 bg-white border-t border-slate-100">
+      <div className="px-3 py-3 bg-white border-t border-faint-rule">
         {showAdd && onAdd ? (
           <AddRowForm
             group={group}
@@ -1437,7 +1437,7 @@ function ShowMeTable({
             type="button"
             onClick={() => setShowAdd(true)}
             disabled={!onAdd}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md border border-dashed border-[#7C3AED]/40 text-[12px] text-[#5B21B6] hover:bg-[#F5F3FF] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED] disabled:opacity-50"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md border border-dashed border-[#56514A]/40 text-[12px] text-[#56514A] hover:bg-[#F1EBDE] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#56514A] disabled:opacity-50"
             aria-label="Add a requirement manually"
           >
             <span aria-hidden>＋</span> Add a requirement manually
@@ -1459,14 +1459,14 @@ function RowIconBtn({
   ariaLabel: string;
   title: string;
 }) {
-  const base = "inline-flex items-center justify-center w-7 h-7 rounded-md border focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]";
+  const base = "inline-flex items-center justify-center w-7 h-7 rounded-md border focus:outline-none focus-visible:ring-2 focus-visible:ring-[#56514A]";
   const cls = disabled
-    ? `${base} border-slate-200 bg-slate-50 text-slate-300 cursor-not-allowed`
+    ? `${base} border-bone bg-paper text-ink-faint cursor-not-allowed`
     : highlight
-      ? `${base} border-[#7C3AED] bg-[#7C3AED] text-white hover:bg-[#6D28D9]`
+      ? `${base} border-[#56514A] bg-[#56514A] text-white hover:bg-[#56514A]`
       : active
-        ? `${base} border-[#7C3AED] bg-[#F5F3FF] text-[#5B21B6]`
-        : `${base} border-slate-300 bg-white text-slate-600 hover:bg-slate-50`;
+        ? `${base} border-[#56514A] bg-[#F1EBDE] text-[#56514A]`
+        : `${base} border-bone bg-white text-charcoal hover:bg-paper`;
   return (
     <button
       type="button"
@@ -1484,23 +1484,23 @@ function RowIconBtn({
 
 function ViewPanel({ filename, onClose }: { filename: string; onClose: () => void }) {
   return (
-    <div className="rounded-md border border-slate-200 bg-white p-3">
+    <div className="rounded-md border border-bone bg-white p-3">
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
-          <div className="text-[11px] uppercase tracking-wide text-slate-500 font-semibold">Document preview</div>
-          <div className="text-[13px] font-semibold text-slate-900 truncate mt-0.5">{filename}</div>
-          <div className="text-[11px] text-slate-500 mt-0.5">
+          <div className="text-[11px] uppercase tracking-wide text-ink-muted font-semibold">Document preview</div>
+          <div className="text-[13px] font-semibold text-ink truncate mt-0.5">{filename}</div>
+          <div className="text-[11px] text-ink-muted mt-0.5">
             Opens in the Professor's Documents — this is the file Hobson is reading for dates.
           </div>
         </div>
         <button
           type="button"
           onClick={onClose}
-          className="text-[11px] text-slate-500 hover:text-slate-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED] rounded px-1"
+          className="text-[11px] text-ink-muted hover:text-charcoal focus:outline-none focus-visible:ring-2 focus-visible:ring-[#56514A] rounded px-1"
           aria-label="Close preview"
         >Close</button>
       </div>
-      <div className="mt-2 h-24 rounded border border-dashed border-slate-300 bg-slate-50 grid place-items-center text-[11px] text-slate-500">
+      <div className="mt-2 h-24 rounded border border-dashed border-bone bg-paper grid place-items-center text-[11px] text-ink-muted">
         Simulated preview — {filename}
       </div>
     </div>
@@ -1513,28 +1513,28 @@ function UploadOverridePanel({
   const fileRef = React.useRef<HTMLInputElement | null>(null);
   const hasCurrent = !!req.documentOnFile;
   return (
-    <div className="rounded-md border border-[#7C3AED]/30 bg-white p-3">
-      <div className="text-[11px] uppercase tracking-wide text-[#5B21B6] font-semibold">
+    <div className="rounded-md border border-[#56514A]/30 bg-white p-3">
+      <div className="text-[11px] uppercase tracking-wide text-[#56514A] font-semibold">
         {hasCurrent ? "Replace the document held for" : "Upload a document for"} {req.docType}
       </div>
-      <div className="text-[12px] text-slate-700 mt-1">
-        Current: <span className={hasCurrent ? "text-slate-900" : "italic text-slate-400"}>
+      <div className="text-[12px] text-charcoal mt-1">
+        Current: <span className={hasCurrent ? "text-ink" : "italic text-ink-muted"}>
           {hasCurrent ? req.documentOnFile : "None on file"}
         </span>
       </div>
-      <div className="text-[11px] text-slate-500 mt-0.5">
+      <div className="text-[11px] text-ink-muted mt-0.5">
         The Professor will read the new file and update the dates — feeding the Compliance summary.
       </div>
       <div className="mt-2 flex items-center gap-2">
         <button
           type="button"
           onClick={() => fileRef.current?.click()}
-          className="px-3 py-1.5 rounded-md bg-[#7C3AED] text-white text-[12px] font-semibold hover:bg-[#6D28D9] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]"
+          className="px-3 py-1.5 rounded-md bg-[#56514A] text-white text-[12px] font-semibold hover:bg-[#56514A] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#56514A]"
         >Choose file</button>
         <button
           type="button"
           onClick={onClose}
-          className="px-3 py-1.5 rounded-md border border-slate-300 bg-white text-[12px] text-slate-700 hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-300"
+          className="px-3 py-1.5 rounded-md border border-bone bg-white text-[12px] text-charcoal hover:bg-paper focus:outline-none focus-visible:ring-2 focus-visible:ring-bone"
         >Cancel</button>
         <input
           ref={fileRef}
@@ -1582,38 +1582,38 @@ function AddRowForm({
           areaId,
         });
       }}
-      className="rounded-md border border-[#7C3AED]/30 bg-white p-3 space-y-2"
+      className="rounded-md border border-[#56514A]/30 bg-white p-3 space-y-2"
     >
-      <div className="text-[11px] uppercase tracking-wide text-[#5B21B6] font-semibold">Add a requirement manually</div>
+      <div className="text-[11px] uppercase tracking-wide text-[#56514A] font-semibold">Add a requirement manually</div>
       <input
         autoFocus
         value={name}
         onChange={(e) => setName(e.target.value)}
         placeholder="Document type (e.g. Legionella risk assessment)"
-        className="w-full px-3 py-1.5 rounded-md border border-slate-300 text-[12px] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]"
+        className="w-full px-3 py-1.5 rounded-md border border-bone text-[12px] focus:outline-none focus:ring-2 focus:ring-[#56514A]"
         aria-label="Document type"
       />
       <input
         value={anchor}
         onChange={(e) => setAnchor(e.target.value)}
         placeholder="Anchor (e.g. inspection date)"
-        className="w-full px-3 py-1.5 rounded-md border border-slate-300 text-[12px] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]"
+        className="w-full px-3 py-1.5 rounded-md border border-bone text-[12px] focus:outline-none focus:ring-2 focus:ring-[#56514A]"
         aria-label="Renewal anchor"
       />
       <div className="flex flex-wrap items-center gap-2">
-        <label className="text-[11px] text-slate-600">Renew every</label>
+        <label className="text-[11px] text-charcoal">Renew every</label>
         <input
           type="number"
           min={1}
           value={value}
           onChange={(e) => setValue(Math.max(1, Number(e.target.value) || 1))}
-          className="w-16 px-2 py-1 rounded-md border border-slate-300 text-[12px] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]"
+          className="w-16 px-2 py-1 rounded-md border border-bone text-[12px] focus:outline-none focus:ring-2 focus:ring-[#56514A]"
           aria-label="Renewal duration"
         />
         <select
           value={unit}
           onChange={(e) => setUnit(e.target.value as DurationUnit)}
-          className="px-2 py-1 rounded-md border border-slate-300 text-[12px] bg-white focus:outline-none focus:ring-2 focus:ring-[#7C3AED]"
+          className="px-2 py-1 rounded-md border border-bone text-[12px] bg-white focus:outline-none focus:ring-2 focus:ring-[#56514A]"
           aria-label="Renewal unit"
         >
           <option value="Years">Years</option>
@@ -1622,7 +1622,7 @@ function AddRowForm({
         <select
           value={basis}
           onChange={(e) => setBasis(e.target.value as RequirementBasis)}
-          className="px-2 py-1 rounded-md border border-slate-300 text-[12px] bg-white focus:outline-none focus:ring-2 focus:ring-[#7C3AED]"
+          className="px-2 py-1 rounded-md border border-bone text-[12px] bg-white focus:outline-none focus:ring-2 focus:ring-[#56514A]"
           aria-label="Legal basis"
         >
           <option value="required">Legally required</option>
@@ -1633,12 +1633,12 @@ function AddRowForm({
         <button
           type="button"
           onClick={onCancel}
-          className="px-2.5 py-1 rounded-md text-[11px] text-slate-600 hover:bg-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-300"
+          className="px-2.5 py-1 rounded-md text-[11px] text-charcoal hover:bg-bone-wash focus:outline-none focus-visible:ring-2 focus-visible:ring-bone"
         >Cancel</button>
         <button
           type="submit"
           disabled={!name.trim()}
-          className="px-3 py-1 rounded-md bg-[#7C3AED] text-white text-[11px] font-semibold hover:bg-[#6D28D9] disabled:bg-slate-200 disabled:text-slate-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]"
+          className="px-3 py-1 rounded-md bg-[#56514A] text-white text-[11px] font-semibold hover:bg-[#56514A] disabled:bg-bone disabled:text-ink-muted focus:outline-none focus-visible:ring-2 focus-visible:ring-[#56514A]"
         >Add</button>
       </div>
     </form>
@@ -1684,10 +1684,10 @@ export function InspectorChat(props: InspectorChatProps) {
       {introPhase === "typing" ? (
         <div className="flex items-end gap-2" aria-live="polite">
           <HobsonAvatar />
-          <div className="bg-[#EDE9FE] px-4 py-3 rounded-2xl rounded-bl-md flex items-center gap-1">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#7C3AED] animate-pulse" />
-            <span className="w-1.5 h-1.5 rounded-full bg-[#7C3AED] animate-pulse" style={{ animationDelay: "150ms" }} />
-            <span className="w-1.5 h-1.5 rounded-full bg-[#7C3AED] animate-pulse" style={{ animationDelay: "300ms" }} />
+          <div className="bg-[#F1EBDE] px-4 py-3 rounded-2xl rounded-bl-md flex items-center gap-1">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#56514A] animate-pulse" />
+            <span className="w-1.5 h-1.5 rounded-full bg-[#56514A] animate-pulse" style={{ animationDelay: "150ms" }} />
+            <span className="w-1.5 h-1.5 rounded-full bg-[#56514A] animate-pulse" style={{ animationDelay: "300ms" }} />
           </div>
         </div>
       ) : (
@@ -1777,7 +1777,7 @@ export function InspectorComposer({ buildActive }: { buildActive: boolean }) {
     return (
       <div
         aria-live="polite"
-        className="flex items-center gap-2 px-4 py-3 rounded-2xl border border-dashed border-[#7C3AED]/30 bg-[#F5F3FF] text-[12px] text-[#5B21B6]"
+        className="flex items-center gap-2 px-4 py-3 rounded-2xl border border-dashed border-[#56514A]/30 bg-[#F1EBDE] text-[12px] text-[#56514A]"
       >
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
           <path d="M12 2a10 10 0 1 0 10 10"/><path d="M22 4l-10 10-3-3"/>
@@ -1789,7 +1789,7 @@ export function InspectorComposer({ buildActive }: { buildActive: boolean }) {
   return (
     <div
       aria-disabled="true"
-      className="flex items-center gap-2 px-4 py-2 rounded-full border border-slate-200 bg-slate-50 text-[12px] text-slate-500"
+      className="flex items-center gap-2 px-4 py-2 rounded-full border border-bone bg-paper text-[12px] text-ink-muted"
     >
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
         <rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/>
@@ -1922,27 +1922,27 @@ function RecalibrationPanel({
   onDismissAll: () => void;
 }) {
   return (
-    <div className="mt-3 rounded-xl border border-[#7C3AED]/30 bg-[#FAF8FF] p-3 space-y-3">
+    <div className="mt-3 rounded-xl border border-[#56514A]/30 bg-[#F1EBDE] p-3 space-y-3">
       <div className="flex items-start gap-2">
-        <div className="w-7 h-7 rounded-full overflow-hidden bg-white ring-1 ring-[#7C3AED]/20 grid place-items-center shrink-0">
+        <div className="w-7 h-7 rounded-full overflow-hidden bg-white ring-1 ring-[#56514A]/20 grid place-items-center shrink-0">
           <img src={INSPECTOR_CHARACTER.src} alt="" aria-hidden className="w-[120%] h-[120%] object-contain" />
         </div>
         <div className="min-w-0">
           {state.phase === "researching" ? (
-            <div className="text-[12px] text-[#5B21B6] flex items-center gap-2">
+            <div className="text-[12px] text-[#56514A] flex items-center gap-2">
               <span className="inline-flex gap-1">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#7C3AED] animate-pulse" />
-                <span className="w-1.5 h-1.5 rounded-full bg-[#7C3AED] animate-pulse" style={{ animationDelay: "150ms" }} />
-                <span className="w-1.5 h-1.5 rounded-full bg-[#7C3AED] animate-pulse" style={{ animationDelay: "300ms" }} />
+                <span className="w-1.5 h-1.5 rounded-full bg-[#56514A] animate-pulse" />
+                <span className="w-1.5 h-1.5 rounded-full bg-[#56514A] animate-pulse" style={{ animationDelay: "150ms" }} />
+                <span className="w-1.5 h-1.5 rounded-full bg-[#56514A] animate-pulse" style={{ animationDelay: "300ms" }} />
               </span>
               Re-checking gov.uk and HSE guidance for {state.scopeLabel ?? GROUP_META[state.group].label.toLowerCase()}…
             </div>
           ) : state.changes.length === 0 ? (
-            <div className="text-[12px] text-slate-700">
+            <div className="text-[12px] text-charcoal">
               I've re-checked the current requirements against gov.uk and HSE guidance. <span className="font-medium">Nothing has changed</span> since you set this up — {state.unchangedNote.replace(/^./, (c) => c.toLowerCase())}
             </div>
           ) : (
-            <div className="text-[12px] text-slate-700">
+            <div className="text-[12px] text-charcoal">
               I've re-checked the current requirements against gov.uk and HSE guidance.
               {" "}<span className="font-medium">{state.changes.length} thing{state.changes.length === 1 ? " has" : "s have"} changed</span> since you set this up. Review and confirm what you'd like to apply.
             </div>
@@ -1951,7 +1951,7 @@ function RecalibrationPanel({
         <button
           type="button"
           onClick={onDismissAll}
-          className="ml-auto shrink-0 text-[11px] text-slate-500 hover:text-slate-800 rounded px-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-300"
+          className="ml-auto shrink-0 text-[11px] text-ink-muted hover:text-ink rounded px-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-bone"
           aria-label="Close recalibration"
         >Close</button>
       </div>
@@ -1961,24 +1961,24 @@ function RecalibrationPanel({
           {state.changes.map((c) => {
             const decision = state.resolved[c.id];
             return (
-              <div key={c.id} className={"rounded-lg border bg-white p-3 " + (decision ? "border-slate-200 opacity-80" : "border-[#7C3AED]/25")}>
+              <div key={c.id} className={"rounded-lg border bg-white p-3 " + (decision ? "border-bone opacity-80" : "border-[#56514A]/25")}>
                 <div className="flex items-start gap-2">
-                  <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-[#F5F3FF] border border-[#7C3AED]/30 text-[10px] uppercase tracking-wide text-[#5B21B6] font-semibold shrink-0">
+                  <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-[#F1EBDE] border border-[#56514A]/30 text-[10px] uppercase tracking-wide text-[#56514A] font-semibold shrink-0">
                     {c.kind === "document_updated" ? "Document updated" : c.kind === "edition_updated" ? "New edition" : "Frequency changed"}
                   </span>
                   <div className="min-w-0">
-                    <div className="text-[13px] font-semibold text-slate-900">{c.title}</div>
-                    <div className="text-[12px] text-slate-700 mt-0.5">{c.summary}</div>
-                    <div className="text-[11px] text-slate-500 mt-1">
-                      {c.kind === "document_updated" && <>New version: <span className="font-medium text-slate-700">{c.newVersionLabel}</span></>}
-                      {c.kind === "edition_updated" && <>Latest: <span className="font-medium text-slate-700">{c.newEditionLabel}</span></>}
-                      {c.kind === "frequency_changed" && <>New cadence: <span className="font-medium text-slate-700">every {c.newValue} {c.newUnit.toLowerCase()}</span></>}
+                    <div className="text-[13px] font-semibold text-ink">{c.title}</div>
+                    <div className="text-[12px] text-charcoal mt-0.5">{c.summary}</div>
+                    <div className="text-[11px] text-ink-muted mt-1">
+                      {c.kind === "document_updated" && <>New version: <span className="font-medium text-charcoal">{c.newVersionLabel}</span></>}
+                      {c.kind === "edition_updated" && <>Latest: <span className="font-medium text-charcoal">{c.newEditionLabel}</span></>}
+                      {c.kind === "frequency_changed" && <>New cadence: <span className="font-medium text-charcoal">every {c.newValue} {c.newUnit.toLowerCase()}</span></>}
                     </div>
                   </div>
                 </div>
                 <div className="mt-2 flex items-center justify-end gap-2">
                   {decision ? (
-                    <span className={"text-[11px] " + (decision === "applied" ? "text-emerald-700" : "text-slate-500")}>
+                    <span className={"text-[11px] " + (decision === "applied" ? "text-success" : "text-ink-muted")}>
                       {decision === "applied" ? "Applied" : "Dismissed"}
                     </span>
                   ) : (
@@ -1986,12 +1986,12 @@ function RecalibrationPanel({
                       <button
                         type="button"
                         onClick={() => onResolve(c.id, "dismissed", c)}
-                        className="px-2.5 py-1 rounded-md text-[12px] border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-300"
+                        className="px-2.5 py-1 rounded-md text-[12px] border border-bone bg-white hover:bg-paper text-charcoal focus:outline-none focus-visible:ring-2 focus-visible:ring-bone"
                       >{c.keepLabel}</button>
                       <button
                         type="button"
                         onClick={() => onResolve(c.id, "applied", c)}
-                        className="px-2.5 py-1 rounded-md text-[12px] font-semibold bg-[#7C3AED] text-white hover:bg-[#6D28D9] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]"
+                        className="px-2.5 py-1 rounded-md text-[12px] font-semibold bg-[#56514A] text-white hover:bg-[#56514A] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#56514A]"
                       >{c.acceptLabel}</button>
                     </>
                   )}
@@ -2003,8 +2003,8 @@ function RecalibrationPanel({
       )}
 
       {state.phase === "results" && state.group === "contract" && (
-        <div className="rounded-md border border-slate-200 bg-white px-3 py-2 text-[11px] text-slate-600 flex items-start gap-2">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden className="mt-0.5 shrink-0 text-emerald-600"><path d="M20 6L9 17l-5-5"/></svg>
+        <div className="rounded-md border border-bone bg-white px-3 py-2 text-[11px] text-charcoal flex items-start gap-2">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden className="mt-0.5 shrink-0 text-success"><path d="M20 6L9 17l-5-5"/></svg>
           <span>{state.unchangedNote}</span>
         </div>
       )}
@@ -2029,26 +2029,26 @@ function GroupSection({
   const [open, setOpen] = useState(false);
   const panelId = `group-panel-${group}`;
   return (
-    <section className="rounded-xl border border-slate-200 bg-white">
+    <section className="rounded-xl border border-bone bg-white">
       <div className="flex items-stretch">
         <button
           type="button"
           aria-expanded={open}
           aria-controls={panelId}
           onClick={() => setOpen((v) => !v)}
-          className="flex-1 flex items-center gap-2 px-4 py-3 text-left hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED] rounded-l-xl min-w-0"
+          className="flex-1 flex items-center gap-2 px-4 py-3 text-left hover:bg-paper focus:outline-none focus-visible:ring-2 focus-visible:ring-[#56514A] rounded-l-xl min-w-0"
         >
           <svg
-            className={`w-4 h-4 text-[#5B21B6] shrink-0 transition-transform ${open ? "rotate-90" : ""}`}
+            className={`w-4 h-4 text-[#56514A] shrink-0 transition-transform ${open ? "rotate-90" : ""}`}
             viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden
           >
             <path d="M9 6l6 6-6 6" />
           </svg>
           <div className="min-w-0">
-            <div className="text-[13px] font-semibold text-slate-900 truncate">
-              {meta.label} <span className="text-slate-500 font-normal">· {rules.length}</span>
+            <div className="text-[13px] font-semibold text-ink truncate">
+              {meta.label} <span className="text-ink-muted font-normal">· {rules.length}</span>
             </div>
-            <div className="text-[11px] text-slate-500 truncate">{meta.helper}</div>
+            <div className="text-[11px] text-ink-muted truncate">{meta.helper}</div>
           </div>
         </button>
         <div className="flex items-center gap-1.5 shrink-0 px-3">
@@ -2056,7 +2056,7 @@ function GroupSection({
             <button
               type="button"
               onClick={onShowMe}
-              className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md border border-slate-300 bg-white text-[12px] text-slate-700 hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]"
+              className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md border border-bone bg-white text-[12px] text-charcoal hover:bg-paper focus:outline-none focus-visible:ring-2 focus-visible:ring-[#56514A]"
               aria-label={`Show me ${meta.label} in the chat`}
             >
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
@@ -2069,7 +2069,7 @@ function GroupSection({
             type="button"
             onClick={onRecalibrate}
             disabled={busy}
-            className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md border border-slate-300 bg-white text-[12px] text-slate-700 hover:bg-slate-50 disabled:opacity-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]"
+            className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md border border-bone bg-white text-[12px] text-charcoal hover:bg-paper disabled:opacity-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#56514A]"
             aria-label={`Update ${meta.label} from the web`}
           >
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden className={busy ? "animate-spin" : ""}>
@@ -2080,29 +2080,29 @@ function GroupSection({
         </div>
       </div>
       {open && (
-        <div id={panelId} className="p-3 space-y-2 border-t border-slate-100">
+        <div id={panelId} className="p-3 space-y-2 border-t border-faint-rule">
           {rules.length === 0 ? (
-            <div className="text-[12px] text-slate-500 italic px-1 py-3">No items in this group yet.</div>
+            <div className="text-[12px] text-ink-muted italic px-1 py-3">No items in this group yet.</div>
           ) : (
             <div className="grid gap-2 sm:grid-cols-2">
               {rules.map((r) => (
-                <div key={r.id} className="rounded-lg border border-slate-200 bg-white p-3">
+                <div key={r.id} className="rounded-lg border border-bone bg-white p-3">
                   <div className="flex items-start justify-between gap-2 mb-1">
-                    <div className="text-[13px] font-semibold text-slate-900 truncate">{r.docType}</div>
+                    <div className="text-[13px] font-semibold text-ink truncate">{r.docType}</div>
                     <BasisBadge basis={r.basis} />
                   </div>
                   {r.category === "certification" ? (
                     <>
-                      <div className="text-[12px] text-slate-700">
+                      <div className="text-[12px] text-charcoal">
                         Renews every <span className="font-medium">{r.durationValue} {r.durationUnit.toLowerCase()}</span>
                       </div>
-                      <div className="text-[11px] text-slate-500 mt-0.5">
+                      <div className="text-[11px] text-ink-muted mt-0.5">
                         Anchor: {r.anchor} · scope: {r.appliesTo === "building" ? "building" : "per let unit"}
                       </div>
                     </>
                   ) : (
                     <>
-                      {r.description && <div className="text-[12px] text-slate-700">{r.description}</div>}
+                      {r.description && <div className="text-[12px] text-charcoal">{r.description}</div>}
                       <VersionSourcePicker req={r} onChange={(patch) => onUpdateRule(r.id, patch)} compact />
                     </>
                   )}
@@ -2156,24 +2156,24 @@ function ScheduleHeader({
   return (
     <section
       aria-label="Inspector recalibration schedule"
-      className="rounded-xl border border-[#7C3AED]/25 bg-white p-4"
+      className="rounded-xl border border-[#56514A]/25 bg-white p-4"
     >
       <div className="flex items-start gap-3 flex-wrap">
-        <div className="w-9 h-9 rounded-full overflow-hidden bg-[#F5F3FF] ring-1 ring-[#7C3AED]/20 grid place-items-center shrink-0">
+        <div className="w-9 h-9 rounded-full overflow-hidden bg-[#F1EBDE] ring-1 ring-[#56514A]/20 grid place-items-center shrink-0">
           <img src={INSPECTOR_CHARACTER.src} alt="" aria-hidden className="w-[120%] h-[120%] object-contain" />
         </div>
         <div className="min-w-0 flex-1">
-          <div className="text-[13px] font-semibold text-slate-900">Hobson sends the Researcher · the Inspector updates your rulebook</div>
-          <div className="text-[11px] text-slate-500 mt-0.5">
+          <div className="text-[13px] font-semibold text-ink">Hobson sends the Researcher · the Inspector updates your rulebook</div>
+          <div className="text-[11px] text-ink-muted mt-0.5">
             A standing check across every requirement. The Researcher watches the law and guidance; the Inspector updates your rulebook from what's found. I always propose changes — I never apply them on my own.
           </div>
           <div className="mt-2 flex items-center gap-3 flex-wrap">
-            <label className="text-[11px] text-slate-600 flex items-center gap-2">
+            <label className="text-[11px] text-charcoal flex items-center gap-2">
               <span>Cadence</span>
               <select
                 value={frequency}
                 onChange={(e) => onFrequency(e.target.value as CheckFrequency)}
-                className="px-2 py-1 rounded-md border border-slate-300 text-[12px] bg-white focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]"
+                className="px-2 py-1 rounded-md border border-bone text-[12px] bg-white focus:outline-none focus-visible:ring-2 focus-visible:ring-[#56514A]"
                 aria-label="Recalibration cadence"
               >
                 {FREQUENCY_OPTIONS.map((o) => (
@@ -2181,9 +2181,9 @@ function ScheduleHeader({
                 ))}
               </select>
             </label>
-            <div className="text-[11px] text-slate-500">
-              Last checked <span className="text-slate-700 font-medium">{fmtDate(lastChecked)}</span>
-              {" · "}next due <span className="text-slate-700 font-medium">{fmtDate(nextDue)}</span>
+            <div className="text-[11px] text-ink-muted">
+              Last checked <span className="text-charcoal font-medium">{fmtDate(lastChecked)}</span>
+              {" · "}next due <span className="text-charcoal font-medium">{fmtDate(nextDue)}</span>
             </div>
           </div>
         </div>
@@ -2191,7 +2191,7 @@ function ScheduleHeader({
           type="button"
           onClick={onCheckNow}
           disabled={busy}
-          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-[#7C3AED] text-white text-[12px] font-semibold hover:bg-[#6D28D9] disabled:opacity-60 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]"
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-[#56514A] text-white text-[12px] font-semibold hover:bg-[#56514A] disabled:opacity-60 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#56514A]"
         >
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden className={busy ? "animate-spin" : ""}>
             <path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 4v5h-5"/>
@@ -2254,26 +2254,26 @@ function InspectorNotesStrip({
   return (
     <section
       aria-label="The Inspector's notes"
-      className="border-b border-slate-100 bg-[#FAF8FF] shrink-0"
+      className="border-b border-faint-rule bg-[#F1EBDE] shrink-0"
     >
       <button
         type="button"
         aria-expanded={open}
         aria-controls={panelId}
         onClick={() => setOpen((v) => !v)}
-        className="w-full flex items-center gap-2 px-5 py-2 text-left hover:bg-[#F5F3FF] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED]"
+        className="w-full flex items-center gap-2 px-5 py-2 text-left hover:bg-[#F1EBDE] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#56514A]"
       >
-        <div className="w-6 h-6 rounded-full overflow-hidden bg-white ring-1 ring-[#7C3AED]/20 grid place-items-center shrink-0">
+        <div className="w-6 h-6 rounded-full overflow-hidden bg-white ring-1 ring-[#56514A]/20 grid place-items-center shrink-0">
           <img src={INSPECTOR_CHARACTER.src} alt="" aria-hidden className="w-[120%] h-[120%] object-contain" />
         </div>
-        <h3 className="text-[12px] font-semibold uppercase tracking-wide text-[#5B21B6] shrink-0">The Inspector's notes</h3>
-        <span className="text-[11px] text-slate-500 truncate min-w-0">· my vigilance &amp; the rulebook</span>
+        <h3 className="text-[12px] font-semibold uppercase tracking-wide text-[#56514A] shrink-0">The Inspector's notes</h3>
+        <span className="text-[11px] text-ink-muted truncate min-w-0">· my vigilance &amp; the rulebook</span>
         {badge && (
-          <span className="ml-1 shrink-0 inline-flex items-center px-1.5 py-0.5 rounded-full bg-[#B45309]/10 text-[#B45309] text-[10px] font-semibold tracking-wide uppercase">
+          <span className="ml-1 shrink-0 inline-flex items-center px-1.5 py-0.5 rounded-full bg-[#8F5A14]/10 text-[#8F5A14] text-[10px] font-semibold tracking-wide uppercase">
             {badge}
           </span>
         )}
-        <span className="ml-auto shrink-0 text-[#5B21B6]" aria-hidden>
+        <span className="ml-auto shrink-0 text-[#56514A]" aria-hidden>
           <svg className={`w-4 h-4 transition-transform ${open ? "rotate-90" : ""}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <path d="M9 6l6 6-6 6" />
           </svg>
@@ -2286,10 +2286,10 @@ function InspectorNotesStrip({
 
       {/* Opening note — lavender bubble, his voice */}
       <div className="flex items-start gap-2 mb-2">
-        <div className="w-7 h-7 rounded-full overflow-hidden bg-white ring-1 ring-[#7C3AED]/20 grid place-items-center shrink-0">
+        <div className="w-7 h-7 rounded-full overflow-hidden bg-white ring-1 ring-[#56514A]/20 grid place-items-center shrink-0">
           <img src={INSPECTOR_CHARACTER.src} alt="" aria-hidden className="w-[120%] h-[120%] object-contain" />
         </div>
-        <div className="max-w-[640px] bg-white border border-[#7C3AED]/20 text-[12.5px] leading-relaxed px-3 py-2 rounded-2xl rounded-bl-md text-slate-800">
+        <div className="max-w-[640px] bg-white border border-[#56514A]/20 text-[12.5px] leading-relaxed px-3 py-2 rounded-2xl rounded-bl-md text-ink">
           A note on where things stand. I last checked the law and guidance on{" "}
           <span className="font-semibold">{fmtDate(lastChecked)}</span>. I'm watching{" "}
           <span className="font-semibold">{rulesCount} requirement{rulesCount === 1 ? "" : "s"}</span> across your residential units.
@@ -2299,58 +2299,58 @@ function InspectorNotesStrip({
 
       <div className="grid gap-2 lg:grid-cols-3">
         {/* Section 1 — Last web check */}
-        <div className="lg:col-span-2 rounded-md border border-[#7C3AED]/15 bg-white p-3">
+        <div className="lg:col-span-2 rounded-md border border-[#56514A]/15 bg-white p-3">
           <div className="flex items-center justify-between gap-2 mb-1.5">
-            <div className="text-[11px] font-semibold uppercase tracking-wide text-[#5B21B6]">Last web check</div>
-            <div className="text-[11px] text-slate-500">
+            <div className="text-[11px] font-semibold uppercase tracking-wide text-[#56514A]">Last web check</div>
+            <div className="text-[11px] text-ink-muted">
               {fmtDate(lastChecked)} · gov.uk &amp; HSE guidance
             </div>
           </div>
           <ul className="space-y-1">
             {updatedItems.map((it) => (
-              <li key={it.id} className="flex items-start gap-2 text-[12px] text-slate-800">
+              <li key={it.id} className="flex items-start gap-2 text-[12px] text-ink">
                 <span
                   aria-hidden
-                  className={`mt-1.5 w-1.5 h-1.5 rounded-full shrink-0 ${it.pending ? "bg-[#B45309]" : "bg-emerald-500"}`}
+                  className={`mt-1.5 w-1.5 h-1.5 rounded-full shrink-0 ${it.pending ? "bg-[#8F5A14]" : "bg-success"}`}
                 />
                 <div className="min-w-0 flex-1">
                   <span className="font-medium">{it.label}</span>
-                  <span className="text-slate-500"> — {it.reason}</span>
+                  <span className="text-ink-muted"> — {it.reason}</span>
                 </div>
                 <span
                   className={`text-[11px] px-1.5 py-0.5 rounded border shrink-0 ${
                     it.pending
-                      ? "border-[#B45309]/30 bg-[#FFF7ED] text-[#B45309]"
-                      : "border-emerald-200 bg-emerald-50 text-emerald-700"
+                      ? "border-[#8F5A14]/30 bg-[#F7EDDC] text-[#8F5A14]"
+                      : "border-success-border bg-success-bg text-success"
                   }`}
                 >
                   {it.status}
                 </span>
               </li>
             ))}
-            <li className="flex items-start gap-2 text-[12px] text-slate-800">
-              <span aria-hidden className="mt-1.5 w-1.5 h-1.5 rounded-full bg-slate-300 shrink-0" />
+            <li className="flex items-start gap-2 text-[12px] text-ink">
+              <span aria-hidden className="mt-1.5 w-1.5 h-1.5 rounded-full bg-bone-strong shrink-0" />
               <div className="min-w-0 flex-1">
                 <span className="font-medium">Gas, EICR, EPC</span>
-                <span className="text-slate-500"> — unchanged at this check.</span>
+                <span className="text-ink-muted"> — unchanged at this check.</span>
               </div>
             </li>
           </ul>
         </div>
 
         {/* Section 2 — What I'm watching */}
-        <div className="rounded-md border border-[#7C3AED]/15 bg-white p-3">
-          <div className="text-[11px] font-semibold uppercase tracking-wide text-[#5B21B6] mb-1.5">What I'm watching</div>
+        <div className="rounded-md border border-[#56514A]/15 bg-white p-3">
+          <div className="text-[11px] font-semibold uppercase tracking-wide text-[#56514A] mb-1.5">What I'm watching</div>
           <div className="flex items-end gap-4">
             <div>
-              <div className="text-[20px] font-semibold text-slate-900 leading-none">{rulesCount}</div>
-              <div className="text-[11px] text-slate-500 mt-1">requirements set</div>
+              <div className="text-[20px] font-semibold text-ink leading-none">{rulesCount}</div>
+              <div className="text-[11px] text-ink-muted mt-1">requirements set</div>
             </div>
             <div>
-              <div className={`text-[20px] font-semibold leading-none ${awaitingCount > 0 ? "text-[#B45309]" : "text-slate-900"}`}>
+              <div className={`text-[20px] font-semibold leading-none ${awaitingCount > 0 ? "text-[#8F5A14]" : "text-ink"}`}>
                 {awaitingCount}
               </div>
-              <div className="text-[11px] text-slate-500 mt-1">awaiting your confirmation</div>
+              <div className="text-[11px] text-ink-muted mt-1">awaiting your confirmation</div>
             </div>
           </div>
         </div>
@@ -2358,19 +2358,19 @@ function InspectorNotesStrip({
 
       {/* Section 3 — Gaps in MY coverage (not a unit verdict) */}
       {gapsCoverage.commercial && (
-        <div className="mt-2 flex items-start gap-2 px-3 py-2 rounded-md border border-[#7C3AED]/15 bg-white text-[12px] text-slate-800">
+        <div className="mt-2 flex items-start gap-2 px-3 py-2 rounded-md border border-[#56514A]/15 bg-white text-[12px] text-ink">
           <svg
             className="w-4 h-4 shrink-0 mt-0.5"
             viewBox="0 0 24 24"
             fill="none"
-            stroke="#5B21B6"
+            stroke="#56514A"
             strokeWidth="2"
             aria-hidden
           >
-            <path d="M12 3l9 16H3z" /><path d="M12 10v4" /><circle cx="12" cy="17" r="0.9" fill="#5B21B6" />
+            <path d="M12 3l9 16H3z" /><path d="M12 10v4" /><circle cx="12" cy="17" r="0.9" fill="#56514A" />
           </svg>
           <div className="min-w-0">
-            <span className="font-medium text-[#5B21B6]">Gaps in the rulebook.</span>{" "}
+            <span className="font-medium text-[#56514A]">Gaps in the rulebook.</span>{" "}
             No requirements set yet for commercial units. I can only watch what we've defined — say the word and I'll set them up.
           </div>
         </div>
@@ -2454,26 +2454,26 @@ function AreaPanel({
   const panelId = `area-panel-${areaId}`;
 
   return (
-    <section className="rounded-xl border border-slate-200 bg-white">
+    <section className="rounded-xl border border-bone bg-white">
       <button
         type="button"
         aria-expanded={open}
         aria-controls={panelId}
         onClick={() => setOpen((v) => !v)}
-        className="w-full flex items-center justify-between gap-3 px-4 py-3 text-left hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED] rounded-xl"
+        className="w-full flex items-center justify-between gap-3 px-4 py-3 text-left hover:bg-paper focus:outline-none focus-visible:ring-2 focus-visible:ring-[#56514A] rounded-xl"
       >
         <div className="flex items-center gap-3 min-w-0">
           <svg
-            className={`w-4 h-4 text-[#5B21B6] shrink-0 transition-transform ${open ? "rotate-90" : ""}`}
+            className={`w-4 h-4 text-[#56514A] shrink-0 transition-transform ${open ? "rotate-90" : ""}`}
             viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden
           >
             <path d="M9 6l6 6-6 6" />
           </svg>
           <div className="min-w-0">
-            <div className="text-[13px] font-semibold text-slate-900 truncate">
-              {def.label} <span className="text-slate-500 font-normal">· {def.sublabel}</span>
+            <div className="text-[13px] font-semibold text-ink truncate">
+              {def.label} <span className="text-ink-muted font-normal">· {def.sublabel}</span>
             </div>
-            <div className="text-[11px] text-slate-500 truncate">
+            <div className="text-[11px] text-ink-muted truncate">
               {rules.length} requirement{rules.length === 1 ? "" : "s"} · {required} legally required · {business} business · {applicable} where applicable · last checked {fmtDate(lastChecked)}
             </div>
           </div>
@@ -2481,29 +2481,29 @@ function AreaPanel({
       </button>
 
       {open && (
-        <div id={panelId} className="px-4 pb-4 space-y-3 border-t border-slate-100 pt-4">
+        <div id={panelId} className="px-4 pb-4 space-y-3 border-t border-faint-rule pt-4">
           {rules.length === 0 ? (
-            <div className="text-[12px] text-slate-500 italic px-1 py-3">No requirements in this area yet.</div>
+            <div className="text-[12px] text-ink-muted italic px-1 py-3">No requirements in this area yet.</div>
           ) : (
             <div className="grid gap-2 sm:grid-cols-2">
               {rules.map((r) => (
-                <div key={r.id} className="rounded-lg border border-slate-200 bg-white p-3">
+                <div key={r.id} className="rounded-lg border border-bone bg-white p-3">
                   <div className="flex items-start justify-between gap-2 mb-1">
-                    <div className="text-[13px] font-semibold text-slate-900 truncate">{r.docType}</div>
+                    <div className="text-[13px] font-semibold text-ink truncate">{r.docType}</div>
                     <BasisBadge basis={r.basis} />
                   </div>
                   {r.category === "certification" ? (
                     <>
-                      <div className="text-[12px] text-slate-700">
+                      <div className="text-[12px] text-charcoal">
                         Renews every <span className="font-medium">{r.durationValue} {r.durationUnit.toLowerCase()}</span>
                       </div>
-                      <div className="text-[11px] text-slate-500 mt-0.5">
+                      <div className="text-[11px] text-ink-muted mt-0.5">
                         Anchor: {r.anchor} · scope: {r.appliesTo === "building" ? "building" : "per let unit"}
                       </div>
                     </>
                   ) : (
                     <>
-                      {r.description && <div className="text-[12px] text-slate-700">{r.description}</div>}
+                      {r.description && <div className="text-[12px] text-charcoal">{r.description}</div>}
                       <VersionSourcePicker req={r} onChange={(patch) => updateRule(r.id, patch)} compact />
                     </>
                   )}
@@ -2589,13 +2589,13 @@ export function InspectorWorkArea({
 
   return (
     <div className="absolute inset-0 bg-white z-[450] flex flex-col">
-      <header className="h-14 px-5 flex items-center border-b border-slate-200 shrink-0">
+      <header className="h-14 px-5 flex items-center border-b border-bone shrink-0">
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-full overflow-hidden bg-[#F5F3FF] ring-1 ring-slate-200 grid place-items-center">
+          <div className="w-9 h-9 rounded-full overflow-hidden bg-[#F1EBDE] ring-1 ring-bone grid place-items-center">
             <img src={INSPECTOR_CHARACTER.src} alt="" aria-hidden className="w-[120%] h-[120%] object-contain" />
           </div>
           <div>
-            <div className="text-[11px] text-slate-500">
+            <div className="text-[11px] text-ink-muted">
               {rules.length === 0
                 ? "No rules yet — ask Hobson to set up your compliance and the Researcher will find what the law requires."
                 : `${presentAreas.length} area${presentAreas.length === 1 ? "" : "s"} · ${required} legally required · ${business} business · ${applicable} where applicable`}
@@ -2631,9 +2631,9 @@ export function InspectorWorkArea({
 
           {/* (e) Areas */}
           {rules.length === 0 ? (
-            <div className="rounded-xl border border-dashed border-slate-300 bg-slate-50 p-10 text-center">
-              <div className="text-[13px] font-semibold text-slate-700 mb-1">No compliance areas yet</div>
-              <div className="text-[12px] text-slate-500">Ask Hobson to set up your compliance and he'll have the Researcher find what the law requires, then the Inspector will build your rulebook.</div>
+            <div className="rounded-xl border border-dashed border-bone bg-paper p-10 text-center">
+              <div className="text-[13px] font-semibold text-charcoal mb-1">No compliance areas yet</div>
+              <div className="text-[12px] text-ink-muted">Ask Hobson to set up your compliance and he'll have the Researcher find what the law requires, then the Inspector will build your rulebook.</div>
             </div>
           ) : (
             <div className="space-y-3">

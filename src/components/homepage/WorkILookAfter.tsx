@@ -23,18 +23,18 @@ type Responsibility = {
 };
 
 const RESPONSIBILITIES: Responsibility[] = [
-  { label: "Rent Reviews", icon: FileClock, tint: "bg-sky-50", iconColor: "text-sky-600" },
-  { label: "Break Clauses", icon: DoorOpen, tint: "bg-emerald-50", iconColor: "text-emerald-600" },
-  { label: "Lease Expiry Monitoring", icon: Calendar, tint: "bg-amber-50", iconColor: "text-amber-600" },
-  { label: "EPC Compliance", icon: Leaf, tint: "bg-lime-50", iconColor: "text-lime-600" },
-  { label: "Insurance Renewals", icon: ShieldCheck, tint: "bg-rose-50", iconColor: "text-rose-600" },
-  { label: "Service Charge Monitoring", icon: Receipt, tint: "bg-violet-50", iconColor: "text-violet-600" },
-  { label: "Vacant Unit Monitoring", icon: Home, tint: "bg-cyan-50", iconColor: "text-cyan-600" },
-  { label: "Tenant Communications", icon: MessageSquare, tint: "bg-orange-50", iconColor: "text-orange-600" },
-  { label: "Key Date Monitoring", icon: BellRing, tint: "bg-indigo-50", iconColor: "text-indigo-600" },
-  { label: "Compliance Monitoring", icon: ClipboardCheck, tint: "bg-teal-50", iconColor: "text-teal-600" },
-  { label: "Dilapidations", icon: Hammer, tint: "bg-fuchsia-50", iconColor: "text-fuchsia-600" },
-  { label: "Licence Renewals", icon: FileSignature, tint: "bg-blue-50", iconColor: "text-blue-600" },
+  { label: "Rent Reviews", icon: FileClock, tint: "bg-paper", iconColor: "text-charcoal" },
+  { label: "Break Clauses", icon: DoorOpen, tint: "bg-success-bg", iconColor: "text-success" },
+  { label: "Lease Expiry Monitoring", icon: Calendar, tint: "bg-warning-bg", iconColor: "text-warning" },
+  { label: "EPC Compliance", icon: Leaf, tint: "bg-success-bg", iconColor: "text-success" },
+  { label: "Insurance Renewals", icon: ShieldCheck, tint: "bg-danger-bg", iconColor: "text-danger" },
+  { label: "Service Charge Monitoring", icon: Receipt, tint: "bg-paper", iconColor: "text-charcoal" },
+  { label: "Vacant Unit Monitoring", icon: Home, tint: "bg-paper", iconColor: "text-charcoal" },
+  { label: "Tenant Communications", icon: MessageSquare, tint: "bg-warning-bg", iconColor: "text-warning" },
+  { label: "Key Date Monitoring", icon: BellRing, tint: "bg-paper", iconColor: "text-charcoal" },
+  { label: "Compliance Monitoring", icon: ClipboardCheck, tint: "bg-paper", iconColor: "text-charcoal" },
+  { label: "Dilapidations", icon: Hammer, tint: "bg-paper", iconColor: "text-charcoal" },
+  { label: "Licence Renewals", icon: FileSignature, tint: "bg-paper", iconColor: "text-charcoal" },
 ];
 
 export const WorkILookAfter = () => {

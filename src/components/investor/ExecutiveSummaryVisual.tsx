@@ -72,16 +72,16 @@ export const ExecutiveSummaryVisual = () => {
         </div>
         
         <div className="grid grid-cols-3 gap-3">
-          <div className="text-center p-4 rounded-xl bg-gradient-to-b from-emerald-50 to-emerald-100/50 dark:from-emerald-950/30 dark:to-emerald-900/20 border border-emerald-200/50 dark:border-emerald-800/30">
-            <div className="text-2xl sm:text-3xl font-bold text-emerald-700 dark:text-emerald-400">£1.41B</div>
+          <div className="text-center p-4 rounded-xl bg-gradient-to-b from-success-bg to-success-bg/50 dark:from-success-solid/30 dark:to-success-solid/20 border border-success-border/50 dark:border-success/30">
+            <div className="text-2xl sm:text-3xl font-bold text-success dark:text-success">£1.41B</div>
             <div className="text-xs text-muted-foreground mt-1">UK</div>
           </div>
-          <div className="text-center p-4 rounded-xl bg-gradient-to-b from-emerald-50 to-emerald-100/50 dark:from-emerald-950/30 dark:to-emerald-900/20 border border-emerald-200/50 dark:border-emerald-800/30">
-            <div className="text-2xl sm:text-3xl font-bold text-emerald-700 dark:text-emerald-400">£15.5B</div>
+          <div className="text-center p-4 rounded-xl bg-gradient-to-b from-success-bg to-success-bg/50 dark:from-success-solid/30 dark:to-success-solid/20 border border-success-border/50 dark:border-success/30">
+            <div className="text-2xl sm:text-3xl font-bold text-success dark:text-success">£15.5B</div>
             <div className="text-xs text-muted-foreground mt-1">Europe</div>
           </div>
-          <div className="text-center p-4 rounded-xl bg-gradient-to-b from-emerald-50 to-emerald-100/50 dark:from-emerald-950/30 dark:to-emerald-900/20 border border-emerald-200/50 dark:border-emerald-800/30">
-            <div className="text-2xl sm:text-3xl font-bold text-emerald-700 dark:text-emerald-400">£155.6B</div>
+          <div className="text-center p-4 rounded-xl bg-gradient-to-b from-success-bg to-success-bg/50 dark:from-success-solid/30 dark:to-success-solid/20 border border-success-border/50 dark:border-success/30">
+            <div className="text-2xl sm:text-3xl font-bold text-success dark:text-success">£155.6B</div>
             <div className="text-xs text-muted-foreground mt-1">Global</div>
           </div>
         </div>
@@ -102,7 +102,7 @@ export const ExecutiveSummaryVisual = () => {
       {/* Traction & Execution Momentum */}
       <div className="space-y-4">
         <div className="flex items-center gap-2">
-          <Rocket className="w-5 h-5 text-blue-600" />
+          <Rocket className="w-5 h-5 text-charcoal" />
           <h4 className="font-semibold text-foreground">Traction & Execution Momentum</h4>
         </div>
         
@@ -112,23 +112,23 @@ export const ExecutiveSummaryVisual = () => {
         
         <div className="space-y-2 pl-4">
           <div className="flex items-start gap-2">
-            <CheckCircle2 className="w-4 h-4 text-blue-600 mt-0.5 flex-shrink-0" />
+            <CheckCircle2 className="w-4 h-4 text-charcoal mt-0.5 flex-shrink-0" />
             <p className="text-sm text-foreground">Validated across <span className="font-semibold">Real Estate operating use cases</span></p>
           </div>
           <div className="flex items-start gap-2">
-            <CheckCircle2 className="w-4 h-4 text-blue-600 mt-0.5 flex-shrink-0" />
+            <CheckCircle2 className="w-4 h-4 text-charcoal mt-0.5 flex-shrink-0" />
             <p className="text-sm text-foreground"><span className="font-semibold">98% model accuracy</span> measured on proprietary, industry-specific datasets</p>
           </div>
           <div className="flex items-start gap-2">
-            <CheckCircle2 className="w-4 h-4 text-blue-600 mt-0.5 flex-shrink-0" />
+            <CheckCircle2 className="w-4 h-4 text-charcoal mt-0.5 flex-shrink-0" />
             <p className="text-sm text-foreground"><span className="font-semibold">Multi-document reasoning</span> across legal, compliance, and operational sources</p>
           </div>
           <div className="flex items-start gap-2">
-            <CheckCircle2 className="w-4 h-4 text-blue-600 mt-0.5 flex-shrink-0" />
+            <CheckCircle2 className="w-4 h-4 text-charcoal mt-0.5 flex-shrink-0" />
             <p className="text-sm text-foreground"><span className="font-semibold">Domain-trained AI</span> purpose-built for auditability and regulatory scrutiny</p>
           </div>
           <div className="flex items-start gap-2">
-            <CheckCircle2 className="w-4 h-4 text-blue-600 mt-0.5 flex-shrink-0" />
+            <CheckCircle2 className="w-4 h-4 text-charcoal mt-0.5 flex-shrink-0" />
             <p className="text-sm text-foreground"><span className="font-semibold">MVP launch Q1 2026</span>, with scope defined by partner workflows rather than theoretical use cases</p>
           </div>
         </div>

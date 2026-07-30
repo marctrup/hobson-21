@@ -47,7 +47,7 @@ const MeetTheFounder = () => {
                 In this short video, Marc Trup explains the vision behind Hobson
                 and why property deserves its own AI co-worker.
               </p>
-              <div className="mx-auto mt-10 h-px w-24" style={{ backgroundColor: '#EDE7DA' }} />
+              <div className="mx-auto mt-10 h-px w-24" style={{ backgroundColor: '#F7EDDC' }} />
             </div>
           </section>
 
@@ -64,7 +64,7 @@ const MeetTheFounder = () => {
                   className="relative rounded-2xl p-3 sm:p-5"
                   style={{
                     background: '#FFFFFF',
-                    border: '1px solid #EDE7DA',
+                    border: '1px solid #F7EDDC',
                     boxShadow: '0 30px 60px -30px rgba(45,45,45,0.30), 0 10px 30px -15px rgba(45,45,45,0.18)',
                   }}
                 >
@@ -84,7 +84,7 @@ const MeetTheFounder = () => {
                 className="rounded-2xl p-8 sm:p-12"
                 style={{
                   background: '#FFFFFF',
-                  border: '1px solid #EDE7DA',
+                  border: '1px solid #F7EDDC',
                   boxShadow: '0 10px 30px -20px rgba(45,45,45,0.15)',
                 }}
               >

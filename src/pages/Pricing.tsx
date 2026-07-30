@@ -31,14 +31,14 @@ const TOKENS = {
   paper: "#FCFAF7", // warm cream paper
   paperSoft: "#FFFFFF",
   brass: "#B4914F", // antique brass
-  brassLight: "#C9A868",
+  brassLight: "#8F5A14",
   primary: "#B4914F",
-  primaryLight: "#C9A868",
+  primaryLight: "#8F5A14",
   card: "#FFFFFF",
   inkSoft: "rgba(45,45,45,0.82)",
   inkMuted: "rgba(45,45,45,0.65)",
-  hairline: "#EDE7DA",
-  hairlineDark: "rgba(201,168,104,0.4)",
+  hairline: "#F7EDDC",
+  hairlineDark: "rgba(180,145,79,0.4)",
 };
 
 
@@ -71,7 +71,7 @@ const Pill: React.FC<{ children: React.ReactNode; dark?: boolean }> = ({ childre
       padding: "6px 12px",
       borderRadius: 999,
       border: `1px solid ${dark ? TOKENS.hairlineDark : TOKENS.hairline}`,
-      background: dark ? "rgba(201,168,104,0.10)" : "rgba(255,255,255,0.6)",
+      background: dark ? "rgba(180,145,79,0.10)" : "rgba(255,255,255,0.6)",
       color: dark ? TOKENS.brassLight : TOKENS.ink,
       fontFamily: FONTS.mono,
       fontSize: 12,
@@ -340,17 +340,17 @@ const Calculators: React.FC = () => {
   // Token shortcuts scoped to this section
   const T = {
     cream: "#FCFAF7",
-    tint: "#F5F1E9",
-    ink: "#23211D",
-    muted: "#6E6A63",
-    faint: "#96918A",
+    tint: "#F7EDDC",
+    ink: "#2D2D2D",
+    muted: "#6E6A62",
+    faint: "#8A8478",
     gold: "#B4914F",
-    goldInk: "#8C6F38",
-    wash: "#F7F1E5",
-    line: "rgba(35,33,29,0.12)",
-    dark: "#313131",
+    goldInk: "#8F5A14",
+    wash: "#F7EDDC",
+    line: "rgba(45,45,45,0.12)",
+    dark: "#2D2D2D",
     paperSoft: "#FFFDFA",
-    paperGrad: "#FFFDF9",
+    paperGrad: "#F7EDDC",
   };
 
   const Eyebrow: React.FC<{ children: React.ReactNode; color?: string; style?: React.CSSProperties }> = ({ children, color, style }) => (
@@ -516,7 +516,7 @@ const Calculators: React.FC = () => {
             <div
               style={{
                 background: T.paperSoft,
-                border: `1px solid rgba(35,33,29,0.13)`,
+                border: `1px solid rgba(45,45,45,0.13)`,
                 borderRadius: 16,
                 padding: 26,
                 display: "flex",
@@ -560,14 +560,14 @@ const Calculators: React.FC = () => {
                     <div style={{ fontFamily: FONTS.mono, fontSize: 11, color: T.faint, marginTop: 6 }}>
                       {fmtGBP2(readLow)} – {fmtGBP2(readHigh)}
                     </div>
-                    <div style={{ fontFamily: FONTS.sans, fontSize: 10, lineHeight: 1.45, color: "#96918A", marginTop: 6 }}>
+                    <div style={{ fontFamily: FONTS.sans, fontSize: 10, lineHeight: 1.45, color: "#8A8478", marginTop: 6 }}>
                       Estimated at 25p a document — the average for a mixed portfolio. The firm quote follows once the documents have been seen.
                     </div>
                   </div>
                 </div>
 
                 {/* ---- Vertical hairline ---- */}
-                <div aria-hidden style={{ background: "rgba(35,33,29,0.08)", width: 1, height: "100%" }} />
+                <div aria-hidden style={{ background: "rgba(45,45,45,0.08)", width: 1, height: "100%" }} />
 
                 {/* ---- Section B: seats ---- */}
                 <div style={{ display: "flex", flexDirection: "column" }}>
@@ -590,8 +590,8 @@ const Calculators: React.FC = () => {
               <div
                 className="hp-includes"
                 style={{
-                  background: "#FBF8F3",
-                  border: "1px solid rgba(35,33,29,0.08)",
+                  background: "#F7EDDC",
+                  border: "1px solid rgba(45,45,45,0.08)",
                   borderRadius: 10,
                   padding: "18px 20px",
                   marginTop: 22,
@@ -628,10 +628,10 @@ const Calculators: React.FC = () => {
                     <div key={item.h} style={{ display: "grid", gridTemplateColumns: "auto 1fr", gap: 8 }}>
                       <span style={{ color: T.gold, fontSize: 13, lineHeight: 1.4 }}>✦</span>
                       <div>
-                        <div style={{ fontFamily: FONTS.sans, fontSize: 13, fontWeight: 500, color: "#23211D", lineHeight: 1.3 }}>
+                        <div style={{ fontFamily: FONTS.sans, fontSize: 13, fontWeight: 500, color: "#2D2D2D", lineHeight: 1.3 }}>
                           {item.h}
                         </div>
-                        <div style={{ fontFamily: FONTS.sans, fontSize: 12, color: "#6E6A63", lineHeight: 1.5, marginTop: 3 }}>
+                        <div style={{ fontFamily: FONTS.sans, fontSize: 12, color: "#6E6A62", lineHeight: 1.5, marginTop: 3 }}>
                           {item.b}
                         </div>
                       </div>
@@ -877,8 +877,8 @@ const Calculators: React.FC = () => {
           width: 18px;
           height: 18px;
           background: #F3EFFA;
-          border-left: 1px solid #E4DAF3;
-          border-bottom: 1px solid #E4DAF3;
+          border-left: 1px solid #E8E1D4;
+          border-bottom: 1px solid #E8E1D4;
           transform: rotate(45deg);
         }
         @media (max-width: 640px) {
@@ -969,7 +969,7 @@ export default function Pricing() {
         @keyframes hpCaretBlink { 50% { border-color: transparent; } }
         .hp-lift { transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease; }
         .hp-lift:hover { transform: translateY(-2px); box-shadow: 0 12px 32px -18px rgba(45,45,45,0.25); }
-        .hp-slider { -webkit-appearance: none; appearance: none; height: 4px; background: rgba(201,168,104,0.25); border-radius: 999px; outline: none; }
+        .hp-slider { -webkit-appearance: none; appearance: none; height: 4px; background: rgba(180,145,79,0.25); border-radius: 999px; outline: none; }
         .hp-slider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 22px; height: 22px; border-radius: 50%; background: ${TOKENS.brassLight}; border: 3px solid ${TOKENS.ink}; box-shadow: 0 2px 6px rgba(0,0,0,0.3); cursor: pointer; }
         .hp-slider::-moz-range-thumb { width: 22px; height: 22px; border-radius: 50%; background: ${TOKENS.brassLight}; border: 3px solid ${TOKENS.ink}; cursor: pointer; }
         .hp-slider:focus-visible::-webkit-slider-thumb { outline: 2px solid ${TOKENS.brassLight}; outline-offset: 3px; }
@@ -977,7 +977,7 @@ export default function Pricing() {
         .hp-btn-brass { background: ${TOKENS.brass}; color: ${TOKENS.paper}; }
         .hp-btn-brass:hover { background: ${TOKENS.brassLight}; }
         .hp-btn-ghost { background: transparent; color: ${TOKENS.paper}; border-color: ${TOKENS.brassLight}; }
-        .hp-btn-ghost:hover { background: rgba(201,168,104,0.12); }
+        .hp-btn-ghost:hover { background: rgba(180,145,79,0.12); }
         .hp-btn:focus-visible { outline: 2px solid ${TOKENS.brassLight}; outline-offset: 3px; }
         details.hp-faq { background: ${TOKENS.paper}; border: 1px solid ${TOKENS.hairline}; border-radius: 14px; padding: 22px 26px; transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease; }
         details.hp-faq + details.hp-faq { margin-top: 12px; }
@@ -1046,7 +1046,7 @@ export default function Pricing() {
                 borderTop: `3px solid ${TOKENS.brass}`,
                 borderRadius: 20,
                 padding: "clamp(36px, 5vw, 64px)",
-                boxShadow: "0 24px 60px -30px rgba(20, 14, 40, 0.18)",
+                boxShadow: "0 24px 60px -30px rgba(45, 45, 45, 0.08)",
                 display: "grid",
                 gridTemplateColumns: "minmax(0, 1fr)",
                 gap: "clamp(28px, 4vw, 48px)",
@@ -1088,7 +1088,7 @@ export default function Pricing() {
         <section
           style={{
             padding: "clamp(80px, 11vw, 150px) 24px",
-            background: "#F1EEE7",
+            background: "#F7EDDC",
             borderTop: `1px solid ${TOKENS.hairline}`,
           }}
         >

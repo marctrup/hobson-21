@@ -10,15 +10,15 @@ import {
 import { useCommsByChannel } from "@/hooks/crm/dashboard/useCommsByChannel";
 
 const CHANNEL_COLOR: Record<string, string> = {
-  email: "#3b82f6",
-  call: "#10b981",
-  meeting: "#a855f7",
+  email: "#56514A",
+  call: "#5E6B33",
+  meeting: "#8A8478",
   video_call: "#8b5cf6",
-  sms: "#f59e0b",
-  whatsapp: "#22c55e",
-  linkedin_message: "#0ea5e9",
-  letter: "#64748b",
-  other: "#94a3b8",
+  sms: "#8F5A14",
+  whatsapp: "#5E6B33",
+  linkedin_message: "#56514A",
+  letter: "#56514A",
+  other: "#8A8478",
 };
 
 export const CommsByChannelCard = () => {
@@ -26,14 +26,14 @@ export const CommsByChannelCard = () => {
   const total = (data ?? []).reduce((a, r) => a + r.count, 0);
 
   return (
-    <div className="bg-white border border-slate-200 rounded-lg p-4 h-full">
-      <div className="text-xs font-medium uppercase tracking-wide text-slate-500">
+    <div className="bg-white border border-bone rounded-lg p-4 h-full">
+      <div className="text-xs font-medium uppercase tracking-wide text-ink-muted">
         Communications by channel · last 30 days
       </div>
       {isLoading ? (
-        <div className="text-sm text-slate-500 mt-2">Loading…</div>
+        <div className="text-sm text-ink-muted mt-2">Loading…</div>
       ) : total === 0 ? (
-        <div className="mt-6 text-center text-sm text-slate-500 py-8">
+        <div className="mt-6 text-center text-sm text-ink-muted py-8">
           No communications in the last 30 days.
         </div>
       ) : (
@@ -56,7 +56,7 @@ export const CommsByChannelCard = () => {
                 {(data ?? []).map((b) => (
                   <Cell
                     key={b.channel}
-                    fill={CHANNEL_COLOR[b.channel] ?? "#94a3b8"}
+                    fill={CHANNEL_COLOR[b.channel] ?? "#8A8478"}
                   />
                 ))}
               </Bar>
@@ -65,7 +65,7 @@ export const CommsByChannelCard = () => {
         </div>
       )}
       {total > 0 && (
-        <div className="text-xs text-slate-500 mt-1 text-center">
+        <div className="text-xs text-ink-muted mt-1 text-center">
           {total} communication{total === 1 ? "" : "s"} in last 30 days
         </div>
       )}

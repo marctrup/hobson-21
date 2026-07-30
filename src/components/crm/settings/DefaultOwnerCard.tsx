@@ -48,14 +48,14 @@ export function DefaultOwnerCard() {
   };
 
   return (
-    <div className="bg-white border border-slate-200 rounded-lg p-5">
+    <div className="bg-white border border-bone rounded-lg p-5">
       <div className="text-sm font-medium">Default owner</div>
-      <p className="text-sm text-slate-500 mt-0.5">
+      <p className="text-sm text-ink-muted mt-0.5">
         Assigned to new clients created via the website ingest.
       </p>
 
       {!hasOwner && !isLoading && (
-        <div className="mt-3 rounded-md border border-amber-300 bg-amber-50 px-3 py-2 text-xs text-amber-900">
+        <div className="mt-3 rounded-md border border-warning-border bg-warning-bg px-3 py-2 text-xs text-warning">
           No default owner set. Website ingests will fail until one is chosen.
         </div>
       )}
@@ -84,10 +84,10 @@ export function DefaultOwnerCard() {
           <PopoverContent className="w-[320px] p-0" align="start">
             <div className="max-h-72 overflow-y-auto py-1">
               {teamLoading && (
-                <div className="px-3 py-2 text-xs text-slate-500">Loading…</div>
+                <div className="px-3 py-2 text-xs text-ink-muted">Loading…</div>
               )}
               {!teamLoading && eligible.length === 0 && (
-                <div className="px-3 py-2 text-xs text-slate-500">
+                <div className="px-3 py-2 text-xs text-ink-muted">
                   No eligible members.
                 </div>
               )}
@@ -98,7 +98,7 @@ export function DefaultOwnerCard() {
                     key={m.user_id}
                     type="button"
                     onClick={() => void handlePick(m)}
-                    className="w-full flex items-center gap-2 px-3 py-2 text-sm hover:bg-slate-50 text-left"
+                    className="w-full flex items-center gap-2 px-3 py-2 text-sm hover:bg-paper text-left"
                   >
                     <Check
                       className={`size-4 ${selected ? "opacity-100" : "opacity-0"}`}
@@ -107,7 +107,7 @@ export function DefaultOwnerCard() {
                       <div className="truncate font-medium">
                         {m.display_name ?? m.email}
                       </div>
-                      <div className="truncate text-xs text-slate-500">
+                      <div className="truncate text-xs text-ink-muted">
                         {m.email} · {m.role}
                       </div>
                     </div>
@@ -124,7 +124,7 @@ export function DefaultOwnerCard() {
             variant="ghost"
             onClick={() => void handleClear()}
             disabled={setOwner.isPending}
-            className="text-slate-600"
+            className="text-charcoal"
           >
             {setOwner.isPending ? (
               <Loader2 className="size-3.5 animate-spin" />

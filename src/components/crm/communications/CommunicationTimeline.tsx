@@ -33,11 +33,11 @@ export const CommunicationTimeline = ({
   onSelect,
 }: Props) => {
   if (isLoading) {
-    return <div className="text-sm text-slate-500 p-6">Loading…</div>;
+    return <div className="text-sm text-ink-muted p-6">Loading…</div>;
   }
   if (rows.length === 0) {
     return (
-      <div className="text-sm text-slate-500 bg-white border border-slate-200 rounded-lg p-8 text-center">
+      <div className="text-sm text-ink-muted bg-white border border-bone rounded-lg p-8 text-center">
         No communications yet.
       </div>
     );
@@ -50,10 +50,10 @@ export const CommunicationTimeline = ({
           <button
             type="button"
             onClick={() => onSelect(c.id)}
-            className="w-full text-left bg-white border border-slate-200 rounded-lg p-3 hover:border-slate-300 hover:shadow-sm transition"
+            className="w-full text-left bg-white border border-bone rounded-lg p-3 hover:border-bone hover:shadow-sm transition"
           >
             <div className="flex items-start gap-3">
-              <div className="mt-0.5 size-8 rounded-md bg-slate-100 text-slate-600 flex items-center justify-center shrink-0">
+              <div className="mt-0.5 size-8 rounded-md bg-bone-wash text-charcoal flex items-center justify-center shrink-0">
                 <ChannelIcon channel={c.channel} className="size-4" />
               </div>
               <div className="flex-1 min-w-0">
@@ -67,35 +67,35 @@ export const CommunicationTimeline = ({
                     <DirIcon d={c.direction} />
                     {COMM_DIRECTION_LABELS[c.direction]}
                   </span>
-                  <span className="text-xs text-slate-500">
+                  <span className="text-xs text-ink-muted">
                     {COMM_CHANNEL_LABELS[c.channel]}
                   </span>
                   {c.is_important && (
-                    <Star className="size-3.5 text-amber-500 fill-amber-400" />
+                    <Star className="size-3.5 text-warning fill-warning" />
                   )}
                   {c.needs_review && (
-                    <span className="text-[10px] uppercase tracking-wide text-rose-600">
+                    <span className="text-[10px] uppercase tracking-wide text-danger">
                       Needs review
                     </span>
                   )}
-                  <span className="ml-auto text-xs text-slate-500">
+                  <span className="ml-auto text-xs text-ink-muted">
                     {formatDateTimeUK(c.occurred_at)}
                   </span>
                 </div>
-                <div className="mt-1 font-medium text-slate-900 truncate">
+                <div className="mt-1 font-medium text-ink truncate">
                   {c.subject || c.summary || "(no subject)"}
                 </div>
                 {c.subject && c.summary && (
-                  <div className="text-sm text-slate-600 truncate">
+                  <div className="text-sm text-charcoal truncate">
                     {c.summary}
                   </div>
                 )}
                 {showClient && c.client_name && (
-                  <div className="mt-1 text-xs text-slate-500">
+                  <div className="mt-1 text-xs text-ink-muted">
                     <Link
                       to={`/crm/clients/${c.client_id}`}
                       onClick={(e) => e.stopPropagation()}
-                      className="underline hover:text-slate-700"
+                      className="underline hover:text-charcoal"
                     >
                       {c.client_name}
                     </Link>

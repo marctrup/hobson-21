@@ -5,11 +5,11 @@ export const PropertyManagementVisualization = () => {
   const content = CONTENT;
   const viz = content.heroVisualization;
 
-  return <div className="relative from-primary/5 to-secondary/10 rounded-2xl p-8 border border-primary/10 bg-gray-50">
+  return <div className="relative from-primary/5 to-secondary/10 rounded-2xl p-8 border border-primary/10 bg-paper">
       {/* Main Header */}
       <div className="text-center mb-8">
         <h1 className={`leading-relaxed font-bold mb-2 text-2xl`}>
-          <span className="text-gray-500 font-semibold">{viz.mainHeading}</span>
+          <span className="text-ink-muted font-semibold">{viz.mainHeading}</span>
         </h1>
       </div>
 
@@ -18,44 +18,44 @@ export const PropertyManagementVisualization = () => {
         <div className="text-center lg:mt-[10px]">
           <div className="mb-4">
             <h4 className={`font-black uppercase tracking-widest mb-2 relative inline-block text-lg`}>
-              <span className="text-gray-500 drop-shadow-sm">
+              <span className="text-ink-muted drop-shadow-sm">
                 {viz.todaysProcess.title}
               </span>
-              <div className="absolute -bottom-1 left-0 w-full h-0.5 bg-gray-400 rounded-full"></div>
+              <div className="absolute -bottom-1 left-0 w-full h-0.5 bg-ink-faint rounded-full"></div>
             </h4>
-            <div className={`text-gray-500 font-bold uppercase tracking-wide opacity-80 text-xs`}>
+            <div className={`text-ink-muted font-bold uppercase tracking-wide opacity-80 text-xs`}>
               {viz.todaysProcess.subtitle}
             </div>
           </div>
           
           {/* Circular Process */}
           <div className="relative w-24 h-24 sm:w-32 sm:h-32 lg:w-36 lg:h-36 mx-auto mb-4">
-            <div className="absolute inset-0 border-2 border-dashed border-purple-300 rounded-full md:animate-spin" style={{
+            <div className="absolute inset-0 border-2 border-dashed border-bone rounded-full md:animate-spin" style={{
             animationDuration: '8s'
           }}></div>
             
             {/* Process Icons */}
             <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-2">
               <div className="bg-background border border-border rounded-full p-2">
-                <UserCheck className="w-4 h-4 text-blue-600" />
+                <UserCheck className="w-4 h-4 text-charcoal" />
               </div>
             </div>
             
             <div className="absolute right-0 top-1/2 transform translate-x-2 -translate-y-1/2">
               <div className="bg-background border border-border rounded-full p-2">
-                <FolderOpen className="w-4 h-4 text-orange-600" />
+                <FolderOpen className="w-4 h-4 text-warning" />
               </div>
             </div>
             
             <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-2">
               <div className="bg-background border border-border rounded-full p-2">
-                <Search className="w-4 h-4 text-green-600" />
+                <Search className="w-4 h-4 text-success" />
               </div>
             </div>
             
             <div className="absolute left-0 top-1/2 transform -translate-x-2 -translate-y-1/2">
               <div className="bg-background border border-border rounded-full p-2">
-                <RotateCcw className="w-4 h-4 text-purple-600" />
+                <RotateCcw className="w-4 h-4 text-charcoal" />
               </div>
             </div>
           </div>
@@ -67,12 +67,12 @@ export const PropertyManagementVisualization = () => {
         <div className="text-center lg:mt-[15px]">
           <div className="mb-4">
             <h4 className={`font-black uppercase tracking-widest mb-2 relative inline-block text-lg`}>
-              <span className="text-gray-500 drop-shadow-sm">
+              <span className="text-ink-muted drop-shadow-sm">
                 {viz.theChallenge.title}
               </span>
-              <div className="absolute -bottom-1 left-0 w-full h-0.5 bg-gray-400 rounded-full"></div>
+              <div className="absolute -bottom-1 left-0 w-full h-0.5 bg-ink-faint rounded-full"></div>
             </h4>
-            <div className={`text-gray-500 font-bold uppercase tracking-wide opacity-80 text-xs`}>
+            <div className={`text-ink-muted font-bold uppercase tracking-wide opacity-80 text-xs`}>
               {viz.theChallenge.subtitle}
             </div>
           </div>
@@ -80,7 +80,7 @@ export const PropertyManagementVisualization = () => {
           {/* Scattered Documents */}
           <div className="relative h-32 sm:h-40 lg:h-48 bg-gradient-to-br from-muted/10 to-muted/20 rounded-lg p-2 sm:p-3 lg:p-4 overflow-hidden">
             {/* Animated Document Scatter - representing overwhelming amount */}
-            <div className="absolute bg-white border border-gray-300 rounded shadow-sm p-1" style={{
+            <div className="absolute bg-white border border-bone rounded shadow-sm p-1" style={{
             width: '24px',
             height: '28px',
             left: '15%',
@@ -89,13 +89,13 @@ export const PropertyManagementVisualization = () => {
             animation: 'float1 2.5s ease-in-out infinite'
           }}>
               <div className="space-y-0.5">
-                <div className="w-full h-1 bg-gray-300 rounded"></div>
-                <div className="w-3/4 h-1 bg-gray-300 rounded"></div>
-                <div className="w-1/2 h-1 bg-gray-300 rounded"></div>
+                <div className="w-full h-1 bg-bone-strong rounded"></div>
+                <div className="w-3/4 h-1 bg-bone-strong rounded"></div>
+                <div className="w-1/2 h-1 bg-bone-strong rounded"></div>
               </div>
             </div>
             
-            <div className="absolute bg-white border border-gray-300 rounded shadow-sm p-1" style={{
+            <div className="absolute bg-white border border-bone rounded shadow-sm p-1" style={{
             width: '24px',
             height: '28px',
             left: '65%',
@@ -104,13 +104,13 @@ export const PropertyManagementVisualization = () => {
             animation: 'float2 3s ease-in-out infinite 0.5s'
           }}>
               <div className="space-y-0.5">
-                <div className="w-full h-1 bg-gray-300 rounded"></div>
-                <div className="w-3/4 h-1 bg-gray-300 rounded"></div>
-                <div className="w-1/2 h-1 bg-gray-300 rounded"></div>
+                <div className="w-full h-1 bg-bone-strong rounded"></div>
+                <div className="w-3/4 h-1 bg-bone-strong rounded"></div>
+                <div className="w-1/2 h-1 bg-bone-strong rounded"></div>
               </div>
             </div>
             
-            <div className="absolute bg-white border border-gray-300 rounded shadow-sm p-1" style={{
+            <div className="absolute bg-white border border-bone rounded shadow-sm p-1" style={{
             width: '24px',
             height: '28px',
             left: '35%',
@@ -119,13 +119,13 @@ export const PropertyManagementVisualization = () => {
             animation: 'float3 2.8s ease-in-out infinite 1s'
           }}>
               <div className="space-y-0.5">
-                <div className="w-full h-1 bg-gray-300 rounded"></div>
-                <div className="w-3/4 h-1 bg-gray-300 rounded"></div>
-                <div className="w-1/2 h-1 bg-gray-300 rounded"></div>
+                <div className="w-full h-1 bg-bone-strong rounded"></div>
+                <div className="w-3/4 h-1 bg-bone-strong rounded"></div>
+                <div className="w-1/2 h-1 bg-bone-strong rounded"></div>
               </div>
             </div>
             
-            <div className="absolute bg-white border border-gray-300 rounded shadow-sm p-1" style={{
+            <div className="absolute bg-white border border-bone rounded shadow-sm p-1" style={{
             width: '24px',
             height: '28px',
             left: '75%',
@@ -134,13 +134,13 @@ export const PropertyManagementVisualization = () => {
             animation: 'float1 2.7s ease-in-out infinite 1.5s'
           }}>
               <div className="space-y-0.5">
-                <div className="w-full h-1 bg-gray-300 rounded"></div>
-                <div className="w-3/4 h-1 bg-gray-300 rounded"></div>
-                <div className="w-1/2 h-1 bg-gray-300 rounded"></div>
+                <div className="w-full h-1 bg-bone-strong rounded"></div>
+                <div className="w-3/4 h-1 bg-bone-strong rounded"></div>
+                <div className="w-1/2 h-1 bg-bone-strong rounded"></div>
               </div>
             </div>
             
-            <div className="absolute bg-white border border-gray-300 rounded shadow-sm p-1" style={{
+            <div className="absolute bg-white border border-bone rounded shadow-sm p-1" style={{
             width: '24px',
             height: '28px',
             left: '25%',
@@ -149,13 +149,13 @@ export const PropertyManagementVisualization = () => {
             animation: 'float2 2.4s ease-in-out infinite 0.8s'
           }}>
               <div className="space-y-0.5">
-                <div className="w-full h-1 bg-blue-200 rounded"></div>
-                <div className="w-3/4 h-1 bg-blue-200 rounded"></div>
-                <div className="w-1/2 h-1 bg-blue-200 rounded"></div>
+                <div className="w-full h-1 bg-bone rounded"></div>
+                <div className="w-3/4 h-1 bg-bone rounded"></div>
+                <div className="w-1/2 h-1 bg-bone rounded"></div>
               </div>
             </div>
             
-            <div className="absolute bg-white border border-gray-300 rounded shadow-sm p-1" style={{
+            <div className="absolute bg-white border border-bone rounded shadow-sm p-1" style={{
             width: '24px',
             height: '28px',
             left: '55%',
@@ -164,13 +164,13 @@ export const PropertyManagementVisualization = () => {
             animation: 'float3 2.6s ease-in-out infinite 1.8s'
           }}>
               <div className="space-y-0.5">
-                <div className="w-full h-1 bg-gray-300 rounded"></div>
-                <div className="w-3/4 h-1 bg-gray-300 rounded"></div>
-                <div className="w-1/2 h-1 bg-gray-300 rounded"></div>
+                <div className="w-full h-1 bg-bone-strong rounded"></div>
+                <div className="w-3/4 h-1 bg-bone-strong rounded"></div>
+                <div className="w-1/2 h-1 bg-bone-strong rounded"></div>
               </div>
             </div>
             
-            <div className="absolute bg-white border border-gray-300 rounded shadow-sm p-1" style={{
+            <div className="absolute bg-white border border-bone rounded shadow-sm p-1" style={{
             width: '24px',
             height: '28px',
             left: '45%',
@@ -179,13 +179,13 @@ export const PropertyManagementVisualization = () => {
             animation: 'float1 3.2s ease-in-out infinite 0.3s'
           }}>
               <div className="space-y-0.5">
-                <div className="w-full h-1 bg-blue-300 rounded"></div>
-                <div className="w-3/4 h-1 bg-blue-300 rounded"></div>
-                <div className="w-1/2 h-1 bg-blue-300 rounded"></div>
+                <div className="w-full h-1 bg-bone-strong rounded"></div>
+                <div className="w-3/4 h-1 bg-bone-strong rounded"></div>
+                <div className="w-1/2 h-1 bg-bone-strong rounded"></div>
               </div>
             </div>
             
-            <div className="absolute bg-white border border-gray-300 rounded shadow-sm p-1" style={{
+            <div className="absolute bg-white border border-bone rounded shadow-sm p-1" style={{
             width: '24px',
             height: '28px',
             left: '80%',
@@ -194,13 +194,13 @@ export const PropertyManagementVisualization = () => {
             animation: 'float2 2.9s ease-in-out infinite 1.2s'
           }}>
               <div className="space-y-0.5">
-                <div className="w-full h-1 bg-gray-300 rounded"></div>
-                <div className="w-3/4 h-1 bg-gray-300 rounded"></div>
-                <div className="w-1/2 h-1 bg-gray-300 rounded"></div>
+                <div className="w-full h-1 bg-bone-strong rounded"></div>
+                <div className="w-3/4 h-1 bg-bone-strong rounded"></div>
+                <div className="w-1/2 h-1 bg-bone-strong rounded"></div>
               </div>
             </div>
             
-            <div className="absolute bg-white border border-gray-300 rounded shadow-sm p-1" style={{
+            <div className="absolute bg-white border border-bone rounded shadow-sm p-1" style={{
             width: '24px',
             height: '28px',
             left: '20%',
@@ -209,13 +209,13 @@ export const PropertyManagementVisualization = () => {
             animation: 'float3 2.3s ease-in-out infinite 0.6s'
           }}>
               <div className="space-y-0.5">
-                <div className="w-full h-1 bg-blue-200 rounded"></div>
-                <div className="w-3/4 h-1 bg-blue-200 rounded"></div>
-                <div className="w-1/2 h-1 bg-blue-200 rounded"></div>
+                <div className="w-full h-1 bg-bone rounded"></div>
+                <div className="w-3/4 h-1 bg-bone rounded"></div>
+                <div className="w-1/2 h-1 bg-bone rounded"></div>
               </div>
             </div>
             
-            <div className="absolute bg-white border border-gray-300 rounded shadow-sm p-1" style={{
+            <div className="absolute bg-white border border-bone rounded shadow-sm p-1" style={{
             width: '24px',
             height: '28px',
             left: '70%',
@@ -224,13 +224,13 @@ export const PropertyManagementVisualization = () => {
             animation: 'float1 2.5s ease-in-out infinite 2s'
           }}>
               <div className="space-y-0.5">
-                <div className="w-full h-1 bg-gray-300 rounded"></div>
-                <div className="w-3/4 h-1 bg-gray-300 rounded"></div>
-                <div className="w-1/2 h-1 bg-gray-300 rounded"></div>
+                <div className="w-full h-1 bg-bone-strong rounded"></div>
+                <div className="w-3/4 h-1 bg-bone-strong rounded"></div>
+                <div className="w-1/2 h-1 bg-bone-strong rounded"></div>
               </div>
             </div>
             
-            <div className="absolute bg-white border border-gray-300 rounded shadow-sm p-1" style={{
+            <div className="absolute bg-white border border-bone rounded shadow-sm p-1" style={{
             width: '24px',
             height: '28px',
             left: '50%',
@@ -239,13 +239,13 @@ export const PropertyManagementVisualization = () => {
             animation: 'float2 3.5s ease-in-out infinite 0.2s'
           }}>
               <div className="space-y-0.5">
-                <div className="w-full h-1 bg-gray-300 rounded"></div>
-                <div className="w-3/4 h-1 bg-gray-300 rounded"></div>
-                <div className="w-1/2 h-1 bg-gray-300 rounded"></div>
+                <div className="w-full h-1 bg-bone-strong rounded"></div>
+                <div className="w-3/4 h-1 bg-bone-strong rounded"></div>
+                <div className="w-1/2 h-1 bg-bone-strong rounded"></div>
               </div>
             </div>
             
-            <div className="absolute bg-white border border-gray-300 rounded shadow-sm p-1" style={{
+            <div className="absolute bg-white border border-bone rounded shadow-sm p-1" style={{
             width: '24px',
             height: '28px',
             left: '12%',
@@ -254,13 +254,13 @@ export const PropertyManagementVisualization = () => {
             animation: 'float3 2.7s ease-in-out infinite 1.5s'
           }}>
               <div className="space-y-0.5">
-                <div className="w-full h-1 bg-blue-300 rounded"></div>
-                <div className="w-3/4 h-1 bg-blue-300 rounded"></div>
-                <div className="w-1/2 h-1 bg-blue-300 rounded"></div>
+                <div className="w-full h-1 bg-bone-strong rounded"></div>
+                <div className="w-3/4 h-1 bg-bone-strong rounded"></div>
+                <div className="w-1/2 h-1 bg-bone-strong rounded"></div>
               </div>
             </div>
             
-            <div className="absolute bg-white border border-gray-300 rounded shadow-sm p-1" style={{
+            <div className="absolute bg-white border border-bone rounded shadow-sm p-1" style={{
             width: '24px',
             height: '28px',
             left: '85%',
@@ -269,14 +269,14 @@ export const PropertyManagementVisualization = () => {
             animation: 'float1 2.8s ease-in-out infinite 0.9s'
           }}>
               <div className="space-y-0.5">
-                <div className="w-full h-1 bg-gray-300 rounded"></div>
-                <div className="w-3/4 h-1 bg-gray-300 rounded"></div>
-                <div className="w-1/2 h-1 bg-gray-300 rounded"></div>
+                <div className="w-full h-1 bg-bone-strong rounded"></div>
+                <div className="w-3/4 h-1 bg-bone-strong rounded"></div>
+                <div className="w-1/2 h-1 bg-bone-strong rounded"></div>
               </div>
             </div>
             
             {/* Additional documents for more chaos */}
-            <div className="absolute bg-white border border-gray-300 rounded shadow-sm p-1" style={{
+            <div className="absolute bg-white border border-bone rounded shadow-sm p-1" style={{
             width: '24px',
             height: '28px',
             left: '5%',
@@ -285,13 +285,13 @@ export const PropertyManagementVisualization = () => {
             animation: 'float2 2.4s ease-in-out infinite 1.6s'
           }}>
               <div className="space-y-0.5">
-                <div className="w-full h-1 bg-gray-400 rounded"></div>
-                <div className="w-3/4 h-1 bg-gray-400 rounded"></div>
-                <div className="w-1/2 h-1 bg-gray-400 rounded"></div>
+                <div className="w-full h-1 bg-ink-faint rounded"></div>
+                <div className="w-3/4 h-1 bg-ink-faint rounded"></div>
+                <div className="w-1/2 h-1 bg-ink-faint rounded"></div>
               </div>
             </div>
             
-            <div className="absolute bg-white border border-gray-300 rounded shadow-sm p-1" style={{
+            <div className="absolute bg-white border border-bone rounded shadow-sm p-1" style={{
             width: '24px',
             height: '28px',
             left: '90%',
@@ -300,13 +300,13 @@ export const PropertyManagementVisualization = () => {
             animation: 'float3 2.6s ease-in-out infinite 0.4s'
           }}>
               <div className="space-y-0.5">
-                <div className="w-full h-1 bg-blue-200 rounded"></div>
-                <div className="w-3/4 h-1 bg-blue-200 rounded"></div>
-                <div className="w-1/2 h-1 bg-blue-200 rounded"></div>
+                <div className="w-full h-1 bg-bone rounded"></div>
+                <div className="w-3/4 h-1 bg-bone rounded"></div>
+                <div className="w-1/2 h-1 bg-bone rounded"></div>
               </div>
             </div>
             
-            <div className="absolute bg-white border border-gray-300 rounded shadow-sm p-1" style={{
+            <div className="absolute bg-white border border-bone rounded shadow-sm p-1" style={{
             width: '24px',
             height: '28px',
             left: '30%',
@@ -315,13 +315,13 @@ export const PropertyManagementVisualization = () => {
             animation: 'float1 2.3s ease-in-out infinite 1.1s'
           }}>
               <div className="space-y-0.5">
-                <div className="w-full h-1 bg-gray-300 rounded"></div>
-                <div className="w-3/4 h-1 bg-gray-300 rounded"></div>
-                <div className="w-1/2 h-1 bg-gray-300 rounded"></div>
+                <div className="w-full h-1 bg-bone-strong rounded"></div>
+                <div className="w-3/4 h-1 bg-bone-strong rounded"></div>
+                <div className="w-1/2 h-1 bg-bone-strong rounded"></div>
               </div>
             </div>
             
-            <div className="absolute bg-white border border-gray-300 rounded shadow-sm p-1" style={{
+            <div className="absolute bg-white border border-bone rounded shadow-sm p-1" style={{
             width: '24px',
             height: '28px',
             left: '8%',
@@ -330,13 +330,13 @@ export const PropertyManagementVisualization = () => {
             animation: 'float2 2.9s ease-in-out infinite 2.1s'
           }}>
               <div className="space-y-0.5">
-                <div className="w-full h-1 bg-blue-300 rounded"></div>
-                <div className="w-3/4 h-1 bg-blue-300 rounded"></div>
-                <div className="w-1/2 h-1 bg-blue-300 rounded"></div>
+                <div className="w-full h-1 bg-bone-strong rounded"></div>
+                <div className="w-3/4 h-1 bg-bone-strong rounded"></div>
+                <div className="w-1/2 h-1 bg-bone-strong rounded"></div>
               </div>
             </div>
             
-            <div className="absolute bg-white border border-gray-300 rounded shadow-sm p-1" style={{
+            <div className="absolute bg-white border border-bone rounded shadow-sm p-1" style={{
             width: '24px',
             height: '28px',
             left: '92%',
@@ -345,13 +345,13 @@ export const PropertyManagementVisualization = () => {
             animation: 'float3 2.5s ease-in-out infinite 0.7s'
           }}>
               <div className="space-y-0.5">
-                <div className="w-full h-1 bg-gray-400 rounded"></div>
-                <div className="w-3/4 h-1 bg-gray-400 rounded"></div>
-                <div className="w-1/2 h-1 bg-gray-400 rounded"></div>
+                <div className="w-full h-1 bg-ink-faint rounded"></div>
+                <div className="w-3/4 h-1 bg-ink-faint rounded"></div>
+                <div className="w-1/2 h-1 bg-ink-faint rounded"></div>
               </div>
             </div>
             
-            <div className="absolute bg-white border border-gray-300 rounded shadow-sm p-1" style={{
+            <div className="absolute bg-white border border-bone rounded shadow-sm p-1" style={{
             width: '24px',
             height: '28px',
             left: '40%',
@@ -360,13 +360,13 @@ export const PropertyManagementVisualization = () => {
             animation: 'float1 3s ease-in-out infinite 2.2s'
           }}>
               <div className="space-y-0.5">
-                <div className="w-full h-1 bg-blue-200 rounded"></div>
-                <div className="w-3/4 h-1 bg-blue-200 rounded"></div>
-                <div className="w-1/2 h-1 bg-blue-200 rounded"></div>
+                <div className="w-full h-1 bg-bone rounded"></div>
+                <div className="w-3/4 h-1 bg-bone rounded"></div>
+                <div className="w-1/2 h-1 bg-bone rounded"></div>
               </div>
             </div>
             
-            <div className="absolute bg-white border border-gray-300 rounded shadow-sm p-1" style={{
+            <div className="absolute bg-white border border-bone rounded shadow-sm p-1" style={{
             width: '24px',
             height: '28px',
             left: '58%',
@@ -375,13 +375,13 @@ export const PropertyManagementVisualization = () => {
             animation: 'float2 2.7s ease-in-out infinite 0.9s'
           }}>
               <div className="space-y-0.5">
-                <div className="w-full h-1 bg-gray-300 rounded"></div>
-                <div className="w-3/4 h-1 bg-gray-300 rounded"></div>
-                <div className="w-1/2 h-1 bg-gray-300 rounded"></div>
+                <div className="w-full h-1 bg-bone-strong rounded"></div>
+                <div className="w-3/4 h-1 bg-bone-strong rounded"></div>
+                <div className="w-1/2 h-1 bg-bone-strong rounded"></div>
               </div>
             </div>
             
-            <div className="absolute bg-white border border-gray-300 rounded shadow-sm p-1" style={{
+            <div className="absolute bg-white border border-bone rounded shadow-sm p-1" style={{
             width: '24px',
             height: '28px',
             left: '18%',
@@ -390,13 +390,13 @@ export const PropertyManagementVisualization = () => {
             animation: 'float3 2.4s ease-in-out infinite 1.7s'
           }}>
               <div className="space-y-0.5">
-                <div className="w-full h-1 bg-blue-300 rounded"></div>
-                <div className="w-3/4 h-1 bg-blue-300 rounded"></div>
-                <div className="w-1/2 h-1 bg-blue-300 rounded"></div>
+                <div className="w-full h-1 bg-bone-strong rounded"></div>
+                <div className="w-3/4 h-1 bg-bone-strong rounded"></div>
+                <div className="w-1/2 h-1 bg-bone-strong rounded"></div>
               </div>
             </div>
             
-            <div className="absolute bg-white border border-gray-300 rounded shadow-sm p-1" style={{
+            <div className="absolute bg-white border border-bone rounded shadow-sm p-1" style={{
             width: '24px',
             height: '28px',
             left: '88%',
@@ -405,13 +405,13 @@ export const PropertyManagementVisualization = () => {
             animation: 'float1 2.6s ease-in-out infinite 0.5s'
           }}>
               <div className="space-y-0.5">
-                <div className="w-full h-1 bg-gray-400 rounded"></div>
-                <div className="w-3/4 h-1 bg-gray-400 rounded"></div>
-                <div className="w-1/2 h-1 bg-gray-400 rounded"></div>
+                <div className="w-full h-1 bg-ink-faint rounded"></div>
+                <div className="w-3/4 h-1 bg-ink-faint rounded"></div>
+                <div className="w-1/2 h-1 bg-ink-faint rounded"></div>
               </div>
             </div>
             
-            <div className="absolute bg-white border border-gray-300 rounded shadow-sm p-1" style={{
+            <div className="absolute bg-white border border-bone rounded shadow-sm p-1" style={{
             width: '24px',
             height: '28px',
             left: '2%',
@@ -420,13 +420,13 @@ export const PropertyManagementVisualization = () => {
             animation: 'float2 2.8s ease-in-out infinite 1.4s'
           }}>
               <div className="space-y-0.5">
-                <div className="w-full h-1 bg-blue-200 rounded"></div>
-                <div className="w-3/4 h-1 bg-blue-200 rounded"></div>
-                <div className="w-1/2 h-1 bg-blue-200 rounded"></div>
+                <div className="w-full h-1 bg-bone rounded"></div>
+                <div className="w-3/4 h-1 bg-bone rounded"></div>
+                <div className="w-1/2 h-1 bg-bone rounded"></div>
               </div>
             </div>
             
-            <div className="absolute bg-white border border-gray-300 rounded shadow-sm p-1" style={{
+            <div className="absolute bg-white border border-bone rounded shadow-sm p-1" style={{
             width: '24px',
             height: '28px',
             left: '78%',
@@ -435,13 +435,13 @@ export const PropertyManagementVisualization = () => {
             animation: 'float3 2.3s ease-in-out infinite 1s'
           }}>
               <div className="space-y-0.5">
-                <div className="w-full h-1 bg-gray-300 rounded"></div>
-                <div className="w-3/4 h-1 bg-gray-300 rounded"></div>
-                <div className="w-1/2 h-1 bg-gray-300 rounded"></div>
+                <div className="w-full h-1 bg-bone-strong rounded"></div>
+                <div className="w-3/4 h-1 bg-bone-strong rounded"></div>
+                <div className="w-1/2 h-1 bg-bone-strong rounded"></div>
               </div>
             </div>
             
-            <div className="absolute bg-white border border-gray-300 rounded shadow-sm p-1" style={{
+            <div className="absolute bg-white border border-bone rounded shadow-sm p-1" style={{
             width: '24px',
             height: '28px',
             left: '62%',
@@ -450,144 +450,144 @@ export const PropertyManagementVisualization = () => {
             animation: 'float1 3.1s ease-in-out infinite 1.9s'
           }}>
               <div className="space-y-0.5">
-                <div className="w-full h-1 bg-blue-300 rounded"></div>
-                <div className="w-3/4 h-1 bg-blue-300 rounded"></div>
-                <div className="w-1/2 h-1 bg-blue-300 rounded"></div>
+                <div className="w-full h-1 bg-bone-strong rounded"></div>
+                <div className="w-3/4 h-1 bg-bone-strong rounded"></div>
+                <div className="w-1/2 h-1 bg-bone-strong rounded"></div>
               </div>
             </div>
             
             {/* Highlighted documents - different types with different colored content */}
-            <div className="absolute bottom-2 left-2 bg-white border border-gray-300 rounded shadow-sm p-1" style={{
+            <div className="absolute bottom-2 left-2 bg-white border border-bone rounded shadow-sm p-1" style={{
             width: '24px',
             height: '28px'
           }}>
               <div className="space-y-0.5">
-                <div className="w-full h-1 bg-gray-400 rounded"></div>
-                <div className="w-3/4 h-1 bg-gray-400 rounded"></div>
-                <div className="w-1/2 h-1 bg-gray-400 rounded"></div>
+                <div className="w-full h-1 bg-ink-faint rounded"></div>
+                <div className="w-3/4 h-1 bg-ink-faint rounded"></div>
+                <div className="w-1/2 h-1 bg-ink-faint rounded"></div>
               </div>
             </div>
             
-            <div className="absolute top-4 right-4 bg-white border border-gray-300 rounded shadow-sm p-1" style={{
+            <div className="absolute top-4 right-4 bg-white border border-bone rounded shadow-sm p-1" style={{
             width: '24px',
             height: '28px'
           }}>
               <div className="space-y-0.5">
-                <div className="w-full h-1 bg-blue-300 rounded"></div>
-                <div className="w-3/4 h-1 bg-blue-300 rounded"></div>
-                <div className="w-1/2 h-1 bg-blue-300 rounded"></div>
+                <div className="w-full h-1 bg-bone-strong rounded"></div>
+                <div className="w-3/4 h-1 bg-bone-strong rounded"></div>
+                <div className="w-1/2 h-1 bg-bone-strong rounded"></div>
               </div>
             </div>
 
             {/* Additional document types with different colored content */}
-            <div className="absolute top-8 left-8 bg-white border border-gray-300 rounded shadow-sm p-1" style={{
+            <div className="absolute top-8 left-8 bg-white border border-bone rounded shadow-sm p-1" style={{
             width: '24px',
             height: '28px'
           }}>
               <div className="space-y-0.5">
-                <div className="w-full h-1 bg-gray-400 rounded"></div>
-                <div className="w-3/4 h-1 bg-gray-400 rounded"></div>
-                <div className="w-1/2 h-1 bg-gray-400 rounded"></div>
+                <div className="w-full h-1 bg-ink-faint rounded"></div>
+                <div className="w-3/4 h-1 bg-ink-faint rounded"></div>
+                <div className="w-1/2 h-1 bg-ink-faint rounded"></div>
               </div>
             </div>
 
-            <div className="absolute bottom-8 right-8 bg-white border border-gray-300 rounded shadow-sm p-1" style={{
+            <div className="absolute bottom-8 right-8 bg-white border border-bone rounded shadow-sm p-1" style={{
             width: '24px',
             height: '28px'
           }}>
               <div className="space-y-0.5">
-                <div className="w-full h-1 bg-blue-200 rounded"></div>
-                <div className="w-3/4 h-1 bg-blue-200 rounded"></div>
-                <div className="w-1/2 h-1 bg-blue-200 rounded"></div>
+                <div className="w-full h-1 bg-bone rounded"></div>
+                <div className="w-3/4 h-1 bg-bone rounded"></div>
+                <div className="w-1/2 h-1 bg-bone rounded"></div>
               </div>
             </div>
 
-            <div className="absolute top-16 right-12 bg-white border border-gray-300 rounded shadow-sm p-1" style={{
+            <div className="absolute top-16 right-12 bg-white border border-bone rounded shadow-sm p-1" style={{
             width: '24px',
             height: '28px'
           }}>
               <div className="space-y-0.5">
-                <div className="w-full h-1 bg-gray-400 rounded"></div>
-                <div className="w-3/4 h-1 bg-gray-400 rounded"></div>
-                <div className="w-1/2 h-1 bg-gray-400 rounded"></div>
+                <div className="w-full h-1 bg-ink-faint rounded"></div>
+                <div className="w-3/4 h-1 bg-ink-faint rounded"></div>
+                <div className="w-1/2 h-1 bg-ink-faint rounded"></div>
               </div>
             </div>
 
-            <div className="absolute bottom-16 left-8 bg-white border border-gray-300 rounded shadow-sm p-1" style={{
+            <div className="absolute bottom-16 left-8 bg-white border border-bone rounded shadow-sm p-1" style={{
             width: '24px',
             height: '28px'
           }}>
               <div className="space-y-0.5">
-                <div className="w-full h-1 bg-blue-300 rounded"></div>
-                <div className="w-3/4 h-1 bg-blue-300 rounded"></div>
-                <div className="w-1/2 h-1 bg-blue-300 rounded"></div>
+                <div className="w-full h-1 bg-bone-strong rounded"></div>
+                <div className="w-3/4 h-1 bg-bone-strong rounded"></div>
+                <div className="w-1/2 h-1 bg-bone-strong rounded"></div>
               </div>
             </div>
 
             {/* More colored document content types */}
-            <div className="absolute top-6 left-16 bg-white border border-gray-300 rounded shadow-sm p-1" style={{
+            <div className="absolute top-6 left-16 bg-white border border-bone rounded shadow-sm p-1" style={{
             width: '24px',
             height: '28px'
           }}>
               <div className="space-y-0.5">
-                <div className="w-full h-1 bg-gray-400 rounded"></div>
-                <div className="w-3/4 h-1 bg-gray-400 rounded"></div>
-                <div className="w-1/2 h-1 bg-gray-400 rounded"></div>
+                <div className="w-full h-1 bg-ink-faint rounded"></div>
+                <div className="w-3/4 h-1 bg-ink-faint rounded"></div>
+                <div className="w-1/2 h-1 bg-ink-faint rounded"></div>
               </div>
             </div>
 
-            <div className="absolute bottom-12 right-16 bg-white border border-gray-300 rounded shadow-sm p-1" style={{
+            <div className="absolute bottom-12 right-16 bg-white border border-bone rounded shadow-sm p-1" style={{
             width: '24px',
             height: '28px'
           }}>
               <div className="space-y-0.5">
-                <div className="w-full h-1 bg-blue-400 rounded"></div>
-                <div className="w-3/4 h-1 bg-blue-400 rounded"></div>
-                <div className="w-1/2 h-1 bg-blue-400 rounded"></div>
+                <div className="w-full h-1 bg-ink-faint rounded"></div>
+                <div className="w-3/4 h-1 bg-ink-faint rounded"></div>
+                <div className="w-1/2 h-1 bg-ink-faint rounded"></div>
               </div>
             </div>
 
-            <div className="absolute top-12 left-12 bg-white border border-gray-300 rounded shadow-sm p-1" style={{
+            <div className="absolute top-12 left-12 bg-white border border-bone rounded shadow-sm p-1" style={{
             width: '24px',
             height: '28px'
           }}>
               <div className="space-y-0.5">
-                <div className="w-full h-1 bg-gray-400 rounded"></div>
-                <div className="w-3/4 h-1 bg-gray-400 rounded"></div>
-                <div className="w-1/2 h-1 bg-gray-400 rounded"></div>
+                <div className="w-full h-1 bg-ink-faint rounded"></div>
+                <div className="w-3/4 h-1 bg-ink-faint rounded"></div>
+                <div className="w-1/2 h-1 bg-ink-faint rounded"></div>
               </div>
             </div>
 
-            <div className="absolute bottom-6 left-20 bg-white border border-gray-300 rounded shadow-sm p-1" style={{
+            <div className="absolute bottom-6 left-20 bg-white border border-bone rounded shadow-sm p-1" style={{
             width: '24px',
             height: '28px'
           }}>
               <div className="space-y-0.5">
-                <div className="w-full h-1 bg-blue-200 rounded"></div>
-                <div className="w-3/4 h-1 bg-blue-200 rounded"></div>
-                <div className="w-1/2 h-1 bg-blue-200 rounded"></div>
+                <div className="w-full h-1 bg-bone rounded"></div>
+                <div className="w-3/4 h-1 bg-bone rounded"></div>
+                <div className="w-1/2 h-1 bg-bone rounded"></div>
               </div>
             </div>
 
-            <div className="absolute top-20 right-6 bg-white border border-gray-300 rounded shadow-sm p-1" style={{
+            <div className="absolute top-20 right-6 bg-white border border-bone rounded shadow-sm p-1" style={{
             width: '24px',
             height: '28px'
           }}>
               <div className="space-y-0.5">
-                <div className="w-full h-1 bg-gray-300 rounded"></div>
-                <div className="w-3/4 h-1 bg-gray-300 rounded"></div>
-                <div className="w-1/2 h-1 bg-gray-300 rounded"></div>
+                <div className="w-full h-1 bg-bone-strong rounded"></div>
+                <div className="w-3/4 h-1 bg-bone-strong rounded"></div>
+                <div className="w-1/2 h-1 bg-bone-strong rounded"></div>
               </div>
             </div>
 
-            <div className="absolute bottom-4 left-1/2 bg-white border border-gray-300 rounded shadow-sm p-1" style={{
+            <div className="absolute bottom-4 left-1/2 bg-white border border-bone rounded shadow-sm p-1" style={{
             width: '24px',
             height: '28px'
           }}>
               <div className="space-y-0.5">
-                <div className="w-full h-1 bg-blue-300 rounded"></div>
-                <div className="w-3/4 h-1 bg-blue-300 rounded"></div>
-                <div className="w-1/2 h-1 bg-blue-300 rounded"></div>
+                <div className="w-full h-1 bg-bone-strong rounded"></div>
+                <div className="w-3/4 h-1 bg-bone-strong rounded"></div>
+                <div className="w-1/2 h-1 bg-bone-strong rounded"></div>
               </div>
             </div>
           </div>
@@ -596,7 +596,7 @@ export const PropertyManagementVisualization = () => {
             <div>{viz.theChallenge.documents.leaseAgreements}</div>
             <div>{viz.theChallenge.documents.deedsOfVariation}</div>
             <div>{viz.theChallenge.documents.reversionaryLeases}</div>
-            <div className="mt-2 text-green-600">
+            <div className="mt-2 text-success">
               {viz.theChallenge.documents.differentDates}
             </div>
           </div>
@@ -606,18 +606,18 @@ export const PropertyManagementVisualization = () => {
         <div className="text-center">
           <div className="mb-3">
             <h4 className={`font-black uppercase tracking-widest mb-2 relative inline-block text-lg`}>
-              <span className="bg-gradient-to-r from-purple-600 via-indigo-600 to-purple-700 bg-clip-text text-transparent drop-shadow-sm">
+              <span className="bg-gradient-to-r from-charcoal via-charcoal to-charcoal bg-clip-text text-transparent drop-shadow-sm">
                 {viz.hobsonAI.title}
               </span>
-              <div className="absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-purple-500 to-indigo-500 rounded-full"></div>
+              <div className="absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-ink-faint to-ink-faint rounded-full"></div>
             </h4>
-            <div className={`text-purple-600 font-bold uppercase tracking-wide opacity-80 text-xs`}>
+            <div className={`text-charcoal font-bold uppercase tracking-wide opacity-80 text-xs`}>
               {viz.hobsonAI.subtitle}
             </div>
           </div>
           
           {/* Clean Answer Card */}
-          <div className="bg-gray-50 rounded-lg border border-primary/20 shadow-lg relative" style={{
+          <div className="bg-paper rounded-lg border border-primary/20 shadow-lg relative" style={{
           padding: 'clamp(15px, 4vw, 22px)'
         }}>
             <div className={`font-normal text-muted-foreground mb-3 font-sans text-left text-sm`}>
@@ -627,17 +627,17 @@ export const PropertyManagementVisualization = () => {
             <div className="text-left space-y-2 mb-4">
               <div className={`text-muted-foreground font-bold mb-2 text-xs`}>{viz.hobsonAI.sources}</div>
               <div className={`flex items-start gap-2 text-muted-foreground text-xs`}>
-                <CheckCircle className="w-3 h-3 text-green-600 mt-0.5 flex-shrink-0" />
+                <CheckCircle className="w-3 h-3 text-success mt-0.5 flex-shrink-0" />
                 <span>{viz.hobsonAI.leaseAgreement}<br />{viz.hobsonAI.leaseAgreementRef}</span>
               </div>
               <div className={`flex items-start gap-2 text-muted-foreground text-xs`}>
-                <CheckCircle className="w-3 h-3 text-green-600 mt-0.5 flex-shrink-0" />
+                <CheckCircle className="w-3 h-3 text-success mt-0.5 flex-shrink-0" />
                 <span>{viz.hobsonAI.deedOfVariation}<br />{viz.hobsonAI.deedOfVariationRef}</span>
               </div>
             </div>
             
             {/* Chat input area */}
-            <div className="flex items-center gap-2 bg-amber-50 border border-border rounded-lg -mx-2" style={{
+            <div className="flex items-center gap-2 bg-warning-bg border border-border rounded-lg -mx-2" style={{
             padding: '10px',
             marginTop: '19px'
           }}>
@@ -647,7 +647,7 @@ export const PropertyManagementVisualization = () => {
               <textarea placeholder={viz.hobsonAI.askPlaceholder} className="flex-1 resize-none bg-transparent text-xs font-bold placeholder:text-muted-foreground border-none outline-none min-h-[24px] max-h-[100px]" style={{
               marginTop: '2px'
             }} rows={1} />
-              <div className="w-5 h-5 rounded-full bg-black flex items-center justify-center hover:bg-gray-800 cursor-pointer flex-shrink-0">
+              <div className="w-5 h-5 rounded-full bg-black flex items-center justify-center hover:bg-ink cursor-pointer flex-shrink-0">
                 <ArrowUp className="w-3 h-3 text-white" />
               </div>
             </div>

@@ -41,9 +41,9 @@ export const ReportsFilterBar = () => {
   endInclusive.setDate(endInclusive.getDate() - 1);
 
   return (
-    <div className="bg-white border border-slate-200 rounded-lg p-3 flex flex-wrap items-center gap-3">
+    <div className="bg-white border border-bone rounded-lg p-3 flex flex-wrap items-center gap-3">
       <div className="flex items-center gap-2">
-        <label className="text-xs font-medium text-slate-500 uppercase tracking-wide">
+        <label className="text-xs font-medium text-ink-muted uppercase tracking-wide">
           Range
         </label>
         <Select
@@ -73,7 +73,7 @@ export const ReportsFilterBar = () => {
               f.setCustomRange(new Date(e.target.value), endInclusive)
             }
           />
-          <span className="text-xs text-slate-400">→</span>
+          <span className="text-xs text-ink-muted">→</span>
           <Input
             type="date"
             className="h-8 w-[140px] text-sm"
@@ -86,7 +86,7 @@ export const ReportsFilterBar = () => {
       )}
 
       <div className="flex items-center gap-2">
-        <label className="text-xs font-medium text-slate-500 uppercase tracking-wide">
+        <label className="text-xs font-medium text-ink-muted uppercase tracking-wide">
           Owner
         </label>
         <Select value={f.ownerId} onValueChange={(v) => f.setOwnerId(v)}>
@@ -104,8 +104,8 @@ export const ReportsFilterBar = () => {
         </Select>
       </div>
 
-      <div className="ml-auto text-xs text-slate-500">
-        Bucket: <span className="font-medium text-slate-700">{f.bucket}</span>
+      <div className="ml-auto text-xs text-ink-muted">
+        Bucket: <span className="font-medium text-charcoal">{f.bucket}</span>
       </div>
     </div>
   );

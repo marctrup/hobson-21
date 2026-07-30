@@ -326,7 +326,7 @@ export const HobsonChatbot = () => {
                     className={`max-w-[75%] rounded-2xl px-4 py-3 ${
                       message.role === 'user'
                         ? 'bg-primary text-primary-foreground rounded-br-sm'
-                        : 'bg-purple-50 dark:bg-purple-950/20 text-foreground rounded-bl-sm'
+                        : 'bg-paper dark:bg-ink/20 text-foreground rounded-bl-sm'
                     }`}
                   >
                     <p className="text-sm leading-relaxed whitespace-pre-wrap">
@@ -372,7 +372,7 @@ export const HobsonChatbot = () => {
                   alt="Hobson Owl" 
                   className="w-16 h-auto object-contain flex-shrink-0"
                 />
-                <div className="bg-purple-50 dark:bg-purple-950/20 text-foreground rounded-2xl rounded-bl-sm px-4 py-3">
+                <div className="bg-paper dark:bg-ink/20 text-foreground rounded-2xl rounded-bl-sm px-4 py-3">
                   <Loader2 className="w-4 h-4 animate-spin" />
                 </div>
               </div>

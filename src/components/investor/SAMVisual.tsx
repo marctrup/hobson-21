@@ -34,14 +34,14 @@ export const SAMVisual = () => {
         </div>
 
         {/* Global SAM Card */}
-        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-amber-500/10 via-amber-500/5 to-transparent border border-amber-500/20 p-8">
+        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-warning/10 via-warning/5 to-transparent border border-warning/20 p-8">
           <div className="absolute top-4 right-4 opacity-10">
-            <Globe className="w-24 h-24 text-amber-500" />
+            <Globe className="w-24 h-24 text-warning" />
           </div>
           <div className="relative z-10">
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-12 h-12 rounded-full bg-amber-500/20 flex items-center justify-center">
-                <Globe className="w-6 h-6 text-amber-500" />
+              <div className="w-12 h-12 rounded-full bg-warning/20 flex items-center justify-center">
+                <Globe className="w-6 h-6 text-warning" />
               </div>
               <div>
                 <p className="text-sm font-medium text-muted-foreground uppercase tracking-wider">Global Market</p>
@@ -49,7 +49,7 @@ export const SAMVisual = () => {
               </div>
             </div>
             <div className="mb-6">
-              <p className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-amber-500 to-amber-600 bg-clip-text text-transparent">
+              <p className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-warning to-warning bg-clip-text text-transparent">
                 £101B
               </p>
             </div>

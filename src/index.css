@@ -58,10 +58,21 @@ All colors MUST be HSL.
     --brass-text: #8E7133;
     /* Purple is identity only: owl avatar, logo, favicon */
     --purple: #8B5CF6;
+    --purple-deep: #7C3AED;
     /* Evidence provenance only */
     --lavender-highlight: #EDE3FB;
     --lavender-wash: #F3EFFA;
     --purple-marker: #5B3A96;
+
+    /* Extended warm neutrals */
+    --document-white: #FFFFFF;
+    --vellum: #FFFDFA;
+    --zebra: #FAF7F2;
+    --code-surface: #F7F3EC;
+    --row-hover: #F4EFE4;
+    --disabled: #F4F0E9;
+    --faint-rule: #EDE5D6;
+
 
     /* Semantic (warm, palette-compatible) */
     --danger: #9C4A38;
@@ -317,3 +328,19 @@ html::-webkit-scrollbar-thumb:hover,
 .hobson-scroll::-webkit-scrollbar-thumb:hover {
   background: #B4914F;
 }
+
+/* Any internally scrolling container inherits the same warm scrollbar */
+*::-webkit-scrollbar { width: 10px; height: 10px; }
+*::-webkit-scrollbar-track { background: #F1EBDE; }
+*::-webkit-scrollbar-thumb { background: #D8CDB6; border-radius: 5px; }
+*::-webkit-scrollbar-thumb:hover { background: #B4914F; }
+
+::selection { background: #E8E1D4; color: #2D2D2D; }
+
+:focus-visible {
+  outline: 2px solid #B4914F;
+  outline-offset: 2px;
+}
+
+html { caret-color: #2D2D2D; }
+

@@ -1676,7 +1676,7 @@ const renderWhyNow = (
   // Convergence section - light background matching on-screen update
   yPosition = checkPageBreak(doc, yPosition, 85, pageHeight, margin);
 
-  // Convergence background - white with purple border (matches on-screen bg-white border-2 border-purple-200)
+  // Convergence background - white with purple border (matches on-screen bg-white border-2 border-bone)
   const convergenceBoxHeight = 50; // Box only contains title and pills
   doc.setFillColor(...PDF_CONFIG.bgWhite);
   doc.setDrawColor(...PDF_CONFIG.primaryLight);
@@ -1688,7 +1688,7 @@ const renderWhyNow = (
   setCardTitleFont(doc);
   doc.text(whyNowData.convergence.title, pageWidth / 2, yPosition + 12, { align: "center" });
 
-  // Points as pills with light purple background (matches on-screen bg-purple-50 border-purple-200)
+  // Points as pills with light purple background (matches on-screen bg-paper border-bone)
   const points = whyNowData.convergence.points;
   setBodySmallFont(doc);
   
@@ -1702,7 +1702,7 @@ const renderWhyNow = (
   
   points.slice(0, 3).forEach((point) => {
     const textWidth = doc.getTextWidth(point) + 10;
-    // Light purple pill background (matches on-screen bg-purple-50)
+    // Light purple pill background (matches on-screen bg-paper)
     doc.setFillColor(...PDF_CONFIG.primaryBgLight);
     doc.setDrawColor(...PDF_CONFIG.primaryLight);
     doc.setLineWidth(0.3);

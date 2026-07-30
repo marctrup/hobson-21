@@ -26,7 +26,7 @@ const FeatureCard = memo(({ feature, index }: FeatureCardProps) => {
             <div className="flex items-center gap-2 mb-2">
               <h3 className="text-xl font-bold text-foreground">{feature.title}</h3>
               {index < 3 ? (
-                <Badge variant="outline" className="text-green-600 border-green-600/20 bg-green-50 dark:bg-green-950/20">
+                <Badge variant="outline" className="text-success border-success/20 bg-success-bg dark:bg-success-solid/20">
                   Beta
                 </Badge>
               ) : (

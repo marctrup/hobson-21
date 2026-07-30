@@ -16,20 +16,20 @@ export const SectorScaleOpportunityVisual = () => {
   return (
     <div className="space-y-6">
       {/* Strapline */}
-      <div className="p-5 rounded-xl bg-gradient-to-r from-slate-50 to-slate-100/80 dark:from-slate-900/50 dark:to-slate-800/30 border border-slate-200/50 dark:border-slate-700/30">
-        <p className="text-base lg:text-lg font-semibold text-purple-600 dark:text-purple-400 leading-relaxed">
+      <div className="p-5 rounded-xl bg-gradient-to-r from-paper to-bone-wash/80 dark:from-ink/50 dark:to-ink/30 border border-bone/50 dark:border-charcoal/30">
+        <p className="text-base lg:text-lg font-semibold text-charcoal dark:text-ink-muted leading-relaxed">
           Real estate is one of the largest and most document-intensive industries in the UK and globally.
         </p>
       </div>
 
       {/* Document-Governed Activities */}
-      <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-blue-50 to-blue-100/50 dark:from-blue-950/30 dark:to-blue-900/20 border border-blue-200/50 dark:border-blue-800/30 p-5">
-        <div className="absolute -top-8 -right-8 w-24 h-24 bg-gradient-to-br from-blue-500 to-blue-600 opacity-10 rounded-full blur-2xl" />
+      <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-paper to-bone-wash/50 dark:from-ink/30 dark:to-ink/20 border border-bone/50 dark:border-charcoal/30 p-5">
+        <div className="absolute -top-8 -right-8 w-24 h-24 bg-gradient-to-br from-ink-faint to-charcoal opacity-10 rounded-full blur-2xl" />
         
         <div className="relative">
           <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-xl bg-blue-100 dark:bg-blue-950/50 flex items-center justify-center">
-              <FileText className="w-5 h-5 text-blue-600" />
+            <div className="w-10 h-10 rounded-xl bg-bone-wash dark:bg-ink/50 flex items-center justify-center">
+              <FileText className="w-5 h-5 text-charcoal" />
             </div>
             <h4 className="font-semibold text-foreground">Document-Governed Industry</h4>
           </div>
@@ -41,7 +41,7 @@ export const SectorScaleOpportunityVisual = () => {
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
             {activities.map((activity, idx) => (
               <div key={idx} className="flex items-center gap-2 bg-white/60 dark:bg-white/5 rounded-lg px-3 py-2">
-                <activity.icon className="w-4 h-4 text-blue-600 flex-shrink-0" />
+                <activity.icon className="w-4 h-4 text-charcoal flex-shrink-0" />
                 <span className="text-xs text-foreground">{activity.label}</span>
               </div>
             ))}
@@ -50,13 +50,13 @@ export const SectorScaleOpportunityVisual = () => {
       </div>
 
       {/* Compounding Complexity */}
-      <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-purple-50 to-purple-100/50 dark:from-purple-950/30 dark:to-purple-900/20 border border-purple-200/50 dark:border-purple-800/30 p-5">
-        <div className="absolute -top-8 -right-8 w-24 h-24 bg-gradient-to-br from-purple-500 to-purple-600 opacity-10 rounded-full blur-2xl" />
+      <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-paper to-bone-wash/50 dark:from-ink/30 dark:to-ink/20 border border-bone/50 dark:border-charcoal/30 p-5">
+        <div className="absolute -top-8 -right-8 w-24 h-24 bg-gradient-to-br from-ink-faint to-charcoal opacity-10 rounded-full blur-2xl" />
         
         <div className="relative">
           <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-xl bg-purple-100 dark:bg-purple-950/50 flex items-center justify-center">
-              <TrendingUp className="w-5 h-5 text-purple-600" />
+            <div className="w-10 h-10 rounded-xl bg-bone-wash dark:bg-ink/50 flex items-center justify-center">
+              <TrendingUp className="w-5 h-5 text-charcoal" />
             </div>
             <h4 className="font-semibold text-foreground">Compounding Complexity</h4>
           </div>
@@ -67,15 +67,15 @@ export const SectorScaleOpportunityVisual = () => {
           
           <div className="grid sm:grid-cols-3 gap-3">
             <div className="bg-white/60 dark:bg-white/5 rounded-lg p-3 text-center">
-              <div className="text-lg font-bold text-purple-600 mb-1">Portfolios</div>
+              <div className="text-lg font-bold text-charcoal mb-1">Portfolios</div>
               <div className="text-xs text-muted-foreground">Grow in size and complexity</div>
             </div>
             <div className="bg-white/60 dark:bg-white/5 rounded-lg p-3 text-center">
-              <div className="text-lg font-bold text-purple-600 mb-1">Regulation</div>
+              <div className="text-lg font-bold text-charcoal mb-1">Regulation</div>
               <div className="text-xs text-muted-foreground">Increases annually</div>
             </div>
             <div className="bg-white/60 dark:bg-white/5 rounded-lg p-3 text-center">
-              <div className="text-lg font-bold text-purple-600 mb-1">Reporting</div>
+              <div className="text-lg font-bold text-charcoal mb-1">Reporting</div>
               <div className="text-xs text-muted-foreground">Standards tighten continuously</div>
             </div>
           </div>

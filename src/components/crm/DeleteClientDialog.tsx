@@ -76,7 +76,7 @@ export function DeleteClientDialog({ clientId, clientName, onDeleted }: Props) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline" size="sm" className="text-rose-600">
+        <Button variant="outline" size="sm" className="text-danger">
           <Trash2 className="size-4" />
         </Button>
       </DialogTrigger>
@@ -85,30 +85,30 @@ export function DeleteClientDialog({ clientId, clientName, onDeleted }: Props) {
           <DialogTitle>Delete client</DialogTitle>
         </DialogHeader>
 
-        <div className="rounded-md border border-rose-200 bg-rose-50 p-3 flex gap-2 text-sm text-rose-800">
+        <div className="rounded-md border border-danger-border bg-danger-bg p-3 flex gap-2 text-sm text-danger">
           <AlertTriangle className="size-4 mt-0.5 shrink-0" />
           <div>This action is permanent and cannot be undone.</div>
         </div>
 
-        <div className="space-y-3 text-sm text-slate-700">
+        <div className="space-y-3 text-sm text-charcoal">
           <div>
             This will permanently remove <strong>{clientName}</strong> and all associated data:
           </div>
 
           {preview.isLoading && (
-            <div className="flex items-center gap-2 text-slate-500">
+            <div className="flex items-center gap-2 text-ink-muted">
               <Loader2 className="size-4 animate-spin" /> Loading counts…
             </div>
           )}
 
           {preview.error && (
-            <div className="text-rose-600">
+            <div className="text-danger">
               Could not load dependent record counts: {(preview.error as Error).message}
             </div>
           )}
 
           {preview.data && (
-            <ul className="list-disc pl-5 space-y-1 text-slate-700">
+            <ul className="list-disc pl-5 space-y-1 text-charcoal">
               <li><strong>{preview.data.contacts_count}</strong> contacts</li>
               <li>
                 <strong>{preview.data.communications_count}</strong> communications
@@ -123,7 +123,7 @@ export function DeleteClientDialog({ clientId, clientName, onDeleted }: Props) {
             </ul>
           )}
 
-          <div className="text-xs text-slate-500 pt-1">
+          <div className="text-xs text-ink-muted pt-1">
             The per-client activity timeline will be removed along with the client. A separate
             audit record of this deletion will be preserved in the workspace security log for
             compliance.
@@ -133,7 +133,7 @@ export function DeleteClientDialog({ clientId, clientName, onDeleted }: Props) {
             <Label htmlFor="confirm-name" className="text-sm block">
               To confirm, type the client record name exactly as shown:
             </Label>
-            <code className="inline-block mt-1 px-2 py-1 rounded bg-slate-100 border border-slate-200 text-slate-900 text-sm font-mono select-all">
+            <code className="inline-block mt-1 px-2 py-1 rounded bg-bone-wash border border-bone text-ink text-sm font-mono select-all">
               {clientName}
             </code>
             <Input
@@ -146,13 +146,13 @@ export function DeleteClientDialog({ clientId, clientName, onDeleted }: Props) {
               disabled={del.isPending}
             />
             {typed.length > 0 && !nameMatches && (
-              <div className="text-xs text-rose-600 mt-1">
+              <div className="text-xs text-danger mt-1">
                 That doesn't match the client record name. Type exactly:{" "}
-                <code className="px-1 rounded bg-rose-100">{clientName}</code>
+                <code className="px-1 rounded bg-danger-bg">{clientName}</code>
               </div>
             )}
             {preview.isLoading && (
-              <div className="text-xs text-slate-500 mt-1">
+              <div className="text-xs text-ink-muted mt-1">
                 Waiting for record counts to load…
               </div>
             )}

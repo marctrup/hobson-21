@@ -16,10 +16,10 @@ export const PESTLEAnalysisVisual = () => {
       title: "Political",
       subtitle: "Rising Regulation & Data Governance",
       icon: Landmark,
-      color: "from-blue-500/10 to-blue-600/10",
-      borderColor: "border-blue-200/50 dark:border-blue-800/30",
-      iconColor: "text-blue-600 dark:text-blue-400",
-      bgCircle: "bg-blue-100 dark:bg-blue-900/30",
+      color: "from-ink-faint/10 to-charcoal/10",
+      borderColor: "border-bone/50 dark:border-charcoal/30",
+      iconColor: "text-charcoal dark:text-ink-muted",
+      bgCircle: "bg-bone-wash dark:bg-ink/30",
       intro: "The global Real Estate environment is becoming increasingly tightly regulated, with increasing documentation requirements and scrutiny. Key drivers include:",
       items: [
         "Building Safety Act: more detailed record-keeping and audit-ready evidence",
@@ -36,10 +36,10 @@ export const PESTLEAnalysisVisual = () => {
       title: "Economic",
       subtitle: "Cost Pressure, Efficiency & Market Cycles",
       icon: TrendingUp,
-      color: "from-emerald-500/10 to-emerald-600/10",
-      borderColor: "border-emerald-200/50 dark:border-emerald-800/30",
-      iconColor: "text-emerald-600 dark:text-emerald-400",
-      bgCircle: "bg-emerald-100 dark:bg-emerald-900/30",
+      color: "from-success/10 to-success/10",
+      borderColor: "border-success-border/50 dark:border-success/30",
+      iconColor: "text-success dark:text-success",
+      bgCircle: "bg-success-bg dark:bg-success-solid/30",
       intro: "Real Estate organisations face persistent economic challenges:",
       items: [
         "Cost constraints limit headcount growth",
@@ -56,10 +56,10 @@ export const PESTLEAnalysisVisual = () => {
       title: "Social",
       subtitle: "AI Comfort, Trust & Work Culture",
       icon: Users,
-      color: "from-purple-500/10 to-purple-600/10",
-      borderColor: "border-purple-200/50 dark:border-purple-800/30",
-      iconColor: "text-purple-600 dark:text-purple-400",
-      bgCircle: "bg-purple-100 dark:bg-purple-900/30",
+      color: "from-ink-faint/10 to-charcoal/10",
+      borderColor: "border-bone/50 dark:border-charcoal/30",
+      iconColor: "text-charcoal dark:text-ink-muted",
+      bgCircle: "bg-bone-wash dark:bg-ink/30",
       intro: "Attitudes toward AI are warming, but trust is still fragile:",
       items: [
         "Growing openness to AI for operations, reporting, and document workflows",
@@ -75,10 +75,10 @@ export const PESTLEAnalysisVisual = () => {
       title: "Technological",
       subtitle: "Fast-Moving AI & PropTech",
       icon: Cpu,
-      color: "from-amber-500/10 to-amber-600/10",
-      borderColor: "border-amber-200/50 dark:border-amber-800/30",
-      iconColor: "text-amber-600 dark:text-amber-400",
-      bgCircle: "bg-amber-100 dark:bg-amber-900/30",
+      color: "from-warning/10 to-warning/10",
+      borderColor: "border-warning-border/50 dark:border-warning/30",
+      iconColor: "text-warning dark:text-warning",
+      bgCircle: "bg-warning-bg dark:bg-warning-solid/30",
       intro: "The technology landscape is evolving quickly:",
       items: [
         "Advances in LLMs, embeddings, RAG, and knowledge graphs make document understanding far more powerful",
@@ -95,10 +95,10 @@ export const PESTLEAnalysisVisual = () => {
       title: "Legal",
       subtitle: "Compliance, Data & Documentation Risk",
       icon: Scale,
-      color: "from-rose-500/10 to-rose-600/10",
-      borderColor: "border-rose-200/50 dark:border-rose-800/30",
-      iconColor: "text-rose-600 dark:text-rose-400",
-      bgCircle: "bg-rose-100 dark:bg-rose-900/30",
+      color: "from-danger/10 to-danger/10",
+      borderColor: "border-danger-border/50 dark:border-danger/30",
+      iconColor: "text-danger dark:text-danger",
+      bgCircle: "bg-danger-bg dark:bg-danger-solid/30",
       intro: "Legal frameworks reinforce the need for structured, accurate document handling:",
       items: [
         "GDPR demands explicit data handling, transparency, and security",
@@ -114,10 +114,10 @@ export const PESTLEAnalysisVisual = () => {
       title: "Environmental",
       subtitle: "ESG Reporting & Paper Reduction",
       icon: Leaf,
-      color: "from-teal-500/10 to-teal-600/10",
-      borderColor: "border-teal-200/50 dark:border-teal-800/30",
-      iconColor: "text-teal-600 dark:text-teal-400",
-      bgCircle: "bg-teal-100 dark:bg-teal-900/30",
+      color: "from-ink-faint/10 to-charcoal/10",
+      borderColor: "border-bone/50 dark:border-charcoal/30",
+      iconColor: "text-charcoal dark:text-ink-muted",
+      bgCircle: "bg-bone-wash dark:bg-ink/30",
       intro: "Environmental factors are secondary drivers, but still important:",
       items: [
         "ESG reporting adds another layer of documentation and evidence",
@@ -150,7 +150,7 @@ export const PESTLEAnalysisVisual = () => {
       </div>
 
       {/* Key Drivers Summary */}
-      <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900/50 dark:to-slate-800/30 p-5 border border-slate-200 dark:border-slate-700/50">
+      <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-paper to-bone-wash dark:from-ink/50 dark:to-ink/30 p-5 border border-bone dark:border-charcoal/50">
         <p className="text-sm text-foreground mb-3">
           Across all dimensions — political, economic, social, technological, legal, and environmental — the environment is shifting towards tools that provide:
         </p>

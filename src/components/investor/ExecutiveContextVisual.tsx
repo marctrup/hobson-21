@@ -12,8 +12,8 @@ export const ExecutiveContextVisual = () => {
   return (
     <div className="space-y-8">
       {/* Header - Inflexion Point */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-teal-500/10 via-teal-500/5 to-teal-500/10 p-6 border border-teal-200/50 dark:border-teal-800/30">
-        <div className="absolute top-0 right-0 w-32 h-32 bg-teal-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-ink-faint/10 via-ink-faint/5 to-ink-faint/10 p-6 border border-bone/50 dark:border-charcoal/30">
+        <div className="absolute top-0 right-0 w-32 h-32 bg-ink-faint/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
         <div className="relative">
           <h3 className="text-xl font-bold text-foreground">The Real Estate industry has entered a structural inflexion point.</h3>
         </div>
@@ -22,15 +22,15 @@ export const ExecutiveContextVisual = () => {
       {/* Pressures */}
       <div className="grid sm:grid-cols-2 gap-3">
         {pressures.map((pressure, idx) => (
-          <div key={idx} className="flex items-center gap-3 p-4 rounded-xl bg-gradient-to-br from-red-50/50 to-red-100/30 dark:from-red-950/20 dark:to-red-900/10 border border-red-200/50 dark:border-red-800/30">
-            <AlertTriangle className="w-5 h-5 text-red-600 dark:text-red-400 flex-shrink-0" />
+          <div key={idx} className="flex items-center gap-3 p-4 rounded-xl bg-gradient-to-br from-danger-bg/50 to-danger-bg/30 dark:from-danger-solid/20 dark:to-danger-solid/10 border border-danger-border/50 dark:border-danger/30">
+            <AlertTriangle className="w-5 h-5 text-danger dark:text-danger flex-shrink-0" />
             <span className="text-foreground font-medium">{pressure}</span>
           </div>
         ))}
       </div>
 
       {/* Context paragraph */}
-      <div className="p-6 rounded-xl bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900/50 dark:to-slate-800/30 border border-slate-200 dark:border-slate-700/50">
+      <div className="p-6 rounded-xl bg-gradient-to-br from-paper to-bone-wash dark:from-ink/50 dark:to-ink/30 border border-bone dark:border-charcoal/50">
         <p className="text-foreground leading-relaxed">
           Traditional property management systems can no longer scale to meet the demands placed upon them. 
           Operators are under immediate pressure to transform how they manage risk, compliance, documentation, 
@@ -53,15 +53,15 @@ export const ExecutiveContextVisual = () => {
       {/* Mission Statement */}
       <div className="space-y-4">
         <div className="flex items-center gap-3">
-          <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-teal-500/10 text-teal-600 dark:text-teal-400">
+          <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-ink-faint/10 text-charcoal dark:text-ink-muted">
             <Target className="w-5 h-5" />
           </div>
           <div>
             <h4 className="font-semibold text-foreground">Mission Statement</h4>
-            <p className="text-sm text-teal-600 dark:text-teal-400 font-medium">Innovation without disruption</p>
+            <p className="text-sm text-charcoal dark:text-ink-muted font-medium">Innovation without disruption</p>
           </div>
         </div>
-        <div className="ml-13 p-5 rounded-xl bg-gradient-to-br from-teal-50/80 to-teal-100/50 dark:from-teal-950/30 dark:to-teal-900/20 border border-teal-200 dark:border-teal-800/30">
+        <div className="ml-13 p-5 rounded-xl bg-gradient-to-br from-paper/80 to-bone-wash/50 dark:from-ink/30 dark:to-ink/20 border border-bone dark:border-charcoal/30">
           <p className="text-foreground leading-relaxed">
             To become the intelligence layer real estate runs on—ensuring every operational decision is based on 
             instant, auditable insight rather than manual search, institutional memory, or guesswork.
@@ -91,14 +91,14 @@ export const ExecutiveContextVisual = () => {
       </div>
 
       {/* Conclusion */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-amber-500/10 via-orange-500/5 to-amber-500/10 p-6 border border-amber-200/50 dark:border-amber-800/30">
-        <div className="absolute top-0 right-0 w-32 h-32 bg-amber-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-warning/10 via-warning/5 to-warning/10 p-6 border border-warning-border/50 dark:border-warning/30">
+        <div className="absolute top-0 right-0 w-32 h-32 bg-warning/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
         <div className="relative">
           <p className="text-foreground leading-relaxed">
             The following go-to-market strategy is therefore not incremental; it is designed for 
-            <span className="font-bold text-amber-700 dark:text-amber-400"> rapid validation</span>, 
-            <span className="font-bold text-amber-700 dark:text-amber-400"> accelerated adoption</span>, and 
-            <span className="font-bold text-amber-700 dark:text-amber-400"> decisive category capture</span>—creating 
+            <span className="font-bold text-warning dark:text-warning"> rapid validation</span>, 
+            <span className="font-bold text-warning dark:text-warning"> accelerated adoption</span>, and 
+            <span className="font-bold text-warning dark:text-warning"> decisive category capture</span>—creating 
             a narrow, highly investable window in which early capital enables Hobson to define the industry's future operating model.
           </p>
         </div>

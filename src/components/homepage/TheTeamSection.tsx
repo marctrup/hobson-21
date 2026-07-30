@@ -41,12 +41,12 @@ const SERVICES: Specialist[] = [
 const SpecialistCard: React.FC<{ s: Specialist; index: number }> = ({ s, index }) => (
   <article
     className="group relative rounded-3xl p-6 shadow-[0_8px_30px_-12px_rgba(180,145,79,0.18)] hover:shadow-[0_20px_50px_-15px_rgba(180,145,79,0.35)] hover:-translate-y-1 transition-all duration-500"
-    style={{ animation: `fade-up 0.6s ease ${index * 80}ms both`, background: "#FFFFFF", border: "1px solid #EDE7DA" }}
+    style={{ animation: `fade-up 0.6s ease ${index * 80}ms both`, background: "#FFFFFF", border: "1px solid #F7EDDC" }}
   >
     <div className="absolute -top-3 left-6 px-3 py-1 rounded-full text-[10px] font-semibold uppercase tracking-wider"
       style={s.tone === "persistent"
         ? { background: "#2D2D2D", color: "#FCFAF7" }
-        : { background: "#FBF7EE", color: "#8a6d3a", border: "1px solid #E4D9BE" }}>
+        : { background: "#F7EDDC", color: "#8F5A14", border: "1px solid #E6D2AE" }}>
       {s.tone === "persistent" ? "Maintains" : "Provides"}
     </div>
     <div className="flex items-start gap-4">
@@ -54,7 +54,7 @@ const SpecialistCard: React.FC<{ s: Specialist; index: number }> = ({ s, index }
       <div className="min-w-0">
         <h3 className="text-lg font-bold" style={{ color: "#2D2D2D" }}>{s.name}</h3>
         <p className="text-sm font-medium" style={{ color: "#B4914F" }}>{s.owns}</p>
-        <p className="mt-2 text-sm text-slate-600 leading-relaxed">{s.blurb}</p>
+        <p className="mt-2 text-sm text-charcoal leading-relaxed">{s.blurb}</p>
       </div>
     </div>
   </article>
@@ -62,7 +62,7 @@ const SpecialistCard: React.FC<{ s: Specialist; index: number }> = ({ s, index }
 
 export const TheTeamSection = () => {
   return (
-    <section className="py-12 sm:py-16 md:py-20" style={{ background: "linear-gradient(to bottom, #FFFFFF, #FBF9F5)" }}>
+    <section className="py-12 sm:py-16 md:py-20" style={{ background: "linear-gradient(to bottom, #FFFFFF, #F7EDDC)" }}>
       <style>{`
         @keyframes fade-up { from { opacity: 0; transform: translateY(16px);} to { opacity: 1; transform: none;} }
       `}</style>
@@ -70,7 +70,7 @@ export const TheTeamSection = () => {
         <div className="max-w-3xl mx-auto text-center">
           <p className="text-xs font-semibold tracking-[0.2em] uppercase" style={{ color: "#B4914F" }}>The team</p>
           <h2 className="mt-3 text-3xl sm:text-4xl md:text-5xl font-bold text-foreground tracking-tight">Two kinds of specialist.</h2>
-          <p className="mt-4 text-lg text-slate-600">
+          <p className="mt-4 text-lg text-charcoal">
             Some of my agents quietly maintain my understanding of your portfolio over time. Others provide expert services whenever I need them. Together, they help me understand your business, complete work on your behalf and give you one clear answer.
           </p>
         </div>
@@ -80,9 +80,9 @@ export const TheTeamSection = () => {
           <div className="flex items-end justify-between gap-4 mb-6">
             <div>
               <h3 className="text-2xl font-bold text-foreground">Hobson's Permanent Memory</h3>
-              <p className="text-slate-600 text-sm mt-1">These four agents quietly maintain everything I know about your portfolio.</p>
+              <p className="text-charcoal text-sm mt-1">These four agents quietly maintain everything I know about your portfolio.</p>
             </div>
-            <span className="hidden sm:inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider rounded-full px-3 py-1.5" style={{ color: "#8a6d3a", background: "#FFFFFF", border: "1px solid #E4D9BE" }}>
+            <span className="hidden sm:inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider rounded-full px-3 py-1.5" style={{ color: "#8F5A14", background: "#FFFFFF", border: "1px solid #E6D2AE" }}>
               Always on
             </span>
           </div>
@@ -96,9 +96,9 @@ export const TheTeamSection = () => {
           <div className="flex items-end justify-between gap-4 mb-6">
             <div>
               <h3 className="text-2xl font-bold text-foreground">Specialist Services</h3>
-              <p className="text-slate-600 text-sm mt-1">Whenever specialist expertise is needed, these are the agents Hobson calls upon.</p>
+              <p className="text-charcoal text-sm mt-1">Whenever specialist expertise is needed, these are the agents Hobson calls upon.</p>
             </div>
-            <span className="hidden sm:inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider rounded-full px-3 py-1.5" style={{ color: "#8a6d3a", background: "#FFFFFF", border: "1px solid #E4D9BE" }}>
+            <span className="hidden sm:inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider rounded-full px-3 py-1.5" style={{ color: "#8F5A14", background: "#FFFFFF", border: "1px solid #E6D2AE" }}>
               On demand
             </span>
           </div>

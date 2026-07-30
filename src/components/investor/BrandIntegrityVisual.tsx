@@ -71,9 +71,9 @@ export const BrandIntegrityVisual = () => {
       </div>
 
       {/* Brand Background */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-purple-500/10 via-purple-500/5 to-purple-500/10 p-6 border border-purple-200/50 dark:border-purple-800/30">
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-ink-faint/10 via-ink-faint/5 to-ink-faint/10 p-6 border border-bone/50 dark:border-charcoal/30">
         <h4 className="font-semibold text-foreground mb-4 flex items-center gap-2">
-          <Shield className="w-5 h-5 text-purple-600 dark:text-purple-400" />
+          <Shield className="w-5 h-5 text-charcoal dark:text-ink-muted" />
           Brand Background
         </h4>
         <div className="space-y-3">
@@ -82,17 +82,17 @@ export const BrandIntegrityVisual = () => {
           </p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
             <div className="bg-background/60 rounded-xl p-3 border border-border/50">
-              <p className="text-xs font-medium text-purple-600 dark:text-purple-400 uppercase mb-1">Primary Archetype</p>
+              <p className="text-xs font-medium text-charcoal dark:text-ink-muted uppercase mb-1">Primary Archetype</p>
               <p className="text-sm font-medium text-foreground">Sage</p>
               <p className="text-xs text-muted-foreground">Wisdom, guidance, truth</p>
             </div>
             <div className="bg-background/60 rounded-xl p-3 border border-border/50">
-              <p className="text-xs font-medium text-purple-600 dark:text-purple-400 uppercase mb-1">Supporting Trait</p>
+              <p className="text-xs font-medium text-charcoal dark:text-ink-muted uppercase mb-1">Supporting Trait</p>
               <p className="text-sm font-medium text-foreground">Ruler</p>
               <p className="text-xs text-muted-foreground">Order, reliability</p>
             </div>
             <div className="bg-background/60 rounded-xl p-3 border border-border/50">
-              <p className="text-xs font-medium text-purple-600 dark:text-purple-400 uppercase mb-1">Supporting Trait</p>
+              <p className="text-xs font-medium text-charcoal dark:text-ink-muted uppercase mb-1">Supporting Trait</p>
               <p className="text-sm font-medium text-foreground">Creator</p>
               <p className="text-xs text-muted-foreground">Innovation</p>
             </div>
@@ -106,15 +106,15 @@ export const BrandIntegrityVisual = () => {
       {/* Strengths & Weaknesses */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Strengths */}
-        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-emerald-500/10 via-emerald-500/5 to-emerald-500/10 p-5 border border-emerald-200/50 dark:border-emerald-800/30">
+        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-success/10 via-success/5 to-success/10 p-5 border border-success-border/50 dark:border-success/30">
           <h4 className="font-semibold text-foreground mb-3 flex items-center gap-2">
-            <CheckCircle2 className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
+            <CheckCircle2 className="w-5 h-5 text-success dark:text-success" />
             Brand Strengths
           </h4>
           <ul className="space-y-2">
             {brandStrengths.map((strength, idx) => (
               <li key={idx} className="text-sm text-muted-foreground flex items-start gap-2">
-                <span className="text-emerald-600 dark:text-emerald-400 mt-1">•</span>
+                <span className="text-success dark:text-success mt-1">•</span>
                 {strength}
               </li>
             ))}
@@ -122,15 +122,15 @@ export const BrandIntegrityVisual = () => {
         </div>
 
         {/* Weaknesses */}
-        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-amber-500/10 via-amber-500/5 to-amber-500/10 p-5 border border-amber-200/50 dark:border-amber-800/30">
+        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-warning/10 via-warning/5 to-warning/10 p-5 border border-warning-border/50 dark:border-warning/30">
           <h4 className="font-semibold text-foreground mb-3 flex items-center gap-2">
-            <Lightbulb className="w-5 h-5 text-amber-600 dark:text-amber-400" />
+            <Lightbulb className="w-5 h-5 text-warning dark:text-warning" />
             Brand Weaknesses (Opportunities)
           </h4>
           <ul className="space-y-2">
             {brandWeaknesses.map((weakness, idx) => (
               <li key={idx} className="text-sm text-muted-foreground flex items-start gap-2">
-                <span className="text-amber-600 dark:text-amber-400 mt-1">•</span>
+                <span className="text-warning dark:text-warning mt-1">•</span>
                 {weakness}
               </li>
             ))}
@@ -141,9 +141,9 @@ export const BrandIntegrityVisual = () => {
       {/* Emotional & Cognitive Appeal */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Emotional */}
-        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-pink-500/10 via-pink-500/5 to-pink-500/10 p-5 border border-pink-200/50 dark:border-pink-800/30">
+        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-danger/10 via-danger/5 to-danger/10 p-5 border border-danger-border/50 dark:border-danger/30">
           <h4 className="font-semibold text-foreground mb-3 flex items-center gap-2">
-            <Heart className="w-5 h-5 text-pink-600 dark:text-pink-400" />
+            <Heart className="w-5 h-5 text-danger dark:text-danger" />
             Emotional (Heart) Appeal
           </h4>
           <p className="text-sm text-muted-foreground mb-3">
@@ -152,24 +152,24 @@ export const BrandIntegrityVisual = () => {
           <p className="text-xs text-muted-foreground mb-2">Can be deepened by:</p>
           <ul className="space-y-1">
             <li className="text-xs text-muted-foreground flex items-start gap-1">
-              <span className="text-pink-600 dark:text-pink-400">•</span>
+              <span className="text-danger dark:text-danger">•</span>
               Before/after stories showing real relief and time saved
             </li>
             <li className="text-xs text-muted-foreground flex items-start gap-1">
-              <span className="text-pink-600 dark:text-pink-400">•</span>
+              <span className="text-danger dark:text-danger">•</span>
               User narratives highlighting confidence and reduced risk
             </li>
             <li className="text-xs text-muted-foreground flex items-start gap-1">
-              <span className="text-pink-600 dark:text-pink-400">•</span>
+              <span className="text-danger dark:text-danger">•</span>
               Visuals showing Hobson as calm presence in hectic workflows
             </li>
           </ul>
         </div>
 
         {/* Cognitive */}
-        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-blue-500/10 via-blue-500/5 to-blue-500/10 p-5 border border-blue-200/50 dark:border-blue-800/30">
+        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-ink-faint/10 via-ink-faint/5 to-ink-faint/10 p-5 border border-bone/50 dark:border-charcoal/30">
           <h4 className="font-semibold text-foreground mb-3 flex items-center gap-2">
-            <Brain className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+            <Brain className="w-5 h-5 text-charcoal dark:text-ink-muted" />
             Cognitive (Head) Appeal
           </h4>
           <p className="text-sm text-muted-foreground mb-3">
@@ -177,11 +177,11 @@ export const BrandIntegrityVisual = () => {
           </p>
           <ul className="space-y-2">
             <li className="text-sm text-muted-foreground flex items-start gap-2">
-              <CheckCircle2 className="w-4 h-4 text-blue-600 dark:text-blue-400 flex-shrink-0 mt-0.5" />
+              <CheckCircle2 className="w-4 h-4 text-charcoal dark:text-ink-muted flex-shrink-0 mt-0.5" />
               <span><span className="font-medium text-foreground">Measurable outcomes:</span> time saved, fewer errors, quicker decisions</span>
             </li>
             <li className="text-sm text-muted-foreground flex items-start gap-2">
-              <CheckCircle2 className="w-4 h-4 text-blue-600 dark:text-blue-400 flex-shrink-0 mt-0.5" />
+              <CheckCircle2 className="w-4 h-4 text-charcoal dark:text-ink-muted flex-shrink-0 mt-0.5" />
               <span><span className="font-medium text-foreground">Transparent referencing:</span> every answer traced back to its source</span>
             </li>
           </ul>
@@ -192,16 +192,16 @@ export const BrandIntegrityVisual = () => {
       </div>
 
       {/* Authenticity */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-emerald-500/10 via-emerald-500/5 to-emerald-500/10 p-5 border border-emerald-200/50 dark:border-emerald-800/30">
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-success/10 via-success/5 to-success/10 p-5 border border-success-border/50 dark:border-success/30">
         <h4 className="font-semibold text-foreground mb-3 flex items-center gap-2">
-          <Shield className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
+          <Shield className="w-5 h-5 text-success dark:text-success" />
           Authenticity Assessment
         </h4>
         <p className="text-sm text-muted-foreground mb-3">
           Authenticity is one of Hobson's core strengths. The brand avoids hype, is open about its limitations, and is built around <span className="font-medium text-foreground">clarity, not mystery</span>. Showing sources for every answer is a direct expression of that principle.
         </p>
         <div className="bg-background/60 rounded-xl p-3 border border-border/50">
-          <p className="text-xs font-medium text-emerald-600 dark:text-emerald-400 uppercase mb-2">Planned Enhancements</p>
+          <p className="text-xs font-medium text-success dark:text-success uppercase mb-2">Planned Enhancements</p>
           <p className="text-sm text-muted-foreground">
             Confidence scores, incomplete-data alerts, and clearer "how this answer was generated" views will deepen honesty. Case studies, short trials, and measurable results will provide external proof.
           </p>
@@ -209,9 +209,9 @@ export const BrandIntegrityVisual = () => {
       </div>
 
       {/* Brand Metaphors */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-amber-500/10 via-amber-500/5 to-amber-500/10 p-5 border border-amber-200/50 dark:border-amber-800/30">
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-warning/10 via-warning/5 to-warning/10 p-5 border border-warning-border/50 dark:border-warning/30">
         <h4 className="font-semibold text-foreground mb-4 flex items-center gap-2">
-          <Compass className="w-5 h-5 text-amber-600 dark:text-amber-400" />
+          <Compass className="w-5 h-5 text-warning dark:text-warning" />
           Brand Metaphors
         </h4>
         <p className="text-sm text-muted-foreground mb-4">
@@ -231,9 +231,9 @@ export const BrandIntegrityVisual = () => {
       </div>
 
       {/* Internal Brand Function */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-blue-500/10 via-blue-500/5 to-blue-500/10 p-5 border border-blue-200/50 dark:border-blue-800/30">
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-ink-faint/10 via-ink-faint/5 to-ink-faint/10 p-5 border border-bone/50 dark:border-charcoal/30">
         <h4 className="font-semibold text-foreground mb-3 flex items-center gap-2">
-          <Users className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+          <Users className="w-5 h-5 text-charcoal dark:text-ink-muted" />
           Internal Brand Function
         </h4>
         <p className="text-sm text-muted-foreground mb-3">
@@ -252,7 +252,7 @@ export const BrandIntegrityVisual = () => {
       </div>
 
       {/* Current Marketing Position */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900/50 dark:to-slate-800/30 p-6 border border-slate-200 dark:border-slate-700/50">
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-paper to-bone-wash dark:from-ink/50 dark:to-ink/30 p-6 border border-bone dark:border-charcoal/50">
         <h4 className="font-semibold text-foreground mb-4 flex items-center gap-2">
           <TrendingUp className="w-5 h-5 text-primary" />
           Current Marketing Position

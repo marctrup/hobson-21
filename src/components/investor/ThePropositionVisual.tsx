@@ -121,14 +121,14 @@ export const ThePropositionVisual = () => {
 
         <div className="space-y-2">
           {/* Phase 1 */}
-          <div className="rounded-lg bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 p-4">
+          <div className="rounded-lg bg-paper dark:bg-ink/30 border border-bone dark:border-charcoal p-4">
             <div className="flex items-center gap-2 mb-2">
-              <div className="w-5 h-5 rounded-full bg-blue-200 border border-blue-400 flex items-center justify-center">
-                <span className="text-[9px] font-bold text-blue-800">1</span>
+              <div className="w-5 h-5 rounded-full bg-bone border border-bone-strong flex items-center justify-center">
+                <span className="text-[9px] font-bold text-ink">1</span>
               </div>
-              <h4 className="font-semibold text-sm text-blue-700 dark:text-blue-400">MVP & Validation (Q1 2026)</h4>
+              <h4 className="font-semibold text-sm text-charcoal dark:text-ink-muted">MVP & Validation (Q1 2026)</h4>
             </div>
-            <p className="text-xs text-blue-600 dark:text-blue-300 mb-2">Objective: Remove all barriers to adoption while validating usefulness</p>
+            <p className="text-xs text-charcoal dark:text-ink-faint mb-2">Objective: Remove all barriers to adoption while validating usefulness</p>
             <ul className="space-y-1 text-xs text-muted-foreground">
               <li>• Fully free access for selected non-paying pilot partners</li>
               <li>• No credit card, no setup costs — enables frictionless testing</li>
@@ -136,14 +136,14 @@ export const ThePropositionVisual = () => {
           </div>
 
           {/* Phase 2 */}
-          <div className="rounded-lg bg-purple-50 dark:bg-purple-950/30 border border-purple-200 dark:border-purple-800 p-4">
+          <div className="rounded-lg bg-paper dark:bg-ink/30 border border-bone dark:border-charcoal p-4">
             <div className="flex items-center gap-2 mb-2">
-              <div className="w-5 h-5 rounded-full bg-purple-200 border border-purple-400 flex items-center justify-center">
-                <span className="text-[9px] font-bold text-purple-800">2</span>
+              <div className="w-5 h-5 rounded-full bg-bone border border-bone-strong flex items-center justify-center">
+                <span className="text-[9px] font-bold text-ink">2</span>
               </div>
-              <h4 className="font-semibold text-sm text-purple-700 dark:text-purple-400">Pilot Expansion & Proof (Q2–Q4 2026)</h4>
+              <h4 className="font-semibold text-sm text-charcoal dark:text-ink-muted">Pilot Expansion & Proof (Q2–Q4 2026)</h4>
             </div>
-            <p className="text-xs text-purple-600 dark:text-purple-300 mb-2">Objective: Build evidence, refine features, and test willingness to pay</p>
+            <p className="text-xs text-charcoal dark:text-ink-faint mb-2">Objective: Build evidence, refine features, and test willingness to pay</p>
             <ul className="space-y-1 text-xs text-muted-foreground">
               <li>• Continue free access for approved pilots to maximise engagement</li>
               <li>• Introduce usage-based pricing prototypes by Q4 2026</li>
@@ -152,14 +152,14 @@ export const ThePropositionVisual = () => {
           </div>
 
           {/* Phase 3 */}
-          <div className="rounded-lg bg-green-50 dark:bg-green-950/30 border border-green-200 dark:border-green-800 p-4">
+          <div className="rounded-lg bg-success-bg dark:bg-success-solid/30 border border-success-border dark:border-success p-4">
             <div className="flex items-center gap-2 mb-2">
-              <div className="w-5 h-5 rounded-full bg-green-200 border border-green-400 flex items-center justify-center">
-                <span className="text-[9px] font-bold text-green-800">3</span>
+              <div className="w-5 h-5 rounded-full bg-success-bg border border-success-border flex items-center justify-center">
+                <span className="text-[9px] font-bold text-success">3</span>
               </div>
-              <h4 className="font-semibold text-sm text-green-700 dark:text-green-400">Commercial Launch (2027)</h4>
+              <h4 className="font-semibold text-sm text-success dark:text-success">Commercial Launch (2027)</h4>
             </div>
-            <p className="text-xs text-green-600 dark:text-green-300 mb-2">Objective: Convert validated pilots to paying customers</p>
+            <p className="text-xs text-success dark:text-success mb-2">Objective: Convert validated pilots to paying customers</p>
             <ul className="space-y-1 text-xs text-muted-foreground">
               <li>• Formal launch of usage-based pricing with clear value metrics</li>
               <li>• Roll out three-tier model (Starter → Professional → Enterprise)</li>
@@ -168,14 +168,14 @@ export const ThePropositionVisual = () => {
           </div>
 
           {/* Phase 4 */}
-          <div className="rounded-lg bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 p-4">
+          <div className="rounded-lg bg-warning-bg dark:bg-warning-solid/30 border border-warning-border dark:border-warning p-4">
             <div className="flex items-center gap-2 mb-2">
-              <div className="w-5 h-5 rounded-full bg-amber-200 border border-amber-400 flex items-center justify-center">
-                <span className="text-[9px] font-bold text-amber-800">4</span>
+              <div className="w-5 h-5 rounded-full bg-warning-bg border border-warning-border flex items-center justify-center">
+                <span className="text-[9px] font-bold text-warning">4</span>
               </div>
-              <h4 className="font-semibold text-sm text-amber-700 dark:text-amber-400">Global Expansion (2028+)</h4>
+              <h4 className="font-semibold text-sm text-warning dark:text-warning">Global Expansion (2028+)</h4>
             </div>
-            <p className="text-xs text-amber-600 dark:text-amber-300 mb-2">Objective: Support multi-region scale and cross-market adoption</p>
+            <p className="text-xs text-warning dark:text-warning mb-2">Objective: Support multi-region scale and cross-market adoption</p>
             <ul className="space-y-1 text-xs text-muted-foreground">
               <li>• Introduce localised pricing for EU and international markets</li>
               <li>• Offer enterprise bundles for multi-jurisdiction portfolio groups</li>
@@ -196,8 +196,8 @@ export const ThePropositionVisual = () => {
         <p className="text-xs text-muted-foreground">Hobson's distribution approach evolves with product maturity.</p>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-          <div className="rounded-lg bg-muted/50 border-l-4 border-blue-500 p-4">
-            <p className="text-xs font-bold text-blue-600 dark:text-blue-400 mb-1">2026: MVP & Pilot</p>
+          <div className="rounded-lg bg-muted/50 border-l-4 border-bone-strong p-4">
+            <p className="text-xs font-bold text-charcoal dark:text-ink-muted mb-1">2026: MVP & Pilot</p>
             <p className="text-[10px] text-muted-foreground mb-2">Depth, validation, and trust-building</p>
             <ul className="space-y-1 text-[10px] text-muted-foreground">
               <li>• Relationship-led onboarding with pilot partners</li>
@@ -207,8 +207,8 @@ export const ThePropositionVisual = () => {
             </ul>
           </div>
 
-          <div className="rounded-lg bg-muted/50 border-l-4 border-green-500 p-4">
-            <p className="text-xs font-bold text-green-600 dark:text-green-400 mb-1">2027: UK Commercial Launch</p>
+          <div className="rounded-lg bg-muted/50 border-l-4 border-success p-4">
+            <p className="text-xs font-bold text-success dark:text-success mb-1">2027: UK Commercial Launch</p>
             <p className="text-[10px] text-muted-foreground mb-2">Scalable UK acquisition through digital channels</p>
             <ul className="space-y-1 text-[10px] text-muted-foreground">
               <li>• Public website with self-serve sign-up</li>
@@ -218,8 +218,8 @@ export const ThePropositionVisual = () => {
             </ul>
           </div>
 
-          <div className="rounded-lg bg-muted/50 border-l-4 border-amber-500 p-4">
-            <p className="text-xs font-bold text-amber-600 dark:text-amber-400 mb-1">2028+: Global Expansion</p>
+          <div className="rounded-lg bg-muted/50 border-l-4 border-warning p-4">
+            <p className="text-xs font-bold text-warning dark:text-warning mb-1">2028+: Global Expansion</p>
             <p className="text-[10px] text-muted-foreground mb-2">International reach supported by partners</p>
             <ul className="space-y-1 text-[10px] text-muted-foreground">
               <li>• Localised websites for EU and US</li>
@@ -242,8 +242,8 @@ export const ThePropositionVisual = () => {
         <p className="text-xs text-muted-foreground">All activity reflects Hobson's brand identity: calm, clear, intelligent, and trustworthy.</p>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-          <div className="rounded-lg bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 p-3">
-            <p className="text-xs font-bold text-blue-700 dark:text-blue-400 mb-2">2026: Validation & Education</p>
+          <div className="rounded-lg bg-paper dark:bg-ink/30 border border-bone dark:border-charcoal p-3">
+            <p className="text-xs font-bold text-charcoal dark:text-ink-muted mb-2">2026: Validation & Education</p>
             <ul className="space-y-1 text-[10px] text-muted-foreground">
               <li>• Educational content on AI in real estate</li>
               <li>• Hobson Choice Quiz for awareness</li>
@@ -254,8 +254,8 @@ export const ThePropositionVisual = () => {
             </ul>
           </div>
 
-          <div className="rounded-lg bg-green-50 dark:bg-green-950/30 border border-green-200 dark:border-green-800 p-3">
-            <p className="text-xs font-bold text-green-700 dark:text-green-400 mb-2">2027: Commercial Launch</p>
+          <div className="rounded-lg bg-success-bg dark:bg-success-solid/30 border border-success-border dark:border-success p-3">
+            <p className="text-xs font-bold text-success dark:text-success mb-2">2027: Commercial Launch</p>
             <ul className="space-y-1 text-[10px] text-muted-foreground">
               <li>• Full-funnel LinkedIn campaigns</li>
               <li>• PR announcements and testimonials</li>
@@ -264,8 +264,8 @@ export const ThePropositionVisual = () => {
             </ul>
           </div>
 
-          <div className="rounded-lg bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 p-3">
-            <p className="text-xs font-bold text-amber-700 dark:text-amber-400 mb-2">2028+: International</p>
+          <div className="rounded-lg bg-warning-bg dark:bg-warning-solid/30 border border-warning-border dark:border-warning p-3">
+            <p className="text-xs font-bold text-warning dark:text-warning mb-2">2028+: International</p>
             <ul className="space-y-1 text-[10px] text-muted-foreground">
               <li>• Localised content and landing pages</li>
               <li>• Region-specific webinars</li>
@@ -279,7 +279,7 @@ export const ThePropositionVisual = () => {
           <p className="text-xs font-semibold text-foreground mb-3">SMART Promotional Targets</p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
             <div className="text-center p-2 bg-background rounded-lg">
-              <p className="text-[10px] font-bold text-blue-600 dark:text-blue-400 mb-1">By Q4 2026</p>
+              <p className="text-[10px] font-bold text-charcoal dark:text-ink-muted mb-1">By Q4 2026</p>
               <ul className="text-[9px] text-muted-foreground space-y-1">
                 <li>20% awareness lift</li>
                 <li>500+ qualified contacts</li>
@@ -287,7 +287,7 @@ export const ThePropositionVisual = () => {
               </ul>
             </div>
             <div className="text-center p-2 bg-background rounded-lg">
-              <p className="text-[10px] font-bold text-green-600 dark:text-green-400 mb-1">By 2027</p>
+              <p className="text-[10px] font-bold text-success dark:text-success mb-1">By 2027</p>
               <ul className="text-[9px] text-muted-foreground space-y-1">
                 <li>Predictable acquisition funnel</li>
                 <li>10+ educational assets</li>
@@ -295,7 +295,7 @@ export const ThePropositionVisual = () => {
               </ul>
             </div>
             <div className="text-center p-2 bg-background rounded-lg">
-              <p className="text-[10px] font-bold text-amber-600 dark:text-amber-400 mb-1">By 2028</p>
+              <p className="text-[10px] font-bold text-warning dark:text-warning mb-1">By 2028</p>
               <ul className="text-[9px] text-muted-foreground space-y-1">
                 <li>Localised content (2 markets)</li>
                 <li>2-3 regional partnerships</li>

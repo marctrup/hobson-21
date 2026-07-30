@@ -138,7 +138,7 @@ export function AuthForm({ mode, onToggleMode, onSuccess }: AuthFormProps) {
                 disabled={isLoading}
               />
               {errors.username && (
-                <p className="text-sm text-red-600">{errors.username.message}</p>
+                <p className="text-sm text-danger">{errors.username.message}</p>
               )}
             </div>
           )}
@@ -152,7 +152,7 @@ export function AuthForm({ mode, onToggleMode, onSuccess }: AuthFormProps) {
               disabled={isLoading}
             />
             {errors.email && (
-              <p className="text-sm text-red-600">{errors.email.message}</p>
+              <p className="text-sm text-danger">{errors.email.message}</p>
             )}
           </div>
 
@@ -165,7 +165,7 @@ export function AuthForm({ mode, onToggleMode, onSuccess }: AuthFormProps) {
               disabled={isLoading}
             />
             {errors.password && (
-              <p className="text-sm text-red-600">{errors.password.message}</p>
+              <p className="text-sm text-danger">{errors.password.message}</p>
             )}
           </div>
 

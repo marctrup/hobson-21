@@ -48,25 +48,25 @@ export const PilotClientsVisual = () => {
 
   const colorClasses: Record<string, { bg: string; iconBg: string; icon: string; border: string; badge: string }> = {
     blue: {
-      bg: 'from-blue-50 to-blue-100/50 dark:from-blue-950/30 dark:to-blue-900/20',
-      iconBg: 'bg-blue-100 dark:bg-blue-950/50',
-      icon: 'text-blue-600',
-      border: 'border-blue-200/50 dark:border-blue-800/30',
-      badge: 'bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300',
+      bg: 'from-paper to-bone-wash/50 dark:from-ink/30 dark:to-ink/20',
+      iconBg: 'bg-bone-wash dark:bg-ink/50',
+      icon: 'text-charcoal',
+      border: 'border-bone/50 dark:border-charcoal/30',
+      badge: 'bg-bone-wash dark:bg-ink/50 text-charcoal dark:text-ink-faint',
     },
     purple: {
-      bg: 'from-purple-50 to-purple-100/50 dark:from-purple-950/30 dark:to-purple-900/20',
-      iconBg: 'bg-purple-100 dark:bg-purple-950/50',
-      icon: 'text-purple-600',
-      border: 'border-purple-200/50 dark:border-purple-800/30',
-      badge: 'bg-purple-100 dark:bg-purple-900/50 text-purple-700 dark:text-purple-300',
+      bg: 'from-paper to-bone-wash/50 dark:from-ink/30 dark:to-ink/20',
+      iconBg: 'bg-bone-wash dark:bg-ink/50',
+      icon: 'text-charcoal',
+      border: 'border-bone/50 dark:border-charcoal/30',
+      badge: 'bg-bone-wash dark:bg-ink/50 text-charcoal dark:text-ink-faint',
     },
     emerald: {
-      bg: 'from-emerald-50 to-emerald-100/50 dark:from-emerald-950/30 dark:to-emerald-900/20',
-      iconBg: 'bg-emerald-100 dark:bg-emerald-950/50',
-      icon: 'text-emerald-600',
-      border: 'border-emerald-200/50 dark:border-emerald-800/30',
-      badge: 'bg-emerald-100 dark:bg-emerald-900/50 text-emerald-700 dark:text-emerald-300',
+      bg: 'from-success-bg to-success-bg/50 dark:from-success-solid/30 dark:to-success-solid/20',
+      iconBg: 'bg-success-bg dark:bg-success-solid/50',
+      icon: 'text-success',
+      border: 'border-success-border/50 dark:border-success/30',
+      badge: 'bg-success-bg dark:bg-success-solid/50 text-success dark:text-success',
     },
   };
 

@@ -178,14 +178,14 @@ export default function CrmPipeline() {
         <div className="flex items-start justify-between mb-6 gap-4">
           <div>
             <h1 className="text-2xl font-semibold tracking-tight">Pipeline</h1>
-            <p className="text-sm text-slate-500 mt-1">
+            <p className="text-sm text-ink-muted mt-1">
               {canWrite
                 ? "Drag clients between stages to update their pipeline position. Set status to On hold from a client's detail page to remove them from the pipeline."
                 : "Read-only view of the current pipeline."}
             </p>
           </div>
 
-          <div className="flex items-center gap-2 bg-white border border-slate-200 rounded-md px-3 py-2 shrink-0">
+          <div className="flex items-center gap-2 bg-white border border-bone rounded-md px-3 py-2 shrink-0">
             <Switch
               id="show-on-hold"
               checked={showOnHold}
@@ -193,19 +193,19 @@ export default function CrmPipeline() {
             />
             <Label
               htmlFor="show-on-hold"
-              className="text-sm text-slate-700 cursor-pointer flex items-center gap-1.5"
+              className="text-sm text-charcoal cursor-pointer flex items-center gap-1.5"
             >
-              <PauseCircle className="size-3.5 text-slate-500" />
+              <PauseCircle className="size-3.5 text-ink-muted" />
               Show on-hold clients
               {onHoldCount > 0 && (
-                <span className="text-xs text-slate-500">({onHoldCount})</span>
+                <span className="text-xs text-ink-muted">({onHoldCount})</span>
               )}
             </Label>
           </div>
         </div>
 
         {isLoading ? (
-          <div className="flex items-center gap-2 text-sm text-slate-500">
+          <div className="flex items-center gap-2 text-sm text-ink-muted">
             <Loader2 className="size-4 animate-spin" /> Loading pipeline…
           </div>
         ) : (
@@ -258,7 +258,7 @@ function KanbanColumn({
       ref={setNodeRef}
       className={cn(
         "shrink-0 w-72 bg-white border rounded-lg flex flex-col transition-colors",
-        isOver ? "border-slate-900 ring-2 ring-slate-900/10" : "border-slate-200",
+        isOver ? "border-charcoal ring-2 ring-charcoal/10" : "border-bone",
       )}
     >
       <div
@@ -268,7 +268,7 @@ function KanbanColumn({
         )}
       >
         <div className="flex items-center gap-2">
-          <span className="text-sm font-semibold text-slate-900">
+          <span className="text-sm font-semibold text-ink">
             {stage.label}
           </span>
           <span
@@ -283,7 +283,7 @@ function KanbanColumn({
       </div>
       <div className="flex-1 p-2 space-y-2 min-h-[120px]">
         {clients.length === 0 ? (
-          <p className="text-xs text-slate-400 text-center py-6">
+          <p className="text-xs text-ink-muted text-center py-6">
             {draggable ? "Drop a client here" : "No clients"}
           </p>
         ) : (
@@ -306,17 +306,17 @@ function KanbanColumn({
 
 function UncategorisedColumn({ clients }: { clients: PipelineClient[] }) {
   return (
-    <div className="shrink-0 w-72 bg-amber-50/50 border border-dashed border-amber-300 rounded-lg flex flex-col">
-      <div className="px-3 py-2 border-b border-amber-200 rounded-t-lg flex items-center justify-between bg-amber-50">
+    <div className="shrink-0 w-72 bg-warning-bg/50 border border-dashed border-warning-border rounded-lg flex flex-col">
+      <div className="px-3 py-2 border-b border-warning-border rounded-t-lg flex items-center justify-between bg-warning-bg">
         <div className="flex items-center gap-2">
-          <span className="text-sm font-semibold text-amber-900">
+          <span className="text-sm font-semibold text-warning">
             Uncategorised
           </span>
-          <span className="text-[10px] font-medium px-1.5 py-0.5 rounded bg-amber-200 text-amber-900">
+          <span className="text-[10px] font-medium px-1.5 py-0.5 rounded bg-warning-bg text-warning">
             {clients.length}
           </span>
         </div>
-        <span className="text-[10px] text-amber-700 uppercase tracking-wide">
+        <span className="text-[10px] text-warning uppercase tracking-wide">
           Legacy
         </span>
       </div>
@@ -327,9 +327,9 @@ function UncategorisedColumn({ clients }: { clients: PipelineClient[] }) {
             to={`/crm/clients/${c.id}`}
             className="block"
           >
-            <div className="bg-white border border-amber-200 rounded-md p-2.5 text-xs hover:shadow-sm transition-shadow">
-              <div className="font-medium text-slate-900 truncate">{c.name}</div>
-              <div className="text-amber-700 mt-1 font-mono text-[10px]">
+            <div className="bg-white border border-warning-border rounded-md p-2.5 text-xs hover:shadow-sm transition-shadow">
+              <div className="font-medium text-ink truncate">{c.name}</div>
+              <div className="text-warning mt-1 font-mono text-[10px]">
                 stage: {c.pipeline_stage}
               </div>
             </div>
@@ -373,24 +373,24 @@ function ClientCard({
       className={cn(
         "bg-white border rounded-md p-2.5 text-xs transition-shadow",
         dragging
-          ? "shadow-lg ring-2 ring-slate-900/10 border-slate-200"
+          ? "shadow-lg ring-2 ring-charcoal/10 border-bone"
           : "hover:shadow-sm",
-        onHold ? "border-amber-300 bg-amber-50/40" : "border-slate-200",
+        onHold ? "border-warning-border bg-warning-bg/40" : "border-bone",
       )}
     >
       <div className="flex items-start justify-between gap-2">
-        <div className="font-medium text-slate-900 truncate flex-1">
+        <div className="font-medium text-ink truncate flex-1">
           {client.name}
         </div>
         {onHold && (
-          <span className="shrink-0 inline-flex items-center gap-0.5 text-[9px] font-semibold uppercase tracking-wide px-1.5 py-0.5 rounded bg-amber-200 text-amber-900">
+          <span className="shrink-0 inline-flex items-center gap-0.5 text-[9px] font-semibold uppercase tracking-wide px-1.5 py-0.5 rounded bg-warning-bg text-warning">
             <PauseCircle className="size-2.5" />
             On hold
           </span>
         )}
       </div>
       {client.primary_contact_name && (
-        <div className="text-slate-500 mt-0.5 truncate">
+        <div className="text-ink-muted mt-0.5 truncate">
           {client.primary_contact_name}
         </div>
       )}

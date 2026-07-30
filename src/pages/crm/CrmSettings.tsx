@@ -9,7 +9,7 @@ export default function CrmSettings() {
   const { isAdmin, isLoading } = useCrmAccess();
 
   if (isLoading) {
-    return <div className="p-6 text-sm text-slate-500">Loading…</div>;
+    return <div className="p-6 text-sm text-ink-muted">Loading…</div>;
   }
   if (!isAdmin) return <NotFound />;
 
@@ -20,7 +20,7 @@ export default function CrmSettings() {
         <meta name="robots" content="noindex,nofollow" />
       </Helmet>
       <h1 className="text-2xl font-semibold tracking-tight">Settings</h1>
-      <p className="text-sm text-slate-500 mt-1">
+      <p className="text-sm text-ink-muted mt-1">
         Workspace and team management.
       </p>
 
@@ -29,58 +29,58 @@ export default function CrmSettings() {
 
         <Link
           to="/crm/settings/team"
-          className="bg-white border border-slate-200 rounded-lg p-5 flex items-center gap-4 hover:border-slate-300 hover:shadow-sm transition"
+          className="bg-white border border-bone rounded-lg p-5 flex items-center gap-4 hover:border-bone hover:shadow-sm transition"
         >
-          <Users className="size-5 text-slate-500" />
+          <Users className="size-5 text-ink-muted" />
           <div className="flex-1">
             <div className="text-sm font-medium">Team & roles</div>
-            <p className="text-sm text-slate-500 mt-0.5">
+            <p className="text-sm text-ink-muted mt-0.5">
               Invite teammates, change roles, and revoke access.
             </p>
           </div>
-          <ChevronRight className="size-4 text-slate-400" />
+          <ChevronRight className="size-4 text-ink-muted" />
         </Link>
 
         <Link
           to="/crm/settings/integration"
-          className="bg-white border border-slate-200 rounded-lg p-5 flex items-center gap-4 hover:border-slate-300 hover:shadow-sm transition"
+          className="bg-white border border-bone rounded-lg p-5 flex items-center gap-4 hover:border-bone hover:shadow-sm transition"
         >
-          <Plug className="size-5 text-slate-500" />
+          <Plug className="size-5 text-ink-muted" />
           <div className="flex-1">
             <div className="text-sm font-medium">Website integration</div>
-            <p className="text-sm text-slate-500 mt-0.5">
+            <p className="text-sm text-ink-muted mt-0.5">
               Set the default owner for website leads and rotate the ingest secret.
             </p>
           </div>
-          <ChevronRight className="size-4 text-slate-400" />
+          <ChevronRight className="size-4 text-ink-muted" />
         </Link>
 
         <Link
           to="/crm/settings/ingest-failures"
-          className="bg-white border border-slate-200 rounded-lg p-5 flex items-center gap-4 hover:border-slate-300 hover:shadow-sm transition"
+          className="bg-white border border-bone rounded-lg p-5 flex items-center gap-4 hover:border-bone hover:shadow-sm transition"
         >
-          <AlertTriangle className="size-5 text-slate-500" />
+          <AlertTriangle className="size-5 text-ink-muted" />
           <div className="flex-1">
             <div className="text-sm font-medium">Failed ingests</div>
-            <p className="text-sm text-slate-500 mt-0.5">
+            <p className="text-sm text-ink-muted mt-0.5">
               Review and resolve website submissions that could not be saved.
             </p>
           </div>
-          <ChevronRight className="size-4 text-slate-400" />
+          <ChevronRight className="size-4 text-ink-muted" />
         </Link>
 
         <Link
           to="/crm/settings/audit-log"
-          className="bg-white border border-slate-200 rounded-lg p-5 flex items-center gap-4 hover:border-slate-300 hover:shadow-sm transition"
+          className="bg-white border border-bone rounded-lg p-5 flex items-center gap-4 hover:border-bone hover:shadow-sm transition"
         >
-          <ScrollText className="size-5 text-slate-500" />
+          <ScrollText className="size-5 text-ink-muted" />
           <div className="flex-1">
             <div className="text-sm font-medium">Audit log</div>
-            <p className="text-sm text-slate-500 mt-0.5">
+            <p className="text-sm text-ink-muted mt-0.5">
               Security-relevant actions across the workspace.
             </p>
           </div>
-          <ChevronRight className="size-4 text-slate-400" />
+          <ChevronRight className="size-4 text-ink-muted" />
         </Link>
       </div>
     </div>

@@ -72,7 +72,7 @@ export const CommunicationFilters = ({
     <div className="flex flex-wrap items-center gap-2">
       {showSearch && (
         <div className="relative flex-1 min-w-[220px] max-w-sm">
-          <Search className="absolute left-2 top-1/2 -translate-y-1/2 size-4 text-slate-400" />
+          <Search className="absolute left-2 top-1/2 -translate-y-1/2 size-4 text-ink-muted" />
           <Input
             value={value.search ?? ""}
             onChange={(e) => onChange({ ...value, search: e.target.value })}
@@ -126,7 +126,7 @@ export const CommunicationFilters = ({
         </PopoverContent>
       </Popover>
 
-      <label className="flex items-center gap-1.5 text-sm bg-white border border-slate-200 rounded-md px-2.5 py-1.5 cursor-pointer">
+      <label className="flex items-center gap-1.5 text-sm bg-white border border-bone rounded-md px-2.5 py-1.5 cursor-pointer">
         <input
           type="checkbox"
           checked={!!value.importantOnly}
@@ -138,7 +138,7 @@ export const CommunicationFilters = ({
       </label>
 
       {showNeedsReview && (
-        <label className="flex items-center gap-1.5 text-sm bg-white border border-slate-200 rounded-md px-2.5 py-1.5 cursor-pointer">
+        <label className="flex items-center gap-1.5 text-sm bg-white border border-bone rounded-md px-2.5 py-1.5 cursor-pointer">
           <input
             type="checkbox"
             checked={!!value.needsReviewOnly}

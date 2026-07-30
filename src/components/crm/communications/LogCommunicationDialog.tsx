@@ -302,7 +302,7 @@ export const LogCommunicationDialog = ({
                   placeholder="<p>Paste HTML here…</p>"
                   className="font-mono text-xs"
                 />
-                <div className="text-xs text-slate-500 mt-1">
+                <div className="text-xs text-ink-muted mt-1">
                   Sanitised before saving.
                 </div>
               </div>
@@ -366,9 +366,9 @@ export const LogCommunicationDialog = ({
           {/* Attachments */}
           <div>
             <Label>Attachments</Label>
-            <label className="block border-2 border-dashed border-slate-300 rounded-md p-4 text-center cursor-pointer hover:border-slate-400 bg-white">
-              <Upload className="size-5 mx-auto text-slate-400" />
-              <div className="text-sm text-slate-600 mt-1">
+            <label className="block border-2 border-dashed border-bone rounded-md p-4 text-center cursor-pointer hover:border-bone-strong bg-white">
+              <Upload className="size-5 mx-auto text-ink-muted" />
+              <div className="text-sm text-charcoal mt-1">
                 Click or drop files here · max 50MB each
               </div>
               <input
@@ -383,11 +383,11 @@ export const LogCommunicationDialog = ({
                 {files.map((f, i) => (
                   <li
                     key={`${f.name}-${i}`}
-                    className="flex items-center justify-between text-sm bg-slate-50 border border-slate-200 rounded-md px-2.5 py-1.5"
+                    className="flex items-center justify-between text-sm bg-paper border border-bone rounded-md px-2.5 py-1.5"
                   >
                     <span className="truncate">
                       {f.name}{" "}
-                      <span className="text-slate-500">
+                      <span className="text-ink-muted">
                         · {formatBytes(f.size)}
                       </span>
                     </span>
@@ -396,7 +396,7 @@ export const LogCommunicationDialog = ({
                       onClick={() =>
                         setFiles((prev) => prev.filter((_, idx) => idx !== i))
                       }
-                      className="text-slate-400 hover:text-rose-600"
+                      className="text-ink-muted hover:text-danger"
                     >
                       <X className="size-4" />
                     </button>
@@ -408,13 +408,13 @@ export const LogCommunicationDialog = ({
 
           {/* Important + sentiment + follow-up */}
           <div className="grid grid-cols-2 gap-3">
-            <label className="flex items-center gap-2 text-sm bg-white border border-slate-200 rounded-md px-3 py-2 cursor-pointer">
+            <label className="flex items-center gap-2 text-sm bg-white border border-bone rounded-md px-3 py-2 cursor-pointer">
               <input
                 type="checkbox"
                 checked={important}
                 onChange={(e) => setImportant(e.target.checked)}
               />
-              <Star className="size-4 text-amber-500" />
+              <Star className="size-4 text-warning" />
               Mark as important
             </label>
             <div>
@@ -440,7 +440,7 @@ export const LogCommunicationDialog = ({
             </div>
           </div>
 
-          <div className="bg-slate-50 border border-slate-200 rounded-md p-3 space-y-2">
+          <div className="bg-paper border border-bone rounded-md p-3 space-y-2">
             <label className="flex items-center gap-2 text-sm cursor-pointer">
               <input
                 type="checkbox"
@@ -600,28 +600,28 @@ const ParticipantsPicker = ({
               />
               <div className="mt-2 max-h-56 overflow-y-auto space-y-1">
                 {isFetching && (
-                  <div className="text-xs text-slate-500 px-1">Searching…</div>
+                  <div className="text-xs text-ink-muted px-1">Searching…</div>
                 )}
                 {!isFetching && visible.length === 0 && (
-                  <div className="text-xs text-slate-500 px-1">No matches.</div>
+                  <div className="text-xs text-ink-muted px-1">No matches.</div>
                 )}
                 {visible.map((o) => (
                   <button
                     key={o.key}
                     type="button"
                     onClick={() => addOption(o)}
-                    className="w-full text-left px-2 py-1.5 rounded hover:bg-slate-100 text-sm"
+                    className="w-full text-left px-2 py-1.5 rounded hover:bg-bone-wash text-sm"
                   >
-                    <div className="font-medium text-slate-800">{o.label}</div>
+                    <div className="font-medium text-ink">{o.label}</div>
                     {o.sublabel && (
-                      <div className="text-xs text-slate-500 truncate">
+                      <div className="text-xs text-ink-muted truncate">
                         {o.sublabel}
                       </div>
                     )}
                   </button>
                 ))}
               </div>
-              <div className="mt-2 pt-2 border-t border-slate-200">
+              <div className="mt-2 pt-2 border-t border-bone">
                 <Button
                   type="button"
                   variant="ghost"
@@ -641,7 +641,7 @@ const ParticipantsPicker = ({
       </div>
 
       {externalOpen && (
-        <div className="bg-slate-50 border border-slate-200 rounded-md p-3 mb-2 space-y-2">
+        <div className="bg-paper border border-bone rounded-md p-3 mb-2 space-y-2">
           <Input
             value={externalName}
             onChange={(e) => setExternalName(e.target.value)}
@@ -669,7 +669,7 @@ const ParticipantsPicker = ({
       )}
 
       {participants.length === 0 ? (
-        <div className="text-sm text-slate-500 bg-white border border-slate-200 rounded-md px-3 py-2">
+        <div className="text-sm text-ink-muted bg-white border border-bone rounded-md px-3 py-2">
           No participants yet.
         </div>
       ) : (
@@ -677,7 +677,7 @@ const ParticipantsPicker = ({
           {participants.map((p, i) => (
             <li
               key={i}
-              className="flex items-center gap-2 bg-white border border-slate-200 rounded-md px-2.5 py-1.5"
+              className="flex items-center gap-2 bg-white border border-bone rounded-md px-2.5 py-1.5"
             >
               <Select
                 value={p.role_in_comm}
@@ -698,7 +698,7 @@ const ParticipantsPicker = ({
               <button
                 type="button"
                 onClick={() => remove(i)}
-                className="text-slate-400 hover:text-rose-600"
+                className="text-ink-muted hover:text-danger"
               >
                 <Trash2 className="size-3.5" />
               </button>

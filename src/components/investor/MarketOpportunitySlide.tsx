@@ -11,19 +11,19 @@ export const MarketOpportunitySlide = () => {
           <h3 className="text-xs sm:text-sm font-semibold text-foreground px-2">Efficiency Savings Potential</h3>
           
           <div className="space-y-1.5 sm:space-y-2">
-            <div className="flex justify-between items-center p-2 sm:p-3 bg-gradient-to-r from-teal-50 to-green-50 rounded-lg border border-teal-200">
+            <div className="flex justify-between items-center p-2 sm:p-3 bg-gradient-to-r from-paper to-success-bg rounded-lg border border-bone">
               <span className="text-[10px] sm:text-xs font-medium text-foreground">UK:</span>
-              <span className="text-sm sm:text-lg font-bold text-teal-700">£6B</span>
+              <span className="text-sm sm:text-lg font-bold text-charcoal">£6B</span>
             </div>
             
-            <div className="flex justify-between items-center p-2 sm:p-3 bg-gradient-to-r from-cyan-50 to-blue-50 rounded-lg border border-cyan-200">
+            <div className="flex justify-between items-center p-2 sm:p-3 bg-gradient-to-r from-paper to-paper rounded-lg border border-bone">
               <span className="text-[10px] sm:text-xs font-medium text-foreground">Europe:</span>
-              <span className="text-sm sm:text-lg font-bold text-cyan-700">£66B</span>
+              <span className="text-sm sm:text-lg font-bold text-charcoal">£66B</span>
             </div>
             
-            <div className="flex justify-between items-center p-2 sm:p-3 bg-gradient-to-r from-purple-50 to-pink-50 rounded-lg border border-purple-200">
+            <div className="flex justify-between items-center p-2 sm:p-3 bg-gradient-to-r from-paper to-danger-bg rounded-lg border border-bone">
               <span className="text-[10px] sm:text-xs font-medium text-foreground">Global:</span>
-              <span className="text-sm sm:text-lg font-bold text-purple-700">£708B</span>
+              <span className="text-sm sm:text-lg font-bold text-charcoal">£708B</span>
             </div>
           </div>
           

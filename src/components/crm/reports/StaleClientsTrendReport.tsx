@@ -32,7 +32,7 @@ export const StaleClientsTrendReport = () => {
     >
       <ResponsiveContainer width="100%" height={240}>
         <LineChart data={points} margin={{ top: 8, right: 12, left: 0, bottom: 4 }}>
-          <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+          <CartesianGrid strokeDasharray="3 3" stroke="#E8E1D4" />
           <XAxis dataKey="label" tick={{ fontSize: 11 }} />
           <YAxis tick={{ fontSize: 11 }} allowDecimals={false} />
           <Tooltip />
@@ -40,7 +40,7 @@ export const StaleClientsTrendReport = () => {
             type="monotone"
             dataKey="stale_count"
             name="Stale clients"
-            stroke="#f59e0b"
+            stroke="#8F5A14"
             strokeWidth={2}
             dot={{ r: 3 }}
           />

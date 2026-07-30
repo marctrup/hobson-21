@@ -196,7 +196,7 @@ export const PricingSection = () => {
           {/* ESSENTIAL — Most Popular */}
           <Card className="relative bg-gradient-to-br from-primary/5 to-primary/15 border-2 border-primary shadow-xl flex flex-col h-full">
             <div className="absolute -top-6 left-1/2 -translate-x-1/2 z-10">
-              <Badge className="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-4 py-2 text-sm font-medium shadow-lg whitespace-nowrap">
+              <Badge className="bg-gradient-to-r from-ink-faint to-charcoal text-white px-4 py-2 text-sm font-medium shadow-lg whitespace-nowrap">
                 {pricing.plans.essential.popular}
               </Badge>
             </div>
@@ -304,13 +304,13 @@ export const PricingSection = () => {
           {/* AI BOOST */}
           {aiBoost && (
             <Card className="relative bg-gradient-to-br from-accent/30 to-accent/10 border border-accent hover:border-primary/40 transition-all duration-300 hover:shadow-lg flex flex-col h-full">
-              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-amber-400 to-orange-500" />
+              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-warning-border to-warning" />
               <CardHeader className="text-center pb-3 flex-shrink-0">
                 <CardTitle className="text-base sm:text-lg font-bold flex items-center justify-center gap-2">
-                  <Zap className="h-5 w-5 text-amber-500" />
+                  <Zap className="h-5 w-5 text-warning" />
                   {aiBoost.name}
                 </CardTitle>
-                <Badge variant="outline" className="mx-auto mt-1 text-[10px] border-amber-400/50 text-amber-700 dark:text-amber-400">
+                <Badge variant="outline" className="mx-auto mt-1 text-[10px] border-warning-border/50 text-warning dark:text-warning">
                   {aiBoost.subtitle}
                 </Badge>
               </CardHeader>
@@ -323,7 +323,7 @@ export const PricingSection = () => {
                   <div className="space-y-2.5">
                     {aiBoost.features.map((f: string, i: number) => (
                       <div key={i} className="flex items-center gap-2">
-                        <CheckCircle2 className="h-4 w-4 text-amber-500 flex-shrink-0" />
+                        <CheckCircle2 className="h-4 w-4 text-warning flex-shrink-0" />
                         <span className="text-xs">{f}</span>
                       </div>
                     ))}
@@ -331,7 +331,7 @@ export const PricingSection = () => {
                   <p className="text-[11px] text-muted-foreground mt-4 italic">{aiBoost.closingNote}</p>
                 </div>
                 <Button
-                  className="w-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white text-xs sm:text-sm mt-4"
+                  className="w-full bg-gradient-to-r from-warning to-warning hover:from-warning hover:to-warning text-white text-xs sm:text-sm mt-4"
                   onClick={() => {
                     const boostPriceId = aiBoost.stripePriceId;
                     if (boostPriceId) {

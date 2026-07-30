@@ -511,7 +511,7 @@ const LandingPageB = () => {
       <Dialog open={showSuccessDialog} onOpenChange={setShowSuccessDialog}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle className="text-center text-green-600">
+            <DialogTitle className="text-center text-success">
               Application Submitted Successfully!
             </DialogTitle>
           </DialogHeader>

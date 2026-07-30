@@ -465,7 +465,7 @@ export function PostDetailDialog({ open, onOpenChange, post, onCommentChange }: 
               <div>
                 <span className="text-sm font-medium">Status</span>
                 <div className="mt-1">
-                  <Badge variant="secondary" className="bg-blue-100 text-blue-800">
+                  <Badge variant="secondary" className="bg-bone-wash text-ink">
                     In Review
                   </Badge>
                 </div>

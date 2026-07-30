@@ -74,34 +74,34 @@ export const CompetitorBenchmarksVisual = () => {
     }
     const colors: Record<string, { bg: string; border: string; text: string; badge: string }> = {
       blue: {
-        bg: "from-blue-500/10 to-blue-600/10",
-        border: "border-blue-200/50 dark:border-blue-800/30",
-        text: "text-blue-600 dark:text-blue-400",
-        badge: "bg-blue-500/10 text-blue-600 dark:text-blue-400",
+        bg: "from-ink-faint/10 to-charcoal/10",
+        border: "border-bone/50 dark:border-charcoal/30",
+        text: "text-charcoal dark:text-ink-muted",
+        badge: "bg-ink-faint/10 text-charcoal dark:text-ink-muted",
       },
       purple: {
-        bg: "from-purple-500/10 to-purple-600/10",
-        border: "border-purple-200/50 dark:border-purple-800/30",
-        text: "text-purple-600 dark:text-purple-400",
-        badge: "bg-purple-500/10 text-purple-600 dark:text-purple-400",
+        bg: "from-ink-faint/10 to-charcoal/10",
+        border: "border-bone/50 dark:border-charcoal/30",
+        text: "text-charcoal dark:text-ink-muted",
+        badge: "bg-ink-faint/10 text-charcoal dark:text-ink-muted",
       },
       amber: {
-        bg: "from-amber-500/10 to-amber-600/10",
-        border: "border-amber-200/50 dark:border-amber-800/30",
-        text: "text-amber-600 dark:text-amber-400",
-        badge: "bg-amber-500/10 text-amber-600 dark:text-amber-400",
+        bg: "from-warning/10 to-warning/10",
+        border: "border-warning-border/50 dark:border-warning/30",
+        text: "text-warning dark:text-warning",
+        badge: "bg-warning/10 text-warning dark:text-warning",
       },
       emerald: {
-        bg: "from-emerald-500/10 to-emerald-600/10",
-        border: "border-emerald-200/50 dark:border-emerald-800/30",
-        text: "text-emerald-600 dark:text-emerald-400",
-        badge: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400",
+        bg: "from-success/10 to-success/10",
+        border: "border-success-border/50 dark:border-success/30",
+        text: "text-success dark:text-success",
+        badge: "bg-success/10 text-success dark:text-success",
       },
       red: {
-        bg: "from-red-500/10 to-red-600/10",
-        border: "border-red-200/50 dark:border-red-800/30",
-        text: "text-red-600 dark:text-red-400",
-        badge: "bg-red-500/10 text-red-600 dark:text-red-400",
+        bg: "from-danger/10 to-danger/10",
+        border: "border-danger-border/50 dark:border-danger/30",
+        text: "text-danger dark:text-danger",
+        badge: "bg-danger/10 text-danger dark:text-danger",
       },
     };
     return colors[color] || colors.blue;
@@ -110,12 +110,12 @@ export const CompetitorBenchmarksVisual = () => {
   return (
     <div className="space-y-6">
       {/* Introduction */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-purple-500/10 via-purple-500/5 to-purple-500/10 p-6 border border-purple-200/50 dark:border-purple-800/30">
-        <div className="absolute top-0 right-0 w-32 h-32 bg-purple-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-ink-faint/10 via-ink-faint/5 to-ink-faint/10 p-6 border border-bone/50 dark:border-charcoal/30">
+        <div className="absolute top-0 right-0 w-32 h-32 bg-ink-faint/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
         <div className="relative">
           <div className="flex items-start gap-4 mb-4">
-            <div className="w-12 h-12 rounded-xl bg-purple-500/10 flex items-center justify-center flex-shrink-0">
-              <Target className="w-6 h-6 text-purple-600 dark:text-purple-400" />
+            <div className="w-12 h-12 rounded-xl bg-ink-faint/10 flex items-center justify-center flex-shrink-0">
+              <Target className="w-6 h-6 text-charcoal dark:text-ink-muted" />
             </div>
             <div>
               <h3 className="text-xl font-bold text-foreground">Competitor Benchmarks</h3>
@@ -210,10 +210,10 @@ export const CompetitorBenchmarksVisual = () => {
                 </div>
 
                 {/* Strategic Implications */}
-                <div className={`rounded-xl p-3 border ${competitor.isHobson ? 'bg-primary/5 border-primary/20' : 'bg-emerald-50/50 dark:bg-emerald-950/20 border-emerald-200/50 dark:border-emerald-800/30'}`}>
+                <div className={`rounded-xl p-3 border ${competitor.isHobson ? 'bg-primary/5 border-primary/20' : 'bg-success-bg/50 dark:bg-success-solid/20 border-success-border/50 dark:border-success/30'}`}>
                   <div className="flex items-center gap-2 mb-2">
-                    <Lightbulb className={`w-4 h-4 ${competitor.isHobson ? 'text-primary' : 'text-emerald-600 dark:text-emerald-400'}`} />
-                    <span className={`text-xs font-medium uppercase ${competitor.isHobson ? 'text-primary' : 'text-emerald-600 dark:text-emerald-400'}`}>Strategic Implications</span>
+                    <Lightbulb className={`w-4 h-4 ${competitor.isHobson ? 'text-primary' : 'text-success dark:text-success'}`} />
+                    <span className={`text-xs font-medium uppercase ${competitor.isHobson ? 'text-primary' : 'text-success dark:text-success'}`}>Strategic Implications</span>
                   </div>
                   <p className={`text-sm ${competitor.isHobson ? 'text-foreground font-medium' : 'text-muted-foreground'}`}>{competitor.implications}</p>
                 </div>

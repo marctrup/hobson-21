@@ -156,7 +156,7 @@ export const OrchestrationDemo: React.FC = () => {
         @keyframes pulse-ring { 0% { transform: scale(0.9); opacity:0.7;} 100% { transform: scale(1.6); opacity:0;} }
       `}</style>
 
-      <div className="rounded-3xl flex flex-col h-[600px] max-h-[80vh] overflow-hidden" style={{ border: '1px solid #E7E1F2', background: '#FFFFFF', boxShadow: '0 24px 60px -24px rgba(76,29,149,0.18)' }}>
+      <div className="rounded-3xl flex flex-col h-[600px] max-h-[80vh] overflow-hidden" style={{ border: '1px solid var(--bone)', background: 'var(--paper)', boxShadow: '0 24px 60px -24px rgba(45,45,45,0.18)' }}>
         <div
           ref={scrollRef}
           onScroll={handleScroll}
@@ -168,7 +168,7 @@ export const OrchestrationDemo: React.FC = () => {
           style={{ animation: hasStarted ? "fade-up 0.4s ease both" : undefined }}
         >
           <img src={hobsonOwl} alt="Hobson" className="w-10 h-10 object-contain" />
-          <div className="rounded-2xl rounded-tl-sm px-4 py-3 text-sm max-w-[85%]" style={{ background: '#F3EEFB', color: 'var(--ink)', border: '1px solid #E4DBF3' }}>
+          <div className="rounded-2xl rounded-tl-sm px-4 py-3 text-sm max-w-[85%]" style={{ background: 'var(--bone-wash)', color: 'var(--ink)', border: '1px solid #E6D2AE' }}>
             {HOBSON_PROACTIVE.slice(0, introProactiveIdx)}
             {introPhase === 1 && <span className="animate-pulse">|</span>}
           </div>
@@ -185,12 +185,12 @@ export const OrchestrationDemo: React.FC = () => {
               type="button"
               onClick={() => setIntroPhase(4)}
               className="rounded-full px-5 py-2 text-sm font-semibold transition-colors"
-              style={{ background: '#6D28D9', color: '#FFFFFF' }}
+              style={{ background: 'var(--charcoal)', color: 'var(--paper)' }}
             >
               Yes
             </button>
           ) : (
-            <div className="max-w-[85%] rounded-2xl rounded-tr-sm px-4 py-2 text-sm" style={{ background: '#6D28D9', color: '#FFFFFF' }}>
+            <div className="max-w-[85%] rounded-2xl rounded-tr-sm px-4 py-2 text-sm" style={{ background: 'var(--charcoal)', color: 'var(--paper)' }}>
               {USER_YES}
             </div>
           )}
@@ -203,7 +203,7 @@ export const OrchestrationDemo: React.FC = () => {
           style={{ animation: introPhase >= 4 ? "fade-up 0.4s ease both" : undefined }}
         >
           <img src={hobsonOwl} alt="Hobson" className="w-10 h-10 object-contain" />
-          <div className="rounded-2xl rounded-tl-sm px-4 py-3 text-sm" style={{ background: '#F3EEFB', color: 'var(--ink)', border: '1px solid #E4DBF3' }}>
+          <div className="rounded-2xl rounded-tl-sm px-4 py-3 text-sm" style={{ background: 'var(--bone-wash)', color: 'var(--ink)', border: '1px solid #E6D2AE' }}>
 
             {HOBSON_INTRO.slice(0, introHobsonIdx)}
             {introPhase === 4 && <span className="animate-pulse">|</span>}
@@ -219,26 +219,26 @@ export const OrchestrationDemo: React.FC = () => {
               <div
                 key={i}
                 className="rounded-2xl overflow-hidden transition-all duration-500"
-                style={{ animation: "fade-up 0.35s ease both", background: '#FFFFFF', border: `1px solid ${p.isActive ? '#7C3AED' : '#E7E1F2'}` }}
+                style={{ animation: "fade-up 0.35s ease both", background: 'var(--paper)', border: `1px solid ${p.isActive ? 'var(--brass)' : 'var(--bone)'}` }}
               >
-                <div className="flex items-center gap-3 px-4 py-3" style={{ background: '#F3EEFB', borderBottom: '1px solid #E7E1F2' }}>
+                <div className="flex items-center gap-3 px-4 py-3" style={{ background: 'var(--bone-wash)', borderBottom: '1px solid var(--bone)' }}>
                   <div className="relative w-9 h-9 shrink-0 grid place-items-center">
                     <img src={b.img} alt="" className="w-9 h-9 object-contain" />
                     {p.isActive && (
-                      <span className="absolute inset-0 rounded-xl ring-2 ring-[#7C3AED]" style={{ animation: "pulse-ring 1.6s ease-out infinite" }} />
+                      <span className="absolute inset-0 rounded-xl ring-2 ring-[#B4914F]" style={{ animation: "pulse-ring 1.6s ease-out infinite" }} />
                     )}
                   </div>
                   <div className="min-w-0 flex-1">
-                    <p className="text-[11px] font-semibold tracking-wide uppercase" style={{ color: '#7C3AED' }}>{b.who}</p>
+                    <p className="text-[11px] font-semibold tracking-wide uppercase" style={{ color: 'var(--brass)' }}>{b.who}</p>
                     <p className="text-sm truncate" style={{ color: 'var(--ink)' }}>{b.headline}</p>
                   </div>
                   {p.isDone ? (
                     <span className="inline-flex items-center gap-1 text-xs font-semibold" style={{ color: 'var(--ink-muted)' }}>
-                      <Check className="w-4 h-4" style={{ color: '#7C3AED' }} /> Complete
+                      <Check className="w-4 h-4" style={{ color: 'var(--brass)' }} /> Complete
                     </span>
                   ) : (
                     <span className="text-xs font-semibold flex items-center gap-1" style={{ color: 'var(--ink-muted)' }}>
-                      <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: '#7C3AED' }} />
+                      <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: 'var(--brass)' }} />
                       Working
                     </span>
                   )}
@@ -250,13 +250,13 @@ export const OrchestrationDemo: React.FC = () => {
                     return (
                       <li key={j} className={`flex items-center gap-2 text-sm transition-opacity ${stepDone || stepActive ? "opacity-100" : "opacity-40"}`}>
                         {stepDone ? (
-                          <Check className="w-3.5 h-3.5 shrink-0" style={{ color: '#7C3AED' }} />
+                          <Check className="w-3.5 h-3.5 shrink-0" style={{ color: 'var(--brass)' }} />
                         ) : stepActive ? (
-                          <span className="w-3.5 h-3.5 rounded-full border-2 border-t-transparent animate-spin shrink-0" style={{ borderColor: '#7C3AED', borderTopColor: 'transparent' }} />
+                          <span className="w-3.5 h-3.5 rounded-full border-2 border-t-transparent animate-spin shrink-0" style={{ borderColor: 'var(--brass)', borderTopColor: 'transparent' }} />
                         ) : (
-                          <span className="w-3.5 h-3.5 rounded-full shrink-0" style={{ border: '1px solid #E7E1F2' }} />
+                          <span className="w-3.5 h-3.5 rounded-full shrink-0" style={{ border: '1px solid var(--bone)' }} />
                         )}
-                        <span style={{ color: 'var(--ink-muted)', textDecoration: stepDone ? 'line-through' : undefined, textDecorationColor: stepDone ? '#D6CDE6' : undefined }}>{s}</span>
+                        <span style={{ color: 'var(--ink-muted)', textDecoration: stepDone ? 'line-through' : undefined, textDecorationColor: stepDone ? 'var(--bone-strong)' : undefined }}>{s}</span>
                       </li>
                     );
                   })}
@@ -271,14 +271,14 @@ export const OrchestrationDemo: React.FC = () => {
         <div className={`mt-5 transition-all duration-500 ${finalShown ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2 pointer-events-none h-0 overflow-hidden"}`}>
           <div className="flex items-start gap-3">
             <img src={hobsonOwl} alt="Hobson" className="w-10 h-10 object-contain" />
-            <div className="rounded-2xl rounded-tl-sm px-4 py-3 text-sm max-w-[90%]" style={{ background: '#F3EEFB', color: 'var(--ink)', border: '1px solid #E4DBF3' }}>
+            <div className="rounded-2xl rounded-tl-sm px-4 py-3 text-sm max-w-[90%]" style={{ background: 'var(--bone-wash)', color: 'var(--ink)', border: '1px solid #E6D2AE' }}>
               <p>
                 I've finished preparing your rent review for <span className="font-semibold" style={{ color: 'var(--ink)' }}>32 Hamilton Gardens</span>.
                 Here is what I have for your approval:
               </p>
 
-              <div className="mt-3 rounded-xl overflow-hidden" style={{ background: '#FFFFFF', border: '1px solid #E7E1F2' }}>
-                <div className="px-3 py-2 text-[11px] font-semibold tracking-wide uppercase" style={{ color: '#7C3AED', borderBottom: '1px solid #E7E1F2' }}>Recommendation</div>
+              <div className="mt-3 rounded-xl overflow-hidden" style={{ background: 'var(--paper)', border: '1px solid var(--bone)' }}>
+                <div className="px-3 py-2 text-[11px] font-semibold tracking-wide uppercase" style={{ color: 'var(--brass)', borderBottom: '1px solid var(--bone)' }}>Recommendation</div>
                 <div className="px-3 py-3 grid grid-cols-3 gap-3 text-sm">
                   <div>
                     <div className="text-[11px]" style={{ color: 'var(--ink-muted)' }}>Passing rent</div>
@@ -305,8 +305,8 @@ export const OrchestrationDemo: React.FC = () => {
                   { t: "Comparables pack", s: "3 sources, audit-trailed" },
                   { t: "Reminder schedule", s: "Service + response windows set" },
                 ].map((x) => (
-                  <div key={x.t} className="flex items-start gap-2 rounded-lg px-3 py-2" style={{ background: '#FFFFFF', border: '1px solid #E7E1F2' }}>
-                    <Check className="w-4 h-4 mt-0.5 shrink-0" style={{ color: '#7C3AED' }} />
+                  <div key={x.t} className="flex items-start gap-2 rounded-lg px-3 py-2" style={{ background: 'var(--paper)', border: '1px solid var(--bone)' }}>
+                    <Check className="w-4 h-4 mt-0.5 shrink-0" style={{ color: 'var(--brass)' }} />
                     <div>
                       <div className="text-sm font-semibold" style={{ color: 'var(--ink)' }}>{x.t}</div>
                       <div className="text-xs" style={{ color: 'var(--ink-muted)' }}>{x.s}</div>
@@ -322,7 +322,7 @@ export const OrchestrationDemo: React.FC = () => {
         </div>
         </div>
 
-        <div className="px-4 sm:px-6 py-3 flex items-center justify-between text-xs" style={{ borderTop: '1px solid #E7E1F2', background: '#FFFFFF', color: 'var(--ink-muted)' }}>
+        <div className="px-4 sm:px-6 py-3 flex items-center justify-between text-xs" style={{ borderTop: '1px solid var(--bone)', background: 'var(--paper)', color: 'var(--ink-muted)' }}>
           <span>The user only ever speaks to Hobson.</span>
           <button
             onClick={() => {
@@ -340,7 +340,7 @@ export const OrchestrationDemo: React.FC = () => {
               }
             }}
             className="px-3 py-1.5 rounded-full font-semibold transition-colors"
-            style={{ background: '#FFFFFF', border: '1px solid #E7E1F2', color: '#6D28D9' }}
+            style={{ background: 'var(--paper)', border: '1px solid var(--bone)', color: 'var(--brass-text)' }}
 
           >
             {finished ? "Replay" : playing ? "Pause" : "Resume"}

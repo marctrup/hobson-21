@@ -3,11 +3,11 @@ import { supabase } from "@/integrations/supabase/client";
 
 const C = {
   bg: "#FFFFFF",
-  purple: "#534AB7",
-  navy: "#1A1A2E",
-  muted: "#6B6B8A",
-  greenBg: "#ECFDF5",
-  greenText: "#166534",
+  purple: "#56514A",
+  navy: "#2D2D2D",
+  muted: "#56514A",
+  greenBg: "#EDEFE0",
+  greenText: "#4A5527",
 };
 
 interface InterestModalProps {
@@ -72,12 +72,12 @@ export const InterestModal = ({ open, onClose, source = "login-interest" }: Inte
             <p className="text-sm mb-6" style={{ color: C.muted }}>Join the waitlist and we'll be in touch as soon as we go live.</p>
             <div className="space-y-3">
               <div className="grid grid-cols-2 gap-3">
-                <input type="text" placeholder="First name *" value={first} onChange={e => setFirst(e.target.value)} className="rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2" style={{ border: '1.5px solid #B0ADCF', color: C.navy, background: '#F9F9FC', colorScheme: 'light' }} />
-                <input type="text" placeholder="Last name *" value={last} onChange={e => setLast(e.target.value)} className="rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2" style={{ border: '1.5px solid #B0ADCF', color: C.navy, background: '#F9F9FC', colorScheme: 'light' }} />
+                <input type="text" placeholder="First name *" value={first} onChange={e => setFirst(e.target.value)} className="rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2" style={{ border: '1.5px solid #8A8478', color: C.navy, background: '#F1EBDE', colorScheme: 'light' }} />
+                <input type="text" placeholder="Last name *" value={last} onChange={e => setLast(e.target.value)} className="rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2" style={{ border: '1.5px solid #8A8478', color: C.navy, background: '#F1EBDE', colorScheme: 'light' }} />
               </div>
-              <input type="email" placeholder="Email *" value={email} onChange={e => setEmail(e.target.value)} className="w-full rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2" style={{ border: '1.5px solid #B0ADCF', color: C.navy, background: '#F9F9FC', colorScheme: 'light' }} />
-              <input type="tel" placeholder="Phone (optional)" value={phone} onChange={e => setPhone(e.target.value)} className="w-full rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2" style={{ border: '1.5px solid #B0ADCF', color: C.navy, background: '#F9F9FC', colorScheme: 'light' }} />
-              <input type="text" placeholder="Company (optional)" value={company} onChange={e => setCompany(e.target.value)} className="w-full rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2" style={{ border: '1.5px solid #B0ADCF', color: C.navy, background: '#F9F9FC', colorScheme: 'light' }} />
+              <input type="email" placeholder="Email *" value={email} onChange={e => setEmail(e.target.value)} className="w-full rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2" style={{ border: '1.5px solid #8A8478', color: C.navy, background: '#F1EBDE', colorScheme: 'light' }} />
+              <input type="tel" placeholder="Phone (optional)" value={phone} onChange={e => setPhone(e.target.value)} className="w-full rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2" style={{ border: '1.5px solid #8A8478', color: C.navy, background: '#F1EBDE', colorScheme: 'light' }} />
+              <input type="text" placeholder="Company (optional)" value={company} onChange={e => setCompany(e.target.value)} className="w-full rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2" style={{ border: '1.5px solid #8A8478', color: C.navy, background: '#F1EBDE', colorScheme: 'light' }} />
             </div>
             <button onClick={handleSubmit} disabled={submitting || !first.trim() || !last.trim() || !email.trim()} className="w-full mt-5 py-3 rounded-lg text-sm font-semibold text-white transition-all hover:opacity-90 disabled:opacity-50" style={{ background: C.purple }}>
               {submitting ? "Submitting…" : "Get early access"}

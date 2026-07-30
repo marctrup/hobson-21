@@ -306,7 +306,7 @@ const LearnFaq = () => {
           <div className="mx-auto max-w-3xl px-6 pt-16 pb-12 text-center">
             <div
               className="inline-flex items-center justify-center w-14 h-14 mb-6 rounded-full"
-              style={{ backgroundColor: "#F3F0FF", border: "1px solid #E8E4F0" }}
+              style={{ backgroundColor: "#F1EBDE", border: "1px solid #E8E1D4" }}
             >
               <img src={owlMascot} alt="" className="w-9 h-9" />
             </div>
@@ -324,12 +324,12 @@ const LearnFaq = () => {
             </h1>
             <p
               className="mt-5 text-base sm:text-lg leading-relaxed max-w-xl mx-auto"
-              style={{ color: "#6B6B6B" }}
+              style={{ color: "#6E6A62" }}
             >
               How Hobson thinks about your property documents — and why you
               can trust the answers it gives.
             </p>
-            <div className="mx-auto mt-8 h-px w-24" style={{ backgroundColor: "#EDE7DA" }} />
+            <div className="mx-auto mt-8 h-px w-24" style={{ backgroundColor: "#F7EDDC" }} />
           </div>
         </section>
 
@@ -339,7 +339,7 @@ const LearnFaq = () => {
           {/* Sticky category chips */}
           <div
             className="sticky top-16 z-30 backdrop-blur-md"
-            style={{ backgroundColor: "rgba(252,250,247,0.85)", borderTop: "1px solid #EDE7DA", borderBottom: "1px solid #EDE7DA" }}
+            style={{ backgroundColor: "rgba(252,250,247,0.85)", borderTop: "1px solid #F7EDDC", borderBottom: "1px solid #F7EDDC" }}
           >
             <div className="mx-auto max-w-4xl px-6 py-4">
               <div className="flex flex-wrap justify-center gap-2.5">
@@ -354,7 +354,7 @@ const LearnFaq = () => {
                       style={
                         active
                           ? { backgroundColor: "#2D2D2D", color: "#FFFFFF", border: "1px solid #2D2D2D" }
-                          : { backgroundColor: "#F3F0FF", color: "#2D2D2D", border: "1px solid #E8E4F0" }
+                          : { backgroundColor: "#F1EBDE", color: "#2D2D2D", border: "1px solid #E8E1D4" }
                       }
                     >
                       {label}
@@ -370,7 +370,7 @@ const LearnFaq = () => {
         <section className="mx-auto max-w-3xl px-6 py-16">
           {noResults ? (
             <div className="text-center py-16">
-              <p style={{ color: "#6B6B6B" }}>
+              <p style={{ color: "#6E6A62" }}>
                 No questions match your search. Try a different word.
               </p>
             </div>
@@ -391,7 +391,7 @@ const LearnFaq = () => {
                     >
                       {cat.name}
                     </h2>
-                    <div className="flex-1 h-px" style={{ backgroundColor: "#EDE7DA" }} />
+                    <div className="flex-1 h-px" style={{ backgroundColor: "#F7EDDC" }} />
                   </div>
                   <Accordion type="multiple" className="space-y-4">
                     {cat.items.map((item, idx) => {
@@ -402,10 +402,10 @@ const LearnFaq = () => {
                           value={value}
                           className="group rounded-xl overflow-hidden bg-white transition-all duration-300 data-[state=open]:shadow-[0_8px_20px_-6px_rgba(180,145,79,0.18)]"
                           style={{
-                            border: "1px solid #E8E4F0",
+                            border: "1px solid #E8E1D4",
                           }}
                         >
-                          <AccordionTrigger className="px-6 py-6 hover:no-underline [&>svg]:hidden text-left group-data-[state=open]:border-b group-data-[state=open]:border-[#F3F0FF]">
+                          <AccordionTrigger className="px-6 py-6 hover:no-underline [&>svg]:hidden text-left group-data-[state=open]:border-b group-data-[state=open]:border-[#F1EBDE]">
                             <div className="flex items-center gap-4 flex-1">
                               <div className="flex-1">
                                 <div className="flex flex-wrap items-center gap-2">
@@ -418,7 +418,7 @@ const LearnFaq = () => {
                                   {item.mostAsked && (
                                     <Badge
                                       className="border-0 font-medium"
-                                      style={{ backgroundColor: "#F3F0FF", color: "#B4914F" }}
+                                      style={{ backgroundColor: "#F1EBDE", color: "#B4914F" }}
                                     >
                                       Most asked
                                     </Badge>
@@ -441,7 +441,7 @@ const LearnFaq = () => {
                           <AccordionContent className="px-6 pb-8 pt-6">
                             <div
                               className="prose max-w-none text-[15px] leading-relaxed prose-p:my-3 prose-strong:font-semibold prose-em:italic"
-                              style={{ color: "#555555" }}
+                              style={{ color: "#56514A" }}
                             >
                               <ReactMarkdown
                                 components={{

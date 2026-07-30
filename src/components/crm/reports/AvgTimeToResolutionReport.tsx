@@ -12,10 +12,10 @@ import { useAvgTimeToResolution } from "@/hooks/crm/reports/useServiceReports";
 import { downloadCsv } from "@/lib/crm/reportsExport";
 
 const PRIORITY_COLOR: Record<string, string> = {
-  low: "#94a3b8",
-  medium: "#3b82f6",
-  high: "#f59e0b",
-  urgent: "#f43f5e",
+  low: "#8A8478",
+  medium: "#56514A",
+  high: "#8F5A14",
+  urgent: "#9C4A38",
 };
 
 export const AvgTimeToResolutionReport = () => {

@@ -4,7 +4,7 @@ import React, { memo } from "react";
 
 const PropertyMap = memo(() => {
   return (
-    <div className="w-full lg:w-1/2 relative bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900/50 dark:to-blue-900/20 overflow-hidden">
+    <div className="w-full lg:w-1/2 relative bg-gradient-to-br from-paper to-paper dark:from-ink/50 dark:to-ink/20 overflow-hidden">
       {/* Map Header */}
       <div className="absolute top-4 left-4 right-4 z-20">
         <div className="flex items-center justify-between bg-background/95 backdrop-blur-sm rounded-lg p-3 border border-primary/10 shadow-lg">
@@ -23,12 +23,12 @@ const PropertyMap = memo(() => {
       </div>
       
       {/* Street-Level London Map with Dense Grid */}
-      <div className="absolute inset-0 bg-gray-100 dark:bg-gray-800">
+      <div className="absolute inset-0 bg-bone-wash dark:bg-ink">
         {/* Dense Grid - Horizontal lines every 5% */}
         {Array.from({ length: 21 }, (_, i) => i * 5).map((top) => (
           <div 
             key={`h-${top}`} 
-            className="absolute left-0 w-full h-0.5 bg-gray-300 dark:bg-gray-600"
+            className="absolute left-0 w-full h-0.5 bg-bone-strong dark:bg-charcoal"
             style={{ top: `${top}%` }}
           ></div>
         ))}
@@ -37,7 +37,7 @@ const PropertyMap = memo(() => {
         {Array.from({ length: 21 }, (_, i) => i * 5).map((left) => (
           <div 
             key={`v-${left}`} 
-            className="absolute top-0 h-full w-0.5 bg-gray-300 dark:bg-gray-600"
+            className="absolute top-0 h-full w-0.5 bg-bone-strong dark:bg-charcoal"
             style={{ left: `${left}%` }}
           ></div>
         ))}
@@ -46,24 +46,24 @@ const PropertyMap = memo(() => {
         {[20, 35, 50, 65, 80].map((top) => (
           <div 
             key={`major-h-${top}`} 
-            className="absolute left-0 w-full h-1 bg-white dark:bg-gray-500"
+            className="absolute left-0 w-full h-1 bg-white dark:bg-ink-faint"
             style={{ top: `${top}%` }}
           ></div>
         ))}
         {[15, 30, 45, 60, 75].map((left) => (
           <div 
             key={`major-v-${left}`} 
-            className="absolute top-0 h-full w-1 bg-white dark:bg-gray-500"
+            className="absolute top-0 h-full w-1 bg-white dark:bg-ink-faint"
             style={{ left: `${left}%` }}
           ></div>
         ))}
         
         {/* Parks and Green Spaces */}
-        <div className="absolute bg-green-300 dark:bg-green-700 rounded-sm" style={{ top: '15%', left: '18%', width: '15%', height: '12%' }}>
-          <span className="text-xs p-1 text-green-800 dark:text-green-200">Hyde Park</span>
+        <div className="absolute bg-success-border dark:bg-success rounded-sm" style={{ top: '15%', left: '18%', width: '15%', height: '12%' }}>
+          <span className="text-xs p-1 text-success dark:text-success">Hyde Park</span>
         </div>
-        <div className="absolute bg-green-300 dark:bg-green-700 rounded-full" style={{ top: '10%', left: '38%', width: '12%', height: '10%' }}>
-          <span className="text-xs p-1 text-green-800 dark:text-green-200">Regent's Park</span>
+        <div className="absolute bg-success-border dark:bg-success rounded-full" style={{ top: '10%', left: '38%', width: '12%', height: '10%' }}>
+          <span className="text-xs p-1 text-success dark:text-success">Regent's Park</span>
         </div>
         
         {/* Building Blocks */}
@@ -79,7 +79,7 @@ const PropertyMap = memo(() => {
         ].map((block, i) => (
           <div 
             key={i} 
-            className={`absolute bg-gray-300 dark:bg-gray-600 border border-gray-400`}
+            className={`absolute bg-bone-strong dark:bg-charcoal border border-bone-strong`}
             style={{
               top: `${block.top}%`,
               left: `${block.left}%`,
@@ -90,11 +90,11 @@ const PropertyMap = memo(() => {
         ))}
         
         {/* Street Names */}
-        <div className="absolute text-xs text-gray-700 dark:text-gray-300 bg-white/80 dark:bg-gray-800/80 px-1 rounded transform -rotate-90" style={{ top: '28%', left: '5%' }}>Oxford St</div>
-        <div className="absolute text-xs text-gray-700 dark:text-gray-300 bg-white/80 dark:bg-gray-800/80 px-1 rounded transform -rotate-90" style={{ top: '43%', left: '5%' }}>Strand</div>
-        <div className="absolute text-xs text-gray-700 dark:text-gray-300 bg-white/80 dark:bg-gray-800/80 px-1 rounded" style={{ top: '8%', left: '23%' }}>Regent St</div>
-        <div className="absolute text-xs text-gray-700 dark:text-gray-300 bg-white/80 dark:bg-gray-800/80 px-1 rounded" style={{ top: '8%', left: '38%' }}>TCR</div>
-        <div className="absolute text-xs text-gray-700 dark:text-gray-300 bg-blue-200/80 dark:bg-blue-800/80 px-1 rounded" style={{ top: '48%', left: '85%' }}>Thames</div>
+        <div className="absolute text-xs text-charcoal dark:text-ink-faint bg-white/80 dark:bg-ink/80 px-1 rounded transform -rotate-90" style={{ top: '28%', left: '5%' }}>Oxford St</div>
+        <div className="absolute text-xs text-charcoal dark:text-ink-faint bg-white/80 dark:bg-ink/80 px-1 rounded transform -rotate-90" style={{ top: '43%', left: '5%' }}>Strand</div>
+        <div className="absolute text-xs text-charcoal dark:text-ink-faint bg-white/80 dark:bg-ink/80 px-1 rounded" style={{ top: '8%', left: '23%' }}>Regent St</div>
+        <div className="absolute text-xs text-charcoal dark:text-ink-faint bg-white/80 dark:bg-ink/80 px-1 rounded" style={{ top: '8%', left: '38%' }}>TCR</div>
+        <div className="absolute text-xs text-charcoal dark:text-ink-faint bg-bone/80 dark:bg-ink/80 px-1 rounded" style={{ top: '48%', left: '85%' }}>Thames</div>
         
         {/* Underground Stations */}
         {[
@@ -102,8 +102,8 @@ const PropertyMap = memo(() => {
           { top: 45, left: 42, name: "Covent Garden" },
           { top: 35, left: 58, name: "Holborn" }
         ].map((station, i) => (
-          <div key={i} className="absolute w-2 h-2 bg-red-500 rounded-full border border-white" style={{ top: `${station.top}%`, left: `${station.left}%` }}>
-            <div className="text-xs absolute -bottom-4 -left-6 text-gray-700 dark:text-gray-300 bg-white/80 dark:bg-gray-800/80 px-1 rounded text-center">{station.name}</div>
+          <div key={i} className="absolute w-2 h-2 bg-danger rounded-full border border-white" style={{ top: `${station.top}%`, left: `${station.left}%` }}>
+            <div className="text-xs absolute -bottom-4 -left-6 text-charcoal dark:text-ink-faint bg-white/80 dark:bg-ink/80 px-1 rounded text-center">{station.name}</div>
           </div>
         ))}
         
