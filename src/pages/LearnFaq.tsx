@@ -10,6 +10,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import owlMascot from "@/assets/owl-mascot.png";
+import evidencePackImage from "@/assets/evidence-pack-example.png.asset.json";
 
 
 type FAQ = {
