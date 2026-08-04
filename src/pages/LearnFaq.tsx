@@ -189,17 +189,38 @@ And that's only the first safeguard. On top of it, Hobson backs every figure wit
 That turns accuracy into something we can see and improve, not a claim we simply hope is true. And because the test leases run from a simple residential tenancy all the way to long, complex commercial leases with formula-driven rents, we're proving Hobson on the hard cases, not just the easy ones.`,
       },
       {
-        q: `How does Hobson guard against AI "making things up"?`,
-        a: `This is the risk we take most seriously, because a confident wrong answer is far more dangerous than an honest "I'm not sure." Left unchecked, AI models can produce a figure, a quote, even a precise page reference for something that simply isn't in the document.
+        q: "If Hobson got something wrong, would I notice?",
+        a: `Not necessarily — and that's exactly why we don't rely on spot-checking.
 
-So Hobson is built to distrust its own first draft. Every figure it reports has to be backed by wording from the document that genuinely contains it — if the supporting text doesn't say what the answer claims, the answer doesn't stand. Beyond that, we actively test for invented answers: checking that the evidence behind each fact really exists and really says what's claimed, that nothing from one tenancy has been applied to another, and that Hobson keeps a clear line between what a document actually says and what it doesn't. Catching those patterns on purpose is how we keep them out of your answers.`,
+Ordinary software fails loudly: an error, a crash, a blank cell. AI fails quietly. A wrong rent figure arrives looking exactly like a right one — same confident tone, same clean formatting, often a citation attached. Left unchecked, AI models will produce a figure, a quote, even a precise page reference for something that simply isn't in the document. Nothing flags it for you.
+
+So Hobson is built to distrust its own first draft. Every figure it reports has to be backed by wording from the document that genuinely contains it — if the supporting text doesn't say what the answer claims, the answer doesn't stand. And we actively test for invented content: checking that the evidence behind each fact really exists and really says what's claimed, that nothing from one tenancy has been applied to another, and that Hobson holds a clear line between what a document says and what it's silent on.
+
+You shouldn't have to be the safety net. The checking happens before an answer reaches you — and the evidence comes with it, so you can confirm anything that matters.`,
+      },
+      {
+        q: "What exactly do you test — just the document reading?",
+        a: `The whole journey. Reading a lease correctly is one step, and an answer can still come out wrong if a later one goes astray — the wrong unit identified, an out-of-date document pulled, the wrong tool used, a calculation run on the right figures in the wrong order.
+
+So each step is checked in its own right: was the right document retrieved, was the right tool chosen, is every statement actually supported by a source, was the calculation produced by the calculation engine rather than improvised by the model. A step can be perfectly sound and still give you a wrong answer if the one before it failed.`,
+      },
+      {
+        q: "If an answer is wrong, can you find out why?",
+        a: `Yes — down to the exact step. Every answer Hobson gives is recorded as it happens: which documents it read, which tools it ran, how it reached the result.
+
+Without that record, all anyone knows is "the answer was wrong," and fixing it is guesswork. With it, we can see whether the wrong document was pulled, the wrong tool was used, a calculation was off, or the final wording added something the documents didn't support — and fix that precise step.
+
+Anything your team flags becomes a permanent test case, so the same mistake can't quietly return later. Real problems from live use are the most valuable tests there are.`,
       },
       {
         q: "Hobson keeps improving — how do you stop an update from breaking something that already worked?",
-        a: `Because nothing changes in the dark. Behind the scenes, every answer Hobson gives is recorded step by step — which documents it read, which checks it ran, how it reached the result. If something is ever wrong, the team can see exactly where it happened and fix that precise step, rather than guessing.
+        a: `Because no change ships without being measured against everything that already works.
 
-That same record becomes a growing library of test cases. Whenever we improve how Hobson works, the new version has to prove itself against that whole library first — compared question by question with the current one — and it doesn't go live if it makes anything worse. So Hobson gets sharper over time without the "fixed one thing, broke another" problem that catches out software which isn't tested this way. Real answers your own team flags feed straight back into that test library, so the system keeps learning from live use.`,
+Every improvement — a new way of reading documents, a change to a tool — has to run the full test library first, and is compared question by question with the current version, across accuracy, sourcing, completeness, cost and speed. Anything that got worse has to be explained and accepted before it goes live, not discovered by you three weeks later.
+
+So Hobson gets sharper over time without the "fixed one thing, broke another" problem that catches out software which isn't tested this way.`,
       },
+
       {
         q: "When Hobson works out a figure, can I see how it reached it?",
         a: `Always. Any number Hobson calculates for you — a reviewed rent, a deadline, a notice date — never arrives on its own. Its workings come with it: the figures it started from and when they applied, the rules it followed, and any cap or floor that changed the result, set out in order.
