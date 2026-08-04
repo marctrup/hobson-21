@@ -265,6 +265,15 @@ A good co-worker doesn't just answer the narrow question; they mention the thing
 
 Two limits keep this useful rather than noisy. It only raises something that genuinely matters — it won't lecture, speculate, or invent a worry to look helpful. And it only mentions what your documents actually establish; it never manufactures a risk or a fact that isn't there. So when Hobson flags something, it's worth reading — and when your answer is simply the answer, that's all you get.`,
       },
+      {
+        q: "Can a document change how my portfolio is organised?",
+        a: `No. You decide the structure; documents attach to it. Never the other way round.
+
+That's not a technical preference — it's how property works. The space exists first and the tenant arrives afterwards. Someone builds a floor, someone decides where the demise line falls, and only then is a lease signed over a space that was already there. A lease is evidence about a space; it isn't what brings the space into being.
+
+So the rule holds in both directions. One lease covering units at three different addresses doesn't fuse them into one — they're still in three places, and place is what makes a group. And sixteen units with sixteen separate leases in one place are still one group, not sixteen.
+
+The test is simple: take the document away and ask whether the group still exists. Surrender the lease tomorrow and Stanley House is still Stanley House, its four floors still one place. Your portfolio should describe your real property, and it should change when the property changes or when you realise you've described it wrongly — not because a PDF arrived.`,
     ],
   },
 
