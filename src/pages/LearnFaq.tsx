@@ -322,7 +322,7 @@ That's the difference between a Hobson answer and reading the lease yourself: th
     ],
   },
   {
-    name: "Leases, money & the fine print",
+    name: "Hobson never guesses",
     items: [
       {
         q: "When a lease reaches its end date, does Hobson assume the tenancy is over?",
