@@ -150,7 +150,7 @@ Where a lease doesn't settle the question, the pack says so. Below the answer, H
           alt: "Illustrative example of a Hobson evidence pack, showing an answer supported by three verbatim extracts from a lease, each with page number, clause reference and a highlighted source page",
           label: "Illustrative example",
           caption:
-            "This answer took three passes through the lease. The rent clause points to the Second Schedule; the Schedule defines the figure; a later part sets out how it's paid. Hobson follows the thread to the printed value and shows you every step — in a long lease, the answer is almost never on the page you started from.",
+            "The rent isn't stated in one place. The rent clause points to the Second Schedule, the Schedule defines the figure, and a later part sets out how it's paid. Hobson resolved that chain when it read the document, and kept all three clauses attached to the fact — so the evidence was already there when the question was asked.",
         },
       },
       {
