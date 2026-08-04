@@ -60,11 +60,13 @@ And the model isn't the hard part — frontier models are becoming a commodity a
       },
       {
         q: "Will Hobson give me the same answer twice?",
-        a: `Yes. That's not automatic with AI — ask a general model the same question twice and you can get two different answers.
+        a: `The figures, yes — always. Once Hobson has read your documents, every amount and date comes from fixed rules, worked out the same way each time. Ask on Monday and again on Thursday and the rent is the same rent, with the same workings shown.
 
-Hobson removes that where it matters most. Once a document is in the record, every figure, date and calculation is produced by fixed rules rather than by the model, so the same question gives the same answer every time, and you can check how it was reached.
+That isn't automatic with AI. Ask a general chatbot the same question twice and you can get two different answers, because it writes a fresh reply each time instead of drawing on anything it has already established.
 
-Reading documents is where a model is genuinely useful — but its job there is to transcribe, not to interpret. It captures what a clause says, with the wording it came from, and records "not stated" rather than filling a gap from what it's seen elsewhere. Because that reading is the one step a model performs, it's the step we measure most closely: the same lease read repeatedly, every field checked to come back identical.`,
+Reading your documents is the one job where AI genuinely earns its place — but its task there is to copy out what a clause says, not to work out what it might mean. It captures the wording exactly, and where a lease is silent it says so rather than filling the gap with something it saw in another lease. Because so much rests on that reading, it's the part we check hardest: the same lease read over and over, every detail confirmed to come back identical.
+
+Two other parts of answering your question use AI too — understanding what you're asking and where to look for it, and writing the reply itself. Neither of those makes up figures, but neither is perfectly predictable, so we don't assume they're right. We check each one: did it go to the right unit, open the right documents, and is every sentence in the answer backed by something the lease actually says.`,
       },
       {
         q: "Doesn't all software get tested? What's different about AI?",
