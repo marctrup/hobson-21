@@ -320,18 +320,6 @@ This matters more than it sounds. The same address gets written a dozen differen
 
 Hobson treats them as genuinely unrelated, because they are. One group's fire risk assessment says nothing whatsoever about another's, and Hobson won't report a document from one as though it covered the other. They share a point on a map and nothing else.`,
       },
-      {
-        q: "How does Hobson know where a document belongs?",
-        a: `In two steps, and neither is a guess.
-
-First the place. A document names an address, and that address resolves to an actual location. That matters more than it sounds: the same building gets written a dozen different ways across a stack of paperwork, and matching two spellings proves nothing. Resolving to a location is what makes two records provably the same place — so a document lands where it belongs rather than somewhere that merely reads similarly.
-
-Then the level. Once it's at the right location, whether the document sits at a unit or at the group is your decision, recorded as a stored fact. A lease describes what's demised to that tenant — the extent of what they hold, and nothing more. It doesn't describe how the place as a whole is divided, and that's what determines the level.
-
-Some things clearly belong to the place rather than to any one space inside it: the buildings insurance, the fire risk assessment, the asbestos register, the site plan. None is the sum of anything held below — a buildings insurance policy isn't four floor-level policies added together.
-
-Hobson then reads at the level a document actually sits, and nothing later moves it because the shape of the data appears to suggest otherwise. So you're never told a unit is missing its fire risk assessment when the assessment exists perfectly well one level up.`,
-      },
     ],
   },
   {
@@ -339,12 +327,17 @@ Hobson then reads at the level a document actually sits, and nothing later moves
     items: [
       {
         q: "How does Hobson make sense of all the documents?",
-        a: `Hobson sorts every document into one of three kinds, because each plays a different role in the story of a property.
+        a: `Three things have to be settled about any document, and none of them is a guess.
 
-There's the document that **creates a tenancy** — the lease, licence or tenancy agreement. There are the documents that **change that tenancy over time** — deeds of variation, assignments, licences to alter, rent reviews, notices — each linked back to the lease it belongs to. And there are documents **about the building itself** — EPCs, fire risk assessments, valuations, certificates — which stand on their own.
+First, where it belongs. A document names an address, and that address resolves to an actual location. That matters more than it sounds: the same building gets written a dozen different ways across a stack of paperwork, and matching two spellings proves nothing. Resolving to a location is what makes two records provably the same place, so a document lands where it belongs rather than somewhere that merely reads similarly.
 
-Knowing which kind a document is means Hobson knows what to do with it: build it into the story of a tenancy, or file it against the building. You don't have to tell it — it works this out as each document arrives.`,
+Second, which level it sits at — a single unit, or the group of units it belongs to. That's your decision, recorded as a stored fact. A lease describes what's demised to that tenant, the extent of what they hold and nothing more; it doesn't describe how the place as a whole is divided, and that's what determines the level. Nothing later moves a document between levels because the shape of the data appears to suggest otherwise. So you're never told a unit is missing its fire risk assessment when the assessment exists perfectly well one level up.
+
+Third, what kind of document it is. Some create a tenancy — a lease, a licence, a tenancy agreement. Some modify a tenancy already in existence — deeds of variation, assignments, licences to alter, rent review memoranda, notices. And some are about the asset itself rather than any tenancy — the EPC, the fire risk assessment, the valuation, the buildings insurance.
+
+That third one decides how a document is used. Anything that modifies a tenancy is linked to the tenancy it modifies and applied in the order things happened, so the record shows where a lease stands today rather than where it started. Asset documents stand on their own, outside any tenancy's history — and none is the sum of anything held below: a buildings insurance policy isn't four floor-level policies added together.`,
       },
+
       {
         q: "After years of variations and assignments, how does Hobson know where a lease actually stands?",
         a: `By reading the whole story, not just the latest page. Hobson takes the original lease, then applies every later document that changed it — in the order they happened — to work out where things stand today. A rent set at £50,000 and later raised to £60,000 by a deed of variation shows as £60,000, with both documents cited.
