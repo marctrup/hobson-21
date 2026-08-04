@@ -472,6 +472,28 @@ const LearnFaq = () => {
                                 {item.a}
                               </ReactMarkdown>
                             </div>
+                            {item.image && (
+                              <figure className="mt-8 mb-2">
+                                <div
+                                  className="text-right text-[12px] mb-2"
+                                  style={{ color: "#8A8378" }}
+                                >
+                                  {item.image.label}
+                                </div>
+                                <img
+                                  src={item.image.src}
+                                  alt={item.image.alt}
+                                  className="w-full h-auto rounded-2xl block"
+                                  style={{ border: "1px solid #E8E1D4" }}
+                                />
+                                <figcaption
+                                  className="mt-2 text-[12.5px] leading-relaxed"
+                                  style={{ color: "#8A8378" }}
+                                >
+                                  {item.image.caption}
+                                </figcaption>
+                              </figure>
+                            )}
                           </AccordionContent>
                         </AccordionItem>
                       );
