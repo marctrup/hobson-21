@@ -59,6 +59,25 @@ Hobson uses a model like that for what models are genuinely good at — reading 
 And the model isn't the hard part — frontier models are becoming a commodity anyone can call. The hard part is everything wrapped around it: capturing how property actually works, building the deterministic tools and the single calculation engine, and above all the validation framework that proves each answer against leases checked by hand by property experts. That takes a rare combination — property expertise, AI engineering and testing discipline in one team — and a long, deliberate build to get right. It's the part that can't be shortcut. Hobson is that layer, already built and being proven on real portfolios, so you get a system you can trust your portfolio to — not a raw tool you'd have to construct and fact-check yourself.`,
       },
       {
+        q: "Will Hobson give me the same answer twice?",
+        a: `Yes. That's not automatic with AI — ask a general model the same question twice and you can get two different answers.
+
+Hobson removes that where it matters most. Once a document is in the record, every figure, date and calculation is produced by fixed rules rather than by the model, so the same question gives the same answer every time, and you can check how it was reached.
+
+The one place we do use a model's judgement is reading documents, because that's what models are genuinely good at. So that's the one place we measure stability directly — reading the same lease repeatedly and checking that every field comes back identical.`,
+      },
+      {
+        q: "Doesn't all software get tested? What's different about AI?",
+        a: `All serious software is tested. What changes with AI is what a test can actually prove.
+
+Ordinary software is predictable — the same input gives the same output, every time. So a test is a straight pass or fail, and once it passes, it stays passed. And when something does break, it usually breaks loudly: an error, a crash, a blank cell. You find out.
+
+AI isn't predictable in that way, so one test proves nothing. You have to run the same document many times over and measure how often it's right. The result isn't pass or fail — it's a score. There's no version that simply "works" and then stays working.
+
+That's why the testing has to be a different shape: a library of real leases where property experts have established the correct answer for every detail, re-run in full whenever anything changes, scored, and compared against the version before it. Same discipline as any well-built software. Different instrument, because we're measuring something that can be right most of the time rather than something that either works or doesn't.`,
+      },
+      {
+
 
         q: "Is Hobson ever afraid to say it doesn't know?",
         a: `Never — and it's one of the biggest differences between Hobson and a general AI.
