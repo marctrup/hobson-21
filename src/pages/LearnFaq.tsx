@@ -285,13 +285,15 @@ The test is simple: take the document away and ask whether the group still exist
     items: [
       {
         q: "Why does Hobson organise everything around the unit?",
-        a: `Because the unit is where the truth of a tenancy actually lives. A **Unit** — a single occupiable space, whether an office suite, a shop, a warehouse, a flat or a parking space — is what every lease, tenant and obligation attaches to, so it's what Hobson builds everything around.
+        a: `Because a unit is where occupation actually happens. A **unit** is a single occupiable space — an office suite, a shop, a warehouse, a flat, a parking space — and it's where most of the detail lives: who the tenant is, what rent is payable, when the lease ends, whether there's a break clause or a deposit.
 
-Above it, a **Property** groups related units — the floors of a building, the shops in a parade, or even units held under one lease across different addresses — and a **Portfolio** sits at the top with the estate-wide view. A Property is *optional*: a single house sits directly in your portfolio with no building layer, while a multi-let tower groups dozens of units under one Property. Same underlying model — so a landlord with one flat and a fund with a thousand units both work exactly the same way.
+Above it sits the **unit group**: a set of units in the same place. It isn't just a container. Plenty of things belong to a place rather than to any one space inside it — the buildings insurance, the fire risk assessment, the service charge budget, the site plan — and they exist at the group and nowhere else.
 
-And you can ask at whichever level you need. Ask about a **single unit** and you get the detail — who the tenant is, what rent is payable, when the lease expires, whether there's a break clause or deposit. Ask about a **Property** and you get the building's picture — its rent roll, which units are vacant, which leases expire. Ask across the whole **Portfolio** and you get the estate view — total contracted rent, occupancy rate, which reviews are due this year.
+At the top is your **portfolio**, the whole estate under management. Unlike the two levels below it, it isn't somewhere you can stand — it's a reporting view: how many units are vacant, which leases expire this year, what the total contracted rent is, which reviews fall due in the next twelve months.
 
-Because these are all the same information seen at different heights, the portfolio totals are never separately kept figures that can drift out of date — they're built from the units beneath them, so the headline always reconciles with the detail underneath.`,
+Three levels is all it takes, which is why a landlord with one flat and a fund with a thousand units work exactly the same way — no special cases for a house, a single-let warehouse, a multi-let tower or a mixed-use estate.
+
+And you ask at whichever level you need. A unit gives you the tenancy detail. A group gives you the place — its rent roll, which units are vacant, which leases expire. The portfolio gives you the estate view, built from the records beneath it rather than kept separately, so the headline always reconciles with the detail underneath.`,
       },
       {
         q: `Why doesn't Hobson use the word "property"?`,
