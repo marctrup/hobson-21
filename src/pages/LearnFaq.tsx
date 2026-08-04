@@ -229,7 +229,7 @@ So Hobson gets sharper over time without the "fixed one thing, broke another" pr
 
 So you're never asked to take a calculated number on trust. You can see exactly how it was reached and check it yourself — and if the workings can't be shown for some reason, Hobson tells you that rather than handing you a bare figure.
 
-There's one more quiet safeguard behind this: every calculation across the whole system is done in a single place, one consistent way. **One method to rely on, and one place to check** — so the same question always produces the same, showable answer.`,
+There's one more safeguard behind this: every calculation across the whole system is done in a single place, by fixed rules. That's why the figure is stable — it isn't the AI recalculating and happening to land in the same spot each time; it's the same rule producing the same result. **One method to rely on, and one place to check.**`,
       },
     ],
   },
