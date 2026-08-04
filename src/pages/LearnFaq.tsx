@@ -10,9 +10,15 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import owlMascot from "@/assets/owl-mascot.png";
+import evidencePackImage from "@/assets/evidence-pack-example.png.asset.json";
 
 
-type FAQ = { q: string; a: string; mostAsked?: boolean };
+type FAQ = {
+  q: string;
+  a: string;
+  mostAsked?: boolean;
+  image?: { src: string; alt: string; label: string; caption: string };
+};
 type Category = { name: string; items: FAQ[] };
 
 const CATEGORIES: Category[] = [
@@ -130,6 +136,23 @@ You never have to manage a committee, repeat yourself to different parts of the 
   {
     name: "Accuracy you can trust",
     items: [
+      {
+        q: "When Hobson gives me an answer, how do I check it's right?",
+        a: `You don't have to take it on trust — every answer comes with an evidence pack.
+
+The pack shows the exact wording behind each fact: the document, the page, the clause, and the text itself, quoted verbatim rather than paraphrased. Nothing is summarised in the extracts, so what you're reading is what the lease actually says. Verification takes seconds, not an afternoon in a filing cabinet.
+
+This matters because of when the evidence is captured. Hobson doesn't produce an answer and then go looking for a citation to support it — the figure and the wording it came from are recorded together at the moment the document is read, and stored as one thing. A reference can't be composed after the fact to justify a number, which is precisely how AI citations go wrong elsewhere.
+
+Where a lease doesn't settle the question, the pack says so. Below the answer, Hobson sets out what isn't established and why — a date the lease never fixes, a figure that depends on something not yet recorded. A known gap is a real answer; a confident guess isn't.`,
+        image: {
+          src: evidencePackImage.url,
+          alt: "Illustrative example of a Hobson evidence pack, showing an answer supported by three verbatim extracts from a lease, each with page number, clause reference and a highlighted source page",
+          label: "Illustrative example",
+          caption:
+            "This answer took three passes through the lease. The rent clause points to the Second Schedule; the Schedule defines the figure; a later part sets out how it's paid. Hobson follows the thread to the printed value and shows you every step — in a long lease, the answer is almost never on the page you started from.",
+        },
+      },
       {
         q: "How does Hobson stay accurate across a big portfolio without mixing units up?",
         a: `By answering your question in one exact place, rather than reaching across everything at once.
@@ -449,6 +472,28 @@ const LearnFaq = () => {
                                 {item.a}
                               </ReactMarkdown>
                             </div>
+                            {item.image && (
+                              <figure className="mt-8 mb-2">
+                                <div
+                                  className="text-right text-[12px] mb-2"
+                                  style={{ color: "#8A8378" }}
+                                >
+                                  {item.image.label}
+                                </div>
+                                <img
+                                  src={item.image.src}
+                                  alt={item.image.alt}
+                                  className="w-full h-auto rounded-2xl block"
+                                  style={{ border: "1px solid #E8E1D4" }}
+                                />
+                                <figcaption
+                                  className="mt-2 text-[12.5px] leading-relaxed"
+                                  style={{ color: "#8A8378" }}
+                                >
+                                  {item.image.caption}
+                                </figcaption>
+                              </figure>
+                            )}
                           </AccordionContent>
                         </AccordionItem>
                       );
