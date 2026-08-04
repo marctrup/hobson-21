@@ -327,14 +327,6 @@ Some things clearly belong to the place rather than to any one space inside it: 
 
 Hobson then reads at the level a document actually sits, and nothing later moves it because the shape of the data appears to suggest otherwise. So you're never told a unit is missing its fire risk assessment when the assessment exists perfectly well one level up.`,
       },
-      {
-        q: "Where does a lease sit — on the unit or on the group?",
-        a: `On one or the other, never both — and which one follows the structure you've set, not anything the lease itself says. A lease records an address; it doesn't tell anyone how that address is divided.
-
-Where each space has its own tenancy, each unit holds its own lease and the group holds none. Where a set of units is let as a whole, the lease sits at the group and no unit beneath it holds its own. Where a single space stands on its own, the lease sits on that unit.
-
-That single fact changes how everything above reads. Add up unit rents where the lease is held a level up and you'd get nothing, or a figure counted twice. Hobson reads the level the lease actually sits at rather than inferring it from the shape of the data.`,
-      },
     ],
   },
   {
