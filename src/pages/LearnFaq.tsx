@@ -247,15 +247,15 @@ Two things follow. Nothing Hobson proposes is taken on trust: every claim traces
       },
       {
         q: "How does Hobson know when to follow a fixed rule and when to use judgment?",
-        a: `It comes down to three kinds of work — and Hobson treats each differently, which is exactly what tells you when it's following a fixed rule and when it's using judgment.
+        a: `It comes down to three kinds of work, and Hobson treats each differently.
 
-**Answering** applies fixed rules to your recorded documents. Ask the same thing tomorrow with nothing changed and the answer is identical — every time. It never guesses, and if something it needs is missing, it says so and stops.
+**Answering** reports what your documents establish. The figures come from fixed rules, so ask the same thing tomorrow with nothing changed and the rent is the same rent, worked out the same way. Hobson still uses AI to understand what you're asking and to write the reply clearly — but never to decide what's true. It doesn't guess, and if something it needs is missing, it says so and stops.
 
 **Recording** changes the record — and only ever after a person decides. It never erases: the old position is kept, bounded by date, so you can always ask what was true at an earlier point and get a real answer.
 
 **Noticing and proposing** is where Hobson behaves like a co-worker — researching what the law requires, spotting what's missing, judging which few things out of ninety actually matter, and recommending what to do next.
 
-The first two are reliable and predictable; the third is perceptive and proactive; and Hobson uses each for exactly what it's good at.`,
+The first two are reliable and predictable about the facts; the third is perceptive and proactive. Hobson uses each for exactly what it's good at — and none of the three changes anything or acts without you.`,
       },
       {
         q: "Will Hobson tell me things I didn't think to ask?",
