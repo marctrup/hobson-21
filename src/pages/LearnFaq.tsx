@@ -265,6 +265,16 @@ A good co-worker doesn't just answer the narrow question; they mention the thing
 
 Two limits keep this useful rather than noisy. It only raises something that genuinely matters — it won't lecture, speculate, or invent a worry to look helpful. And it only mentions what your documents actually establish; it never manufactures a risk or a fact that isn't there. So when Hobson flags something, it's worth reading — and when your answer is simply the answer, that's all you get.`,
       },
+      {
+        q: "Can a document change how my portfolio is organised?",
+        a: `No. You decide the structure; documents attach to it. Never the other way round.
+
+That's not a technical preference — it's how property works. The space exists first and the tenant arrives afterwards. Someone builds a floor, someone decides where the demise line falls, and only then is a lease signed over a space that was already there. A lease is evidence about a space; it isn't what brings the space into being.
+
+So the rule holds in both directions. One lease covering units at three different addresses doesn't fuse them into one — they're still in three places, and place is what makes a group. And sixteen units with sixteen separate leases in one place are still one group, not sixteen.
+
+The test is simple: take the document away and ask whether the group still exists. Surrender the lease tomorrow and Stanley House is still Stanley House, its four floors still one place. Your portfolio should describe your real property, and it should change when the property changes or when you realise you've described it wrongly — not because a PDF arrived.`,
+      },
     ],
   },
 
@@ -282,6 +292,44 @@ Above it, a **Property** groups related units — the floors of a building, the 
 And you can ask at whichever level you need. Ask about a **single unit** and you get the detail — who the tenant is, what rent is payable, when the lease expires, whether there's a break clause or deposit. Ask about a **Property** and you get the building's picture — its rent roll, which units are vacant, which leases expire. Ask across the whole **Portfolio** and you get the estate view — total contracted rent, occupancy rate, which reviews are due this year.
 
 Because these are all the same information seen at different heights, the portfolio totals are never separately kept figures that can drift out of date — they're built from the units beneath them, so the headline always reconciles with the detail underneath.`,
+      },
+      {
+        q: `Why doesn't Hobson use the word "property"?`,
+        a: `Because it means two different things, and both are correct. Someone with a single warehouse says "my property" and means one space. Someone with a twelve-suite office block says it and means the whole set. Ordinary usage, both of them.
+
+So Hobson can't use the word as the name of either level without being wrong half the time. Underneath, it keeps two things separate and unambiguous: a **unit**, meaning one occupiable space, and a **unit group**, meaning a set of units in the same place.
+
+None of that needs enforcing when you talk to it. Ask about the property at Stanley House and you'll get an answer about Stanley House. The precision matters in the data, not in how you speak.`,
+      },
+      {
+        q: "What makes a set of units one group?",
+        a: `Being in the same place. That's the whole definition — not a shared lease, not a shared landlord, not a shared tenant. Those things are often true of a group's units, and none of them is what makes the group.
+
+This matters more than it sounds. The same address gets written a dozen different ways across a stack of documents, and matching two spellings proves nothing. Resolving an address to an actual location is what makes two records provably the same place — and that's what lets a document attach to the right thing rather than to something that merely reads similarly.`,
+      },
+      {
+        q: "Can two separate groups sit at the same address?",
+        a: `Yes, and more often than people expect. Three unrelated groups can share one location — twenty units between them, one address on the map.
+
+Hobson treats them as genuinely unrelated, because they are. One group's fire risk assessment says nothing whatsoever about another's, and Hobson won't report a document from one as though it covered the other. They share a point on a map and nothing else.`,
+      },
+      {
+        q: "Some of my documents cover more than one unit. Where do those sit?",
+        a: `Wherever you place them, at whichever level they belong to.
+
+Some things are about a place rather than about one space inside it — the buildings insurance, the fire risk assessment, the asbestos register, the lift inspection, the service charge budget, the site plan. Where your space is divided into several units, those attach to the group rather than to any unit within it. And none of them is the sum of anything held below: a buildings insurance policy isn't four floor-level policies added together.
+
+You decide the level when the document is recorded — is this about the place, or about the occupation of one space in it? That placement is then a stored fact. Nothing later moves a document between levels because the data appears to suggest it belongs elsewhere.
+
+Hobson reads at the level a document actually sits. So you're never told a unit is missing its fire risk assessment when the assessment exists perfectly well one level up.`,
+      },
+      {
+        q: "Where does a lease sit — on the unit or on the group?",
+        a: `On one or the other, never both — and which one follows the structure you've set, not anything the lease itself says. A lease records an address; it doesn't tell anyone how that address is divided.
+
+Where each space has its own tenancy, each unit holds its own lease and the group holds none. Where a set of units is let as a whole, the lease sits at the group and no unit beneath it holds its own. Where a single space stands on its own, the lease sits on that unit.
+
+That single fact changes how everything above reads. Add up unit rents where the lease is held a level up and you'd get nothing, or a figure counted twice. Hobson reads the level the lease actually sits at rather than inferring it from the shape of the data.`,
       },
     ],
   },
