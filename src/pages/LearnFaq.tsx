@@ -1,4 +1,3 @@
-import { useMemo, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import { Helmet } from "react-helmet-async";
 import { GlobalHeader } from "@/components/GlobalHeader";
@@ -289,13 +288,7 @@ That's the difference between an answer you can act on and one that only looks t
 ];
 
 const LearnFaq = () => {
-  const [activeCategory, setActiveCategory] = useState<string>("All");
-
-  const filtered = useMemo(() => {
-    return CATEGORIES.filter(
-      (cat) => activeCategory === "All" || activeCategory === cat.name
-    );
-  }, [activeCategory]);
+  const filtered = CATEGORIES;
 
   const noResults = filtered.length === 0;
 
@@ -368,38 +361,6 @@ const LearnFaq = () => {
           </div>
         </section>
 
-        <section>
-
-
-          {/* Sticky category chips */}
-          <div
-            className="sticky top-16 z-30 backdrop-blur-md"
-            style={{ backgroundColor: "rgba(252,250,247,0.85)", borderTop: "1px solid #F7EDDC", borderBottom: "1px solid #F7EDDC" }}
-          >
-            <div className="mx-auto max-w-4xl px-6 py-4">
-              <div className="flex flex-wrap justify-center gap-2.5">
-                {["All", ...CATEGORIES.map((c) => c.name)].map((label) => {
-                  const active = activeCategory === label;
-                  return (
-                    <button
-                      key={label}
-                      onClick={() => setActiveCategory(label)}
-                      aria-pressed={active}
-                      className="px-5 py-2 rounded-full text-sm font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
-                      style={
-                        active
-                          ? { backgroundColor: "#2D2D2D", color: "#FFFFFF", border: "1px solid #2D2D2D" }
-                          : { backgroundColor: "#F1EBDE", color: "#2D2D2D", border: "1px solid #E8E1D4" }
-                      }
-                    >
-                      {label}
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-          </div>
-        </section>
 
         {/* FAQ list */}
         <section className="mx-auto max-w-3xl px-6 py-16">
