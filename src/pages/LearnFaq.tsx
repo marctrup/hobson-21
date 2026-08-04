@@ -335,7 +335,7 @@ Second, which level it sits at — a single unit, or the group of units it belon
 
 Third, what kind of document it is. Some create a tenancy — a lease, a licence, a tenancy agreement. Some modify a tenancy already in existence — deeds of variation, assignments, licences to alter, rent review memoranda, notices. And some are about the asset itself rather than any tenancy — the EPC, the fire risk assessment, the valuation, the buildings insurance.
 
-That third one decides how a document is used. Anything that modifies a tenancy is linked to the tenancy it modifies and applied in the order things happened, so the record shows where a lease stands today rather than where it started. Asset documents stand on their own, outside any tenancy's history — and none is the sum of anything held below: a buildings insurance policy isn't four floor-level policies added together.`,
+That third one decides how a document is used. Anything that modifies a tenancy is linked to the tenancy it modifies and applied in the order things happened, so the record shows where a lease stands today rather than where it started. Asset documents sit outside any tenancy, but they're not static either — Hobson tracks their dates, so it knows which certificate is the current one, which has been superseded by a later version, and which has expired or is about to.`,
       },
 
       {
