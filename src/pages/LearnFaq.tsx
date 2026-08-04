@@ -12,7 +12,12 @@ import {
 import owlMascot from "@/assets/owl-mascot.png";
 
 
-type FAQ = { q: string; a: string; mostAsked?: boolean };
+type FAQ = {
+  q: string;
+  a: string;
+  mostAsked?: boolean;
+  image?: { src: string; alt: string; label: string; caption: string };
+};
 type Category = { name: string; items: FAQ[] };
 
 const CATEGORIES: Category[] = [
