@@ -274,6 +274,7 @@ That's not a technical preference — it's how property works. The space exists 
 So the rule holds in both directions. One lease covering units at three different addresses doesn't fuse them into one — they're still in three places, and place is what makes a group. And sixteen units with sixteen separate leases in one place are still one group, not sixteen.
 
 The test is simple: take the document away and ask whether the group still exists. Surrender the lease tomorrow and Stanley House is still Stanley House, its four floors still one place. Your portfolio should describe your real property, and it should change when the property changes or when you realise you've described it wrongly — not because a PDF arrived.`,
+      },
     ],
   },
 
