@@ -285,9 +285,9 @@ The test is simple: take the document away and ask whether the group still exist
     items: [
       {
         q: "Why does Hobson organise everything around the unit?",
-        a: `Because a unit is where occupation actually happens. A **unit** is a single occupiable space — an office suite, a shop, a warehouse, a flat, a parking space — and it's where most of the detail lives: who the tenant is, what rent is payable, when the lease ends, whether there's a break clause or a deposit.
+        a: `Because a unit is the smallest thing occupation can attach to. A **unit** is a single occupiable space — an office suite, a shop, a warehouse, a flat, a parking space. Above it sits the **unit group**: a set of units in the same place, and location is the only thing that makes them one group.
 
-Above it sits the **unit group**: a set of units in the same place. It isn't just a container. Plenty of things belong to a place rather than to any one space inside it — the buildings insurance, the fire risk assessment, the service charge budget, the site plan — and they exist at the group and nowhere else. A lease or other right to occupy can sit here too, where a set of units is let as a whole.
+Both levels are real, and both hold documents. A right to occupy — a lease, a licence, a tenancy — sits at one level or the other, never both, depending on how your space is divided and let. Things about the place rather than about one space inside it, like the buildings insurance or the fire risk assessment, sit at the group. The level a document belongs to isn't something Hobson works out from the document; it follows the structure you've set.
 
 At the top is your **portfolio**, the whole estate under management. Unlike the two levels below it, it isn't somewhere you can stand — it's a reporting view: how many units are vacant, which leases expire this year, what the total contracted rent is, which reviews fall due in the next twelve months.
 
