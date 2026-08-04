@@ -64,7 +64,7 @@ And the model isn't the hard part — frontier models are becoming a commodity a
 
 Hobson removes that where it matters most. Once a document is in the record, every figure, date and calculation is produced by fixed rules rather than by the model, so the same question gives the same answer every time, and you can check how it was reached.
 
-The one place we do use a model's judgement is reading documents, because that's what models are genuinely good at. So that's the one place we measure stability directly — reading the same lease repeatedly and checking that every field comes back identical.`,
+Reading documents is where a model's judgement genuinely earns its place, so that's where we measure stability most closely — reading the same lease repeatedly and checking every field comes back identical. Everything downstream of the reading is checked too, but the figures themselves come from fixed rules, not from the model's recollection.`,
       },
       {
         q: "Doesn't all software get tested? What's different about AI?",
