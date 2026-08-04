@@ -316,14 +316,16 @@ This matters more than it sounds. The same address gets written a dozen differen
 Hobson treats them as genuinely unrelated, because they are. One group's fire risk assessment says nothing whatsoever about another's, and Hobson won't report a document from one as though it covered the other. They share a point on a map and nothing else.`,
       },
       {
-        q: "Some of my documents cover more than one unit. Where do those sit?",
-        a: `Wherever you place them, at whichever level they belong to.
+        q: "How does Hobson know where a document belongs?",
+        a: `In two steps, and neither is a guess.
 
-Some things are about a place rather than about one space inside it — the buildings insurance, the fire risk assessment, the asbestos register, the lift inspection, the service charge budget, the site plan. Where your space is divided into several units, those attach to the group rather than to any unit within it. And none of them is the sum of anything held below: a buildings insurance policy isn't four floor-level policies added together.
+First the place. A document names an address, and that address resolves to an actual location. That matters more than it sounds: the same building gets written a dozen different ways across a stack of paperwork, and matching two spellings proves nothing. Resolving to a location is what makes two records provably the same place — so a document lands where it belongs rather than somewhere that merely reads similarly.
 
-You decide the level when the document is recorded — is this about the place, or about the occupation of one space in it? That placement is then a stored fact. Nothing later moves a document between levels because the data appears to suggest it belongs elsewhere.
+Then the level. Once it's at the right location, whether the document sits at a unit or at the group is your decision, recorded as a stored fact. A lease describes what's demised to that tenant — the extent of what they hold, and nothing more. It doesn't describe how the place as a whole is divided, and that's what determines the level.
 
-Hobson reads at the level a document actually sits. So you're never told a unit is missing its fire risk assessment when the assessment exists perfectly well one level up.`,
+Some things clearly belong to the place rather than to any one space inside it: the buildings insurance, the fire risk assessment, the asbestos register, the site plan. None is the sum of anything held below — a buildings insurance policy isn't four floor-level policies added together.
+
+Hobson then reads at the level a document actually sits, and nothing later moves it because the shape of the data appears to suggest otherwise. So you're never told a unit is missing its fire risk assessment when the assessment exists perfectly well one level up.`,
       },
       {
         q: "Where does a lease sit — on the unit or on the group?",
