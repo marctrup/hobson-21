@@ -69,16 +69,6 @@ Reading your documents is the one job where AI genuinely earns its place — but
 Two other parts of answering your question use AI too — understanding what you're asking and where to look for it, and writing the reply itself. Neither of those makes up figures, but neither is perfectly predictable, so we don't assume they're right. We check each one: did it go to the right unit, open the right documents, and is every sentence in the answer backed by something the lease actually says.`,
       },
       {
-        q: "Doesn't all software get tested? What's different about AI?",
-        a: `All serious software is tested. What changes with AI is what a test can actually prove.
-
-Ordinary software is predictable — the same input gives the same output, every time. So a test is a straight pass or fail, and once it passes, it stays passed. And when something does break, it usually breaks loudly: an error, a crash, a blank cell. You find out.
-
-AI isn't predictable in that way, so one test proves nothing. You have to run the same document many times over and measure how often it's right. The result isn't pass or fail — it's a score. There's no version that simply "works" and then stays working.
-
-That's why the testing has to be a different shape: a library of real leases where property experts have established the correct answer for every detail, re-run in full whenever anything changes, scored, and compared against the version before it. Same discipline as any well-built software. Different instrument, because we're measuring something that can be right most of the time rather than something that either works or doesn't.`,
-      },
-      {
 
 
         q: "Is Hobson ever afraid to say it doesn't know?",
@@ -89,6 +79,16 @@ Most AI tools are built to always produce an answer, so when they don't know som
 That includes telling you when something simply isn't in your documents at all — "the lease records no rent deposit" is a real, checked finding, stated plainly, not an apology. And where a fact is missing, Hobson explains what it would need to get you the answer, rather than pretending it already has it.
 
 Its confidence comes from **honesty, not from always having a number** — and an answer you can trust is worth far more than one that only sounds sure.`,
+      },
+      {
+        q: "Doesn't all software get tested? What's different about AI?",
+        a: `All serious software is tested. What changes with AI is what a test can actually prove.
+
+Ordinary software is predictable — the same input gives the same output, every time. So a test is a straight pass or fail, and once it passes, it stays passed. And when something does break, it usually breaks loudly: an error, a crash, a blank cell. You find out.
+
+AI isn't predictable in that way, so one test proves nothing. You have to run the same document many times over and measure how often it's right. The result isn't pass or fail — it's a score. There's no version that simply "works" and then stays working.
+
+That's why the testing has to be a different shape: a library of real leases where property experts have established the correct answer for every detail, re-run in full whenever anything changes, scored, and compared against the version before it. Same discipline as any well-built software. Different instrument, because we're measuring something that can be right most of the time rather than something that either works or doesn't.`,
       },
     ],
   },
@@ -175,22 +175,6 @@ Where a lease doesn't settle the question, the pack says so. Below the answer, H
         },
       },
       {
-        q: "How does Hobson stay accurate across a big portfolio without mixing units up?",
-        a: `By answering your question in one exact place, rather than reaching across everything at once.
-
-Ask "what's the rent?" across hundreds of units and there's no honest single answer — rent of *which* unit? A system could reach across the whole lot and hand you one figure anyway, but to do that it has to quietly pick a winner from hundreds of candidates. That's a guess — exactly what you don't want behind a number you're about to act on. So Hobson first works out which unit you mean, goes there, and answers from that one lease, where there's only ever one correct figure, provably from one document. And it shows you where it went, because with a big estate the real danger isn't a wrong number — it's a right number attached to the wrong unit.
-
-Working in one place also makes made-up answers far less likely. Mistakes and invented figures both thrive on noise: the amount "£50,000" might appear in twenty different leases, and an AI under pressure to answer can grab the wrong one. With only one unit's documents in play, that whole class of mix-up disappears — there's only one rent in the room.
-
-And that's only the first safeguard. On top of it, Hobson backs every figure with wording that actually contains it, reports silence as silence rather than guessing, and produces every calculated number in one place. Getting you to the right unit makes the answer far more likely to be correct; the other checks catch anything that slips through.`,
-      },
-      {
-        q: "How do you know Hobson's answers are accurate — and not just confident-sounding?",
-        a: `Because we measure it rather than assume it. AI that sounds sure of itself is easy to build; AI you can actually trust has to be tested. So Hobson's document-reading is checked against a library of real leases that property experts have gone through by hand, line by line, to establish the correct answer for every detail. Whenever we change how Hobson reads documents, we run it back over that expert-verified set and measure how closely it matches.
-
-That turns accuracy into something we can see and improve, not a claim we simply hope is true. And because the test leases run from a simple residential tenancy all the way to long, complex commercial leases with formula-driven rents, we're proving Hobson on the hard cases, not just the easy ones.`,
-      },
-      {
         q: "If Hobson got something wrong, would I notice?",
         a: `Not necessarily — and that's exactly why we don't rely on spot-checking.
 
@@ -201,35 +185,22 @@ So Hobson is built to distrust its own first draft. Every figure it reports has 
 You shouldn't have to be the safety net. The checking happens before an answer reaches you — and the evidence comes with it, so you can confirm anything that matters.`,
       },
       {
-        q: "What exactly do you test — just the document reading?",
-        a: `The whole journey. Reading a lease correctly is one step, and an answer can still come out wrong if a later one goes astray — the wrong unit identified, an out-of-date document pulled, the wrong tool used, a calculation run on the right figures in the wrong order.
-
-So each step is checked in its own right: was the right document retrieved, was the right tool chosen, is every statement actually supported by a source, was the calculation produced by the calculation engine rather than improvised by the model. A step can be perfectly sound and still give you a wrong answer if the one before it failed.`,
-      },
-      {
-        q: "If an answer is wrong, can you find out why?",
-        a: `Yes — down to the exact step. Every answer Hobson gives is recorded as it happens: which documents it read, which tools it ran, how it reached the result.
-
-Without that record, all anyone knows is "the answer was wrong," and fixing it is guesswork. With it, we can see whether the wrong document was pulled, the wrong tool was used, a calculation was off, or the final wording added something the documents didn't support — and fix that precise step.
-
-Anything your team flags becomes a permanent test case, so the same mistake can't quietly return later. Real problems from live use are the most valuable tests there are.`,
-      },
-      {
-        q: "Hobson keeps improving — how do you stop an update from breaking something that already worked?",
-        a: `Because no change ships without being measured against everything that already works.
-
-Every improvement — a new way of reading documents, a change to a tool — has to run the full test library first, and is compared question by question with the current version, across accuracy, sourcing, completeness, cost and speed. Anything that got worse has to be explained and accepted before it goes live, not discovered by you three weeks later.
-
-So Hobson gets sharper over time without the "fixed one thing, broke another" problem that catches out software which isn't tested this way.`,
-      },
-
-      {
         q: "When Hobson works out a figure, can I see how it reached it?",
         a: `Always. Any number Hobson calculates for you — a reviewed rent, a deadline, a notice date — never arrives on its own. Its workings come with it: the figures it started from and when they applied, the rules it followed, and any cap or floor that changed the result, set out in order.
 
 So you're never asked to take a calculated number on trust. You can see exactly how it was reached and check it yourself — and if the workings can't be shown for some reason, Hobson tells you that rather than handing you a bare figure.
 
 There's one more safeguard behind this: every calculation across the whole system is done in a single place, by fixed rules. That's why the figure is stable — it isn't the AI recalculating and happening to land in the same spot each time; it's the same rule producing the same result. **One method to rely on, and one place to check.**`,
+      },
+      {
+        q: "How does Hobson stay accurate across a big portfolio without mixing units up?",
+        a: `By answering your question in one exact place, rather than reaching across everything at once.
+
+Ask "what's the rent?" across hundreds of units and there's no honest single answer — rent of *which* unit? A system could reach across the whole lot and hand you one figure anyway, but to do that it has to quietly pick a winner from hundreds of candidates. That's a guess — exactly what you don't want behind a number you're about to act on. So Hobson first works out which unit you mean, goes there, and answers from that one lease, where there's only ever one correct figure, provably from one document. And it shows you where it went, because with a big estate the real danger isn't a wrong number — it's a right number attached to the wrong unit.
+
+Working in one place also makes made-up answers far less likely. Mistakes and invented figures both thrive on noise: the amount "£50,000" might appear in twenty different leases, and an AI under pressure to answer can grab the wrong one. With only one unit's documents in play, that whole class of mix-up disappears — there's only one rent in the room.
+
+And that's only the first safeguard. On top of it, Hobson backs every figure with wording that actually contains it, reports silence as silence rather than guessing, and produces every calculated number in one place. Getting you to the right unit makes the answer far more likely to be correct; the other checks catch anything that slips through.`,
       },
     ],
   },
@@ -390,6 +361,40 @@ Property documents disagree more often than you'd expect: a lease sets one break
 Instead it sets out both positions plainly, each with the document and wording it came from, and tells you the documents conflict. Where one position is the safer one to rely on until the matter is settled, it will say so — but it leaves both facts in full view, so you can see exactly what you're deciding between.
 
 That's the difference between an answer you can act on and one that only looks tidy.`,
+      },
+    ],
+  },
+
+  {
+    name: "How we prove it",
+    items: [
+      {
+        q: "How do you know Hobson's answers are accurate — and not just confident-sounding?",
+        a: `Because we measure it rather than assume it. AI that sounds sure of itself is easy to build; AI you can actually trust has to be tested. So Hobson's document-reading is checked against a library of real leases that property experts have gone through by hand, line by line, to establish the correct answer for every detail. Whenever we change how Hobson reads documents, we run it back over that expert-verified set and measure how closely it matches.
+
+That turns accuracy into something we can see and improve, not a claim we simply hope is true. And because the test leases run from a simple residential tenancy all the way to long, complex commercial leases with formula-driven rents, we're proving Hobson on the hard cases, not just the easy ones.`,
+      },
+      {
+        q: "What exactly do you test — just the document reading?",
+        a: `The whole journey. Reading a lease correctly is one step, and an answer can still come out wrong if a later one goes astray — the wrong unit identified, an out-of-date document pulled, the wrong tool used, a calculation run on the right figures in the wrong order.
+
+So each step is checked in its own right: was the right document retrieved, was the right tool chosen, is every statement actually supported by a source, was the calculation produced by the calculation engine rather than improvised by the model. A step can be perfectly sound and still give you a wrong answer if the one before it failed.`,
+      },
+      {
+        q: "If an answer is wrong, can you find out why?",
+        a: `Yes — down to the exact step. Every answer Hobson gives is recorded as it happens: which documents it read, which tools it ran, how it reached the result.
+
+Without that record, all anyone knows is "the answer was wrong," and fixing it is guesswork. With it, we can see whether the wrong document was pulled, the wrong tool was used, a calculation was off, or the final wording added something the documents didn't support — and fix that precise step.
+
+Anything your team flags becomes a permanent test case, so the same mistake can't quietly return later. Real problems from live use are the most valuable tests there are.`,
+      },
+      {
+        q: "Hobson keeps improving — how do you stop an update from breaking something that already worked?",
+        a: `Because no change ships without being measured against everything that already works.
+
+Every improvement — a new way of reading documents, a change to a tool — has to run the full test library first, and is compared question by question with the current version, across accuracy, sourcing, completeness, cost and speed. Anything that got worse has to be explained and accepted before it goes live, not discovered by you three weeks later.
+
+So Hobson gets sharper over time without the "fixed one thing, broke another" problem that catches out software which isn't tested this way.`,
       },
     ],
   },
