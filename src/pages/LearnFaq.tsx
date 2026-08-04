@@ -72,15 +72,31 @@ Its confidence comes from **honesty, not from always having a number** — and a
     items: [
       {
         q: "Is Hobson built for my industry?",
-        a: `Yes — because Hobson is built around documents rather than industries. A retail group, a restaurant chain, a law firm and a single-building owner all hold the same document types: leases, deeds of variation, side letters, licences, guarantees, compliance certificates and notices. Those documents create the same obligations wherever they sit — key dates, repairing standards, notice requirements, what is recoverable. What differs between industries is the volume and the context, not the paperwork. The intelligence is in understanding the documents, and the documents are the same everywhere.`,
+        a: `Hobson is built around documents, not industries — and the documents are the same everywhere.
+
+A restaurant group's operations director and a law firm's facilities director are looking at the same clause. Both leases say "full repairing and insuring." Both create the same obligation, the same cost at exit, the same argument with a landlord if it's missed. The two of them sit in different buildings with different job titles and read the identical provision.
+
+That holds across every document type that matters: leases, deeds of variation, side letters, licences to assign or alter, guarantees, compliance certificates and notices. A retail group with three hundred stores and a single-building owner hold the same paperwork. What changes between industries is the volume and the context — not what the documents say or what they oblige you to do.
+
+So the question isn't whether Hobson knows your industry. It's whether it can read your documents, and those it already knows.`,
       },
       {
         q: "Is Hobson only for large portfolios?",
-        a: `No. Ten properties and five hundred share the same document types — the larger portfolio simply has more of them. What changes with size is who is responsible. In a smaller business, one person covers the lease, the certificates, the rent reviews and the notices, and needs Hobson to be a complete property expert across all of it. In a larger business, finance, legal, operations and workplace teams each own a slice and need Hobson to know their area in real depth. The same learning model serves both.`,
+        a: `No — ten properties and five hundred are the same problem at different volumes.
+
+What actually changes with size is who's responsible. In a smaller business, one person covers everything: the lease, the gas safety certificate, the rent review window, the break notice. They need Hobson to be a complete property expert — one that's read every document and can answer anything, without them working out which file to open first.
+
+In a larger business, those same jobs are split. Finance owns the rent roll and the service charge reconciliation. Legal owns the notices and assignments. Operations owns the certificates and repair obligations. Each one needs Hobson to know their corner in precise detail.
+
+The document library is identical in both cases. The smaller the team, the more Hobson has to cover; the larger the team, the deeper it has to go. Both are served by the same learning model — because a Hobson that has already learned the portfolio can answer either kind of question, while one that searches on demand can only find what you already knew to look for.`,
       },
       {
         q: "I work in finance, legal or operations — not property. Is Hobson for me?",
-        a: `Yes. Because Hobson has already learned the whole document library, any team can ask about their own area without first working out which file holds the answer. Finance asks about review mechanisms, rent-free periods and recoverable service charge items. Legal asks about notice requirements, variations and guarantor chains. Operations asks about repairing standards, alteration consents and certificate expiries. The same underlying knowledge, answered to whatever level of detail the question needs.`,
+        a: `Yes — and you shouldn't need to know which document holds your answer.
+
+Ask as a finance analyst: which stores have RPI-linked reviews rather than open market, what's still inside a rent-free period, which service charge items this lease actually makes recoverable. Ask as a solicitor: what form must this notice take, who is the correct addressee, which guarantors survived the last assignment. Ask as an operations manager: does this site's lease require landlord consent before the fit-out, what's the repairing standard, which EPCs expire this quarter.
+
+Same document library, three completely different questions — answered from what Hobson has already extracted, with the clause cited for each. You don't need to be the property person. You need the part of the property that's yours.`,
       },
     ],
   },
