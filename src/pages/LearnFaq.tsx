@@ -289,13 +289,7 @@ That's the difference between an answer you can act on and one that only looks t
 ];
 
 const LearnFaq = () => {
-  const [activeCategory, setActiveCategory] = useState<string>("All");
-
-  const filtered = useMemo(() => {
-    return CATEGORIES.filter(
-      (cat) => activeCategory === "All" || activeCategory === cat.name
-    );
-  }, [activeCategory]);
+  const filtered = CATEGORIES;
 
   const noResults = filtered.length === 0;
 
