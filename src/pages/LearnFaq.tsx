@@ -64,7 +64,7 @@ And the model isn't the hard part — frontier models are becoming a commodity a
 
 Hobson removes that where it matters most. Once a document is in the record, every figure, date and calculation is produced by fixed rules rather than by the model, so the same question gives the same answer every time, and you can check how it was reached.
 
-Reading documents is where a model's judgement genuinely earns its place, so that's where we measure stability most closely — reading the same lease repeatedly and checking every field comes back identical. Everything downstream of the reading is checked too, but the figures themselves come from fixed rules, not from the model's recollection.`,
+Reading documents is where a model is genuinely useful — but its job there is to transcribe, not to interpret. It captures what a clause says, with the wording it came from, and records "not stated" rather than filling a gap from what it's seen elsewhere. Because that reading is the one step a model performs, it's the step we measure most closely: the same lease read repeatedly, every field checked to come back identical.`,
       },
       {
         q: "Doesn't all software get tested? What's different about AI?",
