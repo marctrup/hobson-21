@@ -68,6 +68,25 @@ Its confidence comes from **honesty, not from always having a number** — and a
   },
 
   {
+    name: "Who Hobson is for",
+    items: [
+      {
+        q: "Is Hobson built for my industry?",
+        a: `Yes — because Hobson is built around documents rather than industries. A retail group, a restaurant chain, a law firm and a single-building owner all hold the same document types: leases, deeds of variation, side letters, licences, guarantees, compliance certificates and notices. Those documents create the same obligations wherever they sit — key dates, repairing standards, notice requirements, what is recoverable. What differs between industries is the volume and the context, not the paperwork. The intelligence is in understanding the documents, and the documents are the same everywhere.`,
+      },
+      {
+        q: "Is Hobson only for large portfolios?",
+        a: `No. Ten properties and five hundred share the same document types — the larger portfolio simply has more of them. What changes with size is who is responsible. In a smaller business, one person covers the lease, the certificates, the rent reviews and the notices, and needs Hobson to be a complete property expert across all of it. In a larger business, finance, legal, operations and workplace teams each own a slice and need Hobson to know their area in real depth. The same learning model serves both.`,
+      },
+      {
+        q: "I work in finance, legal or operations — not property. Is Hobson for me?",
+        a: `Yes. Because Hobson has already learned the whole document library, any team can ask about their own area without first working out which file holds the answer. Finance asks about review mechanisms, rent-free periods and recoverable service charge items. Legal asks about notice requirements, variations and guarantor chains. Operations asks about repairing standards, alteration consents and certificate expiries. The same underlying knowledge, answered to whatever level of detail the question needs.`,
+      },
+    ],
+  },
+
+
+  {
     name: "Working with Hobson",
     items: [
       {
