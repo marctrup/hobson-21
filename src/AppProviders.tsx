@@ -21,7 +21,7 @@ export function AppProviders() {
   return (
     <HelmetProvider>
       <BrowserRouter>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+        <ThemeProvider attribute="class" defaultTheme="light" forcedTheme="light" enableSystem={false}>
           <QueryClientProvider client={queryClient}>
             <AuthProvider>
                 <ToastPortal />
