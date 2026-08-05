@@ -187,6 +187,12 @@ All colors MUST be HSL.
 }
 
 @layer base {
+  /* Editorial Stationery is a light-only identity. Force native UI (form
+     controls, scrollbars, autofill) to render light regardless of OS setting. */
+  :root {
+    color-scheme: light;
+  }
+
   * {
     @apply border-border;
   }
@@ -194,6 +200,7 @@ All colors MUST be HSL.
   body {
     @apply bg-background text-foreground;
   }
+
 
   /* Skip navigation link for accessibility */
   .sr-only {
