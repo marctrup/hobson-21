@@ -110,22 +110,6 @@ const CaseStudies = () => {
         <section className="mx-auto max-w-5xl px-6 pt-20 pb-24">
           <div className="grid gap-6 md:grid-cols-2">
             {CARDS.map((card, i) => {
-              const statusPill = card.live ? (
-                <span
-                  className="inline-flex items-center rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em]"
-                  style={{ backgroundColor: LAVENDER_BG, color: BRASS, border: `1px solid ${LAVENDER_BORDER}` }}
-                >
-                  {card.status}
-                </span>
-              ) : (
-                <span
-                  className="inline-flex items-center rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em]"
-                  style={{ backgroundColor: "#F1EBDE", color: "#6E6A62", border: "1px dashed #D8CDB6" }}
-                >
-                  {card.status}
-                </span>
-              );
-
               const inner = (
                 <div
                   className={[
@@ -140,23 +124,20 @@ const CaseStudies = () => {
                       : { backgroundColor: "#F7EDDC", border: "1px dashed #E6D2AE" }
                   }
                 >
-                  <div className="flex items-start justify-between gap-3">
-                    <div className="flex flex-wrap gap-1.5">
-                      {card.categories.map((c) => (
-                        <span
-                          key={c}
-                          className="inline-flex items-center rounded-full px-2.5 py-1 text-[10px] font-medium uppercase tracking-[0.12em]"
-                          style={
-                            card.live
-                              ? { backgroundColor: PAPER, color: MUTED, border: `1px solid ${RULE}` }
-                              : { backgroundColor: "#F7EDDC", color: "#6E6A62", border: "1px dashed #E6D2AE" }
-                          }
-                        >
-                          {c}
-                        </span>
-                      ))}
-                    </div>
-                    {statusPill}
+                  <div className="flex flex-wrap gap-1.5">
+                    {card.categories.map((c) => (
+                      <span
+                        key={c}
+                        className="inline-flex items-center rounded-full px-2.5 py-1 text-[10px] font-medium uppercase tracking-[0.12em]"
+                        style={
+                          card.live
+                            ? { backgroundColor: PAPER, color: MUTED, border: `1px solid ${RULE}` }
+                            : { backgroundColor: "#F7EDDC", color: "#6E6A62", border: "1px dashed #E6D2AE" }
+                        }
+                      >
+                        {c}
+                      </span>
+                    ))}
                   </div>
 
                   <h2
