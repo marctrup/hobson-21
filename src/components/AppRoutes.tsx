@@ -139,6 +139,7 @@ const AppContent = () => {
               <Route path="/learn/faq" element={<LearnFaq />} />
               <Route path="/learn/case-studies" element={<CaseStudies />} />
               <Route path="/learn/case-studies/mixed-use-owner" element={<CaseStudyMixedUseOwner />} />
+              <Route path="/learn/case-studies/historic-leases" element={<CaseStudyHistoricLeases />} />
               <Route path="/learn/*" element={<Navigate to="/learn" replace />} />
 
 
