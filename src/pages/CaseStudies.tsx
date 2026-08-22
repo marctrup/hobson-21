@@ -87,12 +87,6 @@ const CaseStudies = () => {
           }}
         >
           <div className="mx-auto max-w-3xl px-6 pt-6 pb-12 text-center">
-            <div
-              className="inline-flex items-center justify-center w-14 h-14 mb-6 rounded-full"
-              style={{ backgroundColor: LAVENDER_BG, border: `1px solid ${LAVENDER_BORDER}` }}
-            >
-              <img src={owlMascot} alt="" className="w-9 h-9" />
-            </div>
             <p
               className="text-[11px] font-semibold uppercase tracking-[0.24em]"
               style={{ color: BRASS }}
