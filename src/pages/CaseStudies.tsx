@@ -24,7 +24,6 @@ type Card = {
 const CARDS: Card[] = [
   {
     to: "/learn/case-studies/mixed-use-owner",
-    status: "Phase 1 · live",
     live: true,
     categories: ["Property owner", "Mixed-use"],
     headline: "You have to be exactly right — in front of a tenant.",
@@ -34,7 +33,6 @@ const CARDS: Card[] = [
   },
   {
     to: "/learn/case-studies/historic-leases",
-    status: "Phase 1 · live",
     live: true,
     categories: ["Large enterprise", "Central London", "Historic leases"],
     headline: "Documents written over 100 years ago — can Hobson really read them?",
@@ -43,7 +41,6 @@ const CARDS: Card[] = [
     cta: "Read this story",
   },
   {
-    status: "Coming soon",
     live: false,
     categories: ["Residential", "Small team"],
     headline: "A very large portfolio. A team of two.",
@@ -52,7 +49,6 @@ const CARDS: Card[] = [
     cta: "Story in preparation",
   },
   {
-    status: "Coming soon",
     live: false,
     categories: ["Licensees", "High turnover"],
     headline: "The paperwork never sits still.",
