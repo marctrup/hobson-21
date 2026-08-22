@@ -7,14 +7,13 @@ import { GlobalHeader } from "@/components/GlobalHeader";
 const BRASS = "#B4914F";
 const INK = "#2D2D2D";
 const MUTED = "#6E6A62";
-const LAVENDER_BG = "#F1EBDE";
+
 const LAVENDER_BORDER = "#E8E1D4";
 const PAPER = "#FCFAF7";
 const RULE = "#F7EDDC";
 
 type Card = {
   to?: string;
-  status: string;
   live: boolean;
   categories: string[];
   headline: string;
@@ -25,7 +24,6 @@ type Card = {
 const CARDS: Card[] = [
   {
     to: "/learn/case-studies/mixed-use-owner",
-    status: "Phase 1 · live",
     live: true,
     categories: ["Property owner", "Mixed-use"],
     headline: "You have to be exactly right — in front of a tenant.",
@@ -35,7 +33,6 @@ const CARDS: Card[] = [
   },
   {
     to: "/learn/case-studies/historic-leases",
-    status: "Phase 1 · live",
     live: true,
     categories: ["Large enterprise", "Central London", "Historic leases"],
     headline: "Documents written over 100 years ago — can Hobson really read them?",
@@ -44,7 +41,6 @@ const CARDS: Card[] = [
     cta: "Read this story",
   },
   {
-    status: "Coming soon",
     live: false,
     categories: ["Residential", "Small team"],
     headline: "A very large portfolio. A team of two.",
@@ -53,7 +49,6 @@ const CARDS: Card[] = [
     cta: "Story in preparation",
   },
   {
-    status: "Coming soon",
     live: false,
     categories: ["Licensees", "High turnover"],
     headline: "The paperwork never sits still.",
@@ -115,22 +110,6 @@ const CaseStudies = () => {
         <section className="mx-auto max-w-5xl px-6 pt-20 pb-24">
           <div className="grid gap-6 md:grid-cols-2">
             {CARDS.map((card, i) => {
-              const statusPill = card.live ? (
-                <span
-                  className="inline-flex items-center rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em]"
-                  style={{ backgroundColor: LAVENDER_BG, color: BRASS, border: `1px solid ${LAVENDER_BORDER}` }}
-                >
-                  {card.status}
-                </span>
-              ) : (
-                <span
-                  className="inline-flex items-center rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em]"
-                  style={{ backgroundColor: "#F1EBDE", color: "#6E6A62", border: "1px dashed #D8CDB6" }}
-                >
-                  {card.status}
-                </span>
-              );
-
               const inner = (
                 <div
                   className={[
@@ -145,23 +124,20 @@ const CaseStudies = () => {
                       : { backgroundColor: "#F7EDDC", border: "1px dashed #E6D2AE" }
                   }
                 >
-                  <div className="flex items-start justify-between gap-3">
-                    <div className="flex flex-wrap gap-1.5">
-                      {card.categories.map((c) => (
-                        <span
-                          key={c}
-                          className="inline-flex items-center rounded-full px-2.5 py-1 text-[10px] font-medium uppercase tracking-[0.12em]"
-                          style={
-                            card.live
-                              ? { backgroundColor: PAPER, color: MUTED, border: `1px solid ${RULE}` }
-                              : { backgroundColor: "#F7EDDC", color: "#6E6A62", border: "1px dashed #E6D2AE" }
-                          }
-                        >
-                          {c}
-                        </span>
-                      ))}
-                    </div>
-                    {statusPill}
+                  <div className="flex flex-wrap gap-1.5">
+                    {card.categories.map((c) => (
+                      <span
+                        key={c}
+                        className="inline-flex items-center rounded-full px-2.5 py-1 text-[10px] font-medium uppercase tracking-[0.12em]"
+                        style={
+                          card.live
+                            ? { backgroundColor: PAPER, color: MUTED, border: `1px solid ${RULE}` }
+                            : { backgroundColor: "#F7EDDC", color: "#6E6A62", border: "1px dashed #E6D2AE" }
+                        }
+                      >
+                        {c}
+                      </span>
+                    ))}
                   </div>
 
                   <h2
