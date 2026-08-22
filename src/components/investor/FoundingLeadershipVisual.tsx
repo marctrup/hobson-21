@@ -1,5 +1,5 @@
 import React from 'react';
-import { CheckCircle2, Award, Building2, TrendingUp, Shield, Target } from 'lucide-react';
+import { CheckCircle2, Award, Building2, TrendingUp, Shield } from 'lucide-react';
 
 export const FoundingLeadershipVisual = () => {
   const foundingExperience = [

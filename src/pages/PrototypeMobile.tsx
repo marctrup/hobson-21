@@ -9,7 +9,7 @@
  * Intentionally NOT included: map, Admin agents, Documents library,
  * draggable split-panes. The desktop /prototype experience is untouched.
  */
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import {
   ChevronRight,
@@ -23,9 +23,6 @@ import {
   MessageCircle,
   ListChecks,
   Building2,
-  Home,
-  AlertTriangle,
-  Calendar,
   ShieldCheck,
   Users,
   ArrowRight,

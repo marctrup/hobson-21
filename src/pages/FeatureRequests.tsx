@@ -8,14 +8,10 @@ import {
   Lightbulb, 
   Puzzle, 
   HelpCircle, 
-  Bug, 
-  Trophy,
-  Medal,
-  Award,
+  Bug,
   User,
   Calendar,
   ThumbsUp,
-  ArrowLeft,
   Settings,
   Trash2
 } from 'lucide-react';

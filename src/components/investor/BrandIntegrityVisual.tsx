@@ -1,4 +1,4 @@
-import { Award, Target, Shield, Eye, Sparkles, Heart, Brain, CheckCircle2, Lightbulb, Users, Compass, TrendingUp } from "lucide-react";
+import { Award, Shield, Heart, Brain, CheckCircle2, Lightbulb, Users, Compass, TrendingUp } from "lucide-react";
 
 export const BrandIntegrityVisual = () => {
   const brandMetaphors = [

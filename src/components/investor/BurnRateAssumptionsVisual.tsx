@@ -1,5 +1,5 @@
 import React from 'react';
-import { Info, TrendingUp, Users, Server, Target, Calculator, BarChart3, Lightbulb, PoundSterling } from 'lucide-react';
+import { Info, Users, Server, Target, Calculator, BarChart3, Lightbulb, PoundSterling } from 'lucide-react';
 const BurnRateAssumptionsVisual = () => {
   return <div className="space-y-6">
       {/* Header */}

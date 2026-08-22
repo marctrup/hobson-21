@@ -1,5 +1,5 @@
 import React from "react";
-import { FileText, Target, Eye, MessageSquare, Sparkles, Globe, CheckCircle, ArrowRight, BookOpen, Users, TrendingUp, Calendar, Linkedin, Search, Monitor, BarChart3, Heart, Lightbulb, Zap, Mail, Layout } from "lucide-react";
+import { FileText, Target, Eye, MessageSquare, Sparkles, Globe, CheckCircle, ArrowRight, BookOpen, Users, TrendingUp, Linkedin, Search, Monitor, BarChart3, Heart, Lightbulb, Zap, Mail, Layout } from "lucide-react";
 
 export const ContentEngagementStrategyVisual: React.FC = () => {
   return (

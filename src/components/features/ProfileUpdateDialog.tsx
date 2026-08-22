@@ -16,7 +16,7 @@ import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/hooks/useAuth';
-import { sanitizeInput, isDisplayNameAllowed, getDisplayNameError } from '@/utils/security';
+import { sanitizeInput, isDisplayNameAllowed } from '@/utils/security';
 
 const profileSchema = z.object({
   display_name: z.string()

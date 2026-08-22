@@ -1,5 +1,5 @@
 import React from 'react';
-import { TrendingUp, AlertTriangle, CheckCircle2, XCircle, Zap, Lightbulb, Target } from 'lucide-react';
+import { TrendingUp, AlertTriangle, CheckCircle2, XCircle, Zap, Lightbulb } from 'lucide-react';
 
 export const SWOTAnalysisVisual = () => {
   const pillarsData = [

@@ -5,7 +5,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
-import { usePilotApplication, FormData } from "@/hooks/usePilotApplication";
+import { usePilotApplication } from "@/hooks/usePilotApplication";
 
 interface PilotApplicationFormProps {
   showForm: boolean;

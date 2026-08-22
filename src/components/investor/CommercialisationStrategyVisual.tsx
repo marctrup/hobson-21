@@ -1,5 +1,5 @@
 import React from 'react';
-import { AlertTriangle, TrendingDown, Users, Scale, ShieldAlert, Target, CheckCircle2, Zap } from 'lucide-react';
+import { AlertTriangle, TrendingDown, Users, Scale, ShieldAlert, CheckCircle2, Zap } from 'lucide-react';
 
 export const CommercialisationStrategyVisual = () => {
   const operatorChallenges = [

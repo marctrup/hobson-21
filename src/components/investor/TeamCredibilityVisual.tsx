@@ -1,5 +1,5 @@
 import React from 'react';
-import { CheckCircle2, Users, Building2, Shield, Handshake, FileCheck } from 'lucide-react';
+import { Users, Building2, Shield, Handshake, FileCheck } from 'lucide-react';
 
 export const TeamCredibilityVisual = () => {
   const teamBrings = [

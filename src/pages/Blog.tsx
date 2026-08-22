@@ -3,7 +3,6 @@ import { Helmet, HelmetProvider } from "react-helmet-async";
 import { supabase } from "@/integrations/supabase/client";
 import { GlobalHeader } from "@/components/GlobalHeader";
 import { BlogHero } from "@/components/blog/BlogHero";
-import { BlogGrid } from "@/components/blog/BlogGrid";
 import { FeaturedPost } from "@/components/blog/FeaturedPost";
 import { BlogPostCard } from "@/components/blog/BlogPostCard";
 import { CategoryFilter } from "@/components/blog/CategoryFilter";

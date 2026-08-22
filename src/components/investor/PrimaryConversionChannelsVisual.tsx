@@ -1,5 +1,5 @@
 import React from "react";
-import { Monitor, Globe, Target, CheckCircle, ArrowRight, BarChart3, TrendingUp, Zap, Mail, MousePointer, RefreshCw, Eye, FileText, Users } from "lucide-react";
+import { Monitor, Globe, Target, CheckCircle, BarChart3, Zap, Mail, RefreshCw, Eye, Users } from "lucide-react";
 
 export const PrimaryConversionChannelsVisual: React.FC = () => {
   return (

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Building2, Users, User, Layers, Monitor, Handshake } from 'lucide-react';
+import { Building2, Users, User, Layers, Handshake } from 'lucide-react';
 
 export const PilotClientsVisual = () => {
   const pilots = [

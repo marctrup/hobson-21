@@ -1,6 +1,5 @@
 import React from 'react';
 import { Mail } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 import hobsonOwl from '@/assets/hobson-owl-mascot.png';
 
 export const InvitationSlide = () => {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Brain, Cloud, Zap, Database, Share2, Search, Mail, Shield } from 'lucide-react';
+import { Brain, Cloud, Zap, Database, Search, Mail, Shield } from 'lucide-react';
 
 export const TechStackVisual = () => {
   const categories = [

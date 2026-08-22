@@ -1,5 +1,5 @@
 import React from 'react';
-import { Target, TrendingUp, CheckCircle2, Layers, Globe, Calendar, Users, MessageSquare, ArrowRight, Shield, Zap, Building2, LineChart, FileText, Search, BarChart3, UserCheck } from 'lucide-react';
+import { Target, CheckCircle2, Layers, Globe, Calendar, Users, ArrowRight, Shield, Zap, Search } from 'lucide-react';
 
 export const SegmentationStrategyVisual = () => {
   return (

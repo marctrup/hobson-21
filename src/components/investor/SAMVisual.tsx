@@ -1,5 +1,5 @@
 import React from "react";
-import { Globe, MapPin, TrendingUp } from "lucide-react";
+import { Globe, MapPin } from "lucide-react";
 
 export const SAMVisual = () => {
   return (

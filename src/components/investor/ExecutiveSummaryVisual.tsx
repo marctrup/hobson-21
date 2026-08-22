@@ -1,5 +1,5 @@
 import React from 'react';
-import { Brain, Target, Zap, CheckCircle2, Globe, Rocket, Shield, XCircle, AlertTriangle, ArrowDown, FileText, Search, Lock, TrendingUp, Repeat } from 'lucide-react';
+import { Target, Zap, CheckCircle2, Globe, Rocket, Shield, TrendingUp } from 'lucide-react';
 export const ExecutiveSummaryVisual = () => {
   return <div className="space-y-8">
       {/* Opening Statement */}

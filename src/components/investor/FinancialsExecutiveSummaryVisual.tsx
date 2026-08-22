@@ -1,5 +1,5 @@
 import React from "react";
-import { TrendingUp, Target, BarChart3, DollarSign, Zap } from "lucide-react";
+import { TrendingUp, Target, DollarSign, Zap } from "lucide-react";
 
 export const FinancialsExecutiveSummaryVisual: React.FC = () => {
   const metrics = [

@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-import { ArrowRight, ArrowLeft, Building2, type LucideIcon } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { GlobalHeader } from "@/components/GlobalHeader";
 
 

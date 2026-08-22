@@ -1,4 +1,4 @@
-import { FileText, ArrowRight, Brain, CheckCircle, Users, FolderOpen, Search, RotateCcw, UserCheck, Plus, ArrowUp } from "lucide-react";
+import { CheckCircle, FolderOpen, Search, RotateCcw, UserCheck, Plus, ArrowUp } from "lucide-react";
 export const PropertyManagementVisualizationHomeowner = () => {
   return <div className="relative from-primary/5 to-secondary/10 rounded-2xl p-8 border border-primary/10 bg-paper">
       {/* Main Header */}

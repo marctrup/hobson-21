@@ -3,17 +3,14 @@ import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link, useNavigate } from 'react-router-dom';
 import { 
-  ArrowLeft, 
   Megaphone, 
   Calendar, 
-  Bell, 
-  ExternalLink,
+  Bell,
   Clock,
   User
 } from 'lucide-react';
 import hobsonLogo from "/hobson-logo.png";
 import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';

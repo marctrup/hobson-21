@@ -17,7 +17,6 @@ import {
   ThumbsUp, 
   MessageSquare,
   ArrowUp,
-  ArrowDown,
   Reply,
   MoreHorizontal,
   Edit,
