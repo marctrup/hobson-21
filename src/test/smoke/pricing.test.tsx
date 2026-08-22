@@ -7,27 +7,28 @@ describe("Pricing page", () => {
   it("renders the hero headline", async () => {
     renderWithProviders(<Pricing />, { route: "/pricing" });
     await waitFor(() => {
-      expect(screen.getByText(/No plans\./i)).toBeInTheDocument();
-      expect(screen.getByText(/No credits\./i)).toBeInTheDocument();
-      expect(screen.getByText(/Nothing counted\./i)).toBeInTheDocument();
+      expect(screen.getByRole("heading", { level: 1 }).textContent).toMatch(
+        /Choose Hobson on its own, or Hobson with helping hands/i
+      );
     });
   });
 
-  it("shows the two-costs section", async () => {
+  it("shows the two pricing options", async () => {
     renderWithProviders(<Pricing />, { route: "/pricing" });
     await waitFor(() => {
-      expect(screen.getAllByText(/A seat for each person/i).length).toBeGreaterThan(0);
-      expect(screen.getAllByText(/Learning your documents/i).length).toBeGreaterThan(0);
+      expect(screen.getAllByText(/on its own/i).length).toBeGreaterThan(0);
+      expect(screen.getAllByText(/helping hands/i).length).toBeGreaterThan(0);
+      expect(screen.getAllByText(/Every seat includes/i).length).toBeGreaterThan(0);
     });
   });
 
-  it("renders the calculators and closing CTA", async () => {
+  it("renders the calculators and enterprise CTA", async () => {
     renderWithProviders(<Pricing />, { route: "/pricing" });
     await waitFor(() => {
-      expect(screen.getByLabelText(/People/i)).toBeInTheDocument();
-      expect(screen.getByLabelText(/Documents/i)).toBeInTheDocument();
-      expect(screen.getByRole("link", { name: /Work out your price/i })).toBeInTheDocument();
-      expect(screen.getByRole("link", { name: /Meet the team/i })).toBeInTheDocument();
+      expect(screen.getAllByLabelText(/Documents/i).length).toBeGreaterThan(0);
+      expect(screen.getAllByLabelText(/People/i).length).toBeGreaterThan(0);
     });
+    const talk = screen.getByRole("link", { name: /Talk to me/i });
+    expect(talk).toHaveAttribute("href", "mailto:info@hobsonschoice.ai");
   });
 });

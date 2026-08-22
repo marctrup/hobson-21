@@ -13,10 +13,10 @@ const post = {
   categories: [{ name: "News", slug: "news" }],
 } as any;
 
-describe("BlogPostCard — Read More", () => {
-  it("renders a 'Read More' link pointing to /blog/<slug>", () => {
+describe("BlogPostCard — Read link", () => {
+  it("renders a 'Read' link pointing to /blog/<slug>", () => {
     renderWithProviders(<BlogPostCard post={post} />);
-    const link = screen.getByRole("link", { name: /Read More/i });
+    const link = screen.getByRole("link", { name: /^Read$/i });
     expect(link).toBeInTheDocument();
     expect(link).toHaveAttribute("href", "/blog/my-post");
   });
@@ -29,7 +29,7 @@ describe("BlogPostCard — Read More", () => {
 
   it("encodes special characters in the slug", () => {
     renderWithProviders(<BlogPostCard post={{ ...post, slug: "hello world" }} />);
-    const link = screen.getByRole("link", { name: /Read More/i });
+    const link = screen.getByRole("link", { name: /^Read$/i });
     expect(link.getAttribute("href")).toBe("/blog/hello%20world");
   });
 });
