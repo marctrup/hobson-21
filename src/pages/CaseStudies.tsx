@@ -14,7 +14,6 @@ const RULE = "#F7EDDC";
 
 type Card = {
   to?: string;
-  status: string;
   live: boolean;
   categories: string[];
   headline: string;
