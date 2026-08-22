@@ -341,7 +341,7 @@ export const Homepage = () => {
               <div className="grid md:grid-cols-4 gap-10 md:gap-12">
                 {/* Logo & tagline */}
                 <div className="md:col-span-2">
-                  <OptimizedImage src="/hobson-logo.png" alt={content.header.logoAlt} className="h-[48px] w-auto mb-4" />
+                  <span className="text-3xl font-semibold text-foreground tracking-tight block mb-4">Hobson</span>
                   <p className="text-sm text-muted-foreground max-w-md">
                     AI assistance to operators, occupiers and owners of real estate.
                   </p>
