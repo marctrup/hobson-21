@@ -28,6 +28,7 @@ const Learn = lazy(() => import("../pages/Learn"));
 const LearnFaq = lazy(() => import("../pages/LearnFaq"));
 const CaseStudies = lazy(() => import("../pages/CaseStudies"));
 const CaseStudyMixedUseOwner = lazy(() => import("../pages/CaseStudyMixedUseOwner"));
+const CaseStudyHistoricLeases = lazy(() => import("../pages/CaseStudyHistoricLeases"));
 
 const Status = lazy(() => import("../pages/Status"));
 const Announcements = lazy(() => import("../pages/Announcements"));
@@ -138,6 +139,7 @@ const AppContent = () => {
               <Route path="/learn/faq" element={<LearnFaq />} />
               <Route path="/learn/case-studies" element={<CaseStudies />} />
               <Route path="/learn/case-studies/mixed-use-owner" element={<CaseStudyMixedUseOwner />} />
+              <Route path="/learn/case-studies/historic-leases" element={<CaseStudyHistoricLeases />} />
               <Route path="/learn/*" element={<Navigate to="/learn" replace />} />
 
 

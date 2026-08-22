@@ -34,13 +34,14 @@ const CARDS: Card[] = [
     cta: "Read this story",
   },
   {
-    status: "Coming soon",
-    live: false,
-    categories: ["Enterprise", "Commercial Leases"],
+    to: "/learn/case-studies/historic-leases",
+    status: "Phase 1 · live",
+    live: true,
+    categories: ["Large enterprise", "Central London", "Historic leases"],
     headline: "Documents written over 100 years ago — can Hobson really read them?",
     description:
-      "A large Central London enterprise with major commercial and ground-rent portfolios, and a big team across the business — where some leases are more than a century old. The hardest test there is.",
-    cta: "Story in preparation",
+      "A major Central London portfolio, generations of property history and some of the hardest leases Hobson has encountered.",
+    cta: "Read this story",
   },
   {
     status: "Coming soon",
