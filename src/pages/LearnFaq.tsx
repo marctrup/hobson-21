@@ -23,72 +23,40 @@ type Category = { name: string; items: FAQ[] };
 
 const CATEGORIES: Category[] = [
   {
-    name: "Hobson vs. other AI",
+    name: "Why Hobson",
     items: [
       {
         mostAsked: true,
         q: "How is Hobson different from ChatGPT?",
-        a: `ChatGPT is a brilliant generalist. Ask it about your lease and it reads the words on the page and gives you a plausible-sounding answer. Hobson is a property specialist that gives you the correct one — and proves it.
+        a: `ChatGPT is a brilliant generalist. Hand it a lease and it reads the words on the page and gives you a plausible answer. Hobson is built specifically around a property record — the documents, the rules, and how both change over time.
 
-**It reads your whole story, not one document.** A lease says the rent is £50,000; a deed of variation two years later changes it to £60,000. ChatGPT, handed the lease, tells you £50,000. Hobson reads every related document in order and tells you £60,000 — today's true figure — because it understands that a tenancy evolves and always answers with where things stand today.
+**It reads the whole record, not one document.** A lease says the rent is £50,000; a deed of variation two years later changes it to £60,000. ChatGPT, handed the lease, tells you £50,000. Hobson reads every related document in order and tells you £60,000 — where things stand today.
 
-**Every answer shows its evidence.** Hobson cites the document, page, clause and exact wording behind every fact, so you verify in seconds instead of digging through a filing cabinet. And when it doesn't know, it says so rather than guessing.
+**Every answer shows its evidence.** Hobson cites the document, page, clause and exact wording behind each fact, so you can verify in seconds.
 
-**It tells you when something isn't there.** "The lease contains no break right" is a real, checked answer. Where documents disagree, Hobson shows both positions and their sources rather than quietly picking one.
-
-In short: ChatGPT predicts a likely answer. Hobson extracts the *actual* one from your documents, tracks how they change over time, and shows you the proof.`,
+**It tells you when something isn't there.** "The lease contains no break right" is a real, checked answer. Where documents disagree, Hobson shows both positions and their sources rather than quietly picking one.`,
       },
       {
         q: "How is Hobson different from an AI co-worker like Claude?",
-        a: `Claude and other AI co-workers are powerful — they can already read a document, cite it and remember, so this is a fair question. The difference is that Claude is a model, and Hobson is a system built around one.
+        a: `Claude is a model. Hobson is a property system built around one.
 
-A model is brilliant but probabilistic: ask it the same question twice and you can get two answers; it can transpose a figure, miss the seventh variation in a stack, or produce a confident citation for wording that isn't quite there. Reading, citing and remembering are things it usually does well — but each is a behaviour you're trusting to be right this time, with no way to know if it wasn't.
+Models are good at reading and understanding language, and Hobson uses one for exactly that. Four things sit around it:
 
-Hobson uses a model like that for what models are genuinely good at — reading and extracting — and deliberately doesn't trust it for the rest:
+**A permanent property record.** Each document is turned into structured facts, held for good and queryable across the whole portfolio — so "total rent across 500 units" comes from records, not recollection.
 
-**It computes with fixed rules, not the model.** Every figure, date and calculation is produced by deterministic code and a single calculation engine, so once a document is in the record, the same question gives the same, checkable answer every time.
+**Fixed rules for the sums.** Figures, dates and calculations are worked out by set rules rather than improvised by the model.
 
-**It turns documents into records, not recollection.** Hobson extracts each document into structured fields — every value with its source — held permanently and queryable across your whole portfolio. That's a database you can trust for "total rent across 500 units," not a summary the model is recalling.
+**Evidence attached to the fact.** The source wording is captured when the document is read and travels with the figure, so a reference can't be composed afterwards to justify a number.
 
-**Its citations are captured, not generated.** The source travels with the fact from extraction and is checked to actually contain the figure — so a reference can't be a plausible invention.
-
-**It answers only from your documents.** A general model's vast training knowledge can quietly import another lease's wording or a generic assumption. Hobson is bounded to your documents and defined property rules.
-
-**Its accuracy is measured.** We test Hobson against a library of real leases where property experts have established the correct answer for every detail, and re-run that test whenever we change how it works — so how accurate it is is known, and improving. That's a benchmark built behind the scenes, not a person checking your answers: day to day, Hobson runs on its own. A general model just gives you an answer, with no measure of whether it's right.
-
-And the model isn't the hard part — frontier models are becoming a commodity anyone can call. The hard part is everything wrapped around it: capturing how property actually works, building the deterministic tools and the single calculation engine, and above all the validation framework that proves each answer against leases checked by hand by property experts. That takes a rare combination — property expertise, AI engineering and testing discipline in one team — and a long, deliberate build to get right. It's the part that can't be shortcut. Hobson is that layer, already built and being proven on real portfolios, so you get a system you can trust your portfolio to — not a raw tool you'd have to construct and fact-check yourself.`,
+**Accuracy that's actually measured.** Hobson is tested against real property documents where experts have established the right answer, so how accurate it is is known rather than assumed.`,
       },
       {
         q: "Will Hobson give me the same answer twice?",
-        a: `The figures, yes — always. Once Hobson has read your documents, every amount and date comes from fixed rules, worked out the same way each time. Ask on Monday and again on Thursday and the rent is the same rent, with the same workings shown.
+        a: `The facts and figures, yes. Once your documents are read, the recorded facts stay as they are unless the record itself changes, and any calculation follows fixed rules — so the same question gives the same figure, with the same workings.
 
-That isn't automatic with AI. Ask a general chatbot the same question twice and you can get two different answers, because it writes a fresh reply each time instead of drawing on anything it has already established.
+The wording of the reply may vary slightly, because AI is used to write the response. What it isn't used for is deciding what's true.
 
-Reading your documents is the one job where AI genuinely earns its place — but its task there is to copy out what a clause says, not to work out what it might mean. It captures the wording exactly, and where a lease is silent it says so rather than filling the gap with something it saw in another lease. Because so much rests on that reading, it's the part we check hardest: the same lease read over and over, every detail confirmed to come back identical.
-
-Two other parts of answering your question use AI too — understanding what you're asking and where to look for it, and writing the reply itself. Neither of those makes up figures, but neither is perfectly predictable, so we don't assume they're right. We check each one: did it go to the right unit, open the right documents, and is every sentence in the answer backed by something the lease actually says.`,
-      },
-      {
-
-
-        q: "Is Hobson ever afraid to say it doesn't know?",
-        a: `Never — and it's one of the biggest differences between Hobson and a general AI.
-
-Most AI tools are built to always produce an answer, so when they don't know something they tend to fill the gap with a confident guess. Hobson does the opposite. Where the documents don't settle a question, or a piece of information it needs is missing, it says so plainly — what it can tell you, what it can't, and why. It treats "I don't have enough to answer that yet" as a proper, finished answer, not a failure to cover up.
-
-That includes telling you when something simply isn't in your documents at all — "the lease records no rent deposit" is a real, checked finding, stated plainly, not an apology. And where a fact is missing, Hobson explains what it would need to get you the answer, rather than pretending it already has it.
-
-Its confidence comes from **honesty, not from always having a number** — and an answer you can trust is worth far more than one that only sounds sure.`,
-      },
-      {
-        q: "Doesn't all software get tested? What's different about AI?",
-        a: `All serious software is tested. What changes with AI is what a test can actually prove.
-
-Ordinary software is predictable — the same input gives the same output, every time. So a test is a straight pass or fail, and once it passes, it stays passed. And when something does break, it usually breaks loudly: an error, a crash, a blank cell. You find out.
-
-AI isn't predictable in that way, so one test proves nothing. You have to run the same document many times over and measure how often it's right. The result isn't pass or fail — it's a score. There's no version that simply "works" and then stays working.
-
-That's why the testing has to be a different shape: a library of real leases where property experts have established the correct answer for every detail, re-run in full whenever anything changes, scored, and compared against the version before it. Same discipline as any well-built software. Different instrument, because we're measuring something that can be right most of the time rather than something that either works or doesn't.`,
+So the answer and the evidence behind it stay stable, even if the sentence around them reads a little differently.`,
       },
     ],
   },
@@ -98,74 +66,65 @@ That's why the testing has to be a different shape: a library of real leases whe
     items: [
       {
         q: "Is Hobson built for my industry?",
-        a: `Hobson is built around documents, not industries — and the documents are the same everywhere.
+        a: `Hobson is built around property documents and property obligations, not around one business sector.
 
-A restaurant group's operations director and a law firm's facilities director are looking at the same clause. Both leases say "full repairing and insuring." Both create the same obligation, the same cost at exit, the same argument with a landlord if it's missed. The two of them sit in different buildings with different job titles and read the identical provision.
+A restaurant group's operations director and a law firm's facilities director are reading the same clause. Both leases say "full repairing and insuring", and both create the same obligation and the same cost at exit.
 
-That holds across every document type that matters: leases, deeds of variation, side letters, licences to assign or alter, guarantees, compliance certificates and notices. A retail group with three hundred stores and a single-building owner hold the same paperwork. What changes between industries is the volume and the context — not what the documents say or what they oblige you to do.
-
-So the question isn't whether Hobson knows your industry. It's whether it can read your documents, and those it already knows.`,
+That holds across the documents that matter: leases, deeds of variation, side letters, licences, guarantees, certificates and notices. Retail, offices, industrial, landlord or occupier — what changes is the volume and the context, not what the documents oblige you to do.`,
       },
       {
         q: "Is Hobson only for large portfolios?",
-        a: `No — ten properties and five hundred are the same problem at different volumes.
+        a: `No. Ten units and five hundred are the same problem at different volumes.
 
-What actually changes with size is who's responsible. In a smaller business, one person covers everything: the lease, the gas safety certificate, the rent review window, the break notice. They need Hobson to be a complete property expert — one that's read every document and can answer anything, without them working out which file to open first.
+In a smaller business, one person covers the lease, the gas safety certificate, the rent review window and the break notice, and needs Hobson to answer anything without them working out which file to open. In a larger business those jobs are split across teams, and each needs its own corner in precise detail.
 
-In a larger business, those same jobs are split. Finance owns the rent roll and the service charge reconciliation. Legal owns the notices and assignments. Operations owns the certificates and repair obligations. Each one needs Hobson to know their corner in precise detail.
-
-The document library is identical in both cases. The smaller the team, the more Hobson has to cover; the larger the team, the deeper it has to go. Both are served by the same learning model — because a Hobson that has already learned the portfolio can answer either kind of question, while one that searches on demand can only find what you already knew to look for.`,
+The document library is the same in both cases. The smaller the team, the more Hobson has to cover; the larger the team, the deeper it has to go.`,
       },
       {
-        q: "I work in finance, legal or operations — not property. Is Hobson for me?",
-        a: `Yes — and you shouldn't need to know which document holds your answer.
+        q: "Do I need to be a property expert to use Hobson?",
+        a: `No. Ask in plain language and you get a plain-language answer. Where a property term is unavoidable, Hobson explains it rather than leaving you to look it up.
 
-Ask as a finance analyst: which stores have RPI-linked reviews rather than open market, what's still inside a rent-free period, which service charge items this lease actually makes recoverable. Ask as a solicitor: what form must this notice take, who is the correct addressee, which guarantors survived the last assignment. Ask as an operations manager: does this site's lease require landlord consent before the fit-out, what's the repairing standard, which EPCs expire this quarter.
-
-Same document library, three completely different questions — answered from what Hobson has already extracted, with the clause cited for each. You don't need to be the property person. You need the part of the property that's yours.`,
+You also don't need to know which document holds the answer. A finance analyst can ask which units have index-linked reviews rather than open market; an operations manager can ask which EPCs expire this quarter. Same document library, different questions, each answered with the clause cited.`,
       },
     ],
   },
 
-
   {
-    name: "Working with Hobson",
+    name: "Using Hobson",
     items: [
       {
-        q: "Do I need to be a property expert to use Hobson?",
-        a: `No. Hobson adapts to you — it never assumes your job title or knowledge. Ask in plain language and you get a plain-language answer; where a technical term is unavoidable, it explains it rather than leaving you to look it up.
-
-It meets you at your level, whether you live in leases every day or only deal with them occasionally — clear enough for a newcomer, without talking down to someone who knows the field.`,
-      },
-      {
         q: "What's Hobson like to work with?",
-        a: `Direct and low-effort. Hobson gets to the point rather than padding answers, and it won't perform enthusiasm or bury a simple answer in advice you didn't ask for.
+        a: `Direct and low-effort. It gets to the point rather than padding answers, and it won't bury a simple answer in advice you didn't ask for.
 
-It keeps what you share confidential, tells you plainly where things stand — including when something is uncertain or missing — and takes responsibility for its answers rather than hedging. The aim is that a piece of property work feels handled, so you're not left holding all the detail in your head.`,
+It tells you plainly where things stand — including when something is uncertain or missing — and takes responsibility for its answers rather than hedging.`,
       },
       {
         q: "Am I dealing with one assistant, or a team?",
-        a: `One assistant: Hobson. Behind the scenes it brings together different kinds of property expertise, and you may see which kind is helping while work is underway — but every answer comes back as one considered response, in one voice.
+        a: `One assistant: Hobson. Different specialist capabilities work behind the scenes, and you may see which kind is helping while work is underway, but every answer comes back as one considered response.
 
-You never have to manage a committee, repeat yourself to different parts of the system, or work out who's responsible for what. You ask Hobson; Hobson answers.`,
+You never have to coordinate separate tools, repeat yourself, or work out who's responsible for what.`,
+      },
+      {
+        q: "Will Hobson tell me things I didn't think to ask?",
+        a: `Where it genuinely helps, yes. If a deadline is approaching or a consequence follows from your answer, Hobson mentions it briefly.
+
+It won't lecture, speculate, or invent a worry to look useful. When your answer is simply the answer, that's all you get.`,
       },
     ],
   },
 
-
-
   {
-    name: "Accuracy you can trust",
+    name: "Accuracy & evidence",
     items: [
       {
         q: "When Hobson gives me an answer, how do I check it's right?",
-        a: `You don't have to take it on trust — every answer comes with an evidence pack.
+        a: `Every answer comes with an evidence pack.
 
-The pack shows the exact wording behind each fact: the document, the page, the clause, and the text itself, quoted verbatim rather than paraphrased. Nothing is summarised in the extracts, so what you're reading is what the lease actually says. Verification takes seconds, not an afternoon in a filing cabinet.
+The pack shows the document, the page, the clause and the wording itself, quoted rather than paraphrased. Nothing in the extracts is summarised, so what you read is what the lease actually says.
 
-This matters because of when the evidence is captured. Hobson doesn't produce an answer and then go looking for a citation to support it — the figure and the wording it came from are recorded together at the moment the document is read, and stored as one thing. A reference can't be composed after the fact to justify a number, which is precisely how AI citations go wrong elsewhere.
+What makes that reliable is when the evidence is captured. Hobson doesn't produce an answer and then go looking for a citation — the figure and the wording it came from are recorded together at the moment the document is read, and stored as one thing. A reference can't be composed after the fact to justify a number.
 
-Where a lease doesn't settle the question, the pack says so. Below the answer, Hobson sets out what isn't established and why — a date the lease never fixes, a figure that depends on something not yet recorded. A known gap is a real answer; a confident guess isn't.`,
+Where a lease doesn't settle the question, the pack says so.`,
         image: {
           src: evidencePackImage.url,
           alt: "Illustrative example of a Hobson evidence pack, showing an answer supported by three verbatim extracts from a lease, each with page number, clause reference and a highlighted source page",
@@ -175,224 +134,139 @@ Where a lease doesn't settle the question, the pack says so. Below the answer, H
         },
       },
       {
-        q: "If Hobson got something wrong, would I notice?",
-        a: `Not necessarily — and that's exactly why we don't rely on spot-checking.
+        q: "What happens when Hobson doesn't have enough information?",
+        a: `It says so. Hobson reports what your documents establish, and is equally clear about what they don't.
 
-Ordinary software fails loudly: an error, a crash, a blank cell. AI fails quietly. A wrong rent figure arrives looking exactly like a right one — same confident tone, same clean formatting, often a citation attached. Left unchecked, AI models will produce a figure, a quote, even a precise page reference for something that simply isn't in the document. Nothing flags it for you.
+Where something is missing, it tells you what it can answer, what it can't, and what it would need. "The lease records no rent deposit" is a real, checked finding, not a failure — an absence is an answer in its own right.
 
-So Hobson is built to distrust its own first draft. Every figure it reports has to be backed by wording from the document that genuinely contains it — if the supporting text doesn't say what the answer claims, the answer doesn't stand. And we actively test for invented content: checking that the evidence behind each fact really exists and really says what's claimed, that nothing from one tenancy has been applied to another, and that Hobson holds a clear line between what a document says and what it's silent on.
+Rent is a good example. A lease may set the figure payable now and a rule that changes it later — a review, an index-linked uplift, a fixed step. Where that rule hasn't yet produced a number, Hobson says the future figure isn't established rather than quietly carrying today's forward.`,
+      },
+      {
+        q: "What happens if documents contradict each other?",
+        a: `It shows you both sides. Property documents disagree more often than you'd expect: a lease sets one break date and a later deed sets another; a figure is stated one way in one place and differently in another.
 
-You shouldn't have to be the safety net. The checking happens before an answer reaches you — and the evidence comes with it, so you can confirm anything that matters.`,
+Hobson sets out both positions plainly, each with the document and wording it came from, and tells you they conflict. Where one is the safer position to rely on until the matter is settled, it will say so — but it never quietly picks a winner or splits the difference.`,
       },
       {
         q: "When Hobson works out a figure, can I see how it reached it?",
-        a: `Always. Any number Hobson calculates for you — a reviewed rent, a deadline, a notice date — never arrives on its own. Its workings come with it: the figures it started from and when they applied, the rules it followed, and any cap or floor that changed the result, set out in order.
+        a: `Always. Any number Hobson calculates — a reviewed rent, a deadline, a notice date — arrives with its workings: the figures it started from and when they applied, the rule it followed, any cap or floor that changed the result, and the figure that came out.
 
-So you're never asked to take a calculated number on trust. You can see exactly how it was reached and check it yourself — and if the workings can't be shown for some reason, Hobson tells you that rather than handing you a bare figure.
-
-There's one more safeguard behind this: every calculation across the whole system is done in a single place, by fixed rules. That's why the figure is stable — it isn't the AI recalculating and happening to land in the same spot each time; it's the same rule producing the same result. **One method to rely on, and one place to check.**`,
+Calculations are done in one place using fixed rules, so the same inputs produce the same result. If the workings can't be shown for some reason, Hobson tells you rather than handing you a bare figure.`,
       },
       {
-        q: "How does Hobson stay accurate across a big portfolio without mixing units up?",
-        a: `By answering your question in one exact place, rather than reaching across everything at once.
+        q: "How do you know Hobson is accurate?",
+        a: `Because it's measured rather than assumed. AI that sounds sure of itself is easy to build, and it fails quietly — a wrong figure arrives looking exactly like a right one. So Hobson is tested against a library of real property documents that property experts have gone through by hand to establish the correct answer for every detail, from a simple residential tenancy to long commercial leases with formula-driven rents.
 
-Ask "what's the rent?" across hundreds of units and there's no honest single answer — rent of *which* unit? A system could reach across the whole lot and hand you one figure anyway, but to do that it has to quietly pick a winner from hundreds of candidates. That's a guess — exactly what you don't want behind a number you're about to act on. So Hobson first works out which unit you mean, goes there, and answers from that one lease, where there's only ever one correct figure, provably from one document. And it shows you where it went, because with a big estate the real danger isn't a wrong number — it's a right number attached to the wrong unit.
+The testing covers the whole journey, not just the reading. Each step is checked in its own right: did it go to the right unit and pull the right documents, was each fact extracted correctly, is every statement actually supported by wording that exists, were the figures produced by the fixed rules, and does the final answer say only what the documents support.
 
-Working in one place also makes made-up answers far less likely. Mistakes and invented figures both thrive on noise: the amount "£50,000" might appear in twenty different leases, and an AI under pressure to answer can grab the wrong one. With only one unit's documents in play, that whole class of mix-up disappears — there's only one rent in the room.
+When something does go wrong, the record of how the answer was reached shows which step failed, so it can be fixed precisely — and anything your team flags becomes a permanent test case.`,
+      },
+      {
+        q: "How do you stop an update breaking something that already worked?",
+        a: `Before any change goes live, Hobson is run over the whole test library again and compared question by question with the current version — accuracy, sourcing, completeness, cost and speed.
 
-And that's only the first safeguard. On top of it, Hobson backs every figure with wording that actually contains it, reports silence as silence rather than guessing, and produces every calculated number in one place. Getting you to the right unit makes the answer far more likely to be correct; the other checks catch anything that slips through.`,
+Anything that got worse has to be explained and accepted before release, rather than discovered by you three weeks later. That's how Hobson improves without the "fixed one thing, broke another" problem.`,
       },
     ],
   },
 
   {
-    name: "How we prove it",
-    items: [
-      {
-        q: "How do you know Hobson's answers are accurate — and not just confident-sounding?",
-        a: `Because we measure it rather than assume it. AI that sounds sure of itself is easy to build; AI you can actually trust has to be tested. So Hobson's document-reading is checked against a library of real leases that property experts have gone through by hand, line by line, to establish the correct answer for every detail. Whenever we change how Hobson reads documents, we run it back over that expert-verified set and measure how closely it matches.
-
-That turns accuracy into something we can see and improve, not a claim we simply hope is true. And because the test leases run from a simple residential tenancy all the way to long, complex commercial leases with formula-driven rents, we're proving Hobson on the hard cases, not just the easy ones.`,
-      },
-      {
-        q: "What exactly do you test — just the document reading?",
-        a: `The whole journey. Reading a lease correctly is one step, and an answer can still come out wrong if a later one goes astray — the wrong unit identified, an out-of-date document pulled, the wrong tool used, a calculation run on the right figures in the wrong order.
-
-So each step is checked in its own right: was the right document retrieved, was the right tool chosen, is every statement actually supported by a source, was the calculation produced by the calculation engine rather than improvised by the model. A step can be perfectly sound and still give you a wrong answer if the one before it failed.`,
-      },
-      {
-        q: "If an answer is wrong, can you find out why?",
-        a: `Yes — down to the exact step. Every answer Hobson gives is recorded as it happens: which documents it read, which tools it ran, how it reached the result.
-
-Without that record, all anyone knows is "the answer was wrong," and fixing it is guesswork. With it, we can see whether the wrong document was pulled, the wrong tool was used, a calculation was off, or the final wording added something the documents didn't support — and fix that precise step.
-
-Anything your team flags becomes a permanent test case, so the same mistake can't quietly return later. Real problems from live use are the most valuable tests there are.`,
-      },
-      {
-        q: "Hobson keeps improving — how do you stop an update from breaking something that already worked?",
-        a: `Because no change ships without being measured against everything that already works.
-
-Every improvement — a new way of reading documents, a change to a tool — has to run the full test library first, and is compared question by question with the current version, across accuracy, sourcing, completeness, cost and speed. Anything that got worse has to be explained and accepted before it goes live, not discovered by you three weeks later.
-
-So Hobson gets sharper over time without the "fixed one thing, broke another" problem that catches out software which isn't tested this way.`,
-      },
-    ],
-  },
-
-  {
-    name: "Staying in control",
+    name: "Control & security",
     items: [
       {
         q: "Will Hobson ever act on its own? How much control do I keep?",
-        a: `Complete control. Hobson is built so that it *cannot* take an action you haven't approved — not as a rule it's asked to follow, but as a hard limit in how it's made.
+        a: `Complete control. Hobson proposes; you decide; the record only changes when you confirm it.
 
-Hobson proposes; you decide; the record only changes when you confirm it. When it spots a dangerous defect and says "tell them today," it prepares the message — but the send button is yours. It doesn't *choose* not to serve a notice on its own; it's simply never given the ability to. An instruction can be overridden in a moment that feels urgent — a limit built into how it works can't.
+When it spots something urgent and says "tell them today", it prepares the message — but the send button is yours. It isn't asked to hold back from consequential actions; it's simply never given the ability to take them.
 
-Two things follow. Nothing Hobson proposes is taken on trust: every claim traces back to a document and a rule it can prove. And Hobson always separates "nothing to report" from "I couldn't check" — a green light means it looked and you're clear, never that it quietly gave up.`,
+Hobson also separates "nothing to report" from "I couldn't check". A green light means it looked and you're clear, never that it quietly gave up.`,
       },
       {
         q: "How does Hobson know when to follow a fixed rule and when to use judgment?",
-        a: `It comes down to three kinds of work, and Hobson treats each differently.
+        a: `Three kinds of work, treated differently.
 
-**Answering** reports what your documents establish. The figures come from fixed rules, so ask the same thing tomorrow with nothing changed and the rent is the same rent, worked out the same way. Hobson still uses AI to understand what you're asking and to write the reply clearly — but never to decide what's true. It doesn't guess, and if something it needs is missing, it says so and stops.
+**Answering** reports what your documents establish, with figures from fixed rules. AI helps understand the question and write the reply — never to decide what's true.
 
-**Recording** changes the record — and only ever after a person decides. It never erases: the old position is kept, bounded by date, so you can always ask what was true at an earlier point and get a real answer.
+**Recording** changes the record, and only after a person decides. Nothing is erased: the old position is kept and dated, so you can always ask what was true earlier.
 
-**Noticing and proposing** is where Hobson behaves like a co-worker — researching what the law requires, spotting what's missing, judging which few things out of ninety actually matter, and recommending what to do next.
-
-The first two are reliable and predictable about the facts; the third is perceptive and proactive. Hobson uses each for exactly what it's good at — and none of the three changes anything or acts without you.`,
+**Noticing and proposing** is where Hobson behaves like a co-worker — spotting what's missing, judging what matters, recommending what to do next. It still changes nothing without you.`,
       },
       {
-        q: "Will Hobson tell me things I didn't think to ask?",
-        a: `Where it genuinely helps, yes — but never to pad an answer.
-
-A good co-worker doesn't just answer the narrow question; they mention the thing you'd have wanted to know but didn't think to ask — a deadline coming up, a consequence that follows, the sensible next step. Hobson does the same, briefly and proportionately, when something like that sits alongside your answer.
-
-Two limits keep this useful rather than noisy. It only raises something that genuinely matters — it won't lecture, speculate, or invent a worry to look helpful. And it only mentions what your documents actually establish; it never manufactures a risk or a fact that isn't there. So when Hobson flags something, it's worth reading — and when your answer is simply the answer, that's all you get.`,
-      },
-      {
-        q: "Can a document change how my portfolio is organised?",
-        a: `No. You decide the structure; documents attach to it. Never the other way round.
-
-That's not a technical preference — it's how property works. The space exists first and the tenant arrives afterwards. Someone builds a floor, someone decides where the demise line falls, and only then is a lease signed over a space that was already there. A lease is evidence about a space; it isn't what brings the space into being.
-
-So the rule holds in both directions. One lease covering units at three different addresses doesn't fuse them into one — they're still in three places, and place is what makes a group. And sixteen units with sixteen separate leases in one place are still one group, not sixteen.
-
-The test is simple: take the document away and ask whether the group still exists. Surrender the lease tomorrow and Stanley House is still Stanley House, its four floors still one place. Your portfolio should describe your real property, and it should change when the property changes or when you realise you've described it wrongly — not because a PDF arrived.`,
+        q: "What happens to what I share with Hobson?",
+        a: `It's kept confidential. Hobson answers from your documents and your defined property rules — not from another customer's records, and not from generic assumptions imported from elsewhere.`,
       },
     ],
   },
 
-
-
   {
-    name: "Your portfolio, organised",
+    name: "Your portfolio",
     items: [
       {
-        q: "Why does Hobson organise everything around the unit?",
-        a: `Because a unit is the smallest thing occupation can attach to. A **unit** is a single occupiable space — an office suite, a shop, a warehouse, a flat, a parking space. Above it sits the **unit group**: a set of units in the same place, and location is the only thing that makes them one group.
+        q: "How does Hobson organise my portfolio?",
+        a: `Three levels, and that's all it takes.
 
-Both levels are real, and both hold documents. Any single right to occupy — a lease, a licence, a tenancy — sits at one level or the other, not spread across both. But a place can have more than one: a headlease held at the group with subleases held by the units beneath it, each a separate occupation in its own right. Things about the place rather than about one space inside it, like the buildings insurance or the fire risk assessment, sit at the group. The level a document belongs to isn't something Hobson works out from the document; it follows the structure you've set.
+**Unit** — the smallest occupiable space: an office suite, a shop, a warehouse, a flat, a parking space.
 
-At the top is your **portfolio**, the whole estate under management. Unlike the two levels below it, it isn't somewhere you can stand — it's a reporting view: how many units are vacant, which leases expire this year, what the total contracted rent is, which reviews fall due in the next twelve months.
+**Unit group** — a set of units in the same place. Location is the only thing that makes them one group, not a shared lease, landlord or tenant.
 
-Three levels is all it takes, which is why a landlord with one flat and a fund with a thousand units work exactly the same way — no special cases for a house, a single-let warehouse, a multi-let tower or a mixed-use estate.
+**Portfolio** — the whole estate. Not somewhere you can stand, but a reporting view: how many units are vacant, which leases expire this year, what the total contracted rent is.
 
-And you ask at whichever level you need. A unit gives you the tenancy detail. A group gives you the place — its rent roll, which units are vacant, which leases expire. The portfolio gives you the estate view, built from the records beneath it rather than kept separately, so the headline always reconciles with the detail underneath.`,
-      },
-      {
-        q: `Why doesn't Hobson use the word "property"?`,
-        a: `Because it means two different things, and both are correct. Someone with a single warehouse says "my property" and means one space. Someone with a twelve-suite office block says it and means the whole set. Ordinary usage, both of them.
+You can ask at any level. A unit gives you the tenancy detail, a group gives you the place, the portfolio gives you the estate view — built from the records beneath it, so the headline reconciles with the detail.
 
-So Hobson can't use the word as the name of either level without being wrong half the time. Underneath, it keeps two things separate and unambiguous: a **unit**, meaning one occupiable space, and a **unit group**, meaning a set of units in the same place.
+Hobson avoids the word "property" underneath, because it can mean either a single occupiable space or a whole building. You can still speak naturally; the precision matters in the data, not in how you ask.
 
-None of that needs enforcing when you talk to it. Ask about the property at Stanley House and you'll get an answer about Stanley House. The precision matters in the data, not in how you speak.`,
-      },
-      {
-        q: "What makes a set of units one group?",
-        a: `Being in the same place. That's the whole definition — not a shared lease, not a shared landlord, not a shared tenant. Those things are often true of a group's units, and none of them is what makes the group.
+Two groups can also sit at the same address and stay entirely separate records — one group's fire risk assessment says nothing about another's.
 
-This matters more than it sounds. The same address gets written a dozen different ways across a stack of documents, and matching two spellings proves nothing. Resolving an address to an actual location is what makes two records provably the same place — and that's what lets a document attach to the right thing rather than to something that merely reads similarly.`,
-      },
-      {
-        q: "Can two separate groups sit at the same address?",
-        a: `Yes, and more often than people expect. Three unrelated groups can share one location — twenty units between them, one address on the map.
-
-Hobson treats them as genuinely unrelated, because they are. One group's fire risk assessment says nothing whatsoever about another's, and Hobson won't report a document from one as though it covered the other. They share a point on a map and nothing else.`,
+**Documents attach to the structure; they don't create it.** You define the real-world structure and it changes when the property changes — not because a PDF arrived. One lease covering units at three addresses doesn't fuse them into one place.`,
       },
     ],
   },
+
   {
-    name: "Understanding your documents",
+    name: "Your documents",
     items: [
       {
         q: "How does Hobson make sense of all the documents?",
-        a: `Three things have to be settled about any document, and none of them is a guess.
+        a: `Three things are settled about any document, and none of them is a guess.
 
-First, where it belongs. A document names an address, and that address resolves to an actual location. That matters more than it sounds: the same building gets written a dozen different ways across a stack of paperwork, and matching two spellings proves nothing. Resolving to a location is what makes two records provably the same place, so a document lands where it belongs rather than somewhere that merely reads similarly.
+**Where it belongs.** A document names an address, and that address resolves to an actual location. The same building gets written a dozen ways across a stack of paperwork, and matching two spellings proves nothing — resolving to a location is what makes two records provably the same place.
 
-Second, which level it sits at — a single unit, or the group of units it belongs to. That's your decision, recorded as a stored fact, and it stays put. If you later reconfigure — split a floor into two suites, merge two units, restructure a site — documents don't get shuffled around after the event. Each unit and each group keeps its own history, so you can always see what happened at a given space and when.
+**Which level it sits at.** A single unit, or the group it belongs to. That's your decision, recorded and stable, so a later reconfiguration doesn't shuffle documents around after the event.
 
-Third, what kind of document it is. Some create a tenancy — a lease, a licence, a tenancy agreement. Some modify a tenancy already in existence — deeds of variation, assignments, licences to alter, rent review memoranda, notices. And some are about the asset itself rather than any tenancy — the EPC, the fire risk assessment, the valuation, the buildings insurance.
-
-That third one decides how a document is used. Anything that modifies a tenancy is linked to the tenancy it modifies and applied in the order things happened, so the record shows where a lease stands today rather than where it started. Asset documents sit outside any tenancy, but they're not static either — Hobson tracks their dates, so it knows which certificate is the current one, which has been superseded by a later version, and which has expired or is about to.`,
+**What kind of document it is.** Some create a tenancy; some modify one already in existence; some are about the asset itself. That decides how it's used: anything modifying a tenancy is applied in the order things happened, while asset documents are tracked by date so Hobson knows which certificate is current, superseded or about to expire.`,
       },
-
       {
         q: "After years of variations and assignments, how does Hobson know where a lease actually stands?",
-        a: `By reading the whole story, not just the latest page. Hobson takes the original lease, then applies every later document that changed it — in the order they happened — to work out where things stand today. A rent set at £50,000 and later raised to £60,000 by a deed of variation shows as £60,000, with both documents cited.
+        a: `By reading the whole record. Hobson takes the original lease, then applies every later document that changed it — variations, assignments, licences, review memoranda, notices — in the order they happened.
 
-Two things make this trustworthy over a long tenancy. **Nothing is ever thrown away** — a replaced position becomes history, kept permanently, so you can always ask what was true at an earlier date. And **every related document is always taken into account**, so the answer is never just what one document says.
+Nothing is thrown away. A replaced position becomes history, kept permanently, so you can always ask what was true at an earlier date.
 
-That's the difference between a Hobson answer and reading the lease yourself: the lease tells you how a tenancy *started*; Hobson tells you where it *is*.`,
+That's the difference between reading the lease yourself and asking Hobson: the lease tells you how a tenancy started; Hobson tells you where it is.`,
       },
-    ],
-  },
-  {
-    name: "Hobson never guesses",
-    items: [
       {
         q: "When a lease reaches its end date, does Hobson assume the tenancy is over?",
-        a: `No — and that reflects a principle that runs through everything Hobson does: documents record what should happen; only real events record what did.
+        a: `No. A term end date is a milestone on paper, not proof of what happened. Tenants routinely stay on after a term expires.
 
-A term end date is a milestone on paper. On its own it isn't proof that the tenancy has ended or that the tenant has left — those are separate things, they happen on their own dates, and often they don't happen when the term runs out at all. Tenants routinely stay on after a term expires.
+A notice doesn't settle it either — a notice records an intention, not an outcome.
 
-So Hobson never treats a date passing as an event in its own right. It reports a tenancy as ended, or a unit as empty, only when something actually confirms it — not because the calendar moved, and not because a notice is sitting in the file (a notice records an intention, not an outcome). Where nothing confirms it, Hobson says so plainly and marks it unconfirmed, rather than quietly filling the silence with an assumption.
-
-That's the philosophy in a line: Hobson tells you what the documents establish and what they don't — and never guesses at the difference.`,
+So Hobson reports a tenancy as ended, or a unit as empty, only when something confirms it. Where nothing does, it marks the position unconfirmed and says so.`,
       },
       {
         q: "How does Hobson think about the different kinds of money in a lease?",
-        a: `It treats them as genuinely different things — because treating one kind of money as another is a classic source of wrong numbers.
+        a: `It keeps four things apart, because treating one as another is a classic source of wrong numbers:
 
-Hobson separates four things that are easy to confuse: **the price of being there** (rent or a licence fee, recurring); **reimbursing the landlord's costs** (service charge, insurance — kept apart from rent); **one-off deal money** (a premium, a fit-out contribution, a surrender payment); and **money that may never be paid** (overage, clawback, profit share — due only if a future event happens).
+**The price of being there** — rent or a licence fee, recurring.
 
-Because Hobson knows which is which, it won't report a one-off premium as though it were recurring rent, or present a "might-never-happen" overage as a certain liability. Each kind is handled by its own rules, so the figures you see mean exactly what they say.`,
-      },
-      {
-        q: "Will Hobson ever guess a rent it can't yet work out?",
-        a: `No — and this points to a principle at the heart of how Hobson works: it reports what the documents establish, and stays honest about what they don't.
+**Reimbursing the landlord's costs** — service charge and insurance, kept separate from rent.
 
-Your rent really has two parts — the figure payable now, and the rule that will change it later (a market review, an index-linked uplift, a fixed step). Hobson keeps them distinct, because they're different kinds of fact: one is a printed amount, the other is a mechanism for reaching a future one. It records both.
+**One-off deal money** — a premium, a fit-out contribution, a surrender payment.
 
-But where that mechanism hasn't yet produced a number — a review that hasn't happened, an index not yet applied — Hobson tells you the future rate isn't established, rather than quietly carrying today's figure forward. It would rather show you a known gap than a confident guess.
+**Money that may never be paid** — overage, clawback, profit share, due only if a future event happens.
 
-That's the same principle you'll find everywhere in Hobson: say what's established, flag what isn't, and never fill the space with an assumption.`,
-      },
-      {
-        q: "What does Hobson do when my documents contradict each other?",
-        a: `It shows you both sides — it never quietly picks one.
-
-Property documents disagree more often than you'd expect: a lease sets one break date and a later deed sets another; a figure is stated one way in one place and differently in another. When that happens, Hobson doesn't hide the mess by choosing a winner, and it doesn't split the difference into a vague middle — a blurred answer is more dangerous than either clear position.
-
-Instead it sets out both positions plainly, each with the document and wording it came from, and tells you the documents conflict. Where one position is the safer one to rely on until the matter is settled, it will say so — but it leaves both facts in full view, so you can see exactly what you're deciding between.
-
-That's the difference between an answer you can act on and one that only looks tidy.`,
+So a one-off premium is never reported as recurring rent, and a contingent overage is never presented as a certain liability.`,
       },
     ],
   },
-
-
 ];
 
 const LearnFaq = () => {
