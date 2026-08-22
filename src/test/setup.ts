@@ -78,3 +78,11 @@ vi.mock("@/integrations/supabase/client", () => {
     },
   };
 });
+
+// jsdom does not implement Element.prototype.scrollTo (used by auto-follow scroll containers)
+if (!(Element.prototype as any).scrollTo) {
+  (Element.prototype as any).scrollTo = function () {};
+}
+if (!(Element.prototype as any).scrollIntoView) {
+  (Element.prototype as any).scrollIntoView = function () {};
+}
