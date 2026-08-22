@@ -7,7 +7,7 @@ import { GlobalHeader } from "@/components/GlobalHeader";
 const BRASS = "#B4914F";
 const INK = "#2D2D2D";
 const MUTED = "#6E6A62";
-const LAVENDER_BG = "#F1EBDE";
+
 const LAVENDER_BORDER = "#E8E1D4";
 const PAPER = "#FCFAF7";
 const RULE = "#F7EDDC";
