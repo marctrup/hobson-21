@@ -1,4 +1,4 @@
-import { FileText, ArrowRight, Brain, CheckCircle, Users, FolderOpen, Search, RotateCcw, UserCheck, Plus, ArrowUp } from "lucide-react";
+import { CheckCircle, FolderOpen, Search, RotateCcw, UserCheck, Plus, ArrowUp } from "lucide-react";
 import { CONTENT } from "@/config/content";
 
 export const PropertyManagementVisualization = () => {

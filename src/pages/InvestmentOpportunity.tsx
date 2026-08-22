@@ -11,27 +11,21 @@ import {
   Lock,
   FileText,
   Download,
-  BarChart,
   TrendingUp,
-  Code,
   Users,
   Target,
   Map,
   DollarSign,
   PieChart,
   Briefcase,
-  BookOpen,
-  X,
   FileSpreadsheet,
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { OptimizedImage } from "@/components/OptimizedImage";
 import hobsonLogo from "/hobson-logo.png";
-import mvpArchitecture from "@/assets/mvp-ai-architecture.png";
 import hobsonDevicesCombined from "@/assets/hobson-devices-combined.png";
 import aiArchitectureDiagram from "@/assets/ai-architecture-diagram.jpg";
 
-import revenueGrowthChart from "@/assets/revenue-growth-chart.png";
 import { CompetitiveLandscapeVisual } from "@/components/investor/CompetitiveLandscapeVisual";
 import { CompetitiveMatrixVisual } from "@/components/investor/CompetitiveMatrixVisual";
 import { EuropeanGlobalVisual } from "@/components/investor/EuropeanGlobalVisual";
@@ -100,10 +94,8 @@ import { FinancialsExecutiveSummaryVisual } from "@/components/investor/Financia
 import AssumptionsVisual from "@/components/investor/AssumptionsVisual";
 
 import CapitalRaiseStrategyVisual from "@/components/investor/CapitalRaiseStrategyVisual";
-import { getCompetitorPdfContent } from "@/components/investor/data/competitorData";
 import { generateCardPdf, generateFullBusinessPlanPdf, CardSection, BusinessPlanCards, FundingRequirement } from "@/utils/investmentPdfGenerator";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
-import { jsPDF } from "jspdf";
 
 // Section data with pages
 const sections = [

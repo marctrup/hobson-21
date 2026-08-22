@@ -1,5 +1,5 @@
 import React from "react";
-import { Palette, Target, Eye, MessageSquare, Sparkles, Globe, CheckCircle, ArrowRight, Layers, Users, TrendingUp, Calendar, Linkedin, Search, Monitor, BarChart3 } from "lucide-react";
+import { Palette, Target, Eye, MessageSquare, Sparkles, Globe, CheckCircle, ArrowRight, Layers, TrendingUp, Calendar, Linkedin, Search, Monitor, BarChart3 } from "lucide-react";
 
 export const BrandStrategyVisual: React.FC = () => {
   return (

@@ -1,5 +1,4 @@
-import { Badge } from "@/components/ui/badge";
-import { MessageCircle, Map, FileText, TrendingUp, CheckCircle } from "lucide-react";
+import { MessageCircle, Map, FileText, TrendingUp } from "lucide-react";
 import FeatureShowcase from "@/components/features/FeatureShowcase";
 import { CONTENT } from "@/config/content";
 

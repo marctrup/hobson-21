@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { OptimizedImage } from "@/components/OptimizedImage";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
-import { Star, CheckCircle, Users, Clock, ArrowRight, FileText, Sparkles, Trophy, Target, Zap, Award, Mail, Brain, Rocket, Shield } from "lucide-react";
+import { Star, Clock, ArrowRight, FileText, Sparkles, Trophy, Target, Award, Brain, Rocket, Shield } from "lucide-react";
 import confetti from 'canvas-confetti';
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";

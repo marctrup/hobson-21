@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState, useCallback } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
@@ -25,8 +25,6 @@ import {
   InspectorComposer,
   InspectorWorkArea,
   DEFAULT_HS_REQUIREMENTS,
-  DEFAULT_FINANCIAL_REQUIREMENTS,
-  AREA_DEFS,
   RESEARCH_BY_AREA,
   augmentComplianceRows,
   type ComplianceArea,
@@ -1488,7 +1486,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+   
   }, []);
   const [adminMode, setAdminMode] = useState(false);
   const [adminCharacter, setAdminCharacter] = useState<AdminCharacter | null>(null);

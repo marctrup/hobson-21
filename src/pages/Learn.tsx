@@ -9,7 +9,6 @@ import {
 } from "lucide-react";
 import { GlobalHeader } from "@/components/GlobalHeader";
 
-import owlMascot from "@/assets/owl-mascot.png";
 
 type HubCard = {
   to?: string;

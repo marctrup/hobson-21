@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useSearchParams } from "react-router-dom";
-import { Plus, Edit, Trash2, Eye, Calendar, Clock, ChevronUp, ChevronDown, Megaphone } from "lucide-react";
+import { Plus, Edit, Trash2, Eye, Calendar, ChevronUp, ChevronDown, Megaphone } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";

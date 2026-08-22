@@ -1,10 +1,9 @@
-import React, { useState, useCallback } from "react";
+import { useState, useCallback } from "react";
 import { getEdgeFunctionUrl } from "@/utils/supabaseHelpers";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { useToast } from "@/hooks/use-toast";
-import { supabase } from "@/integrations/supabase/client";
 
 const formSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),

@@ -1,4 +1,4 @@
-import { FileText, ArrowRight, Brain, CheckCircle, Clock, AlertTriangle } from "lucide-react";
+import { ArrowRight, Brain, CheckCircle, Clock, AlertTriangle } from "lucide-react";
 
 export const PropertyFlowVisualization = () => {
   return (

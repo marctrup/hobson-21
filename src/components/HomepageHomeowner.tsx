@@ -1,12 +1,9 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { Menu, X, Brain, Zap, Search, Shield, Users, Globe, Building2, TrendingUp, MapPin, PenTool, CreditCard, Heart, ArrowRight, MessageCircle, FileText, Lightbulb, Target, CheckCircle } from "lucide-react";
+import { Menu, X, ArrowRight } from "lucide-react";
 import { SimpleButton } from "@/components/ui/simple-button";
-import { Badge } from "@/components/ui/badge";
-import { SimpleCard, SimpleCardContent } from "@/components/ui/simple-card";
 import { OptimizedImage } from "@/components/OptimizedImage";
 import { Helmet } from "react-helmet-async";
-import { Dialog, DialogContent, DialogTrigger, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { PropertyManagementVisualizationHomeowner } from "@/components/homepage/PropertyManagementVisualizationHomeowner";
 import { HomepageGeorgiaVideoHomeowner } from "@/components/videos/HomepageGeorgiaVideoHomeowner";
 import { HomepagePilotVideoHomeowner } from "@/components/videos/HomepagePilotVideoHomeowner";

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Settings, Users, Code, Shield, TrendingUp, CheckCircle2, AlertTriangle, Target, Lightbulb, Building, Cpu, Eye, Handshake, Zap } from 'lucide-react';
+import { Settings, Users, CheckCircle2, AlertTriangle, Cpu, Eye, Handshake, Zap } from 'lucide-react';
 
 export const InternalCapabilityAssessmentVisual = () => {
   const strengths = [

@@ -151,14 +151,14 @@ export const useDeleteCommunication = () => {
             .from("crm-comm-attachments")
             .remove(atts.map((a) => a.storage_path));
           if (rmErr) {
-            // eslint-disable-next-line no-console
+             
             console.warn(
               "[crm] communication deleted, but storage cleanup failed:",
               rmErr.message,
             );
           }
         } catch (e) {
-          // eslint-disable-next-line no-console
+           
           console.warn("[crm] storage cleanup threw:", e);
         }
       }

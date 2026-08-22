@@ -1,5 +1,5 @@
 import React from "react";
-import { AlertTriangle, Layers, Building2, FileText, Shield, Calendar, DollarSign, Wrench, MessageSquare, ArrowRight } from "lucide-react";
+import { AlertTriangle, Layers, Building2, FileText, Calendar, DollarSign, Wrench, MessageSquare, ArrowRight } from "lucide-react";
 
 const ProductVisionVisual: React.FC = () => {
   const industryPains = [

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Building2, Users, User, TrendingUp, AlertTriangle, Target } from 'lucide-react';
+import { Building2, Users, User, AlertTriangle, Target } from 'lucide-react';
 
 export const CustomerSegmentationVisual = () => {
   const segments = [

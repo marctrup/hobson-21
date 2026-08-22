@@ -3,32 +3,11 @@ import { Link } from "react-router-dom";
 import {
   Menu,
   X,
-  Brain,
-  Zap,
-  Search,
-  Shield,
-  Users,
-  Globe,
-  Building2,
-  TrendingUp,
-  MapPin,
-  PenTool,
-  CreditCard,
-  Heart,
   ArrowRight,
-  MessageCircle,
-  FileText,
-  Lightbulb,
-  Target,
-  CheckCircle,
-  FileHeart,
 } from "lucide-react";
 import { SimpleButton } from "@/components/ui/simple-button";
-import { Badge } from "@/components/ui/badge";
-import { SimpleCard, SimpleCardContent } from "@/components/ui/simple-card";
 import { OptimizedImage } from "@/components/OptimizedImage";
 import { Helmet } from "react-helmet-async";
-import { Dialog, DialogContent, DialogTrigger, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { PropertyManagementVisualization } from "@/components/homepage/PropertyManagementVisualization";
 import { HomepageGeorgiaVideo } from "@/components/videos/HomepageGeorgiaVideo";
 import { FeaturesSection } from "@/components/homepage/FeaturesSection";

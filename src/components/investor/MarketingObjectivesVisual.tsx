@@ -1,5 +1,5 @@
 import React from "react";
-import { Target, TrendingUp, Users, Eye, Heart, Repeat, MessageSquare, Globe, CheckCircle, ArrowRight, BarChart3, Megaphone, Mail, Linkedin, MousePointer } from "lucide-react";
+import { Target, TrendingUp, Eye, Heart, Globe, CheckCircle, ArrowRight, BarChart3, Megaphone, MousePointer } from "lucide-react";
 
 const smartObjectives = [
   {

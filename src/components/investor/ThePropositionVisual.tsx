@@ -1,5 +1,5 @@
 import React from 'react';
-import { Target, Lightbulb, CheckCircle2, Zap, Users, Shield, TrendingUp, ArrowRight, FileText, Clock, DollarSign, Globe, MessageSquare, Megaphone, UserCheck, Settings, Eye, Calendar } from 'lucide-react';
+import { Target, Lightbulb, CheckCircle2, Users, ArrowRight, DollarSign, Globe, Megaphone, Settings, Eye } from 'lucide-react';
 
 export const ThePropositionVisual = () => {
   return (

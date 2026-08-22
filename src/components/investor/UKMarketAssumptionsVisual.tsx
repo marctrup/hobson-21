@@ -1,5 +1,5 @@
 import React from 'react';
-import { Building2, Users, TrendingUp, ExternalLink, MapPin, Store, Utensils, Dumbbell, Ruler, FileSearch } from 'lucide-react';
+import { Building2, Users, TrendingUp, MapPin, Store, Utensils, Dumbbell, Ruler, FileSearch } from 'lucide-react';
 
 export const UKMarketAssumptionsVisual = () => {
   const realEstateTypes = [

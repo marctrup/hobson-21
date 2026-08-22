@@ -1,5 +1,5 @@
 import React from 'react';
-import { TrendingUp, CheckCircle2, Rocket, Code, Users, FileCheck } from 'lucide-react';
+import { TrendingUp, Rocket, Code, Users, FileCheck } from 'lucide-react';
 
 export const RaiseVisual = () => {
   const useOfFunds = [

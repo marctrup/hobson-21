@@ -14,7 +14,7 @@ import {
   Menu,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Sheet, SheetContent } from "@/components/ui/sheet";
 import { useAuth } from "@/hooks/useAuth";
 import { useCrmAccess } from "@/hooks/crm/useCrmAccess";
 import { useWorkspaceName } from "@/hooks/crm/useWorkspaceName";

@@ -10,8 +10,6 @@ import {
   CheckCircle,
   FileText,
   Target,
-  Scale,
-  Banknote,
   Percent,
   Link as LinkIcon,
 } from "lucide-react";

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Target, TrendingUp, Users, Rocket, Shield, Globe, Zap, Award, CheckCircle2, BarChart3, Calendar, Building2, Megaphone, Settings, DollarSign, ArrowRight } from 'lucide-react';
+import { Target, TrendingUp, Users, Rocket, CheckCircle2, BarChart3, Megaphone, Settings, DollarSign, ArrowRight } from 'lucide-react';
 
 const BusinessObjectivesVisual = () => {
   return (

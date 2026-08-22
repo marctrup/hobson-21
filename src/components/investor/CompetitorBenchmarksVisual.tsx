@@ -1,4 +1,4 @@
-import { Target, Building2, Users, Zap, TrendingUp, Search, Share2, Lightbulb } from "lucide-react";
+import { Target, Users, TrendingUp, Search, Share2, Lightbulb } from "lucide-react";
 
 interface Competitor {
   name: string;

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useParams, Link, Navigate } from "react-router-dom";
-import { Calendar, Clock, ArrowLeft, Tag } from "lucide-react";
+import { Calendar, ArrowLeft } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";

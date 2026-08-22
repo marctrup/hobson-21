@@ -2,7 +2,7 @@ import { Helmet } from "react-helmet-async";
 import { useEffect, useState } from "react";
 import { useParams, Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { ArrowLeft, Star, Plus, Trash2, Mail, Phone, Globe, MapPin } from "lucide-react";
+import { ArrowLeft, Star, Plus, Trash2 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";

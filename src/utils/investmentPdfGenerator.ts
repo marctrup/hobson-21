@@ -14,7 +14,7 @@
  */
 
 import { jsPDF } from "jspdf";
-import { getPdfContentForComponent, getExecutiveContextStructuredData, getSituationAnalysisStructuredData, getCustomerPersonasStructuredData, getCustomerUserJourneysStructuredData, getMarketDescriptionStructuredData, getCompetitorBenchmarksStructuredData, getCustomerOnlineBehaviourStructuredData, getWhyNowStructuredData, getSWOTAnalysisStructuredData, getCustomerSegmentationStructuredData, getCustomersMarketSourcesStructuredData, getProductVisionStructuredData, getEarlyRoadmapStructuredData, getTechStackStructuredData, getCommercialisationStrategyStructuredData, getCommercialsStructuredData, getHEUPricingStructuredData, getTeamCredibilityStructuredData, getFoundingLeadershipStructuredData, getTeamStructuredData, getMarketingObjectivesStructuredData, getBrandStrategyStructuredData, getBrandIntegrityStructuredData, getSegmentationStrategyStructuredData, getContentEngagementStrategyStructuredData, getPrimaryConversionChannelsStructuredData, getAcquisitionExecutiveSummaryStructuredData, getGoToMarketStrategyStructuredData, getCustomerSegmentationVisualStructuredData, getFinancialsExecutiveSummaryStructuredData, getBurnRateAssumptionsDetailedStructuredData, getPESTLEAnalysisStructuredData, getInternalCapabilityAssessmentStructuredData, getOurVisionStructuredData, getStrategicApproachStructuredData, getRaiseStructuredData, getAssumptionsStructuredData } from "@/components/investor/data/pdfContentProviders";
+import { getPdfContentForComponent, getExecutiveContextStructuredData, getSituationAnalysisStructuredData, getCustomerPersonasStructuredData, getCustomerUserJourneysStructuredData, getMarketDescriptionStructuredData, getCompetitorBenchmarksStructuredData, getCustomerOnlineBehaviourStructuredData, getWhyNowStructuredData, getSWOTAnalysisStructuredData, getCustomerSegmentationStructuredData, getCustomersMarketSourcesStructuredData, getProductVisionStructuredData, getTechStackStructuredData, getCommercialisationStrategyStructuredData, getCommercialsStructuredData, getHEUPricingStructuredData, getTeamCredibilityStructuredData, getFoundingLeadershipStructuredData, getTeamStructuredData, getMarketingObjectivesStructuredData, getBrandStrategyStructuredData, getBrandIntegrityStructuredData, getFinancialsExecutiveSummaryStructuredData, getPESTLEAnalysisStructuredData, getInternalCapabilityAssessmentStructuredData, getOurVisionStructuredData, getStrategicApproachStructuredData, getRaiseStructuredData, getAssumptionsStructuredData } from "@/components/investor/data/pdfContentProviders";
 import { competitorData } from "@/components/investor/data/competitorData";
 
 // ============================================================================
@@ -1868,7 +1868,7 @@ const renderWhyNowSpeed = (
   ];
   
   const advColWidth = (maxWidth - 16) / 2;
-  let advY = yPosition + 18;
+  const advY = yPosition + 18;
   advantages.forEach((adv, idx) => {
     const col = idx % 2;
     const row = Math.floor(idx / 2);
@@ -2681,7 +2681,7 @@ const renderSectorScaleOpportunity = (
   ];
 
   const colWidth = (maxWidth - 30) / 2;
-  let activityY = yPosition + 32;
+  const activityY = yPosition + 32;
   activities.forEach((activity, idx) => {
     const col = idx % 2;
     const row = Math.floor(idx / 2);
@@ -3399,7 +3399,7 @@ const renderProductVision = (
   doc.text(data.coreCapabilities.intro, margin + 8, yPosition + 22);
   
   // 2x3 grid of capabilities
-  let capY = yPosition + 30;
+  const capY = yPosition + 30;
   coreCapabilities.forEach((cap, idx) => {
     const col = idx % 2;
     const row = Math.floor(idx / 2);
@@ -3469,7 +3469,7 @@ const renderEarlyRoadmap = (
   doc.text("Confirmed market need for:", margin + 12, yPosition + 32);
   
   const phase1Items = ["Compliance risk", "Lease complexity", "Arrears management", "Maintenance chaos", "Portfolio fragmentation"];
-  let p1Y = yPosition + 40;
+  const p1Y = yPosition + 40;
   phase1Items.forEach((item, idx) => {
     const col = idx % 3;
     const row = Math.floor(idx / 3);
@@ -5529,7 +5529,7 @@ const renderPLGrowth = (
   doc.setFont("helvetica", "bold");
   // Draw Y-axis label text vertically (char by char)
   const yLabel = "GBP M";
-  let yLabelY = chartY + chartHeight / 2 + 6;
+  const yLabelY = chartY + chartHeight / 2 + 6;
   doc.text(yLabel, margin + 4, yLabelY, { angle: 90 });
   
   // Y-axis tick labels
@@ -6105,7 +6105,7 @@ const renderExecutiveContext = (
   });
   yPosition += inflexionHeight + spacing.cardGap;
 
-  let textY = 0;
+  const textY = 0;
 
   // 2. Pressures - 2x2 grid
   fitPage(50);
@@ -13290,7 +13290,7 @@ const renderLeadGeneration = (
     doc.setFontSize(fontSize.caption);
     doc.setFont("helvetica", "normal");
     
-    let tacticX = margin + box.paddingX;
+    const tacticX = margin + box.paddingX;
     source.tactics.forEach((tactic, tIdx) => {
       const tacticY = yPosition + 24 + Math.floor(tIdx / 2) * lineHeight.body;
       const tacticXPos = tacticX + (tIdx % 2) * (maxWidth / 2 - box.paddingX);

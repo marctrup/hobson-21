@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { CheckCircle2, ArrowRight, Users, Zap, Shield, Target } from "lucide-react";
+import { ArrowRight, Users, Zap, Shield, Target } from "lucide-react";
 import { Helmet } from "react-helmet-async";
 import { GlobalHeader } from "@/components/GlobalHeader";
 import { SimpleButton } from "@/components/ui/simple-button";
