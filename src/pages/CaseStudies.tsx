@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { ArrowRight, ArrowLeft, Building2, type LucideIcon } from "lucide-react";
 import { GlobalHeader } from "@/components/GlobalHeader";
-import owlMascot from "@/assets/owl-mascot.png";
+
 
 const BRASS = "#B4914F";
 const INK = "#2D2D2D";
