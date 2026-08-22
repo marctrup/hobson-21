@@ -314,12 +314,6 @@ const LearnFaq = () => {
           }}
         >
           <div className="mx-auto max-w-3xl px-6 pt-16 pb-12 text-center">
-            <div
-              className="inline-flex items-center justify-center w-14 h-14 mb-6 rounded-full"
-              style={{ backgroundColor: "#F1EBDE", border: "1px solid #E8E1D4" }}
-            >
-              <img src={owlMascot} alt="" className="w-9 h-9" />
-            </div>
             <p
               className="text-[11px] font-semibold uppercase tracking-[0.24em]"
               style={{ color: "#B4914F" }}
