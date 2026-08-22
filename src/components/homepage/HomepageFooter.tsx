@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import { CONTENT } from "@/config/content";
-import hobsonLogo from "/hobson-logo.png";
 
 export const HomepageFooter = () => {
   const text = CONTENT.sharedFooter;
@@ -11,7 +10,7 @@ export const HomepageFooter = () => {
         <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
           <div className="col-span-2">
             <div className="mb-4">
-              <img src={hobsonLogo} alt="Hobson's AI" className="h-16" loading="lazy" decoding="async" />
+              <span className="text-3xl font-semibold text-foreground tracking-tight">Hobson</span>
             </div>
           </div>
           
