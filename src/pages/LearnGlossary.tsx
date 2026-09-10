@@ -44,16 +44,6 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
       "The connected sequence of documents and facts relating to the same occupational relationship over time.",
   },
   {
-    term: "Chain Status",
-    definition:
-      "The position a fact holds within a chain: Pre-occupational, Current, Future or Superseded.",
-  },
-  {
-    term: "Classifier Prompt",
-    definition:
-      "The instructions Hobson uses to identify what something is and assign it to the correct category.",
-  },
-  {
     term: "Confirmed Surrender",
     definition:
       "A surrender that has been completed and is effective, rather than merely proposed or notified.",
@@ -67,11 +57,6 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
     term: "Contingent Consideration",
     definition:
       "A one-off payment that becomes due only if a specified future event happens, and may therefore never become payable.",
-  },
-  {
-    term: "Current",
-    definition:
-      "A fact that applies now within its chain.",
   },
   {
     term: "Deed",
@@ -114,11 +99,6 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
       "A suggested next question based only on information Hobson has already established and which has not already been answered.",
   },
   {
-    term: "Future",
-    definition:
-      "A fact that has been established but does not yet apply.",
-  },
-  {
     term: "Geolocation",
     definition:
       "The geographic location assigned to a unit, expressed as longitude and latitude.",
@@ -132,11 +112,6 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
     term: "Holding Over",
     definition:
       "Where an occupier remains in occupation after the contractual term has expired.",
-  },
-  {
-    term: "Judge",
-    definition:
-      "The LLM judge stage that decides whether Hobson has enough evidence to answer a question or whether more information needs to be gathered.",
   },
   {
     term: "Lease",
@@ -244,11 +219,6 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
     term: "Statutory Declaration",
     definition:
       "A formal statement in which a person declares specified facts or circumstances to be true.",
-  },
-  {
-    term: "Summary Narrator Prompt",
-    definition:
-      "The instructions Hobson uses to answer follow-up questions from what has already been said in the conversation, without carrying out new research, retrieval or calculations.",
   },
   {
     term: "Superseded",
