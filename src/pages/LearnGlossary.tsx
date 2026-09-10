@@ -159,11 +159,6 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
       "A tool that reads information already recorded in Hobson and applies fixed rules to answer a question.",
   },
   {
-    term: "Group-level Lease",
-    definition:
-      "A lease recorded against a unit group rather than an individual unit.",
-  },
-  {
     term: "Holding Over",
     definition:
       "Where an occupier remains in occupation after the contractual term has expired.",
