@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { Helmet } from "react-helmet-async";
-import { Search, BookOpen } from "lucide-react";
+import { Search } from "lucide-react";
 import { GlobalHeader } from "@/components/GlobalHeader";
 
 const BRASS = "#B4914F";
@@ -14,8 +14,29 @@ const RULE = "#F7EDDC";
 
 const LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 
-// Placeholder glossary terms — real terms will be added here.
-const TERMS: { term: string; definition: string }[] = [];
+// Glossary terms — add new entries here; they are sorted and grouped automatically.
+const TERMS: { term: string; definition: string }[] = [
+  {
+    term: "Agent",
+    definition:
+      "A Hobson component that can research, assess information and make recommendations, but does not change the property record itself.",
+  },
+  {
+    term: "Deterministic",
+    definition:
+      "Designed to produce the same result when given the same information and rules.",
+  },
+  {
+    term: "Get-tool",
+    definition:
+      "A tool that reads information already recorded in Hobson and applies fixed rules to answer a question.",
+  },
+  {
+    term: "Write tool",
+    definition:
+      "A tool that records an approved change to information held in Hobson.",
+  },
+];
 
 const LearnGlossary = () => {
   const [query, setQuery] = useState("");
@@ -25,7 +46,7 @@ const LearnGlossary = () => {
       (t) =>
         t.term.toLowerCase().includes(query.toLowerCase()) ||
         t.definition.toLowerCase().includes(query.toLowerCase())
-    );
+    ).sort((a, b) => a.term.localeCompare(b.term));
     const map = new Map<string, { term: string; definition: string }[]>();
     for (const t of filtered) {
       const letter = t.term[0]?.toUpperCase() ?? "#";
@@ -77,8 +98,7 @@ const LearnGlossary = () => {
               className="mt-5 text-base sm:text-lg leading-relaxed max-w-xl mx-auto"
               style={{ color: MUTED }}
             >
-              Plain-English explanations of the property, document and Hobson
-              terms used across Hobson.
+              Plain-English definitions of the terms used across Hobson.
             </p>
             <div
               className="mx-auto mt-10 h-px w-24"
@@ -139,14 +159,8 @@ const LearnGlossary = () => {
               className="rounded-[20px] bg-white p-10 sm:p-14 text-center shadow-sm"
               style={{ border: `1px solid ${LAVENDER_BORDER}` }}
             >
-              <div
-                className="mx-auto inline-flex items-center justify-center w-12 h-12 rounded-xl"
-                style={{ backgroundColor: LAVENDER_BG, border: `1px solid ${LAVENDER_BORDER}` }}
-              >
-                <BookOpen className="h-5 w-5" style={{ color: BRASS }} />
-              </div>
               <h2
-                className="mt-6 font-serif text-2xl font-normal tracking-tight"
+                className="font-serif text-2xl font-normal tracking-tight"
                 style={{ color: INK }}
               >
                 The glossary is being prepared
