@@ -251,6 +251,11 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
       "Where a tenancy continues after the contractual term because the law allows or requires it to continue.",
   },
   {
+    term: "Schema",
+    definition:
+      "The defined structure and fields used to store information extracted from a document.",
+  },
+  {
     term: "Side Letter",
     definition:
       "A document that sits alongside another agreement and supplements, qualifies or modifies how it operates between particular parties.",
