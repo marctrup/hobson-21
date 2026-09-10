@@ -74,6 +74,11 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
       "A tool that reads information already recorded in Hobson and applies fixed rules to answer a question.",
   },
   {
+    term: "Holding Over",
+    definition:
+      "Where an occupier remains in occupation after the contractual term has expired.",
+  },
+  {
     term: "Occupation Payment",
     aliases: ["occupancy payment"],
     definition:
@@ -90,6 +95,11 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
       "A payment towards the costs of operating or maintaining a property, such as service charge or insurance, rather than payment for the right to occupy.",
   },
   {
+    term: "Periodic Holdover",
+    definition:
+      "Where a tenancy continues on a periodic basis after the contractual term has expired.",
+  },
+  {
     term: "Portfolio",
     definition:
       "The whole collection of units and unit groups being managed together for reporting and oversight.",
@@ -99,6 +109,16 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
     fullName: "Right to Occupy",
     definition:
       "The document that creates the right to occupy a property, such as a lease, licence to occupy or tenancy agreement. It forms the starting point of the tenancy chain.",
+  },
+  {
+    term: "Statutory Continuation",
+    definition:
+      "Where a tenancy continues after the contractual term because the law allows or requires it to continue.",
+  },
+  {
+    term: "Term End Date",
+    definition:
+      "The date on which the contractual term expires. It does not by itself mean the tenancy has ended or the occupier has left.",
   },
   {
     term: "Time-Bound",
@@ -124,6 +144,11 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
     term: "Unit Group",
     definition:
       "A collection of units grouped together within Hobson.",
+  },
+  {
+    term: "Vacate Date",
+    definition:
+      "The date an occupier is expected or planned to leave. It does not by itself confirm that they actually left.",
   },
   {
     term: "Write tool",
