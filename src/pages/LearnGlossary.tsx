@@ -99,11 +99,6 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
       "A suggested next question based only on information Hobson has already established and which has not already been answered.",
   },
   {
-    term: "Future",
-    definition:
-      "A fact that has been established but does not yet apply.",
-  },
-  {
     term: "Geolocation",
     definition:
       "The geographic location assigned to a unit, expressed as longitude and latitude.",
