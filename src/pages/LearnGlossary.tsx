@@ -321,11 +321,6 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
       "A collection of units grouped together within Hobson.",
   },
   {
-    term: "Unit-level Lease",
-    definition:
-      "A lease recorded against an individual unit rather than the unit group.",
-  },
-  {
     term: "Vacate Date",
     definition:
       "The date an occupier is expected or planned to leave. It does not by itself confirm that they actually left.",
