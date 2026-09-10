@@ -38,17 +38,25 @@ const CATEGORIES: Category[] = [
       },
       {
         q: "How is Hobson different from an AI co-worker like Claude?",
-        a: `Claude is a model. Hobson is a property system built around one.
+        a: `Claude and Hobson both use large language models. The difference is that Claude is a generalist AI, while Hobson is a specialist property system built around AI.
 
-Models are good at reading and understanding language, and Hobson uses one for exactly that. Four things sit around it:
+Claude is designed to understand and generate language across a very wide range of tasks. Hobson uses the same underlying type of technology, but places it inside a controlled system designed specifically for property.
 
-**A permanent property record.** Each document is turned into structured facts, held for good and queryable across the whole portfolio — so "total rent across 500 units" comes from records, not recollection.
+Four things make that different:
 
-**Fixed rules for the sums.** Figures, dates and calculations are worked out by set rules rather than improvised by the model.
+**A permanent property record.**
+Hobson turns documents into structured property facts that are stored, linked to the asset and available across the portfolio. So a question such as "what is the total rent across 500 units?" is answered from the property record, not from documents being reread each time.
 
-**Evidence attached to the fact.** The source wording is captured when the document is read and travels with the figure, so a reference can't be composed afterwards to justify a number.
+**Fixed rules for calculations.**
+Figures, dates and calculations can be handled by defined rules rather than being worked out freely by the language model.
 
-**Accuracy that's actually measured.** Hobson is tested against real property documents where experts have established the right answer, so how accurate it is is known rather than assumed.`,
+**Evidence attached to every fact.**
+The source wording is captured when the document is processed and remains linked to the extracted fact, so the answer can be traced back to its evidence.
+
+**Accuracy that is measured.**
+Hobson is tested against real property documents where the correct answers have been established by property experts. Its performance can therefore be measured against a known standard.
+
+So the difference is not that one uses an LLM and the other does not. Claude is a general-purpose AI model. Hobson is a specialist property platform that uses LLMs within a structured, controlled and measurable system.`,
       },
       {
         q: "Will Hobson give me the same answer twice?",
