@@ -141,6 +141,16 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
       "Where a tenancy continues after the contractual term because the law allows or requires it to continue.",
   },
   {
+    term: "Side Letter",
+    definition:
+      "A document that sits alongside another agreement and supplements, qualifies or modifies how it operates between particular parties.",
+  },
+  {
+    term: "Statutory Declaration",
+    definition:
+      "A formal statement in which a person declares specified facts or circumstances to be true.",
+  },
+  {
     term: "Term End Date",
     definition:
       "The date on which the contractual term expires. It does not by itself mean the tenancy has ended or the occupier has left.",
