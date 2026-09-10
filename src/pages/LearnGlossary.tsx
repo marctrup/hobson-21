@@ -64,11 +64,6 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
       "A formally executed document used to create, transfer, vary, release or confirm legal rights.",
   },
   {
-    term: "Deterministic",
-    definition:
-      "Designed to produce the same result when given the same information and rules.",
-  },
-  {
     term: "Document Family",
     definition:
       "The classification Hobson gives every document: RTO, AMD or ACD. It determines whether the document starts a tenancy chain, forms part of that chain, or sits separately from it.",
