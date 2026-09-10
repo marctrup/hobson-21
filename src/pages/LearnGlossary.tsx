@@ -49,6 +49,16 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
       "A Hobson component that can research, assess information and make recommendations, but does not change the property record itself.",
   },
   {
+    term: "Chain",
+    definition:
+      "The connected sequence of documents and facts relating to the same occupational relationship over time.",
+  },
+  {
+    term: "Chain Status",
+    definition:
+      "The position a fact holds within a chain: Pre-occupational, Current, Future or Superseded.",
+  },
+  {
     term: "Classifier Prompt",
     definition:
       "The instructions Hobson uses to identify what something is and assign it to the correct category.",
@@ -69,6 +79,11 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
       "A one-off payment that becomes due only if a specified future event happens, and may therefore never become payable.",
   },
   {
+    term: "Current",
+    definition:
+      "A fact that applies now within its chain.",
+  },
+  {
     term: "Deed",
     definition:
       "A formally executed document used to create, transfer, vary, release or confirm legal rights.",
@@ -82,6 +97,16 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
     term: "Document Family",
     definition:
       "The classification Hobson gives every document: RTO, AMD or ACD. It determines whether the document starts a tenancy chain, forms part of that chain, or sits separately from it.",
+  },
+  {
+    term: "Effective Date",
+    definition:
+      "The date on which a document itself takes effect.",
+  },
+  {
+    term: "Future",
+    definition:
+      "A fact that has been established but does not yet apply.",
   },
   {
     term: "Get-tool",
@@ -145,10 +170,20 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
       "The whole collection of units and unit groups being managed together for reporting and oversight.",
   },
   {
+    term: "Pre-occupational",
+    definition:
+      "A fact that belongs to the period before occupation began within the relevant chain.",
+  },
+  {
     term: "RTO",
     fullName: "Right to Occupy",
     definition:
       "The document that creates the right to occupy a property, such as a lease, licence to occupy or tenancy agreement. It forms the starting point of the tenancy chain.",
+  },
+  {
+    term: "Relevant Operative Date",
+    definition:
+      "The date from which a particular fact applies, changes or ends. It may be different from the Effective Date of the document.",
   },
   {
     term: "Statutory Continuation",
@@ -164,6 +199,11 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
     term: "Statutory Declaration",
     definition:
       "A formal statement in which a person declares specified facts or circumstances to be true.",
+  },
+  {
+    term: "Superseded",
+    definition:
+      "A fact that applied previously within its chain but has since been replaced by a later position.",
   },
   {
     term: "Term End Date",
@@ -199,6 +239,11 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
     term: "Unit Group",
     definition:
       "A collection of units grouped together within Hobson.",
+  },
+  {
+    term: "Unresolved Position",
+    definition:
+      "A position that cannot be established from the information currently recorded.",
   },
   {
     term: "Vacate Date",
