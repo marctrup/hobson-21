@@ -192,7 +192,7 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
   {
     term: "Pre-occupational",
     definition:
-      "A fact that belongs to the period before occupation began within the relevant chain.",
+      "A fact or document that belongs to the period before occupation begins within the relevant chain, such as an Agreement for Lease or Heads of Terms agreed before the lease or licence takes effect.",
   },
   {
     term: "Provenance",
