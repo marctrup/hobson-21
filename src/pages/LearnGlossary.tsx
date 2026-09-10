@@ -136,7 +136,7 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
   {
     term: "Geolocation",
     definition:
-      "The geographic location assigned to a unit group.",
+      "The geographic location assigned to a unit.",
   },
   {
     term: "Get-tool",
