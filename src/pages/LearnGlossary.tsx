@@ -85,6 +85,16 @@ const TERMS: { term: string; fullName?: string; definition: string }[] = [
       "A document or requirement that does not become invalid or non-compliant simply because time passes.",
   },
   {
+    term: "Unit",
+    definition:
+      "An individual occupiable space, such as an office suite, shop, warehouse, flat, house, storage unit or separately let parking space.",
+  },
+  {
+    term: "Unit Group",
+    definition:
+      "A collection of units grouped together within Hobson.",
+  },
+  {
     term: "Write tool",
     definition:
       "A tool that records an approved change to information held in Hobson.",
