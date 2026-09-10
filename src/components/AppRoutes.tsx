@@ -26,6 +26,7 @@ const BreachProtocol = lazy(() => import("../pages/BreachProtocol"));
 const RefundPolicy = lazy(() => import("../pages/RefundPolicy"));
 const Learn = lazy(() => import("../pages/Learn"));
 const LearnFaq = lazy(() => import("../pages/LearnFaq"));
+const LearnGlossary = lazy(() => import("../pages/LearnGlossary"));
 const CaseStudies = lazy(() => import("../pages/CaseStudies"));
 const CaseStudyMixedUseOwner = lazy(() => import("../pages/CaseStudyMixedUseOwner"));
 const CaseStudyHistoricLeases = lazy(() => import("../pages/CaseStudyHistoricLeases"));
@@ -137,6 +138,7 @@ const AppContent = () => {
               <Route path="/refund-policy" element={<RefundPolicy />} />
               <Route path="/learn" element={<Learn />} />
               <Route path="/learn/faq" element={<LearnFaq />} />
+              <Route path="/learn/glossary" element={<LearnGlossary />} />
               <Route path="/learn/case-studies" element={<CaseStudies />} />
               <Route path="/learn/case-studies/mixed-use-owner" element={<CaseStudyMixedUseOwner />} />
               <Route path="/learn/case-studies/historic-leases" element={<CaseStudyHistoricLeases />} />
