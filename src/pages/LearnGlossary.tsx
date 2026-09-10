@@ -134,11 +134,6 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
       "The instructions that tell Hobson what information to capture from a document, what to exclude and how to classify it.",
   },
   {
-    term: "Finding",
-    definition:
-      "A piece of information Hobson has established from the available records and can use when answering a question.",
-  },
-  {
     term: "Follow-Up Question",
     definition:
       "A suggested next question based only on information Hobson has already established and which has not already been answered.",
