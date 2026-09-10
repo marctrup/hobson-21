@@ -137,6 +137,7 @@ const AppContent = () => {
               <Route path="/refund-policy" element={<RefundPolicy />} />
               <Route path="/learn" element={<Learn />} />
               <Route path="/learn/faq" element={<LearnFaq />} />
+              <Route path="/learn/glossary" element={<LearnGlossary />} />
               <Route path="/learn/case-studies" element={<CaseStudies />} />
               <Route path="/learn/case-studies/mixed-use-owner" element={<CaseStudyMixedUseOwner />} />
               <Route path="/learn/case-studies/historic-leases" element={<CaseStudyHistoricLeases />} />

@@ -127,7 +127,7 @@ const Learn = () => {
         {/* Cards */}
         <section className="mx-auto max-w-6xl px-6 pt-20 pb-20">
 
-          <div className="grid gap-6 md:grid-cols-3">
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {CARDS.map((card) => {
               const Icon = card.icon;
 
