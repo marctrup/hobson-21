@@ -109,6 +109,16 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
       "The date on which a document itself takes effect.",
   },
   {
+    term: "Evidence Pack",
+    definition:
+      "The collection of source documents and exact extracts Hobson shows to support an answer.",
+  },
+  {
+    term: "Exact Extract",
+    definition:
+      "The precise passage from a source document that supports a fact or answer.",
+  },
+  {
     term: "Finding",
     definition:
       "A piece of information Hobson has established from the available records and can use when answering a question.",
@@ -132,6 +142,11 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
     term: "Holding Over",
     definition:
       "Where an occupier remains in occupation after the contractual term has expired.",
+  },
+  {
+    term: "Internal Evidence",
+    definition:
+      "The exact wording captured from a source document that supports a fact recorded by Hobson.",
   },
   {
     term: "Licence",
