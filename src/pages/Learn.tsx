@@ -4,6 +4,7 @@ import {
   ArrowRight,
   MessageCircleQuestion,
   TrendingUp,
+  BookOpen,
   PlayCircle,
   type LucideIcon,
 } from "lucide-react";
@@ -38,6 +39,16 @@ const CARDS: HubCard[] = [
     description:
       "Real property teams on what changed when Hobson took on their documents — the time saved and the risks caught.",
     cta: "Read the stories",
+    status: "Available now",
+    available: true,
+  },
+  {
+    to: "/learn/glossary",
+    icon: BookOpen,
+    title: "Glossary",
+    description:
+      "Plain-English explanations of the property, document and Hobson terms used across the platform.",
+    cta: "Explore the glossary",
     status: "Available now",
     available: true,
   },
