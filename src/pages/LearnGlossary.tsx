@@ -129,11 +129,6 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
       "A document that records or confirms an event, decision, agreement or outcome.",
   },
   {
-    term: "Narrator Prompt",
-    definition:
-      "The instructions Hobson uses to turn the findings returned by its tools into a clear answer for the user, without adding information that has not been established.",
-  },
-  {
     term: "Notice",
     definition:
       "A formal communication used to give information, make a demand or proposal, exercise a right, or start or end a process.",
@@ -173,11 +168,6 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
     term: "Prompt",
     definition:
       "A set of instructions that tells an AI what task to perform, what rules to follow and how to produce its response.",
-  },
-  {
-    term: "Provenance",
-    definition:
-      "Where a piece of information came from, such as whether it was taken from a document, supplied as an assumption or produced by a calculation.",
   },
   {
     term: "RTO",
