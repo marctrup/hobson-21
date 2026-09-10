@@ -79,10 +79,11 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
       "The date on which a document itself takes effect.",
   },
   {
-    term: "Evidence Store",
+    term: "Evidence Pack",
     definition:
       "The collection of results returned by Hobson's tools for a question, which provides the evidence used to produce the answer.",
   },
+
   {
     term: "Extraction",
     definition:
