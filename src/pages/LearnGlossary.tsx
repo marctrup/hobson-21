@@ -119,6 +119,16 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
       "The precise passage from a source document that supports a fact or answer.",
   },
   {
+    term: "Extraction",
+    definition:
+      "The process Hobson uses to identify a particular type of information in a document and store it in a defined structure.",
+  },
+  {
+    term: "Extraction Prompt",
+    definition:
+      "The instructions that tell Hobson what information to capture from a document, what to exclude and how to classify it.",
+  },
+  {
     term: "Finding",
     definition:
       "A piece of information Hobson has established from the available records and can use when answering a question.",
@@ -239,6 +249,11 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
     term: "Statutory Continuation",
     definition:
       "Where a tenancy continues after the contractual term because the law allows or requires it to continue.",
+  },
+  {
+    term: "Schema",
+    definition:
+      "The defined structure and fields used to store information extracted from a document.",
   },
   {
     term: "Side Letter",
