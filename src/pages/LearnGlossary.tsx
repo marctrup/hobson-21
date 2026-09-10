@@ -185,11 +185,6 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
       "Where a tenancy continues on a periodic basis after the contractual term has expired.",
   },
   {
-    term: "Personality Prompt",
-    definition:
-      "The instructions that control Hobson's tone, language and manner of communicating, without changing the facts or content of the answer.",
-  },
-  {
     term: "Planner Prompt",
     definition:
       "The instructions Hobson uses to decide which tools are needed to answer a question and how they should be used.",
