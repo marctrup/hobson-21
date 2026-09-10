@@ -33,6 +33,11 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
       "The practical action that should be taken, such as renewing, replacing, re-inspecting or reviewing something.",
   },
   {
+    term: "Agreement",
+    definition:
+      "A document that records terms agreed between two or more parties and creates or changes contractual rights or obligations.",
+  },
+  {
     term: "AMD",
     fullName: "Accompanying and Modification Documents",
     definition:
@@ -59,6 +64,11 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
       "A one-off payment that becomes due only if a specified future event happens, and may therefore never become payable.",
   },
   {
+    term: "Deed",
+    definition:
+      "A formally executed document used to create, transfer, vary, release or confirm legal rights.",
+  },
+  {
     term: "Deterministic",
     definition:
       "Designed to produce the same result when given the same information and rules.",
@@ -77,6 +87,21 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
     term: "Holding Over",
     definition:
       "Where an occupier remains in occupation after the contractual term has expired.",
+  },
+  {
+    term: "Licence",
+    definition:
+      "A document giving permission or consent for a particular act or activity.",
+  },
+  {
+    term: "Memorandum",
+    definition:
+      "A document that records or confirms an event, decision, agreement or outcome.",
+  },
+  {
+    term: "Notice",
+    definition:
+      "A formal communication used to give information, make a demand or proposal, exercise a right, or start or end a process.",
   },
   {
     term: "Occupation Payment",
@@ -116,6 +141,16 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
       "Where a tenancy continues after the contractual term because the law allows or requires it to continue.",
   },
   {
+    term: "Side Letter",
+    definition:
+      "A document that sits alongside another agreement and supplements, qualifies or modifies how it operates between particular parties.",
+  },
+  {
+    term: "Statutory Declaration",
+    definition:
+      "A formal statement in which a person declares specified facts or circumstances to be true.",
+  },
+  {
     term: "Term End Date",
     definition:
       "The date on which the contractual term expires. It does not by itself mean the tenancy has ended or the occupier has left.",
@@ -134,6 +169,11 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
     term: "Time-Unbound",
     definition:
       "A document or requirement that does not become invalid or non-compliant simply because time passes.",
+  },
+  {
+    term: "Transfer",
+    definition:
+      "A document that transfers legal ownership of land or an interest in land from one party to another.",
   },
   {
     term: "Unit",
