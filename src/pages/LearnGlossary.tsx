@@ -112,8 +112,9 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
   {
     term: "Holding Over",
     definition:
-      "Where an occupier remains in occupation after the contractual term has expired.",
+      "Where an occupier remains in occupation after the contractual term has expired, often awaiting new terms.",
   },
+
   {
     term: "Lease",
     definition:
