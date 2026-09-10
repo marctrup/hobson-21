@@ -14,8 +14,29 @@ const RULE = "#F7EDDC";
 
 const LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 
-// Placeholder glossary terms — real terms will be added here.
-const TERMS: { term: string; definition: string }[] = [];
+// Glossary terms — add new entries here; they are sorted and grouped automatically.
+const TERMS: { term: string; definition: string }[] = [
+  {
+    term: "Agent",
+    definition:
+      "A Hobson component that can research, assess information and make recommendations, but does not change the property record itself.",
+  },
+  {
+    term: "Deterministic",
+    definition:
+      "Designed to produce the same result when given the same information and rules.",
+  },
+  {
+    term: "Get-tool",
+    definition:
+      "A tool that reads information already recorded in Hobson and applies fixed rules to answer a question.",
+  },
+  {
+    term: "Write tool",
+    definition:
+      "A tool that records an approved change to information held in Hobson.",
+  },
+];
 
 const LearnGlossary = () => {
   const [query, setQuery] = useState("");
@@ -77,8 +98,7 @@ const LearnGlossary = () => {
               className="mt-5 text-base sm:text-lg leading-relaxed max-w-xl mx-auto"
               style={{ color: MUTED }}
             >
-              Plain-English explanations of the property, document and Hobson
-              terms used across Hobson.
+              Plain-English definitions of the terms used across Hobson.
             </p>
             <div
               className="mx-auto mt-10 h-px w-24"
