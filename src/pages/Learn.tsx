@@ -47,7 +47,8 @@ const CARDS: HubCard[] = [
     icon: BookOpen,
     title: "Glossary",
     description:
-      "Plain-English explanations of the property, document and Hobson terms used across the platform.",
+      "Plain-English definitions of the property, document and Hobson terms you'll see across the platform.",
+
     cta: "Explore the glossary",
     status: "Available now",
     available: true,
