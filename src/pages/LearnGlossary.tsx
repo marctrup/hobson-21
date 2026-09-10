@@ -221,11 +221,6 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
       "A formal statement in which a person declares specified facts or circumstances to be true.",
   },
   {
-    term: "Summary Narrator Prompt",
-    definition:
-      "The instructions Hobson uses to answer follow-up questions from what has already been said in the conversation, without carrying out new research, retrieval or calculations.",
-  },
-  {
     term: "Superseded",
     definition:
       "A fact that applied previously within its chain but has since been replaced by a later position.",
