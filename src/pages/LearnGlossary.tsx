@@ -114,6 +114,11 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
       "The collection of source documents and exact extracts Hobson shows to support an answer.",
   },
   {
+    term: "Evidence Store",
+    definition:
+      "The collection of results returned by Hobson's tools for a question, which provides the evidence used to produce the answer.",
+  },
+  {
     term: "Exact Extract",
     definition:
       "The precise passage from a source document that supports a fact or answer.",
@@ -167,6 +172,11 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
     term: "Internal Evidence",
     definition:
       "The exact wording captured from a source document that supports a fact recorded by Hobson.",
+  },
+  {
+    term: "Judge",
+    definition:
+      "The LLM judge stage that decides whether Hobson has enough evidence to answer a question or whether more information needs to be gathered.",
   },
   {
     term: "Licence",
