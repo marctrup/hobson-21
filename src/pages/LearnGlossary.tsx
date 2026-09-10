@@ -109,19 +109,9 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
       "The date on which a document itself takes effect.",
   },
   {
-    term: "Evidence Pack",
-    definition:
-      "The collection of source documents and exact extracts Hobson shows to support an answer.",
-  },
-  {
     term: "Evidence Store",
     definition:
       "The collection of results returned by Hobson's tools for a question, which provides the evidence used to produce the answer.",
-  },
-  {
-    term: "Exact Extract",
-    definition:
-      "The precise passage from a source document that supports a fact or answer.",
   },
   {
     term: "Extraction",
@@ -132,11 +122,6 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
     term: "Extraction Prompt",
     definition:
       "The instructions that tell Hobson what information to capture from a document, what to exclude and how to classify it.",
-  },
-  {
-    term: "Finding",
-    definition:
-      "A piece of information Hobson has established from the available records and can use when answering a question.",
   },
   {
     term: "Follow-Up Question",
@@ -157,11 +142,6 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
     term: "Get-tool",
     definition:
       "A tool that reads information already recorded in Hobson and applies fixed rules to answer a question.",
-  },
-  {
-    term: "Group-level Lease",
-    definition:
-      "A lease recorded against a unit group rather than an individual unit.",
   },
   {
     term: "Holding Over",
@@ -319,16 +299,6 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
     term: "Unit Group",
     definition:
       "A collection of units grouped together within Hobson.",
-  },
-  {
-    term: "Unit-level Lease",
-    definition:
-      "A lease recorded against an individual unit rather than the unit group.",
-  },
-  {
-    term: "Unresolved Position",
-    definition:
-      "A position that cannot be established from the information currently recorded.",
   },
   {
     term: "Vacate Date",
