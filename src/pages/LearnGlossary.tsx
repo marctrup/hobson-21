@@ -119,11 +119,6 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
       "The collection of results returned by Hobson's tools for a question, which provides the evidence used to produce the answer.",
   },
   {
-    term: "Exact Extract",
-    definition:
-      "The precise passage from a source document that supports a fact or answer.",
-  },
-  {
     term: "Extraction",
     definition:
       "The process Hobson uses to identify a particular type of information in a document and store it in a defined structure.",
