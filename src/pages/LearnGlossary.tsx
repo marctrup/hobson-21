@@ -226,6 +226,11 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
       "The date from which a particular fact applies, changes or ends. It may be different from the Effective Date of the document.",
   },
   {
+    term: "Reversionary Lease",
+    definition:
+      "A lease that has been granted but is due to begin at a future date, usually after an existing lease or tenancy comes to an end.",
+  },
+  {
     term: "Statutory Continuation",
     definition:
       "Where a tenancy continues after the contractual term because the law allows or requires it to continue.",
