@@ -104,11 +104,6 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
     definition:
       "A tool that reads information already recorded in Hobson and applies fixed rules to answer a question.",
   },
-  {
-    term: "Holding Over",
-    definition:
-      "Where an occupier remains in occupation after the contractual term has expired, often awaiting new terms.",
-  },
 
   {
     term: "Lease",
@@ -145,11 +140,6 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
     term: "Operational Payment",
     definition:
       "A payment towards the costs of operating or maintaining a property, such as service charge or insurance, rather than payment for the right to occupy.",
-  },
-  {
-    term: "Periodic Holdover",
-    definition:
-      "Where a tenancy continues on a periodic basis after the contractual term has expired.",
   },
   {
     term: "Portfolio",
