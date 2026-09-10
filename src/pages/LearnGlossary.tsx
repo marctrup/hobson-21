@@ -23,16 +23,6 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
       "Documents relating to the property or its compliance obligations that are not part of a specific tenancy chain.",
   },
   {
-    term: "Action Requirement",
-    definition:
-      "Whether further action is required, unnecessary, dependent on circumstances or advisable.",
-  },
-  {
-    term: "Action Type",
-    definition:
-      "The practical action that should be taken, such as renewing, replacing, re-inspecting or reviewing something.",
-  },
-  {
     term: "Agreement",
     definition:
       "A document that records terms agreed between two or more parties and creates or changes contractual rights or obligations.",
@@ -147,11 +137,6 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
     term: "Holding Over",
     definition:
       "Where an occupier remains in occupation after the contractual term has expired.",
-  },
-  {
-    term: "Internal Evidence",
-    definition:
-      "The exact wording captured from a source document that supports a fact recorded by Hobson.",
   },
   {
     term: "Judge",
