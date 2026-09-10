@@ -33,6 +33,11 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
       "The practical action that should be taken, such as renewing, replacing, re-inspecting or reviewing something.",
   },
   {
+    term: "Agreement",
+    definition:
+      "A document that records terms agreed between two or more parties and creates or changes contractual rights or obligations.",
+  },
+  {
     term: "AMD",
     fullName: "Accompanying and Modification Documents",
     definition:
