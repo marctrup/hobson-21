@@ -49,6 +49,11 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
       "A Hobson component that can research, assess information and make recommendations, but does not change the property record itself.",
   },
   {
+    term: "Classifier Prompt",
+    definition:
+      "The instructions Hobson uses to identify what something is and assign it to the correct category.",
+  },
+  {
     term: "Confirmed Surrender",
     definition:
       "A surrender that has been completed and is effective, rather than merely proposed or notified.",
@@ -99,6 +104,11 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
       "A document that records or confirms an event, decision, agreement or outcome.",
   },
   {
+    term: "Narrator Prompt",
+    definition:
+      "The instructions Hobson uses to turn the findings returned by its tools into a clear answer for the user, without adding information that has not been established.",
+  },
+  {
     term: "Notice",
     definition:
       "A formal communication used to give information, make a demand or proposal, exercise a right, or start or end a process.",
@@ -123,6 +133,11 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
     term: "Periodic Holdover",
     definition:
       "Where a tenancy continues on a periodic basis after the contractual term has expired.",
+  },
+  {
+    term: "Planner Prompt",
+    definition:
+      "The instructions Hobson uses to decide which tools are needed to answer a question and how they should be used.",
   },
   {
     term: "Portfolio",
