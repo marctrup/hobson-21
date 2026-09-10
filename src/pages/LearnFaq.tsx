@@ -27,36 +27,30 @@ const CATEGORIES: Category[] = [
     items: [
       {
         mostAsked: true,
-        q: "How is Hobson different from ChatGPT?",
-        a: `ChatGPT is a brilliant generalist. Hand it a lease and it reads the words on the page and gives you a plausible answer. Hobson is built specifically around a property record — the documents, the rules, and how both change over time.
+        q: "How is Hobson different from general-purpose AI like ChatGPT or Claude?",
+        a: `Hobson, ChatGPT and Claude all use the same underlying technology: large language models (LLMs). The difference is what is built around them.
 
-**It reads the whole record, not one document.** A lease says the rent is £50,000; a deed of variation two years later changes it to £60,000. ChatGPT, handed the lease, tells you £50,000. Hobson reads every related document in order and tells you £60,000 — where things stand today.
+ChatGPT and Claude are general-purpose AI. Hobson uses large language models inside a specialist system built specifically for property.
 
-**Every answer shows its evidence.** Hobson cites the document, page, clause and exact wording behind each fact, so you can verify in seconds.
+It builds a permanent property record.
+Hobson turns documents into structured facts linked to the property and keeps that record up to date as new documents are added.
 
-**It tells you when something isn't there.** "The lease contains no break right" is a real, checked answer. Where documents disagree, Hobson shows both positions and their sources rather than quietly picking one.`,
-      },
-      {
-        q: "How is Hobson different from an AI co-worker like Claude?",
-        a: `Claude and Hobson both use large language models. The difference is that Claude is a generalist AI, while Hobson is a specialist property system built around AI.
+It understands how the position changes over time.
+A lease may say the rent is £50,000 and a later deed may change it to £60,000. Hobson reads the documents together and identifies the current position, rather than treating each document in isolation.
 
-Claude is designed to understand and generate language across a very wide range of tasks. Hobson uses the same underlying type of technology, but places it inside a controlled system designed specifically for property.
+It uses fixed rules where precision matters.
+Figures, dates and calculations can be worked out using defined rules rather than being improvised by the language model.
 
-Four things make that different:
+Every fact stays connected to its evidence.
+The source document and wording are captured with the fact, so users can see where an answer comes from and verify it quickly.
 
-**A permanent property record.**
-Hobson turns documents into structured property facts that are stored, linked to the asset and available across the portfolio. So a question such as "what is the total rent across 500 units?" is answered from the property record, not from documents being reread each time.
+It handles uncertainty explicitly.
+If something is not in the record, Hobson can say so. If documents conflict or the position cannot be established, it shows that rather than simply choosing the most plausible answer.
 
-**Fixed rules for calculations.**
-Figures, dates and calculations can be handled by defined rules rather than being worked out freely by the language model.
+Its accuracy is measured.
+Hobson is tested against real property documents where property experts have established the correct answer, so its performance can be measured against a known standard.
 
-**Evidence attached to every fact.**
-The source wording is captured when the document is processed and remains linked to the extracted fact, so the answer can be traced back to its evidence.
-
-**Accuracy that is measured.**
-Hobson is tested against real property documents where the correct answers have been established by property experts. Its performance can therefore be measured against a known standard.
-
-So the difference is not that one uses an LLM and the other does not. Claude is a general-purpose AI model. Hobson is a specialist property platform that uses LLMs within a structured, controlled and measurable system.`,
+The difference is not the underlying AI. They all use large language models. ChatGPT and Claude are generalists; Hobson is a specialist property system built around them.`,
       },
       {
         q: "Will Hobson give me the same answer twice?",
