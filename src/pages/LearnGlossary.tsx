@@ -15,7 +15,19 @@ const RULE = "#F7EDDC";
 const LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 
 // Glossary terms — add new entries here; they are sorted and grouped automatically.
-const TERMS: { term: string; definition: string }[] = [
+const TERMS: { term: string; fullName?: string; definition: string }[] = [
+  {
+    term: "ACD",
+    fullName: "Asset and Compliance Documents",
+    definition:
+      "Documents relating to the property or its compliance obligations that are not part of a specific tenancy chain.",
+  },
+  {
+    term: "AMD",
+    fullName: "Accompanying and Modification Documents",
+    definition:
+      "Documents linked to a tenancy that accompany or change its terms over time.",
+  },
   {
     term: "Agent",
     definition:
@@ -27,9 +39,20 @@ const TERMS: { term: string; definition: string }[] = [
       "Designed to produce the same result when given the same information and rules.",
   },
   {
+    term: "Document Family",
+    definition:
+      "The classification Hobson gives every document: RTO, AMD or ACD. It determines whether the document starts a tenancy chain, forms part of that chain, or sits separately from it.",
+  },
+  {
     term: "Get-tool",
     definition:
       "A tool that reads information already recorded in Hobson and applies fixed rules to answer a question.",
+  },
+  {
+    term: "RTO",
+    fullName: "Right to Occupy",
+    definition:
+      "The document that creates the right to occupy a property, such as a lease, licence to occupy or tenancy agreement. It forms the starting point of the tenancy chain.",
   },
   {
     term: "Write tool",
