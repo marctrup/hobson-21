@@ -70,7 +70,7 @@ const LearnGlossary = () => {
         t.term.toLowerCase().includes(query.toLowerCase()) ||
         t.definition.toLowerCase().includes(query.toLowerCase())
     ).sort((a, b) => a.term.localeCompare(b.term));
-    const map = new Map<string, { term: string; definition: string }[]>();
+    const map = new Map<string, { term: string; fullName?: string; definition: string }[]>();
     for (const t of filtered) {
       const letter = t.term[0]?.toUpperCase() ?? "#";
       if (!map.has(letter)) map.set(letter, []);
