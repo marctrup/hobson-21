@@ -39,11 +39,6 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
       "A Hobson component that can research, assess information and make recommendations, but does not change the property record itself.",
   },
   {
-    term: "Calculated Finding",
-    definition:
-      "A value Hobson has calculated from the information available to it and can report as part of an answer.",
-  },
-  {
     term: "Chain",
     definition:
       "The connected sequence of documents and facts relating to the same occupational relationship over time.",
@@ -208,6 +203,11 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
     term: "Pre-occupational",
     definition:
       "A fact or document that belongs to the period before occupation begins within the relevant chain, such as an Agreement for Lease or Heads of Terms agreed before the lease or licence takes effect.",
+  },
+  {
+    term: "Prompt",
+    definition:
+      "A set of instructions that tells an AI what task to perform, what rules to follow and how to produce its response.",
   },
   {
     term: "Provenance",
