@@ -212,6 +212,11 @@ const LearnGlossary = () => {
                       <dt className="font-serif text-xl" style={{ color: INK }}>
                         {t.term}
                       </dt>
+                      {t.fullName && (
+                        <dd className="mt-1 text-[13px] font-medium uppercase tracking-wide" style={{ color: BRASS }}>
+                          {t.fullName}
+                        </dd>
+                      )}
                       <dd className="mt-2 text-[15px] leading-relaxed" style={{ color: MUTED }}>
                         {t.definition}
                       </dd>
