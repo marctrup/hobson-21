@@ -28,29 +28,32 @@ const CATEGORIES: Category[] = [
       {
         mostAsked: true,
         q: "How is Hobson different from general-purpose AI like ChatGPT or Claude?",
-        a: `Hobson, ChatGPT and Claude all use the same underlying technology: large language models (LLMs). The difference is what is built around them.
+        a: `Hobson, ChatGPT and Claude all use the same underlying technology: large language models.
 
-ChatGPT and Claude are general-purpose AI. Hobson uses large language models inside a specialist system built specifically for property.
+The difference is what happens after they read a document.
 
-It builds a permanent property record.
-Hobson turns documents into structured facts linked to the property and keeps that record up to date as new documents are added.
+ChatGPT and Claude read documents to help answer questions. Hobson reads documents to build and maintain a property record.
 
-It understands how the position changes over time.
-A lease may say the rent is £50,000 and a later deed may change it to £60,000. Hobson reads the documents together and identifies the current position, rather than treating each document in isolation.
+When Hobson reads a lease, deed, notice or certificate, it turns the important information into structured property facts and stores them against the property. As new documents are added, Hobson can update that record so it reflects the latest position.
 
-It uses fixed rules where precision matters.
-Figures, dates and calculations can be worked out using defined rules rather than being improvised by the language model.
+That means Hobson can do things a general-purpose AI is not designed around:
 
-Every fact stays connected to its evidence.
-The source document and wording are captured with the fact, so users can see where an answer comes from and verify it quickly.
+It keeps a permanent property record.
+The important facts are stored against the property, rather than simply sitting inside the original document.
 
-It handles uncertainty explicitly.
-If something is not in the record, Hobson can say so. If documents conflict or the position cannot be established, it shows that rather than simply choosing the most plausible answer.
+It understands changes over time.
+If a later document changes the rent, tenant or another term, Hobson can show the current position as well as the history behind it.
 
-Its accuracy is measured.
-Hobson is tested against real property documents where property experts have established the correct answer, so its performance can be measured against a known standard.
+It uses fixed rules where accuracy matters.
+Dates, figures and calculations can be handled using set rules rather than left to the AI to work out each time.
 
-The difference is not the underlying AI. They all use large language models. ChatGPT and Claude are generalists; Hobson is a specialist property system built around them.`,
+Every fact stays linked to its source.
+You can see the document and wording behind an answer and check it quickly.
+
+It is tested for property work.
+Hobson is measured against real property documents where experts have established the correct answer.
+
+So the difference is simple: ChatGPT and Claude are general-purpose AI tools that can read property documents. Hobson is a specialist property system that turns those documents into a structured, permanent and up-to-date property record.`,
       },
       {
         q: "Will Hobson give me the same answer twice?",
