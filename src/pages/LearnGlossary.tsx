@@ -59,6 +59,11 @@ const TERMS: { term: string; fullName?: string; definition: string }[] = [
       "A tool that reads information already recorded in Hobson and applies fixed rules to answer a question.",
   },
   {
+    term: "Portfolio",
+    definition:
+      "The whole collection of units and unit groups being managed together for reporting and oversight.",
+  },
+  {
     term: "RTO",
     fullName: "Right to Occupy",
     definition:
@@ -78,6 +83,16 @@ const TERMS: { term: string; fullName?: string; definition: string }[] = [
     term: "Time-Unbound",
     definition:
       "A document or requirement that does not become invalid or non-compliant simply because time passes.",
+  },
+  {
+    term: "Unit",
+    definition:
+      "An individual occupiable space, such as an office suite, shop, warehouse, flat, house, storage unit or separately let parking space.",
+  },
+  {
+    term: "Unit Group",
+    definition:
+      "A collection of units grouped together within Hobson.",
   },
   {
     term: "Write tool",
