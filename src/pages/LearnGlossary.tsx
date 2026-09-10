@@ -15,7 +15,7 @@ const RULE = "#F7EDDC";
 const LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 
 // Glossary terms — add new entries here; they are sorted and grouped automatically.
-const TERMS: { term: string; fullName?: string; definition: string }[] = [
+const TERMS: { term: string; fullName?: string; definition: string; aliases?: string[] }[] = [
   {
     term: "ACD",
     fullName: "Asset and Compliance Documents",
@@ -44,6 +44,16 @@ const TERMS: { term: string; fullName?: string; definition: string }[] = [
       "A Hobson component that can research, assess information and make recommendations, but does not change the property record itself.",
   },
   {
+    term: "Consideration",
+    definition:
+      "A one-off payment or other value exchanged as part of entering into or ending a transaction, rather than for the ongoing right to occupy.",
+  },
+  {
+    term: "Contingent Consideration",
+    definition:
+      "A one-off payment that becomes due only if a specified future event happens, and may therefore never become payable.",
+  },
+  {
     term: "Deterministic",
     definition:
       "Designed to produce the same result when given the same information and rules.",
@@ -57,6 +67,22 @@ const TERMS: { term: string; fullName?: string; definition: string }[] = [
     term: "Get-tool",
     definition:
       "A tool that reads information already recorded in Hobson and applies fixed rules to answer a question.",
+  },
+  {
+    term: "Occupation Payment",
+    aliases: ["occupancy payment"],
+    definition:
+      "The recurring amount paid for the right to occupy or use premises, such as rent or a licence fee.",
+  },
+  {
+    term: "Occupation Payment Mechanism",
+    definition:
+      "The rule that determines how an occupation payment is set or changed, and when that change applies. It is a rule, not a payment itself.",
+  },
+  {
+    term: "Operational Payment",
+    definition:
+      "A payment towards the costs of operating or maintaining a property, such as service charge or insurance, rather than payment for the right to occupy.",
   },
   {
     term: "Portfolio",
@@ -105,12 +131,14 @@ const LearnGlossary = () => {
   const [query, setQuery] = useState("");
 
   const grouped = useMemo(() => {
+    const q = query.toLowerCase();
     const filtered = TERMS.filter(
       (t) =>
-        t.term.toLowerCase().includes(query.toLowerCase()) ||
-        t.definition.toLowerCase().includes(query.toLowerCase())
+        t.term.toLowerCase().includes(q) ||
+        t.definition.toLowerCase().includes(q) ||
+        (t.aliases ?? []).some((a) => a.toLowerCase().includes(q))
     ).sort((a, b) => a.term.localeCompare(b.term));
-    const map = new Map<string, { term: string; fullName?: string; definition: string }[]>();
+    const map = new Map<string, { term: string; fullName?: string; definition: string; aliases?: string[] }[]>();
     for (const t of filtered) {
       const letter = t.term[0]?.toUpperCase() ?? "#";
       if (!map.has(letter)) map.set(letter, []);
