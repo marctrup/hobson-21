@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { Helmet } from "react-helmet-async";
-import { Search, BookOpen } from "lucide-react";
+import { Search } from "lucide-react";
 import { GlobalHeader } from "@/components/GlobalHeader";
 
 const BRASS = "#B4914F";
