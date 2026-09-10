@@ -159,14 +159,8 @@ const LearnGlossary = () => {
               className="rounded-[20px] bg-white p-10 sm:p-14 text-center shadow-sm"
               style={{ border: `1px solid ${LAVENDER_BORDER}` }}
             >
-              <div
-                className="mx-auto inline-flex items-center justify-center w-12 h-12 rounded-xl"
-                style={{ backgroundColor: LAVENDER_BG, border: `1px solid ${LAVENDER_BORDER}` }}
-              >
-                <BookOpen className="h-5 w-5" style={{ color: BRASS }} />
-              </div>
               <h2
-                className="mt-6 font-serif text-2xl font-normal tracking-tight"
+                className="font-serif text-2xl font-normal tracking-tight"
                 style={{ color: INK }}
               >
                 The glossary is being prepared
