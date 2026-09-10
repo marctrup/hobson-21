@@ -170,11 +170,6 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
       "A set of instructions that tells an AI what task to perform, what rules to follow and how to produce its response.",
   },
   {
-    term: "Provenance",
-    definition:
-      "Where a piece of information came from, such as whether it was taken from a document, supplied as an assumption or produced by a calculation.",
-  },
-  {
     term: "RTO",
     fullName: "Right to Occupy",
     definition:
