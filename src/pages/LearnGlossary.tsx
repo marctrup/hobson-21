@@ -142,11 +142,6 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
       "A payment towards the costs of operating or maintaining a property, such as service charge or insurance, rather than payment for the right to occupy.",
   },
   {
-    term: "Periodic Holdover",
-    definition:
-      "Where a tenancy continues on a periodic basis after the contractual term has expired.",
-  },
-  {
     term: "Portfolio",
     definition:
       "The whole collection of units and unit groups being managed together for reporting and oversight.",
