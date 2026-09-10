@@ -129,11 +129,6 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
       "A document that records or confirms an event, decision, agreement or outcome.",
   },
   {
-    term: "Narrator Prompt",
-    definition:
-      "The instructions Hobson uses to turn the findings returned by its tools into a clear answer for the user, without adding information that has not been established.",
-  },
-  {
     term: "Notice",
     definition:
       "A formal communication used to give information, make a demand or proposal, exercise a right, or start or end a process.",
