@@ -160,11 +160,6 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
       "Where a tenancy continues on a periodic basis after the contractual term has expired.",
   },
   {
-    term: "Planner Prompt",
-    definition:
-      "The instructions Hobson uses to decide which tools are needed to answer a question and how they should be used.",
-  },
-  {
     term: "Portfolio",
     definition:
       "The whole collection of units and unit groups being managed together for reporting and oversight.",
