@@ -104,6 +104,11 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
       "The date on which a document itself takes effect.",
   },
   {
+    term: "Finding",
+    definition:
+      "A piece of information Hobson has established from the available records and can use when answering a question.",
+  },
+  {
     term: "Future",
     definition:
       "A fact that has been established but does not yet apply.",
