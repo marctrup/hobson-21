@@ -64,6 +64,11 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
       "A one-off payment that becomes due only if a specified future event happens, and may therefore never become payable.",
   },
   {
+    term: "Deed",
+    definition:
+      "A formally executed document used to create, transfer, vary, release or confirm legal rights.",
+  },
+  {
     term: "Deterministic",
     definition:
       "Designed to produce the same result when given the same information and rules.",
