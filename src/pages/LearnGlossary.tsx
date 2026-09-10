@@ -89,6 +89,21 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
       "Where an occupier remains in occupation after the contractual term has expired.",
   },
   {
+    term: "Licence",
+    definition:
+      "A document giving permission or consent for a particular act or activity.",
+  },
+  {
+    term: "Memorandum",
+    definition:
+      "A document that records or confirms an event, decision, agreement or outcome.",
+  },
+  {
+    term: "Notice",
+    definition:
+      "A formal communication used to give information, make a demand or proposal, exercise a right, or start or end a process.",
+  },
+  {
     term: "Occupation Payment",
     aliases: ["occupancy payment"],
     definition:
