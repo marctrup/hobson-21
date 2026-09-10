@@ -132,14 +132,7 @@ const Learn = () => {
             {CARDS.map((card) => {
               const Icon = card.icon;
 
-              const statusPill = card.available ? (
-                <span
-                  className="inline-flex items-center rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em]"
-                  style={{ backgroundColor: LAVENDER_BG, color: BRASS, border: `1px solid ${LAVENDER_BORDER}` }}
-                >
-                  {card.status}
-                </span>
-              ) : (
+              const statusPill = card.available ? null : (
                 <span
                   className="inline-flex items-center rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em]"
                   style={{ backgroundColor: "#F1EBDE", color: "#6E6A62", border: "1px dashed #D8CDB6" }}
@@ -147,6 +140,7 @@ const Learn = () => {
                   {card.status}
                 </span>
               );
+
 
               const inner = (
                 <div
