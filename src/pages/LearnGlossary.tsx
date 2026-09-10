@@ -134,9 +134,19 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
       "A fact that has been established but does not yet apply.",
   },
   {
+    term: "Geolocation",
+    definition:
+      "The geographic location assigned to a unit group.",
+  },
+  {
     term: "Get-tool",
     definition:
       "A tool that reads information already recorded in Hobson and applies fixed rules to answer a question.",
+  },
+  {
+    term: "Group-level Lease",
+    definition:
+      "A lease recorded against a unit group rather than an individual unit.",
   },
   {
     term: "Holding Over",
@@ -284,6 +294,11 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
     term: "Unit Group",
     definition:
       "A collection of units grouped together within Hobson.",
+  },
+  {
+    term: "Unit-level Lease",
+    definition:
+      "A lease recorded against an individual unit rather than the unit group.",
   },
   {
     term: "Unresolved Position",
