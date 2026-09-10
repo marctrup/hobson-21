@@ -23,6 +23,16 @@ const TERMS: { term: string; fullName?: string; definition: string }[] = [
       "Documents relating to the property or its compliance obligations that are not part of a specific tenancy chain.",
   },
   {
+    term: "Action Requirement",
+    definition:
+      "Whether further action is required, unnecessary, dependent on circumstances or advisable.",
+  },
+  {
+    term: "Action Type",
+    definition:
+      "The practical action that should be taken, such as renewing, replacing, re-inspecting or reviewing something.",
+  },
+  {
     term: "AMD",
     fullName: "Accompanying and Modification Documents",
     definition:
@@ -53,6 +63,21 @@ const TERMS: { term: string; fullName?: string; definition: string }[] = [
     fullName: "Right to Occupy",
     definition:
       "The document that creates the right to occupy a property, such as a lease, licence to occupy or tenancy agreement. It forms the starting point of the tenancy chain.",
+  },
+  {
+    term: "Time-Bound",
+    definition:
+      "A document or requirement whose validity or compliance status can run out simply because time passes.",
+  },
+  {
+    term: "Time Classification",
+    definition:
+      "The classification that records whether a document or compliance requirement is Time-Bound or Time-Unbound.",
+  },
+  {
+    term: "Time-Unbound",
+    definition:
+      "A document or requirement that does not become invalid or non-compliant simply because time passes.",
   },
   {
     term: "Write tool",
