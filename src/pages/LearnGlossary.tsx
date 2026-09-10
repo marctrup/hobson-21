@@ -49,6 +49,11 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
       "A Hobson component that can research, assess information and make recommendations, but does not change the property record itself.",
   },
   {
+    term: "Calculated Finding",
+    definition:
+      "A value Hobson has calculated from the information available to it and can report as part of an answer.",
+  },
+  {
     term: "Chain",
     definition:
       "The connected sequence of documents and facts relating to the same occupational relationship over time.",
@@ -183,6 +188,11 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
     term: "Pre-occupational",
     definition:
       "A fact that belongs to the period before occupation began within the relevant chain.",
+  },
+  {
+    term: "Provenance",
+    definition:
+      "Where a piece of information came from, such as whether it was taken from a document, supplied as an assumption or produced by a calculation.",
   },
   {
     term: "RTO",
