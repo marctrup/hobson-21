@@ -174,6 +174,11 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
       "The exact wording captured from a source document that supports a fact recorded by Hobson.",
   },
   {
+    term: "Judge",
+    definition:
+      "The LLM judge stage that decides whether Hobson has enough evidence to answer a question or whether more information needs to be gathered.",
+  },
+  {
     term: "Licence",
     definition:
       "A document giving permission or consent for a particular act or activity.",
