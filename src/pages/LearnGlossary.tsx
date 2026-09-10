@@ -326,11 +326,6 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
       "A lease recorded against an individual unit rather than the unit group.",
   },
   {
-    term: "Unresolved Position",
-    definition:
-      "A position that cannot be established from the information currently recorded.",
-  },
-  {
     term: "Vacate Date",
     definition:
       "The date an occupier is expected or planned to leave. It does not by itself confirm that they actually left.",
