@@ -44,6 +44,11 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
       "A Hobson component that can research, assess information and make recommendations, but does not change the property record itself.",
   },
   {
+    term: "Confirmed Surrender",
+    definition:
+      "A surrender that has been completed and is effective, rather than merely proposed or notified.",
+  },
+  {
     term: "Consideration",
     definition:
       "A one-off payment or other value exchanged as part of entering into or ending a transaction, rather than for the ongoing right to occupy.",
