@@ -171,6 +171,11 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
       "A document or requirement that does not become invalid or non-compliant simply because time passes.",
   },
   {
+    term: "Transfer",
+    definition:
+      "A document that transfers legal ownership of land or an interest in land from one party to another.",
+  },
+  {
     term: "Unit",
     definition:
       "An individual occupiable space, such as an office suite, shop, warehouse, flat, house, storage unit or separately let parking space.",
