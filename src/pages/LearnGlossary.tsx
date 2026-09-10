@@ -44,16 +44,6 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
       "The connected sequence of documents and facts relating to the same occupational relationship over time.",
   },
   {
-    term: "Chain Status",
-    definition:
-      "The position a fact holds within a chain: Pre-occupational, Current, Future or Superseded.",
-  },
-  {
-    term: "Classifier Prompt",
-    definition:
-      "The instructions Hobson uses to identify what something is and assign it to the correct category.",
-  },
-  {
     term: "Confirmed Surrender",
     definition:
       "A surrender that has been completed and is effective, rather than merely proposed or notified.",
