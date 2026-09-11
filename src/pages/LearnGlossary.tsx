@@ -59,6 +59,11 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
       "A one-off payment that becomes due only if a specified future event happens, and may therefore never become payable.",
   },
   {
+    term: "Current Position",
+    definition:
+      "The position that applies now after taking account of the relevant documents and changes across the chain.",
+  },
+  {
     term: "Deed",
     definition:
       "A formally executed document used to create, transfer, vary, release or confirm legal rights.",
@@ -186,6 +191,11 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
     term: "Statutory Declaration",
     definition:
       "A formal statement in which a person declares specified facts or circumstances to be true.",
+  },
+  {
+    term: "Structured Property Knowledge",
+    definition:
+      "Property information that Hobson has taken from documents and organised into defined, consistent records that can be used across the platform.",
   },
   {
     term: "Superseded",
