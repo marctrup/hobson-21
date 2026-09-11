@@ -126,6 +126,11 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
       "A formal communication used to give information, make a demand or proposal, exercise a right, or start or end a process.",
   },
   {
+    term: "Operational Record",
+    definition:
+      "A record of something that has actually happened, such as a notice being served, an approval being given or an action being completed.",
+  },
+  {
     term: "Occupation Payment",
     aliases: ["occupancy payment"],
     definition:
@@ -145,6 +150,11 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
     term: "Portfolio",
     definition:
       "The whole collection of units and unit groups being managed together for reporting and oversight.",
+  },
+  {
+    term: "Property Concept",
+    definition:
+      "A type of property information that Hobson records consistently across different documents, such as parties, units, payments, termination, or obligations.",
   },
   {
     term: "Pre-occupational",
