@@ -137,6 +137,11 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
       "The recurring amount paid for the right to occupy or use premises, such as rent or a licence fee.",
   },
   {
+    term: "Occupation Status",
+    definition:
+      "The current status of a Unit based on whether it is covered by an applicable occupational relationship, such as a direct lease, a shared lease through a Unit Set, or occupation at Unit Group level.",
+  },
+  {
     term: "Occupation Payment Mechanism",
     definition:
       "The rule that determines how an occupation payment is set or changed, and when that change applies. It is a rule, not a payment itself.",
@@ -193,9 +198,19 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
       "The defined structure and fields used to store information extracted from a document.",
   },
   {
+    term: "Shared Lease",
+    definition:
+      "A lease or other occupational arrangement that applies to specifically identified Units through a Unit Set, rather than to the Unit Group as a whole.",
+  },
+  {
     term: "Side Letter",
     definition:
       "A document that sits alongside another agreement and supplements, qualifies or modifies how it operates between particular parties.",
+  },
+  {
+    term: "Standalone Unit",
+    definition:
+      "A Unit that exists independently of a Unit Group and has its own geolocation.",
   },
   {
     term: "Statutory Declaration",
@@ -241,7 +256,7 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
   {
     term: "Unit",
     definition:
-      "One occupiable space.",
+      "One individual occupiable space. A Unit may exist independently as a Standalone Unit or form part of a Unit Group.",
   },
   {
     term: "Unit Group",
