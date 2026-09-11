@@ -149,7 +149,7 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
   {
     term: "Portfolio",
     definition:
-      "The whole collection of units and unit groups being managed together for reporting and oversight.",
+      "Reporting boundary across everything.",
   },
   {
     term: "Property Concept",
@@ -241,12 +241,17 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
   {
     term: "Unit",
     definition:
-      "An individual occupiable space, such as an office suite, shop, warehouse, flat, house, storage unit or separately let parking space.",
+      "One occupiable space.",
   },
   {
     term: "Unit Group",
     definition:
-      "A collection of units grouped together within Hobson.",
+      "Units grouped structurally by geolocation.",
+  },
+  {
+    term: "Unit Set",
+    definition:
+      "A collection of existing Units linked for a particular purpose, such as sharing a lease or other document.",
   },
   {
     term: "Vacate Date",
