@@ -126,6 +126,11 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
       "A formal communication used to give information, make a demand or proposal, exercise a right, or start or end a process.",
   },
   {
+    term: "Operational Record",
+    definition:
+      "A record of something that has actually happened, such as a notice being served, an approval being given or an action being completed.",
+  },
+  {
     term: "Occupation Payment",
     aliases: ["occupancy payment"],
     definition:
