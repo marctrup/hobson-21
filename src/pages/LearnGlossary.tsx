@@ -152,6 +152,11 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
       "The whole collection of units and unit groups being managed together for reporting and oversight.",
   },
   {
+    term: "Property Concept",
+    definition:
+      "A type of property information that Hobson records consistently across different documents, such as parties, units, payments, termination, or obligations.",
+  },
+  {
     term: "Pre-occupational",
     definition:
       "A fact or document that belongs to the period before occupation begins within the relevant chain, such as an Agreement for Lease or Heads of Terms agreed before the lease or licence takes effect.",
