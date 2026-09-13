@@ -178,7 +178,7 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
       "The document that creates the right to occupy a property, such as a lease, licence to occupy or tenancy agreement. It forms the starting point of the tenancy chain.",
   },
   {
-    term: "Relevant Operative Date",
+    term: "Operative Date",
     definition:
       "The date from which a particular fact applies, changes or ends. It may be different from the Effective Date of the document.",
   },
