@@ -151,7 +151,7 @@ export const PricingSection = () => {
         {/* Header */}
         <div className="text-center mb-12 sm:mb-16">
           <div className="flex items-center justify-center gap-4 mb-4">
-            <img src={owlMascot} alt="Hobson AI Owl Mascot" className="w-16 h-16 sm:w-20 sm:h-20 object-contain" />
+            <img loading="lazy" decoding="async" src={owlMascot} alt="Hobson AI Owl Mascot" className="w-16 h-16 sm:w-20 sm:h-20 object-contain" />
             <h2 className={`font-bold text-foreground text-2xl sm:text-3xl md:text-4xl`}>
               {pricing.title}
             </h2>
