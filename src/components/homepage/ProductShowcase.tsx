@@ -61,7 +61,6 @@ const ProductShowcase = memo(() => {
                   src={hobsonUnitInterface}
                   alt="Hobson AI desktop — conversational chat alongside an interactive property map"
                   className="w-[107%] h-auto block -ml-[6%]"
-                  decoding="async"
                   fetchPriority="high"
                 />
               </div>
@@ -79,7 +78,6 @@ const ProductShowcase = memo(() => {
                     src={mobileChatImg}
                     alt="Hobson AI mobile chat"
                     className="absolute inset-0 w-full h-full object-cover object-top"
-                    decoding="async"
                   />
                 </div>
                 <div className="absolute bottom-1 left-1/2 -translate-x-1/2 w-[35%] h-[2px] bg-white/40 rounded-full z-20" />

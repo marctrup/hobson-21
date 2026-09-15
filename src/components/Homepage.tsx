@@ -283,7 +283,6 @@ export const Homepage = () => {
                           src={hobsonAnswerTight.url}
                           alt="Hobson answering a rent question by referencing two uploaded tenancy documents and citing each source"
                           className="w-full h-auto block"
-                          loading="lazy"
                         />
                       </div>
                     </div>
