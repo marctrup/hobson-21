@@ -52,6 +52,7 @@ const MeetTheFounder = lazy(() => import("../pages/MeetTheFounder"));
 const LeaseManagementSoftware = lazy(() => import("../pages/LeaseManagementSoftware"));
 const PropertyManagementSoftware = lazy(() => import("../pages/PropertyManagementSoftware"));
 const PropertyPortfolioSoftware = lazy(() => import("../pages/PropertyPortfolioSoftware"));
+const AILeaseAbstraction = lazy(() => import("../pages/AILeaseAbstraction"));
 
 
 // CRM
