@@ -11,9 +11,11 @@ export default function PropertyGuide({ slug }: { slug: string }) {
   const guide = propertyGuides.find(item => item.slug === slug);
   if (!guide) return null;
   const url = `https://hobson-21.lovable.app/learn/${guide.slug}`;
+  const faqSections = guide.sections.filter(section => section.title.trim().endsWith('?'));
   const schema = { '@context': 'https://schema.org', '@graph': [
     { '@type': 'Article', headline: guide.title, description: guide.description, mainEntityOfPage: url, author: { '@type': 'Organization', name: 'Hobson' }, publisher: { '@type': 'Organization', name: 'Hobson AI Limited' } },
     { '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Learn', item: 'https://hobson-21.lovable.app/learn' }, { '@type': 'ListItem', position: 2, name: guide.title, item: url }] },
+    ...(faqSections.length ? [{ '@type': 'FAQPage', mainEntity: faqSections.map(section => ({ '@type': 'Question', name: section.title, acceptedAnswer: { '@type': 'Answer', text: [...section.paragraphs, ...(section.points ? ['Key points: ' + section.points.join(' ')] : [])].join('\n\n') } })) }] : []),
   ] };
   return <div className="min-h-screen bg-background text-foreground">
     <Helmet><title>{guide.seoTitle}</title><meta name="description" content={guide.description} /><link rel="canonical" href={url} /><meta property="og:title" content={guide.seoTitle} /><meta property="og:description" content={guide.description} /><meta property="og:url" content={url} /><meta property="og:type" content="article" /><script type="application/ld+json">{JSON.stringify(schema)}</script></Helmet>
