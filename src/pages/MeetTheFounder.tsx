@@ -1,4 +1,6 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 import { Helmet } from "react-helmet-async";
 import { GlobalHeader } from "@/components/GlobalHeader";
 import { YouTubeVideoSection } from "@/components/homepage/YouTubeVideoSection";
@@ -112,6 +114,7 @@ const MeetTheFounder = () => {
                   <p>
                     One that thinks alongside people, quietly takes care of the routine work and gives professionals more time to focus on what really matters.
                   </p>
+                  <Button asChild variant="link" className="px-0 text-brass-text"><Link to="/press">Press &amp; interviews →</Link></Button>
                 </div>
               </div>
             </div>

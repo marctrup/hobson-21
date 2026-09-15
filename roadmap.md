@@ -11,3 +11,9 @@
 - [x] Replace homepage loading placeholder with real H1, description and nav links.
 - [ ] Publish so snapshots go live; then verify with curl on hobsonschoice.ai.
 - [ ] Regenerate snapshots before any future publish that rebuilds assets (see memory: SEO static snapshots).
+
+# Press & Media
+- [ ] Build /press with clearly separated Hobson and historic founder coverage.
+- [ ] Add footer/founder links, metadata, sitemap and snapshot registration.
+- [ ] Verify page layout and links.
+- [ ] Generate production snapshot and publish when authorised.
