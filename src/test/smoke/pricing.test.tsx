@@ -29,6 +29,6 @@ describe("Pricing page", () => {
       expect(screen.getAllByLabelText(/People/i).length).toBeGreaterThan(0);
     });
     const talk = screen.getByRole("link", { name: /Talk to me/i });
-    expect(talk).toHaveAttribute("href", "/contact");
+    expect(talk).toHaveAttribute("href", "mailto:info@hobsonschoice.ai");
   });
 });

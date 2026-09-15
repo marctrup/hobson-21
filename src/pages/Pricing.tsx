@@ -649,7 +649,7 @@ const Calculators: React.FC = () => {
               </div>
 
               <a
-                href="/contact"
+                href="mailto:info@hobsonschoice.ai"
                 style={{
                   marginTop: 14,
                   padding: "12px 18px",
@@ -823,7 +823,7 @@ const Calculators: React.FC = () => {
 
 
               <a
-                href="/contact"
+                href="mailto:info@hobsonschoice.ai"
                 style={{
                   marginTop: 14,
                   padding: "12px 18px",
@@ -1067,7 +1067,7 @@ export default function Pricing() {
                   If your portfolio is large, your structure complex, your team above twenty, or your requirements particular, the calculator will only take us so far. I am happy to understand your organisation properly and design something around it. The complete Hobson, fitted to you.
                 </p>
                 <div>
-                  <a href="/contact" className="hp-btn hp-btn-brass">Talk to me</a>
+                  <a href="mailto:info@hobsonschoice.ai" className="hp-btn hp-btn-brass">Talk to me</a>
                 </div>
               </div>
             </div>
