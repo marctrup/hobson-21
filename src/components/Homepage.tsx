@@ -279,11 +279,10 @@ export const Homepage = () => {
                           <span className="w-2.5 h-2.5 rounded-full bg-warning-border/70" />
                           <span className="w-2.5 h-2.5 rounded-full bg-success-border/70" />
                         </div>
-                        <img
+                        <img loading="lazy" decoding="async"
                           src={hobsonAnswerTight.url}
                           alt="Hobson answering a rent question by referencing two uploaded tenancy documents and citing each source"
                           className="w-full h-auto block"
-                          loading="lazy"
                         />
                       </div>
                     </div>

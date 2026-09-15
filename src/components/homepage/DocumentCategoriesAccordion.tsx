@@ -100,11 +100,10 @@ export const DocumentCategoriesAccordion = () => {
   return (
     <div className="mt-16 sm:mt-20">
       <div className="text-center mb-6 sm:mb-8">
-        <img
+        <img loading="lazy" decoding="async"
           src={owlReading}
           alt="Hobson the owl reading a book"
           className="w-32 h-32 sm:w-40 sm:h-40 mx-auto mb-4 object-contain"
-          loading="lazy"
         />
         <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-2">
           Documents Hobson is trained to read and understand

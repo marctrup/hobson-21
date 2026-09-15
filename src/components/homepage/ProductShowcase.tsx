@@ -57,11 +57,10 @@ const ProductShowcase = memo(() => {
             >
               {/* Crop the leftmost nav rail (~6%) so chat + map are the focus */}
               <div className="overflow-hidden">
-                <img
+                <img loading="lazy" decoding="async"
                   src={hobsonUnitInterface}
                   alt="Hobson AI desktop — conversational chat alongside an interactive property map"
                   className="w-[107%] h-auto block -ml-[6%]"
-                  decoding="async"
                   fetchPriority="high"
                 />
               </div>
@@ -75,11 +74,10 @@ const ProductShowcase = memo(() => {
               <div className="relative rounded-[1.2rem] sm:rounded-[1.6rem] border-[3px] sm:border-[5px] border-foreground/90 bg-foreground/90 shadow-2xl shadow-primary/30 overflow-hidden">
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[38%] h-2.5 sm:h-3 bg-foreground/90 rounded-b-xl z-20" />
                 <div className="relative w-full aspect-[9/19.5] overflow-hidden rounded-[0.95rem] sm:rounded-[1.25rem] bg-background">
-                  <img
+                  <img loading="lazy" decoding="async"
                     src={mobileChatImg}
                     alt="Hobson AI mobile chat"
                     className="absolute inset-0 w-full h-full object-cover object-top"
-                    decoding="async"
                   />
                 </div>
                 <div className="absolute bottom-1 left-1/2 -translate-x-1/2 w-[35%] h-[2px] bg-white/40 rounded-full z-20" />
