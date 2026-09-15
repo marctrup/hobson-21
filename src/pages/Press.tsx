@@ -2,7 +2,6 @@ import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
 import { ArrowRight, ExternalLink, Mail } from "lucide-react";
 import { GlobalHeader } from "@/components/GlobalHeader";
-import { HomepageFooter } from "@/components/homepage/HomepageFooter";
 import { Button } from "@/components/ui/button";
 
 const publicationDates = [
