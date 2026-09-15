@@ -12,6 +12,9 @@ export default function PropertyGuide({ slug }: { slug: string }) {
   if (!guide) return null;
   const url = `https://hobson-21.lovable.app/learn/${guide.slug}`;
   const faqSections = guide.sections.filter(section => section.title.trim().endsWith('?'));
+  const faqEntries = faqSections.length
+    ? faqSections.map(section => ({ '@type': 'Question', name: section.title, acceptedAnswer: { '@type': 'Answer', text: [...section.paragraphs, ...(section.points ? ['Key points: ' + section.points.join(' ')] : [])].join('\n\n') } }))
+    : (guide.title.trim().endsWith('?') ? [{ '@type': 'Question', name: guide.title, acceptedAnswer: { '@type': 'Answer', text: guide.summary } }] : []);
   const schema = { '@context': 'https://schema.org', '@graph': [
     { '@type': 'Article', headline: guide.title, description: guide.description, mainEntityOfPage: url, author: { '@type': 'Organization', name: 'Hobson' }, publisher: { '@type': 'Organization', name: 'Hobson AI Limited' } },
     { '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Learn', item: 'https://hobson-21.lovable.app/learn' }, { '@type': 'ListItem', position: 2, name: guide.title, item: url }] },
