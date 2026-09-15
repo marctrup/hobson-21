@@ -1,0 +1,37 @@
+# Hobson AI
+
+> Hobson AI is an AI co-worker built for property. It reads your property documents — leases, licences, certificates, management agreements — and turns them into structured, evidence-backed answers. Every answer links to the exact clause and page it came from.
+
+Hobson organises everything around a simple hierarchy: Portfolio > Unit Group > Unit. You ask a question in plain English; Hobson prepares the information and the evidence, and you make the decision.
+
+## Product
+
+- [Home](https://hobsonschoice.ai/): Overview of Hobson as an AI co-worker for property teams.
+- [Pricing](https://hobsonschoice.ai/pricing): Capacity-based plans covering users, documents and seats.
+- [Contact](https://hobsonschoice.ai/contact): Talk to the team about your portfolio.
+- [Press & Media](https://hobsonschoice.ai/press): Coverage of Hobson and the founder's track record.
+- [Co-founder](https://hobsonschoice.ai/founder): Background of the founder and why Hobson was built.
+
+## Solutions
+
+- [Lease management software](https://hobsonschoice.ai/lease-management-software): Track lease events, dates and obligations with evidence from the original documents.
+- [Property management software](https://hobsonschoice.ai/property-management-software): AI software for property teams managing documents, units and compliance.
+- [Property portfolio software](https://hobsonschoice.ai/property-portfolio-software): Portfolio-wide answers across unit groups and units.
+- [AI lease abstraction](https://hobsonschoice.ai/ai-lease-abstraction): Automated extraction of lease terms into structured property knowledge.
+
+## Learn
+
+- [Learn hub](https://hobsonschoice.ai/learn): Guides, case studies, FAQs and glossary.
+- [Glossary](https://hobsonschoice.ai/learn/glossary): Definitions of property and Hobson terminology.
+- [FAQ](https://hobsonschoice.ai/learn/faq): Answers about documents, evidence, security and pricing.
+- [Case studies](https://hobsonschoice.ai/learn/case-studies): Real examples of Hobson in use.
+- [What is lease management software](https://hobsonschoice.ai/learn/what-is-lease-management-software): Introduction for buyers.
+- [How much does property management software cost](https://hobsonschoice.ai/learn/how-much-does-property-management-software-cost): Pricing guidance for the UK market.
+- [Best property management software UK](https://hobsonschoice.ai/learn/best-property-management-software-uk): How to compare options.
+- [Blog](https://hobsonschoice.ai/blog): Articles on property, documents and AI.
+
+## Optional
+
+- [Privacy policy](https://hobsonschoice.ai/privacy-policy)
+- [Data protection](https://hobsonschoice.ai/data-protection)
+- [Refund policy](https://hobsonschoice.ai/refund-policy)
