@@ -132,38 +132,40 @@ const AppContent = () => {
             <>
               {/* Main website routes */}
               <Route path="/" element={<Homepage />} />
-              <Route path="/property-management-software" element={<PropertyManagementSoftware />} />
-              <Route path="/property-portfolio-software" element={<PropertyPortfolioSoftware />} />
-              <Route path="/lease-management-software" element={<LeaseManagementSoftware />} />
-              <Route path="/ai-lease-abstraction" element={<AILeaseAbstraction />} />
+              <Route element={<PublicLayout />}>
+                <Route path="/property-management-software" element={<PropertyManagementSoftware />} />
+                <Route path="/property-portfolio-software" element={<PropertyPortfolioSoftware />} />
+                <Route path="/lease-management-software" element={<LeaseManagementSoftware />} />
+                <Route path="/ai-lease-abstraction" element={<AILeaseAbstraction />} />
 
-              <Route path="/pricing" element={<Pricing />} />
-              <Route path="/founder" element={<MeetTheFounder />} />
-              <Route path="/press" element={<Press />} />
-              <Route path="/meet-the-founder" element={<Navigate to="/founder" replace />} />
-              <Route path="/blog" element={<Blog />} />
-              <Route path="/blog/:slug" element={<BlogPost />} />
-              <Route path="/contact" element={<ContactUs />} />
-              <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-              <Route path="/data-protection" element={<DataProtection />} />
-              <Route path="/breach-protocol" element={<BreachProtocol />} />
-              <Route path="/refund-policy" element={<RefundPolicy />} />
-              <Route path="/learn" element={<Learn />} />
-              <Route path="/learn/what-is-lease-management-software" element={<PropertyGuide slug="what-is-lease-management-software" />} />
-              <Route path="/learn/how-much-does-property-management-software-cost" element={<PropertyGuide slug="how-much-does-property-management-software-cost" />} />
-              <Route path="/learn/best-property-management-software-uk" element={<PropertyGuide slug="best-property-management-software-uk" />} />
-              <Route path="/learn/faq" element={<LearnFaq />} />
-              <Route path="/learn/glossary" element={<LearnGlossary />} />
-              <Route path="/learn/case-studies" element={<CaseStudies />} />
-              <Route path="/learn/case-studies/mixed-use-owner" element={<CaseStudyMixedUseOwner />} />
-              <Route path="/learn/case-studies/historic-leases" element={<CaseStudyHistoricLeases />} />
-              <Route path="/learn/*" element={<Navigate to="/learn" replace />} />
+                <Route path="/pricing" element={<Pricing />} />
+                <Route path="/founder" element={<MeetTheFounder />} />
+                <Route path="/press" element={<Press />} />
+                <Route path="/meet-the-founder" element={<Navigate to="/founder" replace />} />
+                <Route path="/blog" element={<Blog />} />
+                <Route path="/blog/:slug" element={<BlogPost />} />
+                <Route path="/contact" element={<ContactUs />} />
+                <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+                <Route path="/data-protection" element={<DataProtection />} />
+                <Route path="/breach-protocol" element={<BreachProtocol />} />
+                <Route path="/refund-policy" element={<RefundPolicy />} />
+                <Route path="/learn" element={<Learn />} />
+                <Route path="/learn/what-is-lease-management-software" element={<PropertyGuide slug="what-is-lease-management-software" />} />
+                <Route path="/learn/how-much-does-property-management-software-cost" element={<PropertyGuide slug="how-much-does-property-management-software-cost" />} />
+                <Route path="/learn/best-property-management-software-uk" element={<PropertyGuide slug="best-property-management-software-uk" />} />
+                <Route path="/learn/faq" element={<LearnFaq />} />
+                <Route path="/learn/glossary" element={<LearnGlossary />} />
+                <Route path="/learn/case-studies" element={<CaseStudies />} />
+                <Route path="/learn/case-studies/mixed-use-owner" element={<CaseStudyMixedUseOwner />} />
+                <Route path="/learn/case-studies/historic-leases" element={<CaseStudyHistoricLeases />} />
+                <Route path="/learn/*" element={<Navigate to="/learn" replace />} />
 
+                <Route path="/status" element={<Status />} />
+                <Route path="/announcements" element={<Announcements />} />
+                <Route path="/announcement/:slug" element={<AnnouncementPost />} />
+                <Route path="/feature-requests" element={<FeatureRequests />} />
+              </Route>
 
-              <Route path="/status" element={<Status />} />
-              <Route path="/announcements" element={<Announcements />} />
-              <Route path="/announcement/:slug" element={<AnnouncementPost />} />
-              <Route path="/feature-requests" element={<FeatureRequests />} />
               <Route path="/usehobson" element={<UseHobson />} />
               <Route path="/investment-opportunity" element={<InvestmentOpportunity />} />
               <Route path="/investor-summary" element={<Navigate to="/investment-opportunity" replace />} />
