@@ -115,7 +115,7 @@ const LeaseManagementSoftware = () => {
                 className="rounded-full px-8 font-semibold"
                 style={{ borderColor: BRASS, color: INK }}
               >
-                <Link to="/contact">Talk to us</Link>
+                <a href="mailto:info@hobsonschoice.ai">Talk to us</a>
               </Button>
             </div>
             <div
