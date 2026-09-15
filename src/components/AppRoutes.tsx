@@ -3,6 +3,7 @@ import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { HuggingFaceCacheManager } from "@/components/HuggingFaceCacheManager";
 import { Homepage } from "./Homepage";
+import { PublicLayout } from "./PublicLayout";
 import Pricing from "../pages/Pricing";
 
 // Lazy load secondary routes to keep initial navigation responsive
