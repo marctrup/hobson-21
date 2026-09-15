@@ -23,7 +23,6 @@ type HubCard = {
 };
 
 const CARDS: HubCard[] = [
-  ...propertyGuides.map(guide => ({ to: `/learn/${guide.slug}`, icon: BookOpen, title: guide.title, description: guide.description, cta: "Read the guide", status: "", available: true })),
   {
     to: "/learn/faq",
     icon: MessageCircleQuestion,
@@ -50,12 +49,10 @@ const CARDS: HubCard[] = [
     title: "Glossary",
     description:
       "Plain-English definitions of the property, document and Hobson terms you'll see across the platform.",
-
     cta: "Explore the glossary",
     status: "Available now",
     available: true,
   },
-
   {
     icon: PlayCircle,
     title: "Tutorials",
@@ -65,6 +62,7 @@ const CARDS: HubCard[] = [
     status: "Coming soon",
     available: false,
   },
+  ...propertyGuides.map(guide => ({ to: `/learn/${guide.slug}`, icon: BookOpen, title: guide.title, description: guide.description, cta: "Read the guide", status: "", available: true })),
 ];
 
 const BRASS = "#B4914F";
