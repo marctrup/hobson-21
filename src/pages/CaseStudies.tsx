@@ -68,9 +68,9 @@ const CaseStudies = () => {
           name="description"
           content="Real partnerships underway. Pick the situation that sounds like yours — and see how Hobson is helping property owners today."
         />
-        <link rel="canonical" href="https://hobson-21.lovable.app/learn/case-studies" />
+        <link rel="canonical" href="https://hobsonschoice.ai/learn/case-studies" />
         <meta property="og:title" content="Hobson case studies" />
-        <meta property="og:url" content="https://hobson-21.lovable.app/learn/case-studies" />
+        <meta property="og:url" content="https://hobsonschoice.ai/learn/case-studies" />
         <meta property="og:type" content="website" />
       </Helmet>
       <GlobalHeader />

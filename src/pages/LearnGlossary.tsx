@@ -310,9 +310,9 @@ const LearnGlossary = () => {
           name="description"
           content="Plain-English explanations of the property, document and Hobson terms used across Hobson."
         />
-        <link rel="canonical" href="https://hobson-21.lovable.app/learn/glossary" />
+        <link rel="canonical" href="https://hobsonschoice.ai/learn/glossary" />
         <meta property="og:title" content="Hobson Glossary" />
-        <meta property="og:url" content="https://hobson-21.lovable.app/learn/glossary" />
+        <meta property="og:url" content="https://hobsonschoice.ai/learn/glossary" />
         <meta property="og:type" content="website" />
       </Helmet>
       <GlobalHeader />

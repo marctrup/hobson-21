@@ -69,7 +69,7 @@ const CaseStudyHistoricLeases = () => {
         />
         <link
           rel="canonical"
-          href="https://hobson-21.lovable.app/learn/case-studies/historic-leases"
+          href="https://hobsonschoice.ai/learn/case-studies/historic-leases"
         />
         <meta
           property="og:title"
@@ -81,7 +81,7 @@ const CaseStudyHistoricLeases = () => {
         />
         <meta
           property="og:url"
-          content="https://hobson-21.lovable.app/learn/case-studies/historic-leases"
+          content="https://hobsonschoice.ai/learn/case-studies/historic-leases"
         />
         <meta property="og:type" content="article" />
       </Helmet>
