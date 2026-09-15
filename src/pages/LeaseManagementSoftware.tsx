@@ -80,7 +80,7 @@ const LeaseManagementSoftware = () => {
               className="text-[11px] font-semibold uppercase tracking-[0.24em]"
               style={{ color: BRASS }}
             >
-              Software for property teams
+              AI Software for property teams
             </p>
             <h1
               className="mt-4 font-serif text-4xl sm:text-5xl md:text-6xl font-normal tracking-tight leading-[1.1]"
