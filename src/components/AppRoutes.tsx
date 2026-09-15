@@ -50,6 +50,7 @@ const PrototypeMobile = lazy(() => import("../pages/PrototypeMobile"));
 
 const MeetTheFounder = lazy(() => import("../pages/MeetTheFounder"));
 const LeaseManagementSoftware = lazy(() => import("../pages/LeaseManagementSoftware"));
+const PropertyManagementSoftware = lazy(() => import("../pages/PropertyManagementSoftware"));
 
 // CRM
 const CrmGuard = lazy(() => import("./crm/CrmGuard").then(m => ({ default: m.CrmGuard })));
@@ -126,7 +127,7 @@ const AppContent = () => {
             <>
               {/* Main website routes */}
               <Route path="/" element={<Homepage />} />
-              <Route path="/property-management-software" element={<Navigate to="/lease-management-software" replace />} />
+              <Route path="/property-management-software" element={<PropertyManagementSoftware />} />
               <Route path="/lease-management-software" element={<LeaseManagementSoftware />} />
               <Route path="/pricing" element={<Pricing />} />
               <Route path="/founder" element={<MeetTheFounder />} />
