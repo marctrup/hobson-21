@@ -17,6 +17,15 @@ const ROUTES = [
   '/pricing',
   '/blog',
   '/learn/faq',
+  '/learn',
+  '/learn/glossary',
+  '/lease-management-software',
+  '/property-management-software',
+  '/property-portfolio-software',
+  '/ai-lease-abstraction',
+  '/learn/what-is-lease-management-software',
+  '/learn/how-much-does-property-management-software-cost',
+  '/learn/best-property-management-software-uk',
   '/contact',
 ];
 
