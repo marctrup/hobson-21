@@ -1,3 +1,4 @@
+import { PropertyTopicLinks } from "@/components/PropertyTopicLinks";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { ArrowRight, CheckCircle, Building2, Layers, Search, Users } from "lucide-react";
@@ -355,6 +356,7 @@ const PropertyPortfolioSoftware = () => {
             </div>
           </div>
         </section>
+        <PropertyTopicLinks />
       </main>
     </div>
   );

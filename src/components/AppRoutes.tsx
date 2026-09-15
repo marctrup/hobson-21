@@ -52,6 +52,7 @@ const MeetTheFounder = lazy(() => import("../pages/MeetTheFounder"));
 const LeaseManagementSoftware = lazy(() => import("../pages/LeaseManagementSoftware"));
 const PropertyManagementSoftware = lazy(() => import("../pages/PropertyManagementSoftware"));
 const PropertyPortfolioSoftware = lazy(() => import("../pages/PropertyPortfolioSoftware"));
+const PropertyGuide = lazy(() => import("../pages/PropertyGuide"));
 const AILeaseAbstraction = lazy(() => import("../pages/AILeaseAbstraction"));
 
 
@@ -146,6 +147,9 @@ const AppContent = () => {
               <Route path="/breach-protocol" element={<BreachProtocol />} />
               <Route path="/refund-policy" element={<RefundPolicy />} />
               <Route path="/learn" element={<Learn />} />
+              <Route path="/learn/what-is-lease-management-software" element={<PropertyGuide slug="what-is-lease-management-software" />} />
+              <Route path="/learn/how-much-does-property-management-software-cost" element={<PropertyGuide slug="how-much-does-property-management-software-cost" />} />
+              <Route path="/learn/best-property-management-software-uk" element={<PropertyGuide slug="best-property-management-software-uk" />} />
               <Route path="/learn/faq" element={<LearnFaq />} />
               <Route path="/learn/glossary" element={<LearnGlossary />} />
               <Route path="/learn/case-studies" element={<CaseStudies />} />

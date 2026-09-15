@@ -1,3 +1,4 @@
+import { propertyGuides } from "@/content/propertyGuides";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import {
@@ -22,6 +23,7 @@ type HubCard = {
 };
 
 const CARDS: HubCard[] = [
+  ...propertyGuides.map(guide => ({ to: `/learn/${guide.slug}`, icon: BookOpen, title: guide.title, description: guide.description, cta: "Read the guide", status: "", available: true })),
   {
     to: "/learn/faq",
     icon: MessageCircleQuestion,

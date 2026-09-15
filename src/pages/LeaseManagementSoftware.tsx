@@ -1,3 +1,4 @@
+import { PropertyTopicLinks } from "@/components/PropertyTopicLinks";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { ArrowRight, CheckCircle, FileText, Search, Shield, Users } from "lucide-react";
@@ -354,6 +355,7 @@ const LeaseManagementSoftware = () => {
             </div>
           </div>
         </section>
+        <PropertyTopicLinks />
       </main>
     </div>
   );
