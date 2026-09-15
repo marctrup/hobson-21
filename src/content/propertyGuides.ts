@@ -1,5 +1,6 @@
 export type GuideSection = { id: string; title: string; paragraphs: string[]; points?: string[] };
-export type PropertyGuide = { slug: string; title: string; seoTitle: string; description: string; summary: string; target: string; targetLabel: string; sections: GuideSection[]; sources: { label: string; url: string }[] };
+export type GuideFaq = { q: string; a: string };
+export type PropertyGuide = { slug: string; title: string; seoTitle: string; description: string; summary: string; target: string; targetLabel: string; sections: GuideSection[]; faqs?: GuideFaq[]; sources: { label: string; url: string }[] };
 export const propertyGuides: PropertyGuide[] = [
   {
     slug: 'what-is-lease-management-software',
