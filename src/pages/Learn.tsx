@@ -82,9 +82,9 @@ const Learn = () => {
           name="description"
           content="Get to know Hobson — straight answers, real customer stories and short walkthroughs showing how it reads your property documents and helps you act on them."
         />
-        <link rel="canonical" href="https://hobson-21.lovable.app/learn" />
+        <link rel="canonical" href="https://hobsonschoice.ai/learn" />
         <meta property="og:title" content="Learn about Hobson AI" />
-        <meta property="og:url" content="https://hobson-21.lovable.app/learn" />
+        <meta property="og:url" content="https://hobsonschoice.ai/learn" />
         <meta property="og:type" content="website" />
       </Helmet>
       <GlobalHeader />

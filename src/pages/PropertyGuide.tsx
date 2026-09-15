@@ -10,11 +10,11 @@ import evidencePack from '@/assets/evidence-pack-example.png.asset.json';
 export default function PropertyGuide({ slug }: { slug: string }) {
   const guide = propertyGuides.find(item => item.slug === slug);
   if (!guide) return null;
-  const url = `https://hobson-21.lovable.app/learn/${guide.slug}`;
+  const url = `https://hobsonschoice.ai/learn/${guide.slug}`;
   const faqEntries = (guide.faqs ?? []).map(faq => ({ '@type': 'Question', name: faq.q, acceptedAnswer: { '@type': 'Answer', text: faq.a } }));
   const schema = { '@context': 'https://schema.org', '@graph': [
     { '@type': 'Article', headline: guide.title, description: guide.description, mainEntityOfPage: url, author: { '@type': 'Organization', name: 'Hobson' }, publisher: { '@type': 'Organization', name: 'Hobson AI Limited' } },
-    { '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Learn', item: 'https://hobson-21.lovable.app/learn' }, { '@type': 'ListItem', position: 2, name: guide.title, item: url }] },
+    { '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Learn', item: 'https://hobsonschoice.ai/learn' }, { '@type': 'ListItem', position: 2, name: guide.title, item: url }] },
     ...(faqEntries.length ? [{ '@type': 'FAQPage', mainEntity: faqEntries }] : []),
   ] };
   return <div className="min-h-screen bg-background text-foreground">

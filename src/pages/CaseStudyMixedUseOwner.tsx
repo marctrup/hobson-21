@@ -53,7 +53,7 @@ const CaseStudyMixedUseOwner = () => {
         />
         <link
           rel="canonical"
-          href="https://hobson-21.lovable.app/learn/case-studies/mixed-use-owner"
+          href="https://hobsonschoice.ai/learn/case-studies/mixed-use-owner"
         />
         <meta
           property="og:title"
@@ -61,7 +61,7 @@ const CaseStudyMixedUseOwner = () => {
         />
         <meta
           property="og:url"
-          content="https://hobson-21.lovable.app/learn/case-studies/mixed-use-owner"
+          content="https://hobsonschoice.ai/learn/case-studies/mixed-use-owner"
         />
         <meta property="og:type" content="article" />
       </Helmet>

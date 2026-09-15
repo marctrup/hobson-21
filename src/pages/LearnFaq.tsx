@@ -302,9 +302,9 @@ const LearnFaq = () => {
           name="description"
           content="Answers to the most common questions about Hobson: how it reads property documents, how accuracy is tested, and how it stays in your control."
         />
-        <link rel="canonical" href="https://hobson-21.lovable.app/learn/faq" />
+        <link rel="canonical" href="https://hobsonschoice.ai/learn/faq" />
         <meta property="og:title" content="Hobson AI FAQ — questions, answered" />
-        <meta property="og:url" content="https://hobson-21.lovable.app/learn/faq" />
+        <meta property="og:url" content="https://hobsonschoice.ai/learn/faq" />
         <meta property="og:type" content="website" />
         <script type="application/ld+json">{JSON.stringify(faqJsonLd)}</script>
       </Helmet>
