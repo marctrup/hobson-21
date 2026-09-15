@@ -99,7 +99,7 @@ export default function Press() {
           </div>
         </section>
       </main>
-      <HomepageFooter />
+      
     </div>
   );
 }
