@@ -5,6 +5,11 @@ import { GlobalHeader } from "@/components/GlobalHeader";
 import { HomepageFooter } from "@/components/homepage/HomepageFooter";
 import { Button } from "@/components/ui/button";
 
+const publicationDates = [
+  { iso: "2019-02-14", label: "14 February 2019" },
+  { iso: "2019-03-12", label: "12 March 2019" },
+  { iso: "2020-11-11", label: "11 November 2020" },
+];
 const coverage = [
   { publication: "Property Reporter", title: "In the Spotlight with Marc Trup", description: "Founder interview covering Marc’s background in property, why he created Arthur Online and his approach to property technology.", url: "https://www.propertyreporter.co.uk/in-the-spotlight/in-the-spotlight-with-marc-trup.html", cta: "Read on Property Reporter" },
   { publication: "TechRound", title: "Modernising the Property Market: Arthur Online", description: "Interview with Marc Trup, then CEO and founder of Arthur Online, discussing the business, property technology and the company’s plans.", url: "https://techround.co.uk/business/modernising-the-property-market-arthur-online/", cta: "Read on TechRound" },
@@ -55,10 +60,11 @@ export default function Press() {
             <p className="mt-4 max-w-3xl text-muted-foreground leading-relaxed">Hobson’s founders have spent more than a decade building technology for the property industry. Before Hobson, Marc and Rochelle Trup co-founded Arthur Online, the property management platform subsequently acquired by Aareon.</p>
             <p className="mt-3 text-muted-foreground">Here is selected independent coverage from that journey.</p>
             <div className="grid md:grid-cols-3 gap-6 mt-9">
-              {coverage.map(item => (
+              {coverage.map((item, index) => (
                 <article key={item.url} className="flex flex-col rounded-lg border border-bone bg-document-white p-6">
                   <p className="text-xs font-medium text-brass-text">FROM THE ARTHUR ONLINE YEARS</p>
                   <p className="mt-5 font-semibold">{item.publication}</p>
+                  <time dateTime={publicationDates[index].iso} className="mt-1 text-sm text-muted-foreground">{publicationDates[index].label}</time>
                   <h3 className="mt-4 font-serif text-2xl leading-snug">{item.title}</h3>
                   <p className="mt-4 text-sm leading-relaxed text-muted-foreground">{item.description}</p>
                   <div className="mt-auto pt-6">
