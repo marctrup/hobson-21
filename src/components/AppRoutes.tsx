@@ -52,6 +52,7 @@ const MeetTheFounder = lazy(() => import("../pages/MeetTheFounder"));
 const LeaseManagementSoftware = lazy(() => import("../pages/LeaseManagementSoftware"));
 const PropertyManagementSoftware = lazy(() => import("../pages/PropertyManagementSoftware"));
 const PropertyPortfolioSoftware = lazy(() => import("../pages/PropertyPortfolioSoftware"));
+const AILeaseAbstraction = lazy(() => import("../pages/AILeaseAbstraction"));
 
 
 // CRM
@@ -132,6 +133,7 @@ const AppContent = () => {
               <Route path="/property-management-software" element={<PropertyManagementSoftware />} />
               <Route path="/property-portfolio-software" element={<PropertyPortfolioSoftware />} />
               <Route path="/lease-management-software" element={<LeaseManagementSoftware />} />
+              <Route path="/ai-lease-abstraction" element={<AILeaseAbstraction />} />
 
               <Route path="/pricing" element={<Pricing />} />
               <Route path="/founder" element={<MeetTheFounder />} />
