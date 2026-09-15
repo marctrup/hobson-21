@@ -89,6 +89,13 @@ export const GlobalHeader = () => {
         {isMobileMenuOpen && (
           <nav className="md:hidden mt-4 pb-4 border-t pt-4">
             <div className="flex flex-col gap-4">
+              <Link
+                to="/"
+                className={`text-base transition-colors py-2 ${isActive('/') ? 'text-primary font-medium' : 'text-muted-foreground hover:text-foreground'}`}
+                onClick={closeMobileMenu}
+              >
+                Home
+              </Link>
               {primaryLinks.map((link) => (
                 <Link
                   key={link.to}
