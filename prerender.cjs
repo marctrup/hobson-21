@@ -27,6 +27,7 @@ const ROUTES = [
   '/learn/how-much-does-property-management-software-cost',
   '/learn/best-property-management-software-uk',
   '/contact',
+  '/press',
 ];
 
 const MIME_TYPES = {
