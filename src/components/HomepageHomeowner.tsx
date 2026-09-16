@@ -21,7 +21,7 @@ export const HomepageHomeowner = () => {
   };
   return <>
       <Helmet>
-        <title>Homepage | Hobson AI — AI assistance to operators, occupiers and owners of real estate</title>
+        <title>Homepage | Hobson AI</title>
         <meta name="description" content="Transform a tenancy agreement with intelligent analysis, automated insights, and instant answers. ." />
         <meta name="keywords" content="Real Estate AI, tenancy agreement analysis, property AI, automation, " />
         <meta property="og:title" content="AI-Document Intelligence for the Property Industry | Hobson AI" />

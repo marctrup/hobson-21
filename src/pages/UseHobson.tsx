@@ -11,7 +11,7 @@ export const UseHobson = () => {
   return (
     <>
       <Helmet>
-        <title>Use Hobson AI | Hobson AI — AI assistance to operators, occupiers and owners of real estate</title>
+        <title>Use Hobson AI | Hobson AI</title>
         <meta
           name="description"
           content="Start using Hobson AI today. Get 1,000 free HEUs to analyze your property documents with AI-powered clarity and instant answers."

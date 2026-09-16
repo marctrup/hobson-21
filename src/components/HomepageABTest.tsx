@@ -28,7 +28,7 @@ export const HomepageABTest = () => {
   return (
     <>
       <Helmet>
-        <title>Hobson AI — AI assistance to operators, occupiers and owners of real estate</title>
+        <title>Hobson AI — The AI co-worker built for property</title>
         <meta name="robots" content="noindex, nofollow" />
         <meta
           name="description"
