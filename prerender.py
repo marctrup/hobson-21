@@ -81,6 +81,11 @@ BOOTSTRAP = """<script>
 class Handler(http.server.SimpleHTTPRequestHandler):
     def translate_path(self, path):
         path = path.split("?")[0].split("#")[0]
+        # Always render app routes through the fresh Vite entry point. Public
+        # snapshots are copied into dist during builds and must never become
+        # the input for their own next generation.
+        if path.rstrip("/") in ROUTES:
+            return os.path.join(DIST, "index.html")
         full = os.path.join(DIST, path.lstrip("/"))
         if os.path.isfile(full):
             return full
