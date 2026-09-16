@@ -97,7 +97,7 @@ const Features = () => {
   return (
     <>
       <Helmet>
-        <title>Features | Hobson AI — What Hobson does, how it works, why it matters</title>
+        <title>Features — what Hobson does and why it matters | Hobson AI</title>
         <meta name="description" content="Every Phase 1 feature explained — multi-document reasoning, document hierarchy understanding, plain English querying, sourced answers, cross-portfolio questioning and more. All live today." />
         <link rel="canonical" href="https://hobsonschoice.ai/features" />
         <meta property="og:title" content="Features | Hobson AI — What Hobson does, how it works, why it matters" />
