@@ -8,11 +8,26 @@ export const HomepageFooter = () => {
     <footer className="bg-muted/30 border-t py-16">
       <div className="container mx-auto px-4">
         <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          <div className="col-span-2">
+          <div>
             <div className="mb-4">
               <span className="text-3xl font-semibold text-foreground tracking-tight">Hobson</span>
             </div>
           </div>
+
+          <div>
+            <h4 className="font-semibold text-foreground mb-4">Solutions</h4>
+            <div className="space-y-2">
+              <Link to="/lease-management-software" className="block text-muted-foreground hover:text-foreground transition-colors">Lease management software</Link>
+              <Link to="/property-management-software" className="block text-muted-foreground hover:text-foreground transition-colors">Property management software</Link>
+              <Link to="/property-portfolio-software" className="block text-muted-foreground hover:text-foreground transition-colors">Property portfolio software</Link>
+              <Link to="/ai-lease-abstraction" className="block text-muted-foreground hover:text-foreground transition-colors">AI lease abstraction</Link>
+              <Link to="/learn" className="block text-muted-foreground hover:text-foreground transition-colors">Learn</Link>
+              <Link to="/learn/faq" className="block text-muted-foreground hover:text-foreground transition-colors">FAQ</Link>
+              <Link to="/learn/glossary" className="block text-muted-foreground hover:text-foreground transition-colors">Glossary</Link>
+              <Link to="/learn/case-studies" className="block text-muted-foreground hover:text-foreground transition-colors">Case studies</Link>
+            </div>
+          </div>
+          
           
           <div>
             <h4 className="font-semibold text-foreground mb-4">{text.company}</h4>
