@@ -106,6 +106,39 @@ def strip_hashed_assets(html: str) -> str:
     return html.replace("</head>", BOOTSTRAP + "\n</head>", 1)
 
 
+# Head keys that pages manage per-route via Helmet. The rendered DOM contains
+# both the static index.html tag and Helmet's copy (marked data-rh="true");
+# keep only Helmet's so crawlers never see duplicates.
+HELMET_KEYS = [
+    r'name="description"',
+    r'name="twitter:card"',
+    r'name="twitter:title"',
+    r'name="twitter:description"',
+    r'property="og:title"',
+    r'property="og:description"',
+    r'property="og:url"',
+    r'property="og:type"',
+]
+
+
+def dedupe_helmet_head(html: str) -> str:
+    for key in HELMET_KEYS:
+        pattern = r'<meta[^>]*' + key + r'[^>]*>'
+        tags = re.findall(pattern, html)
+        helmet_tags = [t for t in tags if 'data-rh="true"' in t]
+        if helmet_tags:
+            for t in tags:
+                if 'data-rh="true"' not in t:
+                    html = html.replace(t, "", 1)
+    canonical = r'<link[^>]+rel="canonical"[^>]*>'
+    canonical_tags = re.findall(canonical, html)
+    if any('data-rh="true"' in t for t in canonical_tags):
+        for t in canonical_tags:
+            if 'data-rh="true"' not in t:
+                html = html.replace(t, "", 1)
+    return html
+
+
 async def main():
     from playwright.async_api import async_playwright
 
