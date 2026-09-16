@@ -47,8 +47,7 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({
             return (
               <a
                 href={href}
-                target={isExternal ? '_blank' : undefined}
-                rel={isExternal ? 'noopener noreferrer' : undefined}
+                rel={isExternal ? 'external' : undefined}
                 className="text-[hsl(var(--link))] underline underline-offset-2 hover:text-[hsl(var(--link-hover))]"
               >
                 {children}
