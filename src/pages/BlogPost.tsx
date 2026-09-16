@@ -134,55 +134,8 @@ const BlogPost = () => {
     }
   }, [post?.featured_image_url]);
 
-  // Handle external links properly - only within blog content
-  useEffect(() => {
-    if (post && contentRef.current) {
-      const handleLinkClick = (e: Event) => {
-        const target = e.target as HTMLElement;
-        
-        if (target.tagName === 'A') {
-          const link = target as HTMLAnchorElement;
-          const href = link.getAttribute('href');
-          
-          console.log('Link clicked:', href);
-          
-          if (href) {
-            // Handle mailto and tel links - let them work natively
-            if (href.startsWith('mailto:') || href.startsWith('tel:')) {
-              console.log('Mailto/Tel link detected, allowing native behavior:', href);
-              // Force the native behavior by directly setting window.location
-              e.preventDefault();
-              e.stopPropagation();
-              window.location.href = href;
-              return;
-            }
-            
-            // Check if it's an external HTTP link
-            const isExternalHttp = href.startsWith('http') || 
-                                 (href.includes('.') && !href.startsWith('/') && !href.startsWith('#'));
-            
-            if (isExternalHttp) {
-              console.log('External HTTP link detected, preventing default:', href);
-              e.preventDefault();
-              e.stopPropagation();
-              
-              // Add https:// if the href doesn't have a protocol
-              const finalUrl = href.startsWith('http') ? href : `https://${href}`;
-              window.open(finalUrl, '_blank', 'noopener,noreferrer');
-            }
-          }
-        }
-      };
-
-      contentRef.current.addEventListener('click', handleLinkClick, true);
-      
-      return () => {
-        if (contentRef.current) {
-          contentRef.current.removeEventListener('click', handleLinkClick, true);
-        }
-      };
-    }
-  }, [post]);
+  // Links inside blog content are rendered as real anchors by MarkdownRenderer,
+  // so browsers (and crawlers) handle them natively.
 
   // Optimize images within blog content
   useEffect(() => {
