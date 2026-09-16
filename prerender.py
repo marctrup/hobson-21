@@ -29,6 +29,7 @@ PORT = 4173
 ROUTES = [
     "/pricing",
     "/blog",
+    "/blog/how-ai-recognises-patterns-tenancy-agreements",
     "/contact",
     "/press",
     "/founder",
