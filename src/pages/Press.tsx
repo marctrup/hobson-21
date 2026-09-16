@@ -48,9 +48,22 @@ export default function Press() {
         </section>
 
         <section className="max-w-6xl mx-auto px-6 py-14 sm:py-20">
-          <h2 className="font-serif text-3xl sm:text-4xl">Hobson in the Press</h2>
-          <p className="mt-4 text-lg text-muted-foreground max-w-3xl">Independent coverage, interviews and commentary about Hobson AI and the future of AI in property.</p>
-          <p className="mt-8 py-6 border-y border-bone text-muted-foreground">Independent Hobson coverage will be shared here as it becomes available.</p>
+          <h2 className="font-serif text-3xl sm:text-4xl">Independent Coverage</h2>
+          <p className="mt-4 text-lg text-muted-foreground max-w-3xl">Selected articles, interviews and commentary published by independent property industry organisations.</p>
+          <article className="mt-8 max-w-3xl rounded-lg border border-bone bg-document-white p-6 sm:p-8">
+            <p className="font-semibold">Property Investors Bureau</p>
+            <h3 className="mt-4 font-serif text-2xl leading-snug">How AI Recognises Patterns – Like a Boxer and a Trainer</h3>
+            <p className="mt-4 text-muted-foreground">Marc Trup, Director of Hobson AI</p>
+            <p className="mt-1 text-sm text-muted-foreground">Published <time dateTime="2025-12-07">7 December 2025</time></p>
+            <div className="mt-6 flex flex-col items-start gap-4">
+              <Button asChild variant="link" className="h-auto p-0 text-brass-text whitespace-normal text-left justify-start">
+                <a href="https://pibuk.org/how-ai-recognises-patterns-like-a-boxer-and-a-trainer/" target="_blank" rel="noopener noreferrer">Read on Property Investors Bureau<ExternalLink className="ml-2 h-4 w-4 shrink-0" aria-hidden="true" /></a>
+              </Button>
+              <Button asChild variant="link" className="h-auto p-0 text-brass-text whitespace-normal text-left justify-start">
+                <Link to="/blog/how-ai-recognises-patterns-tenancy-agreements">Read the article on Hobson<ArrowRight className="ml-2 h-4 w-4 shrink-0" aria-hidden="true" /></Link>
+              </Button>
+            </div>
+          </article>
         </section>
 
         <section className="border-y border-bone bg-zebra">
