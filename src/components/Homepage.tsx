@@ -339,7 +339,7 @@ export const Homepage = () => {
             <div className="container mx-auto px-4 max-w-6xl">
               <div className="grid md:grid-cols-4 gap-10 md:gap-12">
                 {/* Logo & tagline */}
-                <div className="md:col-span-2">
+                <div className="md:col-span-1">
                   <span className="text-3xl font-semibold text-foreground tracking-tight block mb-4">Hobson</span>
                   <p className="text-sm text-muted-foreground max-w-md">
                     AI assistance to operators, occupiers and owners of real estate.
