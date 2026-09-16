@@ -25,10 +25,12 @@ ROOT = os.path.dirname(os.path.abspath(__file__))
 DIST = os.path.join(ROOT, "dist")
 PUBLIC = os.path.join(ROOT, "public")
 PORT = 4173
+BASE_URL = os.environ.get("PRERENDER_BASE_URL")
 
 ROUTES = [
     "/pricing",
     "/blog",
+    "/blog/how-ai-recognises-patterns-tenancy-agreements",
     "/contact",
     "/press",
     "/founder",
@@ -80,6 +82,11 @@ BOOTSTRAP = """<script>
 class Handler(http.server.SimpleHTTPRequestHandler):
     def translate_path(self, path):
         path = path.split("?")[0].split("#")[0]
+        # Always render app routes through the fresh Vite entry point. Public
+        # snapshots are copied into dist during builds and must never become
+        # the input for their own next generation.
+        if path.rstrip("/") in ROUTES:
+            return os.path.join(DIST, "index.html")
         full = os.path.join(DIST, path.lstrip("/"))
         if os.path.isfile(full):
             return full
@@ -142,14 +149,18 @@ def dedupe_helmet_head(html: str) -> str:
 async def main():
     from playwright.async_api import async_playwright
 
-    httpd = start_server()
+    if not BASE_URL and not os.path.isfile(os.path.join(DIST, "index.html")):
+        raise RuntimeError("dist/index.html is missing; run the Vite build before prerendering")
+
+    httpd = None if BASE_URL else start_server()
+    render_base_url = BASE_URL or f"http://127.0.0.1:{PORT}"
     try:
         async with async_playwright() as p:
             browser = await p.chromium.launch(headless=True)
             context = await browser.new_context(viewport={"width": 1280, "height": 1800})
             for route in ROUTES:
                 page = await context.new_page()
-                await page.goto(f"http://127.0.0.1:{PORT}{route}", wait_until="networkidle", timeout=60000)
+                await page.goto(f"{render_base_url}{route}", wait_until="networkidle", timeout=60000)
                 await page.wait_for_timeout(1200)
                 html = dedupe_helmet_head(strip_hashed_assets(await page.content()))
                 out_dir = os.path.join(PUBLIC, route.strip("/"))
@@ -160,7 +171,8 @@ async def main():
                 await page.close()
             await browser.close()
     finally:
-        httpd.shutdown()
+        if httpd:
+            httpd.shutdown()
     print(f"\nPrerendered {len(ROUTES)} routes.")
 
 

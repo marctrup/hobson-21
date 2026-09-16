@@ -15,7 +15,7 @@ const coverage = [
   { publication: "Mennie Talks Podcast", title: "Interview with Marc Trup — Co-founder of Arthur Online", description: "Long-form interview covering Marc’s entrepreneurial journey, property investing and the creation of Arthur Online.", url: "https://reecemennie.podbean.com/e/season-2-007-interview-with-marc-trup-co-founder-of-property-management-platform-arthur-online/", cta: "Listen to the interview" },
 ];
 
-const title = "Press & Media | Hobson AI | Marc & Rochelle Trup";
+const title = "Press & Media | Hobson AI";
 const description = "Press, interviews and media coverage of Hobson AI and founders Marc and Rochelle Trup, including their previous work building property technology platform Arthur Online.";
 
 export default function Press() {
@@ -55,7 +55,7 @@ export default function Press() {
             <h3 className="mt-4 font-serif text-2xl leading-snug">How AI Recognises Patterns – Like a Boxer and a Trainer</h3>
             <p className="mt-4 text-muted-foreground">Marc Trup, Director of Hobson AI</p>
             <p className="mt-1 text-sm text-muted-foreground">Published <time dateTime="2025-12-07">7 December 2025</time></p>
-            <div className="mt-6 flex flex-col items-start gap-4">
+            <div className="mt-6 flex flex-col items-start gap-3 sm:flex-row sm:gap-6">
               <Button asChild variant="link" className="h-auto p-0 text-brass-text whitespace-normal text-left justify-start">
                 <a href="https://pibuk.org/how-ai-recognises-patterns-like-a-boxer-and-a-trainer/" target="_blank" rel="noopener noreferrer">Read on Property Investors Bureau<ExternalLink className="ml-2 h-4 w-4 shrink-0" aria-hidden="true" /></a>
               </Button>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useParams, Link, Navigate } from "react-router-dom";
-import { Calendar, ArrowLeft } from "lucide-react";
+import { Calendar, ArrowLeft, ExternalLink } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -19,6 +19,7 @@ interface BlogPost {
   featured_image_url: string | null;
   featured_image_alt: string | null;
   published_at: string;
+  updated_at: string;
   reading_time: number;
   meta_title: string | null;
   meta_description: string | null;
@@ -30,6 +31,12 @@ interface BlogPost {
     slug: string;
   }[];
 }
+
+const PIB_ARTICLE_SLUG = "how-ai-recognises-patterns-tenancy-agreements";
+const PIB_ARTICLE_URL = `https://hobsonschoice.ai/blog/${PIB_ARTICLE_SLUG}`;
+const PIB_EXTERNAL_URL = "https://pibuk.org/how-ai-recognises-patterns-like-a-boxer-and-a-trainer/";
+const PIB_META_TITLE = "How AI Recognises Patterns in Property Leases | Hobson AI";
+const PIB_META_DESCRIPTION = "Marc Trup explains how AI recognises patterns in complex property leases, why variation in lease wording matters, and how Hobson approaches property document intelligence.";
 
 const BlogPost = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -94,6 +101,7 @@ const BlogPost = () => {
           featured_image_url: data.featured_image_url,
           featured_image_alt: data.featured_image_alt,
           published_at: data.published_at || data.updated_at,
+          updated_at: data.updated_at,
           reading_time: data.reading_time,
           meta_title: data.meta_title,
           meta_description: data.meta_description,
@@ -181,24 +189,35 @@ const BlogPost = () => {
     return <Navigate to="/blog" replace />;
   }
 
+  const isPibArticle = slug === PIB_ARTICLE_SLUG;
+  const canonicalUrl = isPibArticle ? PIB_ARTICLE_URL : `https://hobsonschoice.ai/blog/${slug}`;
+  const pageTitle = isPibArticle ? PIB_META_TITLE : `${post.meta_title || post.title} | Hobson AI`;
+  const pageDescription = isPibArticle ? PIB_META_DESCRIPTION : post.meta_description || post.excerpt;
+  const articleAuthor = isPibArticle ? "Marc Trup" : post.author.display_name;
+  const articleContent = isPibArticle
+    ? post.content.replace(/^#\s+\*{0,2}[^\n]+\*{0,2}\s*\n+/, "")
+    : post.content;
+
   return (
     <>
       <Helmet>
-        <title>{post.meta_title || post.title} | Hobson AI</title>
-        <meta name="description" content={post.meta_description || post.excerpt} />
+        <title>{pageTitle}</title>
+        <meta name="description" content={pageDescription} />
         <meta name="keywords" content="property management, real estate AI, property technology, AI document analysis" />
+        <link rel="canonical" href={canonicalUrl} />
         
         {/* OpenAI/ChatGPT optimization */}
         <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
-        <meta name="author" content={post.author.display_name} />
+        <meta name="author" content={articleAuthor} />
         <meta name="article:published_time" content={post.published_at} />
-        <meta name="article:author" content={post.author.display_name} />
+        <meta name="article:modified_time" content={post.updated_at} />
+        <meta name="article:author" content={articleAuthor} />
         
         {/* Open Graph */}
-        <meta property="og:title" content={post.meta_title || post.title} />
-        <meta property="og:description" content={post.meta_description || post.excerpt} />
+        <meta property="og:title" content={pageTitle} />
+        <meta property="og:description" content={pageDescription} />
         <meta property="og:type" content="article" />
-        <meta property="og:url" content={`https://hobsonschoice.ai/blog/${slug}`} />
+        <meta property="og:url" content={canonicalUrl} />
         {post.featured_image_url && (
           <meta property="og:image" content={post.featured_image_url} />
         )}
@@ -208,8 +227,8 @@ const BlogPost = () => {
         
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={post.meta_title || post.title} />
-        <meta name="twitter:description" content={post.meta_description || post.excerpt} />
+        <meta name="twitter:title" content={pageTitle} />
+        <meta name="twitter:description" content={pageDescription} />
         {post.featured_image_url && (
           <meta name="twitter:image" content={post.featured_image_url} />
         )}
@@ -222,8 +241,8 @@ const BlogPost = () => {
           {JSON.stringify({
             "@context": "https://schema.org",
             "@type": "Article",
-            "headline": post.meta_title || post.title,
-            "description": post.meta_description || post.excerpt,
+            "headline": isPibArticle ? "How AI Recognises Patterns in Property Leases" : post.title,
+            "description": pageDescription,
             "image": post.featured_image_url ? {
               "@type": "ImageObject",
               "url": post.featured_image_url,
@@ -233,12 +252,14 @@ const BlogPost = () => {
             } : undefined,
             "author": {
               "@type": "Person",
-              "name": post.author.display_name,
-              "url": "https://hobsonschoice.ai"
+              "@id": isPibArticle ? "https://hobsonschoice.ai/#marc-trup" : undefined,
+              "name": articleAuthor,
+              "url": isPibArticle ? "https://hobsonschoice.ai/founder" : "https://hobsonschoice.ai"
             },
             "publisher": {
               "@type": "Organization",
-              "name": "Hobson's Choice AI",
+              "@id": "https://hobsonschoice.ai/#organization",
+              "name": "Hobson AI",
               "logo": {
                 "@type": "ImageObject",
                 "url": "https://hobsonschoice.ai/hobson-logo.png",
@@ -248,24 +269,47 @@ const BlogPost = () => {
               "url": "https://hobsonschoice.ai"
             },
             "datePublished": post.published_at,
-            "dateModified": post.published_at,
+            "dateModified": post.updated_at,
             "mainEntityOfPage": {
               "@type": "WebPage",
-              "@id": `https://hobsonschoice.ai/blog/${slug}`
+              "@id": canonicalUrl
             },
             "keywords": post.categories.map(c => c.name).join(", "),
             "articleSection": post.categories.length > 0 ? post.categories[0].name : "Property Management",
-            "wordCount": Math.ceil(post.content.split(' ').length),
-            "inLanguage": "en"
+            "wordCount": Math.ceil(articleContent.split(' ').length),
+            "inLanguage": "en-GB"
           })}
         </script>
+        {isPibArticle && (
+          <script type="application/ld+json">
+            {JSON.stringify({
+              "@context": "https://schema.org",
+              "@graph": [
+                {
+                  "@type": "Person",
+                  "@id": "https://hobsonschoice.ai/#marc-trup",
+                  "name": "Marc Trup",
+                  "url": "https://hobsonschoice.ai/founder",
+                  "jobTitle": "Director",
+                  "worksFor": { "@id": "https://hobsonschoice.ai/#organization" }
+                },
+                {
+                  "@type": "Organization",
+                  "@id": "https://hobsonschoice.ai/#organization",
+                  "name": "Hobson AI",
+                  "url": "https://hobsonschoice.ai"
+                }
+              ]
+            })}
+          </script>
+        )}
         
         {/* Breadcrumb structured data */}
         <script type="application/ld+json">
           {JSON.stringify(getBreadcrumbStructuredData([
             { name: "Home", url: "https://hobsonschoice.ai/" },
             { name: "Blog", url: "https://hobsonschoice.ai/blog" },
-            { name: post.title, url: `https://hobsonschoice.ai/blog/${slug}` }
+            { name: post.title, url: canonicalUrl }
           ]))}
         </script>
       </Helmet>
@@ -318,7 +362,8 @@ const BlogPost = () => {
                 {post.title}
               </h1>
               
-              <div className="flex items-center gap-6 text-muted-foreground">
+              <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-muted-foreground">
+                {isPibArticle && <span>By Marc Trup, Director of Hobson AI</span>}
                 <div className="flex items-center gap-2">
                   <Calendar className="w-4 h-4" />
                   {format(new Date(post.published_at), 'MMMM dd, yyyy')}
@@ -326,13 +371,57 @@ const BlogPost = () => {
               </div>
             </header>
 
+            {isPibArticle && (
+              <aside className="mb-8 border-y border-bone bg-bone-wash px-4 py-5 sm:px-6" aria-labelledby="external-publication-heading">
+                <p className="text-xs font-semibold uppercase text-brass-text">Published externally</p>
+                <h2 id="external-publication-heading" className="mt-2 font-serif text-xl font-normal text-foreground">
+                  Also published by Property Investors Bureau
+                </h2>
+                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                  This article by Marc Trup, Director of Hobson AI, was also published by the Property Investors Bureau.
+                </p>
+                <a
+                  href={PIB_EXTERNAL_URL}
+                  target="_blank"
+                  rel="noopener noreferrer external"
+                  className="mt-3 inline-flex items-center text-sm font-medium text-[hsl(var(--link))] underline underline-offset-4 hover:text-[hsl(var(--link-hover))]"
+                >
+                  Read the article on Property Investors Bureau
+                  <ExternalLink className="ml-2 h-4 w-4" aria-hidden="true" />
+                </a>
+              </aside>
+            )}
+
             {/* Article Content */}
             <div ref={contentRef}>
               <MarkdownRenderer
-                content={post.content}
+                content={articleContent}
                 className="prose-headings:text-foreground prose-strong:text-foreground text-foreground text-lg max-w-none"
               />
             </div>
+
+            {isPibArticle && (
+              <>
+                <aside className="mt-10 border-t border-bone pt-8" aria-labelledby="related-reading-heading">
+                  <h2 id="related-reading-heading" className="font-serif text-2xl font-normal text-foreground">Related Hobson reading</h2>
+                  <ul className="mt-4 space-y-2 text-base">
+                    <li><Link className="text-[hsl(var(--link))] underline underline-offset-4 hover:text-[hsl(var(--link-hover))]" to="/ai-lease-abstraction">How AI lease abstraction turns varied wording into structured property knowledge</Link></li>
+                    <li><Link className="text-[hsl(var(--link))] underline underline-offset-4 hover:text-[hsl(var(--link-hover))]" to="/lease-management-software">Lease management software for understanding obligations and dates</Link></li>
+                    <li><Link className="text-[hsl(var(--link))] underline underline-offset-4 hover:text-[hsl(var(--link-hover))]" to="/property-management-software">AI software for property teams</Link></li>
+                  </ul>
+                </aside>
+                <aside className="mt-10 border-y border-bone bg-bone-wash px-5 py-7 sm:px-7" aria-labelledby="author-heading">
+                  <p className="text-xs font-semibold uppercase text-brass-text">Author</p>
+                  <h2 id="author-heading" className="mt-2 font-serif text-2xl font-normal text-foreground">About Marc Trup</h2>
+                  <p className="mt-3 leading-relaxed text-muted-foreground">
+                    Marc Trup is a Director of Hobson AI and an experienced property technology founder. He previously co-founded Arthur Online after managing property portfolios first-hand, and now applies that experience to property document intelligence and proactive work.
+                  </p>
+                  <Link className="mt-4 inline-flex items-center text-sm font-medium text-[hsl(var(--link))] underline underline-offset-4 hover:text-[hsl(var(--link-hover))]" to="/founder">
+                    Meet Marc Trup
+                  </Link>
+                </aside>
+              </>
+            )}
 
             {/* Article Footer */}
             <footer className="mt-12 pt-8 border-t">
