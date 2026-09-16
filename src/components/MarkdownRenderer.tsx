@@ -49,7 +49,7 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({
                 href={href}
                 target={isExternal ? '_blank' : undefined}
                 rel={isExternal ? 'noopener noreferrer' : undefined}
-                className="text-primary underline hover:text-primary/80 hover:no-underline"
+                className="text-[hsl(var(--link))] underline underline-offset-2 hover:text-[hsl(var(--link-hover))]"
               >
                 {children}
               </a>
