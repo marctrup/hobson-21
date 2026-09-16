@@ -374,7 +374,7 @@ export const Homepage = () => {
                   </div>
                 </div>
 
-                {/* Solutions & resources */}
+                {/* Solutions */}
                 <div>
                   <h4 className="text-sm font-semibold uppercase tracking-wider text-foreground mb-5">Solutions</h4>
                   <div className="space-y-3">
@@ -382,6 +382,13 @@ export const Homepage = () => {
                     <Link to="/property-management-software" className="block text-sm text-muted-foreground hover:text-primary transition-colors">Property management software</Link>
                     <Link to="/property-portfolio-software" className="block text-sm text-muted-foreground hover:text-primary transition-colors">Property portfolio software</Link>
                     <Link to="/ai-lease-abstraction" className="block text-sm text-muted-foreground hover:text-primary transition-colors">AI lease abstraction</Link>
+                  </div>
+                </div>
+
+                {/* Resources */}
+                <div>
+                  <h4 className="text-sm font-semibold uppercase tracking-wider text-foreground mb-5">Resources</h4>
+                  <div className="space-y-3">
                     <Link to="/learn" className="block text-sm text-muted-foreground hover:text-primary transition-colors">Learn</Link>
                     <Link to="/learn/faq" className="block text-sm text-muted-foreground hover:text-primary transition-colors">FAQ</Link>
                     <Link to="/learn/glossary" className="block text-sm text-muted-foreground hover:text-primary transition-colors">Glossary</Link>
