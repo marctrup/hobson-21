@@ -42,16 +42,19 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({
           li: ({ children }) => (
             <li className="mb-1.5 text-foreground text-lg">{children}</li>
           ),
-          a: ({ href, children }) => (
-            <a
-              href={href}
-              target={href?.startsWith('mailto:') || href?.startsWith('tel:') ? undefined : '_blank'}
-              rel={href?.startsWith('mailto:') || href?.startsWith('tel:') ? undefined : 'noopener noreferrer'}
-              className="text-primary underline hover:text-primary/80 hover:no-underline"
-            >
-              {children}
-            </a>
-          ),
+          a: ({ href, children }) => {
+            const isExternal = /^https?:\/\//i.test(href || '');
+            return (
+              <a
+                href={href}
+                target={isExternal ? '_blank' : undefined}
+                rel={isExternal ? 'noopener noreferrer' : undefined}
+                className="text-primary underline hover:text-primary/80 hover:no-underline"
+              >
+                {children}
+              </a>
+            );
+          },
           strong: ({ children }) => (
             <strong className="font-semibold text-foreground">{children}</strong>
           ),
