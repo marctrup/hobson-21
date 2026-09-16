@@ -478,7 +478,7 @@ const LearnFaq = () => {
                 className="inline-flex items-center justify-center w-14 h-14 mb-6 rounded-full"
                 style={{ backgroundColor: "rgba(180,145,79,0.15)", border: "1px solid rgba(180,145,79,0.35)" }}
               >
-                <img src={owlMascot} alt="" className="w-9 h-9" />
+                <img src={owlMascot} alt="Hobson the owl mascot" className="w-9 h-9" />
               </div>
               <h3 className="font-serif text-2xl sm:text-3xl font-normal">
                 Still have a question?
