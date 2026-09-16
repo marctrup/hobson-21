@@ -36,7 +36,6 @@ const Status = lazy(() => import("../pages/Status"));
 const Announcements = lazy(() => import("../pages/Announcements"));
 const AnnouncementPost = lazy(() => import("../pages/AnnouncementPost"));
 const FeatureRequests = lazy(() => import("../pages/FeatureRequests"));
-const UseHobson = lazy(() => import("../pages/UseHobson").then(module => ({ default: module.UseHobson })));
 
 const Admin = lazy(() => import("../pages/Admin"));
 const FaqManagement = lazy(() => import("../pages/admin/FaqManagement"));
@@ -167,7 +166,6 @@ const AppContent = () => {
                 <Route path="/feature-requests" element={<FeatureRequests />} />
               </Route>
 
-              <Route path="/usehobson" element={<UseHobson />} />
               <Route path="/investment-opportunity" element={<InvestmentOpportunity />} />
               <Route path="/investor-summary" element={<Navigate to="/investment-opportunity" replace />} />
               <Route path="/prototype" element={<Prototype />} />
