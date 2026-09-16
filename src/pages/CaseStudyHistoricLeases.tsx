@@ -338,7 +338,7 @@ For a portfolio like this, that means the knowledge held across leases, deeds, s
                   border: "1px solid rgba(180,145,79,0.35)",
                 }}
               >
-                <img src={owlMascot} alt="" className="w-9 h-9" />
+                <img src={owlMascot} alt="Hobson the owl mascot" className="w-9 h-9" />
               </div>
               <p
                 className="max-w-xl mx-auto leading-relaxed text-[17px]"
