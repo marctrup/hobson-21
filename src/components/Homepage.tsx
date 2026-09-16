@@ -41,29 +41,19 @@ export const Homepage = () => {
 
   return <>
       <Helmet>
-        <title>Hobson AI — The AI co-worker built for property</title>
-        <meta name="description" content={content.seo.description} />
+        {/* Title, description, Open Graph and Twitter tags are provided by the
+            static index.html for the homepage — setting them here would
+            duplicate them in the rendered DOM. Only homepage-specific extras
+            live in this Helmet block. */}
         <meta name="keywords" content="AI property management, tenancy agreement analysis, property AI, document automation, real estate AI, property technology, AI document analysis" />
-        
+
         {/* OpenAI/ChatGPT specific meta tags */}
         <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
         <meta name="googlebot" content="index, follow" />
-        
-        {/* Open Graph */}
-        <meta property="og:title" content="AI Document Intelligence for Property Management | Hobson AI" />
-        <meta property="og:description" content={content.seo.description} />
-        <meta property="og:image" content="https://hobsonschoice.ai/hobson-owl-social.png" />
-        <meta property="og:type" content="website" />
+
         <meta property="og:url" content="https://hobsonschoice.ai/" />
         <meta property="og:site_name" content="Hobson AI" />
-        
-        {/* Twitter */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:site" content="@HobsonAI" />
-        <meta name="twitter:title" content="AI Document Intelligence for Property Management" />
-        <meta name="twitter:description" content={content.seo.description} />
-        <meta name="twitter:image" content="https://hobsonschoice.ai/hobson-owl-social.png" />
-        
+
         <link rel="canonical" href="https://hobsonschoice.ai/" />
         
         {/* Preload critical assets */}
