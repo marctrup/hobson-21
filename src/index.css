@@ -150,6 +150,10 @@ All colors MUST be HSL.
     --input: 39 30% 87%;
     --ring: 39 40% 51%;         /* brass */
 
+    /* Inline content hyperlinks */
+    --link: 214 88% 40%;
+    --link-hover: 214 88% 32%;
+
     --radius: 0.5rem;
 
   }
