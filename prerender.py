@@ -151,7 +151,7 @@ async def main():
                 page = await context.new_page()
                 await page.goto(f"http://127.0.0.1:{PORT}{route}", wait_until="networkidle", timeout=60000)
                 await page.wait_for_timeout(1200)
-                html = strip_hashed_assets(await page.content())
+                html = dedupe_helmet_head(strip_hashed_assets(await page.content()))
                 out_dir = os.path.join(PUBLIC, route.strip("/"))
                 os.makedirs(out_dir, exist_ok=True)
                 with open(os.path.join(out_dir, "index.html"), "w", encoding="utf-8") as f:
