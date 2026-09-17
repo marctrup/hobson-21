@@ -6,13 +6,6 @@ export const useHuggingFaceCacheReset = () => {
   useEffect(() => {
     const resetHfCache = async () => {
       try {
-        // Dynamic import to avoid affecting React initialization
-        const { env } = await import("@huggingface/transformers");
-        
-        // Bypass cache for a clean fetch
-        env.useBrowserCache = false;
-        env.allowLocalModels = false;
-
         // Clear Cache Storage
         if ("caches" in window) {
           const keys = await caches.keys();
