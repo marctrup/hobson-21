@@ -2,9 +2,9 @@ import React, { Suspense, lazy, useEffect } from "react";
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { HuggingFaceCacheManager } from "@/components/HuggingFaceCacheManager";
-import { Homepage } from "./Homepage";
+const Homepage = lazy(() => import("./Homepage").then((m) => ({ default: m.Homepage })));
 import { PublicLayout } from "./PublicLayout";
-import Pricing from "../pages/Pricing";
+const Pricing = lazy(() => import("../pages/Pricing"));
 
 // Lazy load secondary routes to keep initial navigation responsive
 const LandingPageA = lazy(() => import("../pages/LandingPageA"));

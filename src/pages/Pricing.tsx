@@ -948,8 +948,16 @@ export default function Pricing() {
   return (
     <>
       <Helmet>
-        <title>Pricing — Hobson</title>
+        <title>Pricing — Hobson AI property software</title>
         <meta name="description" content="No plans. No credits. Nothing counted. Pay for seats and document learning — that's it." />
+        <link rel="canonical" href="https://hobsonschoice.ai/pricing" />
+        <meta property="og:title" content="Pricing — Hobson AI property software" />
+        <meta property="og:description" content="No plans. No credits. Nothing counted. Pay for seats and document learning — that's it." />
+        <meta property="og:url" content="https://hobsonschoice.ai/pricing" />
+        <meta property="og:type" content="website" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Pricing — Hobson AI property software" />
+        <meta name="twitter:description" content="No plans. No credits. Nothing counted. Pay for seats and document learning — that's it." />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         <link
