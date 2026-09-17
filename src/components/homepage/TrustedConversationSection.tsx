@@ -42,7 +42,7 @@ export const TrustedConversationSection = () => {
 
           {/* Hobson avatar */}
           <div className="flex justify-center mb-6">
-            <img loading="lazy" decoding="async" src={owlMascot.url} alt="Hobson the owl saluting" className="w-[88px] h-[88px] sm:w-[105px] sm:h-[105px] object-contain" />
+            <img loading="lazy" decoding="async" width={105} height={126} src={owlMascot.url} alt="Hobson the owl saluting" className="w-[88px] h-[88px] sm:w-[105px] sm:h-[105px] object-contain" />
           </div>
 
           {/* Intro paragraph */}
