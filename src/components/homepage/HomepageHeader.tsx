@@ -76,7 +76,7 @@ export const HomepageHeader = () => {
                   />
                 </span>
                 <span
-                  className="mt-2 text-[10px] text-ink-muted italic leading-none opacity-45 transition-all duration-500 group-hover:opacity-100 group-hover:text-brass-text"
+                  className="mt-2 text-[10px] font-bold text-brass-text italic leading-none"
                   style={serifStack}
                 >
                   {link.voice}
@@ -98,7 +98,7 @@ export const HomepageHeader = () => {
                   />
                 </span>
                 <span
-                  className="mt-2 text-[10px] text-ink-muted italic leading-none opacity-45 transition-all duration-500 group-hover:opacity-100 group-hover:text-brass-text"
+                  className="mt-2 text-[10px] font-bold text-brass-text italic leading-none"
                   style={serifStack}
                 >
                   {link.voice}
@@ -139,7 +139,7 @@ export const HomepageHeader = () => {
                 onClick={closeMobileMenu}
               >
                 <span className="text-lg text-ink leading-tight">Home</span>
-                <span className="mt-1 text-xs text-ink-muted italic leading-tight" style={serifStack}>
+                <span className="mt-1 text-xs font-bold text-brass-text italic leading-tight" style={serifStack}>
                   Start with me
                 </span>
               </Link>
