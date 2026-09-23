@@ -1,4 +1,5 @@
 import { PropertyTopicLinks } from "@/components/PropertyTopicLinks";
+import { SolutionFAQ } from "@/components/SolutionFAQ";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { getSolutionPageStructuredData } from "@/utils/seo-data";
@@ -48,6 +49,34 @@ const DIFFERENCES = [
   "No repeat abstraction when a new question arises",
 ];
 
+const FAQS = [
+  {
+    question: "What is AI lease abstraction?",
+    answer:
+      "AI lease abstraction is the automated extraction of key commercial terms from a lease \u2014 parties, term, rent, review dates, break options, repairing obligations and restrictions \u2014 into structured data. Hobson AI does this and shows the exact extract behind every term.",
+  },
+  {
+    question: "How accurate is AI lease abstraction?",
+    answer:
+      "Accuracy matters less than verifiability. Hobson shows the passage, the document and the page behind each extracted fact, so your team can confirm anything that carries risk in seconds rather than trusting a score.",
+  },
+  {
+    question: "How long does it take to abstract a lease?",
+    answer:
+      "Minutes rather than the hours a manual abstract takes, and Hobson handles a batch of documents at once.",
+  },
+  {
+    question: "Can it read scanned or historic leases?",
+    answer:
+      "Yes. Scanned documents and older leases are read, and where a right depends on an earlier document Hobson keeps that chain intact.",
+  },
+  {
+    question: "What does lease abstraction cost with Hobson AI?",
+    answer:
+      "You pay once for the documents Hobson reads, then add seats for your team. Tier details are on the pricing page.",
+  },
+];
+
 const AILeaseAbstraction = () => {
   return (
     <div className="min-h-screen flex flex-col" style={{ backgroundColor: PAPER }}>
@@ -66,7 +95,7 @@ const AILeaseAbstraction = () => {
         <meta property="og:url" content="https://hobsonschoice.ai/ai-lease-abstraction" />
         <meta property="og:type" content="website" />
               <script type="application/ld+json">
-          {JSON.stringify(getSolutionPageStructuredData({ name: "AI Lease Abstraction", path: "/ai-lease-abstraction", description: "AI lease abstraction that reads your leases, extracts the terms that matter and shows the exact extract behind every fact." }))}
+          {JSON.stringify(getSolutionPageStructuredData({ name: "AI Lease Abstraction", path: "/ai-lease-abstraction", description: "AI lease abstraction that reads your leases, extracts the terms that matter and shows the exact extract behind every fact.", faqs: FAQS }))}
         </script>
         </Helmet>
 
@@ -359,6 +388,7 @@ const AILeaseAbstraction = () => {
             </div>
           </div>
         </section>
+        <SolutionFAQ items={FAQS} />
         <PropertyTopicLinks />
       </main>
     </div>

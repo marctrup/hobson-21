@@ -1,4 +1,5 @@
 import { PropertyTopicLinks } from "@/components/PropertyTopicLinks";
+import { SolutionFAQ } from "@/components/SolutionFAQ";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { getSolutionPageStructuredData } from "@/utils/seo-data";
@@ -48,6 +49,34 @@ const DIFFERENCES = [
   "No starting from a blank page at every review or disposal",
 ];
 
+const FAQS = [
+  {
+    question: "What is AI property management software?",
+    answer:
+      "AI property management software reads the documents behind a portfolio \u2014 leases, deeds, licences, schedules and correspondence \u2014 and answers questions about them in plain English. Hobson AI does this from your own files and cites the exact passage behind every answer.",
+  },
+  {
+    question: "How is Hobson AI different from traditional property management systems?",
+    answer:
+      "Traditional systems store the summary someone typed in. Hobson reads the source document, structures what it finds, and shows the evidence, so the facts stay tied to the paperwork rather than to manual data entry.",
+  },
+  {
+    question: "Does it replace my property manager?",
+    answer:
+      "No. Hobson prepares the information \u2014 the decision stays with your team. It removes the file-reading, not the judgement.",
+  },
+  {
+    question: "What documents can Hobson read?",
+    answer:
+      "Leases, deeds of variation, licences, rent review memoranda, management agreements and related property paperwork, including scanned and historic documents.",
+  },
+  {
+    question: "How much does it cost?",
+    answer:
+      "You pay once for Hobson to read your documents, then add seats for the people who need answers. Tier details are on the pricing page.",
+  },
+];
+
 const PropertyManagementSoftware = () => {
   return (
     <div className="min-h-screen flex flex-col" style={{ backgroundColor: PAPER }}>
@@ -66,7 +95,7 @@ const PropertyManagementSoftware = () => {
         <meta property="og:url" content="https://hobsonschoice.ai/property-management-software" />
         <meta property="og:type" content="website" />
               <script type="application/ld+json">
-          {JSON.stringify(getSolutionPageStructuredData({ name: "Property Management Software", path: "/property-management-software", description: "AI property management software that reads your documents, structures what it finds and answers your team with evidence from the source." }))}
+          {JSON.stringify(getSolutionPageStructuredData({ name: "Property Management Software", path: "/property-management-software", description: "AI property management software that reads your documents, structures what it finds and answers your team with evidence from the source.", faqs: FAQS }))}
         </script>
         </Helmet>
 
@@ -360,6 +389,7 @@ const PropertyManagementSoftware = () => {
             </div>
           </div>
         </section>
+        <SolutionFAQ items={FAQS} />
         <PropertyTopicLinks />
       </main>
     </div>
