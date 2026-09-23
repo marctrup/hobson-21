@@ -124,28 +124,33 @@ export const Homepage = () => {
 
             {/* Mobile Navigation Menu */}
             {isMobileMenuOpen && <nav className="md:hidden mt-4 pb-4 border-t pt-4" role="navigation" aria-label="Mobile navigation">
-                <div className="flex flex-col gap-4">
-                  <Link to="/pricing" className="text-base text-muted-foreground hover:text-foreground transition-colors py-2" onClick={closeMobileMenu}>
-                    Pricing
-                  </Link>
-                  <Link to="/founder" className="text-base text-muted-foreground hover:text-foreground transition-colors py-2" onClick={closeMobileMenu}>
-                    Founder
-                  </Link>
-                  <Link to="/blog" className="text-base text-muted-foreground hover:text-foreground transition-colors py-2" onClick={closeMobileMenu}>
-                      {content.header.nav.blog}
+                <div className="flex flex-col">
+                  {[
+                    { to: "/", label: "Home", voice: "Start with me" },
+                    { to: "/pricing", label: "Pricing", voice: "What I cost" },
+                    { to: "/founder", label: "Founder", voice: "How I came to be" },
+                    { to: "/blog", label: "Blog", voice: "Notes from my desk" },
+                    { to: "/learn", label: "Learn", voice: "Where I keep my notes" },
+                    { to: "/contact", label: "Contact", voice: "Talk to me" },
+                  ].map((link) => (
+                    <Link
+                      key={link.to}
+                      to={link.to}
+                      className="group flex flex-col border-b border-bone-wash py-3"
+                      onClick={closeMobileMenu}
+                      title={link.title}
+                    >
+                      <span className="text-lg text-ink leading-tight">{link.label}</span>
+                      <span className="mt-1 text-xs text-ink-muted italic leading-tight" style={serifStack}>
+                        {link.voice}
+                      </span>
                     </Link>
-                  <Link to="/learn" className="text-base text-muted-foreground hover:text-foreground transition-colors py-2" onClick={closeMobileMenu}>
-                    Learn
-                  </Link>
-                  <Link to="/contact" className="text-base text-muted-foreground hover:text-foreground transition-colors py-2" onClick={closeMobileMenu}>
-                    Contact
-                  </Link>
-                  <HobsonGatewayMobile onClick={closeMobileMenu} />
-
-
-                   
+                  ))}
+                  <div className="pt-4">
+                    <HobsonGatewayMobile onClick={closeMobileMenu} />
+                  </div>
                 </div>
-              </nav>}
+              </nav>}}
           </div>
         </header>
 
