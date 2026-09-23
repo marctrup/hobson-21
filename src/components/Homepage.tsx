@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Menu, X, ArrowRight, FileText, CheckCircle, Building2 } from "lucide-react";
 import { SimpleButton } from "@/components/ui/simple-button";
-import { HobsonGateway, HobsonGatewayMobile } from "@/components/HobsonGateway";
+import { HobsonGateway, HobsonGatewayMobile, serifStack } from "@/components/HobsonGateway";
 import { OptimizedImage } from "@/components/OptimizedImage";
 import { Helmet } from "react-helmet-async";
 import { OrchestrationDemo } from "@/components/homepage/OrchestrationDemo";
@@ -138,7 +138,6 @@ export const Homepage = () => {
                       to={link.to}
                       className="group flex flex-col border-b border-bone-wash py-3"
                       onClick={closeMobileMenu}
-                      title={link.title}
                     >
                       <span className="text-lg text-ink leading-tight">{link.label}</span>
                       <span className="mt-1 text-xs text-ink-muted italic leading-tight" style={serifStack}>
