@@ -136,6 +136,14 @@ const CaseStudyHistoricLeases = () => {
             <div className="mx-auto mt-10 h-px w-24" style={{ backgroundColor: RULE }} />
           </header>
 
+          <AnswerFirst className="mx-0 max-w-none">
+            Yes. Hobson reads handwritten and century-old property documents —
+            historic leases, deeds and archive correspondence — and turns them
+            into answers a managing agent can rely on. In this case a Central
+            London estate used Hobson to find terms buried in documents more
+            than 100 years old, in minutes rather than days.
+          </AnswerFirst>
+
           <p
             className="mt-10 font-serif text-xl sm:text-2xl leading-relaxed"
             style={{ color: INK }}

@@ -116,6 +116,14 @@ const CaseStudyMixedUseOwner = () => {
             <div className="mx-auto mt-10 h-px w-24" style={{ backgroundColor: RULE }} />
           </header>
 
+          <AnswerFirst className="mx-0 max-w-none">
+            A mixed-use owner faced a tenant disputing the service charge line
+            by line. Hobson read the leases, deeds of variation and letters,
+            found the exact percentages, the earlier settlement and the
+            consultation requirement, and set out an answer to every challenge
+            — evidence the owner could stand behind.
+          </AnswerFirst>
+
           <p
             className="mt-10 font-serif text-xl sm:text-2xl leading-relaxed"
             style={{ color: INK }}
