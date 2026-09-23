@@ -10,6 +10,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { GlobalHeader } from "@/components/GlobalHeader";
+import { AnswerFirst } from "@/components/AnswerFirst";
 
 
 type HubCard = {
@@ -118,6 +119,13 @@ const Learn = () => {
               everything you need to see how Hobson reads your property
               documents and helps you act on them.
             </p>
+            <AnswerFirst>
+              Learn is Hobson's resource library: straight answers to common
+              questions, plain-English definitions of property and document
+              terms, real customer case studies and step-by-step guides — all
+              showing how Hobson reads property documents and helps owners and
+              managers act on them.
+            </AnswerFirst>
             <div
               className="mx-auto mt-10 h-px w-24"
               style={{ backgroundColor: RULE }}
