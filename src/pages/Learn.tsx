@@ -81,7 +81,7 @@ const Learn = () => {
         <title>Learn about Hobson AI — FAQ, case studies and tutorials</title>
         <meta
           name="description"
-          content="Get to know Hobson — straight answers, real customer stories and short walkthroughs showing how it reads your property documents and helps you act on them."
+          content="Get to know Hobson — straight answers, real customer stories and short walkthroughs showing how I read your property documents and help you act on them."
         />
         <link rel="canonical" href="https://hobsonschoice.ai/learn" />
         <meta property="og:title" content="Learn about Hobson AI" />
