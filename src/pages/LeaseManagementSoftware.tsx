@@ -48,6 +48,34 @@ const DIFFERENCES = [
   "No need to re-read a file every time a question arises",
 ];
 
+const FAQS = [
+  {
+    question: "What is lease management software?",
+    answer:
+      "Lease management software keeps the commercial terms of your leases — rent, term, review dates, break options and obligations — in one place so a team can act on them without re-reading the documents. Hobson AI goes further: it reads the leases themselves, extracts the terms, and shows the exact extract that supports each fact.",
+  },
+  {
+    question: "How does Hobson AI differ from a general AI chatbot?",
+    answer:
+      "Hobson answers only from your own documents and cites the passage it used, so nothing is invented. A general chatbot has no access to your leases and cannot show where an answer came from.",
+  },
+  {
+    question: "Can it handle leases with deeds of variation and licences?",
+    answer:
+      "Yes. Hobson keeps the relationships between documents intact, so a right granted in an earlier lease and altered by a later deed is read as one chain rather than two unrelated files.",
+  },
+  {
+    question: "Who is it for?",
+    answer:
+      "Landlords, asset managers, property managers, surveyors and investors who hold commercial or mixed-use property and need reliable answers from lease documents.",
+  },
+  {
+    question: "How much does lease management software from Hobson AI cost?",
+    answer:
+      "You pay once for Hobson to read your documents, then add team seats as you need them. Full tier details are on the pricing page.",
+  },
+];
+
 const LeaseManagementSoftware = () => {
   return (
     <div className="min-h-screen flex flex-col" style={{ backgroundColor: PAPER }}>
