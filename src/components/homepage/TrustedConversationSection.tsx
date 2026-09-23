@@ -36,7 +36,7 @@ export const TrustedConversationSection = () => {
               One Trusted Conversation
             </h2>
             <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto">
-              A quiet team behind it.
+              A quiet team behind me.
             </p>
           </div>
 
