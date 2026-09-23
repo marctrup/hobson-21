@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { AnswerFirst } from "@/components/AnswerFirst";
 import { Helmet } from "react-helmet-async";
 import { getCaseStudyStructuredData } from "@/utils/seo-data";
 import ReactMarkdown from "react-markdown";
