@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { InterestModal } from "@/components/InterestModal";
+
 import { Link } from "react-router-dom";
 import { Menu, X, ArrowRight, FileText, CheckCircle, Building2 } from "lucide-react";
 import { SimpleButton } from "@/components/ui/simple-button";
@@ -28,7 +28,7 @@ import hobsonAnswerTight from "@/assets/hobson-answer-tight.png.asset.json";
 export const Homepage = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [showPilotForm, setShowPilotForm] = useState(false);
-  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+
   
   const content = CONTENT;
   
