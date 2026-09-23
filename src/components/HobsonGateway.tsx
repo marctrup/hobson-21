@@ -12,7 +12,7 @@ export const serifStack = { fontFamily: 'Georgia, "Times New Roman", ui-serif, s
 export const HobsonGateway = ({ className = "" }: { className?: string }) => (
   <a
     href={APP_URL}
-    aria-label="Colleagues this way — enter Hobson"
+    aria-label="This way, please — enter Hobson"
     className={`group inline-flex items-center gap-3 rounded-sm border border-ink/25 bg-paper px-4 py-2 leading-tight shadow-[0_1px_0_rgba(45,45,45,0.06)] outline-none transition-all duration-500 hover:border-brass hover:bg-bone-wash hover:shadow-[0_2px_8px_rgba(45,45,45,0.10)] focus-visible:ring-2 focus-visible:ring-brass/60 ${className}`}
   >
     <span className="flex flex-col items-start">
@@ -23,7 +23,7 @@ export const HobsonGateway = ({ className = "" }: { className?: string }) => (
         className="relative mt-1 pb-1 text-base text-ink italic font-normal leading-none tracking-tight"
         style={serifStack}
       >
-        Colleagues this way
+        This way, please
         <span
           aria-hidden="true"
           className="absolute bottom-0 left-0 h-px w-6 bg-brass/60 transition-all duration-500 group-hover:w-full group-hover:bg-brass"
@@ -48,7 +48,7 @@ export const HobsonGateway = ({ className = "" }: { className?: string }) => (
 export const HobsonGatewayMobile = ({ onClick }: { onClick?: () => void }) => (
   <a
     href={APP_URL}
-    aria-label="Colleagues this way — enter Hobson"
+    aria-label="This way, please — enter Hobson"
     onClick={onClick}
     className="group inline-flex w-full max-w-xs items-center justify-between gap-3 rounded-sm border border-ink/25 bg-paper px-4 py-3 leading-tight shadow-[0_1px_0_rgba(45,45,45,0.06)] outline-none transition-all duration-500 hover:border-brass hover:bg-bone-wash hover:shadow-[0_2px_8px_rgba(45,45,45,0.10)] focus-visible:ring-2 focus-visible:ring-brass/60"
   >
