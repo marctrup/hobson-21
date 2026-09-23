@@ -531,7 +531,7 @@ const Calculators: React.FC = () => {
                 </h2>
               </div>
               <p style={{ fontFamily: FONTS.sans, fontSize: 13.5, lineHeight: 1.55, color: T.muted, margin: "0 0 18px" }} className="hp-card-blurb">
-                Reading your documents is the heavy lifting — done once, then never again. So it is charged once. After that you pay for seats, and there is no limit on how much you use me.
+                Reading your documents is the heavy lifting — I do it once, and it is done. After that you pay for seats, and there is no limit on how much you use me.
               </p>
 
               {/* Two sections side-by-side, divided by a vertical hairline */}
@@ -548,7 +548,7 @@ const Calculators: React.FC = () => {
                 <div style={{ display: "flex", flexDirection: "column" }}>
                   <Eyebrow color={T.gold} style={{ fontWeight: 700 }}>Reading · one-off</Eyebrow>
                   <p style={{ fontFamily: FONTS.sans, fontSize: 13, lineHeight: 1.5, color: T.muted, margin: "10px 0 14px" }}>
-                    10p–60p per document depending on complexity. A typical mix averages 25p. Read once, remembered for good.
+                    10p–60p a document, depending on complexity. A typical mix averages 25p. I read each document once and remember it for good.
                   </p>
 
                   <Slider id="docs" label="Documents" min={10} max={2000} step={10} value={docs} onChange={setDocs} suffix="docs" />
@@ -561,7 +561,7 @@ const Calculators: React.FC = () => {
                       {fmtGBP2(readLow)} – {fmtGBP2(readHigh)}
                     </div>
                     <div style={{ fontFamily: FONTS.sans, fontSize: 10, lineHeight: 1.45, color: "#8A8478", marginTop: 6 }}>
-                      Estimated at 25p a document — the average for a mixed portfolio. The firm quote follows once the documents have been seen.
+                      Estimated at 25p a document — the average for a mixed portfolio. The firm quote follows once I have seen the documents.
                     </div>
                   </div>
                 </div>
@@ -618,12 +618,12 @@ const Calculators: React.FC = () => {
                   }}
                 >
                   {[
-                    { h: "Ask anything, any time", b: "Every document Hobson has read, searchable in plain questions. No limit on how often you ask." },
+                    { h: "Ask anything, any time", b: "Every document I have read, searchable in plain questions. No limit on how often you ask." },
                     { h: "Your portfolio on a map", b: "Every property placed by address, every document attached to the right one." },
-                    { h: "Learns how you work", b: "Each seat has its own Hobson. It remembers what that person cares about and gets quicker over time." },
-                    { h: "Everything Hobson can do", b: "No tiers, nothing held back. Every seat gets the full product." },
+                    { h: "I learn how you work", b: "Each seat has its own Hobson — me. I remember what that person cares about and get quicker over time." },
+                    { h: "Everything I can do", b: "No tiers, nothing held back. Every seat gets the whole of me." },
                     { h: "Add or remove people any time", b: "Seats are monthly. Change the number as your team changes." },
-                    { h: "Support and Knowledgebase", b: "Email the team, or find the answer yourself in the guides." },
+                    { h: "Support and Knowledgebase", b: "Email my team, or find the answer yourself in the guides." },
                   ].map((item) => (
                     <div key={item.h} style={{ display: "grid", gridTemplateColumns: "auto 1fr", gap: 8 }}>
                       <span style={{ color: T.gold, fontSize: 13, lineHeight: 1.4 }}>✦</span>
@@ -695,14 +695,14 @@ const Calculators: React.FC = () => {
                 <div style={{ fontFamily: FONTS.sans, fontSize: 12.5, color: T.muted, marginTop: 4 }}>My onboarding team + relationship manager</div>
               </div>
               <p style={{ fontFamily: FONTS.sans, fontSize: 13.5, lineHeight: 1.55, color: T.muted, margin: 0 }} className="hp-card-blurb">
-                We prepare your documents before Professor reads them, and one of us stays with you afterwards.
+                My team prepares your documents before Professor reads them, and one of us stays with you afterwards.
               </p>
 
               {/* Bullets */}
               <ul style={{ listStyle: "none", padding: 0, margin: "14px 0 0" }} className="hp-bullets">
                 {[
                   { h: "We go through your folders", b: "Every document opened, every type identified, everything checked that it can actually be read." },
-                  { h: "We make the addresses clear", b: "So each document lands on the right property. Hobson needs a clean address for the map to work." },
+                  { h: "We make the addresses clear", b: "So each document lands on the right property. I need a clean address for the map to work." },
                   { h: "Then Professor reads them", b: "He is only ever as good as what he is given. Prepared properly, he has everything he needs." },
                   { h: "Your relationship manager stays", b: "To guide you, advise you, or simply be there — for as long as you need them." },
                 ].map((item, i) => (
@@ -739,7 +739,7 @@ const Calculators: React.FC = () => {
                   suffix="docs"
                 />
                 <p style={{ fontFamily: FONTS.sans, fontSize: 12, lineHeight: 1.5, color: T.muted, margin: "8px 0 0" }}>
-                  You need not onboard everything — a person can check the documents that matter most.
+                  You need not onboard everything — we can start with the documents that matter most.
                 </p>
               </div>
 
