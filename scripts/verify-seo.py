@@ -23,8 +23,10 @@ PUBLIC = os.path.join(ROOT, "public")
 APEX = "https://hobsonschoice.ai"
 MAX_TITLE = 70
 
-sys.path.insert(0, ROOT)
-from prerender import ROUTES  # noqa: E402
+# Read the route list straight out of prerender.py (importing it would run it).
+_src = open(os.path.join(ROOT, "prerender.py"), encoding="utf-8").read()
+_block = re.search(r"ROUTES\s*=\s*\[(.*?)\]", _src, re.S).group(1)
+ROUTES = re.findall(r'"([^"]+)"', _block)
 
 problems = []
 
