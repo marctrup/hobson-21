@@ -440,6 +440,7 @@ export const getSolutionPageStructuredData = (opts: {
   name: string;
   path: string;
   description: string;
+  faqs?: Array<{ question: string; answer: string }>;
 }) => ({
   "@context": "https://schema.org",
   "@graph": [
@@ -468,7 +469,17 @@ export const getSolutionPageStructuredData = (opts: {
         { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://hobsonschoice.ai" },
         { "@type": "ListItem", "position": 2, "name": opts.name, "item": `https://hobsonschoice.ai${opts.path}` }
       ]
-    }
+    },
+    ...(opts.faqs?.length
+      ? [{
+          "@type": "FAQPage",
+          "mainEntity": opts.faqs.map((faq) => ({
+            "@type": "Question",
+            "name": faq.question,
+            "acceptedAnswer": { "@type": "Answer", "text": faq.answer }
+          }))
+        }]
+      : [])
   ]
 });
 
