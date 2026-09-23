@@ -1,4 +1,5 @@
 import { PropertyTopicLinks } from "@/components/PropertyTopicLinks";
+import { SolutionFAQ } from "@/components/SolutionFAQ";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { getSolutionPageStructuredData } from "@/utils/seo-data";
@@ -48,6 +49,34 @@ const DIFFERENCES = [
   "No starting from a blank page when the board asks a question",
 ];
 
+const FAQS = [
+  {
+    question: "What is property portfolio software?",
+    answer:
+      "Property portfolio software brings every property, unit and document into one structure so an owner can see the whole estate at once. Hobson AI builds that structure from your documents \u2014 portfolio, unit group and unit \u2014 and answers questions across all of it.",
+  },
+  {
+    question: "Can it answer questions across the whole portfolio at once?",
+    answer:
+      "Yes. You can ask which leases expire next year, which units have upcoming rent reviews, or which properties restrict underletting, and get an answer with the source extract behind each item.",
+  },
+  {
+    question: "Does it work for mixed-use portfolios?",
+    answer:
+      "Yes. Commercial, residential and mixed-use holdings sit in the same hierarchy, so a portfolio with shops beneath flats is handled as one estate.",
+  },
+  {
+    question: "How long does setup take?",
+    answer:
+      "Hobson reads your documents and builds the portfolio structure for you, so there is no manual data-entry project before you get answers.",
+  },
+  {
+    question: "How much does it cost?",
+    answer:
+      "Pricing is based on the documents Hobson reads and the number of seats your team needs. Full details are on the pricing page.",
+  },
+];
+
 const PropertyPortfolioSoftware = () => {
   return (
     <div className="min-h-screen flex flex-col" style={{ backgroundColor: PAPER }}>
@@ -66,7 +95,7 @@ const PropertyPortfolioSoftware = () => {
         <meta property="og:url" content="https://hobsonschoice.ai/property-portfolio-software" />
         <meta property="og:type" content="website" />
               <script type="application/ld+json">
-          {JSON.stringify(getSolutionPageStructuredData({ name: "Property Portfolio Software", path: "/property-portfolio-software", description: "Property portfolio software that reads your documents, structures your portfolio and answers your team with evidence from the source." }))}
+          {JSON.stringify(getSolutionPageStructuredData({ name: "Property Portfolio Software", path: "/property-portfolio-software", description: "Property portfolio software that reads your documents, structures your portfolio and answers your team with evidence from the source.", faqs: FAQS }))}
         </script>
         </Helmet>
 
@@ -360,6 +389,7 @@ const PropertyPortfolioSoftware = () => {
             </div>
           </div>
         </section>
+        <SolutionFAQ items={FAQS} />
         <PropertyTopicLinks />
       </main>
     </div>
