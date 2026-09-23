@@ -96,7 +96,7 @@ export const TheTeamSection = () => {
           <div className="flex items-end justify-between gap-4 mb-6">
             <div>
               <h3 className="text-2xl font-bold text-foreground">Specialist Services</h3>
-              <p className="text-charcoal text-sm mt-1">Whenever specialist expertise is needed, these are the agents Hobson calls upon.</p>
+              <p className="text-charcoal text-sm mt-1">When a matter calls for specialist expertise, these are the four I turn to.</p>
             </div>
             <span className="hidden sm:inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider rounded-full px-3 py-1.5" style={{ color: "#8F5A14", background: "#FFFFFF", border: "1px solid #E6D2AE" }}>
               On demand
