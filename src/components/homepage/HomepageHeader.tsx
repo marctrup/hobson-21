@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { CONTENT } from "@/config/content";
-import { HobsonGateway, HobsonGatewayMobile } from "@/components/HobsonGateway";
+import { HobsonGateway, HobsonGatewayMobile, serifStack } from "@/components/HobsonGateway";
 import hobsonLogo from "/hobson-logo.png";
 
 
@@ -59,33 +59,57 @@ export const HomepageHeader = () => {
             </Link>
           </div>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-6" role="navigation" aria-label="Main navigation">
-            {content.navigation.links.map((link) => (
+          {/* Desktop Navigation — each way Hobson directs you, in his own words */}
+          <nav className="hidden md:flex items-center gap-7" role="navigation" aria-label="Main navigation">
+            {content.navigation.links.map((link: any) => (
               <Link
                 key={link.to}
                 to={link.to}
-                className="text-base text-muted-foreground hover:text-foreground transition-colors"
+                className="group flex flex-col items-start py-1 outline-none rounded-sm focus-visible:ring-2 focus-visible:ring-brass/60"
                 title={link.title}
               >
-                {link.label}
+                <span className="relative text-[15px] text-ink leading-none">
+                  {link.label}
+                  <span
+                    aria-hidden="true"
+                    className="absolute -bottom-1.5 left-0 h-px w-0 bg-brass/60 transition-all duration-500 group-hover:w-full group-hover:bg-brass"
+                  />
+                </span>
+                <span
+                  className="mt-2 text-[10px] text-ink-muted italic leading-none opacity-45 transition-all duration-500 group-hover:opacity-100 group-hover:text-brass-text"
+                  style={serifStack}
+                >
+                  {link.voice}
+                </span>
               </Link>
             ))}
             {(content.navigation as any).secondary?.map((link: any) => (
               <Link
                 key={link.to}
                 to={link.to}
-                className="text-base text-muted-foreground hover:text-foreground transition-colors"
+                className="group flex flex-col items-start py-1 outline-none rounded-sm focus-visible:ring-2 focus-visible:ring-brass/60"
                 title={link.title}
               >
-                {link.label}
+                <span className="relative text-[15px] text-ink leading-none">
+                  {link.label}
+                  <span
+                    aria-hidden="true"
+                    className="absolute -bottom-1.5 left-0 h-px w-0 bg-brass/60 transition-all duration-500 group-hover:w-full group-hover:bg-brass"
+                  />
+                </span>
+                <span
+                  className="mt-2 text-[10px] text-ink-muted italic leading-none opacity-45 transition-all duration-500 group-hover:opacity-100 group-hover:text-brass-text"
+                  style={serifStack}
+                >
+                  {link.voice}
+                </span>
               </Link>
             ))}
             
             {/* Gateway to the app */}
             <HobsonGateway className="ml-2" />
 
-
+            
             
           </nav>
 
@@ -108,37 +132,48 @@ export const HomepageHeader = () => {
         {/* Mobile Navigation Menu */}
         {isMobileMenuOpen && (
           <nav className="md:hidden mt-4 pb-4 border-t pt-4" role="navigation" aria-label="Mobile navigation">
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col">
               <Link
                 to="/"
-                className="text-base text-muted-foreground hover:text-foreground transition-colors py-2"
+                className="group flex flex-col border-b border-bone-wash py-3"
                 onClick={closeMobileMenu}
               >
-                Home
+                <span className="text-lg text-ink leading-tight">Home</span>
+                <span className="mt-1 text-xs text-ink-muted italic leading-tight" style={serifStack}>
+                  Start with me
+                </span>
               </Link>
-              {content.navigation.links.map((link) => (
+              {content.navigation.links.map((link: any) => (
                 <Link
                   key={link.to}
                   to={link.to}
-                  className="text-base text-muted-foreground hover:text-foreground transition-colors py-2"
+                  className="group flex flex-col border-b border-bone-wash py-3"
                   onClick={closeMobileMenu}
                   title={link.title}
                 >
-                  {link.label}
+                  <span className="text-lg text-ink leading-tight">{link.label}</span>
+                  <span className="mt-1 text-xs text-ink-muted italic leading-tight" style={serifStack}>
+                    {link.voice}
+                  </span>
                 </Link>
                 ))}
                 {(content.navigation as any).secondary?.map((link: any) => (
                 <Link
                   key={link.to}
                   to={link.to}
-                  className="text-base text-muted-foreground hover:text-foreground transition-colors py-2"
+                  className="group flex flex-col border-b border-bone-wash py-3"
                   onClick={closeMobileMenu}
                   title={link.title}
                 >
-                  {link.label}
+                  <span className="text-lg text-ink leading-tight">{link.label}</span>
+                  <span className="mt-1 text-xs text-ink-muted italic leading-tight" style={serifStack}>
+                    {link.voice}
+                  </span>
                 </Link>
                 ))}
-                <HobsonGatewayMobile onClick={closeMobileMenu} />
+                <div className="pt-4">
+                  <HobsonGatewayMobile onClick={closeMobileMenu} />
+                </div>
 
 
             </div>

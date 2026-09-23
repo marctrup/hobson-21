@@ -411,13 +411,13 @@ export const CONTENT = {
   navigation: {
     links: [
       
-      { to: "/pricing", label: "Pricing", title: "Hobson AI Pricing Plans" },
-      { to: "/learn", label: "Learn", title: "Hobson AI FAQ" },
-      { to: "/founder", label: "Co-Founder", title: "Meet a Co-Founder of Hobson AI" },
-      { to: "/blog", label: "Blog", title: "Property Management Insights" },
+      { to: "/pricing", label: "Pricing", title: "Hobson AI Pricing Plans", voice: "What I cost" },
+      { to: "/learn", label: "Learn", title: "Hobson AI FAQ", voice: "Where I keep my notes" },
+      { to: "/founder", label: "Co-Founder", title: "Meet a Co-Founder of Hobson AI", voice: "How I came to be" },
+      { to: "/blog", label: "Blog", title: "Property Management Insights", voice: "Notes from my desk" },
     ],
     secondary: [
-      { to: "/contact", label: "Contact", title: "Contact Real Estate Software Support" },
+      { to: "/contact", label: "Contact", title: "Contact Real Estate Software Support", voice: "Talk to me" },
     ],
   },
 
