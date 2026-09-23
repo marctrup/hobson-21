@@ -1,6 +1,7 @@
 import { PropertyTopicLinks } from "@/components/PropertyTopicLinks";
 import { SolutionFAQ } from "@/components/SolutionFAQ";
 import { LastUpdated } from "@/components/LastUpdated";
+import { AnswerFirst } from "@/components/AnswerFirst";
 import { getUpdatedDate } from "@/utils/content-dates";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
@@ -134,6 +135,13 @@ const AILeaseAbstraction = () => {
               terms that matter with the exact passage that supports each one. Abstraction
               you can verify, not just trust.
             </p>
+            <AnswerFirst>
+              Lease abstraction is the work of pulling the key terms out of a lease — parties,
+              term, rent, review dates, break options and obligations — into a structured
+              summary. AI lease abstraction does that automatically. Hobson AI abstracts UK
+              commercial leases, deeds and licences, and keeps the exact clause and page
+              beside every extracted term so you can verify it in seconds.
+            </AnswerFirst>
             <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
               <Button
                 asChild

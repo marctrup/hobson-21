@@ -1,6 +1,7 @@
 import { PropertyTopicLinks } from "@/components/PropertyTopicLinks";
 import { SolutionFAQ } from "@/components/SolutionFAQ";
 import { LastUpdated } from "@/components/LastUpdated";
+import { AnswerFirst } from "@/components/AnswerFirst";
 import { getUpdatedDate } from "@/utils/content-dates";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
@@ -134,6 +135,13 @@ const PropertyPortfolioSoftware = () => {
               deeds, licences and schedules underneath them — then answers portfolio-wide
               questions with the exact extract that supports each fact.
             </p>
+            <AnswerFirst>
+              Property portfolio software gives an owner one view across every holding —
+              units, leases, income events and obligations — rather than a file per
+              building. Hobson AI is portfolio software for UK landlords and investors that
+              organises everything as Portfolio, Unit Group and Unit, answers portfolio-wide
+              questions, and cites the exact clause and page behind each figure.
+            </AnswerFirst>
             <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
               <Button
                 asChild
