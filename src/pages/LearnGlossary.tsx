@@ -315,6 +315,9 @@ const LearnGlossary = () => {
         <meta property="og:title" content="Hobson Glossary" />
         <meta property="og:url" content="https://hobsonschoice.ai/learn/glossary" />
         <meta property="og:type" content="website" />
+        <script type="application/ld+json">
+          {JSON.stringify(getDefinedTermSetStructuredData(TERMS))}
+        </script>
       </Helmet>
       <GlobalHeader />
 
