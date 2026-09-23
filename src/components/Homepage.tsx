@@ -8,6 +8,7 @@ import { OptimizedImage } from "@/components/OptimizedImage";
 import { Helmet } from "react-helmet-async";
 import { OrchestrationDemo } from "@/components/homepage/OrchestrationDemo";
 import { ClosingSection } from "@/components/homepage/ClosingSection";
+import { HomepageFooter } from "@/components/homepage/HomepageFooter";
 
 
 
