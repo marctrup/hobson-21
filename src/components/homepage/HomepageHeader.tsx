@@ -132,37 +132,48 @@ export const HomepageHeader = () => {
         {/* Mobile Navigation Menu */}
         {isMobileMenuOpen && (
           <nav className="md:hidden mt-4 pb-4 border-t pt-4" role="navigation" aria-label="Mobile navigation">
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col">
               <Link
                 to="/"
-                className="text-base text-muted-foreground hover:text-foreground transition-colors py-2"
+                className="group flex flex-col border-b border-bone-wash py-3"
                 onClick={closeMobileMenu}
               >
-                Home
+                <span className="text-lg text-ink leading-tight">Home</span>
+                <span className="mt-1 text-xs text-ink-muted italic leading-tight" style={serifStack}>
+                  Start with me
+                </span>
               </Link>
-              {content.navigation.links.map((link) => (
+              {content.navigation.links.map((link: any) => (
                 <Link
                   key={link.to}
                   to={link.to}
-                  className="text-base text-muted-foreground hover:text-foreground transition-colors py-2"
+                  className="group flex flex-col border-b border-bone-wash py-3"
                   onClick={closeMobileMenu}
                   title={link.title}
                 >
-                  {link.label}
+                  <span className="text-lg text-ink leading-tight">{link.label}</span>
+                  <span className="mt-1 text-xs text-ink-muted italic leading-tight" style={serifStack}>
+                    {link.voice}
+                  </span>
                 </Link>
                 ))}
                 {(content.navigation as any).secondary?.map((link: any) => (
                 <Link
                   key={link.to}
                   to={link.to}
-                  className="text-base text-muted-foreground hover:text-foreground transition-colors py-2"
+                  className="group flex flex-col border-b border-bone-wash py-3"
                   onClick={closeMobileMenu}
                   title={link.title}
                 >
-                  {link.label}
+                  <span className="text-lg text-ink leading-tight">{link.label}</span>
+                  <span className="mt-1 text-xs text-ink-muted italic leading-tight" style={serifStack}>
+                    {link.voice}
+                  </span>
                 </Link>
                 ))}
-                <HobsonGatewayMobile onClick={closeMobileMenu} />
+                <div className="pt-4">
+                  <HobsonGatewayMobile onClick={closeMobileMenu} />
+                </div>
 
 
             </div>
