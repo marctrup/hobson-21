@@ -17,3 +17,4 @@
 - [x] Add footer/founder links, metadata, sitemap and snapshot registration.
 - [x] Verify page layout and links; desktop/mobile checks and 26 frontend tests passed.
 - [ ] Generate production snapshot and publish when authorised.
+- Rebuild login-gateway options with brand-bible-aligned wording (reject 'Enter the Study')
