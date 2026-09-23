@@ -387,6 +387,7 @@ const LeaseManagementSoftware = () => {
             </div>
           </div>
         </section>
+        <SolutionFAQ items={FAQS} />
         <PropertyTopicLinks />
       </main>
     </div>
