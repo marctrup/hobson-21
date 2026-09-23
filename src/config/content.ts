@@ -20,8 +20,8 @@ export const CONTENT = {
 
   // Hero Section
   hero: {
-    title: "The AI co-worker built for",
-    titleHighlight: "property.",
+    title: "I am Hobson —",
+    titleHighlight: "the AI co-worker built for property.",
     subtitle: "Every property business has work that needs doing. Ask me a question, ask me to take care of something, or simply leave the routine work with me. I'll quietly get on with it while you focus on the decisions that matter.",
     strapline: "",
     ctaButton: "Start free — no card required",
