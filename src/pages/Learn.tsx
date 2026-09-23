@@ -29,7 +29,7 @@ const CARDS: HubCard[] = [
     icon: MessageCircleQuestion,
     title: "Frequently asked questions",
     description:
-      "Straight answers on how Hobson works, how its accuracy is tested, and how it stays in your control.",
+      "Straight answers on how I work, how my accuracy is tested, and how I stay in your control.",
     cta: "Read the FAQ",
     status: "Available now",
     available: true,
@@ -39,7 +39,7 @@ const CARDS: HubCard[] = [
     icon: TrendingUp,
     title: "Case studies",
     description:
-      "Real property teams on what changed when Hobson took on their documents — the time saved and the risks caught.",
+      "Real property teams on what changed when I took on their documents — the time saved and the risks caught.",
     cta: "Read the stories",
     status: "Available now",
     available: true,
@@ -49,7 +49,7 @@ const CARDS: HubCard[] = [
     icon: BookOpen,
     title: "Glossary",
     description:
-      "Plain-English definitions of the property, document and Hobson terms you'll see across the platform.",
+      "Plain-English definitions of the property, document and Hobson terms you will meet as we work together.",
     cta: "Explore the glossary",
     status: "Available now",
     available: true,
@@ -58,7 +58,7 @@ const CARDS: HubCard[] = [
     icon: PlayCircle,
     title: "Tutorials",
     description:
-      "Short video walkthroughs showing Hobson in action — from uploading a lease to getting a cited answer.",
+      "Short video walkthroughs of me at work — from uploading a lease to getting a cited answer.",
     cta: "In preparation",
     status: "Coming soon",
     available: false,
@@ -109,21 +109,21 @@ const Learn = () => {
               className="mt-4 font-serif text-4xl sm:text-5xl md:text-6xl font-normal tracking-tight"
               style={{ color: INK }}
             >
-              Get to know <span style={{ color: BRASS }}>Hobson</span>.
+              Let me <span style={{ color: BRASS }}>introduce myself</span>.
             </h1>
             <p
               className="mt-5 text-base sm:text-lg leading-relaxed max-w-xl mx-auto"
               style={{ color: MUTED }}
             >
               Straight answers, real customer stories, and short walkthroughs —
-              everything you need to see how Hobson reads your property
-              documents and helps you act on them.
+              everything you need to see how I read your property documents
+              and help you act on them.
             </p>
             <AnswerFirst>
-              Learn is Hobson's resource library: straight answers to common
+              Learn is where I keep my notes: straight answers to common
               questions, plain-English definitions of property and document
               terms, real customer case studies and step-by-step guides — all
-              showing how Hobson reads property documents and helps owners and
+              showing how I read property documents and help owners and
               managers act on them.
             </AnswerFirst>
             <div
