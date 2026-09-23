@@ -81,30 +81,39 @@ export const Homepage = () => {
                 </Link>
               </div>
 
-              {/* Desktop Navigation */}
-              <nav className="hidden md:flex items-center gap-6" role="navigation" aria-label="Main navigation">
-                <Link to="/pricing" className="text-base text-muted-foreground hover:text-foreground transition-colors">
-                  Pricing
-                </Link>
-                <Link to="/founder" className="text-base text-muted-foreground hover:text-foreground transition-colors">
-                  Founder
-                </Link>
-                <Link to="/blog" className="text-base text-muted-foreground hover:text-foreground transition-colors">
-                    {content.header.nav.blog}
+              {/* Desktop Navigation - each way Hobson directs you, in his own words */}
+              <nav className="hidden md:flex items-center gap-7" role="navigation" aria-label="Main navigation">
+                {[
+                  { to: "/pricing", label: "Pricing", title: "Hobson AI Pricing Plans", voice: "What I cost" },
+                  { to: "/founder", label: "Founder", title: "Meet a Co-Founder of Hobson AI", voice: "How I came to be" },
+                  { to: "/blog", label: "Blog", title: "Property Management Insights", voice: "Notes from my desk" },
+                  { to: "/learn", label: "Learn", title: "Hobson AI FAQ", voice: "Where I keep my notes" },
+                  { to: "/contact", label: "Contact", title: "Contact Real Estate Software Support", voice: "Talk to me" },
+                ].map((link) => (
+                  <Link
+                    key={link.to}
+                    to={link.to}
+                    className="group flex flex-col items-start py-1 outline-none rounded-sm focus-visible:ring-2 focus-visible:ring-brass/60"
+                    title={link.title}
+                  >
+                    <span className="relative text-[15px] text-ink leading-none">
+                      {link.label}
+                      <span
+                        aria-hidden="true"
+                        className="absolute -bottom-1.5 left-0 h-px w-0 bg-brass/60 transition-all duration-500 group-hover:w-full group-hover:bg-brass"
+                      />
+                    </span>
+                    <span
+                      className="mt-2 text-[10px] text-ink-muted italic leading-none opacity-45 transition-all duration-500 group-hover:opacity-100 group-hover:text-brass-text"
+                      style={serifStack}
+                    >
+                      {link.voice}
+                    </span>
                   </Link>
-                <Link to="/learn" className="text-base text-muted-foreground hover:text-foreground transition-colors">
-                  Learn
-                </Link>
-                <Link to="/contact" className="text-base text-muted-foreground hover:text-foreground transition-colors">
-                  Contact
-                </Link>
-                
+                ))}
+
                 {/* Gateway to the app */}
                 <HobsonGateway className="ml-2" />
-
-
-
-                
               </nav>
 
               {/* Mobile Menu Button */}
