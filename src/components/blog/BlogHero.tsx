@@ -18,8 +18,8 @@ export const BlogHero = () => {
           Notes from <span style={{ color: '#B4914F' }}>my desk</span>
         </h1>
         <p className="mt-5 text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-          What I have learned from reading portfolios, leases and the trade at
-          large — set down for operators, occupiers and owners.
+          What we have learned from working with our clients, operators,
+          occupiers and owners.
         </p>
         <div className="mx-auto mt-10 h-px w-24" style={{ backgroundColor: '#F7EDDC' }} />
       </div>
