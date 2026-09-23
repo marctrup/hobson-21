@@ -8,6 +8,7 @@ import { Helmet } from "react-helmet-async";
 import { HomepageHeader } from "@/components/homepage/HomepageHeader";
 import { OptimizedImage } from "@/components/OptimizedImage";
 import { MarkdownRenderer } from "@/components/MarkdownRenderer";
+import { AnswerFirst } from "@/components/AnswerFirst";
 import { format } from "date-fns";
 import { getBreadcrumbStructuredData } from "@/utils/seo-data";
 
@@ -370,6 +371,13 @@ const BlogPost = () => {
                 </div>
               </div>
             </header>
+
+            {post.excerpt && (
+              <AnswerFirst className="mx-0 mb-8 max-w-none">
+                {post.excerpt}
+              </AnswerFirst>
+            )}
+
 
             {isPibArticle && (
               <aside className="mb-8 border-y border-bone bg-bone-wash px-4 py-5 sm:px-6" aria-labelledby="external-publication-heading">
