@@ -3363,10 +3363,10 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
             {!testerMode && <RailItem icon="clock" label={"What I've done"} active={view !== "onboarding" && showWhatIveDone} onClick={() => { setShowDocuments(false); setShowWhatIveDone(true); }} />}
             <RailItem icon="chat" label="Chat History" />
             <div className="mt-auto flex flex-col items-center gap-3 pb-2">
-              <button className="w-11 h-11 rounded-full bg-[#56514A] text-white grid place-items-center shadow-md hover:bg-[#56514A] transition" aria-label="New chat">
+              <button className="w-11 h-11 rounded-full bg-[#56514A] text-white grid place-items-center shadow-md hover:bg-[#56514A] transition" aria-label="A new conversation">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><path d="M12 5v14M5 12h14"/></svg>
               </button>
-              <span className="text-[10px] text-ink-muted">New chat</span>
+              <span className="text-[10px] text-ink-muted">A new conversation</span>
               {!testerMode && <RailItem icon="gear" label="Back Office" onClick={() => setShowBackOfficeGate(true)} />}
               <div className="w-9 h-9 rounded-full bg-bone grid place-items-center text-xs font-semibold text-charcoal">MT</div>
             </div>
