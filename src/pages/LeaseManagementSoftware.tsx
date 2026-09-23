@@ -1,6 +1,7 @@
 import { PropertyTopicLinks } from "@/components/PropertyTopicLinks";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
+import { getSolutionPageStructuredData } from "@/utils/seo-data";
 import { ArrowRight, CheckCircle, FileText, Search, Shield, Users } from "lucide-react";
 import { GlobalHeader } from "@/components/GlobalHeader";
 import { Button } from "@/components/ui/button";
@@ -64,7 +65,10 @@ const LeaseManagementSoftware = () => {
         />
         <meta property="og:url" content="https://hobsonschoice.ai/lease-management-software" />
         <meta property="og:type" content="website" />
-      </Helmet>
+              <script type="application/ld+json">
+          {JSON.stringify(getSolutionPageStructuredData({ name: "Lease Management Software", path: "/lease-management-software", description: "Lease management software that reads your documents, extracts the facts that matter and answers your team with evidence from the source." }))}
+        </script>
+        </Helmet>
 
       <GlobalHeader />
 

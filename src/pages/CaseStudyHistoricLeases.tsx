@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
+import { getCaseStudyStructuredData } from "@/utils/seo-data";
 import ReactMarkdown from "react-markdown";
 import { ArrowLeft } from "lucide-react";
 import { GlobalHeader } from "@/components/GlobalHeader";
@@ -84,7 +85,10 @@ const CaseStudyHistoricLeases = () => {
           content="https://hobsonschoice.ai/learn/case-studies/historic-leases"
         />
         <meta property="og:type" content="article" />
-      </Helmet>
+              <script type="application/ld+json">
+          {JSON.stringify(getCaseStudyStructuredData({ headline: "Documents written over 100 years ago — can Hobson really read them?", path: "/learn/case-studies/historic-leases", description: "Can AI understand a century of property documents? See how Hobson handles complex historic leases, deeds, schedules and changing property records.", datePublished: "2025-06-01", dateModified: "2026-09-23" }))}
+        </script>
+        </Helmet>
       <GlobalHeader />
 
       <main className="flex-1">

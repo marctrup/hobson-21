@@ -1,6 +1,7 @@
 import { PropertyTopicLinks } from "@/components/PropertyTopicLinks";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
+import { getSolutionPageStructuredData } from "@/utils/seo-data";
 import { ArrowRight, CheckCircle, Building2, Layers, Search, Users } from "lucide-react";
 import { GlobalHeader } from "@/components/GlobalHeader";
 import { Button } from "@/components/ui/button";
@@ -64,7 +65,10 @@ const PropertyPortfolioSoftware = () => {
         />
         <meta property="og:url" content="https://hobsonschoice.ai/property-portfolio-software" />
         <meta property="og:type" content="website" />
-      </Helmet>
+              <script type="application/ld+json">
+          {JSON.stringify(getSolutionPageStructuredData({ name: "Property Portfolio Software", path: "/property-portfolio-software", description: "Property portfolio software that reads your documents, structures your portfolio and answers your team with evidence from the source." }))}
+        </script>
+        </Helmet>
 
       <GlobalHeader />
 
