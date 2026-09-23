@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { CONTENT } from "@/config/content";
+import { HobsonGateway, HobsonGatewayMobile } from "@/components/HobsonGateway";
 import hobsonLogo from "/hobson-logo.png";
 
 
@@ -81,13 +82,9 @@ export const HomepageHeader = () => {
               </Link>
             ))}
             
-            {/* Login button */}
-            <a
-              href="https://app.hobsonschoice.ai"
-              className="inline-flex items-center justify-center rounded-md border border-primary/20 bg-primary/10 text-primary hover:bg-primary/15 h-9 px-4 py-2 text-sm font-medium transition-colors"
-            >
-              Login
-            </a>
+            {/* Gateway to the app */}
+            <HobsonGateway className="ml-2" />
+
 
             
           </nav>
@@ -141,12 +138,8 @@ export const HomepageHeader = () => {
                   {link.label}
                 </Link>
                 ))}
-                <a
-                  href="https://app.hobsonschoice.ai"
-                  className="inline-flex items-center justify-center rounded-md border border-primary/20 bg-primary/10 text-primary hover:bg-primary/15 h-9 px-4 py-2 text-sm font-medium transition-colors w-fit"
-                >
-                  Login
-                </a>
+                <HobsonGatewayMobile onClick={closeMobileMenu} />
+
 
             </div>
           </nav>

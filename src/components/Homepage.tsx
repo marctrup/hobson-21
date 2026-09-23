@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Menu, X, ArrowRight, FileText, CheckCircle, Building2 } from "lucide-react";
 import { SimpleButton } from "@/components/ui/simple-button";
+import { HobsonGateway, HobsonGatewayMobile } from "@/components/HobsonGateway";
 import { OptimizedImage } from "@/components/OptimizedImage";
 import { Helmet } from "react-helmet-async";
 import { OrchestrationDemo } from "@/components/homepage/OrchestrationDemo";
@@ -98,14 +99,9 @@ export const Homepage = () => {
                   Contact
                 </Link>
                 
-                {/* Login button */}
-                <a
-                  href="https://app.hobsonschoice.ai"
-                  className="inline-flex h-9 items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-opacity hover:opacity-90"
-                  style={{ background: "#2D2D2D", color: "#FCFAF7" }}
-                >
-                  Login
-                </a>
+                {/* Gateway to the app */}
+                <HobsonGateway className="ml-2" />
+
 
 
                 
@@ -135,14 +131,8 @@ export const Homepage = () => {
                   <Link to="/contact" className="text-base text-muted-foreground hover:text-foreground transition-colors py-2" onClick={closeMobileMenu}>
                     Contact
                   </Link>
-                  {/* Login button */}
-                  <a
-                    href="https://app.hobsonschoice.ai"
-                    className="inline-flex h-9 w-fit items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-opacity hover:opacity-90"
-                    style={{ background: "#2D2D2D", color: "#FCFAF7" }}
-                  >
-                    Login
-                  </a>
+                  <HobsonGatewayMobile onClick={closeMobileMenu} />
+
 
                    
                 </div>
