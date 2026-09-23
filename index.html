@@ -185,23 +185,88 @@
       ></iframe
     ></noscript>
     <div id="root">
-      <!-- Critical loading state: meaningful content for first paint and for crawlers that do not run JavaScript -->
+      <!-- Static homepage summary: first paint for visitors, and the full readable
+           page for search engines and AI assistants that do not run JavaScript.
+           React replaces this once the app mounts. -->
       <div
-        style="min-height:100vh;background:hsl(0 0% 100%);display:flex;align-items:center;justify-content:center;font-family:system-ui,-apple-system,sans-serif"
+        style="min-height:100vh;background:hsl(0 0% 100%);font-family:system-ui,-apple-system,sans-serif;padding:3rem 1.25rem"
       >
-        <div style="text-align:center;max-width:640px;padding:2rem">
-          <h1 style="font-size:2rem;font-weight:700;color:hsl(222.2 84% 4.9%);margin-bottom:0.75rem">Hobson — the AI co-worker built for property</h1>
-          <p style="color:hsl(215.4 16.3% 46.9%);margin-bottom:1.25rem">Ask a question, hand over routine work, and get answers backed by evidence from your own documents. Hobson learns your portfolio, leases and policies so your team can stop hunting through files.</p>
-          <nav style="display:flex;flex-wrap:wrap;gap:0.75rem;justify-content:center;font-size:0.95rem">
+        <div style="max-width:760px;margin:0 auto;color:hsl(222.2 84% 4.9%)">
+          <h1 style="font-size:2rem;font-weight:700;line-height:1.2;margin-bottom:0.75rem">Hobson — the AI co-worker built for property</h1>
+          <p style="color:hsl(215.4 16.3% 46.9%);margin-bottom:1.5rem">
+            Hobson AI is an AI co-worker for property teams. It reads your leases, licences, certificates and
+            management agreements, builds an understanding of your portfolio, and answers questions in plain
+            English with the evidence behind every answer. Ask a question, ask Hobson to take care of something,
+            or leave the routine work with it.
+          </p>
+
+          <h2 style="font-size:1.25rem;font-weight:600;margin:1.75rem 0 0.5rem">What does Hobson AI do?</h2>
+          <p style="color:hsl(215.4 16.3% 46.9%)">
+            Hobson answers questions about your property documents and completes routine property work on your
+            behalf. Every document you share becomes part of its understanding of your portfolio, so it can
+            connect information across leases, plans, reports and records rather than searching one file at a
+            time. Every answer links back to the clause and page it came from.
+          </p>
+
+          <h2 style="font-size:1.25rem;font-weight:600;margin:1.75rem 0 0.5rem">How is Hobson different from a general AI assistant?</h2>
+          <p style="color:hsl(215.4 16.3% 46.9%)">
+            A general assistant reads a document you paste into it. Hobson understands your business: your
+            properties, your people, your policies and your obligations. It keeps that understanding up to date
+            over time, so answers reflect your portfolio rather than the words in a single file. Work is prepared
+            for you, but nothing is sent or actioned until you approve it.
+          </p>
+
+          <h2 style="font-size:1.25rem;font-weight:600;margin:1.75rem 0 0.5rem">How does Hobson work?</h2>
+          <p style="color:hsl(215.4 16.3% 46.9%)">
+            You only ever speak to Hobson. Behind it sits a team of specialist agents that Hobson coordinates
+            quietly. Four maintain what Hobson knows — portfolio knowledge, portfolio structure, compliance
+            position and relationships. Four provide services on demand — external research, calculations and
+            finance, systems and integrations, and access and security.
+          </p>
+
+          <h2 style="font-size:1.25rem;font-weight:600;margin:1.75rem 0 0.5rem">Who is Hobson AI for?</h2>
+          <p style="color:hsl(215.4 16.3% 46.9%)">
+            Hobson is built for organisations where property documents matter: asset managers handling lease
+            events and compliance, retail operators managing rent reviews and break clauses across a multi-site
+            estate, hospitality businesses tracking site leases and certificates, and corporate occupiers where
+            property is a material cost but not the core business.
+          </p>
+
+          <h2 style="font-size:1.25rem;font-weight:600;margin:1.75rem 0 0.5rem">What can Hobson prepare for you?</h2>
+          <p style="color:hsl(215.4 16.3% 46.9%)">
+            A typical example: Hobson flags a rent review due in 60 days, drafts the recommendation with the
+            passing rent, proposed rent and uplift, gathers audit-trailed comparable lettings, drafts the notice
+            and covering email, and sets the reminder schedule. Everything waits for your approval.
+          </p>
+
+          <h2 style="font-size:1.25rem;font-weight:600;margin:1.75rem 0 0.5rem">How much does Hobson AI cost?</h2>
+          <p style="color:hsl(215.4 16.3% 46.9%)">
+            Hobson uses capacity-based pricing: plans differ by the number of users, documents and seats, with
+            monthly and annual billing and a saving for paying annually. Enterprise arrangements are available
+            for larger portfolios. Full details are on the
+            <a href="/pricing" style="color:hsl(269 91% 52%)">pricing page</a>.
+          </p>
+
+          <h2 style="font-size:1.25rem;font-weight:600;margin:1.75rem 0 0.5rem">Explore Hobson AI</h2>
+          <nav style="display:flex;flex-wrap:wrap;gap:0.75rem 1.25rem;font-size:0.95rem;margin-bottom:1rem">
             <a href="/pricing" style="color:hsl(269 91% 52%)">Pricing</a>
             <a href="/learn" style="color:hsl(269 91% 52%)">Learn</a>
             <a href="/learn/faq" style="color:hsl(269 91% 52%)">FAQ</a>
+            <a href="/learn/glossary" style="color:hsl(269 91% 52%)">Glossary</a>
+            <a href="/learn/case-studies" style="color:hsl(269 91% 52%)">Case studies</a>
             <a href="/blog" style="color:hsl(269 91% 52%)">Blog</a>
+            <a href="/press" style="color:hsl(269 91% 52%)">Press</a>
+            <a href="/founder" style="color:hsl(269 91% 52%)">Founder</a>
             <a href="/contact" style="color:hsl(269 91% 52%)">Contact</a>
             <a href="/property-management-software" style="color:hsl(269 91% 52%)">Property management software</a>
             <a href="/lease-management-software" style="color:hsl(269 91% 52%)">Lease management software</a>
+            <a href="/property-portfolio-software" style="color:hsl(269 91% 52%)">Property portfolio software</a>
             <a href="/ai-lease-abstraction" style="color:hsl(269 91% 52%)">AI lease abstraction</a>
           </nav>
+          <p style="color:hsl(215.4 16.3% 46.9%);font-size:0.9rem">
+            Hobson's Choice AI Ltd, United Kingdom. Contact
+            <a href="mailto:info@hobsonschoice.ai" style="color:hsl(269 91% 52%)">info@hobsonschoice.ai</a>.
+          </p>
         </div>
       </div>
     </div>
