@@ -1042,7 +1042,7 @@ export default function Pricing() {
               You may have me either way — my team can do the setting-up for you, or I can guide you through it. Move the sliders to see what each would cost.
             </p>
             <AnswerFirst>
-              Hobson AI is priced on capacity, not features: every plan includes the same
+              Pricing is based on capacity, not features: every plan includes the same
               abilities, and the tiers differ only in how many users, documents and seats
               they cover. You pay once for me to read your documents, then add team
               seats as you need them. Use the calculators below to see what your portfolio
