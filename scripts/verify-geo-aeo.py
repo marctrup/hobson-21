@@ -61,6 +61,9 @@ AI_CRAWLERS = [
     "PerplexityBot", "Google-Extended", "Applebot-Extended",
 ]
 
+# Short, purely functional pages (forms, legal boilerplate) are exempt.
+SHORT_PAGE_EXEMPT = ["/contact"]
+
 MIN_WORDS = 120
 
 problems = []
@@ -90,7 +93,7 @@ for route in ROUTES:
         problems.append(f"{route}: no JSON-LD structured data")
 
     words = visible_words(html)
-    if words < MIN_WORDS:
+    if words < MIN_WORDS and route not in SHORT_PAGE_EXEMPT:
         problems.append(
             f"{route}: only {words} words of readable text "
             f"(AI assistants need at least {MIN_WORDS} to quote a page)")

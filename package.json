@@ -12,7 +12,8 @@
     "build": "vite build",
     "prerender": "vite build && python3 prerender.py",
     "seo:update": "bash scripts/update-search.sh",
-    "seo:verify": "python3 scripts/verify-seo.py",
+    "seo:verify": "python3 scripts/verify-seo.py && python3 scripts/verify-geo-aeo.py",
+    "geo:verify": "python3 scripts/verify-geo-aeo.py",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
     "preview": "vite preview"
