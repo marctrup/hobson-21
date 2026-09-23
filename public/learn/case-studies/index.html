@@ -23,7 +23,7 @@
     /></noscript>
 
     <!-- Initialize dataLayer before GTM -->
-    <script type="text/javascript" async="" src="https://www.googletagmanager.com/gtag/js?id=G-060T0MS3F8&amp;cx=c&amp;gtm=4e69f3"></script><script async="" src="https://www.googletagmanager.com/gtm.js?id=GTM-M7JNNWVM"></script><script>
+    <script type="text/javascript" async="" src="https://www.googletagmanager.com/gtag/js?id=G-060T0MS3F8&amp;cx=c&amp;gtm=4e69l1"></script><script async="" src="https://www.googletagmanager.com/gtm.js?id=GTM-M7JNNWVM"></script><script>
       window.dataLayer = window.dataLayer || [];
     </script>
     <!-- Google Tag Manager -->
@@ -149,6 +149,65 @@
             });
           });
         });
+      }
+    </script>
+    <!-- Sitewide structured data: who Hobson is, what the product is, and how to search the site -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Organization",
+            "@id": "https://hobsonschoice.ai/#organization",
+            "name": "Hobson AI",
+            "legalName": "Hobson's Choice AI Ltd",
+            "url": "https://hobsonschoice.ai/",
+            "logo": "https://hobsonschoice.ai/hobson-logo.png",
+            "description": "Hobson AI is an AI co-worker for property teams. It reads leases, licences, certificates and management agreements, and answers questions in plain English with evidence from the original documents.",
+            "foundingDate": "2024",
+            "areaServed": "GB",
+            "sameAs": ["https://twitter.com/HobsonAI"],
+            "contactPoint": {
+              "@type": "ContactPoint",
+              "email": "info@hobsonschoice.ai",
+              "contactType": "customer support",
+              "availableLanguage": "English"
+            }
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://hobsonschoice.ai/#website",
+            "url": "https://hobsonschoice.ai/",
+            "name": "Hobson AI",
+            "inLanguage": "en-GB",
+            "publisher": { "@id": "https://hobsonschoice.ai/#organization" }
+          },
+          {
+            "@type": "SoftwareApplication",
+            "@id": "https://hobsonschoice.ai/#software",
+            "name": "Hobson AI",
+            "applicationCategory": "BusinessApplication",
+            "operatingSystem": "Web",
+            "url": "https://hobsonschoice.ai/",
+            "publisher": { "@id": "https://hobsonschoice.ai/#organization" },
+            "description": "AI software for property teams. Hobson reads property documents, builds an understanding of the portfolio, answers questions with evidence from the source clause, and prepares routine property work for approval.",
+            "featureList": [
+              "Plain English questions across an entire property portfolio",
+              "Answers evidenced back to the clause and page",
+              "AI lease abstraction and document reading",
+              "Lease event, obligation and compliance tracking",
+              "Routine property work prepared for human approval"
+            ],
+            "offers": {
+              "@type": "AggregateOffer",
+              "priceCurrency": "GBP",
+              "lowPrice": "19.50",
+              "highPrice": "450.00",
+              "offerCount": "4",
+              "url": "https://hobsonschoice.ai/pricing"
+            }
+          }
+        ]
       }
     </script>
     
