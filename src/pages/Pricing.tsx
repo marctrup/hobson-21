@@ -446,9 +446,9 @@ const Calculators: React.FC = () => {
                   margin: 0,
                 }}
               >
-                Hobson
+                Me
                 <span style={{ color: TOKENS.brass, fontSize: "0.7em", marginLeft: 10 }}>
-                  on its own
+                  on my own
                 </span>
               </h2>
             </div>
@@ -477,7 +477,7 @@ const Calculators: React.FC = () => {
                   margin: 0,
                 }}
               >
-                Hobson
+                Me
                 <span style={{ color: T.gold, fontSize: "0.7em", marginLeft: 10 }}>+ helping hands</span>
                 <div
                   style={{
@@ -490,7 +490,7 @@ const Calculators: React.FC = () => {
                     fontStyle: "normal",
                   }}
                 >
-                  Onboarding team + relationship manager
+                  My onboarding team + relationship manager
                 </div>
               </h2>
             </div>
@@ -527,11 +527,11 @@ const Calculators: React.FC = () => {
               <div className="hp-head-mobile" style={{ display: "none", marginBottom: 16 }}>
                 <div style={{ fontFamily: FONTS.mono, fontSize: 11, letterSpacing: "0.22em", textTransform: "uppercase", color: T.faint, marginBottom: 6 }}>Option one</div>
                 <h2 style={{ fontFamily: FONTS.serif, fontWeight: 400, fontSize: 26, lineHeight: 1.15, letterSpacing: "-0.01em", color: T.ink, margin: 0 }}>
-                  Hobson<span style={{ color: TOKENS.brass, fontSize: "0.7em", marginLeft: 10 }}>on its own</span>
+                  Me<span style={{ color: TOKENS.brass, fontSize: "0.7em", marginLeft: 10 }}>on my own</span>
                 </h2>
               </div>
               <p style={{ fontFamily: FONTS.sans, fontSize: 13.5, lineHeight: 1.55, color: T.muted, margin: "0 0 18px" }} className="hp-card-blurb">
-                Reading your documents is the heavy lifting — done once, then never again. So it is charged once. After that you pay for seats, and there is no limit on how much you use me.
+                Reading your documents is the heavy lifting — I do it once, and it is done. After that you pay for seats, and there is no limit on how much you use me.
               </p>
 
               {/* Two sections side-by-side, divided by a vertical hairline */}
@@ -548,7 +548,7 @@ const Calculators: React.FC = () => {
                 <div style={{ display: "flex", flexDirection: "column" }}>
                   <Eyebrow color={T.gold} style={{ fontWeight: 700 }}>Reading · one-off</Eyebrow>
                   <p style={{ fontFamily: FONTS.sans, fontSize: 13, lineHeight: 1.5, color: T.muted, margin: "10px 0 14px" }}>
-                    10p–60p per document depending on complexity. A typical mix averages 25p. Read once, remembered for good.
+                    10p–60p a document, depending on complexity. A typical mix averages 25p. I read each document once and remember it for good.
                   </p>
 
                   <Slider id="docs" label="Documents" min={10} max={2000} step={10} value={docs} onChange={setDocs} suffix="docs" />
@@ -561,7 +561,7 @@ const Calculators: React.FC = () => {
                       {fmtGBP2(readLow)} – {fmtGBP2(readHigh)}
                     </div>
                     <div style={{ fontFamily: FONTS.sans, fontSize: 10, lineHeight: 1.45, color: "#8A8478", marginTop: 6 }}>
-                      Estimated at 25p a document — the average for a mixed portfolio. The firm quote follows once the documents have been seen.
+                      Estimated at 25p a document — the average for a mixed portfolio. The firm quote follows once I have seen the documents.
                     </div>
                   </div>
                 </div>
@@ -618,12 +618,12 @@ const Calculators: React.FC = () => {
                   }}
                 >
                   {[
-                    { h: "Ask anything, any time", b: "Every document Hobson has read, searchable in plain questions. No limit on how often you ask." },
+                    { h: "Ask anything, any time", b: "Every document I have read, searchable in plain questions. No limit on how often you ask." },
                     { h: "Your portfolio on a map", b: "Every property placed by address, every document attached to the right one." },
-                    { h: "Learns how you work", b: "Each seat has its own Hobson. It remembers what that person cares about and gets quicker over time." },
-                    { h: "Everything Hobson can do", b: "No tiers, nothing held back. Every seat gets the full product." },
+                    { h: "I learn how you work", b: "Each seat has its own Hobson — me. I remember what that person cares about and get quicker over time." },
+                    { h: "Everything I can do", b: "No tiers, nothing held back. Every seat gets the whole of me." },
                     { h: "Add or remove people any time", b: "Seats are monthly. Change the number as your team changes." },
-                    { h: "Support and Knowledgebase", b: "Email the team, or find the answer yourself in the guides." },
+                    { h: "Support and Knowledgebase", b: "Email my team, or find the answer yourself in the guides." },
                   ].map((item) => (
                     <div key={item.h} style={{ display: "grid", gridTemplateColumns: "auto 1fr", gap: 8 }}>
                       <span style={{ color: T.gold, fontSize: 13, lineHeight: 1.4 }}>✦</span>
@@ -690,19 +690,19 @@ const Calculators: React.FC = () => {
               <div className="hp-head-mobile" style={{ display: "none", marginBottom: 16 }}>
                 <div style={{ fontFamily: FONTS.mono, fontSize: 11, letterSpacing: "0.22em", textTransform: "uppercase", color: T.gold, marginBottom: 6 }}>Option two</div>
                 <h2 style={{ fontFamily: FONTS.serif, fontWeight: 400, fontSize: 26, lineHeight: 1.15, letterSpacing: "-0.01em", color: T.ink, margin: 0 }}>
-                  Hobson<span style={{ color: T.gold, fontSize: "0.7em", marginLeft: 10 }}>+ helping hands</span>
+                  Me<span style={{ color: T.gold, fontSize: "0.7em", marginLeft: 10 }}>+ helping hands</span>
                 </h2>
-                <div style={{ fontFamily: FONTS.sans, fontSize: 12.5, color: T.muted, marginTop: 4 }}>Onboarding team + relationship manager</div>
+                <div style={{ fontFamily: FONTS.sans, fontSize: 12.5, color: T.muted, marginTop: 4 }}>My onboarding team + relationship manager</div>
               </div>
               <p style={{ fontFamily: FONTS.sans, fontSize: 13.5, lineHeight: 1.55, color: T.muted, margin: 0 }} className="hp-card-blurb">
-                We prepare your documents before Professor reads them, and one of us stays with you afterwards.
+                My team prepares your documents before Professor reads them, and one of us stays with you afterwards.
               </p>
 
               {/* Bullets */}
               <ul style={{ listStyle: "none", padding: 0, margin: "14px 0 0" }} className="hp-bullets">
                 {[
                   { h: "We go through your folders", b: "Every document opened, every type identified, everything checked that it can actually be read." },
-                  { h: "We make the addresses clear", b: "So each document lands on the right property. Hobson needs a clean address for the map to work." },
+                  { h: "We make the addresses clear", b: "So each document lands on the right property. I need a clean address for the map to work." },
                   { h: "Then Professor reads them", b: "He is only ever as good as what he is given. Prepared properly, he has everything he needs." },
                   { h: "Your relationship manager stays", b: "To guide you, advise you, or simply be there — for as long as you need them." },
                 ].map((item, i) => (
@@ -739,7 +739,7 @@ const Calculators: React.FC = () => {
                   suffix="docs"
                 />
                 <p style={{ fontFamily: FONTS.sans, fontSize: 12, lineHeight: 1.5, color: T.muted, margin: "8px 0 0" }}>
-                  You need not onboard everything — a person can check the documents that matter most.
+                  You need not onboard everything — we can start with the documents that matter most.
                 </p>
               </div>
 
@@ -951,15 +951,15 @@ export default function Pricing() {
     <>
       <Helmet>
         <title>Pricing — Hobson AI property software</title>
-        <meta name="description" content="No plans. No credits. Nothing counted. Pay for seats and document learning — that's it." />
+        <meta name="description" content="No plans. No credits. Nothing counted. You pay for my seats and my reading — that is all." />
         <link rel="canonical" href="https://hobsonschoice.ai/pricing" />
         <meta property="og:title" content="Pricing — Hobson AI property software" />
-        <meta property="og:description" content="No plans. No credits. Nothing counted. Pay for seats and document learning — that's it." />
+        <meta property="og:description" content="No plans. No credits. Nothing counted. You pay for my seats and my reading — that is all." />
         <meta property="og:url" content="https://hobsonschoice.ai/pricing" />
         <meta property="og:type" content="website" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Pricing — Hobson AI property software" />
-        <meta name="twitter:description" content="No plans. No credits. Nothing counted. Pay for seats and document learning — that's it." />
+        <meta name="twitter:description" content="No plans. No credits. Nothing counted. You pay for my seats and my reading — that is all." />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         <link
@@ -1027,7 +1027,7 @@ export default function Pricing() {
               className="font-serif text-4xl sm:text-5xl md:text-6xl font-normal tracking-tight"
               style={{ color: TOKENS.ink, lineHeight: 1.15 }}
             >
-              Choose Hobson <span style={{ color: TOKENS.brass }}>on its own</span>, or Hobson with <span style={{ color: TOKENS.brass }}>helping hands</span>.
+              Have me <span style={{ color: TOKENS.brass }}>on my own</span>, or with <span style={{ color: TOKENS.brass }}>helping hands</span>.
             </h1>
             <p
               style={{
@@ -1039,12 +1039,12 @@ export default function Pricing() {
                 maxWidth: "66ch",
               }}
             >
-              Hobson supports you either way — our team can do the setup for you, or Hobson guides you through doing it yourself. Move the sliders to see what each costs.
+              You may have me either way — my team can do the setting-up for you, or I can guide you through it yourself. Move the sliders to see what each would cost.
             </p>
             <AnswerFirst>
               Hobson AI is priced on capacity, not features: every plan includes the same
               abilities, and the tiers differ only in how many users, documents and seats
-              they cover. You pay once for Hobson to read your documents, then add team
+              they cover. You pay once for me to read your documents, then add team
               seats as you need them. Use the calculators below to see what your portfolio
               would cost.
             </AnswerFirst>
@@ -1137,7 +1137,7 @@ export default function Pricing() {
               </div>
               <H2>Questions, answered plainly.</H2>
               <p style={{ fontFamily: FONTS.serif, fontStyle: "italic", fontSize: 17, color: TOKENS.inkSoft, marginTop: 14, maxWidth: 560, marginLeft: "auto", marginRight: "auto" }}>
-                The things I'm most often asked — answered in my own words.
+                The things I am asked most often — answered in my own words.
               </p>
             </div>
             <div>
