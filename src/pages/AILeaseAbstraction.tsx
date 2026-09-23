@@ -1,5 +1,7 @@
 import { PropertyTopicLinks } from "@/components/PropertyTopicLinks";
 import { SolutionFAQ } from "@/components/SolutionFAQ";
+import { LastUpdated } from "@/components/LastUpdated";
+import { getUpdatedDate } from "@/utils/content-dates";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { getSolutionPageStructuredData } from "@/utils/seo-data";
@@ -49,6 +51,8 @@ const DIFFERENCES = [
   "No repeat abstraction when a new question arises",
 ];
 
+const UPDATED = getUpdatedDate("/ai-lease-abstraction");
+
 const FAQS = [
   {
     question: "What is AI lease abstraction?",
@@ -95,7 +99,7 @@ const AILeaseAbstraction = () => {
         <meta property="og:url" content="https://hobsonschoice.ai/ai-lease-abstraction" />
         <meta property="og:type" content="website" />
               <script type="application/ld+json">
-          {JSON.stringify(getSolutionPageStructuredData({ name: "AI Lease Abstraction", path: "/ai-lease-abstraction", description: "AI lease abstraction that reads your leases, extracts the terms that matter and shows the exact extract behind every fact.", faqs: FAQS }))}
+          {JSON.stringify(getSolutionPageStructuredData({ name: "AI Lease Abstraction", path: "/ai-lease-abstraction", description: "AI lease abstraction that reads your leases, extracts the terms that matter and shows the exact extract behind every fact.", faqs: FAQS, dateModified: UPDATED }))}
         </script>
         </Helmet>
 
@@ -389,6 +393,9 @@ const AILeaseAbstraction = () => {
           </div>
         </section>
         <SolutionFAQ items={FAQS} />
+        <div className="mx-auto max-w-4xl px-6 pb-12">
+          <LastUpdated date={UPDATED} />
+        </div>
         <PropertyTopicLinks />
       </main>
     </div>

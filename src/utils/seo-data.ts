@@ -406,13 +406,15 @@ export const structuredData = {
 // Defined-term helper for the glossary — marks each entry as a defined term
 // so search and AI answer engines can quote definitions directly.
 export const getDefinedTermSetStructuredData = (
-  terms: Array<{ term: string; fullName?: string; definition: string }>
+  terms: Array<{ term: string; fullName?: string; definition: string }>,
+  dateModified?: string
 ) => ({
   "@context": "https://schema.org",
   "@type": "DefinedTermSet",
   "name": "Hobson Glossary",
   "url": "https://hobsonschoice.ai/learn/glossary",
   "description": "Plain-English definitions of the property, document and Hobson terms used across Hobson.",
+  ...(dateModified ? { "dateModified": dateModified } : {}),
   "hasDefinedTerm": terms.map((t) => ({
     "@type": "DefinedTerm",
     "name": t.term,
@@ -441,6 +443,7 @@ export const getSolutionPageStructuredData = (opts: {
   path: string;
   description: string;
   faqs?: Array<{ question: string; answer: string }>;
+  dateModified?: string;
 }) => ({
   "@context": "https://schema.org",
   "@graph": [
@@ -470,6 +473,16 @@ export const getSolutionPageStructuredData = (opts: {
         { "@type": "ListItem", "position": 2, "name": opts.name, "item": `https://hobsonschoice.ai${opts.path}` }
       ]
     },
+    ...(opts.dateModified
+      ? [{
+          "@type": "WebPage",
+          "url": `https://hobsonschoice.ai${opts.path}`,
+          "name": opts.name,
+          "description": opts.description,
+          "dateModified": opts.dateModified,
+          "isPartOf": { "@type": "WebSite", "url": "https://hobsonschoice.ai", "name": "Hobson AI" }
+        }]
+      : []),
     ...(opts.faqs?.length
       ? [{
           "@type": "FAQPage",
