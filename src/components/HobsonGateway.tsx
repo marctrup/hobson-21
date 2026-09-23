@@ -60,7 +60,7 @@ export const HobsonGatewayMobile = ({ onClick }: { onClick?: () => void }) => (
         className="relative mt-1 pb-1 text-lg text-ink italic font-normal leading-none tracking-tight"
         style={serifStack}
       >
-        Colleagues this way
+        This way, please
         <span
           aria-hidden="true"
           className="absolute bottom-0 left-0 h-px w-6 bg-brass/60 transition-all duration-500 group-hover:w-full group-hover:bg-brass"
