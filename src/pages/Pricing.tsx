@@ -446,9 +446,9 @@ const Calculators: React.FC = () => {
                   margin: 0,
                 }}
               >
-                Hobson
+                Me
                 <span style={{ color: TOKENS.brass, fontSize: "0.7em", marginLeft: 10 }}>
-                  on its own
+                  on my own
                 </span>
               </h2>
             </div>
@@ -477,7 +477,7 @@ const Calculators: React.FC = () => {
                   margin: 0,
                 }}
               >
-                Hobson
+                Me
                 <span style={{ color: T.gold, fontSize: "0.7em", marginLeft: 10 }}>+ helping hands</span>
                 <div
                   style={{
@@ -490,7 +490,7 @@ const Calculators: React.FC = () => {
                     fontStyle: "normal",
                   }}
                 >
-                  Onboarding team + relationship manager
+                  My onboarding team + relationship manager
                 </div>
               </h2>
             </div>
@@ -527,7 +527,7 @@ const Calculators: React.FC = () => {
               <div className="hp-head-mobile" style={{ display: "none", marginBottom: 16 }}>
                 <div style={{ fontFamily: FONTS.mono, fontSize: 11, letterSpacing: "0.22em", textTransform: "uppercase", color: T.faint, marginBottom: 6 }}>Option one</div>
                 <h2 style={{ fontFamily: FONTS.serif, fontWeight: 400, fontSize: 26, lineHeight: 1.15, letterSpacing: "-0.01em", color: T.ink, margin: 0 }}>
-                  Hobson<span style={{ color: TOKENS.brass, fontSize: "0.7em", marginLeft: 10 }}>on its own</span>
+                  Me<span style={{ color: TOKENS.brass, fontSize: "0.7em", marginLeft: 10 }}>on my own</span>
                 </h2>
               </div>
               <p style={{ fontFamily: FONTS.sans, fontSize: 13.5, lineHeight: 1.55, color: T.muted, margin: "0 0 18px" }} className="hp-card-blurb">
@@ -690,9 +690,9 @@ const Calculators: React.FC = () => {
               <div className="hp-head-mobile" style={{ display: "none", marginBottom: 16 }}>
                 <div style={{ fontFamily: FONTS.mono, fontSize: 11, letterSpacing: "0.22em", textTransform: "uppercase", color: T.gold, marginBottom: 6 }}>Option two</div>
                 <h2 style={{ fontFamily: FONTS.serif, fontWeight: 400, fontSize: 26, lineHeight: 1.15, letterSpacing: "-0.01em", color: T.ink, margin: 0 }}>
-                  Hobson<span style={{ color: T.gold, fontSize: "0.7em", marginLeft: 10 }}>+ helping hands</span>
+                  Me<span style={{ color: T.gold, fontSize: "0.7em", marginLeft: 10 }}>+ helping hands</span>
                 </h2>
-                <div style={{ fontFamily: FONTS.sans, fontSize: 12.5, color: T.muted, marginTop: 4 }}>Onboarding team + relationship manager</div>
+                <div style={{ fontFamily: FONTS.sans, fontSize: 12.5, color: T.muted, marginTop: 4 }}>My onboarding team + relationship manager</div>
               </div>
               <p style={{ fontFamily: FONTS.sans, fontSize: 13.5, lineHeight: 1.55, color: T.muted, margin: 0 }} className="hp-card-blurb">
                 We prepare your documents before Professor reads them, and one of us stays with you afterwards.
@@ -1027,7 +1027,7 @@ export default function Pricing() {
               className="font-serif text-4xl sm:text-5xl md:text-6xl font-normal tracking-tight"
               style={{ color: TOKENS.ink, lineHeight: 1.15 }}
             >
-              Choose Hobson <span style={{ color: TOKENS.brass }}>on its own</span>, or Hobson with <span style={{ color: TOKENS.brass }}>helping hands</span>.
+              Have me <span style={{ color: TOKENS.brass }}>on my own</span>, or with <span style={{ color: TOKENS.brass }}>helping hands</span>.
             </h1>
             <p
               style={{
@@ -1039,12 +1039,12 @@ export default function Pricing() {
                 maxWidth: "66ch",
               }}
             >
-              Hobson supports you either way — our team can do the setup for you, or Hobson guides you through doing it yourself. Move the sliders to see what each costs.
+              You may have me either way — my team can do the setting-up for you, or I can guide you through it yourself. Move the sliders to see what each would cost.
             </p>
             <AnswerFirst>
               Hobson AI is priced on capacity, not features: every plan includes the same
               abilities, and the tiers differ only in how many users, documents and seats
-              they cover. You pay once for Hobson to read your documents, then add team
+              they cover. You pay once for me to read your documents, then add team
               seats as you need them. Use the calculators below to see what your portfolio
               would cost.
             </AnswerFirst>
