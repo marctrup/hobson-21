@@ -59,33 +59,57 @@ export const HomepageHeader = () => {
             </Link>
           </div>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-6" role="navigation" aria-label="Main navigation">
-            {content.navigation.links.map((link) => (
+          {/* Desktop Navigation — each way Hobson directs you, in his own words */}
+          <nav className="hidden md:flex items-center gap-7" role="navigation" aria-label="Main navigation">
+            {content.navigation.links.map((link: any) => (
               <Link
                 key={link.to}
                 to={link.to}
-                className="text-base text-muted-foreground hover:text-foreground transition-colors"
+                className="group flex flex-col items-start py-1 outline-none rounded-sm focus-visible:ring-2 focus-visible:ring-brass/60"
                 title={link.title}
               >
-                {link.label}
+                <span className="relative text-[15px] text-ink leading-none">
+                  {link.label}
+                  <span
+                    aria-hidden="true"
+                    className="absolute -bottom-1.5 left-0 h-px w-0 bg-brass/60 transition-all duration-500 group-hover:w-full group-hover:bg-brass"
+                  />
+                </span>
+                <span
+                  className="mt-2 text-[10px] text-ink-muted italic leading-none opacity-45 transition-all duration-500 group-hover:opacity-100 group-hover:text-brass-text"
+                  style={serifStack}
+                >
+                  {link.voice}
+                </span>
               </Link>
             ))}
             {(content.navigation as any).secondary?.map((link: any) => (
               <Link
                 key={link.to}
                 to={link.to}
-                className="text-base text-muted-foreground hover:text-foreground transition-colors"
+                className="group flex flex-col items-start py-1 outline-none rounded-sm focus-visible:ring-2 focus-visible:ring-brass/60"
                 title={link.title}
               >
-                {link.label}
+                <span className="relative text-[15px] text-ink leading-none">
+                  {link.label}
+                  <span
+                    aria-hidden="true"
+                    className="absolute -bottom-1.5 left-0 h-px w-0 bg-brass/60 transition-all duration-500 group-hover:w-full group-hover:bg-brass"
+                  />
+                </span>
+                <span
+                  className="mt-2 text-[10px] text-ink-muted italic leading-none opacity-45 transition-all duration-500 group-hover:opacity-100 group-hover:text-brass-text"
+                  style={serifStack}
+                >
+                  {link.voice}
+                </span>
               </Link>
             ))}
             
             {/* Gateway to the app */}
             <HobsonGateway className="ml-2" />
 
-
+            
             
           </nav>
 
