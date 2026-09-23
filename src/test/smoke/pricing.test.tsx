@@ -28,7 +28,12 @@ describe("Pricing page", () => {
       expect(screen.getAllByLabelText(/Documents/i).length).toBeGreaterThan(0);
       expect(screen.getAllByLabelText(/People/i).length).toBeGreaterThan(0);
     });
-    const talk = screen.getByRole("link", { name: /Talk to me/i });
+    // The header's Contact link shares the "Talk to me" name — the enterprise
+    // CTA is the one that opens Outlook, so match by its mailto href.
+    const talk = screen
+      .getAllByRole("link", { name: /Talk to me/i })
+      .find((el) => el.getAttribute("href")?.startsWith("mailto:"));
+    expect(talk).toBeDefined();
     expect(talk).toHaveAttribute("href", "mailto:info@hobsonschoice.ai");
   });
 });
