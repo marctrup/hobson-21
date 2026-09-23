@@ -79,8 +79,8 @@ export const TheTeamSection = () => {
         <div className="mt-14 max-w-5xl mx-auto">
           <div className="flex items-end justify-between gap-4 mb-6">
             <div>
-              <h3 className="text-2xl font-bold text-foreground">Hobson's Permanent Memory</h3>
-              <p className="text-charcoal text-sm mt-1">These four agents quietly maintain everything I know about your portfolio.</p>
+              <h3 className="text-2xl font-bold text-foreground">My Permanent Memory</h3>
+              <p className="text-charcoal text-sm mt-1">Four of my colleagues quietly maintain everything I know about your portfolio.</p>
             </div>
             <span className="hidden sm:inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider rounded-full px-3 py-1.5" style={{ color: "#8F5A14", background: "#FFFFFF", border: "1px solid #E6D2AE" }}>
               Always on
@@ -95,8 +95,8 @@ export const TheTeamSection = () => {
         <div className="mt-20 max-w-5xl mx-auto">
           <div className="flex items-end justify-between gap-4 mb-6">
             <div>
-              <h3 className="text-2xl font-bold text-foreground">Specialist Services</h3>
-              <p className="text-charcoal text-sm mt-1">When a matter calls for specialist expertise, these are the four I turn to.</p>
+              <h3 className="text-2xl font-bold text-foreground">My Specialist Services</h3>
+              <p className="text-charcoal text-sm mt-1">When a matter calls for specialist expertise, these are the four I call upon.</p>
             </div>
             <span className="hidden sm:inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider rounded-full px-3 py-1.5" style={{ color: "#8F5A14", background: "#FFFFFF", border: "1px solid #E6D2AE" }}>
               On demand
