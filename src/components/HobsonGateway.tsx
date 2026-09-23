@@ -2,7 +2,7 @@ import React from "react";
 
 const APP_URL = "https://app.hobsonschoice.ai";
 
-const serifStack = { fontFamily: 'Georgia, "Times New Roman", ui-serif, serif' };
+export const serifStack = { fontFamily: 'Georgia, "Times New Roman", ui-serif, serif' };
 
 /**
  * HobsonGateway — the invitation that replaces a "Login" button.
