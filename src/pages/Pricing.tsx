@@ -1039,7 +1039,7 @@ export default function Pricing() {
                 maxWidth: "66ch",
               }}
             >
-              You may have me either way — my team can do the setting-up for you, or I can guide you through it yourself. Move the sliders to see what each would cost.
+              You may have me either way — my team can do the setting-up for you, or I can guide you through it. Move the sliders to see what each would cost.
             </p>
             <AnswerFirst>
               Hobson AI is priced on capacity, not features: every plan includes the same

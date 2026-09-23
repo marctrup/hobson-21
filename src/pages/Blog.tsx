@@ -165,7 +165,7 @@ const Blog = () => {
       <div className="min-h-screen" style={{ background: '#FCFAF7' }}>
         <Helmet>
           <title>Blog | Hobson AI</title>
-          <meta name="description" content="Latest insights, updates, and expert tips for property management professionals using AI-powered document intelligence and automation tools." />
+          <meta name="description" content="Notes from my desk — what I have learned from reading portfolios, leases and the trade at large, for operators, occupiers and owners of real estate." />
           <meta name="keywords" content="property management blog, real estate AI insights, property technology news, AI automation tips, property management trends" />
           
           {/* OpenAI/ChatGPT optimization */}
@@ -173,7 +173,7 @@ const Blog = () => {
           
           {/* Open Graph */}
           <meta property="og:title" content="Property Management AI Blog | Hobson AI" />
-          <meta property="og:description" content="Latest insights, updates, and expert tips for property management professionals using AI-powered document intelligence." />
+          <meta property="og:description" content="Notes from my desk — what I have learned from reading portfolios, leases and the trade at large." />
           <meta property="og:type" content="website" />
           <meta property="og:url" content="https://hobsonschoice.ai/blog" />
           <meta property="og:image" content="https://hobsonschoice.ai/hobson-owl-social.png" />
@@ -183,7 +183,7 @@ const Blog = () => {
           <meta name="twitter:card" content="summary_large_image" />
           <meta name="twitter:site" content="@HobsonAI" />
           <meta name="twitter:title" content="Property Management AI Blog | Hobson AI" />
-          <meta name="twitter:description" content="Latest insights and tips for property management professionals using AI." />
+          <meta name="twitter:description" content="Notes from my desk — what I have learned from reading portfolios, leases and the trade at large." />
           <meta name="twitter:image" content="https://hobsonschoice.ai/hobson-owl-social.png" />
           
           <link rel="canonical" href="https://hobsonschoice.ai/blog" />

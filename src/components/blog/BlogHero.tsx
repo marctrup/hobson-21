@@ -12,14 +12,14 @@ export const BlogHero = () => {
           className="text-[11px] font-semibold uppercase tracking-[0.24em] mb-4"
           style={{ color: '#B4914F' }}
         >
-          Blog
+          My journal
         </p>
         <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl font-normal tracking-tight text-foreground leading-tight">
-          Industry <span style={{ color: '#B4914F' }}>Insights</span>
+          Notes from <span style={{ color: '#B4914F' }}>my desk</span>
         </h1>
         <p className="mt-5 text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-          Expert perspectives on AI-powered property management, industry trends,
-          and best practices for property operators, occupiers and owners.
+          What I have learned from reading portfolios, leases and the trade at
+          large — set down for operators, occupiers and owners.
         </p>
         <div className="mx-auto mt-10 h-px w-24" style={{ backgroundColor: '#F7EDDC' }} />
       </div>
