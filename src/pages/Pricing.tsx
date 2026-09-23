@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { structuredData } from "@/utils/seo-data";
 import { GlobalHeader } from "@/components/GlobalHeader";
+import { AnswerFirst } from "@/components/AnswerFirst";
 import { InterestModal } from "@/components/InterestModal";
 
 
@@ -1040,6 +1041,13 @@ export default function Pricing() {
             >
               Hobson supports you either way — our team can do the setup for you, or Hobson guides you through doing it yourself. Move the sliders to see what each costs.
             </p>
+            <AnswerFirst>
+              Hobson AI is priced on capacity, not features: every plan includes the same
+              abilities, and the tiers differ only in how many users, documents and seats
+              they cover. You pay once for Hobson to read your documents, then add team
+              seats as you need them. Use the calculators below to see what your portfolio
+              would cost.
+            </AnswerFirst>
 
           </div>
         </section>

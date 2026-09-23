@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { LastUpdated } from "@/components/LastUpdated";
+import { AnswerFirst } from "@/components/AnswerFirst";
 import { getUpdatedDate } from "@/utils/content-dates";
 import { Search } from "lucide-react";
 import { GlobalHeader } from "@/components/GlobalHeader";
@@ -350,6 +351,13 @@ const LearnGlossary = () => {
             >
               Plain-English definitions of the terms used across Hobson.
             </p>
+            <AnswerFirst>
+              This glossary defines the property and lease terms used across Hobson AI, in
+              plain English — from rent review, break option and deed of variation to
+              Hobson's own hierarchy of Portfolio, Unit Group and Unit. Each entry is a
+              short, standalone definition written for UK landlords, managing agents,
+              surveyors and investors.
+            </AnswerFirst>
             <div
               className="mx-auto mt-10 h-px w-24"
               style={{ backgroundColor: RULE }}

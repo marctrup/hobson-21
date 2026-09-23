@@ -1,6 +1,7 @@
 import { PropertyTopicLinks } from "@/components/PropertyTopicLinks";
 import { SolutionFAQ } from "@/components/SolutionFAQ";
 import { LastUpdated } from "@/components/LastUpdated";
+import { AnswerFirst } from "@/components/AnswerFirst";
 import { getUpdatedDate } from "@/utils/content-dates";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
@@ -134,6 +135,13 @@ const LeaseManagementSoftware = () => {
               licences and schedules — then answers questions with the exact extract that
               supports each fact.
             </p>
+            <AnswerFirst>
+              Lease management software keeps the commercial terms of your leases — rent,
+              term, review dates, break options and repairing obligations — in one place so
+              a team can act on them without re-reading the documents. Hobson AI is lease
+              management software for UK property teams that reads the leases themselves,
+              extracts the terms, and shows the exact clause and page behind every answer.
+            </AnswerFirst>
             <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
               <Button
                 asChild

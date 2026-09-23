@@ -1,6 +1,7 @@
 import { PropertyTopicLinks } from "@/components/PropertyTopicLinks";
 import { SolutionFAQ } from "@/components/SolutionFAQ";
 import { LastUpdated } from "@/components/LastUpdated";
+import { AnswerFirst } from "@/components/AnswerFirst";
 import { getUpdatedDate } from "@/utils/content-dates";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
@@ -134,6 +135,13 @@ const PropertyManagementSoftware = () => {
               leases, deeds, licences and schedules behind them — then answers questions
               with the exact extract that supports each fact.
             </p>
+            <AnswerFirst>
+              Property management software helps a team run buildings and tenancies —
+              documents, units, compliance dates and obligations — from one place. Hobson AI
+              is property management software for UK landlords and managing agents that
+              reads your leases, licences and certificates, answers questions in plain
+              English, and cites the exact clause and page behind every answer.
+            </AnswerFirst>
             <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
               <Button
                 asChild

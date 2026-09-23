@@ -1,6 +1,7 @@
 import ReactMarkdown from "react-markdown";
 import { Helmet } from "react-helmet-async";
 import { LastUpdated } from "@/components/LastUpdated";
+import { AnswerFirst } from "@/components/AnswerFirst";
 import { getUpdatedDate } from "@/utils/content-dates";
 import { GlobalHeader } from "@/components/GlobalHeader";
 import { Button } from "@/components/ui/button";
@@ -343,6 +344,13 @@ const LearnFaq = () => {
               How Hobson thinks about your property documents — and why you
               can trust the answers it gives.
             </p>
+            <AnswerFirst>
+              Hobson AI is an AI co-worker for UK property teams. It reads your leases,
+              licences, certificates and management agreements, answers questions about them
+              in plain English, and links every answer to the exact clause and page it came
+              from. It works only from your own documents, so nothing is invented. These
+              answers cover documents, evidence, security and pricing.
+            </AnswerFirst>
             <div className="mx-auto mt-8 h-px w-24" style={{ backgroundColor: "#F7EDDC" }} />
           </div>
         </section>
