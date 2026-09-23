@@ -173,7 +173,7 @@ export const Homepage = () => {
                   <p className="text-muted-foreground leading-relaxed text-lg sm:text-xl">{content.hero.subtitle}</p>
                   <p className="text-xl sm:text-2xl lg:text-3xl font-semibold leading-snug tracking-tight pt-4 sm:pt-6">
                     <span className="text-muted-foreground">Claude reads your documents.</span>{" "}
-                    <span style={{ color: '#B4914F' }}>Hobson understands your business.</span>
+                    <span style={{ color: '#B4914F' }}>I understand your business.</span>
 
                   </p>
                   
