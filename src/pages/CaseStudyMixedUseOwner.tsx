@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
+import { getCaseStudyStructuredData } from "@/utils/seo-data";
 import ReactMarkdown from "react-markdown";
 import { ArrowLeft } from "lucide-react";
 import { GlobalHeader } from "@/components/GlobalHeader";
@@ -64,7 +65,10 @@ const CaseStudyMixedUseOwner = () => {
           content="https://hobsonschoice.ai/learn/case-studies/mixed-use-owner"
         />
         <meta property="og:type" content="article" />
-      </Helmet>
+              <script type="application/ld+json">
+          {JSON.stringify(getCaseStudyStructuredData({ headline: "My tenant was disputing the service charge — a Hobson case study", path: "/learn/case-studies/mixed-use-owner", description: "A hands-on owner of mixed-use properties, mid-dispute over a service charge, needed the precise figure and the clause to back it up.", datePublished: "2025-06-01", dateModified: "2026-09-23" }))}
+        </script>
+        </Helmet>
       <GlobalHeader />
 
       <main className="flex-1">

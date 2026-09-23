@@ -1,6 +1,7 @@
 import { PropertyTopicLinks } from "@/components/PropertyTopicLinks";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
+import { getSolutionPageStructuredData } from "@/utils/seo-data";
 import { ArrowRight, CheckCircle, Building2, Search, Shield, Users } from "lucide-react";
 import { GlobalHeader } from "@/components/GlobalHeader";
 import { Button } from "@/components/ui/button";
@@ -64,7 +65,10 @@ const PropertyManagementSoftware = () => {
         />
         <meta property="og:url" content="https://hobsonschoice.ai/property-management-software" />
         <meta property="og:type" content="website" />
-      </Helmet>
+              <script type="application/ld+json">
+          {JSON.stringify(getSolutionPageStructuredData({ name: "Property Management Software", path: "/property-management-software", description: "AI property management software that reads your documents, structures what it finds and answers your team with evidence from the source." }))}
+        </script>
+        </Helmet>
 
       <GlobalHeader />
 

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Helmet } from "react-helmet-async";
+import { structuredData } from "@/utils/seo-data";
 import { GlobalHeader } from "@/components/GlobalHeader";
 import { InterestModal } from "@/components/InterestModal";
 
@@ -964,7 +965,13 @@ export default function Pricing() {
           rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..600&family=Hanken+Grotesk:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap"
         />
-      </Helmet>
+              <script type="application/ld+json">
+          {JSON.stringify(structuredData.softwareApplication)}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify(structuredData.organization)}
+        </script>
+        </Helmet>
 
       {/* Page-scoped styles */}
       <style>{`

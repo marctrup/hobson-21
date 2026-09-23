@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Helmet } from "react-helmet-async";
+import { founderStructuredData } from "@/utils/seo-data";
 import { GlobalHeader } from "@/components/GlobalHeader";
 import { YouTubeVideoSection } from "@/components/homepage/YouTubeVideoSection";
 import founderPhoto from "@/assets/founder-photo.jpg.asset.json";
@@ -16,7 +17,10 @@ const MeetTheFounder = () => {
           content="Marc Trup on why he built Hobson — an AI co-worker designed specifically for property work."
         />
         <link rel="canonical" href="https://hobsonschoice.ai/founder" />
-      </Helmet>
+              <script type="application/ld+json">
+          {JSON.stringify(founderStructuredData)}
+        </script>
+        </Helmet>
 
       <div className="min-h-screen" style={{ background: '#FCFAF7' }}>
         <GlobalHeader />

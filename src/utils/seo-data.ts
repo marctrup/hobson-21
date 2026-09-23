@@ -433,3 +433,93 @@ export const getBreadcrumbStructuredData = (items: Array<{ name: string; url: st
     "item": item.url
   }))
 });
+
+// Solution landing pages — product identity plus breadcrumb trail so search
+// and AI answer engines can attribute the page to Hobson AI.
+export const getSolutionPageStructuredData = (opts: {
+  name: string;
+  path: string;
+  description: string;
+}) => ({
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "SoftwareApplication",
+      "name": `Hobson AI — ${opts.name}`,
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Web, iOS, Android",
+      "url": `https://hobsonschoice.ai${opts.path}`,
+      "description": opts.description,
+      "offers": {
+        "@type": "AggregateOffer",
+        "priceCurrency": "GBP",
+        "lowPrice": "19.50",
+        "highPrice": "750.00"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Hobson AI Limited",
+        "url": "https://hobsonschoice.ai"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://hobsonschoice.ai" },
+        { "@type": "ListItem", "position": 2, "name": opts.name, "item": `https://hobsonschoice.ai${opts.path}` }
+      ]
+    }
+  ]
+});
+
+// Case studies — Article markup with publisher and breadcrumbs.
+export const getCaseStudyStructuredData = (opts: {
+  headline: string;
+  path: string;
+  description: string;
+  datePublished: string;
+  dateModified?: string;
+}) => ({
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "headline": opts.headline,
+      "description": opts.description,
+      "url": `https://hobsonschoice.ai${opts.path}`,
+      "mainEntityOfPage": `https://hobsonschoice.ai${opts.path}`,
+      "datePublished": opts.datePublished,
+      "dateModified": opts.dateModified ?? opts.datePublished,
+      "author": { "@type": "Organization", "name": "Hobson AI Limited", "url": "https://hobsonschoice.ai" },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Hobson AI Limited",
+        "url": "https://hobsonschoice.ai",
+        "logo": { "@type": "ImageObject", "url": "https://hobsonschoice.ai/logo.png" }
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://hobsonschoice.ai" },
+        { "@type": "ListItem", "position": 2, "name": "Case studies", "item": "https://hobsonschoice.ai/learn/case-studies" },
+        { "@type": "ListItem", "position": 3, "name": opts.headline, "item": `https://hobsonschoice.ai${opts.path}` }
+      ]
+    }
+  ]
+});
+
+// Founder page — Person markup linked to the organisation.
+export const founderStructuredData = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Marc Trup",
+  "url": "https://hobsonschoice.ai/founder",
+  "jobTitle": "Co-Founder",
+  "description": "Marc Trup is a co-founder of Hobson AI, an AI co-worker built specifically for property work. He previously built and ran a property management business in London.",
+  "worksFor": {
+    "@type": "Organization",
+    "name": "Hobson AI Limited",
+    "url": "https://hobsonschoice.ai"
+  }
+};

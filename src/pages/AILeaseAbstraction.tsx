@@ -1,6 +1,7 @@
 import { PropertyTopicLinks } from "@/components/PropertyTopicLinks";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
+import { getSolutionPageStructuredData } from "@/utils/seo-data";
 import { ArrowRight, CheckCircle, FileSearch, Layers, Quote, ShieldCheck } from "lucide-react";
 import { GlobalHeader } from "@/components/GlobalHeader";
 import { Button } from "@/components/ui/button";
@@ -64,7 +65,10 @@ const AILeaseAbstraction = () => {
         />
         <meta property="og:url" content="https://hobsonschoice.ai/ai-lease-abstraction" />
         <meta property="og:type" content="website" />
-      </Helmet>
+              <script type="application/ld+json">
+          {JSON.stringify(getSolutionPageStructuredData({ name: "AI Lease Abstraction", path: "/ai-lease-abstraction", description: "AI lease abstraction that reads your leases, extracts the terms that matter and shows the exact extract behind every fact." }))}
+        </script>
+        </Helmet>
 
       <GlobalHeader />
 
