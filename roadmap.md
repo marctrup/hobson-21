@@ -1,4 +1,4 @@
 # Roadmap
 
 - [x] Rebuild login-gateway options, speaking only as Hobson (specialists incl. Keeper are back-office only, never user-facing)
-- [x] On pick: implemented "Quiet invitation" gateway (HobsonGateway.tsx) in HomepageHeader + Homepage, desktop and mobile; crawler copies refreshed via seo:update; tests 26/26
+- [x] Gateway revision: first-person voice ("I am expecting you") + framed button treatment with hover fill and arrow; verified desktop + mobile; seo:update and tests 26/26 pass
