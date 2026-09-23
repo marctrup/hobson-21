@@ -4,22 +4,22 @@ const audiences = [
   {
     icon: Building2,
     label: "Asset managers",
-    description: "Managing portfolios, lease events and compliance across residential and commercial property.",
+    description: "I keep portfolios, lease events and compliance in order across residential and commercial property.",
   },
   {
     icon: ShoppingBag,
     label: "Retail operators",
-    description: "Managing store leases, rent reviews, break clauses and EPC obligations across a multi-site estate.",
+    description: "I watch over store leases, rent reviews, break clauses and EPC obligations across a multi-site estate.",
   },
   {
     icon: UtensilsCrossed,
     label: "Hospitality businesses",
-    description: "Managing site leases, compliance certificates and operational obligations across restaurants, pubs and hotels.",
+    description: "I keep site leases, compliance certificates and operational obligations in hand across restaurants, pubs and hotels.",
   },
   {
     icon: Briefcase,
     label: "Corporate occupiers",
-    description: "Managing office, industrial and mixed-use leases where property is a material operating cost but not the core business.",
+    description: "I manage office, industrial and mixed-use leases where property is a material operating cost, but not the core business.",
   },
 ];
 
@@ -40,10 +40,10 @@ export const AudienceStrip = () => {
               id="audience-heading"
               className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground tracking-tight mb-3"
             >
-              Who can Benefit
+              Who I work for
             </h2>
             <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto">
-              Hobson is purpose-built for every organisation where property documents matter.
+              I am built for every organisation where property documents matter.
             </p>
           </div>
 

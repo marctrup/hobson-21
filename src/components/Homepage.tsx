@@ -206,10 +206,10 @@ export const Homepage = () => {
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
                   <div className="space-y-2">
                     <h2 id="founder-cta-heading" className="text-xl sm:text-2xl font-bold" style={{ color: "#2D2D2D" }}>
-                      Watch a co-founder's story
+                      The people behind me
                     </h2>
                     <p className="text-base leading-relaxed max-w-xl" style={{ color: "#56514A" }}>
-                      Hobson was created by people who understand the day-to-day reality of property work.
+                      I was created by people who understand the day-to-day reality of property work — because they have lived it.
                     </p>
                   </div>
                   <Link
@@ -217,7 +217,7 @@ export const Homepage = () => {
                     className="inline-flex items-center justify-center gap-2 rounded-md px-5 py-3 text-sm font-medium transition-opacity hover:opacity-90 whitespace-nowrap shrink-0"
                     style={{ background: "#2D2D2D", color: "#FCFAF7" }}
                   >
-                    Watch a co-founder's story
+                    Hear how I came to be
                     <ArrowRight className="h-4 w-4" />
                   </Link>
                 </div>
@@ -234,7 +234,7 @@ export const Homepage = () => {
               <div className="max-w-6xl mx-auto">
                 <div className="max-w-3xl mx-auto text-center mb-14 md:mb-20">
                   <span className="inline-block text-xs font-semibold tracking-[0.2em] uppercase mb-4" style={{ color: '#B4914F' }}>
-                    See Hobson in action
+                    See me in action
                   </span>
                   <h2
                     id="screenshot-heading"
@@ -242,11 +242,11 @@ export const Homepage = () => {
                   >
                     Ask once.{" "}
                     <span style={{ color: '#B4914F' }}>
-                      Get the full picture.
+                      I bring the full picture.
                     </span>
                   </h2>
                   <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
-                    Every document you share becomes part of my understanding of your portfolio. When you ask me a question, I bring together the right knowledge and always show you the evidence behind my answer.
+                    Every document you share becomes part of my understanding of your portfolio. Ask me a question and I shall bring together the right knowledge — always showing you the evidence behind my answer.
                   </p>
                 </div>
 
@@ -325,7 +325,7 @@ export const Homepage = () => {
                 <div className="md:col-span-1">
                   <span className="text-3xl font-semibold text-foreground tracking-tight block mb-4">Hobson</span>
                   <p className="text-sm text-muted-foreground max-w-md">
-                    AI assistance to operators, occupiers and owners of real estate.
+                    I provide AI assistance to operators, occupiers and owners of real estate.
                   </p>
                   <div className="flex items-center gap-4 mt-6">
                     <a
