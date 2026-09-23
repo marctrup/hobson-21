@@ -94,7 +94,7 @@ const LeaseManagementSoftware = () => {
         <meta property="og:url" content="https://hobsonschoice.ai/lease-management-software" />
         <meta property="og:type" content="website" />
               <script type="application/ld+json">
-          {JSON.stringify(getSolutionPageStructuredData({ name: "Lease Management Software", path: "/lease-management-software", description: "Lease management software that reads your documents, extracts the facts that matter and answers your team with evidence from the source." }))}
+          {JSON.stringify(getSolutionPageStructuredData({ name: "Lease Management Software", path: "/lease-management-software", description: "Lease management software that reads your documents, extracts the facts that matter and answers your team with evidence from the source.", faqs: FAQS }))}
         </script>
         </Helmet>
 
