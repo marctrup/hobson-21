@@ -16,7 +16,7 @@ export const HobsonGateway = ({ className = "" }: { className?: string }) => (
     className={`group inline-flex items-center gap-3 rounded-sm border border-ink/25 bg-paper px-4 py-2 leading-tight shadow-[0_1px_0_rgba(45,45,45,0.06)] outline-none transition-all duration-500 hover:border-brass hover:bg-bone-wash hover:shadow-[0_2px_8px_rgba(45,45,45,0.10)] focus-visible:ring-2 focus-visible:ring-brass/60 ${className}`}
   >
     <span className="flex flex-col items-start">
-      <span className="text-[9px] uppercase tracking-[0.3em] text-brass-text font-montserrat leading-none opacity-80 transition-opacity duration-500 group-hover:opacity-100">
+      <span className="text-[9px] uppercase tracking-[0.3em] text-brass-text font-montserrat font-bold leading-none opacity-80 transition-opacity duration-500 group-hover:opacity-100">
         Enter
       </span>
       <span
@@ -53,7 +53,7 @@ export const HobsonGatewayMobile = ({ onClick }: { onClick?: () => void }) => (
     className="group inline-flex w-full max-w-xs items-center justify-between gap-3 rounded-sm border border-ink/25 bg-paper px-4 py-3 leading-tight shadow-[0_1px_0_rgba(45,45,45,0.06)] outline-none transition-all duration-500 hover:border-brass hover:bg-bone-wash hover:shadow-[0_2px_8px_rgba(45,45,45,0.10)] focus-visible:ring-2 focus-visible:ring-brass/60"
   >
     <span className="flex flex-col items-start">
-      <span className="text-[9px] uppercase tracking-[0.3em] text-brass-text font-montserrat leading-none opacity-80 transition-opacity duration-500 group-hover:opacity-100">
+      <span className="text-[9px] uppercase tracking-[0.3em] text-brass-text font-montserrat font-bold leading-none opacity-80 transition-opacity duration-500 group-hover:opacity-100">
         Enter
       </span>
       <span
