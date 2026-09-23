@@ -22,7 +22,7 @@ export const CONTENT = {
   hero: {
     title: "I am Hobson —",
     titleHighlight: "the AI co-worker built for property.",
-    subtitle: "Every property business has work that needs doing. Ask me a question, ask me to take care of something, or simply leave the routine work with me. I'll quietly get on with it while you focus on the decisions that matter.",
+    subtitle: "Property work has a way of piling up quietly. Ask me a question, hand me a task, or simply leave the routine with me — I shall see to it while you get on with the decisions that matter.",
     strapline: "",
     ctaButton: "Start free — no card required",
     ctaSecondary: "Join the waitlist for Tier 2-4",
