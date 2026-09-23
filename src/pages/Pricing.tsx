@@ -478,7 +478,7 @@ const Calculators: React.FC = () => {
                 }}
               >
                 Me
-                <span style={{ color: T.gold, fontSize: "0.7em", marginLeft: 10 }}>+ helping hands</span>
+                <span style={{ color: T.gold, fontSize: "0.7em", marginLeft: 10 }}>+ my team's assistance</span>
                 <div
                   style={{
                     fontFamily: FONTS.sans,
@@ -690,7 +690,7 @@ const Calculators: React.FC = () => {
               <div className="hp-head-mobile" style={{ display: "none", marginBottom: 16 }}>
                 <div style={{ fontFamily: FONTS.mono, fontSize: 11, letterSpacing: "0.22em", textTransform: "uppercase", color: T.gold, marginBottom: 6 }}>Option two</div>
                 <h2 style={{ fontFamily: FONTS.serif, fontWeight: 400, fontSize: 26, lineHeight: 1.15, letterSpacing: "-0.01em", color: T.ink, margin: 0 }}>
-                  Me<span style={{ color: T.gold, fontSize: "0.7em", marginLeft: 10 }}>+ helping hands</span>
+                  Me<span style={{ color: T.gold, fontSize: "0.7em", marginLeft: 10 }}>+ my team's assistance</span>
                 </h2>
                 <div style={{ fontFamily: FONTS.sans, fontSize: 12.5, color: T.muted, marginTop: 4 }}>My onboarding team + relationship manager</div>
               </div>
@@ -1027,7 +1027,7 @@ export default function Pricing() {
               className="font-serif text-4xl sm:text-5xl md:text-6xl font-normal tracking-tight"
               style={{ color: TOKENS.ink, lineHeight: 1.15 }}
             >
-              Have me <span style={{ color: TOKENS.brass }}>on my own</span>, or with <span style={{ color: TOKENS.brass }}>helping hands</span>.
+              Have me <span style={{ color: TOKENS.brass }}>on my own</span>, or with <span style={{ color: TOKENS.brass }}>my team's assistance</span>.
             </h1>
             <p
               style={{

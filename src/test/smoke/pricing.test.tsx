@@ -8,7 +8,7 @@ describe("Pricing page", () => {
     renderWithProviders(<Pricing />, { route: "/pricing" });
     await waitFor(() => {
       expect(screen.getByRole("heading", { level: 1 }).textContent).toMatch(
-        /Have me on my own, or with helping hands/i
+        /Have me on my own, or with my team's assistance/i
       );
     });
   });
@@ -17,7 +17,7 @@ describe("Pricing page", () => {
     renderWithProviders(<Pricing />, { route: "/pricing" });
     await waitFor(() => {
       expect(screen.getAllByText(/on my own/i).length).toBeGreaterThan(0);
-      expect(screen.getAllByText(/helping hands/i).length).toBeGreaterThan(0);
+      expect(screen.getAllByText(/my team's assistance/i).length).toBeGreaterThan(0);
       expect(screen.getAllByText(/Every seat includes/i).length).toBeGreaterThan(0);
     });
   });
