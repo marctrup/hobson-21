@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { CONTENT } from "@/config/content";
-import { InterestModal } from "@/components/InterestModal";
 import hobsonLogo from "/hobson-logo.png";
+
 
 // UK Flag SVG component
 const UKFlag = ({ className }: { className?: string }) => (
@@ -27,8 +27,8 @@ const UKFlag = ({ className }: { className?: string }) => (
 
 export const HomepageHeader = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const content = CONTENT;
+
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -153,7 +153,7 @@ export const HomepageHeader = () => {
         )}
       </div>
     </header>
-    <InterestModal open={isLoginModalOpen} onClose={() => setIsLoginModalOpen(false)} source="login-interest" />
     </>
   );
+
 };
