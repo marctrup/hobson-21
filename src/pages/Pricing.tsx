@@ -194,10 +194,10 @@ const TogetherCard: React.FC<{ people: number; docEstimate: number; seatsMonthly
             Together
           </div>
           <h3 style={{ fontFamily: FONTS.serif, fontWeight: 400, fontSize: "clamp(1.6rem, 2.6vw, 2.15rem)", lineHeight: 1.15, letterSpacing: "-0.02em", margin: 0, color: TOKENS.ink }}>
-            Commit to Professor. I'll give you the first month on me.
+            Commit to my colleague the Professor. I'll give you the first month on me.
           </h3>
           <p style={{ fontFamily: FONTS.sans, fontSize: 15.5, lineHeight: 1.65, color: TOKENS.inkSoft, marginTop: 16 }}>
-            Once you approve Professor's reading fee, I will work with your team for the first month at no charge for seats. You experience the complete Hobson before a single monthly payment is made.
+            Once you approve my colleague's reading fee, I will work with your team for the first month at no charge for seats. You experience the complete Hobson before a single monthly payment is made.
 
           </p>
 
@@ -205,7 +205,7 @@ const TogetherCard: React.FC<{ people: number; docEstimate: number; seatsMonthly
 
           <div>
             <p style={{ fontFamily: FONTS.serif, fontStyle: "italic", fontSize: "clamp(0.98rem, 1.4vw, 1.1rem)", lineHeight: 1.55, color: TOKENS.ink, margin: 0 }}>
-              &ldquo;I would rather you experience me properly before deciding. Once Professor knows your documents, the first month is mine to prove my worth.&rdquo;
+              &ldquo;I would rather you experience me properly before deciding. Once my colleague knows your documents, the first month is mine to prove my worth.&rdquo;
             </p>
           </div>
         </div>
@@ -252,7 +252,7 @@ const TogetherCard: React.FC<{ people: number; docEstimate: number; seatsMonthly
 // Section 3 — Calculators
 // ============================================================================
 
-const HERO_MESSAGE = "\u201CTell me about your business. I will show you the seat cost for your team and an estimate for my Professor to read your documents. Nothing begins until you approve it.\u201D";
+const HERO_MESSAGE = "\u201CTell me about your business. I will show you the seat cost for your team and an estimate for my colleague the Professor to read your documents. Nothing begins until you approve it.\u201D";
 
 const TypewriterText: React.FC<{ text: string; speed?: number; startDelay?: number }> = ({
   text,
@@ -695,7 +695,7 @@ const Calculators: React.FC = () => {
                 <div style={{ fontFamily: FONTS.sans, fontSize: 12.5, color: T.muted, marginTop: 4 }}>My onboarding team + relationship manager</div>
               </div>
               <p style={{ fontFamily: FONTS.sans, fontSize: 13.5, lineHeight: 1.55, color: T.muted, margin: 0 }} className="hp-card-blurb">
-                My team prepares your documents before Professor reads them, and one of us stays with you afterwards.
+                My team prepares your documents before my colleague the Professor reads them, and one of us stays with you afterwards.
               </p>
 
               {/* Bullets */}
@@ -703,7 +703,7 @@ const Calculators: React.FC = () => {
                 {[
                   { h: "We go through your folders", b: "Every document opened, every type identified, everything checked that it can actually be read." },
                   { h: "We make the addresses clear", b: "So each document lands on the right property. I need a clean address for the map to work." },
-                  { h: "Then Professor reads them", b: "He is only ever as good as what he is given. Prepared properly, he has everything he needs." },
+                  { h: "Then my colleague reads them", b: "He is only ever as good as what he is given. Prepared properly, he has everything he needs." },
                   { h: "Your relationship manager stays", b: "To guide you, advise you, or simply be there — for as long as you need them." },
                 ].map((item, i) => (
 
@@ -900,7 +900,7 @@ const FAQS: Array<{ q: string; a: string }> = [
   },
   {
     q: "Why is there no plan to choose?",
-    a: "Because there is no smaller version of me. Everyone receives the complete Hobson and my full back-office team. Your price is based simply on how many people use me and how many documents my Professor needs to read. Nothing to compare, nothing to outgrow.",
+    a: "Because there is no smaller version of me. Everyone receives the complete Hobson and my full back-office team. Your price is based simply on how many people use me and how many documents my colleague the Professor needs to read. Nothing to compare, nothing to outgrow.",
   },
   {
     q: "What does each person actually get?",
@@ -912,11 +912,11 @@ const FAQS: Array<{ q: string; a: string }> = [
   },
   {
     q: "Do I keep paying whenever you use a document?",
-    a: "No. Professor reads each document once and retains what matters. You pay for that initial read — not for every future question, calculation or check that draws on it.",
+    a: "No. My colleague the Professor reads each document once and retains what matters. You pay for that initial read — not for every future question, calculation or check that draws on it.",
   },
   {
     q: "What happens when new documents arrive?",
-    a: "Professor reads them in the same way, at the same per-document rate. A few documents can be added as they arrive without any fuss. When a larger batch comes — perhaps after an acquisition or the opening of a data room — I will confirm the cost and wait for your approval before beginning. Nothing is ever charged automatically.",
+    a: "My colleague reads them in the same way, at the same per-document rate. A few documents can be added as they arrive without any fuss. When a larger batch comes — perhaps after an acquisition or the opening of a data room — I will confirm the cost and wait for your approval before beginning. Nothing is ever charged automatically.",
   },
   {
     q: "Do I pay before I know the final cost?",
@@ -1044,7 +1044,7 @@ export default function Pricing() {
             <AnswerFirst>
               Pricing is based on capacity, not features: every plan includes the same
               abilities, and the tiers differ only in how many users, documents and seats
-              they cover. You pay once for the professor to read your documents, then add team
+              they cover. You pay once for my colleague the Professor to read your documents, then add team
               seats as you need them. Use the calculators below to see what your portfolio
               would cost.
             </AnswerFirst>
