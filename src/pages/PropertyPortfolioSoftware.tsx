@@ -1,5 +1,7 @@
 import { PropertyTopicLinks } from "@/components/PropertyTopicLinks";
 import { SolutionFAQ } from "@/components/SolutionFAQ";
+import { LastUpdated } from "@/components/LastUpdated";
+import { getUpdatedDate } from "@/utils/content-dates";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { getSolutionPageStructuredData } from "@/utils/seo-data";
@@ -49,6 +51,8 @@ const DIFFERENCES = [
   "No starting from a blank page when the board asks a question",
 ];
 
+const UPDATED = getUpdatedDate("/property-portfolio-software");
+
 const FAQS = [
   {
     question: "What is property portfolio software?",
@@ -95,7 +99,7 @@ const PropertyPortfolioSoftware = () => {
         <meta property="og:url" content="https://hobsonschoice.ai/property-portfolio-software" />
         <meta property="og:type" content="website" />
               <script type="application/ld+json">
-          {JSON.stringify(getSolutionPageStructuredData({ name: "Property Portfolio Software", path: "/property-portfolio-software", description: "Property portfolio software that reads your documents, structures your portfolio and answers your team with evidence from the source.", faqs: FAQS }))}
+          {JSON.stringify(getSolutionPageStructuredData({ name: "Property Portfolio Software", path: "/property-portfolio-software", description: "Property portfolio software that reads your documents, structures your portfolio and answers your team with evidence from the source.", faqs: FAQS, dateModified: UPDATED }))}
         </script>
         </Helmet>
 
@@ -390,6 +394,9 @@ const PropertyPortfolioSoftware = () => {
           </div>
         </section>
         <SolutionFAQ items={FAQS} />
+        <div className="mx-auto max-w-4xl px-6 pb-12">
+          <LastUpdated date={UPDATED} />
+        </div>
         <PropertyTopicLinks />
       </main>
     </div>

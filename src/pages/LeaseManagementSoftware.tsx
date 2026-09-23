@@ -1,5 +1,7 @@
 import { PropertyTopicLinks } from "@/components/PropertyTopicLinks";
 import { SolutionFAQ } from "@/components/SolutionFAQ";
+import { LastUpdated } from "@/components/LastUpdated";
+import { getUpdatedDate } from "@/utils/content-dates";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { getSolutionPageStructuredData } from "@/utils/seo-data";
@@ -49,6 +51,8 @@ const DIFFERENCES = [
   "No need to re-read a file every time a question arises",
 ];
 
+const UPDATED = getUpdatedDate("/lease-management-software");
+
 const FAQS = [
   {
     question: "What is lease management software?",
@@ -95,7 +99,7 @@ const LeaseManagementSoftware = () => {
         <meta property="og:url" content="https://hobsonschoice.ai/lease-management-software" />
         <meta property="og:type" content="website" />
               <script type="application/ld+json">
-          {JSON.stringify(getSolutionPageStructuredData({ name: "Lease Management Software", path: "/lease-management-software", description: "Lease management software that reads your documents, extracts the facts that matter and answers your team with evidence from the source.", faqs: FAQS }))}
+          {JSON.stringify(getSolutionPageStructuredData({ name: "Lease Management Software", path: "/lease-management-software", description: "Lease management software that reads your documents, extracts the facts that matter and answers your team with evidence from the source.", faqs: FAQS, dateModified: UPDATED }))}
         </script>
         </Helmet>
 
@@ -389,6 +393,9 @@ const LeaseManagementSoftware = () => {
           </div>
         </section>
         <SolutionFAQ items={FAQS} />
+        <div className="mx-auto max-w-4xl px-6 pb-12">
+          <LastUpdated date={UPDATED} />
+        </div>
         <PropertyTopicLinks />
       </main>
     </div>
