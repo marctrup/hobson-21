@@ -403,6 +403,25 @@ export const structuredData = {
 
 };
 
+// Defined-term helper for the glossary — marks each entry as a defined term
+// so search and AI answer engines can quote definitions directly.
+export const getDefinedTermSetStructuredData = (
+  terms: Array<{ term: string; fullName?: string; definition: string }>
+) => ({
+  "@context": "https://schema.org",
+  "@type": "DefinedTermSet",
+  "name": "Hobson Glossary",
+  "url": "https://hobsonschoice.ai/learn/glossary",
+  "description": "Plain-English definitions of the property, document and Hobson terms used across Hobson.",
+  "hasDefinedTerm": terms.map((t) => ({
+    "@type": "DefinedTerm",
+    "name": t.term,
+    ...(t.fullName ? { "alternateName": t.fullName } : {}),
+    "description": t.definition,
+    "inDefinedTermSet": "https://hobsonschoice.ai/learn/glossary"
+  }))
+});
+
 // Breadcrumb helper
 export const getBreadcrumbStructuredData = (items: Array<{ name: string; url: string }>) => ({
   "@context": "https://schema.org",

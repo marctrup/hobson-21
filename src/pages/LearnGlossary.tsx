@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { Search } from "lucide-react";
 import { GlobalHeader } from "@/components/GlobalHeader";
+import { getDefinedTermSetStructuredData } from "@/utils/seo-data";
 
 const BRASS = "#B4914F";
 const INK = "#2D2D2D";
