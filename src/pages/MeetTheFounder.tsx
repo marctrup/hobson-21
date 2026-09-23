@@ -11,10 +11,10 @@ const MeetTheFounder = () => {
   return (
     <>
       <Helmet>
-        <title>Meet a Co-Founder | Hobson AI</title>
+        <title>How I came to be | Hobson AI</title>
         <meta
           name="description"
-          content="Marc Trup on why he built Hobson — an AI co-worker designed specifically for property work."
+          content="Marc Trup on why he built me — an AI co-worker designed specifically for property work. In my own words, and in his."
         />
         <link rel="canonical" href="https://hobsonschoice.ai/founder" />
               <script type="application/ld+json">
@@ -42,16 +42,17 @@ const MeetTheFounder = () => {
                 Founder
               </p>
               <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl font-normal tracking-tight text-foreground">
-                Meet a <span style={{ color: '#B4914F' }}>Co-Founder</span>
+                How I <span style={{ color: '#B4914F' }}>came to be</span>
               </h1>
 
               <p className="mt-6 text-lg sm:text-xl text-muted-foreground leading-relaxed">
-                Hobson was built by property people who believed there had to be
-                a better way to manage property work.
+                I was built by property people who believed there had to be a
+                better way to manage property work. I rather think they were
+                right.
               </p>
               <p className="mt-4 text-base sm:text-lg text-muted-foreground/90 leading-relaxed">
-                In this short video, Marc Trup explains the vision behind Hobson
-                and why property deserves its own AI co-worker.
+                In this short video, Marc Trup explains the vision behind me —
+                and why property deserves an AI co-worker of its own.
               </p>
               <div className="mx-auto mt-10 h-px w-24" style={{ backgroundColor: '#F7EDDC' }} />
             </div>
