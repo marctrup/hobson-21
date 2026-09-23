@@ -1,4 +1,5 @@
 import { PropertyTopicLinks } from "@/components/PropertyTopicLinks";
+import { SolutionFAQ } from "@/components/SolutionFAQ";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { getSolutionPageStructuredData } from "@/utils/seo-data";
