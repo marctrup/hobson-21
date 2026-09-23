@@ -15,26 +15,12 @@ export const HobsonGateway = ({ className = "" }: { className?: string }) => (
     aria-label="This way, please — enter Hobson"
     className={`group inline-flex items-center gap-3 rounded-sm border border-ink/25 bg-paper px-4 py-2 leading-tight shadow-[0_1px_0_rgba(45,45,45,0.06)] outline-none transition-all duration-500 hover:border-brass hover:bg-bone-wash hover:shadow-[0_2px_8px_rgba(45,45,45,0.10)] focus-visible:ring-2 focus-visible:ring-brass/60 ${className}`}
   >
-    <span className="flex flex-col items-start">
-      <span className="text-[9px] uppercase tracking-[0.3em] text-brass-text font-montserrat font-bold leading-none opacity-80 transition-opacity duration-500 group-hover:opacity-100">
-        Enter
-      </span>
+    <span className="relative text-[15px] text-ink italic font-bold leading-none tracking-tight" style={serifStack}>
+      This way, please
       <span
-        className="relative mt-1 pb-1 text-base text-ink italic font-normal leading-none tracking-tight"
-        style={serifStack}
-      >
-        This way, please
-        <span
-          aria-hidden="true"
-          className="absolute bottom-0 left-0 h-px w-6 bg-brass/60 transition-all duration-500 group-hover:w-full group-hover:bg-brass"
-        />
-      </span>
-      <span
-        className="mt-1 text-[10px] text-ink-muted italic tracking-wide leading-none"
-        style={serifStack}
-      >
-        Everything is in hand
-      </span>
+        aria-hidden="true"
+        className="absolute -bottom-1.5 left-0 h-px w-6 bg-brass/60 transition-all duration-500 group-hover:w-full group-hover:bg-brass"
+      />
     </span>
     <span
       aria-hidden="true"
