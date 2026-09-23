@@ -85,7 +85,7 @@ export const Homepage = () => {
               <nav className="hidden md:flex items-center gap-7" role="navigation" aria-label="Main navigation">
                 {[
                   { to: "/pricing", label: "Pricing", title: "Hobson AI Pricing Plans", voice: "What I cost" },
-                  { to: "/founder", label: "Founder", title: "Meet a Co-Founder of Hobson AI", voice: "How I came to be" },
+                  { to: "/founder", label: "Founders", title: "Meet the Founders of Hobson AI", voice: "How I came to be" },
                   { to: "/blog", label: "Blog", title: "Property Management Insights", voice: "Notes from my desk" },
                   { to: "/learn", label: "Learn", title: "Hobson AI FAQ", voice: "Where I keep my notes" },
                   { to: "/contact", label: "Contact", title: "Contact Real Estate Software Support", voice: "Talk to me" },
@@ -128,7 +128,7 @@ export const Homepage = () => {
                   {[
                     { to: "/", label: "Home", voice: "Start with me" },
                     { to: "/pricing", label: "Pricing", voice: "What I cost" },
-                    { to: "/founder", label: "Founder", voice: "How I came to be" },
+                    { to: "/founder", label: "Founders", voice: "How I came to be" },
                     { to: "/blog", label: "Blog", voice: "Notes from my desk" },
                     { to: "/learn", label: "Learn", voice: "Where I keep my notes" },
                     { to: "/contact", label: "Contact", voice: "Talk to me" },

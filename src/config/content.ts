@@ -413,7 +413,7 @@ export const CONTENT = {
       
       { to: "/pricing", label: "Pricing", title: "Hobson AI Pricing Plans", voice: "What I cost" },
       { to: "/learn", label: "Learn", title: "Hobson AI FAQ", voice: "Where I keep my notes" },
-      { to: "/founder", label: "Co-Founder", title: "Meet a Co-Founder of Hobson AI", voice: "How I came to be" },
+      { to: "/founder", label: "Founders", title: "Meet the Founders of Hobson AI", voice: "How I came to be" },
       { to: "/blog", label: "Blog", title: "Property Management Insights", voice: "Notes from my desk" },
     ],
     secondary: [

@@ -39,7 +39,7 @@ const MeetTheFounder = () => {
                 className="text-[11px] font-semibold uppercase tracking-[0.24em] mb-4"
                 style={{ color: '#B4914F' }}
               >
-                Founder
+                Founders
               </p>
               <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl font-normal tracking-tight text-foreground">
                 How I <span style={{ color: '#B4914F' }}>came to be</span>
