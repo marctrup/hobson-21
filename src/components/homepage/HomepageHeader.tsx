@@ -152,7 +152,7 @@ export const HomepageHeader = () => {
                   title={link.title}
                 >
                   <span className="text-lg text-ink leading-tight">{link.label}</span>
-                  <span className="mt-1 text-xs text-ink-muted italic leading-tight" style={serifStack}>
+                  <span className="mt-1 text-xs font-bold text-brass-text italic leading-tight" style={serifStack}>
                     {link.voice}
                   </span>
                 </Link>
@@ -166,7 +166,7 @@ export const HomepageHeader = () => {
                   title={link.title}
                 >
                   <span className="text-lg text-ink leading-tight">{link.label}</span>
-                  <span className="mt-1 text-xs text-ink-muted italic leading-tight" style={serifStack}>
+                  <span className="mt-1 text-xs font-bold text-brass-text italic leading-tight" style={serifStack}>
                     {link.voice}
                   </span>
                 </Link>
