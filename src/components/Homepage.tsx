@@ -149,7 +149,7 @@ export const Homepage = () => {
                     <HobsonGatewayMobile onClick={closeMobileMenu} />
                   </div>
                 </div>
-              </nav>}}
+              </nav>}
           </div>
         </header>
 
