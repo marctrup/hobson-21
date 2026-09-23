@@ -1,5 +1,7 @@
 import { useMemo, useState } from "react";
 import { Helmet } from "react-helmet-async";
+import { LastUpdated } from "@/components/LastUpdated";
+import { getUpdatedDate } from "@/utils/content-dates";
 import { Search } from "lucide-react";
 import { GlobalHeader } from "@/components/GlobalHeader";
 import { getDefinedTermSetStructuredData } from "@/utils/seo-data";
@@ -316,7 +318,7 @@ const LearnGlossary = () => {
         <meta property="og:url" content="https://hobsonschoice.ai/learn/glossary" />
         <meta property="og:type" content="website" />
         <script type="application/ld+json">
-          {JSON.stringify(getDefinedTermSetStructuredData(TERMS))}
+          {JSON.stringify(getDefinedTermSetStructuredData(TERMS, getUpdatedDate("/learn/glossary")))}
         </script>
       </Helmet>
       <GlobalHeader />
@@ -452,6 +454,10 @@ const LearnGlossary = () => {
             ))
           )}
         </section>
+
+        <div className="mx-auto max-w-3xl px-6 pb-16">
+          <LastUpdated date={getUpdatedDate("/learn/glossary")} />
+        </div>
       </main>
     </div>
   );

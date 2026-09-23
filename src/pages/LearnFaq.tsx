@@ -1,5 +1,7 @@
 import ReactMarkdown from "react-markdown";
 import { Helmet } from "react-helmet-async";
+import { LastUpdated } from "@/components/LastUpdated";
+import { getUpdatedDate } from "@/utils/content-dates";
 import { GlobalHeader } from "@/components/GlobalHeader";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -279,9 +281,12 @@ const LearnFaq = () => {
 
   const noResults = filtered.length === 0;
 
+  const updated = getUpdatedDate("/learn/faq");
+
   const faqJsonLd = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
+    dateModified: updated,
     mainEntity: CATEGORIES.flatMap((cat) =>
       cat.items.map((item) => ({
         "@type": "Question",
@@ -505,6 +510,10 @@ const LearnFaq = () => {
             </div>
           </div>
         </section>
+
+        <div className="mx-auto max-w-3xl px-6 pb-16">
+          <LastUpdated date={updated} />
+        </div>
       </main>
     </div>
   );
