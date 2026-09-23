@@ -156,6 +156,12 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
       "A payment towards the costs of operating or maintaining a property, such as service charge or insurance, rather than payment for the right to occupy.",
   },
   {
+    term: "ORD",
+    fullName: "Operational & Reference Documents",
+    definition:
+      "Documents that provide information about the property, portfolio, products or operations, rather than legal arrangements or compliance findings.",
+  },
+  {
     term: "Portfolio",
     definition:
       "Reporting boundary across everything.",
@@ -235,6 +241,12 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
     term: "Term End Date",
     definition:
       "The date on which the contractual term expires. It does not by itself mean the tenancy has ended or the occupier has left.",
+  },
+  {
+    term: "TPA",
+    fullName: "Third Party Arrangement Documents",
+    definition:
+      "Documents that create a standalone arrangement with an outside party that burdens, protects, finances or manages the property or ownership structure.",
   },
   {
     term: "Time-Bound",
