@@ -1044,7 +1044,7 @@ export default function Pricing() {
             <AnswerFirst>
               Pricing is based on capacity, not features: every plan includes the same
               abilities, and the tiers differ only in how many users, documents and seats
-              they cover. You pay once for me to read your documents, then add team
+              they cover. You pay once for the professor to read your documents, then add team
               seats as you need them. Use the calculators below to see what your portfolio
               would cost.
             </AnswerFirst>
