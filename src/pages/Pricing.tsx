@@ -951,15 +951,15 @@ export default function Pricing() {
     <>
       <Helmet>
         <title>Pricing — Hobson AI property software</title>
-        <meta name="description" content="No plans. No credits. Nothing counted. Pay for seats and document learning — that's it." />
+        <meta name="description" content="No plans. No credits. Nothing counted. You pay for my seats and my reading — that is all." />
         <link rel="canonical" href="https://hobsonschoice.ai/pricing" />
         <meta property="og:title" content="Pricing — Hobson AI property software" />
-        <meta property="og:description" content="No plans. No credits. Nothing counted. Pay for seats and document learning — that's it." />
+        <meta property="og:description" content="No plans. No credits. Nothing counted. You pay for my seats and my reading — that is all." />
         <meta property="og:url" content="https://hobsonschoice.ai/pricing" />
         <meta property="og:type" content="website" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Pricing — Hobson AI property software" />
-        <meta name="twitter:description" content="No plans. No credits. Nothing counted. Pay for seats and document learning — that's it." />
+        <meta name="twitter:description" content="No plans. No credits. Nothing counted. You pay for my seats and my reading — that is all." />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         <link
@@ -1137,7 +1137,7 @@ export default function Pricing() {
               </div>
               <H2>Questions, answered plainly.</H2>
               <p style={{ fontFamily: FONTS.serif, fontStyle: "italic", fontSize: 17, color: TOKENS.inkSoft, marginTop: 14, maxWidth: 560, marginLeft: "auto", marginRight: "auto" }}>
-                The things I'm most often asked — answered in my own words.
+                The things I am asked most often — answered in my own words.
               </p>
             </div>
             <div>
