@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { InterestModal } from "@/components/InterestModal";
+
 import { Link } from "react-router-dom";
 import { Menu, X, ArrowRight, FileText, CheckCircle, Building2 } from "lucide-react";
 import { SimpleButton } from "@/components/ui/simple-button";
@@ -28,7 +28,7 @@ import hobsonAnswerTight from "@/assets/hobson-answer-tight.png.asset.json";
 export const Homepage = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [showPilotForm, setShowPilotForm] = useState(false);
-  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+
   
   const content = CONTENT;
   
@@ -99,13 +99,15 @@ export const Homepage = () => {
                 </Link>
                 
                 {/* Login button */}
-                <button
-                  onClick={() => setIsLoginModalOpen(true)}
+                <a
+                  href="https://app.hobsonschoice.ai"
                   className="inline-flex h-9 items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-opacity hover:opacity-90"
                   style={{ background: "#2D2D2D", color: "#FCFAF7" }}
                 >
                   Login
-                </button>
+                </a>
+
+
                 
               </nav>
 
@@ -134,13 +136,14 @@ export const Homepage = () => {
                     Contact
                   </Link>
                   {/* Login button */}
-                  <button
-                    onClick={() => { closeMobileMenu(); setIsLoginModalOpen(true); }}
+                  <a
+                    href="https://app.hobsonschoice.ai"
                     className="inline-flex h-9 w-fit items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-opacity hover:opacity-90"
                     style={{ background: "#2D2D2D", color: "#FCFAF7" }}
                   >
                     Login
-                  </button>
+                  </a>
+
                    
                 </div>
               </nav>}
@@ -397,6 +400,6 @@ export const Homepage = () => {
           </footer>
         </main>
       </div>
-      <InterestModal open={isLoginModalOpen} onClose={() => setIsLoginModalOpen(false)} source="login-interest" />
     </>;
 };
+
