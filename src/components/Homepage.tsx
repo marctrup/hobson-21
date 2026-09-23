@@ -99,13 +99,15 @@ export const Homepage = () => {
                 </Link>
                 
                 {/* Login button */}
-                <button
-                  onClick={() => setIsLoginModalOpen(true)}
+                <a
+                  href="https://app.hobsonschoice.ai"
                   className="inline-flex h-9 items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-opacity hover:opacity-90"
                   style={{ background: "#2D2D2D", color: "#FCFAF7" }}
                 >
                   Login
-                </button>
+                </a>
+
+
                 
               </nav>
 
@@ -134,13 +136,14 @@ export const Homepage = () => {
                     Contact
                   </Link>
                   {/* Login button */}
-                  <button
-                    onClick={() => { closeMobileMenu(); setIsLoginModalOpen(true); }}
+                  <a
+                    href="https://app.hobsonschoice.ai"
                     className="inline-flex h-9 w-fit items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-opacity hover:opacity-90"
                     style={{ background: "#2D2D2D", color: "#FCFAF7" }}
                   >
                     Login
-                  </button>
+                  </a>
+
                    
                 </div>
               </nav>}
