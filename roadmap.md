@@ -1,4 +1,8 @@
 # Roadmap
 
-- [x] Rebuild login-gateway options, speaking only as Hobson (specialists incl. Keeper are back-office only, never user-facing)
-- [x] Gateway revision: first-person voice ("I am expecting you") + framed button treatment with hover fill and arrow; verified desktop + mobile; seo:update and tests 26/26 pass
+- [ ] Tighten flagged database policies and grants
+- [ ] Restrict privileged database function execution
+- [ ] Harden edge-function authentication and validation
+- [ ] Remove or upgrade vulnerable production dependencies
+- [ ] Re-run security scanners, linter, and regression suites
+- [ ] Record remaining external platform actions and blockers
