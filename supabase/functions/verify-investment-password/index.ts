@@ -6,27 +6,8 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
-// Simple in-memory rate limiting (resets on function cold start)
-const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
 const MAX_ATTEMPTS = 5;
-const WINDOW_MS = 15 * 60 * 1000; // 15 minutes
-
-function checkRateLimit(identifier: string): boolean {
-  const now = Date.now();
-  const record = rateLimitMap.get(identifier);
-  
-  if (!record || now > record.resetTime) {
-    rateLimitMap.set(identifier, { count: 1, resetTime: now + WINDOW_MS });
-    return true;
-  }
-  
-  if (record.count >= MAX_ATTEMPTS) {
-    return false;
-  }
-  
-  record.count++;
-  return true;
-}
+const WINDOW_MINUTES = 15;
 
 // Simple SHA-256 hash for password comparison (for non-bcrypt hashes)
 async function sha256Hash(message: string): Promise<string> {
@@ -37,6 +18,15 @@ async function sha256Hash(message: string): Promise<string> {
   return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
 }
 
+function constantTimeEqual(left: string, right: string): boolean {
+  if (left.length !== right.length) return false;
+  let difference = 0;
+  for (let index = 0; index < left.length; index += 1) {
+    difference |= left.charCodeAt(index) ^ right.charCodeAt(index);
+  }
+  return difference === 0;
+}
+
 serve(async (req) => {
   // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
@@ -44,13 +34,39 @@ serve(async (req) => {
   }
 
   try {
+    if (req.method !== 'POST') {
+      return new Response(JSON.stringify({ error: 'Method not allowed' }), {
+        status: 405,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+
     // Get client IP for rate limiting
     const clientIP = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 
                      req.headers.get('x-real-ip') || 
                      'unknown';
     
-    // Check rate limit
-    if (!checkRateLimit(clientIP)) {
+    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+    const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+    const supabase = createClient(supabaseUrl, supabaseKey);
+
+    const { data: rateLimitOk, error: rateLimitError } = await supabase.rpc(
+      'check_server_rate_limit',
+      {
+        p_identifier: clientIP,
+        p_action_type: 'investment_password',
+        p_max_requests: MAX_ATTEMPTS,
+        p_window_minutes: WINDOW_MINUTES,
+      },
+    );
+    if (rateLimitError) {
+      console.error('Rate limit check failed:', rateLimitError);
+      return new Response(JSON.stringify({ error: 'Unable to verify password' }), {
+        status: 503,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+    if (rateLimitOk === false) {
       console.log(`Rate limit exceeded for IP: ${clientIP}`);
       return new Response(
         JSON.stringify({ error: 'Too many attempts. Please try again later.' }),
@@ -74,11 +90,6 @@ serve(async (req) => {
         { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 400 }
       );
     }
-
-    // Create Supabase client
-    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
-    const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
-    const supabase = createClient(supabaseUrl, supabaseKey);
 
     // Fetch the stored password hash
     const { data, error } = await supabase
@@ -104,7 +115,7 @@ serve(async (req) => {
 
     const storedHash = data.password_hash;
     const inputHash = await sha256Hash(password);
-    const isValid = inputHash === storedHash;
+    const isValid = constantTimeEqual(inputHash, storedHash);
 
     console.log(`Password verification attempt from ${clientIP}: ${isValid ? 'success' : 'failed'}`);
 
