@@ -25,7 +25,7 @@ import { TheTeamSection } from "@/components/homepage/TheTeamSection";
 
 import { structuredData } from "@/utils/seo-data";
 import { CONTENT } from "@/config/content";
-import hobsonAnswerTight from "@/assets/hobson-answer-tight.png.asset.json";
+import hobsonAnswerSources from "@/assets/hobson-answer-sources.png.asset.json";
 
 export const Homepage = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -277,8 +277,8 @@ export const Homepage = () => {
                           <span className="w-2.5 h-2.5 rounded-full bg-success-border/70" />
                         </div>
                         <img loading="lazy" decoding="async"
-                          src={hobsonAnswerTight.url}
-                          alt="Hobson answering a rent question by referencing two uploaded tenancy documents and citing each source"
+                          src={hobsonAnswerSources.url}
+                          alt="Hobson answering a rent question by citing the relevant lease document, with page references shown in the sources panel"
                           className="w-full h-auto block"
                         />
                       </div>
