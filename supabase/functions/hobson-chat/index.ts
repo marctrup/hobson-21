@@ -10,9 +10,9 @@ const corsHeaders = {
 async function getKnowledgeBase(): Promise<string> {
   try {
     const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
-    const supabaseAnonKey = Deno.env.get("SUPABASE_ANON_KEY")!;
+    const supabaseServiceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
     
-    const supabase = createClient(supabaseUrl, supabaseAnonKey);
+    const supabase = createClient(supabaseUrl, supabaseServiceKey);
     
     const { data, error } = await supabase
       .from('chatbot_knowledge_base')
@@ -65,10 +65,26 @@ serve(async (req) => {
   }
 
   try {
+    if (req.method !== "POST") {
+      return new Response(JSON.stringify({ error: "Method not allowed" }), {
+        status: 405,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
     const { messages } = await req.json();
     
     if (!messages || !Array.isArray(messages)) {
       throw new Error("Invalid request: messages array required");
+    }
+    if (messages.length > 30 || messages.some((message) =>
+      !message || !["user", "assistant"].includes(message.role) ||
+      typeof message.content !== "string" || message.content.length > 8000
+    )) {
+      return new Response(JSON.stringify({ error: "Invalid message format" }), {
+        status: 400,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
     }
 
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");

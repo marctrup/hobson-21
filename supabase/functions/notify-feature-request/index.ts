@@ -2,6 +2,7 @@ import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.53.0';
 import { Resend } from "npm:resend@2.0.0";
 import { featureRequestSchema, escapeHtml } from '../_shared/validation.ts';
+import { getCaller } from '../_shared/crm-auth.ts';
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -23,6 +24,21 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
+    if (req.method !== "POST") {
+      return new Response(JSON.stringify({ error: "Method not allowed" }), {
+        status: 405,
+        headers: { "Content-Type": "application/json", ...corsHeaders },
+      });
+    }
+
+    const caller = await getCaller(req);
+    if (!caller) {
+      return new Response(JSON.stringify({ error: "Authentication required" }), {
+        status: 401,
+        headers: { "Content-Type": "application/json", ...corsHeaders },
+      });
+    }
+
     const rawData = await req.json();
     
     // Validate input
@@ -38,6 +54,12 @@ const handler = async (req: Request): Promise<Response> => {
     }
     
     const { title, description, category, author_name, author_id } = validationResult.data;
+    if (author_id !== caller.userId) {
+      return new Response(JSON.stringify({ error: "Author does not match signed-in user" }), {
+        status: 403,
+        headers: { "Content-Type": "application/json", ...corsHeaders },
+      });
+    }
 
     console.log('Feature request notification for:', title);
 
