@@ -35,6 +35,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { supabase } from "@/integrations/supabase/client";
+import type { Database } from "@/integrations/supabase/types";
 import { useAuth } from "@/hooks/useAuth";
 import { useCrmAccess } from "@/hooks/crm/useCrmAccess";
 import { toast } from "@/hooks/use-toast";
@@ -125,7 +126,7 @@ export default function CrmClientDetail() {
   });
 
   const updateClient = useMutation({
-    mutationFn: async (patch: Record<string, unknown>) => {
+    mutationFn: async (patch: Partial<Database["public"]["Tables"]["crm_clients"]["Update"]>) => {
       const { error } = await supabase.from("crm_clients").update(patch).eq("id", id);
       if (error) throw error;
     },

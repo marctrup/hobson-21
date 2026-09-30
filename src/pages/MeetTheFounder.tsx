@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Helmet } from "react-helmet-async";
 import { founderStructuredData } from "@/utils/seo-data";
 import { GlobalHeader } from "@/components/GlobalHeader";
-import { YouTubeVideoSection } from "@/components/homepage/YouTubeVideoSection";
+import { FounderShortVideo } from "@/components/videos/FounderShortVideo";
 import founderPhoto from "@/assets/founder-photo.jpg.asset.json";
 
 const MeetTheFounder = () => {
@@ -62,23 +62,13 @@ const MeetTheFounder = () => {
           {/* Video */}
           <section className="pt-16 sm:pt-20 pb-12 sm:pb-16">
             <div className="container mx-auto px-4">
-              <div className="max-w-[1000px] mx-auto relative">
+              <div className="relative max-w-[420px] mx-auto">
                 <div
                   className="absolute -inset-8 rounded-[2.5rem] blur-3xl opacity-60 pointer-events-none"
                   style={{ background: 'radial-gradient(circle at 30% 30%, rgba(180,145,79,0.18), transparent 70%)' }}
                 />
-                <div
-                  className="relative rounded-2xl p-3 sm:p-5"
-                  style={{
-                    background: '#FFFFFF',
-                    border: '1px solid #F7EDDC',
-                    boxShadow: '0 30px 60px -30px rgba(45,45,45,0.30), 0 10px 30px -15px rgba(45,45,45,0.18)',
-                  }}
-                >
-                  <YouTubeVideoSection
-                    videoId="MXutUHZFXIs"
-                    title=""
-                  />
+                <div className="relative">
+                  <FounderShortVideo />
                 </div>
               </div>
             </div>
