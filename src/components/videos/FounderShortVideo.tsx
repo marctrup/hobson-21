@@ -42,7 +42,7 @@ export const FounderShortVideo = () => {
             >
               <img
                 src={marcTalkingToPhone.url}
-                alt="Marc Trup, Co-Founder of Hobson, recording a short film on his phone"
+                alt="Marc Trup, one of Hobson's Founders, recording a short film on his phone"
                 className="absolute inset-0 w-full h-full object-cover object-top"
                 loading="eager"
               />
