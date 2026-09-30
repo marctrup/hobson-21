@@ -5,7 +5,7 @@ import { Helmet } from "react-helmet-async";
 import { founderStructuredData } from "@/utils/seo-data";
 import { GlobalHeader } from "@/components/GlobalHeader";
 import { FounderShortVideo } from "@/components/videos/FounderShortVideo";
-import founderPhoto from "@/assets/founder-photo.jpg.asset.json";
+import marcTalkingToPhone from "@/assets/marc-talking-to-phone.png.asset.json";
 
 const MeetTheFounder = () => {
   return (
@@ -87,10 +87,10 @@ const MeetTheFounder = () => {
               >
               <div className="flex flex-col items-center gap-4 mb-8">
                 <img
-                  src={founderPhoto.url}
-                  alt="Marc Trup, Co-Founder of Hobson"
+                  src={marcTalkingToPhone.url}
+                  alt="Marc Trup, one of Hobson's Founders"
                   className="w-16 h-16 sm:w-20 sm:h-20 rounded-full object-cover shadow-lg"
-                  style={{ border: '2px solid #B4914F' }}
+                  style={{ border: '2px solid #B4914F', objectPosition: '50% 30%' }}
                 />
                 <h2 className="text-2xl sm:text-3xl font-bold text-foreground text-center">
                   Why we Built Hobson
