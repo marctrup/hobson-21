@@ -7,7 +7,7 @@ import ContactUs from "@/pages/ContactUs";
 describe("Contact form", () => {
   beforeEach(() => {
     vi.restoreAllMocks();
-    global.fetch = vi.fn(async () => ({
+    globalThis.fetch = vi.fn(async () => ({
       ok: true,
       status: 200,
       json: async () => ({ success: true }),
@@ -19,7 +19,7 @@ describe("Contact form", () => {
     renderWithProviders(<ContactUs />, { route: "/contact" });
     const submit = await screen.findByRole("button", { name: /send|submit|message/i });
     await user.click(submit);
-    expect(global.fetch).not.toHaveBeenCalled();
+    expect(globalThis.fetch).not.toHaveBeenCalled();
   });
 
   it("calls the send-contact-message edge function when the form is filled", async () => {
@@ -50,7 +50,7 @@ describe("Contact form", () => {
     }
 
     await waitFor(() => {
-      const calls = (global.fetch as unknown as ReturnType<typeof vi.fn>).mock.calls;
+      const calls = (globalThis.fetch as unknown as ReturnType<typeof vi.fn>).mock.calls;
       const hit = calls.some(([url]) => String(url).includes("send-contact-message"));
       // Either fetch was called, or rate-limit/dialog blocked it — we accept
       // both as long as nothing threw above.
