@@ -57,10 +57,6 @@ export const FounderShortVideo = () => {
           )}
         </div>
       </div>
-
-      <p className="mt-4 text-sm text-muted-foreground text-center">
-        Filmed on my phone, as things happen — no studio, no script.
-      </p>
     </div>
   );
 };
