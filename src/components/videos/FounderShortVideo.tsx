@@ -45,7 +45,6 @@ export const FounderShortVideo = () => {
                 alt="Marc Trup, Co-Founder of Hobson, recording a short film on his phone"
                 className="absolute inset-0 w-full h-full object-cover object-top"
                 loading="eager"
-                fetchPriority="high"
               />
               <div className="absolute inset-0 bg-black/10 group-hover:bg-black/5 transition-colors duration-300" />
               <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-black/60 to-transparent" />
