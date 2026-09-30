@@ -12,7 +12,6 @@ const VIDEO_ID = "o22VxrIMPjQ";
 export const FounderShortVideo = () => {
   const [isPlaying, setIsPlaying] = useState(false);
 
-  return (
     <div className="flex flex-col items-center">
       <div
         className="relative w-full max-w-[340px] rounded-[2.25rem] p-2.5"
