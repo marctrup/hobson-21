@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Play } from "lucide-react";
 import marcTalkingToPhone from "@/assets/marc-talking-to-phone.png.asset.json";
 
-const VIDEO_ID = "cmQKIeEEMwI";
+const VIDEO_ID = "o22VxrIMPjQ";
 
 /**
  * Portrait, phone-recorded video presented in a phone-like frame.
@@ -42,7 +42,7 @@ export const FounderShortVideo = () => {
             >
               <img
                 src={marcTalkingToPhone.url}
-                alt="Marc Trup, Co-Founder of Hobson, recording a short film on his phone"
+                alt="Marc Trup, one of Hobson's Founders, recording a short film on his phone"
                 className="absolute inset-0 w-full h-full object-cover object-top"
                 loading="eager"
               />
