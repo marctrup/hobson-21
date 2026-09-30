@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Helmet } from "react-helmet-async";
 import { founderStructuredData } from "@/utils/seo-data";
 import { GlobalHeader } from "@/components/GlobalHeader";
-import { YouTubeVideoSection } from "@/components/homepage/YouTubeVideoSection";
+import { FounderShortVideo } from "@/components/videos/FounderShortVideo";
 import founderPhoto from "@/assets/founder-photo.jpg.asset.json";
 
 const MeetTheFounder = () => {
