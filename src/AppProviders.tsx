@@ -25,6 +25,7 @@ export function AppProviders() {
         <ThemeProvider attribute="class" defaultTheme="light" forcedTheme="light" enableSystem={false}>
           <QueryClientProvider client={queryClient}>
             <AuthProvider>
+                <ScrollToTop />
                 <ToastPortal />
                 <AppRoutes />
             </AuthProvider>
