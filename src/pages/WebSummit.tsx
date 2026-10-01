@@ -1,5 +1,5 @@
 import { Helmet } from "react-helmet-async";
-import { CalendarDays, MapPin, Sparkles, Mail, ExternalLink } from "lucide-react";
+import { Mail, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { GlobalHeader } from "@/components/GlobalHeader";
 import { AnswerFirst } from "@/components/AnswerFirst";
@@ -51,21 +51,10 @@ const structuredData = {
   ],
 };
 
-const particulars = [
-  { icon: CalendarDays, label: "When", value: "9–12 November 2026" },
-  { icon: MapPin, label: "Where", value: "MEO Arena, Lisbon — the exact spot is confirmed on the day" },
-  {
-    icon: Sparkles,
-    label: "Standing",
-    value:
-      "An ALPHA startup — Web Summit's programme for early-stage companies, chosen from thousands of applications",
-  },
-];
-
 const questions = [
   {
     q: "Is Hobson AI at Web Summit 2026?",
-    a: "Yes — I am exhibiting from the doors opening on the 9th to the close on the 12th, as one of the ALPHA startups chosen for this year's programme.",
+    a: "Yes — I am exhibiting from the doors opening on the 9th to the close on the 12th, as one of the ALPHA startups: Web Summit's programme for early-stage companies, chosen from thousands of applications.",
   },
   {
     q: "Where can I meet Hobson AI in Lisbon?",
@@ -128,25 +117,6 @@ export default function WebSummit() {
             write to rochelle.t@hobsonschoice.ai and I shall tell you where to find me.
           </AnswerFirst>
         </section>
-
-        <section className="max-w-6xl mx-auto px-6 py-14 sm:py-16">
-          <h2 className="font-serif text-3xl sm:text-4xl">The particulars</h2>
-          <div className="mt-8 grid gap-4 sm:grid-cols-3">
-            {particulars.map((item) => (
-              <div
-                key={item.label}
-                className="rounded-lg border border-bone bg-document-white p-6"
-              >
-                <item.icon className="h-5 w-5 text-brass-text" aria-hidden="true" />
-                <p className="mt-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                  {item.label}
-                </p>
-                <p className="mt-2 font-medium leading-snug">{item.value}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
 
         <section className="max-w-3xl mx-auto px-6 py-14 sm:py-20">
           <h2 className="font-serif text-3xl sm:text-4xl">Questions people ask me</h2>
