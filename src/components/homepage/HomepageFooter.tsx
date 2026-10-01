@@ -32,6 +32,7 @@ export const HomepageFooter = () => {
               <Link to="/founder" className="block text-sm text-muted-foreground hover:text-primary transition-colors">Founders</Link>
               <Link to="/blog" className="block text-sm text-muted-foreground hover:text-primary transition-colors">Blog</Link>
               <Link to="/press" className="block text-sm text-muted-foreground hover:text-primary transition-colors">Press</Link>
+              <Link to="/web-summit" className="block text-sm text-muted-foreground hover:text-primary transition-colors">Web Summit 2026</Link>
               <Link to="/contact" className="block text-sm text-muted-foreground hover:text-primary transition-colors">Contact</Link>
               <Link to="/privacy-policy" className="block text-sm text-muted-foreground hover:text-primary transition-colors">Privacy Policy</Link>
               <Link to="/data-protection" className="block text-sm text-muted-foreground hover:text-primary transition-colors">Data Protection</Link>
