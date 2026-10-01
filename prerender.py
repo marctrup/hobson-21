@@ -56,14 +56,25 @@ BOOTSTRAP = """<script>
 /* Load the current build assets from the root document so this snapshot never
    goes stale when file hashes change. */
 (function () {
+  /* Hide the snapshot until its styles arrive, so visitors never see an
+     unstyled flash on refresh. Crawlers still read the HTML in full. */
+  var hide = document.createElement('style');
+  hide.textContent = '#root{visibility:hidden}';
+  document.head.appendChild(hide);
+  var reveal = function () { if (hide.parentNode) hide.parentNode.removeChild(hide); };
+  setTimeout(reveal, 3000);
   fetch('/', { headers: { 'accept': 'text/html' } })
     .then(function (r) { return r.text(); })
     .then(function (html) {
       var doc = new DOMParser().parseFromString(html, 'text/html');
-      doc.querySelectorAll('link[rel="stylesheet"]').forEach(function (l) {
+      var sheets = doc.querySelectorAll('link[rel="stylesheet"]');
+      var pending = sheets.length;
+      if (!pending) reveal();
+      sheets.forEach(function (l) {
         var link = document.createElement('link');
         link.rel = 'stylesheet';
         link.href = l.getAttribute('href');
+        link.onload = link.onerror = function () { if (--pending <= 0) reveal(); };
         document.head.appendChild(link);
       });
       doc.querySelectorAll('script[type="module"][src]').forEach(function (s) {
@@ -74,7 +85,7 @@ BOOTSTRAP = """<script>
         document.head.appendChild(script);
       });
     })
-    .catch(function () {});
+    .catch(reveal);
 })();
 </script>"""
 
