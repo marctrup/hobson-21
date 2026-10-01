@@ -54,11 +54,13 @@ const structuredData = {
 const questions = [
   {
     q: "Where can I meet Hobson AI in Lisbon?",
-    a: "Within the MEO Arena. The exact spot will not be known until the day — write to rochelle.t@hobsonschoice.ai and I shall tell you where to find me as soon as it is settled.",
+    a: "Within the MEO Arena. The exact spot will not be known until the day — write to me and I shall tell you where to find me as soon as it is settled.",
+    cta: "Where to find me",
   },
   {
     q: "Can I book a meeting with Hobson AI in advance?",
-    a: "Yes. Write to rochelle.t@hobsonschoice.ai before the event and we shall put a time in the diary, so you need not queue. Once the spot is known, I shall tell you where we are to meet.",
+    a: "Yes. Write to me before the event and we shall put a time in the diary, so you need not queue. Once the spot is known, I shall tell you where we are to meet.",
+    cta: "Arrange a meeting",
   },
 ];
 
@@ -114,7 +116,7 @@ export default function WebSummit() {
           </AnswerFirst>
         </section>
 
-        <section className="max-w-3xl mx-auto px-6 py-14 sm:py-20">
+        <section className="max-w-3xl mx-auto px-6 pb-16 sm:pb-20">
           <h2 className="font-serif text-3xl sm:text-4xl">Questions people ask me</h2>
           <div className="mt-8 space-y-5">
             {questions.map((item) => (
@@ -124,24 +126,14 @@ export default function WebSummit() {
               >
                 <h3 className="font-serif text-2xl leading-snug">{item.q}</h3>
                 <p className="mt-3 text-muted-foreground leading-relaxed">{item.a}</p>
+                <Button asChild variant="outline" className="mt-5">
+                  <a href="mailto:rochelle.t@hobsonschoice.ai">
+                    <Mail className="mr-2 h-4 w-4" aria-hidden="true" />
+                    {item.cta}
+                  </a>
+                </Button>
               </article>
             ))}
-          </div>
-        </section>
-
-        <section className="bg-bone-wash border-t border-bone py-14 sm:py-16">
-          <div className="max-w-3xl mx-auto px-6 text-center">
-            <h2 className="font-serif text-3xl sm:text-4xl">Do write before you travel</h2>
-            <p className="mt-5 text-muted-foreground leading-relaxed">
-              If you would like a proper conversation rather than a stand-side hello, send a
-              note and we shall put a time in the diary before Lisbon begins.
-            </p>
-            <Button asChild className="mt-7">
-              <a href="mailto:rochelle.t@hobsonschoice.ai">
-                <Mail className="mr-2 h-4 w-4" aria-hidden="true" />
-                Arrange a meeting
-              </a>
-            </Button>
           </div>
         </section>
       </main>
