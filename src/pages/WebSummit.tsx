@@ -1,5 +1,5 @@
 import { Helmet } from "react-helmet-async";
-import { CalendarDays, MapPin, Sparkles, Mail, ArrowRight } from "lucide-react";
+import { CalendarDays, MapPin, Sparkles, Mail, ArrowRight, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { GlobalHeader } from "@/components/GlobalHeader";
@@ -104,6 +104,15 @@ export default function WebSummit() {
               The exact spot will not be known until the day — write to me at
               rochelle.t@hobsonschoice.ai and I shall confirm where to find me.
             </p>
+            <a
+              href={officialListingUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-brass-text underline decoration-brass/40 underline-offset-4 hover:decoration-brass"
+            >
+              My official Web Summit listing
+              <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
+            </a>
           </div>
         </section>
 
