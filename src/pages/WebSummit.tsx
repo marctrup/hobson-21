@@ -1,5 +1,5 @@
 import { Helmet } from "react-helmet-async";
-import { CalendarDays, MapPin, Sparkles, Mail } from "lucide-react";
+import { CalendarDays, MapPin, Sparkles, Mail, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { GlobalHeader } from "@/components/GlobalHeader";
 import { AnswerFirst } from "@/components/AnswerFirst";
