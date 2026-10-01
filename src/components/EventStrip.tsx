@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { X } from "lucide-react";
 
 const STORAGE_KEY = "hobson-event-strip-dismissed";
@@ -15,6 +15,7 @@ export const EventStrip = () => {
   const [dismissed, setDismissed] = useState(
     () => typeof window !== "undefined" && sessionStorage.getItem(STORAGE_KEY) === "1"
   );
+  const location = useLocation();
 
   if (!SHOW_EVENT || dismissed) return null;
 
