@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Play } from "lucide-react";
-import marcTalkingToPhone from "@/assets/marc-talking-to-phone.png.asset.json";
+import marcTalkingToPhone from "@/assets/marc-talking-to-phone-2.png.asset.json";
 
-const VIDEO_ID = "o22VxrIMPjQ";
+const VIDEO_ID = "ZZGVrk_Gse8";
 
 /**
  * Portrait, phone-recorded video presented in a phone-like frame.
