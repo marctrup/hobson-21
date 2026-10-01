@@ -29,7 +29,7 @@ export const EventStrip = () => {
           I shall be at{" "}
           <Link
             to="/web-summit"
-            className="font-medium underline decoration-brass/50 underline-offset-2 hover:decoration-brass"
+            className="font-medium text-brass-text underline decoration-brass/50 underline-offset-2 hover:decoration-brass"
           >
             Web Summit Lisbon 2026
           </Link>
