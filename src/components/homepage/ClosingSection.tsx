@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import { ArrowRight } from "lucide-react";
 
 export const ClosingSection = () => (
   <section className="py-24" style={{ background: "#FCFAF7" }}>

@@ -158,12 +158,12 @@ export const HomepageABTest = () => {
                   </p>
 
                   <Link
-                    to="/pricing"
+                    to="/contact"
                     className="bg-paper border border-bone rounded-xl px-6 py-3 inline-block hover:bg-bone-wash hover:border-bone hover:scale-105 hover:shadow-lg transition-all duration-200 group"
                     id="homepage-hero-pricing-cta"
                   >
                     <div className="inline-flex items-center gap-3 text-charcoal hover:text-charcoal font-medium text-base">
-                      See pricing
+                      Talk to me
                       <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
                     </div>
                   </Link>
