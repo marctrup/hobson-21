@@ -30,10 +30,17 @@ export const GlobalHeader = () => {
     setIsMobileMenuOpen(false);
   };
 
+  const handleNavClick = (to: string) => {
+    if (location.pathname === to) {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
+
   const desktopLink = (link: any) => (
     <Link
       key={link.to}
       to={link.to}
+      onClick={() => handleNavClick(link.to)}
       className="group flex flex-col items-start py-1 outline-none rounded-sm focus-visible:ring-2 focus-visible:ring-brass/60"
       title={link.title}
       aria-current={isActive(link.to) ? "page" : undefined}
@@ -59,7 +66,7 @@ export const GlobalHeader = () => {
       key={link.to}
       to={link.to}
       className="group flex flex-col border-b border-bone-wash py-3"
-      onClick={closeMobileMenu}
+      onClick={() => { handleNavClick(link.to); closeMobileMenu(); }}
       title={link.title}
       aria-current={isActive(link.to) ? "page" : undefined}
     >
@@ -118,7 +125,7 @@ export const GlobalHeader = () => {
               <Link
                 to="/"
                 className="group flex flex-col border-b border-bone-wash py-3"
-                onClick={closeMobileMenu}
+                onClick={() => { handleNavClick('/'); closeMobileMenu(); }}
                 aria-current={location.pathname === '/' ? "page" : undefined}
               >
                 <span className="text-lg text-ink leading-tight">Home</span>

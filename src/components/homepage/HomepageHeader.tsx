@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { CONTENT } from "@/config/content";
@@ -28,8 +28,14 @@ const UKFlag = ({ className }: { className?: string }) => (
 
 export const HomepageHeader = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const location = useLocation();
   const content = CONTENT;
 
+  const handleNavClick = (to: string) => {
+    if (location.pathname === to) {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -65,6 +71,7 @@ export const HomepageHeader = () => {
               <Link
                 key={link.to}
                 to={link.to}
+                onClick={() => handleNavClick(link.to)}
                 className="group flex flex-col items-start py-1 outline-none rounded-sm focus-visible:ring-2 focus-visible:ring-brass/60"
                 title={link.title}
               >
@@ -87,6 +94,7 @@ export const HomepageHeader = () => {
               <Link
                 key={link.to}
                 to={link.to}
+                onClick={() => handleNavClick(link.to)}
                 className="group flex flex-col items-start py-1 outline-none rounded-sm focus-visible:ring-2 focus-visible:ring-brass/60"
                 title={link.title}
               >
@@ -136,7 +144,7 @@ export const HomepageHeader = () => {
               <Link
                 to="/"
                 className="group flex flex-col border-b border-bone-wash py-3"
-                onClick={closeMobileMenu}
+                onClick={() => { handleNavClick('/'); closeMobileMenu(); }}
               >
                 <span className="text-lg text-ink leading-tight">Home</span>
                 <span className="mt-1 text-xs font-bold text-brass-text italic leading-tight" style={serifStack}>
@@ -148,7 +156,7 @@ export const HomepageHeader = () => {
                   key={link.to}
                   to={link.to}
                   className="group flex flex-col border-b border-bone-wash py-3"
-                  onClick={closeMobileMenu}
+                  onClick={() => { handleNavClick(link.to); closeMobileMenu(); }}
                   title={link.title}
                 >
                   <span className="text-lg text-ink leading-tight">{link.label}</span>
@@ -162,7 +170,7 @@ export const HomepageHeader = () => {
                   key={link.to}
                   to={link.to}
                   className="group flex flex-col border-b border-bone-wash py-3"
-                  onClick={closeMobileMenu}
+                  onClick={() => { handleNavClick(link.to); closeMobileMenu(); }}
                   title={link.title}
                 >
                   <span className="text-lg text-ink leading-tight">{link.label}</span>
