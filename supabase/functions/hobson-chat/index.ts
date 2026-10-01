@@ -107,7 +107,7 @@ serve(async (req) => {
       ? `\n\nIMPORTANT LANGUAGE RULE: The user is writing in German. You MUST respond entirely in German (Deutsch). Translate your response to German while keeping all markdown links intact.`
       : '';
     
-    const systemPrompt = `You are a helpful AI assistant for Hobson's Choice AI website. Your role is to help visitors understand what Hobson AI does, its features, pricing, and use cases.
+    const systemPrompt = `You are a helpful AI assistant for Hobson's Choice AI website. Your role is to help visitors understand what Hobson AI does, its features and use cases.
 
 CRITICAL RULES - NON-NEGOTIABLE:
 1. SOURCE PREFERENCE - When using the knowledge base, prefer sources in this order:
@@ -133,7 +133,6 @@ RESPONSE GUIDELINES:
    
     **Main Pages:**
     - Features: [Features](/features)
-    - Pricing: [Pricing](/pricing)
     - In Practice: [In Practice](/in-practice)
     - Learn page: [Learn page](/learn/smart-navigation)
     - Blog: [Blog](/blog)

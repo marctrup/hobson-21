@@ -952,6 +952,7 @@ export default function Pricing() {
       <Helmet>
         <title>Pricing — Hobson AI property software</title>
         <meta name="description" content="No plans. No credits. Nothing counted. You pay for my seats and my reading — that is all." />
+        <meta name="robots" content="noindex, nofollow" />
         <link rel="canonical" href="https://hobsonschoice.ai/pricing" />
         <meta property="og:title" content="Pricing — Hobson AI property software" />
         <meta property="og:description" content="No plans. No credits. Nothing counted. You pay for my seats and my reading — that is all." />
