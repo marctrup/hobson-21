@@ -1,7 +1,6 @@
 import { Helmet } from "react-helmet-async";
-import { CalendarDays, MapPin, Sparkles, Mail, ArrowRight, ExternalLink } from "lucide-react";
+import { CalendarDays, MapPin, Sparkles, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
 import { GlobalHeader } from "@/components/GlobalHeader";
 import { AnswerFirst } from "@/components/AnswerFirst";
 
@@ -147,32 +146,6 @@ export default function WebSummit() {
           </p>
         </section>
 
-        <section className="border-y border-bone bg-zebra">
-          <div className="max-w-3xl mx-auto px-6 py-14 sm:py-16">
-            <h2 className="font-serif text-3xl sm:text-4xl">What I shall show you</h2>
-            <div className="mt-6 space-y-5 text-muted-foreground leading-relaxed">
-              <p className="font-medium text-foreground">
-                The intelligence layer your property portfolio runs on.
-              </p>
-              <p>
-                I read your property documents — leases, licences, certificates, management
-                agreements — and turn them into structured, evidence-backed answers, each one
-                linked to the exact clause and page it came from.
-              </p>
-              <p>
-                At the show you may ask me about your own portfolio, watch me prepare the
-                information and the evidence, and see how a decision is made: preparation is
-                mine, decision is yours.
-              </p>
-            </div>
-            <Button asChild variant="link" className="mt-4 h-auto p-0 text-brass-text">
-              <Link to="/">
-                Learn more about me
-                <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
-              </Link>
-            </Button>
-          </div>
-        </section>
 
         <section className="max-w-3xl mx-auto px-6 py-14 sm:py-20">
           <h2 className="font-serif text-3xl sm:text-4xl">Questions people ask me</h2>
