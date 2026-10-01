@@ -78,11 +78,22 @@ const CrmReports = lazy(() => import("../pages/crm/CrmReports"));
 const CrmAcceptInvite = lazy(() => import("../pages/crm/CrmAcceptInvite"));
 
 // Loading component
-const PageLoader = () => (
-  <div className="min-h-screen flex items-center justify-center bg-background">
-    <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" />
-  </div>
-);
+// Quiet loader: shows nothing for brief loads (avoids a flash on refresh);
+// the spinner only appears if the page genuinely takes a while.
+const PageLoader = () => {
+  const [visible, setVisible] = React.useState(false);
+  React.useEffect(() => {
+    const t = setTimeout(() => setVisible(true), 800);
+    return () => clearTimeout(t);
+  }, []);
+  return (
+    <div className="min-h-screen flex items-center justify-center">
+      {visible && (
+        <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+      )}
+    </div>
+  );
+};
 
 // Declare global dataLayer for GTM
 declare global {
