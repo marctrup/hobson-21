@@ -113,7 +113,7 @@ export default function WebSummit() {
           </div>
         </section>
 
-        <section className="mx-auto max-w-3xl px-6">
+        <section className="mx-auto max-w-3xl px-6 pt-10 sm:pt-12">
           <AnswerFirst variant="manuscript">
             Hobson AI, the intelligence layer your property portfolio runs on, will be at
             Web Summit Lisbon 2026, at the MEO Arena in Lisbon from 9 to 12 November 2026.
