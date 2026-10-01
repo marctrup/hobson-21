@@ -20,25 +20,33 @@ export const EventStrip = () => {
 
   return (
     <div
-      className="bg-brass/10 border-b border-brass/40"
+      className="relative bg-ink border-y border-brass overflow-hidden"
       role="region"
       aria-label="Exhibition announcement"
     >
-      <div className="container mx-auto px-4 py-2 flex items-center justify-center gap-2 sm:gap-4 text-center">
-        <p className="text-xs sm:text-sm text-brass-text leading-snug min-w-0">
+      {/* Stationery hairlines, inset from each edge */}
+      <div className="absolute inset-y-0 left-2 w-px bg-brass/30 pointer-events-none" aria-hidden="true" />
+      <div className="absolute inset-y-0 right-2 w-px bg-brass/30 pointer-events-none" aria-hidden="true" />
+
+      <div className="container mx-auto px-4 py-2.5 flex items-center justify-center gap-3 sm:gap-4 text-center">
+        <p className="text-[13px] sm:text-sm font-serif text-bone-wash leading-snug min-w-0 tracking-wide">
           I shall be at{" "}
           <Link
             to="/web-summit"
-            className="font-medium text-brass-text underline decoration-brass/50 underline-offset-2 hover:decoration-brass"
+            className="italic text-brass underline decoration-brass/40 underline-offset-4 hover:decoration-brass transition-all duration-300"
           >
             Web Summit Lisbon 2026
           </Link>
-          <span className="hidden sm:inline"> — 9–12 November, MEO Arena — as an ALPHA startup.</span>
-          <span className="sm:hidden">, 9–12 November.</span>
+          <span className="mx-1.5 opacity-50 text-[10px]">—</span>
+          <span className="hidden sm:inline">9–12 November, MEO Arena</span>
+          <span className="sm:hidden">9–12 Nov</span>
+          <span className="mx-1.5 opacity-50 text-[10px]">—</span>
+          <span className="hidden sm:inline">as an ALPHA startup.</span>
+          <span className="sm:hidden">ALPHA.</span>
         </p>
         <Link
           to="/web-summit"
-          className="shrink-0 text-xs sm:text-sm font-medium text-brass-text underline underline-offset-2 hover:opacity-80"
+          className="shrink-0 text-[10px] sm:text-[11px] font-medium uppercase tracking-[0.18em] text-brass border-b border-brass/60 pb-0.5 hover:border-brass transition-colors"
         >
           Where to meet me
         </Link>
@@ -49,7 +57,7 @@ export const EventStrip = () => {
             setDismissed(true);
           }}
           aria-label="Dismiss announcement"
-          className="shrink-0 p-1 rounded-sm text-brass-text/70 hover:text-brass-text"
+          className="shrink-0 p-1 rounded-sm text-brass/60 hover:text-brass transition-colors"
         >
           <X className="h-3.5 w-3.5" aria-hidden="true" />
         </button>
