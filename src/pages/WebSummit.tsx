@@ -98,7 +98,8 @@ export default function WebSummit() {
               I shall be in Lisbon from 9 to 12 November, exhibiting as an ALPHA startup.
             </p>
             <p className="mt-3 text-muted-foreground leading-relaxed">
-              Do come and find me — or write first, and I shall have everything ready for your visit.
+              The exact spot will not be known until the day — write to me at
+              info@hobsonschoice.ai and I shall confirm where to find me.
             </p>
           </div>
         </section>
