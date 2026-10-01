@@ -1,11 +1,13 @@
 import { Helmet } from "react-helmet-async";
-import { CalendarDays, MapPin, Sparkles, Mail, ArrowRight } from "lucide-react";
+import { CalendarDays, MapPin, Sparkles, Mail, ArrowRight, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { GlobalHeader } from "@/components/GlobalHeader";
 import { AnswerFirst } from "@/components/AnswerFirst";
 
 const title = "Hobson AI at Web Summit Lisbon 2026";
+const officialListingUrl =
+  "https://websummit.com/appearances/lis26/92785eda-a81c-4b0b-b4ba-f793e60bd34f/hobson-ai-%E2%80%94%E2%80%94-the-intelligence-layer-your-property-portfolio-runs-on/";
 const description =
   "Hobson AI — the intelligence layer your property portfolio runs on — will be at Web Summit Lisbon 2026, 9–12 November, MEO Arena, as an ALPHA startup.";
 
@@ -18,6 +20,7 @@ const structuredData = {
       name: "Hobson AI",
       url: "https://hobsonschoice.ai",
       description: "The intelligence layer your property portfolio runs on.",
+      sameAs: [officialListingUrl],
     },
     {
       "@type": "Event",
@@ -101,6 +104,15 @@ export default function WebSummit() {
               The exact spot will not be known until the day — write to me at
               rochelle.t@hobsonschoice.ai and I shall confirm where to find me.
             </p>
+            <a
+              href={officialListingUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-brass-text underline decoration-brass/40 underline-offset-4 hover:decoration-brass"
+            >
+              My official Web Summit listing
+              <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
+            </a>
           </div>
         </section>
 
