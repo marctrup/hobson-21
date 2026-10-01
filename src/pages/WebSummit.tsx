@@ -6,6 +6,8 @@ import { GlobalHeader } from "@/components/GlobalHeader";
 import { AnswerFirst } from "@/components/AnswerFirst";
 
 const title = "Hobson AI at Web Summit Lisbon 2026";
+const officialListingUrl =
+  "https://websummit.com/appearances/lis26/92785eda-a81c-4b0b-b4ba-f793e60bd34f/hobson-ai-%E2%80%94%E2%80%94-the-intelligence-layer-your-property-portfolio-runs-on/";
 const description =
   "Hobson AI — the intelligence layer your property portfolio runs on — will be at Web Summit Lisbon 2026, 9–12 November, MEO Arena, as an ALPHA startup.";
 
@@ -18,6 +20,7 @@ const structuredData = {
       name: "Hobson AI",
       url: "https://hobsonschoice.ai",
       description: "The intelligence layer your property portfolio runs on.",
+      sameAs: [officialListingUrl],
     },
     {
       "@type": "Event",
