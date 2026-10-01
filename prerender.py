@@ -59,7 +59,7 @@ BOOTSTRAP = """<script>
   /* Hide the snapshot until its styles arrive, so visitors never see an
      unstyled flash on refresh. Crawlers still read the HTML in full. */
   var hide = document.createElement('style');
-  hide.textContent = '#root{visibility:hidden}';
+  hide.textContent = 'body{visibility:hidden}';
   document.head.appendChild(hide);
   var reveal = function () { if (hide.parentNode) hide.parentNode.removeChild(hide); };
   setTimeout(reveal, 3000);
