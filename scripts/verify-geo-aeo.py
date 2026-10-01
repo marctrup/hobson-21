@@ -39,7 +39,6 @@ SOLUTION_PAGES = [
 
 # Pages that must open with an answer-first "In short" summary.
 ANSWER_FIRST = SOLUTION_PAGES + [
-    "/pricing",
     "/learn",
     "/learn/faq",
     "/learn/glossary",
@@ -53,7 +52,7 @@ FRESHNESS = SOLUTION_PAGES + ["/learn/faq", "/learn/glossary"]
 
 # Pages llms.txt must point at.
 LLMS_REQUIRED = [
-    "/", "/pricing", "/contact", "/learn", "/learn/faq", "/learn/glossary",
+    "/", "/contact", "/learn", "/learn/faq", "/learn/glossary",
     "/web-summit",
 ] + SOLUTION_PAGES
 

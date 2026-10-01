@@ -5,7 +5,6 @@
  */
 export const CONTENT_UPDATED: Record<string, string> = {
   "/": "2026-09-23",
-  "/pricing": "2026-09-23",
   "/lease-management-software": "2026-09-23",
   "/property-management-software": "2026-09-23",
   "/property-portfolio-software": "2026-09-23",
