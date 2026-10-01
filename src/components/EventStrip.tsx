@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { X } from "lucide-react";
 
 const STORAGE_KEY = "hobson-event-strip-dismissed";
@@ -15,6 +15,7 @@ export const EventStrip = () => {
   const [dismissed, setDismissed] = useState(
     () => typeof window !== "undefined" && sessionStorage.getItem(STORAGE_KEY) === "1"
   );
+  const location = useLocation();
 
   if (!SHOW_EVENT || dismissed) return null;
 
@@ -45,7 +46,17 @@ export const EventStrip = () => {
           <span className="sm:hidden">ALPHA.</span>
         </p>
         <Link
-          to="/web-summit"
+          to="/web-summit#questions"
+          onClick={(e) => {
+            // Already on the page: the router won't re-navigate, so glide
+            // to the questions section ourselves.
+            if (location.pathname === "/web-summit") {
+              e.preventDefault();
+              document
+                .querySelector("#questions")
+                ?.scrollIntoView({ behavior: "smooth", block: "start" });
+            }
+          }}
           className="shrink-0 text-[10px] sm:text-[11px] font-medium uppercase tracking-[0.18em] text-brass border-b border-brass/60 pb-0.5 hover:border-brass transition-colors"
         >
           Where to meet me

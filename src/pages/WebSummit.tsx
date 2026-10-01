@@ -116,7 +116,10 @@ export default function WebSummit() {
           </AnswerFirst>
         </section>
 
-        <section className="mx-auto max-w-3xl px-6 pb-16 pt-12 sm:pt-14 sm:pb-20">
+        <section
+          id="questions"
+          className="mx-auto max-w-3xl scroll-mt-24 px-6 pb-16 pt-12 sm:pt-14 sm:pb-20"
+        >
           <h2 className="border-b border-brass/30 pb-6 font-serif text-3xl italic sm:text-4xl">
             Questions people ask me
           </h2>
