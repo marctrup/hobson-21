@@ -144,7 +144,7 @@ export const HomepageHeader = () => {
               <Link
                 to="/"
                 className="group flex flex-col border-b border-bone-wash py-3"
-                onClick={closeMobileMenu}
+                onClick={() => { handleNavClick('/'); closeMobileMenu(); }}
               >
                 <span className="text-lg text-ink leading-tight">Home</span>
                 <span className="mt-1 text-xs font-bold text-brass-text italic leading-tight" style={serifStack}>

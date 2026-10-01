@@ -125,7 +125,7 @@ export const GlobalHeader = () => {
               <Link
                 to="/"
                 className="group flex flex-col border-b border-bone-wash py-3"
-                onClick={closeMobileMenu}
+                onClick={() => { handleNavClick('/'); closeMobileMenu(); }}
                 aria-current={location.pathname === '/' ? "page" : undefined}
               >
                 <span className="text-lg text-ink leading-tight">Home</span>
