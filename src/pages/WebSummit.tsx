@@ -62,11 +62,11 @@ const questions = [
   },
   {
     q: "Where can I meet Hobson AI in Lisbon?",
-    a: "At the MEO Arena throughout the conference, 9–12 November 2026. The exact spot will not be known until the day — write to info@hobsonschoice.ai and I shall confirm where to find me as soon as it is settled.",
+    a: "At the MEO Arena throughout the conference, 9–12 November 2026. The exact spot will not be known until the day — write to rochelle.t@hobsonschoice.ai and I shall confirm where to find me as soon as it is settled.",
   },
   {
     q: "Can I book a meeting with Hobson AI in advance?",
-    a: "Yes. Write to info@hobsonschoice.ai before the event and we shall arrange a time that suits you, so you need not queue. I shall confirm the exact meeting place once the spot is known.",
+    a: "Yes. Write to rochelle.t@hobsonschoice.ai before the event and we shall arrange a time that suits you, so you need not queue. I shall confirm the exact meeting place once the spot is known.",
   },
 ];
 
@@ -99,7 +99,7 @@ export default function WebSummit() {
             </p>
             <p className="mt-3 text-muted-foreground leading-relaxed">
               The exact spot will not be known until the day — write to me at
-              info@hobsonschoice.ai and I shall confirm where to find me.
+              rochelle.t@hobsonschoice.ai and I shall confirm where to find me.
             </p>
           </div>
         </section>
@@ -109,7 +109,7 @@ export default function WebSummit() {
             Yes — Hobson AI, the intelligence layer your property portfolio runs on, will be at
             Web Summit Lisbon 2026, at the MEO Arena in Lisbon from 9 to 12 November 2026,
             exhibiting as an ALPHA startup. The exact meeting spot is confirmed on the day;
-            write to info@hobsonschoice.ai and I shall tell you where to find me.
+            write to rochelle.t@hobsonschoice.ai and I shall tell you where to find me.
           </AnswerFirst>
         </section>
 
@@ -185,7 +185,7 @@ export default function WebSummit() {
               note and we shall put a time in the diary before Lisbon begins.
             </p>
             <Button asChild className="mt-7">
-              <a href="mailto:info@hobsonschoice.ai">
+              <a href="mailto:rochelle.t@hobsonschoice.ai">
                 <Mail className="mr-2 h-4 w-4" aria-hidden="true" />
                 Arrange a meeting
               </a>
