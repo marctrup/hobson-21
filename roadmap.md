@@ -19,5 +19,5 @@
 - [x] Build "Where to meet me" page (/web-summit) with Event structured data, Q&A blocks and email call-to-action
 - [x] Add route to sitemap, llms.txt and crawler snapshot list
 - [ ] Confirm the stand/meeting point on the day (9 Nov 2026) — spot not known in advance; visitors email info@hobsonschoice.ai and Marc confirms when known
-- [ ] Take the strip and page down after the show (ends 12 November 2026); keep a recap on the blog if wanted
+- [ ] After the show (ends 12 Nov 2026): remove the EventStrip only (SHOW_EVENT flag); KEEP the /web-summit page — convert it to a post-show recap so the indexed URL and citations stay live (SEO/GEO/AEO value)
 - [ ] Refresh crawler copies on the next publish so search engines pick up the new page
