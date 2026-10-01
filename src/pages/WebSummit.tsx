@@ -54,21 +54,26 @@ const structuredData = {
 const particulars = [
   { icon: CalendarDays, label: "When", value: "9–12 November 2026" },
   { icon: MapPin, label: "Where", value: "MEO Arena, Lisbon — the exact spot is confirmed on the day" },
-  { icon: Sparkles, label: "Standing", value: "Exhibiting as an ALPHA startup" },
+  {
+    icon: Sparkles,
+    label: "Standing",
+    value:
+      "An ALPHA startup — Web Summit's programme for early-stage companies, chosen from thousands of applications",
+  },
 ];
 
 const questions = [
   {
     q: "Is Hobson AI at Web Summit 2026?",
-    a: "Yes. Hobson AI will exhibit at Web Summit Lisbon 2026, which runs from 9 to 12 November 2026 at the MEO Arena in Lisbon, as part of the ALPHA startup programme.",
+    a: "Yes — I am exhibiting from the doors opening on the 9th to the close on the 12th, as one of the ALPHA startups chosen for this year's programme.",
   },
   {
     q: "Where can I meet Hobson AI in Lisbon?",
-    a: "At the MEO Arena throughout the conference, 9–12 November 2026. The exact spot will not be known until the day — write to rochelle.t@hobsonschoice.ai and I shall confirm where to find me as soon as it is settled.",
+    a: "Within the MEO Arena. The exact spot will not be known until the day — write to rochelle.t@hobsonschoice.ai and I shall tell you where to find me as soon as it is settled.",
   },
   {
     q: "Can I book a meeting with Hobson AI in advance?",
-    a: "Yes. Write to rochelle.t@hobsonschoice.ai before the event and we shall arrange a time that suits you, so you need not queue. I shall confirm the exact meeting place once the spot is known.",
+    a: "Yes. Write to rochelle.t@hobsonschoice.ai before the event and we shall put a time in the diary, so you need not queue. Once the spot is known, I shall tell you where we are to meet.",
   },
 ];
 
@@ -140,10 +145,6 @@ export default function WebSummit() {
               </div>
             ))}
           </div>
-          <p className="mt-6 max-w-3xl text-muted-foreground leading-relaxed">
-            ALPHA is Web Summit's programme for early-stage companies, and places there are
-            chosen from thousands of applications. We are glad of the invitation.
-          </p>
         </section>
 
 
