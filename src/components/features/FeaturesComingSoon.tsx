@@ -26,7 +26,7 @@ const FeaturesComingSoon = () => (
             Hobson learns how your business operates. Your contractors, contacts, policies, approval thresholds and communication preferences — stored permanently and applied to every answer. Every feature above becomes more powerful when Hobson knows your business, not just your documents.
           </p>
           <Link
-            to="/pricing"
+            to="/contact"
             className="inline-flex items-center gap-1 text-accent-teal font-medium hover:underline"
           >
             Join the waitlist <ArrowRight className="w-4 h-4" />
@@ -40,7 +40,7 @@ const FeaturesComingSoon = () => (
             Built on the accuracy of Phase 1 and the business context of Phase 2, Hobson executes workflows autonomously. Rent reviews triggered. Compliance deadlines actioned. Lease events managed end-to-end. The work gets done.
           </p>
           <Link
-            to="/pricing"
+            to="/contact"
             className="inline-flex items-center gap-1 text-accent-amber font-medium hover:underline"
           >
             Join the waitlist <ArrowRight className="w-4 h-4" />

@@ -15,13 +15,6 @@ export const ClosingSection = () => (
       </p>
       <div className="mt-8 flex flex-wrap justify-center gap-3">
         <Link
-          to="/pricing"
-          className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold transition hover:opacity-90"
-          style={{ background: "#2D2D2D", color: "#FCFAF7" }}
-        >
-          See my pricing <ArrowRight className="w-4 h-4" />
-        </Link>
-        <Link
           to="/contact"
           className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold transition hover:bg-[#F7EDDC]"
           style={{ background: "#FCFAF7", border: "1px solid #B4914F", color: "#2D2D2D" }}
