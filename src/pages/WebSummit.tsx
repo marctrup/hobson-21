@@ -51,7 +51,7 @@ const structuredData = {
 
 const particulars = [
   { icon: CalendarDays, label: "When", value: "9–12 November 2026" },
-  { icon: MapPin, label: "Where", value: "MEO Arena, Lisbon, Portugal" },
+  { icon: MapPin, label: "Where", value: "MEO Arena, Lisbon — the exact spot is confirmed on the day" },
   { icon: Sparkles, label: "Standing", value: "Exhibiting as an ALPHA startup" },
 ];
 
@@ -62,11 +62,11 @@ const questions = [
   },
   {
     q: "Where can I meet Hobson AI in Lisbon?",
-    a: "At the MEO Arena throughout the conference, 9–12 November 2026. I shall confirm exactly where to find me nearer the time; the announcement strip on this site carries the latest details.",
+    a: "At the MEO Arena throughout the conference, 9–12 November 2026. The exact spot will not be known until the day — write to info@hobsonschoice.ai and I shall confirm where to find me as soon as it is settled.",
   },
   {
     q: "Can I book a meeting with Hobson AI in advance?",
-    a: "Yes. Write to info@hobsonschoice.ai before the event and we shall arrange a time that suits you, so you need not queue.",
+    a: "Yes. Write to info@hobsonschoice.ai before the event and we shall arrange a time that suits you, so you need not queue. I shall confirm the exact meeting place once the spot is known.",
   },
 ];
 
