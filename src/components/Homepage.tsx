@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Menu, X, ArrowRight, FileText, CheckCircle, Building2 } from "lucide-react";
 import { SimpleButton } from "@/components/ui/simple-button";
+import { EventStrip } from "@/components/EventStrip";
 import { HobsonGateway, HobsonGatewayMobile, serifStack } from "@/components/HobsonGateway";
 import { OptimizedImage } from "@/components/OptimizedImage";
 import { Helmet } from "react-helmet-async";
@@ -202,6 +203,25 @@ export const Homepage = () => {
                 </div>
 
               </div>
+            </div>
+          </section>
+
+          {/* Exhibition mention — remove after the show (13 November 2026) */}
+          <section
+            className="border-b border-bone py-5"
+            aria-label="Where to meet me"
+            style={{ background: "#FAF7F2" }}
+          >
+            <div className="container mx-auto px-4 flex flex-col sm:flex-row items-center justify-center gap-1.5 sm:gap-4 text-center">
+              <p className="text-sm text-muted-foreground">
+                I shall be at Web Summit Lisbon 2026, 9–12 November, as an ALPHA startup.
+              </p>
+              <Link
+                to="/web-summit"
+                className="text-sm font-medium text-brass-text underline underline-offset-2 hover:opacity-80"
+              >
+                Where to meet me
+              </Link>
             </div>
           </section>
 
