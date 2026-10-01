@@ -143,7 +143,6 @@ const AppContent = () => {
                 <Route path="/founder" element={<MeetTheFounder />} />
                 <Route path="/press" element={<Press />} />
                 <Route path="/web-summit" element={<WebSummit />} />
-                <Route path="/meet-the-founder" element={<Navigate to="/founder" replace />} />
                 <Route path="/blog" element={<Blog />} />
                 <Route path="/blog/:slug" element={<BlogPost />} />
                 <Route path="/contact" element={<ContactUs />} />
