@@ -3,6 +3,7 @@ import { Mail, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { GlobalHeader } from "@/components/GlobalHeader";
 import { AnswerFirst } from "@/components/AnswerFirst";
+import hobsonHighFive from "@/assets/hobson-high-five.png.asset.json";
 
 const title = "Hobson AI at Web Summit Lisbon 2026";
 const officialListingUrl =
@@ -104,6 +105,12 @@ export default function WebSummit() {
               My official Web Summit listing
               <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
             </a>
+            <img
+              src={hobsonHighFive.url}
+              alt="Hobson the owl high-fiving a guest"
+              className="mt-8 mx-auto w-44 sm:w-52 h-auto"
+              loading="eager"
+            />
           </div>
         </section>
 
