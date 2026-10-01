@@ -54,12 +54,12 @@ const structuredData = {
 const questions = [
   {
     q: "Where can I meet Hobson AI in Lisbon?",
-    a: "Within the MEO Arena. The exact spot will not be known until the day — write to me and I shall tell you where to find me as soon as it is settled.",
+    a: "Within the MEO Arena. The exact spot will not be known until the day — write to Rochelle at rochelle.t@hobsonschoice.ai and she will tell you where to find me as soon as it is settled.",
     cta: "Where to find me",
   },
   {
     q: "Can I book a meeting with Hobson AI in advance?",
-    a: "Yes. Write to me before the event and we shall put a time in the diary, so you need not queue. Once the spot is known, I shall tell you where we are to meet.",
+    a: "Yes. Write to Rochelle at rochelle.t@hobsonschoice.ai before the event and she will put a time in the diary, so you need not queue. Once the spot is known, she will tell you where we are to meet.",
     cta: "Arrange a meeting",
   },
 ];
@@ -110,9 +110,7 @@ export default function WebSummit() {
         <section className="max-w-3xl mx-auto px-6">
           <AnswerFirst>
             Hobson AI, the intelligence layer your property portfolio runs on, will be at
-            Web Summit Lisbon 2026, at the MEO Arena in Lisbon from 9 to 12 November 2026,
-            exhibiting as an ALPHA startup. The exact meeting spot is confirmed on the day;
-            write to rochelle.t@hobsonschoice.ai and I shall tell you where to find me.
+            Web Summit Lisbon 2026, at the MEO Arena in Lisbon from 9 to 12 November 2026.
           </AnswerFirst>
         </section>
 
