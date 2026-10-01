@@ -53,10 +53,6 @@ const structuredData = {
 
 const questions = [
   {
-    q: "Is Hobson AI at Web Summit 2026?",
-    a: "Yes — I am exhibiting from the doors opening on the 9th to the close on the 12th, as one of the ALPHA startups: Web Summit's programme for early-stage companies, chosen from thousands of applications.",
-  },
-  {
     q: "Where can I meet Hobson AI in Lisbon?",
     a: "Within the MEO Arena. The exact spot will not be known until the day — write to rochelle.t@hobsonschoice.ai and I shall tell you where to find me as soon as it is settled.",
   },
