@@ -149,8 +149,8 @@ const PropertyManagementSoftware = () => {
                 className="rounded-full px-8 font-semibold"
                 style={{ backgroundColor: INK, color: PAPER }}
               >
-                <Link to="/pricing">
-                  See pricing
+                <Link to="/contact">
+                  Talk to me
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
@@ -384,8 +384,8 @@ const PropertyManagementSoftware = () => {
                 className="rounded-full px-8 font-semibold"
                 style={{ backgroundColor: INK, color: PAPER }}
               >
-                <Link to="/pricing">
-                  Explore pricing
+                <Link to="/contact">
+                  Talk to me
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>

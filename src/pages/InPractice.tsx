@@ -288,7 +288,7 @@ const InPractice = () => {
                 <p className="text-muted-foreground leading-relaxed">
                   Hobson learns how your business operates. Your contractors, contacts, policies, approval thresholds and communication preferences — stored permanently and applied to every answer. Hobson stops being a document tool and starts behaving like an informed member of your team.
                 </p>
-                <Link to="/pricing" className="inline-flex items-center gap-1 text-accent-teal font-medium hover:underline">
+                <Link to="/contact" className="inline-flex items-center gap-1 text-accent-teal font-medium hover:underline">
                   Join the waitlist <ArrowRight className="w-4 h-4" />
                 </Link>
               </Card>
@@ -298,7 +298,7 @@ const InPractice = () => {
                 <p className="text-muted-foreground leading-relaxed">
                   Hobson stops answering and starts acting. Rent reviews triggered automatically. Compliance deadlines flagged and actioned. Lease events managed end-to-end without a human in the loop until a decision is required. The work gets done.
                 </p>
-                <Link to="/pricing" className="inline-flex items-center gap-1 text-accent-amber font-medium hover:underline">
+                <Link to="/contact" className="inline-flex items-center gap-1 text-accent-amber font-medium hover:underline">
                   Join the waitlist <ArrowRight className="w-4 h-4" />
                 </Link>
               </Card>

@@ -672,7 +672,7 @@ A comprehensive glossary of Hobson-specific terms and property terminology, mana
 ## Site Navigation
 The Hobson AI website has the following main sections:
 - Features (/features) — What Hobson does, how it works, why it matters
-- Pricing (/pricing) — Plans for operators, occupiers and owners of real estate
+
 - In Practice (/in-practice) — Real property work, real results
 - Learn (/learn) — Smart Navigation, FAQ, Integrations, Glossary
 - Blog (/blog)

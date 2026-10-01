@@ -28,7 +28,6 @@ export const HomepageFooter = () => {
           <div>
             <h4 className="text-sm font-semibold uppercase tracking-wider text-foreground mb-5">Company</h4>
             <div className="space-y-3">
-              <Link to="/pricing" className="block text-sm text-muted-foreground hover:text-primary transition-colors">Pricing</Link>
               <Link to="/founder" className="block text-sm text-muted-foreground hover:text-primary transition-colors">Founders</Link>
               <Link to="/blog" className="block text-sm text-muted-foreground hover:text-primary transition-colors">Blog</Link>
               <Link to="/press" className="block text-sm text-muted-foreground hover:text-primary transition-colors">Press</Link>

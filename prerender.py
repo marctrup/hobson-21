@@ -28,7 +28,6 @@ PORT = 4173
 BASE_URL = os.environ.get("PRERENDER_BASE_URL")
 
 ROUTES = [
-    "/pricing",
     "/blog",
     "/blog/how-ai-recognises-patterns-tenancy-agreements",
     "/contact",
