@@ -108,8 +108,8 @@ export default function WebSummit() {
           <AnswerFirst>
             Yes — Hobson AI, the intelligence layer your property portfolio runs on, will be at
             Web Summit Lisbon 2026, at the MEO Arena in Lisbon from 9 to 12 November 2026,
-            exhibiting as an ALPHA startup. To arrange a meeting in advance, write to
-            info@hobsonschoice.ai, or simply come and find me there.
+            exhibiting as an ALPHA startup. The exact meeting spot is confirmed on the day;
+            write to info@hobsonschoice.ai and I shall tell you where to find me.
           </AnswerFirst>
         </section>
 
