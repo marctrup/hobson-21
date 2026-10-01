@@ -5,6 +5,7 @@ import { ThemeProvider } from "next-themes";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { AuthProvider } from "@/hooks/useAuth";
 import { ToastPortal } from "@/components/ToastPortal";
+import { ScrollToTop } from "@/components/ScrollToTop";
 import { AppRoutes } from "@/components/AppRoutes";
 
 const queryClient = new QueryClient({
