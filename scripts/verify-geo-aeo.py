@@ -54,6 +54,7 @@ FRESHNESS = SOLUTION_PAGES + ["/learn/faq", "/learn/glossary"]
 # Pages llms.txt must point at.
 LLMS_REQUIRED = [
     "/", "/pricing", "/contact", "/learn", "/learn/faq", "/learn/glossary",
+    "/web-summit",
 ] + SOLUTION_PAGES
 
 AI_CRAWLERS = [
