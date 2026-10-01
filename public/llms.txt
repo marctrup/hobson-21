@@ -10,7 +10,7 @@ Hobson organises everything around a simple hierarchy: Portfolio > Unit Group > 
 - [Pricing](https://hobsonschoice.ai/pricing): Capacity-based plans covering users, documents and seats.
 - [Contact](https://hobsonschoice.ai/contact): Talk to the team about your portfolio.
 - [Press & Media](https://hobsonschoice.ai/press): Coverage of Hobson and the founders' track record.
-- [Web Summit Lisbon 2026](https://hobsonschoice.ai/web-summit): Where to meet Hobson AI at Web Summit Lisbon 2026, 9–12 November, MEO Arena, as an ALPHA startup.
+- [Web Summit Lisbon 2026](https://hobsonschoice.ai/web-summit): Where to meet Hobson AI at Web Summit Lisbon 2026, 9–12 November, MEO Arena, as an ALPHA startup. Official Web Summit exhibitor listing: https://websummit.com/appearances/lis26/92785eda-a81c-4b0b-b4ba-f793e60bd34f/hobson-ai-%E2%80%94-the-intelligence-layer-your-property-portfolio-runs-on/
 - [Founders](https://hobsonschoice.ai/founder): Background of the founders and why Hobson was built.
 
 ## Solutions
