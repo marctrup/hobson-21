@@ -114,29 +114,35 @@ export default function WebSummit() {
           </div>
         </section>
 
-        <section className="max-w-3xl mx-auto px-6">
-          <AnswerFirst>
+        <section className="mx-auto max-w-3xl px-6">
+          <AnswerFirst variant="manuscript">
             Hobson AI, the intelligence layer your property portfolio runs on, will be at
             Web Summit Lisbon 2026, at the MEO Arena in Lisbon from 9 to 12 November 2026.
           </AnswerFirst>
         </section>
 
-        <section className="max-w-3xl mx-auto px-6 pb-16 sm:pb-20">
-          <h2 className="font-serif text-3xl sm:text-4xl">Questions people ask me</h2>
-          <div className="mt-8 space-y-5">
+        <section className="mx-auto max-w-3xl px-6 pb-16 sm:pb-20">
+          <h2 className="border-b border-brass/30 pb-6 font-serif text-3xl italic sm:text-4xl">
+            Questions people ask me
+          </h2>
+          <div className="divide-y divide-bone">
             {questions.map((item) => (
-              <article
-                key={item.q}
-                className="rounded-lg border border-bone bg-document-white p-6 sm:p-8"
-              >
-                <h3 className="font-serif text-2xl leading-snug">{item.q}</h3>
-                <p className="mt-3 text-muted-foreground leading-relaxed">{item.a}</p>
-                <Button asChild variant="outline" className="mt-5">
-                  <a href="mailto:rochelle.t@hobsonschoice.ai">
-                    <Mail className="mr-2 h-4 w-4" aria-hidden="true" />
+              <article key={item.q} className="group py-8 sm:py-9">
+                <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
+                  <div className="max-w-xl">
+                    <h3 className="font-serif text-xl leading-snug tracking-tight sm:text-2xl">
+                      {item.q}
+                    </h3>
+                    <p className="mt-3 leading-relaxed text-ink-muted">{item.a}</p>
+                  </div>
+                  <a
+                    href="mailto:rochelle.t@hobsonschoice.ai"
+                    className="inline-flex shrink-0 items-center gap-2 self-start border border-brass px-4 py-2.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-brass-text transition-colors duration-300 hover:bg-brass hover:text-primary-foreground md:mt-1"
+                  >
+                    <Mail className="h-3.5 w-3.5" aria-hidden="true" />
                     {item.cta}
                   </a>
-                </Button>
+                </div>
               </article>
             ))}
           </div>
