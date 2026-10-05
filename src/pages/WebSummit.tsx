@@ -89,7 +89,7 @@ export default function WebSummit() {
               Web Summit Lisbon 2026
             </h1>
             <p className="mt-6 text-lg font-medium">
-              I shall be in Lisbon from 9 to 12 November, exhibiting as an ALPHA startup.
+              We will be in Lisbon from 9 to 12 November, exhibiting as an ALPHA startup.
             </p>
             <a
               href={officialListingUrl}
@@ -97,7 +97,7 @@ export default function WebSummit() {
               rel="noopener noreferrer"
               className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-brass-text underline decoration-brass/40 underline-offset-4 hover:decoration-brass"
             >
-              My official Web Summit listing
+              Our official Web Summit listing
               <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
             </a>
             <img
