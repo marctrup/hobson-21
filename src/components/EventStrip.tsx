@@ -29,10 +29,10 @@ export const EventStrip = () => {
       <div className="absolute inset-y-0 left-2 w-px bg-brass/30 pointer-events-none" aria-hidden="true" />
       <div className="absolute inset-y-0 right-2 w-px bg-brass/30 pointer-events-none" aria-hidden="true" />
 
-      <div className="relative container mx-auto px-4 py-3 sm:py-2.5 sm:pr-12">
+      <div className="relative container mx-auto px-10 py-3 lg:py-2.5 lg:pr-12">
         {/* On phones: the sentence on its own line, the link beneath it.
             From tablet up: everything on one line again. */}
-        <div className="flex flex-col items-center justify-center gap-2.5 text-center sm:flex-row sm:gap-4">
+        <div className="flex flex-col items-center justify-center gap-2.5 text-center lg:flex-row lg:gap-4">
           <p className="text-[13px] sm:text-sm font-serif text-bone-wash leading-snug min-w-0 tracking-wide">
             I shall be at{" "}
             <Link
@@ -42,11 +42,11 @@ export const EventStrip = () => {
               Web Summit Lisbon 2026
             </Link>
             <span className="mx-1.5 opacity-50 text-[10px]">—</span>
-            <span className="hidden sm:inline">9–12 November, MEO Arena</span>
-            <span className="sm:hidden">9–12 Nov</span>
+            <span className="hidden md:inline">9–12 November, MEO Arena</span>
+            <span className="md:hidden">9–12 Nov</span>
             <span className="mx-1.5 opacity-50 text-[10px]">—</span>
-            <span className="hidden sm:inline">as an ALPHA startup.</span>
-            <span className="sm:hidden">ALPHA.</span>
+            <span className="hidden md:inline">as an ALPHA startup.</span>
+            <span className="md:hidden">ALPHA.</span>
           </p>
           <Link
             to="/web-summit#questions"
@@ -75,7 +75,7 @@ export const EventStrip = () => {
             setDismissed(true);
           }}
           aria-label="Dismiss announcement"
-          className="absolute right-1.5 top-1/2 -translate-y-1/2 p-1.5 rounded-sm text-brass/60 hover:text-brass transition-colors sm:right-4 sm:translate-y-0 sm:p-1"
+          className="absolute right-1.5 top-1/2 -translate-y-1/2 p-1.5 rounded-sm text-brass/60 hover:text-brass transition-colors lg:right-4 lg:p-1"
         >
           <X className="h-3.5 w-3.5" aria-hidden="true" />
         </button>
