@@ -29,7 +29,7 @@ export const EventStrip = () => {
       <div className="absolute inset-y-0 left-2 w-px bg-brass/30 pointer-events-none" aria-hidden="true" />
       <div className="absolute inset-y-0 right-2 w-px bg-brass/30 pointer-events-none" aria-hidden="true" />
 
-      <div className="relative container mx-auto px-4 py-3 lg:py-2.5 px-10 lg:pr-12">
+      <div className="relative container mx-auto px-10 py-3 lg:py-2.5 lg:pr-12">
         {/* On phones: the sentence on its own line, the link beneath it.
             From tablet up: everything on one line again. */}
         <div className="flex flex-col items-center justify-center gap-2.5 text-center lg:flex-row lg:gap-4">
