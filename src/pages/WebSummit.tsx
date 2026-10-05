@@ -53,12 +53,12 @@ const structuredData = {
 
 const questions = [
   {
-    q: "Where can I meet Hobson AI in Lisbon?",
+    q: "Where can I meet the team in Lisbon?",
     a: "Within the MEO Arena. The exact spot will not be known until the day — write to Rochelle and she will tell you where to find me as soon as it is settled.",
     cta: "Where to find me",
   },
   {
-    q: "Can I book a meeting with Hobson AI in advance?",
+    q: "Can I book a meeting in advance?",
     a: "Yes. Write to Rochelle before the event and she will put a time in the diary, so you need not queue. Once the spot is known, she will tell you where we are to meet.",
     cta: "Arrange a meeting",
   },
