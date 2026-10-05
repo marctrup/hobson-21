@@ -29,38 +29,45 @@ export const EventStrip = () => {
       <div className="absolute inset-y-0 left-2 w-px bg-brass/30 pointer-events-none" aria-hidden="true" />
       <div className="absolute inset-y-0 right-2 w-px bg-brass/30 pointer-events-none" aria-hidden="true" />
 
-      <div className="container mx-auto px-4 py-2.5 flex items-center justify-center gap-3 sm:gap-4 text-center">
-        <p className="text-[13px] sm:text-sm font-serif text-bone-wash leading-snug min-w-0 tracking-wide">
-          I shall be at{" "}
+      <div className="relative container mx-auto px-4 py-3 sm:py-2.5 sm:pr-12">
+        {/* On phones: the sentence on its own line, the link beneath it.
+            From tablet up: everything on one line again. */}
+        <div className="flex flex-col items-center justify-center gap-2.5 text-center sm:flex-row sm:gap-4">
+          <p className="text-[13px] sm:text-sm font-serif text-bone-wash leading-snug min-w-0 tracking-wide">
+            I shall be at{" "}
+            <Link
+              to="/web-summit"
+              className="italic text-brass underline decoration-brass/40 underline-offset-4 hover:decoration-brass transition-all duration-300"
+            >
+              Web Summit Lisbon 2026
+            </Link>
+            <span className="mx-1.5 opacity-50 text-[10px]">—</span>
+            <span className="hidden sm:inline">9–12 November, MEO Arena</span>
+            <span className="sm:hidden">9–12 Nov</span>
+            <span className="mx-1.5 opacity-50 text-[10px]">—</span>
+            <span className="hidden sm:inline">as an ALPHA startup.</span>
+            <span className="sm:hidden">ALPHA.</span>
+          </p>
           <Link
-            to="/web-summit"
-            className="italic text-brass underline decoration-brass/40 underline-offset-4 hover:decoration-brass transition-all duration-300"
+            to="/web-summit#questions"
+            onClick={(e) => {
+              // Already on the page: the router won't re-navigate, so glide
+              // to the questions section ourselves.
+              if (location.pathname === "/web-summit") {
+                e.preventDefault();
+                document
+                  .querySelector("#questions")
+                  ?.scrollIntoView({ behavior: "smooth", block: "start" });
+              }
+            }}
+            className="shrink-0 text-[10px] sm:text-[11px] font-medium uppercase tracking-[0.18em] text-brass border-b border-brass/60 pb-0.5 hover:border-brass transition-colors"
           >
-            Web Summit Lisbon 2026
+            Where to meet me
           </Link>
-          <span className="mx-1.5 opacity-50 text-[10px]">—</span>
-          <span className="hidden sm:inline">9–12 November, MEO Arena</span>
-          <span className="sm:hidden">9–12 Nov</span>
-          <span className="mx-1.5 opacity-50 text-[10px]">—</span>
-          <span className="hidden sm:inline">as an ALPHA startup.</span>
-          <span className="sm:hidden">ALPHA.</span>
-        </p>
-        <Link
-          to="/web-summit#questions"
-          onClick={(e) => {
-            // Already on the page: the router won't re-navigate, so glide
-            // to the questions section ourselves.
-            if (location.pathname === "/web-summit") {
-              e.preventDefault();
-              document
-                .querySelector("#questions")
-                ?.scrollIntoView({ behavior: "smooth", block: "start" });
-            }
-          }}
-          className="shrink-0 text-[10px] sm:text-[11px] font-medium uppercase tracking-[0.18em] text-brass border-b border-brass/60 pb-0.5 hover:border-brass transition-colors"
-        >
-          Where to meet me
-        </Link>
+        </div>
+
+        {/* The cross stands apart on phones (absolutely positioned clear of
+            the wrapped text) and joins the row from tablet up. */}
         <button
           type="button"
           onClick={() => {
@@ -68,7 +75,7 @@ export const EventStrip = () => {
             setDismissed(true);
           }}
           aria-label="Dismiss announcement"
-          className="shrink-0 p-1 rounded-sm text-brass/60 hover:text-brass transition-colors"
+          className="absolute right-1.5 top-1/2 -translate-y-1/2 p-1.5 rounded-sm text-brass/60 hover:text-brass transition-colors sm:right-4 sm:translate-y-0 sm:p-1"
         >
           <X className="h-3.5 w-3.5" aria-hidden="true" />
         </button>
