@@ -34,7 +34,7 @@ export const EventStrip = () => {
             From tablet up: everything on one line again. */}
         <div className="flex flex-col items-center justify-center gap-2.5 text-center lg:flex-row lg:gap-4">
           <p className="text-[13px] sm:text-sm font-serif text-bone-wash leading-snug min-w-0 tracking-wide">
-            I shall be at{" "}
+            We shall be at{" "}
             <Link
               to="/web-summit"
               className="italic text-brass underline decoration-brass/40 underline-offset-4 hover:decoration-brass transition-all duration-300"
