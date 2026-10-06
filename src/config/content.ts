@@ -412,8 +412,8 @@ export const CONTENT = {
     links: [
       // Pricing hidden while figures are being finalised — restore when ready
 
-      { to: "/learn", label: "Learn", title: "Hobson AI FAQ", voice: "Where I keep my notes" },
       { to: "/founder", label: "Founders", title: "Meet the Founders of Hobson AI", voice: "How I came to be" },
+      { to: "/learn", label: "Learn", title: "Hobson AI FAQ", voice: "Where I keep my notes" },
       { to: "/blog", label: "Blog", title: "Property Management Insights", voice: "Notes from my desk" },
     ],
     secondary: [
