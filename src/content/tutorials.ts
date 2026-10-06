@@ -28,6 +28,7 @@ export const tutorials: Tutorial[] = [
     title: 'Move between Papers and the Map',
     description: 'Move between the Map and Papers without losing where you were working.',
     context: 'Map · Papers',
+    youtubeId: 'b2Jo9k6ifiY',
     relatedId: 'unit-group-units',
   },
   {
