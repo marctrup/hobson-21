@@ -28,6 +28,7 @@ const RefundPolicy = lazy(() => import("../pages/RefundPolicy"));
 const Learn = lazy(() => import("../pages/Learn"));
 const LearnFaq = lazy(() => import("../pages/LearnFaq"));
 const LearnGlossary = lazy(() => import("../pages/LearnGlossary"));
+const LearnTutorials = lazy(() => import("../pages/LearnTutorials"));
 const CaseStudies = lazy(() => import("../pages/CaseStudies"));
 const CaseStudyMixedUseOwner = lazy(() => import("../pages/CaseStudyMixedUseOwner"));
 const CaseStudyHistoricLeases = lazy(() => import("../pages/CaseStudyHistoricLeases"));
@@ -168,6 +169,7 @@ const AppContent = () => {
                 <Route path="/learn/best-property-management-software-uk" element={<PropertyGuide slug="best-property-management-software-uk" />} />
                 <Route path="/learn/faq" element={<LearnFaq />} />
                 <Route path="/learn/glossary" element={<LearnGlossary />} />
+                <Route path="/learn/tutorials" element={<LearnTutorials />} />
                 <Route path="/learn/case-studies" element={<CaseStudies />} />
                 <Route path="/learn/case-studies/mixed-use-owner" element={<CaseStudyMixedUseOwner />} />
                 <Route path="/learn/case-studies/historic-leases" element={<CaseStudyHistoricLeases />} />

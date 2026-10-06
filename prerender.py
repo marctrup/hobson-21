@@ -37,6 +37,7 @@ ROUTES = [
     "/learn",
     "/learn/faq",
     "/learn/glossary",
+    "/learn/tutorials",
     "/learn/case-studies",
     "/learn/case-studies/mixed-use-owner",
     "/learn/case-studies/historic-leases",

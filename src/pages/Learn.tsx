@@ -55,13 +55,14 @@ const CARDS: HubCard[] = [
     available: true,
   },
   {
+    to: "/learn/tutorials",
     icon: PlayCircle,
     title: "Tutorials",
     description:
       "Short video walkthroughs of me at work — from uploading a lease to getting a cited answer.",
-    cta: "In preparation",
-    status: "Coming soon",
-    available: false,
+    cta: "Explore the demonstrations",
+    status: "",
+    available: true,
   },
   ...propertyGuides.map(guide => ({ to: `/learn/${guide.slug}`, icon: BookOpen, title: guide.title, description: guide.description, cta: "Read the guide", status: "", available: true })),
 ];
