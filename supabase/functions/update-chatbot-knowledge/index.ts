@@ -661,7 +661,7 @@ Contains 50 frequently asked questions organised into categories: How Hobson Wor
 ### Integrations (/learn/available-integrations)
 Information about planned integrations and the integration roadmap. Hobson currently does not offer bespoke integrations but is building towards connecting with external systems.
 
-### Glossary (/learn/hobson-glossary)
+### What I mean — glossary (/learn/glossary)
 A comprehensive glossary of Hobson-specific terms and property terminology, managed from the database.
     `.trim();
 
@@ -674,7 +674,7 @@ The Hobson AI website has the following main sections:
 - Features (/features) — What Hobson does, how it works, why it matters
 
 - In Practice (/in-practice) — Real property work, real results
-- Learn (/learn) — Smart Navigation, FAQ, Integrations, Glossary
+- Learn (/learn) — Smart Navigation, FAQ, Integrations, What I mean (glossary)
 - Blog (/blog)
 - Status (/status)
 - Contact Us (/contact)
