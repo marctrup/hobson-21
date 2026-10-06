@@ -27,19 +27,21 @@ const TutorialCard = ({ tutorial }: { tutorial: Tutorial }) => {
               type="button"
               onClick={() => setPlaying(true)}
               aria-label={`Play: ${tutorial.title}`}
-              className="group absolute inset-0 h-full w-full cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-4px] focus-visible:outline-brass"
+              className="group flex h-full w-full cursor-pointer flex-col items-center justify-center gap-6 bg-lavender-wash px-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-4px] focus-visible:outline-brass"
             >
               <img
-                src={`https://i.ytimg.com/vi/${tutorial.youtubeId}/maxresdefault.jpg`}
-                alt={`${tutorial.title} — demonstration cover`}
-                className="h-full w-full object-cover transition duration-300 group-hover:scale-[1.02]"
+                src={hobson}
+                alt="Hobson"
+                className="h-24 w-24 object-contain transition duration-300 group-hover:-translate-y-1 sm:h-28 sm:w-28"
                 loading="lazy"
-                width={1280}
-                height={720}
+                width={112}
+                height={112}
               />
-              <span aria-hidden="true" className="absolute inset-0 bg-ink/15 transition duration-300 group-hover:bg-ink/25" />
-              <span aria-hidden="true" className="absolute left-1/2 top-1/2 flex h-16 w-16 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-brass bg-paper/95 transition duration-300 group-hover:bg-paper">
-                <Play className="ml-0.5 h-6 w-6 text-brass-text" aria-hidden="true" />
+              <span
+                aria-hidden="true"
+                className="flex h-14 w-14 items-center justify-center rounded-full border border-brass bg-paper/95 shadow-sm transition duration-300 group-hover:bg-paper group-hover:shadow-md"
+              >
+                <Play className="ml-0.5 h-5 w-5 text-brass-text" aria-hidden="true" />
               </span>
             </button>
           )
