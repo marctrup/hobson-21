@@ -57,7 +57,7 @@ export const HomepageFooter = () => {
             <div className="space-y-3">
               <Link to="/learn" className="block text-sm text-muted-foreground hover:text-primary transition-colors">Learn</Link>
               <Link to="/learn/faq" className="block text-sm text-muted-foreground hover:text-primary transition-colors">FAQ</Link>
-              <Link to="/learn/glossary" className="block text-sm text-muted-foreground hover:text-primary transition-colors">Glossary</Link>
+              <Link to="/learn/glossary" className="block text-sm text-muted-foreground hover:text-primary transition-colors">What I mean</Link>
               <Link to="/learn/case-studies" className="block text-sm text-muted-foreground hover:text-primary transition-colors">Case studies</Link>
             </div>
           </div>

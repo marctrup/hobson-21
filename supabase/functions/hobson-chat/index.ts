@@ -112,7 +112,7 @@ serve(async (req) => {
 CRITICAL RULES - NON-NEGOTIABLE:
 1. SOURCE PREFERENCE - When using the knowledge base, prefer sources in this order:
    a) FAQ content first (from /learn/faq)
-   b) Other Learn sections: Use Cases, Hobson Credits, Prompt Engineering, Glossary
+   b) Other Learn sections: Use Cases, Hobson Credits, Prompt Engineering, What I mean (the glossary)
    c) Only if the information is genuinely not found anywhere in the knowledge base should you use the fallback response
 
 2. ACCURACY - Do not invent new facts that are not supported by the knowledge base. You may summarize, explain, and combine information as long as it's based on the content provided.
@@ -142,7 +142,7 @@ RESPONSE GUIDELINES:
     - Smart Navigation: [Smart Navigation](/learn/smart-navigation)
     - FAQ: [FAQ](/learn/faq)
     - Integrations: [Integrations](/learn/available-integrations)
-    - Glossary: [Glossary](/learn/hobson-glossary)
+    - What I mean (glossary): [What I mean](/learn/glossary)
     
     **Features Page Sections:**
     - Document Intelligence: [Document Intelligence](/features)

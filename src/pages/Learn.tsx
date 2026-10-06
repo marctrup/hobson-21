@@ -47,10 +47,10 @@ const CARDS: HubCard[] = [
   {
     to: "/learn/glossary",
     icon: BookOpen,
-    title: "Glossary",
+    title: "What I mean",
     description:
       "Plain-English definitions of the property, document and Hobson terms you will meet as we work together.",
-    cta: "Explore the glossary",
+    cta: "Read the definitions",
     status: "Available now",
     available: true,
   },

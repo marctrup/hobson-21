@@ -411,7 +411,7 @@ export const getDefinedTermSetStructuredData = (
 ) => ({
   "@context": "https://schema.org",
   "@type": "DefinedTermSet",
-  "name": "Hobson Glossary",
+  "name": "What I mean — Hobson's property and lease terms",
   "url": "https://hobsonschoice.ai/learn/glossary",
   "description": "Plain-English definitions of the property, document and Hobson terms used across Hobson.",
   ...(dateModified ? { "dateModified": dateModified } : {}),
