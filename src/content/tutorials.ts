@@ -13,6 +13,7 @@ export const tutorials: Tutorial[] = [
     title: 'See my summary of a paper',
     description: 'Select the small “i” beside a paper to see the summary I created when I read it.',
     context: 'Papers',
+    youtubeId: 'pJ3N_u4t0Gc',
     relatedId: 'answer-source',
   },
   {
