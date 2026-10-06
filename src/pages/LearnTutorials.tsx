@@ -8,10 +8,10 @@ import hobson from '@/assets/owl-mascot.png';
 const LearnTutorials = () => (
   <div className="min-h-screen bg-paper text-ink">
     <Helmet>
-      <title>Tutorials — Short demonstrations of Hobson AI</title>
+      <title>Working with me — Short demonstrations of Hobson AI</title>
       <meta name="description" content="Short demonstrations of Hobson at work with papers, cited answers and the map. A collection of useful examples, with videos in preparation." />
       <link rel="canonical" href="https://hobsonschoice.ai/learn/tutorials" />
-      <meta property="og:title" content="Tutorials — Short demonstrations of Hobson AI" />
+      <meta property="og:title" content="Working with me — Short demonstrations of Hobson AI" />
       <meta property="og:description" content="Short demonstrations of useful things I can do. Papers, conversations and the map — videos in preparation." />
       <meta property="og:type" content="website" />
       <meta property="og:url" content="https://hobsonschoice.ai/learn/tutorials" />
@@ -23,7 +23,7 @@ const LearnTutorials = () => (
         <Link to="/learn" className="inline-flex items-center gap-2 text-sm text-brass-text hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brass">
           <ArrowLeft className="h-4 w-4" aria-hidden="true" /> Learn
         </Link>
-        <h1 className="mt-8 font-serif text-4xl font-normal sm:text-5xl">Tutorials</h1>
+        <h1 className="mt-8 font-serif text-4xl font-normal sm:text-5xl">Working with me</h1>
         <p className="mt-4 font-serif text-xl italic text-ink-muted sm:text-2xl">Short demonstrations of useful things I can do.</p>
         <p className="mt-5 max-w-2xl text-base leading-relaxed text-ink-muted">
           You can start anywhere. Each clip shows one small part of how I work,
