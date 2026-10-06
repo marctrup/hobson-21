@@ -59,7 +59,7 @@ const CARDS: HubCard[] = [
     icon: PlayCircle,
     title: "Working with me",
     description:
-      "A few short demonstrations of how I work — from reading a paper to showing you exactly where an answer came from.",
+      "A few short demonstrations of how I work.",
     cta: "Explore the demonstrations",
     status: "",
     available: true,
