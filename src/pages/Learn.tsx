@@ -57,7 +57,7 @@ const CARDS: HubCard[] = [
   {
     to: "/learn/tutorials",
     icon: PlayCircle,
-    title: "Tutorials",
+    title: "Working with me",
     description:
       "A few short demonstrations of how I work — from reading a paper to showing you exactly where an answer came from.",
     cta: "Explore the demonstrations",
