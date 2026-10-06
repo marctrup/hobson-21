@@ -59,6 +59,7 @@ export const HomepageFooter = () => {
               <Link to="/learn/faq" className="block text-sm text-muted-foreground hover:text-primary transition-colors">FAQ</Link>
               <Link to="/learn/glossary" className="block text-sm text-muted-foreground hover:text-primary transition-colors">Glossary</Link>
               <Link to="/learn/case-studies" className="block text-sm text-muted-foreground hover:text-primary transition-colors">Case studies</Link>
+              <Link to="/learn/tutorials" className="block text-sm text-muted-foreground hover:text-primary transition-colors">A few useful tips</Link>
             </div>
           </div>
         </div>
