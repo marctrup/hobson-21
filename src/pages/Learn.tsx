@@ -37,9 +37,9 @@ const CARDS: HubCard[] = [
   {
     to: "/learn/case-studies",
     icon: TrendingUp,
-    title: "Case studies",
+    title: "How others use me",
     description:
-      "Real property teams on what changed when I took on their documents — the time saved and the risks caught.",
+      "Examples of how Hobson is being used in real work.",
     cta: "Read the stories",
     status: "Available now",
     available: true,
