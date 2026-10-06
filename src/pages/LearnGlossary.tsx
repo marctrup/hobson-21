@@ -316,13 +316,13 @@ const LearnGlossary = () => {
   return (
     <div className="min-h-screen flex flex-col" style={{ backgroundColor: PAPER }}>
       <Helmet>
-        <title>What I mean — Learn about Hobson AI</title>
+        <title>Glossary — Learn about Hobson AI</title>
         <meta
           name="description"
           content="Plain-English explanations of the property, document and Hobson terms used across Hobson."
         />
         <link rel="canonical" href="https://hobsonschoice.ai/learn/glossary" />
-        <meta property="og:title" content="What I mean — Hobson's property and lease terms" />
+        <meta property="og:title" content="Glossary — Hobson's property and lease terms" />
         <meta property="og:url" content="https://hobsonschoice.ai/learn/glossary" />
         <meta property="og:type" content="website" />
         <script type="application/ld+json">
@@ -350,7 +350,8 @@ const LearnGlossary = () => {
               className="mt-4 font-serif text-4xl sm:text-5xl md:text-6xl font-normal tracking-tight"
               style={{ color: INK }}
             >
-              What I mean
+              Glossary
+
             </h1>
             <p
               className="mt-5 text-base sm:text-lg leading-relaxed max-w-xl mx-auto"
@@ -359,7 +360,7 @@ const LearnGlossary = () => {
               Plain-English definitions of the terms I may use.
             </p>
             <AnswerFirst>
-              What I mean is my glossary: the property and lease terms used across Hobson AI,
+              My glossary holds the property and lease terms used across Hobson AI,
               defined in plain English — from rent review, break option and deed of variation to
               Hobson's own hierarchy of Portfolio, Unit Group and Unit. Each entry is a
               short, standalone definition written for UK landlords, managing agents,

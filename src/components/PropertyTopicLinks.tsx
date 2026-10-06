@@ -6,7 +6,7 @@ const topics = [
   ['/property-management-software', 'Property management software'],
   ['/property-portfolio-software', 'Property portfolio software'],
   ['/ai-lease-abstraction', 'AI lease abstraction'],
-  ['/learn/glossary', 'What I mean — property and Hobson terms'],
+  ['/learn/glossary', 'Glossary — property and Hobson terms'],
 ];
 export function PropertyTopicLinks() {
   const { pathname } = useLocation();
