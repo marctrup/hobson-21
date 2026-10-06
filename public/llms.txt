@@ -22,8 +22,8 @@ Hobson organises everything around a simple hierarchy: Portfolio > Unit Group > 
 ## Learn
 
 - [Learn hub](https://hobsonschoice.ai/learn): Guides, case studies, FAQs and glossary.
-- [Working with me](https://hobsonschoice.ai/learn/tutorials): Short demonstrations of papers, citations and the map; videos are in preparation.
-- [What I mean](https://hobsonschoice.ai/learn/glossary): Glossary — plain-English definitions of property and Hobson terminology.
+- [Tutorials](https://hobsonschoice.ai/learn/tutorials): Short demonstrations of papers, citations and the map; videos are in preparation.
+- [Glossary](https://hobsonschoice.ai/learn/glossary): Plain-English definitions of property and Hobson terminology.
 - [FAQ](https://hobsonschoice.ai/learn/faq): Answers about documents, evidence, security and pricing.
 - [Case studies](https://hobsonschoice.ai/learn/case-studies): Real examples of Hobson in use.
 - [What is lease management software](https://hobsonschoice.ai/learn/what-is-lease-management-software): Introduction for buyers.

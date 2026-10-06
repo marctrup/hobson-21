@@ -29,7 +29,7 @@ const CARDS: HubCard[] = [
     icon: MessageCircleQuestion,
     title: "Frequently asked questions",
     description:
-      "Straight answers on how I work, how my accuracy is tested, and how I stay in your control.",
+      "Straight answers on how Hobson works, how his accuracy is tested, and how he stays in your control.",
     cta: "Read the FAQ",
     status: "Available now",
     available: true,
@@ -37,7 +37,7 @@ const CARDS: HubCard[] = [
   {
     to: "/learn/case-studies",
     icon: TrendingUp,
-    title: "How others use me",
+    title: "Case studies",
     description:
       "Examples of how Hobson is being used in real work.",
     cta: "Read the stories",
@@ -47,19 +47,19 @@ const CARDS: HubCard[] = [
   {
     to: "/learn/glossary",
     icon: BookOpen,
-    title: "What I mean",
+    title: "Glossary",
     description:
       "Plain-English definitions of the property, document and Hobson terms you will meet as we work together.",
-    cta: "Read the definitions",
+    cta: "Read the glossary",
     status: "Available now",
     available: true,
   },
   {
     to: "/learn/tutorials",
     icon: PlayCircle,
-    title: "Working with me",
+    title: "Tutorials",
     description:
-      "A few short demonstrations of how I work.",
+      "A few short demonstrations of how Hobson works.",
     cta: "Explore the demonstrations",
     status: "",
     available: true,
