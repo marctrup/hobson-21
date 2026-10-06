@@ -1,50 +1,89 @@
 import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, ArrowRight, Film, Play } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Film, Play, X } from 'lucide-react';
 import { GlobalHeader } from '@/components/GlobalHeader';
 import { tutorials, type Tutorial } from '@/content/tutorials';
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog';
 import hobson from '@/assets/owl-mascot.png';
 
 const TutorialCard = ({ tutorial }: { tutorial: Tutorial }) => {
-  const [playing, setPlaying] = useState(false);
+  const [open, setOpen] = useState(false);
   const related = tutorials.find((item) => item.id === tutorial.relatedId);
 
   return (
     <article id={tutorial.id} className="min-w-0 scroll-mt-28">
       <div className="relative aspect-video overflow-hidden rounded-sm border border-bone bg-document-white">
         {tutorial.youtubeId ? (
-          playing ? (
-            <iframe
-              src={`https://www.youtube-nocookie.com/embed/${tutorial.youtubeId}?autoplay=1&rel=0`}
-              title={tutorial.title}
-              className="h-full w-full"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowFullScreen
-            />
-          ) : (
-            <button
-              type="button"
-              onClick={() => setPlaying(true)}
-              aria-label={`Play: ${tutorial.title}`}
-              className="group flex h-full w-full cursor-pointer flex-col items-center justify-center gap-6 bg-lavender-wash px-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-4px] focus-visible:outline-brass"
-            >
-              <img
-                src={hobson}
-                alt="Hobson"
-                className="h-24 w-24 object-contain transition duration-300 group-hover:-translate-y-1 sm:h-28 sm:w-28"
-                loading="lazy"
-                width={112}
-                height={112}
-              />
-              <span
-                aria-hidden="true"
-                className="flex h-14 w-14 items-center justify-center rounded-full border border-brass bg-paper/95 shadow-sm transition duration-300 group-hover:bg-paper group-hover:shadow-md"
+          <Dialog open={open} onOpenChange={setOpen}>
+            <DialogTrigger asChild>
+              <button
+                type="button"
+                aria-label={`Play: ${tutorial.title}`}
+                className="group flex h-full w-full cursor-pointer flex-col items-center justify-center gap-6 bg-lavender-wash px-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-4px] focus-visible:outline-brass"
               >
-                <Play className="ml-0.5 h-5 w-5 text-brass-text" aria-hidden="true" />
-              </span>
-            </button>
-          )
+                <img
+                  src={hobson}
+                  alt="Hobson"
+                  className="h-24 w-24 object-contain transition duration-300 group-hover:-translate-y-1 sm:h-28 sm:w-28"
+                  loading="lazy"
+                  width={112}
+                  height={112}
+                />
+                <span
+                  aria-hidden="true"
+                  className="flex h-14 w-14 items-center justify-center rounded-full border border-brass bg-paper/95 shadow-sm transition duration-300 group-hover:bg-paper group-hover:shadow-md"
+                >
+                  <Play className="ml-0.5 h-5 w-5 text-brass-text" aria-hidden="true" />
+                </span>
+              </button>
+            </DialogTrigger>
+            <DialogContent
+              className="!gap-0 !border-0 !bg-transparent !p-0 !shadow-none [&>button]:hidden"
+              style={{ width: 'min(92vw, 940px, calc((84vh - 130px) * 16 / 9))', maxWidth: 'none' }}
+            >
+              <DialogTitle className="sr-only">{tutorial.title}</DialogTitle>
+              <DialogDescription className="sr-only">{tutorial.description}</DialogDescription>
+              <div
+                className="relative rounded-sm border border-bone bg-bone-wash p-2 sm:p-3"
+                style={{ boxShadow: '0 30px 60px -30px rgba(45,45,45,0.45), 0 10px 30px -15px rgba(45,45,45,0.20)' }}
+              >
+                <DialogClose
+                  aria-label="Stop the demonstration"
+                  className="absolute -top-12 right-0 flex h-9 w-9 items-center justify-center rounded-full border border-brass bg-paper text-brass-text transition duration-200 hover:bg-brass hover:text-paper focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brass"
+                >
+                  <X className="h-4 w-4" aria-hidden="true" />
+                </DialogClose>
+                <div className="aspect-video overflow-hidden rounded-sm bg-ink">
+                  {open && (
+                    <iframe
+                      src={`https://www.youtube-nocookie.com/embed/${tutorial.youtubeId}?autoplay=1&rel=0`}
+                      title={tutorial.title}
+                      className="h-full w-full"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      allowFullScreen
+                    />
+                  )}
+                </div>
+                <div className="mt-3 flex flex-col gap-3 border-t border-bone pt-3 sm:flex-row sm:items-end sm:justify-between">
+                  <div>
+                    <p className="text-xs text-ink-faint">{tutorial.context}</p>
+                    <p className="mt-1 font-serif text-lg italic leading-snug text-ink">{tutorial.title}</p>
+                  </div>
+                  <DialogClose className="inline-flex shrink-0 items-center border border-brass px-4 py-2 text-xs uppercase tracking-[0.18em] text-brass-text transition duration-200 hover:bg-brass hover:text-paper focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brass">
+                    Close
+                  </DialogClose>
+                </div>
+              </div>
+            </DialogContent>
+          </Dialog>
         ) : (
           <div className="flex h-full flex-col items-center justify-center gap-3 bg-lavender-wash px-6">
             <img src={hobson} alt="Hobson" className="h-24 w-24 object-contain sm:h-28 sm:w-28" loading="lazy" width={112} height={112} />
