@@ -36,6 +36,7 @@ export const tutorials: Tutorial[] = [
     title: 'Move between a unit group and its units',
     description: 'Move from a unit group into an individual unit and Hobson keeps the view centred on where you are working.',
     context: 'Map',
+    youtubeId: 'xAWnwhp1WXA',
     relatedId: 'papers-and-map',
   },
   {
