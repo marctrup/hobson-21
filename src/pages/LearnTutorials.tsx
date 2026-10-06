@@ -48,7 +48,7 @@ const LearnTutorials = () => (
                 ) : (
                   <div className="flex h-full flex-col items-center justify-center gap-3 bg-lavender-wash px-6">
                     <img src={hobson} alt="Hobson" className="h-24 w-24 object-contain sm:h-28 sm:w-28" loading="lazy" width={112} height={112} />
-                    <span className="inline-flex items-center gap-2 text-sm text-ink-muted"><Film className="h-4 w-4 text-brass-text" aria-hidden="true" /> Demonstration in preparation</span>
+                    <span className="inline-flex items-center gap-2 text-sm text-ink-muted"><Film className="h-4 w-4 text-brass-text" aria-hidden="true" /> Demonstration coming shortly</span>
                   </div>
                 )}
               </div>
