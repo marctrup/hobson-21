@@ -21,6 +21,7 @@ export const tutorials: Tutorial[] = [
     title: 'See where an answer came from',
     description: 'Open the citation in my answer to see the supporting paper and the relevant passage.',
     context: 'Conversation · Papers',
+    youtubeId: 'a47ImZr9Tss',
     relatedId: 'paper-summary',
   },
   {
@@ -38,12 +39,5 @@ export const tutorials: Tutorial[] = [
     context: 'Map',
     youtubeId: 'xAWnwhp1WXA',
     relatedId: 'papers-and-map',
-  },
-  {
-    id: 'little-context',
-    title: 'Give me a little context',
-    description: 'Mention the unit, tenancy or issue you mean and I can get to the right answer more directly.',
-    context: 'Conversation',
-    relatedId: 'answer-source',
   },
 ];
