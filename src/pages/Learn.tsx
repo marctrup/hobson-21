@@ -79,7 +79,7 @@ const Learn = () => {
   return (
     <div className="min-h-screen flex flex-col" style={{ backgroundColor: PAPER }}>
       <Helmet>
-        <title>Learn about Hobson AI — FAQ, case studies and tutorials</title>
+        <title>Learn about Hobson AI — FAQ, case studies and short demonstrations</title>
         <meta
           name="description"
           content="Get to know Hobson — straight answers, real customer stories and short walkthroughs showing how I read your property documents and help you act on them."
