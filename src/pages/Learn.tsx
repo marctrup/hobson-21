@@ -29,7 +29,7 @@ const CARDS: HubCard[] = [
     icon: MessageCircleQuestion,
     title: "Frequently asked questions",
     description:
-      "Straight answers on how I work, how my accuracy is tested, and how I stay in your control.",
+      "Straight answers on how Hobson works, how his accuracy is tested, and how he stays in your control.",
     cta: "Read the FAQ",
     status: "Available now",
     available: true,
@@ -59,7 +59,7 @@ const CARDS: HubCard[] = [
     icon: PlayCircle,
     title: "Tutorials",
     description:
-      "A few short demonstrations of how I work.",
+      "A few short demonstrations of how Hobson works.",
     cta: "Explore the demonstrations",
     status: "",
     available: true,

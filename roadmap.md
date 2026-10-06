@@ -28,3 +28,7 @@
 - [x] Trim repetitive copy on /web-summit: removed the "What I shall show you" and "The particulars" sections; reworded the Q&A to avoid restating the header
 
 - 2026-10-01: Web Summit page — In short + Questions restyled to Editorial manuscript layout (hairline label rule, italic serif answer card, ruled Q&A list with brass CTAs); email removed from body text, kept only in the mailto CTAs. seo:update passed.
+
+## Learn cards (6 Oct 2026)
+- [x] Revert card/page headers to Case Studies, Glossary, Tutorials (incl. footer, llms.txt, chatbot knowledge)
+- [x] Card descriptions in third person where they were first person
