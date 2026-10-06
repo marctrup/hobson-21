@@ -356,7 +356,7 @@ const LearnGlossary = () => {
               className="mt-5 text-base sm:text-lg leading-relaxed max-w-xl mx-auto"
               style={{ color: MUTED }}
             >
-              Plain-English definitions of the terms used across Hobson.
+              Plain-English definitions of the terms I use across Hobson.
             </p>
             <AnswerFirst>
               What I mean is my glossary: the property and lease terms used across Hobson AI,
