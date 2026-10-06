@@ -59,7 +59,7 @@ const CARDS: HubCard[] = [
     icon: PlayCircle,
     title: "Tutorials",
     description:
-      "Short video walkthroughs of me at work — from uploading a lease to getting a cited answer.",
+      "A few short demonstrations of how I work — from reading a paper to showing you exactly where an answer came from.",
     cta: "Explore the demonstrations",
     status: "",
     available: true,
