@@ -59,7 +59,7 @@ const CARDS: HubCard[] = [
     icon: PlayCircle,
     title: "A few useful tips",
     description:
-      "Small things worth knowing when you work with me.",
+      "Small things worth knowing when you work with Hobson.",
     cta: "Explore the tips",
     status: "",
     available: true,
