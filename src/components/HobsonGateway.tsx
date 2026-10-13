@@ -15,7 +15,9 @@ export const serifStack = { fontFamily: 'Georgia, "Times New Roman", ui-serif, s
  * Hobson alone speaks, in the first person: calm, prepared, no CRM clichés.
  * Reads unmistakably as a button: framed, filled on hover, arrow that answers.
  */
-export const HobsonGateway = ({ className = "" }: { className?: string }) => (
+export const HobsonGateway = ({ className = "" }: { className?: string }) => {
+  if (!SHOW_GATEWAY) return null;
+  return (
   <a
     href={APP_URL}
     aria-label="Enter this way, please — enter Hobson"
