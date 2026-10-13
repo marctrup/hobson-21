@@ -2,6 +2,12 @@ import React from "react";
 
 const APP_URL = "https://app.hobsonschoice.ai";
 
+/**
+ * The gateway is withdrawn for the time being: Hobson is not yet receiving
+ * visitors through the door. Flip to true to restore it everywhere at once.
+ */
+const SHOW_GATEWAY = false;
+
 export const serifStack = { fontFamily: 'Georgia, "Times New Roman", ui-serif, serif' };
 
 /**
@@ -9,7 +15,9 @@ export const serifStack = { fontFamily: 'Georgia, "Times New Roman", ui-serif, s
  * Hobson alone speaks, in the first person: calm, prepared, no CRM clichés.
  * Reads unmistakably as a button: framed, filled on hover, arrow that answers.
  */
-export const HobsonGateway = ({ className = "" }: { className?: string }) => (
+export const HobsonGateway = ({ className = "" }: { className?: string }) => {
+  if (!SHOW_GATEWAY) return null;
+  return (
   <a
     href={APP_URL}
     aria-label="Enter this way, please — enter Hobson"
@@ -29,9 +37,12 @@ export const HobsonGateway = ({ className = "" }: { className?: string }) => (
       →
     </span>
   </a>
-);
+  );
+};
 
-export const HobsonGatewayMobile = ({ onClick }: { onClick?: () => void }) => (
+export const HobsonGatewayMobile = ({ onClick }: { onClick?: () => void }) => {
+  if (!SHOW_GATEWAY) return null;
+  return (
   <a
     href={APP_URL}
     aria-label="Enter this way, please — enter Hobson"
@@ -52,4 +63,5 @@ export const HobsonGatewayMobile = ({ onClick }: { onClick?: () => void }) => (
       →
     </span>
   </a>
-);
+  );
+};
