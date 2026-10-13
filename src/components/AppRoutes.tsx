@@ -181,6 +181,8 @@ const AppContent = () => {
                 <Route path="/feature-requests" element={<FeatureRequests />} />
               </Route>
 
+              {/* Legacy address still held in search indexes — send it home, never 404 */}
+              <Route path="/usehobson" element={<Navigate to="/" replace />} />
               <Route path="/investment-opportunity" element={<InvestmentOpportunity />} />
               <Route path="/investor-summary" element={<Navigate to="/investment-opportunity" replace />} />
               <Route path="/prototype" element={<Prototype />} />
