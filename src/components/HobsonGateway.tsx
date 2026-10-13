@@ -2,6 +2,12 @@ import React from "react";
 
 const APP_URL = "https://app.hobsonschoice.ai";
 
+/**
+ * The gateway is withdrawn for the time being: Hobson is not yet receiving
+ * visitors through the door. Flip to true to restore it everywhere at once.
+ */
+const SHOW_GATEWAY = false;
+
 export const serifStack = { fontFamily: 'Georgia, "Times New Roman", ui-serif, serif' };
 
 /**
