@@ -63,4 +63,5 @@ export const HobsonGatewayMobile = ({ onClick }: { onClick?: () => void }) => {
       →
     </span>
   </a>
-);
+  );
+};
