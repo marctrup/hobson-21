@@ -40,7 +40,9 @@ export const HobsonGateway = ({ className = "" }: { className?: string }) => {
   );
 };
 
-export const HobsonGatewayMobile = ({ onClick }: { onClick?: () => void }) => (
+export const HobsonGatewayMobile = ({ onClick }: { onClick?: () => void }) => {
+  if (!SHOW_GATEWAY) return null;
+  return (
   <a
     href={APP_URL}
     aria-label="Enter this way, please — enter Hobson"
