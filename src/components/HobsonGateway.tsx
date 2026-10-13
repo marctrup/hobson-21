@@ -37,7 +37,8 @@ export const HobsonGateway = ({ className = "" }: { className?: string }) => {
       →
     </span>
   </a>
-);
+  );
+};
 
 export const HobsonGatewayMobile = ({ onClick }: { onClick?: () => void }) => (
   <a
