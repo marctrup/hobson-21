@@ -82,3 +82,13 @@ describe("Illustrative roof leak guidance", () => {
     expect(result.state.holdWasLifted).toBe(false);
   });
 });
+import { LEASE_PLANS_INSTRUCTION as LP, applyRoofGuidance as arg, initialRoofGuidance as irg } from "@/components/prototype/roofGuidance";
+describe("Roof leak lease-plans guidance", () => {
+  it("adds the lease-plans check once, only for the lease review", () => {
+    const first = arg(irg, "lease", LP);
+    expect(first.state.leasePlansRequested).toBe(true);
+    expect(first.reply).toBe("Of course. I'll check the lease plans first and keep the responsibility question open until I've established what they show.");
+    expect(arg(first.state, "lease", LP).state).toBe(first.state);
+    expect(arg(irg, "overall", LP).state.leasePlansRequested).toBe(false);
+  });
+});

@@ -244,3 +244,36 @@ describe("Illustrative work journey", () => {
     expect(within(screen.getByRole("region", { name: /What I'm looking after/ })).getByText(/Contact the insurer/)).toHaveTextContent("— Needs you");
   });
 });
+describe("Roof leak — when Hobson needs help", () => {
+  it("asks for direction, prepares an unsent enquiry and clears the request", async () => {
+    const user = userEvent.setup();
+    render(<WorkOverview onClose={vi.fn()} onGuide={vi.fn()} />);
+    await user.click(screen.getByRole("button", { name: "Investigating the roof leak" }));
+    await user.click(screen.getByRole("button", { name: "Preview needs help" }));
+    expect(screen.getByRole("region", { name: "Hobson needs your help" })).toBeVisible();
+    expect(screen.getByRole("button", { name: /Reviewing repairing obligations/ })).toHaveTextContent("Needs clarification");
+    expect(screen.getByRole("button", { name: /Contractor inspection/ })).toHaveTextContent("Waiting");
+    await user.click(screen.getByRole("button", { name: "Back to What I've Done" }));
+    const needsYou = screen.getByRole("region", { name: /Needs you/ });
+    expect(within(needsYou).getByText("Clarify responsibility for the shopfront roof")).toBeInTheDocument();
+    expect(screen.getByText("4 things I'd like you to review.")).toBeInTheDocument();
+    await user.click(within(needsYou).getByRole("button", { name: "Review suggestion" }));
+    await user.click(screen.getByRole("button", { name: "Prepare the enquiry" }));
+    expect(screen.getByText("Enquiry prepared — Not sent")).toBeVisible();
+    expect(screen.getByRole("article", { name: "Draft surveyor enquiry preview" })).toBeVisible();
+    await user.click(screen.getByRole("button", { name: "Back to What I've Done" }));
+    expect(screen.queryByText("Clarify responsibility for the shopfront roof")).not.toBeInTheDocument();
+  });
+
+  it("keeps an enquiry unsendable while contact is on hold, and leaving unresolved sends nothing", async () => {
+    const user = userEvent.setup();
+    render(<WorkOverview onClose={vi.fn()} onGuide={vi.fn()} roofGuidance={{ shopfrontRequested: false, contactOnHold: true, holdWasLifted: false, leasePlansRequested: false }} />);
+    await user.click(screen.getByRole("button", { name: "Investigating the roof leak" }));
+    await user.click(screen.getByRole("button", { name: "Preview needs help" }));
+    await user.click(screen.getByRole("button", { name: "Leave unresolved" }));
+    expect(screen.getByText(/I'll leave the responsibility question open for now/)).toBeVisible();
+    expect(screen.queryByRole("article", { name: "Draft surveyor enquiry preview" })).not.toBeInTheDocument();
+    await user.click(screen.getByRole("button", { name: "Prepare the enquiry" }));
+    expect(screen.getByText(/can't send it while your hold on further contact stands/)).toBeVisible();
+  });
+});
