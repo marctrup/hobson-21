@@ -1,13 +1,10 @@
-export const INSURER_TO = "insurer@example.com";
-export const INSURER_SUBJECT = "Burlington Gardens — Reported roof leak";
-export const INSURER_BODY = `Dear Sir or Madam,
+export const INSURER_TO = "Insurer (illustrative recipient)";
+export const INSURER_SUBJECT = "Notification of reported roof leak — Burlington Gardens";
+export const INSURER_BODY = `I'm writing to notify you of a reported roof leak at Burlington Gardens.
 
-I'm writing to notify you of a reported roof leak at Burlington Gardens, reported by the tenant.
+The source of the leak and responsibility for repairs are still being investigated. A contractor inspection has been requested, and we are awaiting their response.
 
-A contractor inspection has been requested and we will share the report once received.
-
-Kind regards,
-Hobson`;
+This notification is being made to bring the reported incident to your attention. We will provide further information when it becomes available.`;
 export const SURVEYOR_TO = "surveyor@example.com";
 export const SURVEYOR_SUBJECT = "Burlington Gardens — Extent of the tenant's premises";
 export const SURVEYOR_BODY = `Dear Surveyor,
