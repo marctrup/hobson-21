@@ -4289,7 +4289,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
           />
         )}
         {showWhatIveDone && (
-          <WorkOverview onClose={resetToMap} sideLetterRequested={workGuidance.sideLetterRequested} focusNeedsYou={needsYouFocus} onJourneyBack={() => setGuidingRenewal(false)} onGuide={() => {
+          <WorkOverview onClose={resetToMap} sideLetterRequested={workGuidance.sideLetterRequested} roofGuidance={roofGuidance} focusNeedsYou={needsYouFocus} onJourneyBack={() => setGuidingRenewal(false)} onGuide={(scope) => {
             expandChat();
             if (!guidingRenewal) {
               const width = Math.max(CHAT_MIN_WIDTH, Math.round((window.innerWidth - 68) * 0.3));
@@ -4298,7 +4298,8 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
             }
             setMainCollapsed(false);
             setGuidingRenewal(true);
-            if (!guidingRenewal) setInput(SIDE_LETTER_INSTRUCTION);
+            setGuideScope(scope);
+            if (!guidingRenewal) setInput(scope === "renewal" ? SIDE_LETTER_INSTRUCTION : scope === "lease" ? SHOPFRONT_INSTRUCTION : HOLD_CONTACT_INSTRUCTION);
             setTyping(false);
             requestAnimationFrame(() => {
               inputRef.current?.focus();
