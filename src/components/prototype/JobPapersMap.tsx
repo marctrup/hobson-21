@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { FileText, MapPin } from "lucide-react";
+import { FileText, MapPin, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { Dialog, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import * as DialogPrimitive from "@radix-ui/react-dialog";
 
 export type JobContext = "roof" | "renewal";
 const contexts = {
@@ -37,7 +38,8 @@ export function JobPapersMap({ job, sideLetterRequested = false }: { job: JobCon
   return <>
     {controls}
     <Dialog open={view !== null} onOpenChange={open => { if (!open) setView(null); }}>
-      <DialogContent className="z-[1601] max-h-[85dvh] w-[calc(100%-2rem)] max-w-2xl overflow-y-auto" overlayClassName="z-[1600]">
+      <DialogPrimitive.Portal><DialogPrimitive.Overlay className="fixed inset-0 z-[1600] bg-background/80" /><DialogPrimitive.Content className="fixed left-1/2 top-1/2 z-[1601] grid max-h-[85dvh] w-[calc(100%-2rem)] max-w-2xl -translate-x-1/2 -translate-y-1/2 gap-4 overflow-y-auto rounded-md border border-border bg-background p-6 shadow-lg">
+        <DialogPrimitive.Close asChild><Button variant="ghost" size="icon" aria-label="Back to job" title="Back to job" className="absolute right-2 top-2 h-8 w-8"><X className="h-4 w-4" /></Button></DialogPrimitive.Close>
         <DialogHeader><DialogTitle>{context.place}</DialogTitle><DialogDescription>{view === "papers" ? "Papers for this job · Illustrative examples only" : "Location for this job"}</DialogDescription></DialogHeader>
         {controls}
         {view === "papers" && <section aria-label="Job papers" className="divide-y divide-border border-y border-border">
@@ -45,7 +47,7 @@ export function JobPapersMap({ job, sideLetterRequested = false }: { job: JobCon
           {job === "renewal" && sideLetterRequested && <article className="py-4"><p className="text-sm font-medium">Side Letter — 2024</p><p className="mt-1 text-xs text-muted-foreground">Awaiting paper</p><p className="mt-2 text-sm text-muted-foreground">You mentioned this paper. I haven't located it yet.</p></article>}
         </section>}
         {view === "map" && <section aria-label="Job location" className="min-w-0"><iframe title={`${context.place} job map`} src={context.map} className="aspect-[4/3] w-full rounded-md border border-border" loading="lazy" /><p className="mt-3 text-xs leading-relaxed text-muted-foreground">{context.locationNote}</p></section>}
-      </DialogContent>
+      </DialogPrimitive.Content></DialogPrimitive.Portal>
     </Dialog>
   </>;
 }

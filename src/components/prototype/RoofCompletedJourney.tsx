@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { ArrowLeft, Check, ChevronDown, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { JobPapersMap } from "./JobPapersMap";
 import owlReading from "@/assets/prototype/owl-reading.png";
 import { roofCompletion } from "./roofCompletion";
 import type { RoofWorkState } from "./roofWorkLifecycle";
@@ -21,7 +22,7 @@ export function RoofCompletedJourney({ work, onBack, onReturn }: { work: RoofWor
   return <div role="region" aria-label="Completed roof leak work journey" className="flex min-h-0 flex-1 flex-col">
     <header className="shrink-0 border-b border-border px-5 pb-5 pt-4 sm:px-6">
       <Button variant="ghost" size="sm" onClick={onBack} className="mb-4 gap-2 px-0 text-muted-foreground"><ArrowLeft className="h-4 w-4" />Back to What I'm Up To</Button>
-      <div className="flex flex-wrap items-start justify-between gap-3"><div className="min-w-0 flex-1 basis-64"><p className="mb-2 text-xs text-muted-foreground">Burlington Gardens · Illustrative completion preview</p><h2 className="text-2xl font-semibold leading-tight">Investigating the roof leak</h2></div><Button variant="ghost" size="sm" onClick={onReturn} className="text-muted-foreground">Return to investigation</Button></div>
+      <div className="flex flex-wrap items-start justify-between gap-3"><div className="min-w-0 flex-1 basis-64"><p className="mb-2 text-xs text-muted-foreground">Burlington Gardens · Illustrative completion preview</p><h2 className="text-2xl font-semibold leading-tight">Investigating the roof leak</h2></div><div className="flex flex-wrap items-center gap-2"><JobPapersMap job="roof" /><Button variant="ghost" size="sm" onClick={onReturn} className="text-muted-foreground">Return to investigation</Button></div></div>
       <p role="status" className="mt-3 flex items-center gap-2 text-xs font-medium"><Check className="h-3.5 w-3.5 text-muted-foreground" />Completed</p>
       <div className="mt-3 flex items-start gap-3"><img src={owlReading} alt="Hobson reading" className="h-10 w-10 shrink-0 object-contain" /><p className="max-w-2xl text-sm leading-relaxed text-muted-foreground">{roofCompletion.summary}</p></div>
     </header>
