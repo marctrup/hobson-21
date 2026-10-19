@@ -18,7 +18,7 @@ import { DocumentsLibrary } from "@/components/prototype/DocumentsLibrary";
 import { CollapsibleSection } from "@/components/prototype/CollapsibleSection";
 import { WorkOverview } from "@/components/prototype/WorkOverview";
 import { applyWorkGuidance, initialWorkGuidance, SIDE_LETTER_INSTRUCTION } from "@/components/prototype/workGuidance";
-import { applyRoofGuidance, initialRoofGuidance, HOLD_CONTACT_INSTRUCTION, SHOPFRONT_INSTRUCTION, type RoofGuideScope } from "@/components/prototype/roofGuidance";
+import { applyRoofGuidance, initialRoofGuidance, HOLD_CONTACT_INSTRUCTION, LIFT_HOLD_INSTRUCTION, SHOPFRONT_INSTRUCTION, type RoofGuideScope } from "@/components/prototype/roofGuidance";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import SummaryCard, { SummaryActions } from "./prototype/SummaryCard";
@@ -4025,7 +4025,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                   if (conversation) conversation.scrollTop = conversation.scrollHeight;
                 });
               }} className="flex items-center gap-2 rounded-full border border-input bg-background px-4 py-2.5 focus-within:ring-2 focus-within:ring-ring">
-                <input ref={inputRef} value={input} onChange={(event) => setInput(event.target.value)} aria-label={guideScope === "renewal" ? "Guide Hobson about the tenancy renewal" : guideScope === "lease" ? "Guide Hobson about the lease review" : "Guide Hobson about the roof leak investigation"} aria-describedby="renewal-chat-context" placeholder={guideScope === "renewal" ? "Ask me to check the 2024 side letter…" : guideScope === "lease" ? "Ask me to check the shopfront roof…" : "Ask me to hold further contact…"} className="min-w-0 flex-1 bg-transparent text-sm text-foreground outline-none placeholder:text-muted-foreground" />
+                <input ref={inputRef} value={input} onChange={(event) => setInput(event.target.value)} aria-label={guideScope === "renewal" ? "Guide Hobson about the tenancy renewal" : guideScope === "lease" ? "Guide Hobson about the lease review" : "Guide Hobson about the roof leak investigation"} aria-describedby="renewal-chat-context" placeholder={guideScope === "renewal" ? "Ask me to check the 2024 side letter…" : guideScope === "lease" ? "Ask me to check the shopfront roof…" : roofGuidance.contactOnHold ? "Tell me I can contact people again…" : "Ask me to hold further contact…"} className="min-w-0 flex-1 bg-transparent text-sm text-foreground outline-none placeholder:text-muted-foreground" />
                 <Button type="submit" size="icon" variant="ghost" disabled={!input.trim()} aria-label="Send guidance" className="h-8 w-8 shrink-0"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg></Button>
               </form>
             </>
@@ -4299,7 +4299,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
             setMainCollapsed(false);
             setGuidingRenewal(true);
             setGuideScope(scope);
-            if (!guidingRenewal) setInput(scope === "renewal" ? SIDE_LETTER_INSTRUCTION : scope === "lease" ? SHOPFRONT_INSTRUCTION : HOLD_CONTACT_INSTRUCTION);
+            if (!guidingRenewal) setInput(scope === "renewal" ? SIDE_LETTER_INSTRUCTION : scope === "lease" ? SHOPFRONT_INSTRUCTION : roofGuidance.contactOnHold ? LIFT_HOLD_INSTRUCTION : HOLD_CONTACT_INSTRUCTION);
             setTyping(false);
             requestAnimationFrame(() => {
               inputRef.current?.focus();

@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { applyWorkGuidance, initialWorkGuidance, SIDE_LETTER_INSTRUCTION } from "@/components/prototype/workGuidance";
-import { applyRoofGuidance, initialRoofGuidance, HOLD_CONTACT_INSTRUCTION, SHOPFRONT_INSTRUCTION } from "@/components/prototype/roofGuidance";
+import { applyRoofGuidance, initialRoofGuidance, HOLD_CONTACT_INSTRUCTION, LIFT_HOLD_INSTRUCTION, SHOPFRONT_INSTRUCTION } from "@/components/prototype/roofGuidance";
 
 describe("Illustrative tenancy guidance", () => {
   it("adds the requested 2024 side letter", () => {
