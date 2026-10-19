@@ -42,7 +42,8 @@ export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initia
   const completed = work.history;
   const [confirmation, setConfirmation] = useState<"end" | "restart" | null>(null);
   const previousAttempt = selected.startsWith("previous-") ? work.previous[Number(selected.slice(9))] : undefined;
-  const endedAttempt = work.ended ? work.previous.at(-1) : undefined;
+  const endedAttempt = work.ended ? work.previous[work.previous.length - 1] : undefined;
+  const recordedAttempt = previousAttempt ?? endedAttempt;
   const endedPosition = { lease: "Ended — Responsibility not established.", contractor: work.contractorRequestSent ? "Request previously sent — No response recorded." : "No new inspection requested.", insurer: "Not sent." };
   const [paperOpen, setPaperOpen] = useState(false);
   const [historyOpen, setHistoryOpen] = useState(false);
@@ -61,16 +62,16 @@ export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initia
           <div className="flex shrink-0 flex-wrap items-center gap-2">
             {!work.ended && <><Button variant="outline" size="sm" onClick={() => onPauseChange(!paused)} className="shrink-0 gap-2">{paused ? <Play className="h-4 w-4" /> : <Pause className="h-4 w-4" />}{paused ? "Resume work" : "Pause work"}</Button>
             <Button variant="secondary" size="sm" onClick={() => onGuide("overall")} className="gap-2"><MessageCircle className="h-4 w-4" />Guide Hobson</Button>
-            <DropdownMenu.Root><DropdownMenu.Trigger asChild><Button variant="ghost" size="icon" aria-label="More work options" title="More work options" className="h-8 w-8"><MoreHorizontal className="h-4 w-4" /></Button></DropdownMenu.Trigger><DropdownMenu.Portal><DropdownMenu.Content align="end" className="z-[1500] min-w-36 rounded-md border border-border bg-popover p-1 shadow-md"><DropdownMenu.Item asChild><Button variant="ghost" size="sm" onClick={() => setConfirmation("end")} className="w-full justify-start">End work</Button></DropdownMenu.Item></DropdownMenu.Content></DropdownMenu.Portal></DropdownMenu.Root></>}
+            <DropdownMenu.Root modal={false}><DropdownMenu.Trigger asChild><Button variant="ghost" size="icon" aria-label="More work options" title="More work options" className="h-8 w-8"><MoreHorizontal className="h-4 w-4" /></Button></DropdownMenu.Trigger><DropdownMenu.Portal><DropdownMenu.Content align="end" className="z-[1500] min-w-36 rounded-md border border-border bg-popover p-1 shadow-md"><DropdownMenu.Item asChild onSelect={() => setConfirmation("end")}><Button variant="ghost" size="sm" className="w-full justify-start">End work</Button></DropdownMenu.Item></DropdownMenu.Content></DropdownMenu.Portal></DropdownMenu.Root></>}
             {work.ended && <Button variant="outline" size="sm" onClick={() => setConfirmation("restart")}>Start again</Button>}
           </div>
         </div>
         <div className="mt-3 flex items-center gap-3">
           <img src={owlReading} alt="Hobson reading" className="h-10 w-10 shrink-0 object-contain" />
-          <p className="max-w-2xl text-sm leading-relaxed text-muted-foreground">{roofLeakWork.explanation}</p>
+          <p className="max-w-2xl text-sm leading-relaxed text-muted-foreground">{work.ended ? "The papers, findings and earlier actions remain available below." : roofLeakWork.explanation}</p>
         </div>
         <p className="mt-3 max-w-2xl text-sm leading-relaxed">{work.ended ? "I've ended the investigation. Here's where things stood when we stopped." : work.number > 1 ? "I'm beginning a fresh review using the available papers. Earlier findings are background only; no new contact has been made or authorised." : roofSummary(guidance)}</p>
-        <p role="status" className="mt-3 flex items-center gap-2 text-xs font-medium"><span className={`h-1.5 w-1.5 rounded-full ${paused ? "bg-muted-foreground" : "bg-ring"}`} aria-hidden="true" />{work.ended ? "Ended by you" : paused ? "Work paused · What I've found is preserved" : "I'm working on this now"}</p>
+        <p role="status" className="mt-3 flex items-center gap-2 text-xs font-medium"><span className={`h-1.5 w-1.5 rounded-full ${paused || work.ended ? "bg-muted-foreground" : "bg-ring"}`} aria-hidden="true" />{work.ended ? "Ended by you" : paused ? "Work paused · What I've found is preserved" : "I'm working on this now"}</p>
       </header>
       <AlertDialog open={confirmation !== null} onOpenChange={(open) => { if (!open) setConfirmation(null); }}>
         <AlertDialogPortal><AlertDialogOverlay className="z-[1500] bg-background/80" /><AlertDialogPrimitive.Content className="fixed left-1/2 top-1/2 z-[1501] w-[calc(100%-2rem)] max-w-lg -translate-x-1/2 -translate-y-1/2 space-y-4 rounded-md border border-border bg-background p-6 shadow-lg">
@@ -93,6 +94,7 @@ export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initia
                   <span className="min-w-0">
                     <span className="block text-sm font-semibold leading-snug">{activity.title}</span>
                     <span className="mt-1 block text-xs font-normal leading-relaxed text-muted-foreground">{work.ended ? endedPosition[activity.id] : work.number > 1 && activity.id !== "lease" ? "Not started · Fresh approval required before any new contact." : activity.id === "lease" && help.shown ? <><span className="font-medium text-foreground">Needs clarification</span> · Unable to establish whether the affected roof forms part of the tenant's premises.</> : <>{activity.id === "insurer" && guidance.contactOnHold ? "On hold at your request" : stateLabel[activity.state]} · {activity.note}</>}</span>
+                    {!work.ended && <>
                     {activity.id === "lease" && help.shown && help.choice === "enquiry" && <span className="mt-1 block text-xs font-normal leading-relaxed text-muted-foreground">Surveyor enquiry prepared — not sent.</span>}
                     {activity.id === "lease" && help.shown && help.choice === "unresolved" && <span className="mt-1 block text-xs font-normal leading-relaxed text-muted-foreground">Question left open for now.</span>}
                     {activity.id === "lease" && guidance.leasePlansRequested && <span className="mt-1 block text-xs font-normal leading-relaxed text-muted-foreground">Lease plans to be checked first.</span>}
@@ -101,6 +103,7 @@ export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initia
                     {activity.id === "contractor" && guidance.holdWasLifted && !guidance.contactOnHold && <span className="mt-1 block text-xs font-normal leading-relaxed text-muted-foreground">Further contact permitted again.</span>}
                     {activity.id === "insurer" && guidance.contactOnHold && <span className="mt-1 block text-xs font-normal leading-relaxed text-muted-foreground">Contact on hold at your request.</span>}
                     {activity.id === "insurer" && guidance.holdWasLifted && !guidance.contactOnHold && <span className="mt-1 block text-xs font-normal leading-relaxed text-muted-foreground">Further contact permitted again · Approval still required.</span>}
+                    </>}
                   </span>
                 </Button>
               ))}
@@ -129,7 +132,7 @@ export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initia
             <div key={selected}>
               <h4 className="text-lg font-semibold leading-snug">{selectedDone ? selectedDone.label : selectedActivity?.title}</h4>
 
-              {(previousAttempt || endedAttempt) && <RoofAttemptHistory attempt={previousAttempt ?? endedAttempt as NonNullable<typeof endedAttempt>} />}
+              {recordedAttempt && <RoofAttemptHistory attempt={recordedAttempt} />}
               {!previousAttempt && !work.ended && <>
               {selectedDone && <>
                 <p className="mt-2 flex items-center gap-2 text-xs font-medium text-muted-foreground"><Check className="h-3.5 w-3.5" aria-hidden="true" />Completed</p>
