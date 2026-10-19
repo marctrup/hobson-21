@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { ArrowLeft, Check, ChevronDown, FileText, Hand, Mail, MessageCircle, Pause, Play, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { JobPapersMap } from "./JobPapersMap";
 import owlReading from "@/assets/prototype/owl-reading.png";
 
 type Step = "tenancy" | "rent" | "history" | "summary" | "draft" | "approve" | "await";
@@ -237,6 +238,7 @@ export function WorkJourney({ paused, onPauseChange, onBack, onGuide, sideLetter
             <h2 className="text-2xl font-semibold leading-tight">Getting the tenancy renewal ready</h2>
           </div>
           <div className="flex shrink-0 flex-wrap items-center gap-2">
+            <JobPapersMap job="renewal" sideLetterRequested={sideLetterRequested} />
             <Button variant="outline" size="sm" onClick={() => onPauseChange(!paused)} className="shrink-0 gap-2">{paused ? <Play className="h-4 w-4" /> : <Pause className="h-4 w-4" />}{paused ? "Resume work" : "Pause work"}</Button>
             <Button variant="secondary" size="sm" onClick={onGuide} className="gap-2"><MessageCircle className="h-4 w-4" />Guide Hobson</Button>
             {journeyExtended

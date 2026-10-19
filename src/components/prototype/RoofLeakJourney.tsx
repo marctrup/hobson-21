@@ -7,6 +7,7 @@ import { RoofAttemptHistory, RoofClosingSummary } from "./RoofAttemptHistory";
 import type { RoofWorkState } from "./roofWorkLifecycle";
 import { INSURER_TO, INSURER_SUBJECT, INSURER_BODY, SURVEYOR_TO, SURVEYOR_SUBJECT, SURVEYOR_BODY } from "./roofDrafts";
 import { Button } from "@/components/ui/button";
+import { JobPapersMap } from "./JobPapersMap";
 import owlReading from "@/assets/prototype/owl-reading.png";
 import { roofLeakWork, roofSummary, type RoofActivityId, type RoofActivityState } from "./roofLeakWork";
 import { LEASE_PLANS_INSTRUCTION, type RoofGuidanceState, type RoofGuideScope, type RoofHelpState } from "./roofGuidance";
@@ -62,6 +63,7 @@ export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initia
             <h2 className="text-2xl font-semibold leading-tight">Investigating the roof leak</h2>
           </div>
           <div className="flex shrink-0 flex-wrap items-center gap-2">
+            <JobPapersMap job="roof" />
             {!work.ended && <><Button variant="outline" size="sm" onClick={() => onPauseChange(!paused)} className="shrink-0 gap-2">{paused ? <Play className="h-4 w-4" /> : <Pause className="h-4 w-4" />}{paused ? "Resume work" : "Pause work"}</Button>
             <Button variant="secondary" size="sm" onClick={() => onGuide("overall")} className="gap-2"><MessageCircle className="h-4 w-4" />Guide Hobson</Button>
             <DropdownMenu.Root modal={false}><DropdownMenu.Trigger asChild><Button variant="ghost" size="icon" aria-label="More work options" title="More work options" className="h-8 w-8"><MoreHorizontal className="h-4 w-4" /></Button></DropdownMenu.Trigger><DropdownMenu.Portal><DropdownMenu.Content align="end" className="z-[1500] min-w-36 rounded-md border border-border bg-popover p-1 shadow-md"><DropdownMenu.Item asChild onSelect={() => setConfirmation("end")}><Button variant="ghost" size="sm" className="w-full justify-start">End work</Button></DropdownMenu.Item></DropdownMenu.Content></DropdownMenu.Portal></DropdownMenu.Root></>}
