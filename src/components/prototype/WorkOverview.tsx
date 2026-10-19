@@ -118,7 +118,7 @@ export function WorkOverview({ onClose, onGuide, sideLetterRequested = false, on
         </Button>
       </div>
 
-      {journeyOpen ? <WorkJourney paused={paused} onPauseChange={setPaused} onBack={() => { setJourneyOpen(false); onJourneyBack?.(); }} onGuide={onGuide} sideLetterRequested={sideLetterRequested} /> : <div className="hobson-scroll min-h-0 flex-1 overflow-y-auto">
+      {journeyOpen ? <WorkJourney paused={paused} onPauseChange={setPaused} onBack={() => { setJourneyOpen(false); setOpenAtApproval(false); onJourneyBack?.(); }} onGuide={onGuide} sideLetterRequested={sideLetterRequested} approval={approval} onApprovalChange={setApproval} approvalOpen={openAtApproval} /> : <div className="hobson-scroll min-h-0 flex-1 overflow-y-auto">
         <div className="mx-auto w-full max-w-5xl px-5 pb-16 pt-8 sm:px-8 sm:pt-10">
           <header className="mb-10">
             <h2 className="text-3xl font-semibold leading-tight">What I've Done</h2>
