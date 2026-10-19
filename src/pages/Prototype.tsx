@@ -18,6 +18,7 @@ import { DocumentsLibrary } from "@/components/prototype/DocumentsLibrary";
 import { CollapsibleSection } from "@/components/prototype/CollapsibleSection";
 import { WorkOverview } from "@/components/prototype/WorkOverview";
 import { applyWorkGuidance, initialWorkGuidance, SIDE_LETTER_INSTRUCTION } from "@/components/prototype/workGuidance";
+import { applyRoofGuidance, initialRoofGuidance, HOLD_CONTACT_INSTRUCTION, SHOPFRONT_INSTRUCTION, type RoofGuideScope } from "@/components/prototype/roofGuidance";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import SummaryCard, { SummaryActions } from "./prototype/SummaryCard";
@@ -1440,6 +1441,10 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
   const [showWhatIveDone, setShowWhatIveDone] = useState(false);
   const [guidingRenewal, setGuidingRenewal] = useState(false);
   const [workGuidance, setWorkGuidance] = useState(initialWorkGuidance);
+  const [roofGuidance, setRoofGuidance] = useState(initialRoofGuidance);
+  // Which piece of work the guidance composer is scoped to: the renewal, the whole
+  // roof leak investigation, or the lease-review activity within it.
+  const [guideScope, setGuideScope] = useState<"renewal" | RoofGuideScope>("renewal");
   useEffect(() => {
     if (!showWhatIveDone) setGuidingRenewal(false);
   }, [showWhatIveDone]);
