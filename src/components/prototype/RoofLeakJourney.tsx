@@ -104,7 +104,16 @@ export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initia
           <section aria-labelledby="desk-heading" className="min-w-0 px-5 py-5 sm:px-6">
             <h3 id="desk-heading" className="mb-5 text-xs font-semibold text-muted-foreground">On Hobson's Desk</h3>
             <div key={selected}>
-              <h4 className="text-lg font-semibold leading-snug">{selectedActivity?.title}</h4>
+              <h4 className="text-lg font-semibold leading-snug">{selectedDone ? selectedDone.label : selectedActivity?.title}</h4>
+
+              {selectedDone && <>
+                <p className="mt-2 flex items-center gap-2 text-xs font-medium text-muted-foreground"><Check className="h-3.5 w-3.5" aria-hidden="true" />Completed</p>
+                <div className="mt-4 border-l-2 border-border pl-3">
+                  <h5 className="text-xs font-semibold">Recorded outcome</h5>
+                  <p className="mt-2 text-sm leading-relaxed">{selectedDone.outcome}</p>
+                </div>
+                <p className="mt-4 text-xs leading-relaxed text-muted-foreground">This is part of the investigation's history. The current activities are above, under Happening now.</p>
+              </>}
 
               {selected === "lease" && <>
                 <article className="mt-4 border-y border-border py-4">
