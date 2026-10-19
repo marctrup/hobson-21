@@ -134,9 +134,9 @@ export function WorkOverview({ onClose, onGuide, sideLetterRequested = false, on
             </div>
           </header>
 
-          <section aria-labelledby="work-needs-you" className="mb-10">
+          <section aria-labelledby="work-needs-you" className="mb-12 rounded-2xl border border-border bg-card px-5 py-6 shadow-sm sm:px-7">
             <SectionHeading id="work-needs-you" title="Needs you" count={visibleDecisions.length} icon={Hand} />
-            <div className="divide-y divide-border border-y border-border">
+            <div className="divide-y divide-border">
               {visibleDecisions.map((item) => (
                 <article key={item.title} className="flex flex-wrap items-center gap-x-6 gap-y-2 py-4">
                   <div className="min-w-0 flex-1 basis-72">
@@ -157,11 +157,11 @@ export function WorkOverview({ onClose, onGuide, sideLetterRequested = false, on
             </div>
           </section>
 
-          <section aria-labelledby="work-looking-after" className="mb-10">
+          <section aria-labelledby="work-looking-after" className="mb-12 rounded-2xl bg-muted/50 px-5 py-6 sm:px-7">
             <SectionHeading id="work-looking-after" title="What I'm looking after" count={activeWork.length} icon={CircleDot} />
             <div className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,300px),1fr))] gap-x-8 gap-y-8">
               {activeWork.map((work) => (
-                <article key={work.title} className="min-w-0 border-b border-border pb-6">
+                <article key={work.title} className="min-w-0 rounded-xl bg-background/80 p-5">
                   <p className="text-xs text-muted-foreground">{work.place}</p>
                   <h4 className="mt-2 text-base font-semibold leading-snug">{work.place === "Stanley House · Flat 6" ? <Button variant="link" onClick={() => openJourney(false)} className="h-auto max-w-full justify-start gap-2 whitespace-normal p-0 text-left text-base font-semibold leading-snug">{work.title}<ArrowUpRight className="h-4 w-4 shrink-0" aria-hidden="true" /></Button> : work.place === roofLeakWork.place ? <Button variant="link" onClick={() => openRoofJourney("lease")} className="h-auto max-w-full justify-start gap-2 whitespace-normal p-0 text-left text-base font-semibold leading-snug">{work.title}<ArrowUpRight className="h-4 w-4 shrink-0" aria-hidden="true" /></Button> : work.title}</h4>
                   <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{work.aim}</p>
@@ -175,7 +175,7 @@ export function WorkOverview({ onClose, onGuide, sideLetterRequested = false, on
 
           {currentRoofWork.ended && <section aria-label="Ended work" className="mb-10 border-t border-border pt-5"><h3 className="text-sm font-semibold text-muted-foreground">Ended work</h3><p className="mt-3 text-xs text-muted-foreground">Burlington Gardens · Ended by you</p><Button variant="link" onClick={() => openRoofJourney("lease")} className="mt-1 h-auto max-w-full gap-2 whitespace-normal p-0 text-left text-sm">Investigating the roof leak<ArrowUpRight className="h-3.5 w-3.5" /></Button><p className="mt-2 text-sm text-muted-foreground">The record remains available. No further steps will be taken.</p></section>}
 
-          <section aria-labelledby="work-accomplished">
+          <section aria-labelledby="work-accomplished" className="rounded-2xl border border-dashed border-border px-5 py-6 sm:px-7">
             <SectionHeading id="work-accomplished" title="What I've accomplished" count={visibleAccomplished.length} icon={CheckCheck} quiet />
             <div className="divide-y divide-border">
               {visibleAccomplished.map((work) => (
