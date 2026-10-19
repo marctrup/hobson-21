@@ -148,12 +148,12 @@ export function WorkOverview({ onClose, onGuide, sideLetterRequested = false, on
           </section>
 
           <section aria-labelledby="work-in-progress" className="mb-10">
-            <SectionHeading id="work-in-progress" title="In progress" count={ongoing.length} icon={CircleDot} />
+            <SectionHeading id="work-in-progress" title="In progress" count={visibleOngoing.length} icon={CircleDot} />
             <div className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,260px),1fr))] gap-x-6 gap-y-7">
-              {ongoing.map((work) => (
+              {visibleOngoing.map((work) => (
                 <article key={work.title} className="min-w-0 border-b border-border pb-6">
                   <p className="text-xs text-muted-foreground">{work.place}</p>
-                  <h4 className="mt-2 text-base font-semibold leading-snug">{work.place === "Stanley House · Flat 6" ? <Button variant="link" onClick={() => setJourneyOpen(true)} className="h-auto max-w-full justify-start gap-2 whitespace-normal p-0 text-left text-base font-semibold leading-snug">{work.title}<ArrowUpRight className="h-4 w-4 shrink-0" aria-hidden="true" /></Button> : work.title}</h4>
+                  <h4 className="mt-2 text-base font-semibold leading-snug">{work.place === "Stanley House · Flat 6" ? <Button variant="link" onClick={() => openJourney(false)} className="h-auto max-w-full justify-start gap-2 whitespace-normal p-0 text-left text-base font-semibold leading-snug">{work.title}<ArrowUpRight className="h-4 w-4 shrink-0" aria-hidden="true" /></Button> : work.title}</h4>
                   <p className="mt-3 flex items-start gap-2 text-sm leading-relaxed text-muted-foreground"><Check className="mt-1 h-3.5 w-3.5 shrink-0" aria-hidden="true" />{work.recent}</p>
                   <div className="my-4 border-l-2 border-ring bg-muted/50 px-3 py-3">
                     <p className="mb-1.5 text-xs font-medium text-muted-foreground">Now</p>
