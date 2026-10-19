@@ -98,8 +98,12 @@ describe("Illustrative work journey", () => {
     await user.click(screen.getByRole("button", { name: "Back to What I've Done" }));
     const needsYou = screen.getByRole("region", { name: /Needs you/ });
     expect(within(needsYou).getByText("Stanley House · Flat 6")).toBeInTheDocument();
-    expect(screen.getByRole("region", { name: /In progress/ })).not.toHaveTextContent("Stanley House · Flat 6");
-    await user.click(within(needsYou).getByRole("button", { name: "Getting the tenancy renewal ready" }));
+    // One job, one place: Flat 6 stays in What I'm looking after, not duplicated.
+    const lookingAfter = screen.getByRole("region", { name: /What I'm looking after/ });
+    expect(lookingAfter).toHaveTextContent("Stanley House · Flat 6");
+    expect(within(lookingAfter).getByText("Renewal email — your approval needed")).toBeInTheDocument();
+    const renewalDecision = within(needsYou).getByText("Stanley House · Flat 6").closest("article")!;
+    await user.click(within(renewalDecision).getByRole("button", { name: "Review decision" }));
     expect(screen.getByText("May I send this email?")).toBeVisible();
     await user.click(screen.getByRole("button", { name: "Change before sending" }));
     await user.type(screen.getByLabelText("Edit the email"), " — revised");
@@ -115,7 +119,7 @@ describe("Illustrative work journey", () => {
     expect(screen.getByRole("button", { name: /Checking the tenancy history/ })).toHaveAttribute("aria-current", "step");
     expect(screen.getByRole("button", { name: /Original annual rent\s*£24,000/ })).toBeInTheDocument();
     await user.click(screen.getByRole("button", { name: "Back to What I've Done" }));
-    expect(screen.getByRole("region", { name: /In progress/ })).toHaveTextContent("Stanley House · Flat 6");
+    expect(screen.getByRole("region", { name: /What I'm looking after/ })).toHaveTextContent("Renewal email sent — awaiting the tenant's response");
     expect(screen.getByRole("region", { name: /Needs you/ })).not.toHaveTextContent("Stanley House · Flat 6");
   });
 
