@@ -265,6 +265,20 @@ describe("Roof leak — when Hobson needs help", () => {
     expect(screen.queryByText("Clarify responsibility for the shopfront roof")).not.toBeInTheDocument();
   });
 
+  it("closes the demonstration and restores the original working state", async () => {
+    const user = userEvent.setup();
+    render(<WorkOverview onClose={vi.fn()} onGuide={vi.fn()} />);
+    await user.click(screen.getByRole("button", { name: "Investigating the roof leak" }));
+    await user.click(screen.getByRole("button", { name: "Preview needs help" }));
+    expect(screen.getByRole("region", { name: "Hobson needs your help" })).toBeVisible();
+    await user.click(screen.getByRole("button", { name: "Close this demonstration" }));
+    expect(screen.queryByRole("region", { name: "Hobson needs your help" })).not.toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /Reviewing repairing obligations/ })).toHaveTextContent("Working");
+    await user.click(screen.getByRole("button", { name: "Back to What I'm Up To" }));
+    expect(screen.queryByText("Clarify responsibility for the shopfront roof")).not.toBeInTheDocument();
+    expect(screen.getByText("3 things I'd like you to review.")).toBeInTheDocument();
+  });
+
   it("keeps an enquiry unsendable while contact is on hold, and leaving unresolved sends nothing", async () => {
     const user = userEvent.setup();
     render(<WorkOverview onClose={vi.fn()} onGuide={vi.fn()} roofGuidance={{ shopfrontRequested: false, contactOnHold: true, holdWasLifted: false, leasePlansRequested: false }} />);
