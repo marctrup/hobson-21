@@ -1,3 +1,4 @@
+import { JourneyNavigation } from "./JourneyNavigation";
 import { useState } from "react";
 import { ArrowLeft, Check, ChevronDown, FileText, Hand, Mail, MessageCircle, Pause, Play, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -199,8 +200,8 @@ export function WorkJourney({ paused, onPauseChange, onBack, onGuide, sideLetter
         <article aria-label="Draft email preview" className="mt-5 rounded-md border border-border bg-popover px-4 py-4">
           <p className="flex items-center gap-2 text-xs font-medium text-muted-foreground"><Mail className="h-3.5 w-3.5" aria-hidden="true" />Draft email · not yet sent</p>
           <dl className="mt-3 space-y-2 text-sm">
-            <div className="flex gap-2"><dt className="w-16 shrink-0 text-xs text-muted-foreground">To</dt><dd className="font-medium">{EMAIL_TO}</dd></div>
-            <div className="flex gap-2"><dt className="w-16 shrink-0 text-xs text-muted-foreground">Subject</dt><dd className="font-medium">{EMAIL_SUBJECT}</dd></div>
+            <div className="flex gap-2"><dt className="w-16 shrink-0 text-xs text-muted-foreground">To</dt><dd className="min-w-0 break-words font-medium">{EMAIL_TO}</dd></div>
+            <div className="flex gap-2"><dt className="w-16 shrink-0 text-xs text-muted-foreground">Subject</dt><dd className="min-w-0 break-words font-medium">{EMAIL_SUBJECT}</dd></div>
           </dl>
           {editing ? <div className="mt-4">
             <label htmlFor="email-draft-edit" className="text-xs font-medium text-muted-foreground">Edit the email</label>
@@ -210,7 +211,7 @@ export function WorkJourney({ paused, onPauseChange, onBack, onGuide, sideLetter
               <Button size="sm" variant="ghost" onClick={() => { setEditing(false); setDraftBody(emailBody); }}>Discard changes</Button>
             </div>
           </div> : <blockquote className="mt-4 whitespace-pre-line border-t border-border pt-4 text-sm leading-relaxed">{emailBody}</blockquote>}
-          <p className="mt-4 border-t border-border pt-3 text-sm"><span className="font-medium">Attachments:</span> None</p>
+          <p className="mt-4 border-t border-border pt-3 text-sm"><span className="min-w-0 break-words font-medium">Attachments:</span> None</p>
         </article>
         {edited && !editing && <p className="mt-3 text-xs leading-relaxed text-muted-foreground">You've changed this draft. Approval applies to the latest version shown above.</p>}
         {!editing && <div className="mt-5 border-l-2 border-border pl-3">
@@ -229,7 +230,7 @@ export function WorkJourney({ paused, onPauseChange, onBack, onGuide, sideLetter
   const showActionBar = selected === "approve" && !sent && !editing;
 
   return (
-    <div className="flex min-h-0 flex-1 flex-col" role="region" aria-label="Tenancy renewal work journey">
+    <div className="flex min-h-0 flex-1 flex-col overflow-y-auto lg:overflow-hidden" role="region" aria-label="Tenancy renewal work journey">
       <header className="shrink-0 border-b border-border px-5 pb-5 pt-4 sm:px-6">
         <Button variant="ghost" size="sm" onClick={onBack} className="mb-4 gap-2 px-0 text-muted-foreground"><ArrowLeft className="h-4 w-4" />Back to What I'm Up To</Button>
         <div className="flex flex-wrap items-start justify-between gap-3">
@@ -237,7 +238,7 @@ export function WorkJourney({ paused, onPauseChange, onBack, onGuide, sideLetter
             <p className="mb-2 text-xs text-muted-foreground">Stanley House · Flat 6</p>
             <h2 className="text-2xl font-semibold leading-tight">Getting the tenancy renewal ready</h2>
           </div>
-          <div className="flex shrink-0 flex-wrap items-center gap-2">
+          <div className="flex min-w-0 w-full flex-wrap items-center gap-2 lg:w-auto lg:shrink-0">
             <JobPapersMap job="renewal" sideLetterRequested={sideLetterRequested} />
             <Button variant="outline" size="sm" onClick={() => onPauseChange(!paused)} className="shrink-0 gap-2">{paused ? <Play className="h-4 w-4" /> : <Pause className="h-4 w-4" />}{paused ? "Resume work" : "Pause work"}</Button>
             <Button variant="secondary" size="sm" onClick={onGuide} className="gap-2"><MessageCircle className="h-4 w-4" />Guide Hobson</Button>
@@ -253,29 +254,28 @@ export function WorkJourney({ paused, onPauseChange, onBack, onGuide, sideLetter
         <p role="status" className="mt-3 flex items-center gap-2 text-xs font-medium"><span className={`h-1.5 w-1.5 rounded-full ${paused ? "bg-muted-foreground" : "bg-ring"}`} aria-hidden="true" />{paused ? "Work paused · What I've found is preserved" : journeyExtended && !sent ? "Waiting for your approval" : "I'm working on this now"}</p>
       </header>
 
-      <div className="hobson-scroll min-h-0 flex-1 overflow-y-auto">
-        <div className="grid min-h-full grid-cols-[minmax(0,0.35fr)_minmax(0,0.65fr)] items-stretch p-3 sm:p-5 max-[640px]:grid-cols-1 max-[640px]:gap-3">
-          <nav aria-label="The Journey" className="min-w-0 rounded-2xl bg-muted px-4 py-5 sm:rounded-r-none max-[640px]:rounded-2xl">
-            <h3 className="mb-5 text-xs font-semibold text-muted-foreground">The Journey</h3>
-            <div className="relative">
+      <div className="hobson-scroll min-h-0 shrink-0 lg:flex-1 lg:overflow-y-auto">
+        <div className="grid grid-cols-1 items-stretch gap-3 p-3 sm:p-5 lg:min-h-full lg:grid-cols-[minmax(0,0.35fr)_minmax(0,0.65fr)] lg:gap-0">
+          <JourneyNavigation label="The Journey" selectedTitle={selectedStep?.title}>
+              <div className="relative">
               <div aria-hidden="true" className="absolute bottom-7 left-3 top-8 w-px bg-border" />
               {steps.map((step) => <div key={step.id}>
                 {step.group && <p className="relative mb-2 mt-4 bg-muted text-xs font-medium text-muted-foreground first:mt-0">{step.id === "history" && paused ? "Paused here" : step.group}</p>}
-                <Button variant="ghost" aria-current={selected === step.id ? "step" : undefined} onClick={() => { setSelected(step.id); setEvidence(null); }} className={`relative mb-2 h-auto w-full items-start justify-start gap-2 rounded-md border px-2 py-3 text-left whitespace-normal ${selected === step.id ? "border-border bg-card shadow-sm min-[641px]:w-[calc(100%+17px)] min-[641px]:max-w-none min-[641px]:rounded-r-none min-[641px]:border-r-card relative z-10" : "border-transparent hover:bg-background/60"}`}>
+                <Button variant="ghost" aria-current={selected === step.id ? "step" : undefined} onClick={() => { setSelected(step.id); setEvidence(null); }} className={`relative mb-2 h-auto w-full items-start justify-start gap-2 rounded-md border px-2 py-3 text-left whitespace-normal ${selected === step.id ? "border-border bg-card shadow-sm lg:w-[calc(100%+17px)] lg:max-w-none lg:rounded-r-none lg:border-r-card relative z-10" : "border-transparent hover:bg-background/60"}`}>
                   <span aria-hidden="true" className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center bg-transparent">{stepIcon(step.id)}</span>
                   <span className="min-w-0"><span className="block text-sm font-semibold leading-snug">{step.title}</span><span className="mt-1 block text-xs font-normal leading-relaxed text-muted-foreground">{step.note}</span></span>
                 </Button>
               </div>)}
             </div>
-          </nav>
+          </JourneyNavigation>
 
-          <section aria-labelledby="desk-heading" className="relative min-w-0 rounded-2xl border border-border bg-card px-5 py-5 shadow-sm sm:-ml-px sm:px-7">
+          <section aria-labelledby="desk-heading" className="relative min-w-0 rounded-2xl border border-border bg-card px-5 py-5 shadow-sm lg:-ml-px sm:px-7">
             <h3 id="desk-heading" className="mb-5 text-xs font-semibold text-muted-foreground">On Hobson's Desk</h3>
             <div key={selected}>
               <h4 className="text-lg font-semibold leading-snug">{selectedStep?.title}</h4>
               {journeyExtended && (selected === "draft" || selected === "approve" || selected === "await") ? approvalDesk : investigationDesk}
             </div>
-            {showActionBar && <div className="sticky bottom-0 -mx-5 mt-6 border-t border-border bg-background px-5 py-4 sm:-mx-6 sm:px-6">
+            {showActionBar && <div className="sticky bottom-0 -mx-5 mt-6 border-t border-border bg-background px-5 py-4 sm:-mx-7 sm:px-7">
               <div className="flex flex-wrap items-center gap-2">
                 <Button size="sm" onClick={approveAndSend} disabled={needsReview}>Approve and send</Button>
                 <Button size="sm" variant="outline" onClick={() => { setDraftBody(emailBody); setEditing(true); }}>Change before sending</Button>
