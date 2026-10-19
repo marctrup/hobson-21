@@ -4,7 +4,7 @@ import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import { AlertDialog, AlertDialogPortal, AlertDialogOverlay, AlertDialogTitle, AlertDialogDescription, AlertDialogFooter, AlertDialogAction, AlertDialogCancel } from "@/components/ui/alert-dialog";
 import * as AlertDialogPrimitive from "@radix-ui/react-alert-dialog";
 import { RoofAttemptHistory, RoofClosingSummary } from "./RoofAttemptHistory";
-import type { RoofWorkState } from "./roofWorkLifecycle";
+import { resetRoofDemo, sendInsurerNotification, type RoofWorkState } from "./roofWorkLifecycle";
 import { INSURER_TO, INSURER_SUBJECT, INSURER_BODY, SURVEYOR_TO, SURVEYOR_SUBJECT, SURVEYOR_BODY } from "./roofDrafts";
 import { Button } from "@/components/ui/button";
 import { JobPapersMap } from "./JobPapersMap";
@@ -26,8 +26,9 @@ function stateDot(state: ActivityState) {
 const stateLabel: Record<ActivityState, string> = { working: "Working", waiting: "Waiting", "needs-you": "Needs you" };
 
 /** Illustrative parallel-activities demonstration only — no real work, approvals or integrations. */
-export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initialActivity = "lease", guidance, help, onHelpChange, work, onEnd, onRestart }: {
+export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initialActivity = "lease", guidance, help, onHelpChange, work, onEnd, onRestart, onWorkUpdate }: {
   work: RoofWorkState;
+  onWorkUpdate: (work: RoofWorkState) => void;
   onEnd: () => void;
   onRestart: () => void;
   paused: boolean;
@@ -46,8 +47,11 @@ export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initia
   const previousAttempt = selected.startsWith("previous-") ? work.previous[Number(selected.slice(9))] : undefined;
   const endedAttempt = work.ended ? work.previous[work.previous.length - 1] : undefined;
   const recordedAttempt = previousAttempt ?? endedAttempt;
-  const endedPosition = { lease: "Ended — Responsibility not established.", contractor: work.contractorRequestSent ? "Request previously sent — No response recorded." : "No new inspection requested.", insurer: "Not sent." };
+  const endedPosition = { lease: "Ended — Responsibility not established.", contractor: work.contractorRequestSent ? "Request previously sent — No response recorded." : "No new inspection requested.", insurer: work.insurerSent ? "Sent — awaiting response." : "Not sent." };
   const [paperOpen, setPaperOpen] = useState(false);
+  const [insurerEditing, setInsurerEditing] = useState(false);
+  const [insurerEditText, setInsurerEditText] = useState("");
+  const [insurerNotice, setInsurerNotice] = useState<string | null>(null);
   const [historyOpen, setHistoryOpen] = useState(false);
   const selectedActivity = activities.find((activity) => activity.id === selected);
   const selectedDone = typeof selected === "string" && selected.startsWith("done-") ? completed[Number(selected.slice(5))] : null;
@@ -95,10 +99,10 @@ export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initia
             <div>
               {activities.map((activity) => (
                 <Button key={activity.id} variant="ghost" aria-current={selected === activity.id ? "step" : undefined} onClick={() => { setSelected(activity.id); setPaperOpen(false); }} className={`mb-2 h-auto w-full items-start justify-start gap-2 rounded-md border px-2 py-3 text-left whitespace-normal ${selected === activity.id ? "border-border bg-card shadow-sm min-[641px]:w-[calc(100%+17px)] min-[641px]:max-w-none min-[641px]:rounded-r-none min-[641px]:border-r-card relative z-10" : "border-transparent hover:bg-background/60"}`}>
-                  <span aria-hidden="true" className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center">{!work.ended && activity.id === "lease" && help.shown ? <CircleHelp aria-hidden="true" className="h-3.5 w-3.5 text-foreground" strokeWidth={1.6} /> : stateDot(work.ended || (work.number > 1 && activity.id !== "lease") ? "waiting" : activity.id === "insurer" && guidance.contactOnHold ? "waiting" : activity.state)}</span>
+                  <span aria-hidden="true" className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center">{!work.ended && activity.id === "lease" && help.shown ? <CircleHelp aria-hidden="true" className="h-3.5 w-3.5 text-foreground" strokeWidth={1.6} /> : stateDot(work.ended || (work.number > 1 && activity.id !== "lease") ? "waiting" : activity.id === "insurer" && (guidance.contactOnHold || work.insurerSent) ? "waiting" : activity.state)}</span>
                   <span className="min-w-0">
                     <span className="block text-sm font-semibold leading-snug">{activity.title}</span>
-                    <span className="mt-1 block text-xs font-normal leading-relaxed text-muted-foreground">{work.ended ? endedPosition[activity.id] : work.number > 1 && activity.id !== "lease" ? "Not started · Fresh approval required before any new contact." : activity.id === "lease" && help.shown ? <><span className="font-medium text-foreground">Needs clarification</span> · Unable to establish whether the affected roof forms part of the tenant's premises.</> : <>{activity.id === "insurer" && guidance.contactOnHold ? "On hold at your request" : stateLabel[activity.state]} · {activity.note}</>}</span>
+                    <span className="mt-1 block text-xs font-normal leading-relaxed text-muted-foreground">{work.ended ? endedPosition[activity.id] : work.number > 1 && activity.id !== "lease" ? "Not started · Fresh approval required before any new contact." : activity.id === "lease" && help.shown ? <><span className="font-medium text-foreground">Needs clarification</span> · Unable to establish whether the affected roof forms part of the tenant's premises.</> : activity.id === "insurer" && work.insurerSent ? "Sent — awaiting response" : <>{activity.id === "insurer" && guidance.contactOnHold ? "On hold at your request" : stateLabel[activity.state]} · {activity.note}</>}</span>
                     {!work.ended && <>
                     {activity.id === "lease" && help.shown && help.choice === "enquiry" && <span className="mt-1 block text-xs font-normal leading-relaxed text-muted-foreground">Surveyor enquiry prepared — not sent.</span>}
                     {activity.id === "lease" && help.shown && help.choice === "unresolved" && <span className="mt-1 block text-xs font-normal leading-relaxed text-muted-foreground">Question left open for now.</span>}
@@ -107,7 +111,7 @@ export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initia
                     {activity.id === "contractor" && guidance.contactOnHold && <span className="mt-1 block text-xs font-normal leading-relaxed text-muted-foreground">Awaiting reply · Further contact on hold.</span>}
                     {activity.id === "contractor" && guidance.holdWasLifted && !guidance.contactOnHold && <span className="mt-1 block text-xs font-normal leading-relaxed text-muted-foreground">Further contact permitted again.</span>}
                     {activity.id === "insurer" && guidance.contactOnHold && <span className="mt-1 block text-xs font-normal leading-relaxed text-muted-foreground">Contact on hold at your request.</span>}
-                    {activity.id === "insurer" && guidance.holdWasLifted && !guidance.contactOnHold && <span className="mt-1 block text-xs font-normal leading-relaxed text-muted-foreground">Further contact permitted again · Approval still required.</span>}
+                    {activity.id === "insurer" && !work.insurerSent && guidance.holdWasLifted && !guidance.contactOnHold && <span className="mt-1 block text-xs font-normal leading-relaxed text-muted-foreground">Further contact permitted again · Approval still required.</span>}
                     </>}
                   </span>
                 </Button>
@@ -268,34 +272,60 @@ export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initia
               </>}
 
               {selected === "insurer" && !work.insurerPrepared && <><p className="mt-4 text-sm leading-relaxed text-muted-foreground">No new notification has been prepared or sent. The old draft remains in Previous attempt and carries no permission to send.</p><p className="mt-3 text-xs text-muted-foreground">Any new message will require a fresh review and your specific approval.</p><Button variant="outline" size="sm" disabled className="mt-4">Review approval</Button></>}
-              {selected === "insurer" && work.insurerPrepared && <>
-                <div className="mt-4 border-l-2 border-border pl-3">
-                  <h5 className="text-xs font-semibold">What I've prepared</h5>
-                  <p className="mt-2 text-sm leading-relaxed">Notification prepared — Not sent. A draft notification to the insurer about the reported leak.</p>
-                </div>
-                <div className="mt-4 border-l-2 border-ring pl-3">
-                  <h5 className="text-xs font-semibold">Current position</h5>
-                  <p className="mt-2 text-sm leading-relaxed">{guidance.contactOnHold ? "On hold at your request. Nothing has been sent." : "Awaiting your approval. Nothing has been sent."}</p>
-                </div>
-                <div className="mt-4 border-l-2 border-border pl-3">
-                  <h5 className="text-xs font-semibold">Still required: Your approval</h5>
-                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{guidance.contactOnHold ? "I've prepared the notification, but I won't send it until you lift the hold and approve the message. The hold on further contact prevents sending, even with approval." : "The notification still requires your specific approval before it can be sent. Lifting a hold on contact never approves a message by itself."}</p>
-                </div>
-                {guidance.contactOnHold && <div className="mt-4 border-l-2 border-border pl-3">
-                  <h5 className="text-xs font-semibold">At your request</h5>
-                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">The prepared notification remains available, but I won't send it while your instruction to hold contact stands.</p>
-                </div>}
-                <article aria-label="Draft insurer notification preview" className="mt-5 rounded-md border border-border bg-popover px-4 py-4">
-                  <p className="flex items-center gap-2 text-xs font-medium text-muted-foreground"><Mail className="h-3.5 w-3.5" aria-hidden="true" />Draft notification · not yet sent</p>
+              {selected === "insurer" && work.insurerPrepared && work.insurerSent && <>
+                <p role="status" className="mt-3 flex items-center gap-2 text-sm font-medium"><Check className="h-4 w-4 text-muted-foreground" aria-hidden="true" />Sent — awaiting response</p>
+                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">I've sent the illustrative notification with your approval. No responsibility has been suggested, and no real message has left this prototype.</p>
+                <article aria-label="Sent insurer notification" className="mt-5 rounded-md border border-border bg-popover px-4 py-4">
+                  <p className="flex items-center gap-2 text-xs font-medium text-muted-foreground"><Mail className="h-3.5 w-3.5" aria-hidden="true" />Sent notification · illustrative prototype data</p>
                   <dl className="mt-3 space-y-2 text-sm">
                     <div className="flex gap-2"><dt className="w-16 shrink-0 text-xs text-muted-foreground">To</dt><dd className="font-medium">{INSURER_TO}</dd></div>
                     <div className="flex gap-2"><dt className="w-16 shrink-0 text-xs text-muted-foreground">Subject</dt><dd className="font-medium">{INSURER_SUBJECT}</dd></div>
                   </dl>
-                  <blockquote className="mt-4 whitespace-pre-line border-t border-border pt-4 text-sm leading-relaxed">{INSURER_BODY}</blockquote>
+                  <blockquote className="mt-4 whitespace-pre-line border-t border-border pt-4 text-sm leading-relaxed">{work.insurerDraft}</blockquote>
                 </article>
-                <Button size="sm" variant="outline" className="mt-4" disabled title={guidance.contactOnHold ? "Sending is on hold at your request" : "Approval review is demonstrated in the tenancy renewal journey"}>Review approval</Button>
-                <p className="mt-2 text-xs leading-relaxed text-muted-foreground">{guidance.contactOnHold ? "Sending is on hold at your request; the draft remains here unchanged." : "The approval flow itself is demonstrated in the tenancy renewal journey; this preview shows only what is waiting for you."}</p>
+                <div className="mt-5 border-l-2 border-ring pl-3"><h5 className="text-xs font-semibold">What happens next</h5><p className="mt-2 text-sm leading-relaxed">I'll bring you the insurer's response when it arrives.</p></div>
               </>}
+              {selected === "insurer" && work.insurerPrepared && !work.insurerSent && <>
+                <p className="mt-3 text-xs font-medium text-muted-foreground">{guidance.contactOnHold ? "On hold at your request" : "Needs your approval"}</p>
+                <p className="mt-3 text-sm leading-relaxed">I've prepared a notification about the reported roof leak at Burlington Gardens. Nothing has been sent. Please check the details before deciding.</p>
+                {guidance.contactOnHold && <div className="mt-4 border-l-2 border-ring pl-3">
+                  <h5 className="text-xs font-semibold">At your request</h5>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">You asked me not to contact anyone. The draft remains here to inspect, but the contact restriction must be lifted before approval can proceed. Lifting it will not send the notification or count as approval.</p>
+                </div>}
+                {insurerNotice && <p role="status" className="mt-4 text-sm leading-relaxed text-muted-foreground">{insurerNotice}</p>}
+                <article aria-label="Draft insurer notification preview" className="mt-5 rounded-md border border-border bg-popover px-4 py-4">
+                  <p className="flex items-center gap-2 text-xs font-medium text-muted-foreground"><Mail className="h-3.5 w-3.5" aria-hidden="true" />Draft notification · not yet sent · illustrative prototype data</p>
+                  <dl className="mt-3 space-y-2 text-sm">
+                    <div className="flex gap-2"><dt className="w-16 shrink-0 text-xs text-muted-foreground">To</dt><dd className="font-medium">{INSURER_TO}</dd></div>
+                    <div className="flex gap-2"><dt className="w-16 shrink-0 text-xs text-muted-foreground">Subject</dt><dd className="font-medium">{INSURER_SUBJECT}</dd></div>
+                  </dl>
+                  {insurerEditing ? <div className="mt-4">
+                    <label htmlFor="insurer-draft-edit" className="text-xs font-medium text-muted-foreground">Edit the notification</label>
+                    <textarea id="insurer-draft-edit" value={insurerEditText} onChange={(event) => setInsurerEditText(event.target.value)} rows={9} className="mt-2 w-full rounded-md border border-border bg-background px-3 py-2 text-sm leading-relaxed" />
+                    <div className="mt-3 flex flex-wrap gap-2">
+                      <Button size="sm" onClick={() => { onWorkUpdate({ ...work, insurerDraft: insurerEditText }); setInsurerEditing(false); setInsurerNotice("Your revised version is shown below. It has not been sent — please approve it explicitly if you're content."); }}>Keep this version</Button>
+                      <Button size="sm" variant="ghost" onClick={() => setInsurerEditing(false)}>Discard changes</Button>
+                    </div>
+                  </div> : <blockquote className="mt-4 whitespace-pre-line border-t border-border pt-4 text-sm leading-relaxed">{work.insurerDraft}</blockquote>}
+                  <p className="mt-4 border-t border-border pt-3 text-sm"><span className="font-medium">Attachments:</span> None currently selected.</p>
+                </article>
+                <div className="mt-5 border-l-2 border-border pl-3">
+                  <h5 className="text-xs font-semibold">Still to establish</h5>
+                  <ul className="mt-2 list-disc space-y-1.5 pl-4 text-sm leading-relaxed">
+                    <li>Whether the roof forms part of the tenant's premises.</li>
+                    <li>Who is responsible for repairs.</li>
+                    <li>The contractor's inspection findings.</li>
+                  </ul>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">These remain unresolved, so the notification reports the incident as a fact and does not present any of them as confirmed.</p>
+                </div>
+                {!insurerEditing && <div className="mt-5 flex flex-wrap gap-2">
+                  <Button size="sm" disabled={guidance.contactOnHold} onClick={() => { onWorkUpdate(sendInsurerNotification(work)); setInsurerNotice(null); }}>Approve and send</Button>
+                  <Button size="sm" variant="outline" onClick={() => { setInsurerEditText(work.insurerDraft); setInsurerEditing(true); setInsurerNotice(null); }}>Change before sending</Button>
+                  <Button size="sm" variant="ghost" onClick={() => { setInsurerNotice(null); setSelected("lease"); }}>Not now</Button>
+                </div>}
+                {guidance.contactOnHold && <p className="mt-2 text-xs leading-relaxed text-muted-foreground">Approve and send is unavailable while contact is on hold at your request.</p>}
+              </>}
+              {selected === "insurer" && !work.ended && <div className="mt-6 border-t border-dashed border-border pt-3"><Button size="sm" variant="ghost" onClick={() => { onWorkUpdate(resetRoofDemo()); setInsurerEditing(false); setInsurerNotice(null); }} className="h-auto px-0 text-xs text-muted-foreground">Reset this demonstration</Button></div>}
               </>}
             </div>
           </section>

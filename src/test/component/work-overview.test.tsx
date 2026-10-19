@@ -166,6 +166,29 @@ describe("Illustrative work journey", () => {
     expect(screen.getByRole("region", { name: "Tenancy renewal work journey" })).toBeVisible();
   });
 
+  it("approves the insurer notification once, from either route, and removes it from Needs you", async () => {
+    const user = userEvent.setup();
+    render(<WorkOverview onClose={vi.fn()} onGuide={vi.fn()} />);
+    const needsYou = () => screen.getByRole("region", { name: /Needs you/ });
+    await user.click(within(within(needsYou()).getByText("Contact the insurer").closest("article")!).getByRole("button", { name: "Review decision" }));
+    await user.click(screen.getByRole("button", { name: "Not now" }));
+    await user.click(screen.getByRole("button", { name: "Back to What I'm Up To" }));
+    expect(within(needsYou()).getByText("Contact the insurer")).toBeInTheDocument();
+    // Route B reaches the same draft; an edit is shown back for explicit approval, never sent automatically.
+    await user.click(within(screen.getByRole("region", { name: /What I'm looking after/ })).getByRole("button", { name: /Investigating the roof leak/ }));
+    await user.click(screen.getByRole("button", { name: /Contact the insurer/ }));
+    await user.click(screen.getByRole("button", { name: "Change before sending" }));
+    const box = screen.getByLabelText("Edit the notification");
+    await user.clear(box);
+    await user.type(box, "Revised wording.");
+    await user.click(screen.getByRole("button", { name: "Keep this version" }));
+    expect(screen.getByRole("article", { name: "Draft insurer notification preview" })).toHaveTextContent("Revised wording.");
+    await user.click(screen.getByRole("button", { name: "Approve and send" }));
+    expect(screen.getByRole("article", { name: "Sent insurer notification" })).toHaveTextContent("Revised wording.");
+    await user.click(screen.getByRole("button", { name: "Back to What I'm Up To" }));
+    expect(within(needsYou()).queryByText("Contact the insurer")).not.toBeInTheDocument();
+    expect(screen.getByText("2 things I'd like you to review.")).toBeInTheDocument();
+  });
   it("shows the roof leak as one piece of work with three parallel activities", async () => {
     const user = userEvent.setup();
     render(<WorkOverview onClose={vi.fn()} onGuide={vi.fn()} />);
@@ -207,9 +230,9 @@ describe("Illustrative work journey", () => {
     expect(screen.getByRole("article", { name: "Inspection request record" })).toBeVisible();
 
     await user.click(screen.getByRole("button", { name: /Contact the insurer/ }));
-    expect(screen.getByText("Awaiting your approval. Nothing has been sent.")).toBeVisible();
-    expect(screen.getByRole("article", { name: "Draft insurer notification preview" })).toHaveTextContent("insurer@example.com");
-    expect(screen.getByRole("button", { name: "Review approval" })).toBeDisabled();
+    expect(screen.getByText("Needs your approval")).toBeVisible();
+    expect(screen.getByRole("article", { name: "Draft insurer notification preview" })).toHaveTextContent("Insurer (illustrative recipient)");
+    expect(screen.getByRole("button", { name: "Approve and send" })).toBeEnabled();
 
     // Selecting activities never changes their status, and the tenancy renewal is untouched.
     expect(screen.getByRole("button", { name: /Reviewing repairing obligations/ })).toHaveTextContent("Working");
@@ -238,7 +261,7 @@ describe("Illustrative work journey", () => {
     await user.click(within(insurerDecision).getByRole("button", { name: "Review decision" }));
     expect(screen.getByRole("region", { name: "Roof leak investigation work journey" })).toBeVisible();
     expect(screen.getByRole("button", { name: /Contact the insurer/ })).toHaveAttribute("aria-current", "step");
-    expect(screen.getByText("Awaiting your approval. Nothing has been sent.")).toBeVisible();
+    expect(screen.getByText("Needs your approval")).toBeVisible();
     // Selecting the activity did not change its status.
     await user.click(screen.getByRole("button", { name: "Back to What I'm Up To" }));
     expect(within(screen.getByRole("region", { name: /What I'm looking after/ })).getByText(/Contact the insurer/)).toHaveTextContent("— Needs you");

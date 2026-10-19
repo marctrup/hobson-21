@@ -20,7 +20,7 @@ export function RoofAttemptHistory({ attempt, activity, doneIndex }: { attempt: 
     <dl className="space-y-3 text-sm">
       {showLease && <div><dt className="font-semibold">Reviewing repairing obligations</dt><dd className="mt-1 text-muted-foreground">Ended — Responsibility not established.</dd></div>}
       {showContractor && <div><dt className="font-semibold">Contractor inspection</dt><dd className="mt-1 text-muted-foreground">{attempt.contractorRequestSent ? "Request previously sent — No response recorded." : "No new inspection requested."}</dd></div>}
-      {showInsurer && <div><dt className="font-semibold">Contact the insurer</dt><dd className="mt-1 text-muted-foreground">Not sent.</dd></div>}
+      {showInsurer && <div><dt className="font-semibold">Contact the insurer</dt><dd className="mt-1 text-muted-foreground">{attempt.insurerSent ? "Sent — awaiting response." : "Not sent."}</dd></div>}
     </dl>
     {!activity && <div><h5 className="text-xs font-semibold">Recorded history</h5>{history.length ? <ul className="mt-3 space-y-3">{history.map(item => <li key={item.label}><p className="text-sm font-medium">{item.label}</p><p className="mt-1 text-sm leading-relaxed text-muted-foreground">{item.outcome}</p></li>)}</ul> : <p className="mt-2 text-sm text-muted-foreground">No further actions were recorded in this attempt.</p>}</div>}
     {activity === "contractor" && attempt.contractorRequestSent && <article aria-label="Previous inspection request record" className="border-y border-border py-4"><p className="text-sm font-medium">Inspection request previously sent</p><p className="mt-2 text-sm text-muted-foreground">Example Contractor Ltd · Inspection of the reported roof leak.</p><p className="mt-2 text-sm text-muted-foreground">No response recorded. The sent request has not been recalled or repeated.</p></article>}
@@ -37,7 +37,7 @@ export function RoofAttemptHistory({ attempt, activity, doneIndex }: { attempt: 
       {attempt.help.choice === "enquiry" && <li>You asked me to prepare the surveyor enquiry. It was not sent.</li>}
       {attempt.help.choice === "unresolved" && <li>You chose to leave the responsibility question unresolved.</li>}
     </ul></div>}
-    {showInsurer && attempt.insurerPrepared && <HistoricalDraft title="Insurer notification" to={INSURER_TO} subject={INSURER_SUBJECT} body={INSURER_BODY} />}
+    {showInsurer && attempt.insurerPrepared && <HistoricalDraft title="Insurer notification" to={INSURER_TO} subject={INSURER_SUBJECT} body={attempt.insurerDraft ?? INSURER_BODY} />}
     {showLease && attempt.help.choice === "enquiry" && <HistoricalDraft title="Surveyor enquiry" to={SURVEYOR_TO} subject={SURVEYOR_SUBJECT} body={SURVEYOR_BODY} />}
     <p className="text-xs leading-relaxed text-muted-foreground">Unsent proposals are cancelled for this attempt. These drafts cannot be approved or dispatched.</p>
   </section>;
