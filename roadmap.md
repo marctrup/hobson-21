@@ -1,5 +1,8 @@
 # Roadmap
 
+## Iteration 20 refinement — completed lease
+- [ ] Make only The lease, made clear (Stanley House · Flat 3) selectable with three completed activities, consistent illustrative findings and paper references; preserve the three-item accomplishment count and other jobs.
+
 ## Iteration 20 correction — completion access
 - [x] Connect the existing successful-completion preview beside Preview needs help on the normal lease-review desk; 20 tests pass and on-screen records, overview placement and restored paused investigation verified without changing other behaviour.
 
