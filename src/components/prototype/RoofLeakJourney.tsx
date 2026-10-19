@@ -136,6 +136,16 @@ export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initia
                   <h5 className="text-xs font-semibold">Not yet established</h5>
                   <p className="mt-2 text-sm leading-relaxed text-muted-foreground">I haven't finished reviewing the relevant repairing obligations.</p>
                 </div>
+                {guidance.shopfrontRequested && <div className="mt-4 border-l-2 border-ring pl-3">
+                  <h5 className="text-xs font-semibold">Added at your request</h5>
+                  <p className="mt-2 text-sm leading-relaxed">Check whether the shopfront roof forms part of the tenant's premises.</p>
+                  <p className="mt-2 text-xs leading-relaxed text-muted-foreground">I'll check how the premises are described in the lease before reaching a conclusion. The check hasn't been completed, and the roof isn't assumed to be included.</p>
+                </div>}
+                <div className="mt-4">
+                  <Button variant="ghost" size="sm" onClick={() => onGuide("lease")} className="h-auto gap-2 px-0 text-xs text-muted-foreground">
+                    <MessageCircle className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />Guide this activity
+                  </Button>
+                </div>
                 <div className="mt-3">
                   <Button variant="ghost" size="sm" onClick={() => setPaperOpen(!paperOpen)} aria-expanded={paperOpen} className="h-auto max-w-full justify-start gap-2 whitespace-normal px-0 text-xs text-muted-foreground">
                     <FileText className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />Business Lease · {paperOpen ? "Hide paper" : "View paper"}
