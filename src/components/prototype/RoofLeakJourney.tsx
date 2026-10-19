@@ -283,7 +283,6 @@ export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initia
         </div>
         <footer className="flex flex-wrap items-center justify-between gap-3 border-t border-border px-5 py-4 sm:px-6">
           <p className="max-w-md text-xs leading-relaxed text-muted-foreground">Illustrative work and paper extracts only — no live work is running.</p>
-          {!help.shown && <Button size="sm" variant="ghost" onClick={() => { onHelpChange({ ...help, shown: true }); setSelected("lease"); }} className="text-xs text-muted-foreground">Preview needs help</Button>}
         </footer>
       </div>
     </div>
