@@ -167,6 +167,10 @@ export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initia
                   <h5 className="text-xs font-semibold">Current position</h5>
                   <p className="mt-2 text-sm leading-relaxed">Waiting for the contractor's response.</p>
                 </div>
+                {guidance.contactOnHold && <div className="mt-4 border-l-2 border-ring pl-3">
+                  <h5 className="text-xs font-semibold">At your request</h5>
+                  <p className="mt-2 text-sm leading-relaxed">Further contact on hold. The inspection request has already been sent and can't be recalled, but I won't send any follow-up while your instruction stands.</p>
+                </div>}
                 <div className="mt-4 border-l-2 border-border pl-3">
                   <h5 className="text-xs font-semibold">Still outstanding</h5>
                   <p className="mt-2 text-sm leading-relaxed text-muted-foreground">No inspection report has been received.</p>
@@ -188,8 +192,12 @@ export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initia
                 </div>
                 <div className="mt-4 border-l-2 border-ring pl-3">
                   <h5 className="text-xs font-semibold">Current position</h5>
-                  <p className="mt-2 text-sm leading-relaxed">Awaiting your approval. Nothing has been sent.</p>
+                  <p className="mt-2 text-sm leading-relaxed">{guidance.contactOnHold ? "On hold at your request. Nothing has been sent." : "Awaiting your approval. Nothing has been sent."}</p>
                 </div>
+                {guidance.contactOnHold && <div className="mt-4 border-l-2 border-border pl-3">
+                  <h5 className="text-xs font-semibold">At your request</h5>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">The prepared notification remains available, but I won't send it while your instruction to hold contact stands.</p>
+                </div>}
                 <article aria-label="Draft insurer notification preview" className="mt-5 rounded-md border border-border bg-popover px-4 py-4">
                   <p className="flex items-center gap-2 text-xs font-medium text-muted-foreground"><Mail className="h-3.5 w-3.5" aria-hidden="true" />Draft notification · not yet sent</p>
                   <dl className="mt-3 space-y-2 text-sm">
