@@ -9,7 +9,7 @@ describe("Job-scoped Papers / Map", () => {
     render(<WorkOverview onGuide={vi.fn()} onClose={vi.fn()} />);
     await user.click(screen.getByRole("button", { name: "Investigating the roof leak" }));
     await user.click(screen.getByRole("button", { name: "Pause work" }));
-    await user.click(screen.getByRole("button", { name: "Papers", exact: undefined }));
+    await user.click(screen.getByRole("button", { name: "Papers" }));
     const dialog = screen.getByRole("dialog");
     expect(within(dialog).getByRole("button", { name: /Tenant's report/ })).toBeInTheDocument();
     expect(within(dialog).queryByText("Deed of Variation")).not.toBeInTheDocument();
