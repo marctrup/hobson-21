@@ -202,7 +202,7 @@ describe("Illustrative work journey", () => {
     expect(screen.getByLabelText("Business Lease illustrative extract")).toBeVisible();
 
     await user.click(screen.getByRole("button", { name: /Contractor inspection/ }));
-    expect(screen.getByText("Waiting for the contractor's response.")).toBeVisible();
+    expect(screen.getByText(/I'm awaiting a response\./)).toBeVisible();
     expect(screen.getByText("No inspection report has been received.")).toBeVisible();
     expect(screen.getByRole("article", { name: "Inspection request record" })).toBeVisible();
 
