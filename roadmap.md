@@ -1,7 +1,7 @@
 # Roadmap
 
 ## Glass Workboard — remove roof completion simulation
-- [ ] Remove only the artificial roof completion controls, outcome and records; preserve investigation state and completed Flat 3 lease, with shared state-derived counts and regression checks.
+- [x] Remove only the artificial roof completion controls, outcome and records; investigation and completed Flat 3 lease preserved, shared state-derived counts verified, 22 tests pass and preview flow checked.
 
 ## Iteration 20 refinement — completed lease
 - [x] Make only The lease, made clear (Stanley House · Flat 3) selectable with three completed activities, consistent illustrative findings and paper references; 21 tests pass, summary/evidence explored on screen and original three accomplishments preserved.
