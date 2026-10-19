@@ -126,8 +126,9 @@ describe("Illustrative work journey", () => {
     expect(screen.getByRole("button", { name: /Approve sending the renewal email/ })).toHaveAttribute("aria-current", "step");
     expect(screen.getByText("Why I'm asking")).toBeVisible();
     expect(screen.getByText("Before I send")).toBeVisible();
-    expect(screen.getByText("Ready")).toBeVisible();
+    expect(screen.getByText("Ready for your approval")).toBeVisible();
     expect(screen.getByText("Still to establish")).toBeVisible();
+    expect(screen.getByRole("button", { name: "Approve and send" })).toBeEnabled();
     // Earlier steps remain selectable with their evidence while approval is open.
     await user.click(screen.getByRole("button", { name: /Checking the tenancy history/ }));
     expect(screen.getByRole("button", { name: /Original annual rent\s*£24,000/ })).toBeInTheDocument();
@@ -140,14 +141,12 @@ describe("Illustrative work journey", () => {
     await user.click(screen.getByRole("button", { name: /Read the existing tenancy/ }));
     await user.click(screen.getByRole("button", { name: /Approve sending the renewal email/ }));
     expect(screen.getByText(/— revised/)).toBeVisible();
-    expect(screen.getByRole("button", { name: "Approve and send" })).toBeEnabled();
-    // A draft mentioning terms dependent on unfinished checks cannot be approved.
-    await user.click(screen.getByRole("button", { name: "Change before sending" }));
-    await user.clear(screen.getByLabelText("Edit the email"));
-    await user.type(screen.getByLabelText("Edit the email"), "We propose a rent of £26,000 per annum.");
-    await user.click(screen.getByRole("button", { name: "Keep this version" }));
-    expect(screen.getByText("Further review needed")).toBeVisible();
+    // Any edit clears the ready state until the revised draft is explicitly reviewed.
+    expect(screen.getByText("Needs another check")).toBeVisible();
     expect(screen.getByRole("button", { name: "Approve and send" })).toBeDisabled();
+    await user.click(screen.getByRole("button", { name: "Ask me to review this version" }));
+    expect(screen.getByText("Ready for your approval")).toBeVisible();
+    expect(screen.getByRole("button", { name: "Approve and send" })).toBeEnabled();
   });
 
   it("delegates guidance to the existing conversation without closing the journey", async () => {
