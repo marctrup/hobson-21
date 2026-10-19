@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ArrowLeft, Check, ChevronDown, CircleHelp, FileText, Hand, Mail, MessageCircle, Pause, Play } from "lucide-react";
+import { ArrowLeft, Check, ChevronDown, CircleHelp, FileText, Hand, Mail, MessageCircle, Pause, Play, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import owlReading from "@/assets/prototype/owl-reading.png";
 import { roofLeakWork, roofSummary, type RoofActivityId, type RoofActivityState } from "./roofLeakWork";
@@ -154,7 +154,8 @@ export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initia
                   <h5 className="text-xs font-semibold">Not yet established</h5>
                   <p className="mt-2 text-sm leading-relaxed text-muted-foreground">I haven't finished reviewing the relevant repairing obligations.</p>
                 </div>}
-                {help.shown && <section aria-label="Hobson needs your help" className="mt-5 rounded-md border border-border bg-muted/40 px-4 py-4">
+                {help.shown && <section aria-label="Hobson needs your help" className="relative mt-5 rounded-md border border-border bg-muted/40 px-4 py-4">
+                  <Button variant="ghost" size="icon" onClick={() => onHelpChange({ ...help, shown: false })} aria-label="Close this demonstration" title="Close this demonstration" className="absolute right-1.5 top-1.5 h-7 w-7 text-muted-foreground"><X className="h-4 w-4" aria-hidden="true" /></Button>
                   <h5 className="flex items-center gap-2 text-sm font-semibold"><CircleHelp className="h-4 w-4" aria-hidden="true" strokeWidth={1.6} />Hobson needs your help</h5>
                   <p className="mt-2 text-sm leading-relaxed">I've reviewed the relevant lease provisions, but I can't establish whether the roof above the shopfront forms part of the tenant's premises.</p>
                   <dl className="mt-4 space-y-3 text-sm">
