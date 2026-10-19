@@ -39,7 +39,6 @@ describe("Reversible roof completion demonstration", () => {
     const guide = vi.fn();
     render(<WorkOverview roofWork={work} onRoofWorkChange={change} onGuide={guide} onClose={vi.fn()} />);
     await user.click(screen.getByRole("button", { name: "Investigating the roof leak" }));
-    await user.click(screen.getByRole("button", { name: /Contact the insurer/ }));
     await user.click(screen.getByRole("button", { name: "Preview completed work" }));
     expect(screen.queryByRole("button", { name: "Resume work" })).not.toBeInTheDocument();
     expect(screen.queryByRole("button", { name: "Review approval" })).not.toBeInTheDocument();
@@ -56,8 +55,9 @@ describe("Reversible roof completion demonstration", () => {
     expect(change).not.toHaveBeenCalled();
     expect(guide).not.toHaveBeenCalled();
     await user.click(screen.getByRole("button", { name: "Return to investigation" }));
-    expect(screen.getByRole("button", { name: /Contact the insurer/ })).toHaveAttribute("aria-current", "step");
+    expect(screen.getByRole("button", { name: /Reviewing repairing obligations/ })).toHaveAttribute("aria-current", "step");
     expect(screen.getByRole("button", { name: "Resume work" })).toBeEnabled();
+    await user.click(screen.getByRole("button", { name: /Contact the insurer/ }));
     expect(screen.getByRole("article", { name: "Draft insurer notification preview" })).toBeVisible();
     expect(change).not.toHaveBeenCalled();
   });
