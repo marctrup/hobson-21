@@ -20,7 +20,7 @@ describe("Illustrative work journey", () => {
     await user.click(within(sideLetter).getByRole("button", { name: "Side Letter — 2024" }));
     expect(screen.queryByRole("region", { name: "Original annual rent evidence" })).not.toBeInTheDocument();
     expect(screen.getByRole("button", { name: /Checking the tenancy history/ })).toHaveAttribute("aria-current", "step");
-    await user.click(screen.getByRole("button", { name: "Back to What I've Done" }));
+    await user.click(screen.getByRole("button", { name: "Back to What I'm Up To" }));
     await user.click(screen.getByRole("button", { name: "Getting the tenancy renewal ready" }));
     expect(screen.getAllByRole("article", { name: "Side Letter — 2024" })).toHaveLength(1);
     expect(screen.getByRole("button", { name: "Resume work" })).toBeEnabled();
@@ -63,7 +63,7 @@ describe("Illustrative work journey", () => {
     expect(screen.getByText("31 December 2026")).toBeVisible();
     await user.click(screen.getByRole("button", { name: /Reviewed the rent/ }));
     expect(screen.getByText("£24,000")).toBeVisible();
-    await user.click(screen.getByRole("button", { name: "Back to What I've Done" }));
+    await user.click(screen.getByRole("button", { name: "Back to What I'm Up To" }));
     await user.click(screen.getByRole("button", { name: "Getting the tenancy renewal ready" }));
     expect(screen.getByRole("button", { name: "Resume work" })).toBeEnabled();
   });
@@ -95,7 +95,7 @@ describe("Illustrative work journey", () => {
     expect(screen.getByText("What approving this allows")).toBeVisible();
     await user.click(screen.getByRole("button", { name: "Not now" }));
     expect(screen.getByRole("button", { name: /Checking the tenancy history/ })).toHaveAttribute("aria-current", "step");
-    await user.click(screen.getByRole("button", { name: "Back to What I've Done" }));
+    await user.click(screen.getByRole("button", { name: "Back to What I'm Up To" }));
     const needsYou = screen.getByRole("region", { name: /Needs you/ });
     expect(within(needsYou).getByText("Stanley House · Flat 6")).toBeInTheDocument();
     // One job, one place: Flat 6 stays in What I'm looking after, not duplicated.
@@ -118,7 +118,7 @@ describe("Illustrative work journey", () => {
     await user.click(screen.getByRole("button", { name: "Return to the investigation" }));
     expect(screen.getByRole("button", { name: /Checking the tenancy history/ })).toHaveAttribute("aria-current", "step");
     expect(screen.getByRole("button", { name: /Original annual rent\s*£24,000/ })).toBeInTheDocument();
-    await user.click(screen.getByRole("button", { name: "Back to What I've Done" }));
+    await user.click(screen.getByRole("button", { name: "Back to What I'm Up To" }));
     expect(screen.getByRole("region", { name: /What I'm looking after/ })).toHaveTextContent("Renewal email sent — awaiting the tenant's response");
     expect(screen.getByRole("region", { name: /Needs you/ })).not.toHaveTextContent("Stanley House · Flat 6");
   });
@@ -213,7 +213,7 @@ describe("Illustrative work journey", () => {
 
     // Selecting activities never changes their status, and the tenancy renewal is untouched.
     expect(screen.getByRole("button", { name: /Reviewing repairing obligations/ })).toHaveTextContent("Working");
-    await user.click(screen.getByRole("button", { name: "Back to What I've Done" }));
+    await user.click(screen.getByRole("button", { name: "Back to What I'm Up To" }));
     await user.click(screen.getByRole("button", { name: "Getting the tenancy renewal ready" }));
     expect(screen.getByRole("region", { name: "Tenancy renewal work journey" })).toBeVisible();
   });
@@ -240,7 +240,7 @@ describe("Illustrative work journey", () => {
     expect(screen.getByRole("button", { name: /Contact the insurer/ })).toHaveAttribute("aria-current", "step");
     expect(screen.getByText("Awaiting your approval. Nothing has been sent.")).toBeVisible();
     // Selecting the activity did not change its status.
-    await user.click(screen.getByRole("button", { name: "Back to What I've Done" }));
+    await user.click(screen.getByRole("button", { name: "Back to What I'm Up To" }));
     expect(within(screen.getByRole("region", { name: /What I'm looking after/ })).getByText(/Contact the insurer/)).toHaveTextContent("— Needs you");
   });
 });
@@ -253,7 +253,7 @@ describe("Roof leak — when Hobson needs help", () => {
     expect(screen.getByRole("region", { name: "Hobson needs your help" })).toBeVisible();
     expect(screen.getByRole("button", { name: /Reviewing repairing obligations/ })).toHaveTextContent("Needs clarification");
     expect(screen.getByRole("button", { name: /Contractor inspection/ })).toHaveTextContent("Waiting");
-    await user.click(screen.getByRole("button", { name: "Back to What I've Done" }));
+    await user.click(screen.getByRole("button", { name: "Back to What I'm Up To" }));
     const needsYou = screen.getByRole("region", { name: /Needs you/ });
     expect(within(needsYou).getByText("Clarify responsibility for the shopfront roof")).toBeInTheDocument();
     expect(screen.getByText("4 things I'd like you to review.")).toBeInTheDocument();
@@ -261,7 +261,7 @@ describe("Roof leak — when Hobson needs help", () => {
     await user.click(screen.getByRole("button", { name: "Prepare the enquiry" }));
     expect(screen.getByText("Enquiry prepared — Not sent")).toBeVisible();
     expect(screen.getByRole("article", { name: "Draft surveyor enquiry preview" })).toBeVisible();
-    await user.click(screen.getByRole("button", { name: "Back to What I've Done" }));
+    await user.click(screen.getByRole("button", { name: "Back to What I'm Up To" }));
     expect(screen.queryByText("Clarify responsibility for the shopfront roof")).not.toBeInTheDocument();
   });
 

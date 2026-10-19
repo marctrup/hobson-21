@@ -1,6 +1,6 @@
 # Roadmap
 
-## What I've Done — work journey
+## What I'm Up To — work journey
 - [x] Implement Iteration 7: keep chat near 30% beside readable work, reduce repeated guidance, and keep the mentioned side letter Awaiting paper without fabricated evidence; focused tests and desktop/tablet interaction checks pass.
 - [x] Remove Meet Hobson and Meet my team from /prototype, including their introductory surfaces; direct portfolio entry and absent controls verified.
 - [x] Connect header guidance to the existing conversation, simulate the 2024 side-letter instruction once, and verify preserved findings, pause state and paper evidence.
@@ -10,7 +10,7 @@
 - [x] Open the Stanley House tenancy renewal journey with completed findings, paper extracts, current and next work.
 - [x] Add illustrative pause/resume and guidance through the existing conversation; verify return navigation and preserved work.
 
-## What I've Done — work overview
+## What I'm Up To — work overview
 - [x] Replace only the existing content panel with illustrative Needs you, In progress and Completed work.
 - [x] Verify the screen in the existing shell, including scrolling and unchanged navigation.
 
@@ -58,3 +58,4 @@
 - [x] Iteration 17 — Managing holds and permissions: summary follows the hold; insurer "On hold at your request" with "Still required: Your approval"; lift via "You can contact people again."; hold never equals approval; overview Needs you count follows the hold.
 
 - [x] Iteration 18: When Hobson needs help (roof leak lease review)
+- [x] Label renamed "What I've Done" → "What I'm Up To" (overview heading, aria-label, nav rail item, breadcrumb, both "Back to…" buttons, tests). The roof journey's own past-tense "What I've done" history list and the mobile work log keep their wording.
