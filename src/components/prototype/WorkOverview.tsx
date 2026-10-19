@@ -128,16 +128,17 @@ function ActivityLine({ activity }: { activity: Activity }) {
 
 /** Illustrative work only: deliberately independent of action-card state and approvals. */
 export function WorkOverview({ onClose, onGuide, sideLetterRequested = false, onJourneyBack, focusNeedsYou = 0 }: { onClose: () => void; onGuide: () => void; sideLetterRequested?: boolean; onJourneyBack?: () => void; focusNeedsYou?: number }) {
-  const [journeyOpen, setJourneyOpen] = useState(false);
+  const [journey, setJourney] = useState<"renewal" | "roof" | null>(null);
   const [paused, setPaused] = useState(false);
   const [approval, setApproval] = useState<ApprovalStatus>("idle");
   const [openAtApproval, setOpenAtApproval] = useState(false);
   const awaitingApproval = approval === "awaiting";
   const sentApproval = approval === "sent";
   const visibleDecisions = awaitingApproval ? [renewalDecision, ...decisions] : decisions;
-  const openJourney = (atApproval: boolean) => { setOpenAtApproval(atApproval); setJourneyOpen(true); };
+  const openJourney = (atApproval: boolean) => { setOpenAtApproval(atApproval); setJourney("renewal"); };
+  const closeJourney = () => { setJourney(null); setOpenAtApproval(false); onJourneyBack?.(); };
   useEffect(() => {
-    if (focusNeedsYou > 0 && !journeyOpen) {
+    if (focusNeedsYou > 0 && !journey) {
       document.getElementById("work-needs-you")?.scrollIntoView({ block: "start" });
     }
   }, [focusNeedsYou, journeyOpen]);
