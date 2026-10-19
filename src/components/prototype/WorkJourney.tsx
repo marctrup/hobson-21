@@ -18,7 +18,7 @@ const EMAIL_BODY = `Dear Tenant,
 
 I'm writing regarding the forthcoming end of your tenancy at Stanley House, Flat 6.
 
-We would like to discuss the possibility of renewing the tenancy and would welcome an opportunity to talk through the proposed next steps.
+We would like to discuss the possibility of renewing the tenancy and would welcome an opportunity to talk through the next steps.
 
 Please let us know a convenient time to discuss.
 
