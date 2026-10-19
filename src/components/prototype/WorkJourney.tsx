@@ -25,9 +25,7 @@ Please let us know a convenient time to discuss.
 Kind regards,
 Hobson`;
 
-/** Simple illustrative front-end check only — not a legal or semantic assessment. */
-const TERMS_PATTERN = /£|\bper (week|month|annum)\b|\brent (of|at|is)\b|\bpropos|\boffer\b|\bagree|\bcommit|\bdeposit\b|\bterm of \d|\b\d+ years?\b/i;
-const draftNeedsReview = (body: string) => body !== EMAIL_BODY && TERMS_PATTERN.test(body);
+/** Illustrative review state only — any edit clears readiness until the revised draft is explicitly reviewed. No keyword or legal assessment of the text. */
 
 type StepDef = { id: Step; title: string; note: string; group?: string };
 
@@ -80,14 +78,15 @@ export function WorkJourney({ paused, onPauseChange, onBack, onGuide, sideLetter
   const [editing, setEditing] = useState(false);
   const [draftBody, setDraftBody] = useState(EMAIL_BODY);
   const [edited, setEdited] = useState(false);
+  const [reviewed, setReviewed] = useState(true);
   const toggleEvidence = (id: Evidence) => setEvidence((active) => active === id ? null : id);
   const sent = approval === "sent";
-  const needsReview = draftNeedsReview(emailBody);
+  const needsReview = edited && !reviewed;
 
   const openDemo = () => { setJourneyExtended(true); setSelected("approve"); setEvidence(null); onApprovalChange?.(sent ? "sent" : "awaiting"); };
   const returnToInvestigation = () => { setSelected("history"); setEvidence(null); setEditing(false); };
   const approveAndSend = () => { if (sent || needsReview) return; onApprovalChange?.("sent"); setEditing(false); };
-  const saveEdit = () => { setEmailBody(draftBody); setEditing(false); setEdited(true); onApprovalChange?.("awaiting"); };
+  const saveEdit = () => { setEmailBody(draftBody); setEditing(false); setEdited(true); setReviewed(false); onApprovalChange?.(sent ? "sent" : "awaiting"); };
 
   const renderFinding = (id: "rent" | "end") => {
     const finding = findings[id];
@@ -186,14 +185,15 @@ export function WorkJourney({ paused, onPauseChange, onBack, onGuide, sideLetter
         <div className="mt-4 border-l-2 border-border pl-3">
           <h6 className="text-xs font-semibold">Before I send</h6>
           {needsReview ? <>
-            <p className="mt-2 text-sm font-medium">Further review needed</p>
-            <p className="mt-1 text-sm leading-relaxed text-muted-foreground">This version of the email mentions terms or figures that depend on checks I haven't finished. I can't present it as ready until it's revised or the remaining checks are done.</p>
+            <p className="mt-2 text-sm font-medium">Needs another check</p>
+            <p className="mt-1 text-sm leading-relaxed text-muted-foreground">This version goes beyond inviting a discussion — it asks for something that depends on checks I haven't finished. I need to review the revised wording before I can present it as ready.</p>
+            <Button size="sm" variant="outline" className="mt-3" onClick={() => setReviewed(true)}>Ask me to review this version</Button>
           </> : <>
-            <p className="mt-2 text-sm font-medium">Ready</p>
-            <p className="mt-1 text-sm leading-relaxed text-muted-foreground">The email only asks the tenant to discuss a possible renewal. It makes no offer or financial commitment.</p>
+            <p className="mt-2 text-sm font-medium">Ready for your approval</p>
+            <p className="mt-1 text-sm leading-relaxed text-muted-foreground">This email invites the tenant to discuss a possible renewal. It does not propose rent, tenancy terms or financial commitments.</p>
           </>}
           <p className="mt-3 text-sm font-medium">Still to establish</p>
-          <p className="mt-1 text-sm leading-relaxed text-muted-foreground">I haven't finished checking the Deed of Variation{sideLetterRequested ? " or located the 2024 Side Letter" : ""}. The current tenancy position is not yet confirmed.</p>
+          <p className="mt-1 text-sm leading-relaxed text-muted-foreground">I haven't finished checking the Deed of Variation or located the 2024 Side Letter. These checks remain part of the ongoing investigation.</p>
         </div>
         <article aria-label="Draft email preview" className="mt-5 rounded-md border border-border bg-popover px-4 py-4">
           <p className="flex items-center gap-2 text-xs font-medium text-muted-foreground"><Mail className="h-3.5 w-3.5" aria-hidden="true" />Draft email · not yet sent</p>
@@ -279,7 +279,7 @@ export function WorkJourney({ paused, onPauseChange, onBack, onGuide, sideLetter
                 <Button size="sm" variant="outline" onClick={() => { setDraftBody(emailBody); setEditing(true); }}>Change before sending</Button>
                 <Button size="sm" variant="ghost" onClick={returnToInvestigation}>Not now</Button>
               </div>
-              <p className="mt-2 text-xs leading-relaxed text-muted-foreground">{needsReview ? "Approval is unavailable until the draft is revised — it mentions terms that depend on unfinished checks." : "Not now leaves the email unsent and waiting for your decision — you can return to it here at any time."}</p>
+              <p className="mt-2 text-xs leading-relaxed text-muted-foreground">{needsReview ? "Approval is unavailable until I've reviewed the revised draft." : "Not now leaves the email unsent and waiting for your decision — you can return to it here at any time."}</p>
             </div>}
           </section>
         </div>
