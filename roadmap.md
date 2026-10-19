@@ -1,7 +1,7 @@
 # Roadmap
 
 ## Job Papers / Map toggle
-- [ ] Add job-scoped Papers / Map controls to the roof-leak and tenancy-renewal headers, preserve journey state and verify both views.
+- [x] Add job-scoped Papers / Map controls to the roof-leak and tenancy-renewal headers, preserve journey state and verify both views; 37 tests pass and both map locations and paper previews checked on screen.
 
 ## Iteration 20 — successful completion
 - [x] Add a reversible completed roof-repair demonstration with on-demand illustrative records, preserved attempts, distinct completed outcomes and shared overview counts; 35 focused tests and the complete on-screen flow verified.
