@@ -9,3 +9,4 @@
 - Keep finding evidence local to the illustrative work journey with a single active inline expansion, reusing paper previews; inspecting evidence must not execute work or confirm unfinished checks.
 - Treat guidance about an unavailable paper as an awaiting-paper state; reuse the existing resizable conversation beside work on desktop and overlay it on narrow screens so guidance never fabricates access or compresses the work surface.
 - Keep roof investigation attempts in parent-owned local state shared with the existing composer; terminal end guards and fresh-attempt resets preserve read-only snapshots without leaking old guidance, approvals or pause state into new work or the tenancy example.
+- Keep successful roof completion as a parent-owned reversible preview with typed illustrative records and shared count derivation, never mutate attempts; retain the original journey while previewing so returning restores its exact view and controls.
