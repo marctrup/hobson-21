@@ -71,4 +71,8 @@ Disallow: /learn/setup-guide
 Disallow: /learn/api-reference
 Disallow: /learn/troubleshooting
 
+Disallow: /prototype
+Disallow: /prototype-mobile
+Disallow: /prototype_testers
+
 Sitemap: https://hobsonschoice.ai/sitemap.xml
