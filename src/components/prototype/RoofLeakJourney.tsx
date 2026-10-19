@@ -167,11 +167,15 @@ export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initia
                 </div>
                 <div className="mt-4 border-l-2 border-border pl-3">
                   <h5 className="text-xs font-semibold">Current position</h5>
-                  <p className="mt-2 text-sm leading-relaxed">Waiting for the contractor's response.</p>
+                  <p className="mt-2 text-sm leading-relaxed">The inspection request has already been sent. I'm awaiting a response.</p>
                 </div>
                 {guidance.contactOnHold && <div className="mt-4 border-l-2 border-ring pl-3">
                   <h5 className="text-xs font-semibold">At your request</h5>
-                  <p className="mt-2 text-sm leading-relaxed">Further contact on hold. The inspection request has already been sent and can't be recalled, but I won't send any follow-up while your instruction stands.</p>
+                  <p className="mt-2 text-sm leading-relaxed">Further contact on hold at your request. The inspection request has already been sent and can't be recalled, but I won't send any follow-up while your instruction stands.</p>
+                </div>}
+                {guidance.holdWasLifted && !guidance.contactOnHold && <div className="mt-4 border-l-2 border-border pl-3">
+                  <h5 className="text-xs font-semibold">At your request</h5>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">Further contact permitted again. I won't send a follow-up unless it's needed.</p>
                 </div>}
                 <div className="mt-4 border-l-2 border-border pl-3">
                   <h5 className="text-xs font-semibold">Still outstanding</h5>
@@ -190,11 +194,15 @@ export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initia
               {selected === "insurer" && <>
                 <div className="mt-4 border-l-2 border-border pl-3">
                   <h5 className="text-xs font-semibold">What I've prepared</h5>
-                  <p className="mt-2 text-sm leading-relaxed">Draft notification to the insurer about the reported leak.</p>
+                  <p className="mt-2 text-sm leading-relaxed">Notification prepared — Not sent. A draft notification to the insurer about the reported leak.</p>
                 </div>
                 <div className="mt-4 border-l-2 border-ring pl-3">
                   <h5 className="text-xs font-semibold">Current position</h5>
                   <p className="mt-2 text-sm leading-relaxed">{guidance.contactOnHold ? "On hold at your request. Nothing has been sent." : "Awaiting your approval. Nothing has been sent."}</p>
+                </div>
+                <div className="mt-4 border-l-2 border-border pl-3">
+                  <h5 className="text-xs font-semibold">Still required: Your approval</h5>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{guidance.contactOnHold ? "I've prepared the notification, but I won't send it until you lift the hold and approve the message. The hold on further contact prevents sending, even with approval." : "The notification still requires your specific approval before it can be sent. Lifting a hold on contact never approves a message by itself."}</p>
                 </div>
                 {guidance.contactOnHold && <div className="mt-4 border-l-2 border-border pl-3">
                   <h5 className="text-xs font-semibold">At your request</h5>
