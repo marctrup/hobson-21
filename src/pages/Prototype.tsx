@@ -1411,7 +1411,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
   const [beatIdx, setBeatIdx] = useState(0);
   const [lineIdx, setLineIdx] = useState(0); // line within beat
   const [owl, setOwl] = useState<OwlState>("default");
-  const [messages, setMessages] = useState<ChatMsg[]>([{ id: "portfolio-welcome", role: "hobson", text: `Good morning, ${FIRST_NAME}. Your portfolio is ready to look through.` }]);
+  const [messages, setMessages] = useState<ChatMsg[]>([{ id: "portfolio-welcome", role: "hobson", text: `Good morning, ${FIRST_NAME}. I've finished 3 pieces of work, I'm looking after 4 more, and there are 2 things I'd like you to review.` }]);
   const [typing, setTyping] = useState(false);
   const [chipVisible, setChipVisible] = useState(false);
   const [selectedPropertyId, setSelectedPropertyId] = useState<string | null>(null);
