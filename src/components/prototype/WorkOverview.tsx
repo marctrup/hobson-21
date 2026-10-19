@@ -98,6 +98,12 @@ function SectionHeading({ id, title, count, icon: Icon }: {
 export function WorkOverview({ onClose, onGuide, sideLetterRequested = false, onJourneyBack, focusNeedsYou = 0 }: { onClose: () => void; onGuide: () => void; sideLetterRequested?: boolean; onJourneyBack?: () => void; focusNeedsYou?: number }) {
   const [journeyOpen, setJourneyOpen] = useState(false);
   const [paused, setPaused] = useState(false);
+  const [approval, setApproval] = useState<ApprovalStatus>("idle");
+  const [openAtApproval, setOpenAtApproval] = useState(false);
+  const awaitingApproval = approval === "awaiting";
+  const visibleReviews = awaitingApproval ? [renewalApproval, ...reviews] : reviews;
+  const visibleOngoing = awaitingApproval ? ongoing.filter((work) => work.place !== "Stanley House · Flat 6") : ongoing;
+  const openJourney = (atApproval: boolean) => { setOpenAtApproval(atApproval); setJourneyOpen(true); };
   useEffect(() => {
     if (focusNeedsYou > 0 && !journeyOpen) {
       document.getElementById("work-needs-you")?.scrollIntoView({ block: "start" });
