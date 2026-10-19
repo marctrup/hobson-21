@@ -4293,7 +4293,18 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
           />
         )}
         {showWhatIveDone && (
-          <WorkOverview onClose={resetToMap} />
+          <WorkOverview onClose={resetToMap} onGuide={() => {
+            expandChat();
+            setMessages((previous) => [...previous, {
+              id: `renewal-guidance-${Date.now()}`,
+              role: "hobson",
+              text: "For the tenancy renewal at Stanley House · Flat 6, you could ask me to check a later agreement or a change in rent before I prepare the summary. This is an illustrative prompt; no instructions have been sent.",
+            }]);
+            requestAnimationFrame(() => {
+              const conversation = chatBodyRef.current;
+              if (conversation) conversation.scrollTop = conversation.scrollHeight;
+            });
+          }} />
         )}
         {/* "Meet my team" — user-summoned team wall overlay on the right-hand stage.
             The conversation on the left is undisturbed (no reset, no navigation).

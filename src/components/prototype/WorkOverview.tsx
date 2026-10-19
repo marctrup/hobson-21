@@ -1,6 +1,8 @@
-import { Check, CheckCheck, CircleDot, CornerDownRight, Hand, X } from "lucide-react";
+import { useState } from "react";
+import { ArrowUpRight, Check, CheckCheck, CircleDot, CornerDownRight, Hand, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import owlReading from "@/assets/prototype/owl-reading.png";
+import { WorkJourney } from "./WorkJourney";
 
 const reviews = [
   {
@@ -86,7 +88,9 @@ function SectionHeading({ id, title, count, icon: Icon }: {
 }
 
 /** Illustrative work only: deliberately independent of action-card state and approvals. */
-export function WorkOverview({ onClose }: { onClose: () => void }) {
+export function WorkOverview({ onClose, onGuide }: { onClose: () => void; onGuide: () => void }) {
+  const [journeyOpen, setJourneyOpen] = useState(false);
+  const [paused, setPaused] = useState(false);
   return (
     <div className="absolute inset-0 z-[1200] flex flex-col bg-background text-foreground" role="region" aria-label="What I've Done">
       <div className="flex shrink-0 items-center justify-between border-b border-border px-5 py-3 sm:px-8">
@@ -96,7 +100,7 @@ export function WorkOverview({ onClose }: { onClose: () => void }) {
         </Button>
       </div>
 
-      <div className="hobson-scroll min-h-0 flex-1 overflow-y-auto">
+      {journeyOpen ? <WorkJourney paused={paused} onPauseChange={setPaused} onBack={() => setJourneyOpen(false)} onGuide={onGuide} /> : <div className="hobson-scroll min-h-0 flex-1 overflow-y-auto">
         <div className="mx-auto w-full max-w-5xl px-5 pb-16 pt-8 sm:px-8 sm:pt-10">
           <header className="mb-10">
             <h2 className="text-3xl font-semibold leading-tight">What I've Done</h2>
@@ -131,7 +135,7 @@ export function WorkOverview({ onClose }: { onClose: () => void }) {
               {ongoing.map((work) => (
                 <article key={work.title} className="min-w-0 border-b border-border pb-6">
                   <p className="text-xs text-muted-foreground">{work.place}</p>
-                  <h4 className="mt-2 text-base font-semibold leading-snug">{work.title}</h4>
+                  <h4 className="mt-2 text-base font-semibold leading-snug">{work.place === "Stanley House · Flat 6" ? <Button variant="link" onClick={() => setJourneyOpen(true)} className="h-auto max-w-full justify-start gap-2 whitespace-normal p-0 text-left text-base font-semibold leading-snug">{work.title}<ArrowUpRight className="h-4 w-4 shrink-0" aria-hidden="true" /></Button> : work.title}</h4>
                   <p className="mt-3 flex items-start gap-2 text-sm leading-relaxed text-muted-foreground"><Check className="mt-1 h-3.5 w-3.5 shrink-0" aria-hidden="true" />{work.recent}</p>
                   <div className="my-4 border-l-2 border-ring bg-muted/50 px-3 py-3">
                     <p className="mb-1.5 text-xs font-medium text-muted-foreground">Now</p>
@@ -162,7 +166,7 @@ export function WorkOverview({ onClose }: { onClose: () => void }) {
             </div>
           </section>
         </div>
-      </div>
+      </div>}
     </div>
   );
 }
