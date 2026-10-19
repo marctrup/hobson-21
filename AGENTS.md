@@ -5,3 +5,4 @@
 - Database API privileges are deny-by-default: grant only operations required by matching RLS policies and trusted server functions.
 - Keep tutorial entries in a typed content collection with optional YouTube IDs; missing videos render explicit placeholders, never unrelated footage.
 - Keep the prototype work overview and its work journey in dedicated illustrative components with local pause state, separate from action-card execution and approvals; send guidance prompts through the existing conversation so no real work or second chat is introduced.
+- Keep finding evidence local to the illustrative work journey with a single active inline expansion, reusing paper previews; inspecting evidence must not execute work or confirm unfinished checks.
