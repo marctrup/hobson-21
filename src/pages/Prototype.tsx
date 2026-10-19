@@ -1407,18 +1407,18 @@ function HobsonMap({
 type View = "onboarding" | "portfolio" | "property" | "unit";
 
 const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) => {
-  const [view, setView] = useState<View>("onboarding");
+  const [view, setView] = useState<View>("portfolio");
   const [beatIdx, setBeatIdx] = useState(0);
   const [lineIdx, setLineIdx] = useState(0); // line within beat
-  const [owl, setOwl] = useState<OwlState>("talking");
-  const [messages, setMessages] = useState<ChatMsg[]>([]);
+  const [owl, setOwl] = useState<OwlState>("default");
+  const [messages, setMessages] = useState<ChatMsg[]>([{ id: "portfolio-welcome", role: "hobson", text: `Good morning, ${FIRST_NAME}. Your portfolio is ready to look through.` }]);
   const [typing, setTyping] = useState(false);
   const [chipVisible, setChipVisible] = useState(false);
   const [selectedPropertyId, setSelectedPropertyId] = useState<string | null>(null);
   const [selectedUnitId, setSelectedUnitId] = useState<string | null>(null);
   const [toast, setToast] = useState<string | null>(null);
   const [input, setInput] = useState("");
-  // Staged tour: every load starts at Meet Hobson. No returning-user state.
+  // Each visit opens directly at the illustrative portfolio.
   const [searchQuery, setSearchQuery] = useState("");
   const [searchActiveIdx, setSearchActiveIdx] = useState(0);
   const [hoveredPropertyId, setHoveredPropertyId] = useState<string | null>(null);
@@ -1437,9 +1437,6 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
   useEffect(() => {
     if (!showWhatIveDone) setGuidingRenewal(false);
   }, [showWhatIveDone]);
-  // "Meet my team" — user-summonable team wall overlay on the right stage.
-  // In-memory only (no localStorage/sessionStorage); does not disturb the chat.
-  const [showTeamWall, setShowTeamWall] = useState(false);
   // "Show me everything" — user-summonable unified back-office workbench overlay on the right stage.
   // Display-only; sections collapsed by default (the workbench owns its own collapse state).
   const [showWorkbench, setShowWorkbench] = useState(false);
@@ -1454,6 +1451,13 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
   const [chatWidth, setChatWidth] = useState<number>(CHAT_DEFAULT_WIDTH);
   const [chatCollapsed, setChatCollapsed] = useState<boolean>(false);
   const [chatDropOver, setChatDropOver] = useState(false);
+  const [narrowWorkLayout, setNarrowWorkLayout] = useState(() => window.innerWidth < 1024);
+  useEffect(() => {
+    const update = () => setNarrowWorkLayout(window.innerWidth < 1024);
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
+  const guidanceOverlay = guidingRenewal && showWhatIveDone && narrowWorkLayout && !chatCollapsed;
   const CHAT_MIN_WIDTH = 240;
   const CHAT_COLLAPSE_THRESHOLD = 200;
   const CHAT_COLLAPSED_WIDTH = 44;
@@ -2658,7 +2662,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
     return () => { cancelled = true; window.clearTimeout(fallback); };
   }, []);
   // Stateless demo reset: clear any persisted prototype keys on mount so every reload / re-entry
-  // returns to the seeded Meet Hobson starting state with no residue from a prior session.
+  // returns to the seeded portfolio starting state with no residue from a prior session.
   useEffect(() => {
     try {
       localStorage.removeItem("hobsonPrototype.hasVisited");
@@ -3038,20 +3042,6 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
     playLine(0);
   };
 
-  const replayOnboarding = () => {
-    setMessages([]);
-    setBeatIdx(0);
-    setLineIdx(0);
-    setChipVisible(false);
-    setTyping(false);
-    setOwl("talking");
-    setView("onboarding");
-    setSelectedPropertyId(null);
-    setSelectedUnitId(null);
-    setShowDocuments(false);
-    setShowWhatIveDone(false);
-  };
-
   /* ----- map highlight derived from view/beat ----- */
   const highlight: MapHighlight = useMemo(() => {
     if (view === "onboarding") {
@@ -3163,7 +3153,6 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
     window.setTimeout(() => {
       setTyping(false);
       // Close any competing overlay; ensure workbench is the focused stage.
-      setShowTeamWall(false);
       if (reduced) {
         setMessages((m) => [...m, { id: `wb-${Date.now()}`, role: "hobson", text: reply }]);
         setShowWorkbench(true);
@@ -3320,7 +3309,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
 
   // Map must stay visible during the onboarding tour (Step 5 uses map search).
   // Honour user preference otherwise.
-  const hasRightOverlay = showDocuments || showWhatIveDone || showTeamWall || showWorkbench || !!performingCardId || !!reviewingCardId || adminMode;
+  const hasRightOverlay = showDocuments || showWhatIveDone || showWorkbench || !!performingCardId || !!reviewingCardId || adminMode;
   const isExpanded = chatExpanded && view !== "onboarding" && !hasRightOverlay && !adminMode;
 
   return (
@@ -3440,7 +3429,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
 
       {/* Chat panel */}
       <section
-        className={`${isExpanded || mainCollapsed ? "flex-1" : "shrink-0"} relative bg-white border-r border-bone flex flex-col ${chatCollapsed ? "overflow-hidden" : ""}`}
+        className={`${guidanceOverlay ? "absolute bottom-0 left-[68px] top-0 z-[1300] max-w-[calc(100%-68px)] shadow-xl" : isExpanded || mainCollapsed ? "flex-1" : "shrink-0"} relative bg-white border-r border-bone flex flex-col ${chatCollapsed ? "overflow-hidden" : ""}`}
         style={isExpanded || mainCollapsed ? undefined : { width: chatCollapsed ? CHAT_COLLAPSED_WIDTH : chatWidth }}
         aria-hidden={chatCollapsed ? true : undefined}
         onDragOver={(e) => {
@@ -3493,46 +3482,13 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
             {/* Owl avatar removed with returning-user mode */}
 
             <h1 className="font-semibold text-[15px] text-ink">Chat with Hobson</h1>
-            {view !== "onboarding" && !adminMode && (
-              <button
-                onClick={replayOnboarding}
-                className="ml-2 text-[11px] text-[#56514A] hover:underline focus:outline-none focus:ring-2 focus:ring-[#56514A] rounded"
-              >
-                Meet Hobson
-              </button>
-            )}
           </div>
-          {/* Top-right pair to "Meet Hobson" on the left: a persistent, header-fixed
-              affordance to re-summon the team wall on the right-hand stage.
-              Lives in the chat header (does not scroll with messages).
-              Hidden during the Meet Hobson onboarding to keep that flow focused. */}
-          {view !== "onboarding" && (
-            <button
-              type="button"
-              onClick={() => setShowTeamWall((v) => !v)}
-              aria-pressed={showTeamWall}
-              aria-label={showTeamWall ? "Hide my team" : "Meet my team"}
-              title={showTeamWall ? "Hide my team" : "Meet my team"}
-              className="inline-flex items-center gap-1.5 px-2 py-1 rounded-md text-[11px] font-medium text-[#56514A] hover:text-[#2D2D2D] hover:bg-[#F1EBDE] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#56514A] transition-colors motion-reduce:transition-none"
-            >
-              {/* Small team/trio icon — visually distinct from the text-only "Meet Hobson" */}
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-                <circle cx="9" cy="8" r="3" />
-                <circle cx="17" cy="9" r="2.2" />
-                <path d="M3 19c0-3 3-5 6-5s6 2 6 5" />
-                <path d="M15 19c0-2 2-3.5 4-3.5s2.5 1 2.5 2.5" />
-              </svg>
-              <span>Meet my team</span>
-            </button>
-          )}
-          {/* "Workbench" — Back Office only. Clicking it closes any overlay
-              (e.g. Meet my team) and returns focus to the right-hand workbench. */}
+          {guidingRenewal && showWhatIveDone && <Button variant="ghost" size="icon" aria-label="Collapse conversation" title="Collapse conversation" onClick={collapseChat} className="h-8 w-8 shrink-0"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="m14 6-6 6 6 6" /></svg></Button>}
           {adminMode && view !== "onboarding" && (
             <button
               type="button"
               onClick={() => {
-                setShowTeamWall(false);
-                const wb = document.getElementById("back-office-workbench");
+                          const wb = document.getElementById("back-office-workbench");
                 if (wb) wb.scrollTo({ top: 0, behavior: "smooth" });
               }}
               className="ml-1 inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-[12px] font-semibold text-[#56514A] hover:text-[#2D2D2D] hover:bg-[#F1EBDE] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#56514A] transition-colors motion-reduce:transition-none"
@@ -4178,7 +4134,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
 
       {/* Resizable divider between chat (left) and right work area / map.
           Hidden when chat is expanded full-width (no right pane visible). */}
-      {!isExpanded && (
+      {!isExpanded && !guidanceOverlay && (
         <ResizeDivider
           width={chatCollapsed ? CHAT_COLLAPSED_WIDTH : chatWidth}
           setWidth={setChatWidth}
@@ -4326,6 +4282,11 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
         {showWhatIveDone && (
           <WorkOverview onClose={resetToMap} sideLetterRequested={workGuidance.sideLetterRequested} onJourneyBack={() => setGuidingRenewal(false)} onGuide={() => {
             expandChat();
+            if (!guidingRenewal) {
+              const width = Math.max(CHAT_MIN_WIDTH, Math.round((window.innerWidth - 68) * 0.3));
+              setChatWidth(width);
+              lastExpandedWidthRef.current = width;
+            }
             setMainCollapsed(false);
             setGuidingRenewal(true);
             if (!guidingRenewal) setInput(SIDE_LETTER_INSTRUCTION);
@@ -4336,38 +4297,6 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
               if (conversation) conversation.scrollTop = conversation.scrollHeight;
             });
           }} />
-        )}
-        {/* "Meet my team" — user-summoned team wall overlay on the right-hand stage.
-            The conversation on the left is undisturbed (no reset, no navigation).
-            Z-index sits above documents/what-I've-done so it overlays whatever is
-            currently on the stage, including admin rooms. */}
-        {showTeamWall && (
-          <div className="absolute inset-0 z-[550] bg-white flex flex-col motion-reduce:transition-none">
-            <div className="flex items-center justify-between px-5 h-14 border-b border-faint-rule shrink-0">
-              <div className="flex items-center gap-2">
-                <span className="text-[11px] uppercase tracking-wider text-[#56514A] font-semibold">Hobson's back office</span>
-                <span aria-hidden className="text-ink-faint">·</span>
-                <h2 className="text-[15px] font-semibold text-ink">Meet My Team</h2>
-              </div>
-              <button
-                type="button"
-                onClick={() => setShowTeamWall(false)}
-                aria-label="Close team wall"
-                className="inline-flex items-center justify-center w-8 h-8 rounded-md text-ink-muted hover:text-ink hover:bg-bone-wash focus:outline-none focus-visible:ring-2 focus-visible:ring-[#56514A]"
-              >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M6 6l12 12M18 6L6 18"/></svg>
-              </button>
-            </div>
-            <div className="flex-1 relative">
-              <BackOfficeStage
-                mode="hallway"
-                helpers={BACK_OFFICE_HELPERS}
-                comingSoonId={null}
-                onEnter={() => { /* purely cosmetic outside Back Office */ }}
-                onReturnHallway={() => setShowTeamWall(false)}
-              />
-            </div>
-          </div>
         )}
         {/* "Show everything" — unified back-office workbench overlay on the right stage.
             Display-only; sections collapsed by default. Suppressed in admin mode (the
