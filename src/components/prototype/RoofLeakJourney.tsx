@@ -71,28 +71,33 @@ export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initia
           <nav aria-label="The Journey" className="min-w-0 border-r border-border px-4 py-5 max-[640px]:border-b max-[640px]:border-r-0">
             <h3 className="mb-5 text-xs font-semibold text-muted-foreground">The Journey</h3>
 
-            <p className="mb-2 text-xs font-medium text-muted-foreground">What I've done</p>
-            <ul className="mb-6 space-y-2">
-              {completed.map((item) => (
-                <li key={item} className="flex items-start gap-2 text-sm leading-relaxed text-muted-foreground">
-                  <Check aria-hidden="true" className="mt-1 h-3.5 w-3.5 shrink-0 text-muted-foreground" strokeWidth={1.6} />
-                  {item}
-                </li>
-              ))}
-            </ul>
-
             <p className="mb-2 text-xs font-medium text-muted-foreground">Happening now</p>
-            <div className="relative">
-              <div aria-hidden="true" className="absolute bottom-7 left-3 top-2 w-px bg-border" />
+            <div>
               {activities.map((activity) => (
-                <Button key={activity.id} variant="ghost" aria-current={selected === activity.id ? "step" : undefined} onClick={() => { setSelected(activity.id); setPaperOpen(false); }} className={`relative mb-2 h-auto w-full items-start justify-start gap-2 rounded-md border px-2 py-3 text-left whitespace-normal ${selected === activity.id ? "border-border bg-muted/70" : "border-transparent"}`}>
-                  <span aria-hidden="true" className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center bg-background">{stateDot(activity.state)}</span>
+                <Button key={activity.id} variant="ghost" aria-current={selected === activity.id ? "step" : undefined} onClick={() => { setSelected(activity.id); setPaperOpen(false); }} className={`mb-2 h-auto w-full items-start justify-start gap-2 rounded-md border px-2 py-3 text-left whitespace-normal ${selected === activity.id ? "border-border bg-muted/70" : "border-transparent"}`}>
+                  <span aria-hidden="true" className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center">{stateDot(activity.state)}</span>
                   <span className="min-w-0">
                     <span className="block text-sm font-semibold leading-snug">{activity.title}</span>
                     <span className="mt-1 block text-xs font-normal leading-relaxed text-muted-foreground">{stateLabel[activity.state]} · {activity.note}</span>
                   </span>
                 </Button>
               ))}
+            </div>
+
+            <div className="mt-6 border-t border-border pt-4">
+              <Button variant="ghost" size="sm" onClick={() => setHistoryOpen(!historyOpen)} aria-expanded={historyOpen} aria-controls="roof-history" className="mb-2 h-auto gap-2 px-0 text-xs font-medium text-muted-foreground">
+                What I've done
+                <span className="tabular-nums">{completed.length}</span>
+                <ChevronDown aria-hidden="true" className={`h-3.5 w-3.5 transition-transform ${historyOpen ? "rotate-180" : ""}`} />
+              </Button>
+              {historyOpen && <div id="roof-history">
+                {completed.map((item, index) => (
+                  <Button key={item.label} variant="ghost" aria-current={selected === `done-${index}` ? "step" : undefined} onClick={() => { setSelected(`done-${index}`); setPaperOpen(false); }} className={`mb-1 h-auto w-full items-start justify-start gap-2 rounded-md border px-2 py-2 text-left whitespace-normal ${selected === `done-${index}` ? "border-border bg-muted/70" : "border-transparent"}`}>
+                    <Check aria-hidden="true" className="mt-0.5 h-3.5 w-3.5 shrink-0 text-muted-foreground" strokeWidth={1.6} />
+                    <span className="min-w-0 text-sm font-normal leading-relaxed text-muted-foreground">{item.label}</span>
+                  </Button>
+                ))}
+              </div>}
             </div>
           </nav>
 
