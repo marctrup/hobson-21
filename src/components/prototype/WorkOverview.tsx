@@ -5,6 +5,7 @@ import owlReading from "@/assets/prototype/owl-reading.png";
 import { WorkJourney, type ApprovalStatus } from "./WorkJourney";
 import { RoofLeakJourney } from "./RoofLeakJourney";
 import { RoofCompletedJourney } from "./RoofCompletedJourney";
+import { CompletedLeaseJourney } from "./CompletedLeaseJourney";
 import { roofInsurerDecision, roofLeakWork, type RoofActivityId } from "./roofLeakWork";
 import { createRoofWork, endRoofWork, restartRoofWork, roofAttention, roofOverviewCounts, type RoofWorkState } from "./roofWorkLifecycle";
 import { initialRoofGuidance, LEASE_PLANS_INSTRUCTION, type RoofGuidanceState, type RoofGuideScope, type RoofHelpState } from "./roofGuidance";
@@ -147,7 +148,7 @@ export function WorkOverview({ onClose, onGuide, sideLetterRequested = false, on
   const [localCompletionPreview, setLocalCompletionPreview] = useState(false);
   const completionPreview = suppliedCompletionPreview ?? localCompletionPreview;
   const setCompletionPreview = (preview: boolean) => { if (onCompletionPreviewChange) onCompletionPreviewChange(preview); else setLocalCompletionPreview(preview); if (preview) onJourneyBack?.(); };
-  const [journey, setJourney] = useState<"renewal" | "roof" | null>(null);
+  const [journey, setJourney] = useState<"renewal" | "roof" | "completed-lease" | null>(null);
   const [paused, setPaused] = useState(false);
   const [approval, setApproval] = useState<ApprovalStatus>("idle");
   const [openAtApproval, setOpenAtApproval] = useState(false);
@@ -207,7 +208,7 @@ export function WorkOverview({ onClose, onGuide, sideLetterRequested = false, on
         </Button>
       </div>
 
-      {journey === "renewal" ? <WorkJourney paused={paused} onPauseChange={setPaused} onBack={closeJourney} onGuide={() => onGuide("renewal")} sideLetterRequested={sideLetterRequested} approval={approval} onApprovalChange={setApproval} approvalOpen={openAtApproval} /> : journey === "roof" ? <><div hidden={completionPreview} className={completionPreview ? "hidden" : "flex min-h-0 flex-1 flex-col"}><RoofLeakJourney key={currentRoofWork.number} work={currentRoofWork} onPreviewCompleted={() => setCompletionPreview(true)} onEnd={() => updateRoofWork(endRoofWork(currentRoofWork))} onRestart={() => updateRoofWork(restartRoofWork(currentRoofWork))} paused={currentRoofWork.paused} onPauseChange={(paused) => { if (!currentRoofWork.ended && !completionPreview) updateRoofWork({ ...currentRoofWork, paused }); }} onBack={closeJourney} onGuide={(scope) => { if (!currentRoofWork.ended && !completionPreview) onGuide(scope, scope === "lease" && roofHelp.shown ? LEASE_PLANS_INSTRUCTION : undefined); }} initialActivity={roofActivity} guidance={roofGuidance} help={roofHelp} onHelpChange={setRoofHelp} /></div>{completionPreview && <RoofCompletedJourney work={currentRoofWork} onBack={closeJourney} onReturn={() => setCompletionPreview(false)} />}</> : <div className="hobson-scroll min-h-0 flex-1 overflow-y-auto">
+      {journey === "completed-lease" ? <CompletedLeaseJourney onBack={closeJourney} /> : journey === "renewal" ? <WorkJourney paused={paused} onPauseChange={setPaused} onBack={closeJourney} onGuide={() => onGuide("renewal")} sideLetterRequested={sideLetterRequested} approval={approval} onApprovalChange={setApproval} approvalOpen={openAtApproval} /> : journey === "roof" ? <><div hidden={completionPreview} className={completionPreview ? "hidden" : "flex min-h-0 flex-1 flex-col"}><RoofLeakJourney key={currentRoofWork.number} work={currentRoofWork} onPreviewCompleted={() => setCompletionPreview(true)} onEnd={() => updateRoofWork(endRoofWork(currentRoofWork))} onRestart={() => updateRoofWork(restartRoofWork(currentRoofWork))} paused={currentRoofWork.paused} onPauseChange={(paused) => { if (!currentRoofWork.ended && !completionPreview) updateRoofWork({ ...currentRoofWork, paused }); }} onBack={closeJourney} onGuide={(scope) => { if (!currentRoofWork.ended && !completionPreview) onGuide(scope, scope === "lease" && roofHelp.shown ? LEASE_PLANS_INSTRUCTION : undefined); }} initialActivity={roofActivity} guidance={roofGuidance} help={roofHelp} onHelpChange={setRoofHelp} /></div>{completionPreview && <RoofCompletedJourney work={currentRoofWork} onBack={closeJourney} onReturn={() => setCompletionPreview(false)} />}</> : <div className="hobson-scroll min-h-0 flex-1 overflow-y-auto">
         <div className="mx-auto w-full max-w-5xl px-5 pb-16 pt-8 sm:px-8 sm:pt-10">
           <header className="mb-10">
             <h2 className="text-3xl font-semibold leading-tight">What I'm Up To</h2>
@@ -269,7 +270,7 @@ export function WorkOverview({ onClose, onGuide, sideLetterRequested = false, on
                   <Check aria-hidden="true" className="mt-1 h-4 w-4 shrink-0 text-muted-foreground" strokeWidth={1.6} />
                   <div className="min-w-0 flex-1">
                     <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
-                      <h4 className="text-sm font-semibold text-muted-foreground">{work.place === roofLeakWork.place ? <Button variant="link" onClick={() => openRoofJourney("lease")} className="h-auto max-w-full whitespace-normal p-0 text-left text-sm">{work.title}</Button> : work.title}</h4>
+                      <h4 className="text-sm font-semibold text-muted-foreground">{work.place === roofLeakWork.place ? <Button variant="link" onClick={() => openRoofJourney("lease")} className="h-auto max-w-full whitespace-normal p-0 text-left text-sm">{work.title}</Button> : work.place === "Stanley House · Flat 3" ? <Button variant="link" onClick={() => setJourney("completed-lease")} className="h-auto max-w-full whitespace-normal p-0 text-left text-sm">{work.title}</Button> : work.title}</h4>
                       <p className="text-xs text-muted-foreground">{work.when}</p>
                     </div>
                     <p className="mt-1 text-xs text-muted-foreground">{work.place}</p>
