@@ -2907,22 +2907,14 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
     const pending = actionCards.filter((c) => c.approvalState === "pending" || c.approvalState === "in_progress");
     const urgent = pending.filter((c) => c.urgency === "now");
 
-    const numberWord = (n: number) =>
-      ["one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"][n - 1] ?? String(n);
-    const mattersClause = pending.length === 1 ? "one matter I believe deserves" : "a few matters I believe deserve";
-    const urgentClause = urgent.length
-      ? urgent.length === 1
-        ? ", and one is time-sensitive"
-        : `, and ${numberWord(urgent.length)} are time-sensitive`
-      : "";
+    void pending;
+    void urgent;
 
     const greetLines: string[] = testerMode
       ? [
           `Good morning, ${FIRST_NAME}. For today's testing, go straight to your unit — by the map or the search. That is where I can answer your questions.`,
         ]
-      : pending.length === 0
-        ? [`Good morning, ${FIRST_NAME}. Your portfolio is quiet today — nothing requires your attention.`]
-        : [`Good morning, ${FIRST_NAME}. Your portfolio is quiet for the most part — though there are ${mattersClause} your attention today${urgentClause}. Shall I take you through them?`];
+      : [`Good morning, ${FIRST_NAME}. I've finished 3 pieces of work, I'm looking after 4 more, and there are 2 things I'd like you to review.`];
 
 
 
