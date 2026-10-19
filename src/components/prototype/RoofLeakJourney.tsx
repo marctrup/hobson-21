@@ -47,7 +47,7 @@ export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initia
   const previousAttempt = selected.startsWith("previous-") ? work.previous[Number(selected.slice(9))] : undefined;
   const endedAttempt = work.ended ? work.previous[work.previous.length - 1] : undefined;
   const recordedAttempt = previousAttempt ?? endedAttempt;
-  const endedPosition = { lease: "Ended — Responsibility not established.", contractor: work.contractorRequestSent ? "Request previously sent — No response recorded." : "No new inspection requested.", insurer: "Not sent." };
+  const endedPosition = { lease: "Ended — Responsibility not established.", contractor: work.contractorRequestSent ? "Request previously sent — No response recorded." : "No new inspection requested.", insurer: work.insurerSent ? "Sent — awaiting response." : "Not sent." };
   const [paperOpen, setPaperOpen] = useState(false);
   const [insurerEditing, setInsurerEditing] = useState(false);
   const [insurerEditText, setInsurerEditText] = useState("");
