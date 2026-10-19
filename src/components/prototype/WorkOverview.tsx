@@ -138,8 +138,10 @@ export function WorkOverview({ onClose, onGuide, sideLetterRequested = false, on
   const [openAtApproval, setOpenAtApproval] = useState(false);
   const awaitingApproval = approval === "awaiting";
   const sentApproval = approval === "sent";
-  const visibleDecisions = awaitingApproval ? [renewalDecision, ...decisions] : decisions;
+  const [roofActivity, setRoofActivity] = useState<RoofActivityId>("lease");
+  const visibleDecisions = awaitingApproval ? [renewalDecision, roofInsurerDecision, ...decisions] : [roofInsurerDecision, ...decisions];
   const openJourney = (atApproval: boolean) => { setOpenAtApproval(atApproval); setJourney("renewal"); };
+  const openRoofJourney = (activity: RoofActivityId) => { setRoofActivity(activity); setJourney("roof"); };
   const closeJourney = () => { setJourney(null); setOpenAtApproval(false); onJourneyBack?.(); };
   useEffect(() => {
     if (focusNeedsYou > 0 && !journey) {
@@ -188,7 +190,9 @@ export function WorkOverview({ onClose, onGuide, sideLetterRequested = false, on
                   </div>
                   {item.place === "Stanley House · Flat 6"
                     ? <Button variant="outline" size="sm" onClick={() => openJourney(true)} className="shrink-0 gap-2">Review decision<ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" /></Button>
-                    : <Button variant="ghost" size="sm" className="shrink-0 gap-2 text-muted-foreground" disabled>Review decision</Button>}
+                    : item.place === roofLeakWork.place
+                      ? <Button variant="outline" size="sm" onClick={() => openRoofJourney("insurer")} className="shrink-0 gap-2">Review decision<ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" /></Button>
+                      : <Button variant="ghost" size="sm" className="shrink-0 gap-2 text-muted-foreground" disabled>Review decision</Button>}
                 </article>
               ))}
             </div>
@@ -200,7 +204,7 @@ export function WorkOverview({ onClose, onGuide, sideLetterRequested = false, on
               {lookingAfter.map((work) => (
                 <article key={work.title} className="min-w-0 border-b border-border pb-6">
                   <p className="text-xs text-muted-foreground">{work.place}</p>
-                  <h4 className="mt-2 text-base font-semibold leading-snug">{work.place === "Stanley House · Flat 6" ? <Button variant="link" onClick={() => openJourney(false)} className="h-auto max-w-full justify-start gap-2 whitespace-normal p-0 text-left text-base font-semibold leading-snug">{work.title}<ArrowUpRight className="h-4 w-4 shrink-0" aria-hidden="true" /></Button> : work.place === "Burlington Gardens" ? <Button variant="link" onClick={() => setJourney("roof")} className="h-auto max-w-full justify-start gap-2 whitespace-normal p-0 text-left text-base font-semibold leading-snug">{work.title}<ArrowUpRight className="h-4 w-4 shrink-0" aria-hidden="true" /></Button> : work.title}</h4>
+                  <h4 className="mt-2 text-base font-semibold leading-snug">{work.place === "Stanley House · Flat 6" ? <Button variant="link" onClick={() => openJourney(false)} className="h-auto max-w-full justify-start gap-2 whitespace-normal p-0 text-left text-base font-semibold leading-snug">{work.title}<ArrowUpRight className="h-4 w-4 shrink-0" aria-hidden="true" /></Button> : work.place === roofLeakWork.place ? <Button variant="link" onClick={() => openRoofJourney("lease")} className="h-auto max-w-full justify-start gap-2 whitespace-normal p-0 text-left text-base font-semibold leading-snug">{work.title}<ArrowUpRight className="h-4 w-4 shrink-0" aria-hidden="true" /></Button> : work.title}</h4>
                   <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{work.aim}</p>
                   <ul className="mt-3 space-y-1.5">
                     {activitiesFor(work).map((activity) => <ActivityLine key={activity.label} activity={activity} />)}
