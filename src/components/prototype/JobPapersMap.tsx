@@ -54,7 +54,7 @@ export function JobPapersMap({ job, sideLetterRequested = false }: { job: JobCon
   return <>
     {controls}
     <Dialog open={view !== null} onOpenChange={open => { if (!open) setView(null); }}>
-      <DialogPrimitive.Portal><DialogPrimitive.Overlay className="fixed inset-0 z-[1600] bg-background/80" /><DialogPrimitive.Content className="fixed left-1/2 top-1/2 z-[1601] grid max-h-[85dvh] w-[calc(100%-2rem)] max-w-2xl -translate-x-1/2 -translate-y-1/2 gap-4 overflow-y-auto rounded-md border border-border bg-background p-4 sm:p-6 shadow-lg">
+      <DialogPrimitive.Portal><DialogPrimitive.Overlay className="fixed inset-0 z-[1600] bg-background/80" /><DialogPrimitive.Content className="fixed left-1/2 top-1/2 z-[1601] grid max-h-[85dvh] w-[calc(100%_-_2rem)] max-w-2xl -translate-x-1/2 -translate-y-1/2 gap-4 overflow-y-auto rounded-md border border-border bg-background p-4 sm:p-6 shadow-lg">
         <DialogPrimitive.Close asChild><Button variant="ghost" size="icon" aria-label="Back to job" title="Back to job" className="absolute right-2 top-2 h-8 w-8"><X className="h-4 w-4" /></Button></DialogPrimitive.Close>
         <DialogHeader className="pr-8 text-left"><DialogTitle>{context.place}</DialogTitle><DialogDescription>{view === "papers" ? "Papers for this job · Illustrative examples only" : "Location for this job"}</DialogDescription></DialogHeader>
         {controls}
