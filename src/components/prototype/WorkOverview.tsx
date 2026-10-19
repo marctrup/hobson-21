@@ -4,10 +4,10 @@ import { Button } from "@/components/ui/button";
 import owlReading from "@/assets/prototype/owl-reading.png";
 import { WorkJourney, type ApprovalStatus } from "./WorkJourney";
 import { RoofLeakJourney } from "./RoofLeakJourney";
-import { RoofCompletedJourney } from "./RoofCompletedJourney";
 import { CompletedLeaseJourney } from "./CompletedLeaseJourney";
 import { roofInsurerDecision, roofLeakWork, type RoofActivityId } from "./roofLeakWork";
 import { createRoofWork, endRoofWork, restartRoofWork, roofAttention, roofOverviewCounts, type RoofWorkState } from "./roofWorkLifecycle";
+import { accomplished, decisions, lookingAfter, type Activity, type ActivityState } from "./workOverviewData";
 import { initialRoofGuidance, LEASE_PLANS_INSTRUCTION, type RoofGuidanceState, type RoofGuideScope, type RoofHelpState } from "./roofGuidance";
 
 const roofHelpDecision = {
@@ -17,8 +17,6 @@ const roofHelpDecision = {
   decision: "I have a suggested next step.",
 };
 
-type ActivityState = "working" | "waiting" | "needs-you" | "on-hold" | "needs-clarification";
-type Activity = { label: string; state: ActivityState };
 
 const renewalDecision = {
   place: "Stanley House · Flat 6",
@@ -26,87 +24,6 @@ const renewalDecision = {
   decision: "May I send the renewal email to the tenant?",
   why: "I've prepared an email asking the tenant to discuss the tenancy renewal. It proposes no terms, so I'd like your approval before anything is sent.",
 };
-
-const decisions = [
-  {
-    place: "Stanley House · Flat 8",
-    title: "Rent review",
-    decision: "Would you like me to use these comparables to prepare the proposed rent?",
-    why: "I've reviewed the lease and comparable rents. I'd like you to check the proposed next step.",
-  },
-  {
-    place: "5 Nugent Terrace · Shop",
-    title: "An assessor for the new EPC",
-    decision: "Please confirm the assessor and the instruction before anything is sent.",
-    why: "I've checked the existing certificate and prepared an instruction for your usual assessor.",
-  },
-];
-
-const lookingAfter: { place: string; title: string; aim: string; activities: Activity[] }[] = [
-  {
-    place: roofLeakWork.place,
-    title: roofLeakWork.title,
-    aim: roofLeakWork.aim,
-    activities: roofLeakWork.activities.map(({ label, state }) => ({ label, state })),
-  },
-  {
-    place: "Stanley House · Flat 6",
-    title: "Getting the tenancy renewal ready",
-    aim: "Confirm the current tenancy position and prepare a renewal summary for your review.",
-    activities: [
-      { label: "Tenancy end date confirmed and renewal terms read", state: "waiting" },
-      { label: "Checking the rent and tenancy history", state: "working" },
-    ],
-  },
-  {
-    place: "Across your portfolio",
-    title: "Putting the compliance papers in order",
-    aim: "Match every certificate to its unit and bring you a short list of gaps.",
-    activities: [
-      { label: "Gas safety certificates matched to their units", state: "waiting" },
-      { label: "Checking which certificates are missing or out of date", state: "working" },
-    ],
-  },
-  {
-    place: "5 Nugent Terrace · Flats 1–3",
-    title: "Making sense of the service charges",
-    aim: "Set out any differences between the leases and the latest schedule, with the clauses beside them.",
-    activities: [
-      { label: "Apportionment terms read in all three leases", state: "waiting" },
-      { label: "Comparing the stated shares with the latest schedule", state: "working" },
-    ],
-  },
-  {
-    place: "Stanley House · Communal areas",
-    title: "Preparing the maintenance instruction",
-    aim: "Bring you the draft instruction before anything goes to the contractor.",
-    activities: [
-      { label: "Reported repairs and the contractor's quotation gathered", state: "waiting" },
-      { label: "Checking the proposed work against the outstanding repairs", state: "working" },
-    ],
-  },
-];
-
-const accomplished = [
-  {
-    place: "Stanley House · Flat 3",
-    title: "The lease, made clear",
-    outcome: "I've prepared a cited summary of the rent, key dates and obligations. The answers are now together in one place.",
-    when: "Today, 09:15",
-  },
-  {
-    place: "Across your portfolio",
-    title: "Your key dates are together",
-    outcome: "I've brought together the relevant review, break and expiry dates from your read papers, so you can see what is coming up.",
-    when: "Yesterday, 16:40",
-  },
-  {
-    place: "5 Nugent Terrace · Flat 2",
-    title: "The deposit record is matched",
-    outcome: "I've linked the protection certificate to the tenancy and noted the reference. You no longer need to search for it separately.",
-    when: "Yesterday, 11:20",
-  },
-];
 
 function SectionHeading({ id, title, count, icon: Icon, quiet = false }: {
   id: string;
@@ -144,10 +61,7 @@ function ActivityLine({ activity }: { activity: Activity }) {
 }
 
 /** Illustrative work only: deliberately independent of action-card state and approvals. */
-export function WorkOverview({ onClose, onGuide, sideLetterRequested = false, onJourneyBack, focusNeedsYou = 0, roofGuidance: suppliedRoofGuidance = initialRoofGuidance, roofWork, onRoofWorkChange, completionPreview: suppliedCompletionPreview, onCompletionPreviewChange }: { onClose: () => void; onGuide: (scope: "renewal" | RoofGuideScope, suggestion?: string) => void; sideLetterRequested?: boolean; onJourneyBack?: () => void; focusNeedsYou?: number; roofGuidance?: RoofGuidanceState; roofWork?: RoofWorkState; onRoofWorkChange?: (work: RoofWorkState) => void; completionPreview?: boolean; onCompletionPreviewChange?: (preview: boolean) => void }) {
-  const [localCompletionPreview, setLocalCompletionPreview] = useState(false);
-  const completionPreview = suppliedCompletionPreview ?? localCompletionPreview;
-  const setCompletionPreview = (preview: boolean) => { if (onCompletionPreviewChange) onCompletionPreviewChange(preview); else setLocalCompletionPreview(preview); if (preview) onJourneyBack?.(); };
+export function WorkOverview({ onClose, onGuide, sideLetterRequested = false, onJourneyBack, focusNeedsYou = 0, roofGuidance: suppliedRoofGuidance = initialRoofGuidance, roofWork, onRoofWorkChange }: { onClose: () => void; onGuide: (scope: "renewal" | RoofGuideScope, suggestion?: string) => void; sideLetterRequested?: boolean; onJourneyBack?: () => void; focusNeedsYou?: number; roofGuidance?: RoofGuidanceState; roofWork?: RoofWorkState; onRoofWorkChange?: (work: RoofWorkState) => void }) {
   const [journey, setJourney] = useState<"renewal" | "roof" | "completed-lease" | null>(null);
   const [paused, setPaused] = useState(false);
   const [approval, setApproval] = useState<ApprovalStatus>("idle");
@@ -162,10 +76,10 @@ export function WorkOverview({ onClose, onGuide, sideLetterRequested = false, on
   const updateRoofWork = (next: RoofWorkState) => { if (onRoofWorkChange) onRoofWorkChange(next); else setLocalRoofWork(next); };
   const roofHelp = currentRoofWork.help;
   const setRoofHelp = (help: RoofHelpState) => { if (!currentRoofWork.ended) updateRoofWork({ ...currentRoofWork, help }); };
-  const { help: helpAwaitingDirection, insurer: insurerActionable } = roofAttention(currentRoofWork, completionPreview);
-  const counts = roofOverviewCounts(currentRoofWork, completionPreview);
-  const visibleAccomplished = completionPreview ? [{ place: roofLeakWork.place, title: roofLeakWork.title, outcome: "The contractor has confirmed the reported roof leak is repaired. I have recorded the confirmation and supporting papers; the repair has not been independently verified.", when: "Illustrative completion preview" }, ...accomplished] : accomplished;
-  const activeWork = lookingAfter.filter(work => work.place !== roofLeakWork.place || (!currentRoofWork.ended && !completionPreview));
+  const { help: helpAwaitingDirection, insurer: insurerActionable } = roofAttention(currentRoofWork);
+  const counts = roofOverviewCounts(currentRoofWork);
+  const visibleAccomplished = accomplished;
+  const activeWork = lookingAfter.filter(work => work.place !== roofLeakWork.place || !currentRoofWork.ended);
   const visibleDecisions = [
     ...(awaitingApproval ? [renewalDecision] : []),
     ...(helpAwaitingDirection ? [roofHelpDecision] : []),
@@ -208,7 +122,7 @@ export function WorkOverview({ onClose, onGuide, sideLetterRequested = false, on
         </Button>
       </div>
 
-      {journey === "completed-lease" ? <CompletedLeaseJourney onBack={closeJourney} /> : journey === "renewal" ? <WorkJourney paused={paused} onPauseChange={setPaused} onBack={closeJourney} onGuide={() => onGuide("renewal")} sideLetterRequested={sideLetterRequested} approval={approval} onApprovalChange={setApproval} approvalOpen={openAtApproval} /> : journey === "roof" ? <><div hidden={completionPreview} className={completionPreview ? "hidden" : "flex min-h-0 flex-1 flex-col"}><RoofLeakJourney key={currentRoofWork.number} work={currentRoofWork} onPreviewCompleted={() => setCompletionPreview(true)} onEnd={() => updateRoofWork(endRoofWork(currentRoofWork))} onRestart={() => updateRoofWork(restartRoofWork(currentRoofWork))} paused={currentRoofWork.paused} onPauseChange={(paused) => { if (!currentRoofWork.ended && !completionPreview) updateRoofWork({ ...currentRoofWork, paused }); }} onBack={closeJourney} onGuide={(scope) => { if (!currentRoofWork.ended && !completionPreview) onGuide(scope, scope === "lease" && roofHelp.shown ? LEASE_PLANS_INSTRUCTION : undefined); }} initialActivity={roofActivity} guidance={roofGuidance} help={roofHelp} onHelpChange={setRoofHelp} /></div>{completionPreview && <RoofCompletedJourney work={currentRoofWork} onBack={closeJourney} onReturn={() => setCompletionPreview(false)} />}</> : <div className="hobson-scroll min-h-0 flex-1 overflow-y-auto">
+      {journey === "completed-lease" ? <CompletedLeaseJourney onBack={closeJourney} /> : journey === "renewal" ? <WorkJourney paused={paused} onPauseChange={setPaused} onBack={closeJourney} onGuide={() => onGuide("renewal")} sideLetterRequested={sideLetterRequested} approval={approval} onApprovalChange={setApproval} approvalOpen={openAtApproval} /> : journey === "roof" ? <RoofLeakJourney key={currentRoofWork.number} work={currentRoofWork} onEnd={() => updateRoofWork(endRoofWork(currentRoofWork))} onRestart={() => updateRoofWork(restartRoofWork(currentRoofWork))} paused={currentRoofWork.paused} onPauseChange={(paused) => { if !currentRoofWork.ended updateRoofWork({ ...currentRoofWork, paused }); }} onBack={closeJourney} onGuide={(scope) => { if !currentRoofWork.ended onGuide(scope, scope === "lease" && roofHelp.shown ? LEASE_PLANS_INSTRUCTION : undefined); }} initialActivity={roofActivity} guidance={roofGuidance} help={roofHelp} onHelpChange={setRoofHelp} /> : <div className="hobson-scroll min-h-0 flex-1 overflow-y-auto">
         <div className="mx-auto w-full max-w-5xl px-5 pb-16 pt-8 sm:px-8 sm:pt-10">
           <header className="mb-10">
             <h2 className="text-3xl font-semibold leading-tight">What I'm Up To</h2>
@@ -219,7 +133,6 @@ export function WorkOverview({ onClose, onGuide, sideLetterRequested = false, on
               </p>
             </div>
           </header>
-          {completionPreview && <div className="mb-8 flex flex-wrap items-center justify-between gap-3 border-y border-border py-3"><p className="text-xs text-muted-foreground">Illustrative completion preview · Original investigation preserved</p><Button variant="ghost" size="sm" onClick={() => { setCompletionPreview(false); openRoofJourney(roofActivity); }} className="text-xs text-muted-foreground">Return to investigation</Button></div>}
 
           <section aria-labelledby="work-needs-you" className="mb-10">
             <SectionHeading id="work-needs-you" title="Needs you" count={visibleDecisions.length} icon={Hand} />
@@ -260,7 +173,7 @@ export function WorkOverview({ onClose, onGuide, sideLetterRequested = false, on
             </div>
           </section>
 
-          {currentRoofWork.ended && !completionPreview && <section aria-label="Ended work" className="mb-10 border-t border-border pt-5"><h3 className="text-sm font-semibold text-muted-foreground">Ended work</h3><p className="mt-3 text-xs text-muted-foreground">Burlington Gardens · Ended by you</p><Button variant="link" onClick={() => openRoofJourney("lease")} className="mt-1 h-auto max-w-full gap-2 whitespace-normal p-0 text-left text-sm">Investigating the roof leak<ArrowUpRight className="h-3.5 w-3.5" /></Button><p className="mt-2 text-sm text-muted-foreground">The record remains available. No further steps will be taken.</p></section>}
+          {currentRoofWork.ended && <section aria-label="Ended work" className="mb-10 border-t border-border pt-5"><h3 className="text-sm font-semibold text-muted-foreground">Ended work</h3><p className="mt-3 text-xs text-muted-foreground">Burlington Gardens · Ended by you</p><Button variant="link" onClick={() => openRoofJourney("lease")} className="mt-1 h-auto max-w-full gap-2 whitespace-normal p-0 text-left text-sm">Investigating the roof leak<ArrowUpRight className="h-3.5 w-3.5" /></Button><p className="mt-2 text-sm text-muted-foreground">The record remains available. No further steps will be taken.</p></section>}
 
           <section aria-labelledby="work-accomplished">
             <SectionHeading id="work-accomplished" title="What I've accomplished" count={visibleAccomplished.length} icon={CheckCheck} quiet />
