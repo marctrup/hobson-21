@@ -57,7 +57,7 @@ export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initia
           </div>
           <div className="flex shrink-0 flex-wrap items-center gap-2">
             <Button variant="outline" size="sm" onClick={() => onPauseChange(!paused)} className="shrink-0 gap-2">{paused ? <Play className="h-4 w-4" /> : <Pause className="h-4 w-4" />}{paused ? "Resume work" : "Pause work"}</Button>
-            <Button variant="secondary" size="sm" onClick={onGuide} className="gap-2"><MessageCircle className="h-4 w-4" />Guide Hobson</Button>
+            <Button variant="secondary" size="sm" onClick={() => onGuide("overall")} className="gap-2"><MessageCircle className="h-4 w-4" />Guide Hobson</Button>
           </div>
         </div>
         <div className="mt-3 flex items-center gap-3">
@@ -81,6 +81,9 @@ export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initia
                   <span className="min-w-0">
                     <span className="block text-sm font-semibold leading-snug">{activity.title}</span>
                     <span className="mt-1 block text-xs font-normal leading-relaxed text-muted-foreground">{stateLabel[activity.state]} · {activity.note}</span>
+                    {activity.id === "lease" && guidance.shopfrontRequested && <span className="mt-1 block text-xs font-normal leading-relaxed text-muted-foreground">Shopfront roof added to the review.</span>}
+                    {activity.id === "contractor" && guidance.contactOnHold && <span className="mt-1 block text-xs font-normal leading-relaxed text-muted-foreground">Awaiting reply · Further contact on hold.</span>}
+                    {activity.id === "insurer" && guidance.contactOnHold && <span className="mt-1 block text-xs font-normal leading-relaxed text-muted-foreground">Contact on hold at your request.</span>}
                   </span>
                 </Button>
               ))}
