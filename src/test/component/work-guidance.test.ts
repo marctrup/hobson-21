@@ -7,11 +7,18 @@ describe("Illustrative tenancy guidance", () => {
     expect(result.state.sideLetterRequested).toBe(true);
     expect(initialWorkGuidance.sideLetterRequested).toBe(false);
   });
+  it("keeps the mentioned 2024 paper awaiting access rather than found or reviewed", () => {
+    const result = applyWorkGuidance(initialWorkGuidance, SIDE_LETTER_INSTRUCTION);
+    expect(result.state.sideLetterStatus).toBe("awaiting-paper");
+    const repeated = applyWorkGuidance(result.state, SIDE_LETTER_INSTRUCTION);
+    expect(repeated.state.sideLetterStatus).toBe("awaiting-paper");
+    expect(initialWorkGuidance.sideLetterStatus).toBeNull();
+  });
   it("does not duplicate work for a repeated request", () => {
     const first = applyWorkGuidance(initialWorkGuidance, SIDE_LETTER_INSTRUCTION);
     const repeated = applyWorkGuidance(first.state, SIDE_LETTER_INSTRUCTION);
     expect(repeated.state).toBe(first.state);
-    expect(Object.keys(repeated.state)).toEqual(["sideLetterRequested"]);
+    expect(Object.keys(repeated.state)).toEqual(["sideLetterRequested", "sideLetterStatus"]);
   });
   it("does not execute unrelated instructions", () => {
     const result = applyWorkGuidance(initialWorkGuidance, "Please send the renewal summary now.");

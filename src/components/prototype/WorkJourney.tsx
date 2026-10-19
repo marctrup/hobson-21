@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import owlReading from "@/assets/prototype/owl-reading.png";
 
 type Step = "tenancy" | "rent" | "history" | "summary";
-type Evidence = "rent" | "end" | "variation";
+type Evidence = "rent" | "end" | "variation" | "side-letter";
 const findings = {
   rent: { label: "Original annual rent", value: "£24,000", found: "The original Business Lease records an annual rent of £24,000.", extract: "Annual rent: £24,000, payable in accordance with the terms of this lease." },
   end: { label: "Tenancy end date in the original lease", value: "31 December 2026", found: "The original Business Lease records a tenancy end date of 31 December 2026.", extract: "The tenancy term ends on 31 December 2026." },
@@ -93,7 +93,7 @@ export function WorkJourney({ paused, onPauseChange, onBack, onGuide, sideLetter
                 {step.group && <p className="relative mb-2 mt-4 bg-background text-xs font-medium text-muted-foreground first:mt-0">{step.id === "history" && paused ? "Paused here" : step.group}</p>}
                 <Button variant="ghost" aria-current={selected === step.id ? "step" : undefined} onClick={() => { setSelected(step.id); setEvidence(null); }} className={`relative mb-2 h-auto w-full items-start justify-start gap-2 rounded-md border px-2 py-3 text-left whitespace-normal ${selected === step.id ? "border-border bg-muted/70" : "border-transparent"}`}>
                   <span aria-hidden="true" className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center bg-background">{step.id === "tenancy" || step.id === "rent" ? <Check className="h-3.5 w-3.5 text-muted-foreground" /> : <span className={`h-2 w-2 rounded-full ${step.id === "history" ? paused ? "bg-muted-foreground" : "bg-ring" : "border border-muted-foreground"}`} />}</span>
-                  <span className="min-w-0"><span className="block text-sm font-semibold leading-snug">{step.title}</span><span className="mt-1 block text-xs font-normal leading-relaxed text-muted-foreground">{step.id === "history" && sideLetterRequested ? "Also checking the 2024 side letter, at your request." : step.note}</span></span>
+                  <span className="min-w-0"><span className="block text-sm font-semibold leading-snug">{step.title}</span><span className="mt-1 block text-xs font-normal leading-relaxed text-muted-foreground">{step.id === "history" && sideLetterRequested ? "2024 side letter added to the investigation at your request." : step.note}</span></span>
                 </Button>
               </div>)}
             </div>
@@ -105,7 +105,6 @@ export function WorkJourney({ paused, onPauseChange, onBack, onGuide, sideLetter
               <h4 className="text-lg font-semibold leading-snug">{selectedStep?.title}</h4>
               {selected === "history" && <>
                 <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{paused ? "I've paused the check of later papers against the original tenancy terms." : "I'm checking whether later papers have changed the original tenancy terms."}</p>
-                {sideLetterRequested && <p className="mt-3 border-l-2 border-border pl-3 text-xs leading-relaxed text-muted-foreground">You asked me to also check the 2024 side letter.</p>}
                 <article className="mt-5 border-y border-border py-4">
                   <div className="flex flex-wrap items-center justify-between gap-2"><h5 className="flex items-center gap-2 text-sm font-semibold"><FileText className="h-4 w-4 text-muted-foreground" />Business Lease</h5><span className="flex items-center gap-1 text-xs text-muted-foreground"><Check className="h-3 w-3" />Reviewed</span></div>
                   <div className="mt-3 space-y-2">{renderFinding("rent")}{renderFinding("end")}</div>
@@ -123,11 +122,11 @@ export function WorkJourney({ paused, onPauseChange, onBack, onGuide, sideLetter
                   <PaperReference name="Deed of Variation" extract="This illustrative later agreement refers to variations to the Business Lease. Its effect on the rent and tenancy term has not yet been established; no changed terms are confirmed in this preview." />
                 </article>
                 {sideLetterRequested && <article aria-label="Side Letter — 2024" className="border-b border-border py-4">
-                  <div className="flex flex-wrap items-center justify-between gap-2"><h5 className="flex items-center gap-2 text-sm font-semibold"><FileText className="h-4 w-4 text-muted-foreground" />Side Letter — 2024</h5><span className="text-xs text-muted-foreground">To check</span></div>
-                  <p className="mt-3 text-sm text-muted-foreground">Added at your request.</p>
-                  <p className="mt-2 text-xs leading-relaxed text-muted-foreground">Illustrative paper only. I haven't reviewed it or established whether it changes the tenancy terms.</p>
+                  <div className="flex flex-wrap items-center justify-between gap-2"><h5><Button variant="ghost" onClick={() => toggleEvidence("side-letter")} aria-expanded={evidence === "side-letter"} aria-controls="side-letter-next-action" className="h-auto gap-2 whitespace-normal px-2 py-2 text-left text-sm font-semibold"><FileText className="h-4 w-4 shrink-0 text-muted-foreground" />Side Letter — 2024<ChevronDown aria-hidden="true" className={`h-3.5 w-3.5 shrink-0 text-muted-foreground ${evidence === "side-letter" ? "rotate-180" : ""}`} /></Button></h5><span className="text-xs text-muted-foreground">Awaiting paper</span></div>
+                  <p className="mt-3 text-sm text-muted-foreground">You mentioned this paper. I haven't located it yet.</p>
+                  {evidence === "side-letter" && <aside id="side-letter-next-action" className="mt-3 border-l-2 border-border pl-3 text-sm leading-relaxed">I'll look for the side letter among your papers. If I can't find it, I'll ask you for a copy.</aside>}
                 </article>}
-                <div className="mt-5 border-l-2 border-ring pl-3"><h5 className="text-xs font-semibold">What I'm trying to establish</h5><p className="mt-2 text-sm leading-relaxed">Have any later papers changed the rent, tenancy end date or other relevant terms?</p>{sideLetterRequested && <p className="mt-2 text-xs leading-relaxed text-muted-foreground">The side letter needs checking too before I prepare your renewal summary.</p>}</div>
+                <div className="mt-5 border-l-2 border-ring pl-3"><h5 className="text-xs font-semibold">What I'm trying to establish</h5><p className="mt-2 text-sm leading-relaxed">Have any later papers changed the rent, tenancy end date or other relevant terms?</p></div>
               </>}
               {selected === "tenancy" && <>
                 <p className="mt-2 text-sm leading-relaxed text-muted-foreground">I found the tenancy agreement and confirmed the parties and end date recorded in it.</p>
