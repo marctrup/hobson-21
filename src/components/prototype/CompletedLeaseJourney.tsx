@@ -13,8 +13,8 @@ export function CompletedLeaseJourney({ onBack }: { onBack: () => void }) {
   const activity = completedLease.activities.find(item => item.id === selected);
   const findings = selected === "dates" ? completedLease.findings.filter(item => ["Rent", "Term start", "Term end"].includes(item.label)) : completedLease.findings;
   const references = [...new Set(findings.map(item => item.reference))];
-  return <div role="region" aria-label="Completed lease work journey" className="flex min-h-0 flex-1 flex-col overflow-y-auto lg:overflow-hidden">
-    <header className="shrink-0 border-b border-border px-5 pb-5 pt-4 sm:px-6">
+  return <div role="region" aria-label="Completed lease work journey" className="flex min-h-0 flex-1 flex-col overflow-y-auto [@container_work_(min-width:48rem)]:overflow-hidden">
+    <header className="shrink-0 border-b border-border px-5 pb-5 pt-4 [@container_work_(min-width:40rem)]:px-6">
       <Button variant="ghost" size="sm" onClick={onBack} className="mb-4 gap-2 px-0 text-muted-foreground"><ArrowLeft className="h-4 w-4" />Back to What I'm Up To</Button>
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div className="min-w-0 flex-1 basis-64"><p className="mb-2 text-xs text-muted-foreground">{completedLease.place}</p><h2 className="text-2xl font-semibold leading-tight">{completedLease.title}</h2></div>
@@ -26,12 +26,12 @@ export function CompletedLeaseJourney({ onBack }: { onBack: () => void }) {
       <p role="status" className="mt-3 flex items-center gap-2 text-xs font-medium"><Check className="h-3.5 w-3.5 text-muted-foreground" />Completed</p>
       <div className="mt-3 flex items-start gap-3"><img src={owlReading} alt="Hobson reading" className="h-10 w-10 shrink-0 object-contain" /><p className="max-w-2xl text-sm leading-relaxed text-muted-foreground">{completedLease.explanation}</p></div>
     </header>
-    <div className="hobson-scroll min-h-0 shrink-0 lg:flex-1 lg:overflow-y-auto">
-      <div className="grid grid-cols-1 items-stretch gap-3 p-3 sm:p-5 lg:min-h-full lg:grid-cols-[minmax(0,0.35fr)_minmax(0,0.65fr)] lg:gap-0">
+    <div className="hobson-scroll min-h-0 shrink-0 [@container_work_(min-width:48rem)]:flex-1 [@container_work_(min-width:48rem)]:overflow-y-auto">
+      <div className="grid grid-cols-1 items-stretch gap-3 p-3 [@container_work_(min-width:40rem)]:p-5 [@container_work_(min-width:48rem)]:min-h-full [@container_work_(min-width:48rem)]:grid-cols-[minmax(0,0.35fr)_minmax(0,0.65fr)] [@container_work_(min-width:48rem)]:gap-0">
         <JourneyNavigation label="The completed lease journey" selectedTitle={selected === "summary" ? "Your lease summary is ready" : activity?.title}>
-          {completedLease.activities.map(item => <Button key={item.id} variant="ghost" onClick={() => { setSelected(item.id); setEvidence(null); }} aria-current={selected === item.id ? "step" : undefined} className={`mb-2 h-auto w-full items-start justify-start gap-2 whitespace-normal rounded-md border px-2 py-3 text-left ${selected === item.id ? "border-border bg-card shadow-sm lg:w-[calc(100%+17px)] lg:max-w-none lg:rounded-r-none lg:border-r-card relative z-10" : "border-transparent hover:bg-background/60"}`}><Check className="mt-0.5 h-3.5 w-3.5 shrink-0 text-muted-foreground" /><span className="text-sm leading-relaxed">{item.title}</span></Button>)}
+          {completedLease.activities.map(item => <Button key={item.id} variant="ghost" onClick={() => { setSelected(item.id); setEvidence(null); }} aria-current={selected === item.id ? "step" : undefined} className={`mb-2 h-auto w-full items-start justify-start gap-2 whitespace-normal rounded-md border px-2 py-3 text-left ${selected === item.id ? "border-border bg-card shadow-sm [@container_work_(min-width:48rem)]:w-[calc(100%+17px)] [@container_work_(min-width:48rem)]:max-w-none [@container_work_(min-width:48rem)]:rounded-r-none [@container_work_(min-width:48rem)]:border-r-card relative z-10" : "border-transparent hover:bg-background/60"}`}><Check className="mt-0.5 h-3.5 w-3.5 shrink-0 text-muted-foreground" /><span className="text-sm leading-relaxed">{item.title}</span></Button>)}
         </JourneyNavigation>
-        <section aria-labelledby="lease-desk-heading" className="relative min-w-0 rounded-2xl border border-border bg-card px-5 py-5 shadow-sm lg:-ml-px sm:px-7">
+        <section aria-labelledby="lease-desk-heading" className="relative min-w-0 rounded-2xl border border-border bg-card px-5 py-5 shadow-sm [@container_work_(min-width:48rem)]:-ml-px [@container_work_(min-width:40rem)]:px-7">
           <h3 id="lease-desk-heading" className="mb-5 text-xs font-semibold text-muted-foreground">On Hobson's Desk</h3>
           <h4 className="text-lg font-semibold">{selected === "summary" ? "Your lease summary is ready" : activity?.title}</h4>
           <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{activity?.note}</p>

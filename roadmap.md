@@ -1,5 +1,8 @@
 # Roadmap
 
+## Resizable prototype work area
+- [x] Reflow overview and all three journeys to their available width as the divider moves; 17 focused tests pass, browser dragging verified at 427px and 966px work widths with no overflow and preserved evidence/selection.
+
 ## What I'm Up To on phones
 - [x] Make the overview, journeys, papers and guidance comfortable on narrow screens; 36 focused tests pass and flows verified at 320, 390, 768 and 1280px, preserving the simulations.
 

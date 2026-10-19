@@ -58,15 +58,15 @@ export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initia
   const selectedDone = typeof selected === "string" && selected.startsWith("done-") ? completed[Number(selected.slice(5))] : null;
 
   return (
-    <div className="flex min-h-0 flex-1 flex-col overflow-y-auto lg:overflow-hidden" role="region" aria-label="Roof leak investigation work journey">
-      <header className="shrink-0 border-b border-border px-5 pb-5 pt-4 sm:px-6">
+    <div className="flex min-h-0 flex-1 flex-col overflow-y-auto [@container_work_(min-width:48rem)]:overflow-hidden" role="region" aria-label="Roof leak investigation work journey">
+      <header className="shrink-0 border-b border-border px-5 pb-5 pt-4 [@container_work_(min-width:40rem)]:px-6">
         <Button variant="ghost" size="sm" onClick={onBack} className="mb-4 gap-2 px-0 text-muted-foreground"><ArrowLeft className="h-4 w-4" />Back to What I'm Up To</Button>
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div className="min-w-0 flex-1 basis-64">
             <p className="mb-2 text-xs text-muted-foreground">Burlington Gardens</p>
             <h2 className="text-2xl font-semibold leading-tight">Investigating the roof leak</h2>
           </div>
-          <div className="flex min-w-0 w-full flex-wrap items-center gap-2 lg:w-auto lg:shrink-0">
+          <div className="flex min-w-0 w-full flex-wrap items-center gap-2 [@container_work_(min-width:48rem)]:w-auto [@container_work_(min-width:48rem)]:shrink-0">
             <JobPapersMap job="roof" />
             {!work.ended && <><Button variant="outline" size="sm" onClick={() => onPauseChange(!paused)} className="shrink-0 gap-2">{paused ? <Play className="h-4 w-4" /> : <Pause className="h-4 w-4" />}{paused ? "Resume work" : "Pause work"}</Button>
             <Button variant="secondary" size="sm" onClick={() => onGuide("overall")} className="gap-2"><MessageCircle className="h-4 w-4" />Guide Hobson</Button>
@@ -82,15 +82,15 @@ export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initia
         <p role="status" className="mt-3 flex items-center gap-2 text-xs font-medium"><span className={`h-1.5 w-1.5 rounded-full ${paused || work.ended ? "bg-muted-foreground" : "bg-ring"}`} aria-hidden="true" />{work.ended ? "Ended by you" : paused ? "Work paused · What I've found is preserved" : "I'm working on this now"}</p>
       </header>
       <AlertDialog open={confirmation !== null} onOpenChange={(open) => { if (!open) setConfirmation(null); }}>
-        <AlertDialogPortal><AlertDialogOverlay className="z-[1500] bg-background/80" /><AlertDialogPrimitive.Content className="fixed left-1/2 top-1/2 z-[1501] w-[calc(100%_-_2rem)] max-w-lg max-h-[85dvh] overflow-y-auto -translate-x-1/2 -translate-y-1/2 space-y-4 rounded-md border border-border bg-background p-4 sm:p-6 shadow-lg">
+        <AlertDialogPortal><AlertDialogOverlay className="z-[1500] bg-background/80" /><AlertDialogPrimitive.Content className="fixed left-1/2 top-1/2 z-[1501] w-[calc(100%_-_2rem)] max-w-lg max-h-[85dvh] overflow-y-auto -translate-x-1/2 -translate-y-1/2 space-y-4 rounded-md border border-border bg-background p-4 [@container_work_(min-width:40rem)]:p-6 shadow-lg">
           <AlertDialogTitle>{confirmation === "end" ? "End this investigation?" : "Start a fresh investigation?"}</AlertDialogTitle>
           <AlertDialogDescription>{confirmation === "end" ? "I'll stop working on the roof leak investigation. Everything I've done will remain available, but I won't take any further steps." : "I can begin a fresh investigation using the papers and information already available. I'll review the earlier findings before deciding what needs to be done next. Your previous investigation will remain in the history."}</AlertDialogDescription>
           <AlertDialogFooter><AlertDialogCancel>{confirmation === "end" ? "Keep working" : "Cancel"}</AlertDialogCancel><AlertDialogAction onClick={() => { if (confirmation === "end") onEnd(); else onRestart(); setConfirmation(null); }}>{confirmation === "end" ? "End work" : "Start again"}</AlertDialogAction></AlertDialogFooter>
         </AlertDialogPrimitive.Content></AlertDialogPortal>
       </AlertDialog>
 
-      <div className="hobson-scroll min-h-0 shrink-0 lg:flex-1 lg:overflow-y-auto">
-        <div className="grid grid-cols-1 items-stretch gap-3 p-3 sm:p-5 lg:min-h-full lg:grid-cols-[minmax(0,0.35fr)_minmax(0,0.65fr)] lg:gap-0">
+      <div className="hobson-scroll min-h-0 shrink-0 [@container_work_(min-width:48rem)]:flex-1 [@container_work_(min-width:48rem)]:overflow-y-auto">
+        <div className="grid grid-cols-1 items-stretch gap-3 p-3 [@container_work_(min-width:40rem)]:p-5 [@container_work_(min-width:48rem)]:min-h-full [@container_work_(min-width:48rem)]:grid-cols-[minmax(0,0.35fr)_minmax(0,0.65fr)] [@container_work_(min-width:48rem)]:gap-0">
           <JourneyNavigation label="The Journey" selectedTitle={selected === "closing" ? "Closing summary" : previousAttempt ? "Previous attempt" : selectedDone ? selectedDone.label : selectedActivity?.title}>
   
             {work.ended && <Button variant="ghost" size="sm" onClick={() => setSelected("closing")} aria-current={selected === "closing" ? "step" : undefined} className="mb-4 h-auto max-w-full whitespace-normal px-0 text-left text-xs text-muted-foreground">Closing summary</Button>}
@@ -98,7 +98,7 @@ export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initia
             <p className="mb-2 text-xs font-medium text-muted-foreground">{work.ended ? "Where we stopped" : "Happening now"}</p>
             <div>
               {activities.map((activity) => (
-                <Button key={activity.id} variant="ghost" aria-current={selected === activity.id ? "step" : undefined} onClick={() => { setSelected(activity.id); setPaperOpen(false); }} className={`mb-2 h-auto w-full items-start justify-start gap-2 rounded-md border px-2 py-3 text-left whitespace-normal ${selected === activity.id ? "border-border bg-card shadow-sm lg:w-[calc(100%+17px)] lg:max-w-none lg:rounded-r-none lg:border-r-card relative z-10" : "border-transparent hover:bg-background/60"}`}>
+                <Button key={activity.id} variant="ghost" aria-current={selected === activity.id ? "step" : undefined} onClick={() => { setSelected(activity.id); setPaperOpen(false); }} className={`mb-2 h-auto w-full items-start justify-start gap-2 rounded-md border px-2 py-3 text-left whitespace-normal ${selected === activity.id ? "border-border bg-card shadow-sm [@container_work_(min-width:48rem)]:w-[calc(100%+17px)] [@container_work_(min-width:48rem)]:max-w-none [@container_work_(min-width:48rem)]:rounded-r-none [@container_work_(min-width:48rem)]:border-r-card relative z-10" : "border-transparent hover:bg-background/60"}`}>
                   <span aria-hidden="true" className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center">{!work.ended && activity.id === "lease" && help.shown ? <CircleHelp aria-hidden="true" className="h-3.5 w-3.5 text-foreground" strokeWidth={1.6} /> : stateDot(work.ended || (work.number > 1 && activity.id !== "lease") ? "waiting" : activity.id === "insurer" && (guidance.contactOnHold || work.insurerSent) ? "waiting" : activity.state)}</span>
                   <span className="min-w-0">
                     <span className="block text-sm font-semibold leading-snug">{activity.title}</span>
@@ -127,7 +127,7 @@ export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initia
               {historyOpen && <div id="roof-history">
                 {work.previous.map((attempt, index) => <Button key={attempt.number} variant="ghost" onClick={() => setSelected(`previous-${index}`)} className="mb-2 h-auto w-full flex-col items-start whitespace-normal text-left"><span className="text-sm">Previous attempt</span><span className="text-xs text-muted-foreground">Ended by you.</span></Button>)}
                 {completed.map((item, index) => (
-                  <Button key={item.label} variant="ghost" aria-current={selected === `done-${index}` ? "step" : undefined} onClick={() => { setSelected(`done-${index}`); setPaperOpen(false); }} className={`mb-1 h-auto w-full items-start justify-start gap-2 rounded-md border px-2 py-2 text-left whitespace-normal ${selected === `done-${index}` ? "border-border bg-card shadow-sm lg:w-[calc(100%+17px)] lg:max-w-none lg:rounded-r-none lg:border-r-card relative z-10" : "border-transparent hover:bg-background/60"}`}>
+                  <Button key={item.label} variant="ghost" aria-current={selected === `done-${index}` ? "step" : undefined} onClick={() => { setSelected(`done-${index}`); setPaperOpen(false); }} className={`mb-1 h-auto w-full items-start justify-start gap-2 rounded-md border px-2 py-2 text-left whitespace-normal ${selected === `done-${index}` ? "border-border bg-card shadow-sm [@container_work_(min-width:48rem)]:w-[calc(100%+17px)] [@container_work_(min-width:48rem)]:max-w-none [@container_work_(min-width:48rem)]:rounded-r-none [@container_work_(min-width:48rem)]:border-r-card relative z-10" : "border-transparent hover:bg-background/60"}`}>
                     <Check aria-hidden="true" className="mt-0.5 h-3.5 w-3.5 shrink-0 text-muted-foreground" strokeWidth={1.6} />
                     <span className="min-w-0 text-sm font-normal leading-relaxed text-muted-foreground">{item.label}</span>
                   </Button>
@@ -136,7 +136,7 @@ export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initia
             </div>
           </JourneyNavigation>
 
-          <section aria-labelledby="desk-heading" className="relative min-w-0 rounded-2xl border border-border bg-card px-5 py-5 shadow-sm lg:-ml-px sm:px-7">
+          <section aria-labelledby="desk-heading" className="relative min-w-0 rounded-2xl border border-border bg-card px-5 py-5 shadow-sm [@container_work_(min-width:48rem)]:-ml-px [@container_work_(min-width:40rem)]:px-7">
             <h3 id="desk-heading" className="mb-5 text-xs font-semibold text-muted-foreground">On Hobson's Desk</h3>
             <div key={selected}>
               <h4 className="text-lg font-semibold leading-snug">{selected === "closing" ? "Investigation ended by you" : previousAttempt ? "Previous attempt" : selectedDone ? selectedDone.label : selectedActivity?.title}</h4>
@@ -264,9 +264,9 @@ export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initia
                 <article aria-label="Inspection request record" className="mt-5 rounded-md border border-border bg-popover px-4 py-4">
                   <p className="flex items-center gap-2 text-xs font-medium text-muted-foreground"><FileText className="h-3.5 w-3.5" aria-hidden="true" />Inspection request · Illustrative record</p>
                   <dl className="mt-3 space-y-2 text-sm">
-                    <div className="flex gap-2"><dt className="w-16 shrink-0 sm:w-24 text-xs text-muted-foreground">Requested</dt><dd className="min-w-0 break-words font-medium">Contractor inspection of the reported roof leak</dd></div>
-                    <div className="flex gap-2"><dt className="w-16 shrink-0 sm:w-24 text-xs text-muted-foreground">Sent to</dt><dd className="min-w-0 break-words font-medium">Example Contractor Ltd</dd></div>
-                    <div className="flex gap-2"><dt className="w-16 shrink-0 sm:w-24 text-xs text-muted-foreground">Status</dt><dd className="min-w-0 break-words font-medium">Awaiting response</dd></div>
+                    <div className="flex gap-2"><dt className="w-16 shrink-0 [@container_work_(min-width:40rem)]:w-24 text-xs text-muted-foreground">Requested</dt><dd className="min-w-0 break-words font-medium">Contractor inspection of the reported roof leak</dd></div>
+                    <div className="flex gap-2"><dt className="w-16 shrink-0 [@container_work_(min-width:40rem)]:w-24 text-xs text-muted-foreground">Sent to</dt><dd className="min-w-0 break-words font-medium">Example Contractor Ltd</dd></div>
+                    <div className="flex gap-2"><dt className="w-16 shrink-0 [@container_work_(min-width:40rem)]:w-24 text-xs text-muted-foreground">Status</dt><dd className="min-w-0 break-words font-medium">Awaiting response</dd></div>
                   </dl>
                 </article>
               </>}
@@ -330,7 +330,7 @@ export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initia
             </div>
           </section>
         </div>
-        <footer className="flex flex-wrap items-center justify-between gap-3 border-t border-border px-5 py-4 sm:px-6">
+        <footer className="flex flex-wrap items-center justify-between gap-3 border-t border-border px-5 py-4 [@container_work_(min-width:40rem)]:px-6">
           <p className="max-w-md text-xs leading-relaxed text-muted-foreground">Illustrative work and paper extracts only — no live work is running.</p>
         </footer>
       </div>
