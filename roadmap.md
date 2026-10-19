@@ -1,5 +1,8 @@
 # Roadmap
 
+## What I'm Up To on phones
+- [ ] Make the overview, journeys, papers and guidance comfortable on narrow screens; preserve every simulation and verify phone/tablet/desktop flows.
+
 ## Prototype privacy gate
 
 - [x] Put /prototype behind a server-verified pass phrase so a direct address never reveals the demonstration; entrance only for the session, wrong phrases refused, rate limited, robots.txt disallows the route; 66 tests pass and the closed door verified on screen.
