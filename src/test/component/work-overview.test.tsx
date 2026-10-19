@@ -91,7 +91,7 @@ describe("Illustrative work journey", () => {
     expect(screen.getByRole("button", { name: /Approve sending the renewal email/ })).toHaveAttribute("aria-current", "step");
     expect(screen.getByText("May I send this email?")).toBeVisible();
     expect(screen.getByText("tenant@example.com")).toBeVisible();
-    expect(screen.getByText(/Attachments:/)).toHaveTextContent("None");
+    expect(screen.getByText((_, el) => el?.tagName === "P" && /Attachments:\s*None/.test(el.textContent ?? ""))).toBeVisible();
     expect(screen.getByText("What approving this allows")).toBeVisible();
     await user.click(screen.getByRole("button", { name: "Not now" }));
     expect(screen.getByRole("button", { name: /Checking the tenancy history/ })).toHaveAttribute("aria-current", "step");
