@@ -15,9 +15,9 @@ export const roofLeakWork = {
     { id: "insurer" as RoofActivityId, label: "Contact the insurer", title: "Contact the insurer", state: "needs-you" as RoofActivityState, note: "I've prepared a notification to the insurer. I need your approval before sending it." },
   ],
   completed: [
-    "Read the tenant's report.",
-    "Identified the relevant Business Lease.",
-    "Requested a contractor inspection.",
+    { label: "Read the tenant's report.", outcome: "The tenant reported water coming through near the top-floor ceiling. The report is read and noted; the cause of the leak is not yet established." },
+    { label: "Identified the relevant Business Lease.", outcome: "I found the Business Lease for Burlington Gardens — the paper that sets out the repairing obligations. Its relevant clauses are now under review." },
+    { label: "Requested a contractor inspection.", outcome: "I asked Example Contractor Ltd to inspect the reported leak. The request is recorded under Contractor inspection while I await their response." },
   ],
   summary: "I'm continuing my review of the lease, waiting for the contractor and need your approval before contacting the insurer.",
   explanation: "I'm looking into the reported leak, establishing responsibility and arranging what needs to happen next.",
