@@ -18,6 +18,7 @@ import { DocumentsLibrary } from "@/components/prototype/DocumentsLibrary";
 import { CollapsibleSection } from "@/components/prototype/CollapsibleSection";
 import { WorkOverview } from "@/components/prototype/WorkOverview";
 import { applyWorkGuidance, initialWorkGuidance, SIDE_LETTER_INSTRUCTION } from "@/components/prototype/workGuidance";
+import { createRoofWork, roofAttention } from "@/components/prototype/roofWorkLifecycle";
 import { applyRoofGuidance, initialRoofGuidance, HOLD_CONTACT_INSTRUCTION, LIFT_HOLD_INSTRUCTION, SHOPFRONT_INSTRUCTION, type RoofGuideScope } from "@/components/prototype/roofGuidance";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -1441,7 +1442,10 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
   const [showWhatIveDone, setShowWhatIveDone] = useState(false);
   const [guidingRenewal, setGuidingRenewal] = useState(false);
   const [workGuidance, setWorkGuidance] = useState(initialWorkGuidance);
-  const [roofGuidance, setRoofGuidance] = useState(initialRoofGuidance);
+  const [roofWork, setRoofWork] = useState(createRoofWork);
+  const roofGuidance = roofWork.guidance;
+  const setRoofGuidance = (guidance: typeof roofGuidance) => setRoofWork(previous => previous.ended ? previous : { ...previous, guidance });
+  const [guidedRoofAttempt, setGuidedRoofAttempt] = useState(1);
   // Which piece of work the guidance composer is scoped to: the renewal, the whole
   // roof leak investigation, or the lease-review activity within it.
   const [guideScope, setGuideScope] = useState<"renewal" | RoofGuideScope>("renewal");
@@ -2925,7 +2929,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
       ? [
           `Good morning, ${FIRST_NAME}. For today's testing, go straight to your unit — by the map or the search. That is where I can answer your questions.`,
         ]
-      : [`Good morning, ${FIRST_NAME}. I've finished 3 pieces of work, I'm looking after 5 more, and there are 3 things I'd like you to review.`];
+      : [`Good morning, ${FIRST_NAME}. I've finished 3 pieces of work, I'm looking after ${roofWork.ended ? 4 : 5} more, and there are ${2 + Number(roofAttention(roofWork).insurer) + Number(roofAttention(roofWork).help)} things I'd like you to review.`];
 
 
 
@@ -4011,7 +4015,9 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                 if (!instruction) return;
                 const result = guideScope === "renewal"
                   ? applyWorkGuidance(workGuidance, instruction)
-                  : applyRoofGuidance(roofGuidance, guideScope, instruction);
+                  : roofWork.ended || guidedRoofAttempt !== roofWork.number
+                    ? { state: roofGuidance, reply: "That instruction belongs to an investigation that has ended. I haven't changed the work. Please open the current investigation to guide a fresh attempt." }
+                    : applyRoofGuidance(roofGuidance, guideScope, instruction);
                 if (guideScope === "renewal") setWorkGuidance(result.state as typeof workGuidance);
                 else setRoofGuidance(result.state as typeof roofGuidance);
                 const id = crypto.randomUUID();
@@ -4289,7 +4295,10 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
           />
         )}
         {showWhatIveDone && (
-          <WorkOverview onClose={resetToMap} sideLetterRequested={workGuidance.sideLetterRequested} roofGuidance={roofGuidance} focusNeedsYou={needsYouFocus} onJourneyBack={() => setGuidingRenewal(false)} onGuide={(scope, suggestion) => {
+          <WorkOverview onClose={resetToMap} sideLetterRequested={workGuidance.sideLetterRequested} roofGuidance={roofGuidance} roofWork={roofWork} onRoofWorkChange={(next) => {
+            setRoofWork(next);
+            if (guideScope !== "renewal") { setGuidingRenewal(false); setInput(""); }
+          }} focusNeedsYou={needsYouFocus} onJourneyBack={() => setGuidingRenewal(false)} onGuide={(scope, suggestion) => {
             expandChat();
             if (!guidingRenewal) {
               const width = Math.max(CHAT_MIN_WIDTH, Math.round((window.innerWidth - 68) * 0.3));
@@ -4299,6 +4308,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
             setMainCollapsed(false);
             setGuidingRenewal(true);
             setGuideScope(scope);
+            if (scope !== "renewal") setGuidedRoofAttempt(roofWork.number);
             if (suggestion) setInput(suggestion);
             else if (!guidingRenewal) setInput(scope === "renewal" ? SIDE_LETTER_INSTRUCTION : scope === "lease" ? SHOPFRONT_INSTRUCTION : roofGuidance.contactOnHold ? LIFT_HOLD_INSTRUCTION : HOLD_CONTACT_INSTRUCTION);
             setTyping(false);
