@@ -1,13 +1,20 @@
 import { useEffect, useState } from "react";
-import { Activity as ActivityIcon, ArrowUpRight, Check, CheckCheck, CircleDot, Clock, Hand, Pause, X } from "lucide-react";
+import { Activity as ActivityIcon, ArrowUpRight, Check, CheckCheck, CircleDot, CircleHelp, Clock, Hand, Pause, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import owlReading from "@/assets/prototype/owl-reading.png";
 import { WorkJourney, type ApprovalStatus } from "./WorkJourney";
 import { RoofLeakJourney } from "./RoofLeakJourney";
 import { roofInsurerDecision, roofLeakWork, type RoofActivityId } from "./roofLeakWork";
-import { initialRoofGuidance, type RoofGuidanceState, type RoofGuideScope } from "./roofGuidance";
+import { initialRoofGuidance, initialRoofHelp, LEASE_PLANS_INSTRUCTION, type RoofGuidanceState, type RoofGuideScope, type RoofHelpState } from "./roofGuidance";
 
-type ActivityState = "working" | "waiting" | "needs-you" | "on-hold";
+const roofHelpDecision = {
+  place: "Burlington Gardens — Roof leak",
+  title: "Clarify responsibility for the shopfront roof",
+  why: "I haven't been able to establish which part of the roof the lease covers.",
+  decision: "I have a suggested next step.",
+};
+
+type ActivityState = "working" | "waiting" | "needs-you" | "on-hold" | "needs-clarification";
 type Activity = { label: string; state: ActivityState };
 
 const renewalDecision = {
@@ -120,6 +127,7 @@ const stateIcon: Record<ActivityState, { icon: typeof Clock; label: string }> = 
   waiting: { icon: Clock, label: "Waiting" },
   "needs-you": { icon: Hand, label: "Needs you" },
   "on-hold": { icon: Pause, label: "On hold at your request" },
+  "needs-clarification": { icon: CircleHelp, label: "Needs clarification" },
 };
 
 function ActivityLine({ activity }: { activity: Activity }) {
@@ -133,7 +141,7 @@ function ActivityLine({ activity }: { activity: Activity }) {
 }
 
 /** Illustrative work only: deliberately independent of action-card state and approvals. */
-export function WorkOverview({ onClose, onGuide, sideLetterRequested = false, onJourneyBack, focusNeedsYou = 0, roofGuidance = initialRoofGuidance }: { onClose: () => void; onGuide: (scope: "renewal" | RoofGuideScope) => void; sideLetterRequested?: boolean; onJourneyBack?: () => void; focusNeedsYou?: number; roofGuidance?: RoofGuidanceState }) {
+export function WorkOverview({ onClose, onGuide, sideLetterRequested = false, onJourneyBack, focusNeedsYou = 0, roofGuidance = initialRoofGuidance }: { onClose: () => void; onGuide: (scope: "renewal" | RoofGuideScope, suggestion?: string) => void; sideLetterRequested?: boolean; onJourneyBack?: () => void; focusNeedsYou?: number; roofGuidance?: RoofGuidanceState }) {
   const [journey, setJourney] = useState<"renewal" | "roof" | null>(null);
   const [paused, setPaused] = useState(false);
   const [approval, setApproval] = useState<ApprovalStatus>("idle");
@@ -141,9 +149,12 @@ export function WorkOverview({ onClose, onGuide, sideLetterRequested = false, on
   const awaitingApproval = approval === "awaiting";
   const sentApproval = approval === "sent";
   const [roofActivity, setRoofActivity] = useState<RoofActivityId>("lease");
+  const [roofHelp, setRoofHelp] = useState<RoofHelpState>(initialRoofHelp);
+  const helpAwaitingDirection = roofHelp.shown && roofHelp.choice === null && !roofGuidance.leasePlansRequested;
   const insurerActionable = !roofGuidance.contactOnHold;
   const visibleDecisions = [
     ...(awaitingApproval ? [renewalDecision] : []),
+    ...(helpAwaitingDirection ? [roofHelpDecision] : []),
     ...(insurerActionable ? [roofInsurerDecision] : []),
     ...decisions,
   ];
@@ -161,7 +172,9 @@ export function WorkOverview({ onClose, onGuide, sideLetterRequested = false, on
       return work.activities.map((activity) =>
         activity.label === "Contact the insurer" && roofGuidance.contactOnHold
           ? { ...activity, state: "on-hold" as ActivityState }
-          : activity,
+          : activity.label === "Reviewing the lease" && roofHelp.shown
+            ? { ...activity, state: "needs-clarification" as ActivityState }
+            : activity,
       );
     }
     if (work.place !== "Stanley House · Flat 6") return work.activities;
@@ -179,7 +192,7 @@ export function WorkOverview({ onClose, onGuide, sideLetterRequested = false, on
         </Button>
       </div>
 
-      {journey === "renewal" ? <WorkJourney paused={paused} onPauseChange={setPaused} onBack={closeJourney} onGuide={() => onGuide("renewal")} sideLetterRequested={sideLetterRequested} approval={approval} onApprovalChange={setApproval} approvalOpen={openAtApproval} /> : journey === "roof" ? <RoofLeakJourney paused={paused} onPauseChange={setPaused} onBack={closeJourney} onGuide={(scope) => onGuide(scope)} initialActivity={roofActivity} guidance={roofGuidance} /> : <div className="hobson-scroll min-h-0 flex-1 overflow-y-auto">
+      {journey === "renewal" ? <WorkJourney paused={paused} onPauseChange={setPaused} onBack={closeJourney} onGuide={() => onGuide("renewal")} sideLetterRequested={sideLetterRequested} approval={approval} onApprovalChange={setApproval} approvalOpen={openAtApproval} /> : journey === "roof" ? <RoofLeakJourney paused={paused} onPauseChange={setPaused} onBack={closeJourney} onGuide={(scope) => onGuide(scope, scope === "lease" && roofHelp.shown ? LEASE_PLANS_INSTRUCTION : undefined)} initialActivity={roofActivity} guidance={roofGuidance} help={roofHelp} onHelpChange={setRoofHelp} /> : <div className="hobson-scroll min-h-0 flex-1 overflow-y-auto">
         <div className="mx-auto w-full max-w-5xl px-5 pb-16 pt-8 sm:px-8 sm:pt-10">
           <header className="mb-10">
             <h2 className="text-3xl font-semibold leading-tight">What I've Done</h2>
@@ -202,7 +215,9 @@ export function WorkOverview({ onClose, onGuide, sideLetterRequested = false, on
                     <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">{item.why}</p>
                     <p className="mt-1.5 text-sm font-medium leading-relaxed">{item.decision}</p>
                   </div>
-                  {item.place === "Stanley House · Flat 6"
+                  {item.title === roofHelpDecision.title
+                    ? <Button variant="outline" size="sm" onClick={() => openRoofJourney("lease")} className="shrink-0 gap-2">Review suggestion<ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" /></Button>
+                    : item.place === "Stanley House · Flat 6"
                     ? <Button variant="outline" size="sm" onClick={() => openJourney(true)} className="shrink-0 gap-2">Review decision<ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" /></Button>
                     : item.place === roofLeakWork.place
                       ? <Button variant="outline" size="sm" onClick={() => openRoofJourney("insurer")} className="shrink-0 gap-2">Review decision<ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" /></Button>
