@@ -46,3 +46,4 @@
 ## Learn cards (6 Oct 2026)
 - [x] Revert card/page headers to Case Studies, Glossary, Tutorials (incl. footer, llms.txt, chatbot knowledge)
 - [x] Card descriptions in third person where they were first person
+- [x] Iteration 8: morning briefing — new greeting figures, single "Show me what needs me" action opening What I've Done focused on Needs you, chat preserved
