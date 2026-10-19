@@ -50,3 +50,5 @@
 - [x] Iteration 10: approval before action — "Preview approval stage" demo in the tenancy renewal journey; draft email preview, "What approving this allows", Approve and send / Change before sending / Not now; Needs you reflects the awaiting approval; investigation state preserved
 - [x] Iteration 11: approval as a step within the work journey — extended journey (Completed / Investigation in progress / Prepared / Needs you / Next), "Why I'm asking" and "Before I send" readiness, sticky approval actions, edits gated on readiness, investigation preserved.
 - [x] Iteration 12: What I've Done redesigned — briefing, compact Needs you decisions with "Review decision", "What I'm looking after" (one job, one place, activity lines: working/waiting/needs-you), quieter "What I've accomplished"; Flat 6 never duplicated.
+
+- [x] Iteration 13: Burlington Gardens roof leak — one work item with three parallel activities (lease review working, contractor waiting, insurer needs-you); selectable activities change only the desk view; briefing count updated to 5; tenancy renewal unchanged
