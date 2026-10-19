@@ -3,6 +3,7 @@ import { ArrowLeft, Check, ChevronDown, FileText, Hand, Mail, MessageCircle, Pau
 import { Button } from "@/components/ui/button";
 import owlReading from "@/assets/prototype/owl-reading.png";
 import { roofLeakWork, type RoofActivityId, type RoofActivityState } from "./roofLeakWork";
+import { SHOPFRONT_INSTRUCTION, type RoofGuidanceState, type RoofGuideScope } from "./roofGuidance";
 
 type ActivityId = RoofActivityId;
 type ActivityState = RoofActivityState;
@@ -31,12 +32,13 @@ function stateDot(state: ActivityState) {
 const stateLabel: Record<ActivityState, string> = { working: "Working", waiting: "Waiting", "needs-you": "Needs you" };
 
 /** Illustrative parallel-activities demonstration only — no real work, approvals or integrations. */
-export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initialActivity = "lease" }: {
+export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initialActivity = "lease", guidance }: {
   paused: boolean;
   onPauseChange: (paused: boolean) => void;
   onBack: () => void;
-  onGuide: () => void;
+  onGuide: (scope: RoofGuideScope) => void;
   initialActivity?: ActivityId;
+  guidance: RoofGuidanceState;
 }) {
   const [selected, setSelected] = useState<ActivityId | `done-${number}`>(initialActivity);
   const [paperOpen, setPaperOpen] = useState(false);
