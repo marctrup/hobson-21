@@ -44,6 +44,9 @@ const GlossaryManagement = lazy(() => import("../pages/admin/GlossaryManagement"
 const InvestmentPassword = lazy(() => import("../pages/admin/InvestmentPassword"));
 const InvestmentOpportunity = lazy(() => import("../pages/InvestmentOpportunity"));
 const Prototype = lazy(() => import("../pages/Prototype"));
+const PrototypeGate = lazy(() =>
+  import("../components/prototype/PrototypeGate").then((m) => ({ default: m.PrototypeGate }))
+);
 
 
 
@@ -184,7 +187,14 @@ const AppContent = () => {
               <Route path="/in-practice" element={<Navigate to="/" replace />} />
               <Route path="/investment-opportunity" element={<InvestmentOpportunity />} />
               <Route path="/investor-summary" element={<Navigate to="/investment-opportunity" replace />} />
-              <Route path="/prototype" element={<Prototype />} />
+              <Route
+                path="/prototype"
+                element={
+                  <PrototypeGate>
+                    <Prototype />
+                  </PrototypeGate>
+                }
+              />
               {/* Old prototype routes — redirect, never 404 */}
               <Route path="/prototype-mobile" element={<Navigate to="/prototype" replace />} />
               <Route path="/prototype_testers" element={<Navigate to="/prototype" replace />} />
