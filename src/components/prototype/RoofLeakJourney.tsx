@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ArrowLeft, Check, ChevronDown, CircleHelp, FileText, Hand, Mail, MessageCircle, Pause, Play, X, MoreHorizontal } from "lucide-react";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import { AlertDialog, AlertDialogPortal, AlertDialogOverlay, AlertDialogTitle, AlertDialogDescription, AlertDialogFooter, AlertDialogAction, AlertDialogCancel } from "@/components/ui/alert-dialog";
 import * as AlertDialogPrimitive from "@radix-ui/react-alert-dialog";
-import { RoofAttemptHistory } from "./RoofAttemptHistory";
+import { RoofAttemptHistory, RoofClosingSummary } from "./RoofAttemptHistory";
 import type { RoofWorkState } from "./roofWorkLifecycle";
 import { INSURER_TO, INSURER_SUBJECT, INSURER_BODY, SURVEYOR_TO, SURVEYOR_SUBJECT, SURVEYOR_BODY } from "./roofDrafts";
 import { Button } from "@/components/ui/button";
@@ -38,7 +38,8 @@ export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initia
   help: RoofHelpState;
   onHelpChange: (help: RoofHelpState) => void;
 }) {
-  const [selected, setSelected] = useState<ActivityId | `done-${number}` | `previous-${number}`>(initialActivity);
+  const [selected, setSelected] = useState<ActivityId | "closing" | `done-${number}` | `previous-${number}`>(work.ended ? "closing" : initialActivity);
+  useEffect(() => { if (work.ended) setSelected("closing"); }, [work.ended]);
   const completed = work.history;
   const [confirmation, setConfirmation] = useState<"end" | "restart" | null>(null);
   const previousAttempt = selected.startsWith("previous-") ? work.previous[Number(selected.slice(9))] : undefined;
@@ -70,13 +71,13 @@ export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initia
           <img src={owlReading} alt="Hobson reading" className="h-10 w-10 shrink-0 object-contain" />
           <p className="max-w-2xl text-sm leading-relaxed text-muted-foreground">{work.ended ? "The papers, findings and earlier actions remain available below." : roofLeakWork.explanation}</p>
         </div>
-        <p className="mt-3 max-w-2xl text-sm leading-relaxed">{work.ended ? "I've ended the investigation. Here's where things stood when we stopped." : work.number > 1 ? "I'm beginning a fresh review using the available papers. Earlier findings are background only; no new contact has been made or authorised." : roofSummary(guidance)}</p>
+        {!work.ended && <p className="mt-3 max-w-2xl text-sm leading-relaxed">{work.number > 1 ? "I've started a fresh investigation. I still have the lease, the tenant's report and the record of the contractor inspection request. I'll check the earlier findings before deciding what needs doing next. I won't repeat external actions without the required authority." : roofSummary(guidance)}</p>}
         <p role="status" className="mt-3 flex items-center gap-2 text-xs font-medium"><span className={`h-1.5 w-1.5 rounded-full ${paused || work.ended ? "bg-muted-foreground" : "bg-ring"}`} aria-hidden="true" />{work.ended ? "Ended by you" : paused ? "Work paused · What I've found is preserved" : "I'm working on this now"}</p>
       </header>
       <AlertDialog open={confirmation !== null} onOpenChange={(open) => { if (!open) setConfirmation(null); }}>
         <AlertDialogPortal><AlertDialogOverlay className="z-[1500] bg-background/80" /><AlertDialogPrimitive.Content className="fixed left-1/2 top-1/2 z-[1501] w-[calc(100%-2rem)] max-w-lg -translate-x-1/2 -translate-y-1/2 space-y-4 rounded-md border border-border bg-background p-6 shadow-lg">
           <AlertDialogTitle>{confirmation === "end" ? "End this investigation?" : "Start a fresh investigation?"}</AlertDialogTitle>
-          <AlertDialogDescription>{confirmation === "end" ? "I'll stop working on the roof leak investigation. Everything I've done will remain available, but I won't take any further steps." : "I can begin a fresh investigation using the information already available. Your previous investigation will remain in the history."}</AlertDialogDescription>
+          <AlertDialogDescription>{confirmation === "end" ? "I'll stop working on the roof leak investigation. Everything I've done will remain available, but I won't take any further steps." : "I can begin a fresh investigation using the papers and information already available. I'll review the earlier findings before deciding what needs to be done next. Your previous investigation will remain in the history."}</AlertDialogDescription>
           <AlertDialogFooter><AlertDialogCancel>{confirmation === "end" ? "Keep working" : "Cancel"}</AlertDialogCancel><AlertDialogAction onClick={() => { if (confirmation === "end") onEnd(); else onRestart(); setConfirmation(null); }}>{confirmation === "end" ? "End work" : "Start again"}</AlertDialogAction></AlertDialogFooter>
         </AlertDialogPrimitive.Content></AlertDialogPortal>
       </AlertDialog>
@@ -85,6 +86,8 @@ export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initia
         <div className="grid min-h-full grid-cols-[minmax(0,0.35fr)_minmax(0,0.65fr)] max-[640px]:grid-cols-1">
           <nav aria-label="The Journey" className="min-w-0 border-r border-border px-4 py-5 max-[640px]:border-b max-[640px]:border-r-0">
             <h3 className="mb-5 text-xs font-semibold text-muted-foreground">The Journey</h3>
+
+            {work.ended && <Button variant="ghost" size="sm" onClick={() => setSelected("closing")} aria-current={selected === "closing" ? "step" : undefined} className="mb-4 h-auto max-w-full whitespace-normal px-0 text-left text-xs text-muted-foreground">Closing summary</Button>}
 
             <p className="mb-2 text-xs font-medium text-muted-foreground">{work.ended ? "Where we stopped" : "Happening now"}</p>
             <div>
@@ -130,9 +133,10 @@ export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initia
           <section aria-labelledby="desk-heading" className="min-w-0 px-5 py-5 sm:px-6">
             <h3 id="desk-heading" className="mb-5 text-xs font-semibold text-muted-foreground">On Hobson's Desk</h3>
             <div key={selected}>
-              <h4 className="text-lg font-semibold leading-snug">{previousAttempt ? "Previous attempt" : selectedDone ? selectedDone.label : selectedActivity?.title}</h4>
+              <h4 className="text-lg font-semibold leading-snug">{selected === "closing" ? "Investigation ended by you" : previousAttempt ? "Previous attempt" : selectedDone ? selectedDone.label : selectedActivity?.title}</h4>
 
-              {recordedAttempt && <RoofAttemptHistory attempt={recordedAttempt} />}
+              {selected === "closing" && endedAttempt && <RoofClosingSummary attempt={endedAttempt} />}
+              {selected !== "closing" && recordedAttempt && <RoofAttemptHistory key={selected} attempt={recordedAttempt} activity={work.ended && !previousAttempt ? selectedActivity?.id : undefined} doneIndex={work.ended && selectedDone ? Number(selected.slice(5)) : undefined} />}
               {!previousAttempt && !work.ended && <>
               {selectedDone && <>
                 <p className="mt-2 flex items-center gap-2 text-xs font-medium text-muted-foreground"><Check className="h-3.5 w-3.5" aria-hidden="true" />Completed</p>
@@ -144,6 +148,10 @@ export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initia
               </>}
 
               {selected === "lease" && <>
+                {work.number > 1 && <div className="mt-4 space-y-4 border-y border-border py-4">
+                  <div><h5 className="text-xs font-semibold">Information already available</h5><ul className="mt-2 space-y-1 text-sm leading-relaxed text-muted-foreground"><li>Tenant's report.</li><li>Business Lease.</li><li>Record of the previous contractor inspection request.</li></ul></div>
+                  <div><h5 className="text-xs font-semibold">What I'm checking again</h5><ul className="mt-2 space-y-1 text-sm leading-relaxed text-muted-foreground"><li>The relevant repairing obligations.</li><li>Whether the earlier findings remain applicable.</li></ul></div>
+                </div>}
                 <article className="mt-4 border-y border-border py-4">
                   <div className="flex flex-wrap items-center justify-between gap-2">
                     <h5 className="flex items-center gap-2 text-sm font-semibold"><FileText className="h-4 w-4 text-muted-foreground" />Business Lease</h5>
