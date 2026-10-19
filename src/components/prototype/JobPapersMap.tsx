@@ -14,7 +14,7 @@ function JobMap({ job }: { job: JobContext }) {
     const position: L.LatLngTuple = job === "roof" ? [51.5095, -0.1402] : [51.583, -0.197];
     const map = L.map(element.current).setView(position, 16);
     L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", { attribution: '&copy; OpenStreetMap contributors', maxZoom: 19 }).addTo(map);
-    L.marker(position, { icon: L.divIcon({ className: "", html: '<span class="block h-5 w-5 rounded-full border-4 border-background bg-ring shadow-md"></span>', iconSize: [20, 20], iconAnchor: [10, 10] }) }).addTo(map).bindTooltip(job === "roof" ? "Burlington Gardens · Approximate location" : "Stanley House · Flat 6").openTooltip();
+    L.marker(position, { icon: L.divIcon({ className: "", html: '<span class="block h-5 w-5 rounded-full border-4 border-background bg-ring shadow-md"></span>', iconSize: [20, 20], iconAnchor: [10, 10] }) }).addTo(map).bindTooltip(job === "roof" ? "Burlington Gardens · Approximate location" : "Stanley House · Flat 6 · Approximate location").openTooltip();
     const observer = new ResizeObserver(() => map.invalidateSize());
     observer.observe(element.current);
     return () => { observer.disconnect(); map.remove(); };
@@ -34,7 +34,7 @@ const contexts = {
   renewal: {
     place: "Stanley House · Flat 6",
     map: "https://www.openstreetmap.org/export/embed.html?bbox=-0.201%2C51.580%2C-0.193%2C51.586&layer=mapnik&marker=51.583%2C-0.197",
-    locationNote: "Stanley House — 1115 Finchley Road, London NW11 · Example portfolio location.",
+    locationNote: "Stanley House — 1115 Finchley Road, London NW11 · Approximate location · Example portfolio location.",
     papers: [
       { title: "Business Lease", note: "Original terms read — current position still being checked", extract: "Original annual rent: £24,000. Tenancy term ends on 31 December 2026. These original terms are not confirmed current while later agreements are being considered." },
       { title: "Deed of Variation", note: "Checking", extract: "The check of this later paper is unfinished. No changes to rent or tenancy dates have been confirmed." },
