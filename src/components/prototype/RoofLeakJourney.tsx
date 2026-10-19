@@ -2,21 +2,14 @@ import { useState } from "react";
 import { ArrowLeft, Check, FileText, Hand, Mail, MessageCircle, Pause, Play } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import owlReading from "@/assets/prototype/owl-reading.png";
+import { roofLeakWork, type RoofActivityId, type RoofActivityState } from "./roofLeakWork";
 
-type ActivityId = "lease" | "contractor" | "insurer";
-type ActivityState = "working" | "waiting" | "needs-you";
+type ActivityId = RoofActivityId;
+type ActivityState = RoofActivityState;
 
-const completed = [
-  "Read the tenant's report.",
-  "Identified the relevant Business Lease.",
-  "Requested a contractor inspection.",
-];
+const completed = roofLeakWork.completed;
 
-const activities: { id: ActivityId; title: string; state: ActivityState; note: string }[] = [
-  { id: "lease", title: "Reviewing repairing obligations", state: "working", note: "I'm checking the lease to establish who is responsible for the affected roof." },
-  { id: "contractor", title: "Contractor inspection", state: "waiting", note: "I've requested an inspection and I'm waiting for the contractor to respond." },
-  { id: "insurer", title: "Contact the insurer", state: "needs-you", note: "I've prepared a notification to the insurer. I need your approval before sending it." },
-];
+const activities: { id: ActivityId; title: string; state: ActivityState; note: string }[] = roofLeakWork.activities;
 
 const INSURER_TO = "insurer@example.com";
 const INSURER_SUBJECT = "Burlington Gardens — Reported roof leak";
@@ -38,13 +31,14 @@ function stateDot(state: ActivityState) {
 const stateLabel: Record<ActivityState, string> = { working: "Working", waiting: "Waiting", "needs-you": "Needs you" };
 
 /** Illustrative parallel-activities demonstration only — no real work, approvals or integrations. */
-export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide }: {
+export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initialActivity = "lease" }: {
   paused: boolean;
   onPauseChange: (paused: boolean) => void;
   onBack: () => void;
   onGuide: () => void;
+  initialActivity?: ActivityId;
 }) {
-  const [selected, setSelected] = useState<ActivityId>("lease");
+  const [selected, setSelected] = useState<ActivityId>(initialActivity);
   const [paperOpen, setPaperOpen] = useState(false);
   const selectedActivity = activities.find((activity) => activity.id === selected);
 
@@ -64,9 +58,9 @@ export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide }: {
         </div>
         <div className="mt-3 flex items-center gap-3">
           <img src={owlReading} alt="Hobson reading" className="h-10 w-10 shrink-0 object-contain" />
-          <p className="max-w-2xl text-sm leading-relaxed text-muted-foreground">I'm looking into the reported leak, establishing responsibility and arranging what needs to happen next.</p>
+          <p className="max-w-2xl text-sm leading-relaxed text-muted-foreground">{roofLeakWork.explanation}</p>
         </div>
-        <p className="mt-3 max-w-2xl text-sm leading-relaxed">I'm continuing my review of the lease, waiting for the contractor and need your approval before contacting the insurer.</p>
+        <p className="mt-3 max-w-2xl text-sm leading-relaxed">{roofLeakWork.summary}</p>
         <p role="status" className="mt-3 flex items-center gap-2 text-xs font-medium"><span className={`h-1.5 w-1.5 rounded-full ${paused ? "bg-muted-foreground" : "bg-ring"}`} aria-hidden="true" />{paused ? "Work paused · What I've found is preserved" : "I'm working on this now"}</p>
       </header>
 
