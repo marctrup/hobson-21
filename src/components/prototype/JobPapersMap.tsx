@@ -13,7 +13,7 @@ function JobMap({ job }: { job: JobContext }) {
     if (!element.current) return;
     const position: L.LatLngTuple = job === "roof" ? [51.5095, -0.1402] : [51.583, -0.197];
     const map = L.map(element.current).setView(position, 16);
-    L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png", { attribution: '&copy; OpenStreetMap contributors &copy; CARTO', maxZoom: 19 }).addTo(map);
+    L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", { attribution: '&copy; OpenStreetMap contributors', maxZoom: 19 }).addTo(map);
     L.marker(position, { icon: L.divIcon({ className: "", html: '<span class="block h-5 w-5 rounded-full border-4 border-background bg-ring shadow-md"></span>', iconSize: [20, 20], iconAnchor: [10, 10] }) }).addTo(map).bindTooltip(job === "roof" ? "Burlington Gardens · Approximate location" : "Stanley House · Flat 6").openTooltip();
     const observer = new ResizeObserver(() => map.invalidateSize());
     observer.observe(element.current);
