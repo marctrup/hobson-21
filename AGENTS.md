@@ -12,3 +12,4 @@
 - Keep workload entries in one typed collection shared by overview and briefing count derivation; roof work uses only its parent-owned investigation state, and the completed lease is the read-only completion example.
 - Job Papers / Map controls open a context-only layer without navigating the shell or unmounting the journey; use job-specific illustrative papers and explicitly label approximate locations so state is preserved and unrelated evidence is never shown.
 - Completed lease exploration uses a read-only journey and one typed illustrative source for findings and cited extracts; opening it never alters work counts or starts another job.
+- Keep the prototype demonstration behind a pass phrase verified by a server function; the browser holds only a session flag, and any direct address must reveal the entrance rather than the work.

@@ -1,5 +1,10 @@
 # Roadmap
 
+## Prototype privacy gate
+
+- [x] Put /prototype behind a server-verified pass phrase so a direct address never reveals the demonstration; entrance only for the session, wrong phrases refused, rate limited, robots.txt disallows the route; 66 tests pass and the closed door verified on screen.
+- [ ] Publish when Marc asks, so hobsonschoice.ai/prototype shows the current demonstration behind the pass phrase.
+
 ## Glass Workboard — remove roof completion simulation
 - [x] Remove only the artificial roof completion controls, outcome and records; investigation and completed Flat 3 lease preserved, shared state-derived counts verified, 22 tests pass and preview flow checked.
 
