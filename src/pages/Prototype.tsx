@@ -1411,7 +1411,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
   const [beatIdx, setBeatIdx] = useState(0);
   const [lineIdx, setLineIdx] = useState(0); // line within beat
   const [owl, setOwl] = useState<OwlState>("default");
-  const [messages, setMessages] = useState<ChatMsg[]>([{ id: "portfolio-welcome", role: "hobson", text: `Good morning, ${FIRST_NAME}. Your portfolio is ready to look through.` }]);
+  const [messages, setMessages] = useState<ChatMsg[]>([{ id: "portfolio-welcome", role: "hobson", text: `Good morning, ${FIRST_NAME}. I've finished 3 pieces of work, I'm looking after 4 more, and there are 2 things I'd like you to review.` }]);
   const [typing, setTyping] = useState(false);
   const [chipVisible, setChipVisible] = useState(false);
   const [selectedPropertyId, setSelectedPropertyId] = useState<string | null>(null);
@@ -1427,6 +1427,12 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
   const [portfolioChip, setPortfolioChip] = useState<string | null>(null);
   const [actionCards, setActionCards] = useState<ActionCard[]>(INITIAL_ACTION_CARDS);
   const [briefingChoice, setBriefingChoice] = useState<null | "all" | "urgent" | "browse">(null);
+  const [needsYouFocus, setNeedsYouFocus] = useState(0);
+  const showNeedsYou = () => {
+    setShowDocuments(false);
+    setShowWhatIveDone(true);
+    setNeedsYouFocus((n) => n + 1);
+  };
   const [expandedCardId, setExpandedCardId] = useState<string | null>(null);
   const [hoveredCardPropertyId, setHoveredCardPropertyId] = useState<string | null>(null);
   const [actionToast, setActionToast] = useState<string | null>(null);
@@ -2907,22 +2913,14 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
     const pending = actionCards.filter((c) => c.approvalState === "pending" || c.approvalState === "in_progress");
     const urgent = pending.filter((c) => c.urgency === "now");
 
-    const numberWord = (n: number) =>
-      ["one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"][n - 1] ?? String(n);
-    const mattersClause = pending.length === 1 ? "one matter I believe deserves" : "a few matters I believe deserve";
-    const urgentClause = urgent.length
-      ? urgent.length === 1
-        ? ", and one is time-sensitive"
-        : `, and ${numberWord(urgent.length)} are time-sensitive`
-      : "";
+    void pending;
+    void urgent;
 
     const greetLines: string[] = testerMode
       ? [
           `Good morning, ${FIRST_NAME}. For today's testing, go straight to your unit — by the map or the search. That is where I can answer your questions.`,
         ]
-      : pending.length === 0
-        ? [`Good morning, ${FIRST_NAME}. Your portfolio is quiet today — nothing requires your attention.`]
-        : [`Good morning, ${FIRST_NAME}. Your portfolio is quiet for the most part — though there are ${mattersClause} your attention today${urgentClause}. Shall I take you through them?`];
+      : [`Good morning, ${FIRST_NAME}. I've finished 3 pieces of work, I'm looking after 4 more, and there are 2 things I'd like you to review.`];
 
 
 
@@ -3955,6 +3953,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
               cards={actionCards}
               choice={briefingChoice}
               setChoice={setBriefingChoice}
+              onShowNeedsYou={showNeedsYou}
               expandedCardId={expandedCardId}
               setExpandedCardId={setExpandedCardId}
               onHoverCard={setHoveredCardPropertyId}
@@ -4279,7 +4278,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
           />
         )}
         {showWhatIveDone && (
-          <WorkOverview onClose={resetToMap} sideLetterRequested={workGuidance.sideLetterRequested} onJourneyBack={() => setGuidingRenewal(false)} onGuide={() => {
+          <WorkOverview onClose={resetToMap} sideLetterRequested={workGuidance.sideLetterRequested} focusNeedsYou={needsYouFocus} onJourneyBack={() => setGuidingRenewal(false)} onGuide={() => {
             expandChat();
             if (!guidingRenewal) {
               const width = Math.max(CHAT_MIN_WIDTH, Math.round((window.innerWidth - 68) * 0.3));
@@ -9012,10 +9011,12 @@ function PortfolioBriefing({
   onReview,
   onManualComplete,
   onOpenWorkflow,
+  onShowNeedsYou,
 }: {
   cards: ActionCard[];
   choice: null | "all" | "urgent" | "browse";
   setChoice: (c: null | "all" | "urgent" | "browse") => void;
+  onShowNeedsYou: () => void;
   expandedCardId: string | null;
   setExpandedCardId: (id: string | null) => void;
   onHoverCard: (propertyId: string | null) => void;
@@ -9040,35 +9041,16 @@ function PortfolioBriefing({
     );
   }
 
-  // Initial chip choice
+  // Initial action — a single contextual continuation of the briefing
   if (choice === null) {
-    const chips: { label: string; value: "all" | "urgent" | "browse" }[] = [
-      { label: `Show me what needs me (${pending.length})`, value: "all" },
-      ...(urgent.length ? [{ label: `Just the urgent ${urgent.length === 1 ? "one" : `${urgent.length}`}`, value: "urgent" as const }] : []),
-    ];
-
     return (
       <div className="flex flex-col items-end gap-1.5">
-        <span className="text-[11px] text-ink-muted flex items-center gap-1">
-          Tap to reply <span aria-hidden>↓</span>
-        </span>
-        <div className="flex gap-1.5 flex-wrap justify-end">
-          {chips.map((c, i) => (
-            <button
-              key={c.value}
-              onClick={() => setChoice(c.value)}
-              autoFocus={i === 0}
-              className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold shadow-sm transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#56514A] ${
-                i === 0
-                  ? "bg-[#56514A] text-white hover:bg-[#56514A] animate-[pulse_1.6s_ease-in-out_infinite]"
-                  : "bg-[#F1EBDE] text-[#56514A] hover:bg-[#E8E1D4] border border-[#E8E1D4]"
-              }`}
-            >
-              {c.label}
-              {i === 0 && <span aria-hidden className="animate-bounce">↓</span>}
-            </button>
-          ))}
-        </div>
+        <button
+          onClick={onShowNeedsYou}
+          className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold shadow-sm transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#56514A] bg-[#F1EBDE] text-[#56514A] hover:bg-[#E8E1D4] border border-[#E8E1D4]"
+        >
+          Show me what needs me
+        </button>
       </div>
     );
   }

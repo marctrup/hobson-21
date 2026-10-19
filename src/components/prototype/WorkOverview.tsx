@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ArrowUpRight, Check, CheckCheck, CircleDot, CornerDownRight, Hand, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import owlReading from "@/assets/prototype/owl-reading.png";
@@ -88,9 +88,14 @@ function SectionHeading({ id, title, count, icon: Icon }: {
 }
 
 /** Illustrative work only: deliberately independent of action-card state and approvals. */
-export function WorkOverview({ onClose, onGuide, sideLetterRequested = false, onJourneyBack }: { onClose: () => void; onGuide: () => void; sideLetterRequested?: boolean; onJourneyBack?: () => void }) {
+export function WorkOverview({ onClose, onGuide, sideLetterRequested = false, onJourneyBack, focusNeedsYou = 0 }: { onClose: () => void; onGuide: () => void; sideLetterRequested?: boolean; onJourneyBack?: () => void; focusNeedsYou?: number }) {
   const [journeyOpen, setJourneyOpen] = useState(false);
   const [paused, setPaused] = useState(false);
+  useEffect(() => {
+    if (focusNeedsYou > 0 && !journeyOpen) {
+      document.getElementById("work-needs-you")?.scrollIntoView({ block: "start" });
+    }
+  }, [focusNeedsYou, journeyOpen]);
   return (
     <div className="absolute inset-0 z-[1200] flex flex-col bg-background text-foreground" role="region" aria-label="What I've Done">
       <div className="flex shrink-0 items-center justify-between border-b border-border px-5 py-3 sm:px-8">
