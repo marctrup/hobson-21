@@ -4001,13 +4001,19 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
 
           {guidingRenewal && showWhatIveDone ? (
             <>
-              <p id="renewal-chat-context" className="mb-2 text-xs leading-relaxed text-muted-foreground">Regarding: Tenancy renewal · Stanley House, Flat 6</p>
+              <p id="renewal-chat-context" className="mb-2 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs leading-relaxed text-muted-foreground">
+                <span>Regarding: {guideScope === "renewal" ? "Tenancy renewal · Stanley House, Flat 6" : guideScope === "lease" ? "Roof leak · Reviewing repairing obligations" : "Roof leak investigation · Burlington Gardens"}</span>
+                {guideScope === "lease" && <button type="button" onClick={() => setGuideScope("overall")} className="underline decoration-dotted underline-offset-2 hover:text-foreground">Guide the whole investigation instead</button>}
+              </p>
               <form onSubmit={(event) => {
                 event.preventDefault();
                 const instruction = input.trim();
                 if (!instruction) return;
-                const result = applyWorkGuidance(workGuidance, instruction);
-                setWorkGuidance(result.state);
+                const result = guideScope === "renewal"
+                  ? applyWorkGuidance(workGuidance, instruction)
+                  : applyRoofGuidance(roofGuidance, guideScope, instruction);
+                if (guideScope === "renewal") setWorkGuidance(result.state);
+                else setRoofGuidance(result.state);
                 const id = crypto.randomUUID();
                 setMessages((previous) => [...previous, { id: `guidance-user-${id}`, role: "user", text: instruction }, { id: `guidance-hobson-${id}`, role: "hobson", text: result.reply }]);
                 setInput("");
@@ -4019,7 +4025,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                   if (conversation) conversation.scrollTop = conversation.scrollHeight;
                 });
               }} className="flex items-center gap-2 rounded-full border border-input bg-background px-4 py-2.5 focus-within:ring-2 focus-within:ring-ring">
-                <input ref={inputRef} value={input} onChange={(event) => setInput(event.target.value)} aria-label="Guide Hobson about the tenancy renewal" aria-describedby="renewal-chat-context" placeholder="Ask me to check the 2024 side letter…" className="min-w-0 flex-1 bg-transparent text-sm text-foreground outline-none placeholder:text-muted-foreground" />
+                <input ref={inputRef} value={input} onChange={(event) => setInput(event.target.value)} aria-label={guideScope === "renewal" ? "Guide Hobson about the tenancy renewal" : guideScope === "lease" ? "Guide Hobson about the lease review" : "Guide Hobson about the roof leak investigation"} aria-describedby="renewal-chat-context" placeholder={guideScope === "renewal" ? "Ask me to check the 2024 side letter…" : guideScope === "lease" ? "Ask me to check the shopfront roof…" : "Ask me to hold further contact…"} className="min-w-0 flex-1 bg-transparent text-sm text-foreground outline-none placeholder:text-muted-foreground" />
                 <Button type="submit" size="icon" variant="ghost" disabled={!input.trim()} aria-label="Send guidance" className="h-8 w-8 shrink-0"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg></Button>
               </form>
             </>
