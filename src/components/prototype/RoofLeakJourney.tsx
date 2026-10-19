@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ArrowLeft, Check, FileText, Hand, Mail, MessageCircle, Pause, Play } from "lucide-react";
+import { ArrowLeft, Check, ChevronDown, FileText, Hand, Mail, MessageCircle, Pause, Play } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import owlReading from "@/assets/prototype/owl-reading.png";
 import { roofLeakWork, type RoofActivityId, type RoofActivityState } from "./roofLeakWork";
@@ -38,9 +38,11 @@ export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initia
   onGuide: () => void;
   initialActivity?: ActivityId;
 }) {
-  const [selected, setSelected] = useState<ActivityId>(initialActivity);
+  const [selected, setSelected] = useState<ActivityId | `done-${number}`>(initialActivity);
   const [paperOpen, setPaperOpen] = useState(false);
+  const [historyOpen, setHistoryOpen] = useState(false);
   const selectedActivity = activities.find((activity) => activity.id === selected);
+  const selectedDone = typeof selected === "string" && selected.startsWith("done-") ? completed[Number(selected.slice(5))] : null;
 
   return (
     <div className="flex min-h-0 flex-1 flex-col" role="region" aria-label="Roof leak investigation work journey">
