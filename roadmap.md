@@ -1,7 +1,7 @@
 # Roadmap
 
 ## What I've Done — work journey
-- [ ] Refine only current work with selectable illustrative papers, original-lease findings and outstanding uncertainty; verify previews and pause behaviour.
+- [x] Refine only current work with selectable illustrative papers, original-lease findings and outstanding uncertainty; verify previews and pause behaviour.
 - [x] Open the Stanley House tenancy renewal journey with completed findings, paper extracts, current and next work.
 - [x] Add illustrative pause/resume and guidance through the existing conversation; verify return navigation and preserved work.
 
