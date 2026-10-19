@@ -3331,7 +3331,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
       <StyleTag />
 
       {/* Left nav rail */}
-      <aside className="w-[68px] shrink-0 bg-white border-r border-bone flex flex-col items-center py-4 gap-2">
+      <aside className={`${showWhatIveDone && narrowWorkLayout ? "hidden" : "flex"} w-[68px] shrink-0 bg-white border-r border-bone flex-col items-center py-4 gap-2`}>
         <button
           type="button"
           onClick={adminMode ? exitAdmin : undefined}
@@ -3442,8 +3442,8 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
 
       {/* Chat panel */}
       <section
-        className={`${guidanceOverlay ? "absolute bottom-0 left-[68px] top-0 z-[1300] max-w-[calc(100%-68px)] shadow-xl" : `relative ${isExpanded || mainCollapsed ? "flex-1" : "shrink-0"}`} bg-white border-r border-bone flex flex-col ${chatCollapsed ? "overflow-hidden" : ""}`}
-        style={isExpanded || mainCollapsed ? undefined : { width: chatCollapsed ? CHAT_COLLAPSED_WIDTH : chatWidth }}
+        className={`${guidanceOverlay ? "absolute inset-0 z-[1300] w-full shadow-xl" : `relative ${isExpanded || mainCollapsed ? "flex-1" : "shrink-0"}`} bg-white border-r border-bone flex flex-col ${showWhatIveDone && narrowWorkLayout && !guidanceOverlay ? "hidden" : ""} ${chatCollapsed ? "overflow-hidden" : ""}`}
+        style={guidanceOverlay ? undefined : isExpanded || mainCollapsed ? undefined : { width: chatCollapsed ? CHAT_COLLAPSED_WIDTH : chatWidth }}
         onDragOver={(e) => {
           if (!chatCollapsed && adminMode && adminCharacter === "professor") { e.preventDefault(); setChatDropOver(true); }
         }}
@@ -4155,7 +4155,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
 
       {/* Resizable divider between chat (left) and right work area / map.
           Hidden when chat is expanded full-width (no right pane visible). */}
-      {!isExpanded && !guidanceOverlay && (
+      {!isExpanded && !guidanceOverlay && !(showWhatIveDone && narrowWorkLayout) && (
         <ResizeDivider
           width={chatCollapsed ? CHAT_COLLAPSED_WIDTH : chatWidth}
           setWidth={setChatWidth}
@@ -4174,7 +4174,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
           isDefault={isLayoutDefault}
         />
       )}
-      {!isExpanded && !isLayoutDefault && (
+      {!isExpanded && !isLayoutDefault && !(showWhatIveDone && narrowWorkLayout) && (
         <button
           type="button"
           onClick={resetLayout}

@@ -1,5 +1,8 @@
 # Roadmap
 
+## What I'm Up To on phones
+- [x] Make the overview, journeys, papers and guidance comfortable on narrow screens; 36 focused tests pass and flows verified at 320, 390, 768 and 1280px, preserving the simulations.
+
 ## Prototype privacy gate
 
 - [x] Put /prototype behind a server-verified pass phrase so a direct address never reveals the demonstration; entrance only for the session, wrong phrases refused, rate limited, robots.txt disallows the route; 66 tests pass and the closed door verified on screen.

@@ -1,3 +1,4 @@
+import { JourneyNavigation } from "./JourneyNavigation";
 import { useState } from "react";
 import { ArrowLeft, Check, FileText, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -12,7 +13,7 @@ export function CompletedLeaseJourney({ onBack }: { onBack: () => void }) {
   const activity = completedLease.activities.find(item => item.id === selected);
   const findings = selected === "dates" ? completedLease.findings.filter(item => ["Rent", "Term start", "Term end"].includes(item.label)) : completedLease.findings;
   const references = [...new Set(findings.map(item => item.reference))];
-  return <div role="region" aria-label="Completed lease work journey" className="flex min-h-0 flex-1 flex-col">
+  return <div role="region" aria-label="Completed lease work journey" className="flex min-h-0 flex-1 flex-col overflow-y-auto lg:overflow-hidden">
     <header className="shrink-0 border-b border-border px-5 pb-5 pt-4 sm:px-6">
       <Button variant="ghost" size="sm" onClick={onBack} className="mb-4 gap-2 px-0 text-muted-foreground"><ArrowLeft className="h-4 w-4" />Back to What I'm Up To</Button>
       <div className="flex flex-wrap items-start justify-between gap-3">
@@ -25,13 +26,12 @@ export function CompletedLeaseJourney({ onBack }: { onBack: () => void }) {
       <p role="status" className="mt-3 flex items-center gap-2 text-xs font-medium"><Check className="h-3.5 w-3.5 text-muted-foreground" />Completed</p>
       <div className="mt-3 flex items-start gap-3"><img src={owlReading} alt="Hobson reading" className="h-10 w-10 shrink-0 object-contain" /><p className="max-w-2xl text-sm leading-relaxed text-muted-foreground">{completedLease.explanation}</p></div>
     </header>
-    <div className="hobson-scroll min-h-0 flex-1 overflow-y-auto">
-      <div className="grid min-h-full grid-cols-[minmax(0,0.35fr)_minmax(0,0.65fr)] items-stretch p-3 sm:p-5 max-[640px]:grid-cols-1 max-[640px]:gap-3">
-        <nav aria-label="The completed lease journey" className="min-w-0 rounded-2xl bg-muted px-4 py-5 sm:rounded-r-none max-[640px]:rounded-2xl">
-          <h3 className="mb-5 text-xs font-semibold text-muted-foreground">The Journey</h3>
-          {completedLease.activities.map(item => <Button key={item.id} variant="ghost" onClick={() => { setSelected(item.id); setEvidence(null); }} aria-current={selected === item.id ? "step" : undefined} className={`mb-2 h-auto w-full items-start justify-start gap-2 whitespace-normal rounded-md border px-2 py-3 text-left ${selected === item.id ? "border-border bg-card shadow-sm min-[641px]:w-[calc(100%+17px)] min-[641px]:max-w-none min-[641px]:rounded-r-none min-[641px]:border-r-card relative z-10" : "border-transparent hover:bg-background/60"}`}><Check className="mt-0.5 h-3.5 w-3.5 shrink-0 text-muted-foreground" /><span className="text-sm leading-relaxed">{item.title}</span></Button>)}
-        </nav>
-        <section aria-labelledby="lease-desk-heading" className="relative min-w-0 rounded-2xl border border-border bg-card px-5 py-5 shadow-sm sm:-ml-px sm:px-7">
+    <div className="hobson-scroll min-h-0 shrink-0 lg:flex-1 lg:overflow-y-auto">
+      <div className="grid grid-cols-1 items-stretch gap-3 p-3 sm:p-5 lg:min-h-full lg:grid-cols-[minmax(0,0.35fr)_minmax(0,0.65fr)] lg:gap-0">
+        <JourneyNavigation label="The completed lease journey" selectedTitle={selected === "summary" ? "Your lease summary is ready" : activity?.title}>
+          {completedLease.activities.map(item => <Button key={item.id} variant="ghost" onClick={() => { setSelected(item.id); setEvidence(null); }} aria-current={selected === item.id ? "step" : undefined} className={`mb-2 h-auto w-full items-start justify-start gap-2 whitespace-normal rounded-md border px-2 py-3 text-left ${selected === item.id ? "border-border bg-card shadow-sm lg:w-[calc(100%+17px)] lg:max-w-none lg:rounded-r-none lg:border-r-card relative z-10" : "border-transparent hover:bg-background/60"}`}><Check className="mt-0.5 h-3.5 w-3.5 shrink-0 text-muted-foreground" /><span className="text-sm leading-relaxed">{item.title}</span></Button>)}
+        </JourneyNavigation>
+        <section aria-labelledby="lease-desk-heading" className="relative min-w-0 rounded-2xl border border-border bg-card px-5 py-5 shadow-sm lg:-ml-px sm:px-7">
           <h3 id="lease-desk-heading" className="mb-5 text-xs font-semibold text-muted-foreground">On Hobson's Desk</h3>
           <h4 className="text-lg font-semibold">{selected === "summary" ? "Your lease summary is ready" : activity?.title}</h4>
           <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{activity?.note}</p>
