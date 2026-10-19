@@ -118,6 +118,38 @@ describe("Illustrative work journey", () => {
     expect(screen.getByRole("region", { name: /Needs you/ })).not.toHaveTextContent("Stanley House · Flat 6");
   });
 
+  it("keeps approval inside the journey and gates approval on the draft's readiness", async () => {
+    const user = userEvent.setup();
+    render(<WorkOverview onClose={vi.fn()} onGuide={vi.fn()} />);
+    await user.click(screen.getByRole("button", { name: "Getting the tenancy renewal ready" }));
+    await user.click(screen.getByRole("button", { name: "Preview approval stage" }));
+    expect(screen.getByRole("button", { name: /Approve sending the renewal email/ })).toHaveAttribute("aria-current", "step");
+    expect(screen.getByText("Why I'm asking")).toBeVisible();
+    expect(screen.getByText("Before I send")).toBeVisible();
+    expect(screen.getByText("Ready")).toBeVisible();
+    expect(screen.getByText("Still to establish")).toBeVisible();
+    // Earlier steps remain selectable with their evidence while approval is open.
+    await user.click(screen.getByRole("button", { name: /Checking the tenancy history/ }));
+    expect(screen.getByRole("button", { name: /Original annual rent\s*£24,000/ })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /Drafted email to discuss the tenancy renewal/ })).toBeInTheDocument();
+    // Edits are preserved when returning to the approval step.
+    await user.click(screen.getByRole("button", { name: /Approve sending the renewal email/ }));
+    await user.click(screen.getByRole("button", { name: "Change before sending" }));
+    await user.type(screen.getByLabelText("Edit the email"), " — revised");
+    await user.click(screen.getByRole("button", { name: "Keep this version" }));
+    await user.click(screen.getByRole("button", { name: /Read the existing tenancy/ }));
+    await user.click(screen.getByRole("button", { name: /Approve sending the renewal email/ }));
+    expect(screen.getByText(/— revised/)).toBeVisible();
+    expect(screen.getByRole("button", { name: "Approve and send" })).toBeEnabled();
+    // A draft mentioning terms dependent on unfinished checks cannot be approved.
+    await user.click(screen.getByRole("button", { name: "Change before sending" }));
+    await user.clear(screen.getByLabelText("Edit the email"));
+    await user.type(screen.getByLabelText("Edit the email"), "We propose a rent of £26,000 per annum.");
+    await user.click(screen.getByRole("button", { name: "Keep this version" }));
+    expect(screen.getByText("Further review needed")).toBeVisible();
+    expect(screen.getByRole("button", { name: "Approve and send" })).toBeDisabled();
+  });
+
   it("delegates guidance to the existing conversation without closing the journey", async () => {
     const user = userEvent.setup();
     const guide = vi.fn();
