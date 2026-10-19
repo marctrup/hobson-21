@@ -1,10 +1,13 @@
 import { useState } from "react";
-import { ArrowLeft, Check, ChevronDown, FileText, MessageCircle, Pause, Play, X } from "lucide-react";
+import { ArrowLeft, Check, ChevronDown, FileText, Hand, Mail, MessageCircle, Pause, Play, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import owlReading from "@/assets/prototype/owl-reading.png";
 
 type Step = "tenancy" | "rent" | "history" | "summary";
+type ApprovalStep = "draft" | "approve" | "await";
 type Evidence = "rent" | "end" | "variation" | "side-letter";
+export type ApprovalStatus = "idle" | "awaiting" | "sent";
+
 const findings = {
   rent: { label: "Original annual rent", value: "£24,000", found: "The original Business Lease records an annual rent of £24,000.", extract: "Annual rent: £24,000, payable in accordance with the terms of this lease." },
   end: { label: "Tenancy end date in the original lease", value: "31 December 2026", found: "The original Business Lease records a tenancy end date of 31 December 2026.", extract: "The tenancy term ends on 31 December 2026." },
@@ -14,6 +17,25 @@ const steps: { id: Step; title: string; note: string; group?: string }[] = [
   { id: "rent", title: "Reviewed the rent", note: "Found £24,000 annually in the original lease." },
   { id: "history", title: "Checking the tenancy history", note: "Looking for changes in later papers.", group: "Working now" },
   { id: "summary", title: "Prepare renewal summary", note: "Not started.", group: "Next" },
+];
+
+const EMAIL_TO = "tenant@example.com";
+const EMAIL_SUBJECT = "Stanley House, Flat 6 — Tenancy renewal";
+const EMAIL_BODY = `Dear Tenant,
+
+I'm writing regarding the forthcoming end of your tenancy at Stanley House, Flat 6.
+
+We would like to discuss the possibility of renewing the tenancy and would welcome an opportunity to talk through the proposed next steps.
+
+Please let us know a convenient time to discuss.
+
+Kind regards,
+Hobson`;
+
+const approvalSteps = (sent: boolean): { id: ApprovalStep; title: string; note: string; group?: string }[] => [
+  { id: "draft", title: "Prepared renewal email draft", note: "Ready for your review.", group: "Completed" },
+  { id: "approve", title: "Approve sending the renewal email", note: sent ? "Email sent." : "Waiting for your decision.", group: sent ? "Completed" : "Needs you" },
+  { id: "await", title: "Await tenant response", note: "Not started.", group: "Next" },
 ];
 
 function PaperReference({ extract, name = "Business Lease" }: { extract: string; name?: string }) {
@@ -32,16 +54,32 @@ function PaperReference({ extract, name = "Business Lease" }: { extract: string;
   );
 }
 
-export function WorkJourney({ paused, onPauseChange, onBack, onGuide, sideLetterRequested = false }: {
+export function WorkJourney({ paused, onPauseChange, onBack, onGuide, sideLetterRequested = false, approval = "idle", onApprovalChange, approvalOpen = false }: {
   paused: boolean;
   onPauseChange: (paused: boolean) => void;
   onBack: () => void;
   onGuide: () => void;
   sideLetterRequested?: boolean;
+  approval?: ApprovalStatus;
+  onApprovalChange?: (status: ApprovalStatus) => void;
+  approvalOpen?: boolean;
 }) {
   const [selected, setSelected] = useState<Step>("history");
   const [evidence, setEvidence] = useState<Evidence | null>(null);
+  const [demoOpen, setDemoOpen] = useState(approvalOpen);
+  const [approvalStep, setApprovalStep] = useState<ApprovalStep>("approve");
+  const [emailBody, setEmailBody] = useState(EMAIL_BODY);
+  const [editing, setEditing] = useState(false);
+  const [draftBody, setDraftBody] = useState(EMAIL_BODY);
+  const [edited, setEdited] = useState(false);
   const toggleEvidence = (id: Evidence) => setEvidence((active) => active === id ? null : id);
+  const sent = approval === "sent";
+
+  const openDemo = () => { setDemoOpen(true); setApprovalStep("approve"); onApprovalChange?.(sent ? "sent" : "awaiting"); };
+  const closeDemo = () => { setDemoOpen(false); setEditing(false); };
+  const approveAndSend = () => { onApprovalChange?.("sent"); setApprovalStep("approve"); setEditing(false); };
+  const saveEdit = () => { setEmailBody(draftBody); setEditing(false); setEdited(true); onApprovalChange?.("awaiting"); };
+
   const renderFinding = (id: "rent" | "end") => {
     const finding = findings[id];
     const open = evidence === id;
@@ -62,6 +100,86 @@ export function WorkJourney({ paused, onPauseChange, onBack, onGuide, sideLetter
     </div>;
   };
   const selectedStep = steps.find((step) => step.id === selected);
+  const demoSteps = approvalSteps(sent);
+  const selectedDemoStep = demoSteps.find((step) => step.id === approvalStep);
+
+  const demoNav = (
+    <nav aria-label="The Journey" className="min-w-0 border-r border-border px-4 py-5 max-[640px]:border-b max-[640px]:border-r-0">
+      <h3 className="mb-5 text-xs font-semibold text-muted-foreground">The Journey</h3>
+      <div className="relative">
+        <div aria-hidden="true" className="absolute bottom-7 left-3 top-8 w-px bg-border" />
+        {demoSteps.map((step) => <div key={step.id}>
+          {step.group && <p className="relative mb-2 mt-4 bg-background text-xs font-medium text-muted-foreground first:mt-0">{step.group}</p>}
+          <Button variant="ghost" aria-current={approvalStep === step.id ? "step" : undefined} onClick={() => setApprovalStep(step.id)} className={`relative mb-2 h-auto w-full items-start justify-start gap-2 rounded-md border px-2 py-3 text-left whitespace-normal ${approvalStep === step.id ? "border-border bg-muted/70" : "border-transparent"}`}>
+            <span aria-hidden="true" className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center bg-background">{step.id === "draft" || (step.id === "approve" && sent) ? <Check className="h-3.5 w-3.5 text-muted-foreground" /> : step.id === "approve" ? <Hand className="h-3.5 w-3.5 text-ring" /> : <span className="h-2 w-2 rounded-full border border-muted-foreground" />}</span>
+            <span className="min-w-0"><span className="block text-sm font-semibold leading-snug">{step.title}</span><span className="mt-1 block text-xs font-normal leading-relaxed text-muted-foreground">{step.note}</span></span>
+          </Button>
+        </div>)}
+      </div>
+    </nav>
+  );
+
+  const demoDesk = (
+    <section aria-labelledby="desk-heading" className="min-w-0 px-5 py-5 sm:px-6">
+      <h3 id="desk-heading" className="mb-5 text-xs font-semibold text-muted-foreground">On Hobson's Desk</h3>
+      <div key={approvalStep}>
+        <h4 className="text-lg font-semibold leading-snug">{selectedDemoStep?.title}</h4>
+        {approvalStep === "draft" && <>
+          <p className="mt-2 text-sm leading-relaxed text-muted-foreground">I've drafted a short email to the tenant inviting a conversation about renewing the tenancy. Nothing has been sent.</p>
+          <p className="mt-4 text-sm leading-relaxed text-muted-foreground">The draft is waiting under <span className="font-medium text-foreground">Approve sending the renewal email</span> for your decision.</p>
+        </>}
+        {approvalStep === "await" && <>
+          <p className="mt-3 text-xs font-medium text-muted-foreground">Not started</p>
+          <p className="mt-5 text-sm leading-relaxed">Once the email has gone, I'll wait for the tenant's response and bring it to you when it arrives.</p>
+        </>}
+        {approvalStep === "approve" && <>
+          {sent ? <>
+            <p role="status" className="mt-3 flex items-center gap-2 text-sm font-medium"><Check className="h-4 w-4 text-muted-foreground" aria-hidden="true" />Email sent.</p>
+            <p className="mt-3 text-sm leading-relaxed text-muted-foreground">The email you approved has gone to the tenant, exactly as you saw it.</p>
+            <div className="mt-5 border-l-2 border-ring pl-3"><h5 className="text-xs font-semibold">What happens next</h5><p className="mt-2 text-sm leading-relaxed">I'll wait for the tenant's response and bring it to you when it arrives.</p></div>
+          </> : <>
+            <h5 className="mt-2 text-base font-semibold">May I send this email?</h5>
+            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">I've prepared an email asking the tenant to discuss the tenancy renewal. I'd like you to check it before I send anything.</p>
+            <article aria-label="Draft email preview" className="mt-5 rounded-md border border-border bg-popover px-4 py-4">
+              <p className="flex items-center gap-2 text-xs font-medium text-muted-foreground"><Mail className="h-3.5 w-3.5" aria-hidden="true" />Draft email · not yet sent</p>
+              <dl className="mt-3 space-y-2 text-sm">
+                <div className="flex gap-2"><dt className="w-16 shrink-0 text-xs text-muted-foreground">To</dt><dd className="font-medium">{EMAIL_TO}</dd></div>
+                <div className="flex gap-2"><dt className="w-16 shrink-0 text-xs text-muted-foreground">Subject</dt><dd className="font-medium">{EMAIL_SUBJECT}</dd></div>
+              </dl>
+              {editing ? <div className="mt-4">
+                <label htmlFor="email-draft-edit" className="text-xs font-medium text-muted-foreground">Edit the email</label>
+                <textarea id="email-draft-edit" value={draftBody} onChange={(event) => setDraftBody(event.target.value)} rows={10} className="mt-2 w-full rounded-md border border-border bg-background px-3 py-2 text-sm leading-relaxed" />
+                <div className="mt-3 flex flex-wrap gap-2">
+                  <Button size="sm" onClick={saveEdit}>Keep this version</Button>
+                  <Button size="sm" variant="ghost" onClick={() => { setEditing(false); setDraftBody(emailBody); }}>Discard changes</Button>
+                </div>
+              </div> : <blockquote className="mt-4 whitespace-pre-line border-t border-border pt-4 text-sm leading-relaxed">{emailBody}</blockquote>}
+              <p className="mt-4 border-t border-border pt-3 text-sm"><span className="font-medium">Attachments:</span> None</p>
+            </article>
+            {edited && !editing && <p className="mt-3 text-xs leading-relaxed text-muted-foreground">You've changed this draft. Approval applies to the latest version shown above.</p>}
+            {!editing && <>
+              <div className="mt-5 border-l-2 border-border pl-3">
+                <h6 className="text-xs font-semibold">What approving this allows</h6>
+                <ul className="mt-2 list-disc space-y-1.5 pl-4 text-sm leading-relaxed">
+                  <li>Send this exact email to the displayed recipient.</li>
+                  <li>No other emails will be sent under this approval.</li>
+                  <li>No tenancy terms, rent or financial commitments will be agreed.</li>
+                  <li>I cannot change the recipient, wording or attachments after approval without asking again.</li>
+                </ul>
+              </div>
+              <div className="mt-5 flex flex-wrap items-center gap-2">
+                <Button size="sm" onClick={approveAndSend}>Approve and send</Button>
+                <Button size="sm" variant="outline" onClick={() => { setDraftBody(emailBody); setEditing(true); }}>Change before sending</Button>
+                <Button size="sm" variant="ghost" onClick={closeDemo}>Not now</Button>
+              </div>
+              <p className="mt-3 text-xs leading-relaxed text-muted-foreground">Not now leaves the email unsent and waiting for your decision — you can return to it here at any time. You can also ask me to change it through Guide Hobson.</p>
+            </>}
+          </>}
+        </>}
+      </div>
+    </section>
+  );
+
   return (
     <div className="flex min-h-0 flex-1 flex-col" role="region" aria-label="Tenancy renewal work journey">
       <header className="shrink-0 border-b border-border px-5 pb-5 pt-4 sm:px-6">
@@ -74,18 +192,21 @@ export function WorkJourney({ paused, onPauseChange, onBack, onGuide, sideLetter
           <div className="flex shrink-0 flex-wrap items-center gap-2">
             <Button variant="outline" size="sm" onClick={() => onPauseChange(!paused)} className="shrink-0 gap-2">{paused ? <Play className="h-4 w-4" /> : <Pause className="h-4 w-4" />}{paused ? "Resume work" : "Pause work"}</Button>
             <Button variant="secondary" size="sm" onClick={onGuide} className="gap-2"><MessageCircle className="h-4 w-4" />Guide Hobson</Button>
+            {demoOpen
+              ? <Button variant="ghost" size="sm" onClick={closeDemo} className="gap-2">Return to the investigation</Button>
+              : <Button variant="ghost" size="sm" onClick={openDemo} className="gap-2 text-muted-foreground">Preview approval stage</Button>}
           </div>
         </div>
         <div className="mt-3 flex items-center gap-3">
           <img src={owlReading} alt="Hobson reading" className="h-10 w-10 shrink-0 object-contain" />
-          <p className="max-w-2xl text-sm leading-relaxed text-muted-foreground">I'm reviewing the existing tenancy and its history so I can prepare a renewal summary for you.</p>
+          <p className="max-w-2xl text-sm leading-relaxed text-muted-foreground">{demoOpen ? "I've prepared an email to the tenant about the renewal. I'd like your approval before anything is sent." : "I'm reviewing the existing tenancy and its history so I can prepare a renewal summary for you."}</p>
         </div>
-        <p role="status" className="mt-3 flex items-center gap-2 text-xs font-medium"><span className={`h-1.5 w-1.5 rounded-full ${paused ? "bg-muted-foreground" : "bg-ring"}`} aria-hidden="true" />{paused ? "Work paused · What I've found is preserved" : "I'm working on this now"}</p>
+        <p role="status" className="mt-3 flex items-center gap-2 text-xs font-medium"><span className={`h-1.5 w-1.5 rounded-full ${paused ? "bg-muted-foreground" : "bg-ring"}`} aria-hidden="true" />{paused ? "Work paused · What I've found is preserved" : demoOpen && !sent ? "Waiting for your approval" : "I'm working on this now"}</p>
       </header>
 
       <div className="hobson-scroll min-h-0 flex-1 overflow-y-auto">
         <div className="grid min-h-full grid-cols-[minmax(0,0.35fr)_minmax(0,0.65fr)] max-[640px]:grid-cols-1">
-          <nav aria-label="The Journey" className="min-w-0 border-r border-border px-4 py-5 max-[640px]:border-b max-[640px]:border-r-0">
+          {demoOpen ? demoNav : <nav aria-label="The Journey" className="min-w-0 border-r border-border px-4 py-5 max-[640px]:border-b max-[640px]:border-r-0">
             <h3 className="mb-5 text-xs font-semibold text-muted-foreground">The Journey</h3>
             <div className="relative">
               <div aria-hidden="true" className="absolute bottom-7 left-3 top-8 w-px bg-border" />
@@ -97,9 +218,9 @@ export function WorkJourney({ paused, onPauseChange, onBack, onGuide, sideLetter
                 </Button>
               </div>)}
             </div>
-          </nav>
+          </nav>}
 
-          <section aria-labelledby="desk-heading" className="min-w-0 px-5 py-5 sm:px-6">
+          {demoOpen ? demoDesk : <section aria-labelledby="desk-heading" className="min-w-0 px-5 py-5 sm:px-6">
             <h3 id="desk-heading" className="mb-5 text-xs font-semibold text-muted-foreground">On Hobson's Desk</h3>
             <div key={selected}>
               <h4 className="text-lg font-semibold leading-snug">{selectedStep?.title}</h4>
@@ -146,7 +267,7 @@ export function WorkJourney({ paused, onPauseChange, onBack, onGuide, sideLetter
                 <p className="mt-4 border-t border-border pt-4 text-sm leading-relaxed text-muted-foreground">{sideLetterRequested ? "The later papers, including the 2024 side letter, need checking before I prepare the renewal summary." : "The later papers need checking before I prepare the renewal summary."}</p>
               </>}
             </div>
-          </section>
+          </section>}
         </div>
         <footer className="flex flex-wrap items-center justify-between gap-3 border-t border-border px-5 py-4 sm:px-6">
           <p className="max-w-md text-xs leading-relaxed text-muted-foreground">Illustrative work and paper extracts only — no live work is running.</p>
