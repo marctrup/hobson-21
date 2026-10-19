@@ -125,7 +125,7 @@ export function WorkOverview({ onClose, onGuide, sideLetterRequested = false, on
             <div className="mt-5 flex items-center gap-4">
               <img src={owlReading} alt="Hobson reading" className="h-16 w-16 shrink-0 object-contain" />
               <p className="max-w-xl text-base leading-relaxed text-muted-foreground">
-                I've finished <span className="font-medium text-foreground">3 pieces of work</span>, I'm looking after <span className="font-medium text-foreground">4 more</span>, and there are <span className="font-medium text-foreground">2 things I'd like you to review.</span>
+                I've finished <span className="font-medium text-foreground">3 pieces of work</span>, I'm looking after <span className="font-medium text-foreground">{visibleOngoing.length} more</span>, and there are <span className="font-medium text-foreground">{visibleReviews.length} things I'd like you to review.</span>
               </p>
             </div>
           </header>
