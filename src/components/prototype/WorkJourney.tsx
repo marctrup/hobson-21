@@ -128,7 +128,7 @@ export function WorkJourney({ paused, onPauseChange, onBack, onGuide, sideLetter
         <PaperReference extract="Tenant: Example Tenant Ltd. Annual rent: £24,000. The tenancy term ends on 31 December 2026. These are the original lease terms; the effect of any later agreement has not yet been established." />
       </article>
       <article className="border-b border-border py-4">
-        <div className="flex flex-wrap items-center justify-between gap-2"><h5><Button variant="ghost" onClick={() => toggleEvidence("variation")} aria-expanded={evidence === "variation"} aria-controls="evidence-variation" className={`h-auto gap-2 rounded-sm px-2 py-2 text-sm font-semibold ${evidence === "variation" ? "bg-muted/70" : ""}`}><FileText className="h-4 w-4 text-muted-foreground" />Deed of Variation<ChevronDown aria-hidden="true" className={`h-3.5 w-3.5 text-muted-foreground ${evidence === "variation" ? "rotate-180" : ""}`} /></Button></h5><span className="flex items-center gap-1.5 text-xs text-muted-foreground"><span aria-hidden="true" className={`h-1.5 w-1.5 rounded-full ${paused ? "bg-muted-foreground" : "bg-ring"}`} />{paused ? "Checking paused" : "Checking"}</span></div>
+        <div className="flex flex-wrap items-center justify-between gap-2"><h5><Button variant="ghost" onClick={() => toggleEvidence("variation")} aria-expanded={evidence === "variation"} aria-controls="evidence-variation" className={`h-auto max-w-full gap-2 whitespace-normal rounded-sm px-2 py-2 text-left text-sm font-semibold ${evidence === "variation" ? "bg-muted/70" : ""}`}><FileText className="h-4 w-4 text-muted-foreground" />Deed of Variation<ChevronDown aria-hidden="true" className={`h-3.5 w-3.5 text-muted-foreground ${evidence === "variation" ? "rotate-180" : ""}`} /></Button></h5><span className="flex items-center gap-1.5 text-xs text-muted-foreground"><span aria-hidden="true" className={`h-1.5 w-1.5 rounded-full ${paused ? "bg-muted-foreground" : "bg-ring"}`} />{paused ? "Checking paused" : "Checking"}</span></div>
         {evidence === "variation" && <aside id="evidence-variation" role="region" aria-label="Deed of Variation investigation" className="mt-2 border-l-2 border-border bg-popover px-3 py-3">
           <div className="flex items-center justify-between gap-2"><h6 className="text-xs font-semibold">What I'm checking</h6><Button variant="ghost" size="icon" className="h-6 w-6" aria-label="Close evidence" onClick={() => setEvidence(null)}><X className="h-3.5 w-3.5" /></Button></div>
           <p className="mt-2 text-sm leading-relaxed">I'm examining whether this paper changes the original tenancy terms.</p>
@@ -230,15 +230,15 @@ export function WorkJourney({ paused, onPauseChange, onBack, onGuide, sideLetter
   const showActionBar = selected === "approve" && !sent && !editing;
 
   return (
-    <div className="flex min-h-0 flex-1 flex-col overflow-y-auto lg:overflow-hidden" role="region" aria-label="Tenancy renewal work journey">
-      <header className="shrink-0 border-b border-border px-5 pb-5 pt-4 sm:px-6">
+    <div className="flex min-h-0 flex-1 flex-col overflow-y-auto [@container_work_(min-width:48rem)]:overflow-hidden" role="region" aria-label="Tenancy renewal work journey">
+      <header className="shrink-0 border-b border-border px-5 pb-5 pt-4 [@container_work_(min-width:40rem)]:px-6">
         <Button variant="ghost" size="sm" onClick={onBack} className="mb-4 gap-2 px-0 text-muted-foreground"><ArrowLeft className="h-4 w-4" />Back to What I'm Up To</Button>
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div className="min-w-0 flex-1 basis-64">
             <p className="mb-2 text-xs text-muted-foreground">Stanley House · Flat 6</p>
             <h2 className="text-2xl font-semibold leading-tight">Getting the tenancy renewal ready</h2>
           </div>
-          <div className="flex min-w-0 w-full flex-wrap items-center gap-2 lg:w-auto lg:shrink-0">
+          <div className="flex min-w-0 w-full flex-wrap items-center gap-2 [@container_work_(min-width:48rem)]:w-auto [@container_work_(min-width:48rem)]:shrink-0">
             <JobPapersMap job="renewal" sideLetterRequested={sideLetterRequested} />
             <Button variant="outline" size="sm" onClick={() => onPauseChange(!paused)} className="shrink-0 gap-2">{paused ? <Play className="h-4 w-4" /> : <Pause className="h-4 w-4" />}{paused ? "Resume work" : "Pause work"}</Button>
             <Button variant="secondary" size="sm" onClick={onGuide} className="gap-2"><MessageCircle className="h-4 w-4" />Guide Hobson</Button>
@@ -254,14 +254,14 @@ export function WorkJourney({ paused, onPauseChange, onBack, onGuide, sideLetter
         <p role="status" className="mt-3 flex items-center gap-2 text-xs font-medium"><span className={`h-1.5 w-1.5 rounded-full ${paused ? "bg-muted-foreground" : "bg-ring"}`} aria-hidden="true" />{paused ? "Work paused · What I've found is preserved" : journeyExtended && !sent ? "Waiting for your approval" : "I'm working on this now"}</p>
       </header>
 
-      <div className="hobson-scroll min-h-0 shrink-0 lg:flex-1 lg:overflow-y-auto">
-        <div className="grid grid-cols-1 items-stretch gap-3 p-3 sm:p-5 lg:min-h-full lg:grid-cols-[minmax(0,0.35fr)_minmax(0,0.65fr)] lg:gap-0">
+      <div className="hobson-scroll min-h-0 shrink-0 [@container_work_(min-width:48rem)]:flex-1 [@container_work_(min-width:48rem)]:overflow-y-auto">
+        <div className="grid grid-cols-1 items-stretch gap-3 p-3 [@container_work_(min-width:40rem)]:p-5 [@container_work_(min-width:48rem)]:min-h-full [@container_work_(min-width:48rem)]:grid-cols-[minmax(0,0.35fr)_minmax(0,0.65fr)] [@container_work_(min-width:48rem)]:gap-0">
           <JourneyNavigation label="The Journey" selectedTitle={selectedStep?.title}>
               <div className="relative">
               <div aria-hidden="true" className="absolute bottom-7 left-3 top-8 w-px bg-border" />
               {steps.map((step) => <div key={step.id}>
                 {step.group && <p className="relative mb-2 mt-4 bg-muted text-xs font-medium text-muted-foreground first:mt-0">{step.id === "history" && paused ? "Paused here" : step.group}</p>}
-                <Button variant="ghost" aria-current={selected === step.id ? "step" : undefined} onClick={() => { setSelected(step.id); setEvidence(null); }} className={`relative mb-2 h-auto w-full items-start justify-start gap-2 rounded-md border px-2 py-3 text-left whitespace-normal ${selected === step.id ? "border-border bg-card shadow-sm lg:w-[calc(100%+17px)] lg:max-w-none lg:rounded-r-none lg:border-r-card relative z-10" : "border-transparent hover:bg-background/60"}`}>
+                <Button variant="ghost" aria-current={selected === step.id ? "step" : undefined} onClick={() => { setSelected(step.id); setEvidence(null); }} className={`relative mb-2 h-auto w-full items-start justify-start gap-2 rounded-md border px-2 py-3 text-left whitespace-normal ${selected === step.id ? "border-border bg-card shadow-sm [@container_work_(min-width:48rem)]:w-[calc(100%+17px)] [@container_work_(min-width:48rem)]:max-w-none [@container_work_(min-width:48rem)]:rounded-r-none [@container_work_(min-width:48rem)]:border-r-card relative z-10" : "border-transparent hover:bg-background/60"}`}>
                   <span aria-hidden="true" className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center bg-transparent">{stepIcon(step.id)}</span>
                   <span className="min-w-0"><span className="block text-sm font-semibold leading-snug">{step.title}</span><span className="mt-1 block text-xs font-normal leading-relaxed text-muted-foreground">{step.note}</span></span>
                 </Button>
@@ -269,13 +269,13 @@ export function WorkJourney({ paused, onPauseChange, onBack, onGuide, sideLetter
             </div>
           </JourneyNavigation>
 
-          <section aria-labelledby="desk-heading" className="relative min-w-0 rounded-2xl border border-border bg-card px-5 py-5 shadow-sm lg:-ml-px sm:px-7">
+          <section aria-labelledby="desk-heading" className="relative min-w-0 rounded-2xl border border-border bg-card px-5 py-5 shadow-sm [@container_work_(min-width:48rem)]:-ml-px [@container_work_(min-width:40rem)]:px-7">
             <h3 id="desk-heading" className="mb-5 text-xs font-semibold text-muted-foreground">On Hobson's Desk</h3>
             <div key={selected}>
               <h4 className="text-lg font-semibold leading-snug">{selectedStep?.title}</h4>
               {journeyExtended && (selected === "draft" || selected === "approve" || selected === "await") ? approvalDesk : investigationDesk}
             </div>
-            {showActionBar && <div className="sticky bottom-0 -mx-5 mt-6 border-t border-border bg-background px-5 py-4 sm:-mx-7 sm:px-7">
+            {showActionBar && <div className="sticky bottom-0 -mx-5 mt-6 border-t border-border bg-background px-5 py-4 [@container_work_(min-width:40rem)]:-mx-7 [@container_work_(min-width:40rem)]:px-7">
               <div className="flex flex-wrap items-center gap-2">
                 <Button size="sm" onClick={approveAndSend} disabled={needsReview}>Approve and send</Button>
                 <Button size="sm" variant="outline" onClick={() => { setDraftBody(emailBody); setEditing(true); }}>Change before sending</Button>
@@ -285,7 +285,7 @@ export function WorkJourney({ paused, onPauseChange, onBack, onGuide, sideLetter
             </div>}
           </section>
         </div>
-        <footer className="flex flex-wrap items-center justify-between gap-3 border-t border-border px-5 py-4 sm:px-6">
+        <footer className="flex flex-wrap items-center justify-between gap-3 border-t border-border px-5 py-4 [@container_work_(min-width:40rem)]:px-6">
           <p className="max-w-md text-xs leading-relaxed text-muted-foreground">Illustrative work and paper extracts only — no live work is running.</p>
         </footer>
       </div>

@@ -1,5 +1,8 @@
 # Roadmap
 
+## Resizable prototype work area
+- [ ] Reflow overview and all three journeys to their available width as the divider moves; preserve selections and verify narrow and wide work panes.
+
 ## What I'm Up To on phones
 - [x] Make the overview, journeys, papers and guidance comfortable on narrow screens; 36 focused tests pass and flows verified at 320, 390, 768 and 1280px, preserving the simulations.
 
