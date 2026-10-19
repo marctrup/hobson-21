@@ -15,6 +15,10 @@ describe("Illustrative work journey", () => {
     expect(screen.getByRole("region", { name: "Original annual rent evidence" })).toBeVisible();
     expect(screen.getByRole("button", { name: "Resume work" })).toBeEnabled();
     expect(screen.getAllByRole("article", { name: "Side Letter — 2024" })).toHaveLength(1);
+    const sideLetter = screen.getByRole("article", { name: "Side Letter — 2024" });
+    expect(within(sideLetter).queryByRole("button", { name: /View paper/ })).not.toBeInTheDocument();
+    await user.click(within(sideLetter).getByRole("button", { name: "Side Letter — 2024" }));
+    expect(screen.queryByRole("region", { name: "Original annual rent evidence" })).not.toBeInTheDocument();
     expect(screen.getByRole("button", { name: /Checking the tenancy history/ })).toHaveAttribute("aria-current", "step");
     await user.click(screen.getByRole("button", { name: "Back to What I've Done" }));
     await user.click(screen.getByRole("button", { name: "Getting the tenancy renewal ready" }));
