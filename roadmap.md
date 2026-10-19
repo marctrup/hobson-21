@@ -1,5 +1,9 @@
 # Roadmap
 
+## What I've Done — work overview
+- [ ] Replace only the existing content panel with illustrative Needs you, In progress and Completed work.
+- [ ] Verify the screen in the existing shell, including scrolling and unchanged navigation.
+
 ## Tutorials library
 - [x] Add the Tutorials page, connect the Learn tile, and verify layout and related links with clearly labelled video placeholders.
 - [x] Add Tutorials to search-engine discovery and refresh crawler copies before publication.
