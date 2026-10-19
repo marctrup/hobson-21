@@ -106,6 +106,7 @@ describe("Illustrative work journey", () => {
     await user.click(screen.getByRole("button", { name: "Keep this version" }));
     expect(screen.getByText(/Approval applies to the latest version/)).toBeVisible();
     expect(screen.queryByText("Email sent.")).not.toBeInTheDocument();
+    await user.click(screen.getByRole("button", { name: "Ask me to review this version" }));
     await user.click(screen.getByRole("button", { name: "Approve and send" }));
     expect(screen.getAllByRole("status").some((el) => el.textContent === "Email sent.")).toBe(true);
     expect(screen.getByText(/I'll wait for the tenant's response/)).toBeVisible();
