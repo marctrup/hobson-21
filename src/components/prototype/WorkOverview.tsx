@@ -5,6 +5,7 @@ import owlReading from "@/assets/prototype/owl-reading.png";
 import { WorkJourney, type ApprovalStatus } from "./WorkJourney";
 import { RoofLeakJourney } from "./RoofLeakJourney";
 import { roofInsurerDecision, roofLeakWork, type RoofActivityId } from "./roofLeakWork";
+import { initialRoofGuidance, type RoofGuidanceState, type RoofGuideScope } from "./roofGuidance";
 
 type ActivityState = "working" | "waiting" | "needs-you";
 type Activity = { label: string; state: ActivityState };
@@ -131,7 +132,7 @@ function ActivityLine({ activity }: { activity: Activity }) {
 }
 
 /** Illustrative work only: deliberately independent of action-card state and approvals. */
-export function WorkOverview({ onClose, onGuide, sideLetterRequested = false, onJourneyBack, focusNeedsYou = 0 }: { onClose: () => void; onGuide: () => void; sideLetterRequested?: boolean; onJourneyBack?: () => void; focusNeedsYou?: number }) {
+export function WorkOverview({ onClose, onGuide, sideLetterRequested = false, onJourneyBack, focusNeedsYou = 0, roofGuidance = initialRoofGuidance }: { onClose: () => void; onGuide: (scope: "renewal" | RoofGuideScope) => void; sideLetterRequested?: boolean; onJourneyBack?: () => void; focusNeedsYou?: number; roofGuidance?: RoofGuidanceState }) {
   const [journey, setJourney] = useState<"renewal" | "roof" | null>(null);
   const [paused, setPaused] = useState(false);
   const [approval, setApproval] = useState<ApprovalStatus>("idle");
@@ -165,7 +166,7 @@ export function WorkOverview({ onClose, onGuide, sideLetterRequested = false, on
         </Button>
       </div>
 
-      {journey === "renewal" ? <WorkJourney paused={paused} onPauseChange={setPaused} onBack={closeJourney} onGuide={onGuide} sideLetterRequested={sideLetterRequested} approval={approval} onApprovalChange={setApproval} approvalOpen={openAtApproval} /> : journey === "roof" ? <RoofLeakJourney paused={paused} onPauseChange={setPaused} onBack={closeJourney} onGuide={onGuide} initialActivity={roofActivity} /> : <div className="hobson-scroll min-h-0 flex-1 overflow-y-auto">
+      {journey === "renewal" ? <WorkJourney paused={paused} onPauseChange={setPaused} onBack={closeJourney} onGuide={() => onGuide("renewal")} sideLetterRequested={sideLetterRequested} approval={approval} onApprovalChange={setApproval} approvalOpen={openAtApproval} /> : journey === "roof" ? <RoofLeakJourney paused={paused} onPauseChange={setPaused} onBack={closeJourney} onGuide={(scope) => onGuide(scope)} initialActivity={roofActivity} guidance={roofGuidance} /> : <div className="hobson-scroll min-h-0 flex-1 overflow-y-auto">
         <div className="mx-auto w-full max-w-5xl px-5 pb-16 pt-8 sm:px-8 sm:pt-10">
           <header className="mb-10">
             <h2 className="text-3xl font-semibold leading-tight">What I've Done</h2>

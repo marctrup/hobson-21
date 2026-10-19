@@ -3,6 +3,7 @@ import { ArrowLeft, Check, ChevronDown, FileText, Hand, Mail, MessageCircle, Pau
 import { Button } from "@/components/ui/button";
 import owlReading from "@/assets/prototype/owl-reading.png";
 import { roofLeakWork, type RoofActivityId, type RoofActivityState } from "./roofLeakWork";
+import { SHOPFRONT_INSTRUCTION, type RoofGuidanceState, type RoofGuideScope } from "./roofGuidance";
 
 type ActivityId = RoofActivityId;
 type ActivityState = RoofActivityState;
@@ -31,12 +32,13 @@ function stateDot(state: ActivityState) {
 const stateLabel: Record<ActivityState, string> = { working: "Working", waiting: "Waiting", "needs-you": "Needs you" };
 
 /** Illustrative parallel-activities demonstration only — no real work, approvals or integrations. */
-export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initialActivity = "lease" }: {
+export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initialActivity = "lease", guidance }: {
   paused: boolean;
   onPauseChange: (paused: boolean) => void;
   onBack: () => void;
-  onGuide: () => void;
+  onGuide: (scope: RoofGuideScope) => void;
   initialActivity?: ActivityId;
+  guidance: RoofGuidanceState;
 }) {
   const [selected, setSelected] = useState<ActivityId | `done-${number}`>(initialActivity);
   const [paperOpen, setPaperOpen] = useState(false);
@@ -55,7 +57,7 @@ export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initia
           </div>
           <div className="flex shrink-0 flex-wrap items-center gap-2">
             <Button variant="outline" size="sm" onClick={() => onPauseChange(!paused)} className="shrink-0 gap-2">{paused ? <Play className="h-4 w-4" /> : <Pause className="h-4 w-4" />}{paused ? "Resume work" : "Pause work"}</Button>
-            <Button variant="secondary" size="sm" onClick={onGuide} className="gap-2"><MessageCircle className="h-4 w-4" />Guide Hobson</Button>
+            <Button variant="secondary" size="sm" onClick={() => onGuide("overall")} className="gap-2"><MessageCircle className="h-4 w-4" />Guide Hobson</Button>
           </div>
         </div>
         <div className="mt-3 flex items-center gap-3">
@@ -79,6 +81,9 @@ export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initia
                   <span className="min-w-0">
                     <span className="block text-sm font-semibold leading-snug">{activity.title}</span>
                     <span className="mt-1 block text-xs font-normal leading-relaxed text-muted-foreground">{stateLabel[activity.state]} · {activity.note}</span>
+                    {activity.id === "lease" && guidance.shopfrontRequested && <span className="mt-1 block text-xs font-normal leading-relaxed text-muted-foreground">Shopfront roof added to the review.</span>}
+                    {activity.id === "contractor" && guidance.contactOnHold && <span className="mt-1 block text-xs font-normal leading-relaxed text-muted-foreground">Awaiting reply · Further contact on hold.</span>}
+                    {activity.id === "insurer" && guidance.contactOnHold && <span className="mt-1 block text-xs font-normal leading-relaxed text-muted-foreground">Contact on hold at your request.</span>}
                   </span>
                 </Button>
               ))}
@@ -131,6 +136,16 @@ export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initia
                   <h5 className="text-xs font-semibold">Not yet established</h5>
                   <p className="mt-2 text-sm leading-relaxed text-muted-foreground">I haven't finished reviewing the relevant repairing obligations.</p>
                 </div>
+                {guidance.shopfrontRequested && <div className="mt-4 border-l-2 border-ring pl-3">
+                  <h5 className="text-xs font-semibold">Added at your request</h5>
+                  <p className="mt-2 text-sm leading-relaxed">Check whether the shopfront roof forms part of the tenant's premises.</p>
+                  <p className="mt-2 text-xs leading-relaxed text-muted-foreground">I'll check how the premises are described in the lease before reaching a conclusion. The check hasn't been completed, and the roof isn't assumed to be included.</p>
+                </div>}
+                <div className="mt-4">
+                  <Button variant="ghost" size="sm" onClick={() => onGuide("lease")} className="h-auto gap-2 px-0 text-xs text-muted-foreground">
+                    <MessageCircle className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />Guide this activity
+                  </Button>
+                </div>
                 <div className="mt-3">
                   <Button variant="ghost" size="sm" onClick={() => setPaperOpen(!paperOpen)} aria-expanded={paperOpen} className="h-auto max-w-full justify-start gap-2 whitespace-normal px-0 text-xs text-muted-foreground">
                     <FileText className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />Business Lease · {paperOpen ? "Hide paper" : "View paper"}
@@ -152,6 +167,10 @@ export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initia
                   <h5 className="text-xs font-semibold">Current position</h5>
                   <p className="mt-2 text-sm leading-relaxed">Waiting for the contractor's response.</p>
                 </div>
+                {guidance.contactOnHold && <div className="mt-4 border-l-2 border-ring pl-3">
+                  <h5 className="text-xs font-semibold">At your request</h5>
+                  <p className="mt-2 text-sm leading-relaxed">Further contact on hold. The inspection request has already been sent and can't be recalled, but I won't send any follow-up while your instruction stands.</p>
+                </div>}
                 <div className="mt-4 border-l-2 border-border pl-3">
                   <h5 className="text-xs font-semibold">Still outstanding</h5>
                   <p className="mt-2 text-sm leading-relaxed text-muted-foreground">No inspection report has been received.</p>
@@ -173,8 +192,12 @@ export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initia
                 </div>
                 <div className="mt-4 border-l-2 border-ring pl-3">
                   <h5 className="text-xs font-semibold">Current position</h5>
-                  <p className="mt-2 text-sm leading-relaxed">Awaiting your approval. Nothing has been sent.</p>
+                  <p className="mt-2 text-sm leading-relaxed">{guidance.contactOnHold ? "On hold at your request. Nothing has been sent." : "Awaiting your approval. Nothing has been sent."}</p>
                 </div>
+                {guidance.contactOnHold && <div className="mt-4 border-l-2 border-border pl-3">
+                  <h5 className="text-xs font-semibold">At your request</h5>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">The prepared notification remains available, but I won't send it while your instruction to hold contact stands.</p>
+                </div>}
                 <article aria-label="Draft insurer notification preview" className="mt-5 rounded-md border border-border bg-popover px-4 py-4">
                   <p className="flex items-center gap-2 text-xs font-medium text-muted-foreground"><Mail className="h-3.5 w-3.5" aria-hidden="true" />Draft notification · not yet sent</p>
                   <dl className="mt-3 space-y-2 text-sm">
@@ -183,8 +206,8 @@ export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initia
                   </dl>
                   <blockquote className="mt-4 whitespace-pre-line border-t border-border pt-4 text-sm leading-relaxed">{INSURER_BODY}</blockquote>
                 </article>
-                <Button size="sm" variant="outline" className="mt-4" disabled title="Approval review is demonstrated in the tenancy renewal journey">Review approval</Button>
-                <p className="mt-2 text-xs leading-relaxed text-muted-foreground">The approval flow itself is demonstrated in the tenancy renewal journey; this preview shows only what is waiting for you.</p>
+                <Button size="sm" variant="outline" className="mt-4" disabled title={guidance.contactOnHold ? "Sending is on hold at your request" : "Approval review is demonstrated in the tenancy renewal journey"}>Review approval</Button>
+                <p className="mt-2 text-xs leading-relaxed text-muted-foreground">{guidance.contactOnHold ? "Sending is on hold at your request; the draft remains here unchanged." : "The approval flow itself is demonstrated in the tenancy renewal journey; this preview shows only what is waiting for you."}</p>
               </>}
             </div>
           </section>
