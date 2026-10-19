@@ -1,8 +1,8 @@
 /** Local illustrative guidance only; never executes work or confirms paper terms. */
 export const SIDE_LETTER_INSTRUCTION = "There's also a side letter from 2024. Please check that before preparing the renewal summary.";
 
-export type WorkGuidanceState = { sideLetterRequested: boolean };
-export const initialWorkGuidance: WorkGuidanceState = { sideLetterRequested: false };
+export type WorkGuidanceState = { sideLetterRequested: boolean; sideLetterStatus: "awaiting-paper" | null };
+export const initialWorkGuidance: WorkGuidanceState = { sideLetterRequested: false, sideLetterStatus: null };
 
 export function applyWorkGuidance(state: WorkGuidanceState, instruction: string) {
   const normalise = (text: string) => text.trim().replace(/[’‘]/g, "'").replace(/\s+/g, " ").replace(/[.!]+$/, "").toLowerCase();
@@ -13,9 +13,9 @@ export function applyWorkGuidance(state: WorkGuidanceState, instruction: string)
     };
   }
   return {
-    state: state.sideLetterRequested ? state : { ...state, sideLetterRequested: true },
+    state: state.sideLetterRequested ? state : { ...state, sideLetterRequested: true, sideLetterStatus: "awaiting-paper" as const },
     reply: state.sideLetterRequested
-      ? "The 2024 side letter is already included in the tenancy history check. It still needs checking before I prepare your summary."
-      : "Of course. I'll check the side letter as part of the tenancy history before preparing your summary.",
+      ? "The 2024 side letter is already included in the investigation. I'm still awaiting the paper."
+      : "Of course. I've added the 2024 side letter to the investigation. I haven't located the paper yet.",
   };
 }
