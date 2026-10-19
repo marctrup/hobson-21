@@ -102,7 +102,8 @@ describe("Illustrative work journey", () => {
     const lookingAfter = screen.getByRole("region", { name: /What I'm looking after/ });
     expect(lookingAfter).toHaveTextContent("Stanley House · Flat 6");
     expect(within(lookingAfter).getByText("Renewal email — your approval needed")).toBeInTheDocument();
-    await user.click(within(needsYou).getByRole("button", { name: "Review decision" }));
+    const renewalDecision = within(needsYou).getByText("Stanley House · Flat 6").closest("article")!;
+    await user.click(within(renewalDecision).getByRole("button", { name: "Review decision" }));
     expect(screen.getByText("May I send this email?")).toBeVisible();
     await user.click(screen.getByRole("button", { name: "Change before sending" }));
     await user.type(screen.getByLabelText("Edit the email"), " — revised");
