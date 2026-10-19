@@ -230,7 +230,7 @@ export function WorkJourney({ paused, onPauseChange, onBack, onGuide, sideLetter
   return (
     <div className="flex min-h-0 flex-1 flex-col" role="region" aria-label="Tenancy renewal work journey">
       <header className="shrink-0 border-b border-border px-5 pb-5 pt-4 sm:px-6">
-        <Button variant="ghost" size="sm" onClick={onBack} className="mb-4 gap-2 px-0 text-muted-foreground"><ArrowLeft className="h-4 w-4" />Back to What I've Done</Button>
+        <Button variant="ghost" size="sm" onClick={onBack} className="mb-4 gap-2 px-0 text-muted-foreground"><ArrowLeft className="h-4 w-4" />Back to What I'm Up To</Button>
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div className="min-w-0 flex-1 basis-64">
             <p className="mb-2 text-xs text-muted-foreground">Stanley House · Flat 6</p>

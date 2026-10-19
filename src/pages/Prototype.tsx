@@ -3297,9 +3297,9 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
       });
     }
 
-    // Right-slot suffixes (Documents / What I've done) sit at the end of the current path
+    // Right-slot suffixes (Documents / What I'm Up To) sit at the end of the current path
     if (showDocuments) base.push({ label: "Documents" });
-    else if (showWhatIveDone) base.push({ label: "What I've done" });
+    else if (showWhatIveDone) base.push({ label: "What I'm Up To" });
 
     // Last item is the current location -> not clickable
     if (base.length > 0) base[base.length - 1] = { ...base[base.length - 1], onClick: undefined };
@@ -3360,7 +3360,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
           <>
             <RailItem icon="pin" label="Portfolio" active={view !== "onboarding" && !showDocuments && !showWhatIveDone} onClick={() => { setShowDocuments(false); setShowWhatIveDone(false); goPortfolio(false); }} />
             <RailItem icon="doc" label="Documents" active={view !== "onboarding" && showDocuments} onClick={() => { setShowWhatIveDone(false); setShowDocuments(true); }} />
-            {!testerMode && <RailItem icon="clock" label={"What I've done"} active={view !== "onboarding" && showWhatIveDone} onClick={() => { setShowDocuments(false); setShowWhatIveDone(true); }} />}
+            {!testerMode && <RailItem icon="clock" label={"What I'm Up To"} active={view !== "onboarding" && showWhatIveDone} onClick={() => { setShowDocuments(false); setShowWhatIveDone(true); }} />}
             <RailItem icon="chat" label="Chat History" />
             <div className="mt-auto flex flex-col items-center gap-3 pb-2">
               <button className="w-11 h-11 rounded-full bg-[#56514A] text-white grid place-items-center shadow-md hover:bg-[#56514A] transition" aria-label="A new conversation">

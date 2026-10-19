@@ -184,7 +184,7 @@ export function WorkOverview({ onClose, onGuide, sideLetterRequested = false, on
   };
 
   return (
-    <div className="absolute inset-0 z-[1200] flex flex-col bg-background text-foreground" role="region" aria-label="What I've Done">
+    <div className="absolute inset-0 z-[1200] flex flex-col bg-background text-foreground" role="region" aria-label="What I'm Up To">
       <div className="flex shrink-0 items-center justify-between border-b border-border px-5 py-3 sm:px-8">
         <span className="text-xs text-muted-foreground">Your portfolio · Work overview</span>
         <Button variant="ghost" size="icon" onClick={onClose} aria-label="Close work overview" title="Close work overview" className="h-8 w-8 text-muted-foreground">
@@ -195,7 +195,7 @@ export function WorkOverview({ onClose, onGuide, sideLetterRequested = false, on
       {journey === "renewal" ? <WorkJourney paused={paused} onPauseChange={setPaused} onBack={closeJourney} onGuide={() => onGuide("renewal")} sideLetterRequested={sideLetterRequested} approval={approval} onApprovalChange={setApproval} approvalOpen={openAtApproval} /> : journey === "roof" ? <RoofLeakJourney paused={paused} onPauseChange={setPaused} onBack={closeJourney} onGuide={(scope) => onGuide(scope, scope === "lease" && roofHelp.shown ? LEASE_PLANS_INSTRUCTION : undefined)} initialActivity={roofActivity} guidance={roofGuidance} help={roofHelp} onHelpChange={setRoofHelp} /> : <div className="hobson-scroll min-h-0 flex-1 overflow-y-auto">
         <div className="mx-auto w-full max-w-5xl px-5 pb-16 pt-8 sm:px-8 sm:pt-10">
           <header className="mb-10">
-            <h2 className="text-3xl font-semibold leading-tight">What I've Done</h2>
+            <h2 className="text-3xl font-semibold leading-tight">What I'm Up To</h2>
             <div className="mt-5 flex items-center gap-4">
               <img src={owlReading} alt="Hobson reading" className="h-16 w-16 shrink-0 object-contain" />
               <p className="max-w-xl text-base leading-relaxed text-muted-foreground">
