@@ -4,6 +4,7 @@
 
 export const SHOPFRONT_INSTRUCTION = "Check whether the roof above the shopfront forms part of the tenant's premises.";
 export const HOLD_CONTACT_INSTRUCTION = "Don't contact anyone else until I've spoken to the tenant.";
+export const LIFT_HOLD_INSTRUCTION = "You can contact people again.";
 
 export type RoofGuideScope = "overall" | "lease";
 
@@ -12,9 +13,11 @@ export type RoofGuidanceState = {
   shopfrontRequested: boolean;
   /** The user asked Hobson to hold all further external contact. */
   contactOnHold: boolean;
+  /** A contact hold was applied and later lifted — the record of both is preserved. */
+  holdWasLifted: boolean;
 };
 
-export const initialRoofGuidance: RoofGuidanceState = { shopfrontRequested: false, contactOnHold: false };
+export const initialRoofGuidance: RoofGuidanceState = { shopfrontRequested: false, contactOnHold: false, holdWasLifted: false };
 
 const normalise = (text: string) =>
   text.trim().replace(/[’‘]/g, "'").replace(/\s+/g, " ").replace(/[.!]+$/, "").toLowerCase();
@@ -44,9 +47,18 @@ export function applyRoofGuidance(
     };
   }
 
+  if (scope === "overall" && text === normalise(LIFT_HOLD_INSTRUCTION)) {
+    return {
+      state: state.contactOnHold ? { ...state, contactOnHold: false, holdWasLifted: true } : state,
+      reply: state.contactOnHold
+        ? "Of course. I've lifted your hold on further contact. I'll continue under the existing instructions, and I'll still ask for approval before sending anything that needs your permission."
+        : "There's no hold in place at present — I'm continuing under the existing instructions, and I'll still ask for approval before sending anything that needs your permission.",
+    };
+  }
+
   const example = scope === "lease" ? SHOPFRONT_INSTRUCTION : HOLD_CONTACT_INSTRUCTION;
   return {
     state,
-    reply: `For this demonstration, I can take two instructions: one about the shopfront roof while we're looking at the lease review, and one about holding further contact for the investigation as a whole. I haven't changed the work. You can ask: “${example}”`,
+    reply: `For this demonstration, I can take three instructions: one about the shopfront roof while we're looking at the lease review, and two about holding or resuming further contact for the investigation as a whole. I haven't changed the work. You can ask: “${example}”`,
   };
 }
