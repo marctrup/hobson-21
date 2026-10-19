@@ -4012,8 +4012,8 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                 const result = guideScope === "renewal"
                   ? applyWorkGuidance(workGuidance, instruction)
                   : applyRoofGuidance(roofGuidance, guideScope, instruction);
-                if (guideScope === "renewal") setWorkGuidance(result.state);
-                else setRoofGuidance(result.state);
+                if (guideScope === "renewal") setWorkGuidance(result.state as typeof workGuidance);
+                else setRoofGuidance(result.state as typeof roofGuidance);
                 const id = crypto.randomUUID();
                 setMessages((previous) => [...previous, { id: `guidance-user-${id}`, role: "user", text: instruction }, { id: `guidance-hobson-${id}`, role: "hobson", text: result.reply }]);
                 setInput("");
