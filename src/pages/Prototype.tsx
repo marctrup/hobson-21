@@ -9032,35 +9032,16 @@ function PortfolioBriefing({
     );
   }
 
-  // Initial chip choice
+  // Initial action — a single contextual continuation of the briefing
   if (choice === null) {
-    const chips: { label: string; value: "all" | "urgent" | "browse" }[] = [
-      { label: `Show me what needs me (${pending.length})`, value: "all" },
-      ...(urgent.length ? [{ label: `Just the urgent ${urgent.length === 1 ? "one" : `${urgent.length}`}`, value: "urgent" as const }] : []),
-    ];
-
     return (
       <div className="flex flex-col items-end gap-1.5">
-        <span className="text-[11px] text-ink-muted flex items-center gap-1">
-          Tap to reply <span aria-hidden>↓</span>
-        </span>
-        <div className="flex gap-1.5 flex-wrap justify-end">
-          {chips.map((c, i) => (
-            <button
-              key={c.value}
-              onClick={() => setChoice(c.value)}
-              autoFocus={i === 0}
-              className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold shadow-sm transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#56514A] ${
-                i === 0
-                  ? "bg-[#56514A] text-white hover:bg-[#56514A] animate-[pulse_1.6s_ease-in-out_infinite]"
-                  : "bg-[#F1EBDE] text-[#56514A] hover:bg-[#E8E1D4] border border-[#E8E1D4]"
-              }`}
-            >
-              {c.label}
-              {i === 0 && <span aria-hidden className="animate-bounce">↓</span>}
-            </button>
-          ))}
-        </div>
+        <button
+          onClick={onShowNeedsYou}
+          className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold shadow-sm transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#56514A] bg-[#F1EBDE] text-[#56514A] hover:bg-[#E8E1D4] border border-[#E8E1D4]"
+        >
+          Show me what needs me
+        </button>
       </div>
     );
   }
