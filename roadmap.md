@@ -1,7 +1,7 @@
 # Roadmap
 
 ## Iteration 20 — successful completion
-- [ ] Add a reversible completed roof-repair demonstration with on-demand illustrative records, preserved attempts, distinct completed outcomes and shared overview counts; verify tests and the on-screen flow.
+- [x] Add a reversible completed roof-repair demonstration with on-demand illustrative records, preserved attempts, distinct completed outcomes and shared overview counts; 35 focused tests and the complete on-screen flow verified.
 
 ## Iteration 19 — roof leak attempts
 - [x] Iteration 19A: compact closing summary, on-demand activity history and retained-knowledge explanation; overview and active behaviour preserved; 30 tests and on-screen flow verified.

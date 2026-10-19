@@ -44,11 +44,11 @@ describe("Reversible roof completion demonstration", () => {
     expect(screen.queryByRole("button", { name: "Resume work" })).not.toBeInTheDocument();
     expect(screen.queryByRole("button", { name: "Review approval" })).not.toBeInTheDocument();
     for (const name of ["Contractor repair completion report", "Confirmation email", "Relevant inspection record"]) {
-      await user.click(screen.getByRole("button", { name, exact: true }));
+      await user.click(screen.getByRole("button", { name }));
       expect(screen.getByLabelText(`${name} illustrative preview`)).toBeVisible();
     }
-    await user.click(screen.getByRole("button", { name: "Recorded the authorised repair instruction", exact: true }));
-    await user.click(screen.getByRole("button", { name: "Authorised repair instruction record", exact: true }));
+    await user.click(screen.getByRole("button", { name: "Recorded the authorised repair instruction" }));
+    await user.click(screen.getByRole("button", { name: "Authorised repair instruction record" }));
     expect(screen.getByLabelText("Authorised repair instruction record illustrative preview")).toBeVisible();
     await user.click(screen.getByRole("button", { name: "Earlier investigation history" }));
     await user.click(screen.getByRole("button", { name: "Preserved investigation · Attempt 1" }));
