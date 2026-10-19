@@ -1,5 +1,9 @@
 # Roadmap
 
+## What I've Done — work journey
+- [x] Open the Stanley House tenancy renewal journey with completed findings, paper extracts, current and next work.
+- [x] Add illustrative pause/resume and guidance through the existing conversation; verify return navigation and preserved work.
+
 ## What I've Done — work overview
 - [x] Replace only the existing content panel with illustrative Needs you, In progress and Completed work.
 - [x] Verify the screen in the existing shell, including scrolling and unchanged navigation.
