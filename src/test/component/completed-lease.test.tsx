@@ -22,7 +22,7 @@ describe("Completed Flat 3 lease exploration", () => {
     await user.click(screen.getByRole("button", { name: "Business Lease · Rent wording" }));
     expect(screen.getByLabelText("Rent wording illustrative extract")).toBeVisible();
     await user.click(screen.getByRole("button", { name: "Prepared the cited summary" }));
-    await user.click(screen.getByRole("button", { name: "Map", exact: true }));
+    await user.click(screen.getByRole("button", { name: /^Map$/ }));
     expect(screen.getByRole("group", { name: "Stanley House · Flat 3 Papers / Map" })).toBeVisible();
     await user.click(screen.getByRole("button", { name: "Back to What I'm Up To" }));
     expect(within(screen.getByRole("region", { name: "What I've accomplished" })).getAllByRole("article")).toHaveLength(3);
