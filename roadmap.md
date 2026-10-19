@@ -1,5 +1,8 @@
 # Roadmap
 
+## Iteration 20 correction — completion access
+- [ ] Connect the existing successful-completion preview beside Preview needs help on the normal lease-review desk; verify records, overview placement and restored investigation without changing other behaviour.
+
 ## Job Papers / Map toggle
 - [x] Add job-scoped Papers / Map controls to the roof-leak and tenancy-renewal headers, preserve journey state and verify both views; 37 tests pass and both map locations and paper previews checked on screen.
 
