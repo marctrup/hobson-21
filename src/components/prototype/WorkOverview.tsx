@@ -98,6 +98,12 @@ function SectionHeading({ id, title, count, icon: Icon }: {
 export function WorkOverview({ onClose, onGuide, sideLetterRequested = false, onJourneyBack, focusNeedsYou = 0 }: { onClose: () => void; onGuide: () => void; sideLetterRequested?: boolean; onJourneyBack?: () => void; focusNeedsYou?: number }) {
   const [journeyOpen, setJourneyOpen] = useState(false);
   const [paused, setPaused] = useState(false);
+  const [approval, setApproval] = useState<ApprovalStatus>("idle");
+  const [openAtApproval, setOpenAtApproval] = useState(false);
+  const awaitingApproval = approval === "awaiting";
+  const visibleReviews = awaitingApproval ? [renewalApproval, ...reviews] : reviews;
+  const visibleOngoing = awaitingApproval ? ongoing.filter((work) => work.place !== "Stanley House · Flat 6") : ongoing;
+  const openJourney = (atApproval: boolean) => { setOpenAtApproval(atApproval); setJourneyOpen(true); };
   useEffect(() => {
     if (focusNeedsYou > 0 && !journeyOpen) {
       document.getElementById("work-needs-you")?.scrollIntoView({ block: "start" });
@@ -112,25 +118,25 @@ export function WorkOverview({ onClose, onGuide, sideLetterRequested = false, on
         </Button>
       </div>
 
-      {journeyOpen ? <WorkJourney paused={paused} onPauseChange={setPaused} onBack={() => { setJourneyOpen(false); onJourneyBack?.(); }} onGuide={onGuide} sideLetterRequested={sideLetterRequested} /> : <div className="hobson-scroll min-h-0 flex-1 overflow-y-auto">
+      {journeyOpen ? <WorkJourney paused={paused} onPauseChange={setPaused} onBack={() => { setJourneyOpen(false); setOpenAtApproval(false); onJourneyBack?.(); }} onGuide={onGuide} sideLetterRequested={sideLetterRequested} approval={approval} onApprovalChange={setApproval} approvalOpen={openAtApproval} /> : <div className="hobson-scroll min-h-0 flex-1 overflow-y-auto">
         <div className="mx-auto w-full max-w-5xl px-5 pb-16 pt-8 sm:px-8 sm:pt-10">
           <header className="mb-10">
             <h2 className="text-3xl font-semibold leading-tight">What I've Done</h2>
             <div className="mt-5 flex items-center gap-4">
               <img src={owlReading} alt="Hobson reading" className="h-16 w-16 shrink-0 object-contain" />
               <p className="max-w-xl text-base leading-relaxed text-muted-foreground">
-                I've finished <span className="font-medium text-foreground">3 pieces of work</span>, I'm looking after <span className="font-medium text-foreground">4 more</span>, and there are <span className="font-medium text-foreground">2 things I'd like you to review.</span>
+                I've finished <span className="font-medium text-foreground">3 pieces of work</span>, I'm looking after <span className="font-medium text-foreground">{visibleOngoing.length} more</span>, and there are <span className="font-medium text-foreground">{visibleReviews.length} things I'd like you to review.</span>
               </p>
             </div>
           </header>
 
           <section aria-labelledby="work-needs-you" className="mb-10">
-            <SectionHeading id="work-needs-you" title="Needs you" count={reviews.length} icon={Hand} />
+            <SectionHeading id="work-needs-you" title="Needs you" count={visibleReviews.length} icon={Hand} />
             <div className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,260px),1fr))] gap-4">
-              {reviews.map((work) => (
+              {visibleReviews.map((work) => (
                 <article key={work.title} className="flex min-w-0 flex-col rounded-lg border border-border border-t-2 border-t-ring bg-popover p-5">
                   <p className="text-xs text-muted-foreground">{work.place}</p>
-                  <h4 className="mt-2 text-base font-semibold leading-snug">{work.title}</h4>
+                  <h4 className="mt-2 text-base font-semibold leading-snug">{work.place === "Stanley House · Flat 6" ? <Button variant="link" onClick={() => openJourney(true)} className="h-auto max-w-full justify-start gap-2 whitespace-normal p-0 text-left text-base font-semibold leading-snug">{work.title}<ArrowUpRight className="h-4 w-4 shrink-0" aria-hidden="true" /></Button> : work.title}</h4>
                   <p className="mb-5 mt-3 text-sm leading-relaxed text-muted-foreground">{work.prepared}</p>
                   <div className="mt-auto border-t border-border pt-4">
                     <p className="mb-2 flex items-center gap-2 text-xs font-medium text-foreground"><CornerDownRight className="h-3.5 w-3.5 text-muted-foreground" aria-hidden="true" />Your decision</p>
@@ -142,12 +148,12 @@ export function WorkOverview({ onClose, onGuide, sideLetterRequested = false, on
           </section>
 
           <section aria-labelledby="work-in-progress" className="mb-10">
-            <SectionHeading id="work-in-progress" title="In progress" count={ongoing.length} icon={CircleDot} />
+            <SectionHeading id="work-in-progress" title="In progress" count={visibleOngoing.length} icon={CircleDot} />
             <div className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,260px),1fr))] gap-x-6 gap-y-7">
-              {ongoing.map((work) => (
+              {visibleOngoing.map((work) => (
                 <article key={work.title} className="min-w-0 border-b border-border pb-6">
                   <p className="text-xs text-muted-foreground">{work.place}</p>
-                  <h4 className="mt-2 text-base font-semibold leading-snug">{work.place === "Stanley House · Flat 6" ? <Button variant="link" onClick={() => setJourneyOpen(true)} className="h-auto max-w-full justify-start gap-2 whitespace-normal p-0 text-left text-base font-semibold leading-snug">{work.title}<ArrowUpRight className="h-4 w-4 shrink-0" aria-hidden="true" /></Button> : work.title}</h4>
+                  <h4 className="mt-2 text-base font-semibold leading-snug">{work.place === "Stanley House · Flat 6" ? <Button variant="link" onClick={() => openJourney(false)} className="h-auto max-w-full justify-start gap-2 whitespace-normal p-0 text-left text-base font-semibold leading-snug">{work.title}<ArrowUpRight className="h-4 w-4 shrink-0" aria-hidden="true" /></Button> : work.title}</h4>
                   <p className="mt-3 flex items-start gap-2 text-sm leading-relaxed text-muted-foreground"><Check className="mt-1 h-3.5 w-3.5 shrink-0" aria-hidden="true" />{work.recent}</p>
                   <div className="my-4 border-l-2 border-ring bg-muted/50 px-3 py-3">
                     <p className="mb-1.5 text-xs font-medium text-muted-foreground">Now</p>

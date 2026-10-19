@@ -83,6 +83,41 @@ describe("Illustrative work journey", () => {
     }
   });
 
+  it("asks approval before sending the renewal email and reflects the decision", async () => {
+    const user = userEvent.setup();
+    render(<WorkOverview onClose={vi.fn()} onGuide={vi.fn()} />);
+    await user.click(screen.getByRole("button", { name: "Getting the tenancy renewal ready" }));
+    await user.click(screen.getByRole("button", { name: "Preview approval stage" }));
+    expect(screen.getByRole("button", { name: /Approve sending the renewal email/ })).toHaveAttribute("aria-current", "step");
+    expect(screen.getByText("May I send this email?")).toBeVisible();
+    expect(screen.getByText("tenant@example.com")).toBeVisible();
+    expect(screen.getByText((_, el) => el?.tagName === "P" && /Attachments:\s*None/.test(el.textContent ?? ""))).toBeVisible();
+    expect(screen.getByText("What approving this allows")).toBeVisible();
+    await user.click(screen.getByRole("button", { name: "Not now" }));
+    expect(screen.getByRole("button", { name: /Checking the tenancy history/ })).toHaveAttribute("aria-current", "step");
+    await user.click(screen.getByRole("button", { name: "Back to What I've Done" }));
+    const needsYou = screen.getByRole("region", { name: /Needs you/ });
+    expect(within(needsYou).getByText("Stanley House · Flat 6")).toBeInTheDocument();
+    expect(screen.getByRole("region", { name: /In progress/ })).not.toHaveTextContent("Stanley House · Flat 6");
+    await user.click(within(needsYou).getByRole("button", { name: "Getting the tenancy renewal ready" }));
+    expect(screen.getByText("May I send this email?")).toBeVisible();
+    await user.click(screen.getByRole("button", { name: "Change before sending" }));
+    await user.type(screen.getByLabelText("Edit the email"), " — revised");
+    await user.click(screen.getByRole("button", { name: "Keep this version" }));
+    expect(screen.getByText(/Approval applies to the latest version/)).toBeVisible();
+    expect(screen.queryByText("Email sent.")).not.toBeInTheDocument();
+    await user.click(screen.getByRole("button", { name: "Approve and send" }));
+    expect(screen.getAllByRole("status").some((el) => el.textContent === "Email sent.")).toBe(true);
+    expect(screen.getByText(/I'll wait for the tenant's response/)).toBeVisible();
+    expect(screen.getByRole("button", { name: /Approve sending the renewal email/ })).toHaveTextContent("Email sent.");
+    await user.click(screen.getByRole("button", { name: "Return to the investigation" }));
+    expect(screen.getByRole("button", { name: /Checking the tenancy history/ })).toHaveAttribute("aria-current", "step");
+    expect(screen.getByRole("button", { name: /Original annual rent\s*£24,000/ })).toBeInTheDocument();
+    await user.click(screen.getByRole("button", { name: "Back to What I've Done" }));
+    expect(screen.getByRole("region", { name: /In progress/ })).toHaveTextContent("Stanley House · Flat 6");
+    expect(screen.getByRole("region", { name: /Needs you/ })).not.toHaveTextContent("Stanley House · Flat 6");
+  });
+
   it("delegates guidance to the existing conversation without closing the journey", async () => {
     const user = userEvent.setup();
     const guide = vi.fn();
