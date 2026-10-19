@@ -2,7 +2,14 @@ import { useEffect, useState } from "react";
 import { ArrowUpRight, Check, CheckCheck, CircleDot, CornerDownRight, Hand, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import owlReading from "@/assets/prototype/owl-reading.png";
-import { WorkJourney } from "./WorkJourney";
+import { WorkJourney, type ApprovalStatus } from "./WorkJourney";
+
+const renewalApproval = {
+  place: "Stanley House · Flat 6",
+  title: "Getting the tenancy renewal ready",
+  prepared: "I've prepared an email asking the tenant to discuss the tenancy renewal.",
+  decision: "May I send the renewal email to the tenant?",
+};
 
 const reviews = [
   {
