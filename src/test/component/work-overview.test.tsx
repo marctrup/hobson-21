@@ -180,9 +180,18 @@ describe("Illustrative work journey", () => {
     await user.click(screen.getByRole("button", { name: "Investigating the roof leak" }));
     expect(screen.getByRole("region", { name: "Roof leak investigation work journey" })).toBeVisible();
     expect(screen.getByText(/I'm continuing my review of the lease, waiting for the contractor and need your approval before contacting the insurer\./)).toBeVisible();
-    // Completed work is shown quietly; no cause or responsibility is implied.
+    // Completed work is a quiet, collapsed history; no cause or responsibility is implied.
+    expect(screen.queryByText("Read the tenant's report.")).not.toBeInTheDocument();
+    await user.click(screen.getByRole("button", { name: /What I've done/ }));
     expect(screen.getByText("Read the tenant's report.")).toBeVisible();
     expect(screen.getByText("Requested a contractor inspection.")).toBeVisible();
+    // Completed actions are selectable and show their recorded outcome on the Desk.
+    await user.click(screen.getByRole("button", { name: /Read the tenant's report\./ }));
+    expect(screen.getByText("Recorded outcome")).toBeVisible();
+    expect(screen.getByText(/the cause of the leak is not yet established\./)).toBeVisible();
+    // Returning to a current activity keeps its status unchanged.
+    await user.click(screen.getByRole("button", { name: /Reviewing repairing obligations/ }));
+    expect(screen.getByRole("button", { name: /Reviewing repairing obligations/ })).toHaveTextContent("Working");
 
     // Each activity is selectable and only changes what is viewed.
     const lease = screen.getByRole("button", { name: /Reviewing repairing obligations/ });
