@@ -32,6 +32,16 @@ const decisions = [
 
 const lookingAfter: { place: string; title: string; aim: string; activities: Activity[] }[] = [
   {
+    place: "Burlington Gardens",
+    title: "Investigating the roof leak",
+    aim: "I'm investigating the source of the leak, checking responsibility and arranging the next steps.",
+    activities: [
+      { label: "Reviewing the lease", state: "working" },
+      { label: "Contractor inspection", state: "waiting" },
+      { label: "Contact the insurer", state: "needs-you" },
+    ],
+  },
+  {
     place: "Stanley House · Flat 6",
     title: "Getting the tenancy renewal ready",
     aim: "Confirm the current tenancy position and prepare a renewal summary for your review.",
