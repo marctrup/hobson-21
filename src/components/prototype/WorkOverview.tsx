@@ -179,7 +179,7 @@ export function WorkOverview({ onClose, onGuide, sideLetterRequested = false, on
       return work.activities.map((activity) =>
         currentRoofWork.number > 1 && activity.label !== "Reviewing the lease"
           ? { ...activity, label: activity.label === "Contractor inspection" ? "Contractor inspection — no new request" : "Insurer notification — not prepared", state: "waiting" as ActivityState }
-          :         activity.label === "Contact the insurer" && roofGuidance.contactOnHold
+          : activity.label === "Contact the insurer" && roofGuidance.contactOnHold
           ? { ...activity, state: "on-hold" as ActivityState }
           : activity.label === "Reviewing the lease" && roofHelp.shown
             ? { ...activity, state: "needs-clarification" as ActivityState }

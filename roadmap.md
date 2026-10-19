@@ -1,7 +1,7 @@
 # Roadmap
 
 ## Iteration 19 — roof leak attempts
-- [ ] Add confirmed End work and Start again, preserve read-only attempts and unsent drafts, remove ended decisions and verify the complete prototype flow.
+- [x] Add confirmed End work and Start again, preserve read-only attempts and unsent drafts, remove ended decisions; 30 focused tests and the complete browser flow pass, including reopening the overview.
 
 ## What I'm Up To — work journey
 - [x] Implement Iteration 7: keep chat near 30% beside readable work, reduce repeated guidance, and keep the mentioned side letter Awaiting paper without fabricated evidence; focused tests and desktop/tablet interaction checks pass.

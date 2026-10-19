@@ -90,7 +90,7 @@ export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initia
             <div>
               {activities.map((activity) => (
                 <Button key={activity.id} variant="ghost" aria-current={selected === activity.id ? "step" : undefined} onClick={() => { setSelected(activity.id); setPaperOpen(false); }} className={`mb-2 h-auto w-full items-start justify-start gap-2 rounded-md border px-2 py-3 text-left whitespace-normal ${selected === activity.id ? "border-border bg-muted/70" : "border-transparent"}`}>
-                  <span aria-hidden="true" className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center">{!work.ended && activity.id === "lease" && help.shown ? <CircleHelp aria-hidden="true" className="h-3.5 w-3.5 text-foreground" strokeWidth={1.6} /> : stateDot(work.ended ? "waiting" : activity.id === "insurer" && guidance.contactOnHold ? "waiting" : activity.state)}</span>
+                  <span aria-hidden="true" className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center">{!work.ended && activity.id === "lease" && help.shown ? <CircleHelp aria-hidden="true" className="h-3.5 w-3.5 text-foreground" strokeWidth={1.6} /> : stateDot(work.ended || (work.number > 1 && activity.id !== "lease") ? "waiting" : activity.id === "insurer" && guidance.contactOnHold ? "waiting" : activity.state)}</span>
                   <span className="min-w-0">
                     <span className="block text-sm font-semibold leading-snug">{activity.title}</span>
                     <span className="mt-1 block text-xs font-normal leading-relaxed text-muted-foreground">{work.ended ? endedPosition[activity.id] : work.number > 1 && activity.id !== "lease" ? "Not started · Fresh approval required before any new contact." : activity.id === "lease" && help.shown ? <><span className="font-medium text-foreground">Needs clarification</span> · Unable to establish whether the affected roof forms part of the tenant's premises.</> : <>{activity.id === "insurer" && guidance.contactOnHold ? "On hold at your request" : stateLabel[activity.state]} · {activity.note}</>}</span>
@@ -130,7 +130,7 @@ export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initia
           <section aria-labelledby="desk-heading" className="min-w-0 px-5 py-5 sm:px-6">
             <h3 id="desk-heading" className="mb-5 text-xs font-semibold text-muted-foreground">On Hobson's Desk</h3>
             <div key={selected}>
-              <h4 className="text-lg font-semibold leading-snug">{selectedDone ? selectedDone.label : selectedActivity?.title}</h4>
+              <h4 className="text-lg font-semibold leading-snug">{previousAttempt ? "Previous attempt" : selectedDone ? selectedDone.label : selectedActivity?.title}</h4>
 
               {recordedAttempt && <RoofAttemptHistory attempt={recordedAttempt} />}
               {!previousAttempt && !work.ended && <>
