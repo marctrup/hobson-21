@@ -11,3 +11,4 @@
 - Keep roof investigation attempts in parent-owned local state shared with the existing composer; terminal end guards and fresh-attempt resets preserve read-only snapshots without leaking old guidance, approvals or pause state into new work or the tenancy example.
 - Keep successful roof completion as a parent-owned reversible preview with typed illustrative records and shared count derivation, never mutate attempts; retain the original journey while previewing so returning restores its exact view and controls.
 - Job Papers / Map controls open a context-only layer without navigating the shell or unmounting the journey; use job-specific illustrative papers and explicitly label approximate locations so state is preserved and unrelated evidence is never shown.
+- Completed lease exploration uses a read-only journey and one typed illustrative source for findings and cited extracts; opening it never alters work counts or starts another job.
