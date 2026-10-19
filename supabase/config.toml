@@ -72,3 +72,6 @@ verify_jwt = false
 
 [functions.hobson-tts]
 verify_jwt = false
+
+[functions.prototype-gate]
+verify_jwt = false
