@@ -9,13 +9,13 @@ describe("Illustrative work journey", () => {
     const guide = vi.fn();
     render(<WorkOverview onClose={vi.fn()} onGuide={guide} />);
     await user.click(screen.getByRole("button", { name: "Getting the tenancy renewal ready" }));
-    const rent = screen.getByRole("button", { name: /Original annual rent £24,000/ });
+    const rent = screen.getByRole("button", { name: /Original annual rent\s*£24,000/ });
     await user.click(rent);
     const rentEvidence = screen.getByRole("region", { name: "Original annual rent evidence" });
     expect(rent).toHaveAttribute("aria-expanded", "true");
     await user.click(within(rentEvidence).getByRole("button", { name: /View paper/ }));
     expect(within(rentEvidence).getByLabelText("Business Lease illustrative extract")).toHaveTextContent("£24,000");
-    await user.click(screen.getByRole("button", { name: /Tenancy end date in the original lease 31 December 2026/ }));
+    await user.click(screen.getByRole("button", { name: /Tenancy end date in the original lease\s*31 December 2026/ }));
     expect(screen.queryByRole("region", { name: "Original annual rent evidence" })).not.toBeInTheDocument();
     const endEvidence = screen.getByRole("region", { name: "Tenancy end date in the original lease evidence" });
     await user.click(within(endEvidence).getByRole("button", { name: /View paper/ }));
