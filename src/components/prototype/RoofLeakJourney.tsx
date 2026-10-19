@@ -85,8 +85,8 @@ export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initia
       </AlertDialog>
 
       <div className="hobson-scroll min-h-0 flex-1 overflow-y-auto">
-        <div className="grid min-h-full grid-cols-[minmax(0,0.35fr)_minmax(0,0.65fr)] max-[640px]:grid-cols-1">
-          <nav aria-label="The Journey" className="min-w-0 border-r border-border px-4 py-5 max-[640px]:border-b max-[640px]:border-r-0">
+        <div className="grid min-h-full grid-cols-[minmax(0,0.35fr)_minmax(0,0.65fr)] items-stretch p-3 sm:p-5 max-[640px]:grid-cols-1 max-[640px]:gap-3">
+          <nav aria-label="The Journey" className="min-w-0 rounded-2xl bg-muted px-4 py-5 sm:rounded-r-none max-[640px]:rounded-2xl">
             <h3 className="mb-5 text-xs font-semibold text-muted-foreground">The Journey</h3>
 
             {work.ended && <Button variant="ghost" size="sm" onClick={() => setSelected("closing")} aria-current={selected === "closing" ? "step" : undefined} className="mb-4 h-auto max-w-full whitespace-normal px-0 text-left text-xs text-muted-foreground">Closing summary</Button>}
@@ -94,7 +94,7 @@ export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initia
             <p className="mb-2 text-xs font-medium text-muted-foreground">{work.ended ? "Where we stopped" : "Happening now"}</p>
             <div>
               {activities.map((activity) => (
-                <Button key={activity.id} variant="ghost" aria-current={selected === activity.id ? "step" : undefined} onClick={() => { setSelected(activity.id); setPaperOpen(false); }} className={`mb-2 h-auto w-full items-start justify-start gap-2 rounded-md border px-2 py-3 text-left whitespace-normal ${selected === activity.id ? "border-border bg-muted/70" : "border-transparent"}`}>
+                <Button key={activity.id} variant="ghost" aria-current={selected === activity.id ? "step" : undefined} onClick={() => { setSelected(activity.id); setPaperOpen(false); }} className={`mb-2 h-auto w-full items-start justify-start gap-2 rounded-md border px-2 py-3 text-left whitespace-normal ${selected === activity.id ? "border-border bg-card shadow-sm min-[641px]:-mr-[17px] min-[641px]:rounded-r-none min-[641px]:border-r-card relative z-10" : "border-transparent hover:bg-background/60"}`}>
                   <span aria-hidden="true" className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center">{!work.ended && activity.id === "lease" && help.shown ? <CircleHelp aria-hidden="true" className="h-3.5 w-3.5 text-foreground" strokeWidth={1.6} /> : stateDot(work.ended || (work.number > 1 && activity.id !== "lease") ? "waiting" : activity.id === "insurer" && guidance.contactOnHold ? "waiting" : activity.state)}</span>
                   <span className="min-w-0">
                     <span className="block text-sm font-semibold leading-snug">{activity.title}</span>
@@ -123,7 +123,7 @@ export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initia
               {historyOpen && <div id="roof-history">
                 {work.previous.map((attempt, index) => <Button key={attempt.number} variant="ghost" onClick={() => setSelected(`previous-${index}`)} className="mb-2 h-auto w-full flex-col items-start whitespace-normal text-left"><span className="text-sm">Previous attempt</span><span className="text-xs text-muted-foreground">Ended by you.</span></Button>)}
                 {completed.map((item, index) => (
-                  <Button key={item.label} variant="ghost" aria-current={selected === `done-${index}` ? "step" : undefined} onClick={() => { setSelected(`done-${index}`); setPaperOpen(false); }} className={`mb-1 h-auto w-full items-start justify-start gap-2 rounded-md border px-2 py-2 text-left whitespace-normal ${selected === `done-${index}` ? "border-border bg-muted/70" : "border-transparent"}`}>
+                  <Button key={item.label} variant="ghost" aria-current={selected === `done-${index}` ? "step" : undefined} onClick={() => { setSelected(`done-${index}`); setPaperOpen(false); }} className={`mb-1 h-auto w-full items-start justify-start gap-2 rounded-md border px-2 py-2 text-left whitespace-normal ${selected === `done-${index}` ? "border-border bg-card shadow-sm min-[641px]:-mr-[17px] min-[641px]:rounded-r-none min-[641px]:border-r-card relative z-10" : "border-transparent hover:bg-background/60"}`}>
                     <Check aria-hidden="true" className="mt-0.5 h-3.5 w-3.5 shrink-0 text-muted-foreground" strokeWidth={1.6} />
                     <span className="min-w-0 text-sm font-normal leading-relaxed text-muted-foreground">{item.label}</span>
                   </Button>
@@ -132,7 +132,7 @@ export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initia
             </div>
           </nav>
 
-          <section aria-labelledby="desk-heading" className="min-w-0 px-5 py-5 sm:px-6">
+          <section aria-labelledby="desk-heading" className="relative min-w-0 rounded-2xl border border-border bg-card px-5 py-5 shadow-sm sm:-ml-px sm:px-7">
             <h3 id="desk-heading" className="mb-5 text-xs font-semibold text-muted-foreground">On Hobson's Desk</h3>
             <div key={selected}>
               <h4 className="text-lg font-semibold leading-snug">{selected === "closing" ? "Investigation ended by you" : previousAttempt ? "Previous attempt" : selectedDone ? selectedDone.label : selectedActivity?.title}</h4>

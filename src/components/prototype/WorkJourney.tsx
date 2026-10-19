@@ -254,22 +254,22 @@ export function WorkJourney({ paused, onPauseChange, onBack, onGuide, sideLetter
       </header>
 
       <div className="hobson-scroll min-h-0 flex-1 overflow-y-auto">
-        <div className="grid min-h-full grid-cols-[minmax(0,0.35fr)_minmax(0,0.65fr)] max-[640px]:grid-cols-1">
-          <nav aria-label="The Journey" className="min-w-0 border-r border-border px-4 py-5 max-[640px]:border-b max-[640px]:border-r-0">
+        <div className="grid min-h-full grid-cols-[minmax(0,0.35fr)_minmax(0,0.65fr)] items-stretch p-3 sm:p-5 max-[640px]:grid-cols-1 max-[640px]:gap-3">
+          <nav aria-label="The Journey" className="min-w-0 rounded-2xl bg-muted px-4 py-5 sm:rounded-r-none max-[640px]:rounded-2xl">
             <h3 className="mb-5 text-xs font-semibold text-muted-foreground">The Journey</h3>
             <div className="relative">
               <div aria-hidden="true" className="absolute bottom-7 left-3 top-8 w-px bg-border" />
               {steps.map((step) => <div key={step.id}>
-                {step.group && <p className="relative mb-2 mt-4 bg-background text-xs font-medium text-muted-foreground first:mt-0">{step.id === "history" && paused ? "Paused here" : step.group}</p>}
-                <Button variant="ghost" aria-current={selected === step.id ? "step" : undefined} onClick={() => { setSelected(step.id); setEvidence(null); }} className={`relative mb-2 h-auto w-full items-start justify-start gap-2 rounded-md border px-2 py-3 text-left whitespace-normal ${selected === step.id ? "border-border bg-muted/70" : "border-transparent"}`}>
-                  <span aria-hidden="true" className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center bg-background">{stepIcon(step.id)}</span>
+                {step.group && <p className="relative mb-2 mt-4 bg-muted text-xs font-medium text-muted-foreground first:mt-0">{step.id === "history" && paused ? "Paused here" : step.group}</p>}
+                <Button variant="ghost" aria-current={selected === step.id ? "step" : undefined} onClick={() => { setSelected(step.id); setEvidence(null); }} className={`relative mb-2 h-auto w-full items-start justify-start gap-2 rounded-md border px-2 py-3 text-left whitespace-normal ${selected === step.id ? "border-border bg-card shadow-sm min-[641px]:-mr-[17px] min-[641px]:rounded-r-none min-[641px]:border-r-card relative z-10" : "border-transparent hover:bg-background/60"}`}>
+                  <span aria-hidden="true" className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center bg-transparent">{stepIcon(step.id)}</span>
                   <span className="min-w-0"><span className="block text-sm font-semibold leading-snug">{step.title}</span><span className="mt-1 block text-xs font-normal leading-relaxed text-muted-foreground">{step.note}</span></span>
                 </Button>
               </div>)}
             </div>
           </nav>
 
-          <section aria-labelledby="desk-heading" className="min-w-0 px-5 py-5 sm:px-6">
+          <section aria-labelledby="desk-heading" className="relative min-w-0 rounded-2xl border border-border bg-card px-5 py-5 shadow-sm sm:-ml-px sm:px-7">
             <h3 id="desk-heading" className="mb-5 text-xs font-semibold text-muted-foreground">On Hobson's Desk</h3>
             <div key={selected}>
               <h4 className="text-lg font-semibold leading-snug">{selectedStep?.title}</h4>
