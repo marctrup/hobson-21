@@ -1427,6 +1427,12 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
   const [portfolioChip, setPortfolioChip] = useState<string | null>(null);
   const [actionCards, setActionCards] = useState<ActionCard[]>(INITIAL_ACTION_CARDS);
   const [briefingChoice, setBriefingChoice] = useState<null | "all" | "urgent" | "browse">(null);
+  const [needsYouFocus, setNeedsYouFocus] = useState(0);
+  const showNeedsYou = () => {
+    setShowDocuments(false);
+    setShowWhatIveDone(true);
+    setNeedsYouFocus((n) => n + 1);
+  };
   const [expandedCardId, setExpandedCardId] = useState<string | null>(null);
   const [hoveredCardPropertyId, setHoveredCardPropertyId] = useState<string | null>(null);
   const [actionToast, setActionToast] = useState<string | null>(null);
@@ -9004,10 +9010,12 @@ function PortfolioBriefing({
   onReview,
   onManualComplete,
   onOpenWorkflow,
+  onShowNeedsYou,
 }: {
   cards: ActionCard[];
   choice: null | "all" | "urgent" | "browse";
   setChoice: (c: null | "all" | "urgent" | "browse") => void;
+  onShowNeedsYou: () => void;
   expandedCardId: string | null;
   setExpandedCardId: (id: string | null) => void;
   onHoverCard: (propertyId: string | null) => void;
