@@ -1,7 +1,7 @@
 # Roadmap
 
 ## What I've Done — work journey
-- [ ] Replace the individual report layout with a selectable journey and desk; keep pause visible and verify all four steps without changing work status.
+- [x] Replace the individual report layout with a selectable journey and desk; keep pause visible and verify all four steps without changing work status.
 - [x] Refine only current work with selectable illustrative papers, original-lease findings and outstanding uncertainty; verify previews and pause behaviour.
 - [x] Open the Stanley House tenancy renewal journey with completed findings, paper extracts, current and next work.
 - [x] Add illustrative pause/resume and guidance through the existing conversation; verify return navigation and preserved work.
