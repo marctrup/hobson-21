@@ -208,4 +208,30 @@ describe("Illustrative work journey", () => {
     await user.click(screen.getByRole("button", { name: "Getting the tenancy renewal ready" }));
     expect(screen.getByRole("region", { name: "Tenancy renewal work journey" })).toBeVisible();
   });
+
+  it("reflects the insurer decision in Needs you and opens the roof journey at that activity", async () => {
+    const user = userEvent.setup();
+    render(<WorkOverview onClose={vi.fn()} onGuide={vi.fn()} />);
+    // Three outstanding decisions: Flat 8 rent review, EPC assessor, and the insurer notification.
+    const needsYou = screen.getByRole("region", { name: /Needs you/ });
+    expect(within(needsYou).getByText("Burlington Gardens")).toBeInTheDocument();
+    expect(within(needsYou).getByText("Contact the insurer")).toBeInTheDocument();
+    expect(within(needsYou).getByText(/I've prepared a notification about the reported roof leak\./)).toBeInTheDocument();
+    expect(screen.getByText("3 things I'd like you to review.")).toBeInTheDocument();
+    // The roof leak remains one piece of work in What I'm looking after, with readable states.
+    const lookingAfter = screen.getByRole("region", { name: /What I'm looking after/ });
+    expect(within(lookingAfter).getAllByText("Investigating the roof leak")).toHaveLength(1);
+    expect(within(lookingAfter).getByText(/Reviewing the lease/)).toHaveTextContent("— Working");
+    expect(within(lookingAfter).getByText(/Contractor inspection/)).toHaveTextContent("— Waiting");
+    expect(within(lookingAfter).getByText(/Contact the insurer/)).toHaveTextContent("— Needs you");
+    // Review decision opens the existing roof leak Work Surface with Contact the insurer selected.
+    const insurerDecision = within(needsYou).getByText("Burlington Gardens").closest("article")!;
+    await user.click(within(insurerDecision).getByRole("button", { name: "Review decision" }));
+    expect(screen.getByRole("region", { name: "Roof leak investigation work journey" })).toBeVisible();
+    expect(screen.getByRole("button", { name: /Contact the insurer/ })).toHaveAttribute("aria-current", "step");
+    expect(screen.getByText("Awaiting your approval. Nothing has been sent.")).toBeVisible();
+    // Selecting the activity did not change its status.
+    await user.click(screen.getByRole("button", { name: "Back to What I've Done" }));
+    expect(within(screen.getByRole("region", { name: /What I'm looking after/ })).getByText(/Contact the insurer/)).toHaveTextContent("— Needs you");
+  });
 });

@@ -52,3 +52,4 @@
 - [x] Iteration 12: What I've Done redesigned — briefing, compact Needs you decisions with "Review decision", "What I'm looking after" (one job, one place, activity lines: working/waiting/needs-you), quieter "What I've accomplished"; Flat 6 never duplicated.
 
 - [x] Iteration 13: Burlington Gardens roof leak — one work item with three parallel activities (lease review working, contractor waiting, insurer needs-you); selectable activities change only the desk view; briefing count updated to 5; tenancy renewal unchanged
+- [x] Iteration 14: shared roof-leak data source; insurer decision in Needs you (3 decisions); state icons (activity/clock/hand); counts derived; briefing updated to 5 jobs / 3 reviews; Review decision opens roof journey at insurer activity
