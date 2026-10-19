@@ -1,10 +1,26 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import L from "leaflet";
+import "leaflet/dist/leaflet.css";
 import { FileText, MapPin, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 
 export type JobContext = "roof" | "renewal";
+function JobMap({ job }: { job: JobContext }) {
+  const element = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (!element.current) return;
+    const position: L.LatLngTuple = job === "roof" ? [51.5095, -0.1402] : [51.583, -0.197];
+    const map = L.map(element.current).setView(position, 16);
+    L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png", { attribution: '&copy; OpenStreetMap contributors &copy; CARTO', maxZoom: 19 }).addTo(map);
+    L.marker(position, { icon: L.divIcon({ className: "", html: '<span class="block h-5 w-5 rounded-full border-4 border-background bg-ring shadow-md"></span>', iconSize: [20, 20], iconAnchor: [10, 10] }) }).addTo(map).bindTooltip(job === "roof" ? "Burlington Gardens · Approximate location" : "Stanley House · Flat 6").openTooltip();
+    const observer = new ResizeObserver(() => map.invalidateSize());
+    observer.observe(element.current);
+    return () => { observer.disconnect(); map.remove(); };
+  }, [job]);
+  return <div ref={element} role="img" aria-label={`${contexts[job].place} job map`} className="relative z-0 aspect-[4/3] w-full rounded-md border border-border" />;
+}
 const contexts = {
   roof: {
     place: "Burlington Gardens",
@@ -46,7 +62,7 @@ export function JobPapersMap({ job, sideLetterRequested = false }: { job: JobCon
           {context.papers.map(item => <article key={item.title} className="py-4"><Button variant="ghost" onClick={() => setPaper(paper === item.title ? null : item.title)} aria-expanded={paper === item.title} className="h-auto w-full justify-start gap-2 whitespace-normal px-0 text-left"><FileText className="h-4 w-4 shrink-0 text-muted-foreground" aria-hidden="true" /><span><span className="block text-sm font-medium">{item.title}</span><span className="mt-1 block text-xs font-normal text-muted-foreground">{item.note}</span></span></Button>{paper === item.title && <aside aria-label={`${item.title} job paper preview`} className="mt-3 border-l-2 border-border pl-3"><p className="text-sm leading-relaxed">{item.extract}</p><p className="mt-2 text-xs text-muted-foreground">Illustrative extract — not an actual portfolio document.</p></aside>}</article>)}
           {job === "renewal" && sideLetterRequested && <article className="py-4"><p className="text-sm font-medium">Side Letter — 2024</p><p className="mt-1 text-xs text-muted-foreground">Awaiting paper</p><p className="mt-2 text-sm text-muted-foreground">You mentioned this paper. I haven't located it yet.</p></article>}
         </section>}
-        {view === "map" && <section aria-label="Job location" className="min-w-0"><iframe title={`${context.place} job map`} src={context.map} className="aspect-[4/3] w-full rounded-md border border-border" loading="lazy" /><p className="mt-3 text-xs leading-relaxed text-muted-foreground">{context.locationNote}</p></section>}
+        {view === "map" && <section aria-label="Job location" className="min-w-0"><JobMap job={job} /><p className="mt-3 text-xs leading-relaxed text-muted-foreground">{context.locationNote}</p></section>}
       </DialogPrimitive.Content></DialogPrimitive.Portal>
     </Dialog>
   </>;

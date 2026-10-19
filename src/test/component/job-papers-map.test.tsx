@@ -14,7 +14,7 @@ describe("Job-scoped Papers / Map", () => {
     expect(within(dialog).getByRole("button", { name: /Tenant's report/ })).toBeInTheDocument();
     expect(within(dialog).queryByText("Deed of Variation")).not.toBeInTheDocument();
     await user.click(within(dialog).getByRole("button", { name: "Map" }));
-    expect(within(dialog).getByTitle("Burlington Gardens job map")).toHaveAttribute("src", expect.stringContaining("marker=51.5095%2C-0.1402"));
+    expect(within(dialog).getByRole("img", { name: "Burlington Gardens job map" })).toBeInTheDocument();
     await user.click(within(dialog).getByRole("button", { name: "Back to job" }));
     expect(screen.getByRole("button", { name: "Resume work" })).toBeEnabled();
   });
@@ -30,7 +30,7 @@ describe("Job-scoped Papers / Map", () => {
     expect(within(dialog).getByText("Awaiting paper")).toBeInTheDocument();
     expect(within(dialog).queryByRole("button", { name: /Side Letter/ })).not.toBeInTheDocument();
     await user.click(within(dialog).getByRole("button", { name: "Map" }));
-    expect(within(dialog).getByTitle("Stanley House · Flat 6 job map")).toHaveAttribute("src", expect.stringContaining("marker=51.583%2C-0.197"));
+    expect(within(dialog).getByRole("img", { name: "Stanley House · Flat 6 job map" })).toBeInTheDocument();
     await user.click(within(dialog).getByRole("button", { name: "Back to job" }));
     expect(screen.getByRole("button", { name: /Checking the tenancy history/ })).toHaveAttribute("aria-current", "step");
   });
