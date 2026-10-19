@@ -3,17 +3,17 @@ import { ArrowLeft, Check, FileText, MessageCircle, Pause, Play } from "lucide-r
 import { Button } from "@/components/ui/button";
 import owlReading from "@/assets/prototype/owl-reading.png";
 
-function PaperReference({ extract }: { extract: string }) {
+function PaperReference({ extract, name = "Business Lease" }: { extract: string; name?: string }) {
   const [open, setOpen] = useState(false);
   return (
     <div className="mt-4">
       <Button variant="ghost" size="sm" onClick={() => setOpen(!open)} aria-expanded={open} className="h-auto max-w-full justify-start gap-2 whitespace-normal px-0 text-xs text-muted-foreground">
         <FileText className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
-        Business Lease · {open ? "Hide paper" : "View paper"}
+        {name} · {open ? "Hide paper" : "View paper"}
       </Button>
       {open && (
-        <aside aria-label="Business Lease illustrative extract" className="mt-3 border-l-2 border-border bg-popover px-4 py-4">
-          <p className="text-xs font-medium text-muted-foreground">Business Lease · Illustrative extract</p>
+        <aside aria-label={`${name} illustrative extract`} className="mt-3 border-l-2 border-border bg-popover px-4 py-4">
+          <p className="text-xs font-medium text-muted-foreground">{name} · Illustrative extract</p>
           <blockquote className="mt-3 text-sm leading-relaxed">{extract}</blockquote>
           <p className="mt-3 text-xs text-muted-foreground">Example paper only — not a document from your portfolio.</p>
         </aside>
@@ -69,7 +69,34 @@ export function WorkJourney({ paused, onPauseChange, onBack, onGuide }: {
           <h3 id="journey-current" className="mb-4 text-sm font-semibold">What I'm doing now</h3>
           <div className="border-l-2 border-ring bg-muted/50 px-5 py-5">
             <h4 className="flex items-center gap-3 text-base font-semibold"><span className={`h-2 w-2 shrink-0 rounded-full ${paused ? "bg-muted-foreground" : "bg-ring motion-safe:animate-pulse"}`} aria-hidden="true" />Checking the tenancy history</h4>
-            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{paused ? "I've paused here. The later papers still need checking for changes to the original terms." : "I'm looking through the later papers to see whether the original terms have changed."}</p>
+            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{paused ? "I've paused here. The later papers still need checking for changes to the original terms." : "I'm checking the later papers to see whether anything has changed since the original tenancy agreement."}</p>
+
+            <div className="mt-6">
+              <h5 className="text-xs font-semibold">Papers I'm checking</h5>
+              <p className="mt-2 text-xs text-muted-foreground">Illustrative papers — not from your live portfolio.</p>
+              <div className="mt-4 divide-y divide-border">
+                <div className="pb-4">
+                  <div className="flex items-center gap-2 text-xs text-muted-foreground"><Check className="h-3.5 w-3.5" aria-hidden="true" />Reviewed</div>
+                  <PaperReference extract="Tenant: Example Tenant Ltd. Annual rent: £24,000. The tenancy term ends on 31 December 2026. These are the original lease terms; the effect of any later agreement has not yet been established." />
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">The original agreement records the tenancy terms and annual rent.</p>
+                </div>
+                <div className="pt-4">
+                  <div className="flex items-center gap-2 text-xs font-medium"><span className={`h-1.5 w-1.5 shrink-0 rounded-full ${paused ? "bg-muted-foreground" : "bg-ring"}`} aria-hidden="true" />{paused ? "Checking paused" : "Checking"}</div>
+                  <PaperReference name="Deed of Variation" extract="This illustrative later agreement refers to variations to the Business Lease. Its effect on the rent and tenancy term has not yet been established; no changed terms are confirmed in this preview." />
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{paused ? "I still need to examine whether this changes any of the original tenancy terms." : "I'm examining whether this changes any of the original tenancy terms."}</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-6 border-t border-border pt-5">
+              <h5 className="text-xs font-semibold">What I've established so far</h5>
+              <p className="mt-2 text-sm leading-relaxed">The original lease records an annual rent of £24,000 and a tenancy end date of 31 December 2026.</p>
+              <div className="mt-4 border-l border-dashed border-border pl-3">
+                <h5 className="text-xs font-medium text-muted-foreground">Still checking</h5>
+                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">Whether any later agreement changes these terms.</p>
+              </div>
+            </div>
+            <p className="mt-5 border-t border-border pt-4 text-sm leading-relaxed text-muted-foreground">Once I've checked the later papers, I shall bring any changes into the renewal summary.</p>
           </div>
         </section>
 
