@@ -212,6 +212,11 @@ export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initia
                     <p className="mt-2 text-xs text-muted-foreground">Example paper only — not a document from your portfolio.</p>
                   </aside>}
                 </div>
+                <div className="mt-5 border-t border-dashed border-border pt-3">
+                  {help.shown
+                    ? <Button size="sm" variant="ghost" onClick={() => onHelpChange({ ...help, shown: false })} className="h-auto px-0 text-xs text-muted-foreground">Return to investigation</Button>
+                    : <Button size="sm" variant="ghost" onClick={() => onHelpChange({ ...help, shown: true })} className="h-auto px-0 text-xs text-muted-foreground">Preview needs help</Button>}
+                </div>
               </>}
 
               {selected === "contractor" && <>
