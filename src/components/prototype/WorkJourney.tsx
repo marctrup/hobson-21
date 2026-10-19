@@ -34,7 +34,7 @@ Hobson`;
 
 const approvalSteps = (sent: boolean): { id: ApprovalStep; title: string; note: string; group?: string }[] => [
   { id: "draft", title: "Prepared renewal email draft", note: "Ready for your review.", group: "Completed" },
-  { id: "approve", title: "Approve sending the renewal email", note: sent ? "Email sent." : "Waiting for your decision.", group: sent ? "Completed" : "Needs you" },
+  { id: "approve", title: "Approve sending the renewal email", note: sent ? "Email sent." : "Waiting for your decision.", group: sent ? undefined : "Needs you" },
   { id: "await", title: "Await tenant response", note: "Not started.", group: "Next" },
 ];
 
