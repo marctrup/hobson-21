@@ -7,7 +7,7 @@ import { RoofLeakJourney } from "./RoofLeakJourney";
 import { roofInsurerDecision, roofLeakWork, type RoofActivityId } from "./roofLeakWork";
 import { initialRoofGuidance, type RoofGuidanceState, type RoofGuideScope } from "./roofGuidance";
 
-type ActivityState = "working" | "waiting" | "needs-you";
+type ActivityState = "working" | "waiting" | "needs-you" | "on-hold";
 type Activity = { label: string; state: ActivityState };
 
 const renewalDecision = {
@@ -119,6 +119,7 @@ const stateIcon: Record<ActivityState, { icon: typeof Clock; label: string }> = 
   working: { icon: ActivityIcon, label: "Working" },
   waiting: { icon: Clock, label: "Waiting" },
   "needs-you": { icon: Hand, label: "Needs you" },
+  "on-hold": { icon: Pause, label: "On hold at your request" },
 };
 
 function ActivityLine({ activity }: { activity: Activity }) {
