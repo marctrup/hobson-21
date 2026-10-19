@@ -131,12 +131,12 @@ export function WorkOverview({ onClose, onGuide, sideLetterRequested = false, on
           </header>
 
           <section aria-labelledby="work-needs-you" className="mb-10">
-            <SectionHeading id="work-needs-you" title="Needs you" count={reviews.length} icon={Hand} />
+            <SectionHeading id="work-needs-you" title="Needs you" count={visibleReviews.length} icon={Hand} />
             <div className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,260px),1fr))] gap-4">
-              {reviews.map((work) => (
+              {visibleReviews.map((work) => (
                 <article key={work.title} className="flex min-w-0 flex-col rounded-lg border border-border border-t-2 border-t-ring bg-popover p-5">
                   <p className="text-xs text-muted-foreground">{work.place}</p>
-                  <h4 className="mt-2 text-base font-semibold leading-snug">{work.title}</h4>
+                  <h4 className="mt-2 text-base font-semibold leading-snug">{work.place === "Stanley House · Flat 6" ? <Button variant="link" onClick={() => openJourney(true)} className="h-auto max-w-full justify-start gap-2 whitespace-normal p-0 text-left text-base font-semibold leading-snug">{work.title}<ArrowUpRight className="h-4 w-4 shrink-0" aria-hidden="true" /></Button> : work.title}</h4>
                   <p className="mb-5 mt-3 text-sm leading-relaxed text-muted-foreground">{work.prepared}</p>
                   <div className="mt-auto border-t border-border pt-4">
                     <p className="mb-2 flex items-center gap-2 text-xs font-medium text-foreground"><CornerDownRight className="h-3.5 w-3.5 text-muted-foreground" aria-hidden="true" />Your decision</p>
