@@ -5,7 +5,7 @@ import owlReading from "@/assets/prototype/owl-reading.png";
 import { WorkJourney, type ApprovalStatus } from "./WorkJourney";
 import { RoofLeakJourney } from "./RoofLeakJourney";
 import { roofInsurerDecision, roofLeakWork, type RoofActivityId } from "./roofLeakWork";
-import type { RoofGuidanceState, RoofGuideScope } from "./roofGuidance";
+import { initialRoofGuidance, type RoofGuidanceState, type RoofGuideScope } from "./roofGuidance";
 
 type ActivityState = "working" | "waiting" | "needs-you";
 type Activity = { label: string; state: ActivityState };
@@ -132,7 +132,7 @@ function ActivityLine({ activity }: { activity: Activity }) {
 }
 
 /** Illustrative work only: deliberately independent of action-card state and approvals. */
-export function WorkOverview({ onClose, onGuide, sideLetterRequested = false, onJourneyBack, focusNeedsYou = 0, roofGuidance }: { onClose: () => void; onGuide: (scope: "renewal" | RoofGuideScope) => void; sideLetterRequested?: boolean; onJourneyBack?: () => void; focusNeedsYou?: number; roofGuidance: RoofGuidanceState }) {
+export function WorkOverview({ onClose, onGuide, sideLetterRequested = false, onJourneyBack, focusNeedsYou = 0, roofGuidance = initialRoofGuidance }: { onClose: () => void; onGuide: (scope: "renewal" | RoofGuideScope) => void; sideLetterRequested?: boolean; onJourneyBack?: () => void; focusNeedsYou?: number; roofGuidance?: RoofGuidanceState }) {
   const [journey, setJourney] = useState<"renewal" | "roof" | null>(null);
   const [paused, setPaused] = useState(false);
   const [approval, setApproval] = useState<ApprovalStatus>("idle");
