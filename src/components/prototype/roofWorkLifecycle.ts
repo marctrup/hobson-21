@@ -29,9 +29,14 @@ export function restartRoofWork(work: RoofWorkState): RoofWorkState {
   return { ...createRoofWork(), number: work.number + 1, insurerPrepared: false, contractorRequestSent: false, history: [], previous: work.previous };
 }
 
-export function roofAttention(work: RoofWorkState) {
+export function roofAttention(work: RoofWorkState, completionPreview = false) {
   return {
-    insurer: !work.ended && work.insurerPrepared && !work.guidance.contactOnHold,
-    help: !work.ended && work.help.shown && work.help.choice === null && !work.guidance.leasePlansRequested,
+    insurer: !completionPreview && !work.ended && work.insurerPrepared && !work.guidance.contactOnHold,
+    help: !completionPreview && !work.ended && work.help.shown && work.help.choice === null && !work.guidance.leasePlansRequested,
   };
+}
+
+export function roofOverviewCounts(work: RoofWorkState, completionPreview = false) {
+  const attention = roofAttention(work, completionPreview);
+  return { accomplished: completionPreview ? 4 : 3, active: work.ended || completionPreview ? 4 : 5, needsYou: 2 + Number(attention.insurer) + Number(attention.help) };
 }
