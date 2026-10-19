@@ -88,7 +88,7 @@ function SectionHeading({ id, title, count, icon: Icon }: {
 /** Illustrative work only: deliberately independent of action-card state and approvals. */
 export function WorkOverview({ onClose }: { onClose: () => void }) {
   return (
-    <div className="absolute inset-0 z-[600] flex flex-col bg-background text-foreground" role="region" aria-label="What I've Done">
+    <div className="absolute inset-0 z-[1200] flex flex-col bg-background text-foreground" role="region" aria-label="What I've Done">
       <div className="flex shrink-0 items-center justify-between border-b border-border px-5 py-3 sm:px-8">
         <span className="text-xs text-muted-foreground">Your portfolio · Work overview</span>
         <Button variant="ghost" size="icon" onClick={onClose} aria-label="Close work overview" title="Close work overview" className="h-8 w-8 text-muted-foreground">
