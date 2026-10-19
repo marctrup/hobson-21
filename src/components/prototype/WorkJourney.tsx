@@ -32,11 +32,12 @@ function PaperReference({ extract, name = "Business Lease" }: { extract: string;
   );
 }
 
-export function WorkJourney({ paused, onPauseChange, onBack, onGuide }: {
+export function WorkJourney({ paused, onPauseChange, onBack, onGuide, sideLetterRequested = false }: {
   paused: boolean;
   onPauseChange: (paused: boolean) => void;
   onBack: () => void;
   onGuide: () => void;
+  sideLetterRequested?: boolean;
 }) {
   const [selected, setSelected] = useState<Step>("history");
   const [evidence, setEvidence] = useState<Evidence | null>(null);
@@ -70,7 +71,10 @@ export function WorkJourney({ paused, onPauseChange, onBack, onGuide }: {
             <p className="mb-2 text-xs text-muted-foreground">Stanley House · Flat 6</p>
             <h2 className="text-2xl font-semibold leading-tight">Getting the tenancy renewal ready</h2>
           </div>
-          <Button variant="outline" size="sm" onClick={() => onPauseChange(!paused)} className="shrink-0 gap-2">{paused ? <Play className="h-4 w-4" /> : <Pause className="h-4 w-4" />}{paused ? "Resume work" : "Pause work"}</Button>
+          <div className="flex shrink-0 flex-wrap items-center gap-2">
+            <Button variant="outline" size="sm" onClick={() => onPauseChange(!paused)} className="shrink-0 gap-2">{paused ? <Play className="h-4 w-4" /> : <Pause className="h-4 w-4" />}{paused ? "Resume work" : "Pause work"}</Button>
+            <Button variant="secondary" size="sm" onClick={onGuide} className="gap-2"><MessageCircle className="h-4 w-4" />Guide Hobson</Button>
+          </div>
         </div>
         <div className="mt-3 flex items-center gap-3">
           <img src={owlReading} alt="Hobson reading" className="h-10 w-10 shrink-0 object-contain" />
@@ -89,7 +93,7 @@ export function WorkJourney({ paused, onPauseChange, onBack, onGuide }: {
                 {step.group && <p className="relative mb-2 mt-4 bg-background text-xs font-medium text-muted-foreground first:mt-0">{step.id === "history" && paused ? "Paused here" : step.group}</p>}
                 <Button variant="ghost" aria-current={selected === step.id ? "step" : undefined} onClick={() => { setSelected(step.id); setEvidence(null); }} className={`relative mb-2 h-auto w-full items-start justify-start gap-2 rounded-md border px-2 py-3 text-left whitespace-normal ${selected === step.id ? "border-border bg-muted/70" : "border-transparent"}`}>
                   <span aria-hidden="true" className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center bg-background">{step.id === "tenancy" || step.id === "rent" ? <Check className="h-3.5 w-3.5 text-muted-foreground" /> : <span className={`h-2 w-2 rounded-full ${step.id === "history" ? paused ? "bg-muted-foreground" : "bg-ring" : "border border-muted-foreground"}`} />}</span>
-                  <span className="min-w-0"><span className="block text-sm font-semibold leading-snug">{step.title}</span><span className="mt-1 block text-xs font-normal leading-relaxed text-muted-foreground">{step.note}</span></span>
+                  <span className="min-w-0"><span className="block text-sm font-semibold leading-snug">{step.title}</span><span className="mt-1 block text-xs font-normal leading-relaxed text-muted-foreground">{step.id === "history" && sideLetterRequested ? "Also checking the 2024 side letter, at your request." : step.note}</span></span>
                 </Button>
               </div>)}
             </div>
@@ -101,6 +105,7 @@ export function WorkJourney({ paused, onPauseChange, onBack, onGuide }: {
               <h4 className="text-lg font-semibold leading-snug">{selectedStep?.title}</h4>
               {selected === "history" && <>
                 <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{paused ? "I've paused the check of later papers against the original tenancy terms." : "I'm checking whether later papers have changed the original tenancy terms."}</p>
+                {sideLetterRequested && <p className="mt-3 border-l-2 border-border pl-3 text-xs leading-relaxed text-muted-foreground">You asked me to also check the 2024 side letter.</p>}
                 <article className="mt-5 border-y border-border py-4">
                   <div className="flex flex-wrap items-center justify-between gap-2"><h5 className="flex items-center gap-2 text-sm font-semibold"><FileText className="h-4 w-4 text-muted-foreground" />Business Lease</h5><span className="flex items-center gap-1 text-xs text-muted-foreground"><Check className="h-3 w-3" />Reviewed</span></div>
                   <div className="mt-3 space-y-2">{renderFinding("rent")}{renderFinding("end")}</div>
@@ -117,7 +122,12 @@ export function WorkJourney({ paused, onPauseChange, onBack, onGuide }: {
                   <p className="mt-1 text-xs text-muted-foreground">No conclusion reached yet.</p>
                   <PaperReference name="Deed of Variation" extract="This illustrative later agreement refers to variations to the Business Lease. Its effect on the rent and tenancy term has not yet been established; no changed terms are confirmed in this preview." />
                 </article>
-                <div className="mt-5 border-l-2 border-ring pl-3"><h5 className="text-xs font-semibold">What I'm trying to establish</h5><p className="mt-2 text-sm leading-relaxed">Have any later papers changed the rent, tenancy end date or other relevant terms?</p></div>
+                {sideLetterRequested && <article aria-label="Side Letter — 2024" className="border-b border-border py-4">
+                  <div className="flex flex-wrap items-center justify-between gap-2"><h5 className="flex items-center gap-2 text-sm font-semibold"><FileText className="h-4 w-4 text-muted-foreground" />Side Letter — 2024</h5><span className="text-xs text-muted-foreground">To check</span></div>
+                  <p className="mt-3 text-sm text-muted-foreground">Added at your request.</p>
+                  <p className="mt-2 text-xs leading-relaxed text-muted-foreground">Illustrative paper only. I haven't reviewed it or established whether it changes the tenancy terms.</p>
+                </article>}
+                <div className="mt-5 border-l-2 border-ring pl-3"><h5 className="text-xs font-semibold">What I'm trying to establish</h5><p className="mt-2 text-sm leading-relaxed">Have any later papers changed the rent, tenancy end date or other relevant terms?</p>{sideLetterRequested && <p className="mt-2 text-xs leading-relaxed text-muted-foreground">The side letter needs checking too before I prepare your renewal summary.</p>}</div>
               </>}
               {selected === "tenancy" && <>
                 <p className="mt-2 text-sm leading-relaxed text-muted-foreground">I found the tenancy agreement and confirmed the parties and end date recorded in it.</p>
@@ -134,14 +144,13 @@ export function WorkJourney({ paused, onPauseChange, onBack, onGuide }: {
               {selected === "summary" && <>
                 <p className="mt-3 text-xs font-medium text-muted-foreground">Not started</p>
                 <p className="mt-5 text-sm leading-relaxed">I shall bring together the current terms and any changes I've found, ready for your review.</p>
-                <p className="mt-4 border-t border-border pt-4 text-sm leading-relaxed text-muted-foreground">The later papers need checking before I prepare the renewal summary.</p>
+                <p className="mt-4 border-t border-border pt-4 text-sm leading-relaxed text-muted-foreground">{sideLetterRequested ? "The later papers, including the 2024 side letter, need checking before I prepare the renewal summary." : "The later papers need checking before I prepare the renewal summary."}</p>
               </>}
             </div>
           </section>
         </div>
         <footer className="flex flex-wrap items-center justify-between gap-3 border-t border-border px-5 py-4 sm:px-6">
           <p className="max-w-md text-xs leading-relaxed text-muted-foreground">Illustrative work and paper extracts only — no live work is running.</p>
-          <Button variant="secondary" size="sm" onClick={onGuide} className="gap-2"><MessageCircle className="h-4 w-4" />Guide Hobson</Button>
         </footer>
       </div>
     </div>

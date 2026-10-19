@@ -17,6 +17,8 @@ const characterKeeper = characterKeeperAsset.url;
 import { DocumentsLibrary } from "@/components/prototype/DocumentsLibrary";
 import { CollapsibleSection } from "@/components/prototype/CollapsibleSection";
 import { WorkOverview } from "@/components/prototype/WorkOverview";
+import { applyWorkGuidance, initialWorkGuidance, SIDE_LETTER_INSTRUCTION } from "@/components/prototype/workGuidance";
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import SummaryCard, { SummaryActions } from "./prototype/SummaryCard";
 import { summaryIntroFor, summaryQuestionFor, type SummaryScope } from "./prototype/summaryData";
@@ -1430,6 +1432,11 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
   const [actionToast, setActionToast] = useState<string | null>(null);
   const [showDocuments, setShowDocuments] = useState(false);
   const [showWhatIveDone, setShowWhatIveDone] = useState(false);
+  const [guidingRenewal, setGuidingRenewal] = useState(false);
+  const [workGuidance, setWorkGuidance] = useState(initialWorkGuidance);
+  useEffect(() => {
+    if (!showWhatIveDone) setGuidingRenewal(false);
+  }, [showWhatIveDone]);
   // "Meet my team" — user-summonable team wall overlay on the right stage.
   // In-memory only (no localStorage/sessionStorage); does not disturb the chat.
   const [showTeamWall, setShowTeamWall] = useState(false);
@@ -2766,17 +2773,17 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
 
   /* ----- pre-fill the next onboarding question into the chat box ----- */
   useEffect(() => {
-    if (view !== "onboarding") return;
+    if (view !== "onboarding" || guidingRenewal) return;
     if (chipVisible) {
       setInput(BEATS[beatIdx]?.prefill ?? "");
     } else {
       setInput("");
     }
-  }, [view, chipVisible, beatIdx]);
+  }, [view, chipVisible, beatIdx, guidingRenewal]);
 
   /* ----- onboarding line streaming ----- */
   useEffect(() => {
-    if (view !== "onboarding") return;
+    if (view !== "onboarding" || guidingRenewal) return;
     if (!owlsReady) return;
     const beat = BEATS[beatIdx];
     if (!beat) return;
@@ -2807,7 +2814,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
     }, preDelay);
     return () => clearTimeout(t);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [beatIdx, lineIdx, view, owlsReady]);
+  }, [beatIdx, lineIdx, view, owlsReady, guidingRenewal]);
 
   const appendFeedbackPrompt = (chips?: string[]) => {
     const fid = `fb-${Date.now()}-${Math.random()}`;
@@ -4033,7 +4040,31 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
         <div className={`px-5 pt-2 pb-4 border-t border-faint-rule bg-white ${isExpanded ? "w-full" : ""}`}>
          <div className={isExpanded ? "max-w-[820px] mx-auto" : ""}>
 
-          {view === "onboarding" ? (
+          {guidingRenewal && showWhatIveDone ? (
+            <>
+              <p id="renewal-chat-context" className="mb-2 text-xs leading-relaxed text-muted-foreground">Regarding: Tenancy renewal · Stanley House, Flat 6</p>
+              <form onSubmit={(event) => {
+                event.preventDefault();
+                const instruction = input.trim();
+                if (!instruction) return;
+                const result = applyWorkGuidance(workGuidance, instruction);
+                setWorkGuidance(result.state);
+                const id = crypto.randomUUID();
+                setMessages((previous) => [...previous, { id: `guidance-user-${id}`, role: "user", text: instruction }, { id: `guidance-hobson-${id}`, role: "hobson", text: result.reply }]);
+                setInput("");
+                setTyping(false);
+                setOwl("talking");
+                requestAnimationFrame(() => {
+                  inputRef.current?.focus();
+                  const conversation = chatBodyRef.current;
+                  if (conversation) conversation.scrollTop = conversation.scrollHeight;
+                });
+              }} className="flex items-center gap-2 rounded-full border border-input bg-background px-4 py-2.5 focus-within:ring-2 focus-within:ring-ring">
+                <input ref={inputRef} value={input} onChange={(event) => setInput(event.target.value)} aria-label="Guide Hobson about the tenancy renewal" aria-describedby="renewal-chat-context" placeholder="Ask me to check the 2024 side letter…" className="min-w-0 flex-1 bg-transparent text-sm text-foreground outline-none placeholder:text-muted-foreground" />
+                <Button type="submit" size="icon" variant="ghost" disabled={!input.trim()} aria-label="Send guidance" className="h-8 w-8 shrink-0"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg></Button>
+              </form>
+            </>
+          ) : view === "onboarding" ? (
             <>
               {chipVisible && (
                 <div className="mb-2 flex items-center justify-end gap-2">
@@ -4293,14 +4324,14 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
           />
         )}
         {showWhatIveDone && (
-          <WorkOverview onClose={resetToMap} onGuide={() => {
+          <WorkOverview onClose={resetToMap} sideLetterRequested={workGuidance.sideLetterRequested} onJourneyBack={() => setGuidingRenewal(false)} onGuide={() => {
             expandChat();
-            setMessages((previous) => [...previous, {
-              id: `renewal-guidance-${Date.now()}`,
-              role: "hobson",
-              text: "For the tenancy renewal at Stanley House · Flat 6, you could ask me to check a later agreement or a change in rent before I prepare the summary. This is an illustrative prompt; no instructions have been sent.",
-            }]);
+            setMainCollapsed(false);
+            setGuidingRenewal(true);
+            if (!guidingRenewal) setInput(SIDE_LETTER_INSTRUCTION);
+            setTyping(false);
             requestAnimationFrame(() => {
+              inputRef.current?.focus();
               const conversation = chatBodyRef.current;
               if (conversation) conversation.scrollTop = conversation.scrollHeight;
             });
