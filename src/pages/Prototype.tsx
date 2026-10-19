@@ -2814,7 +2814,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
     }, preDelay);
     return () => clearTimeout(t);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [beatIdx, lineIdx, view, owlsReady]);
+  }, [beatIdx, lineIdx, view, owlsReady, guidingRenewal]);
 
   const appendFeedbackPrompt = (chips?: string[]) => {
     const fid = `fb-${Date.now()}-${Math.random()}`;

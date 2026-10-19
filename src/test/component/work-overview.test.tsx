@@ -4,6 +4,24 @@ import userEvent from "@testing-library/user-event";
 import { WorkOverview } from "@/components/prototype/WorkOverview";
 
 describe("Illustrative work journey", () => {
+  it("preserves the selected evidence and pause state when guidance adds a paper", async () => {
+    const user = userEvent.setup();
+    const props = { onClose: vi.fn(), onGuide: vi.fn() };
+    const { rerender } = render(<WorkOverview {...props} sideLetterRequested={false} />);
+    await user.click(screen.getByRole("button", { name: "Getting the tenancy renewal ready" }));
+    await user.click(screen.getByRole("button", { name: "Pause work" }));
+    await user.click(screen.getByRole("button", { name: /Original annual rent\s*£24,000/ }));
+    rerender(<WorkOverview {...props} sideLetterRequested />);
+    expect(screen.getByRole("region", { name: "Original annual rent evidence" })).toBeVisible();
+    expect(screen.getByRole("button", { name: "Resume work" })).toBeEnabled();
+    expect(screen.getAllByRole("article", { name: "Side Letter — 2024" })).toHaveLength(1);
+    expect(screen.getByRole("button", { name: /Checking the tenancy history/ })).toHaveAttribute("aria-current", "step");
+    await user.click(screen.getByRole("button", { name: "Back to What I've Done" }));
+    await user.click(screen.getByRole("button", { name: "Getting the tenancy renewal ready" }));
+    expect(screen.getAllByRole("article", { name: "Side Letter — 2024" })).toHaveLength(1);
+    expect(screen.getByRole("button", { name: "Resume work" })).toBeEnabled();
+  });
+
   it("opens one original-lease finding at a time and reuses its paper preview", async () => {
     const user = userEvent.setup();
     const guide = vi.fn();
