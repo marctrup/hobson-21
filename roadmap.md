@@ -1,6 +1,7 @@
 # Roadmap
 
 ## Iteration 19 — roof leak attempts
+- [ ] Iteration 19A: compact closing summary, on-demand activity history and retained-knowledge explanation; preserve overview and active behaviour.
 - [x] Add confirmed End work and Start again, preserve read-only attempts and unsent drafts, remove ended decisions; 30 focused tests and the complete browser flow pass, including reopening the overview.
 
 ## What I'm Up To — work journey
