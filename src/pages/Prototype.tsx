@@ -3953,6 +3953,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
               cards={actionCards}
               choice={briefingChoice}
               setChoice={setBriefingChoice}
+              onShowNeedsYou={showNeedsYou}
               expandedCardId={expandedCardId}
               setExpandedCardId={setExpandedCardId}
               onHoverCard={setHoveredCardPropertyId}
@@ -4277,7 +4278,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
           />
         )}
         {showWhatIveDone && (
-          <WorkOverview onClose={resetToMap} sideLetterRequested={workGuidance.sideLetterRequested} onJourneyBack={() => setGuidingRenewal(false)} onGuide={() => {
+          <WorkOverview onClose={resetToMap} sideLetterRequested={workGuidance.sideLetterRequested} focusNeedsYou={needsYouFocus} onJourneyBack={() => setGuidingRenewal(false)} onGuide={() => {
             expandChat();
             if (!guidingRenewal) {
               const width = Math.max(CHAT_MIN_WIDTH, Math.round((window.innerWidth - 68) * 0.3));
