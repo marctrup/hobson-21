@@ -88,7 +88,7 @@ function SectionHeading({ id, title, count, icon: Icon }: {
 }
 
 /** Illustrative work only: deliberately independent of action-card state and approvals. */
-export function WorkOverview({ onClose, onGuide }: { onClose: () => void; onGuide: () => void }) {
+export function WorkOverview({ onClose, onGuide, sideLetterRequested = false, onJourneyBack }: { onClose: () => void; onGuide: () => void; sideLetterRequested?: boolean; onJourneyBack?: () => void }) {
   const [journeyOpen, setJourneyOpen] = useState(false);
   const [paused, setPaused] = useState(false);
   return (
@@ -100,7 +100,7 @@ export function WorkOverview({ onClose, onGuide }: { onClose: () => void; onGuid
         </Button>
       </div>
 
-      {journeyOpen ? <WorkJourney paused={paused} onPauseChange={setPaused} onBack={() => setJourneyOpen(false)} onGuide={onGuide} /> : <div className="hobson-scroll min-h-0 flex-1 overflow-y-auto">
+      {journeyOpen ? <WorkJourney paused={paused} onPauseChange={setPaused} onBack={() => { setJourneyOpen(false); onJourneyBack?.(); }} onGuide={onGuide} sideLetterRequested={sideLetterRequested} /> : <div className="hobson-scroll min-h-0 flex-1 overflow-y-auto">
         <div className="mx-auto w-full max-w-5xl px-5 pb-16 pt-8 sm:px-8 sm:pt-10">
           <header className="mb-10">
             <h2 className="text-3xl font-semibold leading-tight">What I've Done</h2>

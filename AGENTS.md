@@ -4,5 +4,6 @@
 - Anonymous submissions must pass through validated, rate-limited Edge Functions; browsers never write sensitive tables directly.
 - Database API privileges are deny-by-default: grant only operations required by matching RLS policies and trusted server functions.
 - Keep tutorial entries in a typed content collection with optional YouTube IDs; missing videos render explicit placeholders, never unrelated footage.
-- Keep the prototype work overview and its work journey in dedicated illustrative components with local pause state, separate from action-card execution and approvals; send guidance prompts through the existing conversation so no real work or second chat is introduced.
+- Keep the prototype work overview and its work journey in dedicated illustrative components with local pause state, separate from action-card execution and approvals; handle sample guidance through the existing conversation with idempotent local work state so no real work or second chat is introduced.
+- The staged, non-AI prototype conversation retains its existing transcript and input: AI Elements/AI SDK transport is incompatible with this simulation-only scope; guidance only unlocks the existing composer for the exact sample instruction, without migrating the chat system.
 - Keep finding evidence local to the illustrative work journey with a single active inline expansion, reusing paper previews; inspecting evidence must not execute work or confirm unfinished checks.
