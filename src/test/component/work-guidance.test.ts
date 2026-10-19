@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { applyWorkGuidance, initialWorkGuidance, SIDE_LETTER_INSTRUCTION } from "@/components/prototype/workGuidance";
-import { applyRoofGuidance, initialRoofGuidance, HOLD_CONTACT_INSTRUCTION, SHOPFRONT_INSTRUCTION } from "@/components/prototype/roofGuidance";
+import { applyRoofGuidance, initialRoofGuidance, HOLD_CONTACT_INSTRUCTION, LIFT_HOLD_INSTRUCTION, SHOPFRONT_INSTRUCTION } from "@/components/prototype/roofGuidance";
 
 describe("Illustrative tenancy guidance", () => {
   it("adds the requested 2024 side letter", () => {
@@ -53,5 +53,32 @@ describe("Illustrative roof leak guidance", () => {
     const result = applyRoofGuidance(initialRoofGuidance, "overall", "Chase the contractor now.");
     expect(result.state).toBe(initialRoofGuidance);
     expect(result.reply).toContain("I haven't changed the work");
+  });
+  it("lifts the hold only for an investigation-wide instruction", () => {
+    const held = applyRoofGuidance(initialRoofGuidance, "overall", HOLD_CONTACT_INSTRUCTION);
+    const lifted = applyRoofGuidance(held.state, "overall", LIFT_HOLD_INSTRUCTION);
+    expect(lifted.state.contactOnHold).toBe(false);
+    expect(lifted.state.holdWasLifted).toBe(true);
+    expect(lifted.state.shopfrontRequested).toBe(false);
+    const wrongScope = applyRoofGuidance(held.state, "lease", LIFT_HOLD_INSTRUCTION);
+    expect(wrongScope.state).toBe(held.state);
+  });
+  it("lifting an already lifted hold changes nothing further", () => {
+    const held = applyRoofGuidance(initialRoofGuidance, "overall", HOLD_CONTACT_INSTRUCTION);
+    const lifted = applyRoofGuidance(held.state, "overall", LIFT_HOLD_INSTRUCTION);
+    const repeated = applyRoofGuidance(lifted.state, "overall", LIFT_HOLD_INSTRUCTION);
+    expect(repeated.state).toBe(lifted.state);
+  });
+  it("lifting the hold preserves earlier instructions", () => {
+    const withShopfront = applyRoofGuidance(initialRoofGuidance, "lease", SHOPFRONT_INSTRUCTION);
+    const held = applyRoofGuidance(withShopfront.state, "overall", HOLD_CONTACT_INSTRUCTION);
+    const lifted = applyRoofGuidance(held.state, "overall", LIFT_HOLD_INSTRUCTION);
+    expect(lifted.state.shopfrontRequested).toBe(true);
+    expect(lifted.state.contactOnHold).toBe(false);
+  });
+  it("lifting when no hold is active changes nothing", () => {
+    const result = applyRoofGuidance(initialRoofGuidance, "overall", LIFT_HOLD_INSTRUCTION);
+    expect(result.state).toBe(initialRoofGuidance);
+    expect(result.state.holdWasLifted).toBe(false);
   });
 });

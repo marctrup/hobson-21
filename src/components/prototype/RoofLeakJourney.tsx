@@ -2,7 +2,7 @@ import { useState } from "react";
 import { ArrowLeft, Check, ChevronDown, FileText, Hand, Mail, MessageCircle, Pause, Play } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import owlReading from "@/assets/prototype/owl-reading.png";
-import { roofLeakWork, type RoofActivityId, type RoofActivityState } from "./roofLeakWork";
+import { roofLeakWork, roofSummary, type RoofActivityId, type RoofActivityState } from "./roofLeakWork";
 import { SHOPFRONT_INSTRUCTION, type RoofGuidanceState, type RoofGuideScope } from "./roofGuidance";
 
 type ActivityId = RoofActivityId;
@@ -64,7 +64,7 @@ export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initia
           <img src={owlReading} alt="Hobson reading" className="h-10 w-10 shrink-0 object-contain" />
           <p className="max-w-2xl text-sm leading-relaxed text-muted-foreground">{roofLeakWork.explanation}</p>
         </div>
-        <p className="mt-3 max-w-2xl text-sm leading-relaxed">{roofLeakWork.summary}</p>
+        <p className="mt-3 max-w-2xl text-sm leading-relaxed">{roofSummary(guidance)}</p>
         <p role="status" className="mt-3 flex items-center gap-2 text-xs font-medium"><span className={`h-1.5 w-1.5 rounded-full ${paused ? "bg-muted-foreground" : "bg-ring"}`} aria-hidden="true" />{paused ? "Work paused · What I've found is preserved" : "I'm working on this now"}</p>
       </header>
 
@@ -77,13 +77,15 @@ export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initia
             <div>
               {activities.map((activity) => (
                 <Button key={activity.id} variant="ghost" aria-current={selected === activity.id ? "step" : undefined} onClick={() => { setSelected(activity.id); setPaperOpen(false); }} className={`mb-2 h-auto w-full items-start justify-start gap-2 rounded-md border px-2 py-3 text-left whitespace-normal ${selected === activity.id ? "border-border bg-muted/70" : "border-transparent"}`}>
-                  <span aria-hidden="true" className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center">{stateDot(activity.state)}</span>
+                  <span aria-hidden="true" className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center">{stateDot(activity.id === "insurer" && guidance.contactOnHold ? "waiting" : activity.state)}</span>
                   <span className="min-w-0">
                     <span className="block text-sm font-semibold leading-snug">{activity.title}</span>
-                    <span className="mt-1 block text-xs font-normal leading-relaxed text-muted-foreground">{stateLabel[activity.state]} · {activity.note}</span>
+                    <span className="mt-1 block text-xs font-normal leading-relaxed text-muted-foreground">{activity.id === "insurer" && guidance.contactOnHold ? "On hold at your request" : stateLabel[activity.state]} · {activity.note}</span>
                     {activity.id === "lease" && guidance.shopfrontRequested && <span className="mt-1 block text-xs font-normal leading-relaxed text-muted-foreground">Shopfront roof added to the review.</span>}
                     {activity.id === "contractor" && guidance.contactOnHold && <span className="mt-1 block text-xs font-normal leading-relaxed text-muted-foreground">Awaiting reply · Further contact on hold.</span>}
+                    {activity.id === "contractor" && guidance.holdWasLifted && !guidance.contactOnHold && <span className="mt-1 block text-xs font-normal leading-relaxed text-muted-foreground">Further contact permitted again.</span>}
                     {activity.id === "insurer" && guidance.contactOnHold && <span className="mt-1 block text-xs font-normal leading-relaxed text-muted-foreground">Contact on hold at your request.</span>}
+                    {activity.id === "insurer" && guidance.holdWasLifted && !guidance.contactOnHold && <span className="mt-1 block text-xs font-normal leading-relaxed text-muted-foreground">Further contact permitted again · Approval still required.</span>}
                   </span>
                 </Button>
               ))}
@@ -165,11 +167,15 @@ export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initia
                 </div>
                 <div className="mt-4 border-l-2 border-border pl-3">
                   <h5 className="text-xs font-semibold">Current position</h5>
-                  <p className="mt-2 text-sm leading-relaxed">Waiting for the contractor's response.</p>
+                  <p className="mt-2 text-sm leading-relaxed">The inspection request has already been sent. I'm awaiting a response.</p>
                 </div>
                 {guidance.contactOnHold && <div className="mt-4 border-l-2 border-ring pl-3">
                   <h5 className="text-xs font-semibold">At your request</h5>
-                  <p className="mt-2 text-sm leading-relaxed">Further contact on hold. The inspection request has already been sent and can't be recalled, but I won't send any follow-up while your instruction stands.</p>
+                  <p className="mt-2 text-sm leading-relaxed">Further contact on hold at your request. The inspection request has already been sent and can't be recalled, but I won't send any follow-up while your instruction stands.</p>
+                </div>}
+                {guidance.holdWasLifted && !guidance.contactOnHold && <div className="mt-4 border-l-2 border-border pl-3">
+                  <h5 className="text-xs font-semibold">At your request</h5>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">Further contact permitted again. I won't send a follow-up unless it's needed.</p>
                 </div>}
                 <div className="mt-4 border-l-2 border-border pl-3">
                   <h5 className="text-xs font-semibold">Still outstanding</h5>
@@ -188,11 +194,15 @@ export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initia
               {selected === "insurer" && <>
                 <div className="mt-4 border-l-2 border-border pl-3">
                   <h5 className="text-xs font-semibold">What I've prepared</h5>
-                  <p className="mt-2 text-sm leading-relaxed">Draft notification to the insurer about the reported leak.</p>
+                  <p className="mt-2 text-sm leading-relaxed">Notification prepared — Not sent. A draft notification to the insurer about the reported leak.</p>
                 </div>
                 <div className="mt-4 border-l-2 border-ring pl-3">
                   <h5 className="text-xs font-semibold">Current position</h5>
                   <p className="mt-2 text-sm leading-relaxed">{guidance.contactOnHold ? "On hold at your request. Nothing has been sent." : "Awaiting your approval. Nothing has been sent."}</p>
+                </div>
+                <div className="mt-4 border-l-2 border-border pl-3">
+                  <h5 className="text-xs font-semibold">Still required: Your approval</h5>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{guidance.contactOnHold ? "I've prepared the notification, but I won't send it until you lift the hold and approve the message. The hold on further contact prevents sending, even with approval." : "The notification still requires your specific approval before it can be sent. Lifting a hold on contact never approves a message by itself."}</p>
                 </div>
                 {guidance.contactOnHold && <div className="mt-4 border-l-2 border-border pl-3">
                   <h5 className="text-xs font-semibold">At your request</h5>

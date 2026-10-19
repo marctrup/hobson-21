@@ -23,6 +23,13 @@ export const roofLeakWork = {
   explanation: "I'm looking into the reported leak, establishing responsibility and arranging what needs to happen next.",
 };
 
+/** The summary must always describe the current position — it changes with the contact hold. */
+export function roofSummary(guidance: { contactOnHold: boolean; holdWasLifted: boolean }): string {
+  if (guidance.contactOnHold) return "I'm continuing the lease review. The contractor's reply is outstanding, and I've held further contact as you asked.";
+  if (guidance.holdWasLifted) return "I'm continuing the lease review. The contractor's reply is outstanding, and the insurer notification still awaits your approval.";
+  return roofLeakWork.summary;
+}
+
 /** The outstanding decision within the investigation — a reference, not a separate job. */
 export const roofInsurerDecision = {
   place: roofLeakWork.place,

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Activity as ActivityIcon, ArrowUpRight, Check, CheckCheck, CircleDot, Clock, Hand, X } from "lucide-react";
+import { Activity as ActivityIcon, ArrowUpRight, Check, CheckCheck, CircleDot, Clock, Hand, Pause, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import owlReading from "@/assets/prototype/owl-reading.png";
 import { WorkJourney, type ApprovalStatus } from "./WorkJourney";
@@ -7,7 +7,7 @@ import { RoofLeakJourney } from "./RoofLeakJourney";
 import { roofInsurerDecision, roofLeakWork, type RoofActivityId } from "./roofLeakWork";
 import { initialRoofGuidance, type RoofGuidanceState, type RoofGuideScope } from "./roofGuidance";
 
-type ActivityState = "working" | "waiting" | "needs-you";
+type ActivityState = "working" | "waiting" | "needs-you" | "on-hold";
 type Activity = { label: string; state: ActivityState };
 
 const renewalDecision = {
@@ -119,6 +119,7 @@ const stateIcon: Record<ActivityState, { icon: typeof Clock; label: string }> = 
   working: { icon: ActivityIcon, label: "Working" },
   waiting: { icon: Clock, label: "Waiting" },
   "needs-you": { icon: Hand, label: "Needs you" },
+  "on-hold": { icon: Pause, label: "On hold at your request" },
 };
 
 function ActivityLine({ activity }: { activity: Activity }) {
@@ -140,7 +141,12 @@ export function WorkOverview({ onClose, onGuide, sideLetterRequested = false, on
   const awaitingApproval = approval === "awaiting";
   const sentApproval = approval === "sent";
   const [roofActivity, setRoofActivity] = useState<RoofActivityId>("lease");
-  const visibleDecisions = awaitingApproval ? [renewalDecision, roofInsurerDecision, ...decisions] : [roofInsurerDecision, ...decisions];
+  const insurerActionable = !roofGuidance.contactOnHold;
+  const visibleDecisions = [
+    ...(awaitingApproval ? [renewalDecision] : []),
+    ...(insurerActionable ? [roofInsurerDecision] : []),
+    ...decisions,
+  ];
   const openJourney = (atApproval: boolean) => { setOpenAtApproval(atApproval); setJourney("renewal"); };
   const openRoofJourney = (activity: RoofActivityId) => { setRoofActivity(activity); setJourney("roof"); };
   const closeJourney = () => { setJourney(null); setOpenAtApproval(false); onJourneyBack?.(); };
@@ -151,6 +157,13 @@ export function WorkOverview({ onClose, onGuide, sideLetterRequested = false, on
   }, [focusNeedsYou, journey]);
 
   const activitiesFor = (work: (typeof lookingAfter)[number]): Activity[] => {
+    if (work.place === roofLeakWork.place) {
+      return work.activities.map((activity) =>
+        activity.label === "Contact the insurer" && roofGuidance.contactOnHold
+          ? { ...activity, state: "on-hold" as ActivityState }
+          : activity,
+      );
+    }
     if (work.place !== "Stanley House · Flat 6") return work.activities;
     if (awaitingApproval) return [...work.activities, { label: "Renewal email — your approval needed", state: "needs-you" }];
     if (sentApproval) return [...work.activities, { label: "Renewal email sent — awaiting the tenant's response", state: "waiting" }];
