@@ -33,14 +33,10 @@ const decisions = [
 
 const lookingAfter: { place: string; title: string; aim: string; activities: Activity[] }[] = [
   {
-    place: "Burlington Gardens",
-    title: "Investigating the roof leak",
-    aim: "I'm investigating the source of the leak, checking responsibility and arranging the next steps.",
-    activities: [
-      { label: "Reviewing the lease", state: "working" },
-      { label: "Contractor inspection", state: "waiting" },
-      { label: "Contact the insurer", state: "needs-you" },
-    ],
+    place: roofLeakWork.place,
+    title: roofLeakWork.title,
+    aim: roofLeakWork.aim,
+    activities: roofLeakWork.activities.map(({ label, state }) => ({ label, state })),
   },
   {
     place: "Stanley House · Flat 6",
@@ -118,11 +114,18 @@ function SectionHeading({ id, title, count, icon: Icon, quiet = false }: {
   );
 }
 
+const stateIcon: Record<ActivityState, { icon: typeof Clock; label: string }> = {
+  working: { icon: ActivityIcon, label: "Working" },
+  waiting: { icon: Clock, label: "Waiting" },
+  "needs-you": { icon: Hand, label: "Needs you" },
+};
+
 function ActivityLine({ activity }: { activity: Activity }) {
+  const { icon: Icon, label } = stateIcon[activity.state];
   return (
     <li className="flex items-start gap-2 text-sm leading-relaxed">
-      <span aria-hidden="true" className={`mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full ${activity.state === "working" ? "bg-ring" : activity.state === "needs-you" ? "border border-ring bg-background" : "bg-muted-foreground/50"}`} />
-      <span className={activity.state === "needs-you" ? "font-medium text-foreground" : "text-muted-foreground"}>{activity.label}</span>
+      <Icon aria-hidden="true" className={`mt-1 h-3.5 w-3.5 shrink-0 ${activity.state === "needs-you" ? "text-ring" : "text-muted-foreground"}`} strokeWidth={1.6} />
+      <span className={activity.state === "needs-you" ? "font-medium text-foreground" : "text-muted-foreground"}>{activity.label} <span className="text-xs font-normal text-muted-foreground">— {label}</span></span>
     </li>
   );
 }
