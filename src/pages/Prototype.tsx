@@ -4297,7 +4297,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
         {showWhatIveDone && (
           <WorkOverview onClose={resetToMap} sideLetterRequested={workGuidance.sideLetterRequested} roofGuidance={roofGuidance} roofWork={roofWork} onRoofWorkChange={(next) => {
             setRoofWork(next);
-            if (guideScope !== "renewal") { setGuidingRenewal(false); setInput(""); }
+            if (guideScope !== "renewal" && (next.ended !== roofWork.ended || next.number !== roofWork.number)) { setGuidingRenewal(false); setInput(""); }
           }} focusNeedsYou={needsYouFocus} onJourneyBack={() => setGuidingRenewal(false)} onGuide={(scope, suggestion) => {
             expandChat();
             if (!guidingRenewal) {
