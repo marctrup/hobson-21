@@ -34,9 +34,9 @@ function SectionHeading({ id, title, count, icon: Icon, quiet = false }: {
 }) {
   return (
     <div className="mb-5 flex items-center gap-3">
-      <Icon aria-hidden="true" className="h-4 w-4 shrink-0 text-muted-foreground" strokeWidth={1.6} />
-      <h3 id={id} className={`text-lg font-semibold ${quiet ? "text-muted-foreground" : "text-foreground"}`}>{title}</h3>
-      <span className="text-sm tabular-nums text-muted-foreground">{count}</span>
+      <Icon aria-hidden="true" className="h-3.5 w-3.5 shrink-0 text-muted-foreground" strokeWidth={1.6} />
+      <h3 id={id} className={`text-xs font-medium uppercase tracking-[0.18em] ${quiet ? "text-muted-foreground/80" : "text-charcoal"}`}>{title}</h3>
+      <span className="text-xs tabular-nums text-muted-foreground">{count}</span>
       <div className="ml-2 h-px flex-1 bg-border" aria-hidden="true" />
     </div>
   );
@@ -124,9 +124,13 @@ export function WorkOverview({ onClose, onGuide, sideLetterRequested = false, on
 
       {journey === "completed-lease" ? <CompletedLeaseJourney onBack={closeJourney} /> : journey === "renewal" ? <WorkJourney paused={paused} onPauseChange={setPaused} onBack={closeJourney} onGuide={() => onGuide("renewal")} sideLetterRequested={sideLetterRequested} approval={approval} onApprovalChange={setApproval} approvalOpen={openAtApproval} /> : journey === "roof" ? <RoofLeakJourney key={currentRoofWork.number} work={currentRoofWork} onEnd={() => updateRoofWork(endRoofWork(currentRoofWork))} onRestart={() => updateRoofWork(restartRoofWork(currentRoofWork))} paused={currentRoofWork.paused} onPauseChange={(paused) => { if (!currentRoofWork.ended) updateRoofWork({ ...currentRoofWork, paused }); }} onBack={closeJourney} onGuide={(scope) => { if (!currentRoofWork.ended) onGuide(scope, scope === "lease" && roofHelp.shown ? LEASE_PLANS_INSTRUCTION : undefined); }} initialActivity={roofActivity} guidance={roofGuidance} help={roofHelp} onHelpChange={setRoofHelp} /> : <div className="hobson-scroll min-h-0 flex-1 overflow-y-auto">
         <div className="mx-auto w-full max-w-5xl px-5 pb-16 pt-8 sm:px-8 sm:pt-10">
-          <header className="mb-10">
-            <h2 className="text-3xl font-semibold leading-tight">What I'm Up To</h2>
-            <div className="mt-5 flex items-center gap-4">
+          <header className="mb-14 pt-4">
+            <p className="mb-3 text-[11px] font-medium uppercase tracking-[0.22em] text-[var(--brass-text)]">
+              {new Date().toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "long" })}
+            </p>
+            <h2 className="text-4xl font-normal leading-[1.1] tracking-tight text-ink sm:text-5xl">What I'm Up To</h2>
+            <div aria-hidden="true" className="mt-5 h-px w-16 bg-[var(--brass)]" />
+            <div className="mt-6 flex items-center gap-4">
               <img src={owlReading} alt="Hobson reading" className="h-16 w-16 shrink-0 object-contain" />
               <p className="max-w-xl text-base leading-relaxed text-muted-foreground">
                 I've finished <span className="font-medium text-foreground">{counts.accomplished} pieces of work</span>, I'm looking after <span className="font-medium text-foreground">{activeWork.length} more</span>, and there are <span className="font-medium text-foreground">{visibleDecisions.length} things I'd like you to review.</span>
