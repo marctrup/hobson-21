@@ -232,7 +232,7 @@ describe("Illustrative work journey", () => {
     await user.click(screen.getByRole("button", { name: /Contact the insurer/ }));
     expect(screen.getByText("Needs your approval")).toBeVisible();
     expect(screen.getByRole("article", { name: "Draft insurer notification preview" })).toHaveTextContent("Insurer (illustrative recipient)");
-    expect(screen.getByRole("button", { name: "Review approval" })).toBeDisabled();
+    expect(screen.getByRole("button", { name: "Approve and send" })).toBeEnabled();
 
     // Selecting activities never changes their status, and the tenancy renewal is untouched.
     expect(screen.getByRole("button", { name: /Reviewing repairing obligations/ })).toHaveTextContent("Working");
