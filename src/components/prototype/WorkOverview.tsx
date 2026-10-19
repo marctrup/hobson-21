@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Activity as ActivityIcon, ArrowUpRight, Check, CheckCheck, CircleDot, Clock, Hand, X } from "lucide-react";
+import { Activity as ActivityIcon, ArrowUpRight, Check, CheckCheck, CircleDot, Clock, Hand, Pause, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import owlReading from "@/assets/prototype/owl-reading.png";
 import { WorkJourney, type ApprovalStatus } from "./WorkJourney";

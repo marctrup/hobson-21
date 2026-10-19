@@ -2,7 +2,7 @@ import { useState } from "react";
 import { ArrowLeft, Check, ChevronDown, FileText, Hand, Mail, MessageCircle, Pause, Play } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import owlReading from "@/assets/prototype/owl-reading.png";
-import { roofLeakWork, type RoofActivityId, type RoofActivityState } from "./roofLeakWork";
+import { roofLeakWork, roofSummary, type RoofActivityId, type RoofActivityState } from "./roofLeakWork";
 import { SHOPFRONT_INSTRUCTION, type RoofGuidanceState, type RoofGuideScope } from "./roofGuidance";
 
 type ActivityId = RoofActivityId;
