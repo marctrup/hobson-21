@@ -206,8 +206,8 @@ export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initia
                   </dl>
                   <blockquote className="mt-4 whitespace-pre-line border-t border-border pt-4 text-sm leading-relaxed">{INSURER_BODY}</blockquote>
                 </article>
-                <Button size="sm" variant="outline" className="mt-4" disabled title="Approval review is demonstrated in the tenancy renewal journey">Review approval</Button>
-                <p className="mt-2 text-xs leading-relaxed text-muted-foreground">The approval flow itself is demonstrated in the tenancy renewal journey; this preview shows only what is waiting for you.</p>
+                <Button size="sm" variant="outline" className="mt-4" disabled title={guidance.contactOnHold ? "Sending is on hold at your request" : "Approval review is demonstrated in the tenancy renewal journey"}>Review approval</Button>
+                <p className="mt-2 text-xs leading-relaxed text-muted-foreground">{guidance.contactOnHold ? "Sending is on hold at your request; the draft remains here unchanged." : "The approval flow itself is demonstrated in the tenancy renewal journey; this preview shows only what is waiting for you."}</p>
               </>}
             </div>
           </section>
