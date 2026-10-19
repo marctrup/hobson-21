@@ -3,6 +3,7 @@ import { ArrowUpRight, Check, CheckCheck, CircleDot, Hand, X } from "lucide-reac
 import { Button } from "@/components/ui/button";
 import owlReading from "@/assets/prototype/owl-reading.png";
 import { WorkJourney, type ApprovalStatus } from "./WorkJourney";
+import { RoofLeakJourney } from "./RoofLeakJourney";
 
 type ActivityState = "working" | "waiting" | "needs-you";
 type Activity = { label: string; state: ActivityState };
