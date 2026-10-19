@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { ArrowLeft, Check, ChevronDown, FileText, Hand, Mail, MessageCircle, Pause, Play } from "lucide-react";
+import { ArrowLeft, Check, ChevronDown, CircleHelp, FileText, Hand, Mail, MessageCircle, Pause, Play } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import owlReading from "@/assets/prototype/owl-reading.png";
 import { roofLeakWork, roofSummary, type RoofActivityId, type RoofActivityState } from "./roofLeakWork";
-import { SHOPFRONT_INSTRUCTION, type RoofGuidanceState, type RoofGuideScope } from "./roofGuidance";
+import { LEASE_PLANS_INSTRUCTION, type RoofGuidanceState, type RoofGuideScope, type RoofHelpState } from "./roofGuidance";
 
 type ActivityId = RoofActivityId;
 type ActivityState = RoofActivityState;
@@ -23,6 +23,17 @@ A contractor inspection has been requested and we will share the report once rec
 Kind regards,
 Hobson`;
 
+const SURVEYOR_TO = "surveyor@example.com";
+const SURVEYOR_SUBJECT = "Burlington Gardens — Extent of the tenant's premises";
+const SURVEYOR_BODY = `Dear Surveyor,
+
+Could you please clarify whether the roof above the shopfront at Burlington Gardens forms part of the tenant's premises under the lease?
+
+This will help establish which area the lease covers. No view on repairing responsibility has been reached.
+
+Kind regards,
+Hobson`;
+
 function stateDot(state: ActivityState) {
   if (state === "working") return <span aria-hidden="true" className="h-2 w-2 rounded-full bg-ring" />;
   if (state === "needs-you") return <Hand aria-hidden="true" className="h-3.5 w-3.5 text-ring" />;
@@ -32,13 +43,15 @@ function stateDot(state: ActivityState) {
 const stateLabel: Record<ActivityState, string> = { working: "Working", waiting: "Waiting", "needs-you": "Needs you" };
 
 /** Illustrative parallel-activities demonstration only — no real work, approvals or integrations. */
-export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initialActivity = "lease", guidance }: {
+export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initialActivity = "lease", guidance, help, onHelpChange }: {
   paused: boolean;
   onPauseChange: (paused: boolean) => void;
   onBack: () => void;
   onGuide: (scope: RoofGuideScope) => void;
   initialActivity?: ActivityId;
   guidance: RoofGuidanceState;
+  help: RoofHelpState;
+  onHelpChange: (help: RoofHelpState) => void;
 }) {
   const [selected, setSelected] = useState<ActivityId | `done-${number}`>(initialActivity);
   const [paperOpen, setPaperOpen] = useState(false);
@@ -77,10 +90,13 @@ export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initia
             <div>
               {activities.map((activity) => (
                 <Button key={activity.id} variant="ghost" aria-current={selected === activity.id ? "step" : undefined} onClick={() => { setSelected(activity.id); setPaperOpen(false); }} className={`mb-2 h-auto w-full items-start justify-start gap-2 rounded-md border px-2 py-3 text-left whitespace-normal ${selected === activity.id ? "border-border bg-muted/70" : "border-transparent"}`}>
-                  <span aria-hidden="true" className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center">{stateDot(activity.id === "insurer" && guidance.contactOnHold ? "waiting" : activity.state)}</span>
+                  <span aria-hidden="true" className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center">{activity.id === "lease" && help.shown ? <CircleHelp aria-hidden="true" className="h-3.5 w-3.5 text-foreground" strokeWidth={1.6} /> : stateDot(activity.id === "insurer" && guidance.contactOnHold ? "waiting" : activity.state)}</span>
                   <span className="min-w-0">
                     <span className="block text-sm font-semibold leading-snug">{activity.title}</span>
-                    <span className="mt-1 block text-xs font-normal leading-relaxed text-muted-foreground">{activity.id === "insurer" && guidance.contactOnHold ? "On hold at your request" : stateLabel[activity.state]} · {activity.note}</span>
+                    <span className="mt-1 block text-xs font-normal leading-relaxed text-muted-foreground">{activity.id === "lease" && help.shown ? <><span className="font-medium text-foreground">Needs clarification</span> · Unable to establish whether the affected roof forms part of the tenant's premises.</> : <>{activity.id === "insurer" && guidance.contactOnHold ? "On hold at your request" : stateLabel[activity.state]} · {activity.note}</>}</span>
+                    {activity.id === "lease" && help.shown && help.choice === "enquiry" && <span className="mt-1 block text-xs font-normal leading-relaxed text-muted-foreground">Surveyor enquiry prepared — not sent.</span>}
+                    {activity.id === "lease" && help.shown && help.choice === "unresolved" && <span className="mt-1 block text-xs font-normal leading-relaxed text-muted-foreground">Question left open for now.</span>}
+                    {activity.id === "lease" && guidance.leasePlansRequested && <span className="mt-1 block text-xs font-normal leading-relaxed text-muted-foreground">Lease plans to be checked first.</span>}
                     {activity.id === "lease" && guidance.shopfrontRequested && <span className="mt-1 block text-xs font-normal leading-relaxed text-muted-foreground">Shopfront roof added to the review.</span>}
                     {activity.id === "contractor" && guidance.contactOnHold && <span className="mt-1 block text-xs font-normal leading-relaxed text-muted-foreground">Awaiting reply · Further contact on hold.</span>}
                     {activity.id === "contractor" && guidance.holdWasLifted && !guidance.contactOnHold && <span className="mt-1 block text-xs font-normal leading-relaxed text-muted-foreground">Further contact permitted again.</span>}
@@ -134,10 +150,48 @@ export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initia
                   <h5 className="text-xs font-semibold">What I'm trying to establish</h5>
                   <p className="mt-2 text-sm leading-relaxed">Who is responsible for repairing the affected roof?</p>
                 </div>
-                <div className="mt-4 border-l-2 border-border pl-3">
+                {!help.shown && <div className="mt-4 border-l-2 border-border pl-3">
                   <h5 className="text-xs font-semibold">Not yet established</h5>
                   <p className="mt-2 text-sm leading-relaxed text-muted-foreground">I haven't finished reviewing the relevant repairing obligations.</p>
-                </div>
+                </div>}
+                {help.shown && <section aria-label="Hobson needs your help" className="mt-5 rounded-md border border-border bg-muted/40 px-4 py-4">
+                  <h5 className="flex items-center gap-2 text-sm font-semibold"><CircleHelp className="h-4 w-4" aria-hidden="true" strokeWidth={1.6} />Hobson needs your help</h5>
+                  <p className="mt-2 text-sm leading-relaxed">I've reviewed the relevant lease provisions, but I can't establish whether the roof above the shopfront forms part of the tenant's premises.</p>
+                  <dl className="mt-4 space-y-3 text-sm">
+                    <div><dt className="text-xs font-semibold">What I've established</dt><dd className="mt-1 leading-relaxed text-muted-foreground">The lease contains repairing obligations relevant to the premises.</dd></div>
+                    <div><dt className="text-xs font-semibold">What I haven't established</dt><dd className="mt-1 leading-relaxed text-muted-foreground">I cannot confirm whether the affected shopfront roof falls within the tenant's premises.</dd></div>
+                    <div><dt className="text-xs font-semibold">Why it matters</dt><dd className="mt-1 leading-relaxed text-muted-foreground">Without establishing which area the lease covers, I cannot reliably determine who is responsible for these repairs.</dd></div>
+                  </dl>
+                  <p className="mt-3 text-xs text-muted-foreground">Illustrative unresolved finding — not a legal conclusion.</p>
+                </section>}
+                {help.shown && help.choice !== "enquiry" && <div className="mt-4 border-l-2 border-ring pl-3">
+                  <h5 className="text-xs font-semibold">What I suggest</h5>
+                  <p className="mt-2 text-sm leading-relaxed">I suggest asking the surveyor to clarify whether the affected roof forms part of the tenant's premises. I can prepare the enquiry for your approval.</p>
+                  {help.choice === "unresolved" && <p role="status" className="mt-3 text-sm leading-relaxed text-muted-foreground">I'll leave the responsibility question open for now and continue with the other parts of the investigation. The question remains open.</p>}
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    <Button size="sm" variant="outline" onClick={() => onHelpChange({ ...help, choice: "enquiry" })}>Prepare the enquiry</Button>
+                    <Button size="sm" variant="ghost" onClick={() => onGuide("lease")} className="gap-2"><MessageCircle className="h-3.5 w-3.5" aria-hidden="true" />Guide Hobson</Button>
+                    {help.choice !== "unresolved" && <Button size="sm" variant="ghost" onClick={() => onHelpChange({ ...help, choice: "unresolved" })} className="text-muted-foreground">Leave unresolved</Button>}
+                  </div>
+                </div>}
+                {help.shown && help.choice === "enquiry" && <div className="mt-4">
+                  <p role="status" className="text-sm font-semibold">Enquiry prepared — Not sent</p>
+                  <p className="mt-1 text-sm leading-relaxed text-muted-foreground">The draft asks the surveyor to clarify which area the lease covers. The responsibility question stays open until that's established.</p>
+                  <article aria-label="Draft surveyor enquiry preview" className="mt-3 rounded-md border border-border bg-popover px-4 py-4">
+                    <p className="flex items-center gap-2 text-xs font-medium text-muted-foreground"><Mail className="h-3.5 w-3.5" aria-hidden="true" />Draft enquiry · not yet sent</p>
+                    <dl className="mt-3 space-y-2 text-sm">
+                      <div className="flex gap-2"><dt className="w-16 shrink-0 text-xs text-muted-foreground">To</dt><dd className="font-medium">{SURVEYOR_TO}</dd></div>
+                      <div className="flex gap-2"><dt className="w-16 shrink-0 text-xs text-muted-foreground">Subject</dt><dd className="font-medium">{SURVEYOR_SUBJECT}</dd></div>
+                    </dl>
+                    <blockquote className="mt-4 whitespace-pre-line border-t border-border pt-4 text-sm leading-relaxed">{SURVEYOR_BODY}</blockquote>
+                  </article>
+                  <p className="mt-3 text-xs leading-relaxed text-muted-foreground">{guidance.contactOnHold ? "On hold at your request. I've prepared the enquiry, but I can't send it while your hold on further contact stands." : "Still required: Your approval. Preparing a message is not the same as sending it; I won't send this without your approval."}</p>
+                </div>}
+                {guidance.leasePlansRequested && <div className="mt-4 border-l-2 border-ring pl-3">
+                  <h5 className="text-xs font-semibold">Added at your request</h5>
+                  <p className="mt-2 text-sm leading-relaxed">{LEASE_PLANS_INSTRUCTION}</p>
+                  <p className="mt-2 text-xs leading-relaxed text-muted-foreground">I haven't reviewed the plans yet. The responsibility question stays open until I've established what they show.</p>
+                </div>}
                 {guidance.shopfrontRequested && <div className="mt-4 border-l-2 border-ring pl-3">
                   <h5 className="text-xs font-semibold">Added at your request</h5>
                   <p className="mt-2 text-sm leading-relaxed">Check whether the shopfront roof forms part of the tenant's premises.</p>
@@ -224,6 +278,7 @@ export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initia
         </div>
         <footer className="flex flex-wrap items-center justify-between gap-3 border-t border-border px-5 py-4 sm:px-6">
           <p className="max-w-md text-xs leading-relaxed text-muted-foreground">Illustrative work and paper extracts only — no live work is running.</p>
+          {!help.shown && <Button size="sm" variant="ghost" onClick={() => { onHelpChange({ ...help, shown: true }); setSelected("lease"); }} className="text-xs text-muted-foreground">Preview needs help</Button>}
         </footer>
       </div>
     </div>

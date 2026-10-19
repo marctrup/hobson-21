@@ -4289,7 +4289,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
           />
         )}
         {showWhatIveDone && (
-          <WorkOverview onClose={resetToMap} sideLetterRequested={workGuidance.sideLetterRequested} roofGuidance={roofGuidance} focusNeedsYou={needsYouFocus} onJourneyBack={() => setGuidingRenewal(false)} onGuide={(scope) => {
+          <WorkOverview onClose={resetToMap} sideLetterRequested={workGuidance.sideLetterRequested} roofGuidance={roofGuidance} focusNeedsYou={needsYouFocus} onJourneyBack={() => setGuidingRenewal(false)} onGuide={(scope, suggestion) => {
             expandChat();
             if (!guidingRenewal) {
               const width = Math.max(CHAT_MIN_WIDTH, Math.round((window.innerWidth - 68) * 0.3));
@@ -4299,7 +4299,8 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
             setMainCollapsed(false);
             setGuidingRenewal(true);
             setGuideScope(scope);
-            if (!guidingRenewal) setInput(scope === "renewal" ? SIDE_LETTER_INSTRUCTION : scope === "lease" ? SHOPFRONT_INSTRUCTION : roofGuidance.contactOnHold ? LIFT_HOLD_INSTRUCTION : HOLD_CONTACT_INSTRUCTION);
+            if (suggestion) setInput(suggestion);
+            else if (!guidingRenewal) setInput(scope === "renewal" ? SIDE_LETTER_INSTRUCTION : scope === "lease" ? SHOPFRONT_INSTRUCTION : roofGuidance.contactOnHold ? LIFT_HOLD_INSTRUCTION : HOLD_CONTACT_INSTRUCTION);
             setTyping(false);
             requestAnimationFrame(() => {
               inputRef.current?.focus();

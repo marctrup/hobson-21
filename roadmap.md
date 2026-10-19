@@ -56,3 +56,5 @@
 - [x] Iteration 15: roof leak journey reshaped — Happening now as independent activities (no timeline), What I've done as collapsible selectable history with recorded outcomes on the Desk; selection never changes status
 - [x] Iteration 16: Guide Hobson across parallel work — one Guide button, visible "Regarding:" context with scope switch, "Guide this activity" on the lease desk, shopfront-roof instruction (lease only) and investigation-wide contact hold; other activities unchanged, idempotent, state persists across chat/overview
 - [x] Iteration 17 — Managing holds and permissions: summary follows the hold; insurer "On hold at your request" with "Still required: Your approval"; lift via "You can contact people again."; hold never equals approval; overview Needs you count follows the hold.
+
+- [x] Iteration 18: When Hobson needs help (roof leak lease review)
