@@ -165,4 +165,47 @@ describe("Illustrative work journey", () => {
     expect(close).not.toHaveBeenCalled();
     expect(screen.getByRole("region", { name: "Tenancy renewal work journey" })).toBeVisible();
   });
+
+  it("shows the roof leak as one piece of work with three parallel activities", async () => {
+    const user = userEvent.setup();
+    render(<WorkOverview onClose={vi.fn()} onGuide={vi.fn()} />);
+    const lookingAfter = screen.getByRole("region", { name: /What I'm looking after/ });
+    // One job, one place: the investigation appears once, with its three activities inside it.
+    expect(within(lookingAfter).getAllByText("Investigating the roof leak")).toHaveLength(1);
+    expect(within(lookingAfter).getByText("Reviewing the lease")).toBeInTheDocument();
+    expect(within(lookingAfter).getByText("Contractor inspection")).toBeInTheDocument();
+    expect(within(lookingAfter).getByText("Contact the insurer")).toBeInTheDocument();
+    expect(screen.getByText("5 more")).toBeInTheDocument();
+
+    await user.click(screen.getByRole("button", { name: "Investigating the roof leak" }));
+    expect(screen.getByRole("region", { name: "Roof leak investigation work journey" })).toBeVisible();
+    expect(screen.getByText(/I'm continuing my review of the lease, waiting for the contractor and need your approval before contacting the insurer\./)).toBeVisible();
+    // Completed work is shown quietly; no cause or responsibility is implied.
+    expect(screen.getByText("Read the tenant's report.")).toBeVisible();
+    expect(screen.getByText("Requested a contractor inspection.")).toBeVisible();
+
+    // Each activity is selectable and only changes what is viewed.
+    const lease = screen.getByRole("button", { name: /Reviewing repairing obligations/ });
+    expect(lease).toHaveAttribute("aria-current", "step");
+    expect(screen.getByText("Who is responsible for repairing the affected roof?")).toBeVisible();
+    expect(screen.getByText(/I haven't finished reviewing the relevant repairing obligations\./)).toBeVisible();
+    await user.click(screen.getByRole("button", { name: /Business Lease · View paper/ }));
+    expect(screen.getByLabelText("Business Lease illustrative extract")).toBeVisible();
+
+    await user.click(screen.getByRole("button", { name: /Contractor inspection/ }));
+    expect(screen.getByText("Waiting for the contractor's response.")).toBeVisible();
+    expect(screen.getByText("No inspection report has been received.")).toBeVisible();
+    expect(screen.getByRole("article", { name: "Inspection request record" })).toBeVisible();
+
+    await user.click(screen.getByRole("button", { name: /Contact the insurer/ }));
+    expect(screen.getByText("Awaiting your approval. Nothing has been sent.")).toBeVisible();
+    expect(screen.getByRole("article", { name: "Draft insurer notification preview" })).toHaveTextContent("insurer@example.com");
+    expect(screen.getByRole("button", { name: "Review approval" })).toBeDisabled();
+
+    // Selecting activities never changes their status, and the tenancy renewal is untouched.
+    expect(screen.getByRole("button", { name: /Reviewing repairing obligations/ })).toHaveTextContent("Working");
+    await user.click(screen.getByRole("button", { name: "Back to What I've Done" }));
+    await user.click(screen.getByRole("button", { name: "Getting the tenancy renewal ready" }));
+    expect(screen.getByRole("region", { name: "Tenancy renewal work journey" })).toBeVisible();
+  });
 });
