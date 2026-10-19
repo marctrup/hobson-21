@@ -3429,9 +3429,8 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
 
       {/* Chat panel */}
       <section
-        className={`${guidanceOverlay ? "absolute bottom-0 left-[68px] top-0 z-[1300] max-w-[calc(100%-68px)] shadow-xl" : isExpanded || mainCollapsed ? "flex-1" : "shrink-0"} relative bg-white border-r border-bone flex flex-col ${chatCollapsed ? "overflow-hidden" : ""}`}
+        className={`${guidanceOverlay ? "absolute bottom-0 left-[68px] top-0 z-[1300] max-w-[calc(100%-68px)] shadow-xl" : `relative ${isExpanded || mainCollapsed ? "flex-1" : "shrink-0"}`} bg-white border-r border-bone flex flex-col ${chatCollapsed ? "overflow-hidden" : ""}`}
         style={isExpanded || mainCollapsed ? undefined : { width: chatCollapsed ? CHAT_COLLAPSED_WIDTH : chatWidth }}
-        aria-hidden={chatCollapsed ? true : undefined}
         onDragOver={(e) => {
           if (!chatCollapsed && adminMode && adminCharacter === "professor") { e.preventDefault(); setChatDropOver(true); }
         }}
