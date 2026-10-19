@@ -1,7 +1,7 @@
 # Roadmap
 
 ## What I'm Up To on phones
-- [ ] Make the overview, journeys, papers and guidance comfortable on narrow screens; preserve every simulation and verify phone/tablet/desktop flows.
+- [x] Make the overview, journeys, papers and guidance comfortable on narrow screens; 36 focused tests pass and flows verified at 320, 390, 768 and 1280px, preserving the simulations.
 
 ## Prototype privacy gate
 
