@@ -1,8 +1,8 @@
 # Roadmap
 
 ## What I've Done — work journey
-- [ ] Implement Iteration 7: keep chat near 30% beside readable work, reduce repeated guidance, and keep the mentioned side letter Awaiting paper without fabricated evidence.
-- [ ] Remove Meet Hobson and Meet my team from /prototype, including their introductory surfaces.
+- [x] Implement Iteration 7: keep chat near 30% beside readable work, reduce repeated guidance, and keep the mentioned side letter Awaiting paper without fabricated evidence; focused tests and desktop/tablet interaction checks pass.
+- [x] Remove Meet Hobson and Meet my team from /prototype, including their introductory surfaces; direct portfolio entry and absent controls verified.
 - [x] Connect header guidance to the existing conversation, simulate the 2024 side-letter instruction once, and verify preserved findings, pause state and paper evidence.
 - [x] Make original-lease findings and the unfinished variation check selectable with one inline evidence expansion; verify paper previews and unchanged journey/pause state.
 - [x] Replace the individual report layout with a selectable journey and desk; keep pause visible and verify all four steps without changing work status.
