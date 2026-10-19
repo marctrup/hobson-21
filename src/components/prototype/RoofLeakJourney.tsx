@@ -25,8 +25,9 @@ function stateDot(state: ActivityState) {
 const stateLabel: Record<ActivityState, string> = { working: "Working", waiting: "Waiting", "needs-you": "Needs you" };
 
 /** Illustrative parallel-activities demonstration only — no real work, approvals or integrations. */
-export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initialActivity = "lease", guidance, help, onHelpChange, work, onEnd, onRestart }: {
+export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initialActivity = "lease", guidance, help, onHelpChange, work, onEnd, onRestart, onPreviewCompleted }: {
   work: RoofWorkState;
+  onPreviewCompleted: () => void;
   onEnd: () => void;
   onRestart: () => void;
   paused: boolean;
@@ -300,6 +301,7 @@ export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initia
         </div>
         <footer className="flex flex-wrap items-center justify-between gap-3 border-t border-border px-5 py-4 sm:px-6">
           <p className="max-w-md text-xs leading-relaxed text-muted-foreground">Illustrative work and paper extracts only — no live work is running.</p>
+          <Button variant="ghost" size="sm" onClick={onPreviewCompleted} className="h-auto whitespace-normal text-xs text-muted-foreground">Preview completed work</Button>
         </footer>
       </div>
     </div>

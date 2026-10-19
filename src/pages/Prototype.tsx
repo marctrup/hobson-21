@@ -18,7 +18,7 @@ import { DocumentsLibrary } from "@/components/prototype/DocumentsLibrary";
 import { CollapsibleSection } from "@/components/prototype/CollapsibleSection";
 import { WorkOverview } from "@/components/prototype/WorkOverview";
 import { applyWorkGuidance, initialWorkGuidance, SIDE_LETTER_INSTRUCTION } from "@/components/prototype/workGuidance";
-import { createRoofWork, roofAttention } from "@/components/prototype/roofWorkLifecycle";
+import { createRoofWork, roofOverviewCounts } from "@/components/prototype/roofWorkLifecycle";
 import { applyRoofGuidance, initialRoofGuidance, HOLD_CONTACT_INSTRUCTION, LIFT_HOLD_INSTRUCTION, SHOPFRONT_INSTRUCTION, type RoofGuideScope } from "@/components/prototype/roofGuidance";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -1443,8 +1443,10 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
   const [guidingRenewal, setGuidingRenewal] = useState(false);
   const [workGuidance, setWorkGuidance] = useState(initialWorkGuidance);
   const [roofWork, setRoofWork] = useState(createRoofWork);
+  const [roofCompletionPreview, setRoofCompletionPreview] = useState(false);
+  const roofCounts = roofOverviewCounts(roofWork, roofCompletionPreview);
   const roofGuidance = roofWork.guidance;
-  const setRoofGuidance = (guidance: typeof roofGuidance) => setRoofWork(previous => previous.ended ? previous : { ...previous, guidance });
+  const setRoofGuidance = (guidance: typeof roofGuidance) => setRoofWork(previous => previous.ended || roofCompletionPreview ? previous : { ...previous, guidance });
   const [guidedRoofAttempt, setGuidedRoofAttempt] = useState(1);
   // Which piece of work the guidance composer is scoped to: the renewal, the whole
   // roof leak investigation, or the lease-review activity within it.
@@ -2929,7 +2931,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
       ? [
           `Good morning, ${FIRST_NAME}. For today's testing, go straight to your unit — by the map or the search. That is where I can answer your questions.`,
         ]
-      : [`Good morning, ${FIRST_NAME}. I've finished 3 pieces of work, I'm looking after ${roofWork.ended ? 4 : 5} more, and there are ${2 + Number(roofAttention(roofWork).insurer) + Number(roofAttention(roofWork).help)} things I'd like you to review.`];
+      : [`Good morning, ${FIRST_NAME}. I've finished ${roofCounts.accomplished} pieces of work, I'm looking after ${roofCounts.active} more, and there are ${roofCounts.needsYou} things I'd like you to review.`];
 
 
 
@@ -4015,7 +4017,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                 if (!instruction) return;
                 const result = guideScope === "renewal"
                   ? applyWorkGuidance(workGuidance, instruction)
-                  : roofWork.ended || guidedRoofAttempt !== roofWork.number
+                  : roofWork.ended || roofCompletionPreview || guidedRoofAttempt !== roofWork.number
                     ? { state: roofGuidance, reply: "That instruction belongs to an investigation that has ended. I haven't changed the work. Please open the current investigation to guide a fresh attempt." }
                     : applyRoofGuidance(roofGuidance, guideScope, instruction);
                 if (guideScope === "renewal") setWorkGuidance(result.state as typeof workGuidance);
@@ -4295,7 +4297,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
           />
         )}
         {showWhatIveDone && (
-          <WorkOverview onClose={resetToMap} sideLetterRequested={workGuidance.sideLetterRequested} roofGuidance={roofGuidance} roofWork={roofWork} onRoofWorkChange={(next) => {
+          <WorkOverview completionPreview={roofCompletionPreview} onCompletionPreviewChange={(preview) => { setRoofCompletionPreview(preview); if (guideScope !== "renewal") { setGuidingRenewal(false); setInput(""); } }} onClose={resetToMap} sideLetterRequested={workGuidance.sideLetterRequested} roofGuidance={roofGuidance} roofWork={roofWork} onRoofWorkChange={(next) => {
             setRoofWork(next);
             if (guideScope !== "renewal" && (next.ended !== roofWork.ended || next.number !== roofWork.number)) { setGuidingRenewal(false); setInput(""); }
           }} focusNeedsYou={needsYouFocus} onJourneyBack={() => setGuidingRenewal(false)} onGuide={(scope, suggestion) => {
