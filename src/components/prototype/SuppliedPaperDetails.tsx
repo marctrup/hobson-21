@@ -1,7 +1,8 @@
 import { useContext, useEffect, useState } from "react";
 import { PaperPreviewContext } from "./paperPreviewContext";
-import { ChevronDown, FileText } from "lucide-react";
+import { ChevronDown, FileSearch, FileText, HelpCircle, MessageSquare, Undo2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { DeskActionButton } from "./DeskActionButton";
 import { SIDE_LETTER_RENT, applyPaperPlacement, initialWorkGuidance, RENEWAL_PAPER_PLACE, type PaperPlace, type PaperPlacementAction, type SuppliedPaper } from "./workGuidance";
 
 export function SuppliedPaperDetails({ paper: currentPaper, places = [], onPlacement }: { paper: SuppliedPaper; places?: PaperPlace[]; onPlacement?: (id: string, action: PaperPlacementAction) => void }) {
@@ -76,9 +77,37 @@ export function SuppliedPaperDetails({ paper: currentPaper, places = [], onPlace
       <h6 className="mt-3 text-xs font-semibold">What changed</h6><p className="mt-1 text-sm leading-relaxed">The Side Letter records a later rent position for this tenancy.</p>
       <h6 className="mt-3 text-xs font-semibold">What remains to check</h6><p className="mt-1 text-sm leading-relaxed">Whether any other later papers affect that position.</p>
     </section> : <div className="mt-3 border-l-2 border-border pl-3"><h6 className="text-xs font-semibold">{paper.progress === "checking-effect" ? "Checking the Side Letter" : "What I'm checking"}</h6><p className="mt-1 text-sm leading-relaxed">{paper.progress === "checking-effect" ? "I'm examining whether the Side Letter changes the rent recorded in the Business Lease. Its effect is not yet established" : "Whether this Side Letter changes the rent position recorded in the Business Lease. Its effect has not been established"}; the rent finding, renewal summary and draft email remain unchanged.</p></div>}
-    <Button variant="ghost" size="sm" className="mt-2 h-auto whitespace-normal px-0 text-xs text-muted-foreground" aria-expanded={sourceOpen} onClick={() => setSourceOpen(!sourceOpen)}>Source conversation · {sourceOpen ? "Hide attachment message" : "Show attachment message"}</Button>
-    {sourceOpen && <blockquote className="mt-2 border-l-2 border-border pl-3 text-sm leading-relaxed">{paper.sourceInstruction}</blockquote>}
-    {onPlacement && !previewPaper && currentPaper.progress === "checking-effect" && currentPaper.tenancyLinked && <Button variant="ghost" size="sm" className="mt-3 h-auto whitespace-normal text-xs text-muted-foreground" onClick={() => onPlacement(currentPaper.id, { type: "examine" })}>Preview Side Letter finding</Button>}
-    {onPlacement && places.length > 0 && <Button variant="ghost" size="sm" className="mt-3 h-auto whitespace-normal text-xs text-muted-foreground" onClick={() => { setChoosing(false); setPreviewPaper(previewPaper ? null : { ...currentPaper, progress: "uncertain", filedPlace: null, tenancyLinked: false, proposedPlace: RENEWAL_PAPER_PLACE }); }}>{previewPaper ? "Return to investigation" : "Preview uncertain placement"}</Button>}
+    {sourceOpen && <blockquote className="mt-3 border-l-2 border-border pl-3 text-sm leading-relaxed">{paper.sourceInstruction}</blockquote>}
+    <div className="mt-4 border-t border-dashed border-border pt-3">
+      <p className="text-xs font-semibold text-muted-foreground">Related actions</p>
+      <div className="mt-2 flex flex-wrap items-center gap-2">
+        <DeskActionButton
+          icon={<MessageSquare className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />}
+          label={sourceOpen ? "Hide chat message" : "View chat message"}
+          tooltip={sourceOpen ? "Hide the message where you supplied this Side Letter." : "Find the conversation where you supplied this Side Letter."}
+          expanded={sourceOpen}
+          onClick={() => setSourceOpen(!sourceOpen)}
+        />
+        {onPlacement && !previewPaper && currentPaper.progress === "checking-effect" && currentPaper.tenancyLinked && <DeskActionButton
+          demo
+          icon={<FileSearch className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />}
+          label="Preview finding"
+          tooltip="Simulate Hobson completing the review and showing what the Side Letter changes."
+          onClick={() => onPlacement(currentPaper.id, { type: "examine" })}
+        />}
+        {onPlacement && places.length > 0 && (previewPaper ? <DeskActionButton
+          icon={<Undo2 className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />}
+          label="Return to investigation"
+          tooltip="Close this example and restore the completed Side Letter review and conversation."
+          onClick={() => { setChoosing(false); setPreviewPaper(null); }}
+        /> : <DeskActionButton
+          demo
+          icon={<HelpCircle className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />}
+          label="Preview uncertainty"
+          tooltip="See how Hobson asks for help when he cannot establish where a paper belongs."
+          onClick={() => { setChoosing(false); setPreviewPaper({ ...currentPaper, progress: "uncertain", filedPlace: null, tenancyLinked: false, proposedPlace: RENEWAL_PAPER_PLACE }); }}
+        />)}
+      </div>
+    </div>
   </article>;
 }

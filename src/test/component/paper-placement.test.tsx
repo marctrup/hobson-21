@@ -64,7 +64,7 @@ describe("Iteration 22A paper placement", () => {
     render(<Desk />);
     await user.click(screen.getByRole("button", { name: "Getting the tenancy renewal ready" }));
     expect(screen.queryByRole("article", { name: "Side Letter — 2024" })).not.toBeInTheDocument();
-    await user.click(screen.getByRole("button", { name: "Preview uncertain placement" }));
+    await user.click(screen.getByRole("button", { name: "Preview uncertainty" }));
     await user.click(screen.getByRole("button", { name: "Choose somewhere else" }));
     await user.selectOptions(screen.getByLabelText("Choose a Unit or Unit Group"), "stanley-f8");
     await user.click(screen.getByRole("button", { name: "Keep with Flat 6 instead" }));
