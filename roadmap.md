@@ -1,7 +1,7 @@
 # Roadmap
 
 ## Retire the Nugent Terrace rent conversation
-- [ ] Remove the prefilled Flat 2 rent question and its dedicated scripted reply and follow-ups; preserve current work demonstrations and ordinary chat.
+- [x] Remove the prefilled Flat 2 rent question and its dedicated scripted reply, references and download controls; current work and ordinary chat preserved; 49 component tests pass and build is clean. Browser review could not pass the private entrance while its verification remained pending.
 
 ## Remove "chat is locked" from the prototype
 - [x] Replace every locked composer with a working chat box that answers honestly for the current view; 70 tests pass (one new composer test) and sending was checked in a test browser.
