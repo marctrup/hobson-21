@@ -199,8 +199,16 @@ function PrototypeUnitShell() {
       {/* Resizable divider */}
       <UnitResizeDivider width={chatWidth} setWidth={setChatWidth} onReset={() => setChatWidth(DEFAULT_CHAT_WIDTH)} isDefault={chatWidth === DEFAULT_CHAT_WIDTH} />
 
-      {/* Blank main canvas — the next feature is designed here */}
-      <main className="min-w-0 flex-1" aria-label="Prototype Unit canvas" />
+      {/* Main canvas — map placeholder, the next feature is designed here */}
+      <main className="min-w-0 flex-1 p-4" aria-label="Prototype Unit canvas">
+        <div className="flex h-full w-full flex-col items-center justify-center gap-3 rounded-xl border border-dashed border-[#56514A]/25 bg-white/60">
+          <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#56514A" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+            <path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2z" />
+            <path d="M9 4v14M15 6v14" />
+          </svg>
+          <p className="text-sm font-medium tracking-wide text-ink-muted">Map</p>
+        </div>
+      </main>
     </div>
   );
 }
