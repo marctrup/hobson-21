@@ -19,7 +19,7 @@ describe("Illustrative tenancy guidance", () => {
     const first = applyWorkGuidance(initialWorkGuidance, SIDE_LETTER_INSTRUCTION);
     const repeated = applyWorkGuidance(first.state, SIDE_LETTER_INSTRUCTION);
     expect(repeated.state).toBe(first.state);
-    expect(Object.keys(repeated.state)).toEqual(["sideLetterRequested", "sideLetterStatus"]);
+    expect(Object.keys(repeated.state)).toEqual(["sideLetterRequested", "sideLetterStatus", "suppliedPapers"]);
   });
   it("does not execute unrelated instructions", () => {
     const result = applyWorkGuidance(initialWorkGuidance, "Please send the renewal summary now.");
@@ -90,5 +90,19 @@ describe("Roof leak lease-plans guidance", () => {
     expect(first.reply).toBe("Of course. I'll check the lease plans first and keep the responsibility question open until I've established what they show.");
     expect(arg(first.state, "lease", LP).state).toBe(first.state);
     expect(arg(irg, "overall", LP).state.leasePlansRequested).toBe(false);
+  });
+});
+
+describe("Iteration 21: attaching the Side Letter through chat", async () => {
+  const g = await import("@/components/prototype/workGuidance");
+  it("records receipt only, awaiting reading, with job context", () => {
+    const r = g.applyWorkGuidance(g.initialWorkGuidance, g.SIDE_LETTER_ATTACHMENT_INSTRUCTION, g.SIDE_LETTER_ATTACHMENT_ID);
+    expect(r.reply).toBe("Thank you. I've received the Side Letter. I'll read it and check whether it changes the rent before continuing with the renewal.");
+    expect(r.state.suppliedPapers).toEqual([expect.objectContaining({ filename: "Side Letter 2024.pdf", status: "awaiting-reading", activity: "Reviewing the rent", place: "Stanley House, Flat 6" })]);
+  });
+  it("does not duplicate the same simulated attachment", () => {
+    const once = g.applyWorkGuidance(g.initialWorkGuidance, g.SIDE_LETTER_ATTACHMENT_INSTRUCTION, g.SIDE_LETTER_ATTACHMENT_ID).state;
+    const twice = g.applyWorkGuidance(once, g.SIDE_LETTER_ATTACHMENT_INSTRUCTION, g.SIDE_LETTER_ATTACHMENT_ID).state;
+    expect(twice.suppliedPapers).toHaveLength(1);
   });
 });
