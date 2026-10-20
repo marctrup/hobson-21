@@ -800,7 +800,7 @@ function PrototypeUnitShell() {
           const totals = units ? summarise(units) : null;
           const openList = openUnit ? unitsFor(openUnit.ctx) : [];
           const opened = openList.find(u => u.number === openUnit?.number);
-          const openedName = openUnit?.ctx === "proposal" ? selectedAddress?.name ?? "Stanley House" : portfolio.find(g => g.id === openUnit?.ctx)?.name ?? "";
+          const openedName = openUnit?.ctx === "proposal" ? draftCard?.name ?? selectedAddress?.name ?? "Stanley House" : portfolio.find(g => g.id === openUnit?.ctx)?.name ?? "";
           const detailPanel = openUnit && opened ? <PrototypeUnitDetails unit={opened} units={openList} groupName={openedName} onChange={next => updateUnitsIn(openUnit.ctx, next)} onBack={() => setOpenUnit(null)} /> : null;
           const openFrom = (ctx: string) => (u: ProposedUnit) => setOpenUnit({ ctx, number: u.number });
           return (<>
