@@ -2,12 +2,15 @@ import { useState } from "react";
 import { ArrowLeft, ChevronDown, ChevronRight, FileText, Plus, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import PrototypeDocumentsPreview from "./PrototypeDocumentsPreview";
+import PrototypeDocumentsTenancies from "./PrototypeDocumentsTenancies";
+import type { Tenancies } from "./prototypeDocumentsTenancies";
 import { BATCH_LIMIT, FIRST_LOOK, formatSize, needsYou, type Batch, type BatchPaper, type LookGroup } from "./prototypeDocumentsBatch";
 
 type Props = {
   batch: Batch; lookPhrase?: string;
   onRemove: (id: string) => void; onAddMore: () => void; onStart: () => void; onCancel: () => void;
   onReview?: () => void; onLeave?: () => void;
+  tenancies?: Tenancies | null; onChangeTenancy?: (which: "puig" | "mgmt" | "sub") => void;
 };
 
 const GROUPS: { key: LookGroup; title: string; tone: string }[] = [
@@ -16,7 +19,7 @@ const GROUPS: { key: LookGroup; title: string; tone: string }[] = [
   { key: "ready", title: "Ready", tone: "border-faint-rule bg-background/60" },
 ];
 
-export default function PrototypeDocumentsBatch({ batch, lookPhrase, onRemove, onAddMore, onStart, onCancel, onReview, onLeave }: Props) {
+export default function PrototypeDocumentsBatch({ batch, lookPhrase, onRemove, onAddMore, onStart, onCancel, onReview, onLeave, tenancies, onChangeTenancy }: Props) {
   const [openId, setOpenId] = useState<string | null>(null);
   const [readyOpen, setReadyOpen] = useState(false);
   const open = batch.papers.find((p) => p.id === openId);
@@ -31,6 +34,7 @@ export default function PrototypeDocumentsBatch({ batch, lookPhrase, onRemove, o
     </div>
   );
 
+  if (batch.look === "handoff" && tenancies) return <PrototypeDocumentsTenancies t={tenancies} papers={batch.papers} onView={setOpenId} onChange={(w) => onChangeTenancy?.(w)} />;
   const sorted = batch.look === "sorted" || batch.look === "handoff";
   if (sorted) {
     const outstanding = needsYou(batch.papers);
