@@ -4384,7 +4384,8 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
             setGuidingRenewal(true);
             setGuideScope(scope);
             if (scope !== "renewal") setGuidedRoofAttempt(roofWork.number);
-            if (suggestion) setInput(suggestion);
+            if (scope === "renewal" && workGuidance.suppliedPapers.length) setInput("");
+            else if (suggestion) setInput(suggestion);
             else if (!guidingRenewal) setInput(scope === "renewal" ? SIDE_LETTER_INSTRUCTION : scope === "lease" ? SHOPFRONT_INSTRUCTION : roofGuidance.contactOnHold ? LIFT_HOLD_INSTRUCTION : HOLD_CONTACT_INSTRUCTION);
             setTyping(false);
             requestAnimationFrame(() => {
