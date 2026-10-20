@@ -1,7 +1,7 @@
 import a1 from "@/assets/prototype/rsh-batch-1.pdf.asset.json";
 import a2 from "@/assets/prototype/rsh-batch-2.pdf.asset.json";
 import a3 from "@/assets/prototype/rsh-batch-3.pdf.asset.json";
-import a4 from "@/assets/prototype/rsh-batch-4.pdf.asset.json";
+import aWayleave from "@/assets/prototype/rsh-batch-wayleave.pdf.asset.json";
 import a5 from "@/assets/prototype/rsh-batch-5.pdf.asset.json";
 
 export const BATCH_LIMIT = 5;
@@ -11,8 +11,8 @@ export type Batch = { papers: BatchPaper[]; started: boolean };
 export const EXAMPLE_BATCH: BatchPaper[] = [
   ["RSH - Puig Lease - 16.12.2016.pdf", a1],
   ["5th Fl - RSH - Licence to Alter - Puig - 16.12.2016.pdf", a2],
+  ["BT & Puig Wayleave - 20.04.2017 (1).pdf", aWayleave],
   ["2020.04.23 - 5th Fl, RSH - Puig Deed of Variation - Signed by Both Parties.pdf", a3],
-  ["2024.04.29 - 5th Fl, RSH - Licence to Alter in Underlease.pdf", a4],
   ["2024.04.29 - 5th Floor, RSH - Sublease.pdf", a5],
 ].map(([filename, a], i) => ({ id: `example-${i + 1}`, filename: filename as string, size: (a as typeof a1).size, url: (a as typeof a1).url }));
 
