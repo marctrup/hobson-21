@@ -9,6 +9,8 @@ import { discoverAddress, MOCK_ADDRESSES, type AddressParts, type AddressRecord 
 import { countsReply, proposeCounts, editUnits, summarise, namingProposal, numberUnits, restoreUnit, understandBuilding, type BuildingUnderstanding, type ProposedUnit } from "./prototypeUnitStructure";
 import { PrototypeUnitStructure } from "./PrototypeUnitStructure";
 import { PrototypeUnitDetails } from "./PrototypeUnitDetails";
+import { UnitKnowledgeRow } from "./PrototypeUnitKnowledge";
+import { PARAGON_GROUP_ID, paperById } from "./prototypeUnitPapers";
 import { PrototypeUnitGroupCard, type GroupCard } from "./PrototypeUnitGroupCard";
 import { applyChanges, FIELD_LABELS, interpretDetails, summaryLine, type DetailInstruction } from "./prototypeUnitDetails";
 
@@ -209,18 +211,25 @@ function UnitResizeDivider({ width, setWidth, onReset, isDefault }: { width: num
   );
 }
 
+// A separate illustrative example with a confirmed paper; never linked to Stanley House and never auto-created from the paper.
+const PARAGON_DEMO: PortfolioGroup = {
+  id: PARAGON_GROUP_ID, name: "The Paragon Centre", line: "3 Reading Lane, London E8 1GQ",
+  record: { id: PARAGON_GROUP_ID, name: "The Paragon Centre", line: "3 Reading Lane, London E8 1GQ", postcode: "E8 1GQ", coordinates: [51.5465, -0.0553], number: "3" },
+  units: [{ number: 1, name: "First Floor Gym", type: "Unit", classification: "Commercial" }],
+};
+
 // An established Unit Group in the simulated portfolio: names, uses and order exactly as authorised.
-function PortfolioGroupView({ group, onClose, onOpenUnit, onCardChange, onChangeAddress }: { group: PortfolioGroup; onClose?: () => void; onOpenUnit?: (unit: ProposedUnit) => void; onCardChange?: (card: GroupCard) => void; onChangeAddress?: () => void }) {
+function PortfolioGroupView({ group, onClose, onOpenUnit, onCardChange, onChangeAddress, onViewPaper, label }: { group: PortfolioGroup; onViewPaper?: (id: string) => void; label?: string; onClose?: () => void; onOpenUnit?: (unit: ProposedUnit) => void; onCardChange?: (card: GroupCard) => void; onChangeAddress?: () => void }) {
   const [open, setOpen] = useState(true);
   const totals = summarise(group.units);
   return (
     <section aria-label={`${group.name} Unit Group`} className="min-w-0 rounded-md border border-border bg-background px-4 py-3 motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-2 motion-safe:duration-300">
-      <PrototypeUnitGroupCard card={{ name: group.name, description: group.description, photo: group.photo }} address={group.line} label="Unit Group · in your portfolio" summary={`${totals.total} Units · ${totals.residential} Residential · ${totals.commercial} Commercial`} onChange={c => onCardChange?.(c)} onChangeAddress={onChangeAddress} actions={<>
+      <PrototypeUnitGroupCard card={{ name: group.name, description: group.description, photo: group.photo }} address={group.line} label={label ?? "Unit Group · in your portfolio"} summary={`${totals.total} Units · ${totals.residential} Residential · ${totals.commercial} Commercial`} onChange={c => onCardChange?.(c)} onChangeAddress={onChangeAddress} actions={<>
           <button type="button" aria-expanded={open} onClick={() => setOpen(v => !v)} className="min-h-9 rounded-md px-2 text-sm text-muted-foreground hover:text-foreground">{open ? "Hide Units" : "Show Units"}</button>
           {onClose && <button type="button" onClick={onClose} className="min-h-9 rounded-md px-2 text-sm text-muted-foreground hover:text-foreground">Back to map</button>}
         </>} />
       {open && <ul aria-label={`${group.name} Units`} className="mt-3 divide-y divide-border border-t border-border">
-        {group.units.map(u => <li key={u.number}>{onOpenUnit ? <button type="button" onClick={() => onOpenUnit(u)} aria-label={`Open ${u.name}`} className="flex min-h-10 w-full items-center justify-between gap-3 rounded py-1.5 text-left hover:bg-secondary/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"><span className="truncate text-sm text-foreground">{u.name}</span><span className="truncate text-xs text-muted-foreground">{summaryLine(u)}</span></button> : <div className="flex min-h-10 items-center justify-between gap-3 py-1.5"><span className="truncate text-sm text-foreground">{u.name}</span><span className="truncate text-xs text-muted-foreground">{summaryLine(u)}</span></div>}</li>)}
+        {group.units.map(u => <li key={u.number} className="flex items-center"><UnitKnowledgeRow unit={u} groupId={group.id} onViewPaper={onViewPaper}>{onOpenUnit ? <button type="button" onClick={() => onOpenUnit(u)} aria-label={`Open ${u.name}`} className="flex min-h-10 w-full items-center justify-between gap-3 rounded py-1.5 text-left hover:bg-secondary/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"><span className="truncate text-sm text-foreground">{u.name}</span><span className="truncate text-xs text-muted-foreground">{summaryLine(u)}</span></button> : <div className="flex min-h-10 items-center justify-between gap-3 py-1.5"><span className="truncate text-sm text-foreground">{u.name}</span><span className="truncate text-xs text-muted-foreground">{summaryLine(u)}</span></div>}</UnitKnowledgeRow></li>)}
       </ul>}
     </section>
   );
@@ -278,6 +287,8 @@ function PrototypeUnitShell() {
   const [detailsPromptId, setDetailsPromptId] = useState<number | null>(null);
   const [pendingDetail, setPendingDetail] = useState<{ id: number; ctx: "proposal" | string; instruction: Extract<DetailInstruction, { kind: "proposal" }> } | null>(null);
   // The group's own card (name, description, photo) while proposed; carried into the portfolio on creation.
+  const [demoGroup, setDemoGroup] = useState<PortfolioGroup>(PARAGON_DEMO);
+  const [paperOpen, setPaperOpen] = useState<string | null>(null);
   const [draftCard, setDraftCard] = useState<GroupCard | null>(null);
   const [addrChange, setAddrChange] = useState<{ ctx: "proposal" | string; record?: AddressRecord; options?: AddressRecord[]; promptId: number } | null>(null);
   const nextId = useRef(1);
@@ -409,9 +420,10 @@ function PrototypeUnitShell() {
     }
   };
 
-  const unitsFor = (ctx: "proposal" | string) => ctx === "proposal" ? units ?? [] : portfolio.find(g => g.id === ctx)?.units ?? [];
+  const unitsFor = (ctx: "proposal" | string) => ctx === "proposal" ? units ?? [] : (ctx === demoGroup.id ? demoGroup : portfolio.find(g => g.id === ctx))?.units ?? [];
   const updateUnitsIn = (ctx: "proposal" | string, next: ProposedUnit[]) => {
     if (ctx === "proposal") setBuildingUnderstanding({ kind: "proposal", units: next });
+    else if (ctx === demoGroup.id) setDemoGroup(g => ({ ...g, units: next }));
     else setPortfolio(previous => previous.map(g => g.id === ctx ? { ...g, units: next } : g));
   };
   const detailCtx = (): "proposal" | string | null => buildingStage === "created" || (!units && portfolio.length) ? portfolio[portfolio.length - 1]?.id ?? null : units ? "proposal" : null;
@@ -477,6 +489,7 @@ function PrototypeUnitShell() {
   const cardFor = (ctx: "proposal" | string): GroupCard | null => ctx === "proposal" ? draftCard : (() => { const g = portfolio.find(x => x.id === ctx); return g ? { name: g.name, description: g.description, photo: g.photo } : null; })();
   const updateCard = (ctx: "proposal" | string, card: GroupCard) => {
     if (ctx === "proposal") setDraftCard(card);
+    else if (ctx === demoGroup.id) setDemoGroup(g => ({ ...g, name: card.name, description: card.description, photo: card.photo }));
     else setPortfolio(previous => previous.map(g => g.id === ctx ? { ...g, name: card.name, description: card.description, photo: card.photo } : g));
   };
   // Name and description changes by conversation update the same card; never a new group.
@@ -800,7 +813,8 @@ function PrototypeUnitShell() {
           const totals = units ? summarise(units) : null;
           const openList = openUnit ? unitsFor(openUnit.ctx) : [];
           const opened = openList.find(u => u.number === openUnit?.number);
-          const openedName = openUnit?.ctx === "proposal" ? draftCard?.name ?? selectedAddress?.name ?? "Stanley House" : portfolio.find(g => g.id === openUnit?.ctx)?.name ?? "";
+          const openedName = openUnit?.ctx === "proposal" ? draftCard?.name ?? selectedAddress?.name ?? "Stanley House" : (openUnit?.ctx === demoGroup.id ? demoGroup : portfolio.find(g => g.id === openUnit?.ctx))?.name ?? "";
+          const paper = paperOpen ? paperById(paperOpen) : null;
           const detailPanel = openUnit && opened ? <PrototypeUnitDetails unit={opened} units={openList} groupName={openedName} onChange={next => updateUnitsIn(openUnit.ctx, next)} onBack={() => setOpenUnit(null)} /> : null;
           const openFrom = (ctx: string) => (u: ProposedUnit) => setOpenUnit({ ctx, number: u.number });
           return (<>
@@ -808,7 +822,15 @@ function PrototypeUnitShell() {
               {buildingUnderstanding && !showingGroup && <div className="text-xs leading-relaxed text-muted-foreground"><p>{selectedAddress?.line}</p><p className="mt-1 text-[10px]">Illustrative mock lookup · approximate location</p></div>}
               <UnitLocationMap compact={compact} group={focus ? { name: focus.name, units: focus.units.length } : null} onOpenGroup={focus ? () => { setGroupOpen(true); setMapExpanded(false); } : undefined} stage={focus ? "confirmed" : locationStage} address={focus ? focus.line : locationAddress} candidate={focus ? focus.record : selectedAddress ?? addressCandidates[0] ?? null} />
             </div>
-            {exploring && focus ? (groupOpen ? (detailPanel && openUnit?.ctx === focus.id ? detailPanel : <PortfolioGroupView group={focus} onCardChange={c => updateCard(focus.id, c)} onChangeAddress={() => startAddressChange(focus.id)} onOpenUnit={openFrom(focus.id)} onClose={() => { setGroupOpen(false); setMapExpanded(true); setOpenUnit(null); }} />) : null) : detailPanel && !(buildingStage === "ready" && openUnit?.ctx === "proposal" && !showSummaryUnits) ? detailPanel : buildingStage === "ready" && units && totals ? (
+            {paper ? (
+              <section aria-label="Supporting paper" className="min-w-0 rounded-md border border-border bg-background px-4 py-3 motion-safe:animate-in motion-safe:fade-in motion-safe:duration-200">
+                <button type="button" onClick={() => setPaperOpen(null)} className="-ml-2 min-h-8 rounded-md px-2 text-xs text-muted-foreground hover:text-foreground">← Back</button>
+                <p className="mt-1 text-xs font-medium text-muted-foreground">Papers · {paper.kind} · {paper.dated}</p>
+                <h3 className="mt-1 text-lg font-semibold text-foreground">{paper.title}</h3>
+                <blockquote className="mt-3 border-l-2 border-border pl-3 text-sm leading-relaxed text-foreground">{paper.excerpt}</blockquote>
+                <p className="mt-3 text-[10px] text-muted-foreground">Illustrative extract for this demonstration</p>
+              </section>
+            ) : exploring && focus ? (groupOpen ? (detailPanel && openUnit?.ctx === focus.id ? detailPanel : <PortfolioGroupView group={focus} onCardChange={c => updateCard(focus.id, c)} onChangeAddress={() => startAddressChange(focus.id)} onOpenUnit={openFrom(focus.id)} onClose={() => { setGroupOpen(false); setMapExpanded(true); setOpenUnit(null); }} />) : null) : detailPanel && !(buildingStage === "ready" && openUnit?.ctx === "proposal" && !showSummaryUnits) ? detailPanel : buildingStage === "ready" && units && totals ? (
               <section aria-label="Ready to create" className="min-w-0 py-3">
                 <p className="text-xs font-medium text-muted-foreground">Ready to add · nothing created yet</p>
                 {draftCard && <div className="mt-2"><PrototypeUnitGroupCard card={draftCard} address={selectedAddress?.line ?? ""} label="Unit Group · proposed" summary={`${totals.total} Units · ${totals.residential} Residential · ${totals.commercial} Commercial`} onChange={setDraftCard} onChangeAddress={() => startAddressChange("proposal")} /></div>}
@@ -828,6 +850,7 @@ function PrototypeUnitShell() {
             ) : portfolio.length > 0 && (
               <div className="flex flex-col gap-3">{portfolio.map(group => <PortfolioGroupView key={group.id} group={group} onCardChange={c => updateCard(group.id, c)} onChangeAddress={() => startAddressChange(group.id)} onOpenUnit={openFrom(group.id)} />)}</div>
             )}
+            {!paper && !detailPanel && locationStage === "idle" && !buildingUnderstanding && <PortfolioGroupView group={demoGroup} label="Illustrative example · Unit Group" onCardChange={c => updateCard(demoGroup.id, c)} onOpenUnit={openFrom(demoGroup.id)} onViewPaper={setPaperOpen} />}
           </>);
         })()}
       </main>
