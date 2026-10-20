@@ -140,7 +140,7 @@ describe("Prototype Unit location confirmation", () => {
     expect(within(screen.getByRole("status")).getByText("Awaiting confirmation")).toBeInTheDocument();
     await user.click(screen.getByRole("button", { name: "Yes, that's the place" }));
     expect(within(screen.getByRole("status")).getByText("Location confirmed")).toBeInTheDocument();
-    expect(within(screen.getByRole("status")).getByText("1115 Finchley Road, London, NW11 0QD")).toBeInTheDocument();
+    expect(within(screen.getByRole("main")).getByText("1115 Finchley Road, London, NW11 0QD")).toBeInTheDocument();
     expect(within(screen.getByRole("log")).queryAllByRole("button")).toHaveLength(0);
   });
 

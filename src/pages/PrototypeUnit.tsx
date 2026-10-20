@@ -26,7 +26,7 @@ const SETUP_CHOICES = [
 
 type LocationStage = "idle" | "awaiting-address" | "candidates" | "proposed" | "confirmed" | "unverified";
 
-function UnitLocationMap({ stage, address, candidate }: { stage: LocationStage; address: string; candidate: AddressRecord | null }) {
+function UnitLocationMap({ stage, address, candidate, compact = false }: { stage: LocationStage; address: string; candidate: AddressRecord | null; compact?: boolean }) {
   const container = useRef<HTMLDivElement>(null);
   const map = useRef<L.Map | null>(null);
   const marker = useRef<L.Marker | null>(null);
@@ -70,9 +70,9 @@ function UnitLocationMap({ stage, address, candidate }: { stage: LocationStage; 
       <div ref={container} className="absolute inset-0" aria-label="Location map" />
       {matched ? <div className="pointer-events-none absolute z-[500] w-[220px] -translate-x-1/2 rounded-md border border-border bg-background/95 px-3 py-2 text-foreground shadow-sm" style={{ left: labelPoint.x, top: labelPoint.y + 24 }} role="status" aria-label="Location status">
         <p className="text-sm font-semibold">{stage === "candidates" ? "Possible address matches" : candidate?.name}</p>
-        <p className="mt-1 text-xs leading-relaxed text-muted-foreground">{stage === "candidates" ? "Finchley Road · NW11 0QD" : candidate?.line}</p>
+        {!compact && <p className="mt-1 text-xs leading-relaxed text-muted-foreground">{stage === "candidates" ? "Finchley Road · NW11 0QD" : candidate?.line}</p>}
         <p className="mt-1.5 text-xs font-medium">{stage === "confirmed" ? "Location confirmed" : "Awaiting confirmation"}</p>
-        <p className="mt-1 text-[10px] text-muted-foreground">Illustrative mock lookup · approximate marker</p>
+        {!compact && <p className="mt-1 text-[10px] text-muted-foreground">Illustrative mock lookup · approximate marker</p>}
       </div> : (stage === "unverified" || (stage === "awaiting-address" && address)) && <div className="pointer-events-none absolute inset-x-3 bottom-8 z-[500] flex justify-center">
         <div className="max-w-full rounded-md border border-border bg-background px-3 py-2 text-foreground shadow-sm" role="status" aria-label="Location status">
           <p className="text-xs font-medium">Location needs verification</p>
@@ -455,8 +455,9 @@ function PrototypeUnitShell() {
         <header className="flex flex-wrap items-center justify-between gap-3">
           <h2 className="text-[15px] font-semibold text-ink">Portfolio</h2>
         </header>
-        <div className={`flex min-h-0 flex-col transition-[flex-basis] duration-300 motion-reduce:transition-none ${buildingUnderstanding ? "h-[300px] shrink-0" : "flex-1"}`}>
-          <UnitLocationMap stage={locationStage} address={locationAddress} candidate={selectedAddress ?? addressCandidates[0] ?? null} />
+        <div className={`flex min-h-0 flex-col gap-2 transition-[flex-basis] duration-300 motion-reduce:transition-none ${buildingUnderstanding ? "h-[300px] shrink-0" : "flex-1"}`}>
+          {buildingUnderstanding && <div className="text-xs leading-relaxed text-muted-foreground"><p>{selectedAddress?.line}</p><p className="mt-1 text-[10px]">Illustrative mock lookup · approximate location</p></div>}
+          <UnitLocationMap compact={Boolean(buildingUnderstanding)} stage={locationStage} address={locationAddress} candidate={selectedAddress ?? addressCandidates[0] ?? null} />
         </div>
         {buildingUnderstanding && <PrototypeUnitStructure understanding={buildingUnderstanding} />}
       </main>
