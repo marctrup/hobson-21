@@ -7,6 +7,15 @@ vi.mock("@/components/prototype/PrototypeGate", () => ({
   PrototypeGate: ({ children }: { children: React.ReactNode }) => children,
 }));
 
+vi.mock("leaflet", () => ({ default: {
+  map: () => ({ invalidateSize: vi.fn(), remove: vi.fn(), flyTo: vi.fn() }),
+  tileLayer: () => ({ addTo: vi.fn() }),
+  divIcon: vi.fn(),
+  marker: () => ({ addTo() { return this; }, bindTooltip() { return this; }, remove: vi.fn() }),
+} }));
+vi.stubGlobal("ResizeObserver", class { observe() {} disconnect() {} });
+vi.stubGlobal("matchMedia", () => ({ matches: false }));
+
 describe("Prototype Unit opening setup", () => {
   it.each([
     "A standalone Unit",
@@ -73,5 +82,53 @@ describe("Prototype Unit opening setup", () => {
     const userTurns = container.querySelectorAll('[role="log"] .self-end');
     expect(userTurns.length).toBeGreaterThan(0);
     userTurns.forEach((turn) => expect(turn.querySelector("img")).toBeNull());
+  });
+});
+
+describe("Prototype Unit location confirmation", () => {
+  const address = "Stanley House, 14 Bedford Square, London, WC1B 3JA";
+  async function startGroup() {
+    const user = userEvent.setup();
+    render(<PrototypeUnit />);
+    await user.click(screen.getByRole("button", { name: "Set up a place →" }));
+    await user.click(screen.getByRole("button", { name: "A Unit Group with several Units" }));
+    return user;
+  }
+
+  it("keeps identification proposed until explicit confirmation, retains it and stops without creating records", async () => {
+    const user = await startGroup();
+    expect(screen.queryByRole("status")).toBeNull();
+    await user.type(screen.getByRole("textbox"), `${address}{Enter}`);
+    expect(within(screen.getByRole("status")).getByText("Proposed location — not yet confirmed")).toBeInTheDocument();
+    await user.click(screen.getByRole("button", { name: "Yes, that's the place" }));
+    expect(within(screen.getByRole("status")).getByText("Location confirmed")).toBeInTheDocument();
+    expect(within(screen.getByRole("status")).getByText(address)).toBeInTheDocument();
+    expect(within(screen.getByRole("log")).queryAllByRole("button")).toHaveLength(0);
+    expect(within(screen.getByRole("main")).queryAllByRole("listitem")).toHaveLength(0);
+    await user.type(screen.getByRole("textbox"), "Thank you{Enter}");
+    expect(within(screen.getByRole("status")).getByText("Location confirmed")).toBeInTheDocument();
+  });
+
+  it("clears the proposal on correction, never matches an alternative and allows return to Stanley House", async () => {
+    const user = await startGroup();
+    const input = screen.getByRole("textbox");
+    await user.type(input, `${address}{Enter}`);
+    await user.click(screen.getByRole("button", { name: "Choose a different location" }));
+    expect(within(screen.getByRole("status")).getByText("No confirmed location")).toBeInTheDocument();
+    await user.type(input, "22 Example Road, Manchester{Enter}");
+    expect(within(screen.getByRole("status")).getByText("Location needs verification")).toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "Yes, that's the place" })).toBeNull();
+    await user.type(input, `${address}{Enter}`);
+    await user.type(input, "Yes, that's the place{Enter}");
+    expect(within(screen.getByRole("status")).getByText("Location confirmed")).toBeInTheDocument();
+  });
+
+  it("clears retained location when starting a new conversation", async () => {
+    const user = await startGroup();
+    await user.type(screen.getByRole("textbox"), `${address}{Enter}`);
+    await user.click(screen.getByRole("button", { name: "Yes, that's the place" }));
+    await user.click(screen.getByRole("button", { name: "A new conversation" }));
+    expect(screen.queryByRole("status")).toBeNull();
+    expect(screen.getByText("Map", { exact: true })).toBeInTheDocument();
   });
 });

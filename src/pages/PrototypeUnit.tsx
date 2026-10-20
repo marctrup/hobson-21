@@ -3,6 +3,8 @@ import { Paperclip } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { PrototypeGate } from "@/components/prototype/PrototypeGate";
 import owlDefault from "@/assets/prototype/owl-default.png";
+import L from "leaflet";
+import "leaflet/dist/leaflet.css";
 
 const RAIL_WIDTH = 68;
 const DEFAULT_CHAT_WIDTH = 380;
@@ -18,6 +20,56 @@ const SETUP_CHOICES = [
   { label: "A Unit Group with several Units", response: "Of course. Let's set up your Unit Group." },
   { label: "I'm not sure — help me work it out", response: "That's fine. I'll help you work out how best to organise it." },
 ] as const;
+
+const STANLEY_ADDRESS = "Stanley House, 14 Bedford Square, London, WC1B 3JA";
+type LocationStage = "idle" | "awaiting-address" | "proposed" | "confirmed" | "unverified";
+const STANLEY_COORDINATES: L.LatLngTuple = [51.51855, -0.13005];
+const isStanleyAddress = (text: string) => text.toLowerCase().replace(/[^a-z0-9]/g, "") === STANLEY_ADDRESS.toLowerCase().replace(/[^a-z0-9]/g, "");
+
+function UnitLocationMap({ stage, address }: { stage: LocationStage; address: string }) {
+  const container = useRef<HTMLDivElement>(null);
+  const map = useRef<L.Map | null>(null);
+  const marker = useRef<L.Marker | null>(null);
+  const matched = stage === "proposed" || stage === "confirmed";
+
+  useEffect(() => {
+    if (!container.current) return;
+    const instance = L.map(container.current, { center: [51.509, -0.12], zoom: 13, scrollWheelZoom: false });
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>', maxZoom: 19,
+    }).addTo(instance);
+    map.current = instance;
+    const observer = new ResizeObserver(() => instance.invalidateSize({ animate: false }));
+    observer.observe(container.current);
+    return () => { observer.disconnect(); instance.remove(); map.current = null; marker.current = null; };
+  }, []);
+
+  useEffect(() => {
+    const instance = map.current;
+    if (!instance) return;
+    marker.current?.remove();
+    marker.current = null;
+    if (!matched) return;
+    const icon = L.divIcon({ className: "", html: '<span class="flex h-9 w-9 items-center justify-center rounded-full border-2 border-background bg-primary text-primary-foreground shadow-md"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 22s7-7 7-13a7 7 0 0 0-14 0c0 6 7 13 7 13Z"/><circle cx="12" cy="9" r="2"/></svg></span>', iconSize: [36, 36], iconAnchor: [18, 36] });
+    marker.current = L.marker(STANLEY_COORDINATES, { icon, title: "Stanley House — illustrative location" })
+      .addTo(instance).bindTooltip("Stanley House", { permanent: true, direction: "top", offset: [0, -36] });
+    instance.flyTo(STANLEY_COORDINATES, 17, { animate: !window.matchMedia("(prefers-reduced-motion: reduce)").matches, duration: 0.8 });
+  }, [matched]);
+
+  return (
+    <div className="relative min-h-0 flex-1 overflow-hidden rounded-lg border border-border">
+      <div ref={container} className="absolute inset-0" aria-label="Location map" />
+      <div className="pointer-events-none absolute inset-x-3 top-3 z-[500] flex justify-center">
+        <div className="max-w-full rounded-md border border-border bg-background px-4 py-3 text-foreground shadow-sm" role="status" aria-label="Location status">
+          <p className="text-sm font-semibold">{matched ? "Stanley House" : "Location needs verification"}</p>
+          <p className="mt-1 break-words text-xs text-muted-foreground">{matched ? STANLEY_ADDRESS : address || "Awaiting the correct address"}</p>
+          <p className="mt-2 text-xs font-medium">{stage === "confirmed" ? "Location confirmed" : matched ? "Proposed location — not yet confirmed" : "No confirmed location"}</p>
+          <p className="mt-1 text-xs text-muted-foreground">Illustrative location{matched ? " · approximate marker" : ""}</p>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 function RailItem({ icon, label, active, onClick }: { icon: "pin" | "doc" | "chat" | "gear"; label: string; active?: boolean; onClick?: () => void }) {
   return (
@@ -137,6 +189,10 @@ function PrototypeUnitShell() {
   const [messages, setMessages] = useState<UnitMessage[]>([OPENING_MESSAGE]);
   const [showInvitation, setShowInvitation] = useState(true);
   const [setupPromptId, setSetupPromptId] = useState<number | null>(null);
+  const [locationStage, setLocationStage] = useState<LocationStage>("idle");
+  const [locationPromptId, setLocationPromptId] = useState<number | null>(null);
+  const [locationAddress, setLocationAddress] = useState("");
+  const [showLocationMap, setShowLocationMap] = useState(false);
   const nextId = useRef(1);
   const conversationEnd = useRef<HTMLDivElement>(null);
 
@@ -163,11 +219,45 @@ function PrototypeUnitShell() {
       { id: nextId.current++, role: "hobson", text: choice.response },
     ]);
     setSetupPromptId(null);
+    if (choice.label === "A Unit Group with several Units") {
+      setMessages((previous) => [...previous, { id: nextId.current++, role: "hobson", text: "What is the full address?" }]);
+      setLocationStage("awaiting-address");
+    }
+  };
+
+  const respondToLocation = (confirm: boolean) => {
+    if (locationStage !== "proposed") return;
+    setMessages((previous) => [...previous,
+      { id: nextId.current++, role: "user", text: confirm ? "Yes, that's the place" : "Choose a different location" },
+      { id: nextId.current++, role: "hobson", text: confirm ? "Good. I've got the location for Stanley House." : "Of course. What's the correct address?" },
+    ]);
+    setLocationStage(confirm ? "confirmed" : "awaiting-address");
+    setLocationPromptId(null);
+    if (!confirm) setLocationAddress("");
+    setInput("");
   };
 
   const send = () => {
     const text = input.trim();
     if (!text) return;
+    if (locationStage === "proposed") {
+      if (text.toLowerCase() === "yes, that's the place") { respondToLocation(true); return; }
+      if (text.toLowerCase() === "choose a different location") { respondToLocation(false); return; }
+    }
+    if (locationStage === "awaiting-address" || locationStage === "unverified") {
+      const found = isStanleyAddress(text);
+      const replyId = nextId.current++;
+      setMessages((previous) => [...previous,
+        { id: nextId.current++, role: "user", text },
+        { id: replyId, role: "hobson", text: found ? "I've found Stanley House at 14 Bedford Square, London, WC1B 3JA. Is this the right place?" : "I haven't verified that location. You can give me another address." },
+      ]);
+      setLocationAddress(text);
+      setLocationStage(found ? "proposed" : "unverified");
+      setLocationPromptId(found ? replyId : null);
+      setShowLocationMap(true);
+      setInput("");
+      return;
+    }
     if (showInvitation && text.toLowerCase().replace(/[.!?]+$/, "") === "set up a place") {
       startSetup(text);
       return;
@@ -198,7 +288,7 @@ function PrototypeUnitShell() {
             type="button"
             className="grid h-11 w-11 place-items-center rounded-full bg-[#56514A] text-white shadow-md transition hover:bg-[#56514A]"
             aria-label="A new conversation"
-            onClick={() => { setMessages([OPENING_MESSAGE]); setInput(""); setSetupPromptId(null); setShowInvitation(true); }}
+            onClick={() => { setMessages([OPENING_MESSAGE]); setInput(""); setSetupPromptId(null); setShowInvitation(true); setLocationStage("idle"); setLocationPromptId(null); setLocationAddress(""); setShowLocationMap(false); }}
           >
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" aria-hidden><path d="M12 5v14M5 12h14" /></svg>
           </button>
@@ -246,6 +336,12 @@ function PrototypeUnitShell() {
                       ))}
                     </div>
                   )}
+                  {locationPromptId === message.id && locationStage === "proposed" && (
+                    <div className="mt-3 flex w-full flex-col items-stretch gap-2">
+                      <Button variant="outline" onClick={() => respondToLocation(true)} className="h-auto min-h-11 justify-start whitespace-normal px-3 py-2.5 text-left font-normal">Yes, that's the place</Button>
+                      <Button variant="outline" onClick={() => respondToLocation(false)} className="h-auto min-h-11 justify-start whitespace-normal px-3 py-2.5 text-left font-normal">Choose a different location</Button>
+                    </div>
+                  )}
                 </div>
               </div>
             );
@@ -282,13 +378,13 @@ function PrototypeUnitShell() {
         <header className="flex flex-wrap items-center justify-between gap-3">
           <h2 className="text-[15px] font-semibold text-ink">Portfolio</h2>
         </header>
-        <div className="flex min-h-0 w-full flex-1 flex-col items-center justify-center gap-3 rounded-xl border border-dashed border-[#56514A]/25 bg-white/60">
+        {showLocationMap ? <UnitLocationMap stage={locationStage} address={locationAddress} /> : <div className="flex min-h-0 w-full flex-1 flex-col items-center justify-center gap-3 rounded-xl border border-dashed border-[#56514A]/25 bg-white/60">
           <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#56514A" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
             <path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2z" />
             <path d="M9 4v14M15 6v14" />
           </svg>
           <p className="text-sm font-medium tracking-wide text-ink-muted">Map</p>
-        </div>
+        </div>}
       </main>
     </div>
   );
