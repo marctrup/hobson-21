@@ -205,7 +205,14 @@ const AppContent = () => {
                   </PrototypeGate>
                 }
               />
-              <Route path="/prototype-documents" element={<PrototypeGate scope="documents"><PrototypeDocuments /></PrototypeGate>} />
+              <Route
+                path="/prototype-documents"
+                element={
+                  <PrototypeGate scope="documents">
+                    <PrototypeDocuments />
+                  </PrototypeGate>
+                }
+              />
               {/* Old prototype address — redirect, never 404 */}
               <Route path="/prototype" element={<Navigate to="/prototype-work" replace />} />
 
