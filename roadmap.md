@@ -1,5 +1,8 @@
 # Roadmap
 
+## Prototype Unit — Paragon map entry
+- [ ] Open on the full map with the existing Paragon sample marker and conversational setup invitation; add an illustrative group cover and verify opening and returning.
+
 ## Prototype Unit — description reuse and photographs
 - [x] Enable copying current details and descriptions without separate Save, retaining replacement approvals.
 - [x] Add session-only Unit photographs, main-photo thumbnails and compact map reference; preserve Unit Group covers.
