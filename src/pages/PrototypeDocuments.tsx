@@ -7,7 +7,7 @@ import PrototypeDocumentsPreview from "./PrototypeDocumentsPreview";
 import PrototypeDocumentsDetails from "./PrototypeDocumentsDetails";
 import { confirmPaper, DETAIL_STAGES, emptyPaperJourney, EXAMPLE_LEASE_FILENAME, PAPER_TYPES, proposePaper, receivePaper, type PaperStage, type PrototypePaper } from "./prototypeDocumentsPaper";
 import PrototypeDocumentsPapers from "./PrototypeDocumentsPapers";
-import { chooseUnit, emptyPlacement, EXAMPLE_UNITS, isSettled, PROPOSED_UNIT, ROLE_LABELS, type PlaceStep, type Placement, type RoleKind } from "./prototypeDocumentsPlacement";
+import { chooseUnit, emptyPlacement, EXAMPLE_UNITS, isSettled, PROPOSED_UNIT, STOP_AFTER_RESPONSIBILITY, ROLE_LABELS, type PlaceStep, type Placement, type RoleKind } from "./prototypeDocumentsPlacement";
 import { shownValue } from "./prototypeDocumentsDetails";
 import { answerEffective, correctDetail, emptyReview, type DetailKey, type DetailsReview } from "./prototypeDocumentsDetails";
 
@@ -203,6 +203,11 @@ export default function PrototypeDocuments() {
   const tenant = shownValue(review.details.find((d) => d.key === "tenant")!);
   const goStep = (p: Placement, natural: PlaceStep): Placement => ({ ...p, step: p.revisiting ? "review" : natural, revisiting: false });
   const proceed = (p: Placement, natural: PlaceStep) => {
+    if (STOP_AFTER_RESPONSIBILITY && (natural === "relation" || natural === "review")) {
+      setPlacement({ ...p, step: "fits", revisiting: false }); setView("papers");
+      addMessage("hobson", "Good. I'll check how this lease fits with the existing tenancy records.");
+      return;
+    }
     const next = goStep(p, natural);
     setPlacement(next);
     if (next.step === "role") addMessage("hobson", "I can see who the landlord and tenant are. I also need to know whose interests I'm looking after.\n\nWhat's your responsibility for this tenancy?");
