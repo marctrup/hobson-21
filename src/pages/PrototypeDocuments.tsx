@@ -11,6 +11,7 @@ import { answerEffective, correctDetail, emptyReview, type DetailKey, type Detai
 // Prototype Documents: an independent, blank Hobson shell. Shares only visual styling
 // with Prototype Work and Prototype Unit — never their components, data or state.
 
+const WORKING_PHRASES = ["Reviewing the lease…", "Checking the dates and parties…", "Bringing the details together…"];
 const RAIL_WIDTH = 68;
 const DEFAULT_CHAT_WIDTH = 380;
 const MIN_CHAT_WIDTH = 280;
@@ -87,6 +88,7 @@ export default function PrototypeDocuments() {
   const [review, setReview] = useState<DetailsReview>(emptyReview);
   const [goTo, setGoTo] = useState<{ page: number; nonce: number } | undefined>();
   const [wide, setWide] = useState(true);
+  const [working, setWorking] = useState(0);
   const mainRef = useRef<HTMLElement>(null);
   const [selectionOpen, setSelectionOpen] = useState(false);
   const [uploading, setUploading] = useState(false);
@@ -120,12 +122,13 @@ export default function PrototypeDocuments() {
   useEffect(() => {
     if (journey.stage !== "checking") return;
     const timer = window.setTimeout(() => {
-      addMessage("hobson", "I've checked the main details in this lease. Most look straightforward, but there's one date I'd like you to check.");
-      addMessage("hobson", "Here's what I've read.");
+      addMessage("hobson", "I've checked the main details I need to place this paper.\n\nThere's one date I'd like you to check.");
       addMessage("hobson", "The lease is dated 22 August 2025. Clause 16 says its terms don't take effect until it has been dated.\n\nShall I use 22 August 2025 as its effective date?");
       setJourney((j) => j.stage === "checking" ? { ...j, stage: "effective" } : j);
     }, 1400);
-    return () => window.clearTimeout(timer);
+    setWorking(0);
+    const steps = [window.setTimeout(() => setWorking(1), 470), window.setTimeout(() => setWorking(2), 940)];
+    return () => { window.clearTimeout(timer); steps.forEach(window.clearTimeout); };
   }, [journey.stage]);
   const restart = () => {
     generation.current++;
@@ -168,7 +171,7 @@ export default function PrototypeDocuments() {
     const next = answerEffective(review, kind, date);
     if (next === review) return;
     setReview(next); setInput("");
-    if (kind === "confirmed") { addMessage("user", "Yes, use that date"); addMessage("hobson", "Thanks. I'll use 22 August 2025 as the effective date."); }
+    if (kind === "confirmed") { addMessage("user", "Yes, use that date"); addMessage("hobson", "I'll use 22 August 2025 as the effective date."); }
     else if (kind === "unsure") { addMessage("user", "Not sure"); addMessage("hobson", "That's fine. I'll leave the effective date unconfirmed for now."); }
     else { addMessage("user", date!.trim()); addMessage("hobson", "Understood. I'll keep the date on the paper as 22 August 2025 and record the effective date you've given me separately."); }
     askOthers();
@@ -177,9 +180,8 @@ export default function PrototypeDocuments() {
     const next = correctDetail(review, key, value);
     if (next === review) return;
     setReview(next);
-    const label = review.details.find((d) => d.key === key)!.label.toLowerCase();
     if (key === "effectiveDate") addMessage("hobson", "Understood. I'll keep the date on the paper as 22 August 2025 and record the effective date you've given me separately.");
-    else addMessage("hobson", key === "tenant" || key === "landlord" ? `Thanks. I've updated the ${label} details you've confirmed.` : `Thanks. I've updated the ${label} you've confirmed.`);
+    else addMessage("hobson", "I've updated it.");
     if (journey.stage === "correcting") askOthers();
   };
   const showInPaper = (page: number) => setGoTo((g) => ({ page, nonce: (g?.nonce ?? 0) + 1 }));
@@ -242,7 +244,7 @@ export default function PrototypeDocuments() {
             <Button variant="ghost" onClick={() => { setJourney((j) => ({ ...j, stage: "choosing" })); addMessage("user", "Change"); addMessage("hobson", "What kind of paper is it?"); }}>Change</Button>
           </div>}
           {journey.stage === "choosing" && <div className="ml-12 flex flex-col items-start gap-1">{PAPER_TYPES.map((type) => <Button key={type} variant="ghost" className="h-auto whitespace-normal text-left" onClick={() => { if (type === "Something else") { setJourney((j) => ({ ...j, stage: "other" })); addMessage("user", type); addMessage("hobson", "What would you call it?"); } else chooseType(type); }}>{type}</Button>)}</div>}
-          {journey.stage === "checking" && <div role="status" aria-label="Checking the key details" className="ml-12 flex gap-1.5 py-2 text-ink-muted motion-safe:animate-pulse"><span>·</span><span>·</span><span>·</span></div>}
+          {journey.stage === "checking" && <p role="status" className="ml-12 py-2 text-sm italic text-ink-muted motion-safe:animate-pulse">{WORKING_PHRASES[working]}</p>}
           {journey.stage === "effective" && <div className="ml-12 flex flex-wrap gap-2">
             <Button variant="outline" onClick={() => answer("confirmed")}>Yes, use that date</Button>
             <Button variant="ghost" onClick={() => answer("other")}>Use another date</Button>
