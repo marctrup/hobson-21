@@ -47,3 +47,40 @@ describe("Iteration 5C tenancy decisions", () => {
     expect(answerBelongs(settled, "sub").belongs["example-2"]).toBe("sub");
   });
 });
+
+import { answerCompletion, answerCompletionDate, answerWayleaveBelongs, receiveSecondCopy, wayleaveOpen } from "./prototypeDocumentsTenancies";
+describe("Wayleave: explain what needs checking", () => {
+  const atWayleave = () => {
+    const s = { ...answerStatus(answerMgmt(answerStatus({ ...startTenancies(), step: "puigStatus" }, "puig", "current"), "both"), "sub", "current"), compared: true };
+    return answerBelongs(answerBelongs({ ...s, step: "licence" }, "puig"), "puig");
+  };
+  it("asks completion after the deed, then the date, then the tenancy", () => {
+    let t = atWayleave();
+    expect(t.step).toBe("wayleave");
+    t = answerCompletion(t, "completed");
+    expect(t.step).toBe("wayleaveDate");
+    t = answerCompletionDate(t, null);
+    expect(t.step).toBe("wayleaveBelongs");
+    t = answerWayleaveBelongs(t, "puig");
+    expect(t.step).toBe("done");
+    expect(wayleaveOpen(t.wayleave)).toEqual(["date"]); // tenancy kept; only the date stays open
+  });
+  it("never takes 20 April 2017 from the filename", () => {
+    const t = answerCompletionDate(answerCompletion(atWayleave(), "completed"), null);
+    expect(t.wayleave.completedOn).toBeNull();
+  });
+  it("a second copy keeps completion open", () => {
+    let t = answerCompletion(atWayleave(), "another");
+    expect(t.step).toBe("wayleaveCopy");
+    t = receiveSecondCopy(t);
+    expect(t.step).toBe("wayleaveBelongs");
+    expect(wayleaveOpen(t.wayleave)).toContain("completion");
+  });
+  it("not completed + confirmed tenancy is fully settled", () => {
+    const t = answerWayleaveBelongs(answerCompletion(atWayleave(), "notCompleted"), "puig");
+    expect(wayleaveOpen(t.wayleave)).toEqual([]);
+  });
+  it("Not sure on completion still lets the review continue", () => {
+    expect(answerCompletion(atWayleave(), "unsure").step).toBe("wayleaveBelongs");
+  });
+});
