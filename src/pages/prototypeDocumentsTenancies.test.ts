@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { answerMgmt, answerStatus, giveEndDate, nextStep, openDecisions, reopen, startTenancies } from "./prototypeDocumentsTenancies";
+import { answerBelongs, answerMgmt, answerStatus, giveEndDate, nextStep, openDecisions, reopen, startTenancies } from "./prototypeDocumentsTenancies";
 
 const base = { ...startTenancies(), step: "puigStatus" as const };
 
@@ -23,12 +23,27 @@ describe("Iteration 5C tenancy decisions", () => {
   });
   it("Not sure never counts as settled", () => {
     const t = answerStatus(answerMgmt(answerStatus(base, "puig", "unsure"), "unsure"), "sub", "current");
-    expect(openDecisions(t)).toBe(3); // Puig + presentation + Wayleave
+    expect(openDecisions(t)).toBe(5); // Puig + presentation + 2 unconfirmed papers + Wayleave
   });
   it("changing one answer keeps the others", () => {
-    const done = { ...answerStatus(answerMgmt(answerStatus(base, "puig", "current"), "both"), "sub", "current"), compared: true };
+    const settled = { ...answerStatus(answerMgmt(answerStatus(base, "puig", "current"), "both"), "sub", "current"), compared: true };
+    const done = answerBelongs(answerBelongs({ ...settled, step: "licence" }, "puig"), "sub");
     const changed = answerMgmt(reopen(done, "mgmt"), "puig");
-    expect(changed).toMatchObject({ puig: "current", sub: "current", mgmt: "puig", step: "done" });
+    expect(changed).toMatchObject({ puig: "current", sub: "current", mgmt: "puig", step: "done", belongs: { "example-2": "puig", "example-4": "sub" } });
     expect(nextStep(changed)).toBe("done");
+  });
+  it("after the leases, asks about the Licence then the Deed; Not sure keeps it open", () => {
+    const settled = { ...answerStatus(answerMgmt(answerStatus(base, "puig", "current"), "puig"), "sub", "current"), compared: true };
+    let t = { ...settled, step: nextStep(settled) };
+    expect(t.step).toBe("licence");
+    t = answerBelongs(t, "puig");
+    expect(t.step).toBe("deed");
+    t = answerBelongs(t, "unsure");
+    expect(t.step).toBe("done");
+    expect(openDecisions(t)).toBe(2); // the deed + Wayleave
+  });
+  it("a paper can belong to the Sublease even when shown inside Puig's history", () => {
+    const settled = { ...answerStatus(answerMgmt(answerStatus(base, "puig", "current"), "puig"), "sub", "current"), compared: true, step: "licence" as const };
+    expect(answerBelongs(settled, "sub").belongs["example-2"]).toBe("sub");
   });
 });
