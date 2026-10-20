@@ -16,8 +16,8 @@ describe("Prototype Unit opening setup", () => {
     const user = userEvent.setup();
     render(<PrototypeUnit />);
     const conversation = screen.getByRole("log", { name: "Conversation" });
-    expect(within(conversation).queryAllByRole("button")).toHaveLength(0);
-    await user.click(screen.getByRole("button", { name: "Add a Unit or Unit Group" }));
+    expect(within(conversation).queryAllByRole("button")).toHaveLength(1);
+    await user.click(within(conversation).getByRole("button", { name: "Set up a place →" }));
     expect(within(conversation).getAllByRole("button")).toHaveLength(3);
     await user.click(within(conversation).getByRole("button", { name: choice }));
     expect(within(conversation).queryAllByRole("button")).toHaveLength(0);
@@ -25,18 +25,31 @@ describe("Prototype Unit opening setup", () => {
     expect(within(screen.getByRole("main")).queryAllByRole("listitem")).toHaveLength(0);
   });
 
-  it("restarts with one fresh choice set and clears setup on a new conversation", async () => {
+  it("restarts the invitation and clears the previous setup on a new conversation", async () => {
     const user = userEvent.setup();
     render(<PrototypeUnit />);
-    const start = screen.getByRole("button", { name: "Add a Unit or Unit Group" });
-    await user.click(start);
+    await user.click(screen.getByRole("button", { name: "Set up a place →" }));
     await user.click(screen.getByRole("button", { name: "A standalone Unit" }));
-    await user.click(start);
+    await user.click(screen.getByRole("button", { name: "A new conversation" }));
+    await user.click(screen.getByRole("button", { name: "Set up a place →" }));
     const conversation = screen.getByRole("log", { name: "Conversation" });
     expect(within(conversation).getAllByRole("button")).toHaveLength(3);
     await user.click(screen.getByRole("button", { name: "A Unit Group with several Units" }));
     await user.click(screen.getByRole("button", { name: "A new conversation" }));
-    expect(conversation.children).toHaveLength(1);
+    expect(within(conversation).queryAllByRole("button")).toHaveLength(1);
+  });
+
+  it("accepts a typed setup reply and selection through the existing composer", async () => {
+    const user = userEvent.setup();
+    render(<PrototypeUnit />);
+    const composer = screen.getByRole("textbox", { name: "Ask Hobson" });
+    await user.type(composer, "Set up a place{Enter}");
+    const conversation = screen.getByRole("log", { name: "Conversation" });
+    expect(within(conversation).getAllByRole("button")).toHaveLength(3);
+    await user.type(composer, "A standalone Unit{Enter}");
     expect(within(conversation).queryAllByRole("button")).toHaveLength(0);
+    expect(composer).toHaveValue("");
+    expect(within(conversation).getAllByText("A standalone Unit")).toHaveLength(1);
+    expect(within(screen.getByRole("main")).queryAllByRole("listitem")).toHaveLength(0);
   });
 });
