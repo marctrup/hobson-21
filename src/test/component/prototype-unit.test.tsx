@@ -8,10 +8,10 @@ vi.mock("@/components/prototype/PrototypeGate", () => ({
 }));
 
 vi.mock("leaflet", () => ({ default: {
-  map: () => ({ invalidateSize: vi.fn(), remove: vi.fn(), flyTo: vi.fn() }),
+  map: () => ({ invalidateSize: vi.fn(), remove: vi.fn(), flyTo: vi.fn(), on: vi.fn(), latLngToContainerPoint: () => ({ x: 200, y: 200 }) }),
   tileLayer: () => ({ addTo: vi.fn() }),
   divIcon: vi.fn(),
-  marker: () => ({ addTo() { return this; }, bindTooltip() { return this; }, remove: vi.fn() }),
+  marker: () => ({ addTo() { return this; }, setIcon: vi.fn(), remove: vi.fn() }),
 } }));
 vi.stubGlobal("ResizeObserver", class { observe() {} disconnect() {} });
 vi.stubGlobal("matchMedia", () => ({ matches: false }));
@@ -99,10 +99,10 @@ describe("Prototype Unit location confirmation", () => {
     const user = await startGroup();
     expect(screen.queryByRole("status")).toBeNull();
     await user.type(screen.getByRole("textbox"), `${address}{Enter}`);
-    expect(within(screen.getByRole("status")).getByText("Proposed location — not yet confirmed")).toBeInTheDocument();
+    expect(within(screen.getByRole("status")).getByText("Awaiting confirmation")).toBeInTheDocument();
     await user.click(screen.getByRole("button", { name: "Yes, that's the place" }));
     expect(within(screen.getByRole("status")).getByText("Location confirmed")).toBeInTheDocument();
-    expect(within(screen.getByRole("status")).getByText(address)).toBeInTheDocument();
+    expect(within(screen.getByRole("status")).getByText("14 Bedford Square, London, WC1B 3JA")).toBeInTheDocument();
     expect(within(screen.getByRole("log")).queryAllByRole("button")).toHaveLength(0);
     expect(within(screen.getByRole("main")).queryAllByRole("listitem")).toHaveLength(0);
     await user.type(screen.getByRole("textbox"), "Thank you{Enter}");
@@ -129,6 +129,6 @@ describe("Prototype Unit location confirmation", () => {
     await user.click(screen.getByRole("button", { name: "Yes, that's the place" }));
     await user.click(screen.getByRole("button", { name: "A new conversation" }));
     expect(screen.queryByRole("status")).toBeNull();
-    expect(screen.getByText("Map", { exact: true })).toBeInTheDocument();
+    expect(screen.getByLabelText("Location map")).toBeInTheDocument();
   });
 });
