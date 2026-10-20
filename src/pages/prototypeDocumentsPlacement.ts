@@ -5,7 +5,9 @@ export const EXAMPLE_GROUP = "Russell Square House";
 export const EXAMPLE_UNITS = ["Third Floor", "Fourth Floor", "Fifth Floor"] as const;
 export const PROPOSED_UNIT = "Fourth Floor";
 
-export type PlaceStep = "none" | "checking" | "unit" | "unitChoose" | "role" | "roleOther" | "relation" | "current" | "endDate" | "review" | "change" | "placed";
+export type PlaceStep = "none" | "checking" | "unit" | "unitChoose" | "role" | "roleOther" | "relation" | "current" | "endDate" | "review" | "change" | "placed" | "fits";
+// Iteration 3A stops after Unit and responsibility; tenancy relationship and status questions stay dormant.
+export const STOP_AFTER_RESPONSIBILITY = true;
 export type RoleKind = "landlord" | "tenant" | "track" | "other";
 export type Placement = {
   step: PlaceStep;

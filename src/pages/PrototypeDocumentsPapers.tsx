@@ -24,7 +24,7 @@ function ProposedPaper({ placement, paperType, filename, tenant, paperDate, effe
         <Button variant="outline" size="sm" onClick={onOpenPaper}>View</Button>
       </div>
       <dl className="mt-3 space-y-1 text-xs text-ink-muted">
-        <div><dt className="inline">Status: </dt><dd className="inline text-ink">{statusText(placement)}</dd></div>
+        {placement.current !== "asking" && <div><dt className="inline">Status: </dt><dd className="inline text-ink">{statusText(placement)}</dd></div>}
         {placement.current === "ended" && <div>The term in the lease runs to 21 August 2035</div>}
         <div>{role}</div>
         {placement.relation === "earlier" && <div>Relationship with an earlier lease left open</div>}
@@ -39,7 +39,7 @@ export default function PrototypeDocumentsPapers(props: Props) {
   const { placement } = props;
   const [groupOpen, setGroupOpen] = useState(true);
   const settled = isSettled(placement);
-  const separate = placement.unitStatus === "unsure" || placement.relation === "earlier" || placement.relation === "unsure" || (["review", "change", "placed"].includes(placement.step) && !settled);
+  const separate = placement.unitStatus === "unsure" || placement.relation === "earlier" || placement.relation === "unsure" || (["review", "change", "placed", "fits"].includes(placement.step) && placement.unitStatus !== "confirmed") || (["review", "change", "placed"].includes(placement.step) && !settled);
   const placed = placement.step === "placed";
   return (
     <section aria-label="Proposed placement" className="min-h-0 flex-1 overflow-y-auto bg-background px-6 py-5">
@@ -58,7 +58,7 @@ export default function PrototypeDocumentsPapers(props: Props) {
               <li key={u} className="border-b border-faint-rule px-4 py-3 last:border-0">
                 <p className={`text-sm ${here ? "font-semibold text-ink" : "text-ink-muted"}`}>{u}{here && placement.unitStatus === "asking" && <span className="ml-2 text-xs font-normal text-ink-muted">· I think it belongs here</span>}</p>
                 {here && !separate && <div className="mt-3">
-                  <p className="mb-2 text-[11px] font-medium uppercase tracking-wide text-ink-muted">{placement.relation === "new" ? "Tenancy history · new" : "Proposed paper"}</p>
+                  <p className="mb-2 text-[11px] font-medium uppercase tracking-wide text-ink-muted">{placement.relation === "new" ? "Tenancy history · new" : "Proposed paper · not yet in a tenancy history"}</p>
                   <ProposedPaper {...props} awaiting={false} />
                 </div>}
                 {!(here && !separate) && <p className="mt-0.5 text-xs text-ink-muted">No confirmed occupational papers</p>}
