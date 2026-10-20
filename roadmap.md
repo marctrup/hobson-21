@@ -1,7 +1,7 @@
 # Roadmap
 
 ## Prototype Unit — guide a useful building answer
-- [ ] Clarify the building question with quiet examples; propose named, classified Units from short descriptions, retain focused follow-up context, and verify confirmation, map and reset.
+- [x] Clarify the building question with quiet examples; propose named, classified Units from short descriptions and retain focused follow-up context. All 41 focused checks pass; browser verified twelve-Unit mixed-use proposal, twelve offices from a kinds follow-up, floor clarification, local confirmation, divider and reset with real map tiles and no page errors. No records created; not published.
 
 ## Prototype Unit — postcode lookup enhancement
 - [x] Add six simulated postcode choices with four initially visible, context-aware flat selection and approximate search-area map; preserve confirmation, building setup and navigation. All 33 focused checks pass; private-entrance browser walkthrough verified choices, both Flat 2 paths, filtering, rejection, postcode continuation and existing building proposal with loaded map tiles and no page errors. No records created; not published.
