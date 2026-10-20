@@ -6504,7 +6504,7 @@ function FeedbackBubble({
   onSkipNote: () => void;
 }) {
   const [note, setNote] = useState("");
-  void showAvatar; // every Hobson turn in this exchange now renders its own owl avatar
+  const conversationOpening = showAvatar; // the owl marks Hobson's opening message only — later turns keep their alignment with a spacer.
 
   const graded = !!feedback.grade;
   const submitted = !!feedback.submitted;
@@ -6578,11 +6578,11 @@ function FeedbackBubble({
     </div>
   );
 
-  // Each Hobson "turn" in this exchange renders with its own owl avatar — never an avatar-less bubble.
+  // The owl appears only on the conversation's opening turn; later turns keep their alignment with a spacer.
   // items-start keeps the owl pinned to the top-left of the turn, beside the bubble (matching HobsonBubble layout).
   const Row: React.FC<{ children: React.ReactNode; className?: string }> = ({ children, className = "" }) => (
     <div className={`flex items-start gap-2 ${className}`}>
-      <OwlAvatar state={owl} />
+      {conversationOpening ? <OwlAvatar state={owl} /> : <div aria-hidden className="w-10 h-10 shrink-0" />}
       <div className="flex flex-col gap-1.5 min-w-0">{children}</div>
     </div>
   );
