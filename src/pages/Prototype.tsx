@@ -17,7 +17,8 @@ const characterKeeper = characterKeeperAsset.url;
 import { DocumentsLibrary } from "@/components/prototype/DocumentsLibrary";
 import { CollapsibleSection } from "@/components/prototype/CollapsibleSection";
 import { WorkOverview } from "@/components/prototype/WorkOverview";
-import { applyWorkGuidance, initialWorkGuidance, SIDE_LETTER_INSTRUCTION } from "@/components/prototype/workGuidance";
+import { applyWorkGuidance, initialWorkGuidance, SIDE_LETTER_INSTRUCTION, SIDE_LETTER_ATTACHMENT_ID, SIDE_LETTER_ATTACHMENT_INSTRUCTION, SIDE_LETTER_FILENAME } from "@/components/prototype/workGuidance";
+import { FileText as FileTextIcon, Paperclip, X as XIcon } from "lucide-react";
 import { createRoofWork, roofOverviewCounts } from "@/components/prototype/roofWorkLifecycle";
 import { applyRoofGuidance, initialRoofGuidance, HOLD_CONTACT_INSTRUCTION, LIFT_HOLD_INSTRUCTION, SHOPFRONT_INSTRUCTION, type RoofGuideScope } from "@/components/prototype/roofGuidance";
 import { Button } from "@/components/ui/button";
@@ -1444,6 +1445,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
   const [showWhatIveDone, setShowWhatIveDone] = useState(false);
   const [guidingRenewal, setGuidingRenewal] = useState(false);
   const [workGuidance, setWorkGuidance] = useState(initialWorkGuidance);
+  const [pendingAttachment, setPendingAttachment] = useState(false);
   const [roofWork, setRoofWork] = useState(createRoofWork);
   const roofCounts = roofOverviewCounts(roofWork);
   useEffect(() => {
@@ -4020,10 +4022,10 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
               {guideScope === "renewal" && pendingAttachment && (
                 <div className="mb-2 flex items-center gap-2">
                   <span aria-label={`Attached: ${SIDE_LETTER_FILENAME}`} className="inline-flex items-center gap-1.5 rounded-md border border-border bg-muted/50 px-2.5 py-1 text-xs text-foreground">
-                    <FileText className="h-3.5 w-3.5 text-muted-foreground" aria-hidden="true" />{SIDE_LETTER_FILENAME}
+                    <FileTextIcon className="h-3.5 w-3.5 text-muted-foreground" aria-hidden="true" />{SIDE_LETTER_FILENAME}
                     <span className="text-muted-foreground">· Sample attachment</span>
                   </span>
-                  <button type="button" onClick={() => setPendingAttachment(false)} aria-label="Remove attachment" className="rounded p-0.5 text-muted-foreground hover:text-foreground"><X className="h-3.5 w-3.5" /></button>
+                  <button type="button" onClick={() => setPendingAttachment(false)} aria-label="Remove attachment" className="rounded p-0.5 text-muted-foreground hover:text-foreground"><XIcon className="h-3.5 w-3.5" /></button>
                 </div>
               )}
               <form onSubmit={(event) => {
@@ -4315,7 +4317,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
           />
         )}
         {showWhatIveDone && (
-          <WorkOverview onClose={resetToMap} sideLetterRequested={workGuidance.sideLetterRequested} roofGuidance={roofGuidance} roofWork={roofWork} onRoofWorkChange={(next) => {
+          <WorkOverview onClose={resetToMap} sideLetterRequested={workGuidance.sideLetterRequested} suppliedPapers={workGuidance.suppliedPapers} roofGuidance={roofGuidance} roofWork={roofWork} onRoofWorkChange={(next) => {
             setRoofWork(next);
             if (guideScope !== "renewal" && (next.ended !== roofWork.ended || next.number !== roofWork.number)) { setGuidingRenewal(false); setInput(""); }
           }} focusNeedsYou={needsYouFocus} onJourneyBack={() => setGuidingRenewal(false)} onGuide={(scope, suggestion) => {
@@ -6816,7 +6818,7 @@ function UserBubble({ text, attachment }: { text: string; attachment?: string })
       <div className="max-w-[340px] bg-[#56514A] text-white text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-br-md">
         {attachment && (
           <span aria-label={`Attached paper: ${attachment}`} className="mb-2 flex items-center gap-1.5 rounded-md bg-white/15 px-2 py-1 text-xs">
-            <FileText className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />{attachment}
+            <FileTextIcon className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />{attachment}
           </span>
         )}
         {text}
