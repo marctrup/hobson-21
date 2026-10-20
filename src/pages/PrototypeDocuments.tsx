@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Check, FileText, Files, MessageCircle, Paperclip, RotateCcw, X } from "lucide-react";
 import PrototypeDocumentsBatch from "./PrototypeDocumentsBatch";
-import { answerCompletion, answerCompletionDate, answerWayleaveBelongs, COMPLETION_LABEL, COMPLETION_REPLY, receiveSecondCopy, RELATIONSHIPS, wayleaveProposal, type Completion, answerBelongs, supportChoices, supportQuestion, supportReply, nextStep, type Belongs, type Reopenable, answerMgmt, answerStatus, giveEndDate, MGMT_LABEL, MGMT_REPLY, Q, reopen, startTenancies, STATUS_LABEL, type Management, type TenancyAnswer, type Tenancies } from "./prototypeDocumentsTenancies";
+import { batchReadiness, PAPER_DATES, READ_OFFER, READ_START, READY_INTRO, answerCompletion, answerCompletionDate, answerWayleaveBelongs, COMPLETION_LABEL, COMPLETION_REPLY, receiveSecondCopy, RELATIONSHIPS, wayleaveProposal, type Completion, answerBelongs, supportChoices, supportQuestion, supportReply, nextStep, type Belongs, type Reopenable, answerMgmt, answerStatus, giveEndDate, MGMT_LABEL, MGMT_REPLY, Q, reopen, startTenancies, STATUS_LABEL, type Management, type TenancyAnswer, type Tenancies } from "./prototypeDocumentsTenancies";
 import { addToBatch, BATCH_OVERFLOW_MESSAGE, EXAMPLE_BATCH, isExampleBatch, LOOK_PHRASES, needsYou, type Batch, type BatchPaper } from "./prototypeDocumentsBatch";
 import { Button } from "@/components/ui/button";
 import owlDefault from "@/assets/prototype/owl-default.png";
@@ -119,7 +119,9 @@ export default function PrototypeDocuments() {
   const [batch, setBatch] = useState<Batch | null>(null);
   const [lookStep, setLookStep] = useState(0);
   const [tenancies, setTenancies] = useState<Tenancies | null>(null);
-  const askFor = (step: Tenancies["step"]) => {
+  const [readIds, setReadIds] = useState<string[]>([]);
+  const [readLeft, setReadLeft] = useState(false);
+  const askFor = (step: Tenancies["step"], t?: Tenancies) => {
     if (step === "puigStatus") addMessage("hobson", Q.puigStatus);
     else if (step === "subMgmt") { addMessage("hobson", Q.subIntro); addMessage("hobson", Q.subMgmt); }
     else if (step === "subStatus") addMessage("hobson", Q.subStatus);
@@ -129,9 +131,16 @@ export default function PrototypeDocuments() {
     else if (step === "wayleave") addMessage("hobson", Q.wayleave);
     else if (step === "wayleaveDate") addMessage("hobson", Q.wayleaveDate);
     else if (step === "wayleaveBelongs") addMessage("hobson", Q.wayleaveBelongs);
-    else if (step === "done") addMessage("hobson", Q.supportsDone);
+    else if (step === "done" && t) {
+      const { ready, help } = batchReadiness(t);
+      const pending = ready.filter((r) => !readIds.includes(r.id));
+      setReadLeft(false);
+      if (!pending.length) { addMessage("hobson", Q.supportsDone); return; }
+      addMessage("hobson", READY_INTRO);
+      addMessage("hobson", READ_OFFER(pending.length, help));
+    }
   };
-  const moveTo = (next: Tenancies) => { setTenancies(next); askFor(next.step); };
+  const moveTo = (next: Tenancies) => { setTenancies(next); askFor(next.step, next); };
   useEffect(() => {
     if (tenancies?.step !== "checking") return;
     const t = window.setTimeout(() => { addMessage("hobson", Q.puigIntro); moveTo({ ...startTenancies(), step: "puigStatus" }); }, 1500);
@@ -205,6 +214,23 @@ export default function PrototypeDocuments() {
     setShowChat(true);
     moveTo(which === "wayleaveDate" ? { ...tenancies, step: "wayleaveDate" } : reopen(tenancies, which));
   };
+  const startBatchReading = () => {
+    if (!tenancies || !batch) return;
+    const pending = batchReadiness(tenancies).ready.filter((r) => !readIds.includes(r.id));
+    if (!pending.length) return;
+    addMessage("user", `Read and add the ${pending.length === 5 ? "5" : pending.length} ${pending.length === 5 ? "papers" : `ready paper${pending.length === 1 ? "" : "s"}`}`);
+    addMessage("hobson", READ_START);
+    setReadings((list) => [...list, ...pending.map((r) => {
+      const p = batch.papers.find((x) => x.id === r.id)!;
+      return { id: readingId.current++, title: r.name, unit: `Fifth Floor · Russell Square House`, filename: p.filename, url: p.url, paperType: r.name, tenant: r.where, paperDate: PAPER_DATES[r.id] ?? "Date not identified", effective: null, placement: emptyPlacement, step: 0, finished: false, batch: true };
+    })]);
+    setReadIds((ids) => [...ids, ...pending.map((r) => r.id)]);
+  };
+  const leaveReading = () => {
+    setReadLeft(true);
+    addMessage("user", "Leave for now");
+    addMessage("hobson", "Very well. Everything we've settled stays as it is. I'll start reading whenever you're ready.");
+  };
   const changeTenancy = (which: Reopenable) => {
     if (!tenancies) return;
     addMessage("user", which === "puig" ? "Change Puig's tenancy" : which === "mgmt" ? "Change how the Sublease is shown" : which === "sub" ? "Change Feelunique's Sublease" : which === "licence" ? "Change where the Licence to Alter belongs" : "Change where the Deed of Variation belongs");
@@ -275,7 +301,7 @@ export default function PrototypeDocuments() {
     generation.current++;
     if (uploadUrl.current) URL.revokeObjectURL(uploadUrl.current);
     uploadUrl.current = null;
-    if (batch) clearBatchUrls(batch.papers); setBatch(null); setTenancies(null);
+    if (batch) clearBatchUrls(batch.papers); setBatch(null); setTenancies(null); setReadIds([]);
     setJourney(emptyPaperJourney); setReview(emptyReview); setPlacement(emptyPlacement); setView("papers"); setSection("current"); setReadingCard(null);
     setDoneCard(null); setNotice(null);
     if (!keepReadings) setReadings([]); setGoTo(undefined); setMessages([]); setInput(""); setSelectionOpen(false); setUploadError(""); setUploading(false); setShowChat(true);
@@ -286,7 +312,7 @@ export default function PrototypeDocuments() {
     const { papers, overflow } = addToBatch(base, incoming);
     clearBatchUrls(incoming.filter((p) => !papers.includes(p)));
     const first = !batch || batch.started;
-    if (batch?.started) { clearBatchUrls(batch.papers); setTenancies(null); }
+    if (batch?.started) { clearBatchUrls(batch.papers); setTenancies(null); setReadIds([]); }
     setBatch({ papers, started: false }); setSelectionOpen(false); setReadingCard(null); setDoneCard(null); setSection("current"); setShowChat(true); setUploadError("");
     addMessage("user", label, true);
     if (first) addMessage("hobson", "Send me the papers you want me to look through. I'll work through them together and only ask about the ones that need you.");
@@ -453,6 +479,7 @@ export default function PrototypeDocuments() {
     const r = readings.find((x) => x.id === id);
     if (!r || r.finished) return;
     setReadings((list) => previewFinish(list, id));
+    if (r.batch) { setNotice(`Done. I've read the ${r.title} and added it to the Fifth Floor at Russell Square House.`); return; }
     const who = r.title.split(" — ")[0];
     const unit = r.placement.unit ?? "the Unit";
     const busy = journey.stage !== "empty" && placement.step !== "placed";
@@ -603,6 +630,10 @@ export default function PrototypeDocuments() {
               {!otherTenancy ? <Button size="sm" variant="outline" onClick={() => setOtherTenancy(true)}>Choose another tenancy</Button> : others.map((r) => <Button key={r.id} size="sm" variant="outline" onClick={() => wayleaveBelongs(r.id as Belongs, `It belongs with ${r.name}`)}>{`With ${r.name}`}</Button>)}
               <Button size="sm" variant="outline" onClick={() => wayleaveBelongs("unsure", "Not sure")}>Not sure</Button>
             </>; })()}
+            {tenancies.step === "done" && (() => { const { ready, help } = batchReadiness(tenancies); const n = ready.filter((r) => !readIds.includes(r.id)).length; if (!n) return null; return <>
+              <Button size="sm" onClick={startBatchReading}>{!help.length && !readIds.length ? `Read and add the ${n} papers` : `Read and add the ${n} ready paper${n === 1 ? "" : "s"}`}</Button>
+              {!readLeft && <Button size="sm" variant="ghost" onClick={leaveReading}>Leave for now</Button>}
+            </>; })()}
             {(tenancies.step === "puigEnd" || tenancies.step === "subEnd") && <Button size="sm" variant="ghost" onClick={() => tenancyEnd(null)}>I don't know the date</Button>}
           </div>}
           <div ref={logEnd} />
@@ -643,7 +674,7 @@ export default function PrototypeDocuments() {
             <span className="text-sm font-medium">Your papers</span>
             <div className="flex shrink-0 items-center gap-1"><Button variant="ghost" size="icon" className="md:hidden" aria-label="Chat with Hobson" title="Chat with Hobson" onClick={() => setShowChat(true)}><MessageCircle className="h-4 w-4" /></Button><Button variant="ghost" size="sm" aria-label="Restart demo" title="Restart demo" onClick={() => restart()}><RotateCcw className="h-3.5 w-3.5 md:mr-2" /><span className="hidden md:inline">Restart demo</span></Button></div>
           </header>
-          <PrototypeDocumentsBatch batch={batch} lookPhrase={LOOK_PHRASES[lookStep]} onRemove={removeFromBatch} onAddMore={() => multiInput.current?.click()} onStart={startBatch} onCancel={cancelBatch} onReview={reviewBatch} onLeave={leaveBatch} tenancies={tenancies} onChangeTenancy={changeTenancy} onReviewWayleave={reviewWayleave} />
+          <PrototypeDocumentsBatch batch={batch} lookPhrase={LOOK_PHRASES[lookStep]} onRemove={removeFromBatch} onAddMore={() => multiInput.current?.click()} onStart={startBatch} onCancel={cancelBatch} onReview={reviewBatch} onLeave={leaveBatch} tenancies={tenancies} onChangeTenancy={changeTenancy} onReviewWayleave={reviewWayleave} readIds={readIds} />
         </>}
         {section === "current" && journey.paper && <>
           <header className="flex h-14 shrink-0 items-center justify-between gap-2 border-b border-bone bg-background px-5">

@@ -1,15 +1,15 @@
 import { Button } from "@/components/ui/button";
 import PrototypeDocumentsChain, { type ChainPaper, type ChainStatus } from "./PrototypeDocumentsChain";
-import { wayleaveOpen, openDecisions, PAPER_DATES, type Belongs, type Reopenable, type SupportId, type TenancyAnswer, type Tenancies } from "./prototypeDocumentsTenancies";
+import { batchReadiness, wayleaveOpen, openDecisions, PAPER_DATES, type Belongs, type Reopenable, type SupportId, type TenancyAnswer, type Tenancies } from "./prototypeDocumentsTenancies";
 import type { BatchPaper } from "./prototypeDocumentsBatch";
 
-type Props = { t: Tenancies; papers: BatchPaper[]; onView: (id: string) => void; onChange: (which: Reopenable) => void; onReviewWayleave: () => void };
+type Props = { t: Tenancies; papers: BatchPaper[]; onView: (id: string) => void; onChange: (which: Reopenable) => void; onReviewWayleave: () => void; readIds: string[] };
 
 const status = (a: TenancyAnswer | null, end: string | null): ChainStatus =>
   a === "current" ? { kind: "current" } : a === "ended" ? { kind: "ended", date: end } : { kind: "unconfirmed" };
 const statusText = (a: TenancyAnswer | null, end: string | null) => a === "current" ? "Current" : a === "ended" ? (end ? `Ended on ${end}` : "Ended · date not given") : "Status unconfirmed";
 
-export default function PrototypeDocumentsTenancies({ t, papers, onView, onChange, onReviewWayleave }: Props) {
+export default function PrototypeDocumentsTenancies({ t, papers, onView, onChange, onReviewWayleave, readIds }: Props) {
   const byId = (id: string) => papers.find((p) => p.id === id);
   const paper = (id: string, type: string, extra: Partial<ChainPaper> = {}): ChainPaper | null => {
     const p = byId(id);
@@ -61,6 +61,17 @@ export default function PrototypeDocumentsTenancies({ t, papers, onView, onChang
     <section aria-label="Proposed tenancy histories" className="min-h-0 flex-1 overflow-y-auto bg-background px-6 py-5">
       <h2 className="text-base font-semibold text-ink">Where I propose to put these papers</h2>
       <p className="mt-1 text-xs text-ink-muted">Proposed · nothing has been added to your papers yet · {openDecisions(t)} {openDecisions(t) === 1 ? "decision" : "decisions"} still open</p>
+      {t.step === "done" && (() => { const { ready, help } = batchReadiness(t); return (
+        <div className="mt-5 grid gap-3 @container sm:grid-cols-2">
+          <section aria-label="Ready to read" className="rounded-lg border border-bone px-4 py-3">
+            <p className="text-sm font-semibold text-ink">{ready.length} {ready.length === 1 ? "paper" : "papers"} ready</p>
+            <ul className="mt-2 space-y-1 text-sm">{ready.map((r) => <li key={r.id} className="flex justify-between gap-2"><button type="button" className="text-left text-ink hover:underline" onClick={() => onView(r.id)}>{r.name}</button><span className="shrink-0 text-xs text-ink-muted">{readIds.includes(r.id) ? "I'm reading this" : `With ${r.where}`}</span></li>)}</ul>
+          </section>
+          {help.length > 0 && <section aria-label="Still needs your help" className="rounded-lg border border-dashed border-primary/50 px-4 py-3">
+            <p className="text-sm font-semibold text-ink">{help.length} {help.length === 1 ? "paper still needs" : "papers still need"} your help</p>
+            <ul className="mt-2 space-y-2 text-sm">{help.map((h) => <li key={h.id}><button type="button" className="text-left text-ink hover:underline" onClick={() => onView(h.id)}>{h.name}</button>{h.questions.map((q) => <p key={q} className="text-xs text-ink-muted">{q}</p>)}</li>)}</ul>
+          </section>}
+        </div>); })()}
       {t.step === "checking" ? <p className="mt-6 text-sm italic text-ink-muted motion-safe:animate-pulse" aria-live="polite">Checking the tenancy papers…</p> : <>
         <div className="mt-5 rounded-lg border border-bone">
           <p className="border-b border-faint-rule px-4 py-2.5 text-sm font-semibold text-ink">Russell Square House</p>
