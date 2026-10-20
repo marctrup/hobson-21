@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Paperclip } from "lucide-react";
+import { Paperclip, Plus, ArrowUpRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { PrototypeGate } from "@/components/prototype/PrototypeGate";
 import owlDefault from "@/assets/prototype/owl-default.png";
@@ -9,7 +9,13 @@ const DEFAULT_CHAT_WIDTH = 380;
 const MIN_CHAT_WIDTH = 280;
 const MIN_CANVAS_WIDTH = 320;
 
-type UnitMessage = { id: number; text: string };
+type UnitMessage = { id: number; text: string; role: "user" | "hobson" };
+
+const SETUP_CHOICES = [
+  { label: "A standalone Unit", response: "Of course. Let's set up your Unit." },
+  { label: "A Unit Group with several Units", response: "Of course. Let's set up your Unit Group." },
+  { label: "I'm not sure — help me work it out", response: "That's fine. I'll help you work out how best to organise it." },
+] as const;
 
 function RailItem({ icon, label, active, onClick }: { icon: "pin" | "doc" | "chat" | "gear"; label: string; active?: boolean; onClick?: () => void }) {
   return (
@@ -127,13 +133,35 @@ function PrototypeUnitShell() {
   const [chatWidth, setChatWidth] = useState(DEFAULT_CHAT_WIDTH);
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState<UnitMessage[]>([]);
+  const [setupPromptId, setSetupPromptId] = useState<number | null>(null);
   const nextId = useRef(1);
+  const conversationEnd = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    conversationEnd.current?.scrollIntoView({ block: "end" });
+  }, [messages]);
+
+  const startSetup = () => {
+    const id = nextId.current++;
+    setMessages((previous) => [...previous, { id, role: "hobson", text: "What would you like me to set up?" }]);
+    setSetupPromptId(id);
+    setInput("");
+  };
+
+  const chooseSetup = (choice: typeof SETUP_CHOICES[number]) => {
+    if (setupPromptId === null) return;
+    setMessages((previous) => [...previous,
+      { id: nextId.current++, role: "user", text: choice.label },
+      { id: nextId.current++, role: "hobson", text: choice.response },
+    ]);
+    setSetupPromptId(null);
+  };
 
   const send = () => {
     const text = input.trim();
     if (!text) return;
-    // Local echo only — no simulated reply, no AI integration yet.
-    setMessages((prev) => [...prev, { id: nextId.current++, text }]);
+    // Ordinary messages remain local echoes; only the setup choices have scripted replies.
+    setMessages((prev) => [...prev, { id: nextId.current++, text, role: "user" }]);
     setInput("");
   };
 
@@ -152,7 +180,7 @@ function PrototypeUnitShell() {
             type="button"
             className="grid h-11 w-11 place-items-center rounded-full bg-[#56514A] text-white shadow-md transition hover:bg-[#56514A]"
             aria-label="A new conversation"
-            onClick={() => { setMessages([]); setInput(""); }}
+            onClick={() => { setMessages([]); setInput(""); setSetupPromptId(null); }}
           >
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" aria-hidden><path d="M12 5v14M5 12h14" /></svg>
           </button>
@@ -167,12 +195,23 @@ function PrototypeUnitShell() {
         <header className="flex h-14 items-center justify-between border-b border-faint-rule px-5">
           <h1 className="text-[15px] font-semibold text-ink">Chat with Hobson</h1>
         </header>
-        <div className="flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto px-5 py-4">
+        <div role="log" aria-label="Conversation" className="flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto px-5 py-4">
           {messages.map((message) => (
-            <div key={message.id} className="self-end rounded-xl bg-[#56514A] px-3.5 py-2.5 text-sm leading-relaxed text-white shadow-sm">
-              {message.text}
+            <div key={message.id} className={`min-w-0 max-w-full ${message.role === "user" ? "self-end rounded-xl bg-primary-light px-3.5 py-2.5 text-primary-foreground shadow-sm" : "self-start py-2 text-ink"}`}>
+              {message.role === "hobson" && <p className="mb-1 text-xs font-semibold text-ink-muted">Hobson</p>}
+              <p className="break-words text-sm leading-relaxed">{message.text}</p>
+              {setupPromptId === message.id && (
+                <div className="mt-4 flex flex-col gap-2">
+                  {SETUP_CHOICES.map((choice) => (
+                    <Button key={choice.label} variant="outline" onClick={() => chooseSetup(choice)} className="h-auto min-h-10 w-full justify-between whitespace-normal px-3 py-2.5 text-left text-sm leading-relaxed">
+                      <span>{choice.label}</span><ArrowUpRight className="h-4 w-4 text-ink-muted" aria-hidden="true" />
+                    </Button>
+                  ))}
+                </div>
+              )}
             </div>
           ))}
+          <div ref={conversationEnd} />
         </div>
         <div className="border-t border-faint-rule bg-white px-5 pb-4 pt-2">
           <form
@@ -199,9 +238,15 @@ function PrototypeUnitShell() {
       {/* Resizable divider */}
       <UnitResizeDivider width={chatWidth} setWidth={setChatWidth} onReset={() => setChatWidth(DEFAULT_CHAT_WIDTH)} isDefault={chatWidth === DEFAULT_CHAT_WIDTH} />
 
-      {/* Main canvas — map placeholder, the next feature is designed here */}
-      <main className="min-w-0 flex-1 p-4" aria-label="Prototype Unit canvas">
-        <div className="flex h-full w-full flex-col items-center justify-center gap-3 rounded-xl border border-dashed border-[#56514A]/25 bg-white/60">
+      {/* Portfolio context remains a placeholder; setup creates no records. */}
+      <main className="flex min-w-0 flex-1 flex-col gap-4 p-4" aria-label="Prototype Unit canvas">
+        <header className="flex flex-wrap items-center justify-between gap-3">
+          <h2 className="text-[15px] font-semibold text-ink">Portfolio</h2>
+          <Button onClick={startSetup} className="h-auto min-h-10 whitespace-normal text-left">
+            <Plus className="h-4 w-4" aria-hidden="true" />Add a Unit or Unit Group
+          </Button>
+        </header>
+        <div className="flex min-h-0 w-full flex-1 flex-col items-center justify-center gap-3 rounded-xl border border-dashed border-[#56514A]/25 bg-white/60">
           <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#56514A" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
             <path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2z" />
             <path d="M9 4v14M15 6v14" />

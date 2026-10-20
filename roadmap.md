@@ -1,5 +1,8 @@
 # Roadmap
 
+## Prototype Unit — opening setup conversation
+- [x] Add the Portfolio action and three local conversational choices with individual acknowledgements, allow restarting, and preserve the map and Prototype Work. Four focused tests pass; all three responses and restart checked in the browser with no errors. Not published.
+
 ## Rename /prototype to /prototype-work
 - [x] Move the gated demonstration to /prototype-work; /prototype redirects there rather than 404, robots.txt disallows the new address, and the pass phrase gate is unchanged. 60 component tests pass, build clean, redirect/gate/work surface checked in a test browser. Not published.
 - [x] Remove every trace of the two retired prototype pages — routes, redirects and robots.txt entries gone.
