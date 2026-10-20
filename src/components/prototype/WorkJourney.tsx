@@ -182,7 +182,7 @@ export function WorkJourney({ paused, onPauseChange, onBack, onGuide, sideLetter
       <p className="mt-5 text-xs leading-relaxed text-muted-foreground">This is the original lease figure, not a confirmed current rent. Later agreements are still being checked.</p>
       {suppliedPapers.map((paper) => <SuppliedPaperDetails key={paper.id} paper={paper} places={paperPlaces} onPlacement={onPaperPlacement} />)}
     </>}
-    {selected === "summary" && <>
+    {selected === "summary" && !sideLetterFound && <>
       <p className="mt-3 text-xs font-medium text-muted-foreground">Not started</p>
       <p className="mt-5 text-sm leading-relaxed">I shall bring together the current terms and any changes I've found, ready for your review.</p>
       <p className="mt-4 border-t border-border pt-4 text-sm leading-relaxed text-muted-foreground">{sideLetterRequested ? "The later papers, including the 2024 side letter, need checking before I prepare the renewal summary." : "The later papers need checking before I prepare the renewal summary."}</p>
