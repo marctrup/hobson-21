@@ -1,5 +1,10 @@
 # Roadmap
 
+## Rename /prototype to /prototype-work
+- [x] Move the gated demonstration to /prototype-work; /prototype, /prototype-mobile and /prototype_testers now redirect there rather than 404, robots.txt disallows the new address, and the pass phrase gate is unchanged. 60 component tests pass, build clean, redirect/gate/work surface checked in a test browser. Not published.
+
+
+
 ## Iteration 22A — use known paper context
 - [x] Show distinct illustrative receipt, identification/linking and effect-check states; auto-file the established happy path, isolate the uncertain-placement preview, remove repeated chat prompts, and preserve renewal findings and approvals. Browser flow verified through the private entrance; not published.
 
@@ -24,7 +29,7 @@
 ## Prototype privacy gate
 
 - [x] Put /prototype behind a server-verified pass phrase so a direct address never reveals the demonstration; entrance only for the session, wrong phrases refused, rate limited, robots.txt disallows the route; 66 tests pass and the closed door verified on screen.
-- [ ] Publish when Marc asks, so hobsonschoice.ai/prototype shows the current demonstration behind the pass phrase.
+- [ ] Publish when Marc asks, so hobsonschoice.ai/prototype-work shows the current demonstration behind the pass phrase (the old /prototype address now redirects there).
 
 ## Glass Workboard — remove roof completion simulation
 - [x] Remove only the artificial roof completion controls, outcome and records; investigation and completed Flat 3 lease preserved, shared state-derived counts verified, 22 tests pass and preview flow checked.

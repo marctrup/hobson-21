@@ -188,16 +188,17 @@ const AppContent = () => {
               <Route path="/investment-opportunity" element={<InvestmentOpportunity />} />
               <Route path="/investor-summary" element={<Navigate to="/investment-opportunity" replace />} />
               <Route
-                path="/prototype"
+                path="/prototype-work"
                 element={
                   <PrototypeGate>
                     <Prototype />
                   </PrototypeGate>
                 }
               />
-              {/* Old prototype routes — redirect, never 404 */}
-              <Route path="/prototype-mobile" element={<Navigate to="/prototype" replace />} />
-              <Route path="/prototype_testers" element={<Navigate to="/prototype" replace />} />
+              {/* Old prototype addresses — redirect, never 404 */}
+              <Route path="/prototype" element={<Navigate to="/prototype-work" replace />} />
+              <Route path="/prototype-mobile" element={<Navigate to="/prototype-work" replace />} />
+              <Route path="/prototype_testers" element={<Navigate to="/prototype-work" replace />} />
               
               <Route path="/auth" element={<Auth />} />
               <Route path="/admin" element={<Admin />} />
