@@ -149,7 +149,7 @@ export function editUnits(text: string, units: ProposedUnit[]): UnitEdit | null 
   let m = raw.match(/^(?:please )?rename (.+?) (?:to|as) ["']?(.+?)["']?$/i) ?? raw.match(/^(?:please )?call (.+?) ["']?(.+?)["']?$/i);
   if (m && /^rename/i.test(raw)) {
     const found = findUnit(m[1], units);
-    if (found.length !== 1) return { kind: "question", reply: found.length ? `Which ${m[1].trim()} would you like renamed — ${found.map(u => u.name).join(", ")}?` : `I can't see a Unit called ${m[1].trim()}. Which one did you mean?` };
+    if (found.length !== 1) return { kind: "question", reply: found.length ? `Which ${m[1].trim().replace(/^the /i, "")} would you like renamed — ${found.map(u => u.name).join(", ")}?` : `I can't see a Unit called ${m[1].trim()}. Which one did you mean?` };
     const name = titleCase(m[2].trim());
     if (units.some(u => u !== found[0] && u.name.toLowerCase() === name.toLowerCase())) return { kind: "question", reply: `There's already a Unit called ${name}. What would you like to call ${found[0].name} instead?` };
     return { kind: "changed", units: units.map(u => u === found[0] ? { ...u, name } : u), reply: `Done. I've renamed ${found[0].name} to ${name}.` };
