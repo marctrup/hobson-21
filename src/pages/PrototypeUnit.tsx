@@ -10,6 +10,7 @@ import { countsReply, proposeCounts, editUnits, summarise, namingProposal, numbe
 import { PrototypeUnitStructure } from "./PrototypeUnitStructure";
 import { PrototypeUnitDetails } from "./PrototypeUnitDetails";
 import { UnitKnowledgeRow } from "./PrototypeUnitKnowledge";
+import { statusFor } from "./prototypeUnitTenancy";
 import { PARAGON_GROUP_ID, paperById } from "./prototypeUnitPapers";
 import { PrototypeUnitGroupCard, type GroupCard } from "./PrototypeUnitGroupCard";
 import { applyChanges, FIELD_LABELS, interpretDetails, summaryLine, type DetailInstruction } from "./prototypeUnitDetails";
@@ -229,7 +230,7 @@ function PortfolioGroupView({ group, onClose, onOpenUnit, onCardChange, onChange
           {onClose && <button type="button" onClick={onClose} className="min-h-9 rounded-md px-2 text-sm text-muted-foreground hover:text-foreground">Back to map</button>}
         </>} />
       {open && <ul aria-label={`${group.name} Units`} className="mt-3 divide-y divide-border border-t border-border">
-        {group.units.map(u => <li key={u.number} className="flex items-center"><UnitKnowledgeRow unit={u} groupId={group.id} onViewPaper={onViewPaper}>{onOpenUnit ? <button type="button" onClick={() => onOpenUnit(u)} aria-label={`Open ${u.name}`} className="flex min-h-10 w-full items-center justify-between gap-3 rounded py-1.5 text-left hover:bg-secondary/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"><span className="truncate text-sm text-foreground">{u.name}</span><span className="truncate text-xs text-muted-foreground">{summaryLine(u)}</span></button> : <div className="flex min-h-10 items-center justify-between gap-3 py-1.5"><span className="truncate text-sm text-foreground">{u.name}</span><span className="truncate text-xs text-muted-foreground">{summaryLine(u)}</span></div>}</UnitKnowledgeRow></li>)}
+        {group.units.map(u => <li key={u.number} className="flex items-center"><UnitKnowledgeRow unit={u} groupId={group.id} onViewPaper={onViewPaper}>{onOpenUnit ? <button type="button" onClick={() => onOpenUnit(u)} aria-label={`Open ${u.name}`} className="flex min-h-11 w-full flex-col justify-center rounded py-1.5 text-left hover:bg-secondary/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"><span className="truncate text-sm font-medium text-foreground">{u.name}</span><span className="truncate text-xs text-muted-foreground">{summaryLine(u, statusFor(group.record.id, u.number))}</span></button> : <div className="flex min-h-11 flex-col justify-center py-1.5"><span className="truncate text-sm font-medium text-foreground">{u.name}</span><span className="truncate text-xs text-muted-foreground">{summaryLine(u, statusFor(group.record.id, u.number))}</span></div>}</UnitKnowledgeRow></li>)}
       </ul>}
     </section>
   );
@@ -846,7 +847,7 @@ function PrototypeUnitShell() {
               <PortfolioGroupView group={showingGroup} onCardChange={c => updateCard(showingGroup.id, c)} onChangeAddress={() => startAddressChange(showingGroup.id)} onOpenUnit={openFrom(showingGroup.id)} />
             ) : buildingUnderstanding ? (<div className="flex flex-col gap-1">
               {draftCard && units && totals && <PrototypeUnitGroupCard card={draftCard} address={selectedAddress?.line ?? ""} label="Unit Group · proposed" summary={`${totals.total} Units · ${totals.residential} Residential · ${totals.commercial} Commercial`} onChange={setDraftCard} onChangeAddress={() => startAddressChange("proposal")} />}
-              <PrototypeUnitStructure title={draftCard && units ? undefined : draftCard?.name ?? selectedAddress?.name} understanding={buildingUnderstanding} editable={buildingStage !== "awaiting-description"} lastRemoved={lastRemoved?.unit.name ?? null} onUndo={() => undoRemoval()} onSave={(next, note) => applyDirectEdit(next, note)} onAdd={next => applyDirectEdit(next, "")} onOpenUnit={u => setOpenUnit({ ctx: "proposal", number: u.number })} onRemove={(unit, index) => applyDirectEdit(units!.filter(u => u.number !== unit.number), `I've removed ${unit.name}.`, { unit, index })} /></div>
+              <PrototypeUnitStructure recordId={selectedAddress?.id} title={draftCard && units ? undefined : draftCard?.name ?? selectedAddress?.name} understanding={buildingUnderstanding} editable={buildingStage !== "awaiting-description"} lastRemoved={lastRemoved?.unit.name ?? null} onUndo={() => undoRemoval()} onSave={(next, note) => applyDirectEdit(next, note)} onAdd={next => applyDirectEdit(next, "")} onOpenUnit={u => setOpenUnit({ ctx: "proposal", number: u.number })} onRemove={(unit, index) => applyDirectEdit(units!.filter(u => u.number !== unit.number), `I've removed ${unit.name}.`, { unit, index })} /></div>
             ) : portfolio.length > 0 && (
               <div className="flex flex-col gap-3">{portfolio.map(group => <PortfolioGroupView key={group.id} group={group} onCardChange={c => updateCard(group.id, c)} onChangeAddress={() => startAddressChange(group.id)} onOpenUnit={openFrom(group.id)} />)}</div>
             )}
