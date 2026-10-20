@@ -873,7 +873,7 @@ function PrototypeUnitShell() {
 
 export default function PrototypeUnit() {
   return (
-    <PrototypeGate>
+    <PrototypeGate scope="unit">
       <PrototypeUnitShell />
     </PrototypeGate>
   );

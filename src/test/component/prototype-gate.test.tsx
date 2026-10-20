@@ -71,7 +71,7 @@ describe("PrototypeGate", () => {
     await waitFor(() => expect(screen.getByText("the demonstration")).toBeInTheDocument());
     expect(invoke).toHaveBeenCalledWith(
       "prototype-gate",
-      expect.objectContaining({ body: { passphrase: "the right phrase" } })
+      expect.objectContaining({ body: { passphrase: "the right phrase", scope: "work" } })
     );
     expect(window.sessionStorage.getItem(SESSION_KEY)).toBe("granted");
   });
@@ -89,5 +89,15 @@ describe("PrototypeGate", () => {
       expect(screen.getByRole("alert")).toHaveTextContent("Too many attempts")
     );
     expect(screen.queryByText("the demonstration")).not.toBeInTheDocument();
+  });
+  it("requires separate admission for Unit even when Work was admitted", async () => {
+    window.sessionStorage.setItem(SESSION_KEY, "granted");
+    invoke.mockResolvedValue({ data: { valid: true }, error: null });
+    render(<PrototypeGate scope="unit"><div>unit demonstration</div></PrototypeGate>);
+    expect(screen.queryByText("unit demonstration")).not.toBeInTheDocument();
+    submitPhrase("unit test phrase");
+    await waitFor(() => expect(screen.getByText("unit demonstration")).toBeInTheDocument());
+    expect(invoke).toHaveBeenCalledWith("prototype-gate", { body: { passphrase: "unit test phrase", scope: "unit" } });
+    expect(window.sessionStorage.getItem("hobson_prototype_unit_open")).toBe("granted");
   });
 });

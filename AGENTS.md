@@ -13,6 +13,7 @@
 - Job Papers / Map controls open a context-only layer without navigating the shell or unmounting the journey; use job-specific illustrative papers and explicitly label approximate locations so state is preserved and unrelated evidence is never shown.
 - The completed lease is a read-only journey from one typed source; opening it never alters counts or starts work.
 - Keep the prototype demonstration behind a pass phrase verified by a server function; the browser holds only a session flag, and any direct address must reveal the entrance rather than the work.
+- Prototype Unit and Work use independently scoped server-held pass phrases and browser admission flags so entering one does not unlock the other.
 - On narrow screens, work occupies the available surface and the existing guidance conversation overlays it; shared journey navigation folds into a chooser so the desk remains reachable without changing simulation state.
 - Work overview and journey layout breakpoints follow the resizable work container, not the browser width, so dragging the conversation divider preserves a readable desk.
 - The ordinary Hobson composer’s sample-paper control opens the existing renewal guidance and receipt flow, so attachments remain job-scoped and never imply real uploads or completed reading.
