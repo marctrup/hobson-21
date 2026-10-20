@@ -19,7 +19,7 @@ describe("Illustrative tenancy guidance", () => {
     const first = applyWorkGuidance(initialWorkGuidance, SIDE_LETTER_INSTRUCTION);
     const repeated = applyWorkGuidance(first.state, SIDE_LETTER_INSTRUCTION);
     expect(repeated.state).toBe(first.state);
-    expect(Object.keys(repeated.state)).toEqual(["sideLetterRequested", "sideLetterStatus"]);
+    expect(Object.keys(repeated.state)).toEqual(["sideLetterRequested", "sideLetterStatus", "suppliedPapers"]);
   });
   it("does not execute unrelated instructions", () => {
     const result = applyWorkGuidance(initialWorkGuidance, "Please send the renewal summary now.");
