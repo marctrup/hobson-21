@@ -134,16 +134,39 @@ export default function PrototypeDocuments() {
   const chooseType = (type: string, original = false) => {
     const updated = confirmPaper(journey, type);
     if (updated === journey) return;
-    setJourney(updated); setInput("");
+    setJourney(updated.paper?.example ? { ...updated, stage: "checking" } : updated); setInput("");
     addMessage("user", original ? "Yes, that's right" : type.trim());
     addMessage("hobson", original ? "Good. I'll check the key details next." : `Thanks. I'll treat it as a ${type.trim()}.\n\nI'll check the key details next.`);
   };
+  const setStage = (stage: PaperStage) => setJourney((j) => ({ ...j, stage }));
+  const askOthers = () => { addMessage("hobson", "Do the other details look right?"); setStage("otherDetails"); };
+  const answer = (kind: "confirmed" | "other" | "unsure", date?: string) => {
+    if (kind === "other" && !date) { addMessage("user", "Use another date"); addMessage("hobson", "What date should I use as the effective date?"); setStage("effectiveOther"); return; }
+    const next = answerEffective(review, kind, date);
+    if (next === review) return;
+    setReview(next); setInput("");
+    if (kind === "confirmed") { addMessage("user", "Yes, use that date"); addMessage("hobson", "Thanks. I'll use 22 August 2025 as the effective date."); }
+    else if (kind === "unsure") { addMessage("user", "Not sure"); addMessage("hobson", "That's fine. I'll leave the effective date unconfirmed for now."); }
+    else { addMessage("user", date!.trim()); addMessage("hobson", "Understood. I'll keep the date on the paper as 22 August 2025 and record the effective date you've given me separately."); }
+    askOthers();
+  };
+  const correct = (key: DetailKey, value: string) => {
+    const next = correctDetail(review, key, value);
+    if (next === review) return;
+    setReview(next);
+    const label = review.details.find((d) => d.key === key)!.label.toLowerCase();
+    if (key === "effectiveDate") addMessage("hobson", "Understood. I'll keep the date on the paper as 22 August 2025 and record the effective date you've given me separately.");
+    else addMessage("hobson", key === "tenant" || key === "landlord" ? `Thanks. I've updated the ${label} details you've confirmed.` : `Thanks. I've updated the ${label} you've confirmed.`);
+    if (journey.stage === "correcting") askOthers();
+  };
+  const showInPaper = (page: number) => setGoTo((g) => ({ page, nonce: (g?.nonce ?? 0) + 1 }));
 
   const send = () => {
     const text = input.trim();
     if (!text) return;
     if (journey.stage === "other" || journey.stage === "choosing") { chooseType(text); return; }
     if (journey.stage === "proposed" && /^(yes|yes,? that's right)[.!]?$/i.test(text)) { chooseType("Business Lease", true); return; }
+    if (journey.stage === "effectiveOther") { answer("other", text); return; }
     addMessage("user", text);
     setInput("");
   };
