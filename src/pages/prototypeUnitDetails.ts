@@ -124,6 +124,8 @@ function findTargets(text: string, units: DetailedUnit[]): number[] | null {
 
 export function interpretDetails(raw: string, units: DetailedUnit[]): DetailInstruction | null {
   const text = raw.toLowerCase().replace(/[.!?]+$/, "").replace(/\s+/g, " ").trim();
+  // Rename commands belong to the structure editor — a name like "Garden Flat" is not outside space.
+  if (/\brename\b/.test(text) || /^(?:please )?(?:call|name)\b/.test(text)) return null;
   const patch: UnitDetails = {};
   let feature: string | undefined;
   const dbl = text.match(new RegExp(`\\b${N} double(?:[- ]bed(?:room)?s?)?\\b`));
