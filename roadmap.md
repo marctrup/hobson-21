@@ -1,5 +1,10 @@
 # Roadmap
 
+## Prototype Unit — description reuse and photographs
+- [ ] Enable copying current details and descriptions without separate Save, retaining replacement approvals.
+- [ ] Add session-only Unit photographs, main-photo thumbnails and compact map reference; preserve Unit Group covers.
+- [ ] Run focused tests and verify copying, photographs and navigation on screen.
+
 ## Prototype Unit — guide a useful building answer
 - [x] Clarify the building question with quiet examples; propose named, classified Units from short descriptions and retain focused follow-up context. All 41 focused checks pass; browser verified twelve-Unit mixed-use proposal, twelve offices from a kinds follow-up, floor clarification, local confirmation, divider and reset with real map tiles and no page errors. No records created; not published.
 
