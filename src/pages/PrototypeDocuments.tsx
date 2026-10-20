@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Check, FileText, Files, MessageCircle, Paperclip, RotateCcw, X } from "lucide-react";
 import PrototypeDocumentsBatch from "./PrototypeDocumentsBatch";
+import { answerMgmt, answerStatus, giveEndDate, MGMT_LABEL, MGMT_REPLY, Q, reopen, startTenancies, STATUS_LABEL, type Management, type TenancyAnswer, type Tenancies } from "./prototypeDocumentsTenancies";
 import { addToBatch, BATCH_OVERFLOW_MESSAGE, EXAMPLE_BATCH, isExampleBatch, LOOK_PHRASES, needsYou, type Batch, type BatchPaper } from "./prototypeDocumentsBatch";
 import { Button } from "@/components/ui/button";
 import owlDefault from "@/assets/prototype/owl-default.png";
@@ -117,6 +118,46 @@ export default function PrototypeDocuments() {
   const multiInput = useRef<HTMLInputElement>(null);
   const [batch, setBatch] = useState<Batch | null>(null);
   const [lookStep, setLookStep] = useState(0);
+  const [tenancies, setTenancies] = useState<Tenancies | null>(null);
+  const askFor = (step: Tenancies["step"]) => {
+    if (step === "puigStatus") addMessage("hobson", Q.puigStatus);
+    else if (step === "subMgmt") { addMessage("hobson", Q.subIntro); addMessage("hobson", Q.subMgmt); }
+    else if (step === "subStatus") addMessage("hobson", Q.subStatus);
+    else if (step === "puigEnd" || step === "subEnd") addMessage("hobson", Q.endDate);
+    else if (step === "done") { addMessage("hobson", Q.done); addMessage("hobson", Q.next); }
+  };
+  const moveTo = (next: Tenancies) => { setTenancies(next); askFor(next.step); };
+  useEffect(() => {
+    if (tenancies?.step !== "checking") return;
+    const t = window.setTimeout(() => { addMessage("hobson", Q.puigIntro); moveTo({ ...startTenancies(), step: "puigStatus" }); }, 1500);
+    return () => window.clearTimeout(t);
+  }, [tenancies?.step]);
+  useEffect(() => {
+    if (tenancies?.step !== "comparing") return;
+    const t = window.setTimeout(() => moveTo({ ...tenancies, compared: true, step: "done" }), 1500);
+    return () => window.clearTimeout(t);
+  }, [tenancies?.step]);
+  const tenancyStatus = (a: TenancyAnswer) => {
+    if (!tenancies) return;
+    const who = tenancies.step === "puigStatus" ? "puig" : "sub";
+    addMessage("user", STATUS_LABEL[a]);
+    moveTo(answerStatus(tenancies, who, a));
+  };
+  const tenancyMgmt = (m: Management) => {
+    if (!tenancies) return;
+    addMessage("user", MGMT_LABEL[m]); addMessage("hobson", MGMT_REPLY[m]);
+    moveTo(answerMgmt(tenancies, m));
+  };
+  const tenancyEnd = (date: string | null) => {
+    if (!tenancies) return;
+    addMessage("user", date ?? "I don't know the date");
+    moveTo(giveEndDate(tenancies, date));
+  };
+  const changeTenancy = (which: "puig" | "mgmt" | "sub") => {
+    if (!tenancies) return;
+    addMessage("user", which === "puig" ? "Change Puig's tenancy" : which === "mgmt" ? "Change how the Sublease is shown" : "Change Feelunique's Sublease");
+    moveTo(reopen(tenancies, which));
+  };
   useEffect(() => {
     if (batch?.look !== "looking") return;
     setLookStep(0);
@@ -182,7 +223,7 @@ export default function PrototypeDocuments() {
     generation.current++;
     if (uploadUrl.current) URL.revokeObjectURL(uploadUrl.current);
     uploadUrl.current = null;
-    if (batch) clearBatchUrls(batch.papers); setBatch(null);
+    if (batch) clearBatchUrls(batch.papers); setBatch(null); setTenancies(null);
     setJourney(emptyPaperJourney); setReview(emptyReview); setPlacement(emptyPlacement); setView("papers"); setSection("current"); setReadingCard(null);
     setDoneCard(null); setNotice(null);
     if (!keepReadings) setReadings([]); setGoTo(undefined); setMessages([]); setInput(""); setSelectionOpen(false); setUploadError(""); setUploading(false); setShowChat(true);
@@ -193,7 +234,7 @@ export default function PrototypeDocuments() {
     const { papers, overflow } = addToBatch(base, incoming);
     clearBatchUrls(incoming.filter((p) => !papers.includes(p)));
     const first = !batch || batch.started;
-    if (batch?.started) clearBatchUrls(batch.papers);
+    if (batch?.started) { clearBatchUrls(batch.papers); setTenancies(null); }
     setBatch({ papers, started: false }); setSelectionOpen(false); setReadingCard(null); setDoneCard(null); setSection("current"); setShowChat(true); setUploadError("");
     addMessage("user", label, true);
     if (first) addMessage("hobson", "Send me the papers you want me to look through. I'll work through them together and only ask about the ones that need you.");
@@ -223,6 +264,7 @@ export default function PrototypeDocuments() {
     setBatch((b) => b && { ...b, look: "handoff" });
     addMessage("user", `Review the ${batch ? needsYou(batch.papers) : 3} that need you`);
     addMessage("hobson", "I'll start with the leases, as they establish the tenancy histories the other papers may belong to.");
+    if (batch && isExampleBatch(batch.papers)) setTenancies(startTenancies());
   };
   const leaveBatch = () => {
     addMessage("user", "Leave for now");
@@ -382,6 +424,7 @@ export default function PrototypeDocuments() {
     if (journey.stage === "effectiveOther") { answer("other", text); return; }
     if (placement.step === "roleOther") { setInput(""); answerRole("other", text); return; }
     if (placement.step === "endDate") { setInput(""); answerEnd(text); return; }
+    if (tenancies && (tenancies.step === "puigEnd" || tenancies.step === "subEnd")) { setInput(""); tenancyEnd(text); return; }
     addMessage("user", text);
     setInput("");
   };
@@ -495,6 +538,11 @@ export default function PrototypeDocuments() {
             <Button size="sm" variant="ghost" onClick={() => { setNotice(null); setSection("papers"); }}>View Papers</Button>
             <Button size="sm" variant="ghost" onClick={() => { setDoneCard(null); addMessage("user", "Finish for now"); addMessage("hobson", "Very good. I'll be here when you have more."); setSection("current"); setPlacement(emptyPlacement); setJourney(emptyPaperJourney); setReview(emptyReview); }}>Finish for now</Button>
           </div>}
+          {tenancies && section === "current" && !journey.paper && <div className="ml-12 flex flex-wrap gap-2" role="group" aria-label="Your answer">
+            {(tenancies.step === "puigStatus" || tenancies.step === "subStatus") && (["current", "ended", "unsure"] as const).map((a) => <Button key={a} size="sm" variant="outline" onClick={() => tenancyStatus(a)}>{STATUS_LABEL[a]}</Button>)}
+            {tenancies.step === "subMgmt" && (["both", "puig", "unsure"] as const).map((m) => <Button key={m} size="sm" variant="outline" onClick={() => tenancyMgmt(m)}>{MGMT_LABEL[m]}</Button>)}
+            {(tenancies.step === "puigEnd" || tenancies.step === "subEnd") && <Button size="sm" variant="ghost" onClick={() => tenancyEnd(null)}>I don't know the date</Button>}
+          </div>}
           <div ref={logEnd} />
         </div>
         <div className="border-t border-faint-rule px-5 pb-4 pt-2">
@@ -512,7 +560,7 @@ export default function PrototypeDocuments() {
             <Button type="button" variant="ghost" size="icon" aria-label="Attach a paper" title="Attach a paper" disabled={journey.stage !== "empty" || (!!batch && !batch.started)} onClick={() => setSelectionOpen((open) => !open)} className="h-9 w-9 shrink-0">
               <Paperclip className="h-5 w-5" aria-hidden />
             </Button>
-            <input value={input} onChange={(e) => setInput(e.target.value)} aria-label="Ask Hobson" placeholder={journey.stage === "other" ? "What kind of paper?" : journey.stage === "effectiveOther" ? "Effective date, e.g. 1 September 2025" : placement.step === "roleOther" ? "Your responsibility, in a few words" : placement.step === "endDate" ? "Ending date, e.g. 30 June 2027" : "Ask Hobson…"} className="min-w-0 flex-1 bg-transparent text-sm text-foreground outline-none placeholder:text-muted-foreground" />
+            <input value={input} onChange={(e) => setInput(e.target.value)} aria-label="Ask Hobson" placeholder={journey.stage === "other" ? "What kind of paper?" : journey.stage === "effectiveOther" ? "Effective date, e.g. 1 September 2025" : placement.step === "roleOther" ? "Your responsibility, in a few words" : placement.step === "endDate" || tenancies?.step === "puigEnd" || tenancies?.step === "subEnd" ? "Ending date, e.g. 30 June 2027" : "Ask Hobson…"} className="min-w-0 flex-1 bg-transparent text-sm text-foreground outline-none placeholder:text-muted-foreground" />
             <Button type="submit" size="icon" variant="ghost" disabled={!input.trim()} aria-label="Send message" className="h-8 w-8 shrink-0">
               <svg aria-hidden width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
             </Button>
@@ -533,7 +581,7 @@ export default function PrototypeDocuments() {
             <span className="text-sm font-medium">Your papers</span>
             <div className="flex shrink-0 items-center gap-1"><Button variant="ghost" size="icon" className="md:hidden" aria-label="Chat with Hobson" title="Chat with Hobson" onClick={() => setShowChat(true)}><MessageCircle className="h-4 w-4" /></Button><Button variant="ghost" size="sm" aria-label="Restart demo" title="Restart demo" onClick={() => restart()}><RotateCcw className="h-3.5 w-3.5 md:mr-2" /><span className="hidden md:inline">Restart demo</span></Button></div>
           </header>
-          <PrototypeDocumentsBatch batch={batch} lookPhrase={LOOK_PHRASES[lookStep]} onRemove={removeFromBatch} onAddMore={() => multiInput.current?.click()} onStart={startBatch} onCancel={cancelBatch} onReview={reviewBatch} onLeave={leaveBatch} />
+          <PrototypeDocumentsBatch batch={batch} lookPhrase={LOOK_PHRASES[lookStep]} onRemove={removeFromBatch} onAddMore={() => multiInput.current?.click()} onStart={startBatch} onCancel={cancelBatch} onReview={reviewBatch} onLeave={leaveBatch} tenancies={tenancies} onChangeTenancy={changeTenancy} />
         </>}
         {section === "current" && journey.paper && <>
           <header className="flex h-14 shrink-0 items-center justify-between gap-2 border-b border-bone bg-background px-5">
