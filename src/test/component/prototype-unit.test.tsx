@@ -225,8 +225,8 @@ describe("Prototype Unit proposed building", () => {
     await user.type(screen.getByRole("textbox"), "11 flats and a shop{Enter}");
     const proposal = screen.getByRole("region", { name: "Proposed building structure" });
     expect(within(proposal).getAllByRole("listitem")).toHaveLength(12);
-    expect(within(proposal).getAllByText("Residential")).toHaveLength(11);
-    expect(within(proposal).getByText("Commercial")).toBeInTheDocument();
+    expect(within(proposal).getAllByText(/^Residential/)).toHaveLength(11);
+    expect(within(proposal).getByText(/^Commercial/)).toBeInTheDocument();
     expect(screen.getByLabelText("Location map")).toBe(map);
     expect(within(screen.getByRole("status", { name: "Location status" })).getByText("Location confirmed")).toBeInTheDocument();
     expect(within(screen.getByRole("main")).queryAllByRole("button", { name: /create/i })).toHaveLength(0);
@@ -281,8 +281,8 @@ describe("Prototype Unit proposed building", () => {
     expect(within(proposal).queryAllByRole("listitem")).toHaveLength(0);
     await user.type(screen.getByRole("textbox"), "Offices{Enter}");
     expect(within(proposal).getAllByRole("listitem")).toHaveLength(4);
-    expect(within(proposal).getByText("Commercial · Ground Floor")).toBeInTheDocument();
-    expect(within(proposal).getByText("Commercial · Third Floor")).toBeInTheDocument();
+    expect(within(proposal).getByText(/Ground Floor/)).toBeInTheDocument();
+    expect(within(proposal).getByText(/Third Floor/)).toBeInTheDocument();
   });
 
   it("proposes names for mixed uses and preserves useful locations without requiring repetition", async () => {
@@ -290,8 +290,8 @@ describe("Prototype Unit proposed building", () => {
     await user.type(screen.getByRole("textbox"), "There are two shops on the ground floor and three flats above.{Enter}");
     const proposal = screen.getByRole("region", { name: "Proposed building structure" });
     expect(within(proposal).getAllByRole("listitem")).toHaveLength(5);
-    expect(within(proposal).getAllByText("Commercial · Ground Floor")).toHaveLength(2);
-    expect(within(proposal).getAllByText("Residential · Above ground floor")).toHaveLength(3);
+    expect(within(proposal).getAllByText(/Ground Floor/)).toHaveLength(2);
+    expect(within(proposal).getAllByText(/Above ground floor/)).toHaveLength(3);
     await user.type(screen.getByRole("textbox"), "4 offices{Enter}");
     expect(within(proposal).getAllByRole("listitem")).toHaveLength(4);
     expect(within(proposal).getByText("Office 4")).toBeInTheDocument();
@@ -355,7 +355,7 @@ describe("Prototype Unit proposed building", () => {
     await user.type(screen.getByRole("textbox"), "11 flats and a shop{Enter}");
     await user.click(screen.getByRole("button", { name: "Yes, those names are fine" }));
     const proposal = screen.getByRole("region", { name: "Proposed building structure" });
-    const names = () => within(proposal).getAllByRole("listitem").map(li => li.querySelector("p")?.textContent);
+    const names = () => within(proposal).getAllByRole("listitem").map(li => li.querySelector("span")?.textContent);
     await user.click(within(proposal).getByRole("button", { name: "More for Flat 1" }));
     expect(await screen.findByRole("menuitem", { name: "Move up" })).toHaveAttribute("data-disabled");
     await user.keyboard("{Escape}");
@@ -385,12 +385,12 @@ describe("Prototype Unit proposed building", () => {
     expect(screen.getByText("Shop 2")).toBeInTheDocument();
     await user.click(screen.getByRole("button", { name: "This structure is right" }));
     await user.click(screen.getByRole("button", { name: "Create this structure" }));
-    expect(screen.getByText("Done. Stanley House is now in your portfolio with 13 Units.")).toBeInTheDocument();
-    const group = screen.getByRole("region", { name: "Stanley House Unit Group" });
-    expect(within(group).getByText("Garden Flat")).toBeInTheDocument();
-    expect(within(group).getByText("Unit Group · in your portfolio")).toBeInTheDocument();
+    expect(screen.getByText("Done. Stanley House is now in your portfolio with 13 Units. Here it is on the map — select the marker whenever you'd like to step back inside.")).toBeInTheDocument();
+    expect(screen.queryByRole("region", { name: "Stanley House Unit Group" })).toBeNull();
+    expect(screen.getByRole("button", { name: "Open Stanley House" })).toBeInTheDocument();
     expect(screen.queryByText(/Proposed structure/)).toBeNull();
     expect(screen.queryByRole("button", { name: "Create this structure" })).toBeNull();
+    expect(screen.queryByRole("button", { name: "View on map" })).toBeNull();
     await user.click(screen.getByRole("button", { name: "Set up another place" }));
     expect(screen.getByRole("button", { name: "A Unit Group with several Units" })).toBeInTheDocument();
     expect(screen.getAllByRole("region", { name: "Stanley House Unit Group" })).toHaveLength(1);
@@ -423,20 +423,21 @@ describe("Prototype Unit proposed building", () => {
     expect(within(proposal).getByText("6 Units · 4 Residential · 2 Commercial")).toBeInTheDocument();
   });
 
-  it("views the created group on the map as one marker and opens it beneath the map", async () => {
+  it("returns to the full map on creation and opens the group beneath the map from the marker", async () => {
     const user = await confirmedStanley();
     await user.type(screen.getByLabelText("Residential Units"), "11");
     await user.type(screen.getByLabelText("Commercial Units"), "1");
     await user.click(screen.getByRole("button", { name: "Continue →" }));
     await user.click(screen.getByRole("button", { name: "This structure is right" }));
     await user.click(screen.getByRole("button", { name: "Create this structure" }));
-    await user.click(screen.getByRole("button", { name: "View on map" }));
     expect(screen.queryByRole("region", { name: "Stanley House Unit Group" })).toBeNull();
+    expect(screen.getByLabelText("Location map")).toBeInTheDocument();
     await user.click(screen.getByRole("button", { name: "Open Stanley House" }));
     const group = screen.getByRole("region", { name: "Stanley House Unit Group" });
     expect(within(group).getAllByRole("listitem")).toHaveLength(12);
     expect(screen.getByLabelText("Location map")).toBeInTheDocument();
     await user.click(within(group).getByRole("button", { name: "Back to map" }));
     expect(screen.queryByRole("region", { name: "Stanley House Unit Group" })).toBeNull();
+    expect(screen.getByRole("button", { name: "Open Stanley House" })).toBeInTheDocument();
   });
 });

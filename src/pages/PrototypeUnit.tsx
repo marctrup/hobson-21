@@ -267,6 +267,8 @@ function PrototypeUnitShell() {
   const [messages, setMessages] = useState<UnitMessage[]>([OPENING_MESSAGE]);
   const [showInvitation, setShowInvitation] = useState(true);
   const [setupPromptId, setSetupPromptId] = useState<number | null>(null);
+  // The illustrative example shows whenever the user is not part-way through setting up a place.
+  const [setupUnderway, setSetupUnderway] = useState(false);
   const [locationStage, setLocationStage] = useState<LocationStage>("idle");
   const [locationPromptId, setLocationPromptId] = useState<number | null>(null);
   const [locationAddress, setLocationAddress] = useState("");
@@ -319,6 +321,7 @@ function PrototypeUnitShell() {
 
   const chooseSetup = (choice: typeof SETUP_CHOICES[number]) => {
     if (setupPromptId === null) return;
+    setSetupUnderway(true);
     setMessages((previous) => [...previous,
       { id: nextId.current++, role: "user", text: choice.label },
       { id: nextId.current++, role: "hobson", text: choice.response },
@@ -401,7 +404,7 @@ function PrototypeUnitShell() {
     setLocationPromptId(result.records.length ? id : null);
   };
 
-  const AFTER_CREATION = ["View on map", "Add Papers", "Set up another place", "Done for now"];
+  const AFTER_CREATION = ["Add Papers", "Set up another place", "Done for now"];
   const NAMING_CHOICES = ["Yes, those names are fine", "Just number them", "Let me describe them"];
   const DESCRIBE_HINT = "Of course. Tell me how you'd like them named — for example, 'Call them Apartments 1 to 11', 'The flats are numbered 101 to 111' or 'Call the shop Ground Floor Shop'.";
 
@@ -454,10 +457,14 @@ function PrototypeUnitShell() {
     if (openUnit?.ctx === "proposal") setOpenUnit({ ctx: group.id, number: openUnit.number });
     setPortfolio(previous => previous.some(g => g.record.id === group.record.id) ? previous : [...previous, group]);
     setBuildingStage("created");
-    setBuildingPromptId(appendExchange(text, `Done. ${group.name} is now in your portfolio with ${group.units.length} Unit${group.units.length === 1 ? "" : "s"}.`));
+    // Creation always returns to the full map; the marker opens the Unit Group.
+    setMapExpanded(true);
+    setGroupOpen(false);
+    setBuildingPromptId(appendExchange(text, `Done. ${group.name} is now in your portfolio with ${group.units.length} Unit${group.units.length === 1 ? "" : "s"}. Here it is on the map — select the marker whenever you'd like to step back inside.`));
   };
 
   const resetSetup = () => {
+    setSetupUnderway(false);
     setSetupPromptId(null); setLocationStage("idle"); setLocationPromptId(null); setLocationAddress(""); setAddressParts({}); setAddressCandidates([]); setSelectedAddress(null);
     setBuildingUnderstanding(null); setBuildingStage("idle"); setBuildingPromptId(null); setLastRemoved(null); setShowSummaryUnits(false);
     setDetailsOffered(false); setDetailsPromptId(null); setPendingDetail(null); setOpenUnit(o => o?.ctx === "proposal" ? null : o); setDraftCard(null); setAddrChange(null);
@@ -465,7 +472,6 @@ function PrototypeUnitShell() {
 
   const afterCreation = (choice: string) => {
     const name = portfolio[portfolio.length - 1]?.name ?? "It";
-    if (choice === "View on map") { setMapExpanded(true); setGroupOpen(false); setBuildingPromptId(appendExchange(choice, `Here's ${name} at its confirmed location.`)); return; }
     if (choice === "Add Papers") { setBuildingPromptId(appendExchange(choice, `Papers aren't part of this demonstration yet. When they are, I'll keep them with ${name}.`)); return; }
     if (choice === "Set up another place") {
       resetSetup(); setMapExpanded(false); setGroupOpen(false); setShowInvitation(false);
@@ -668,7 +674,7 @@ function PrototypeUnitShell() {
             type="button"
             className="grid h-11 w-11 place-items-center rounded-full bg-[#56514A] text-white shadow-md transition hover:bg-[#56514A]"
             aria-label="A new conversation"
-            onClick={() => { setMessages([OPENING_MESSAGE]); setInput(""); setSetupPromptId(null); setShowInvitation(true); setLocationStage("idle"); setLocationPromptId(null); setLocationAddress(""); setAddressParts({}); setAddressCandidates([]); setSelectedAddress(null); setBuildingUnderstanding(null); setBuildingStage("idle"); setBuildingPromptId(null); setLastRemoved(null); setMapExpanded(false); setGroupOpen(false); setShowSummaryUnits(false); setOpenUnit(null); setDetailsOffered(false); setDetailsPromptId(null); setPendingDetail(null); setDraftCard(null); setAddrChange(null); }}
+            onClick={() => { setMessages([OPENING_MESSAGE]); setInput(""); setSetupPromptId(null); setSetupUnderway(false); setShowInvitation(true); setLocationStage("idle"); setLocationPromptId(null); setLocationAddress(""); setAddressParts({}); setAddressCandidates([]); setSelectedAddress(null); setBuildingUnderstanding(null); setBuildingStage("idle"); setBuildingPromptId(null); setLastRemoved(null); setMapExpanded(false); setGroupOpen(false); setShowSummaryUnits(false); setOpenUnit(null); setDetailsOffered(false); setDetailsPromptId(null); setPendingDetail(null); setDraftCard(null); setAddrChange(null); }}
           >
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" aria-hidden><path d="M12 5v14M5 12h14" /></svg>
           </button>
@@ -851,7 +857,7 @@ function PrototypeUnitShell() {
             ) : portfolio.length > 0 && (
               <div className="flex flex-col gap-3">{portfolio.map(group => <PortfolioGroupView key={group.id} group={group} onCardChange={c => updateCard(group.id, c)} onChangeAddress={() => startAddressChange(group.id)} onOpenUnit={openFrom(group.id)} />)}</div>
             )}
-            {!paper && !detailPanel && locationStage === "idle" && !buildingUnderstanding && <PortfolioGroupView group={demoGroup} label="Illustrative example · Unit Group" onCardChange={c => updateCard(demoGroup.id, c)} onOpenUnit={openFrom(demoGroup.id)} onViewPaper={setPaperOpen} />}
+            {!paper && !detailPanel && !setupUnderway && locationStage === "idle" && !buildingUnderstanding && <PortfolioGroupView group={demoGroup} label="Illustrative example · Unit Group" onCardChange={c => updateCard(demoGroup.id, c)} onOpenUnit={openFrom(demoGroup.id)} onViewPaper={setPaperOpen} />}
           </>);
         })()}
       </main>
