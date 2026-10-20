@@ -2,7 +2,7 @@
 
 ## Rename /prototype to /prototype-work
 - [x] Move the gated demonstration to /prototype-work; /prototype redirects there rather than 404, robots.txt disallows the new address, and the pass phrase gate is unchanged. 60 component tests pass, build clean, redirect/gate/work surface checked in a test browser. Not published.
-- [x] Remove every trace of the retired prototype-mobile and prototype_testers pages — routes, redirects and robots.txt entries gone.
+- [x] Remove every trace of the two retired prototype pages — routes, redirects and robots.txt entries gone.
 
 
 
