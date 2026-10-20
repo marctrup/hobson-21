@@ -14,7 +14,7 @@ const DEFAULT_CHAT_WIDTH = 380;
 const MIN_CHAT_WIDTH = 280;
 const MIN_CANVAS_WIDTH = 320;
 
-type UnitMessage = { id: number; text: string; role: "user" | "hobson"; examples?: string };
+type UnitMessage = { id: number; text: string; role: "user" | "hobson"; examples?: string; counts?: boolean };
 
 type PortfolioGroup = { id: string; name: string; line: string; record: AddressRecord; units: ProposedUnit[] };
 
