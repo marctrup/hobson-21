@@ -116,3 +116,4 @@
 
 - [x] Iteration 18: When Hobson needs help (roof leak lease review)
 - [x] Label renamed "What I've Done" → "What I'm Up To" (overview heading, aria-label, nav rail item, breadcrumb, both "Back to…" buttons, tests). The roof journey's own past-tense "What I've done" history list and the mobile work log keep their wording.
+- [x] Hobson's owl in conversations: the purple owl now sits beside Hobson's opening message in every conversation (/prototype-unit and /prototype-work), never repeated beside later messages and never on user messages; later Hobson messages keep alignment with an invisible spacer.
