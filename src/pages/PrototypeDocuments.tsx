@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react";
-import { Check, FileText, MessageCircle, Paperclip, RotateCcw, X } from "lucide-react";
+import { Check, FileText, Files, MessageCircle, Paperclip, RotateCcw, X } from "lucide-react";
+import PrototypeDocumentsBatch from "./PrototypeDocumentsBatch";
+import { addToBatch, BATCH_OVERFLOW_MESSAGE, EXAMPLE_BATCH, type Batch, type BatchPaper } from "./prototypeDocumentsBatch";
 import { Button } from "@/components/ui/button";
 import owlDefault from "@/assets/prototype/owl-default.png";
 import leaseAsset from "@/assets/prototype/russell-square-house-lease.pdf.asset.json";
@@ -112,6 +114,8 @@ export default function PrototypeDocuments() {
   const [uploadError, setUploadError] = useState("");
   const [showChat, setShowChat] = useState(true);
   const fileInput = useRef<HTMLInputElement>(null);
+  const multiInput = useRef<HTMLInputElement>(null);
+  const [batch, setBatch] = useState<Batch | null>(null);
   const logEnd = useRef<HTMLDivElement>(null);
   const uploadUrl = useRef<string | null>(null);
   const generation = useRef(0);
@@ -166,11 +170,51 @@ export default function PrototypeDocuments() {
     generation.current++;
     if (uploadUrl.current) URL.revokeObjectURL(uploadUrl.current);
     uploadUrl.current = null;
+    if (batch) clearBatchUrls(batch.papers); setBatch(null);
     setJourney(emptyPaperJourney); setReview(emptyReview); setPlacement(emptyPlacement); setView("papers"); setSection("current"); setReadingCard(null);
     setDoneCard(null); setNotice(null);
     if (!keepReadings) setReadings([]); setGoTo(undefined); setMessages([]); setInput(""); setSelectionOpen(false); setUploadError(""); setUploading(false); setShowChat(true);
   };
+  const clearBatchUrls = (papers: BatchPaper[]) => papers.forEach((p) => { if (p.local) URL.revokeObjectURL(p.url); });
+  const openBatch = (incoming: BatchPaper[], label: string) => {
+    const base = batch && !batch.started ? batch.papers : [];
+    const { papers, overflow } = addToBatch(base, incoming);
+    clearBatchUrls(incoming.filter((p) => !papers.includes(p)));
+    const first = !batch || batch.started;
+    if (batch?.started) clearBatchUrls(batch.papers);
+    setBatch({ papers, started: false }); setSelectionOpen(false); setReadingCard(null); setDoneCard(null); setSection("current"); setShowChat(true); setUploadError("");
+    addMessage("user", label, true);
+    if (first) addMessage("hobson", "Send me the papers you want me to look through. I'll work through them together and only ask about the ones that need you.");
+    if (overflow > 0) addMessage("hobson", BATCH_OVERFLOW_MESSAGE);
+  };
+  const pickSeveral = (files: File[]) => {
+    if (!files.length) return;
+    const pdfs = files.filter((f) => f.name.toLowerCase().endsWith(".pdf"));
+    if (!pdfs.length) { setUploadError("Please choose PDFs."); return; }
+    if (pdfs.length === 1 && !batch) { void upload(pdfs[0]); return; }
+    const papers = pdfs.map((f, i) => ({ id: `local-${Date.now()}-${i}`, filename: f.name, size: f.size, url: URL.createObjectURL(f), local: true }));
+    openBatch(papers, pdfs.length === 1 ? pdfs[0].name : `${pdfs.length} papers`);
+    if (pdfs.length < files.length) addMessage("hobson", "I've set aside anything that wasn't a PDF.");
+  };
+  const removeFromBatch = (id: string) => setBatch((b) => {
+    if (!b) return b;
+    clearBatchUrls(b.papers.filter((p) => p.id === id));
+    return { ...b, papers: b.papers.filter((p) => p.id !== id) };
+  });
+  const startBatch = () => {
+    if (!batch?.papers.length) return;
+    setBatch({ ...batch, started: true });
+    addMessage("user", "Start with these papers");
+    addMessage("hobson", "I'll take a first look at these papers.");
+  };
+  const cancelBatch = () => {
+    if (batch) clearBatchUrls(batch.papers);
+    setBatch(null);
+    addMessage("user", "Cancel");
+    addMessage("hobson", "Very well. I'll leave those for now.");
+  };
   const receive = (paper: PrototypePaper) => {
+    setBatch(null);
     setJourney(receivePaper(paper)); setSelectionOpen(false); setReadingCard(null); setDoneCard(null); setSection("current"); setShowChat(true);
     addMessage("user", paper.filename, true);
     addMessage("hobson", paper.example ? "I'll take a first look at this." : "I've received your paper. I haven't read or identified this one in this demonstration. What kind of paper is it?");
@@ -436,12 +480,15 @@ export default function PrototypeDocuments() {
           {selectionOpen && <div role="group" aria-label="Choose a paper" className="mb-3 border-b border-bone pb-3">
             <div className="flex items-center justify-between"><span className="text-xs text-ink-muted">A paper for Hobson</span><Button variant="ghost" size="icon" aria-label="Close paper selection" onClick={() => setSelectionOpen(false)}><X className="h-4 w-4" /></Button></div>
             <Button variant="ghost" className="w-full justify-start" disabled={uploading} onClick={() => fileInput.current?.click()}><Paperclip className="mr-2 h-4 w-4" />{uploading ? "Opening paper…" : "Upload a paper"}</Button>
+            <Button variant="ghost" className="w-full justify-start" disabled={uploading} onClick={() => multiInput.current?.click()}><Files className="mr-2 h-4 w-4" />Upload several papers</Button>
             <Button variant="ghost" className="w-full justify-start" disabled={uploading || readings.some((r) => r.filename === EXAMPLE_LEASE_FILENAME)} onClick={() => receive({ filename: EXAMPLE_LEASE_FILENAME, example: true, url: leaseAsset.url })}><FileText className="mr-2 h-4 w-4" />Try an example lease</Button>
+            <Button variant="ghost" className="w-full justify-start" disabled={uploading} onClick={() => openBatch(EXAMPLE_BATCH, "Try an example batch")}><Files className="mr-2 h-4 w-4" />Try an example batch</Button>
             {uploadError && <p role="alert" className="mt-2 text-xs text-destructive">{uploadError}</p>}
           </div>}
           <input ref={fileInput} type="file" accept="application/pdf,.pdf" aria-label="Select a PDF" className="hidden" onChange={(e) => { const file = e.target.files?.[0]; if (file) void upload(file); e.target.value = ""; }} />
+          <input ref={multiInput} type="file" multiple accept="application/pdf,.pdf" aria-label="Select several PDFs" className="hidden" onChange={(e) => { const files = Array.from(e.target.files ?? []); e.target.value = ""; pickSeveral(files); }} />
           <form onSubmit={(e) => { e.preventDefault(); send(); }} className="flex items-center gap-2 rounded-full border border-input bg-background px-4 py-2.5 focus-within:ring-2 focus-within:ring-ring">
-            <Button type="button" variant="ghost" size="icon" aria-label="Attach a paper" title="Attach a paper" disabled={journey.stage !== "empty"} onClick={() => setSelectionOpen((open) => !open)} className="h-9 w-9 shrink-0">
+            <Button type="button" variant="ghost" size="icon" aria-label="Attach a paper" title="Attach a paper" disabled={journey.stage !== "empty" || (!!batch && !batch.started)} onClick={() => setSelectionOpen((open) => !open)} className="h-9 w-9 shrink-0">
               <Paperclip className="h-5 w-5" aria-hidden />
             </Button>
             <input value={input} onChange={(e) => setInput(e.target.value)} aria-label="Ask Hobson" placeholder={journey.stage === "other" ? "What kind of paper?" : journey.stage === "effectiveOther" ? "Effective date, e.g. 1 September 2025" : placement.step === "roleOther" ? "Your responsibility, in a few words" : placement.step === "endDate" ? "Ending date, e.g. 30 June 2027" : "Ask Hobson…"} className="min-w-0 flex-1 bg-transparent text-sm text-foreground outline-none placeholder:text-muted-foreground" />
@@ -460,6 +507,13 @@ export default function PrototypeDocuments() {
           <div className="flex shrink-0 gap-1"><Button size="sm" variant="ghost" onClick={() => { setNotice(null); setSection("papers"); }}>Open in Papers</Button><Button size="icon" variant="ghost" aria-label="Dismiss" onClick={() => setNotice(null)}><X className="h-4 w-4" /></Button></div>
         </div>}
         {section !== "current" && <PrototypeDocumentsReading section={section} readings={readings} onBack={() => setSection("current")} onPreviewFinish={finishReading} onViewPapers={() => { setNotice(null); setSection("papers"); }} />}
+        {section === "current" && batch && !journey.paper && <>
+          <header className="flex h-14 shrink-0 items-center justify-between gap-2 border-b border-bone bg-background px-5">
+            <span className="text-sm font-medium">Your papers</span>
+            <div className="flex shrink-0 items-center gap-1"><Button variant="ghost" size="icon" className="md:hidden" aria-label="Chat with Hobson" title="Chat with Hobson" onClick={() => setShowChat(true)}><MessageCircle className="h-4 w-4" /></Button><Button variant="ghost" size="sm" aria-label="Restart demo" title="Restart demo" onClick={() => restart()}><RotateCcw className="h-3.5 w-3.5 md:mr-2" /><span className="hidden md:inline">Restart demo</span></Button></div>
+          </header>
+          <PrototypeDocumentsBatch batch={batch} onRemove={removeFromBatch} onAddMore={() => multiInput.current?.click()} onStart={startBatch} onCancel={cancelBatch} />
+        </>}
         {section === "current" && journey.paper && <>
           <header className="flex h-14 shrink-0 items-center justify-between gap-2 border-b border-bone bg-background px-5">
             <span className="text-sm font-medium">Your paper</span>
