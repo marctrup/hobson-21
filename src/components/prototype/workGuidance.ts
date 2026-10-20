@@ -5,9 +5,13 @@ export const SIDE_LETTER_FILENAME = "Side Letter 2024.pdf";
 /** Stable identity of the simulated attachment, so repeats never duplicate it but same-named unrelated papers would not match. */
 export const SIDE_LETTER_ATTACHMENT_ID = "sim-side-letter-2024-flat6";
 
+export const SIDE_LETTER_FINDING_REPLY = "I've checked the Side Letter. It records a revised annual rent of £27,000 from 1 October 2024, compared with £24,000 in the original lease. I'll use the later recorded position in the renewal summary, while keeping both papers available for you to check.";
+/** Illustrative demonstration figures only — not a real finding about Stanley House. */
+export const SIDE_LETTER_RENT = { amount: "£27,000", from: "1 October 2024", extract: "With effect from 1 October 2024, the annual rent payable under the Lease shall be £27,000." };
+
 export type PaperPlace = { id: string; label: string; kind: "Unit" | "Unit Group"; propertyId: string; unitId?: string };
 export const RENEWAL_PAPER_PLACE: PaperPlace = { id: "stanley-f6", label: "Stanley House · Flat 6", kind: "Unit", propertyId: "stanley", unitId: "stanley-f6" };
-export type PaperPlacementAction = { type: "propose"; place: PaperPlace } | { type: "confirm" } | { type: "advance" };
+export type PaperPlacementAction = { type: "propose"; place: PaperPlace } | { type: "confirm" } | { type: "advance" } | { type: "examine" };
 
 export type SuppliedPaper = {
   id: string;
@@ -22,7 +26,7 @@ export type SuppliedPaper = {
   tenancyLinked: boolean;
   sourceInstruction: string;
   review: "awaiting-examination";
-  progress: "received" | "identified-linked" | "checking-effect" | "uncertain";
+  progress: "received" | "identified-linked" | "checking-effect" | "uncertain" | "effect-found";
 };
 
 export type WorkGuidanceState = { sideLetterRequested: boolean; sideLetterStatus: "awaiting-paper" | null; suppliedPapers: SuppliedPaper[] };
@@ -77,6 +81,11 @@ export function applyPaperPlacement(state: WorkGuidanceState, id: string, action
       ? { ...paper, progress: "identified-linked", proposedPlace: RENEWAL_PAPER_PLACE, filedPlace: RENEWAL_PAPER_PLACE, tenancyLinked: true }
       : { ...paper, progress: "checking-effect" };
     return { state: { ...state, suppliedPapers: state.suppliedPapers.map(p => p.id === id ? next : p) }, reply: paper.progress === "received" ? "I've established that the Side Letter belongs with the tenancy at Stanley House, Flat 6. I've added it to the relevant papers and will check whether it changes the rent." : null };
+  }
+  if (action.type === "examine") {
+    // Prototype-only: simulates completing the examination once; illustrative figures, never extracted or calculated.
+    if (paper.progress !== "checking-effect" || !paper.tenancyLinked) return { state, reply: null };
+    return { state: { ...state, suppliedPapers: state.suppliedPapers.map(p => p.id === id ? { ...p, progress: "effect-found" as const } : p) }, reply: SIDE_LETTER_FINDING_REPLY };
   }
   if (paper.progress !== "uncertain" || paper.filedPlace) return { state, reply: null };
   const next = action.type === "propose"

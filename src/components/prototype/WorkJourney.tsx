@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { JobPapersMap } from "./JobPapersMap";
 import owlReading from "@/assets/prototype/owl-reading.png";
 
-type Step = "tenancy" | "rent" | "history" | "summary" | "draft" | "approve" | "await";
+type Step = "tenancy" | "rent" | "side-letter-check" | "history" | "summary" | "draft" | "approve" | "await";
 type Evidence = "rent" | "end" | "variation" | "side-letter";
 export type ApprovalStatus = "idle" | "awaiting" | "sent";
 
@@ -38,6 +38,13 @@ const baseSteps: StepDef[] = [
   { id: "rent", title: "Reviewed the rent", note: "Found £24,000 annually in the original lease." },
   { id: "history", title: "Checking the tenancy history", note: "Looking for changes in later papers.", group: "Working now" },
   { id: "summary", title: "Prepare renewal summary", note: "Not started.", group: "Next" },
+];
+const sideLetterFoundSteps: StepDef[] = [
+  { id: "tenancy", title: "Read the existing tenancy", note: "Confirmed the parties and end date.", group: "Completed" },
+  { id: "rent", title: "Reviewed the rent", note: "Found £24,000 annually in the original lease." },
+  { id: "side-letter-check", title: "Checking the Side Letter", note: "Found a later recorded annual rent of £27,000." },
+  { id: "history", title: "Checking the tenancy history", note: "Looking for changes in other later papers.", group: "Working now" },
+  { id: "summary", title: "Preparing the renewal summary", note: "Updating — the later Side Letter may change the rent information used in the renewal summary." },
 ];
 const withSuppliedPaper = (steps: StepDef[], supplied: boolean) => supplied ? steps.map((step) => step.id === "summary" ? { ...step, note: "Waiting for the Side Letter check." } : step) : steps;
 
@@ -116,11 +123,12 @@ export function WorkJourney({ paused, onPauseChange, onBack, onGuide, sideLetter
     </div>;
   };
 
-  const steps = journeyExtended ? extendedSteps(sent, sideLetterRequested) : withSuppliedPaper(baseSteps, suppliedPapers.length > 0);
+  const sideLetterFound = suppliedPapers.some((paper) => paper.progress === "effect-found");
+  const steps = journeyExtended ? extendedSteps(sent, sideLetterRequested) : sideLetterFound ? sideLetterFoundSteps : withSuppliedPaper(baseSteps, suppliedPapers.length > 0);
   const selectedStep = steps.find((step) => step.id === selected);
 
   const stepIcon = (id: Step) => {
-    if (id === "tenancy" || id === "rent" || id === "draft" || (id === "approve" && sent)) return <Check className="h-3.5 w-3.5 text-muted-foreground" />;
+    if (id === "tenancy" || id === "rent" || id === "side-letter-check" || id === "draft" || (id === "approve" && sent)) return <Check className="h-3.5 w-3.5 text-muted-foreground" />;
     if (id === "approve") return <Hand className="h-3.5 w-3.5 text-ring" />;
     return <span className={`h-2 w-2 rounded-full ${id === "history" ? paused ? "bg-muted-foreground" : "bg-ring" : "border border-muted-foreground"}`} />;
   };
@@ -152,6 +160,15 @@ export function WorkJourney({ paused, onPauseChange, onBack, onGuide, sideLetter
       {suppliedPapers.map((paper) => <SuppliedPaperDetails key={paper.id} paper={paper} places={paperPlaces} onPlacement={onPaperPlacement} />)}
       <div className="mt-5 border-l-2 border-ring pl-3"><h5 className="text-xs font-semibold">What I'm trying to establish</h5><p className="mt-2 text-sm leading-relaxed">Have any later papers changed the rent, tenancy end date or other relevant terms?</p></div>
     </>}
+    {selected === "side-letter-check" && <>
+      <p className="mt-2 text-sm leading-relaxed text-muted-foreground">I've checked the Side Letter against the original lease. Both papers remain available for you to check.</p>
+      {suppliedPapers.filter((paper) => paper.progress === "effect-found").map((paper) => <SuppliedPaperDetails key={paper.id} paper={paper} />)}
+    </>}
+    {selected === "summary" && sideLetterFound && <>
+      <p className="mt-3 text-sm font-medium">Renewal summary — Updating</p>
+      <p className="mt-2 text-sm leading-relaxed text-muted-foreground">The later Side Letter may change the rent information used in the renewal summary.</p>
+      <p className="mt-4 text-sm leading-relaxed">I'll use the later recorded rent position, while other paper checks remain open. The summary stays in progress until they're resolved. Tenant identification, unit details and the end date are unaffected and haven't been revisited.</p>
+    </>}
     {selected === "tenancy" && <>
       <p className="mt-2 text-sm leading-relaxed text-muted-foreground">I found the tenancy agreement and confirmed the parties and end date recorded in it.</p>
       <div className="mt-5 space-y-4 border-y border-border py-5 text-sm"><dl><dt className="text-xs text-muted-foreground">Tenant</dt><dd className="mt-1 font-medium">Example Tenant Ltd</dd></dl>{renderFinding("end")}</div>
@@ -165,7 +182,7 @@ export function WorkJourney({ paused, onPauseChange, onBack, onGuide, sideLetter
       <p className="mt-5 text-xs leading-relaxed text-muted-foreground">This is the original lease figure, not a confirmed current rent. Later agreements are still being checked.</p>
       {suppliedPapers.map((paper) => <SuppliedPaperDetails key={paper.id} paper={paper} places={paperPlaces} onPlacement={onPaperPlacement} />)}
     </>}
-    {selected === "summary" && <>
+    {selected === "summary" && !sideLetterFound && <>
       <p className="mt-3 text-xs font-medium text-muted-foreground">Not started</p>
       <p className="mt-5 text-sm leading-relaxed">I shall bring together the current terms and any changes I've found, ready for your review.</p>
       <p className="mt-4 border-t border-border pt-4 text-sm leading-relaxed text-muted-foreground">{sideLetterRequested ? "The later papers, including the 2024 side letter, need checking before I prepare the renewal summary." : "The later papers need checking before I prepare the renewal summary."}</p>
@@ -204,7 +221,7 @@ export function WorkJourney({ paused, onPauseChange, onBack, onGuide, sideLetter
             <p className="mt-1 text-sm leading-relaxed text-muted-foreground">This email invites the tenant to discuss a possible renewal. It does not propose rent, tenancy terms or financial commitments.</p>
           </>}
           <p className="mt-3 text-sm font-medium">Still to establish</p>
-          <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{suppliedPapers.length ? "I haven't finished checking the Deed of Variation or examining the supplied 2024 Side Letter." : "I haven't finished checking the Deed of Variation or located the 2024 Side Letter."} These checks remain part of the ongoing investigation.</p>
+          <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{sideLetterFound ? "The Side Letter records a later rent of £27,000. This email proposes no rent figures, so it isn't affected; I haven't finished checking the Deed of Variation." : suppliedPapers.length ? "I haven't finished checking the Deed of Variation or examining the supplied 2024 Side Letter." : "I haven't finished checking the Deed of Variation or located the 2024 Side Letter."} These checks remain part of the ongoing investigation.</p>
         </div>
         <article aria-label="Draft email preview" className="mt-5 rounded-md border border-border bg-popover px-4 py-4">
           <p className="flex items-center gap-2 text-xs font-medium text-muted-foreground"><Mail className="h-3.5 w-3.5" aria-hidden="true" />Draft email · not yet sent</p>

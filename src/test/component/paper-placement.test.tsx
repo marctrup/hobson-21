@@ -104,3 +104,23 @@ describe("Iteration 22B next action clarity", () => {
     expect(screen.getByText("£24,000")).toBeVisible();
   });
 });
+import { applyPaperPlacement as examinePlacement, initialWorkGuidance as baseGuidance, applyPaperAttachment as attachPaper, SIDE_LETTER_ATTACHMENT_ID as SL_ID, SIDE_LETTER_ATTACHMENT_INSTRUCTION as SL_TEXT, SIDE_LETTER_FINDING_REPLY } from "@/components/prototype/workGuidance";
+describe("Iteration 23 Side Letter finding", () => {
+  const linked = () => {
+    let s = attachPaper(baseGuidance, SL_TEXT, SL_ID).state;
+    s = examinePlacement(s, SL_ID, { type: "advance" }).state;
+    return examinePlacement(s, SL_ID, { type: "advance" }).state;
+  };
+  it("completes the examination once with the stated reply", () => {
+    const first = examinePlacement(linked(), SL_ID, { type: "examine" });
+    expect(first.state.suppliedPapers[0].progress).toBe("effect-found");
+    expect(first.reply).toBe(SIDE_LETTER_FINDING_REPLY);
+    expect(first.reply).toContain("£27,000 from 1 October 2024");
+    const again = examinePlacement(first.state, SL_ID, { type: "examine" });
+    expect(again.reply).toBeNull();
+  });
+  it("cannot complete before the paper is linked", () => {
+    const s = attachPaper(baseGuidance, SL_TEXT, SL_ID).state;
+    expect(examinePlacement(s, SL_ID, { type: "examine" }).reply).toBeNull();
+  });
+});
