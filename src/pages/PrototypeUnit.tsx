@@ -8,6 +8,8 @@ import "leaflet/dist/leaflet.css";
 import { discoverAddress, MOCK_ADDRESSES, type AddressParts, type AddressRecord } from "./prototypeUnitAddress";
 import { countsReply, proposeCounts, editUnits, summarise, namingProposal, numberUnits, restoreUnit, understandBuilding, type BuildingUnderstanding, type ProposedUnit } from "./prototypeUnitStructure";
 import { PrototypeUnitStructure } from "./PrototypeUnitStructure";
+import { PrototypeUnitDetails } from "./PrototypeUnitDetails";
+import { applyChanges, FIELD_LABELS, interpretDetails, summaryLine, type DetailInstruction } from "./prototypeUnitDetails";
 
 const RAIL_WIDTH = 68;
 const DEFAULT_CHAT_WIDTH = 380;
@@ -207,7 +209,7 @@ function UnitResizeDivider({ width, setWidth, onReset, isDefault }: { width: num
 }
 
 // An established Unit Group in the simulated portfolio: names, uses and order exactly as authorised.
-function PortfolioGroupView({ group, onClose }: { group: PortfolioGroup; onClose?: () => void }) {
+function PortfolioGroupView({ group, onClose, onOpenUnit }: { group: PortfolioGroup; onClose?: () => void; onOpenUnit?: (unit: ProposedUnit) => void }) {
   const [open, setOpen] = useState(true);
   const totals = summarise(group.units);
   return (
@@ -225,7 +227,7 @@ function PortfolioGroupView({ group, onClose }: { group: PortfolioGroup; onClose
         </div>
       </div>
       {open && <ul aria-label={`${group.name} Units`} className="mt-3 divide-y divide-border border-t border-border">
-        {group.units.map(u => <li key={u.number} className="flex min-h-10 items-center justify-between gap-3 py-1.5"><span className="truncate text-sm text-foreground">{u.name}</span><span className="shrink-0 text-xs text-muted-foreground">{u.classification}</span></li>)}
+        {group.units.map(u => <li key={u.number}>{onOpenUnit ? <button type="button" onClick={() => onOpenUnit(u)} aria-label={`Open ${u.name}`} className="flex min-h-10 w-full items-center justify-between gap-3 rounded py-1.5 text-left hover:bg-secondary/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"><span className="truncate text-sm text-foreground">{u.name}</span><span className="truncate text-xs text-muted-foreground">{summaryLine(u)}</span></button> : <div className="flex min-h-10 items-center justify-between gap-3 py-1.5"><span className="truncate text-sm text-foreground">{u.name}</span><span className="truncate text-xs text-muted-foreground">{summaryLine(u)}</span></div>}</li>)}
       </ul>}
     </section>
   );
@@ -277,6 +279,11 @@ function PrototypeUnitShell() {
   const [showSummaryUnits, setShowSummaryUnits] = useState(false);
   const [lastRemoved, setLastRemoved] = useState<{ unit: ProposedUnit; index: number } | null>(null);
   const [buildingPromptId, setBuildingPromptId] = useState<number | null>(null);
+  // One shared record per Unit: details live on the Unit itself, in the proposal before creation and in the portfolio after.
+  const [openUnit, setOpenUnit] = useState<{ ctx: "proposal" | string; number: number } | null>(null);
+  const [detailsOffered, setDetailsOffered] = useState(false);
+  const [detailsPromptId, setDetailsPromptId] = useState<number | null>(null);
+  const [pendingDetail, setPendingDetail] = useState<{ id: number; ctx: "proposal" | string; instruction: Extract<DetailInstruction, { kind: "proposal" }> } | null>(null);
   const nextId = useRef(1);
   // Undo is temporary: it fades after a short while.
   useEffect(() => {
@@ -397,7 +404,20 @@ function PrototypeUnitShell() {
     if (next) setBuildingUnderstanding({ kind: "proposal", units: next });
     setBuildingPromptId(appendExchange(text, `${reply}\n\n${REVIEW_LINE}`));
     setBuildingStage("named");
+    // Offered once only; never repeated as a reminder.
+    if (!detailsOffered) {
+      const id = nextId.current++;
+      setMessages(previous => [...previous, { id, role: "hobson", text: "I've laid out the Units. Would you like to add a little more information about them, or shall we leave that for later?" }]);
+      setDetailsPromptId(id); setDetailsOffered(true);
+    }
   };
+
+  const unitsFor = (ctx: "proposal" | string) => ctx === "proposal" ? units ?? [] : portfolio.find(g => g.id === ctx)?.units ?? [];
+  const updateUnitsIn = (ctx: "proposal" | string, next: ProposedUnit[]) => {
+    if (ctx === "proposal") setBuildingUnderstanding({ kind: "proposal", units: next });
+    else setPortfolio(previous => previous.map(g => g.id === ctx ? { ...g, units: next } : g));
+  };
+  const detailCtx = (): "proposal" | string | null => buildingStage === "created" || (!units && portfolio.length) ? portfolio[portfolio.length - 1]?.id ?? null : units ? "proposal" : null;
 
   const applyDirectEdit = (next: ProposedUnit[], note: string, removed?: { unit: ProposedUnit; index: number }) => {
     setBuildingUnderstanding({ kind: "proposal", units: next });
@@ -421,6 +441,7 @@ function PrototypeUnitShell() {
   const createGroup = (text: string) => {
     if (buildingStage !== "ready" || !units || !selectedAddress) return;
     const group: PortfolioGroup = { id: `${selectedAddress.id}-${Date.now()}`, name: selectedAddress.name, line: selectedAddress.line, record: selectedAddress, units: units.map(u => ({ ...u })) };
+    if (openUnit?.ctx === "proposal") setOpenUnit({ ctx: group.id, number: openUnit.number });
     setPortfolio(previous => previous.some(g => g.record.id === group.record.id) ? previous : [...previous, group]);
     setBuildingStage("created");
     setBuildingPromptId(appendExchange(text, `Done. ${group.name} is now in your portfolio with ${group.units.length} Unit${group.units.length === 1 ? "" : "s"}.`));
@@ -429,6 +450,7 @@ function PrototypeUnitShell() {
   const resetSetup = () => {
     setSetupPromptId(null); setLocationStage("idle"); setLocationPromptId(null); setLocationAddress(""); setAddressParts({}); setAddressCandidates([]); setSelectedAddress(null);
     setBuildingUnderstanding(null); setBuildingStage("idle"); setBuildingPromptId(null); setLastRemoved(null); setShowSummaryUnits(false);
+    setDetailsOffered(false); setDetailsPromptId(null); setPendingDetail(null); setOpenUnit(o => o?.ctx === "proposal" ? null : o);
   };
 
   const afterCreation = (choice: string) => {
@@ -454,8 +476,38 @@ function PrototypeUnitShell() {
     setBuildingStage("named");
   };
 
+  const answerDetails = (text: string, normalised: string): boolean => {
+    if (pendingDetail) {
+      if (["apply these details", "yes", "yes please", "go ahead", "confirm"].includes(normalised)) {
+        const { ctx, instruction } = pendingDetail;
+        updateUnitsIn(ctx, applyChanges(unitsFor(ctx), instruction.patch, instruction.changes));
+        setPendingDetail(null);
+        appendExchange(text, `Done. I've recorded that for ${instruction.targets.length === 1 ? unitsFor(ctx).find(u => u.number === instruction.targets[0])?.name : `all ${instruction.targets.length} Units`}.`);
+        return true;
+      }
+      if (["not now", "no", "leave it", "cancel"].includes(normalised)) { setPendingDetail(null); appendExchange(text, "Very well. I've left everything as it was."); return true; }
+    }
+    if (detailsPromptId !== null && normalised === "add some details" && units) {
+      setDetailsPromptId(null); setOpenUnit({ ctx: "proposal", number: units[0].number });
+      appendExchange(text, `Of course. I've opened ${units[0].name}. Fill in whatever you know, or simply tell me — for example, 'Flats 1 to 6 all have two double bedrooms and one bathroom'.`);
+      return true;
+    }
+    if (detailsPromptId !== null && normalised === "leave that for later") {
+      setDetailsPromptId(null); appendExchange(text, "Very good. You can open any Unit whenever you'd like to add more."); return true;
+    }
+    const ctx = detailCtx();
+    if (!ctx) return false;
+    const instruction = interpretDetails(text, unitsFor(ctx));
+    if (!instruction) return false;
+    if (instruction.kind === "question") { appendExchange(text, instruction.reply); return true; }
+    const id = appendExchange(text, instruction.reply);
+    setPendingDetail({ id, ctx, instruction });
+    return true;
+  };
+
   const answerBuilding = (text: string) => {
     const normalised = text.toLowerCase().replace(/[.!?]+$/, "").trim();
+    if ((units || buildingStage === "created") && buildingStage !== "awaiting-description" && answerDetails(text, normalised)) return;
     if (units && buildingStage !== "awaiting-description") {
       if (buildingStage === "created") {
         const choice = AFTER_CREATION.find(c => c.toLowerCase() === normalised);
@@ -502,6 +554,7 @@ function PrototypeUnitShell() {
     if (!text) return;
     const normalised = text.toLowerCase().replace(/[.!?]+$/, "");
     if (locationStage === "confirmed" && buildingStage !== "idle") { answerBuilding(text); return; }
+    if (locationStage === "idle" && portfolio.length && answerDetails(text, normalised.trim())) return;
     if (locationStage === "proposed") {
       if (normalised === "yes, that's the place") { respondToLocation(true); return; }
       if (["no, let's check again", "choose a different location"].includes(normalised)) { respondToLocation(false); return; }
@@ -551,7 +604,7 @@ function PrototypeUnitShell() {
             type="button"
             className="grid h-11 w-11 place-items-center rounded-full bg-[#56514A] text-white shadow-md transition hover:bg-[#56514A]"
             aria-label="A new conversation"
-            onClick={() => { setMessages([OPENING_MESSAGE]); setInput(""); setSetupPromptId(null); setShowInvitation(true); setLocationStage("idle"); setLocationPromptId(null); setLocationAddress(""); setAddressParts({}); setAddressCandidates([]); setSelectedAddress(null); setBuildingUnderstanding(null); setBuildingStage("idle"); setBuildingPromptId(null); setLastRemoved(null); setMapExpanded(false); setGroupOpen(false); setShowSummaryUnits(false); }}
+            onClick={() => { setMessages([OPENING_MESSAGE]); setInput(""); setSetupPromptId(null); setShowInvitation(true); setLocationStage("idle"); setLocationPromptId(null); setLocationAddress(""); setAddressParts({}); setAddressCandidates([]); setSelectedAddress(null); setBuildingUnderstanding(null); setBuildingStage("idle"); setBuildingPromptId(null); setLastRemoved(null); setMapExpanded(false); setGroupOpen(false); setShowSummaryUnits(false); setOpenUnit(null); setDetailsOffered(false); setDetailsPromptId(null); setPendingDetail(null); }}
           >
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" aria-hidden><path d="M12 5v14M5 12h14" /></svg>
           </button>
@@ -592,6 +645,21 @@ function PrototypeUnitShell() {
                       {(buildingStage === "naming" ? NAMING_CHOICES : buildingStage === "named" ? ["This structure is right"] : buildingStage === "ready" ? ["Create this structure", "Make another change"] : buildingStage === "created" ? AFTER_CREATION : (buildingUnderstanding?.kind === "clarify" && buildingUnderstanding.choices) || []).map(choice => (
                         <button key={choice} type="button" onClick={() => answerBuilding(choice)} className={`min-h-11 rounded-full border px-3.5 py-2 text-left text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${choice === "Create this structure" ? "border-primary bg-primary font-semibold text-primary-foreground shadow-sm hover:bg-primary/90" : "border-border bg-secondary/40 text-foreground hover:bg-secondary"}`}>{choice}</button>
                       ))}
+                    </div>
+                  )}
+                  {detailsPromptId === message.id && (
+                    <div className="mt-3 flex flex-wrap gap-2">
+                      {["Add some details", "Leave that for later"].map(choice => <button key={choice} type="button" onClick={() => answerBuilding(choice)} className="min-h-11 rounded-full border border-border bg-secondary/40 px-3.5 py-2 text-sm text-foreground transition-colors hover:bg-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">{choice}</button>)}
+                    </div>
+                  )}
+                  {pendingDetail?.id === message.id && (
+                    <div className="mt-3">
+                      <ul aria-label="Proposed details" className="max-h-56 divide-y divide-border overflow-y-auto rounded-md border border-border bg-background text-xs">
+                        {pendingDetail.instruction.changes.map(c => <li key={`${c.unit}:${c.field}`} className="flex flex-wrap gap-x-1.5 px-2.5 py-1.5"><span className="font-medium">{c.name}</span><span className="text-muted-foreground">{FIELD_LABELS[c.field]}:</span><span>{c.replaces ? `${c.from} → ${c.to}` : c.to}</span></li>)}
+                      </ul>
+                      <div className="mt-2 flex flex-wrap gap-2">
+                        {["Apply these details", "Not now"].map(choice => <button key={choice} type="button" onClick={() => locationStage === "confirmed" && buildingStage !== "idle" ? answerBuilding(choice) : answerDetails(choice, choice.toLowerCase())} className={`min-h-11 rounded-full border px-3.5 py-2 text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${choice === "Apply these details" ? "border-primary bg-primary font-semibold text-primary-foreground hover:bg-primary/90" : "border-border bg-secondary/40 text-foreground hover:bg-secondary"}`}>{choice}</button>)}
+                      </div>
                     </div>
                   )}
                   {message.id === OPENING_MESSAGE.id && showInvitation && (
@@ -674,12 +742,17 @@ function PrototypeUnitShell() {
           const exploring = Boolean(focus) && (mapExpanded || groupOpen);
           const compact = !mapExpanded && !groupOpen && (Boolean(buildingUnderstanding) || portfolioOnly);
           const totals = units ? summarise(units) : null;
+          const openList = openUnit ? unitsFor(openUnit.ctx) : [];
+          const opened = openList.find(u => u.number === openUnit?.number);
+          const openedName = openUnit?.ctx === "proposal" ? selectedAddress?.name ?? "Stanley House" : portfolio.find(g => g.id === openUnit?.ctx)?.name ?? "";
+          const detailPanel = openUnit && opened ? <PrototypeUnitDetails unit={opened} units={openList} groupName={openedName} onChange={next => updateUnitsIn(openUnit.ctx, next)} onBack={() => setOpenUnit(null)} /> : null;
+          const openFrom = (ctx: string) => (u: ProposedUnit) => setOpenUnit({ ctx, number: u.number });
           return (<>
             <div className={`flex min-h-0 flex-col gap-2 transition-[flex-basis] duration-300 motion-reduce:transition-none ${groupOpen && focus ? "h-[42%] min-h-[220px] shrink-0" : compact ? "h-[300px] shrink-0" : "min-h-[300px] flex-1"}`}>
               {buildingUnderstanding && !showingGroup && <div className="text-xs leading-relaxed text-muted-foreground"><p>{selectedAddress?.line}</p><p className="mt-1 text-[10px]">Illustrative mock lookup · approximate location</p></div>}
               <UnitLocationMap compact={compact} group={focus ? { name: focus.name, units: focus.units.length } : null} onOpenGroup={focus ? () => { setGroupOpen(true); setMapExpanded(false); } : undefined} stage={focus ? "confirmed" : locationStage} address={focus ? focus.line : locationAddress} candidate={focus ? focus.record : selectedAddress ?? addressCandidates[0] ?? null} />
             </div>
-            {exploring && focus ? (groupOpen ? <PortfolioGroupView group={focus} onClose={() => { setGroupOpen(false); setMapExpanded(true); }} /> : null) : buildingStage === "ready" && units && totals ? (
+            {exploring && focus ? (groupOpen ? (detailPanel && openUnit?.ctx === focus.id ? detailPanel : <PortfolioGroupView group={focus} onOpenUnit={openFrom(focus.id)} onClose={() => { setGroupOpen(false); setMapExpanded(true); setOpenUnit(null); }} />) : null) : detailPanel && !(buildingStage === "ready" && openUnit?.ctx === "proposal" && !showSummaryUnits) ? detailPanel : buildingStage === "ready" && units && totals ? (
               <section aria-label="Ready to create" className="min-w-0 py-3">
                 <p className="text-xs font-medium text-muted-foreground">Ready to add · nothing created yet</p>
                 <h3 className="mt-1 text-xl font-semibold text-foreground">{selectedAddress?.name}</h3>
@@ -691,14 +764,14 @@ function PrototypeUnitShell() {
                   <li className="flex items-center gap-2 text-muted-foreground"><span className="inline-block h-3.5 w-3.5 rounded-full border border-border" aria-hidden />Nothing created yet</li>
                 </ul>
                 <button type="button" aria-expanded={showSummaryUnits} onClick={() => setShowSummaryUnits(v => !v)} className="mt-3 min-h-9 rounded-md px-2 text-sm text-muted-foreground underline-offset-4 hover:text-foreground hover:underline">{showSummaryUnits ? "Hide the Units" : "Look at the Units again"}</button>
-                {showSummaryUnits && <PrototypeUnitStructure understanding={{ kind: "proposal", units }} />}
+                {showSummaryUnits && <PrototypeUnitStructure understanding={{ kind: "proposal", units }} onOpenUnit={u => setOpenUnit({ ctx: "proposal", number: u.number })} />}
               </section>
             ) : showingGroup ? (
-              <PortfolioGroupView group={showingGroup} />
+              <PortfolioGroupView group={showingGroup} onOpenUnit={openFrom(showingGroup.id)} />
             ) : buildingUnderstanding ? (
-              <PrototypeUnitStructure understanding={buildingUnderstanding} editable={buildingStage !== "awaiting-description"} lastRemoved={lastRemoved?.unit.name ?? null} onUndo={() => undoRemoval()} onSave={(next, note) => applyDirectEdit(next, note)} onAdd={next => applyDirectEdit(next, "")} onRemove={(unit, index) => applyDirectEdit(units!.filter(u => u.number !== unit.number), `I've removed ${unit.name}.`, { unit, index })} />
+              <PrototypeUnitStructure understanding={buildingUnderstanding} editable={buildingStage !== "awaiting-description"} lastRemoved={lastRemoved?.unit.name ?? null} onUndo={() => undoRemoval()} onSave={(next, note) => applyDirectEdit(next, note)} onAdd={next => applyDirectEdit(next, "")} onOpenUnit={u => setOpenUnit({ ctx: "proposal", number: u.number })} onRemove={(unit, index) => applyDirectEdit(units!.filter(u => u.number !== unit.number), `I've removed ${unit.name}.`, { unit, index })} />
             ) : portfolio.length > 0 && (
-              <div className="flex flex-col gap-3">{portfolio.map(group => <PortfolioGroupView key={group.id} group={group} />)}</div>
+              <div className="flex flex-col gap-3">{portfolio.map(group => <PortfolioGroupView key={group.id} group={group} onOpenUnit={openFrom(group.id)} />)}</div>
             )}
           </>);
         })()}
