@@ -280,7 +280,6 @@ export default function PrototypeDocuments() {
     setPlacement((p) => ({ ...p, step, revisiting: true }));
   };
   const startReading = () => {
-    addMessage("user", "Yes, put it here");
     addMessage("hobson", "That's all I need. I'll read the lease properly now. You can give me another paper while I get on with this.");
     const id = readingId.current++;
     const paper = journey.paper!;
