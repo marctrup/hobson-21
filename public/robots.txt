@@ -72,6 +72,7 @@ Disallow: /learn/api-reference
 Disallow: /learn/troubleshooting
 
 Disallow: /prototype
+Disallow: /prototype-work
 Disallow: /prototype-mobile
 Disallow: /prototype_testers
 
