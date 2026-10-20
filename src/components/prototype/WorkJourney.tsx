@@ -2,8 +2,9 @@ import type { PaperPlace, PaperPlacementAction, SuppliedPaper } from "./workGuid
 import { SuppliedPaperDetails } from "./SuppliedPaperDetails";
 import { JourneyNavigation } from "./JourneyNavigation";
 import { useState } from "react";
-import { ArrowLeft, Check, ChevronDown, FileText, Hand, Mail, MessageCircle, Pause, Play, X } from "lucide-react";
+import { ArrowLeft, Check, ChevronDown, FileText, Hand, Mail, MessageCircle, Pause, Play, Undo2, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { DeskActionButton } from "./DeskActionButton";
 import { JobPapersMap } from "./JobPapersMap";
 import owlReading from "@/assets/prototype/owl-reading.png";
 
@@ -269,8 +270,8 @@ export function WorkJourney({ paused, onPauseChange, onBack, onGuide, sideLetter
             <Button variant="outline" size="sm" onClick={() => onPauseChange(!paused)} className="shrink-0 gap-2">{paused ? <Play className="h-4 w-4" /> : <Pause className="h-4 w-4" />}{paused ? "Resume work" : "Pause work"}</Button>
             <Button variant="secondary" size="sm" onClick={onGuide} className="gap-2"><MessageCircle className="h-4 w-4" />Guide Hobson</Button>
             {journeyExtended
-              ? <Button variant="ghost" size="sm" onClick={returnToInvestigation} className="gap-2">Return to the investigation</Button>
-              : <Button variant="ghost" size="sm" onClick={openDemo} className="gap-2 text-muted-foreground">Preview approval stage</Button>}
+              ? <DeskActionButton icon={<Undo2 className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />} label="Return to the investigation" tooltip="Close this example and return to the renewal as it was." onClick={returnToInvestigation} />
+              : <DeskActionButton demo icon={<Mail className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />} label="Preview approval stage" tooltip="See how Hobson asks for your approval before anything is sent." onClick={openDemo} />}
           </div>
         </div>
         <div className="mt-3 flex items-center gap-3">

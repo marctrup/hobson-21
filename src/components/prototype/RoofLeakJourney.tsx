@@ -1,6 +1,7 @@
 import { JourneyNavigation } from "./JourneyNavigation";
 import { useEffect, useState } from "react";
-import { ArrowLeft, Check, ChevronDown, CircleHelp, FileText, Hand, Mail, MessageCircle, Pause, Play, X, MoreHorizontal } from "lucide-react";
+import { ArrowLeft, Check, ChevronDown, CircleHelp, FileText, Hand, HelpCircle, Mail, MessageCircle, Pause, Play, Undo2, X, MoreHorizontal } from "lucide-react";
+import { DeskActionButton } from "./DeskActionButton";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import { AlertDialog, AlertDialogPortal, AlertDialogOverlay, AlertDialogTitle, AlertDialogDescription, AlertDialogFooter, AlertDialogAction, AlertDialogCancel } from "@/components/ui/alert-dialog";
 import * as AlertDialogPrimitive from "@radix-ui/react-alert-dialog";
@@ -232,10 +233,13 @@ export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initia
                     <p className="mt-2 text-xs text-muted-foreground">Example paper only — not a document from your portfolio.</p>
                   </aside>}
                 </div>
-                <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-dashed border-border pt-3">
-                  {help.shown
-                    ? <Button size="sm" variant="ghost" onClick={() => onHelpChange({ ...help, shown: false })} className="h-auto px-0 text-xs text-muted-foreground">Return to investigation</Button>
-                    : <Button size="sm" variant="ghost" onClick={() => onHelpChange({ ...help, shown: true })} className="h-auto px-0 text-xs text-muted-foreground">Preview needs help</Button>}
+                <div className="mt-5 border-t border-dashed border-border pt-3">
+                  <p className="text-xs font-semibold text-muted-foreground">Related actions</p>
+                  <div className="mt-2 flex flex-wrap items-center gap-2">
+                    {help.shown
+                      ? <DeskActionButton icon={<Undo2 className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />} label="Return to investigation" tooltip="Close this example and return to the investigation as it was." onClick={() => onHelpChange({ ...help, shown: false })} />
+                      : <DeskActionButton demo icon={<HelpCircle className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />} label="Preview needs help" tooltip="See how Hobson explains what is missing and asks for your help." onClick={() => onHelpChange({ ...help, shown: true })} />}
+                  </div>
                 </div>
               </>}
 
