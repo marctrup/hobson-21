@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { namingProposal, numberUnits, renameUnits, understandBuilding } from "@/pages/prototypeUnitStructure";
+import { editUnits, namingProposal, numberUnits, renameUnits, understandBuilding } from "@/pages/prototypeUnitStructure";
 
 describe("Illustrative building understanding", () => {
   it("proposes eleven residential flats and one commercial shop, named and numbered", () => {
@@ -94,5 +94,15 @@ describe("Illustrative building understanding", () => {
     const r = understandBuilding("9 residential and 3 commercial", m);
     if (r.kind !== "proposal") throw new Error("Missing proposal");
     expect(r.units.filter(u => u.classification === "Commercial")).toHaveLength(3);
+  });
+  it("applies conversational edits and asks when ambiguous", () => {
+    const r = understandBuilding("11 flats and a shop");
+    if (r.kind !== "proposal") throw new Error("Missing proposal");
+    expect(editUnits("Change Flat 2 to commercial.", r.units)).toMatchObject({ kind: "changed" });
+    const added = editUnits("Add another shop.", r.units);
+    expect(added?.kind === "changed" && added.units.map(u => u.name).slice(-2)).toEqual(["Shop 1", "Shop 2"]);
+    expect(editUnits("Remove Flat 1", r.units)).toMatchObject({ kind: "changed", removed: { index: 0 } });
+    expect(editUnits("Rename the flat to Penthouse", r.units)?.kind).toBe("question");
+    expect(editUnits("Remove Flat 99", r.units)?.kind).toBe("question");
   });
 });

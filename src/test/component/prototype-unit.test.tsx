@@ -225,11 +225,11 @@ describe("Prototype Unit proposed building", () => {
     await user.type(screen.getByRole("textbox"), "11 flats and a shop{Enter}");
     const proposal = screen.getByRole("region", { name: "Proposed building structure" });
     expect(within(proposal).getAllByRole("listitem")).toHaveLength(12);
-    expect(within(proposal).getAllByText("Flat · Residential")).toHaveLength(11);
-    expect(within(proposal).getByText("Shop · Commercial")).toBeInTheDocument();
+    expect(within(proposal).getAllByText("Residential")).toHaveLength(11);
+    expect(within(proposal).getByText("Commercial")).toBeInTheDocument();
     expect(screen.getByLabelText("Location map")).toBe(map);
     expect(within(screen.getByRole("status")).getByText("Location confirmed")).toBeInTheDocument();
-    expect(within(screen.getByRole("main")).queryAllByRole("button")).toHaveLength(0);
+    expect(within(screen.getByRole("main")).queryAllByRole("button", { name: /create/i })).toHaveLength(0);
     expect(within(proposal).getByText("12 Units · 11 Residential · 1 Commercial")).toBeInTheDocument();
     expect(screen.getByText(/I've called them Flat 1 to Flat 11 and Shop for now/)).toBeInTheDocument();
     await user.click(screen.getByRole("button", { name: "Just number them" }));
@@ -266,7 +266,10 @@ describe("Prototype Unit proposed building", () => {
     expect(within(proposal).getAllByRole("listitem")).toHaveLength(12);
     expect(within(proposal).getByText("Office 12")).toBeInTheDocument();
     await user.click(screen.getByRole("button", { name: "Yes, those names are fine" }));
-    expect(within(proposal).getByText("Proposed structure · names chosen")).toBeInTheDocument();
+    expect(within(proposal).getByText("Proposed structure")).toBeInTheDocument();
+    await user.click(screen.getByRole("button", { name: "This structure is right" }));
+    expect(within(proposal).getByText("Proposed structure · reviewed")).toBeInTheDocument();
+    expect(within(proposal).getByText("Nothing created yet")).toBeInTheDocument();
   });
 
   it("does not assume floors are Units and retains floor context through two short clarifications", async () => {
@@ -278,8 +281,8 @@ describe("Prototype Unit proposed building", () => {
     expect(within(proposal).queryAllByRole("listitem")).toHaveLength(0);
     await user.type(screen.getByRole("textbox"), "Offices{Enter}");
     expect(within(proposal).getAllByRole("listitem")).toHaveLength(4);
-    expect(within(proposal).getByText("Office · Commercial · Ground Floor")).toBeInTheDocument();
-    expect(within(proposal).getByText("Office · Commercial · Third Floor")).toBeInTheDocument();
+    expect(within(proposal).getByText("Commercial · Ground Floor")).toBeInTheDocument();
+    expect(within(proposal).getByText("Commercial · Third Floor")).toBeInTheDocument();
   });
 
   it("proposes names for mixed uses and preserves useful locations without requiring repetition", async () => {
@@ -287,11 +290,37 @@ describe("Prototype Unit proposed building", () => {
     await user.type(screen.getByRole("textbox"), "There are two shops on the ground floor and three flats above.{Enter}");
     const proposal = screen.getByRole("region", { name: "Proposed building structure" });
     expect(within(proposal).getAllByRole("listitem")).toHaveLength(5);
-    expect(within(proposal).getAllByText("Shop · Commercial · Ground Floor")).toHaveLength(2);
-    expect(within(proposal).getAllByText("Flat · Residential · Above ground floor")).toHaveLength(3);
+    expect(within(proposal).getAllByText("Commercial · Ground Floor")).toHaveLength(2);
+    expect(within(proposal).getAllByText("Residential · Above ground floor")).toHaveLength(3);
     await user.type(screen.getByRole("textbox"), "4 offices{Enter}");
     expect(within(proposal).getAllByRole("listitem")).toHaveLength(4);
     expect(within(proposal).getByText("Office 4")).toBeInTheDocument();
-    expect(within(proposal).queryByText("Proposed structure · names chosen")).toBeNull();
+    expect(within(proposal).queryByText("Proposed structure · reviewed")).toBeNull();
+  });
+
+  it("keeps chat and pencil edits on one proposal, with undo and live totals", async () => {
+    const user = await confirmedStanley();
+    await user.type(screen.getByRole("textbox"), "11 flats and a shop{Enter}");
+    await user.click(screen.getByRole("button", { name: "Yes, those names are fine" }));
+    const proposal = screen.getByRole("region", { name: "Proposed building structure" });
+    await user.type(screen.getByRole("textbox"), "Rename Flat 1 to Garden Flat{Enter}");
+    expect(screen.getByText(/Done\. I've renamed Flat 1 to Garden Flat\./)).toBeInTheDocument();
+    await user.click(within(proposal).getByRole("button", { name: "Edit Flat 2" }));
+    const name = within(proposal).getByLabelText("Name");
+    await user.clear(name); await user.type(name, "Studio");
+    await user.click(within(proposal).getByRole("button", { name: "Commercial" }));
+    await user.click(within(proposal).getByRole("button", { name: "Save" }));
+    expect(within(proposal).getByText("Garden Flat")).toBeInTheDocument();
+    expect(within(proposal).getByText("12 Units · 10 Residential · 2 Commercial")).toBeInTheDocument();
+    await user.type(screen.getByRole("textbox"), "Add another shop{Enter}");
+    expect(within(proposal).getByText("13 Units · 10 Residential · 3 Commercial")).toBeInTheDocument();
+    await user.type(screen.getByRole("textbox"), "Remove Flat 11{Enter}");
+    expect(within(proposal).queryByText("Flat 11")).toBeNull();
+    await user.click(within(proposal).getByRole("button", { name: "Undo" }));
+    expect(within(proposal).getByText("Flat 11")).toBeInTheDocument();
+    expect(within(proposal).getByText("Studio")).toBeInTheDocument();
+    await user.type(screen.getByRole("textbox"), "Remove the flat{Enter}");
+    expect(screen.getByText(/Which one should I remove/)).toBeInTheDocument();
+    expect(within(proposal).getByText("13 Units · 10 Residential · 3 Commercial")).toBeInTheDocument();
   });
 });
