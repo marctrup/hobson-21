@@ -6,17 +6,17 @@ import Prototype from "@/pages/Prototype";
 import { SIDE_LETTER_ATTACHMENT_INSTRUCTION, SIDE_LETTER_FILENAME } from "@/components/prototype/workGuidance";
 
 describe("Prototype conversation composer", () => {
-  it("attaches the sample Side Letter from the ordinary chat and receives it through renewal guidance", async () => {
+  it("puts the Side Letter message straight into the chat when the paperclip is clicked", async () => {
     const user = userEvent.setup();
     render(<Prototype />);
 
     await user.click(screen.getByRole("button", { name: "Attach a paper (sample Side Letter 2024.pdf)" }));
-    expect(screen.getByLabelText("Guide Hobson about the tenancy renewal")).toHaveValue(SIDE_LETTER_ATTACHMENT_INSTRUCTION);
-    expect(screen.getByLabelText(`Attached: ${SIDE_LETTER_FILENAME}`)).toBeInTheDocument();
-    await user.click(screen.getByRole("button", { name: "Send guidance" }));
 
+    // The message is in the conversation, not sitting in the composer box.
+    expect(screen.getByText(SIDE_LETTER_ATTACHMENT_INSTRUCTION)).toBeInTheDocument();
     expect(screen.getByLabelText(`Attached paper: ${SIDE_LETTER_FILENAME}`)).toBeInTheDocument();
     expect(screen.getByText(/Thank you. I've received the Side Letter/)).toBeInTheDocument();
+    expect(screen.getByLabelText("Guide Hobson about the tenancy renewal")).toHaveValue("");
     expect(screen.queryByLabelText(`Attached: ${SIDE_LETTER_FILENAME}`)).not.toBeInTheDocument();
   });
 

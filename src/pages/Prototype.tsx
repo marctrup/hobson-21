@@ -1484,6 +1484,29 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
   };
   const toggleChatCollapsed = () => (chatCollapsed ? expandChat() : collapseChat());
 
+  const sendGuidance = (instruction: string, options?: { scope?: "renewal" | RoofGuideScope; attachmentId?: string }) => {
+    const scope = options?.scope ?? guideScope;
+    const attachment = options?.attachmentId ?? (scope === "renewal" && pendingAttachment ? SIDE_LETTER_ATTACHMENT_ID : undefined);
+    const result = scope === "renewal"
+      ? applyWorkGuidance(workGuidance, instruction, attachment)
+      : roofWork.ended || guidedRoofAttempt !== roofWork.number
+        ? { state: roofGuidance, reply: "That instruction belongs to an investigation that has ended. I haven't changed the work. Please open the current investigation to guide a fresh attempt." }
+        : applyRoofGuidance(roofGuidance, scope, instruction);
+    if (scope === "renewal") setWorkGuidance(result.state as typeof workGuidance);
+    else setRoofGuidance(result.state as typeof roofGuidance);
+    const id = crypto.randomUUID();
+    setMessages((previous) => [...previous, { id: `guidance-user-${id}`, role: "user", text: instruction, attachment: attachment ? SIDE_LETTER_FILENAME : undefined }, { id: `guidance-hobson-${id}`, role: "hobson", text: result.reply }]);
+    setInput("");
+    setPendingAttachment(false);
+    setTyping(false);
+    setOwl("talking");
+    requestAnimationFrame(() => {
+      inputRef.current?.focus();
+      const conversation = chatBodyRef.current;
+      if (conversation) conversation.scrollTop = conversation.scrollHeight;
+    });
+  };
+
   const attachSampleSideLetter = () => {
     setShowDocuments(false);
     setShowWhatIveDone(true);
@@ -1492,8 +1515,8 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
     setMainCollapsed(false);
     expandChat();
     setPendingAttachment(true);
-    setInput(SIDE_LETTER_ATTACHMENT_INSTRUCTION);
-    requestAnimationFrame(() => inputRef.current?.focus());
+    // The message goes straight into the conversation — it never sits in the composer box.
+    sendGuidance(SIDE_LETTER_ATTACHMENT_INSTRUCTION, { scope: "renewal", attachmentId: SIDE_LETTER_ATTACHMENT_ID });
   };
   const collapseMain = () => {
     setChatCollapsed(false);
@@ -4026,25 +4049,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                 event.preventDefault();
                 const instruction = input.trim();
                 if (!instruction) return;
-                const attachment = guideScope === "renewal" && pendingAttachment ? SIDE_LETTER_ATTACHMENT_ID : undefined;
-                const result = guideScope === "renewal"
-                  ? applyWorkGuidance(workGuidance, instruction, attachment)
-                  : roofWork.ended || guidedRoofAttempt !== roofWork.number
-                    ? { state: roofGuidance, reply: "That instruction belongs to an investigation that has ended. I haven't changed the work. Please open the current investigation to guide a fresh attempt." }
-                    : applyRoofGuidance(roofGuidance, guideScope, instruction);
-                if (guideScope === "renewal") setWorkGuidance(result.state as typeof workGuidance);
-                else setRoofGuidance(result.state as typeof roofGuidance);
-                const id = crypto.randomUUID();
-                setMessages((previous) => [...previous, { id: `guidance-user-${id}`, role: "user", text: instruction, attachment: attachment ? SIDE_LETTER_FILENAME : undefined }, { id: `guidance-hobson-${id}`, role: "hobson", text: result.reply }]);
-                setInput("");
-                setPendingAttachment(false);
-                setTyping(false);
-                setOwl("talking");
-                requestAnimationFrame(() => {
-                  inputRef.current?.focus();
-                  const conversation = chatBodyRef.current;
-                  if (conversation) conversation.scrollTop = conversation.scrollHeight;
-                });
+                sendGuidance(instruction);
               }} className="flex items-center gap-2 rounded-full border border-input bg-background px-4 py-2.5 focus-within:ring-2 focus-within:ring-ring">
                 {guideScope === "renewal" && <Button type="button" variant="ghost" size="icon" onClick={attachSampleSideLetter} aria-label="Attach a paper (sample Side Letter 2024.pdf)" title="Attach a paper (sample Side Letter 2024.pdf)" className="h-9 w-9 shrink-0 text-foreground"><Paperclip className="h-5 w-5" aria-hidden="true" /></Button>}
                 <input ref={inputRef} value={input} onChange={(event) => setInput(event.target.value)} aria-label={guideScope === "renewal" ? "Guide Hobson about the tenancy renewal" : guideScope === "lease" ? "Guide Hobson about the lease review" : "Guide Hobson about the roof leak investigation"} aria-describedby="renewal-chat-context" placeholder={guideScope === "renewal" ? "Ask me to check the 2024 side letter…" : guideScope === "lease" ? "Ask me to check the shopfront roof…" : roofGuidance.contactOnHold ? "Tell me I can contact people again…" : "Ask me to hold further contact…"} className="min-w-0 flex-1 bg-transparent text-sm text-foreground outline-none placeholder:text-muted-foreground" />
