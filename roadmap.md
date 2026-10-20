@@ -1,7 +1,7 @@
 # Roadmap
 
 ## Prototype Unit — conversation-first entry
-- [ ] Remove the Portfolio Add button, open with Hobson's invitation and a quiet suggested reply, preserve the three acknowledgements and typed input, and verify the map remains unchanged.
+- [x] Remove the Portfolio Add button, open with Hobson's invitation and a quiet suggested reply, preserve the three acknowledgements and typed input, and verify the map remains unchanged. Five focused tests pass; private entrance, all choices, restart and typed replies verified in the browser without errors. Not published.
 
 ## Prototype Unit — opening setup conversation
 - [x] Add the Portfolio action and three local conversational choices with individual acknowledgements, allow restarting, and preserve the map and Prototype Work. Four focused tests pass; all three responses and restart checked in the browser with no errors. Not published.
