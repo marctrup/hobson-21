@@ -239,6 +239,16 @@ export default function PrototypeDocuments() {
             <Button variant="ghost" onClick={() => { setJourney((j) => ({ ...j, stage: "choosing" })); addMessage("user", "Change"); addMessage("hobson", "What kind of paper is it?"); }}>Change</Button>
           </div>}
           {journey.stage === "choosing" && <div className="ml-12 flex flex-col items-start gap-1">{PAPER_TYPES.map((type) => <Button key={type} variant="ghost" className="h-auto whitespace-normal text-left" onClick={() => { if (type === "Something else") { setJourney((j) => ({ ...j, stage: "other" })); addMessage("user", type); addMessage("hobson", "What would you call it?"); } else chooseType(type); }}>{type}</Button>)}</div>}
+          {journey.stage === "checking" && <div role="status" aria-label="Checking the key details" className="ml-12 flex gap-1.5 py-2 text-ink-muted motion-safe:animate-pulse"><span>·</span><span>·</span><span>·</span></div>}
+          {journey.stage === "effective" && <div className="ml-12 flex flex-wrap gap-2">
+            <Button variant="outline" onClick={() => answer("confirmed")}>Yes, use that date</Button>
+            <Button variant="ghost" onClick={() => answer("other")}>Use another date</Button>
+            <Button variant="ghost" onClick={() => answer("unsure")}>Not sure</Button>
+          </div>}
+          {journey.stage === "otherDetails" && <div className="ml-12 flex flex-wrap gap-2">
+            <Button variant="outline" onClick={() => { addMessage("user", "Everything looks right"); addMessage("hobson", "Good. I'll work out where this paper belongs."); setStage("ready"); }}>Everything looks right</Button>
+            <Button variant="ghost" onClick={() => { addMessage("user", "I need to change something"); addMessage("hobson", "Of course. Choose Change beside the detail in What I've read, and I'll update it."); setStage("correcting"); if (!wide) setShowChat(false); }}>I need to change something</Button>
+          </div>}
           <div ref={logEnd} />
         </div>
         <div className="border-t border-faint-rule px-5 pb-4 pt-2">
@@ -253,7 +263,7 @@ export default function PrototypeDocuments() {
             <Button type="button" variant="ghost" size="icon" aria-label="Attach a paper" title="Attach a paper" disabled={journey.stage !== "empty"} onClick={() => setSelectionOpen((open) => !open)} className="h-9 w-9 shrink-0">
               <Paperclip className="h-5 w-5" aria-hidden />
             </Button>
-            <input value={input} onChange={(e) => setInput(e.target.value)} aria-label="Ask Hobson" placeholder={journey.stage === "other" ? "What kind of paper?" : "Ask Hobson…"} className="min-w-0 flex-1 bg-transparent text-sm text-foreground outline-none placeholder:text-muted-foreground" />
+            <input value={input} onChange={(e) => setInput(e.target.value)} aria-label="Ask Hobson" placeholder={journey.stage === "other" ? "What kind of paper?" : journey.stage === "effectiveOther" ? "Effective date, e.g. 1 September 2025" : "Ask Hobson…"} className="min-w-0 flex-1 bg-transparent text-sm text-foreground outline-none placeholder:text-muted-foreground" />
             <Button type="submit" size="icon" variant="ghost" disabled={!input.trim()} aria-label="Send message" className="h-8 w-8 shrink-0">
               <svg aria-hidden width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
             </Button>
@@ -263,16 +273,19 @@ export default function PrototypeDocuments() {
 
       <div className="hidden h-full md:flex"><ResizeDivider width={chatWidth} setWidth={setChatWidth} /></div>
 
-      <main className="flex min-w-0 flex-1 flex-col" aria-label="Prototype Documents canvas">
+      <main ref={mainRef} className="flex min-w-0 flex-1 flex-col" aria-label="Prototype Documents canvas">
         {journey.paper && <>
           <header className="flex h-14 shrink-0 items-center justify-between gap-2 border-b border-bone bg-background px-5">
             <span className="text-sm font-medium">Your paper</span>
             <div className="flex shrink-0 items-center gap-1"><Button variant="ghost" size="icon" className="md:hidden" aria-label="Chat with Hobson" title="Chat with Hobson" onClick={() => setShowChat(true)}><MessageCircle className="h-4 w-4" /></Button><Button variant="ghost" size="sm" aria-label="Restart demo" title="Restart demo" onClick={restart}><RotateCcw className="h-3.5 w-3.5 md:mr-2" /><span className="hidden md:inline">Restart demo</span></Button></div>
           </header>
-          <PrototypeDocumentsPreview paper={journey.paper} />
+          <div className={`flex min-h-0 flex-1 ${wide ? "flex-row" : "flex-col"}`}>
+            {detailsShown && <PrototypeDocumentsDetails review={review} collapsible={!wide} onShow={showInPaper} onCorrect={correct} canChangeEffective={journey.stage !== "effective" && journey.stage !== "effectiveOther"} />}
+            <div className="flex min-h-0 min-w-0 flex-1 flex-col"><PrototypeDocumentsPreview paper={journey.paper} goTo={goTo} /></div>
+          </div>
           {journey.paperType && <div className="shrink-0 border-t border-bone bg-background px-6 py-4" aria-label="Paper identification">
-            {journey.stage !== "complete" && <p className="mb-1 text-xs text-ink-muted">I think this is</p>}
-            <p className="flex items-center gap-2 text-sm font-medium">{journey.paperType}{journey.stage === "complete" && <Check className="h-4 w-4 text-primary" aria-label="Confirmed" />}</p>
+            {!confirmed && <p className="mb-1 text-xs text-ink-muted">I think this is</p>}
+            <p className="flex items-center gap-2 text-sm font-medium">{journey.paperType}{confirmed && <Check className="h-4 w-4 text-primary" aria-label="Confirmed" />}</p>
           </div>}
         </>}
       </main>
