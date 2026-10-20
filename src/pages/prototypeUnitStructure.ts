@@ -42,6 +42,11 @@ export function understandBuilding(text: string, previous?: BuildingUnderstandin
       return { kind: "clarify", total, mixture: true, question: `Those don't add up to ${total}. How many are residential, and how many are commercial?` };
     }
   }
+  const resOnly = description.match(new RegExp(`\\b(${countPattern}) residential(?: units?)?\\b`)), comOnly = description.match(new RegExp(`\\b(${countPattern}) commercial(?: units?)?\\b`));
+  if (!context?.total && (resOnly || comOnly)) {
+    const r = resOnly ? countOf(resOnly[1]) : 0, c = comOnly ? countOf(comOnly[1]) : 0;
+    if (Number.isInteger(r) && Number.isInteger(c) && r + c > 0 && r + c <= 100) return proposeCounts(r, c);
+  }
   const groups: SpaceGroup[] = [];
   const matches = [...description.matchAll(new RegExp(`\\b(${countPattern})\\s+(flats?|apartments?|shops?|offices?)\\b([\\s\\S]*?)(?=\\b${countPattern}\\s+(?:flats?|apartments?|shops?|offices?)\\b|$)`, "g"))];
   for (const match of matches) {
@@ -232,4 +237,16 @@ export function renameGroup(text: string, units: ProposedUnit[]): UnitEdit | nul
     return { kind: "question", reply: `I can see ${targets.length} ${kind} in the proposal (${targets.map(u => u.name).join(", ") || "none"}). Which names should go to which?` };
   const next = units.map(u => { const i = targets.indexOf(u); return i >= 0 ? { ...u, name: names[i] } : u; });
   return { kind: "changed", units: next, reply: `Done. I've renamed ${list(targets.map((u, i) => `${u.name} to ${names[i]}`))}.` };
+}
+
+// Two counts from the conversation's quick inputs: flats for residential; one commercial Unit is "Shop", several are numbered.
+export function proposeCounts(residential: number, commercial: number): BuildingUnderstanding {
+  return propose([...(residential ? [{ count: residential, type: "Flat" as const }] : []), ...(commercial ? [{ count: commercial, type: commercial === 1 ? "Shop" as const : "Unit" as const }] : [])]);
+}
+
+export function countsReply(units: ProposedUnit[]) {
+  const { total, residential, commercial } = summarise(units);
+  const say = (n: number) => n === 1 ? "one" : String(n);
+  const parts = [residential ? `${say(residential)} residential` : "", commercial ? `${say(commercial)} commercial` : ""].filter(Boolean).join(" and ");
+  return `I've laid out ${total} Unit${total === 1 ? "" : "s"} — ${parts}. I've suggested names for them. Have a look on the right.`;
 }
