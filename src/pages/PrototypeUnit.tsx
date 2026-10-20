@@ -14,7 +14,7 @@ const DEFAULT_CHAT_WIDTH = 380;
 const MIN_CHAT_WIDTH = 280;
 const MIN_CANVAS_WIDTH = 320;
 
-type UnitMessage = { id: number; text: string; role: "user" | "hobson" };
+type UnitMessage = { id: number; text: string; role: "user" | "hobson"; examples?: string };
 
 const OPENING_MESSAGE: UnitMessage = { id: 0, role: "hobson", text: "I can help you organise the places in your portfolio. Shall we get started?" };
 
@@ -211,7 +211,8 @@ function PrototypeUnitShell() {
   const [selectedAddress, setSelectedAddress] = useState<AddressRecord | null>(null);
   const [showMoreAddresses, setShowMoreAddresses] = useState(false);
   const [buildingUnderstanding, setBuildingUnderstanding] = useState<BuildingUnderstanding | null>(null);
-  const [buildingStage, setBuildingStage] = useState<"idle" | "awaiting-description" | "proposed">("idle");
+  const [buildingStage, setBuildingStage] = useState<"idle" | "awaiting-description" | "proposed" | "confirmed">("idle");
+  const [buildingPromptId, setBuildingPromptId] = useState<number | null>(null);
   const nextId = useRef(1);
   const conversationEnd = useRef<HTMLDivElement>(null);
 
@@ -289,7 +290,7 @@ function PrototypeUnitShell() {
     setLocationStage("confirmed");
     setLocationPromptId(null);
     if (selectedAddress.id === "stanley-finchley") {
-      setMessages(previous => [...previous, { id: nextId.current++, role: "hobson", text: "How is Stanley House divided?" }]);
+      setMessages(previous => [...previous, { id: nextId.current++, role: "hobson", text: "How many separate spaces are there in Stanley House, and what are they used for?", examples: "For example, you could say '11 flats and a shop' or '4 offices'. I'll organise them for you." }]);
       setBuildingStage("awaiting-description");
     }
   };
@@ -318,15 +319,24 @@ function PrototypeUnitShell() {
     const text = input.trim();
     if (!text) return;
     const normalised = text.toLowerCase().replace(/[.!?]+$/, "");
-    if (locationStage === "confirmed" && buildingStage === "awaiting-description") {
-      const understanding = understandBuilding(text);
+    if (locationStage === "confirmed" && (buildingStage === "awaiting-description" || buildingStage === "proposed")) {
+      if (buildingStage === "proposed" && ["yes, that's right", "confirm this structure", "yes", "confirm"].includes(normalised)) {
+        appendExchange(text, "Good. That structure is confirmed for this demonstration. Nothing has been added to your portfolio.");
+        setBuildingStage("confirmed");
+        setBuildingPromptId(null);
+        return;
+      }
+      const understanding = understandBuilding(text, buildingUnderstanding);
+      if (buildingStage === "proposed" && understanding.kind === "clarify" && !understanding.total && !understanding.floors && !understanding.groups) {
+        appendExchange(text, "The proposal is still awaiting your confirmation. Tell me the revised numbers and uses if you would like it changed.");
+        return;
+      }
       setBuildingUnderstanding(understanding);
-      appendExchange(text, understanding.kind === "proposal"
-        ? "I've laid that out as four Units. Have a look on the right. This is only a proposal — nothing has been added yet."
-        : understanding.kind === "mixed"
-          ? "How are the three flats divided, and what are they called?"
-          : "Could you describe the individual spaces people can occupy, and how they are divided?");
-      if (understanding.kind === "proposal") setBuildingStage("proposed");
+      const id = appendExchange(text, understanding.kind === "proposal"
+        ? `I've proposed ${understanding.units.length} Units with names and types on the right. Nothing has been added yet. Is that right?`
+        : understanding.question);
+      setBuildingStage(understanding.kind === "proposal" ? "proposed" : "awaiting-description");
+      setBuildingPromptId(understanding.kind === "proposal" ? id : null);
       return;
     }
     if (locationStage === "proposed") {
@@ -378,7 +388,7 @@ function PrototypeUnitShell() {
             type="button"
             className="grid h-11 w-11 place-items-center rounded-full bg-[#56514A] text-white shadow-md transition hover:bg-[#56514A]"
             aria-label="A new conversation"
-            onClick={() => { setMessages([OPENING_MESSAGE]); setInput(""); setSetupPromptId(null); setShowInvitation(true); setLocationStage("idle"); setLocationPromptId(null); setLocationAddress(""); setAddressParts({}); setAddressCandidates([]); setSelectedAddress(null); setBuildingUnderstanding(null); setBuildingStage("idle"); }}
+            onClick={() => { setMessages([OPENING_MESSAGE]); setInput(""); setSetupPromptId(null); setShowInvitation(true); setLocationStage("idle"); setLocationPromptId(null); setLocationAddress(""); setAddressParts({}); setAddressCandidates([]); setSelectedAddress(null); setBuildingUnderstanding(null); setBuildingStage("idle"); setBuildingPromptId(null); }}
           >
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" aria-hidden><path d="M12 5v14M5 12h14" /></svg>
           </button>
@@ -411,7 +421,9 @@ function PrototypeUnitShell() {
                 )}
                 <div className="min-w-0 flex-1 py-2 text-ink">
                   <p className="mb-1 text-xs font-semibold text-ink-muted">Hobson</p>
-                  <p className="break-words text-sm leading-relaxed">{message.text}</p>
+                  <p className={`break-words leading-relaxed ${message.examples ? "text-base font-semibold" : "text-sm"}`}>{message.text}</p>
+                  {message.examples && <p className="mt-2 break-words text-xs leading-relaxed text-muted-foreground">{message.examples}</p>}
+                  {buildingPromptId === message.id && buildingStage === "proposed" && <Button variant="outline" className="mt-3 h-auto min-h-11 whitespace-normal text-left" onClick={() => { appendExchange("Yes, that's right", "Good. That structure is confirmed for this demonstration. Nothing has been added to your portfolio."); setBuildingStage("confirmed"); setBuildingPromptId(null); }}>Yes, that's right</Button>}
                   {message.id === OPENING_MESSAGE.id && showInvitation && (
                     <Button onClick={() => startSetup()} className="mt-3 min-h-11 max-w-full justify-between gap-4 whitespace-normal px-4 py-2.5 text-left text-sm font-semibold shadow-sm">
                       <span>Set up a place</span>{" "}
@@ -489,7 +501,7 @@ function PrototypeUnitShell() {
           {buildingUnderstanding && <div className="text-xs leading-relaxed text-muted-foreground"><p>{selectedAddress?.line}</p><p className="mt-1 text-[10px]">Illustrative mock lookup · approximate location</p></div>}
           <UnitLocationMap compact={Boolean(buildingUnderstanding)} stage={locationStage} address={locationAddress} candidate={selectedAddress ?? addressCandidates[0] ?? null} />
         </div>
-        {buildingUnderstanding && <PrototypeUnitStructure understanding={buildingUnderstanding} />}
+        {buildingUnderstanding && <PrototypeUnitStructure understanding={buildingUnderstanding} confirmed={buildingStage === "confirmed"} />}
       </main>
     </div>
   );

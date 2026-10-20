@@ -188,7 +188,7 @@ describe("Prototype Unit location confirmation", () => {
     expect(within(screen.getByRole("status")).getByText(whole ? "Stanley House" : "Flat 2, Stanley House")).toBeInTheDocument();
     await user.click(screen.getByRole("button", { name: "Yes, that's the place" }));
     expect(within(screen.getByRole("status")).getByText("Location confirmed")).toBeInTheDocument();
-    await user.type(screen.getByRole("textbox"), "Ground, First, Second and Third Floors.{Enter}");
+    await user.type(screen.getByRole("textbox"), "4 offices{Enter}");
     expect(Boolean(screen.queryByRole("region", { name: "Proposed building structure" }))).toBe(whole);
   });
 
@@ -219,33 +219,64 @@ describe("Prototype Unit proposed building", () => {
     return user;
   }
 
-  it("keeps the confirmed location while proposing four Units, then clears both on restart", async () => {
+  it("proposes twelve typed Units from a short answer, keeping the map and explicit confirmation", async () => {
     const user = await confirmedStanley();
     const map = screen.getByLabelText("Location map");
-    await user.type(screen.getByRole("textbox"), "Ground, First, Second and Third Floors.{Enter}");
+    await user.type(screen.getByRole("textbox"), "11 flats and a shop{Enter}");
     const proposal = screen.getByRole("region", { name: "Proposed building structure" });
-    expect(within(proposal).getAllByRole("listitem").map(item => item.textContent)).toEqual(["Third Floor", "Second Floor", "First Floor", "Ground Floor"]);
+    expect(within(proposal).getAllByRole("listitem")).toHaveLength(12);
+    expect(within(proposal).getAllByText("Flat · Residential")).toHaveLength(11);
+    expect(within(proposal).getByText("Shop · Commercial")).toBeInTheDocument();
     expect(screen.getByLabelText("Location map")).toBe(map);
-    expect(within(screen.getByRole("main")).getByText("1115 Finchley Road, London, NW11 0QD")).toBeInTheDocument();
+    expect(within(screen.getByRole("status")).getByText("Location confirmed")).toBeInTheDocument();
     expect(within(screen.getByRole("main")).queryAllByRole("button")).toHaveLength(0);
     await user.type(screen.getByRole("textbox"), "Create them{Enter}");
-    expect(within(proposal).getAllByRole("listitem")).toHaveLength(4);
+    expect(within(proposal).getAllByRole("listitem")).toHaveLength(12);
+    expect(within(proposal).queryByText("Structure confirmed · illustrative only")).toBeNull();
+    await user.click(screen.getByRole("button", { name: "Yes, that's right" }));
+    expect(within(proposal).getByText("Structure confirmed · illustrative only")).toBeInTheDocument();
+    expect(within(proposal).getByText("Nothing added yet")).toBeInTheDocument();
     await user.click(screen.getByRole("button", { name: "A new conversation" }));
     expect(screen.queryByRole("region", { name: "Proposed building structure" })).toBeNull();
     expect(screen.queryByRole("status")).toBeNull();
     expect(screen.getByLabelText("Location map")).toBe(map);
   });
 
-  it("does not invent five individual Units for mixed shops and flats and permits clarification", async () => {
+  it("retains the twelve-unit total through a kinds follow-up without individual questions", async () => {
+    const user = await confirmedStanley();
+    await user.type(screen.getByRole("textbox"), "12 units{Enter}");
+    expect(within(screen.getByRole("main")).queryAllByRole("listitem")).toHaveLength(0);
+    await user.type(screen.getByRole("textbox"), "All offices{Enter}");
+    const proposal = screen.getByRole("region", { name: "Proposed building structure" });
+    expect(within(proposal).getAllByRole("listitem")).toHaveLength(12);
+    expect(within(proposal).getByText("Office 12")).toBeInTheDocument();
+    await user.type(screen.getByRole("textbox"), "Yes, that's right{Enter}");
+    expect(within(proposal).getByText("Structure confirmed · illustrative only")).toBeInTheDocument();
+  });
+
+  it("does not assume floors are Units and retains floor context through two short clarifications", async () => {
+    const user = await confirmedStanley();
+    await user.type(screen.getByRole("textbox"), "ground floor and three upper floors{Enter}");
+    const proposal = screen.getByRole("region", { name: "Proposed building structure" });
+    expect(within(proposal).queryAllByRole("listitem")).toHaveLength(0);
+    await user.type(screen.getByRole("textbox"), "One separate space on each floor{Enter}");
+    expect(within(proposal).queryAllByRole("listitem")).toHaveLength(0);
+    await user.type(screen.getByRole("textbox"), "Offices{Enter}");
+    expect(within(proposal).getAllByRole("listitem")).toHaveLength(4);
+    expect(within(proposal).getByText("Office · Commercial · Ground Floor")).toBeInTheDocument();
+    expect(within(proposal).getByText("Office · Commercial · Third Floor")).toBeInTheDocument();
+  });
+
+  it("proposes names for mixed uses and preserves useful locations without requiring repetition", async () => {
     const user = await confirmedStanley();
     await user.type(screen.getByRole("textbox"), "There are two shops on the ground floor and three flats above.{Enter}");
     const proposal = screen.getByRole("region", { name: "Proposed building structure" });
-    expect(within(proposal).queryAllByRole("listitem")).toHaveLength(0);
-    expect(within(proposal).getByText("2 shops · Ground Floor")).toBeInTheDocument();
-    expect(within(proposal).getByText("3 flats above")).toBeInTheDocument();
-    await user.type(screen.getByRole("textbox"), "An unusual building{Enter}");
-    expect(within(proposal).queryAllByRole("listitem")).toHaveLength(0);
-    await user.type(screen.getByRole("textbox"), "There is a basement, ground floor and two upper floors.{Enter}");
-    expect(within(proposal).getAllByRole("listitem").map(item => item.textContent)).toEqual(["Second Floor", "First Floor", "Ground Floor", "Basement"]);
+    expect(within(proposal).getAllByRole("listitem")).toHaveLength(5);
+    expect(within(proposal).getAllByText("Shop · Commercial · Ground Floor")).toHaveLength(2);
+    expect(within(proposal).getAllByText("Flat · Residential · Above ground floor")).toHaveLength(3);
+    await user.type(screen.getByRole("textbox"), "4 offices{Enter}");
+    expect(within(proposal).getAllByRole("listitem")).toHaveLength(4);
+    expect(within(proposal).getByText("Office 4")).toBeInTheDocument();
+    expect(within(proposal).queryByText("Structure confirmed · illustrative only")).toBeNull();
   });
 });
