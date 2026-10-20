@@ -4,7 +4,9 @@ import { Button } from "@/components/ui/button";
 import owlDefault from "@/assets/prototype/owl-default.png";
 import leaseAsset from "@/assets/prototype/russell-square-house-lease.pdf.asset.json";
 import PrototypeDocumentsPreview from "./PrototypeDocumentsPreview";
-import { confirmPaper, emptyPaperJourney, EXAMPLE_LEASE_FILENAME, PAPER_TYPES, proposePaper, receivePaper, type PrototypePaper } from "./prototypeDocumentsPaper";
+import PrototypeDocumentsDetails from "./PrototypeDocumentsDetails";
+import { confirmPaper, DETAIL_STAGES, emptyPaperJourney, EXAMPLE_LEASE_FILENAME, PAPER_TYPES, proposePaper, receivePaper, type PaperStage, type PrototypePaper } from "./prototypeDocumentsPaper";
+import { answerEffective, correctDetail, emptyReview, type DetailKey, type DetailsReview } from "./prototypeDocumentsDetails";
 
 // Prototype Documents: an independent, blank Hobson shell. Shares only visual styling
 // with Prototype Work and Prototype Unit — never their components, data or state.
@@ -82,6 +84,10 @@ export default function PrototypeDocuments() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [journey, setJourney] = useState(emptyPaperJourney);
+  const [review, setReview] = useState<DetailsReview>(emptyReview);
+  const [goTo, setGoTo] = useState<{ page: number; nonce: number } | undefined>();
+  const [wide, setWide] = useState(true);
+  const mainRef = useRef<HTMLElement>(null);
   const [selectionOpen, setSelectionOpen] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [uploadError, setUploadError] = useState("");
@@ -97,6 +103,13 @@ export default function PrototypeDocuments() {
   useEffect(() => { logEnd.current?.scrollIntoView({ behavior: "smooth", block: "end" }); }, [messages, journey.stage]);
   useEffect(() => () => { generation.current++; if (uploadUrl.current) URL.revokeObjectURL(uploadUrl.current); }, []);
   useEffect(() => {
+    const el = mainRef.current;
+    if (!el) return;
+    const ro = new ResizeObserver(([e]) => setWide(e.contentRect.width >= 820));
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+  useEffect(() => {
     if (journey.stage !== "reading") return;
     const timer = window.setTimeout(() => {
       setJourney((current) => proposePaper(current));
@@ -104,11 +117,21 @@ export default function PrototypeDocuments() {
     }, 1100);
     return () => window.clearTimeout(timer);
   }, [journey.stage]);
+  useEffect(() => {
+    if (journey.stage !== "checking") return;
+    const timer = window.setTimeout(() => {
+      addMessage("hobson", "I've checked the main details in this lease. Most look straightforward, but there's one date I'd like you to check.");
+      addMessage("hobson", "Here's what I've read.");
+      addMessage("hobson", "The lease is dated 22 August 2025. Clause 16 says its terms don't take effect until it has been dated.\n\nShall I use 22 August 2025 as its effective date?");
+      setJourney((j) => j.stage === "checking" ? { ...j, stage: "effective" } : j);
+    }, 1400);
+    return () => window.clearTimeout(timer);
+  }, [journey.stage]);
   const restart = () => {
     generation.current++;
     if (uploadUrl.current) URL.revokeObjectURL(uploadUrl.current);
     uploadUrl.current = null;
-    setJourney(emptyPaperJourney); setMessages([]); setInput(""); setSelectionOpen(false); setUploadError(""); setUploading(false); setShowChat(true);
+    setJourney(emptyPaperJourney); setReview(emptyReview); setGoTo(undefined); setMessages([]); setInput(""); setSelectionOpen(false); setUploadError(""); setUploading(false); setShowChat(true);
   };
   const receive = (paper: PrototypePaper) => {
     setJourney(receivePaper(paper)); setSelectionOpen(false); setShowChat(true);
@@ -134,19 +157,45 @@ export default function PrototypeDocuments() {
   const chooseType = (type: string, original = false) => {
     const updated = confirmPaper(journey, type);
     if (updated === journey) return;
-    setJourney(updated); setInput("");
+    setJourney(updated.paper?.example ? { ...updated, stage: "checking" } : updated); setInput("");
     addMessage("user", original ? "Yes, that's right" : type.trim());
     addMessage("hobson", original ? "Good. I'll check the key details next." : `Thanks. I'll treat it as a ${type.trim()}.\n\nI'll check the key details next.`);
   };
+  const setStage = (stage: PaperStage) => setJourney((j) => ({ ...j, stage }));
+  const askOthers = () => { addMessage("hobson", "Do the other details look right?"); setStage("otherDetails"); };
+  const answer = (kind: "confirmed" | "other" | "unsure", date?: string) => {
+    if (kind === "other" && !date) { addMessage("user", "Use another date"); addMessage("hobson", "What date should I use as the effective date?"); setStage("effectiveOther"); return; }
+    const next = answerEffective(review, kind, date);
+    if (next === review) return;
+    setReview(next); setInput("");
+    if (kind === "confirmed") { addMessage("user", "Yes, use that date"); addMessage("hobson", "Thanks. I'll use 22 August 2025 as the effective date."); }
+    else if (kind === "unsure") { addMessage("user", "Not sure"); addMessage("hobson", "That's fine. I'll leave the effective date unconfirmed for now."); }
+    else { addMessage("user", date!.trim()); addMessage("hobson", "Understood. I'll keep the date on the paper as 22 August 2025 and record the effective date you've given me separately."); }
+    askOthers();
+  };
+  const correct = (key: DetailKey, value: string) => {
+    const next = correctDetail(review, key, value);
+    if (next === review) return;
+    setReview(next);
+    const label = review.details.find((d) => d.key === key)!.label.toLowerCase();
+    if (key === "effectiveDate") addMessage("hobson", "Understood. I'll keep the date on the paper as 22 August 2025 and record the effective date you've given me separately.");
+    else addMessage("hobson", key === "tenant" || key === "landlord" ? `Thanks. I've updated the ${label} details you've confirmed.` : `Thanks. I've updated the ${label} you've confirmed.`);
+    if (journey.stage === "correcting") askOthers();
+  };
+  const showInPaper = (page: number) => setGoTo((g) => ({ page, nonce: (g?.nonce ?? 0) + 1 }));
 
   const send = () => {
     const text = input.trim();
     if (!text) return;
     if (journey.stage === "other" || journey.stage === "choosing") { chooseType(text); return; }
     if (journey.stage === "proposed" && /^(yes|yes,? that's right)[.!]?$/i.test(text)) { chooseType("Business Lease", true); return; }
+    if (journey.stage === "effectiveOther") { answer("other", text); return; }
     addMessage("user", text);
     setInput("");
   };
+
+  const detailsShown = !!journey.paper?.example && DETAIL_STAGES.includes(journey.stage) && journey.stage !== "checking";
+  const confirmed = journey.stage === "complete" || DETAIL_STAGES.includes(journey.stage);
 
   return (
     <div className="flex h-screen w-full overflow-hidden bg-bone-wash text-ink">
@@ -193,6 +242,16 @@ export default function PrototypeDocuments() {
             <Button variant="ghost" onClick={() => { setJourney((j) => ({ ...j, stage: "choosing" })); addMessage("user", "Change"); addMessage("hobson", "What kind of paper is it?"); }}>Change</Button>
           </div>}
           {journey.stage === "choosing" && <div className="ml-12 flex flex-col items-start gap-1">{PAPER_TYPES.map((type) => <Button key={type} variant="ghost" className="h-auto whitespace-normal text-left" onClick={() => { if (type === "Something else") { setJourney((j) => ({ ...j, stage: "other" })); addMessage("user", type); addMessage("hobson", "What would you call it?"); } else chooseType(type); }}>{type}</Button>)}</div>}
+          {journey.stage === "checking" && <div role="status" aria-label="Checking the key details" className="ml-12 flex gap-1.5 py-2 text-ink-muted motion-safe:animate-pulse"><span>·</span><span>·</span><span>·</span></div>}
+          {journey.stage === "effective" && <div className="ml-12 flex flex-wrap gap-2">
+            <Button variant="outline" onClick={() => answer("confirmed")}>Yes, use that date</Button>
+            <Button variant="ghost" onClick={() => answer("other")}>Use another date</Button>
+            <Button variant="ghost" onClick={() => answer("unsure")}>Not sure</Button>
+          </div>}
+          {journey.stage === "otherDetails" && <div className="ml-12 flex flex-wrap gap-2">
+            <Button variant="outline" onClick={() => { addMessage("user", "Everything looks right"); addMessage("hobson", "Good. I'll work out where this paper belongs."); setStage("ready"); }}>Everything looks right</Button>
+            <Button variant="ghost" onClick={() => { addMessage("user", "I need to change something"); addMessage("hobson", "Of course. Choose Change beside the detail in What I've read, and I'll update it."); setStage("correcting"); if (!wide) setShowChat(false); }}>I need to change something</Button>
+          </div>}
           <div ref={logEnd} />
         </div>
         <div className="border-t border-faint-rule px-5 pb-4 pt-2">
@@ -207,7 +266,7 @@ export default function PrototypeDocuments() {
             <Button type="button" variant="ghost" size="icon" aria-label="Attach a paper" title="Attach a paper" disabled={journey.stage !== "empty"} onClick={() => setSelectionOpen((open) => !open)} className="h-9 w-9 shrink-0">
               <Paperclip className="h-5 w-5" aria-hidden />
             </Button>
-            <input value={input} onChange={(e) => setInput(e.target.value)} aria-label="Ask Hobson" placeholder={journey.stage === "other" ? "What kind of paper?" : "Ask Hobson…"} className="min-w-0 flex-1 bg-transparent text-sm text-foreground outline-none placeholder:text-muted-foreground" />
+            <input value={input} onChange={(e) => setInput(e.target.value)} aria-label="Ask Hobson" placeholder={journey.stage === "other" ? "What kind of paper?" : journey.stage === "effectiveOther" ? "Effective date, e.g. 1 September 2025" : "Ask Hobson…"} className="min-w-0 flex-1 bg-transparent text-sm text-foreground outline-none placeholder:text-muted-foreground" />
             <Button type="submit" size="icon" variant="ghost" disabled={!input.trim()} aria-label="Send message" className="h-8 w-8 shrink-0">
               <svg aria-hidden width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
             </Button>
@@ -217,16 +276,19 @@ export default function PrototypeDocuments() {
 
       <div className="hidden h-full md:flex"><ResizeDivider width={chatWidth} setWidth={setChatWidth} /></div>
 
-      <main className="flex min-w-0 flex-1 flex-col" aria-label="Prototype Documents canvas">
+      <main ref={mainRef} className="flex min-w-0 flex-1 flex-col" aria-label="Prototype Documents canvas">
         {journey.paper && <>
           <header className="flex h-14 shrink-0 items-center justify-between gap-2 border-b border-bone bg-background px-5">
             <span className="text-sm font-medium">Your paper</span>
             <div className="flex shrink-0 items-center gap-1"><Button variant="ghost" size="icon" className="md:hidden" aria-label="Chat with Hobson" title="Chat with Hobson" onClick={() => setShowChat(true)}><MessageCircle className="h-4 w-4" /></Button><Button variant="ghost" size="sm" aria-label="Restart demo" title="Restart demo" onClick={restart}><RotateCcw className="h-3.5 w-3.5 md:mr-2" /><span className="hidden md:inline">Restart demo</span></Button></div>
           </header>
-          <PrototypeDocumentsPreview paper={journey.paper} />
+          <div className={`flex min-h-0 flex-1 ${wide ? "flex-row" : "flex-col"}`}>
+            {detailsShown && <PrototypeDocumentsDetails review={review} collapsible={!wide} onShow={showInPaper} onCorrect={correct} canChangeEffective={journey.stage !== "effective" && journey.stage !== "effectiveOther"} />}
+            <div className="flex min-h-0 min-w-0 flex-1 flex-col"><PrototypeDocumentsPreview paper={journey.paper} goTo={goTo} /></div>
+          </div>
           {journey.paperType && <div className="shrink-0 border-t border-bone bg-background px-6 py-4" aria-label="Paper identification">
-            {journey.stage !== "complete" && <p className="mb-1 text-xs text-ink-muted">I think this is</p>}
-            <p className="flex items-center gap-2 text-sm font-medium">{journey.paperType}{journey.stage === "complete" && <Check className="h-4 w-4 text-primary" aria-label="Confirmed" />}</p>
+            {!confirmed && <p className="mb-1 text-xs text-ink-muted">I think this is</p>}
+            <p className="flex items-center gap-2 text-sm font-medium">{journey.paperType}{confirmed && <Check className="h-4 w-4 text-primary" aria-label="Confirmed" />}</p>
           </div>}
         </>}
       </main>

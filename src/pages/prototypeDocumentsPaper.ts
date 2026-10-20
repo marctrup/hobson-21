@@ -1,6 +1,7 @@
 export const EXAMPLE_LEASE_FILENAME = "2025.08.22 - 4th Fl, RSH - Lease - Signed by Landlord.pdf";
 export const PAPER_TYPES = ["Business Lease", "Underlease", "Licence to Occupy", "Deed of Variation", "Something else"] as const;
-export type PaperStage = "empty" | "reading" | "proposed" | "choosing" | "other" | "complete";
+export type PaperStage = "empty" | "reading" | "proposed" | "choosing" | "other" | "complete" | "checking" | "effective" | "effectiveOther" | "otherDetails" | "correcting" | "ready";
+export const DETAIL_STAGES: PaperStage[] = ["checking", "effective", "effectiveOther", "otherDetails", "correcting", "ready"];
 export type PrototypePaper = { filename: string; url?: string; example: boolean };
 export type PaperJourney = { stage: PaperStage; paper: PrototypePaper | null; paperType: string | null };
 export const emptyPaperJourney: PaperJourney = { stage: "empty", paper: null, paperType: null };
