@@ -16,7 +16,7 @@ function alreadyAdmitted(sessionKey: string): boolean {
 
 type PrototypeGateProps = {
   children: React.ReactNode;
-  scope?: "work" | "unit";
+  scope?: "work" | "unit" | "documents";
 };
 
 /**
@@ -24,7 +24,7 @@ type PrototypeGateProps = {
  * never ships in the site's code and a stray link shows only a quiet entrance.
  */
 export function PrototypeGate({ children, scope = "work" }: PrototypeGateProps) {
-  const sessionKey = scope === "unit" ? "hobson_prototype_unit_open" : SESSION_KEY;
+  const sessionKey = scope === "unit" ? "hobson_prototype_unit_open" : scope === "documents" ? "hobson_prototype_documents_open" : SESSION_KEY;
   const [admitted, setAdmitted] = useState<boolean>(() => alreadyAdmitted(sessionKey));
   const [passphrase, setPassphrase] = useState("");
   const [checking, setChecking] = useState(false);

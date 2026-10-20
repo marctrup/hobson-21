@@ -21,3 +21,4 @@
 - Prototype Unit is independent of Prototype Work: share only gate and shell styling, never work components, data or state. Conversation handlers create no records. Separate proposed and confirmed location state drives a continuously mounted Leaflet map, with resize observation and coordinate-based labels, so conversation and divider changes preserve map context without geocoding.
 - Hobson's owl marks each Hobson turn, never user messages; a spacer aligns continuations.
 - Subdirectories have their own AGENTS.md (e.g. src/pages); read it before changing files there.
+- Prototype Documents (/prototype-documents) is an independent blank shell with its own gate scope and pass phrase; it shares only styling with Work and Unit.
