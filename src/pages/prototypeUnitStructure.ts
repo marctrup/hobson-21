@@ -1,4 +1,4 @@
-export type ProposedUnit = { number: number; name: string; type: "Flat" | "Shop" | "Office" | "Unit"; classification: "Residential" | "Commercial"; location?: string };
+export type ProposedUnit = { number: number; name: string; type: "Flat" | "Shop" | "Office" | "Unit"; classification: "Residential" | "Commercial"; location?: string; details?: import("./prototypeUnitDetails").UnitDetails };
 type SpaceGroup = { count: number; type: ProposedUnit["type"]; location?: string };
 export type BuildingUnderstanding =
   | { kind: "proposal"; units: ProposedUnit[] }

@@ -5,6 +5,7 @@ import { DndContext, KeyboardSensor, PointerSensor, TouchSensor, closestCenter, 
 import { SortableContext, arrayMove, sortableKeyboardCoordinates, useSortable, verticalListSortingStrategy } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import type { ReactNode } from "react";
+import { summaryLine } from "./prototypeUnitDetails";
 import { suggestUnit, summarise, typeFromName, type BuildingUnderstanding, type ProposedUnit } from "./prototypeUnitStructure";
 
 type Props = {
@@ -16,6 +17,7 @@ type Props = {
   onSave?: (units: ProposedUnit[], note: string) => void;
   onRemove?: (unit: ProposedUnit, index: number) => void;
   onAdd?: (units: ProposedUnit[]) => void;
+  onOpenUnit?: (unit: ProposedUnit) => void;
 };
 
 // A sortable row: only the handle starts a drag, so name, pencil and menu stay clickable.
@@ -33,7 +35,7 @@ function SortableRow({ id, label, disabled, children }: { id: number; label: str
 const reclassify = (u: ProposedUnit, c: ProposedUnit["classification"]): ProposedUnit =>
   u.classification === c ? u : { ...u, classification: c, type: c === "Residential" ? "Flat" : u.type === "Flat" ? "Unit" : u.type };
 
-export function PrototypeUnitStructure({ understanding, reviewed = false, editable = false, lastRemoved = null, onUndo, onSave, onRemove, onAdd }: Props) {
+export function PrototypeUnitStructure({ understanding, reviewed = false, editable = false, lastRemoved = null, onUndo, onSave, onRemove, onAdd, onOpenUnit }: Props) {
   const [editing, setEditing] = useState<number | null>(null);
   const [draftName, setDraftName] = useState("");
   const [draftUse, setDraftUse] = useState<ProposedUnit["classification"]>("Residential");
@@ -102,8 +104,9 @@ export function PrototypeUnitStructure({ understanding, reviewed = false, editab
           ) : (
             <SortableRow key={unit.number} id={unit.number} label={unit.name} disabled={!editable || editing !== null}>{handle => (<>
               {editable && handle}
+              {onOpenUnit ? <button type="button" onClick={() => onOpenUnit(unit)} aria-label={`Open ${unit.name}`} className="flex min-w-0 flex-1 items-baseline justify-between gap-3 rounded text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"><span className="truncate text-sm font-medium text-foreground hover:underline">{unit.name}</span><span className="truncate text-xs text-muted-foreground">{summaryLine(unit)}{unit.location ? ` · ${unit.location}` : ""}</span></button> : <>
               <p className="min-w-0 flex-1 truncate text-sm font-medium text-foreground">{unit.name}</p>
-              <p className="shrink-0 text-xs text-muted-foreground">{unit.classification}{unit.location ? ` · ${unit.location}` : ""}</p>
+              <p className="shrink-0 text-xs text-muted-foreground">{summaryLine(unit)}{unit.location ? ` · ${unit.location}` : ""}</p></>}
               {editable && <button type="button" aria-label={`Edit ${unit.name}`} onClick={() => open(unit)} className="grid h-8 w-8 shrink-0 place-items-center rounded-md text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"><Pencil className="h-3.5 w-3.5" aria-hidden /></button>}
               {editable && (
                 <Menu.Root modal={false}>
