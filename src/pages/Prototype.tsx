@@ -1077,6 +1077,8 @@ type ChatMsg = {
   role: "hobson" | "user";
   text: string;
   streaming?: boolean;
+  /** Simulated paper attached to this conversational turn (filename only; never read). */
+  attachment?: string;
   rich?: "rentFlat2" | "summary";
   kind?: "feedback";
   feedback?: FeedbackState;
@@ -3942,7 +3944,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                         />
                       )
                     ) : (
-                      <UserBubble key={m.id} text={m.text} />
+                      <UserBubble key={m.id} text={m.text} attachment={m.attachment} />
                     )
                   ))}
                 </div>
@@ -4015,20 +4017,31 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                 <span>Regarding: {guideScope === "renewal" ? "Tenancy renewal · Stanley House, Flat 6" : guideScope === "lease" ? "Roof leak · Reviewing repairing obligations" : "Roof leak investigation · Burlington Gardens"}</span>
                 {guideScope === "lease" && <button type="button" onClick={() => setGuideScope("overall")} className="underline decoration-dotted underline-offset-2 hover:text-foreground">Guide the whole investigation instead</button>}
               </p>
+              {guideScope === "renewal" && pendingAttachment && (
+                <div className="mb-2 flex items-center gap-2">
+                  <span aria-label={`Attached: ${SIDE_LETTER_FILENAME}`} className="inline-flex items-center gap-1.5 rounded-md border border-border bg-muted/50 px-2.5 py-1 text-xs text-foreground">
+                    <FileText className="h-3.5 w-3.5 text-muted-foreground" aria-hidden="true" />{SIDE_LETTER_FILENAME}
+                    <span className="text-muted-foreground">· Sample attachment</span>
+                  </span>
+                  <button type="button" onClick={() => setPendingAttachment(false)} aria-label="Remove attachment" className="rounded p-0.5 text-muted-foreground hover:text-foreground"><X className="h-3.5 w-3.5" /></button>
+                </div>
+              )}
               <form onSubmit={(event) => {
                 event.preventDefault();
                 const instruction = input.trim();
                 if (!instruction) return;
+                const attachment = guideScope === "renewal" && pendingAttachment ? SIDE_LETTER_ATTACHMENT_ID : undefined;
                 const result = guideScope === "renewal"
-                  ? applyWorkGuidance(workGuidance, instruction)
+                  ? applyWorkGuidance(workGuidance, instruction, attachment)
                   : roofWork.ended || guidedRoofAttempt !== roofWork.number
                     ? { state: roofGuidance, reply: "That instruction belongs to an investigation that has ended. I haven't changed the work. Please open the current investigation to guide a fresh attempt." }
                     : applyRoofGuidance(roofGuidance, guideScope, instruction);
                 if (guideScope === "renewal") setWorkGuidance(result.state as typeof workGuidance);
                 else setRoofGuidance(result.state as typeof roofGuidance);
                 const id = crypto.randomUUID();
-                setMessages((previous) => [...previous, { id: `guidance-user-${id}`, role: "user", text: instruction }, { id: `guidance-hobson-${id}`, role: "hobson", text: result.reply }]);
+                setMessages((previous) => [...previous, { id: `guidance-user-${id}`, role: "user", text: instruction, attachment: attachment ? SIDE_LETTER_FILENAME : undefined }, { id: `guidance-hobson-${id}`, role: "hobson", text: result.reply }]);
                 setInput("");
+                setPendingAttachment(false);
                 setTyping(false);
                 setOwl("talking");
                 requestAnimationFrame(() => {
@@ -4037,6 +4050,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                   if (conversation) conversation.scrollTop = conversation.scrollHeight;
                 });
               }} className="flex items-center gap-2 rounded-full border border-input bg-background px-4 py-2.5 focus-within:ring-2 focus-within:ring-ring">
+                {guideScope === "renewal" && <button type="button" onClick={() => { setPendingAttachment(true); if (!input.trim()) setInput(SIDE_LETTER_ATTACHMENT_INSTRUCTION); inputRef.current?.focus(); }} aria-label="Attach a paper (sample Side Letter 2024.pdf)" title="Attach a paper" className="shrink-0 rounded p-0.5 text-muted-foreground hover:text-foreground"><Paperclip className="h-4 w-4" /></button>}
                 <input ref={inputRef} value={input} onChange={(event) => setInput(event.target.value)} aria-label={guideScope === "renewal" ? "Guide Hobson about the tenancy renewal" : guideScope === "lease" ? "Guide Hobson about the lease review" : "Guide Hobson about the roof leak investigation"} aria-describedby="renewal-chat-context" placeholder={guideScope === "renewal" ? "Ask me to check the 2024 side letter…" : guideScope === "lease" ? "Ask me to check the shopfront roof…" : roofGuidance.contactOnHold ? "Tell me I can contact people again…" : "Ask me to hold further contact…"} className="min-w-0 flex-1 bg-transparent text-sm text-foreground outline-none placeholder:text-muted-foreground" />
                 <Button type="submit" size="icon" variant="ghost" disabled={!input.trim()} aria-label="Send guidance" className="h-8 w-8 shrink-0"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg></Button>
               </form>
@@ -6796,10 +6810,15 @@ function RentFlat2Answer({ onAskFollowUp, bodyText }: { onAskFollowUp?: (q: stri
   );
 }
 
-function UserBubble({ text }: { text: string }) {
+function UserBubble({ text, attachment }: { text: string; attachment?: string }) {
   return (
     <div className="flex justify-end">
       <div className="max-w-[340px] bg-[#56514A] text-white text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-br-md">
+        {attachment && (
+          <span aria-label={`Attached paper: ${attachment}`} className="mb-2 flex items-center gap-1.5 rounded-md bg-white/15 px-2 py-1 text-xs">
+            <FileText className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />{attachment}
+          </span>
+        )}
         {text}
       </div>
     </div>
