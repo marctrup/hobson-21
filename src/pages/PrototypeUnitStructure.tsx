@@ -18,6 +18,7 @@ type Props = {
   onRemove?: (unit: ProposedUnit, index: number) => void;
   onAdd?: (units: ProposedUnit[]) => void;
   onOpenUnit?: (unit: ProposedUnit) => void;
+  title?: string;
 };
 
 // A sortable row: only the handle starts a drag, so name, pencil and menu stay clickable.
@@ -35,7 +36,7 @@ function SortableRow({ id, label, disabled, children }: { id: number; label: str
 const reclassify = (u: ProposedUnit, c: ProposedUnit["classification"]): ProposedUnit =>
   u.classification === c ? u : { ...u, classification: c, type: c === "Residential" ? "Flat" : u.type === "Flat" ? "Unit" : u.type };
 
-export function PrototypeUnitStructure({ understanding, reviewed = false, editable = false, lastRemoved = null, onUndo, onSave, onRemove, onAdd, onOpenUnit }: Props) {
+export function PrototypeUnitStructure({ understanding, reviewed = false, editable = false, lastRemoved = null, onUndo, onSave, onRemove, onAdd, onOpenUnit, title }: Props) {
   const [editing, setEditing] = useState<number | null>(null);
   const [draftName, setDraftName] = useState("");
   const [draftUse, setDraftUse] = useState<ProposedUnit["classification"]>("Residential");
@@ -68,7 +69,7 @@ export function PrototypeUnitStructure({ understanding, reviewed = false, editab
       <div className="mb-3 flex flex-wrap items-baseline justify-between gap-2 border-b border-border pb-3">
         <div>
           <p className="text-xs font-medium text-muted-foreground">{reviewed ? "Proposed structure · reviewed" : "Proposed structure"}</p>
-          <h3 className="mt-1 text-xl font-semibold text-foreground">Stanley House</h3>
+          {title && <h3 className="mt-1 text-xl font-semibold text-foreground">{title}</h3>}
           {summary && <p className="mt-1 text-sm text-foreground">{summary.total} Units · {summary.residential} Residential · {summary.commercial} Commercial</p>}
         </div>
         <p className="text-xs text-muted-foreground">Nothing created yet</p>

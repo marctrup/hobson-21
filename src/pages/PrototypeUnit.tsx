@@ -9,6 +9,7 @@ import { discoverAddress, MOCK_ADDRESSES, type AddressParts, type AddressRecord 
 import { countsReply, proposeCounts, editUnits, summarise, namingProposal, numberUnits, restoreUnit, understandBuilding, type BuildingUnderstanding, type ProposedUnit } from "./prototypeUnitStructure";
 import { PrototypeUnitStructure } from "./PrototypeUnitStructure";
 import { PrototypeUnitDetails } from "./PrototypeUnitDetails";
+import { PrototypeUnitGroupCard, type GroupCard } from "./PrototypeUnitGroupCard";
 import { applyChanges, FIELD_LABELS, interpretDetails, summaryLine, type DetailInstruction } from "./prototypeUnitDetails";
 
 const RAIL_WIDTH = 68;
@@ -18,7 +19,7 @@ const MIN_CANVAS_WIDTH = 320;
 
 type UnitMessage = { id: number; text: string; role: "user" | "hobson"; examples?: string; counts?: boolean };
 
-type PortfolioGroup = { id: string; name: string; line: string; record: AddressRecord; units: ProposedUnit[] };
+type PortfolioGroup = { id: string; name: string; line: string; record: AddressRecord; units: ProposedUnit[]; description?: string; photo?: GroupCard["photo"] };
 
 const OPENING_MESSAGE: UnitMessage = { id: 0, role: "hobson", text: "I can help you organise the places in your portfolio. Shall we get started?" };
 
@@ -209,23 +210,15 @@ function UnitResizeDivider({ width, setWidth, onReset, isDefault }: { width: num
 }
 
 // An established Unit Group in the simulated portfolio: names, uses and order exactly as authorised.
-function PortfolioGroupView({ group, onClose, onOpenUnit }: { group: PortfolioGroup; onClose?: () => void; onOpenUnit?: (unit: ProposedUnit) => void }) {
+function PortfolioGroupView({ group, onClose, onOpenUnit, onCardChange, onChangeAddress }: { group: PortfolioGroup; onClose?: () => void; onOpenUnit?: (unit: ProposedUnit) => void; onCardChange?: (card: GroupCard) => void; onChangeAddress?: () => void }) {
   const [open, setOpen] = useState(true);
   const totals = summarise(group.units);
   return (
     <section aria-label={`${group.name} Unit Group`} className="min-w-0 rounded-md border border-border bg-background px-4 py-3 motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-2 motion-safe:duration-300">
-      <div className="flex flex-wrap items-baseline justify-between gap-2">
-        <div>
-          <p className="text-xs font-medium text-muted-foreground">Unit Group · in your portfolio</p>
-          <h3 className="mt-1 text-lg font-semibold text-foreground">{group.name}</h3>
-          <p className="mt-0.5 text-xs text-muted-foreground">{group.line}</p>
-          <p className="mt-1 text-sm text-foreground">{totals.total} Units · {totals.residential} Residential · {totals.commercial} Commercial</p>
-        </div>
-        <div className="flex items-center gap-1">
+      <PrototypeUnitGroupCard card={{ name: group.name, description: group.description, photo: group.photo }} address={group.line} label="Unit Group · in your portfolio" summary={`${totals.total} Units · ${totals.residential} Residential · ${totals.commercial} Commercial`} onChange={c => onCardChange?.(c)} onChangeAddress={onChangeAddress} actions={<>
           <button type="button" aria-expanded={open} onClick={() => setOpen(v => !v)} className="min-h-9 rounded-md px-2 text-sm text-muted-foreground hover:text-foreground">{open ? "Hide Units" : "Show Units"}</button>
           {onClose && <button type="button" onClick={onClose} className="min-h-9 rounded-md px-2 text-sm text-muted-foreground hover:text-foreground">Back to map</button>}
-        </div>
-      </div>
+        </>} />
       {open && <ul aria-label={`${group.name} Units`} className="mt-3 divide-y divide-border border-t border-border">
         {group.units.map(u => <li key={u.number}>{onOpenUnit ? <button type="button" onClick={() => onOpenUnit(u)} aria-label={`Open ${u.name}`} className="flex min-h-10 w-full items-center justify-between gap-3 rounded py-1.5 text-left hover:bg-secondary/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"><span className="truncate text-sm text-foreground">{u.name}</span><span className="truncate text-xs text-muted-foreground">{summaryLine(u)}</span></button> : <div className="flex min-h-10 items-center justify-between gap-3 py-1.5"><span className="truncate text-sm text-foreground">{u.name}</span><span className="truncate text-xs text-muted-foreground">{summaryLine(u)}</span></div>}</li>)}
       </ul>}
@@ -284,6 +277,9 @@ function PrototypeUnitShell() {
   const [detailsOffered, setDetailsOffered] = useState(false);
   const [detailsPromptId, setDetailsPromptId] = useState<number | null>(null);
   const [pendingDetail, setPendingDetail] = useState<{ id: number; ctx: "proposal" | string; instruction: Extract<DetailInstruction, { kind: "proposal" }> } | null>(null);
+  // The group's own card (name, description, photo) while proposed; carried into the portfolio on creation.
+  const [draftCard, setDraftCard] = useState<GroupCard | null>(null);
+  const [addrChange, setAddrChange] = useState<{ ctx: "proposal" | string; record?: AddressRecord; options?: AddressRecord[]; promptId: number } | null>(null);
   const nextId = useRef(1);
   // Undo is temporary: it fades after a short while.
   useEffect(() => {
@@ -366,6 +362,7 @@ function PrototypeUnitShell() {
     appendExchange("Yes, that's the place", `Good. I've got the location for ${selectedAddress.name}.`);
     setLocationStage("confirmed");
     setLocationPromptId(null);
+    setDraftCard(c => c ?? { name: selectedAddress.name });
     if (selectedAddress.id === "stanley-finchley") {
       setMessages(previous => [...previous, { id: nextId.current++, role: "hobson", text: "How many Units are there at Stanley House?", examples: "Tell me how many of each, and I'll lay them out for you.", counts: true }]);
       setBuildingStage("awaiting-description");
@@ -440,7 +437,7 @@ function PrototypeUnitShell() {
   // The simulated portfolio survives new setups and conversations within this session.
   const createGroup = (text: string) => {
     if (buildingStage !== "ready" || !units || !selectedAddress) return;
-    const group: PortfolioGroup = { id: `${selectedAddress.id}-${Date.now()}`, name: selectedAddress.name, line: selectedAddress.line, record: selectedAddress, units: units.map(u => ({ ...u })) };
+    const group: PortfolioGroup = { id: `${selectedAddress.id}-${Date.now()}`, name: draftCard?.name ?? selectedAddress.name, description: draftCard?.description, photo: draftCard?.photo, line: selectedAddress.line, record: selectedAddress, units: units.map(u => ({ ...u })) };
     if (openUnit?.ctx === "proposal") setOpenUnit({ ctx: group.id, number: openUnit.number });
     setPortfolio(previous => previous.some(g => g.record.id === group.record.id) ? previous : [...previous, group]);
     setBuildingStage("created");
@@ -450,7 +447,7 @@ function PrototypeUnitShell() {
   const resetSetup = () => {
     setSetupPromptId(null); setLocationStage("idle"); setLocationPromptId(null); setLocationAddress(""); setAddressParts({}); setAddressCandidates([]); setSelectedAddress(null);
     setBuildingUnderstanding(null); setBuildingStage("idle"); setBuildingPromptId(null); setLastRemoved(null); setShowSummaryUnits(false);
-    setDetailsOffered(false); setDetailsPromptId(null); setPendingDetail(null); setOpenUnit(o => o?.ctx === "proposal" ? null : o);
+    setDetailsOffered(false); setDetailsPromptId(null); setPendingDetail(null); setOpenUnit(o => o?.ctx === "proposal" ? null : o); setDraftCard(null); setAddrChange(null);
   };
 
   const afterCreation = (choice: string) => {
@@ -474,6 +471,56 @@ function PrototypeUnitShell() {
     setBuildingUnderstanding(proposal);
     setBuildingPromptId(appendExchange(`${residential} residential, ${commercial} commercial`, countsReply(proposal.units)));
     setBuildingStage("named");
+  };
+
+  const cardCtx = (): "proposal" | string | null => draftCard && buildingStage !== "created" && buildingStage !== "idle" ? "proposal" : portfolio[portfolio.length - 1]?.id ?? null;
+  const cardFor = (ctx: "proposal" | string): GroupCard | null => ctx === "proposal" ? draftCard : (() => { const g = portfolio.find(x => x.id === ctx); return g ? { name: g.name, description: g.description, photo: g.photo } : null; })();
+  const updateCard = (ctx: "proposal" | string, card: GroupCard) => {
+    if (ctx === "proposal") setDraftCard(card);
+    else setPortfolio(previous => previous.map(g => g.id === ctx ? { ...g, name: card.name, description: card.description, photo: card.photo } : g));
+  };
+  // Name and description changes by conversation update the same card; never a new group.
+  const answerCard = (text: string): boolean => {
+    const ctx = cardCtx(); const card = ctx ? cardFor(ctx) : null;
+    if (!ctx || !card) return false;
+    const rename = text.trim().match(/^(?:please )?(?:change|rename) (.+?) to (.+?)[.!]?$/i);
+    if (rename && rename[1].trim().toLowerCase() === card.name.toLowerCase()) {
+      const name = rename[2].trim().replace(/^["“']|["”']$/g, "");
+      updateCard(ctx, { ...card, name }); appendExchange(text, `Done. ${card.name} is now ${name}.`); return true;
+    }
+    const desc = text.trim().match(/^(?:please )?add (?:this|a|the following) description:?\s*(.+)$/i);
+    if (desc) {
+      const description = desc[1].trim().replace(/^["“']|["”']$/g, "");
+      updateCard(ctx, { ...card, description }); appendExchange(text, `Done. I've added that description to ${card.name}.`); return true;
+    }
+    return false;
+  };
+  const startAddressChange = (ctx: "proposal" | string) => {
+    const id = nextId.current++;
+    setMessages(previous => [...previous, { id, role: "hobson", text: "Of course. What's the correct address, including the postcode? I'll keep the current location until you confirm a new one." }]);
+    setAddrChange({ ctx, promptId: id });
+  };
+  const proposeNewAddress = (text: string, record: AddressRecord) => {
+    const id = appendExchange(text, `I think I've found it: ${record.name}, ${record.line}. Is this the right place?`);
+    setAddrChange(a => a && { ...a, record, options: undefined, promptId: id });
+  };
+  const answerAddressChange = (text: string) => {
+    if (!addrChange) return;
+    const n = text.toLowerCase().replace(/[.!?]+$/, "").trim();
+    if (addrChange.record && ["yes, that's the place", "yes"].includes(n)) {
+      const r = addrChange.record;
+      if (addrChange.ctx === "proposal") { setSelectedAddress(r); setLocationAddress(`${r.name}, ${r.line}`); }
+      else setPortfolio(previous => previous.map(g => g.id === addrChange.ctx ? { ...g, record: r, line: r.line } : g));
+      setAddrChange(null); appendExchange(text, `Good. I've moved the location to ${r.line}.`); return;
+    }
+    if (["no, leave it as it was", "no", "cancel", "leave it"].includes(n)) { setAddrChange(null); appendExchange(text, "Very well. The address and location are as they were."); return; }
+    const chosen = addrChange.options?.find(r => `${r.name}, ${r.line}`.toLowerCase() === n || r.name.toLowerCase() === n);
+    if (chosen) { proposeNewAddress(text, chosen); return; }
+    const result = discoverAddress(text, {});
+    if (result.records.length === 1) { proposeNewAddress(text, result.records[0]); return; }
+    if (result.records.length > 1) { const id = appendExchange(text, `I've found several addresses for ${result.parts.postcode}. Which one is it?`); setAddrChange(a => a && { ...a, record: undefined, options: result.records.slice(0, 6), promptId: id }); return; }
+    const id = appendExchange(text, "I haven't found a reliable match for that. Could you check the postcode? The current location stays as it is.");
+    setAddrChange(a => a && { ...a, record: undefined, options: undefined, promptId: id });
   };
 
   const answerDetails = (text: string, normalised: string): boolean => {
@@ -507,6 +554,7 @@ function PrototypeUnitShell() {
 
   const answerBuilding = (text: string) => {
     const normalised = text.toLowerCase().replace(/[.!?]+$/, "").trim();
+    if (answerCard(text)) return;
     if ((units || buildingStage === "created") && buildingStage !== "awaiting-description" && answerDetails(text, normalised)) return;
     if (units && buildingStage !== "awaiting-description") {
       if (buildingStage === "created") {
@@ -553,7 +601,9 @@ function PrototypeUnitShell() {
     const text = input.trim();
     if (!text) return;
     const normalised = text.toLowerCase().replace(/[.!?]+$/, "");
+    if (addrChange) { answerAddressChange(text); return; }
     if (locationStage === "confirmed" && buildingStage !== "idle") { answerBuilding(text); return; }
+    if (locationStage === "idle" && portfolio.length && answerCard(text)) return;
     if (locationStage === "idle" && portfolio.length && answerDetails(text, normalised.trim())) return;
     if (locationStage === "proposed") {
       if (normalised === "yes, that's the place") { respondToLocation(true); return; }
@@ -604,7 +654,7 @@ function PrototypeUnitShell() {
             type="button"
             className="grid h-11 w-11 place-items-center rounded-full bg-[#56514A] text-white shadow-md transition hover:bg-[#56514A]"
             aria-label="A new conversation"
-            onClick={() => { setMessages([OPENING_MESSAGE]); setInput(""); setSetupPromptId(null); setShowInvitation(true); setLocationStage("idle"); setLocationPromptId(null); setLocationAddress(""); setAddressParts({}); setAddressCandidates([]); setSelectedAddress(null); setBuildingUnderstanding(null); setBuildingStage("idle"); setBuildingPromptId(null); setLastRemoved(null); setMapExpanded(false); setGroupOpen(false); setShowSummaryUnits(false); setOpenUnit(null); setDetailsOffered(false); setDetailsPromptId(null); setPendingDetail(null); }}
+            onClick={() => { setMessages([OPENING_MESSAGE]); setInput(""); setSetupPromptId(null); setShowInvitation(true); setLocationStage("idle"); setLocationPromptId(null); setLocationAddress(""); setAddressParts({}); setAddressCandidates([]); setSelectedAddress(null); setBuildingUnderstanding(null); setBuildingStage("idle"); setBuildingPromptId(null); setLastRemoved(null); setMapExpanded(false); setGroupOpen(false); setShowSummaryUnits(false); setOpenUnit(null); setDetailsOffered(false); setDetailsPromptId(null); setPendingDetail(null); setDraftCard(null); setAddrChange(null); }}
           >
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" aria-hidden><path d="M12 5v14M5 12h14" /></svg>
           </button>
@@ -645,6 +695,12 @@ function PrototypeUnitShell() {
                       {(buildingStage === "naming" ? NAMING_CHOICES : buildingStage === "named" ? ["This structure is right"] : buildingStage === "ready" ? ["Create this structure", "Make another change"] : buildingStage === "created" ? AFTER_CREATION : (buildingUnderstanding?.kind === "clarify" && buildingUnderstanding.choices) || []).map(choice => (
                         <button key={choice} type="button" onClick={() => answerBuilding(choice)} className={`min-h-11 rounded-full border px-3.5 py-2 text-left text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${choice === "Create this structure" ? "border-primary bg-primary font-semibold text-primary-foreground shadow-sm hover:bg-primary/90" : "border-border bg-secondary/40 text-foreground hover:bg-secondary"}`}>{choice}</button>
                       ))}
+                    </div>
+                  )}
+                  {addrChange?.promptId === message.id && (addrChange.record || addrChange.options) && (
+                    <div className="mt-3 flex w-full flex-col gap-2">
+                      {addrChange.record ? ["Yes, that's the place", "No, leave it as it was"].map(c => <Button key={c} variant="outline" onClick={() => answerAddressChange(c)} className="h-auto min-h-11 justify-start whitespace-normal px-3 py-2.5 text-left font-normal">{c}</Button>)
+                        : addrChange.options!.map(r => <Button key={r.id} variant="outline" onClick={() => proposeNewAddress(`${r.name}, ${r.line}`, r)} className="h-auto min-h-11 flex-col items-start whitespace-normal px-3 py-2.5 text-left font-normal"><span className="text-sm font-medium">{r.name}</span><span className="mt-1 text-xs text-muted-foreground">{r.line}</span></Button>)}
                     </div>
                   )}
                   {detailsPromptId === message.id && (
@@ -744,7 +800,7 @@ function PrototypeUnitShell() {
           const totals = units ? summarise(units) : null;
           const openList = openUnit ? unitsFor(openUnit.ctx) : [];
           const opened = openList.find(u => u.number === openUnit?.number);
-          const openedName = openUnit?.ctx === "proposal" ? selectedAddress?.name ?? "Stanley House" : portfolio.find(g => g.id === openUnit?.ctx)?.name ?? "";
+          const openedName = openUnit?.ctx === "proposal" ? draftCard?.name ?? selectedAddress?.name ?? "Stanley House" : portfolio.find(g => g.id === openUnit?.ctx)?.name ?? "";
           const detailPanel = openUnit && opened ? <PrototypeUnitDetails unit={opened} units={openList} groupName={openedName} onChange={next => updateUnitsIn(openUnit.ctx, next)} onBack={() => setOpenUnit(null)} /> : null;
           const openFrom = (ctx: string) => (u: ProposedUnit) => setOpenUnit({ ctx, number: u.number });
           return (<>
@@ -752,12 +808,10 @@ function PrototypeUnitShell() {
               {buildingUnderstanding && !showingGroup && <div className="text-xs leading-relaxed text-muted-foreground"><p>{selectedAddress?.line}</p><p className="mt-1 text-[10px]">Illustrative mock lookup · approximate location</p></div>}
               <UnitLocationMap compact={compact} group={focus ? { name: focus.name, units: focus.units.length } : null} onOpenGroup={focus ? () => { setGroupOpen(true); setMapExpanded(false); } : undefined} stage={focus ? "confirmed" : locationStage} address={focus ? focus.line : locationAddress} candidate={focus ? focus.record : selectedAddress ?? addressCandidates[0] ?? null} />
             </div>
-            {exploring && focus ? (groupOpen ? (detailPanel && openUnit?.ctx === focus.id ? detailPanel : <PortfolioGroupView group={focus} onOpenUnit={openFrom(focus.id)} onClose={() => { setGroupOpen(false); setMapExpanded(true); setOpenUnit(null); }} />) : null) : detailPanel && !(buildingStage === "ready" && openUnit?.ctx === "proposal" && !showSummaryUnits) ? detailPanel : buildingStage === "ready" && units && totals ? (
+            {exploring && focus ? (groupOpen ? (detailPanel && openUnit?.ctx === focus.id ? detailPanel : <PortfolioGroupView group={focus} onCardChange={c => updateCard(focus.id, c)} onChangeAddress={() => startAddressChange(focus.id)} onOpenUnit={openFrom(focus.id)} onClose={() => { setGroupOpen(false); setMapExpanded(true); setOpenUnit(null); }} />) : null) : detailPanel && !(buildingStage === "ready" && openUnit?.ctx === "proposal" && !showSummaryUnits) ? detailPanel : buildingStage === "ready" && units && totals ? (
               <section aria-label="Ready to create" className="min-w-0 py-3">
                 <p className="text-xs font-medium text-muted-foreground">Ready to add · nothing created yet</p>
-                <h3 className="mt-1 text-xl font-semibold text-foreground">{selectedAddress?.name}</h3>
-                <p className="mt-0.5 text-sm text-muted-foreground">{selectedAddress?.line}</p>
-                <p className="mt-3 text-sm font-medium text-foreground">{totals.total} Units · {totals.residential} Residential · {totals.commercial} Commercial</p>
+                {draftCard && <div className="mt-2"><PrototypeUnitGroupCard card={draftCard} address={selectedAddress?.line ?? ""} label="Unit Group · proposed" summary={`${totals.total} Units · ${totals.residential} Residential · ${totals.commercial} Commercial`} onChange={setDraftCard} onChangeAddress={() => startAddressChange("proposal")} /></div>}
                 <ul className="mt-3 space-y-1 text-sm text-foreground">
                   <li className="flex items-center gap-2"><Check className="h-3.5 w-3.5 text-muted-foreground" aria-hidden />Location confirmed</li>
                   <li className="flex items-center gap-2"><Check className="h-3.5 w-3.5 text-muted-foreground" aria-hidden />Structure reviewed</li>
@@ -767,11 +821,12 @@ function PrototypeUnitShell() {
                 {showSummaryUnits && <PrototypeUnitStructure understanding={{ kind: "proposal", units }} onOpenUnit={u => setOpenUnit({ ctx: "proposal", number: u.number })} />}
               </section>
             ) : showingGroup ? (
-              <PortfolioGroupView group={showingGroup} onOpenUnit={openFrom(showingGroup.id)} />
-            ) : buildingUnderstanding ? (
-              <PrototypeUnitStructure understanding={buildingUnderstanding} editable={buildingStage !== "awaiting-description"} lastRemoved={lastRemoved?.unit.name ?? null} onUndo={() => undoRemoval()} onSave={(next, note) => applyDirectEdit(next, note)} onAdd={next => applyDirectEdit(next, "")} onOpenUnit={u => setOpenUnit({ ctx: "proposal", number: u.number })} onRemove={(unit, index) => applyDirectEdit(units!.filter(u => u.number !== unit.number), `I've removed ${unit.name}.`, { unit, index })} />
+              <PortfolioGroupView group={showingGroup} onCardChange={c => updateCard(showingGroup.id, c)} onChangeAddress={() => startAddressChange(showingGroup.id)} onOpenUnit={openFrom(showingGroup.id)} />
+            ) : buildingUnderstanding ? (<div className="flex flex-col gap-1">
+              {draftCard && units && totals && <PrototypeUnitGroupCard card={draftCard} address={selectedAddress?.line ?? ""} label="Unit Group · proposed" summary={`${totals.total} Units · ${totals.residential} Residential · ${totals.commercial} Commercial`} onChange={setDraftCard} onChangeAddress={() => startAddressChange("proposal")} />}
+              <PrototypeUnitStructure title={draftCard && units ? undefined : draftCard?.name ?? selectedAddress?.name} understanding={buildingUnderstanding} editable={buildingStage !== "awaiting-description"} lastRemoved={lastRemoved?.unit.name ?? null} onUndo={() => undoRemoval()} onSave={(next, note) => applyDirectEdit(next, note)} onAdd={next => applyDirectEdit(next, "")} onOpenUnit={u => setOpenUnit({ ctx: "proposal", number: u.number })} onRemove={(unit, index) => applyDirectEdit(units!.filter(u => u.number !== unit.number), `I've removed ${unit.name}.`, { unit, index })} /></div>
             ) : portfolio.length > 0 && (
-              <div className="flex flex-col gap-3">{portfolio.map(group => <PortfolioGroupView key={group.id} group={group} onOpenUnit={openFrom(group.id)} />)}</div>
+              <div className="flex flex-col gap-3">{portfolio.map(group => <PortfolioGroupView key={group.id} group={group} onCardChange={c => updateCard(group.id, c)} onChangeAddress={() => startAddressChange(group.id)} onOpenUnit={openFrom(group.id)} />)}</div>
             )}
           </>);
         })()}
