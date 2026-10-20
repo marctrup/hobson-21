@@ -1,7 +1,10 @@
 import { useEffect, useRef, useState } from "react";
-import { Paperclip } from "lucide-react";
+import { Check, FileText, MessageCircle, Paperclip, RotateCcw, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import owlDefault from "@/assets/prototype/owl-default.png";
+import leaseAsset from "@/assets/prototype/russell-square-house-lease.pdf.asset.json";
+import PrototypeDocumentsPreview from "./PrototypeDocumentsPreview";
+import { confirmPaper, emptyPaperJourney, EXAMPLE_LEASE_FILENAME, PAPER_TYPES, proposePaper, receivePaper, type PrototypePaper } from "./prototypeDocumentsPaper";
 
 // Prototype Documents: an independent, blank Hobson shell. Shares only visual styling
 // with Prototype Work and Prototype Unit — never their components, data or state.
@@ -11,7 +14,7 @@ const DEFAULT_CHAT_WIDTH = 380;
 const MIN_CHAT_WIDTH = 280;
 const MIN_CANVAS_WIDTH = 320;
 
-type Message = { id: number; text: string };
+type Message = { id: number; text: string; role: "user" | "hobson"; attachment?: boolean };
 
 function RailItem({ icon, label, active }: { icon: "pin" | "doc" | "chat" | "gear"; label: string; active?: boolean }) {
   return (
@@ -78,12 +81,70 @@ export default function PrototypeDocuments() {
   const [chatWidth, setChatWidth] = useState(DEFAULT_CHAT_WIDTH);
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
+  const [journey, setJourney] = useState(emptyPaperJourney);
+  const [selectionOpen, setSelectionOpen] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  const [uploadError, setUploadError] = useState("");
+  const [showChat, setShowChat] = useState(true);
+  const fileInput = useRef<HTMLInputElement>(null);
+  const logEnd = useRef<HTMLDivElement>(null);
+  const uploadUrl = useRef<string | null>(null);
+  const generation = useRef(0);
   const nextId = useRef(1);
+  const addMessage = (role: Message["role"], text: string, attachment = false) => {
+    setMessages((prev) => [...prev, { id: nextId.current++, role, text, attachment }]);
+  };
+  useEffect(() => { logEnd.current?.scrollIntoView({ behavior: "smooth", block: "end" }); }, [messages, journey.stage]);
+  useEffect(() => () => { generation.current++; if (uploadUrl.current) URL.revokeObjectURL(uploadUrl.current); }, []);
+  useEffect(() => {
+    if (journey.stage !== "reading") return;
+    const timer = window.setTimeout(() => {
+      setJourney((current) => proposePaper(current));
+      addMessage("hobson", "I've had a look at your paper. I think this is a Business Lease.\n\nHave I got that right?");
+    }, 1100);
+    return () => window.clearTimeout(timer);
+  }, [journey.stage]);
+  const restart = () => {
+    generation.current++;
+    if (uploadUrl.current) URL.revokeObjectURL(uploadUrl.current);
+    uploadUrl.current = null;
+    setJourney(emptyPaperJourney); setMessages([]); setInput(""); setSelectionOpen(false); setUploadError(""); setUploading(false); setShowChat(true);
+  };
+  const receive = (paper: PrototypePaper) => {
+    setJourney(receivePaper(paper)); setSelectionOpen(false); setShowChat(true);
+    addMessage("user", paper.filename, true);
+    addMessage("hobson", paper.example ? "I'll take a first look at this." : "I've received your paper. I haven't read or identified this one in this demonstration. What kind of paper is it?");
+  };
+  const upload = async (file: File) => {
+    setUploadError("");
+    if (!file.name.toLowerCase().endsWith(".pdf")) { setUploadError("Please choose a PDF."); return; }
+    const attempt = generation.current;
+    setUploading(true);
+    try {
+      const bytes = await file.arrayBuffer();
+      if (!new TextDecoder().decode(bytes.slice(0, 1024)).includes("%PDF-")) throw new Error("invalid-pdf");
+      const hash = Array.from(new Uint8Array(await crypto.subtle.digest("SHA-256", bytes))).map((n) => n.toString(16).padStart(2, "0")).join("");
+      if (attempt !== generation.current) return;
+      if (uploadUrl.current) URL.revokeObjectURL(uploadUrl.current);
+      uploadUrl.current = URL.createObjectURL(file);
+      receive({ filename: file.name, url: uploadUrl.current, example: hash === "122fd13ef4d5cea0d81575c1de6b49127dd1dcb38b3f8bdb9747e934e9abb1c9" });
+    } catch { if (attempt === generation.current) setUploadError("I couldn't open that PDF. Please choose another paper."); }
+    finally { if (attempt === generation.current) setUploading(false); }
+  };
+  const chooseType = (type: string, original = false) => {
+    const updated = confirmPaper(journey, type);
+    if (updated === journey) return;
+    setJourney(updated); setInput("");
+    addMessage("user", original ? "Yes, that's right" : type.trim());
+    addMessage("hobson", original ? "Good. I'll check the key details next." : `Thanks. I'll treat it as a ${type.trim()}.\n\nI'll check the key details next.`);
+  };
 
   const send = () => {
     const text = input.trim();
     if (!text) return;
-    setMessages((prev) => [...prev, { id: nextId.current++, text }]);
+    if (journey.stage === "other" || journey.stage === "choosing") { chooseType(text); return; }
+    if (journey.stage === "proposed" && /^(yes|yes,? that's right)[.!]?$/i.test(text)) { chooseType("Business Lease", true); return; }
+    addMessage("user", text);
     setInput("");
   };
 
@@ -97,37 +158,56 @@ export default function PrototypeDocuments() {
         <RailItem icon="doc" label="Papers" active />
         <RailItem icon="chat" label="Conversations" />
         <div className="mt-auto flex flex-col items-center gap-3 pb-2">
-          <button
+          <Button
             type="button"
             aria-label="A new conversation"
-            onClick={() => { setMessages([]); setInput(""); }}
+            onClick={restart}
             className="grid h-11 w-11 place-items-center rounded-full bg-primary text-primary-foreground shadow-md"
           >
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" aria-hidden><path d="M12 5v14M5 12h14" /></svg>
-          </button>
+          </Button>
           <span className="w-full px-1 text-center text-[9px] leading-tight text-ink-muted">A new conversation</span>
           <RailItem icon="gear" label="Back Office" />
           <div className="grid h-9 w-9 place-items-center rounded-full bg-bone text-xs font-semibold text-charcoal">MT</div>
         </div>
       </aside>
 
-      <section className="relative flex shrink-0 flex-col border-r border-bone bg-background" style={{ width: chatWidth }} aria-label="Chat with Hobson">
-        <header className="flex h-14 items-center border-b border-faint-rule px-5">
+      <section className={`relative z-20 shrink-0 flex-col border-r border-bone bg-background max-md:absolute max-md:inset-y-0 max-md:left-[68px] max-md:w-[calc(100%-68px)] ${showChat ? "flex" : "hidden md:flex"} md:w-[var(--chat-width)]`} style={{ "--chat-width": `${chatWidth}px` } as React.CSSProperties} aria-label="Chat with Hobson">
+        <header className="flex h-14 shrink-0 items-center justify-between border-b border-faint-rule px-5">
           <h1 className="text-[15px] font-semibold text-ink">Chat with Hobson</h1>
+          {journey.paper && <Button variant="ghost" size="icon" className="md:hidden" aria-label="View paper" onClick={() => setShowChat(false)}><FileText className="h-4 w-4" /></Button>}
         </header>
         <div role="log" aria-label="Conversation" className="flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto px-5 py-4">
           {messages.map((m) => (
-            <div key={m.id} className="min-w-0 max-w-full self-end rounded-xl bg-primary-light px-3.5 py-2.5 text-primary-foreground shadow-sm">
-              <p className="break-words text-sm leading-relaxed">{m.text}</p>
+            <div key={m.id} className={`flex min-w-0 gap-2 ${m.role === "user" ? "self-end" : "self-start"}`}>
+              {m.role === "hobson" && <img src={owlDefault} alt="Hobson" className="h-10 w-10 shrink-0 object-contain" />}
+              <div className={`min-w-0 rounded-lg px-3.5 py-2.5 ${m.role === "user" ? "bg-secondary text-ink" : "text-ink"}`}>
+                {m.attachment && <FileText className="mb-2 h-5 w-5 text-ink-muted" aria-hidden />}
+                <p className="break-words whitespace-pre-line text-sm leading-relaxed">{m.text}</p>
+              </div>
             </div>
           ))}
+          {journey.stage === "reading" && <div role="status" aria-label="Taking a first look" className="ml-12 flex gap-1.5 py-2 text-ink-muted motion-safe:animate-pulse"><span>·</span><span>·</span><span>·</span></div>}
+          {journey.stage === "proposed" && <div className="ml-12 flex flex-wrap gap-2">
+            <Button variant="outline" onClick={() => chooseType("Business Lease", true)}>Yes, that's right</Button>
+            <Button variant="ghost" onClick={() => { setJourney((j) => ({ ...j, stage: "choosing" })); addMessage("user", "Change"); addMessage("hobson", "What kind of paper is it?"); }}>Change</Button>
+          </div>}
+          {journey.stage === "choosing" && <div className="ml-12 flex flex-col items-start gap-1">{PAPER_TYPES.map((type) => <Button key={type} variant="ghost" className="h-auto whitespace-normal text-left" onClick={() => { if (type === "Something else") { setJourney((j) => ({ ...j, stage: "other" })); addMessage("user", type); addMessage("hobson", "What would you call it?"); } else chooseType(type); }}>{type}</Button>)}</div>}
+          <div ref={logEnd} />
         </div>
         <div className="border-t border-faint-rule px-5 pb-4 pt-2">
+          {selectionOpen && <div role="group" aria-label="Choose a paper" className="mb-3 border-b border-bone pb-3">
+            <div className="flex items-center justify-between"><span className="text-xs text-ink-muted">A paper for Hobson</span><Button variant="ghost" size="icon" aria-label="Close paper selection" onClick={() => setSelectionOpen(false)}><X className="h-4 w-4" /></Button></div>
+            <Button variant="ghost" className="w-full justify-start" disabled={uploading} onClick={() => fileInput.current?.click()}><Paperclip className="mr-2 h-4 w-4" />{uploading ? "Opening paper…" : "Upload a paper"}</Button>
+            <Button variant="ghost" className="w-full justify-start" disabled={uploading} onClick={() => receive({ filename: EXAMPLE_LEASE_FILENAME, example: true, url: leaseAsset.url })}><FileText className="mr-2 h-4 w-4" />Try an example lease</Button>
+            {uploadError && <p role="alert" className="mt-2 text-xs text-destructive">{uploadError}</p>}
+          </div>}
+          <input ref={fileInput} type="file" accept="application/pdf,.pdf" aria-label="Select a PDF" className="hidden" onChange={(e) => { const file = e.target.files?.[0]; if (file) void upload(file); e.target.value = ""; }} />
           <form onSubmit={(e) => { e.preventDefault(); send(); }} className="flex items-center gap-2 rounded-full border border-input bg-background px-4 py-2.5 focus-within:ring-2 focus-within:ring-ring">
-            <Button type="button" variant="ghost" size="icon" aria-label="Attach a paper" title="Attach a paper" className="h-9 w-9 shrink-0">
+            <Button type="button" variant="ghost" size="icon" aria-label="Attach a paper" title="Attach a paper" disabled={journey.stage !== "empty"} onClick={() => setSelectionOpen((open) => !open)} className="h-9 w-9 shrink-0">
               <Paperclip className="h-5 w-5" aria-hidden />
             </Button>
-            <input value={input} onChange={(e) => setInput(e.target.value)} aria-label="Ask Hobson" placeholder="Ask Hobson…" className="min-w-0 flex-1 bg-transparent text-sm text-foreground outline-none placeholder:text-muted-foreground" />
+            <input value={input} onChange={(e) => setInput(e.target.value)} aria-label="Ask Hobson" placeholder={journey.stage === "other" ? "What kind of paper?" : "Ask Hobson…"} className="min-w-0 flex-1 bg-transparent text-sm text-foreground outline-none placeholder:text-muted-foreground" />
             <Button type="submit" size="icon" variant="ghost" disabled={!input.trim()} aria-label="Send message" className="h-8 w-8 shrink-0">
               <svg aria-hidden width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
             </Button>
@@ -135,9 +215,21 @@ export default function PrototypeDocuments() {
         </div>
       </section>
 
-      <ResizeDivider width={chatWidth} setWidth={setChatWidth} />
+      <div className="hidden h-full md:flex"><ResizeDivider width={chatWidth} setWidth={setChatWidth} /></div>
 
-      <main className="min-w-0 flex-1" aria-label="Prototype Documents canvas" />
+      <main className="flex min-w-0 flex-1 flex-col" aria-label="Prototype Documents canvas">
+        {journey.paper && <>
+          <header className="flex h-14 shrink-0 items-center justify-between gap-2 border-b border-bone bg-background px-5">
+            <span className="text-sm font-medium">Your paper</span>
+            <div className="flex shrink-0 items-center gap-1"><Button variant="ghost" size="icon" className="md:hidden" aria-label="Chat with Hobson" title="Chat with Hobson" onClick={() => setShowChat(true)}><MessageCircle className="h-4 w-4" /></Button><Button variant="ghost" size="sm" aria-label="Restart demo" title="Restart demo" onClick={restart}><RotateCcw className="h-3.5 w-3.5 md:mr-2" /><span className="hidden md:inline">Restart demo</span></Button></div>
+          </header>
+          <PrototypeDocumentsPreview paper={journey.paper} />
+          {journey.paperType && <div className="shrink-0 border-t border-bone bg-background px-6 py-4" aria-label="Paper identification">
+            {journey.stage !== "complete" && <p className="mb-1 text-xs text-ink-muted">I think this is</p>}
+            <p className="flex items-center gap-2 text-sm font-medium">{journey.paperType}{journey.stage === "complete" && <Check className="h-4 w-4 text-primary" aria-label="Confirmed" />}</p>
+          </div>}
+        </>}
+      </main>
     </div>
   );
 }

@@ -1,5 +1,10 @@
 # Roadmap
 
+## Prototype Documents — adding a paper
+- [x] Move PDF image decoders to public/wasm and fetch after client mount; no source binary imports remain, genuine lease rendering and Stage 1 browser flow pass, eleven tests pass and preview build is clean. Not published.
+- [x] Implement and verify the local Stage 1 conversation, paper selection, confirmation/change and restart; eleven focused tests pass, example and arbitrary-upload paths checked in-browser with no page errors. Not published.
+- [x] Use the supplied genuine Russell Square House PDF for the example and seventy-page preview; hosted asset confirmed as application/pdf, real cover visually checked, PDF decoders bundled and small-screen controls corrected. Local browser checks replayed the hosted PDF response because localhost does not serve the hosted asset path.
+
 ## Prototype Unit — publishing password
 - [x] Configure a separate server-held Unit password and admission flag; 34 targeted checks passed and browser verified wrong-password refusal, configured-password admission, reload persistence and independent Work protection. Password verification deployed; website not published.
 
