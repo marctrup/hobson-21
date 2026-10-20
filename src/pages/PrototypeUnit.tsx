@@ -6,7 +6,7 @@ import owlDefault from "@/assets/prototype/owl-default.png";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { discoverAddress, MOCK_ADDRESSES, type AddressParts, type AddressRecord } from "./prototypeUnitAddress";
-import { namingProposal, numberUnits, renameUnits, understandBuilding, type BuildingUnderstanding } from "./prototypeUnitStructure";
+import { editUnits, namingProposal, numberUnits, restoreUnit, understandBuilding, type BuildingUnderstanding, type ProposedUnit } from "./prototypeUnitStructure";
 import { PrototypeUnitStructure } from "./PrototypeUnitStructure";
 
 const RAIL_WIDTH = 68;
@@ -211,7 +211,8 @@ function PrototypeUnitShell() {
   const [selectedAddress, setSelectedAddress] = useState<AddressRecord | null>(null);
   const [showMoreAddresses, setShowMoreAddresses] = useState(false);
   const [buildingUnderstanding, setBuildingUnderstanding] = useState<BuildingUnderstanding | null>(null);
-  const [buildingStage, setBuildingStage] = useState<"idle" | "awaiting-description" | "naming" | "describing" | "named">("idle");
+  const [buildingStage, setBuildingStage] = useState<"idle" | "awaiting-description" | "naming" | "describing" | "named" | "reviewed">("idle");
+  const [lastRemoved, setLastRemoved] = useState<{ unit: ProposedUnit; index: number } | null>(null);
   const [buildingPromptId, setBuildingPromptId] = useState<number | null>(null);
   const nextId = useRef(1);
   const conversationEnd = useRef<HTMLDivElement>(null);
@@ -318,35 +319,59 @@ function PrototypeUnitShell() {
   const NAMING_CHOICES = ["Yes, those names are fine", "Just number them", "Let me describe them"];
   const DESCRIBE_HINT = "Of course. Tell me how you'd like them named — for example, 'Call them Apartments 1 to 11', 'The flats are numbered 101 to 111' or 'Call the shop Ground Floor Shop'.";
 
-  // Structure and naming stay proposals: nothing here creates Units.
+  const REVIEW_LINE = "Here's how I've laid out Stanley House. You can change anything that doesn't look right.";
+  const units = buildingUnderstanding?.kind === "proposal" ? buildingUnderstanding.units : null;
+
+  // Structure, names and edits stay proposals: nothing here creates Units.
+  const toReview = (text: string, reply: string, next?: ProposedUnit[]) => {
+    if (next) setBuildingUnderstanding({ kind: "proposal", units: next });
+    setBuildingPromptId(appendExchange(text, `${reply}\n\n${REVIEW_LINE}`));
+    setBuildingStage("named");
+  };
+
+  const applyDirectEdit = (next: ProposedUnit[], note: string, removed?: { unit: ProposedUnit; index: number }) => {
+    setBuildingUnderstanding({ kind: "proposal", units: next });
+    setLastRemoved(removed ?? null);
+    if (buildingStage === "reviewed") {
+      const id = nextId.current++;
+      setMessages(previous => [...previous, { id, role: "hobson", text: `${note} Let me know when the structure looks right.` }]);
+      setBuildingPromptId(id); setBuildingStage("named");
+    }
+  };
+
+  const undoRemoval = (text?: string) => {
+    if (!units || !lastRemoved) return;
+    const next = restoreUnit(units, lastRemoved);
+    if (text) toReview(text, `Done. I've put ${lastRemoved.unit.name} back.`, next);
+    else applyDirectEdit(next, `I've put ${lastRemoved.unit.name} back.`);
+    setLastRemoved(null);
+  };
+
   const answerBuilding = (text: string) => {
     const normalised = text.toLowerCase().replace(/[.!?]+$/, "").trim();
-    const units = buildingUnderstanding?.kind === "proposal" ? buildingUnderstanding.units : null;
     if (units && buildingStage !== "awaiting-description") {
-      if (normalised === "yes, those names are fine" || (buildingStage === "naming" && ["yes", "that's fine", "fine"].includes(normalised))) {
-        appendExchange(text, "Very good. I'll keep those names. The structure is still only a proposal — nothing has been created.");
-        setBuildingStage("named"); setBuildingPromptId(null); return;
+      if (normalised === "this structure is right" && buildingStage === "named") {
+        appendExchange(text, "Very good. I'll keep it exactly as it is. Nothing has been created yet — that comes next.");
+        setBuildingStage("reviewed"); setBuildingPromptId(null); return;
       }
+      if (normalised === "yes, those names are fine" || (buildingStage === "naming" && ["yes", "that's fine", "fine"].includes(normalised))) { toReview(text, "Very good. I'll keep those names."); return; }
       if (normalised === "just number them") {
-        setBuildingUnderstanding({ kind: "proposal", units: numberUnits(units) });
         const hasCommercial = units.some(u => u.classification === "Commercial");
-        appendExchange(text, `Done. The ${units.some(u => u.type === "Flat") ? "flats" : "Units"} are now simply numbered${hasCommercial ? ", and the commercial space keeps its name" : ""}. Nothing has been created.`);
-        setBuildingStage("named"); setBuildingPromptId(null); return;
+        toReview(text, `Done. The ${units.some(u => u.type === "Flat") ? "flats" : "Units"} are now simply numbered${hasCommercial ? ", and the commercial space keeps its name" : ""}.`, numberUnits(units)); return;
       }
       if (normalised === "let me describe them") { appendExchange(text, DESCRIBE_HINT); setBuildingStage("describing"); setBuildingPromptId(null); return; }
-      const renamed = renameUnits(text, units);
-      if (renamed) {
-        setBuildingUnderstanding({ kind: "proposal", units: renamed });
-        appendExchange(text, "I've renamed them on the right. Anything else you'd like changed? Nothing has been created.");
-        setBuildingStage("named"); setBuildingPromptId(null); return;
-      }
+      if (["undo", "undo that", "put it back"].includes(normalised) && lastRemoved) { undoRemoval(text); return; }
+      const edit = editUnits(text, units);
+      if (edit?.kind === "question") { appendExchange(text, edit.reply); return; }
+      if (edit) { setLastRemoved(edit.removed ?? null); toReview(text, edit.reply, edit.units); return; }
       if (buildingStage === "describing") { appendExchange(text, `I didn't quite follow that. ${DESCRIBE_HINT.replace("Of course. ", "")}`); return; }
     }
     const understanding = understandBuilding(text, buildingUnderstanding);
     if (units && understanding.kind === "clarify" && !understanding.total && !understanding.floors && !understanding.groups) {
-      appendExchange(text, "The names remain a proposal. You can tell me how you'd like them named, or give me revised numbers and uses.");
+      appendExchange(text, "I didn't quite follow that. You could say 'Rename Flat 1 to Garden Flat', 'Add another shop' or 'Remove Flat 11'.");
       return;
     }
+    setLastRemoved(null);
     setBuildingUnderstanding(understanding);
     const id = appendExchange(text, understanding.kind === "proposal" ? namingProposal(understanding.units) : understanding.question);
     setBuildingStage(understanding.kind === "proposal" ? "naming" : "awaiting-description");
@@ -407,7 +432,7 @@ function PrototypeUnitShell() {
             type="button"
             className="grid h-11 w-11 place-items-center rounded-full bg-[#56514A] text-white shadow-md transition hover:bg-[#56514A]"
             aria-label="A new conversation"
-            onClick={() => { setMessages([OPENING_MESSAGE]); setInput(""); setSetupPromptId(null); setShowInvitation(true); setLocationStage("idle"); setLocationPromptId(null); setLocationAddress(""); setAddressParts({}); setAddressCandidates([]); setSelectedAddress(null); setBuildingUnderstanding(null); setBuildingStage("idle"); setBuildingPromptId(null); }}
+            onClick={() => { setMessages([OPENING_MESSAGE]); setInput(""); setSetupPromptId(null); setShowInvitation(true); setLocationStage("idle"); setLocationPromptId(null); setLocationAddress(""); setAddressParts({}); setAddressCandidates([]); setSelectedAddress(null); setBuildingUnderstanding(null); setBuildingStage("idle"); setBuildingPromptId(null); setLastRemoved(null); }}
           >
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" aria-hidden><path d="M12 5v14M5 12h14" /></svg>
           </button>
@@ -442,9 +467,9 @@ function PrototypeUnitShell() {
                   <p className="mb-1 text-xs font-semibold text-ink-muted">Hobson</p>
                   <p className={`whitespace-pre-line break-words leading-relaxed ${message.examples ? "text-base font-semibold" : "text-sm"}`}>{message.text}</p>
                   {message.examples && <p className="mt-2 break-words text-xs leading-relaxed text-muted-foreground">{message.examples}</p>}
-                  {buildingPromptId === message.id && (buildingStage === "naming" ? NAMING_CHOICES : buildingStage === "awaiting-description" && buildingUnderstanding?.kind === "clarify" ? buildingUnderstanding.choices ?? [] : []).length > 0 && (
+                  {buildingPromptId === message.id && (buildingStage === "naming" ? NAMING_CHOICES : buildingStage === "named" ? ["This structure is right"] : buildingStage === "awaiting-description" && buildingUnderstanding?.kind === "clarify" ? buildingUnderstanding.choices ?? [] : []).length > 0 && (
                     <div className="mt-3 flex flex-wrap gap-2">
-                      {(buildingStage === "naming" ? NAMING_CHOICES : (buildingUnderstanding?.kind === "clarify" && buildingUnderstanding.choices) || []).map(choice => (
+                      {(buildingStage === "naming" ? NAMING_CHOICES : buildingStage === "named" ? ["This structure is right"] : (buildingUnderstanding?.kind === "clarify" && buildingUnderstanding.choices) || []).map(choice => (
                         <button key={choice} type="button" onClick={() => answerBuilding(choice)} className="min-h-11 rounded-full border border-border bg-secondary/40 px-3.5 py-2 text-left text-sm text-foreground transition-colors hover:bg-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">{choice}</button>
                       ))}
                     </div>
@@ -526,7 +551,7 @@ function PrototypeUnitShell() {
           {buildingUnderstanding && <div className="text-xs leading-relaxed text-muted-foreground"><p>{selectedAddress?.line}</p><p className="mt-1 text-[10px]">Illustrative mock lookup · approximate location</p></div>}
           <UnitLocationMap compact={Boolean(buildingUnderstanding)} stage={locationStage} address={locationAddress} candidate={selectedAddress ?? addressCandidates[0] ?? null} />
         </div>
-        {buildingUnderstanding && <PrototypeUnitStructure understanding={buildingUnderstanding} named={buildingStage === "named"} />}
+        {buildingUnderstanding && <PrototypeUnitStructure understanding={buildingUnderstanding} reviewed={buildingStage === "reviewed"} editable={buildingStage !== "awaiting-description"} lastRemoved={lastRemoved?.unit.name ?? null} onUndo={() => undoRemoval()} onSave={(next, note) => applyDirectEdit(next, note)} onRemove={(unit, index) => applyDirectEdit(units!.filter(u => u.number !== unit.number), `I've removed ${unit.name}.`, { unit, index })} />}
       </main>
     </div>
   );
