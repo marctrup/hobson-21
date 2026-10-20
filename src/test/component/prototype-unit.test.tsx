@@ -422,4 +422,21 @@ describe("Prototype Unit proposed building", () => {
     const proposal = screen.getByRole("region", { name: "Proposed building structure" });
     expect(within(proposal).getByText("6 Units · 4 Residential · 2 Commercial")).toBeInTheDocument();
   });
+
+  it("views the created group on the map as one marker and opens it beneath the map", async () => {
+    const user = await confirmedStanley();
+    await user.type(screen.getByLabelText("Residential Units"), "11");
+    await user.type(screen.getByLabelText("Commercial Units"), "1");
+    await user.click(screen.getByRole("button", { name: "Continue →" }));
+    await user.click(screen.getByRole("button", { name: "This structure is right" }));
+    await user.click(screen.getByRole("button", { name: "Create this structure" }));
+    await user.click(screen.getByRole("button", { name: "View on map" }));
+    expect(screen.queryByRole("region", { name: "Stanley House Unit Group" })).toBeNull();
+    await user.click(screen.getByRole("button", { name: "Open Stanley House" }));
+    const group = screen.getByRole("region", { name: "Stanley House Unit Group" });
+    expect(within(group).getAllByRole("listitem")).toHaveLength(12);
+    expect(screen.getByLabelText("Location map")).toBeInTheDocument();
+    await user.click(within(group).getByRole("button", { name: "Back to map" }));
+    expect(screen.queryByRole("region", { name: "Stanley House Unit Group" })).toBeNull();
+  });
 });
