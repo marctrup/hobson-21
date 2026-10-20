@@ -194,6 +194,9 @@ export default function PrototypeDocuments() {
     setInput("");
   };
 
+  const detailsShown = !!journey.paper?.example && DETAIL_STAGES.includes(journey.stage) && journey.stage !== "checking";
+  const confirmed = journey.stage === "complete" || DETAIL_STAGES.includes(journey.stage);
+
   return (
     <div className="flex h-screen w-full overflow-hidden bg-bone-wash text-ink">
       <aside className="flex w-[68px] shrink-0 flex-col items-center gap-2 border-r border-bone bg-background py-4">
