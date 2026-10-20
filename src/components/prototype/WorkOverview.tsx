@@ -1,4 +1,4 @@
-import type { SuppliedPaper } from "./workGuidance";
+import type { PaperPlace, PaperPlacementAction, SuppliedPaper } from "./workGuidance";
 import { useEffect, useState } from "react";
 import { Activity as ActivityIcon, ArrowUpRight, Check, CheckCheck, CircleDot, CircleHelp, Clock, Hand, Pause, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -62,7 +62,7 @@ function ActivityLine({ activity }: { activity: Activity }) {
 }
 
 /** Illustrative work only: deliberately independent of action-card state and approvals. */
-export function WorkOverview({ onClose, onGuide, sideLetterRequested = false, suppliedPapers = [], onJourneyBack, focusNeedsYou = 0, roofGuidance: suppliedRoofGuidance = initialRoofGuidance, roofWork, onRoofWorkChange }: { onClose: () => void; onGuide: (scope: "renewal" | RoofGuideScope, suggestion?: string) => void; sideLetterRequested?: boolean; suppliedPapers?: SuppliedPaper[]; onJourneyBack?: () => void; focusNeedsYou?: number; roofGuidance?: RoofGuidanceState; roofWork?: RoofWorkState; onRoofWorkChange?: (work: RoofWorkState) => void }) {
+export function WorkOverview({ onClose, onGuide, sideLetterRequested = false, suppliedPapers = [], paperPlaces = [], onPaperPlacement, onJourneyBack, focusNeedsYou = 0, roofGuidance: suppliedRoofGuidance = initialRoofGuidance, roofWork, onRoofWorkChange }: { onClose: () => void; onGuide: (scope: "renewal" | RoofGuideScope, suggestion?: string) => void; sideLetterRequested?: boolean; suppliedPapers?: SuppliedPaper[]; paperPlaces?: PaperPlace[]; onPaperPlacement?: (id: string, action: PaperPlacementAction) => void; onJourneyBack?: () => void; focusNeedsYou?: number; roofGuidance?: RoofGuidanceState; roofWork?: RoofWorkState; onRoofWorkChange?: (work: RoofWorkState) => void }) {
   const [journey, setJourney] = useState<"renewal" | "roof" | "completed-lease" | null>(null);
   const [paused, setPaused] = useState(false);
   const [approval, setApproval] = useState<ApprovalStatus>("idle");
