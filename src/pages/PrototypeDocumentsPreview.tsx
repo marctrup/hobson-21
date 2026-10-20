@@ -1,11 +1,24 @@
 import { useEffect, useRef, useState } from "react";
 import { getDocument, GlobalWorkerOptions, type PDFDocumentProxy } from "pdfjs-dist";
 import workerUrl from "pdfjs-dist/build/pdf.worker.min.mjs?url";
+import openJpegUrl from "pdfjs-dist/wasm/openjpeg.wasm?url";
+import jbig2Url from "pdfjs-dist/wasm/jbig2.wasm?url";
+import qcmsUrl from "pdfjs-dist/wasm/qcms_bg.wasm?url";
 import { ChevronLeft, ChevronRight, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import type { PrototypePaper } from "./prototypeDocumentsPaper";
 
 GlobalWorkerOptions.workerSrc = workerUrl;
+
+class BundledWasmFactory {
+  async fetch({ filename }: { filename: string }) {
+    const url = ({ "openjpeg.wasm": openJpegUrl, "jbig2.wasm": jbig2Url, "qcms_bg.wasm": qcmsUrl } as Record<string, string>)[filename];
+    if (!url) throw new Error("Unsupported PDF decoder");
+    const response = await fetch(url);
+    if (!response.ok) throw new Error("PDF decoder unavailable");
+    return new Uint8Array(await response.arrayBuffer());
+  }
+}
 
 export default function PrototypeDocumentsPreview({ paper }: { paper: PrototypePaper }) {
   const [pdf, setPdf] = useState<PDFDocumentProxy | null>(null);
@@ -15,7 +28,7 @@ export default function PrototypeDocumentsPreview({ paper }: { paper: PrototypeP
   useEffect(() => {
     setPage(1); setPdf(null); setError(false);
     if (!paper.url) return;
-    const task = getDocument({ url: paper.url });
+    const task = getDocument({ url: paper.url, WasmFactory: BundledWasmFactory, useWorkerFetch: false });
     let active = true;
     task.promise.then((loaded) => { if (active) setPdf(loaded); }).catch(() => { if (active) setError(true); });
     return () => { active = false; void task.destroy(); };
