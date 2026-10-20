@@ -6,7 +6,7 @@ import owlDefault from "@/assets/prototype/owl-default.png";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { discoverAddress, MOCK_ADDRESSES, type AddressParts, type AddressRecord } from "./prototypeUnitAddress";
-import { editUnits, namingProposal, numberUnits, restoreUnit, understandBuilding, type BuildingUnderstanding, type ProposedUnit } from "./prototypeUnitStructure";
+import { editUnits, summarise, namingProposal, numberUnits, restoreUnit, understandBuilding, type BuildingUnderstanding, type ProposedUnit } from "./prototypeUnitStructure";
 import { PrototypeUnitStructure } from "./PrototypeUnitStructure";
 
 const RAIL_WIDTH = 68;
@@ -15,6 +15,8 @@ const MIN_CHAT_WIDTH = 280;
 const MIN_CANVAS_WIDTH = 320;
 
 type UnitMessage = { id: number; text: string; role: "user" | "hobson"; examples?: string };
+
+type PortfolioGroup = { id: string; name: string; line: string; record: AddressRecord; units: ProposedUnit[] };
 
 const OPENING_MESSAGE: UnitMessage = { id: 0, role: "hobson", text: "I can help you organise the places in your portfolio. Shall we get started?" };
 
@@ -197,6 +199,28 @@ function UnitResizeDivider({ width, setWidth, onReset, isDefault }: { width: num
   );
 }
 
+// An established Unit Group in the simulated portfolio: names, uses and order exactly as authorised.
+function PortfolioGroupView({ group }: { group: PortfolioGroup }) {
+  const [open, setOpen] = useState(true);
+  const totals = summarise(group.units);
+  return (
+    <section aria-label={`${group.name} Unit Group`} className="min-w-0 rounded-md border border-border bg-background px-4 py-3">
+      <div className="flex flex-wrap items-baseline justify-between gap-2">
+        <div>
+          <p className="text-xs font-medium text-muted-foreground">Unit Group · in your portfolio</p>
+          <h3 className="mt-1 text-lg font-semibold text-foreground">{group.name}</h3>
+          <p className="mt-0.5 text-xs text-muted-foreground">{group.line}</p>
+          <p className="mt-1 text-sm text-foreground">{totals.total} Units · {totals.residential} Residential · {totals.commercial} Commercial</p>
+        </div>
+        <button type="button" aria-expanded={open} onClick={() => setOpen(v => !v)} className="min-h-9 rounded-md px-2 text-sm text-muted-foreground hover:text-foreground">{open ? "Hide Units" : "Show Units"}</button>
+      </div>
+      {open && <ul aria-label={`${group.name} Units`} className="mt-3 divide-y divide-border border-t border-border">
+        {group.units.map(u => <li key={u.number} className="flex min-h-10 items-center justify-between gap-3 py-1.5"><span className="truncate text-sm text-foreground">{u.name}</span><span className="shrink-0 text-xs text-muted-foreground">{u.classification}</span></li>)}
+      </ul>}
+    </section>
+  );
+}
+
 function PrototypeUnitShell() {
   const [chatWidth, setChatWidth] = useState(DEFAULT_CHAT_WIDTH);
   const [input, setInput] = useState("");
@@ -373,8 +397,8 @@ function PrototypeUnitShell() {
 
   const afterCreation = (choice: string) => {
     const name = portfolio[portfolio.length - 1]?.name ?? "It";
-    if (choice === "View on map") { setMapExpanded(true); appendExchange(choice, `Here's ${name} at its confirmed location.`); return; }
-    if (choice === "Add Papers") { appendExchange(choice, `Papers aren't part of this demonstration yet. When they are, I'll keep them with ${name}.`); return; }
+    if (choice === "View on map") { setMapExpanded(true); setBuildingPromptId(appendExchange(choice, `Here's ${name} at its confirmed location.`)); return; }
+    if (choice === "Add Papers") { setBuildingPromptId(appendExchange(choice, `Papers aren't part of this demonstration yet. When they are, I'll keep them with ${name}.`)); return; }
     if (choice === "Set up another place") {
       resetSetup(); setMapExpanded(false); setShowInvitation(false);
       const id = nextId.current++;
@@ -481,7 +505,7 @@ function PrototypeUnitShell() {
             type="button"
             className="grid h-11 w-11 place-items-center rounded-full bg-[#56514A] text-white shadow-md transition hover:bg-[#56514A]"
             aria-label="A new conversation"
-            onClick={() => { setMessages([OPENING_MESSAGE]); setInput(""); setSetupPromptId(null); setShowInvitation(true); setLocationStage("idle"); setLocationPromptId(null); setLocationAddress(""); setAddressParts({}); setAddressCandidates([]); setSelectedAddress(null); setBuildingUnderstanding(null); setBuildingStage("idle"); setBuildingPromptId(null); setLastRemoved(null); }}
+            onClick={() => { setMessages([OPENING_MESSAGE]); setInput(""); setSetupPromptId(null); setShowInvitation(true); setLocationStage("idle"); setLocationPromptId(null); setLocationAddress(""); setAddressParts({}); setAddressCandidates([]); setSelectedAddress(null); setBuildingUnderstanding(null); setBuildingStage("idle"); setBuildingPromptId(null); setLastRemoved(null); setMapExpanded(false); setShowSummaryUnits(false); }}
           >
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" aria-hidden><path d="M12 5v14M5 12h14" /></svg>
           </button>
@@ -519,7 +543,7 @@ function PrototypeUnitShell() {
                   {buildingPromptId === message.id && (buildingStage === "naming" ? NAMING_CHOICES : buildingStage === "named" ? ["This structure is right"] : buildingStage === "ready" ? ["Create this structure", "Make another change"] : buildingStage === "created" ? AFTER_CREATION : buildingStage === "awaiting-description" && buildingUnderstanding?.kind === "clarify" ? buildingUnderstanding.choices ?? [] : []).length > 0 && (
                     <div className="mt-3 flex flex-wrap gap-2">
                       {(buildingStage === "naming" ? NAMING_CHOICES : buildingStage === "named" ? ["This structure is right"] : buildingStage === "ready" ? ["Create this structure", "Make another change"] : buildingStage === "created" ? AFTER_CREATION : (buildingUnderstanding?.kind === "clarify" && buildingUnderstanding.choices) || []).map(choice => (
-                        <button key={choice} type="button" onClick={() => answerBuilding(choice)} className={`min-h-11 rounded-full border px-3.5 py-2 ${choice === "Create this structure" ? "border-primary bg-primary font-semibold text-primary-foreground shadow-sm hover:bg-primary/90" : "border-border bg-secondary/40"}`}  >{choice}</button>
+                        <button key={choice} type="button" onClick={() => answerBuilding(choice)} className={`min-h-11 rounded-full border px-3.5 py-2 text-left text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${choice === "Create this structure" ? "border-primary bg-primary font-semibold text-primary-foreground shadow-sm hover:bg-primary/90" : "border-border bg-secondary/40 text-foreground hover:bg-secondary"}`}>{choice}</button>
                       ))}
                     </div>
                   )}
@@ -596,11 +620,40 @@ function PrototypeUnitShell() {
         <header className="flex flex-wrap items-center justify-between gap-3">
           <h2 className="text-[15px] font-semibold text-ink">Portfolio</h2>
         </header>
-        <div className={`flex min-h-0 flex-col gap-2 transition-[flex-basis] duration-300 motion-reduce:transition-none ${buildingUnderstanding ? "h-[300px] shrink-0" : "flex-1"}`}>
-          {buildingUnderstanding && <div className="text-xs leading-relaxed text-muted-foreground"><p>{selectedAddress?.line}</p><p className="mt-1 text-[10px]">Illustrative mock lookup · approximate location</p></div>}
-          <UnitLocationMap compact={Boolean(buildingUnderstanding)} stage={locationStage} address={locationAddress} candidate={selectedAddress ?? addressCandidates[0] ?? null} />
-        </div>
-        {buildingUnderstanding && <PrototypeUnitStructure understanding={buildingUnderstanding} reviewed={buildingStage === "reviewed"} editable={buildingStage !== "awaiting-description"} lastRemoved={lastRemoved?.unit.name ?? null} onUndo={() => undoRemoval()} onSave={(next, note) => applyDirectEdit(next, note)} onAdd={next => applyDirectEdit(next, "")} onRemove={(unit, index) => applyDirectEdit(units!.filter(u => u.number !== unit.number), `I've removed ${unit.name}.`, { unit, index })} />}
+        {(() => {
+          const showingGroup = buildingStage === "created" ? portfolio[portfolio.length - 1] : null;
+          const portfolioOnly = !buildingUnderstanding && locationStage === "idle" && portfolio.length > 0;
+          const focus = showingGroup ?? (portfolioOnly ? portfolio[portfolio.length - 1] : null);
+          const compact = !mapExpanded && (Boolean(buildingUnderstanding) || portfolioOnly);
+          const totals = units ? summarise(units) : null;
+          return (<>
+            <div className={`flex min-h-0 flex-col gap-2 transition-[flex-basis] duration-300 motion-reduce:transition-none ${compact ? "h-[300px] shrink-0" : "min-h-[300px] flex-1"}`}>
+              {buildingUnderstanding && !showingGroup && <div className="text-xs leading-relaxed text-muted-foreground"><p>{selectedAddress?.line}</p><p className="mt-1 text-[10px]">Illustrative mock lookup · approximate location</p></div>}
+              <UnitLocationMap compact={compact} stage={focus ? "confirmed" : locationStage} address={focus ? focus.line : locationAddress} candidate={focus ? focus.record : selectedAddress ?? addressCandidates[0] ?? null} />
+            </div>
+            {buildingStage === "ready" && units && totals ? (
+              <section aria-label="Ready to create" className="min-w-0 py-3">
+                <p className="text-xs font-medium text-muted-foreground">Ready to add · nothing created yet</p>
+                <h3 className="mt-1 text-xl font-semibold text-foreground">{selectedAddress?.name}</h3>
+                <p className="mt-0.5 text-sm text-muted-foreground">{selectedAddress?.line}</p>
+                <p className="mt-3 text-sm font-medium text-foreground">{totals.total} Units · {totals.residential} Residential · {totals.commercial} Commercial</p>
+                <ul className="mt-3 space-y-1 text-sm text-foreground">
+                  <li className="flex items-center gap-2"><Check className="h-3.5 w-3.5 text-muted-foreground" aria-hidden />Location confirmed</li>
+                  <li className="flex items-center gap-2"><Check className="h-3.5 w-3.5 text-muted-foreground" aria-hidden />Structure reviewed</li>
+                  <li className="flex items-center gap-2 text-muted-foreground"><span className="inline-block h-3.5 w-3.5 rounded-full border border-border" aria-hidden />Nothing created yet</li>
+                </ul>
+                <button type="button" aria-expanded={showSummaryUnits} onClick={() => setShowSummaryUnits(v => !v)} className="mt-3 min-h-9 rounded-md px-2 text-sm text-muted-foreground underline-offset-4 hover:text-foreground hover:underline">{showSummaryUnits ? "Hide the Units" : "Look at the Units again"}</button>
+                {showSummaryUnits && <PrototypeUnitStructure understanding={{ kind: "proposal", units }} />}
+              </section>
+            ) : showingGroup ? (
+              <PortfolioGroupView group={showingGroup} />
+            ) : buildingUnderstanding ? (
+              <PrototypeUnitStructure understanding={buildingUnderstanding} editable={buildingStage !== "awaiting-description"} lastRemoved={lastRemoved?.unit.name ?? null} onUndo={() => undoRemoval()} onSave={(next, note) => applyDirectEdit(next, note)} onAdd={next => applyDirectEdit(next, "")} onRemove={(unit, index) => applyDirectEdit(units!.filter(u => u.number !== unit.number), `I've removed ${unit.name}.`, { unit, index })} />
+            ) : portfolio.length > 0 && (
+              <div className="flex flex-col gap-3">{portfolio.map(group => <PortfolioGroupView key={group.id} group={group} />)}</div>
+            )}
+          </>);
+        })()}
       </main>
     </div>
   );
