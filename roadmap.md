@@ -1,5 +1,8 @@
 # Roadmap
 
+## Visible chat paperclip
+- [ ] Show the sample-paper paperclip in ordinary Hobson chat as well as renewal guidance; reuse the existing receipt flow and verify sending.
+
 ## Retire the Nugent Terrace rent conversation
 - [x] Remove the prefilled Flat 2 rent question and its dedicated scripted reply, references and download controls; current work and ordinary chat preserved; 49 component tests pass and build is clean. Browser review could not pass the private entrance while its verification remained pending.
 

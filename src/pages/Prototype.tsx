@@ -1483,6 +1483,18 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
     setChatWidth(Math.max(CHAT_MIN_WIDTH, lastExpandedWidthRef.current || CHAT_DEFAULT_WIDTH));
   };
   const toggleChatCollapsed = () => (chatCollapsed ? expandChat() : collapseChat());
+
+  const attachSampleSideLetter = () => {
+    setShowDocuments(false);
+    setShowWhatIveDone(true);
+    setGuidingRenewal(true);
+    setGuideScope("renewal");
+    setMainCollapsed(false);
+    expandChat();
+    setPendingAttachment(true);
+    setInput(SIDE_LETTER_ATTACHMENT_INSTRUCTION);
+    requestAnimationFrame(() => inputRef.current?.focus());
+  };
   const collapseMain = () => {
     setChatCollapsed(false);
     setMainCollapsed(true);
@@ -4034,7 +4046,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                   if (conversation) conversation.scrollTop = conversation.scrollHeight;
                 });
               }} className="flex items-center gap-2 rounded-full border border-input bg-background px-4 py-2.5 focus-within:ring-2 focus-within:ring-ring">
-                {guideScope === "renewal" && <button type="button" onClick={() => { setPendingAttachment(true); if (!input.trim()) setInput(SIDE_LETTER_ATTACHMENT_INSTRUCTION); inputRef.current?.focus(); }} aria-label="Attach a paper (sample Side Letter 2024.pdf)" title="Attach a paper" className="shrink-0 rounded p-0.5 text-muted-foreground hover:text-foreground"><Paperclip className="h-4 w-4" /></button>}
+                {guideScope === "renewal" && <Button type="button" variant="ghost" size="icon" onClick={attachSampleSideLetter} aria-label="Attach a paper (sample Side Letter 2024.pdf)" title="Attach a paper (sample Side Letter 2024.pdf)" className="h-9 w-9 shrink-0 text-foreground"><Paperclip className="h-5 w-5" aria-hidden="true" /></Button>}
                 <input ref={inputRef} value={input} onChange={(event) => setInput(event.target.value)} aria-label={guideScope === "renewal" ? "Guide Hobson about the tenancy renewal" : guideScope === "lease" ? "Guide Hobson about the lease review" : "Guide Hobson about the roof leak investigation"} aria-describedby="renewal-chat-context" placeholder={guideScope === "renewal" ? "Ask me to check the 2024 side letter…" : guideScope === "lease" ? "Ask me to check the shopfront roof…" : roofGuidance.contactOnHold ? "Tell me I can contact people again…" : "Ask me to hold further contact…"} className="min-w-0 flex-1 bg-transparent text-sm text-foreground outline-none placeholder:text-muted-foreground" />
                 <Button type="submit" size="icon" variant="ghost" disabled={!input.trim()} aria-label="Send guidance" className="h-8 w-8 shrink-0"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg></Button>
               </form>
@@ -4156,6 +4168,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
               }}
               className="flex items-center gap-2 px-4 py-2.5 rounded-full border border-bone bg-white focus-within:border-[#56514A] focus-within:ring-2 focus-within:ring-[#56514A]/20 transition"
             >
+              <Button type="button" variant="ghost" size="icon" onClick={attachSampleSideLetter} aria-label="Attach a paper (sample Side Letter 2024.pdf)" title="Attach a paper (sample Side Letter 2024.pdf)" className="h-9 w-9 shrink-0 text-foreground"><Paperclip className="h-5 w-5" aria-hidden="true" /></Button>
               <input
                 ref={inputRef}
                 value={input}

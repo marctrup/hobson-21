@@ -3,8 +3,23 @@ import userEvent from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
 
 import Prototype from "@/pages/Prototype";
+import { SIDE_LETTER_ATTACHMENT_INSTRUCTION, SIDE_LETTER_FILENAME } from "@/components/prototype/workGuidance";
 
 describe("Prototype conversation composer", () => {
+  it("attaches the sample Side Letter from the ordinary chat and receives it through renewal guidance", async () => {
+    const user = userEvent.setup();
+    render(<Prototype />);
+
+    await user.click(screen.getByRole("button", { name: "Attach a paper (sample Side Letter 2024.pdf)" }));
+    expect(screen.getByLabelText("Guide Hobson about the tenancy renewal")).toHaveValue(SIDE_LETTER_ATTACHMENT_INSTRUCTION);
+    expect(screen.getByLabelText(`Attached: ${SIDE_LETTER_FILENAME}`)).toBeInTheDocument();
+    await user.click(screen.getByRole("button", { name: "Send guidance" }));
+
+    expect(screen.getByLabelText(`Attached paper: ${SIDE_LETTER_FILENAME}`)).toBeInTheDocument();
+    expect(screen.getByText(/Thank you. I've received the Side Letter/)).toBeInTheDocument();
+    expect(screen.queryByLabelText(`Attached: ${SIDE_LETTER_FILENAME}`)).not.toBeInTheDocument();
+  });
+
   it("opens an ordinary chat box with no locked notice and answers what you send", async () => {
     const user = userEvent.setup();
     render(<Prototype />);
