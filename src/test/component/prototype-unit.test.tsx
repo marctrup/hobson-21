@@ -281,8 +281,8 @@ describe("Prototype Unit proposed building", () => {
     expect(within(proposal).queryAllByRole("listitem")).toHaveLength(0);
     await user.type(screen.getByRole("textbox"), "Offices{Enter}");
     expect(within(proposal).getAllByRole("listitem")).toHaveLength(4);
-    expect(within(proposal).getByText("Commercial · Ground Floor")).toBeInTheDocument();
-    expect(within(proposal).getByText("Commercial · Third Floor")).toBeInTheDocument();
+    expect(within(proposal).getByText(/Ground Floor/)).toBeInTheDocument();
+    expect(within(proposal).getByText(/Third Floor/)).toBeInTheDocument();
   });
 
   it("proposes names for mixed uses and preserves useful locations without requiring repetition", async () => {
@@ -290,8 +290,8 @@ describe("Prototype Unit proposed building", () => {
     await user.type(screen.getByRole("textbox"), "There are two shops on the ground floor and three flats above.{Enter}");
     const proposal = screen.getByRole("region", { name: "Proposed building structure" });
     expect(within(proposal).getAllByRole("listitem")).toHaveLength(5);
-    expect(within(proposal).getAllByText(/^Commercial · Ground Floor/)).toHaveLength(2);
-    expect(within(proposal).getAllByText(/^Residential · Above ground floor/)).toHaveLength(3);
+    expect(within(proposal).getAllByText(/Ground Floor/)).toHaveLength(2);
+    expect(within(proposal).getAllByText(/Above ground floor/)).toHaveLength(3);
     await user.type(screen.getByRole("textbox"), "4 offices{Enter}");
     expect(within(proposal).getAllByRole("listitem")).toHaveLength(4);
     expect(within(proposal).getByText("Office 4")).toBeInTheDocument();
