@@ -39,12 +39,13 @@ export default function PrototypeDocumentsPapers(props: Props) {
   const { placement } = props;
   const [groupOpen, setGroupOpen] = useState(true);
   const settled = isSettled(placement);
+  const separate = placement.unitStatus === "unsure" || placement.relation === "earlier" || placement.relation === "unsure" || (["review", "change", "placed"].includes(placement.step) && !settled);
   const placed = placement.step === "placed";
   return (
     <section aria-label="Proposed placement" className="min-h-0 flex-1 overflow-y-auto bg-background px-6 py-5">
       <h2 className="text-base font-semibold text-ink">{placed ? "Where this paper will go" : "Where I propose to put this paper"}</h2>
       <p className="mt-1 text-xs text-ink-muted">Nothing has been added to your papers yet.</p>
-      {!settled && placement.step !== "checking" && <div className="mt-5"><p className="mb-2 text-[11px] font-medium uppercase tracking-wide text-ink-muted">Kept separate for now</p><ProposedPaper {...props} awaiting /></div>}
+      {separate && <div className="mt-5"><p className="mb-2 text-[11px] font-medium uppercase tracking-wide text-ink-muted">Kept separate for now</p><ProposedPaper {...props} awaiting /></div>}
       <div className="mt-5 rounded-lg border border-bone">
         <button type="button" aria-expanded={groupOpen} onClick={() => setGroupOpen((o) => !o)} className="flex w-full items-center justify-between px-4 py-3 text-left">
           <span className="text-sm font-semibold text-ink">{EXAMPLE_GROUP}</span>
@@ -56,11 +57,11 @@ export default function PrototypeDocumentsPapers(props: Props) {
             return (
               <li key={u} className="border-b border-faint-rule px-4 py-3 last:border-0">
                 <p className={`text-sm ${here ? "font-semibold text-ink" : "text-ink-muted"}`}>{u}{here && placement.unitStatus === "asking" && <span className="ml-2 text-xs font-normal text-ink-muted">· I think it belongs here</span>}</p>
-                {here && settled && <div className="mt-3">
-                  <p className="mb-2 text-[11px] font-medium uppercase tracking-wide text-ink-muted">Tenancy history</p>
+                {here && !separate && <div className="mt-3">
+                  <p className="mb-2 text-[11px] font-medium uppercase tracking-wide text-ink-muted">{placement.relation === "new" ? "Tenancy history · new" : "Proposed paper"}</p>
                   <ProposedPaper {...props} awaiting={false} />
                 </div>}
-                {!(here && settled) && <p className="mt-0.5 text-xs text-ink-muted">No confirmed occupational papers</p>}
+                {!(here && !separate) && <p className="mt-0.5 text-xs text-ink-muted">No confirmed occupational papers</p>}
               </li>
             );
           })}
