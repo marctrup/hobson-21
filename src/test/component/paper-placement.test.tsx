@@ -53,7 +53,7 @@ describe("Iteration 22 paper placement", () => {
     await user.selectOptions(screen.getByLabelText("Choose a Unit or Unit Group"), "stanley-f8");
     await user.click(screen.getByRole("button", { name: "Keep with Flat 6 instead" }));
     await user.click(screen.getByRole("button", { name: "Yes, add it here" }));
-    await user.click(screen.getByRole("button", { name: "Papers", exact: true }));
+    await user.click(screen.getByRole("button", { name: /^Papers$/ }));
     expect(within(screen.getByRole("dialog")).getByRole("article", { name: "Supplied paper: Side Letter 2024.pdf" })).toBeInTheDocument();
     await user.click(screen.getByRole("button", { name: "Back to job" }));
     await user.click(screen.getByRole("button", { name: /Reviewed the rent/ }));
