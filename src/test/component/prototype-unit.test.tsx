@@ -97,16 +97,16 @@ describe("Prototype Unit location confirmation", () => {
 
   it("keeps identification proposed until explicit confirmation, retains it and stops without creating records", async () => {
     const user = await startGroup();
-    expect(screen.queryByRole("status")).toBeNull();
+    expect(screen.queryByRole("status", { name: "Location status" })).toBeNull();
     await user.type(screen.getByRole("textbox"), `${address}{Enter}`);
-    expect(within(screen.getByRole("status")).getByText("Awaiting confirmation")).toBeInTheDocument();
+    expect(within(screen.getByRole("status", { name: "Location status" })).getByText("Awaiting confirmation")).toBeInTheDocument();
     await user.click(screen.getByRole("button", { name: "Yes, that's the place" }));
-    expect(within(screen.getByRole("status")).getByText("Location confirmed")).toBeInTheDocument();
-    expect(within(screen.getByRole("status")).getByText("14 Bedford Square, London, WC1B 3JA")).toBeInTheDocument();
+    expect(within(screen.getByRole("status", { name: "Location status" })).getByText("Location confirmed")).toBeInTheDocument();
+    expect(within(screen.getByRole("status", { name: "Location status" })).getByText("14 Bedford Square, London, WC1B 3JA")).toBeInTheDocument();
     expect(within(screen.getByRole("log")).queryAllByRole("button")).toHaveLength(0);
     expect(within(screen.getByRole("main")).queryAllByRole("listitem")).toHaveLength(0);
     await user.type(screen.getByRole("textbox"), "Thank you{Enter}");
-    expect(within(screen.getByRole("status")).getByText("Location confirmed")).toBeInTheDocument();
+    expect(within(screen.getByRole("status", { name: "Location status" })).getByText("Location confirmed")).toBeInTheDocument();
   });
 
   it("clears the proposal on correction, never matches an alternative and allows return to Stanley House", async () => {
@@ -114,13 +114,13 @@ describe("Prototype Unit location confirmation", () => {
     const input = screen.getByRole("textbox");
     await user.type(input, `${address}{Enter}`);
     await user.click(screen.getByRole("button", { name: "No, let's check again" }));
-    expect(screen.queryByRole("status")).toBeNull();
+    expect(screen.queryByRole("status", { name: "Location status" })).toBeNull();
     await user.type(input, "22 Example Road, Manchester{Enter}");
-    expect(within(screen.getByRole("status")).getByText("Location needs verification")).toBeInTheDocument();
+    expect(within(screen.getByRole("status", { name: "Location status" })).getByText("Location needs verification")).toBeInTheDocument();
     expect(screen.queryByRole("button", { name: "Yes, that's the place" })).toBeNull();
     await user.type(input, `${address}{Enter}`);
     await user.type(input, "Yes, that's the place{Enter}");
-    expect(within(screen.getByRole("status")).getByText("Location confirmed")).toBeInTheDocument();
+    expect(within(screen.getByRole("status", { name: "Location status" })).getByText("Location confirmed")).toBeInTheDocument();
   });
 
   it("clears retained location when starting a new conversation", async () => {
@@ -128,7 +128,7 @@ describe("Prototype Unit location confirmation", () => {
     await user.type(screen.getByRole("textbox"), `${address}{Enter}`);
     await user.click(screen.getByRole("button", { name: "Yes, that's the place" }));
     await user.click(screen.getByRole("button", { name: "A new conversation" }));
-    expect(screen.queryByRole("status")).toBeNull();
+    expect(screen.queryByRole("status", { name: "Location status" })).toBeNull();
     expect(screen.getByLabelText("Location map")).toBeInTheDocument();
   });
 
@@ -136,9 +136,9 @@ describe("Prototype Unit location confirmation", () => {
     const user = await startGroup();
     await user.type(screen.getByRole("textbox"), "Stanley House 1115 Finchley Road NW11 0QD{Enter}");
     expect(screen.getByRole("button", { name: "Yes, that's the place" })).toBeInTheDocument();
-    expect(within(screen.getByRole("status")).getByText("Awaiting confirmation")).toBeInTheDocument();
+    expect(within(screen.getByRole("status", { name: "Location status" })).getByText("Awaiting confirmation")).toBeInTheDocument();
     await user.click(screen.getByRole("button", { name: "Yes, that's the place" }));
-    expect(within(screen.getByRole("status")).getByText("Location confirmed")).toBeInTheDocument();
+    expect(within(screen.getByRole("status", { name: "Location status" })).getByText("Location confirmed")).toBeInTheDocument();
     expect(within(screen.getByRole("main")).getByText("1115 Finchley Road, London, NW11 0QD")).toBeInTheDocument();
     expect(within(screen.getByRole("log")).queryAllByRole("button")).toHaveLength(0);
   });
@@ -149,7 +149,7 @@ describe("Prototype Unit location confirmation", () => {
     expect(screen.queryByRole("button", { name: "Yes, that's the place" })).toBeNull();
     await user.type(screen.getByRole("textbox"), "NW11 0QD{Enter}");
     await user.click(screen.getByRole("button", { name: "None of these" }));
-    expect(screen.queryByRole("status")).toBeNull();
+    expect(screen.queryByRole("status", { name: "Location status" })).toBeNull();
     await user.type(screen.getByRole("textbox"), "Stanley House, 1115 Finchley Road, London, NW11 0QD{Enter}");
     expect(screen.getByRole("button", { name: "Yes, that's the place" })).toBeInTheDocument();
     expect(screen.queryByRole("button", { name: "None of these" })).toBeNull();
@@ -166,15 +166,15 @@ describe("Prototype Unit location confirmation", () => {
     expect(screen.queryByRole("button", { name: "Yes, that's the place" })).toBeNull();
     await user.click(screen.getByRole("button", { name: "Show more addresses" }));
     await user.click(screen.getByRole("button", { name: "1113 Finchley Road London, NW11 0QD" }));
-    expect(within(screen.getByRole("status")).getByText("Awaiting confirmation")).toBeInTheDocument();
+    expect(within(screen.getByRole("status", { name: "Location status" })).getByText("Awaiting confirmation")).toBeInTheDocument();
     await user.click(screen.getByRole("button", { name: "No, let's check again" }));
     await user.type(screen.getByRole("textbox"), "NW11 0QD{Enter}");
     expect(screen.getByRole("button", { name: "Show more addresses" })).toBeInTheDocument();
     await user.click(screen.getByRole("button", { name: "Show more addresses" }));
     await user.click(screen.getByRole("button", { name: "1117 Finchley Road London, NW11 0QD" }));
     await user.click(screen.getByRole("button", { name: "Yes, that's the place" }));
-    expect(within(screen.getByRole("status")).getByText("1117 Finchley Road")).toBeInTheDocument();
-    expect(within(screen.getByRole("status")).getByText("Location confirmed")).toBeInTheDocument();
+    expect(within(screen.getByRole("status", { name: "Location status" })).getByText("1117 Finchley Road")).toBeInTheDocument();
+    expect(within(screen.getByRole("status", { name: "Location status" })).getByText("Location confirmed")).toBeInTheDocument();
     expect(screen.queryByRole("region", { name: "Proposed building structure" })).toBeNull();
   });
 
@@ -183,11 +183,11 @@ describe("Prototype Unit location confirmation", () => {
     await user.type(screen.getByRole("textbox"), "NW11 0QD{Enter}");
     await user.click(screen.getByRole("button", { name: "Flat 2, Stanley House 1115 Finchley Road, London, NW11 0QD" }));
     expect(screen.queryByRole("button", { name: "Yes, that's the place" })).toBeNull();
-    expect(within(screen.getByRole("status")).queryByText("Location confirmed")).toBeNull();
+    expect(within(screen.getByRole("status", { name: "Location status" })).queryByText("Location confirmed")).toBeNull();
     await user.click(screen.getByRole("button", { name: whole ? "The whole of Stanley House" : "Just Flat 2" }));
-    expect(within(screen.getByRole("status")).getByText(whole ? "Stanley House" : "Flat 2, Stanley House")).toBeInTheDocument();
+    expect(within(screen.getByRole("status", { name: "Location status" })).getByText(whole ? "Stanley House" : "Flat 2, Stanley House")).toBeInTheDocument();
     await user.click(screen.getByRole("button", { name: "Yes, that's the place" }));
-    expect(within(screen.getByRole("status")).getByText("Location confirmed")).toBeInTheDocument();
+    expect(within(screen.getByRole("status", { name: "Location status" })).getByText("Location confirmed")).toBeInTheDocument();
     await user.type(screen.getByRole("textbox"), "4 offices{Enter}");
     expect(Boolean(screen.queryByRole("region", { name: "Proposed building structure" }))).toBe(whole);
   });
@@ -204,7 +204,7 @@ describe("Prototype Unit location confirmation", () => {
     expect(screen.queryByRole("button", { name: "Show more addresses" })).toBeNull();
     expect(screen.getByRole("button", { name: "Flat 3, Stanley House 1115 Finchley Road, London, NW11 0QD" })).toBeInTheDocument();
     await user.click(screen.getByRole("button", { name: "None of these" }));
-    expect(screen.queryByRole("status")).toBeNull();
+    expect(screen.queryByRole("status", { name: "Location status" })).toBeNull();
   });
 });
 
@@ -228,7 +228,7 @@ describe("Prototype Unit proposed building", () => {
     expect(within(proposal).getAllByText("Residential")).toHaveLength(11);
     expect(within(proposal).getByText("Commercial")).toBeInTheDocument();
     expect(screen.getByLabelText("Location map")).toBe(map);
-    expect(within(screen.getByRole("status")).getByText("Location confirmed")).toBeInTheDocument();
+    expect(within(screen.getByRole("status", { name: "Location status" })).getByText("Location confirmed")).toBeInTheDocument();
     expect(within(screen.getByRole("main")).queryAllByRole("button", { name: /create/i })).toHaveLength(0);
     expect(within(proposal).getByText("12 Units · 11 Residential · 1 Commercial")).toBeInTheDocument();
     expect(screen.getByText(/I've called them Flat 1 to Flat 11 and Shop for now/)).toBeInTheDocument();
@@ -241,7 +241,7 @@ describe("Prototype Unit proposed building", () => {
     expect(within(proposal).getByText("Nothing created yet")).toBeInTheDocument();
     await user.click(screen.getByRole("button", { name: "A new conversation" }));
     expect(screen.queryByRole("region", { name: "Proposed building structure" })).toBeNull();
-    expect(screen.queryByRole("status")).toBeNull();
+    expect(screen.queryByRole("status", { name: "Location status" })).toBeNull();
     expect(screen.getByLabelText("Location map")).toBe(map);
   });
 
