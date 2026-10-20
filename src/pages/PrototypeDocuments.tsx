@@ -234,7 +234,7 @@ export default function PrototypeDocuments() {
     const { papers, overflow } = addToBatch(base, incoming);
     clearBatchUrls(incoming.filter((p) => !papers.includes(p)));
     const first = !batch || batch.started;
-    if (batch?.started) clearBatchUrls(batch.papers);
+    if (batch?.started) { clearBatchUrls(batch.papers); setTenancies(null); }
     setBatch({ papers, started: false }); setSelectionOpen(false); setReadingCard(null); setDoneCard(null); setSection("current"); setShowChat(true); setUploadError("");
     addMessage("user", label, true);
     if (first) addMessage("hobson", "Send me the papers you want me to look through. I'll work through them together and only ask about the ones that need you.");
