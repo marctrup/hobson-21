@@ -16,7 +16,7 @@ class PublicWasmFactory {
   }
 }
 
-export default function PrototypeDocumentsPreview({ paper }: { paper: PrototypePaper }) {
+export default function PrototypeDocumentsPreview({ paper, goTo }: { paper: PrototypePaper; goTo?: { page: number; nonce: number } }) {
   const [pdf, setPdf] = useState<PDFDocumentProxy | null>(null);
   const [page, setPage] = useState(1);
   const [error, setError] = useState(false);
@@ -29,6 +29,10 @@ export default function PrototypeDocumentsPreview({ paper }: { paper: PrototypeP
     task.promise.then((loaded) => { if (active) setPdf(loaded); }).catch(() => { if (active) setError(true); });
     return () => { active = false; void task.destroy(); };
   }, [paper.url]);
+  useEffect(() => {
+    if (!goTo || !pdf) return;
+    setPage(Math.max(1, Math.min(pdf.numPages, goTo.page)));
+  }, [goTo, pdf]);
   useEffect(() => {
     if (!pdf) return;
     let active = true;
