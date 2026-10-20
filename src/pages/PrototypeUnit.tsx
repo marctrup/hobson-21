@@ -5,6 +5,7 @@ import { PrototypeGate } from "@/components/prototype/PrototypeGate";
 import owlDefault from "@/assets/prototype/owl-default.png";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
+import { discoverAddress, type AddressParts, type AddressRecord } from "./prototypeUnitAddress";
 
 const RAIL_WIDTH = 68;
 const DEFAULT_CHAT_WIDTH = 380;
@@ -21,17 +22,16 @@ const SETUP_CHOICES = [
   { label: "I'm not sure — help me work it out", response: "That's fine. I'll help you work out how best to organise it." },
 ] as const;
 
-const STANLEY_ADDRESS = "Stanley House, 14 Bedford Square, London, WC1B 3JA";
-type LocationStage = "idle" | "awaiting-address" | "proposed" | "confirmed" | "unverified";
-const STANLEY_COORDINATES: L.LatLngTuple = [51.51855, -0.13005];
-const isStanleyAddress = (text: string) => text.toLowerCase().replace(/[^a-z0-9]/g, "") === STANLEY_ADDRESS.toLowerCase().replace(/[^a-z0-9]/g, "");
+type LocationStage = "idle" | "awaiting-address" | "candidates" | "proposed" | "confirmed" | "unverified";
 
-function UnitLocationMap({ stage, address }: { stage: LocationStage; address: string }) {
+function UnitLocationMap({ stage, address, candidate }: { stage: LocationStage; address: string; candidate: AddressRecord | null }) {
   const container = useRef<HTMLDivElement>(null);
   const map = useRef<L.Map | null>(null);
   const marker = useRef<L.Marker | null>(null);
   const [labelPoint, setLabelPoint] = useState({ x: 0, y: 0 });
-  const matched = stage === "proposed" || stage === "confirmed";
+  const matched = Boolean(candidate) && (stage === "candidates" || stage === "proposed" || stage === "confirmed");
+  const coordinatesRef = useRef<L.LatLngTuple>([51.509, -0.12]);
+  coordinatesRef.current = candidate?.coordinates ?? [51.509, -0.12];
 
   useEffect(() => {
     if (!container.current) return;
@@ -41,7 +41,7 @@ function UnitLocationMap({ stage, address }: { stage: LocationStage; address: st
     }).addTo(instance);
     map.current = instance;
     const placeLabel = () => {
-      const point = instance.latLngToContainerPoint(STANLEY_COORDINATES);
+      const point = instance.latLngToContainerPoint(coordinatesRef.current);
       setLabelPoint({ x: point.x, y: point.y });
     };
     instance.on("move resize", placeLabel);
@@ -54,22 +54,23 @@ function UnitLocationMap({ stage, address }: { stage: LocationStage; address: st
   useEffect(() => {
     const instance = map.current;
     if (!instance) return;
-    if (!matched) { marker.current?.remove(); marker.current = null; return; }
+    if (!matched || !candidate) { marker.current?.remove(); marker.current = null; return; }
     const confirmed = stage === "confirmed";
     const icon = L.divIcon({ className: "", html: `<span class="flex h-7 w-7 items-center justify-center rounded-full border-2 border-background shadow-sm ring-4 transition-colors duration-300 motion-reduce:transition-none ${confirmed ? "bg-primary text-primary-foreground ring-primary/10" : "bg-background text-foreground ring-ring/20"}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">${confirmed ? '<path d="m5 12 4 4 10-10"/>' : '<circle cx="12" cy="12" r="4"/>'}</svg></span>`, iconSize: [28, 28], iconAnchor: [14, 14] });
-    if (marker.current) { marker.current.setIcon(icon); return; }
-    marker.current = L.marker(STANLEY_COORDINATES, { icon, title: "Stanley House — illustrative location" }).addTo(instance);
-    instance.flyTo(STANLEY_COORDINATES, 17, { animate: !window.matchMedia("(prefers-reduced-motion: reduce)").matches, duration: 0.8 });
-  }, [matched, stage]);
+    if (marker.current) { marker.current.setIcon(icon); marker.current.setLatLng(candidate.coordinates); }
+    else
+    marker.current = L.marker(candidate.coordinates, { icon, title: `${candidate.name} — illustrative location` }).addTo(instance);
+    instance.flyTo(candidate.coordinates, stage === "candidates" ? 15 : 17, { animate: !window.matchMedia("(prefers-reduced-motion: reduce)").matches, duration: 0.8 });
+  }, [matched, stage, candidate]);
 
   return (
     <div className="relative z-0 min-h-0 flex-1 overflow-hidden rounded-lg border border-border">
       <div ref={container} className="absolute inset-0" aria-label="Location map" />
       {matched ? <div className="pointer-events-none absolute z-[500] w-[220px] -translate-x-1/2 rounded-md border border-border bg-background/95 px-3 py-2 text-foreground shadow-sm" style={{ left: labelPoint.x, top: labelPoint.y + 24 }} role="status" aria-label="Location status">
-        <p className="text-sm font-semibold">Stanley House</p>
-        <p className="mt-1 text-xs leading-relaxed text-muted-foreground">14 Bedford Square, London, WC1B 3JA</p>
+        <p className="text-sm font-semibold">{stage === "candidates" ? "Possible address matches" : candidate?.name}</p>
+        <p className="mt-1 text-xs leading-relaxed text-muted-foreground">{stage === "candidates" ? "Finchley Road · NW11 0QD" : candidate?.line}</p>
         <p className="mt-1.5 text-xs font-medium">{stage === "confirmed" ? "Location confirmed" : "Awaiting confirmation"}</p>
-        <p className="mt-1 text-[10px] text-muted-foreground">Illustrative location · approximate marker</p>
+        <p className="mt-1 text-[10px] text-muted-foreground">Illustrative mock lookup · approximate marker</p>
       </div> : (stage === "unverified" || (stage === "awaiting-address" && address)) && <div className="pointer-events-none absolute inset-x-3 bottom-8 z-[500] flex justify-center">
         <div className="max-w-full rounded-md border border-border bg-background px-3 py-2 text-foreground shadow-sm" role="status" aria-label="Location status">
           <p className="text-xs font-medium">Location needs verification</p>
@@ -202,6 +203,9 @@ function PrototypeUnitShell() {
   const [locationStage, setLocationStage] = useState<LocationStage>("idle");
   const [locationPromptId, setLocationPromptId] = useState<number | null>(null);
   const [locationAddress, setLocationAddress] = useState("");
+  const [addressParts, setAddressParts] = useState<AddressParts>({});
+  const [addressCandidates, setAddressCandidates] = useState<AddressRecord[]>([]);
+  const [selectedAddress, setSelectedAddress] = useState<AddressRecord | null>(null);
   const nextId = useRef(1);
   const conversationEnd = useRef<HTMLDivElement>(null);
 
@@ -229,42 +233,79 @@ function PrototypeUnitShell() {
     ]);
     setSetupPromptId(null);
     if (choice.label === "A Unit Group with several Units") {
-      setMessages((previous) => [...previous, { id: nextId.current++, role: "hobson", text: "What is the full address?" }]);
+      setMessages((previous) => [...previous, { id: nextId.current++, role: "hobson", text: "What's the full address, including the postcode?" }]);
       setLocationStage("awaiting-address");
     }
   };
 
-  const respondToLocation = (confirm: boolean) => {
-    if (locationStage !== "proposed") return;
-    setMessages((previous) => [...previous,
-      { id: nextId.current++, role: "user", text: confirm ? "Yes, that's the place" : "Choose a different location" },
-      { id: nextId.current++, role: "hobson", text: confirm ? "Good. I've got the location for Stanley House." : "Of course. What's the correct address?" },
+  const appendExchange = (userText: string, hobsonText: string) => {
+    const id = nextId.current++;
+    setMessages(previous => [...previous,
+      { id: nextId.current++, role: "user", text: userText },
+      { id, role: "hobson", text: hobsonText },
     ]);
-    setLocationStage(confirm ? "confirmed" : "awaiting-address");
-    setLocationPromptId(null);
     setInput("");
+    return id;
+  };
+
+  const checkAgain = (reply: string) => {
+    appendExchange(reply, "Of course. What's the correct address, including the postcode?");
+    setLocationStage("awaiting-address");
+    setLocationPromptId(null);
+    setAddressParts({});
+    setAddressCandidates([]);
+    setSelectedAddress(null);
+    setLocationAddress("");
+  };
+
+  const selectCandidate = (record: AddressRecord) => {
+    if (locationStage !== "candidates") return;
+    setSelectedAddress(record);
+    setLocationAddress(`${record.name}, ${record.line}`);
+    setLocationPromptId(appendExchange(`${record.name}, ${record.line}`, "Is this the right place?"));
+    setLocationStage("proposed");
+  };
+
+  const respondToLocation = (confirm: boolean) => {
+    if (locationStage !== "proposed" || !selectedAddress) return;
+    if (!confirm) { checkAgain("No, let's check again"); return; }
+    appendExchange("Yes, that's the place", `Good. I've got the location for ${selectedAddress.name}.`);
+    setLocationStage("confirmed");
+    setLocationPromptId(null);
+  };
+
+  const lookupLocation = (text: string) => {
+    const result = discoverAddress(text, addressParts);
+    setAddressParts(result.parts);
+    setAddressCandidates(result.records);
+    setSelectedAddress(result.outcome === "single" ? result.records[0] ?? null : null);
+    setLocationAddress(text);
+    const record = result.records[0];
+    const reply = result.outcome === "multiple" ? "I've found some possible address matches. Which one is Stanley House?"
+      : result.outcome === "single" && record ? `I think I've found it: ${record.name}, ${record.line}. Is this the right place?`
+      : result.outcome === "missing-postcode" ? "I can look for Stanley House on Finchley Road. Do you have the full postcode? That will help me find the right place."
+      : "I haven't found a reliable match for that address. Could you check the postcode or give me a little more detail?";
+    const id = appendExchange(text, reply);
+    setLocationStage(result.outcome === "multiple" ? "candidates" : result.outcome === "single" ? "proposed" : "unverified");
+    setLocationPromptId(result.records.length ? id : null);
   };
 
   const send = () => {
     const text = input.trim();
     if (!text) return;
+    const normalised = text.toLowerCase().replace(/[.!?]+$/, "");
     if (locationStage === "proposed") {
-      if (text.toLowerCase() === "yes, that's the place") { respondToLocation(true); return; }
-      if (text.toLowerCase() === "choose a different location") { respondToLocation(false); return; }
+      if (normalised === "yes, that's the place") { respondToLocation(true); return; }
+      if (["no, let's check again", "choose a different location"].includes(normalised)) { respondToLocation(false); return; }
+      lookupLocation(text); return;
     }
-    if (locationStage === "awaiting-address" || locationStage === "unverified") {
-      const found = isStanleyAddress(text);
-      const replyId = nextId.current++;
-      setMessages((previous) => [...previous,
-        { id: nextId.current++, role: "user", text },
-        { id: replyId, role: "hobson", text: found ? "I've found Stanley House at 14 Bedford Square, London, WC1B 3JA. Is this the right place?" : "I haven't verified that location. You can give me another address." },
-      ]);
-      setLocationAddress(text);
-      setLocationStage(found ? "proposed" : "unverified");
-      setLocationPromptId(found ? replyId : null);
-      setInput("");
-      return;
+    if (locationStage === "candidates") {
+      if (normalised === "none of these is right") { checkAgain(text); return; }
+      const record = addressCandidates.find(r => r.name.toLowerCase() === normalised || `${r.name}, ${r.line}`.toLowerCase() === normalised);
+      if (record) { selectCandidate(record); return; }
+      lookupLocation(text); return;
     }
+    if (locationStage === "awaiting-address" || locationStage === "unverified") { lookupLocation(text); return; }
     if (showInvitation && text.toLowerCase().replace(/[.!?]+$/, "") === "set up a place") {
       startSetup(text);
       return;
@@ -295,7 +336,7 @@ function PrototypeUnitShell() {
             type="button"
             className="grid h-11 w-11 place-items-center rounded-full bg-[#56514A] text-white shadow-md transition hover:bg-[#56514A]"
             aria-label="A new conversation"
-            onClick={() => { setMessages([OPENING_MESSAGE]); setInput(""); setSetupPromptId(null); setShowInvitation(true); setLocationStage("idle"); setLocationPromptId(null); setLocationAddress(""); }}
+            onClick={() => { setMessages([OPENING_MESSAGE]); setInput(""); setSetupPromptId(null); setShowInvitation(true); setLocationStage("idle"); setLocationPromptId(null); setLocationAddress(""); setAddressParts({}); setAddressCandidates([]); setSelectedAddress(null); }}
           >
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" aria-hidden><path d="M12 5v14M5 12h14" /></svg>
           </button>
@@ -343,10 +384,19 @@ function PrototypeUnitShell() {
                       ))}
                     </div>
                   )}
+                  {locationPromptId === message.id && locationStage === "candidates" && (
+                    <div className="mt-3 flex w-full flex-col gap-2">
+                      <p className="text-xs text-muted-foreground">Illustrative mock address records — not Royal Mail verified</p>
+                      {addressCandidates.map(record => <Button key={record.id} variant="outline" aria-label={`${record.name} ${record.line}`} onClick={() => selectCandidate(record)} className="h-auto min-h-11 flex-col items-start whitespace-normal px-3 py-2.5 text-left font-normal">
+                        <span className="text-sm font-medium">{record.name}</span><span className="mt-1 text-xs leading-relaxed text-muted-foreground">{record.line}</span>
+                      </Button>)}
+                      <Button variant="outline" onClick={() => checkAgain("None of these is right")} className="h-auto min-h-11 justify-start whitespace-normal px-3 py-2.5 text-left font-normal">None of these is right</Button>
+                    </div>
+                  )}
                   {locationPromptId === message.id && locationStage === "proposed" && (
                     <div className="mt-3 flex w-full flex-col items-stretch gap-2">
                       <Button variant="outline" onClick={() => respondToLocation(true)} className="h-auto min-h-11 justify-start whitespace-normal px-3 py-2.5 text-left font-normal">Yes, that's the place</Button>
-                      <Button variant="outline" onClick={() => respondToLocation(false)} className="h-auto min-h-11 justify-start whitespace-normal px-3 py-2.5 text-left font-normal">Choose a different location</Button>
+                      <Button variant="outline" onClick={() => respondToLocation(false)} className="h-auto min-h-11 justify-start whitespace-normal px-3 py-2.5 text-left font-normal">No, let's check again</Button>
                     </div>
                   )}
                 </div>
@@ -385,7 +435,7 @@ function PrototypeUnitShell() {
         <header className="flex flex-wrap items-center justify-between gap-3">
           <h2 className="text-[15px] font-semibold text-ink">Portfolio</h2>
         </header>
-        <UnitLocationMap stage={locationStage} address={locationAddress} />
+        <UnitLocationMap stage={locationStage} address={locationAddress} candidate={selectedAddress ?? addressCandidates[0] ?? null} />
       </main>
     </div>
   );

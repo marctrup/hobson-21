@@ -11,7 +11,7 @@ vi.mock("leaflet", () => ({ default: {
   map: () => ({ invalidateSize: vi.fn(), remove: vi.fn(), flyTo: vi.fn(), on: vi.fn(), latLngToContainerPoint: () => ({ x: 200, y: 200 }) }),
   tileLayer: () => ({ addTo: vi.fn() }),
   divIcon: vi.fn(),
-  marker: () => ({ addTo() { return this; }, setIcon: vi.fn(), remove: vi.fn() }),
+  marker: () => ({ addTo() { return this; }, setIcon: vi.fn(), setLatLng: vi.fn(), remove: vi.fn() }),
 } }));
 vi.stubGlobal("ResizeObserver", class { observe() {} disconnect() {} });
 vi.stubGlobal("matchMedia", () => ({ matches: false }));
@@ -113,8 +113,8 @@ describe("Prototype Unit location confirmation", () => {
     const user = await startGroup();
     const input = screen.getByRole("textbox");
     await user.type(input, `${address}{Enter}`);
-    await user.click(screen.getByRole("button", { name: "Choose a different location" }));
-    expect(within(screen.getByRole("status")).getByText("No confirmed location")).toBeInTheDocument();
+    await user.click(screen.getByRole("button", { name: "No, let's check again" }));
+    expect(screen.queryByRole("status")).toBeNull();
     await user.type(input, "22 Example Road, Manchester{Enter}");
     expect(within(screen.getByRole("status")).getByText("Location needs verification")).toBeInTheDocument();
     expect(screen.queryByRole("button", { name: "Yes, that's the place" })).toBeNull();
@@ -130,5 +130,29 @@ describe("Prototype Unit location confirmation", () => {
     await user.click(screen.getByRole("button", { name: "A new conversation" }));
     expect(screen.queryByRole("status")).toBeNull();
     expect(screen.getByLabelText("Location map")).toBeInTheDocument();
+  });
+
+  it("requires a candidate selection then explicit confirmation for the natural Finchley address", async () => {
+    const user = await startGroup();
+    await user.type(screen.getByRole("textbox"), "Stanley House 1115 Finchley Road NW11 0QD{Enter}");
+    expect(screen.queryByRole("button", { name: "Yes, that's the place" })).toBeNull();
+    await user.click(screen.getByRole("button", { name: "Stanley House 1115 Finchley Road, London, NW11 0QD" }));
+    expect(within(screen.getByRole("status")).getByText("Awaiting confirmation")).toBeInTheDocument();
+    await user.click(screen.getByRole("button", { name: "Yes, that's the place" }));
+    expect(within(screen.getByRole("status")).getByText("Location confirmed")).toBeInTheDocument();
+    expect(within(screen.getByRole("status")).getByText("1115 Finchley Road, London, NW11 0QD")).toBeInTheDocument();
+    expect(within(screen.getByRole("log")).queryAllByRole("button")).toHaveLength(0);
+  });
+
+  it("keeps partial details for a postcode reply and allows rejection of every candidate", async () => {
+    const user = await startGroup();
+    await user.type(screen.getByRole("textbox"), "Stanley House Finchley Road{Enter}");
+    expect(screen.queryByRole("button", { name: "Yes, that's the place" })).toBeNull();
+    await user.type(screen.getByRole("textbox"), "NW11 0QD{Enter}");
+    await user.click(screen.getByRole("button", { name: "None of these is right" }));
+    expect(screen.queryByRole("status")).toBeNull();
+    await user.type(screen.getByRole("textbox"), "Stanley House, 1115 Finchley Road, London, NW11 0QD{Enter}");
+    expect(screen.getByRole("button", { name: "Yes, that's the place" })).toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "None of these is right" })).toBeNull();
   });
 });
