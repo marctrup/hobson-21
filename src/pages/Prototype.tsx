@@ -3264,6 +3264,52 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
     }, delay);
   };
 
+  /* ----- free-text chat: the composer answers from whatever scope you're in ----- */
+  const askAboutProperty = (q: string) => {
+    setMessages((m) => [...m, { id: `u-${Date.now()}`, role: "user", text: q }]);
+    setTyping(true);
+    setOwl("default");
+    const name = selectedProperty?.name ?? "this property";
+    const reply = `I keep the outline of ${name}, but I answer properly unit by unit. Open a unit and I'll tell you exactly what I've read.`;
+    const delay = reduced ? 200 : 700;
+    window.setTimeout(() => {
+      setTyping(false);
+      setOwl("talking");
+      if (reduced) {
+        setMessages((m) => [...m, { id: `a-${Date.now()}`, role: "hobson", text: reply }]);
+      } else {
+        streamHobsonMessage(reply, () => {});
+      }
+    }, delay);
+  };
+
+  const askHobsonFromAnywhere = (q: string) => {
+    const text = q.trim();
+    if (!text) return;
+    if (view === "unit" && selectedUnit) { sendUnitQuestion(text); return; }
+    if (view === "property" && selectedProperty) { askAboutProperty(text); return; }
+    askPortfolioPreview(text);
+  };
+
+  /* ----- back-office rooms: free text gets an honest answer in that room ----- */
+  const magFreeText = (text: string) => {
+    magUserEcho(text);
+    window.setTimeout(() => magAsk("I compose workflows here. Pick a starting point below and I'll build it with you."), 250);
+  };
+
+  const brokerFreeText = (text: string) => {
+    const id = `bo-${Date.now()}`;
+    setBrokerEvents((arr) => [...arr, { kind: "user", id, text }]);
+    window.setTimeout(() => setBrokerEvents((arr) => [...arr, { kind: "broker", id: `${id}-r`, text: "I keep the black book. Add a contact one at a time, or hand me a spreadsheet and I'll read them all in." }]), 250);
+  };
+
+  const profFreeText = () => {
+    const id = `prof-${Date.now()}`;
+    setProfEvents((arr) => [...arr, { kind: "professor", id, text: "I read and catalogue papers. Upload a lease, certificate or notice and I'll tell you what I've found." }]);
+  };
+
+
+
   const handlePortfolioChip = (label: string) => {
     setMessages((m) => [...m, { id: `u-${Date.now()}`, role: "user", text: label }]);
     setPortfolioChip(null);
@@ -4002,7 +4048,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
             />
           )}
 
-          {/* Unit view starter chips removed — chat is locked in the prototype */}
+          {/* Unit view starter chips removed */}
           </>)}
           </div>
 
@@ -4111,7 +4157,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
             adminCharacter === "magician"
               ? (magBuild
                   ? <AdminBuildActiveBanner label="Building a workflow above — pause or cancel it to start another." />
-                  : <LockedComposer view={view} />)
+                  : <ChatComposer onSubmit={magFreeText} placeholder="Tell me what you'd like kept on top of…" label="Ask the Magician" />)
               : adminCharacter === "broker"
                 ? (brokerFlow
                     ? <BrokerComposer
@@ -4121,7 +4167,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                         onSubmitAnswer={submitBrokerAnswer}
                         onCancel={cancelBrokerFlow}
                       />
-                    : <LockedComposer view={view} />)
+                    : <ChatComposer onSubmit={brokerFreeText} placeholder="Ask me about your contacts…" label="Ask the Broker" />)
                 : adminCharacter === "inspector"
                   ? <InspectorComposer buildActive={inspectorBuild !== null} />
                   : !adminCharacter
@@ -4130,7 +4176,8 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                           <BackOfficeComposer onSubmit={boAskHobson} />
                         </div>
                       )
-                    : <LockedComposer view={view} />
+                    : <ChatComposer onSubmit={profFreeText} placeholder="Ask me about your papers…" label="Ask the Professor" />
+
 
 
           ) : testerMode && view === "unit" ? (
@@ -4163,7 +4210,35 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
               </button>
             </form>
           ) : (
-            <LockedComposer view={view} />
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                const q = input.trim();
+                if (!q) return;
+                askHobsonFromAnywhere(q);
+                setInput("");
+              }}
+              className="flex items-center gap-2 px-4 py-2.5 rounded-full border border-bone bg-white focus-within:border-[#56514A] focus-within:ring-2 focus-within:ring-[#56514A]/20 transition"
+            >
+              <input
+                ref={inputRef}
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                placeholder="Ask Hobson…"
+                className="flex-1 outline-none text-sm bg-transparent placeholder:text-ink-muted"
+                aria-label="Ask Hobson"
+              />
+              <button
+                type="submit"
+                disabled={!input.trim()}
+                className="flex items-center justify-center h-9 w-9 rounded-full bg-[#56514A] text-white hover:bg-[#56514A] transition disabled:bg-bone disabled:text-ink-muted"
+                aria-label="Send"
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M5 12h14M13 6l6 6-6 6"/>
+                </svg>
+              </button>
+            </form>
           )}
          </div>
         </div>
@@ -6778,7 +6853,7 @@ function RentFlat2Answer({ onAskFollowUp, bodyText }: { onAskFollowUp?: (q: stri
           {sources.map((s) => <li key={s}>{s}</li>)}
         </ul>
       </div>
-      {/* Related questions removed — chat is locked in the prototype */}
+      {/* Related questions removed */}
       <div>
         <div className="flex items-center gap-2 mb-2">
           <div className="text-[11px] uppercase tracking-wide text-ink-muted font-medium">Related documents</div>
@@ -7678,31 +7753,39 @@ function UnitStarters({ unit, onAsk }: { unit: Unit; onAsk: (q: string) => void 
   );
 }
 
-function LockedComposer({ view }: { view: View }) {
-  void view;
-  const placeholder = "Chat is locked in this prototype";
-  const helper = "Available in the live product";
+function ChatComposer({
+  onSubmit,
+  placeholder = "Ask Hobson…",
+  label = "Ask Hobson",
+}: {
+  onSubmit: (text: string) => void;
+  placeholder?: string;
+  label?: string;
+}) {
+  const [val, setVal] = useState("");
   return (
-    <>
-      <div className="text-[11px] font-semibold text-[#56514A] mb-1 flex items-center gap-1">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden>
-          <rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/>
-        </svg>
-        Chat locked for the prototype
-      </div>
-      <div
-        aria-disabled="true"
-        tabIndex={-1}
-        className="flex items-center gap-2 px-4 py-2.5 rounded-full border border-dashed border-[#56514A]/40 bg-[#F1EBDE] text-sm text-[#56514A]/70 select-none cursor-not-allowed"
-        title={helper}
+    <form
+      onSubmit={(e) => { e.preventDefault(); const t = val.trim(); if (!t) return; onSubmit(t); setVal(""); }}
+      className="flex items-center gap-2 px-4 py-2.5 rounded-full border border-bone bg-white focus-within:border-[#56514A] focus-within:ring-2 focus-within:ring-[#56514A]/20 transition"
+    >
+      <input
+        value={val}
+        onChange={(e) => setVal(e.target.value)}
+        placeholder={placeholder}
+        aria-label={label}
+        className="flex-1 outline-none text-sm bg-transparent placeholder:text-ink-muted"
+      />
+      <button
+        type="submit"
+        disabled={!val.trim()}
+        aria-label="Send"
+        className="flex items-center justify-center h-9 w-9 rounded-full bg-[#56514A] text-white hover:bg-[#56514A] transition disabled:bg-bone disabled:text-ink-muted"
       >
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
-          <rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M5 12h14M13 6l6 6-6 6"/>
         </svg>
-        <span className="flex-1 truncate">{placeholder}</span>
-        <span className="text-[10px] uppercase tracking-wide hidden sm:inline">{helper}</span>
-      </div>
-    </>
+      </button>
+    </form>
   );
 }
 

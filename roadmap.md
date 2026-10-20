@@ -1,5 +1,8 @@
 # Roadmap
 
+## Remove "chat is locked" from the prototype
+- [x] Replace every locked composer with a working chat box that answers honestly for the current view; 70 tests pass (one new composer test) and sending was checked in a test browser.
+
 ## Resizable prototype work area
 - [x] Reflow overview and all three journeys to their available width as the divider moves; 17 focused tests pass, browser dragging verified at 427px and 966px work widths with no overflow and preserved evidence/selection.
 
