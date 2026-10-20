@@ -167,7 +167,7 @@ export function WorkJourney({ paused, onPauseChange, onBack, onGuide, sideLetter
     {selected === "summary" && sideLetterFound && <>
       <p className="mt-3 text-sm font-medium">Renewal summary — Updating</p>
       <p className="mt-2 text-sm leading-relaxed text-muted-foreground">The later Side Letter may change the rent information used in the renewal summary.</p>
-      <p className="mt-4 text-sm leading-relaxed">I'll use the later recorded rent position, while other paper checks remain open. The summary stays in progress until they're resolved. Tenant identification, unit details and the end date are unaffected and haven't been revisited.</p>
+      <p className="mt-4 text-sm leading-relaxed">I'll take the Side Letter into account, while checking whether any other papers — including the Deed of Variation, still under review — affect that position. The summary stays in progress until they're resolved. Tenant identification, unit details and the end date are unaffected and haven't been revisited.</p>
     </>}
     {selected === "tenancy" && <>
       <p className="mt-2 text-sm leading-relaxed text-muted-foreground">I found the tenancy agreement and confirmed the parties and end date recorded in it.</p>
