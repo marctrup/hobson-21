@@ -18,7 +18,7 @@ export const FIRST_LOOK: Record<string, LookEntry> = {
   "example-2": { name: "Licence to Alter — Puig, 2016", group: "ready" },
   "example-3": { name: "BT & Puig Wayleave", group: "unplaced", reason: "The copy appears undated, and I need to establish whether it was completed and how it should be recorded." },
   "example-4": { name: "Deed of Variation — Puig, 2020", group: "ready" },
-  "example-5": { name: "Puig / Feelunique Sublease — 2024", group: "check", reason: "Establish whose tenancy relationship you manage." },
+  "example-5": { name: "Puig / Feelunique Sublease — 2024", group: "check", reason: "Confirm how this tenancy should be managed and presented." },
 };
 export const isExampleBatch = (papers: BatchPaper[]) => papers.length > 0 && papers.every((p) => p.id in FIRST_LOOK);
 export const needsYou = (papers: BatchPaper[]) => papers.filter((p) => FIRST_LOOK[p.id] && FIRST_LOOK[p.id].group !== "ready").length;
@@ -45,3 +45,12 @@ export function formatSize(bytes: number): string {
 }
 
 export const BATCH_OVERFLOW_MESSAGE = "Let's start with these 5. You can add the rest straight afterwards.";
+
+/** Prepared for Iteration 5C (not yet wired): how the Sublease is presented. It always stays a separate legal relationship. */
+export const SUBLEASE_QUESTION = "I can see Puig has granted an underlease to Feelunique. Do you manage Feelunique's tenancy as well, or do you just need me to keep track of it under Puig's lease?";
+export type SubleasePresentation = "separate" | "related" | "unresolved";
+export const SUBLEASE_CHOICES: { key: SubleasePresentation; label: string }[] = [
+  { key: "separate", label: "I manage Feelunique's tenancy too" },   // separate managed Sublease history beside Puig's lease
+  { key: "related", label: "I only manage Puig's tenancy" },         // related arrangement within Puig's history, own legal identity kept
+  { key: "unresolved", label: "Not sure" },                           // presentation left open
+];
