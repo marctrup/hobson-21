@@ -82,7 +82,6 @@ export function PrototypeUnitDetails({ unit, units, groupName, onChange, onBack 
           <textarea id="unit-description" value={description} onChange={e => setDescription(e.target.value)} rows={2} placeholder="Not entered" className="mt-1 w-full rounded-md border border-input bg-background px-3 py-2 text-sm text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring" />
           {suggestion !== null && (
             <div role="status" className="mt-2 flex gap-2">
-              <img src="" alt="" hidden />
               <div className="min-w-0 flex-1 rounded-md bg-secondary/40 px-3 py-2 text-sm text-foreground">
                 {suggestion ? <>
                   <p className="text-xs text-muted-foreground">Hobson suggests, from what's recorded:</p>

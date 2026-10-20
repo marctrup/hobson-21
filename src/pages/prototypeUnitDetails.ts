@@ -107,7 +107,6 @@ export type DetailInstruction =
   | { kind: "question"; reply: string };
 
 function findTargets(text: string, units: DetailedUnit[]): number[] | null {
-  const byName = (re: RegExp) => units.filter(u => re.test(u.name.toLowerCase())).map(u => u.number);
   const range = text.match(/\b(flats?|offices?|units?|apartments?)\s+(\d+)\s*(?:to|-|–|through)\s*(\d+)/);
   if (range) {
     const kind = range[1].replace(/s$/, "");
@@ -119,7 +118,6 @@ function findTargets(text: string, units: DetailedUnit[]): number[] | null {
   if (/\ball (?:of )?(?:the )?units\b/.test(text)) return units.map(u => u.number);
   const named = units.filter(u => new RegExp(`\\b${u.name.toLowerCase().replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\b`).test(text)).map(u => u.number);
   if (named.length) return named;
-  void byName;
   return null;
 }
 
