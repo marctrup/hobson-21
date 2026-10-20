@@ -371,8 +371,9 @@ function PrototypeUnitShell() {
                   <p className="mb-1 text-xs font-semibold text-ink-muted">Hobson</p>
                   <p className="break-words text-sm leading-relaxed">{message.text}</p>
                   {message.id === OPENING_MESSAGE.id && showInvitation && (
-                    <Button variant="ghost" onClick={() => startSetup()} className="mt-3 h-auto justify-start whitespace-normal px-0 py-1 text-left text-sm font-normal text-ink-muted hover:bg-transparent hover:text-ink">
-                      Set up a place →
+                    <Button onClick={() => startSetup()} className="mt-3 min-h-11 max-w-full justify-between gap-4 whitespace-normal px-4 py-2.5 text-left text-sm font-semibold shadow-sm">
+                      <span>Set up a place</span>
+                      <span className="shrink-0">→</span>
                     </Button>
                   )}
                   {setupPromptId === message.id && (
