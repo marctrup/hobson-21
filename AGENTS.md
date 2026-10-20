@@ -22,3 +22,4 @@
 - Hobson's owl marks each Hobson turn, never user messages; a spacer aligns continuations.
 - Subdirectories have their own AGENTS.md (e.g. src/pages); read it before changing files there.
 - Prototype Documents (/prototype-documents) is independently gated and uses its own typed local Stage 1 paper state; only the named example receives scripted recognition, uploaded PDFs remain session-local, and confirmation terminates before extraction or filing so later stages can extend without coupling to Work or Unit.
+- PDF image decoders live under public/wasm and are fetched by URL from the mounted client viewer, never imported into source bundles, to preserve deployment compatibility.
