@@ -1,6 +1,10 @@
 import { useState } from "react";
 import * as Menu from "@radix-ui/react-dropdown-menu";
-import { Check, MoreHorizontal, Pencil, Plus, Undo2 } from "lucide-react";
+import { Check, GripVertical, MoreHorizontal, Pencil, Plus, Undo2 } from "lucide-react";
+import { DndContext, KeyboardSensor, PointerSensor, TouchSensor, closestCenter, useSensor, useSensors, type DragEndEvent } from "@dnd-kit/core";
+import { SortableContext, arrayMove, sortableKeyboardCoordinates, useSortable, verticalListSortingStrategy } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
+import type { ReactNode } from "react";
 import { suggestUnit, summarise, typeFromName, type BuildingUnderstanding, type ProposedUnit } from "./prototypeUnitStructure";
 
 type Props = {
@@ -13,6 +17,18 @@ type Props = {
   onRemove?: (unit: ProposedUnit, index: number) => void;
   onAdd?: (units: ProposedUnit[]) => void;
 };
+
+// A sortable row: only the handle starts a drag, so name, pencil and menu stay clickable.
+function SortableRow({ id, label, disabled, children }: { id: number; label: string; disabled: boolean; children: (handle: ReactNode) => ReactNode }) {
+  const { attributes, listeners, setNodeRef, setActivatorNodeRef, transform, transition, isDragging } = useSortable({ id, disabled });
+  return (
+    <li ref={setNodeRef} style={{ transform: CSS.Translate.toString(transform), transition }} className={`relative flex min-h-11 items-center gap-2 bg-background px-2 py-1.5 ${isDragging ? "z-10 shadow-md ring-1 ring-border" : ""}`}>
+      {children(disabled ? <span className="w-6 shrink-0" aria-hidden /> : (
+        <button type="button" ref={setActivatorNodeRef} {...attributes} {...listeners} aria-label={`Reorder ${label}`} className="grid h-8 w-6 shrink-0 cursor-grab touch-none place-items-center rounded text-muted-foreground/60 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring active:cursor-grabbing"><GripVertical className="h-4 w-4" aria-hidden /></button>
+      ))}
+    </li>
+  );
+}
 
 const reclassify = (u: ProposedUnit, c: ProposedUnit["classification"]): ProposedUnit =>
   u.classification === c ? u : { ...u, classification: c, type: c === "Residential" ? "Flat" : u.type === "Flat" ? "Unit" : u.type };
@@ -27,6 +43,10 @@ export function PrototypeUnitStructure({ understanding, reviewed = false, editab
   const summary = understanding.kind === "proposal" ? summarise(units) : null;
   const nameTaken = (id: number) => units.some(u => u.number !== id && u.name.toLowerCase() === draftName.trim().toLowerCase());
 
+  const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 4 } }), useSensor(TouchSensor, { activationConstraint: { delay: 150, tolerance: 5 } }), useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates }));
+  // Reordering changes position only — never names, uses, identity or count.
+  const move = (from: number, to: number) => { if (to < 0 || to >= base.length || from === to) return; onSave?.(arrayMove(base, from, to), ""); };
+  const onDragEnd = ({ active, over }: DragEndEvent) => { if (!over) return; move(base.findIndex(u => u.number === active.id), base.findIndex(u => u.number === over.id)); };
   const open = (unit: ProposedUnit) => { setAdding(null); setEditing(unit.number); setDraftName(unit.name); setDraftUse(unit.classification); };
   const startAdd = () => { const unit = suggestUnit(base); setAdding(unit); setEditing(unit.number); setDraftName(unit.name); setDraftUse(unit.classification); };
   const cancel = () => { setEditing(null); setAdding(null); };
@@ -58,6 +78,8 @@ export function PrototypeUnitStructure({ understanding, reviewed = false, editab
         </div>
       )}
       {understanding.kind === "proposal" ? (
+        <DndContext sensors={sensors} collisionDetection={closestCenter} modifiers={[({ transform }) => ({ ...transform, x: 0 })]} onDragEnd={onDragEnd} accessibility={{ screenReaderInstructions: { draggable: "To reorder, press space, use the arrow keys, then press space again." } }}>
+        <SortableContext items={base.map(u => u.number)} strategy={verticalListSortingStrategy}>
         <ul aria-label="Proposed Units" className="divide-y divide-border rounded-md border border-border bg-background">
           {units.map((unit, index) => editing === unit.number ? (
             <li key={unit.number} className="bg-secondary/30 px-3 py-3">
@@ -78,7 +100,8 @@ export function PrototypeUnitStructure({ understanding, reviewed = false, editab
               </div>
             </li>
           ) : (
-            <li key={unit.number} className="flex min-h-11 items-center gap-3 px-3 py-1.5">
+            <SortableRow key={unit.number} id={unit.number} label={unit.name} disabled={!editable || editing !== null}>{handle => (<>
+              {editable && handle}
               <p className="min-w-0 flex-1 truncate text-sm font-medium text-foreground">{unit.name}</p>
               <p className="shrink-0 text-xs text-muted-foreground">{unit.classification}{unit.location ? ` · ${unit.location}` : ""}</p>
               {editable && <button type="button" aria-label={`Edit ${unit.name}`} onClick={() => open(unit)} className="grid h-8 w-8 shrink-0 place-items-center rounded-md text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"><Pencil className="h-3.5 w-3.5" aria-hidden /></button>}
@@ -88,14 +111,18 @@ export function PrototypeUnitStructure({ understanding, reviewed = false, editab
                   <Menu.Portal>
                     <Menu.Content align="end" sideOffset={4} className="z-[1000] min-w-32 rounded-md border border-border bg-background p-1 text-sm text-foreground shadow-md">
                       <Menu.Item onSelect={() => open(unit)} className="cursor-pointer rounded px-3 py-2 outline-none data-[highlighted]:bg-secondary">Edit</Menu.Item>
+                      <Menu.Item disabled={index === 0} onSelect={() => move(index, index - 1)} className="cursor-pointer rounded px-3 py-2 outline-none data-[disabled]:opacity-50 data-[highlighted]:bg-secondary">Move up</Menu.Item>
+                      <Menu.Item disabled={index === base.length - 1} onSelect={() => move(index, index + 1)} className="cursor-pointer rounded px-3 py-2 outline-none data-[disabled]:opacity-50 data-[highlighted]:bg-secondary">Move down</Menu.Item>
                       <Menu.Item disabled={base.length < 2} onSelect={() => onRemove?.(unit, index)} className="cursor-pointer rounded px-3 py-2 outline-none data-[disabled]:opacity-50 data-[highlighted]:bg-secondary">Remove</Menu.Item>
                     </Menu.Content>
                   </Menu.Portal>
                 </Menu.Root>
               )}
-            </li>
+            </>)}</SortableRow>
           ))}
         </ul>
+        </SortableContext>
+        </DndContext>
       ) : <p className="text-sm text-muted-foreground">Separate spaces still to establish</p>}
       {understanding.kind === "proposal" && editable && !adding && (
         <button type="button" onClick={startAdd} className="mt-2 inline-flex min-h-9 items-center gap-1.5 rounded-md px-2 text-sm text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"><Plus className="h-3.5 w-3.5" aria-hidden />Add another Unit</button>
