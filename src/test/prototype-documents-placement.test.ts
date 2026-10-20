@@ -30,3 +30,15 @@ describe("Documents Stage 3B", () => {
     expect(statusText({ ...emptyPlacement, current: "current" })).toBe("Current — Confirmed by you");
   });
 });
+import { advanceReadings, activeReadings, previewFinish, READING_PHRASES, type Reading } from "@/pages/prototypeDocumentsReading";
+describe("Documents Reading", () => {
+  const r = { id: 1, finished: false, step: 0 } as Reading;
+  it("advancing activity never finishes a reading", () => {
+    let list = [r]; for (let i = 0; i < 10; i++) list = advanceReadings(list);
+    expect(list[0].finished).toBe(false);
+    expect(list[0].step).toBe(READING_PHRASES.length - 1);
+  });
+  it("finished readings leave the Reading count", () => {
+    expect(activeReadings(previewFinish([r, { ...r, id: 2 }], 1))).toHaveLength(1);
+  });
+});

@@ -9,6 +9,8 @@ import { confirmPaper, DETAIL_STAGES, emptyPaperJourney, EXAMPLE_LEASE_FILENAME,
 import PrototypeDocumentsPapers from "./PrototypeDocumentsPapers";
 import { chooseUnit, emptyPlacement, EXAMPLE_UNITS, isSettled, PROPOSED_UNIT, STOP_AFTER_RESPONSIBILITY, ROLE_LABELS, type PlaceStep, type Placement, type RoleKind } from "./prototypeDocumentsPlacement";
 import { shownValue } from "./prototypeDocumentsDetails";
+import PrototypeDocumentsReading from "./PrototypeDocumentsReading";
+import { activeReadings, advanceReadings, phraseFor, previewFinish, READING_STEP_MS, type Reading } from "./prototypeDocumentsReading";
 import { answerEffective, correctDetail, emptyReview, type DetailKey, type DetailsReview } from "./prototypeDocumentsDetails";
 
 // Prototype Documents: an independent, blank Hobson shell. Shares only visual styling
@@ -23,20 +25,23 @@ const MIN_CANVAS_WIDTH = 320;
 
 type Message = { id: number; text: string; role: "user" | "hobson"; attachment?: boolean };
 
-function RailItem({ icon, label, active }: { icon: "pin" | "doc" | "chat" | "gear"; label: string; active?: boolean }) {
+function RailItem({ icon, label, active, onClick, count }: { icon: "pin" | "doc" | "chat" | "gear" | "book"; label: string; active?: boolean; onClick?: () => void; count?: number }) {
   return (
     <button
       type="button"
-      className={`w-12 flex flex-col items-center gap-0.5 py-2 rounded-lg transition focus:outline-none focus:ring-2 focus:ring-ring ${active ? "bg-secondary" : "hover:bg-paper"}`}
+      className={`relative w-12 flex flex-col items-center gap-0.5 py-2 rounded-lg transition focus:outline-none focus:ring-2 focus:ring-ring ${active ? "bg-secondary" : "hover:bg-paper"}`}
       aria-current={active ? "page" : undefined}
-      aria-label={label}
+      aria-label={count ? `${label}, ${count} being read` : label}
+      onClick={onClick}
     >
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-ink-muted" aria-hidden>
         {icon === "pin" && (<><path d="M12 22s-7-6.5-7-12a7 7 0 1114 0c0 5.5-7 12-7 12z" /><circle cx="12" cy="10" r="2.5" /></>)}
         {icon === "doc" && (<><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" /><path d="M14 2v6h6" /></>)}
         {icon === "chat" && (<path d="M21 12a8 8 0 11-3-6.2L21 3v6h-6" />)}
+        {icon === "book" && (<><path d="M2 5a2 2 0 012-2h6v18H4a2 2 0 01-2-2z" /><path d="M22 5a2 2 0 00-2-2h-6v18h6a2 2 0 002-2z" /></>)}
         {icon === "gear" && (<><circle cx="12" cy="12" r="3" /><path d="M19.4 15a1.6 1.6 0 00.3 1.8l.1.1a2 2 0 11-2.8 2.8l-.1-.1a1.6 1.6 0 00-1.8-.3 1.6 1.6 0 00-1 1.5V21a2 2 0 11-4 0v-.1a1.6 1.6 0 00-1-1.5" /></>)}
       </svg>
+      {!!count && <span aria-hidden className="absolute ml-6 -mt-1 grid h-4 min-w-4 place-items-center rounded-full bg-primary px-1 text-[9px] font-semibold text-primary-foreground">{count}</span>}
       <span className={`w-full px-0.5 text-center text-[10px] leading-tight [overflow-wrap:anywhere] ${active ? "text-ink font-medium" : "text-ink-muted"}`}>{label}</span>
     </button>
   );
@@ -96,6 +101,10 @@ export default function PrototypeDocuments() {
   const [placement, setPlacement] = useState<Placement>(emptyPlacement);
   const [view, setView] = useState<"papers" | "paper">("papers");
   const mainRef = useRef<HTMLElement>(null);
+  const [readings, setReadings] = useState<Reading[]>([]);
+  const [section, setSection] = useState<"current" | "reading" | "papers" | "conversations">("current");
+  const [readingCard, setReadingCard] = useState<number | null>(null);
+  const readingId = useRef(1);
   const [selectionOpen, setSelectionOpen] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [uploadError, setUploadError] = useState("");
@@ -117,6 +126,11 @@ export default function PrototypeDocuments() {
     ro.observe(el);
     return () => ro.disconnect();
   }, []);
+  useEffect(() => {
+    if (!activeReadings(readings).length) return;
+    const t = window.setInterval(() => setReadings(advanceReadings), READING_STEP_MS);
+    return () => window.clearInterval(t);
+  }, [readings.length, activeReadings(readings).length]);
   useEffect(() => {
     if (journey.stage !== "reading") return;
     const timer = window.setTimeout(() => {
@@ -146,14 +160,15 @@ export default function PrototypeDocuments() {
     }, 1500);
     return () => { window.clearTimeout(step); window.clearTimeout(timer); };
   }, [placement.step]);
-  const restart = () => {
+  const restart = (keepReadings = false) => {
     generation.current++;
     if (uploadUrl.current) URL.revokeObjectURL(uploadUrl.current);
     uploadUrl.current = null;
-    setJourney(emptyPaperJourney); setReview(emptyReview); setPlacement(emptyPlacement); setView("papers"); setGoTo(undefined); setMessages([]); setInput(""); setSelectionOpen(false); setUploadError(""); setUploading(false); setShowChat(true);
+    setJourney(emptyPaperJourney); setReview(emptyReview); setPlacement(emptyPlacement); setView("papers"); setSection("current"); setReadingCard(null);
+    if (!keepReadings) setReadings([]); setGoTo(undefined); setMessages([]); setInput(""); setSelectionOpen(false); setUploadError(""); setUploading(false); setShowChat(true);
   };
   const receive = (paper: PrototypePaper) => {
-    setJourney(receivePaper(paper)); setSelectionOpen(false); setShowChat(true);
+    setJourney(receivePaper(paper)); setSelectionOpen(false); setReadingCard(null); setSection("current"); setShowChat(true);
     addMessage("user", paper.filename, true);
     addMessage("hobson", paper.example ? "I'll take a first look at this." : "I've received your paper. I haven't read or identified this one in this demonstration. What kind of paper is it?");
   };
@@ -264,6 +279,21 @@ export default function PrototypeDocuments() {
     addMessage("hobson", q[step]!);
     setPlacement((p) => ({ ...p, step, revisiting: true }));
   };
+  const startReading = () => {
+    addMessage("hobson", "That's all I need. I'll read the lease properly now. You can give me another paper while I get on with this.");
+    const id = readingId.current++;
+    const paper = journey.paper!;
+    setReadings((r) => [...r, { id, title: `${tenant === "SYSTEMIQ LIMITED" ? "Systemiq" : tenant} — ${journey.paperType ?? "Business Lease"}`, unit: `${placement.unit} · Russell Square House`, filename: paper.filename, url: paper.url, paperType: journey.paperType ?? "Business Lease", tenant, paperDate: shownValue(review.details[0]), effective: review.effectiveValue, placement: { ...placement, step: "placed" }, step: 0, finished: false }]);
+    setReadingCard(id);
+    setPlacement((p) => ({ ...p, step: "placed" }));
+  };
+  const anotherPaper = () => {
+    addMessage("user", "Add another paper");
+    generation.current++;
+    setJourney(emptyPaperJourney); setReview(emptyReview); setPlacement(emptyPlacement); setView("papers"); setGoTo(undefined); setInput(""); setUploadError("");
+    setSection("current"); setSelectionOpen(true); setShowChat(true);
+    addMessage("hobson", "Of course. Attach the next paper and I'll take a first look.");
+  };
   const showInPaper = (page: number) => setGoTo((g) => ({ page, nonce: (g?.nonce ?? 0) + 1 }));
 
   const send = () => {
@@ -289,13 +319,14 @@ export default function PrototypeDocuments() {
           <img src={owlDefault} alt="" className="h-10 w-10 object-contain" />
         </div>
         <RailItem icon="pin" label="Portfolio" />
-        <RailItem icon="doc" label="Papers" active />
-        <RailItem icon="chat" label="Conversations" />
+        <RailItem icon="doc" label="Papers" active={section === "papers"} onClick={() => setSection("papers")} />
+        <RailItem icon="book" label="Reading" active={section === "reading"} count={activeReadings(readings).length} onClick={() => setSection("reading")} />
+        <RailItem icon="chat" label="Conversations" active={section === "conversations"} onClick={() => setSection("conversations")} />
         <div className="mt-auto flex flex-col items-center gap-3 pb-2">
           <Button
             type="button"
             aria-label="A new conversation"
-            onClick={restart}
+            onClick={() => restart(true)}
             className="grid h-11 w-11 place-items-center rounded-full bg-primary text-primary-foreground shadow-md"
           >
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" aria-hidden><path d="M12 5v14M5 12h14" /></svg>
@@ -362,7 +393,7 @@ export default function PrototypeDocuments() {
           </div>}
           {placement.step === "endDate" && <div className="ml-12"><Button variant="ghost" onClick={() => answerEnd(null)}>I don't know the date</Button></div>}
           {placement.step === "review" && <div className="ml-12 flex flex-wrap gap-2">
-            {isSettled(placement) && <Button variant="outline" onClick={() => { addMessage("user", "Yes, put it here"); addMessage("hobson", "Good. I'll read the lease properly before adding it to the tenancy history."); setPlacement((p) => ({ ...p, step: "placed" })); }}>Yes, put it here</Button>}
+            {isSettled(placement) && <Button variant="outline" onClick={() => { addMessage("user", "Yes, put it here"); startReading(); }}>Yes, put it here</Button>}
             <Button variant="ghost" onClick={() => { addMessage("user", "Something needs changing"); addMessage("hobson", "Of course. What would you like to change?"); setPlacement((p) => ({ ...p, step: "change" })); }}>Something needs changing</Button>
           </div>}
           {placement.step === "change" && <div className="ml-12 flex flex-wrap gap-2">
@@ -371,13 +402,23 @@ export default function PrototypeDocuments() {
             <Button variant="ghost" onClick={() => revisit("relation", "The tenancy")}>The tenancy</Button>
             <Button variant="ghost" onClick={() => revisit("current", "Whether it's current")}>Whether it's current</Button>
           </div>}
+          {readingCard !== null && (() => { const r = readings.find((x) => x.id === readingCard); if (!r) return null; return (
+            <div aria-label="Reading activity" className="ml-12 rounded-lg border border-bone bg-background p-3">
+              <p className="text-sm font-semibold text-ink">{r.title}</p>
+              <p className="mt-0.5 text-xs italic text-ink-muted">{r.finished ? "I've finished reading this." : phraseFor(r)}</p>
+              <div className="mt-3 flex flex-wrap gap-2">
+                <Button size="sm" onClick={anotherPaper}>Add another paper</Button>
+                <Button size="sm" variant="ghost" onClick={() => setSection("reading")}>See what I'm reading</Button>
+                {placement.step === "placed" && <Button size="sm" variant="ghost" onClick={() => { addMessage("user", "Finish for now"); addMessage("hobson", "Very good. I'll carry on reading. You'll find it under Reading whenever you want it."); setPlacement((p) => ({ ...p, step: "none" })); setJourney(emptyPaperJourney); setReview(emptyReview); }}>Finish for now</Button>}
+              </div>
+            </div>); })()}
           <div ref={logEnd} />
         </div>
         <div className="border-t border-faint-rule px-5 pb-4 pt-2">
           {selectionOpen && <div role="group" aria-label="Choose a paper" className="mb-3 border-b border-bone pb-3">
             <div className="flex items-center justify-between"><span className="text-xs text-ink-muted">A paper for Hobson</span><Button variant="ghost" size="icon" aria-label="Close paper selection" onClick={() => setSelectionOpen(false)}><X className="h-4 w-4" /></Button></div>
             <Button variant="ghost" className="w-full justify-start" disabled={uploading} onClick={() => fileInput.current?.click()}><Paperclip className="mr-2 h-4 w-4" />{uploading ? "Opening paper…" : "Upload a paper"}</Button>
-            <Button variant="ghost" className="w-full justify-start" disabled={uploading} onClick={() => receive({ filename: EXAMPLE_LEASE_FILENAME, example: true, url: leaseAsset.url })}><FileText className="mr-2 h-4 w-4" />Try an example lease</Button>
+            <Button variant="ghost" className="w-full justify-start" disabled={uploading || readings.some((r) => r.filename === EXAMPLE_LEASE_FILENAME)} onClick={() => receive({ filename: EXAMPLE_LEASE_FILENAME, example: true, url: leaseAsset.url })}><FileText className="mr-2 h-4 w-4" />Try an example lease</Button>
             {uploadError && <p role="alert" className="mt-2 text-xs text-destructive">{uploadError}</p>}
           </div>}
           <input ref={fileInput} type="file" accept="application/pdf,.pdf" aria-label="Select a PDF" className="hidden" onChange={(e) => { const file = e.target.files?.[0]; if (file) void upload(file); e.target.value = ""; }} />
@@ -396,10 +437,11 @@ export default function PrototypeDocuments() {
       <div className="hidden h-full md:flex"><ResizeDivider width={chatWidth} setWidth={setChatWidth} /></div>
 
       <main ref={mainRef} className="flex min-w-0 flex-1 flex-col" aria-label="Prototype Documents canvas">
-        {journey.paper && <>
+        {section !== "current" && <PrototypeDocumentsReading section={section} readings={readings} onBack={() => setSection("current")} onPreviewFinish={(id) => setReadings((r) => previewFinish(r, id))} />}
+        {section === "current" && journey.paper && <>
           <header className="flex h-14 shrink-0 items-center justify-between gap-2 border-b border-bone bg-background px-5">
             <span className="text-sm font-medium">Your paper</span>
-            <div className="flex shrink-0 items-center gap-1"><Button variant="ghost" size="icon" className="md:hidden" aria-label="Chat with Hobson" title="Chat with Hobson" onClick={() => setShowChat(true)}><MessageCircle className="h-4 w-4" /></Button><Button variant="ghost" size="sm" aria-label="Restart demo" title="Restart demo" onClick={restart}><RotateCcw className="h-3.5 w-3.5 md:mr-2" /><span className="hidden md:inline">Restart demo</span></Button></div>
+            <div className="flex shrink-0 items-center gap-1"><Button variant="ghost" size="icon" className="md:hidden" aria-label="Chat with Hobson" title="Chat with Hobson" onClick={() => setShowChat(true)}><MessageCircle className="h-4 w-4" /></Button><Button variant="ghost" size="sm" aria-label="Restart demo" title="Restart demo" onClick={() => restart()}><RotateCcw className="h-3.5 w-3.5 md:mr-2" /><span className="hidden md:inline">Restart demo</span></Button></div>
           </header>
           {placing && <div role="group" aria-label="Workspace view" className="flex shrink-0 gap-1 border-b border-bone bg-background px-5 py-2">
             <Button size="sm" variant={view === "papers" ? "secondary" : "ghost"} aria-pressed={view === "papers"} onClick={() => setView("papers")}>Proposed placement</Button>
