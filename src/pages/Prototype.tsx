@@ -3930,7 +3930,11 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
               data-chat-turn-stack
               style={{ gap: CHAT_TURN_GAP_PX }}
             >
-              {messageGroups.map((group) => (
+              {messageGroups.map((group) => {
+                // Hobson's owl opens the conversation only — it is never repeated beside his later
+                // messages in the same conversation, and never appears on the user's messages.
+                const isConversationOpening = group.role === "hobson" && group.id === messageGroups.find((g) => g.role === "hobson")?.id;
+                return (
                 <div
                   key={group.id}
                   className="flex flex-col"
@@ -3947,7 +3951,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                           streaming={!!m.streaming}
                           feedback={m.feedback || {}}
                           chips={m.feedbackChips}
-                          showAvatar={true}
+                          showAvatar={isConversationOpening && i === 0}
                           onGrade={(g) => updateFeedback(m.id, { grade: g })}
                           onToggleChip={(c) => {
                             const cur = m.feedback?.chips || [];
@@ -3959,7 +3963,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                         />
                       ) : m.rich === "summary" && m.summary ? (
                         <div key={m.id} className="flex items-start gap-2">
-                          {i === 0 ? <OwlAvatar state={owl} /> : <div aria-hidden className="w-10 h-10 shrink-0" />}
+                          {isConversationOpening && i === 0 ? <OwlAvatar state={owl} /> : <div aria-hidden className="w-10 h-10 shrink-0" />}
                           <div className="flex-1 min-w-0 space-y-2">
                             {m.text && (
                               <div className="max-w-[420px] bg-[#F1EBDE] text-[#2D2D2D] text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-bl-md">
@@ -3983,7 +3987,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                           text={m.text}
                           owl={owl}
                           streaming={!!m.streaming}
-                          showAvatar={i === 0}
+                          showAvatar={isConversationOpening && i === 0}
                         />
                       )
                     ) : (
@@ -3991,7 +3995,8 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                     )
                   ))}
                 </div>
-              ))}
+                );
+              })}
               {typing && (
                 <div
                   className="flex flex-col"
@@ -4000,7 +4005,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                 >
                   <TypingBubble
                     owl={owl}
-                    showAvatar={messages[messages.length - 1]?.role !== "hobson"}
+                    showAvatar={!messageGroups.some((g) => g.role === "hobson")}
                   />
                 </div>
               )}
@@ -6499,7 +6504,7 @@ function FeedbackBubble({
   onSkipNote: () => void;
 }) {
   const [note, setNote] = useState("");
-  void showAvatar; // every Hobson turn in this exchange now renders its own owl avatar
+  const conversationOpening = showAvatar; // the owl marks Hobson's opening message only — later turns keep their alignment with a spacer.
 
   const graded = !!feedback.grade;
   const submitted = !!feedback.submitted;
@@ -6573,11 +6578,11 @@ function FeedbackBubble({
     </div>
   );
 
-  // Each Hobson "turn" in this exchange renders with its own owl avatar — never an avatar-less bubble.
+  // The owl appears only on the conversation's opening turn; later turns keep their alignment with a spacer.
   // items-start keeps the owl pinned to the top-left of the turn, beside the bubble (matching HobsonBubble layout).
   const Row: React.FC<{ children: React.ReactNode; className?: string }> = ({ children, className = "" }) => (
     <div className={`flex items-start gap-2 ${className}`}>
-      <OwlAvatar state={owl} />
+      {conversationOpening ? <OwlAvatar state={owl} /> : <div aria-hidden className="w-10 h-10 shrink-0" />}
       <div className="flex flex-col gap-1.5 min-w-0">{children}</div>
     </div>
   );
