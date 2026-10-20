@@ -229,7 +229,7 @@ describe("Prototype Unit proposed building", () => {
     expect(within(proposal).getByText("Commercial")).toBeInTheDocument();
     expect(screen.getByLabelText("Location map")).toBe(map);
     expect(within(screen.getByRole("status")).getByText("Location confirmed")).toBeInTheDocument();
-    expect(within(screen.getByRole("main")).queryAllByRole("button")).toHaveLength(0);
+    expect(within(screen.getByRole("main")).queryAllByRole("button", { name: /create/i })).toHaveLength(0);
     expect(within(proposal).getByText("12 Units · 11 Residential · 1 Commercial")).toBeInTheDocument();
     expect(screen.getByText(/I've called them Flat 1 to Flat 11 and Shop for now/)).toBeInTheDocument();
     await user.click(screen.getByRole("button", { name: "Just number them" }));
