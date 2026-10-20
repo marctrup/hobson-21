@@ -201,7 +201,7 @@ export default function PrototypeDocuments() {
     if (journey.stage === "correcting") askOthers();
   };
   const tenant = shownValue(review.details.find((d) => d.key === "tenant")!);
-  const goStep = (p: Placement, natural: PlaceStep): Placement => ({ ...p, step: p.revisiting ? "review" : natural, revisiting: p.revisiting && natural !== "review" ? false : p.revisiting });
+  const goStep = (p: Placement, natural: PlaceStep): Placement => ({ ...p, step: p.revisiting ? "review" : natural, revisiting: false });
   const proceed = (p: Placement, natural: PlaceStep) => {
     const next = goStep(p, natural);
     setPlacement(next);
