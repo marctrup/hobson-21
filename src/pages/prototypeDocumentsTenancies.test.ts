@@ -23,14 +23,14 @@ describe("Iteration 5C tenancy decisions", () => {
   });
   it("Not sure never counts as settled", () => {
     const t = answerStatus(answerMgmt(answerStatus(base, "puig", "unsure"), "unsure"), "sub", "current");
-    expect(openDecisions(t)).toBe(5); // Puig + presentation + 2 unconfirmed papers + Wayleave
+    expect(openDecisions(t)).toBe(6); // Puig + presentation + 2 unconfirmed papers + Wayleave completion and tenancy
   });
   it("changing one answer keeps the others", () => {
     const settled = { ...answerStatus(answerMgmt(answerStatus(base, "puig", "current"), "both"), "sub", "current"), compared: true };
     const done = answerBelongs(answerBelongs({ ...settled, step: "licence" }, "puig"), "sub");
     const changed = answerMgmt(reopen(done, "mgmt"), "puig");
-    expect(changed).toMatchObject({ puig: "current", sub: "current", mgmt: "puig", step: "done", belongs: { "example-2": "puig", "example-4": "sub" } });
-    expect(nextStep(changed)).toBe("done");
+    expect(changed).toMatchObject({ puig: "current", sub: "current", mgmt: "puig", step: "wayleave", belongs: { "example-2": "puig", "example-4": "sub" } });
+    expect(nextStep(changed)).toBe("wayleave");
   });
   it("after the leases, asks about the Licence then the Deed; Not sure keeps it open", () => {
     const settled = { ...answerStatus(answerMgmt(answerStatus(base, "puig", "current"), "puig"), "sub", "current"), compared: true };
@@ -39,8 +39,8 @@ describe("Iteration 5C tenancy decisions", () => {
     t = answerBelongs(t, "puig");
     expect(t.step).toBe("deed");
     t = answerBelongs(t, "unsure");
-    expect(t.step).toBe("done");
-    expect(openDecisions(t)).toBe(2); // the deed + Wayleave
+    expect(t.step).toBe("wayleave");
+    expect(openDecisions(t)).toBe(3); // the deed + Wayleave completion and tenancy
   });
   it("a paper can belong to the Sublease even when shown inside Puig's history", () => {
     const settled = { ...answerStatus(answerMgmt(answerStatus(base, "puig", "current"), "puig"), "sub", "current"), compared: true, step: "licence" as const };
