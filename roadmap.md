@@ -1,5 +1,8 @@
 # Roadmap
 
+## Prototype Unit — intelligent address discovery
+- [ ] Add illustrative Finchley Road lookup records, natural and partial address handling, candidate selection and explicit confirmation; verify all five supplied inputs, correction and map state without creating records or starting Iteration 3.
+
 ## Prototype Unit — map as part of the conversation
 - [x] Keep the real map visible throughout; animate the Stanley House proposal, use a compact adjacent label and distinct confirmed marker, preserve correction and unknown-address safeguards, and stop before structure setup. Nine focused tests pass; tiles, confirmation, correction, return to the example, persistent map and divider resizing verified in the browser without page errors. Not published.
 
