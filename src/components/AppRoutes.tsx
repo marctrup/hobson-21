@@ -204,10 +204,9 @@ const AppContent = () => {
                   </PrototypeGate>
                 }
               />
-              {/* Old prototype addresses — redirect, never 404 */}
+              {/* Old prototype address — redirect, never 404 */}
               <Route path="/prototype" element={<Navigate to="/prototype-work" replace />} />
-              <Route path="/prototype-mobile" element={<Navigate to="/prototype-work" replace />} />
-              <Route path="/prototype_testers" element={<Navigate to="/prototype-work" replace />} />
+
               
               <Route path="/auth" element={<Auth />} />
               <Route path="/admin" element={<Admin />} />
