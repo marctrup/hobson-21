@@ -88,3 +88,19 @@ describe("Iteration 22A paper placement", () => {
     expect(screen.getByRole("article", { name: "Supplied paper: Side Letter 2024.pdf" })).toBeInTheDocument();
   });
 });
+
+describe("Iteration 22B next action clarity", () => {
+  const checking = () => applyPaperPlacement(linked(), SIDE_LETTER_ATTACHMENT_ID, { type: "advance" }).state;
+  it("makes the next action explicit: the Side Letter check is in progress, the summary waits, findings stay", () => {
+    render(<WorkOverview onClose={vi.fn()} onGuide={vi.fn()} sideLetterRequested suppliedPapers={checking().suppliedPapers} />);
+    const user = userEvent.setup();
+    await user.click(screen.getByRole("button", { name: "Getting the tenancy renewal ready" }));
+    expect(screen.getByRole("heading", { name: "Checking the Side Letter" })).toBeInTheDocument();
+    expect(screen.getByText(/I'm examining whether the Side Letter changes the rent recorded in the Business Lease/)).toBeInTheDocument();
+    expect(screen.getByText("Added to Papers")).toBeInTheDocument();
+    expect(screen.getByText("Related to the existing Business Lease")).toBeInTheDocument();
+    expect(screen.getByText("In progress")).toBeInTheDocument();
+    expect(screen.getByText(/Waiting for the Side Letter check/)).toBeInTheDocument();
+    expect(screen.getByText("£24,000")).toBeVisible();
+  });
+});
