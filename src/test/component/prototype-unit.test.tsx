@@ -349,4 +349,23 @@ describe("Prototype Unit proposed building", () => {
     expect(within(proposal).getByText("13 Units · 11 Residential · 2 Commercial")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "This structure is right" })).toBeInTheDocument();
   });
+
+  it("moves Units up and down through the menu, keeping identity, totals and order through Hobson's edits", async () => {
+    const user = await confirmedStanley();
+    await user.type(screen.getByRole("textbox"), "11 flats and a shop{Enter}");
+    await user.click(screen.getByRole("button", { name: "Yes, those names are fine" }));
+    const proposal = screen.getByRole("region", { name: "Proposed building structure" });
+    const names = () => within(proposal).getAllByRole("listitem").map(li => li.querySelector("p")?.textContent);
+    await user.click(within(proposal).getByRole("button", { name: "More for Flat 1" }));
+    expect(await screen.findByRole("menuitem", { name: "Move up" })).toHaveAttribute("data-disabled");
+    await user.keyboard("{Escape}");
+    for (let i = 0; i < 11; i++) {
+      await user.click(within(proposal).getByRole("button", { name: "More for Shop" }));
+      await user.click(await screen.findByRole("menuitem", { name: "Move up" }));
+    }
+    expect(names().slice(0, 2)).toEqual(["Shop", "Flat 1"]);
+    expect(within(proposal).getByText("12 Units · 11 Residential · 1 Commercial")).toBeInTheDocument();
+    await user.type(screen.getByRole("textbox"), "Rename Flat 1 to Garden Flat{Enter}");
+    expect(names().slice(0, 2)).toEqual(["Shop", "Garden Flat"]);
+  });
 });

@@ -19,12 +19,12 @@ type Props = {
 };
 
 // A sortable row: only the handle starts a drag, so name, pencil and menu stay clickable.
-function SortableRow({ id, disabled, children }: { id: number; disabled: boolean; children: (handle: ReactNode) => ReactNode }) {
+function SortableRow({ id, label, disabled, children }: { id: number; label: string; disabled: boolean; children: (handle: ReactNode) => ReactNode }) {
   const { attributes, listeners, setNodeRef, setActivatorNodeRef, transform, transition, isDragging } = useSortable({ id, disabled });
   return (
     <li ref={setNodeRef} style={{ transform: CSS.Translate.toString(transform), transition }} className={`relative flex min-h-11 items-center gap-2 bg-background px-2 py-1.5 ${isDragging ? "z-10 shadow-md ring-1 ring-border" : ""}`}>
       {children(disabled ? <span className="w-6 shrink-0" aria-hidden /> : (
-        <button type="button" ref={setActivatorNodeRef} {...attributes} {...listeners} className="grid h-8 w-6 shrink-0 cursor-grab touch-none place-items-center rounded text-muted-foreground/60 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring active:cursor-grabbing"><GripVertical className="h-4 w-4" aria-hidden /></button>
+        <button type="button" ref={setActivatorNodeRef} {...attributes} {...listeners} aria-label={`Reorder ${label}`} className="grid h-8 w-6 shrink-0 cursor-grab touch-none place-items-center rounded text-muted-foreground/60 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring active:cursor-grabbing"><GripVertical className="h-4 w-4" aria-hidden /></button>
       ))}
     </li>
   );
@@ -100,8 +100,8 @@ export function PrototypeUnitStructure({ understanding, reviewed = false, editab
               </div>
             </li>
           ) : (
-            <SortableRow key={unit.number} id={unit.number} disabled={!editable || editing !== null}>{handle => (<>
-              {editable && <span aria-label={`Drag ${unit.name}`} className="contents">{handle}</span>}
+            <SortableRow key={unit.number} id={unit.number} label={unit.name} disabled={!editable || editing !== null}>{handle => (<>
+              {editable && handle}
               <p className="min-w-0 flex-1 truncate text-sm font-medium text-foreground">{unit.name}</p>
               <p className="shrink-0 text-xs text-muted-foreground">{unit.classification}{unit.location ? ` · ${unit.location}` : ""}</p>
               {editable && <button type="button" aria-label={`Edit ${unit.name}`} onClick={() => open(unit)} className="grid h-8 w-8 shrink-0 place-items-center rounded-md text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"><Pencil className="h-3.5 w-3.5" aria-hidden /></button>}
