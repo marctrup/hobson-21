@@ -1,5 +1,8 @@
 # Roadmap
 
+## Iteration 22 — identify, place and link the Side Letter
+- [ ] Add illustrative identification and confirmed filing through the existing Desk, with alternative places, mismatch safeguards and one shared record; preserve pending review, original findings and all other work.
+
 ## Visible chat paperclip
 - [x] Show the sample-paper paperclip in ordinary Hobson chat as well as renewal guidance; reuse the existing receipt flow; 32 tests pass and build is clean. On-screen review remains blocked by the private entrance.
 
