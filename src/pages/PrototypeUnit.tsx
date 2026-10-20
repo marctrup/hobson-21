@@ -372,7 +372,7 @@ function PrototypeUnitShell() {
                   <p className="break-words text-sm leading-relaxed">{message.text}</p>
                   {message.id === OPENING_MESSAGE.id && showInvitation && (
                     <Button onClick={() => startSetup()} className="mt-3 min-h-11 max-w-full justify-between gap-4 whitespace-normal px-4 py-2.5 text-left text-sm font-semibold shadow-sm">
-                      <span>Set up a place</span>
+                      <span>Set up a place</span>{" "}
                       <span className="shrink-0">→</span>
                     </Button>
                   )}
