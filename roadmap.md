@@ -1,7 +1,7 @@
 # Roadmap
 
 ## Prototype Documents — adding a paper
-- [ ] Move PDF image decoders to public/wasm, remove source binary imports and verify the genuine lease still renders.
+- [x] Move PDF image decoders to public/wasm and fetch after client mount; no source binary imports remain, genuine lease rendering and Stage 1 browser flow pass, eleven tests pass and preview build is clean. Not published.
 - [x] Implement and verify the local Stage 1 conversation, paper selection, confirmation/change and restart; eleven focused tests pass, example and arbitrary-upload paths checked in-browser with no page errors. Not published.
 - [x] Use the supplied genuine Russell Square House PDF for the example and seventy-page preview; hosted asset confirmed as application/pdf, real cover visually checked, PDF decoders bundled and small-screen controls corrected. Local browser checks replayed the hosted PDF response because localhost does not serve the hosted asset path.
 
