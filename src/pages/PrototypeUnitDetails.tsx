@@ -1,5 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Check, ChevronLeft } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { PrototypeUnitPhotographs } from "./PrototypeUnitPhotographs";
 import { copyDescription, groupedNames, listNames, unitSpecificPhrases, applyChanges, FIELD_LABELS, fieldsFor, formatValue, proposeChanges, setDetails, suggestDescription, type DetailField, type DetailedUnit, type UnitDetails } from "./prototypeUnitDetails";
 
 type Props = { unit: DetailedUnit; units: DetailedUnit[]; groupName: string; onChange: (units: DetailedUnit[]) => void; onBack: () => void };
@@ -39,6 +41,10 @@ export function PrototypeUnitDetails({ unit, units, groupName, onChange, onBack 
   const dirty = JSON.stringify(setDetails([unit], unit.number, draft)[0].details) !== JSON.stringify(setDetails([unit], unit.number, unit.details ?? {})[0].details);
 
   const save = () => { if (invalid) return; onChange(setDetails(units, unit.number, draft)); setSaved(true); };
+  const currentUnit = { ...unit, details: draft };
+  const currentUnits = setDetails(units, unit.number, draft);
+  const hasDetails = fieldsFor(unit).some(f => draft[f] !== undefined && draft[f] !== "");
+  const keepDraft = () => { if (!invalid && dirty) onChange(currentUnits); };
 
   const count = (label: string, value: string, set: (v: string) => void) => (
     <label className="flex items-center justify-between gap-3 py-1.5 text-sm text-foreground">
@@ -49,9 +55,10 @@ export function PrototypeUnitDetails({ unit, units, groupName, onChange, onBack 
 
   return (
     <section aria-label={`${unit.name} details`} className="min-w-0 py-3 motion-safe:animate-in motion-safe:fade-in motion-safe:duration-200">
-      <button type="button" onClick={onBack} className="-ml-2 inline-flex min-h-8 items-center gap-1 rounded-md px-2 text-xs text-muted-foreground hover:text-foreground"><ChevronLeft className="h-3.5 w-3.5" aria-hidden />All Units in {groupName}</button>
+      <button type="button" onClick={() => { keepDraft(); onBack(); }} className="-ml-2 inline-flex min-h-8 items-center gap-1 rounded-md px-2 text-xs text-muted-foreground hover:text-foreground"><ChevronLeft className="h-3.5 w-3.5" aria-hidden />All Units in {groupName}</button>
       <h3 className="mt-1 text-xl font-semibold text-foreground">{unit.name}</h3>
       <p className="mt-0.5 text-sm text-muted-foreground">{groupName} · {unit.classification}</p>
+      <PrototypeUnitPhotographs unit={unit} onChange={photos => onChange(units.map(u => u.number === unit.number ? { ...u, ...photos } : u))} />
 
       <div className="mt-3 divide-y divide-border border-y border-border">
         <div className="flex flex-wrap items-center justify-between gap-2 py-1.5 text-sm text-foreground">
@@ -80,7 +87,7 @@ export function PrototypeUnitDetails({ unit, units, groupName, onChange, onBack 
             <button type="button" onClick={() => setSuggestion(invalid ? null : suggestDescription(unit, draft) ?? "")} className="min-h-8 rounded-md px-2 text-xs text-muted-foreground hover:text-foreground">Suggest from these details</button>
           </div>
           <textarea id="unit-description" value={description} onChange={e => setDescription(e.target.value)} rows={2} placeholder="Not entered" className="mt-1 w-full rounded-md border border-input bg-background px-3 py-2 text-sm text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring" />
-          {(unit.details?.description ?? "") && !dirty && <DescriptionReuse unit={unit} units={units} onApply={onChange} />}
+          {draft.description && !invalid && <DescriptionReuse unit={currentUnit} units={currentUnits} onApply={next => { onChange(next); setSaved(true); }} />}
           {suggestion !== null && (
             <div role="status" className="mt-2 flex gap-2">
               <div className="min-w-0 flex-1 rounded-md bg-secondary/40 px-3 py-2 text-sm text-foreground">
@@ -101,9 +108,9 @@ export function PrototypeUnitDetails({ unit, units, groupName, onChange, onBack 
       <div className="mt-3 flex flex-wrap items-center gap-2">
         <button type="button" onClick={save} disabled={!dirty || invalid} className="inline-flex min-h-9 items-center gap-1.5 rounded-md bg-primary px-3 text-sm font-medium text-primary-foreground disabled:opacity-40">Save</button>
         <span aria-live="polite" className="text-xs text-muted-foreground">{invalid ? "Use whole numbers — leave blank if not known." : saved ? <span className="inline-flex items-center gap-1"><Check className="h-3 w-3" aria-hidden />Saved</span> : dirty ? "Unsaved changes" : ""}</span>
-        <button type="button" onClick={() => setApplying(v => !v)} disabled={dirty} title={dirty ? "Save first" : undefined} aria-expanded={applying} className="ml-auto min-h-9 rounded-md px-2 text-sm text-muted-foreground underline-offset-4 hover:text-foreground hover:underline disabled:opacity-40">Apply to other Units</button>
+        <Button variant="ghost" size="sm" onClick={() => setApplying(v => !v)} disabled={invalid || !hasDetails} aria-expanded={applying} className="ml-auto text-muted-foreground">Apply details to other Units</Button>
       </div>
-      {applying && <ApplyToOthers unit={unit} units={units} onApply={next => { onChange(next); setApplying(false); }} onCancel={() => setApplying(false)} />}
+      {applying && <ApplyToOthers unit={currentUnit} units={currentUnits} onApply={next => { onChange(next); setApplying(false); setSaved(true); }} onCancel={() => setApplying(false)} />}
     </section>
   );
 }
@@ -111,8 +118,8 @@ export function PrototypeUnitDetails({ unit, units, groupName, onChange, onBack 
 // Copy chosen facts from one Unit to others, review the exact changes, and apply only on confirmation.
 function ApplyToOthers({ unit, units, onApply, onCancel }: { unit: DetailedUnit; units: DetailedUnit[]; onApply: (u: DetailedUnit[]) => void; onCancel: () => void }) {
   const d = unit.details ?? {};
-  const available = fieldsFor(unit).filter(f => d[f] !== undefined);
-  const candidates = units.filter(u => u.number !== unit.number && u.classification === unit.classification);
+  const available = fieldsFor(unit).filter(f => d[f] !== undefined && d[f] !== "");
+  const candidates = units.filter(u => u.number !== unit.number);
   const [targets, setTargets] = useState<number[]>([]);
   // Bedrooms and bathrooms are offered by default; area, outside space and description must be chosen deliberately.
   const [fields, setFields] = useState<DetailField[]>(available.filter(f => ["doubleBedrooms", "singleBedrooms", "bathrooms"].includes(f)));
