@@ -156,3 +156,45 @@ describe("Prototype Unit location confirmation", () => {
     expect(screen.queryByRole("button", { name: "None of these is right" })).toBeNull();
   });
 });
+
+describe("Prototype Unit proposed building", () => {
+  async function confirmedStanley() {
+    const user = userEvent.setup();
+    render(<PrototypeUnit />);
+    await user.click(screen.getByRole("button", { name: "Set up a place →" }));
+    await user.click(screen.getByRole("button", { name: "A Unit Group with several Units" }));
+    await user.type(screen.getByRole("textbox"), "Stanley House, 1115 Finchley Road, London, NW11 0QD{Enter}");
+    await user.click(screen.getByRole("button", { name: "Yes, that's the place" }));
+    return user;
+  }
+
+  it("keeps the confirmed location while proposing four Units, then clears both on restart", async () => {
+    const user = await confirmedStanley();
+    const map = screen.getByLabelText("Location map");
+    await user.type(screen.getByRole("textbox"), "Ground, First, Second and Third Floors.{Enter}");
+    const proposal = screen.getByRole("region", { name: "Proposed building structure" });
+    expect(within(proposal).getAllByRole("listitem").map(item => item.textContent)).toEqual(["Third Floor", "Second Floor", "First Floor", "Ground Floor"]);
+    expect(screen.getByLabelText("Location map")).toBe(map);
+    expect(within(screen.getByRole("status")).getByText("1115 Finchley Road, London, NW11 0QD")).toBeInTheDocument();
+    expect(within(screen.getByRole("main")).queryAllByRole("button")).toHaveLength(0);
+    await user.type(screen.getByRole("textbox"), "Create them{Enter}");
+    expect(within(proposal).getAllByRole("listitem")).toHaveLength(4);
+    await user.click(screen.getByRole("button", { name: "A new conversation" }));
+    expect(screen.queryByRole("region", { name: "Proposed building structure" })).toBeNull();
+    expect(screen.queryByRole("status")).toBeNull();
+    expect(screen.getByLabelText("Location map")).toBe(map);
+  });
+
+  it("does not invent five individual Units for mixed shops and flats and permits clarification", async () => {
+    const user = await confirmedStanley();
+    await user.type(screen.getByRole("textbox"), "There are two shops on the ground floor and three flats above.{Enter}");
+    const proposal = screen.getByRole("region", { name: "Proposed building structure" });
+    expect(within(proposal).queryAllByRole("listitem")).toHaveLength(0);
+    expect(within(proposal).getByText("2 shops · Ground Floor")).toBeInTheDocument();
+    expect(within(proposal).getByText("3 flats above")).toBeInTheDocument();
+    await user.type(screen.getByRole("textbox"), "An unusual building{Enter}");
+    expect(within(proposal).queryAllByRole("listitem")).toHaveLength(0);
+    await user.type(screen.getByRole("textbox"), "There is a basement, ground floor and two upper floors.{Enter}");
+    expect(within(proposal).getAllByRole("listitem").map(item => item.textContent)).toEqual(["Second Floor", "First Floor", "Ground Floor", "Basement"]);
+  });
+});

@@ -6,6 +6,8 @@ import owlDefault from "@/assets/prototype/owl-default.png";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { discoverAddress, type AddressParts, type AddressRecord } from "./prototypeUnitAddress";
+import { understandBuilding, type BuildingUnderstanding } from "./prototypeUnitStructure";
+import { PrototypeUnitStructure } from "./PrototypeUnitStructure";
 
 const RAIL_WIDTH = 68;
 const DEFAULT_CHAT_WIDTH = 380;
@@ -206,6 +208,8 @@ function PrototypeUnitShell() {
   const [addressParts, setAddressParts] = useState<AddressParts>({});
   const [addressCandidates, setAddressCandidates] = useState<AddressRecord[]>([]);
   const [selectedAddress, setSelectedAddress] = useState<AddressRecord | null>(null);
+  const [buildingUnderstanding, setBuildingUnderstanding] = useState<BuildingUnderstanding | null>(null);
+  const [buildingStage, setBuildingStage] = useState<"idle" | "awaiting-description" | "proposed">("idle");
   const nextId = useRef(1);
   const conversationEnd = useRef<HTMLDivElement>(null);
 
@@ -272,6 +276,10 @@ function PrototypeUnitShell() {
     appendExchange("Yes, that's the place", `Good. I've got the location for ${selectedAddress.name}.`);
     setLocationStage("confirmed");
     setLocationPromptId(null);
+    if (selectedAddress.id === "stanley-finchley") {
+      setMessages(previous => [...previous, { id: nextId.current++, role: "hobson", text: "How is Stanley House divided?" }]);
+      setBuildingStage("awaiting-description");
+    }
   };
 
   const lookupLocation = (text: string) => {
@@ -294,6 +302,17 @@ function PrototypeUnitShell() {
     const text = input.trim();
     if (!text) return;
     const normalised = text.toLowerCase().replace(/[.!?]+$/, "");
+    if (locationStage === "confirmed" && buildingStage === "awaiting-description") {
+      const understanding = understandBuilding(text);
+      setBuildingUnderstanding(understanding);
+      appendExchange(text, understanding.kind === "proposal"
+        ? "I've laid that out as four Units. Have a look on the right. This is only a proposal — nothing has been added yet."
+        : understanding.kind === "mixed"
+          ? "How are the three flats divided, and what are they called?"
+          : "Could you describe the individual spaces people can occupy, and how they are divided?");
+      if (understanding.kind === "proposal") setBuildingStage("proposed");
+      return;
+    }
     if (locationStage === "proposed") {
       if (normalised === "yes, that's the place") { respondToLocation(true); return; }
       if (["no, let's check again", "choose a different location"].includes(normalised)) { respondToLocation(false); return; }
@@ -336,7 +355,7 @@ function PrototypeUnitShell() {
             type="button"
             className="grid h-11 w-11 place-items-center rounded-full bg-[#56514A] text-white shadow-md transition hover:bg-[#56514A]"
             aria-label="A new conversation"
-            onClick={() => { setMessages([OPENING_MESSAGE]); setInput(""); setSetupPromptId(null); setShowInvitation(true); setLocationStage("idle"); setLocationPromptId(null); setLocationAddress(""); setAddressParts({}); setAddressCandidates([]); setSelectedAddress(null); }}
+            onClick={() => { setMessages([OPENING_MESSAGE]); setInput(""); setSetupPromptId(null); setShowInvitation(true); setLocationStage("idle"); setLocationPromptId(null); setLocationAddress(""); setAddressParts({}); setAddressCandidates([]); setSelectedAddress(null); setBuildingUnderstanding(null); setBuildingStage("idle"); }}
           >
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" aria-hidden><path d="M12 5v14M5 12h14" /></svg>
           </button>
@@ -432,11 +451,14 @@ function PrototypeUnitShell() {
       <UnitResizeDivider width={chatWidth} setWidth={setChatWidth} onReset={() => setChatWidth(DEFAULT_CHAT_WIDTH)} isDefault={chatWidth === DEFAULT_CHAT_WIDTH} />
 
       {/* The map stays mounted throughout the conversation; setup creates no records. */}
-      <main className="flex min-w-0 flex-1 flex-col gap-4 p-4" aria-label="Prototype Unit canvas">
+      <main className="flex min-w-0 flex-1 flex-col gap-4 overflow-y-auto p-4" aria-label="Prototype Unit canvas">
         <header className="flex flex-wrap items-center justify-between gap-3">
           <h2 className="text-[15px] font-semibold text-ink">Portfolio</h2>
         </header>
-        <UnitLocationMap stage={locationStage} address={locationAddress} candidate={selectedAddress ?? addressCandidates[0] ?? null} />
+        <div className={`flex min-h-0 flex-col transition-[flex-basis] duration-300 motion-reduce:transition-none ${buildingUnderstanding ? "h-[300px] shrink-0" : "flex-1"}`}>
+          <UnitLocationMap stage={locationStage} address={locationAddress} candidate={selectedAddress ?? addressCandidates[0] ?? null} />
+        </div>
+        {buildingUnderstanding && <PrototypeUnitStructure understanding={buildingUnderstanding} />}
       </main>
     </div>
   );
