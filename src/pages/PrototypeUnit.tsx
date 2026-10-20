@@ -3,6 +3,7 @@ import { Check, Paperclip } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { PrototypeGate } from "@/components/prototype/PrototypeGate";
 import owlDefault from "@/assets/prototype/owl-default.png";
+import paragonPhoto from "@/assets/prototype/paragon-centre-sample.jpg";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { discoverAddress, MOCK_ADDRESSES, type AddressParts, type AddressRecord } from "./prototypeUnitAddress";
@@ -218,6 +219,7 @@ const PARAGON_DEMO: PortfolioGroup = {
   id: PARAGON_GROUP_ID, name: "The Paragon Centre", line: "3 Reading Lane, London E8 1GQ",
   record: { id: PARAGON_GROUP_ID, name: "The Paragon Centre", line: "3 Reading Lane, London E8 1GQ", postcode: "E8 1GQ", coordinates: [51.5465, -0.0553], number: "3" },
   units: [{ number: 1, name: "First Floor Gym", type: "Unit", classification: "Commercial" }],
+  photo: { url: paragonPhoto, x: 50, y: 50, zoom: 1 },
 };
 
 // An established Unit Group in the simulated portfolio: names, uses and order exactly as authorised.
@@ -280,7 +282,7 @@ function PrototypeUnitShell() {
   const [buildingUnderstanding, setBuildingUnderstanding] = useState<BuildingUnderstanding | null>(null);
   const [buildingStage, setBuildingStage] = useState<"idle" | "awaiting-description" | "naming" | "describing" | "named" | "ready" | "created">("idle");
   const [portfolio, setPortfolio] = useState<PortfolioGroup[]>([]);
-  const [mapExpanded, setMapExpanded] = useState(false);
+  const [mapExpanded, setMapExpanded] = useState(true);
   const [groupOpen, setGroupOpen] = useState(false);
   const [showSummaryUnits, setShowSummaryUnits] = useState(false);
   const [lastRemoved, setLastRemoved] = useState<{ unit: ProposedUnit; index: number } | null>(null);
@@ -310,6 +312,10 @@ function PrototypeUnitShell() {
 
   const startSetup = (reply = "Set up a place") => {
     if (!showInvitation) return;
+    setSetupUnderway(true);
+    setGroupOpen(false);
+    setOpenUnit(null);
+    setMapExpanded(false);
     const id = nextId.current++;
     setMessages((previous) => [...previous,
       { id: nextId.current++, role: "user", text: reply },
@@ -815,8 +821,8 @@ function PrototypeUnitShell() {
         {(() => {
           const showingGroup = buildingStage === "created" ? portfolio[portfolio.length - 1] : null;
           const portfolioOnly = !buildingUnderstanding && locationStage === "idle" && portfolio.length > 0;
-          const focus = showingGroup ?? (portfolioOnly ? portfolio[portfolio.length - 1] : null);
-          const exploring = Boolean(focus) && (mapExpanded || groupOpen);
+          const focus = showingGroup ?? (portfolioOnly ? portfolio[portfolio.length - 1] : !setupUnderway && locationStage === "idle" && !buildingUnderstanding ? demoGroup : null);
+          const exploring = Boolean(focus) && (mapExpanded || groupOpen || focus?.id === demoGroup.id);
           const compact = !mapExpanded && !groupOpen && (Boolean(buildingUnderstanding) || portfolioOnly);
           const totals = units ? summarise(units) : null;
           const openList = openUnit ? unitsFor(openUnit.ctx) : [];
@@ -838,7 +844,7 @@ function PrototypeUnitShell() {
                 <blockquote className="mt-3 border-l-2 border-border pl-3 text-sm leading-relaxed text-foreground">{paper.excerpt}</blockquote>
                 <p className="mt-3 text-[10px] text-muted-foreground">Illustrative extract for this demonstration</p>
               </section>
-            ) : exploring && focus ? (groupOpen ? (detailPanel && openUnit?.ctx === focus.id ? detailPanel : <PortfolioGroupView group={focus} onCardChange={c => updateCard(focus.id, c)} onChangeAddress={() => startAddressChange(focus.id)} onOpenUnit={openFrom(focus.id)} onClose={() => { setGroupOpen(false); setMapExpanded(true); setOpenUnit(null); }} />) : null) : detailPanel && !(buildingStage === "ready" && openUnit?.ctx === "proposal" && !showSummaryUnits) ? detailPanel : buildingStage === "ready" && units && totals ? (
+            ) : exploring && focus ? (groupOpen ? (detailPanel && openUnit?.ctx === focus.id ? detailPanel : <PortfolioGroupView group={focus} label={focus.id === demoGroup.id ? "Illustrative example · Unit Group · sample photograph" : undefined} onViewPaper={setPaperOpen} onCardChange={c => updateCard(focus.id, c)} onChangeAddress={focus.id === demoGroup.id ? undefined : () => startAddressChange(focus.id)} onOpenUnit={openFrom(focus.id)} onClose={() => { setGroupOpen(false); setMapExpanded(true); setOpenUnit(null); }} />) : null) : detailPanel && !(buildingStage === "ready" && openUnit?.ctx === "proposal" && !showSummaryUnits) ? detailPanel : buildingStage === "ready" && units && totals ? (
               <section aria-label="Ready to create" className="min-w-0 py-3">
                 <p className="text-xs font-medium text-muted-foreground">Ready to add · nothing created yet</p>
                 {draftCard && <div className="mt-2"><PrototypeUnitGroupCard card={draftCard} address={selectedAddress?.line ?? ""} label="Unit Group · proposed" summary={`${totals.total} Unit${totals.total === 1 ? "" : "s"} · ${totals.residential} Residential · ${totals.commercial} Commercial`} onChange={setDraftCard} onChangeAddress={() => startAddressChange("proposal")} /></div>}
@@ -858,7 +864,6 @@ function PrototypeUnitShell() {
             ) : portfolio.length > 0 && (
               <div className="flex flex-col gap-3">{portfolio.map(group => <PortfolioGroupView key={group.id} group={group} onCardChange={c => updateCard(group.id, c)} onChangeAddress={() => startAddressChange(group.id)} onOpenUnit={openFrom(group.id)} />)}</div>
             )}
-            {!paper && !detailPanel && !setupUnderway && locationStage === "idle" && !buildingUnderstanding && <PortfolioGroupView group={demoGroup} label="Illustrative example · Unit Group" onCardChange={c => updateCard(demoGroup.id, c)} onOpenUnit={openFrom(demoGroup.id)} onViewPaper={setPaperOpen} />}
           </>);
         })()}
       </main>

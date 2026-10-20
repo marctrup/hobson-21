@@ -17,6 +17,18 @@ vi.stubGlobal("ResizeObserver", class { observe() {} disconnect() {} });
 vi.stubGlobal("matchMedia", () => ({ matches: false }));
 
 describe("Prototype Unit opening setup", () => {
+  it("opens the existing Paragon sample from the map, with its own cover, and returns to the map", async () => {
+    const user = userEvent.setup();
+    render(<PrototypeUnit />);
+    expect(screen.queryByRole("region", { name: "The Paragon Centre Unit Group" })).not.toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Set up a place →" })).toBeInTheDocument();
+    await user.click(screen.getByRole("button", { name: "Open The Paragon Centre" }));
+    expect(screen.getByRole("img", { name: "The Paragon Centre cover photograph" })).toHaveAttribute("src", expect.stringContaining("paragon-centre-sample"));
+    expect(screen.getByRole("button", { name: "Open First Floor Gym" })).toBeInTheDocument();
+    await user.click(screen.getByRole("button", { name: "Back to map" }));
+    expect(screen.queryByRole("button", { name: "Open First Floor Gym" })).not.toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Open The Paragon Centre" })).toBeInTheDocument();
+  });
   it.each([
     "A standalone Unit",
     "A Unit Group with several Units",
