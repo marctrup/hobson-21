@@ -7725,31 +7725,39 @@ function UnitStarters({ unit, onAsk }: { unit: Unit; onAsk: (q: string) => void 
   );
 }
 
-function LockedComposer({ view }: { view: View }) {
-  void view;
-  const placeholder = "Chat is locked in this prototype";
-  const helper = "Available in the live product";
+function ChatComposer({
+  onSubmit,
+  placeholder = "Ask Hobson…",
+  label = "Ask Hobson",
+}: {
+  onSubmit: (text: string) => void;
+  placeholder?: string;
+  label?: string;
+}) {
+  const [val, setVal] = useState("");
   return (
-    <>
-      <div className="text-[11px] font-semibold text-[#56514A] mb-1 flex items-center gap-1">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden>
-          <rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/>
-        </svg>
-        Chat locked for the prototype
-      </div>
-      <div
-        aria-disabled="true"
-        tabIndex={-1}
-        className="flex items-center gap-2 px-4 py-2.5 rounded-full border border-dashed border-[#56514A]/40 bg-[#F1EBDE] text-sm text-[#56514A]/70 select-none cursor-not-allowed"
-        title={helper}
+    <form
+      onSubmit={(e) => { e.preventDefault(); const t = val.trim(); if (!t) return; onSubmit(t); setVal(""); }}
+      className="flex items-center gap-2 px-4 py-2.5 rounded-full border border-bone bg-white focus-within:border-[#56514A] focus-within:ring-2 focus-within:ring-[#56514A]/20 transition"
+    >
+      <input
+        value={val}
+        onChange={(e) => setVal(e.target.value)}
+        placeholder={placeholder}
+        aria-label={label}
+        className="flex-1 outline-none text-sm bg-transparent placeholder:text-ink-muted"
+      />
+      <button
+        type="submit"
+        disabled={!val.trim()}
+        aria-label="Send"
+        className="flex items-center justify-center h-9 w-9 rounded-full bg-[#56514A] text-white hover:bg-[#56514A] transition disabled:bg-bone disabled:text-ink-muted"
       >
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
-          <rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M5 12h14M13 6l6 6-6 6"/>
         </svg>
-        <span className="flex-1 truncate">{placeholder}</span>
-        <span className="text-[10px] uppercase tracking-wide hidden sm:inline">{helper}</span>
-      </div>
-    </>
+      </button>
+    </form>
   );
 }
 
