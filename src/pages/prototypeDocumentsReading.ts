@@ -9,6 +9,8 @@ export type Reading = {
   id: number; title: string; unit: string; filename: string; url?: string;
   paperType: string; tenant: string; paperDate: string; effective: string | null;
   placement: Placement; step: number; finished: boolean;
+  /** Batch papers: read against their proposed tenancy, not the single-paper placement. */
+  batch?: boolean;
 };
 
 export const activeReadings = (r: Reading[]) => r.filter((x) => !x.finished);

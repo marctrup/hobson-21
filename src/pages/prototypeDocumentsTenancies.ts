@@ -142,3 +142,36 @@ export function wayleaveOpen(w: WayleaveState): ("completion" | "date" | "belong
 }
 export const WAYLEAVE_EVIDENCE: PaperEvidence = { noun: "This Wayleave", parties: ["Puig UK Limited", "British Telecommunications"], refersTo: { date: "16 December 2016", description: "Business Lease" } };
 export const wayleaveProposal = () => proposeRelationship(WAYLEAVE_EVIDENCE, RELATIONSHIPS);
+
+// Iteration 5D: which papers are ready for full reading, derived from the user's actual decisions.
+export type ReadyItem = { id: string; name: string; where: string };
+export type HelpItem = { id: string; name: string; questions: string[] };
+const whereFor = (b: Belongs | null | undefined) => b === "sub" ? "Feelunique's Sublease" : "Puig's lease";
+export function batchReadiness(t: Tenancies): { ready: ReadyItem[]; help: HelpItem[] } {
+  const ready: ReadyItem[] = [
+    { id: "example-1", name: "Puig Business Lease", where: "Puig's lease" },
+  ];
+  const help: HelpItem[] = [];
+  (["example-2", "example-4"] as const).forEach((id) => {
+    const name = id === "example-2" ? "Licence to Alter" : "Deed of Variation";
+    const b = t.belongs[id];
+    if (b === "puig" || b === "sub") ready.push({ id, name, where: whereFor(b) });
+    else help.push({ id, name, questions: ["Which tenancy does it affect: Puig's lease or Feelunique's Sublease?"] });
+  });
+  ready.push({ id: "example-5", name: "Feelunique Sublease", where: "Feelunique's Sublease" });
+  const open = wayleaveOpen(t.wayleave);
+  if (!open.length) ready.push({ id: "example-3", name: "BT & Puig Wayleave", where: whereFor(t.wayleave.belongs) });
+  else help.push({ id: "example-3", name: "BT & Puig Wayleave", questions: open.map((o) =>
+    o === "completion" ? "Was the agreement completed, or is this an unsigned copy?" :
+    o === "date" ? "When was it completed? The copy itself isn't dated." :
+    "Does it belong with Puig's Business Lease, as I think, or another tenancy?") });
+  // Keep upload order for a familiar list.
+  const order = ["example-1", "example-2", "example-3", "example-4", "example-5"];
+  ready.sort((a, b) => order.indexOf(a.id) - order.indexOf(b.id));
+  return { ready, help };
+}
+export const READY_INTRO = "I've worked out where the papers belong. Here's what I'm ready to read.";
+export const READ_OFFER = (n: number, help: HelpItem[]) => help.length
+  ? `I can get on with the ${n === 1 ? "one ready paper" : `${n} ready papers`} and leave ${help.length === 1 ? `the ${help[0].name.replace("BT & Puig ", "")}` : "the others"} until we've settled ${help.length === 1 ? "it" : "them"}.`
+  : `All ${n} papers are settled. I can read and add them now.`;
+export const READ_START = "That's all I need. I'll read these papers properly now. You can carry on with something else while I work through them.";

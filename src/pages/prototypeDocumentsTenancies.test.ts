@@ -84,3 +84,28 @@ describe("Wayleave: explain what needs checking", () => {
     expect(answerCompletion(atWayleave(), "unsure").step).toBe("wayleaveBelongs");
   });
 });
+
+import { batchReadiness } from "./prototypeDocumentsTenancies";
+describe("5D: ready to read", () => {
+  const base5 = () => {
+    const s = { ...answerStatus(answerMgmt(answerStatus({ ...startTenancies(), step: "puigStatus" }, "puig", "current"), "both"), "sub", "current"), compared: true };
+    return answerBelongs(answerBelongs({ ...s, step: "licence" }, "puig"), "puig");
+  };
+  it("4 ready and the Wayleave needs help when completion is unsure", () => {
+    const t = answerWayleaveBelongs(answerCompletion(base5(), "unsure"), "puig");
+    const r = batchReadiness(t);
+    expect(r.ready.map((x) => x.name)).toEqual(["Puig Business Lease", "Licence to Alter", "Deed of Variation", "Feelunique Sublease"]);
+    expect(r.help).toHaveLength(1);
+    expect(r.help[0].questions[0]).toMatch(/completed/);
+  });
+  it("all 5 ready when the Wayleave is settled", () => {
+    const t = answerWayleaveBelongs(answerCompletion(base5(), "notCompleted"), "puig");
+    expect(batchReadiness(t).ready).toHaveLength(5);
+  });
+  it("an unsure Deed joins the papers needing help", () => {
+    const s = { ...base5(), belongs: { "example-2": "puig" as const, "example-4": "unsure" as const } };
+    const r = batchReadiness(answerWayleaveBelongs(answerCompletion(s, "notCompleted"), "puig"));
+    expect(r.ready).toHaveLength(4);
+    expect(r.help.map((h) => h.name)).toEqual(["Deed of Variation"]);
+  });
+});
