@@ -41,7 +41,7 @@ export default function PrototypeDocumentsReading({ section, readings, onBack, o
         </>}
         {section === "papers" && (readings.length === 0
           ? <><h2 className="text-base font-semibold text-ink">Papers</h2><p className="mt-6 text-sm text-ink-muted">No papers have been added yet.</p></>
-          : readings.map((r) => <div key={r.id} className="-mx-6 -my-5 flex"><PrototypeDocumentsPapers filed={r.finished} placement={r.placement} paperType={r.paperType} filename={r.filename} tenant={r.tenant} paperDate={r.paperDate} effective={r.effective} onOpenPaper={() => r.url && window.open(r.url, "_blank", "noreferrer")} /></div>))}
+          : readings.map((r) => <div key={r.id} className="-mx-6 -my-5 flex"><PrototypeDocumentsPapers filed={r.finished} url={r.url} placement={r.placement} paperType={r.paperType} filename={r.filename} tenant={r.tenant} paperDate={r.paperDate} effective={r.effective} onOpenPaper={() => r.url && window.open(r.url, "_blank", "noreferrer")} /></div>))}
         {section === "conversations" && <>
           <h2 className="text-base font-semibold text-ink">Conversations</h2>
           <button type="button" onClick={onBack} className="mt-5 w-full rounded-lg border border-bone p-4 text-left hover:bg-secondary/40">

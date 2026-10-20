@@ -469,7 +469,7 @@ export default function PrototypeDocuments() {
             <Button size="sm" variant={view === "papers" ? "secondary" : "ghost"} aria-pressed={view === "papers"} onClick={() => setView("papers")}>Proposed placement</Button>
             <Button size="sm" variant={view === "paper" ? "secondary" : "ghost"} aria-pressed={view === "paper"} onClick={() => setView("paper")}>Original paper</Button>
           </div>}
-          {placing && view === "papers" && <PrototypeDocumentsPapers placement={placement} paperType={journey.paperType ?? "Business Lease"} filename={journey.paper.filename} tenant={tenant} paperDate={shownValue(review.details[0])} effective={review.effectiveValue} onOpenPaper={() => setView("paper")} />}
+          {placing && view === "papers" && <PrototypeDocumentsPapers url={journey.paper.url} placement={placement} paperType={journey.paperType ?? "Business Lease"} filename={journey.paper.filename} tenant={tenant} paperDate={shownValue(review.details[0])} effective={review.effectiveValue} onOpenPaper={() => setView("paper")} />}
           <div className={`min-h-0 flex-1 ${placing && view === "papers" ? "hidden" : "flex"} ${wide ? "flex-row" : "flex-col"}`}>
             {detailsShown && !placing && <PrototypeDocumentsDetails review={review} collapsible={!wide} onShow={showInPaper} onCorrect={correct} canChangeEffective={journey.stage !== "effective" && journey.stage !== "effectiveOther"} />}
             <div className="flex min-h-0 min-w-0 flex-1 flex-col"><PrototypeDocumentsPreview paper={journey.paper} goTo={goTo} /></div>

@@ -1,38 +1,30 @@
 import { useState } from "react";
-import { ChevronDown, FileText } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { EXAMPLE_GROUP, EXAMPLE_UNITS, isSettled, statusText, type Placement } from "./prototypeDocumentsPlacement";
+import { ChevronDown } from "lucide-react";
+import PrototypeDocumentsChain, { type ChainMode, type ChainPaper, type ChainStatus } from "./PrototypeDocumentsChain";
+import { EXAMPLE_GROUP, EXAMPLE_UNITS, isSettled, type Placement } from "./prototypeDocumentsPlacement";
 
-type Props = { filed?: boolean; placement: Placement; paperType: string; filename: string; tenant: string; paperDate: string; effective: string | null; onOpenPaper: () => void };
+type Props = { filed?: boolean; url?: string; placement: Placement; paperType: string; filename: string; tenant: string; paperDate: string; effective: string | null; onOpenPaper: () => void };
 
 const ROLE_NOTE = { landlord: "Organised from the landlord's perspective", tenant: "Organised from Systemiq's perspective", track: "Kept for reference, acting for neither party" } as const;
 
-function ProposedPaper({ filed, placement, paperType, filename, tenant, paperDate, effective, onOpenPaper, awaiting }: Props & { awaiting: boolean }) {
+export const LATER_EXAMPLE_PAPERS: ChainPaper[] = [
+  { type: "Licence: Alteration", filename: "2025.08.22 - 4th Fl, RSH - Licence to Alter - Signed by Landlord.pdf", date: "22 August 2025", note: "Original not supplied in this demonstration" },
+  { type: "Side Letter: Variation", filename: "4th floor RSH (Systemiq Limited) Side letter 04.09.2025.pdf", date: "4 September 2025", note: "Original not supplied in this demonstration" },
+];
+
+function chainStatus(p: Placement): ChainStatus {
+  if (p.current === "current") return { kind: "current" };
+  if (p.current === "ended") return { kind: "ended", date: p.endDate };
+  return { kind: "unconfirmed" };
+}
+
+function ProposedPaper({ filed, placement, paperType, filename, tenant, paperDate, effective, onOpenPaper, awaiting, url }: Props & { awaiting: boolean }) {
   const role = placement.role ? (placement.role.kind === "other" ? placement.role.note ? `Your responsibility: ${placement.role.note}` : "Your responsibility not yet settled" : ROLE_NOTE[placement.role.kind]) : "Your responsibility not yet established";
-  return (
-    <article aria-label={`${paperType} — ${filed ? "in tenancy history" : awaiting ? "awaiting placement" : "proposed"}`} className={filed ? "rounded-lg border border-bone bg-background p-4" : "rounded-lg border border-dashed border-primary/50 bg-secondary/40 p-4"}>
-      <div className="flex flex-wrap items-center gap-2">
-        <h4 className="text-sm font-semibold text-ink">{paperType}</h4>
-        {!filed && <span className="rounded-full border border-primary/40 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-primary">{awaiting ? "Awaiting placement" : "Proposed"}</span>}
-      </div>
-      <p className="mt-1 text-sm text-ink">{tenant}</p>
-      <div className="mt-3 flex items-start justify-between gap-3 border-t border-faint-rule pt-3">
-        <div className="min-w-0">
-          <p className="flex items-center gap-1.5 break-words text-xs text-ink"><FileText className="h-3.5 w-3.5 shrink-0 text-ink-muted" aria-hidden />{filename}</p>
-          <p className="mt-1 text-xs text-ink-muted">{paperDate}{effective ? ` · effective ${effective}` : ""}</p>
-        </div>
-        <Button variant="outline" size="sm" onClick={onOpenPaper}>View</Button>
-      </div>
-      <dl className="mt-3 space-y-1 text-xs text-ink-muted">
-        {placement.current !== "asking" && <div><dt className="inline">Status: </dt><dd className="inline text-ink">{statusText(placement)}</dd></div>}
-        {placement.current === "ended" && <div>The term in the lease runs to 21 August 2035</div>}
-        <div>{role}</div>
-        {placement.relation === "earlier" && <div>Relationship with an earlier lease left open</div>}
-        {placement.relation === "unsure" && <div>Tenancy relationship unconfirmed</div>}
-        {placement.unitStatus === "unsure" && <div>Unit unconfirmed</div>}
-      </dl>
-    </article>
-  );
+  const mode: ChainMode = filed ? "confirmed" : awaiting ? "awaiting" : placement.step === "placed" ? "reading" : "proposed";
+  const detail = [tenant, effective ? `Effective ${effective}` : "", placement.current === "ended" ? "The term in the lease runs to 21 August 2035" : "", role,
+    placement.relation === "earlier" ? "Relationship with an earlier lease left open" : "", placement.relation === "unsure" ? "Tenancy relationship unconfirmed" : "", placement.unitStatus === "unsure" ? "Unit unconfirmed" : ""].filter(Boolean);
+  const papers: ChainPaper[] = [{ type: paperType, filename, date: paperDate, url: url ?? "#", pending: !filed }, ...(filed ? LATER_EXAMPLE_PAPERS : [])];
+  return <PrototypeDocumentsChain heading={paperType} status={chainStatus(placement)} mode={mode} papers={papers} detail={detail} onView={(p) => p.filename === filename && onOpenPaper()} />;
 }
 
 export default function PrototypeDocumentsPapers(props: Props) {
@@ -59,7 +51,7 @@ export default function PrototypeDocumentsPapers(props: Props) {
                 <p className={`text-sm ${here ? "font-semibold text-ink" : "text-ink-muted"}`}>{u}{here && placement.unitStatus === "asking" && <span className="ml-2 text-xs font-normal text-ink-muted">· I think it belongs here</span>}</p>
                 {here && !separate && <div className="mt-3">
                   <p className="mb-2 text-[11px] font-medium uppercase tracking-wide text-ink-muted">{props.filed ? "Tenancy history" : placement.relation === "new" ? "Tenancy history · new" : "Proposed paper · not yet in a tenancy history"}</p>
-                  <ProposedPaper {...props} awaiting={false} />
+                  <div className="space-y-3"><ProposedPaper {...props} awaiting={false} /></div>
                 </div>}
                 {!(here && !separate) && <p className="mt-0.5 text-xs text-ink-muted">No confirmed occupational papers</p>}
               </li>

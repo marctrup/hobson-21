@@ -42,3 +42,13 @@ describe("Documents Reading", () => {
     expect(activeReadings(previewFinish([r, { ...r, id: 2 }], 1))).toHaveLength(1);
   });
 });
+import { statusLabel, shortDate } from "@/pages/PrototypeDocumentsChain";
+describe("Tenancy history status wording", () => {
+  it("uses Hobson's words, never back-end states", () => {
+    expect(statusLabel({ kind: "current" })).toBe("Current");
+    expect(statusLabel({ kind: "starts", date: "1 Jan 2026" })).toBe("Starts on 1 Jan 2026");
+    expect(statusLabel({ kind: "ended", date: "30 Jun 2027" })).toBe("Ended on 30 Jun 2027");
+    expect(statusLabel({ kind: "unconfirmed" })).toBe("Status unconfirmed");
+    expect(shortDate("22 August 2025")).toBe("22 Aug 2025");
+  });
+});
