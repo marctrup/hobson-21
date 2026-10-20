@@ -221,7 +221,7 @@ export default function PrototypeDocuments() {
         {journey.paper && <>
           <header className="flex h-14 shrink-0 items-center justify-between gap-2 border-b border-bone bg-background px-5">
             <span className="text-sm font-medium">Your paper</span>
-            <div className="flex items-center gap-1"><Button variant="ghost" size="sm" className="md:hidden" onClick={() => setShowChat(true)}>Chat with Hobson</Button><Button variant="ghost" size="sm" onClick={restart}><RotateCcw className="mr-2 h-3.5 w-3.5" />Restart demo</Button></div>
+            <div className="flex shrink-0 items-center gap-1"><Button variant="ghost" size="icon" className="md:hidden" aria-label="Chat with Hobson" title="Chat with Hobson" onClick={() => setShowChat(true)}><Paperclip className="h-4 w-4" /></Button><Button variant="ghost" size="sm" aria-label="Restart demo" title="Restart demo" onClick={restart}><RotateCcw className="h-3.5 w-3.5 md:mr-2" /><span className="hidden md:inline">Restart demo</span></Button></div>
           </header>
           <PrototypeDocumentsPreview paper={journey.paper} />
           {journey.paperType && <div className="shrink-0 border-t border-bone bg-background px-6 py-4" aria-label="Paper identification">
