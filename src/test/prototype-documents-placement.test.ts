@@ -25,3 +25,8 @@ describe("Documents Stage 3", () => {
     expect(statusText({ ...emptyPlacement, current: "ended", endDate: null })).toContain("ending date not given");
   });
 });
+describe("Documents Stage 3B", () => {
+  it("shows current only as confirmed by the user", () => {
+    expect(statusText({ ...emptyPlacement, current: "current" })).toBe("Current — Confirmed by you");
+  });
+});

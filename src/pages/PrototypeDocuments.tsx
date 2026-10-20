@@ -210,6 +210,7 @@ export default function PrototypeDocuments() {
     }
     const next = goStep(p, natural);
     setPlacement(next);
+    if (next.step === "relation") addMessage("hobson", "Good. I'll check how this lease fits with the existing tenancy records.");
     if (next.step === "role") addMessage("hobson", "I can see who the landlord and tenant are. I also need to know whose interests I'm looking after.\n\nWhat's your responsibility for this tenancy?");
     if (next.step === "relation") addMessage("hobson", `I don't have another confirmed lease for the ${next.unitStatus === "confirmed" ? next.unit : "Unit"} in these records.\n\nI think this starts a new tenancy history for ${tenant === "SYSTEMIQ LIMITED" ? "Systemiq" : tenant}. Have I got that right?`);
     if (next.step === "current") addMessage("hobson", "Is Systemiq's tenancy still current, or has it already ended?");
@@ -238,7 +239,7 @@ export default function PrototypeDocuments() {
     if (rel === "new") addMessage("hobson", "Then I'll prepare a new tenancy history, with this lease as its first paper.");
     if (rel === "earlier") addMessage("hobson", "Then I'll leave that relationship open until we've established how the leases fit together.");
     if (rel === "unsure") addMessage("hobson", "I'll leave the tenancy relationship unconfirmed for now.");
-    proceed({ ...placement, relation: rel }, "current");
+    proceed({ ...placement, relation: rel, ...(rel === "new" ? {} : { current: "asking" as const, endDate: null }) }, rel === "new" ? "current" : "review");
   };
   const answerCurrent = (cur: "current" | "ended" | "unsure", said: string) => {
     addMessage("user", said);
@@ -259,6 +260,7 @@ export default function PrototypeDocuments() {
       relation: "Does this lease start a new tenancy history?",
       current: "Is Systemiq's tenancy still current, or has it already ended?",
     };
+    if (step === "current" && placement.relation !== "new") { addMessage("hobson", "I'll need the tenancy settled first. Does this lease start a new tenancy history?"); setPlacement((p) => ({ ...p, step: "relation", revisiting: true })); return; }
     addMessage("hobson", q[step]!);
     setPlacement((p) => ({ ...p, step, revisiting: true }));
   };
