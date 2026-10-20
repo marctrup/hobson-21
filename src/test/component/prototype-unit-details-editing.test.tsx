@@ -33,7 +33,7 @@ describe("Current Unit drafts and photographs", () => {
     for (const n of [2, 4, 6, 8]) expect(records()[n - 1].details?.description).toBe(text);
     await user.clear(screen.getByLabelText("Description"));
     await user.type(screen.getByLabelText("Description"), "Changed source");
-    await user.click(screen.getByRole("button", { name: "Save", exact: true }));
+    await user.click(screen.getByRole("button", { name: "Save" }));
     expect(records()[3].details?.description).toBe(text);
     for (const n of [4, 6, 8]) {
       await user.click(screen.getByRole("button", { name: "All Units in Stanley House" }));
@@ -48,11 +48,11 @@ describe("Current Unit drafts and photographs", () => {
     await user.type(screen.getByLabelText("Floor area"), "750");
     await user.type(screen.getByLabelText("Double bedrooms"), "2");
     await user.type(screen.getByLabelText("Bathrooms"), "1");
-    await user.click(screen.getByRole("button", { name: "No", exact: true }));
+    await user.click(screen.getByRole("button", { name: "No" }));
     await user.click(screen.getByRole("button", { name: "Apply details to other Units" }));
     const panel = screen.getByLabelText("Apply to other Units");
     expect(within(panel).queryByRole("checkbox", { name: /Single bedrooms/ })).toBeNull();
-    for (const n of [3, 5]) await user.click(within(panel).getByRole("button", { name: `Flat ${n}`, exact: true }));
+    for (const n of [3, 5]) await user.click(within(panel).getByRole("button", { name: `Flat ${n}` }));
     expect(records()[0].details).toBeUndefined();
     await user.click(within(panel).getByRole("button", { name: "Apply 4 changes" }));
     expect(records()[0].details).toEqual({ area: 750, areaUnit: "ft²", doubleBedrooms: 2, bathrooms: 1, outsideSpace: "No" });
@@ -65,7 +65,7 @@ describe("Current Unit drafts and photographs", () => {
     await user.type(screen.getByLabelText("Description"), "New description");
     await user.click(screen.getByRole("button", { name: "Use this description for other Units" }));
     const panel = screen.getByLabelText("Use this description for other Units");
-    await user.click(within(panel).getByRole("checkbox", { name: /Flat 4 · has one/ }));
+    await user.click(within(panel).getByRole("checkbox", { name: /^Flat 4/ }));
     expect(records()[3].details?.description).toBe("Original");
     expect(within(panel).getByRole("button", { name: "Choose Units" })).toBeDisabled();
     await user.click(within(panel).getByRole("checkbox", { name: /Replace Flat 4's/ }));
