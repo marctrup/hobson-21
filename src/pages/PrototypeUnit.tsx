@@ -28,7 +28,9 @@ const SETUP_CHOICES = [
 
 type LocationStage = "idle" | "awaiting-address" | "candidates" | "intention" | "proposed" | "confirmed" | "unverified";
 
-function UnitLocationMap({ stage, address, candidate, compact = false }: { stage: LocationStage; address: string; candidate: AddressRecord | null; compact?: boolean }) {
+function UnitLocationMap({ stage, address, candidate, compact = false, group, onOpenGroup }: { stage: LocationStage; address: string; candidate: AddressRecord | null; compact?: boolean; group?: { name: string; units: number } | null; onOpenGroup?: () => void }) {
+  const openRef = useRef(onOpenGroup);
+  openRef.current = onOpenGroup;
   const container = useRef<HTMLDivElement>(null);
   const map = useRef<L.Map | null>(null);
   const marker = useRef<L.Marker | null>(null);
@@ -61,17 +63,21 @@ function UnitLocationMap({ stage, address, candidate, compact = false }: { stage
     if (!matched || !candidate) { marker.current?.remove(); marker.current = null; return; }
     const confirmed = stage === "confirmed";
     const searching = stage === "candidates";
-    const icon = L.divIcon({ className: "", html: searching ? '<span class="block h-24 w-24 rounded-full border-2 border-dashed border-ring bg-secondary/40"></span>' : `<span class="flex h-7 w-7 items-center justify-center rounded-full border-2 border-background shadow-sm ring-4 transition-colors duration-300 motion-reduce:transition-none ${confirmed ? "bg-primary text-primary-foreground ring-primary/10" : "bg-background text-foreground ring-ring/20"}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">${confirmed ? '<path d="m5 12 4 4 10-10"/>' : '<circle cx="12" cy="12" r="4"/>'}</svg></span>`, iconSize: searching ? [96, 96] : [28, 28], iconAnchor: searching ? [48, 48] : [14, 14] });
+    const icon = group ? L.divIcon({ className: "", html: `<span class="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border-2 border-background bg-primary text-primary-foreground shadow-md ring-8 ring-primary/20"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 21V8l8-5 8 5v13"/><path d="M9 21v-6h6v6"/></svg></span>`, iconSize: [40, 40], iconAnchor: [20, 20] }) : L.divIcon({ className: "", html: searching ? '<span class="block h-24 w-24 rounded-full border-2 border-dashed border-ring bg-secondary/40"></span>' : `<span class="flex h-7 w-7 items-center justify-center rounded-full border-2 border-background shadow-sm ring-4 transition-colors duration-300 motion-reduce:transition-none ${confirmed ? "bg-primary text-primary-foreground ring-primary/10" : "bg-background text-foreground ring-ring/20"}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">${confirmed ? '<path d="m5 12 4 4 10-10"/>' : '<circle cx="12" cy="12" r="4"/>'}</svg></span>`, iconSize: searching ? [96, 96] : [28, 28], iconAnchor: searching ? [48, 48] : [14, 14] });
     if (marker.current) { marker.current.setIcon(icon); marker.current.setLatLng(candidate.coordinates); }
     else
-    marker.current = L.marker(candidate.coordinates, { icon, title: `${candidate.name} — illustrative location` }).addTo(instance);
+    marker.current = L.marker(candidate.coordinates, { icon, title: `${candidate.name} — illustrative location`, keyboard: true }).addTo(instance).on("click", () => openRef.current?.());
     instance.flyTo(candidate.coordinates, stage === "candidates" ? 15 : 17, { animate: !window.matchMedia("(prefers-reduced-motion: reduce)").matches, duration: 0.8 });
-  }, [matched, stage, candidate]);
+  }, [matched, stage, candidate, group?.name, group?.units]);
 
   return (
     <div className="relative z-0 min-h-0 flex-1 overflow-hidden rounded-lg border border-border">
       <div ref={container} className="absolute inset-0" aria-label="Location map" />
-      {matched ? <div className="pointer-events-none absolute z-[500] w-[220px] -translate-x-1/2 rounded-md border border-border bg-background/95 px-3 py-2 text-foreground shadow-sm" style={{ left: labelPoint.x, top: labelPoint.y + 24 }} role="status" aria-label="Location status">
+      {matched && group ? <button type="button" onClick={() => onOpenGroup?.()} aria-label={`Open ${group.name}`} className="absolute z-[500] w-[200px] -translate-x-1/2 rounded-md border border-border bg-background/95 px-3 py-2 text-left text-foreground shadow-sm transition-colors hover:bg-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring" style={{ left: labelPoint.x, top: labelPoint.y + 28 }}>
+        <p className="text-sm font-semibold">{group.name}</p>
+        <p className="mt-0.5 text-xs text-muted-foreground">Unit Group · {group.units} Unit{group.units === 1 ? "" : "s"}</p>
+        {onOpenGroup && <p className="mt-1.5 text-xs font-medium">Open →</p>}
+      </button> : matched ? <div className="pointer-events-none absolute z-[500] w-[220px] -translate-x-1/2 rounded-md border border-border bg-background/95 px-3 py-2 text-foreground shadow-sm" style={{ left: labelPoint.x, top: labelPoint.y + 24 }} role="status" aria-label="Location status">
         <p className="text-sm font-semibold">{stage === "candidates" ? "Possible address matches" : candidate?.name}</p>
         {!compact && <p className="mt-1 text-xs leading-relaxed text-muted-foreground">{stage === "candidates" ? "Finchley Road · NW11 0QD" : candidate?.line}</p>}
         <p className="mt-1.5 text-xs font-medium">{stage === "candidates" ? "Approximate search area" : stage === "confirmed" ? "Location confirmed" : "Awaiting confirmation"}</p>
@@ -200,11 +206,11 @@ function UnitResizeDivider({ width, setWidth, onReset, isDefault }: { width: num
 }
 
 // An established Unit Group in the simulated portfolio: names, uses and order exactly as authorised.
-function PortfolioGroupView({ group }: { group: PortfolioGroup }) {
+function PortfolioGroupView({ group, onClose }: { group: PortfolioGroup; onClose?: () => void }) {
   const [open, setOpen] = useState(true);
   const totals = summarise(group.units);
   return (
-    <section aria-label={`${group.name} Unit Group`} className="min-w-0 rounded-md border border-border bg-background px-4 py-3">
+    <section aria-label={`${group.name} Unit Group`} className="min-w-0 rounded-md border border-border bg-background px-4 py-3 motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-2 motion-safe:duration-300">
       <div className="flex flex-wrap items-baseline justify-between gap-2">
         <div>
           <p className="text-xs font-medium text-muted-foreground">Unit Group · in your portfolio</p>
@@ -212,7 +218,10 @@ function PortfolioGroupView({ group }: { group: PortfolioGroup }) {
           <p className="mt-0.5 text-xs text-muted-foreground">{group.line}</p>
           <p className="mt-1 text-sm text-foreground">{totals.total} Units · {totals.residential} Residential · {totals.commercial} Commercial</p>
         </div>
-        <button type="button" aria-expanded={open} onClick={() => setOpen(v => !v)} className="min-h-9 rounded-md px-2 text-sm text-muted-foreground hover:text-foreground">{open ? "Hide Units" : "Show Units"}</button>
+        <div className="flex items-center gap-1">
+          <button type="button" aria-expanded={open} onClick={() => setOpen(v => !v)} className="min-h-9 rounded-md px-2 text-sm text-muted-foreground hover:text-foreground">{open ? "Hide Units" : "Show Units"}</button>
+          {onClose && <button type="button" onClick={onClose} className="min-h-9 rounded-md px-2 text-sm text-muted-foreground hover:text-foreground">Back to map</button>}
+        </div>
       </div>
       {open && <ul aria-label={`${group.name} Units`} className="mt-3 divide-y divide-border border-t border-border">
         {group.units.map(u => <li key={u.number} className="flex min-h-10 items-center justify-between gap-3 py-1.5"><span className="truncate text-sm text-foreground">{u.name}</span><span className="shrink-0 text-xs text-muted-foreground">{u.classification}</span></li>)}
@@ -263,6 +272,7 @@ function PrototypeUnitShell() {
   const [buildingStage, setBuildingStage] = useState<"idle" | "awaiting-description" | "naming" | "describing" | "named" | "ready" | "created">("idle");
   const [portfolio, setPortfolio] = useState<PortfolioGroup[]>([]);
   const [mapExpanded, setMapExpanded] = useState(false);
+  const [groupOpen, setGroupOpen] = useState(false);
   const [showSummaryUnits, setShowSummaryUnits] = useState(false);
   const [lastRemoved, setLastRemoved] = useState<{ unit: ProposedUnit; index: number } | null>(null);
   const [buildingPromptId, setBuildingPromptId] = useState<number | null>(null);
@@ -422,15 +432,15 @@ function PrototypeUnitShell() {
 
   const afterCreation = (choice: string) => {
     const name = portfolio[portfolio.length - 1]?.name ?? "It";
-    if (choice === "View on map") { setMapExpanded(true); setBuildingPromptId(appendExchange(choice, `Here's ${name} at its confirmed location.`)); return; }
+    if (choice === "View on map") { setMapExpanded(true); setGroupOpen(false); setBuildingPromptId(appendExchange(choice, `Here's ${name} at its confirmed location.`)); return; }
     if (choice === "Add Papers") { setBuildingPromptId(appendExchange(choice, `Papers aren't part of this demonstration yet. When they are, I'll keep them with ${name}.`)); return; }
     if (choice === "Set up another place") {
-      resetSetup(); setMapExpanded(false); setShowInvitation(false);
+      resetSetup(); setMapExpanded(false); setGroupOpen(false); setShowInvitation(false);
       const id = nextId.current++;
       setMessages(previous => [...previous, { id: nextId.current++, role: "user", text: choice }, { id, role: "hobson", text: "What would you like me to set up?" }]);
       setSetupPromptId(id); setInput(""); return;
     }
-    if (choice === "Done for now") { setMapExpanded(false); appendExchange(choice, `Very good. ${name} is in your portfolio whenever you need it.`); resetSetup(); setBuildingStage("idle"); }
+    if (choice === "Done for now") { setMapExpanded(false); setGroupOpen(false); appendExchange(choice, `Very good. ${name} is in your portfolio whenever you need it.`); resetSetup(); setBuildingStage("idle"); }
   };
 
   const submitCounts = (residential: number, commercial: number) => {
@@ -540,7 +550,7 @@ function PrototypeUnitShell() {
             type="button"
             className="grid h-11 w-11 place-items-center rounded-full bg-[#56514A] text-white shadow-md transition hover:bg-[#56514A]"
             aria-label="A new conversation"
-            onClick={() => { setMessages([OPENING_MESSAGE]); setInput(""); setSetupPromptId(null); setShowInvitation(true); setLocationStage("idle"); setLocationPromptId(null); setLocationAddress(""); setAddressParts({}); setAddressCandidates([]); setSelectedAddress(null); setBuildingUnderstanding(null); setBuildingStage("idle"); setBuildingPromptId(null); setLastRemoved(null); setMapExpanded(false); setShowSummaryUnits(false); }}
+            onClick={() => { setMessages([OPENING_MESSAGE]); setInput(""); setSetupPromptId(null); setShowInvitation(true); setLocationStage("idle"); setLocationPromptId(null); setLocationAddress(""); setAddressParts({}); setAddressCandidates([]); setSelectedAddress(null); setBuildingUnderstanding(null); setBuildingStage("idle"); setBuildingPromptId(null); setLastRemoved(null); setMapExpanded(false); setGroupOpen(false); setShowSummaryUnits(false); }}
           >
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" aria-hidden><path d="M12 5v14M5 12h14" /></svg>
           </button>
@@ -660,14 +670,15 @@ function PrototypeUnitShell() {
           const showingGroup = buildingStage === "created" ? portfolio[portfolio.length - 1] : null;
           const portfolioOnly = !buildingUnderstanding && locationStage === "idle" && portfolio.length > 0;
           const focus = showingGroup ?? (portfolioOnly ? portfolio[portfolio.length - 1] : null);
-          const compact = !mapExpanded && (Boolean(buildingUnderstanding) || portfolioOnly);
+          const exploring = Boolean(focus) && (mapExpanded || groupOpen);
+          const compact = !mapExpanded && !groupOpen && (Boolean(buildingUnderstanding) || portfolioOnly);
           const totals = units ? summarise(units) : null;
           return (<>
-            <div className={`flex min-h-0 flex-col gap-2 transition-[flex-basis] duration-300 motion-reduce:transition-none ${compact ? "h-[300px] shrink-0" : "min-h-[300px] flex-1"}`}>
+            <div className={`flex min-h-0 flex-col gap-2 transition-[flex-basis] duration-300 motion-reduce:transition-none ${groupOpen && focus ? "h-[42%] min-h-[220px] shrink-0" : compact ? "h-[300px] shrink-0" : "min-h-[300px] flex-1"}`}>
               {buildingUnderstanding && !showingGroup && <div className="text-xs leading-relaxed text-muted-foreground"><p>{selectedAddress?.line}</p><p className="mt-1 text-[10px]">Illustrative mock lookup · approximate location</p></div>}
-              <UnitLocationMap compact={compact} stage={focus ? "confirmed" : locationStage} address={focus ? focus.line : locationAddress} candidate={focus ? focus.record : selectedAddress ?? addressCandidates[0] ?? null} />
+              <UnitLocationMap compact={compact} group={focus ? { name: focus.name, units: focus.units.length } : null} onOpenGroup={focus ? () => { setGroupOpen(true); setMapExpanded(false); } : undefined} stage={focus ? "confirmed" : locationStage} address={focus ? focus.line : locationAddress} candidate={focus ? focus.record : selectedAddress ?? addressCandidates[0] ?? null} />
             </div>
-            {buildingStage === "ready" && units && totals ? (
+            {exploring && focus ? (groupOpen ? <PortfolioGroupView group={focus} onClose={() => { setGroupOpen(false); setMapExpanded(true); }} /> : null) : buildingStage === "ready" && units && totals ? (
               <section aria-label="Ready to create" className="min-w-0 py-3">
                 <p className="text-xs font-medium text-muted-foreground">Ready to add · nothing created yet</p>
                 <h3 className="mt-1 text-xl font-semibold text-foreground">{selectedAddress?.name}</h3>
