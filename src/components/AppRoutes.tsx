@@ -196,6 +196,14 @@ const AppContent = () => {
                   </PrototypeGate>
                 }
               />
+              <Route
+                path="/prototype-unit"
+                element={
+                  <PrototypeGate>
+                    <PrototypeUnit />
+                  </PrototypeGate>
+                }
+              />
               {/* Old prototype addresses — redirect, never 404 */}
               <Route path="/prototype" element={<Navigate to="/prototype-work" replace />} />
               <Route path="/prototype-mobile" element={<Navigate to="/prototype-work" replace />} />
