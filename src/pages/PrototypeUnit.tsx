@@ -9,6 +9,7 @@ import { discoverAddress, MOCK_ADDRESSES, type AddressParts, type AddressRecord 
 import { countsReply, proposeCounts, editUnits, summarise, namingProposal, numberUnits, restoreUnit, understandBuilding, type BuildingUnderstanding, type ProposedUnit } from "./prototypeUnitStructure";
 import { PrototypeUnitStructure } from "./PrototypeUnitStructure";
 import { PrototypeUnitDetails } from "./PrototypeUnitDetails";
+import { UnitPhotoThumbnail } from "./PrototypeUnitPhotographs";
 import { UnitKnowledgeRow } from "./PrototypeUnitKnowledge";
 import { statusFor } from "./prototypeUnitTenancy";
 import { PARAGON_GROUP_ID, paperById } from "./prototypeUnitPapers";
@@ -230,7 +231,7 @@ function PortfolioGroupView({ group, onClose, onOpenUnit, onCardChange, onChange
           {onClose && <button type="button" onClick={onClose} className="min-h-9 rounded-md px-2 text-sm text-muted-foreground hover:text-foreground">Back to map</button>}
         </>} />
       {open && <ul aria-label={`${group.name} Units`} className="mt-3 divide-y divide-border border-t border-border">
-        {group.units.map(u => <li key={u.number} className="flex items-center"><UnitKnowledgeRow unit={u} groupId={group.id} onViewPaper={onViewPaper} onAddDescription={onOpenUnit ? () => onOpenUnit(u) : undefined}>{onOpenUnit ? <button type="button" onClick={() => onOpenUnit(u)} aria-label={`Open ${u.name}`} className="flex min-h-11 w-full flex-col justify-center rounded py-1.5 text-left hover:bg-secondary/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"><span className="truncate text-sm font-medium text-foreground">{u.name}</span><span className="truncate text-xs text-muted-foreground">{summaryLine(u, statusFor(group.record.id, u.number))}</span></button> : <div className="flex min-h-11 flex-col justify-center py-1.5"><span className="truncate text-sm font-medium text-foreground">{u.name}</span><span className="truncate text-xs text-muted-foreground">{summaryLine(u, statusFor(group.record.id, u.number))}</span></div>}</UnitKnowledgeRow></li>)}
+        {group.units.map(u => <li key={u.number} className="flex items-center"><UnitPhotoThumbnail unit={u} /><UnitKnowledgeRow unit={u} groupId={group.id} onViewPaper={onViewPaper} onAddDescription={onOpenUnit ? () => onOpenUnit(u) : undefined}>{onOpenUnit ? <button type="button" onClick={() => onOpenUnit(u)} aria-label={`Open ${u.name}`} className="flex min-h-11 w-full flex-col justify-center rounded py-1.5 text-left hover:bg-secondary/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"><span className="truncate text-sm font-medium text-foreground">{u.name}</span><span className="truncate text-xs text-muted-foreground">{summaryLine(u, statusFor(group.record.id, u.number))}</span></button> : <div className="flex min-h-11 flex-col justify-center py-1.5"><span className="truncate text-sm font-medium text-foreground">{u.name}</span><span className="truncate text-xs text-muted-foreground">{summaryLine(u, statusFor(group.record.id, u.number))}</span></div>}</UnitKnowledgeRow></li>)}
       </ul>}
     </section>
   );
@@ -825,9 +826,9 @@ function PrototypeUnitShell() {
           const detailPanel = openUnit && opened ? <PrototypeUnitDetails unit={opened} units={openList} groupName={openedName} onChange={next => updateUnitsIn(openUnit.ctx, next)} onBack={() => setOpenUnit(null)} /> : null;
           const openFrom = (ctx: string) => (u: ProposedUnit) => setOpenUnit({ ctx, number: u.number });
           return (<>
-            <div className={`flex min-h-0 flex-col gap-2 transition-[flex-basis] duration-300 motion-reduce:transition-none ${groupOpen && focus ? "h-[42%] min-h-[220px] shrink-0" : compact ? "h-[300px] shrink-0" : "min-h-[300px] flex-1"}`}>
+            <div className={`flex min-h-0 flex-col gap-2 transition-[flex-basis] duration-300 motion-reduce:transition-none ${detailPanel ? "h-[140px] shrink-0" : groupOpen && focus ? "h-[42%] min-h-[220px] shrink-0" : compact ? "h-[300px] shrink-0" : "min-h-[300px] flex-1"}`}>
               {buildingUnderstanding && !showingGroup && <div className="text-xs leading-relaxed text-muted-foreground"><p>{selectedAddress?.line}</p><p className="mt-1 text-[10px]">Illustrative mock lookup · approximate location</p></div>}
-              <UnitLocationMap compact={compact} group={focus ? { name: focus.name, units: focus.units.length } : null} onOpenGroup={focus ? () => { setGroupOpen(true); setMapExpanded(false); } : undefined} stage={focus ? "confirmed" : locationStage} address={focus ? focus.line : locationAddress} candidate={focus ? focus.record : selectedAddress ?? addressCandidates[0] ?? null} />
+              <UnitLocationMap compact={compact || Boolean(detailPanel)} group={focus ? { name: focus.name, units: focus.units.length } : null} onOpenGroup={focus ? () => { setGroupOpen(true); setMapExpanded(false); } : undefined} stage={focus ? "confirmed" : locationStage} address={focus ? focus.line : locationAddress} candidate={focus ? focus.record : selectedAddress ?? addressCandidates[0] ?? null} />
             </div>
             {paper ? (
               <section aria-label="Supporting paper" className="min-w-0 rounded-md border border-border bg-background px-4 py-3 motion-safe:animate-in motion-safe:fade-in motion-safe:duration-200">

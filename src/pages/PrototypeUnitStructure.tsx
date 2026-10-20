@@ -5,6 +5,7 @@ import { DndContext, KeyboardSensor, PointerSensor, TouchSensor, closestCenter, 
 import { SortableContext, arrayMove, sortableKeyboardCoordinates, useSortable, verticalListSortingStrategy } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import type { ReactNode } from "react";
+import { UnitPhotoThumbnail } from "./PrototypeUnitPhotographs";
 import { UnitKnowledgeRow } from "./PrototypeUnitKnowledge";
 import { statusFor } from "./prototypeUnitTenancy";
 import { summaryLine } from "./prototypeUnitDetails";
@@ -108,6 +109,7 @@ export function PrototypeUnitStructure({ understanding, reviewed = false, editab
           ) : (
             <SortableRow key={unit.number} id={unit.number} label={unit.name} disabled={!editable || editing !== null}>{handle => (<>
               {editable && handle}
+              <UnitPhotoThumbnail unit={unit} />
               {onOpenUnit ? <UnitKnowledgeRow unit={unit} onAddDescription={() => onOpenUnit(unit)}><button type="button" onClick={() => onOpenUnit(unit)} aria-label={`Open ${unit.name}`} className="flex w-full min-w-0 flex-1 flex-col rounded text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"><span className="truncate text-sm font-medium text-foreground hover:underline">{unit.name}</span><span className="truncate text-xs text-muted-foreground">{summaryLine(unit, statusFor(recordId, unit.number))}{unit.location ? ` · ${unit.location}` : ""}</span></button></UnitKnowledgeRow> : <>
               <p className="min-w-0 flex-1 truncate text-sm font-medium text-foreground">{unit.name}</p>
               <p className="min-w-0 truncate text-xs text-muted-foreground">{summaryLine(unit, statusFor(recordId, unit.number))}{unit.location ? ` · ${unit.location}` : ""}</p></>}
