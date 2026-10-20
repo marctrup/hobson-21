@@ -26,7 +26,10 @@ export default function PrototypeDocumentsPreview({ paper }: { paper: PrototypeP
     let rendering: ReturnType<Awaited<ReturnType<PDFDocumentProxy["getPage"]>>["render"]> | undefined;
     pdf.getPage(page).then((sheet) => {
       if (!active || !canvas.current) return;
-      rendering = sheet.render({ canvas: canvas.current, viewport: sheet.getViewport({ scale: 1.6 }) });
+      const viewport = sheet.getViewport({ scale: 1.6 });
+      canvas.current.width = Math.ceil(viewport.width);
+      canvas.current.height = Math.ceil(viewport.height);
+      rendering = sheet.render({ canvas: canvas.current, viewport });
       rendering.promise.catch((err: Error) => { if (active && err.name !== "RenderingCancelledException") setError(true); });
     }).catch(() => { if (active) setError(true); });
     return () => { active = false; rendering?.cancel(); };
