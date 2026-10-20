@@ -3930,7 +3930,11 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
               data-chat-turn-stack
               style={{ gap: CHAT_TURN_GAP_PX }}
             >
-              {messageGroups.map((group) => (
+              {messageGroups.map((group) => {
+                // Hobson's owl opens the conversation only — it is never repeated beside his later
+                // messages in the same conversation, and never appears on the user's messages.
+                const isConversationOpening = group.role === "hobson" && group.id === messageGroups.find((g) => g.role === "hobson")?.id;
+                return (
                 <div
                   key={group.id}
                   className="flex flex-col"
@@ -3947,7 +3951,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                           streaming={!!m.streaming}
                           feedback={m.feedback || {}}
                           chips={m.feedbackChips}
-                          showAvatar={true}
+                          showAvatar={isConversationOpening && i === 0}
                           onGrade={(g) => updateFeedback(m.id, { grade: g })}
                           onToggleChip={(c) => {
                             const cur = m.feedback?.chips || [];
@@ -3959,7 +3963,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                         />
                       ) : m.rich === "summary" && m.summary ? (
                         <div key={m.id} className="flex items-start gap-2">
-                          {i === 0 ? <OwlAvatar state={owl} /> : <div aria-hidden className="w-10 h-10 shrink-0" />}
+                          {isConversationOpening && i === 0 ? <OwlAvatar state={owl} /> : <div aria-hidden className="w-10 h-10 shrink-0" />}
                           <div className="flex-1 min-w-0 space-y-2">
                             {m.text && (
                               <div className="max-w-[420px] bg-[#F1EBDE] text-[#2D2D2D] text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-bl-md">
@@ -3983,7 +3987,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                           text={m.text}
                           owl={owl}
                           streaming={!!m.streaming}
-                          showAvatar={i === 0}
+                          showAvatar={isConversationOpening && i === 0}
                         />
                       )
                     ) : (
@@ -3991,7 +3995,8 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                     )
                   ))}
                 </div>
-              ))}
+                );
+              })}
               {typing && (
                 <div
                   className="flex flex-col"
@@ -4000,7 +4005,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                 >
                   <TypingBubble
                     owl={owl}
-                    showAvatar={messages[messages.length - 1]?.role !== "hobson"}
+                    showAvatar={!messageGroups.some((g) => g.role === "hobson")}
                   />
                 </div>
               )}
