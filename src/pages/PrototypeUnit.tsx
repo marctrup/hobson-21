@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Paperclip, Plus, ArrowUpRight } from "lucide-react";
+import { Paperclip } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { PrototypeGate } from "@/components/prototype/PrototypeGate";
 import owlDefault from "@/assets/prototype/owl-default.png";
@@ -10,6 +10,8 @@ const MIN_CHAT_WIDTH = 280;
 const MIN_CANVAS_WIDTH = 320;
 
 type UnitMessage = { id: number; text: string; role: "user" | "hobson" };
+
+const OPENING_MESSAGE: UnitMessage = { id: 0, role: "hobson", text: "I can help you organise the places in your portfolio. Shall we get started?" };
 
 const SETUP_CHOICES = [
   { label: "A standalone Unit", response: "Of course. Let's set up your Unit." },
@@ -132,7 +134,8 @@ function UnitResizeDivider({ width, setWidth, onReset, isDefault }: { width: num
 function PrototypeUnitShell() {
   const [chatWidth, setChatWidth] = useState(DEFAULT_CHAT_WIDTH);
   const [input, setInput] = useState("");
-  const [messages, setMessages] = useState<UnitMessage[]>([]);
+  const [messages, setMessages] = useState<UnitMessage[]>([OPENING_MESSAGE]);
+  const [showInvitation, setShowInvitation] = useState(true);
   const [setupPromptId, setSetupPromptId] = useState<number | null>(null);
   const nextId = useRef(1);
   const conversationEnd = useRef<HTMLDivElement>(null);
@@ -141,9 +144,14 @@ function PrototypeUnitShell() {
     conversationEnd.current?.scrollIntoView({ block: "end" });
   }, [messages]);
 
-  const startSetup = () => {
+  const startSetup = (reply = "Set up a place") => {
+    if (!showInvitation) return;
     const id = nextId.current++;
-    setMessages((previous) => [...previous, { id, role: "hobson", text: "What would you like me to set up?" }]);
+    setMessages((previous) => [...previous,
+      { id: nextId.current++, role: "user", text: reply },
+      { id, role: "hobson", text: "What would you like me to set up?" },
+    ]);
+    setShowInvitation(false);
     setSetupPromptId(id);
     setInput("");
   };
@@ -160,6 +168,16 @@ function PrototypeUnitShell() {
   const send = () => {
     const text = input.trim();
     if (!text) return;
+    if (showInvitation && text.toLowerCase().replace(/[.!?]+$/, "") === "set up a place") {
+      startSetup(text);
+      return;
+    }
+    const choice = SETUP_CHOICES.find((option) => option.label.toLowerCase() === text.toLowerCase());
+    if (setupPromptId !== null && choice) {
+      chooseSetup(choice);
+      setInput("");
+      return;
+    }
     // Ordinary messages remain local echoes; only the setup choices have scripted replies.
     setMessages((prev) => [...prev, { id: nextId.current++, text, role: "user" }]);
     setInput("");
@@ -180,7 +198,7 @@ function PrototypeUnitShell() {
             type="button"
             className="grid h-11 w-11 place-items-center rounded-full bg-[#56514A] text-white shadow-md transition hover:bg-[#56514A]"
             aria-label="A new conversation"
-            onClick={() => { setMessages([]); setInput(""); setSetupPromptId(null); }}
+            onClick={() => { setMessages([OPENING_MESSAGE]); setInput(""); setSetupPromptId(null); setShowInvitation(true); }}
           >
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" aria-hidden><path d="M12 5v14M5 12h14" /></svg>
           </button>
@@ -200,11 +218,16 @@ function PrototypeUnitShell() {
             <div key={message.id} className={`min-w-0 max-w-full ${message.role === "user" ? "self-end rounded-xl bg-primary-light px-3.5 py-2.5 text-primary-foreground shadow-sm" : "self-start py-2 text-ink"}`}>
               {message.role === "hobson" && <p className="mb-1 text-xs font-semibold text-ink-muted">Hobson</p>}
               <p className="break-words text-sm leading-relaxed">{message.text}</p>
+              {message.id === OPENING_MESSAGE.id && showInvitation && (
+                <Button variant="ghost" onClick={() => startSetup()} className="mt-3 h-auto justify-start whitespace-normal px-0 py-1 text-left text-sm font-normal text-ink-muted hover:bg-transparent hover:text-ink">
+                  Set up a place →
+                </Button>
+              )}
               {setupPromptId === message.id && (
-                <div className="mt-4 flex flex-col gap-2">
+                <div className="mt-3 flex flex-col items-start gap-1">
                   {SETUP_CHOICES.map((choice) => (
-                    <Button key={choice.label} variant="outline" onClick={() => chooseSetup(choice)} className="h-auto min-h-10 w-full justify-between whitespace-normal px-3 py-2.5 text-left text-sm leading-relaxed">
-                      <span>{choice.label}</span><ArrowUpRight className="h-4 w-4 text-ink-muted" aria-hidden="true" />
+                    <Button key={choice.label} variant="ghost" onClick={() => chooseSetup(choice)} className="h-auto max-w-full justify-start whitespace-normal px-0 py-1.5 text-left text-sm font-normal leading-relaxed text-ink-muted hover:bg-transparent hover:text-ink">
+                      {choice.label}
                     </Button>
                   ))}
                 </div>
@@ -242,9 +265,6 @@ function PrototypeUnitShell() {
       <main className="flex min-w-0 flex-1 flex-col gap-4 p-4" aria-label="Prototype Unit canvas">
         <header className="flex flex-wrap items-center justify-between gap-3">
           <h2 className="text-[15px] font-semibold text-ink">Portfolio</h2>
-          <Button onClick={startSetup} className="h-auto min-h-10 whitespace-normal text-left">
-            <Plus className="h-4 w-4" aria-hidden="true" />Add a Unit or Unit Group
-          </Button>
         </header>
         <div className="flex min-h-0 w-full flex-1 flex-col items-center justify-center gap-3 rounded-xl border border-dashed border-[#56514A]/25 bg-white/60">
           <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#56514A" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
