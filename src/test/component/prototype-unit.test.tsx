@@ -175,7 +175,7 @@ describe("Prototype Unit proposed building", () => {
     const proposal = screen.getByRole("region", { name: "Proposed building structure" });
     expect(within(proposal).getAllByRole("listitem").map(item => item.textContent)).toEqual(["Third Floor", "Second Floor", "First Floor", "Ground Floor"]);
     expect(screen.getByLabelText("Location map")).toBe(map);
-    expect(within(screen.getByRole("status")).getByText("1115 Finchley Road, London, NW11 0QD")).toBeInTheDocument();
+    expect(within(screen.getByRole("main")).getByText("1115 Finchley Road, London, NW11 0QD")).toBeInTheDocument();
     expect(within(screen.getByRole("main")).queryAllByRole("button")).toHaveLength(0);
     await user.type(screen.getByRole("textbox"), "Create them{Enter}");
     expect(within(proposal).getAllByRole("listitem")).toHaveLength(4);
