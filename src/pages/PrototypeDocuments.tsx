@@ -168,7 +168,7 @@ export default function PrototypeDocuments() {
     if (!keepReadings) setReadings([]); setGoTo(undefined); setMessages([]); setInput(""); setSelectionOpen(false); setUploadError(""); setUploading(false); setShowChat(true);
   };
   const receive = (paper: PrototypePaper) => {
-    setJourney(receivePaper(paper)); setSelectionOpen(false); setShowChat(true);
+    setJourney(receivePaper(paper)); setSelectionOpen(false); setReadingCard(null); setSection("current"); setShowChat(true);
     addMessage("user", paper.filename, true);
     addMessage("hobson", paper.example ? "I'll take a first look at this." : "I've received your paper. I haven't read or identified this one in this demonstration. What kind of paper is it?");
   };
@@ -290,10 +290,9 @@ export default function PrototypeDocuments() {
   };
   const anotherPaper = () => {
     addMessage("user", "Add another paper");
-    const keep = readingCard;
     generation.current++;
     setJourney(emptyPaperJourney); setReview(emptyReview); setPlacement(emptyPlacement); setView("papers"); setGoTo(undefined); setInput(""); setUploadError("");
-    setReadingCard(keep); setSection("current"); setSelectionOpen(true); setShowChat(true);
+    setSection("current"); setSelectionOpen(true); setShowChat(true);
     addMessage("hobson", "Of course. Attach the next paper and I'll take a first look.");
   };
   const showInPaper = (page: number) => setGoTo((g) => ({ page, nonce: (g?.nonce ?? 0) + 1 }));
@@ -409,7 +408,7 @@ export default function PrototypeDocuments() {
               <p className="text-sm font-semibold text-ink">{r.title}</p>
               <p className="mt-0.5 text-xs italic text-ink-muted">{r.finished ? "I've finished reading this." : phraseFor(r)}</p>
               <div className="mt-3 flex flex-wrap gap-2">
-                {journey.stage !== "empty" || placement.step === "placed" ? <Button size="sm" onClick={anotherPaper}>Add another paper</Button> : null}
+                <Button size="sm" onClick={anotherPaper}>Add another paper</Button>
                 <Button size="sm" variant="ghost" onClick={() => setSection("reading")}>See what I'm reading</Button>
                 {placement.step === "placed" && <Button size="sm" variant="ghost" onClick={() => { addMessage("user", "Finish for now"); addMessage("hobson", "Very good. I'll carry on reading. You'll find it under Reading whenever you want it."); setPlacement((p) => ({ ...p, step: "none" })); setJourney(emptyPaperJourney); setReview(emptyReview); }}>Finish for now</Button>}
               </div>
