@@ -16,4 +16,4 @@
 - On narrow screens, work occupies the available surface and the existing guidance conversation overlays it; shared journey navigation folds into a chooser so the desk remains reachable without changing simulation state.
 - Work overview and journey layout breakpoints follow the resizable work container, not the browser width, so dragging the conversation divider preserves a readable desk.
 - The ordinary Hobson composer’s sample-paper control opens the existing renewal guidance and receipt flow, so attachments remain job-scoped and never imply real uploads or completed reading.
-- Supplied-paper identification and confirmed placement use one parent-owned illustrative record shared by the Desk and existing Papers views; filing never completes examination, and alternative locations never acquire the renewal tenancy link automatically.
+- Supplied papers advance through explicit parent-owned illustrative receipt, context-linking and effect-check states shared by Desk and Papers; established context permits automatic placement, while an isolated uncertain-placement preview requires a choice and cannot alter the real sample record or clear examination.

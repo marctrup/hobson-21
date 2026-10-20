@@ -1433,6 +1433,16 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
   const [guidingRenewal, setGuidingRenewal] = useState(false);
   const [workGuidance, setWorkGuidance] = useState(initialWorkGuidance);
   const [pendingAttachment, setPendingAttachment] = useState(false);
+  useEffect(() => {
+    const paper = workGuidance.suppliedPapers.find(p => p.progress === "received" || p.progress === "identified-linked");
+    if (!paper) return;
+    const timer = window.setTimeout(() => {
+      const result = applyPaperPlacement(workGuidance, paper.id, { type: "advance" });
+      setWorkGuidance(result.state);
+      if (result.reply) setMessages(previous => [...previous, { id: `paper-context-${crypto.randomUUID()}`, role: "hobson", text: result.reply }]);
+    }, 1800);
+    return () => window.clearTimeout(timer);
+  }, [workGuidance]);
   const [roofWork, setRoofWork] = useState(createRoofWork);
   const roofCounts = roofOverviewCounts(roofWork);
   useEffect(() => {
@@ -4064,7 +4074,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                 sendGuidance(instruction);
               }} className="flex items-center gap-2 rounded-full border border-input bg-background px-4 py-2.5 focus-within:ring-2 focus-within:ring-ring">
                 {guideScope === "renewal" && <Button type="button" variant="ghost" size="icon" onClick={attachSampleSideLetter} aria-label="Attach a paper (sample Side Letter 2024.pdf)" title="Attach a paper (sample Side Letter 2024.pdf)" className="h-9 w-9 shrink-0 text-foreground"><Paperclip className="h-5 w-5" aria-hidden="true" /></Button>}
-                <input ref={inputRef} value={input} onChange={(event) => setInput(event.target.value)} aria-label={guideScope === "renewal" ? "Guide Hobson about the tenancy renewal" : guideScope === "lease" ? "Guide Hobson about the lease review" : "Guide Hobson about the roof leak investigation"} aria-describedby="renewal-chat-context" placeholder={guideScope === "renewal" ? "Ask me to check the 2024 side letter…" : guideScope === "lease" ? "Ask me to check the shopfront roof…" : roofGuidance.contactOnHold ? "Tell me I can contact people again…" : "Ask me to hold further contact…"} className="min-w-0 flex-1 bg-transparent text-sm text-foreground outline-none placeholder:text-muted-foreground" />
+                <input ref={inputRef} value={input} onChange={(event) => setInput(event.target.value)} aria-label={guideScope === "renewal" ? "Guide Hobson about the tenancy renewal" : guideScope === "lease" ? "Guide Hobson about the lease review" : "Guide Hobson about the roof leak investigation"} aria-describedby="renewal-chat-context" placeholder={guideScope === "renewal" ? "Ask Hobson something about this renewal…" : guideScope === "lease" ? "Ask me to check the shopfront roof…" : roofGuidance.contactOnHold ? "Tell me I can contact people again…" : "Ask me to hold further contact…"} className="min-w-0 flex-1 bg-transparent text-sm text-foreground outline-none placeholder:text-muted-foreground" />
                 <Button type="submit" size="icon" variant="ghost" disabled={!input.trim()} aria-label="Send guidance" className="h-8 w-8 shrink-0"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg></Button>
               </form>
             </>
@@ -4374,7 +4384,8 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
             setGuidingRenewal(true);
             setGuideScope(scope);
             if (scope !== "renewal") setGuidedRoofAttempt(roofWork.number);
-            if (suggestion) setInput(suggestion);
+            if (scope === "renewal" && workGuidance.suppliedPapers.length) setInput("");
+            else if (suggestion) setInput(suggestion);
             else if (!guidingRenewal) setInput(scope === "renewal" ? SIDE_LETTER_INSTRUCTION : scope === "lease" ? SHOPFRONT_INSTRUCTION : roofGuidance.contactOnHold ? LIFT_HOLD_INSTRUCTION : HOLD_CONTACT_INSTRUCTION);
             setTyping(false);
             requestAnimationFrame(() => {

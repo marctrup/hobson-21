@@ -18,6 +18,10 @@ describe("Prototype conversation composer", () => {
     expect(screen.getByText(/Thank you. I've received the Side Letter/)).toBeInTheDocument();
     expect(screen.getByLabelText("Guide Hobson about the tenancy renewal")).toHaveValue("");
     expect(screen.queryByLabelText(`Attached: ${SIDE_LETTER_FILENAME}`)).not.toBeInTheDocument();
+    await user.click(screen.getByRole("button", { name: "Getting the tenancy renewal ready" }));
+    await waitFor(() => expect(screen.getByText("Related to the existing Business Lease")).toBeInTheDocument(), { timeout: 5000 });
+    await user.click(screen.getByRole("button", { name: /^Guide Hobson$/ }));
+    expect(screen.getByLabelText("Guide Hobson about the tenancy renewal")).toHaveValue("");
   });
 
   it("opens an ordinary chat box with no locked notice and answers what you send", async () => {

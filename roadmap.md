@@ -1,5 +1,8 @@
 # Roadmap
 
+## Iteration 22A — use known paper context
+- [x] Show distinct illustrative receipt, identification/linking and effect-check states; auto-file the established happy path, isolate the uncertain-placement preview, remove repeated chat prompts, and preserve renewal findings and approvals. Browser flow verified through the private entrance; not published.
+
 ## Iteration 22 — identify, place and link the Side Letter
 - [x] Add illustrative identification and confirmed filing through the existing Desk, with alternative places, mismatch safeguards and one shared record; pending review, original findings and other work preserved. 49 checks pass; attachment, mismatch, filing, job Papers and reopening verified through the private entrance; preview clean. Not published.
 

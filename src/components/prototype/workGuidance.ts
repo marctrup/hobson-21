@@ -7,7 +7,7 @@ export const SIDE_LETTER_ATTACHMENT_ID = "sim-side-letter-2024-flat6";
 
 export type PaperPlace = { id: string; label: string; kind: "Unit" | "Unit Group"; propertyId: string; unitId?: string };
 export const RENEWAL_PAPER_PLACE: PaperPlace = { id: "stanley-f6", label: "Stanley House · Flat 6", kind: "Unit", propertyId: "stanley", unitId: "stanley-f6" };
-export type PaperPlacementAction = { type: "propose"; place: PaperPlace } | { type: "confirm" };
+export type PaperPlacementAction = { type: "propose"; place: PaperPlace } | { type: "confirm" } | { type: "advance" };
 
 export type SuppliedPaper = {
   id: string;
@@ -22,6 +22,7 @@ export type SuppliedPaper = {
   tenancyLinked: boolean;
   sourceInstruction: string;
   review: "awaiting-examination";
+  progress: "received" | "identified-linked" | "checking-effect" | "uncertain";
 };
 
 export type WorkGuidanceState = { sideLetterRequested: boolean; sideLetterStatus: "awaiting-paper" | null; suppliedPapers: SuppliedPaper[] };
@@ -31,6 +32,9 @@ const normalise = (text: string) => text.trim().replace(/[’‘]/g, "'").replac
 
 export function applyWorkGuidance(state: WorkGuidanceState, instruction: string, attachmentId?: string) {
   if (attachmentId) return applyPaperAttachment(state, instruction, attachmentId);
+  if (state.suppliedPapers.length) {
+    return { state, reply: "I have the Side Letter and your instruction with this renewal. Its effect on the rent is still being checked; I haven't changed the findings or prepared the renewal summary. This conversation is illustrative, so I haven't carried out any additional work." };
+  }
   if (normalise(instruction) !== normalise(SIDE_LETTER_INSTRUCTION)) {
     return {
       state,
@@ -56,20 +60,28 @@ export function applyPaperAttachment(state: WorkGuidanceState, instruction: stri
   if (state.suppliedPapers.some((paper) => paper.id === attachmentId)) {
     return { state, reply: "I already have this Side Letter with the renewal. It's still awaiting reading; I haven't added a second copy." };
   }
-  const paper: SuppliedPaper = { id: attachmentId, filename: SIDE_LETTER_FILENAME, job: "Getting the tenancy renewal ready", place: "Stanley House, Flat 6", activity: "Reviewing the rent", status: "awaiting-reading", identifiedAs: "Side Letter", proposedPlace: RENEWAL_PAPER_PLACE, filedPlace: null, tenancyLinked: false, sourceInstruction: instruction, review: "awaiting-examination" };
+  const paper: SuppliedPaper = { id: attachmentId, filename: SIDE_LETTER_FILENAME, job: "Getting the tenancy renewal ready", place: "Stanley House, Flat 6", activity: "Reviewing the rent", status: "awaiting-reading", identifiedAs: "Side Letter", proposedPlace: RENEWAL_PAPER_PLACE, filedPlace: null, tenancyLinked: false, sourceInstruction: instruction, review: "awaiting-examination", progress: "received" };
   return {
     state: { ...state, suppliedPapers: [...state.suppliedPapers, paper] },
     reply: "Thank you. I've received the Side Letter. I'll read it and check whether it changes the rent before continuing with the renewal.",
   };
 }
 
-/** Filing is a user decision, never examination or a change to tenancy terms. */
+/** Context checking is simulated; placement never establishes rent or clears examination. */
 export function applyPaperPlacement(state: WorkGuidanceState, id: string, action: PaperPlacementAction) {
   const paper = state.suppliedPapers.find(p => p.id === id);
-  if (!paper || paper.filedPlace) return { state, reply: null };
+  if (!paper) return { state, reply: null };
+  if (action.type === "advance") {
+    if (paper.progress !== "received" && paper.progress !== "identified-linked") return { state, reply: null };
+    const next: SuppliedPaper = paper.progress === "received"
+      ? { ...paper, progress: "identified-linked", proposedPlace: RENEWAL_PAPER_PLACE, filedPlace: RENEWAL_PAPER_PLACE, tenancyLinked: true }
+      : { ...paper, progress: "checking-effect" };
+    return { state: { ...state, suppliedPapers: state.suppliedPapers.map(p => p.id === id ? next : p) }, reply: paper.progress === "received" ? "I've established that the Side Letter belongs with the tenancy at Stanley House, Flat 6. I've added it to the relevant papers and will check whether it changes the rent." : null };
+  }
+  if (paper.progress !== "uncertain" || paper.filedPlace) return { state, reply: null };
   const next = action.type === "propose"
     ? { ...paper, proposedPlace: action.place }
-    : { ...paper, filedPlace: paper.proposedPlace, tenancyLinked: paper.proposedPlace.id === RENEWAL_PAPER_PLACE.id };
+    : { ...paper, filedPlace: paper.proposedPlace, tenancyLinked: paper.proposedPlace.id === RENEWAL_PAPER_PLACE.id, progress: "checking-effect" as const };
   return {
     state: { ...state, suppliedPapers: state.suppliedPapers.map(p => p.id === id ? next : p) },
     reply: action.type === "propose" ? null : next.tenancyLinked
