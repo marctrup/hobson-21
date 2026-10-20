@@ -1,15 +1,15 @@
 import { Button } from "@/components/ui/button";
 import PrototypeDocumentsChain, { type ChainPaper, type ChainStatus } from "./PrototypeDocumentsChain";
-import { openDecisions, PAPER_DATES, type Belongs, type Reopenable, type SupportId, type TenancyAnswer, type Tenancies } from "./prototypeDocumentsTenancies";
+import { wayleaveOpen, openDecisions, PAPER_DATES, type Belongs, type Reopenable, type SupportId, type TenancyAnswer, type Tenancies } from "./prototypeDocumentsTenancies";
 import type { BatchPaper } from "./prototypeDocumentsBatch";
 
-type Props = { t: Tenancies; papers: BatchPaper[]; onView: (id: string) => void; onChange: (which: Reopenable) => void };
+type Props = { t: Tenancies; papers: BatchPaper[]; onView: (id: string) => void; onChange: (which: Reopenable) => void; onReviewWayleave: () => void };
 
 const status = (a: TenancyAnswer | null, end: string | null): ChainStatus =>
   a === "current" ? { kind: "current" } : a === "ended" ? { kind: "ended", date: end } : { kind: "unconfirmed" };
 const statusText = (a: TenancyAnswer | null, end: string | null) => a === "current" ? "Current" : a === "ended" ? (end ? `Ended on ${end}` : "Ended · date not given") : "Status unconfirmed";
 
-export default function PrototypeDocumentsTenancies({ t, papers, onView, onChange }: Props) {
+export default function PrototypeDocumentsTenancies({ t, papers, onView, onChange, onReviewWayleave }: Props) {
   const byId = (id: string) => papers.find((p) => p.id === id);
   const paper = (id: string, type: string, extra: Partial<ChainPaper> = {}): ChainPaper | null => {
     const p = byId(id);
@@ -31,8 +31,12 @@ export default function PrototypeDocumentsTenancies({ t, papers, onView, onChang
   const supportsFor = (where: Belongs) => (t.compared ? SUPPORT : [])
     .filter((x) => (t.belongs[x.id] ?? "puig") === where)
     .map((x) => paper(x.id, x.type, { note: supportNote(x.id, x.step, t.belongs[x.id]) }));
-  const accompanying = supportsFor("puig");
-  const subSupports = supportsFor("sub");
+  const w = t.wayleave;
+  const completionText = w.completion === "completed" ? (w.completedOn ? `Completed on ${w.completedOn} (confirmed by you)` : "Completed (confirmed by you) · date not known") : w.completion === "notCompleted" ? "Not completed · not treated as a completed agreement" : w.completion === "another" ? "Another copy kept · not yet compared" : "Not confirmed";
+  const wayleaveWhere: Belongs | null = w.belongs === "puig" || w.belongs === "sub" ? w.belongs : t.step === "wayleaveBelongs" ? "puig" : null;
+  const wayleaveEntry = wayleaveWhere ? paper("example-3", "Wayleave", { date: "Date not identified on this copy", note: `${w.belongs ? "Placement confirmed by you" : "Proposed here · I'm asking you about this now"} · Completion: ${completionText}` }) : null;
+  const accompanying = [...supportsFor("puig"), ...(wayleaveWhere === "puig" ? [wayleaveEntry] : [])];
+  const subSupports = [...supportsFor("sub"), ...(wayleaveWhere === "sub" ? [wayleaveEntry] : [])];
   const keptApart = supportsFor("unsure").filter(Boolean) as ChainPaper[];
   const lease = paper("example-1", "Business Lease");
   const subAsRelated = paper("example-5", "Related Sublease", { note: `Separate legal agreement · Feelunique International Limited · ${statusText(t.sub, t.subEnd)}` });
@@ -49,8 +53,9 @@ export default function PrototypeDocumentsTenancies({ t, papers, onView, onChang
       const b = t.belongs[k === "licence" ? "example-2" : "example-4"];
       return { key: k, label: k === "licence" ? "Licence to Alter" : "Deed of Variation", value: b === "puig" ? "With Puig's lease" : b === "sub" ? "With Feelunique's Sublease" : b === "unsure" ? "Not settled" : null };
     }) : []),
+    ...(w.belongs ? [{ key: "wayleaveBelongs" as const, label: "Wayleave tenancy", value: w.belongs === "puig" ? "With Puig's lease" : w.belongs === "sub" ? "With Feelunique's Sublease" : "Not settled" }] : []),
   ];
-  const asking = ["puigStatus", "puigEnd", "subMgmt", "subStatus", "subEnd", "licence", "deed"].includes(t.step);
+  const asking = ["puigStatus", "puigEnd", "subMgmt", "subStatus", "subEnd", "licence", "deed", "wayleave", "wayleaveDate", "wayleaveCopy", "wayleaveBelongs"].includes(t.step);
 
   return (
     <section aria-label="Proposed tenancy histories" className="min-h-0 flex-1 overflow-y-auto bg-background px-6 py-5">
@@ -71,11 +76,24 @@ export default function PrototypeDocumentsTenancies({ t, papers, onView, onChang
         </div>
         {keptApart.length > 0 && <div className="mt-4"><p className="mb-2 text-[11px] font-medium uppercase tracking-wide text-ink-muted">Kept separate for now</p>
           <PrototypeDocumentsChain heading="Agreement not yet established" status={{ kind: "unconfirmed" }} mode="awaiting" papers={keptApart} onView={viewByName} /></div>}
-        {t.compared && wayleave && <div className="mt-4 rounded-lg border border-bone bg-secondary/40 px-4 py-3">
-          <p className="text-[11px] font-medium uppercase tracking-wide text-ink-muted">Still to check</p>
-          <button type="button" onClick={() => onView(wayleave.id)} className="mt-1 text-left text-sm font-medium text-ink hover:underline">BT &amp; Puig Wayleave</button>
-          <p className="text-xs text-ink-muted">Not placed under either tenancy yet.</p>
-        </div>}
+        {t.compared && wayleave && (() => {
+          const open = wayleaveOpen(w);
+          const rel = w.belongs === "puig" ? "Puig's Business Lease, 16 December 2016 (confirmed by you)" : w.belongs === "sub" ? "Feelunique's Sublease, 29 April 2024 (confirmed by you)" : w.belongs === "unsure" ? "Not settled · I think Puig's Business Lease, 16 December 2016" : "Likely Puig's Business Lease, 16 December 2016";
+          return <section aria-label="BT & Puig Wayleave" className="mt-4 rounded-lg border border-bone bg-secondary/40 px-4 py-3">
+            <div className="flex flex-wrap items-baseline justify-between gap-2">
+              <button type="button" onClick={() => onView(wayleave.id)} className="text-left text-sm font-semibold text-ink hover:underline">BT &amp; Puig Wayleave</button>
+              <span className="text-[11px] font-medium uppercase tracking-wide text-ink-muted">{open.length ? "Needs your check" : "Settled with you"}</span>
+            </div>
+            <p className="mt-1 text-xs text-ink-muted">Relationship: {rel}</p>
+            <p className="mt-3 text-[11px] font-medium uppercase tracking-wide text-ink-muted">{open.length ? "What needs checking" : "What we've established"}</p>
+            <ul className="mt-1 space-y-0.5 text-xs text-ink">
+              <li>Date on paper: Not identified on this copy.</li>
+              <li>Puig's signature: Appears blank.</li>
+              <li>Completion: {completionText}.</li>
+            </ul>
+            {open.length > 0 && <Button size="sm" className="mt-3" onClick={onReviewWayleave}>Review with Hobson</Button>}
+          </section>;
+        })()}
         {t.step === "comparing" && <p className="mt-4 text-sm italic text-ink-muted motion-safe:animate-pulse" aria-live="polite">Comparing the remaining papers…</p>}
         <dl className="mt-6 divide-y divide-faint-rule border-t border-faint-rule text-sm">
           {decisions.map((d) => (

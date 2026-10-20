@@ -10,7 +10,7 @@ type Props = {
   batch: Batch; lookPhrase?: string;
   onRemove: (id: string) => void; onAddMore: () => void; onStart: () => void; onCancel: () => void;
   onReview?: () => void; onLeave?: () => void;
-  tenancies?: Tenancies | null; onChangeTenancy?: (which: Reopenable) => void;
+  tenancies?: Tenancies | null; onChangeTenancy?: (which: Reopenable) => void; onReviewWayleave?: () => void;
 };
 
 const GROUPS: { key: LookGroup; title: string; tone: string }[] = [
@@ -19,7 +19,7 @@ const GROUPS: { key: LookGroup; title: string; tone: string }[] = [
   { key: "ready", title: "Ready", tone: "border-faint-rule bg-background/60" },
 ];
 
-export default function PrototypeDocumentsBatch({ batch, lookPhrase, onRemove, onAddMore, onStart, onCancel, onReview, onLeave, tenancies, onChangeTenancy }: Props) {
+export default function PrototypeDocumentsBatch({ batch, lookPhrase, onRemove, onAddMore, onStart, onCancel, onReview, onLeave, tenancies, onChangeTenancy, onReviewWayleave }: Props) {
   const [openId, setOpenId] = useState<string | null>(null);
   const [readyOpen, setReadyOpen] = useState(false);
   const open = batch.papers.find((p) => p.id === openId);
@@ -34,7 +34,7 @@ export default function PrototypeDocumentsBatch({ batch, lookPhrase, onRemove, o
     </div>
   );
 
-  if (batch.look === "handoff" && tenancies) return <PrototypeDocumentsTenancies t={tenancies} papers={batch.papers} onView={setOpenId} onChange={(w) => onChangeTenancy?.(w)} />;
+  if (batch.look === "handoff" && tenancies) return <PrototypeDocumentsTenancies t={tenancies} papers={batch.papers} onView={setOpenId} onChange={(w) => onChangeTenancy?.(w)} onReviewWayleave={() => onReviewWayleave?.()} />;
   const sorted = batch.look === "sorted" || batch.look === "handoff";
   if (sorted) {
     const outstanding = needsYou(batch.papers);

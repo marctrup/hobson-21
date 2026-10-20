@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Check, FileText, Files, MessageCircle, Paperclip, RotateCcw, X } from "lucide-react";
 import PrototypeDocumentsBatch from "./PrototypeDocumentsBatch";
-import { answerBelongs, supportChoices, supportQuestion, supportReply, nextStep, type Belongs, type Reopenable, answerMgmt, answerStatus, giveEndDate, MGMT_LABEL, MGMT_REPLY, Q, reopen, startTenancies, STATUS_LABEL, type Management, type TenancyAnswer, type Tenancies } from "./prototypeDocumentsTenancies";
+import { answerCompletion, answerCompletionDate, answerWayleaveBelongs, COMPLETION_LABEL, COMPLETION_REPLY, receiveSecondCopy, RELATIONSHIPS, wayleaveProposal, type Completion, answerBelongs, supportChoices, supportQuestion, supportReply, nextStep, type Belongs, type Reopenable, answerMgmt, answerStatus, giveEndDate, MGMT_LABEL, MGMT_REPLY, Q, reopen, startTenancies, STATUS_LABEL, type Management, type TenancyAnswer, type Tenancies } from "./prototypeDocumentsTenancies";
 import { addToBatch, BATCH_OVERFLOW_MESSAGE, EXAMPLE_BATCH, isExampleBatch, LOOK_PHRASES, needsYou, type Batch, type BatchPaper } from "./prototypeDocumentsBatch";
 import { Button } from "@/components/ui/button";
 import owlDefault from "@/assets/prototype/owl-default.png";
@@ -126,6 +126,9 @@ export default function PrototypeDocuments() {
     else if (step === "puigEnd" || step === "subEnd") addMessage("hobson", Q.endDate);
     else if (step === "licence") addMessage("hobson", supportQuestion("example-2"));
     else if (step === "deed") addMessage("hobson", supportQuestion("example-4"));
+    else if (step === "wayleave") addMessage("hobson", Q.wayleave);
+    else if (step === "wayleaveDate") addMessage("hobson", Q.wayleaveDate);
+    else if (step === "wayleaveBelongs") addMessage("hobson", Q.wayleaveBelongs);
     else if (step === "done") addMessage("hobson", Q.supportsDone);
   };
   const moveTo = (next: Tenancies) => { setTenancies(next); askFor(next.step); };
@@ -164,6 +167,43 @@ export default function PrototypeDocuments() {
     const id = tenancies.step === "licence" ? "example-2" : "example-4";
     addMessage("user", label); addMessage("hobson", supportReply(id, b));
     moveTo(answerBelongs(tenancies, b));
+  };
+  const [otherTenancy, setOtherTenancy] = useState(false);
+  const copyInput = useRef<HTMLInputElement>(null);
+  const wayleaveCompletion = (c: Completion) => {
+    if (!tenancies) return;
+    addMessage("user", COMPLETION_LABEL[c]); addMessage("hobson", COMPLETION_REPLY[c]);
+    const next = answerCompletion(tenancies, c);
+    if (next.step === "wayleaveCopy") setTenancies(next); else moveTo(next);
+  };
+  const wayleaveDate = (date: string | null) => {
+    if (!tenancies) return;
+    addMessage("user", date ?? "Not sure");
+    if (!date) addMessage("hobson", "Very well. I'll leave the completion date open.");
+    moveTo(answerCompletionDate(tenancies, date));
+  };
+  const secondCopy = (file: File | undefined) => {
+    if (!tenancies || !file) return;
+    addMessage("user", file.name, true);
+    addMessage("hobson", "Thank you. I've kept it alongside the original copy. I don't have a comparison prepared for this paper in the demonstration, so I haven't drawn any conclusions from it. Its completion stays unconfirmed for now.");
+    moveTo(receiveSecondCopy(tenancies));
+  };
+  const wayleaveBelongs = (b: Belongs, label: string) => {
+    if (!tenancies) return;
+    setOtherTenancy(false);
+    addMessage("user", label);
+    const r = RELATIONSHIPS.find((x) => x.id === b);
+    addMessage("hobson", b === "unsure" ? "I'll leave its tenancy open for now. Its other details stay as you've confirmed them." : b === wayleaveProposal().proposed ? `Very good. I'll keep it with ${r?.name}. That doesn't by itself settle whether it was completed.` : `Understood. I'll show it with ${r?.name} instead.`);
+    moveTo(answerWayleaveBelongs(tenancies, b));
+  };
+  const reviewWayleave = () => {
+    if (!tenancies) return;
+    if (["wayleave", "wayleaveDate", "wayleaveCopy", "wayleaveBelongs"].includes(tenancies.step)) { logEnd.current?.scrollIntoView({ behavior: "smooth", block: "end" }); setShowChat(true); return; }
+    const w = tenancies.wayleave;
+    const which = w.completion === null || w.completion === "unsure" || w.completion === "another" ? "wayleave" : w.completion === "completed" && !w.completedOn ? "wayleaveDate" : "wayleaveBelongs";
+    addMessage("user", "Review the Wayleave with Hobson");
+    setShowChat(true);
+    moveTo(which === "wayleaveDate" ? { ...tenancies, step: "wayleaveDate" } : reopen(tenancies, which));
   };
   const changeTenancy = (which: Reopenable) => {
     if (!tenancies) return;
@@ -437,6 +477,7 @@ export default function PrototypeDocuments() {
     if (placement.step === "roleOther") { setInput(""); answerRole("other", text); return; }
     if (placement.step === "endDate") { setInput(""); answerEnd(text); return; }
     if (tenancies && (tenancies.step === "puigEnd" || tenancies.step === "subEnd")) { setInput(""); tenancyEnd(text); return; }
+    if (tenancies?.step === "wayleaveDate") { setInput(""); wayleaveDate(text); return; }
     addMessage("user", text);
     setInput("");
   };
@@ -554,6 +595,14 @@ export default function PrototypeDocuments() {
             {(tenancies.step === "puigStatus" || tenancies.step === "subStatus") && (["current", "ended", "unsure"] as const).map((a) => <Button key={a} size="sm" variant="outline" onClick={() => tenancyStatus(a)}>{STATUS_LABEL[a]}</Button>)}
             {tenancies.step === "subMgmt" && (["both", "puig", "unsure"] as const).map((m) => <Button key={m} size="sm" variant="outline" onClick={() => tenancyMgmt(m)}>{MGMT_LABEL[m]}</Button>)}
             {(tenancies.step === "licence" || tenancies.step === "deed") && supportChoices(tenancies.step === "licence" ? "example-2" : "example-4").map((c) => <Button key={c.answer} size="sm" variant="outline" onClick={() => tenancyBelongs(c.answer as Belongs, c.label)}>{c.label}</Button>)}
+            {tenancies.step === "wayleave" && (["completed", "another", "notCompleted", "unsure"] as const).map((c) => <Button key={c} size="sm" variant="outline" onClick={() => wayleaveCompletion(c)}>{COMPLETION_LABEL[c]}</Button>)}
+            {tenancies.step === "wayleaveDate" && <Button size="sm" variant="ghost" onClick={() => wayleaveDate(null)}>Not sure</Button>}
+            {tenancies.step === "wayleaveCopy" && <><Button size="sm" variant="outline" onClick={() => copyInput.current?.click()}><Paperclip className="mr-2 h-4 w-4" />Choose the other copy</Button><input ref={copyInput} type="file" accept="application/pdf,.pdf" aria-label="Select the other copy" className="hidden" onChange={(e) => { secondCopy(e.target.files?.[0]); e.target.value = ""; }} /></>}
+            {tenancies.step === "wayleaveBelongs" && (() => { const p = wayleaveProposal(); const first = RELATIONSHIPS.find((r) => r.id === p.proposed); const others = RELATIONSHIPS.filter((r) => r.id !== p.proposed); return <>
+              {first && <Button size="sm" variant="outline" onClick={() => wayleaveBelongs(first.id as Belongs, "Yes, with Puig's lease")}>Yes, with Puig's lease</Button>}
+              {!otherTenancy ? <Button size="sm" variant="outline" onClick={() => setOtherTenancy(true)}>Choose another tenancy</Button> : others.map((r) => <Button key={r.id} size="sm" variant="outline" onClick={() => wayleaveBelongs(r.id as Belongs, `It belongs with ${r.name}`)}>{`With ${r.name}`}</Button>)}
+              <Button size="sm" variant="outline" onClick={() => wayleaveBelongs("unsure", "Not sure")}>Not sure</Button>
+            </>; })()}
             {(tenancies.step === "puigEnd" || tenancies.step === "subEnd") && <Button size="sm" variant="ghost" onClick={() => tenancyEnd(null)}>I don't know the date</Button>}
           </div>}
           <div ref={logEnd} />
@@ -573,7 +622,7 @@ export default function PrototypeDocuments() {
             <Button type="button" variant="ghost" size="icon" aria-label="Attach a paper" title="Attach a paper" disabled={journey.stage !== "empty" || (!!batch && !batch.started)} onClick={() => setSelectionOpen((open) => !open)} className="h-9 w-9 shrink-0">
               <Paperclip className="h-5 w-5" aria-hidden />
             </Button>
-            <input value={input} onChange={(e) => setInput(e.target.value)} aria-label="Ask Hobson" placeholder={journey.stage === "other" ? "What kind of paper?" : journey.stage === "effectiveOther" ? "Effective date, e.g. 1 September 2025" : placement.step === "roleOther" ? "Your responsibility, in a few words" : placement.step === "endDate" || tenancies?.step === "puigEnd" || tenancies?.step === "subEnd" ? "Ending date, e.g. 30 June 2027" : "Ask Hobson…"} className="min-w-0 flex-1 bg-transparent text-sm text-foreground outline-none placeholder:text-muted-foreground" />
+            <input value={input} onChange={(e) => setInput(e.target.value)} aria-label="Ask Hobson" placeholder={journey.stage === "other" ? "What kind of paper?" : journey.stage === "effectiveOther" ? "Effective date, e.g. 1 September 2025" : placement.step === "roleOther" ? "Your responsibility, in a few words" : placement.step === "endDate" || tenancies?.step === "wayleaveDate" || tenancies?.step === "puigEnd" || tenancies?.step === "subEnd" ? "Ending date, e.g. 30 June 2027" : "Ask Hobson…"} className="min-w-0 flex-1 bg-transparent text-sm text-foreground outline-none placeholder:text-muted-foreground" />
             <Button type="submit" size="icon" variant="ghost" disabled={!input.trim()} aria-label="Send message" className="h-8 w-8 shrink-0">
               <svg aria-hidden width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
             </Button>
@@ -594,7 +643,7 @@ export default function PrototypeDocuments() {
             <span className="text-sm font-medium">Your papers</span>
             <div className="flex shrink-0 items-center gap-1"><Button variant="ghost" size="icon" className="md:hidden" aria-label="Chat with Hobson" title="Chat with Hobson" onClick={() => setShowChat(true)}><MessageCircle className="h-4 w-4" /></Button><Button variant="ghost" size="sm" aria-label="Restart demo" title="Restart demo" onClick={() => restart()}><RotateCcw className="h-3.5 w-3.5 md:mr-2" /><span className="hidden md:inline">Restart demo</span></Button></div>
           </header>
-          <PrototypeDocumentsBatch batch={batch} lookPhrase={LOOK_PHRASES[lookStep]} onRemove={removeFromBatch} onAddMore={() => multiInput.current?.click()} onStart={startBatch} onCancel={cancelBatch} onReview={reviewBatch} onLeave={leaveBatch} tenancies={tenancies} onChangeTenancy={changeTenancy} />
+          <PrototypeDocumentsBatch batch={batch} lookPhrase={LOOK_PHRASES[lookStep]} onRemove={removeFromBatch} onAddMore={() => multiInput.current?.click()} onStart={startBatch} onCancel={cancelBatch} onReview={reviewBatch} onLeave={leaveBatch} tenancies={tenancies} onChangeTenancy={changeTenancy} onReviewWayleave={reviewWayleave} />
         </>}
         {section === "current" && journey.paper && <>
           <header className="flex h-14 shrink-0 items-center justify-between gap-2 border-b border-bone bg-background px-5">
