@@ -7,7 +7,7 @@ export const PROPOSED_UNIT = "Fourth Floor";
 
 export type PlaceStep = "none" | "checking" | "unit" | "unitChoose" | "role" | "roleOther" | "relation" | "current" | "endDate" | "review" | "change" | "placed" | "fits";
 // Iteration 3A stops after Unit and responsibility; tenancy relationship and status questions stay dormant.
-export const STOP_AFTER_RESPONSIBILITY = true;
+export const STOP_AFTER_RESPONSIBILITY = false;
 export type RoleKind = "landlord" | "tenant" | "track" | "other";
 export type Placement = {
   step: PlaceStep;
@@ -38,8 +38,8 @@ export function chooseUnit(p: Placement, unit: string | "unsure"): Placement {
 export const isSettled = (p: Placement) => p.unitStatus === "confirmed" && !!p.role && p.relation === "new";
 
 export function statusText(p: Placement): string {
-  if (p.current === "current") return "Current — confirmed by you";
-  if (p.current === "ended") return `Ended — confirmed by you${p.endDate ? ` · ended ${p.endDate}` : " · ending date not given"}`;
+  if (p.current === "current") return "Current — Confirmed by you";
+  if (p.current === "ended") return `Ended — Confirmed by you${p.endDate ? ` · ended ${p.endDate}` : " · ending date not given"}`;
   if (p.current === "unsure") return "Current status unconfirmed";
   return "Current status not yet established";
 }
