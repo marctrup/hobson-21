@@ -1,5 +1,8 @@
 # Roadmap
 
+## Prototype Unit — postcode lookup enhancement
+- [ ] Add six simulated postcode choices with four initially visible, context-aware flat selection and approximate search-area map; preserve confirmation, building setup and navigation, then verify tests and conversation.
+
 ## Prototype Unit — understanding the building
 - [x] Extend confirmed Finchley Road Stanley House with natural building descriptions, provisional architectural grouping and focused clarification; map, reset and other paths preserved with no records created. All three examples, unexpected input, divider resizing and restart verified in the browser without page errors; 27 focused checks pass. Not published.
 
