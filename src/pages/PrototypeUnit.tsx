@@ -30,15 +30,22 @@ function UnitLocationMap({ stage, address }: { stage: LocationStage; address: st
   const container = useRef<HTMLDivElement>(null);
   const map = useRef<L.Map | null>(null);
   const marker = useRef<L.Marker | null>(null);
+  const [labelPoint, setLabelPoint] = useState({ x: 0, y: 0 });
   const matched = stage === "proposed" || stage === "confirmed";
 
   useEffect(() => {
     if (!container.current) return;
-    const instance = L.map(container.current, { center: [51.509, -0.12], zoom: 13, scrollWheelZoom: false });
+    const instance = L.map(container.current, { center: [51.509, -0.12], zoom: 13, scrollWheelZoom: true, zoomControl: false });
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>', maxZoom: 19,
     }).addTo(instance);
     map.current = instance;
+    const placeLabel = () => {
+      const point = instance.latLngToContainerPoint(STANLEY_COORDINATES);
+      setLabelPoint({ x: point.x, y: point.y });
+    };
+    instance.on("move resize", placeLabel);
+    placeLabel();
     const observer = new ResizeObserver(() => instance.invalidateSize({ animate: false }));
     observer.observe(container.current);
     return () => { observer.disconnect(); instance.remove(); map.current = null; marker.current = null; };
@@ -47,26 +54,29 @@ function UnitLocationMap({ stage, address }: { stage: LocationStage; address: st
   useEffect(() => {
     const instance = map.current;
     if (!instance) return;
-    marker.current?.remove();
-    marker.current = null;
-    if (!matched) return;
-    const icon = L.divIcon({ className: "", html: '<span class="flex h-9 w-9 items-center justify-center rounded-full border-2 border-background bg-primary text-primary-foreground shadow-md"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 22s7-7 7-13a7 7 0 0 0-14 0c0 6 7 13 7 13Z"/><circle cx="12" cy="9" r="2"/></svg></span>', iconSize: [36, 36], iconAnchor: [18, 36] });
-    marker.current = L.marker(STANLEY_COORDINATES, { icon, title: "Stanley House — illustrative location" })
-      .addTo(instance).bindTooltip("Stanley House", { permanent: true, direction: "top", offset: [0, -36] });
+    if (!matched) { marker.current?.remove(); marker.current = null; return; }
+    const confirmed = stage === "confirmed";
+    const icon = L.divIcon({ className: "", html: `<span class="flex h-7 w-7 items-center justify-center rounded-full border-2 border-background shadow-sm ring-4 transition-colors duration-300 motion-reduce:transition-none ${confirmed ? "bg-primary text-primary-foreground ring-primary/10" : "bg-background text-foreground ring-ring/20"}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">${confirmed ? '<path d="m5 12 4 4 10-10"/>' : '<circle cx="12" cy="12" r="4"/>'}</svg></span>`, iconSize: [28, 28], iconAnchor: [14, 14] });
+    if (marker.current) { marker.current.setIcon(icon); return; }
+    marker.current = L.marker(STANLEY_COORDINATES, { icon, title: "Stanley House — illustrative location" }).addTo(instance);
     instance.flyTo(STANLEY_COORDINATES, 17, { animate: !window.matchMedia("(prefers-reduced-motion: reduce)").matches, duration: 0.8 });
-  }, [matched]);
+  }, [matched, stage]);
 
   return (
-    <div className="relative min-h-0 flex-1 overflow-hidden rounded-lg border border-border">
+    <div className="relative z-0 min-h-0 flex-1 overflow-hidden rounded-lg border border-border">
       <div ref={container} className="absolute inset-0" aria-label="Location map" />
-      <div className="pointer-events-none absolute inset-x-3 top-3 z-[500] flex justify-center">
-        <div className="max-w-full rounded-md border border-border bg-background px-4 py-3 text-foreground shadow-sm" role="status" aria-label="Location status">
-          <p className="text-sm font-semibold">{matched ? "Stanley House" : "Location needs verification"}</p>
-          <p className="mt-1 break-words text-xs text-muted-foreground">{matched ? STANLEY_ADDRESS : address || "Awaiting the correct address"}</p>
-          <p className="mt-2 text-xs font-medium">{stage === "confirmed" ? "Location confirmed" : matched ? "Proposed location — not yet confirmed" : "No confirmed location"}</p>
-          <p className="mt-1 text-xs text-muted-foreground">Illustrative location{matched ? " · approximate marker" : ""}</p>
+      {matched ? <div className="pointer-events-none absolute z-[500] w-[220px] -translate-x-1/2 rounded-md border border-border bg-background/95 px-3 py-2 text-foreground shadow-sm" style={{ left: labelPoint.x, top: labelPoint.y + 24 }} role="status" aria-label="Location status">
+        <p className="text-sm font-semibold">Stanley House</p>
+        <p className="mt-1 text-xs leading-relaxed text-muted-foreground">14 Bedford Square, London, WC1B 3JA</p>
+        <p className="mt-1.5 text-xs font-medium">{stage === "confirmed" ? "Location confirmed" : "Awaiting confirmation"}</p>
+        <p className="mt-1 text-[10px] text-muted-foreground">Illustrative location · approximate marker</p>
+      </div> : (stage === "unverified" || (stage === "awaiting-address" && address)) && <div className="pointer-events-none absolute inset-x-3 bottom-8 z-[500] flex justify-center">
+        <div className="max-w-full rounded-md border border-border bg-background px-3 py-2 text-foreground shadow-sm" role="status" aria-label="Location status">
+          <p className="text-xs font-medium">Location needs verification</p>
+          <p className="mt-1 break-words text-xs text-muted-foreground">{address}</p>
+          <p className="mt-1 text-xs text-muted-foreground">No confirmed location</p>
         </div>
-      </div>
+      </div>}
     </div>
   );
 }
@@ -192,7 +202,6 @@ function PrototypeUnitShell() {
   const [locationStage, setLocationStage] = useState<LocationStage>("idle");
   const [locationPromptId, setLocationPromptId] = useState<number | null>(null);
   const [locationAddress, setLocationAddress] = useState("");
-  const [showLocationMap, setShowLocationMap] = useState(false);
   const nextId = useRef(1);
   const conversationEnd = useRef<HTMLDivElement>(null);
 
@@ -233,7 +242,6 @@ function PrototypeUnitShell() {
     ]);
     setLocationStage(confirm ? "confirmed" : "awaiting-address");
     setLocationPromptId(null);
-    if (!confirm) setLocationAddress("");
     setInput("");
   };
 
@@ -254,7 +262,6 @@ function PrototypeUnitShell() {
       setLocationAddress(text);
       setLocationStage(found ? "proposed" : "unverified");
       setLocationPromptId(found ? replyId : null);
-      setShowLocationMap(true);
       setInput("");
       return;
     }
@@ -288,7 +295,7 @@ function PrototypeUnitShell() {
             type="button"
             className="grid h-11 w-11 place-items-center rounded-full bg-[#56514A] text-white shadow-md transition hover:bg-[#56514A]"
             aria-label="A new conversation"
-            onClick={() => { setMessages([OPENING_MESSAGE]); setInput(""); setSetupPromptId(null); setShowInvitation(true); setLocationStage("idle"); setLocationPromptId(null); setLocationAddress(""); setShowLocationMap(false); }}
+            onClick={() => { setMessages([OPENING_MESSAGE]); setInput(""); setSetupPromptId(null); setShowInvitation(true); setLocationStage("idle"); setLocationPromptId(null); setLocationAddress(""); }}
           >
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" aria-hidden><path d="M12 5v14M5 12h14" /></svg>
           </button>
@@ -373,18 +380,12 @@ function PrototypeUnitShell() {
       {/* Resizable divider */}
       <UnitResizeDivider width={chatWidth} setWidth={setChatWidth} onReset={() => setChatWidth(DEFAULT_CHAT_WIDTH)} isDefault={chatWidth === DEFAULT_CHAT_WIDTH} />
 
-      {/* Portfolio context remains a placeholder; setup creates no records. */}
+      {/* The map stays mounted throughout the conversation; setup creates no records. */}
       <main className="flex min-w-0 flex-1 flex-col gap-4 p-4" aria-label="Prototype Unit canvas">
         <header className="flex flex-wrap items-center justify-between gap-3">
           <h2 className="text-[15px] font-semibold text-ink">Portfolio</h2>
         </header>
-        {showLocationMap ? <UnitLocationMap stage={locationStage} address={locationAddress} /> : <div className="flex min-h-0 w-full flex-1 flex-col items-center justify-center gap-3 rounded-xl border border-dashed border-[#56514A]/25 bg-white/60">
-          <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#56514A" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-            <path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2z" />
-            <path d="M9 4v14M15 6v14" />
-          </svg>
-          <p className="text-sm font-medium tracking-wide text-ink-muted">Map</p>
-        </div>}
+        <UnitLocationMap stage={locationStage} address={locationAddress} />
       </main>
     </div>
   );
