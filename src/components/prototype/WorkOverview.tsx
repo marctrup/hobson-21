@@ -1,3 +1,4 @@
+import type { SuppliedPaper } from "./workGuidance";
 import { useEffect, useState } from "react";
 import { Activity as ActivityIcon, ArrowUpRight, Check, CheckCheck, CircleDot, CircleHelp, Clock, Hand, Pause, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -61,7 +62,7 @@ function ActivityLine({ activity }: { activity: Activity }) {
 }
 
 /** Illustrative work only: deliberately independent of action-card state and approvals. */
-export function WorkOverview({ onClose, onGuide, sideLetterRequested = false, onJourneyBack, focusNeedsYou = 0, roofGuidance: suppliedRoofGuidance = initialRoofGuidance, roofWork, onRoofWorkChange }: { onClose: () => void; onGuide: (scope: "renewal" | RoofGuideScope, suggestion?: string) => void; sideLetterRequested?: boolean; onJourneyBack?: () => void; focusNeedsYou?: number; roofGuidance?: RoofGuidanceState; roofWork?: RoofWorkState; onRoofWorkChange?: (work: RoofWorkState) => void }) {
+export function WorkOverview({ onClose, onGuide, sideLetterRequested = false, suppliedPapers = [], onJourneyBack, focusNeedsYou = 0, roofGuidance: suppliedRoofGuidance = initialRoofGuidance, roofWork, onRoofWorkChange }: { onClose: () => void; onGuide: (scope: "renewal" | RoofGuideScope, suggestion?: string) => void; sideLetterRequested?: boolean; suppliedPapers?: SuppliedPaper[]; onJourneyBack?: () => void; focusNeedsYou?: number; roofGuidance?: RoofGuidanceState; roofWork?: RoofWorkState; onRoofWorkChange?: (work: RoofWorkState) => void }) {
   const [journey, setJourney] = useState<"renewal" | "roof" | "completed-lease" | null>(null);
   const [paused, setPaused] = useState(false);
   const [approval, setApproval] = useState<ApprovalStatus>("idle");
@@ -124,7 +125,7 @@ export function WorkOverview({ onClose, onGuide, sideLetterRequested = false, on
         </Button>
       </div>
 
-      {journey === "completed-lease" ? <CompletedLeaseJourney onBack={closeJourney} /> : journey === "renewal" ? <WorkJourney paused={paused} onPauseChange={setPaused} onBack={closeJourney} onGuide={() => onGuide("renewal")} sideLetterRequested={sideLetterRequested} approval={approval} onApprovalChange={setApproval} approvalOpen={openAtApproval} /> : journey === "roof" ? <RoofLeakJourney key={currentRoofWork.number} work={currentRoofWork} onEnd={() => updateRoofWork(endRoofWork(currentRoofWork))} onRestart={() => updateRoofWork(restartRoofWork(currentRoofWork))} paused={currentRoofWork.paused} onPauseChange={(paused) => { if (!currentRoofWork.ended) updateRoofWork({ ...currentRoofWork, paused }); }} onBack={closeJourney} onGuide={(scope) => { if (!currentRoofWork.ended) onGuide(scope, scope === "lease" && roofHelp.shown ? LEASE_PLANS_INSTRUCTION : undefined); }} initialActivity={roofActivity} guidance={roofGuidance} help={roofHelp} onHelpChange={setRoofHelp} onWorkUpdate={(next) => { if (!currentRoofWork.ended) updateRoofWork(next); }} /> : <div className="hobson-scroll min-h-0 flex-1 overflow-y-auto">
+      {journey === "completed-lease" ? <CompletedLeaseJourney onBack={closeJourney} /> : journey === "renewal" ? <WorkJourney paused={paused} onPauseChange={setPaused} onBack={closeJourney} onGuide={() => onGuide("renewal")} sideLetterRequested={sideLetterRequested} suppliedPapers={suppliedPapers} approval={approval} onApprovalChange={setApproval} approvalOpen={openAtApproval} /> : journey === "roof" ? <RoofLeakJourney key={currentRoofWork.number} work={currentRoofWork} onEnd={() => updateRoofWork(endRoofWork(currentRoofWork))} onRestart={() => updateRoofWork(restartRoofWork(currentRoofWork))} paused={currentRoofWork.paused} onPauseChange={(paused) => { if (!currentRoofWork.ended) updateRoofWork({ ...currentRoofWork, paused }); }} onBack={closeJourney} onGuide={(scope) => { if (!currentRoofWork.ended) onGuide(scope, scope === "lease" && roofHelp.shown ? LEASE_PLANS_INSTRUCTION : undefined); }} initialActivity={roofActivity} guidance={roofGuidance} help={roofHelp} onHelpChange={setRoofHelp} onWorkUpdate={(next) => { if (!currentRoofWork.ended) updateRoofWork(next); }} /> : <div className="hobson-scroll min-h-0 flex-1 overflow-y-auto">
         <div className="mx-auto w-full max-w-5xl px-3 pb-16 pt-8 [@container_work_(min-width:40rem)]:px-8 [@container_work_(min-width:40rem)]:pt-10">
           <header className="mb-10">
             <h2 className="text-3xl font-semibold leading-tight">What I'm Up To</h2>

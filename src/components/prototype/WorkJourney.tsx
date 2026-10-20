@@ -1,3 +1,4 @@
+import type { SuppliedPaper } from "./workGuidance";
 import { JourneyNavigation } from "./JourneyNavigation";
 import { useState } from "react";
 import { ArrowLeft, Check, ChevronDown, FileText, Hand, Mail, MessageCircle, Pause, Play, X } from "lucide-react";
@@ -37,6 +38,7 @@ const baseSteps: StepDef[] = [
   { id: "history", title: "Checking the tenancy history", note: "Looking for changes in later papers.", group: "Working now" },
   { id: "summary", title: "Prepare renewal summary", note: "Not started.", group: "Next" },
 ];
+const withSuppliedPaper = (steps: StepDef[], supplied: boolean) => supplied ? steps.map((step) => step.id === "summary" ? { ...step, note: "Waiting for the Side Letter check." } : step) : steps;
 
 const extendedSteps = (sent: boolean, sideLetter: boolean): StepDef[] => [
   { id: "tenancy", title: "Read the existing tenancy", note: "Confirmed the parties and end date.", group: "Completed" },
@@ -63,12 +65,13 @@ function PaperReference({ extract, name = "Business Lease" }: { extract: string;
   );
 }
 
-export function WorkJourney({ paused, onPauseChange, onBack, onGuide, sideLetterRequested = false, approval = "idle", onApprovalChange, approvalOpen = false }: {
+export function WorkJourney({ paused, onPauseChange, onBack, onGuide, sideLetterRequested = false, suppliedPapers = [], approval = "idle", onApprovalChange, approvalOpen = false }: {
   paused: boolean;
   onPauseChange: (paused: boolean) => void;
   onBack: () => void;
   onGuide: () => void;
   sideLetterRequested?: boolean;
+  suppliedPapers?: SuppliedPaper[];
   approval?: ApprovalStatus;
   onApprovalChange?: (status: ApprovalStatus) => void;
   approvalOpen?: boolean;
@@ -110,7 +113,7 @@ export function WorkJourney({ paused, onPauseChange, onBack, onGuide, sideLetter
     </div>;
   };
 
-  const steps = journeyExtended ? extendedSteps(sent, sideLetterRequested) : baseSteps;
+  const steps = journeyExtended ? extendedSteps(sent, sideLetterRequested) : withSuppliedPaper(baseSteps, suppliedPapers.length > 0);
   const selectedStep = steps.find((step) => step.id === selected);
 
   const stepIcon = (id: Step) => {
@@ -143,6 +146,13 @@ export function WorkJourney({ paused, onPauseChange, onBack, onGuide, sideLetter
         <p className="mt-3 text-sm text-muted-foreground">You mentioned this paper. I haven't located it yet.</p>
         {evidence === "side-letter" && <aside id="side-letter-next-action" className="mt-3 border-l-2 border-border pl-3 text-sm leading-relaxed">I'll look for the side letter among your papers. If I can't find it, I'll ask you for a copy.</aside>}
       </article>}
+      {suppliedPapers.map((paper) => <article key={paper.id} aria-label={`Supplied paper: ${paper.filename}`} className="border-b border-border py-4">
+        <div className="flex flex-wrap items-center justify-between gap-2"><h5 className="flex items-center gap-2 text-sm font-semibold"><FileText className="h-4 w-4 shrink-0 text-muted-foreground" />{paper.filename}</h5><span className="text-xs text-muted-foreground">Awaiting reading</span></div>
+        <p className="mt-1 text-xs text-muted-foreground">Supplied by you · in this conversation, during {paper.job} · {paper.place}</p>
+        <p className="mt-1 text-xs text-muted-foreground">Relevant activity: {paper.activity}</p>
+        <div className="mt-3 border-l-2 border-border pl-3"><h6 className="text-xs font-semibold">What I'm checking</h6><p className="mt-1 text-sm leading-relaxed">Whether this Side Letter changes the rent position recorded in the Business Lease.</p></div>
+        <p className="mt-2 text-xs leading-relaxed text-muted-foreground">Received, not yet read. I haven't filed it among your papers or confirmed where it sits in the tenancy's papers.</p>
+      </article>)}
       <div className="mt-5 border-l-2 border-ring pl-3"><h5 className="text-xs font-semibold">What I'm trying to establish</h5><p className="mt-2 text-sm leading-relaxed">Have any later papers changed the rent, tenancy end date or other relevant terms?</p></div>
     </>}
     {selected === "tenancy" && <>
@@ -156,11 +166,13 @@ export function WorkJourney({ paused, onPauseChange, onBack, onGuide, sideLetter
       <div className="mt-5 border-y border-border py-5">{renderFinding("rent")}</div>
       <PaperReference extract="Annual rent: £24,000, payable in accordance with the terms of this lease." />
       <p className="mt-5 text-xs leading-relaxed text-muted-foreground">This is the original lease figure, not a confirmed current rent. Later agreements are still being checked.</p>
+      {suppliedPapers.length > 0 && <p className="mt-3 text-xs leading-relaxed text-muted-foreground">You've supplied {suppliedPapers.map((p) => p.filename).join(", ")}. It's awaiting reading; I'll check whether it changes this rent.</p>}
     </>}
     {selected === "summary" && <>
       <p className="mt-3 text-xs font-medium text-muted-foreground">Not started</p>
       <p className="mt-5 text-sm leading-relaxed">I shall bring together the current terms and any changes I've found, ready for your review.</p>
       <p className="mt-4 border-t border-border pt-4 text-sm leading-relaxed text-muted-foreground">{sideLetterRequested ? "The later papers, including the 2024 side letter, need checking before I prepare the renewal summary." : "The later papers need checking before I prepare the renewal summary."}</p>
+      {suppliedPapers.length > 0 && <p className="mt-3 text-sm leading-relaxed text-muted-foreground">Waiting for an additional check: whether the Side Letter you supplied changes the rent.</p>}
     </>}
   </>;
 
