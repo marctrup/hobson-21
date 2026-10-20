@@ -28,9 +28,10 @@ export function formatValue(field: DetailField, d: UnitDetails): string {
 }
 
 // Compact list line: only known facts.
-export function summaryLine(u: DetailedUnit): string {
+export function summaryLine(u: DetailedUnit, status?: string): string {
   const d = u.details ?? {};
   const parts: string[] = [u.classification];
+  if (status) parts.push(status);
   if (u.classification === "Residential") {
     if (d.doubleBedrooms !== undefined) parts.push(plural(d.doubleBedrooms, "double bedroom"));
     if (d.singleBedrooms !== undefined) parts.push(plural(d.singleBedrooms, "single bedroom"));
