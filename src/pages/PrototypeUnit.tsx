@@ -214,26 +214,42 @@ function PrototypeUnitShell() {
           <h1 className="text-[15px] font-semibold text-ink">Chat with Hobson</h1>
         </header>
         <div role="log" aria-label="Conversation" className="flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto px-5 py-4">
-          {messages.map((message) => (
-            <div key={message.id} className={`min-w-0 max-w-full ${message.role === "user" ? "self-end rounded-xl bg-primary-light px-3.5 py-2.5 text-primary-foreground shadow-sm" : "self-start py-2 text-ink"}`}>
-              {message.role === "hobson" && <p className="mb-1 text-xs font-semibold text-ink-muted">Hobson</p>}
-              <p className="break-words text-sm leading-relaxed">{message.text}</p>
-              {message.id === OPENING_MESSAGE.id && showInvitation && (
-                <Button variant="ghost" onClick={() => startSetup()} className="mt-3 h-auto justify-start whitespace-normal px-0 py-1 text-left text-sm font-normal text-ink-muted hover:bg-transparent hover:text-ink">
-                  Set up a place →
-                </Button>
-              )}
-              {setupPromptId === message.id && (
-                <div className="mt-3 flex flex-col items-start gap-1">
-                  {SETUP_CHOICES.map((choice) => (
-                    <Button key={choice.label} variant="ghost" onClick={() => chooseSetup(choice)} className="h-auto max-w-full justify-start whitespace-normal px-0 py-1.5 text-left text-sm font-normal leading-relaxed text-ink-muted hover:bg-transparent hover:text-ink">
-                      {choice.label}
+          {messages.map((message, index) => {
+            // Hobson's owl marks the opening of the conversation only — it is never repeated
+            // beside later messages and never shown on the user's own messages.
+            const showOwl = message.role === "hobson" && messages[index - 1]?.role !== "hobson" && messages.slice(0, index).every((m) => m.role !== "hobson");
+            return message.role === "user" ? (
+              <div key={message.id} className="min-w-0 max-w-full self-end rounded-xl bg-primary-light px-3.5 py-2.5 text-primary-foreground shadow-sm">
+                <p className="break-words text-sm leading-relaxed">{message.text}</p>
+              </div>
+            ) : (
+              <div key={message.id} className="flex max-w-full items-start gap-2 self-start">
+                {showOwl ? (
+                  <img src={owlDefault} alt="" aria-hidden className="mt-0.5 h-8 w-8 shrink-0 object-contain" />
+                ) : (
+                  <span aria-hidden className="w-8 shrink-0" />
+                )}
+                <div className="min-w-0 flex-1 py-2 text-ink">
+                  <p className="mb-1 text-xs font-semibold text-ink-muted">Hobson</p>
+                  <p className="break-words text-sm leading-relaxed">{message.text}</p>
+                  {message.id === OPENING_MESSAGE.id && showInvitation && (
+                    <Button variant="ghost" onClick={() => startSetup()} className="mt-3 h-auto justify-start whitespace-normal px-0 py-1 text-left text-sm font-normal text-ink-muted hover:bg-transparent hover:text-ink">
+                      Set up a place →
                     </Button>
-                  ))}
+                  )}
+                  {setupPromptId === message.id && (
+                    <div className="mt-3 flex flex-col items-start gap-1">
+                      {SETUP_CHOICES.map((choice) => (
+                        <Button key={choice.label} variant="ghost" onClick={() => chooseSetup(choice)} className="h-auto max-w-full justify-start whitespace-normal px-0 py-1.5 text-left text-sm font-normal leading-relaxed text-ink-muted hover:bg-transparent hover:text-ink">
+                          {choice.label}
+                        </Button>
+                      ))}
+                    </div>
+                  )}
                 </div>
-              )}
-            </div>
-          ))}
+              </div>
+            );
+          })}
           <div ref={conversationEnd} />
         </div>
         <div className="border-t border-faint-rule bg-white px-5 pb-4 pt-2">
