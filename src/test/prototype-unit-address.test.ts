@@ -21,6 +21,9 @@ describe("Illustrative address discovery", () => {
   it("does not fabricate an unknown address or a mismatching street number", () => {
     expect(discoverAddress("22 Example Road, Manchester").records).toHaveLength(0);
     expect(discoverAddress("Stanley House 999 Finchley Road NW11 0QD").records).toHaveLength(0);
+    expect(discoverAddress("Stanley House 1115 Finchley Road Manchester NW11 0QD").records).toHaveLength(0);
+    const unknown = discoverAddress("22 Example Road, Manchester");
+    expect(discoverAddress("NW11 0QD", unknown.parts).records).toHaveLength(0);
   });
   it("does not carry the old postcode into a newly supplied address", () => {
     const old = discoverAddress("Stanley House 1115 Finchley Road NW11 0QD");

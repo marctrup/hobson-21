@@ -233,7 +233,7 @@ function PrototypeUnitShell() {
     ]);
     setSetupPromptId(null);
     if (choice.label === "A Unit Group with several Units") {
-      setMessages((previous) => [...previous, { id: nextId.current++, role: "hobson", text: "What’s the full address, including the postcode?" }]);
+      setMessages((previous) => [...previous, { id: nextId.current++, role: "hobson", text: "What's the full address, including the postcode?" }]);
       setLocationStage("awaiting-address");
     }
   };
@@ -387,7 +387,7 @@ function PrototypeUnitShell() {
                   {locationPromptId === message.id && locationStage === "candidates" && (
                     <div className="mt-3 flex w-full flex-col gap-2">
                       <p className="text-xs text-muted-foreground">Illustrative mock address records — not Royal Mail verified</p>
-                      {addressCandidates.map(record => <Button key={record.id} variant="outline" onClick={() => selectCandidate(record)} className="h-auto min-h-11 flex-col items-start whitespace-normal px-3 py-2.5 text-left font-normal">
+                      {addressCandidates.map(record => <Button key={record.id} variant="outline" aria-label={`${record.name} ${record.line}`} onClick={() => selectCandidate(record)} className="h-auto min-h-11 flex-col items-start whitespace-normal px-3 py-2.5 text-left font-normal">
                         <span className="text-sm font-medium">{record.name}</span><span className="mt-1 text-xs leading-relaxed text-muted-foreground">{record.line}</span>
                       </Button>)}
                       <Button variant="outline" onClick={() => checkAgain("None of these is right")} className="h-auto min-h-11 justify-start whitespace-normal px-3 py-2.5 text-left font-normal">None of these is right</Button>
