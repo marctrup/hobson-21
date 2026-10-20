@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Check, FileText, Files, MessageCircle, Paperclip, RotateCcw, X } from "lucide-react";
 import PrototypeDocumentsBatch from "./PrototypeDocumentsBatch";
+import PrototypeDocumentsBatchPapers from "./PrototypeDocumentsBatchPapers";
 import { batchReadiness, PAPER_DATES, READ_OFFER, READ_START, READY_INTRO, answerCompletion, answerCompletionDate, answerWayleaveBelongs, COMPLETION_LABEL, COMPLETION_REPLY, receiveSecondCopy, RELATIONSHIPS, wayleaveProposal, type Completion, answerBelongs, supportChoices, supportQuestion, supportReply, nextStep, type Belongs, type Reopenable, answerMgmt, answerStatus, giveEndDate, MGMT_LABEL, MGMT_REPLY, Q, reopen, startTenancies, STATUS_LABEL, type Management, type TenancyAnswer, type Tenancies } from "./prototypeDocumentsTenancies";
 import { addToBatch, BATCH_OVERFLOW_MESSAGE, EXAMPLE_BATCH, isExampleBatch, LOOK_PHRASES, needsYou, type Batch, type BatchPaper } from "./prototypeDocumentsBatch";
 import { Button } from "@/components/ui/button";
@@ -121,6 +122,8 @@ export default function PrototypeDocuments() {
   const [tenancies, setTenancies] = useState<Tenancies | null>(null);
   const [readIds, setReadIds] = useState<string[]>([]);
   const [readLeft, setReadLeft] = useState(false);
+  const [batchFinished, setBatchFinished] = useState<string[]>([]);
+  const [batchDoneCard, setBatchDoneCard] = useState(false);
   const askFor = (step: Tenancies["step"], t?: Tenancies) => {
     if (step === "puigStatus") addMessage("hobson", Q.puigStatus);
     else if (step === "subMgmt") { addMessage("hobson", Q.subIntro); addMessage("hobson", Q.subMgmt); }
@@ -301,7 +304,7 @@ export default function PrototypeDocuments() {
     generation.current++;
     if (uploadUrl.current) URL.revokeObjectURL(uploadUrl.current);
     uploadUrl.current = null;
-    if (batch) clearBatchUrls(batch.papers); setBatch(null); setTenancies(null); setReadIds([]);
+    if (batch) clearBatchUrls(batch.papers); setBatch(null); setTenancies(null); setReadIds([]); setBatchFinished([]); setBatchDoneCard(false);
     setJourney(emptyPaperJourney); setReview(emptyReview); setPlacement(emptyPlacement); setView("papers"); setSection("current"); setReadingCard(null);
     setDoneCard(null); setNotice(null);
     if (!keepReadings) setReadings([]); setGoTo(undefined); setMessages([]); setInput(""); setSelectionOpen(false); setUploadError(""); setUploading(false); setShowChat(true);
@@ -312,7 +315,7 @@ export default function PrototypeDocuments() {
     const { papers, overflow } = addToBatch(base, incoming);
     clearBatchUrls(incoming.filter((p) => !papers.includes(p)));
     const first = !batch || batch.started;
-    if (batch?.started) { clearBatchUrls(batch.papers); setTenancies(null); setReadIds([]); }
+    if (batch?.started) { clearBatchUrls(batch.papers); setTenancies(null); setReadIds([]); setBatchFinished([]); setBatchDoneCard(false); }
     setBatch({ papers, started: false }); setSelectionOpen(false); setReadingCard(null); setDoneCard(null); setSection("current"); setShowChat(true); setUploadError("");
     addMessage("user", label, true);
     if (first) addMessage("hobson", "Send me the papers you want me to look through. I'll work through them together and only ask about the ones that need you.");
@@ -479,7 +482,25 @@ export default function PrototypeDocuments() {
     const r = readings.find((x) => x.id === id);
     if (!r || r.finished) return;
     setReadings((list) => previewFinish(list, id));
-    if (r.batch) { setNotice(`Done. I've read the ${r.title} and added it to the Fifth Floor at Russell Square House.`); return; }
+    if (r.batch) {
+      // Finish every batch paper still being read together; unresolved papers were never read.
+      const active = readings.filter((x) => x.batch && !x.finished);
+      setReadings((list) => list.map((x) => x.batch ? { ...x, finished: true } : x));
+      const ids = active.map((x) => batch?.papers.find((p) => p.filename === x.filename)?.id).filter(Boolean) as string[];
+      const all = [...batchFinished, ...ids];
+      setBatchFinished(all);
+      const n = active.length;
+      const words = ["no", "one", "two", "three", "four", "five"];
+      const help = tenancies ? batchReadiness(tenancies).help : [];
+      const how = tenancies?.mgmt === "both" ? "I've organised them around Puig's Business Lease and the Feelunique Sublease, as we agreed."
+        : tenancies?.mgmt === "puig" ? "I've organised them within Puig's managed tenancy history, keeping Feelunique's Sublease as its own agreement, as we agreed."
+        : "I've organised them around Puig's Business Lease, and kept Feelunique's Sublease to one side until we settle how it should be shown.";
+      addMessage("hobson", `Done. I've read and added ${words[n] ?? n} ${n === 1 ? "paper" : "papers"} to the Fifth Floor at Russell Square House.\n\n${how}`);
+      help.forEach((h) => addMessage("hobson", `The ${h.name.replace("BT & Puig ", "")} still needs your help. I've kept it separate until we've settled the outstanding details.`));
+      setReadingCard(null); setBatchDoneCard(true);
+      if (section !== "current") setNotice(`Done. I've read and added ${n} ${n === 1 ? "paper" : "papers"} to the Fifth Floor.`);
+      return;
+    }
     const who = r.title.split(" — ")[0];
     const unit = r.placement.unit ?? "the Unit";
     const busy = journey.stage !== "empty" && placement.step !== "placed";
@@ -613,6 +634,11 @@ export default function PrototypeDocuments() {
                 {placement.step === "placed" && <Button size="sm" variant="ghost" onClick={() => { addMessage("user", "Finish for now"); addMessage("hobson", "Very good. I'll carry on reading. You'll find it under Reading whenever you want it."); setPlacement((p) => ({ ...p, step: "none" })); setJourney(emptyPaperJourney); setReview(emptyReview); }}>Finish for now</Button>}
               </div>
             </div>); })()}
+          {batchDoneCard && <div className="ml-12 flex flex-wrap gap-2">
+            <Button size="sm" onClick={() => { setNotice(null); setSection("papers"); }}>View Papers</Button>
+            <Button size="sm" variant="ghost" onClick={() => { setBatchDoneCard(false); anotherPaper(); }}>Add another paper</Button>
+            <Button size="sm" variant="ghost" onClick={() => { setBatchDoneCard(false); addMessage("user", "Finish for now"); addMessage("hobson", "Very good. Everything we've settled is in Papers, and I'll keep the rest ready for when you return."); }}>Finish for now</Button>
+          </div>}
           {doneCard !== null && <div className="ml-12 flex flex-wrap gap-2">
             <Button size="sm" onClick={() => { setDoneCard(null); anotherPaper(); }}>Add another paper</Button>
             <Button size="sm" variant="ghost" onClick={() => { setNotice(null); setSection("papers"); }}>View Papers</Button>
@@ -668,7 +694,7 @@ export default function PrototypeDocuments() {
           <span>{notice}</span>
           <div className="flex shrink-0 gap-1"><Button size="sm" variant="ghost" onClick={() => { setNotice(null); setSection("papers"); }}>Open in Papers</Button><Button size="icon" variant="ghost" aria-label="Dismiss" onClick={() => setNotice(null)}><X className="h-4 w-4" /></Button></div>
         </div>}
-        {section !== "current" && <PrototypeDocumentsReading section={section} readings={readings} onBack={() => setSection("current")} onPreviewFinish={finishReading} onViewPapers={() => { setNotice(null); setSection("papers"); }} />}
+        {section !== "current" && <PrototypeDocumentsReading section={section} readings={readings} onBack={() => setSection("current")} onPreviewFinish={finishReading} onViewPapers={() => { setNotice(null); setSection("papers"); }} batchPapers={tenancies && batch && batchFinished.length ? <PrototypeDocumentsBatchPapers t={tenancies} papers={batch.papers} finishedIds={batchFinished} /> : undefined} />}
         {section === "current" && batch && !journey.paper && <>
           <header className="flex h-14 shrink-0 items-center justify-between gap-2 border-b border-bone bg-background px-5">
             <span className="text-sm font-medium">Your papers</span>
