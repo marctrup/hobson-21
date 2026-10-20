@@ -166,3 +166,32 @@ export function interpretDetails(raw: string, units: DetailedUnit[]): DetailInst
   const reply = `Here's what I'd record for ${names}. Nothing changes until you say so.${replacing ? ` ${replacing === 1 ? "One value" : `${replacing} values`} would replace what's already there.` : ""}`;
   return { kind: "proposal", targets, patch, changes, reply };
 }
+
+// Phrases that may only be true of the source Unit (its name, number or position) — flagged before reuse.
+export function unitSpecificPhrases(description: string, unit: ProposedUnit): string[] {
+  const text = description.toLowerCase();
+  const found = new Set<string>();
+  if (text.includes(unit.name.toLowerCase())) found.add(unit.name);
+  const patterns = [/\b(?:ground|first|second|third|fourth|fifth|top|lower[- ]ground|upper|basement)[- ]floor\b/g, /\bfloor \d+\b/g, /\b(?:penthouse|corner|end of (?:the )?corridor|rear|front[- ]facing|garden level)\b/g, /\bflat \d+\b/g, /\bnumber \d+\b/g];
+  for (const p of patterns) for (const m of text.match(p) ?? []) found.add(m);
+  return [...found];
+}
+
+export const listNames = (names: string[]) => names.length <= 1 ? names.join("") : `${names.slice(0, -1).join(", ")} and ${names[names.length - 1]}`;
+
+// "Flats 4, 6 and 8" when every name shares a prefix; otherwise the plain names.
+export function groupedNames(names: string[]): string {
+  const m = names.map(n => n.match(/^(\w+) (\d+)$/));
+  if (names.length > 1 && m.every(x => x && x[1] === m[0]![1])) return `${m[0]![1]}s ${listNames(m.map(x => x![2]))}`;
+  return listNames(names);
+}
+
+// Copies the exact text as an independent value; existing different descriptions change only when listed in `replace`.
+export function copyDescription(units: DetailedUnit[], description: string, targets: number[], replace: number[]): DetailedUnit[] {
+  return units.map(u => {
+    if (!targets.includes(u.number)) return u;
+    const current = u.details?.description;
+    if (current && current !== description && !replace.includes(u.number)) return u;
+    return { ...u, details: { ...(u.details ?? {}), description } };
+  });
+}

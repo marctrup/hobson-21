@@ -59,3 +59,24 @@ describe("Unit details", () => {
     expect(summaryLine({ ...base()[0], details: { doubleBedrooms: 2, bathrooms: 1 } })).toBe("Residential · 2 double bedrooms · 1 bathroom");
   });
 });
+
+import { copyDescription, groupedNames, unitSpecificPhrases } from "@/pages/prototypeUnitDetails";
+describe("Reusing a description", () => {
+  const text = "Two-bedroom flat with a fitted kitchen, one bathroom and a separate living room.";
+  it("copies the exact text to Flats 4, 6 and 8 only, leaving other details and later edits independent", () => {
+    let u = setDetails(base(), 2, { description: text, bathrooms: 1 });
+    u = copyDescription(u, text, [4, 6, 8], []);
+    expect([4, 6, 8].map(n => u[n - 1].details)).toEqual([{ description: text }, { description: text }, { description: text }]);
+    u = setDetails(u, 2, { description: "Changed" });
+    expect(u[3].details?.description).toBe(text);
+    expect(groupedNames(["Flat 4", "Flat 6", "Flat 8"])).toBe("Flats 4, 6 and 8");
+  });
+  it("never overwrites a different existing description without approval", () => {
+    const u = setDetails(base(), 4, { description: "Mine" });
+    expect(copyDescription(u, text, [4], [])[3].details?.description).toBe("Mine");
+    expect(copyDescription(u, text, [4], [4])[3].details?.description).toBe(text);
+  });
+  it("flags floor positions and the Unit's own name", () => {
+    expect(unitSpecificPhrases("Flat 2 is a first floor flat", base()[1])).toEqual(expect.arrayContaining(["Flat 2", "first floor"]));
+  });
+});
