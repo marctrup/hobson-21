@@ -315,6 +315,7 @@ function PrototypeUnitShell() {
     setSetupUnderway(true);
     setGroupOpen(false);
     setOpenUnit(null);
+    setMapExpanded(false);
     const id = nextId.current++;
     setMessages((previous) => [...previous,
       { id: nextId.current++, role: "user", text: reply },
