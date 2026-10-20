@@ -1,4 +1,5 @@
-import type { SuppliedPaper } from "./workGuidance";
+import type { PaperPlace, PaperPlacementAction, SuppliedPaper } from "./workGuidance";
+import { SuppliedPaperDetails } from "./SuppliedPaperDetails";
 import { JourneyNavigation } from "./JourneyNavigation";
 import { useState } from "react";
 import { ArrowLeft, Check, ChevronDown, FileText, Hand, Mail, MessageCircle, Pause, Play, X } from "lucide-react";
@@ -65,13 +66,15 @@ function PaperReference({ extract, name = "Business Lease" }: { extract: string;
   );
 }
 
-export function WorkJourney({ paused, onPauseChange, onBack, onGuide, sideLetterRequested = false, suppliedPapers = [], approval = "idle", onApprovalChange, approvalOpen = false }: {
+export function WorkJourney({ paused, onPauseChange, onBack, onGuide, sideLetterRequested = false, suppliedPapers = [], paperPlaces = [], onPaperPlacement, approval = "idle", onApprovalChange, approvalOpen = false }: {
   paused: boolean;
   onPauseChange: (paused: boolean) => void;
   onBack: () => void;
   onGuide: () => void;
   sideLetterRequested?: boolean;
   suppliedPapers?: SuppliedPaper[];
+  paperPlaces?: PaperPlace[];
+  onPaperPlacement?: (id: string, action: PaperPlacementAction) => void;
   approval?: ApprovalStatus;
   onApprovalChange?: (status: ApprovalStatus) => void;
   approvalOpen?: boolean;
@@ -141,18 +144,12 @@ export function WorkJourney({ paused, onPauseChange, onBack, onGuide, sideLetter
         <p className="mt-1 text-xs text-muted-foreground">No conclusion reached yet.</p>
         <PaperReference name="Deed of Variation" extract="This illustrative later agreement refers to variations to the Business Lease. Its effect on the rent and tenancy term has not yet been established; no changed terms are confirmed in this preview." />
       </article>
-      {sideLetterRequested && <article aria-label="Side Letter — 2024" className="border-b border-border py-4">
+      {sideLetterRequested && suppliedPapers.length === 0 && <article aria-label="Side Letter — 2024" className="border-b border-border py-4">
         <div className="flex flex-wrap items-center justify-between gap-2"><h5><Button variant="ghost" onClick={() => toggleEvidence("side-letter")} aria-expanded={evidence === "side-letter"} aria-controls="side-letter-next-action" className="h-auto gap-2 whitespace-normal px-2 py-2 text-left text-sm font-semibold"><FileText className="h-4 w-4 shrink-0 text-muted-foreground" />Side Letter — 2024<ChevronDown aria-hidden="true" className={`h-3.5 w-3.5 shrink-0 text-muted-foreground ${evidence === "side-letter" ? "rotate-180" : ""}`} /></Button></h5><span className="text-xs text-muted-foreground">Awaiting paper</span></div>
         <p className="mt-3 text-sm text-muted-foreground">You mentioned this paper. I haven't located it yet.</p>
         {evidence === "side-letter" && <aside id="side-letter-next-action" className="mt-3 border-l-2 border-border pl-3 text-sm leading-relaxed">I'll look for the side letter among your papers. If I can't find it, I'll ask you for a copy.</aside>}
       </article>}
-      {suppliedPapers.map((paper) => <article key={paper.id} aria-label={`Supplied paper: ${paper.filename}`} className="border-b border-border py-4">
-        <div className="flex flex-wrap items-center justify-between gap-2"><h5 className="flex items-center gap-2 text-sm font-semibold"><FileText className="h-4 w-4 shrink-0 text-muted-foreground" />{paper.filename}</h5><span className="text-xs text-muted-foreground">Awaiting reading</span></div>
-        <p className="mt-1 text-xs text-muted-foreground">Supplied by you · in this conversation, during {paper.job} · {paper.place}</p>
-        <p className="mt-1 text-xs text-muted-foreground">Relevant activity: {paper.activity}</p>
-        <div className="mt-3 border-l-2 border-border pl-3"><h6 className="text-xs font-semibold">What I'm checking</h6><p className="mt-1 text-sm leading-relaxed">Whether this Side Letter changes the rent position recorded in the Business Lease.</p></div>
-        <p className="mt-2 text-xs leading-relaxed text-muted-foreground">Received, not yet read. I haven't filed it among your papers or confirmed where it sits in the tenancy's papers.</p>
-      </article>)}
+      {suppliedPapers.map((paper) => <SuppliedPaperDetails key={paper.id} paper={paper} places={paperPlaces} onPlacement={onPaperPlacement} />)}
       <div className="mt-5 border-l-2 border-ring pl-3"><h5 className="text-xs font-semibold">What I'm trying to establish</h5><p className="mt-2 text-sm leading-relaxed">Have any later papers changed the rent, tenancy end date or other relevant terms?</p></div>
     </>}
     {selected === "tenancy" && <>
@@ -166,7 +163,7 @@ export function WorkJourney({ paused, onPauseChange, onBack, onGuide, sideLetter
       <div className="mt-5 border-y border-border py-5">{renderFinding("rent")}</div>
       <PaperReference extract="Annual rent: £24,000, payable in accordance with the terms of this lease." />
       <p className="mt-5 text-xs leading-relaxed text-muted-foreground">This is the original lease figure, not a confirmed current rent. Later agreements are still being checked.</p>
-      {suppliedPapers.length > 0 && <p className="mt-3 text-xs leading-relaxed text-muted-foreground">You've supplied {suppliedPapers.map((p) => p.filename).join(", ")}. It's awaiting reading; I'll check whether it changes this rent.</p>}
+      {suppliedPapers.map((paper) => <SuppliedPaperDetails key={paper.id} paper={paper} places={paperPlaces} onPlacement={onPaperPlacement} />)}
     </>}
     {selected === "summary" && <>
       <p className="mt-3 text-xs font-medium text-muted-foreground">Not started</p>
@@ -207,7 +204,7 @@ export function WorkJourney({ paused, onPauseChange, onBack, onGuide, sideLetter
             <p className="mt-1 text-sm leading-relaxed text-muted-foreground">This email invites the tenant to discuss a possible renewal. It does not propose rent, tenancy terms or financial commitments.</p>
           </>}
           <p className="mt-3 text-sm font-medium">Still to establish</p>
-          <p className="mt-1 text-sm leading-relaxed text-muted-foreground">I haven't finished checking the Deed of Variation or located the 2024 Side Letter. These checks remain part of the ongoing investigation.</p>
+          <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{suppliedPapers.length ? "I haven't finished checking the Deed of Variation or examining the supplied 2024 Side Letter." : "I haven't finished checking the Deed of Variation or located the 2024 Side Letter."} These checks remain part of the ongoing investigation.</p>
         </div>
         <article aria-label="Draft email preview" className="mt-5 rounded-md border border-border bg-popover px-4 py-4">
           <p className="flex items-center gap-2 text-xs font-medium text-muted-foreground"><Mail className="h-3.5 w-3.5" aria-hidden="true" />Draft email · not yet sent</p>
@@ -251,7 +248,7 @@ export function WorkJourney({ paused, onPauseChange, onBack, onGuide, sideLetter
             <h2 className="text-2xl font-semibold leading-tight">Getting the tenancy renewal ready</h2>
           </div>
           <div className="flex min-w-0 w-full flex-wrap items-center gap-2 [@container_work_(min-width:48rem)]:w-auto [@container_work_(min-width:48rem)]:shrink-0">
-            <JobPapersMap job="renewal" sideLetterRequested={sideLetterRequested} />
+            <JobPapersMap job="renewal" sideLetterRequested={sideLetterRequested} suppliedPapers={suppliedPapers} />
             <Button variant="outline" size="sm" onClick={() => onPauseChange(!paused)} className="shrink-0 gap-2">{paused ? <Play className="h-4 w-4" /> : <Pause className="h-4 w-4" />}{paused ? "Resume work" : "Pause work"}</Button>
             <Button variant="secondary" size="sm" onClick={onGuide} className="gap-2"><MessageCircle className="h-4 w-4" />Guide Hobson</Button>
             {journeyExtended

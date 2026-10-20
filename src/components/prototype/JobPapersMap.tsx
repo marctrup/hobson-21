@@ -5,6 +5,8 @@ import { FileText, MapPin, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
+import type { SuppliedPaper } from "./workGuidance";
+import { SuppliedPaperDetails } from "./SuppliedPaperDetails";
 
 export type JobContext = "roof" | "renewal";
 function JobMap({ job }: { job: JobContext }) {
@@ -43,7 +45,7 @@ const contexts = {
 };
 
 /** Context-only navigation: never changes work, approvals or the existing conversation. */
-export function JobPapersMap({ job, sideLetterRequested = false }: { job: JobContext; sideLetterRequested?: boolean }) {
+export function JobPapersMap({ job, sideLetterRequested = false, suppliedPapers = [] }: { job: JobContext; sideLetterRequested?: boolean; suppliedPapers?: SuppliedPaper[] }) {
   const [view, setView] = useState<"papers" | "map" | null>(null);
   const [paper, setPaper] = useState<string | null>(null);
   const context = contexts[job];
@@ -60,7 +62,8 @@ export function JobPapersMap({ job, sideLetterRequested = false }: { job: JobCon
         {controls}
         {view === "papers" && <section aria-label="Job papers" className="divide-y divide-border border-y border-border">
           {context.papers.map(item => <article key={item.title} className="py-4"><Button variant="ghost" onClick={() => setPaper(paper === item.title ? null : item.title)} aria-expanded={paper === item.title} className="h-auto w-full justify-start gap-2 whitespace-normal px-0 text-left"><FileText className="h-4 w-4 shrink-0 text-muted-foreground" aria-hidden="true" /><span><span className="block text-sm font-medium">{item.title}</span><span className="mt-1 block text-xs font-normal text-muted-foreground">{item.note}</span></span></Button>{paper === item.title && <aside aria-label={`${item.title} job paper preview`} className="mt-3 border-l-2 border-border pl-3"><p className="text-sm leading-relaxed">{item.extract}</p><p className="mt-2 text-xs text-muted-foreground">Illustrative extract — not an actual portfolio document.</p></aside>}</article>)}
-          {job === "renewal" && sideLetterRequested && <article className="py-4"><p className="text-sm font-medium">Side Letter — 2024</p><p className="mt-1 text-xs text-muted-foreground">Awaiting paper</p><p className="mt-2 text-sm text-muted-foreground">You mentioned this paper. I haven't located it yet.</p></article>}
+          {job === "renewal" && sideLetterRequested && suppliedPapers.length === 0 && <article className="py-4"><p className="text-sm font-medium">Side Letter — 2024</p><p className="mt-1 text-xs text-muted-foreground">Awaiting paper</p><p className="mt-2 text-sm text-muted-foreground">You mentioned this paper. I haven't located it yet.</p></article>}
+          {job === "renewal" && suppliedPapers.filter(p => p.tenancyLinked && p.filedPlace).map(p => <SuppliedPaperDetails key={p.id} paper={p} />)}
         </section>}
         {view === "map" && <section aria-label="Job location" className="min-w-0"><JobMap job={job} /><p className="mt-3 text-xs leading-relaxed text-muted-foreground">{context.locationNote}</p></section>}
       </DialogPrimitive.Content></DialogPrimitive.Portal>

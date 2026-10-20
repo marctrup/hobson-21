@@ -1,4 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
+import type { SuppliedPaper } from "./workGuidance";
+import { SuppliedPaperDetails } from "./SuppliedPaperDetails";
 import characterProfessorAsset from "@/assets/prototype/character-professor.png.asset.json";
 const characterProfessor = characterProfessorAsset.url;
 
@@ -677,11 +679,13 @@ export function DocumentsLibrary({
   initialScope,
   onNavigatePortfolio,
   onNavigateProperty,
+  suppliedPapers = [],
 }: {
   onClose: () => void;
   initialScope?: DocumentsScope;
   onNavigatePortfolio?: () => void;
   onNavigateProperty?: (propertyId: string) => void;
+  suppliedPapers?: SuppliedPaper[];
 }) {
   const [mode, setMode] = useState<"tree" | "all">("tree");
   const [q, setQ] = useState("");
@@ -791,6 +795,13 @@ export function DocumentsLibrary({
     return null;
   }, [scopePropertyAsset, scopeUnitNode]);
   const isScoped = !!(scopeProperty || scopeUnit);
+
+  const filedPapers = suppliedPapers.filter(paper => {
+    const place = paper.filedPlace;
+    if (!place || (scopeProperty && place.propertyId !== scopeProperty) || (scopeUnit && place.unitId !== scopeUnit)) return false;
+    if (family !== "all" || type !== "all") return false;
+    return !q.trim() || `${paper.filename} Side Letter ${place.label}`.toLowerCase().includes(q.trim().toLowerCase());
+  });
 
   const onView = (d: DocItem) => setViewing(d);
   const onDownload = (d: DocItem) => {
@@ -1028,6 +1039,7 @@ export function DocumentsLibrary({
 
       {/* Body */}
       <div className="flex-1 overflow-y-auto px-6 py-4">
+        {filedPapers.map(paper => <div key={paper.id} className="mb-5 max-w-3xl"><p className="text-sm font-medium text-foreground">{paper.filedPlace?.label}{paper.tenancyLinked ? " · Existing Business Lease tenancy history" : " · No Flat 6 tenancy link"}</p><SuppliedPaperDetails paper={paper} /></div>)}
         {mode === "tree" ? (
           <TreeView
             assets={ASSETS}

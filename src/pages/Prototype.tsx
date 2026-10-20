@@ -17,7 +17,7 @@ const characterKeeper = characterKeeperAsset.url;
 import { DocumentsLibrary } from "@/components/prototype/DocumentsLibrary";
 import { CollapsibleSection } from "@/components/prototype/CollapsibleSection";
 import { WorkOverview } from "@/components/prototype/WorkOverview";
-import { applyWorkGuidance, initialWorkGuidance, SIDE_LETTER_INSTRUCTION, SIDE_LETTER_ATTACHMENT_ID, SIDE_LETTER_ATTACHMENT_INSTRUCTION, SIDE_LETTER_FILENAME } from "@/components/prototype/workGuidance";
+import { applyWorkGuidance, applyPaperPlacement, type PaperPlace, type PaperPlacementAction, initialWorkGuidance, SIDE_LETTER_INSTRUCTION, SIDE_LETTER_ATTACHMENT_ID, SIDE_LETTER_ATTACHMENT_INSTRUCTION, SIDE_LETTER_FILENAME } from "@/components/prototype/workGuidance";
 import { FileText as FileTextIcon, Paperclip, X as XIcon } from "lucide-react";
 import { createRoofWork, roofOverviewCounts } from "@/components/prototype/roofWorkLifecycle";
 import { applyRoofGuidance, initialRoofGuidance, HOLD_CONTACT_INSTRUCTION, LIFT_HOLD_INSTRUCTION, SHOPFRONT_INSTRUCTION, type RoofGuideScope } from "@/components/prototype/roofGuidance";
@@ -718,6 +718,11 @@ const PROPERTIES: Property[] = [
 ];
 
 /* ---------- Scope picker helpers (reusable across all workflow builds) ---------- */
+
+const PAPER_PLACES: PaperPlace[] = PROPERTIES.flatMap(property => [
+  ...(!property.standalone ? [{ id: property.id, label: property.name, kind: "Unit Group" as const, propertyId: property.id }] : []),
+  ...property.units.map(unit => ({ id: unit.id, label: property.standalone ? property.name : `${property.name} · ${unit.label}`, kind: "Unit" as const, propertyId: property.id, unitId: unit.id })),
+]);
 
 const EMPTY_SCOPE: ScopeSelection = {
   level: "portfolio",
@@ -1517,6 +1522,13 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
     setPendingAttachment(true);
     // The message goes straight into the conversation — it never sits in the composer box.
     sendGuidance(SIDE_LETTER_ATTACHMENT_INSTRUCTION, { scope: "renewal", attachmentId: SIDE_LETTER_ATTACHMENT_ID });
+  };
+  const placeSuppliedPaper = (id: string, action: PaperPlacementAction) => {
+    // Only existing prototype destinations can be proposed.
+    if (action.type === "propose" && !PAPER_PLACES.some(place => place.id === action.place.id)) return;
+    const result = applyPaperPlacement(workGuidance, id, action);
+    setWorkGuidance(result.state);
+    if (result.reply) setMessages(previous => [...previous, { id: `paper-filing-${crypto.randomUUID()}`, role: "hobson", text: result.reply }]);
   };
   const collapseMain = () => {
     setChatCollapsed(false);
@@ -4337,6 +4349,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
         {showDocuments && (
           <DocumentsLibrary
             onClose={resetToMap}
+            suppliedPapers={workGuidance.suppliedPapers}
             initialScope={{
               propertyId: view === "property" || view === "unit" ? selectedPropertyId ?? undefined : undefined,
               unitId: view === "unit" ? selectedUnitId ?? undefined : undefined,
@@ -4346,7 +4359,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
           />
         )}
         {showWhatIveDone && (
-          <WorkOverview onClose={resetToMap} sideLetterRequested={workGuidance.sideLetterRequested} suppliedPapers={workGuidance.suppliedPapers} roofGuidance={roofGuidance} roofWork={roofWork} onRoofWorkChange={(next) => {
+          <WorkOverview onClose={resetToMap} sideLetterRequested={workGuidance.sideLetterRequested} suppliedPapers={workGuidance.suppliedPapers} paperPlaces={PAPER_PLACES} onPaperPlacement={placeSuppliedPaper} roofGuidance={roofGuidance} roofWork={roofWork} onRoofWorkChange={(next) => {
             setRoofWork(next);
             if (guideScope !== "renewal" && (next.ended !== roofWork.ended || next.number !== roofWork.number)) { setGuidingRenewal(false); setInput(""); }
           }} focusNeedsYou={needsYouFocus} onJourneyBack={() => setGuidingRenewal(false)} onGuide={(scope, suggestion) => {
