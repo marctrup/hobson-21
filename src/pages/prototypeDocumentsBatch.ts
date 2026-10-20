@@ -6,7 +6,23 @@ import a5 from "@/assets/prototype/rsh-batch-5.pdf.asset.json";
 
 export const BATCH_LIMIT = 5;
 export type BatchPaper = { id: string; filename: string; size: number; url: string; local?: boolean };
-export type Batch = { papers: BatchPaper[]; started: boolean };
+/** look: none (just handed over) → looking → sorted → handoff (ready for 5C). Nothing is filed at any point. */
+export type FirstLook = "none" | "looking" | "sorted" | "handoff";
+export type Batch = { papers: BatchPaper[]; started: boolean; look?: FirstLook };
+
+export type LookGroup = "ready" | "check" | "unplaced";
+export type LookEntry = { name: string; group: LookGroup; reason?: string };
+/** Illustrative first-look outcome for the example batch only; never a filing or tenancy history. */
+export const FIRST_LOOK: Record<string, LookEntry> = {
+  "example-1": { name: "Puig Business Lease — 2016", group: "check", reason: "Confirm the tenancy's position." },
+  "example-2": { name: "Licence to Alter — Puig, 2016", group: "ready" },
+  "example-3": { name: "BT & Puig Wayleave", group: "unplaced", reason: "The copy appears undated, and I need to establish whether it was completed and how it should be recorded." },
+  "example-4": { name: "Deed of Variation — Puig, 2020", group: "ready" },
+  "example-5": { name: "Puig / Feelunique Sublease — 2024", group: "check", reason: "Establish whose tenancy relationship you manage." },
+};
+export const isExampleBatch = (papers: BatchPaper[]) => papers.length > 0 && papers.every((p) => p.id in FIRST_LOOK);
+export const needsYou = (papers: BatchPaper[]) => papers.filter((p) => FIRST_LOOK[p.id] && FIRST_LOOK[p.id].group !== "ready").length;
+export const LOOK_PHRASES = ["Reviewing the five papers…", "Comparing the agreements…", "Bringing the details together…"];
 
 export const EXAMPLE_BATCH: BatchPaper[] = [
   ["RSH - Puig Lease - 16.12.2016.pdf", a1],

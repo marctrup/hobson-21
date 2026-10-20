@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Check, FileText, Files, MessageCircle, Paperclip, RotateCcw, X } from "lucide-react";
 import PrototypeDocumentsBatch from "./PrototypeDocumentsBatch";
-import { addToBatch, BATCH_OVERFLOW_MESSAGE, EXAMPLE_BATCH, type Batch, type BatchPaper } from "./prototypeDocumentsBatch";
+import { addToBatch, BATCH_OVERFLOW_MESSAGE, EXAMPLE_BATCH, isExampleBatch, LOOK_PHRASES, needsYou, type Batch, type BatchPaper } from "./prototypeDocumentsBatch";
 import { Button } from "@/components/ui/button";
 import owlDefault from "@/assets/prototype/owl-default.png";
 import leaseAsset from "@/assets/prototype/russell-square-house-lease.pdf.asset.json";
@@ -116,6 +116,18 @@ export default function PrototypeDocuments() {
   const fileInput = useRef<HTMLInputElement>(null);
   const multiInput = useRef<HTMLInputElement>(null);
   const [batch, setBatch] = useState<Batch | null>(null);
+  const [lookStep, setLookStep] = useState(0);
+  useEffect(() => {
+    if (batch?.look !== "looking") return;
+    setLookStep(0);
+    const steps = [window.setTimeout(() => setLookStep(1), 900), window.setTimeout(() => setLookStep(2), 1800)];
+    const done = window.setTimeout(() => {
+      setBatch((b) => b && b.look === "looking" ? { ...b, look: "sorted" } : b);
+      addMessage("hobson", "I've taken a first look at all five papers.\n\nTwo look straightforward. Two need a quick check, and there's one I couldn't settle from the copy.");
+      addMessage("hobson", "I'll only ask about the ones that need you.");
+    }, 2700);
+    return () => { steps.forEach(window.clearTimeout); window.clearTimeout(done); };
+  }, [batch?.look]);
   const logEnd = useRef<HTMLDivElement>(null);
   const uploadUrl = useRef<string | null>(null);
   const generation = useRef(0);
@@ -203,9 +215,18 @@ export default function PrototypeDocuments() {
   });
   const startBatch = () => {
     if (!batch?.papers.length) return;
-    setBatch({ ...batch, started: true });
+    setBatch({ ...batch, started: true, look: isExampleBatch(batch.papers) ? "looking" : "none" });
     addMessage("user", "Start with these papers");
     addMessage("hobson", "I'll take a first look at these papers.");
+  };
+  const reviewBatch = () => {
+    setBatch((b) => b && { ...b, look: "handoff" });
+    addMessage("user", `Review the ${batch ? needsYou(batch.papers) : 3} that need you`);
+    addMessage("hobson", "I'll start with the leases, as they establish the tenancy histories the other papers may belong to.");
+  };
+  const leaveBatch = () => {
+    addMessage("user", "Leave for now");
+    addMessage("hobson", "Very well. I'll keep these as they are. You can come back to them whenever you're ready.");
   };
   const cancelBatch = () => {
     if (batch) clearBatchUrls(batch.papers);
@@ -214,7 +235,7 @@ export default function PrototypeDocuments() {
     addMessage("hobson", "Very well. I'll leave those for now.");
   };
   const receive = (paper: PrototypePaper) => {
-    setBatch(null);
+    if (!batch?.started) setBatch(null);
     setJourney(receivePaper(paper)); setSelectionOpen(false); setReadingCard(null); setDoneCard(null); setSection("current"); setShowChat(true);
     addMessage("user", paper.filename, true);
     addMessage("hobson", paper.example ? "I'll take a first look at this." : "I've received your paper. I haven't read or identified this one in this demonstration. What kind of paper is it?");
@@ -512,7 +533,7 @@ export default function PrototypeDocuments() {
             <span className="text-sm font-medium">Your papers</span>
             <div className="flex shrink-0 items-center gap-1"><Button variant="ghost" size="icon" className="md:hidden" aria-label="Chat with Hobson" title="Chat with Hobson" onClick={() => setShowChat(true)}><MessageCircle className="h-4 w-4" /></Button><Button variant="ghost" size="sm" aria-label="Restart demo" title="Restart demo" onClick={() => restart()}><RotateCcw className="h-3.5 w-3.5 md:mr-2" /><span className="hidden md:inline">Restart demo</span></Button></div>
           </header>
-          <PrototypeDocumentsBatch batch={batch} onRemove={removeFromBatch} onAddMore={() => multiInput.current?.click()} onStart={startBatch} onCancel={cancelBatch} />
+          <PrototypeDocumentsBatch batch={batch} lookPhrase={LOOK_PHRASES[lookStep]} onRemove={removeFromBatch} onAddMore={() => multiInput.current?.click()} onStart={startBatch} onCancel={cancelBatch} onReview={reviewBatch} onLeave={leaveBatch} />
         </>}
         {section === "current" && journey.paper && <>
           <header className="flex h-14 shrink-0 items-center justify-between gap-2 border-b border-bone bg-background px-5">
