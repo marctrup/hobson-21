@@ -51,7 +51,7 @@ export default function PrototypeDocumentsDetails({ review, collapsible, onShow,
   return (
     <section aria-label="What I've read" className={`flex min-h-0 flex-col bg-background ${collapsible ? "max-h-[45%] shrink-0 border-b border-bone" : "w-[340px] shrink-0 border-r border-bone"}`}>
       <div className="flex items-center justify-between px-5 pt-4 pb-2">
-        <h2 className="text-sm font-semibold text-ink">What I've read</h2>
+        <div><h2 className="text-sm font-semibold text-ink">What I've read</h2><p className="text-xs text-ink-muted">The details I need to place this paper</p></div>
         {collapsible && <Button variant="ghost" size="sm" aria-expanded={open} onClick={() => setOpen((o) => !o)}>{open ? "Hide" : "Show"}<ChevronDown className={`ml-1 h-3.5 w-3.5 transition ${open ? "rotate-180" : ""}`} /></Button>}
       </div>
       {(open || !collapsible) && <ul className="min-h-0 flex-1 overflow-y-auto px-5 pb-3">
