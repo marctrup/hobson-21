@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Check, FileText, Files, MessageCircle, Paperclip, RotateCcw, X } from "lucide-react";
 import PrototypeDocumentsBatch from "./PrototypeDocumentsBatch";
-import { answerBelongs, BELONGS_LABEL, BELONGS_REPLY, nextStep, type Belongs, type Reopenable, answerMgmt, answerStatus, giveEndDate, MGMT_LABEL, MGMT_REPLY, Q, reopen, startTenancies, STATUS_LABEL, type Management, type TenancyAnswer, type Tenancies } from "./prototypeDocumentsTenancies";
+import { answerBelongs, supportChoices, supportQuestion, supportReply, nextStep, type Belongs, type Reopenable, answerMgmt, answerStatus, giveEndDate, MGMT_LABEL, MGMT_REPLY, Q, reopen, startTenancies, STATUS_LABEL, type Management, type TenancyAnswer, type Tenancies } from "./prototypeDocumentsTenancies";
 import { addToBatch, BATCH_OVERFLOW_MESSAGE, EXAMPLE_BATCH, isExampleBatch, LOOK_PHRASES, needsYou, type Batch, type BatchPaper } from "./prototypeDocumentsBatch";
 import { Button } from "@/components/ui/button";
 import owlDefault from "@/assets/prototype/owl-default.png";
@@ -124,8 +124,8 @@ export default function PrototypeDocuments() {
     else if (step === "subMgmt") { addMessage("hobson", Q.subIntro); addMessage("hobson", Q.subMgmt); }
     else if (step === "subStatus") addMessage("hobson", Q.subStatus);
     else if (step === "puigEnd" || step === "subEnd") addMessage("hobson", Q.endDate);
-    else if (step === "licence") addMessage("hobson", Q.licence);
-    else if (step === "deed") addMessage("hobson", Q.deed);
+    else if (step === "licence") addMessage("hobson", supportQuestion("example-2"));
+    else if (step === "deed") addMessage("hobson", supportQuestion("example-4"));
     else if (step === "done") addMessage("hobson", Q.supportsDone);
   };
   const moveTo = (next: Tenancies) => { setTenancies(next); askFor(next.step); };
@@ -159,9 +159,10 @@ export default function PrototypeDocuments() {
     addMessage("user", date ?? "I don't know the date");
     moveTo(giveEndDate(tenancies, date));
   };
-  const tenancyBelongs = (b: Belongs) => {
+  const tenancyBelongs = (b: Belongs, label: string) => {
     if (!tenancies) return;
-    addMessage("user", BELONGS_LABEL[b]); addMessage("hobson", BELONGS_REPLY[b]);
+    const id = tenancies.step === "licence" ? "example-2" : "example-4";
+    addMessage("user", label); addMessage("hobson", supportReply(id, b));
     moveTo(answerBelongs(tenancies, b));
   };
   const changeTenancy = (which: Reopenable) => {
@@ -552,7 +553,7 @@ export default function PrototypeDocuments() {
           {tenancies && section === "current" && !journey.paper && <div className="ml-12 flex flex-wrap gap-2" role="group" aria-label="Your answer">
             {(tenancies.step === "puigStatus" || tenancies.step === "subStatus") && (["current", "ended", "unsure"] as const).map((a) => <Button key={a} size="sm" variant="outline" onClick={() => tenancyStatus(a)}>{STATUS_LABEL[a]}</Button>)}
             {tenancies.step === "subMgmt" && (["both", "puig", "unsure"] as const).map((m) => <Button key={m} size="sm" variant="outline" onClick={() => tenancyMgmt(m)}>{MGMT_LABEL[m]}</Button>)}
-            {(tenancies.step === "licence" || tenancies.step === "deed") && (["puig", "sub", "unsure"] as const).map((b) => <Button key={b} size="sm" variant="outline" onClick={() => tenancyBelongs(b)}>{BELONGS_LABEL[b]}</Button>)}
+            {(tenancies.step === "licence" || tenancies.step === "deed") && supportChoices(tenancies.step === "licence" ? "example-2" : "example-4").map((c) => <Button key={c.answer} size="sm" variant="outline" onClick={() => tenancyBelongs(c.answer as Belongs, c.label)}>{c.label}</Button>)}
             {(tenancies.step === "puigEnd" || tenancies.step === "subEnd") && <Button size="sm" variant="ghost" onClick={() => tenancyEnd(null)}>I don't know the date</Button>}
           </div>}
           <div ref={logEnd} />

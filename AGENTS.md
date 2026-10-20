@@ -23,3 +23,4 @@
 - Subdirectories have their own AGENTS.md (e.g. src/pages); read it before changing files there.
 - Prototype Documents (/prototype-documents) is independently gated with its own local state; see src/pages/AGENTS.md.
 - PDF image decoders live under public/wasm and are fetched by URL from the mounted client viewer, never imported into source bundles, to preserve deployment compatibility.
+- Paper-to-tenancy matching uses one shared Stage 3 module (prototypeDocumentsRelationships) for single and batch journeys: evidence-only proposals, confirmation whenever relationships compete; never key on Unit, filename or paper date.
