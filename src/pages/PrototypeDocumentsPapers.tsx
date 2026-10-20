@@ -3,17 +3,17 @@ import { ChevronDown, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { EXAMPLE_GROUP, EXAMPLE_UNITS, isSettled, statusText, type Placement } from "./prototypeDocumentsPlacement";
 
-type Props = { placement: Placement; paperType: string; filename: string; tenant: string; paperDate: string; effective: string | null; onOpenPaper: () => void };
+type Props = { filed?: boolean; placement: Placement; paperType: string; filename: string; tenant: string; paperDate: string; effective: string | null; onOpenPaper: () => void };
 
 const ROLE_NOTE = { landlord: "Organised from the landlord's perspective", tenant: "Organised from Systemiq's perspective", track: "Kept for reference, acting for neither party" } as const;
 
-function ProposedPaper({ placement, paperType, filename, tenant, paperDate, effective, onOpenPaper, awaiting }: Props & { awaiting: boolean }) {
+function ProposedPaper({ filed, placement, paperType, filename, tenant, paperDate, effective, onOpenPaper, awaiting }: Props & { awaiting: boolean }) {
   const role = placement.role ? (placement.role.kind === "other" ? placement.role.note ? `Your responsibility: ${placement.role.note}` : "Your responsibility not yet settled" : ROLE_NOTE[placement.role.kind]) : "Your responsibility not yet established";
   return (
-    <article aria-label={`${paperType} — ${awaiting ? "awaiting placement" : "proposed"}`} className="rounded-lg border border-dashed border-primary/50 bg-secondary/40 p-4">
+    <article aria-label={`${paperType} — ${filed ? "in tenancy history" : awaiting ? "awaiting placement" : "proposed"}`} className={filed ? "rounded-lg border border-bone bg-background p-4" : "rounded-lg border border-dashed border-primary/50 bg-secondary/40 p-4"}>
       <div className="flex flex-wrap items-center gap-2">
         <h4 className="text-sm font-semibold text-ink">{paperType}</h4>
-        <span className="rounded-full border border-primary/40 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-primary">{awaiting ? "Awaiting placement" : "Proposed"}</span>
+        {!filed && <span className="rounded-full border border-primary/40 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-primary">{awaiting ? "Awaiting placement" : "Proposed"}</span>}
       </div>
       <p className="mt-1 text-sm text-ink">{tenant}</p>
       <div className="mt-3 flex items-start justify-between gap-3 border-t border-faint-rule pt-3">
@@ -43,8 +43,8 @@ export default function PrototypeDocumentsPapers(props: Props) {
   const placed = placement.step === "placed";
   return (
     <section aria-label="Proposed placement" className="min-h-0 flex-1 overflow-y-auto bg-background px-6 py-5">
-      <h2 className="text-base font-semibold text-ink">{placed ? "Where this paper will go" : "Where I propose to put this paper"}</h2>
-      <p className="mt-1 text-xs text-ink-muted">Nothing has been added to your papers yet.</p>
+      <h2 className="text-base font-semibold text-ink">{props.filed ? "What I have for Russell Square House" : placed ? "Where this paper will go" : "Where I propose to put this paper"}</h2>
+      {!props.filed && <p className="mt-1 text-xs text-ink-muted">Nothing has been added to your papers yet.</p>}
       {separate && <div className="mt-5"><p className="mb-2 text-[11px] font-medium uppercase tracking-wide text-ink-muted">Kept separate for now</p><ProposedPaper {...props} awaiting /></div>}
       <div className="mt-5 rounded-lg border border-bone">
         <button type="button" aria-expanded={groupOpen} onClick={() => setGroupOpen((o) => !o)} className="flex w-full items-center justify-between px-4 py-3 text-left">
@@ -58,7 +58,7 @@ export default function PrototypeDocumentsPapers(props: Props) {
               <li key={u} className="border-b border-faint-rule px-4 py-3 last:border-0">
                 <p className={`text-sm ${here ? "font-semibold text-ink" : "text-ink-muted"}`}>{u}{here && placement.unitStatus === "asking" && <span className="ml-2 text-xs font-normal text-ink-muted">· I think it belongs here</span>}</p>
                 {here && !separate && <div className="mt-3">
-                  <p className="mb-2 text-[11px] font-medium uppercase tracking-wide text-ink-muted">{placement.relation === "new" ? "Tenancy history · new" : "Proposed paper · not yet in a tenancy history"}</p>
+                  <p className="mb-2 text-[11px] font-medium uppercase tracking-wide text-ink-muted">{props.filed ? "Tenancy history" : placement.relation === "new" ? "Tenancy history · new" : "Proposed paper · not yet in a tenancy history"}</p>
                   <ProposedPaper {...props} awaiting={false} />
                 </div>}
                 {!(here && !separate) && <p className="mt-0.5 text-xs text-ink-muted">No confirmed occupational papers</p>}

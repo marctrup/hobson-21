@@ -105,6 +105,8 @@ export default function PrototypeDocuments() {
   const [section, setSection] = useState<"current" | "reading" | "papers" | "conversations">("current");
   const [readingCard, setReadingCard] = useState<number | null>(null);
   const readingId = useRef(1);
+  const [doneCard, setDoneCard] = useState<number | null>(null);
+  const [notice, setNotice] = useState<string | null>(null);
   const [selectionOpen, setSelectionOpen] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [uploadError, setUploadError] = useState("");
@@ -165,10 +167,11 @@ export default function PrototypeDocuments() {
     if (uploadUrl.current) URL.revokeObjectURL(uploadUrl.current);
     uploadUrl.current = null;
     setJourney(emptyPaperJourney); setReview(emptyReview); setPlacement(emptyPlacement); setView("papers"); setSection("current"); setReadingCard(null);
+    setDoneCard(null); setNotice(null);
     if (!keepReadings) setReadings([]); setGoTo(undefined); setMessages([]); setInput(""); setSelectionOpen(false); setUploadError(""); setUploading(false); setShowChat(true);
   };
   const receive = (paper: PrototypePaper) => {
-    setJourney(receivePaper(paper)); setSelectionOpen(false); setReadingCard(null); setSection("current"); setShowChat(true);
+    setJourney(receivePaper(paper)); setSelectionOpen(false); setReadingCard(null); setDoneCard(null); setSection("current"); setShowChat(true);
     addMessage("user", paper.filename, true);
     addMessage("hobson", paper.example ? "I'll take a first look at this." : "I've received your paper. I haven't read or identified this one in this demonstration. What kind of paper is it?");
   };
@@ -286,6 +289,16 @@ export default function PrototypeDocuments() {
     setReadings((r) => [...r, { id, title: `${tenant === "SYSTEMIQ LIMITED" ? "Systemiq" : tenant} — ${journey.paperType ?? "Business Lease"}`, unit: `${placement.unit} · Russell Square House`, filename: paper.filename, url: paper.url, paperType: journey.paperType ?? "Business Lease", tenant, paperDate: shownValue(review.details[0]), effective: review.effectiveValue, placement: { ...placement, step: "placed" }, step: 0, finished: false }]);
     setReadingCard(id);
     setPlacement((p) => ({ ...p, step: "placed" }));
+  };
+  const finishReading = (id: number) => {
+    const r = readings.find((x) => x.id === id);
+    if (!r || r.finished) return;
+    setReadings((list) => previewFinish(list, id));
+    const who = r.title.split(" — ")[0];
+    const unit = r.placement.unit ?? "the Unit";
+    const busy = journey.stage !== "empty" && placement.step !== "placed";
+    if (section !== "current" || busy) setNotice(`Done. I've added the ${who} lease to ${unit}.`);
+    if (!busy) { addMessage("hobson", `Done. I've added the ${who} lease to the ${unit} tenancy history at Russell Square House.`); setReadingCard(null); setDoneCard(id); }
   };
   const anotherPaper = () => {
     addMessage("user", "Add another paper");
@@ -412,6 +425,11 @@ export default function PrototypeDocuments() {
                 {placement.step === "placed" && <Button size="sm" variant="ghost" onClick={() => { addMessage("user", "Finish for now"); addMessage("hobson", "Very good. I'll carry on reading. You'll find it under Reading whenever you want it."); setPlacement((p) => ({ ...p, step: "none" })); setJourney(emptyPaperJourney); setReview(emptyReview); }}>Finish for now</Button>}
               </div>
             </div>); })()}
+          {doneCard !== null && <div className="ml-12 flex flex-wrap gap-2">
+            <Button size="sm" onClick={() => { setDoneCard(null); anotherPaper(); }}>Add another paper</Button>
+            <Button size="sm" variant="ghost" onClick={() => { setNotice(null); setSection("papers"); }}>View Papers</Button>
+            <Button size="sm" variant="ghost" onClick={() => { setDoneCard(null); addMessage("user", "Finish for now"); addMessage("hobson", "Very good. I'll be here when you have more."); setSection("current"); setPlacement(emptyPlacement); setJourney(emptyPaperJourney); setReview(emptyReview); }}>Finish for now</Button>
+          </div>}
           <div ref={logEnd} />
         </div>
         <div className="border-t border-faint-rule px-5 pb-4 pt-2">
@@ -437,7 +455,11 @@ export default function PrototypeDocuments() {
       <div className="hidden h-full md:flex"><ResizeDivider width={chatWidth} setWidth={setChatWidth} /></div>
 
       <main ref={mainRef} className="flex min-w-0 flex-1 flex-col" aria-label="Prototype Documents canvas">
-        {section !== "current" && <PrototypeDocumentsReading section={section} readings={readings} onBack={() => setSection("current")} onPreviewFinish={(id) => setReadings((r) => previewFinish(r, id))} />}
+        {notice && <div role="status" className="flex shrink-0 items-center justify-between gap-3 border-b border-bone bg-secondary/50 px-5 py-2 text-sm text-ink">
+          <span>{notice}</span>
+          <div className="flex shrink-0 gap-1"><Button size="sm" variant="ghost" onClick={() => { setNotice(null); setSection("papers"); }}>Open in Papers</Button><Button size="icon" variant="ghost" aria-label="Dismiss" onClick={() => setNotice(null)}><X className="h-4 w-4" /></Button></div>
+        </div>}
+        {section !== "current" && <PrototypeDocumentsReading section={section} readings={readings} onBack={() => setSection("current")} onPreviewFinish={finishReading} onViewPapers={() => { setNotice(null); setSection("papers"); }} />}
         {section === "current" && journey.paper && <>
           <header className="flex h-14 shrink-0 items-center justify-between gap-2 border-b border-bone bg-background px-5">
             <span className="text-sm font-medium">Your paper</span>
