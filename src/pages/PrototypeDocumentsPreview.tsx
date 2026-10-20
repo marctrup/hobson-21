@@ -15,7 +15,7 @@ export default function PrototypeDocumentsPreview({ paper }: { paper: PrototypeP
   useEffect(() => {
     setPage(1); setPdf(null); setError(false);
     if (!paper.url) return;
-    const task = getDocument(paper.url);
+    const task = getDocument({ url: paper.url });
     let active = true;
     task.promise.then((loaded) => { if (active) setPdf(loaded); }).catch(() => { if (active) setError(true); });
     return () => { active = false; void task.destroy(); };
