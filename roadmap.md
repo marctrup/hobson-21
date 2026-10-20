@@ -1,5 +1,8 @@
 # Roadmap
 
+## Prototype Unit — understanding the building
+- [ ] Extend confirmed Finchley Road Stanley House with natural building descriptions, provisional architectural grouping and focused clarification; preserve the map, reset and other paths, create no records, and verify tests and browser flow.
+
 ## Prototype Unit — intelligent address discovery
 - [x] Add illustrative Finchley Road lookup records, natural and partial address handling, candidate selection and explicit confirmation; all five supplied inputs, postcode continuation, rejection, correction and map states verified in the browser with no page errors. Twenty focused checks pass; no records created, Prototype Work untouched, Iteration 3 not started. Not published.
 
