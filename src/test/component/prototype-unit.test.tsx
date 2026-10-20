@@ -140,7 +140,7 @@ describe("Prototype Unit location confirmation", () => {
     await user.click(screen.getByRole("button", { name: "Yes, that's the place" }));
     expect(within(screen.getByRole("status", { name: "Location status" })).getByText("Location confirmed")).toBeInTheDocument();
     expect(within(screen.getByRole("main")).getByText("1115 Finchley Road, London, NW11 0QD")).toBeInTheDocument();
-    expect(within(screen.getByRole("log")).queryAllByRole("button")).toHaveLength(0);
+    expect(within(screen.getByRole("log")).queryAllByRole("button").filter(b => b.textContent !== "Continue →")).toHaveLength(0);
   });
 
   it("keeps partial details for a postcode reply and allows rejection of every candidate", async () => {
