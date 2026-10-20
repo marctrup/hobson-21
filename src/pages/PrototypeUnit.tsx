@@ -146,7 +146,7 @@ function PrototypeUnitShell() {
         </div>
         <RailItem icon="pin" label="Portfolio" active />
         <RailItem icon="doc" label="Papers" />
-        <RailItem icon="chat" label="Conversations" />
+        <RailItem icon="chat" label="Chat History" />
         <div className="mt-auto flex flex-col items-center gap-3 pb-2">
           <button
             type="button"
@@ -156,7 +156,7 @@ function PrototypeUnitShell() {
           >
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" aria-hidden><path d="M12 5v14M5 12h14" /></svg>
           </button>
-          <span className="w-full px-1 text-center text-[10px] leading-tight text-ink-muted [overflow-wrap:anywhere]">A new conversation</span>
+          <span className="w-full px-1 text-center text-[9px] leading-tight text-ink-muted">A new conversation</span>
           <RailItem icon="gear" label="Back Office" />
           <div className="grid h-9 w-9 place-items-center rounded-full bg-bone text-xs font-semibold text-charcoal">MT</div>
         </div>
