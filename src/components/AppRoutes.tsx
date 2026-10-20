@@ -199,7 +199,7 @@ const AppContent = () => {
               <Route
                 path="/prototype-unit"
                 element={
-                  <PrototypeGate>
+                  <PrototypeGate scope="unit">
                     <PrototypeUnit />
                   </PrototypeGate>
                 }

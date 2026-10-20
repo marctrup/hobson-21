@@ -6,9 +6,9 @@ import owlDefault from "@/assets/prototype/owl-default.png";
 
 const SESSION_KEY = "hobson_prototype_open";
 
-function alreadyAdmitted(): boolean {
+function alreadyAdmitted(sessionKey: string): boolean {
   try {
-    return window.sessionStorage.getItem(SESSION_KEY) === "granted";
+    return window.sessionStorage.getItem(sessionKey) === "granted";
   } catch {
     return false;
   }
@@ -16,14 +16,16 @@ function alreadyAdmitted(): boolean {
 
 type PrototypeGateProps = {
   children: React.ReactNode;
+  scope?: "work" | "unit";
 };
 
 /**
  * Doors the prototype behind a pass phrase checked on the server, so the phrase
  * never ships in the site's code and a stray link shows only a quiet entrance.
  */
-export function PrototypeGate({ children }: PrototypeGateProps) {
-  const [admitted, setAdmitted] = useState<boolean>(alreadyAdmitted);
+export function PrototypeGate({ children, scope = "work" }: PrototypeGateProps) {
+  const sessionKey = scope === "unit" ? "hobson_prototype_unit_open" : SESSION_KEY;
+  const [admitted, setAdmitted] = useState<boolean>(() => alreadyAdmitted(sessionKey));
   const [passphrase, setPassphrase] = useState("");
   const [checking, setChecking] = useState(false);
   const [notice, setNotice] = useState<string | null>(null);
@@ -48,7 +50,7 @@ export function PrototypeGate({ children }: PrototypeGateProps) {
 
     try {
       const { data, error } = await supabase.functions.invoke("prototype-gate", {
-        body: { passphrase: passphrase.trim() },
+        body: { passphrase: passphrase.trim(), scope },
       });
 
       if (error) {
@@ -63,7 +65,7 @@ export function PrototypeGate({ children }: PrototypeGateProps) {
 
       if (data?.valid === true) {
         try {
-          window.sessionStorage.setItem(SESSION_KEY, "granted");
+          window.sessionStorage.setItem(sessionKey, "granted");
         } catch {
           // Storage may be unavailable; the door still opens for this visit.
         }
