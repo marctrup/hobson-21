@@ -1,5 +1,8 @@
 # Roadmap
 
+## Prototype Unit — finding the location
+- [ ] Extend only Unit Group setup with an address conversation, a Stanley House map proposal, explicit confirmation and correction; preserve other paths and verify no records are created.
+
 ## Prototype Unit — conversation-first entry
 - [x] Remove the Portfolio Add button, open with Hobson's invitation and a quiet suggested reply, preserve the three acknowledgements and typed input, and verify the map remains unchanged. Five focused tests pass; private entrance, all choices, restart and typed replies verified in the browser without errors. Not published.
 
