@@ -6,7 +6,7 @@ import owlDefault from "@/assets/prototype/owl-default.png";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { discoverAddress, MOCK_ADDRESSES, type AddressParts, type AddressRecord } from "./prototypeUnitAddress";
-import { understandBuilding, type BuildingUnderstanding } from "./prototypeUnitStructure";
+import { namingProposal, numberUnits, renameUnits, understandBuilding, type BuildingUnderstanding } from "./prototypeUnitStructure";
 import { PrototypeUnitStructure } from "./PrototypeUnitStructure";
 
 const RAIL_WIDTH = 68;
@@ -211,7 +211,7 @@ function PrototypeUnitShell() {
   const [selectedAddress, setSelectedAddress] = useState<AddressRecord | null>(null);
   const [showMoreAddresses, setShowMoreAddresses] = useState(false);
   const [buildingUnderstanding, setBuildingUnderstanding] = useState<BuildingUnderstanding | null>(null);
-  const [buildingStage, setBuildingStage] = useState<"idle" | "awaiting-description" | "proposed" | "confirmed">("idle");
+  const [buildingStage, setBuildingStage] = useState<"idle" | "awaiting-description" | "naming" | "describing" | "named">("idle");
   const [buildingPromptId, setBuildingPromptId] = useState<number | null>(null);
   const nextId = useRef(1);
   const conversationEnd = useRef<HTMLDivElement>(null);
@@ -315,30 +315,49 @@ function PrototypeUnitShell() {
     setLocationPromptId(result.records.length ? id : null);
   };
 
+  const NAMING_CHOICES = ["Yes, those names are fine", "Just number them", "Let me describe them"];
+  const DESCRIBE_HINT = "Of course. Tell me how you'd like them named — for example, 'Call them Apartments 1 to 11', 'The flats are numbered 101 to 111' or 'Call the shop Ground Floor Shop'.";
+
+  // Structure and naming stay proposals: nothing here creates Units.
+  const answerBuilding = (text: string) => {
+    const normalised = text.toLowerCase().replace(/[.!?]+$/, "").trim();
+    const units = buildingUnderstanding?.kind === "proposal" ? buildingUnderstanding.units : null;
+    if (units && buildingStage !== "awaiting-description") {
+      if (normalised === "yes, those names are fine" || (buildingStage === "naming" && ["yes", "that's fine", "fine"].includes(normalised))) {
+        appendExchange(text, "Very good. I'll keep those names. The structure is still only a proposal — nothing has been created.");
+        setBuildingStage("named"); setBuildingPromptId(null); return;
+      }
+      if (normalised === "just number them") {
+        setBuildingUnderstanding({ kind: "proposal", units: numberUnits(units) });
+        const hasCommercial = units.some(u => u.classification === "Commercial");
+        appendExchange(text, `Done. The ${units.some(u => u.type === "Flat") ? "flats" : "Units"} are now simply numbered${hasCommercial ? ", and the commercial space keeps its name" : ""}. Nothing has been created.`);
+        setBuildingStage("named"); setBuildingPromptId(null); return;
+      }
+      if (normalised === "let me describe them") { appendExchange(text, DESCRIBE_HINT); setBuildingStage("describing"); setBuildingPromptId(null); return; }
+      const renamed = renameUnits(text, units);
+      if (renamed) {
+        setBuildingUnderstanding({ kind: "proposal", units: renamed });
+        appendExchange(text, "I've renamed them on the right. Anything else you'd like changed? Nothing has been created.");
+        setBuildingStage("named"); setBuildingPromptId(null); return;
+      }
+      if (buildingStage === "describing") { appendExchange(text, `I didn't quite follow that. ${DESCRIBE_HINT.replace("Of course. ", "")}`); return; }
+    }
+    const understanding = understandBuilding(text, buildingUnderstanding);
+    if (units && understanding.kind === "clarify" && !understanding.total && !understanding.floors && !understanding.groups) {
+      appendExchange(text, "The names remain a proposal. You can tell me how you'd like them named, or give me revised numbers and uses.");
+      return;
+    }
+    setBuildingUnderstanding(understanding);
+    const id = appendExchange(text, understanding.kind === "proposal" ? namingProposal(understanding.units) : understanding.question);
+    setBuildingStage(understanding.kind === "proposal" ? "naming" : "awaiting-description");
+    setBuildingPromptId(id);
+  };
+
   const send = () => {
     const text = input.trim();
     if (!text) return;
     const normalised = text.toLowerCase().replace(/[.!?]+$/, "");
-    if (locationStage === "confirmed" && (buildingStage === "awaiting-description" || buildingStage === "proposed")) {
-      if (buildingStage === "proposed" && ["yes, that's right", "confirm this structure", "yes", "confirm"].includes(normalised)) {
-        appendExchange(text, "Good. That structure is confirmed for this demonstration. Nothing has been added to your portfolio.");
-        setBuildingStage("confirmed");
-        setBuildingPromptId(null);
-        return;
-      }
-      const understanding = understandBuilding(text, buildingUnderstanding);
-      if (buildingStage === "proposed" && understanding.kind === "clarify" && !understanding.total && !understanding.floors && !understanding.groups) {
-        appendExchange(text, "The proposal is still awaiting your confirmation. Tell me the revised numbers and uses if you would like it changed.");
-        return;
-      }
-      setBuildingUnderstanding(understanding);
-      const id = appendExchange(text, understanding.kind === "proposal"
-        ? `I've proposed ${understanding.units.length} Units with names and types on the right. Nothing has been added yet. Is that right?`
-        : understanding.question);
-      setBuildingStage(understanding.kind === "proposal" ? "proposed" : "awaiting-description");
-      setBuildingPromptId(understanding.kind === "proposal" ? id : null);
-      return;
-    }
+    if (locationStage === "confirmed" && buildingStage !== "idle") { answerBuilding(text); return; }
     if (locationStage === "proposed") {
       if (normalised === "yes, that's the place") { respondToLocation(true); return; }
       if (["no, let's check again", "choose a different location"].includes(normalised)) { respondToLocation(false); return; }
@@ -421,9 +440,15 @@ function PrototypeUnitShell() {
                 )}
                 <div className="min-w-0 flex-1 py-2 text-ink">
                   <p className="mb-1 text-xs font-semibold text-ink-muted">Hobson</p>
-                  <p className={`break-words leading-relaxed ${message.examples ? "text-base font-semibold" : "text-sm"}`}>{message.text}</p>
+                  <p className={`whitespace-pre-line break-words leading-relaxed ${message.examples ? "text-base font-semibold" : "text-sm"}`}>{message.text}</p>
                   {message.examples && <p className="mt-2 break-words text-xs leading-relaxed text-muted-foreground">{message.examples}</p>}
-                  {buildingPromptId === message.id && buildingStage === "proposed" && <Button variant="outline" className="mt-3 h-auto min-h-11 whitespace-normal text-left" onClick={() => { appendExchange("Yes, that's right", "Good. That structure is confirmed for this demonstration. Nothing has been added to your portfolio."); setBuildingStage("confirmed"); setBuildingPromptId(null); }}>Yes, that's right</Button>}
+                  {buildingPromptId === message.id && (buildingStage === "naming" ? NAMING_CHOICES : buildingStage === "awaiting-description" && buildingUnderstanding?.kind === "clarify" ? buildingUnderstanding.choices ?? [] : []).length > 0 && (
+                    <div className="mt-3 flex flex-wrap gap-2">
+                      {(buildingStage === "naming" ? NAMING_CHOICES : (buildingUnderstanding?.kind === "clarify" && buildingUnderstanding.choices) || []).map(choice => (
+                        <button key={choice} type="button" onClick={() => answerBuilding(choice)} className="min-h-11 rounded-full border border-border bg-secondary/40 px-3.5 py-2 text-left text-sm text-foreground transition-colors hover:bg-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">{choice}</button>
+                      ))}
+                    </div>
+                  )}
                   {message.id === OPENING_MESSAGE.id && showInvitation && (
                     <Button onClick={() => startSetup()} className="mt-3 min-h-11 max-w-full justify-between gap-4 whitespace-normal px-4 py-2.5 text-left text-sm font-semibold shadow-sm">
                       <span>Set up a place</span>{" "}
@@ -501,7 +526,7 @@ function PrototypeUnitShell() {
           {buildingUnderstanding && <div className="text-xs leading-relaxed text-muted-foreground"><p>{selectedAddress?.line}</p><p className="mt-1 text-[10px]">Illustrative mock lookup · approximate location</p></div>}
           <UnitLocationMap compact={Boolean(buildingUnderstanding)} stage={locationStage} address={locationAddress} candidate={selectedAddress ?? addressCandidates[0] ?? null} />
         </div>
-        {buildingUnderstanding && <PrototypeUnitStructure understanding={buildingUnderstanding} confirmed={buildingStage === "confirmed"} />}
+        {buildingUnderstanding && <PrototypeUnitStructure understanding={buildingUnderstanding} named={buildingStage === "named"} />}
       </main>
     </div>
   );
