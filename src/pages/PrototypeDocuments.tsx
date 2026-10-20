@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Check, FileText, Files, MessageCircle, Paperclip, RotateCcw, X } from "lucide-react";
 import PrototypeDocumentsBatch from "./PrototypeDocumentsBatch";
-import { answerMgmt, answerStatus, giveEndDate, MGMT_LABEL, MGMT_REPLY, Q, reopen, startTenancies, STATUS_LABEL, type Management, type TenancyAnswer, type Tenancies } from "./prototypeDocumentsTenancies";
+import { answerBelongs, BELONGS_LABEL, BELONGS_REPLY, nextStep, type Belongs, type Reopenable, answerMgmt, answerStatus, giveEndDate, MGMT_LABEL, MGMT_REPLY, Q, reopen, startTenancies, STATUS_LABEL, type Management, type TenancyAnswer, type Tenancies } from "./prototypeDocumentsTenancies";
 import { addToBatch, BATCH_OVERFLOW_MESSAGE, EXAMPLE_BATCH, isExampleBatch, LOOK_PHRASES, needsYou, type Batch, type BatchPaper } from "./prototypeDocumentsBatch";
 import { Button } from "@/components/ui/button";
 import owlDefault from "@/assets/prototype/owl-default.png";
@@ -124,7 +124,9 @@ export default function PrototypeDocuments() {
     else if (step === "subMgmt") { addMessage("hobson", Q.subIntro); addMessage("hobson", Q.subMgmt); }
     else if (step === "subStatus") addMessage("hobson", Q.subStatus);
     else if (step === "puigEnd" || step === "subEnd") addMessage("hobson", Q.endDate);
-    else if (step === "done") { addMessage("hobson", Q.done); addMessage("hobson", Q.next); }
+    else if (step === "licence") addMessage("hobson", Q.licence);
+    else if (step === "deed") addMessage("hobson", Q.deed);
+    else if (step === "done") addMessage("hobson", Q.supportsDone);
   };
   const moveTo = (next: Tenancies) => { setTenancies(next); askFor(next.step); };
   useEffect(() => {
@@ -134,7 +136,11 @@ export default function PrototypeDocuments() {
   }, [tenancies?.step]);
   useEffect(() => {
     if (tenancies?.step !== "comparing") return;
-    const t = window.setTimeout(() => moveTo({ ...tenancies, compared: true, step: "done" }), 1500);
+    const t = window.setTimeout(() => {
+      const u = { ...tenancies, compared: true };
+      addMessage("hobson", Q.done); addMessage("hobson", Q.next);
+      moveTo({ ...u, step: nextStep(u) });
+    }, 1500);
     return () => window.clearTimeout(t);
   }, [tenancies?.step]);
   const tenancyStatus = (a: TenancyAnswer) => {
@@ -153,9 +159,14 @@ export default function PrototypeDocuments() {
     addMessage("user", date ?? "I don't know the date");
     moveTo(giveEndDate(tenancies, date));
   };
-  const changeTenancy = (which: "puig" | "mgmt" | "sub") => {
+  const tenancyBelongs = (b: Belongs) => {
     if (!tenancies) return;
-    addMessage("user", which === "puig" ? "Change Puig's tenancy" : which === "mgmt" ? "Change how the Sublease is shown" : "Change Feelunique's Sublease");
+    addMessage("user", BELONGS_LABEL[b]); addMessage("hobson", BELONGS_REPLY[b]);
+    moveTo(answerBelongs(tenancies, b));
+  };
+  const changeTenancy = (which: Reopenable) => {
+    if (!tenancies) return;
+    addMessage("user", which === "puig" ? "Change Puig's tenancy" : which === "mgmt" ? "Change how the Sublease is shown" : which === "sub" ? "Change Feelunique's Sublease" : which === "licence" ? "Change where the Licence to Alter belongs" : "Change where the Deed of Variation belongs");
     moveTo(reopen(tenancies, which));
   };
   useEffect(() => {
@@ -541,6 +552,7 @@ export default function PrototypeDocuments() {
           {tenancies && section === "current" && !journey.paper && <div className="ml-12 flex flex-wrap gap-2" role="group" aria-label="Your answer">
             {(tenancies.step === "puigStatus" || tenancies.step === "subStatus") && (["current", "ended", "unsure"] as const).map((a) => <Button key={a} size="sm" variant="outline" onClick={() => tenancyStatus(a)}>{STATUS_LABEL[a]}</Button>)}
             {tenancies.step === "subMgmt" && (["both", "puig", "unsure"] as const).map((m) => <Button key={m} size="sm" variant="outline" onClick={() => tenancyMgmt(m)}>{MGMT_LABEL[m]}</Button>)}
+            {(tenancies.step === "licence" || tenancies.step === "deed") && (["puig", "sub", "unsure"] as const).map((b) => <Button key={b} size="sm" variant="outline" onClick={() => tenancyBelongs(b)}>{BELONGS_LABEL[b]}</Button>)}
             {(tenancies.step === "puigEnd" || tenancies.step === "subEnd") && <Button size="sm" variant="ghost" onClick={() => tenancyEnd(null)}>I don't know the date</Button>}
           </div>}
           <div ref={logEnd} />
