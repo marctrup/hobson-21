@@ -44,6 +44,7 @@ const GlossaryManagement = lazy(() => import("../pages/admin/GlossaryManagement"
 const InvestmentPassword = lazy(() => import("../pages/admin/InvestmentPassword"));
 const InvestmentOpportunity = lazy(() => import("../pages/InvestmentOpportunity"));
 const Prototype = lazy(() => import("../pages/Prototype"));
+const PrototypeUnit = lazy(() => import("../pages/PrototypeUnit"));
 const PrototypeGate = lazy(() =>
   import("../components/prototype/PrototypeGate").then((m) => ({ default: m.PrototypeGate }))
 );
@@ -192,6 +193,14 @@ const AppContent = () => {
                 element={
                   <PrototypeGate>
                     <Prototype />
+                  </PrototypeGate>
+                }
+              />
+              <Route
+                path="/prototype-unit"
+                element={
+                  <PrototypeGate>
+                    <PrototypeUnit />
                   </PrototypeGate>
                 }
               />
