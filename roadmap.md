@@ -2,7 +2,7 @@
 
 ## Prototype Documents — adding a paper
 - [ ] Implement and verify the local Stage 1 conversation, paper selection, confirmation/change and restart.
-- [ ] Add the genuine Russell Square House PDF or cover preview — awaiting the supplied lease, which is not among the uploaded files.
+- [ ] Use the newly supplied genuine Russell Square House PDF for the example and document preview.
 
 ## Prototype Unit — publishing password
 - [x] Configure a separate server-held Unit password and admission flag; 34 targeted checks passed and browser verified wrong-password refusal, configured-password admission, reload persistence and independent Work protection. Password verification deployed; website not published.
