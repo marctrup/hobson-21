@@ -3,7 +3,6 @@ import * as Menu from "@radix-ui/react-dropdown-menu";
 import { Check, GripVertical, MoreHorizontal, Pencil, Plus, Undo2 } from "lucide-react";
 import { DndContext, KeyboardSensor, PointerSensor, TouchSensor, closestCenter, useSensor, useSensors, type DragEndEvent } from "@dnd-kit/core";
 import { SortableContext, arrayMove, sortableKeyboardCoordinates, useSortable, verticalListSortingStrategy } from "@dnd-kit/sortable";
-import { restrictToVerticalAxis, restrictToParentElement } from "@dnd-kit/modifiers";
 import { CSS } from "@dnd-kit/utilities";
 import type { ReactNode } from "react";
 import { suggestUnit, summarise, typeFromName, type BuildingUnderstanding, type ProposedUnit } from "./prototypeUnitStructure";
@@ -79,7 +78,7 @@ export function PrototypeUnitStructure({ understanding, reviewed = false, editab
         </div>
       )}
       {understanding.kind === "proposal" ? (
-        <DndContext sensors={sensors} collisionDetection={closestCenter} modifiers={[restrictToVerticalAxis, restrictToParentElement]} onDragEnd={onDragEnd} accessibility={{ screenReaderInstructions: { draggable: "To reorder, press space, use the arrow keys, then press space again." } }}>
+        <DndContext sensors={sensors} collisionDetection={closestCenter} modifiers={[({ transform }) => ({ ...transform, x: 0 })]} onDragEnd={onDragEnd} accessibility={{ screenReaderInstructions: { draggable: "To reorder, press space, use the arrow keys, then press space again." } }}>
         <SortableContext items={base.map(u => u.number)} strategy={verticalListSortingStrategy}>
         <ul aria-label="Proposed Units" className="divide-y divide-border rounded-md border border-border bg-background">
           {units.map((unit, index) => editing === unit.number ? (
