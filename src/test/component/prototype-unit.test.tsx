@@ -225,8 +225,8 @@ describe("Prototype Unit proposed building", () => {
     await user.type(screen.getByRole("textbox"), "11 flats and a shop{Enter}");
     const proposal = screen.getByRole("region", { name: "Proposed building structure" });
     expect(within(proposal).getAllByRole("listitem")).toHaveLength(12);
-    expect(within(proposal).getAllByText("Residential")).toHaveLength(11);
-    expect(within(proposal).getByText("Commercial")).toBeInTheDocument();
+    expect(within(proposal).getAllByText(/^Residential/)).toHaveLength(11);
+    expect(within(proposal).getByText(/^Commercial/)).toBeInTheDocument();
     expect(screen.getByLabelText("Location map")).toBe(map);
     expect(within(screen.getByRole("status", { name: "Location status" })).getByText("Location confirmed")).toBeInTheDocument();
     expect(within(screen.getByRole("main")).queryAllByRole("button", { name: /create/i })).toHaveLength(0);
