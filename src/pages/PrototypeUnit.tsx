@@ -215,9 +215,9 @@ function PrototypeUnitShell() {
         </header>
         <div role="log" aria-label="Conversation" className="flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto px-5 py-4">
           {messages.map((message, index) => {
-            // Hobson's owl marks the opening of the conversation only — it is never repeated
-            // beside later messages and never shown on the user's own messages.
-            const showOwl = message.role === "hobson" && messages[index - 1]?.role !== "hobson" && messages.slice(0, index).every((m) => m.role !== "hobson");
+            // The owl marks each of Hobson's turns — the first message of every Hobson run.
+            // It never appears on the user's own messages.
+            const showOwl = message.role === "hobson" && messages[index - 1]?.role !== "hobson";
             return message.role === "user" ? (
               <div key={message.id} className="min-w-0 max-w-full self-end rounded-xl bg-primary-light px-3.5 py-2.5 text-primary-foreground shadow-sm">
                 <p className="break-words text-sm leading-relaxed">{message.text}</p>
