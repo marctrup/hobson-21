@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Check, ChevronLeft } from "lucide-react";
-import { applyChanges, FIELD_LABELS, fieldsFor, formatValue, proposeChanges, setDetails, suggestDescription, type DetailField, type DetailedUnit, type UnitDetails } from "./prototypeUnitDetails";
+import { copyDescription, groupedNames, listNames, unitSpecificPhrases, applyChanges, FIELD_LABELS, fieldsFor, formatValue, proposeChanges, setDetails, suggestDescription, type DetailField, type DetailedUnit, type UnitDetails } from "./prototypeUnitDetails";
 
 type Props = { unit: DetailedUnit; units: DetailedUnit[]; groupName: string; onChange: (units: DetailedUnit[]) => void; onBack: () => void };
 
@@ -80,6 +80,7 @@ export function PrototypeUnitDetails({ unit, units, groupName, onChange, onBack 
             <button type="button" onClick={() => setSuggestion(invalid ? null : suggestDescription(unit, draft) ?? "")} className="min-h-8 rounded-md px-2 text-xs text-muted-foreground hover:text-foreground">Suggest from these details</button>
           </div>
           <textarea id="unit-description" value={description} onChange={e => setDescription(e.target.value)} rows={2} placeholder="Not entered" className="mt-1 w-full rounded-md border border-input bg-background px-3 py-2 text-sm text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring" />
+          {(unit.details?.description ?? "") && !dirty && <DescriptionReuse unit={unit} units={units} onApply={onChange} />}
           {suggestion !== null && (
             <div role="status" className="mt-2 flex gap-2">
               <div className="min-w-0 flex-1 rounded-md bg-secondary/40 px-3 py-2 text-sm text-foreground">
@@ -146,6 +147,41 @@ function ApplyToOthers({ unit, units, onApply, onCancel }: { unit: DetailedUnit;
       <div className="mt-3 flex gap-2">
         <button type="button" disabled={!accepted.length} onClick={() => onApply(applyChanges(units, patch, accepted))} className="min-h-9 rounded-md bg-primary px-3 text-sm font-medium text-primary-foreground disabled:opacity-40">Apply {accepted.length ? `${accepted.length} change${accepted.length === 1 ? "" : "s"}` : ""}</button>
         <button type="button" onClick={onCancel} className="min-h-9 rounded-md px-3 text-sm hover:bg-background">Cancel</button>
+      </div>
+    </div>
+  );
+}
+
+// Reuse one Unit's description on others: exact copies that stay independently editable afterwards.
+function DescriptionReuse({ unit, units, onApply }: { unit: DetailedUnit; units: DetailedUnit[]; onApply: (u: DetailedUnit[]) => void }) {
+  const description = unit.details?.description ?? "";
+  const [open, setOpen] = useState(false);
+  const [targets, setTargets] = useState<number[]>([]);
+  const [replace, setReplace] = useState<number[]>([]);
+  const [done, setDone] = useState<string | null>(null);
+  useEffect(() => { setOpen(false); setTargets([]); setReplace([]); setDone(null); }, [unit.number]);
+  useEffect(() => { if (!done) return; const t = window.setTimeout(() => setDone(null), 3000); return () => window.clearTimeout(t); }, [done]);
+  const others = units.filter(u => u.number !== unit.number);
+  const picked = others.filter(u => targets.includes(u.number));
+  const differing = picked.filter(u => u.details?.description && u.details.description !== description);
+  const willChange = picked.filter(u => u.details?.description !== description && (!differing.includes(u) || replace.includes(u.number)));
+  const specific = unitSpecificPhrases(description, unit);
+  const toggle = (list: number[], n: number) => list.includes(n) ? list.filter(x => x !== n) : [...list, n];
+
+  if (!open) return <div className="mt-1 flex items-center gap-2"><button type="button" onClick={() => setOpen(true)} className="min-h-8 rounded-md px-0 text-xs text-muted-foreground underline-offset-4 hover:text-foreground hover:underline">Use this description for other Units</button>{done && <span role="status" className="inline-flex items-center gap-1 text-xs text-muted-foreground"><Check className="h-3 w-3" aria-hidden />{done}</span>}</div>;
+  return (
+    <div aria-label="Use this description for other Units" className="mt-2 rounded-md border border-border bg-secondary/20 px-3 py-2 text-sm text-foreground">
+      <ul className="grid grid-cols-2 gap-x-3 gap-y-0.5 sm:grid-cols-3">
+        {others.map(u => <li key={u.number}><label className="flex min-h-8 items-center gap-2"><input type="checkbox" checked={targets.includes(u.number)} onChange={() => setTargets(t => toggle(t, u.number))} /><span className="truncate">{u.name}</span>{u.details?.description && <span className="text-[10px] text-muted-foreground">· has one</span>}</label></li>)}
+      </ul>
+      {picked.length > 0 && specific.length > 0 && <p className="mt-2 rounded bg-background px-2 py-1.5 text-xs text-foreground">This mentions {listNames(specific.map(p => `"${p}"`))}, which may only be true of {unit.name}. You may wish to adjust it on the others afterwards.</p>}
+      {differing.length > 0 && <div className="mt-2 text-xs">
+        <p className="text-muted-foreground">{groupedNames(differing.map(u => u.name))} already {differing.length === 1 ? "has a description" : "have descriptions"}. Replace them?</p>
+        {differing.map(u => <label key={u.number} className="mt-1 flex items-start gap-2"><input type="checkbox" className="mt-0.5" checked={replace.includes(u.number)} onChange={() => setReplace(r => toggle(r, u.number))} /><span><span className="font-medium">Replace {u.name}'s</span> <span className="text-muted-foreground">"{u.details?.description}"</span></span></label>)}
+      </div>}
+      <div className="mt-2 flex flex-wrap gap-2">
+        <button type="button" disabled={!willChange.length} onClick={() => { onApply(copyDescription(units, description, targets, replace)); setDone(`Copied to ${groupedNames(willChange.map(u => u.name))}`); setOpen(false); setTargets([]); setReplace([]); }} className="min-h-9 rounded-md bg-primary px-3 text-left text-sm font-medium text-primary-foreground disabled:opacity-40">{willChange.length ? `Apply this description to ${groupedNames(willChange.map(u => u.name))}` : "Choose Units"}</button>
+        <button type="button" onClick={() => { setOpen(false); setTargets([]); setReplace([]); }} className="min-h-9 rounded-md px-3 text-sm hover:bg-background">Cancel</button>
       </div>
     </div>
   );
