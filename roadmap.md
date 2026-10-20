@@ -1,5 +1,8 @@
 # Roadmap
 
+## Prototype Unit — guide a useful building answer
+- [ ] Clarify the building question with quiet examples; propose named, classified Units from short descriptions, retain focused follow-up context, and verify confirmation, map and reset.
+
 ## Prototype Unit — postcode lookup enhancement
 - [x] Add six simulated postcode choices with four initially visible, context-aware flat selection and approximate search-area map; preserve confirmation, building setup and navigation. All 33 focused checks pass; private-entrance browser walkthrough verified choices, both Flat 2 paths, filtering, rejection, postcode continuation and existing building proposal with loaded map tiles and no page errors. No records created; not published.
 
