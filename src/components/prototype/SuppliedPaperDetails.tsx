@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { PaperPreviewContext } from "./paperPreviewContext";
 import { ChevronDown, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SIDE_LETTER_RENT, applyPaperPlacement, initialWorkGuidance, RENEWAL_PAPER_PLACE, type PaperPlace, type PaperPlacementAction, type SuppliedPaper } from "./workGuidance";
@@ -9,6 +10,9 @@ export function SuppliedPaperDetails({ paper: currentPaper, places = [], onPlace
   const [rentEvidence, setRentEvidence] = useState<"lease" | "side-letter" | null>(null);
   // A separate illustrative exception; never unfiles or changes the shared happy-path paper.
   const [previewPaper, setPreviewPaper] = useState<SuppliedPaper | null>(null);
+  const setPreviewActive = useContext(PaperPreviewContext);
+  useEffect(() => { setPreviewActive(!!previewPaper); }, [previewPaper, setPreviewActive]);
+  useEffect(() => () => setPreviewActive(false), [setPreviewActive]);
   const paper = previewPaper ?? currentPaper;
   const placePaper = (id: string, action: PaperPlacementAction) => {
     if (!previewPaper) return;
@@ -19,7 +23,7 @@ export function SuppliedPaperDetails({ paper: currentPaper, places = [], onPlace
   const mismatch = paper.proposedPlace.id !== RENEWAL_PAPER_PLACE.id;
   return <article aria-label={`Supplied paper: ${paper.filename}`} className="min-w-0 border-b border-border py-4">
     <h5 className="flex items-start gap-2 text-sm font-semibold"><FileText className="h-4 w-4 shrink-0 text-muted-foreground" aria-hidden="true" />{paper.filename}</h5>
-    <p className="mt-2 text-xs text-muted-foreground">{previewPaper ? "Uncertain placement preview · separate illustrative example" : "Illustrative context check — not extraction from a real PDF."}</p>
+    <p className="mt-2 text-xs text-muted-foreground">{previewPaper ? "Uncertain placement preview · a separate illustrative scenario in which this paper's relationship has not been established. The real Side Letter record and its review are unchanged." : "Illustrative context check — not extraction from a real PDF."}</p>
     <p role="status" className="mt-3 text-sm font-medium">{paper.progress === "received" ? "Checking where this paper belongs" : paper.progress === "identified-linked" ? "Identified and linked" : paper.progress === "uncertain" ? "Placement needs your decision" : paper.progress === "effect-found" ? "Checking the Side Letter · Completed" : "Checking its effect on the renewal"}</p>
     <dl className="mt-3 space-y-2 text-sm">
       {paper.progress !== "received" && <div><dt className="inline text-muted-foreground">Identified as: </dt><dd className="inline">{paper.identifiedAs}</dd></div>}

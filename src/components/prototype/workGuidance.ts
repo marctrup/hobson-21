@@ -5,7 +5,7 @@ export const SIDE_LETTER_FILENAME = "Side Letter 2024.pdf";
 /** Stable identity of the simulated attachment, so repeats never duplicate it but same-named unrelated papers would not match. */
 export const SIDE_LETTER_ATTACHMENT_ID = "sim-side-letter-2024-flat6";
 
-export const SIDE_LETTER_FINDING_REPLY = "I've checked the Side Letter. It records a revised annual rent of £27,000 from 1 October 2024, compared with £24,000 in the original lease. I'll use the later recorded position in the renewal summary, while keeping both papers available for you to check.";
+export const SIDE_LETTER_FINDING_REPLY = "I've checked the Side Letter. It records a revised annual rent of £27,000 from 1 October 2024, compared with £24,000 in the original lease. I'll take this into account when preparing the renewal summary, while checking whether any other papers affect that position.";
 /** Illustrative demonstration figures only — not a real finding about Stanley House. */
 export const SIDE_LETTER_RENT = { amount: "£27,000", from: "1 October 2024", extract: "With effect from 1 October 2024, the annual rent payable under the Lease shall be £27,000." };
 
