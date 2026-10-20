@@ -290,8 +290,8 @@ describe("Prototype Unit proposed building", () => {
     await user.type(screen.getByRole("textbox"), "There are two shops on the ground floor and three flats above.{Enter}");
     const proposal = screen.getByRole("region", { name: "Proposed building structure" });
     expect(within(proposal).getAllByRole("listitem")).toHaveLength(5);
-    expect(within(proposal).getAllByText("Commercial · Ground Floor")).toHaveLength(2);
-    expect(within(proposal).getAllByText("Residential · Above ground floor")).toHaveLength(3);
+    expect(within(proposal).getAllByText(/^Commercial · Ground Floor/)).toHaveLength(2);
+    expect(within(proposal).getAllByText(/^Residential · Above ground floor/)).toHaveLength(3);
     await user.type(screen.getByRole("textbox"), "4 offices{Enter}");
     expect(within(proposal).getAllByRole("listitem")).toHaveLength(4);
     expect(within(proposal).getByText("Office 4")).toBeInTheDocument();
@@ -355,7 +355,7 @@ describe("Prototype Unit proposed building", () => {
     await user.type(screen.getByRole("textbox"), "11 flats and a shop{Enter}");
     await user.click(screen.getByRole("button", { name: "Yes, those names are fine" }));
     const proposal = screen.getByRole("region", { name: "Proposed building structure" });
-    const names = () => within(proposal).getAllByRole("listitem").map(li => li.querySelector("p")?.textContent);
+    const names = () => within(proposal).getAllByRole("listitem").map(li => li.querySelector("span")?.textContent);
     await user.click(within(proposal).getByRole("button", { name: "More for Flat 1" }));
     expect(await screen.findByRole("menuitem", { name: "Move up" })).toHaveAttribute("data-disabled");
     await user.keyboard("{Escape}");
