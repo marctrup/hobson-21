@@ -4,7 +4,9 @@ import { Button } from "@/components/ui/button";
 import owlDefault from "@/assets/prototype/owl-default.png";
 import leaseAsset from "@/assets/prototype/russell-square-house-lease.pdf.asset.json";
 import PrototypeDocumentsPreview from "./PrototypeDocumentsPreview";
-import { confirmPaper, emptyPaperJourney, EXAMPLE_LEASE_FILENAME, PAPER_TYPES, proposePaper, receivePaper, type PrototypePaper } from "./prototypeDocumentsPaper";
+import PrototypeDocumentsDetails from "./PrototypeDocumentsDetails";
+import { confirmPaper, DETAIL_STAGES, emptyPaperJourney, EXAMPLE_LEASE_FILENAME, PAPER_TYPES, proposePaper, receivePaper, type PaperStage, type PrototypePaper } from "./prototypeDocumentsPaper";
+import { answerEffective, correctDetail, emptyReview, type DetailKey, type DetailsReview } from "./prototypeDocumentsDetails";
 
 // Prototype Documents: an independent, blank Hobson shell. Shares only visual styling
 // with Prototype Work and Prototype Unit — never their components, data or state.
@@ -82,6 +84,10 @@ export default function PrototypeDocuments() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [journey, setJourney] = useState(emptyPaperJourney);
+  const [review, setReview] = useState<DetailsReview>(emptyReview);
+  const [goTo, setGoTo] = useState<{ page: number; nonce: number } | undefined>();
+  const [wide, setWide] = useState(true);
+  const mainRef = useRef<HTMLElement>(null);
   const [selectionOpen, setSelectionOpen] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [uploadError, setUploadError] = useState("");
@@ -97,6 +103,13 @@ export default function PrototypeDocuments() {
   useEffect(() => { logEnd.current?.scrollIntoView({ behavior: "smooth", block: "end" }); }, [messages, journey.stage]);
   useEffect(() => () => { generation.current++; if (uploadUrl.current) URL.revokeObjectURL(uploadUrl.current); }, []);
   useEffect(() => {
+    const el = mainRef.current;
+    if (!el) return;
+    const ro = new ResizeObserver(([e]) => setWide(e.contentRect.width >= 820));
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+  useEffect(() => {
     if (journey.stage !== "reading") return;
     const timer = window.setTimeout(() => {
       setJourney((current) => proposePaper(current));
@@ -104,11 +117,21 @@ export default function PrototypeDocuments() {
     }, 1100);
     return () => window.clearTimeout(timer);
   }, [journey.stage]);
+  useEffect(() => {
+    if (journey.stage !== "checking") return;
+    const timer = window.setTimeout(() => {
+      addMessage("hobson", "I've checked the main details in this lease. Most look straightforward, but there's one date I'd like you to check.");
+      addMessage("hobson", "Here's what I've read.");
+      addMessage("hobson", "The lease is dated 22 August 2025. Clause 16 says its terms don't take effect until it has been dated.\n\nShall I use 22 August 2025 as its effective date?");
+      setJourney((j) => j.stage === "checking" ? { ...j, stage: "effective" } : j);
+    }, 1400);
+    return () => window.clearTimeout(timer);
+  }, [journey.stage]);
   const restart = () => {
     generation.current++;
     if (uploadUrl.current) URL.revokeObjectURL(uploadUrl.current);
     uploadUrl.current = null;
-    setJourney(emptyPaperJourney); setMessages([]); setInput(""); setSelectionOpen(false); setUploadError(""); setUploading(false); setShowChat(true);
+    setJourney(emptyPaperJourney); setReview(emptyReview); setGoTo(undefined); setMessages([]); setInput(""); setSelectionOpen(false); setUploadError(""); setUploading(false); setShowChat(true);
   };
   const receive = (paper: PrototypePaper) => {
     setJourney(receivePaper(paper)); setSelectionOpen(false); setShowChat(true);
