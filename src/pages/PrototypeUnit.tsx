@@ -215,6 +215,12 @@ function PrototypeUnitShell() {
   const [lastRemoved, setLastRemoved] = useState<{ unit: ProposedUnit; index: number } | null>(null);
   const [buildingPromptId, setBuildingPromptId] = useState<number | null>(null);
   const nextId = useRef(1);
+  // Undo is temporary: it fades after a short while.
+  useEffect(() => {
+    if (!lastRemoved) return;
+    const timer = window.setTimeout(() => setLastRemoved(null), 10000);
+    return () => window.clearTimeout(timer);
+  }, [lastRemoved]);
   const conversationEnd = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -332,10 +338,10 @@ function PrototypeUnitShell() {
   const applyDirectEdit = (next: ProposedUnit[], note: string, removed?: { unit: ProposedUnit; index: number }) => {
     setBuildingUnderstanding({ kind: "proposal", units: next });
     setLastRemoved(removed ?? null);
+    // Manual changes are quiet: no new messages. After review, the existing reply offers the check again.
     if (buildingStage === "reviewed") {
-      const id = nextId.current++;
-      setMessages(previous => [...previous, { id, role: "hobson", text: `${note} Let me know when the structure looks right.` }]);
-      setBuildingPromptId(id); setBuildingStage("named");
+      const lastHobson = [...messages].reverse().find(m => m.role === "hobson");
+      setBuildingPromptId(lastHobson?.id ?? null); setBuildingStage("named");
     }
   };
 
@@ -551,7 +557,7 @@ function PrototypeUnitShell() {
           {buildingUnderstanding && <div className="text-xs leading-relaxed text-muted-foreground"><p>{selectedAddress?.line}</p><p className="mt-1 text-[10px]">Illustrative mock lookup · approximate location</p></div>}
           <UnitLocationMap compact={Boolean(buildingUnderstanding)} stage={locationStage} address={locationAddress} candidate={selectedAddress ?? addressCandidates[0] ?? null} />
         </div>
-        {buildingUnderstanding && <PrototypeUnitStructure understanding={buildingUnderstanding} reviewed={buildingStage === "reviewed"} editable={buildingStage !== "awaiting-description"} lastRemoved={lastRemoved?.unit.name ?? null} onUndo={() => undoRemoval()} onSave={(next, note) => applyDirectEdit(next, note)} onRemove={(unit, index) => applyDirectEdit(units!.filter(u => u.number !== unit.number), `I've removed ${unit.name}.`, { unit, index })} />}
+        {buildingUnderstanding && <PrototypeUnitStructure understanding={buildingUnderstanding} reviewed={buildingStage === "reviewed"} editable={buildingStage !== "awaiting-description"} lastRemoved={lastRemoved?.unit.name ?? null} onUndo={() => undoRemoval()} onSave={(next, note) => applyDirectEdit(next, note)} onAdd={next => applyDirectEdit(next, "")} onRemove={(unit, index) => applyDirectEdit(units!.filter(u => u.number !== unit.number), `I've removed ${unit.name}.`, { unit, index })} />}
       </main>
     </div>
   );

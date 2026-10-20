@@ -144,6 +144,8 @@ function findUnit(name: string, units: ProposedUnit[]) {
 export function editUnits(text: string, units: ProposedUnit[]): UnitEdit | null {
   const raw = text.trim().replace(/[.!?]+$/, "");
   const s = raw.toLowerCase();
+  const group = renameGroup(raw, units);
+  if (group) return group;
   const bulk = renameUnits(raw, units);
   if (bulk) return { kind: "changed", units: bulk, reply: "Done. I've renamed them together." };
   let m = raw.match(/^(?:please )?rename (.+?) (?:to|as) ["']?(.+?)["']?$/i) ?? raw.match(/^(?:please )?call (.+?) ["']?(.+?)["']?$/i);
@@ -197,4 +199,37 @@ export function restoreUnit(units: ProposedUnit[], removed: { unit: ProposedUnit
   const next = [...units];
   next.splice(Math.min(removed.index, next.length), 0, removed.unit);
   return next;
+}
+
+export function typeFromName(name: string, use: ProposedUnit["classification"]): ProposedUnit["type"] {
+  const n = name.toLowerCase();
+  if (/\bshop\b/.test(n)) return "Shop";
+  if (/\boffice\b/.test(n)) return "Office";
+  if (use === "Residential") return "Flat";
+  return /\b(?:flat|apartment)\b/.test(n) ? "Unit" : "Unit";
+}
+
+// Suggests the next name in the pattern of the last Unit, never renaming existing Units.
+export function suggestUnit(units: ProposedUnit[]): ProposedUnit {
+  const last = units[units.length - 1];
+  const type = last?.type ?? "Flat";
+  const used = new Set(units.map(u => u.name.toLowerCase()));
+  let k = units.filter(u => u.type === type).length + 1;
+  while (used.has(`${type} ${k}`.toLowerCase())) k++;
+  return { number: Math.max(0, ...units.map(u => u.number)) + 1, name: `${type} ${k}`, type, classification: type === "Flat" ? "Residential" : "Commercial" };
+}
+
+// "Rename the two shops Ground Floor East and Ground Floor West" — renames existing Units of that kind in order.
+export function renameGroup(text: string, units: ProposedUnit[]): UnitEdit | null {
+  const m = text.trim().replace(/[.!?]+$/, "").match(/^(?:please )?(?:rename|call|name) (?:the |both )?(?:(both|two|three|four|five|\d+) )?(?:of )?(?:the )?(shops|flats|offices|apartments|commercial units|residential units) (?:to |as )?(.+)$/i);
+  if (!m) return null;
+  const kind = m[2].toLowerCase();
+  const targets = units.filter(u => kind.startsWith("commercial") ? u.classification === "Commercial" : kind.startsWith("residential") ? u.classification === "Residential" : u.type === typeOf(kind));
+  const names = m[3].split(/\s*,\s*|\s+and\s+/i).map(n => titleCase(n.replace(/^["']|["']$/g, "").trim())).filter(Boolean);
+  const stated = m[1] ? (m[1].toLowerCase() === "both" ? 2 : countOf(m[1].toLowerCase())) : undefined;
+  if (names.length < 2) return null;
+  if (targets.length !== names.length || (stated !== undefined && stated !== targets.length))
+    return { kind: "question", reply: `I can see ${targets.length} ${kind} in the proposal (${targets.map(u => u.name).join(", ") || "none"}). Which names should go to which?` };
+  const next = units.map(u => { const i = targets.indexOf(u); return i >= 0 ? { ...u, name: names[i] } : u; });
+  return { kind: "changed", units: next, reply: `Done. I've renamed ${list(targets.map((u, i) => `${u.name} to ${names[i]}`))}.` };
 }

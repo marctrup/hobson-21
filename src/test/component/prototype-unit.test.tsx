@@ -323,4 +323,30 @@ describe("Prototype Unit proposed building", () => {
     expect(screen.getByText(/Which one should I remove/)).toBeInTheDocument();
     expect(within(proposal).getByText("13 Units · 10 Residential · 3 Commercial")).toBeInTheDocument();
   });
+
+  it("adds, edits and removes Units manually without chat narration, and Hobson sees manual additions", async () => {
+    const user = await confirmedStanley();
+    await user.type(screen.getByRole("textbox"), "11 flats and a shop{Enter}");
+    await user.click(screen.getByRole("button", { name: "Yes, those names are fine" }));
+    const proposal = screen.getByRole("region", { name: "Proposed building structure" });
+    const log = screen.getByRole("log");
+    const before = within(log).getAllByText("Hobson").length;
+    await user.click(within(proposal).getByRole("button", { name: "Add another Unit" }));
+    expect(within(proposal).getByLabelText("New Unit name")).toHaveValue("Shop 2");
+    await user.click(within(proposal).getByRole("button", { name: "Save" }));
+    expect(within(proposal).getByText("13 Units · 11 Residential · 2 Commercial")).toBeInTheDocument();
+    await user.click(within(proposal).getByRole("button", { name: "More for Flat 3" }));
+    await user.click(await screen.findByRole("menuitem", { name: "Remove" }));
+    expect(within(proposal).queryByText("Flat 3")).toBeNull();
+    expect(within(proposal).getByText("Flat 4")).toBeInTheDocument();
+    expect(within(proposal).getByText("12 Units · 10 Residential · 2 Commercial")).toBeInTheDocument();
+    await user.click(within(proposal).getByRole("button", { name: "Undo" }));
+    expect(within(proposal).getByText("Flat 3")).toBeInTheDocument();
+    expect(within(log).getAllByText("Hobson")).toHaveLength(before);
+    await user.type(screen.getByRole("textbox"), "Rename the two shops Ground Floor East and Ground Floor West.{Enter}");
+    expect(within(proposal).getByText("Ground Floor East")).toBeInTheDocument();
+    expect(within(proposal).getByText("Ground Floor West")).toBeInTheDocument();
+    expect(within(proposal).getByText("13 Units · 11 Residential · 2 Commercial")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "This structure is right" })).toBeInTheDocument();
+  });
 });
