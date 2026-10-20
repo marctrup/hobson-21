@@ -333,7 +333,7 @@ export default function PrototypeDocuments() {
         </div>
         <RailItem icon="pin" label="Portfolio" />
         <RailItem icon="doc" label="Papers" active={section === "papers"} onClick={() => setSection("papers")} />
-        <RailItem icon="book" label="Reading" active={section === "reading"} count={activeReadings(readings).length} onClick={() => setSection("reading")} />
+        <RailItem icon="book" label="Reading" active={section === "reading" || section === "current"} count={activeReadings(readings).length} onClick={() => setSection("reading")} />
         <RailItem icon="chat" label="Conversations" active={section === "conversations"} onClick={() => setSection("conversations")} />
         <div className="mt-auto flex flex-col items-center gap-3 pb-2">
           <Button
