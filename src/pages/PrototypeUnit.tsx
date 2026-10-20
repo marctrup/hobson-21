@@ -26,7 +26,7 @@ function RailItem({ icon, label, active, onClick }: { icon: "pin" | "doc" | "cha
         {icon === "chat" && (<><path d="M21 12a8 8 0 11-3-6.2L21 3v6h-6" /></>)}
         {icon === "gear" && (<><circle cx="12" cy="12" r="3" /><path d="M19.4 15a1.6 1.6 0 00.3 1.8l.1.1a2 2 0 11-2.8 2.8l-.1-.1a1.6 1.6 0 00-1.8-.3 1.6 1.6 0 00-1 1.5V21a2 2 0 11-4 0v-.1a1.6 1.6 0 00-1-1.5" /></>)}
       </svg>
-      <span className={`text-[10px] text-center leading-tight ${active ? "text-[#56514A] font-medium" : "text-ink-muted"}`}>{label}</span>
+      <span className={`w-full px-0.5 text-center text-[10px] leading-tight [overflow-wrap:anywhere] ${active ? "text-[#56514A] font-medium" : "text-ink-muted"}`}>{label}</span>
     </button>
   );
 }
@@ -156,7 +156,7 @@ function PrototypeUnitShell() {
           >
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" aria-hidden><path d="M12 5v14M5 12h14" /></svg>
           </button>
-          <span className="text-[10px] text-ink-muted">A new conversation</span>
+          <span className="w-full px-1 text-center text-[10px] leading-tight text-ink-muted [overflow-wrap:anywhere]">A new conversation</span>
           <RailItem icon="gear" label="Back Office" />
           <div className="grid h-9 w-9 place-items-center rounded-full bg-bone text-xs font-semibold text-charcoal">MT</div>
         </div>
