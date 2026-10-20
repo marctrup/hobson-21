@@ -215,6 +215,12 @@ function PrototypeUnitShell() {
   const [lastRemoved, setLastRemoved] = useState<{ unit: ProposedUnit; index: number } | null>(null);
   const [buildingPromptId, setBuildingPromptId] = useState<number | null>(null);
   const nextId = useRef(1);
+  // Undo is temporary: it fades after a short while.
+  useEffect(() => {
+    if (!lastRemoved) return;
+    const timer = window.setTimeout(() => setLastRemoved(null), 10000);
+    return () => window.clearTimeout(timer);
+  }, [lastRemoved]);
   const conversationEnd = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
