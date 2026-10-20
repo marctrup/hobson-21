@@ -116,7 +116,7 @@ function ApplyToOthers({ unit, units, onApply, onCancel }: { unit: DetailedUnit;
   // Bedrooms and bathrooms are offered by default; area, outside space and description must be chosen deliberately.
   const [fields, setFields] = useState<DetailField[]>(available.filter(f => ["doubleBedrooms", "singleBedrooms", "bathrooms"].includes(f)));
   const [replace, setReplace] = useState<string[]>([]);
-  const patch = useMemo(() => Object.fromEntries(fields.flatMap(f => f === "area" ? [["area", d.area], ["areaUnit", d.areaUnit]] : [[f, d[f]]])) as UnitDetails, [fields, d]);
+  const patch = useMemo(() => Object.fromEntries(fields.flatMap((f): [string, unknown][] => f === "area" ? [["area", d.area], ["areaUnit", d.areaUnit]] : [[f, d[f]]])) as UnitDetails, [fields, d]);
   const changes = proposeChanges(units, targets, patch);
   const accepted = changes.filter(c => !c.replaces || replace.includes(`${c.unit}:${c.field}`));
   const toggle = <T,>(list: T[], v: T) => list.includes(v) ? list.filter(x => x !== v) : [...list, v];
