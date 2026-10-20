@@ -25,6 +25,11 @@ function propose(groups: SpaceGroup[], floors?: string[]): BuildingUnderstanding
 export function understandBuilding(text: string, previous?: BuildingUnderstanding | null): BuildingUnderstanding {
   const description = text.toLowerCase().replace(/[.,;!]/g, " ").replace(/\s+/g, " ").trim();
   const context = previous?.kind === "clarify" ? previous : undefined;
+  if (context?.floors && /(?:one|1|a single) (?:separate )?(?:space|unit|office|flat|shop)(?: on| per| to)? (?:each|every) floor|each floor (?:has|contains) (?:one|1)/.test(description)) {
+    const type = description.match(/\b(flat|shop|office)\b/);
+    if (type) return propose([{ count: context.floors.length, type: typeOf(type[1]) }], context.floors);
+    return { kind: "clarify", total: context.floors.length, floors: context.floors, question: "What are those separate spaces used for?" };
+  }
   const groups: SpaceGroup[] = [];
   const matches = [...description.matchAll(new RegExp(`\\b(${countPattern})\\s+(flats?|apartments?|shops?|offices?)\\b([\\s\\S]*?)(?=\\b${countPattern}\\s+(?:flats?|apartments?|shops?|offices?)\\b|$)`, "g"))];
   for (const match of matches) {
@@ -51,11 +56,6 @@ export function understandBuilding(text: string, previous?: BuildingUnderstandin
   const upper = description.match(/\b(two|three|2|3) upper floors?\b/);
   if (upper) for (const floor of ["First", "Second", "Third"].slice(0, countOf(upper[1]))) if (!floors.includes(`${floor} Floor`)) floors.push(`${floor} Floor`);
   if (floors.length && /floor/.test(description)) return { kind: "clarify", floors, ...(context?.total ? { total: context.total } : {}), question: "Does each floor contain one separate space, or several?" };
-  if (context?.floors && /(?:one|1|a single) (?:separate )?(?:space|unit|office|flat|shop)(?: on| per| to)? (?:each|every) floor|each floor (?:has|contains) (?:one|1)/.test(description)) {
-    const type = description.match(/\b(flat|shop|office)\b/);
-    if (type) return propose([{ count: context.floors.length, type: typeOf(type[1]) }], context.floors);
-    return { kind: "clarify", total: context.floors.length, floors: context.floors, question: "What are those separate spaces used for?" };
-  }
   if (context?.total && /^(?:they(?:'re| are) (?:all )?|all |all of them are )?(?:flats|apartments|shops|offices)$/.test(description)) return propose([{ count: context.total, type: typeOf(description) }], context.floors);
   if (explicitTotal && explicitTotal > 0 && explicitTotal <= 100) return { kind: "clarify", total: explicitTotal, question: `What kinds of spaces are the ${explicitTotal} Units?` };
   return { ...(context ?? {}), kind: "clarify", question: context?.floors && !context.total ? "How many separate spaces are there on those floors, and what are they used for?" : context?.total ? `What kinds of spaces are the ${context.total} Units?` : "How many separate spaces are there, and what are they used for?" };

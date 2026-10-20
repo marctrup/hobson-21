@@ -61,7 +61,20 @@ describe("Illustrative building understanding", () => {
     expect(understandBuilding("11 flats", understandBuilding("12 units")).kind).toBe("clarify");
     expect(understandBuilding("11 flats and shops").kind).toBe("clarify");
   });
-  it.each(["Three floors", "The lease says there are four Units", "A shop spans two floors", "An unusual building"])("does not fabricate Units from unclear input: %s", text => {
+  it("treats one shop spanning two floors as one space, not two Units", () => {
+    const result = understandBuilding("A shop spans two floors");
+    expect(result.kind).toBe("proposal");
+    if (result.kind !== "proposal") throw new Error("Missing proposal");
+    expect(result.units).toEqual([{ number: 1, name: "Shop", type: "Shop", classification: "Commercial" }]);
+  });
+  it("uses a floor follow-up containing both the division and use", () => {
+    const result = understandBuilding("One office on each floor", understandBuilding("ground floor and three upper floors"));
+    expect(result.kind).toBe("proposal");
+    if (result.kind !== "proposal") throw new Error("Missing proposal");
+    expect(result.units).toHaveLength(4);
+    expect(result.units[3]).toMatchObject({ name: "Office 4", location: "Third Floor" });
+  });
+  it.each(["Three floors", "The lease says there are four Units", "An unusual building"])("does not fabricate Units from unclear input: %s", text => {
     expect(understandBuilding(text).kind).toBe("clarify");
   });
 });
