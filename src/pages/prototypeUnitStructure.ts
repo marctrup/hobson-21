@@ -126,3 +126,75 @@ export function renameUnits(text: string, units: ProposedUnit[]): ProposedUnit[]
   }
   return changed ? next : null;
 }
+
+export type UnitEdit = { kind: "changed"; units: ProposedUnit[]; reply: string; removed?: { unit: ProposedUnit; index: number } } | { kind: "question"; reply: string };
+
+const reclassify = (u: ProposedUnit, c: ProposedUnit["classification"]): ProposedUnit =>
+  ({ ...u, classification: c, type: c === "Residential" ? "Flat" : u.type === "Flat" ? "Unit" : u.type });
+
+// Finds Units named in text; exact name match only, so Flat 1 never matches Flat 11.
+function findUnit(name: string, units: ProposedUnit[]) {
+  const n = name.trim().toLowerCase().replace(/^the /, "");
+  const exact = units.filter(u => u.name.toLowerCase() === n);
+  if (exact.length) return exact;
+  return units.filter(u => u.name.toLowerCase().split(" ")[0] === n.replace(/s$/, "")) ;
+}
+
+// Conversational changes to the single shared proposal. Returns null when the text is not an edit.
+export function editUnits(text: string, units: ProposedUnit[]): UnitEdit | null {
+  const raw = text.trim().replace(/[.!?]+$/, "");
+  const s = raw.toLowerCase();
+  const bulk = renameUnits(raw, units);
+  if (bulk) return { kind: "changed", units: bulk, reply: "Done. I've renamed them together." };
+  let m = raw.match(/^(?:please )?rename (.+?) (?:to|as) ["']?(.+?)["']?$/i) ?? raw.match(/^(?:please )?call (.+?) ["']?(.+?)["']?$/i);
+  if (m && /^rename/i.test(raw)) {
+    const found = findUnit(m[1], units);
+    if (found.length !== 1) return { kind: "question", reply: found.length ? `Which ${m[1].trim()} would you like renamed — ${found.map(u => u.name).join(", ")}?` : `I can't see a Unit called ${m[1].trim()}. Which one did you mean?` };
+    const name = titleCase(m[2].trim());
+    if (units.some(u => u !== found[0] && u.name.toLowerCase() === name.toLowerCase())) return { kind: "question", reply: `There's already a Unit called ${name}. What would you like to call ${found[0].name} instead?` };
+    return { kind: "changed", units: units.map(u => u === found[0] ? { ...u, name } : u), reply: `Done. I've renamed ${found[0].name} to ${name}.` };
+  }
+  m = raw.match(/^(?:please )?(?:change|make|mark|set) (.+?) (?:to|as) (residential|commercial)$/i);
+  if (m) {
+    const c = (m[2][0].toUpperCase() + m[2].slice(1).toLowerCase()) as ProposedUnit["classification"];
+    const found = findUnit(m[1], units);
+    if (!found.length) return { kind: "question", reply: `I can't see a Unit called ${m[1].trim()}. Which one did you mean?` };
+    if (found.length > 1 && !/s$/.test(m[1].trim())) return { kind: "question", reply: `Which one should be ${c.toLowerCase()} — ${found.map(u => u.name).join(", ")}?` };
+    return { kind: "changed", units: units.map(u => found.includes(u) ? reclassify(u, c) : u), reply: `Done. I've marked ${found.length === 1 ? found[0].name : list(found.map(u => u.name))} as ${c.toLowerCase()}.` };
+  }
+  m = s.match(new RegExp(`^(?:please )?add (another|${countPattern}|\\d+)(?: more)? (flats?|apartments?|shops?|offices?|units?)$`));
+  if (m) {
+    const count = m[1] === "another" ? 1 : countOf(m[1]);
+    if (!Number.isInteger(count) || count < 1 || count > 50) return { kind: "question", reply: "How many would you like me to add?" };
+    if (/^units?$/.test(m[2])) return { kind: "question", reply: "Should the new Unit be residential or commercial?" };
+    const type = typeOf(m[2]);
+    let next = units.map(u => ({ ...u }));
+    let id = Math.max(0, ...units.map(u => u.number));
+    const added: string[] = [];
+    for (let i = 0; i < count; i++) {
+      const same = next.filter(u => u.type === type);
+      if (type === "Shop" && same.length === 1 && same[0].name === "Shop") same[0].name = "Shop 1";
+      const used = new Set(next.map(u => u.name.toLowerCase()));
+      let k = same.length + 1; while (used.has(`${type} ${k}`.toLowerCase())) k++;
+      const name = `${type} ${k}`;
+      next.push({ number: ++id, name, type, classification: type === "Flat" ? "Residential" : "Commercial" });
+      added.push(name);
+    }
+    return { kind: "changed", units: next, reply: `Done. I've added ${list(added)}.` };
+  }
+  m = raw.match(/^(?:please )?(?:remove|delete|take out) (.+)$/i);
+  if (m) {
+    const found = findUnit(m[1], units);
+    if (found.length !== 1) return { kind: "question", reply: found.length ? `Which one should I remove — ${found.map(u => u.name).join(", ")}?` : `I can't see a Unit called ${m[1].trim()}. Which one did you mean?` };
+    if (units.length === 1) return { kind: "question", reply: "That's the only Unit in the proposal. What should take its place?" };
+    const index = units.indexOf(found[0]);
+    return { kind: "changed", units: units.filter(u => u !== found[0]), reply: `Done. I've removed ${found[0].name}. Say "undo" if that was a mistake.`, removed: { unit: found[0], index } };
+  }
+  return null;
+}
+
+export function restoreUnit(units: ProposedUnit[], removed: { unit: ProposedUnit; index: number }) {
+  const next = [...units];
+  next.splice(Math.min(removed.index, next.length), 0, removed.unit);
+  return next;
+}
