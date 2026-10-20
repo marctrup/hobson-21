@@ -211,7 +211,10 @@ function PrototypeUnitShell() {
   const [selectedAddress, setSelectedAddress] = useState<AddressRecord | null>(null);
   const [showMoreAddresses, setShowMoreAddresses] = useState(false);
   const [buildingUnderstanding, setBuildingUnderstanding] = useState<BuildingUnderstanding | null>(null);
-  const [buildingStage, setBuildingStage] = useState<"idle" | "awaiting-description" | "naming" | "describing" | "named" | "reviewed">("idle");
+  const [buildingStage, setBuildingStage] = useState<"idle" | "awaiting-description" | "naming" | "describing" | "named" | "ready" | "created">("idle");
+  const [portfolio, setPortfolio] = useState<PortfolioGroup[]>([]);
+  const [mapExpanded, setMapExpanded] = useState(false);
+  const [showSummaryUnits, setShowSummaryUnits] = useState(false);
   const [lastRemoved, setLastRemoved] = useState<{ unit: ProposedUnit; index: number } | null>(null);
   const [buildingPromptId, setBuildingPromptId] = useState<number | null>(null);
   const nextId = useRef(1);
@@ -322,6 +325,7 @@ function PrototypeUnitShell() {
     setLocationPromptId(result.records.length ? id : null);
   };
 
+  const AFTER_CREATION = ["View on map", "Add Papers", "Set up another place", "Done for now"];
   const NAMING_CHOICES = ["Yes, those names are fine", "Just number them", "Let me describe them"];
   const DESCRIBE_HINT = "Of course. Tell me how you'd like them named — for example, 'Call them Apartments 1 to 11', 'The flats are numbered 101 to 111' or 'Call the shop Ground Floor Shop'.";
 
@@ -339,7 +343,7 @@ function PrototypeUnitShell() {
     setBuildingUnderstanding({ kind: "proposal", units: next });
     setLastRemoved(removed ?? null);
     // Manual changes are quiet: no new messages. After review, the existing reply offers the check again.
-    if (buildingStage === "reviewed") {
+    if (buildingStage === "ready") {
       const lastHobson = [...messages].reverse().find(m => m.role === "hobson");
       setBuildingPromptId(lastHobson?.id ?? null); setBuildingStage("named");
     }
@@ -353,12 +357,51 @@ function PrototypeUnitShell() {
     setLastRemoved(null);
   };
 
+  // The simulated portfolio survives new setups and conversations within this session.
+  const createGroup = (text: string) => {
+    if (buildingStage !== "ready" || !units || !selectedAddress) return;
+    const group: PortfolioGroup = { id: `${selectedAddress.id}-${Date.now()}`, name: selectedAddress.name, line: selectedAddress.line, record: selectedAddress, units: units.map(u => ({ ...u })) };
+    setPortfolio(previous => previous.some(g => g.record.id === group.record.id) ? previous : [...previous, group]);
+    setBuildingStage("created");
+    setBuildingPromptId(appendExchange(text, `Done. ${group.name} is now in your portfolio with ${group.units.length} Unit${group.units.length === 1 ? "" : "s"}.`));
+  };
+
+  const resetSetup = () => {
+    setSetupPromptId(null); setLocationStage("idle"); setLocationPromptId(null); setLocationAddress(""); setAddressParts({}); setAddressCandidates([]); setSelectedAddress(null);
+    setBuildingUnderstanding(null); setBuildingStage("idle"); setBuildingPromptId(null); setLastRemoved(null); setShowSummaryUnits(false);
+  };
+
+  const afterCreation = (choice: string) => {
+    const name = portfolio[portfolio.length - 1]?.name ?? "It";
+    if (choice === "View on map") { setMapExpanded(true); appendExchange(choice, `Here's ${name} at its confirmed location.`); return; }
+    if (choice === "Add Papers") { appendExchange(choice, `Papers aren't part of this demonstration yet. When they are, I'll keep them with ${name}.`); return; }
+    if (choice === "Set up another place") {
+      resetSetup(); setMapExpanded(false); setShowInvitation(false);
+      const id = nextId.current++;
+      setMessages(previous => [...previous, { id: nextId.current++, role: "user", text: choice }, { id, role: "hobson", text: "What would you like me to set up?" }]);
+      setSetupPromptId(id); setInput(""); return;
+    }
+    if (choice === "Done for now") { setMapExpanded(false); appendExchange(choice, `Very good. ${name} is in your portfolio whenever you need it.`); resetSetup(); setBuildingStage("idle"); }
+  };
+
   const answerBuilding = (text: string) => {
     const normalised = text.toLowerCase().replace(/[.!?]+$/, "").trim();
     if (units && buildingStage !== "awaiting-description") {
+      if (buildingStage === "created") {
+        const choice = AFTER_CREATION.find(c => c.toLowerCase() === normalised);
+        if (choice) { afterCreation(choice); return; }
+        appendExchange(text, `${portfolio[portfolio.length - 1]?.name ?? "It"} is already in your portfolio. You can view it on the map, set up another place, or leave it there for now.`); return;
+      }
       if (normalised === "this structure is right" && buildingStage === "named") {
-        appendExchange(text, "Very good. I'll keep it exactly as it is. Nothing has been created yet — that comes next.");
-        setBuildingStage("reviewed"); setBuildingPromptId(null); return;
+        setBuildingPromptId(appendExchange(text, `${selectedAddress?.name ?? "Stanley House"} is ready. I've got the location and all ${units.length} Unit${units.length === 1 ? "" : "s"}. Shall I add it to your portfolio?`));
+        setBuildingStage("ready"); return;
+      }
+      if (buildingStage === "ready") {
+        if (["create this structure", "yes", "yes please", "go ahead"].includes(normalised)) { createGroup(text); return; }
+        if (normalised === "make another change") {
+          setBuildingPromptId(appendExchange(text, "Of course. Everything is as you left it — change whatever you like, and tell me when it's right."));
+          setBuildingStage("named"); return;
+        }
       }
       if (normalised === "yes, those names are fine" || (buildingStage === "naming" && ["yes", "that's fine", "fine"].includes(normalised))) { toReview(text, "Very good. I'll keep those names."); return; }
       if (normalised === "just number them") {
@@ -473,10 +516,10 @@ function PrototypeUnitShell() {
                   <p className="mb-1 text-xs font-semibold text-ink-muted">Hobson</p>
                   <p className={`whitespace-pre-line break-words leading-relaxed ${message.examples ? "text-base font-semibold" : "text-sm"}`}>{message.text}</p>
                   {message.examples && <p className="mt-2 break-words text-xs leading-relaxed text-muted-foreground">{message.examples}</p>}
-                  {buildingPromptId === message.id && (buildingStage === "naming" ? NAMING_CHOICES : buildingStage === "named" ? ["This structure is right"] : buildingStage === "awaiting-description" && buildingUnderstanding?.kind === "clarify" ? buildingUnderstanding.choices ?? [] : []).length > 0 && (
+                  {buildingPromptId === message.id && (buildingStage === "naming" ? NAMING_CHOICES : buildingStage === "named" ? ["This structure is right"] : buildingStage === "ready" ? ["Create this structure", "Make another change"] : buildingStage === "created" ? AFTER_CREATION : buildingStage === "awaiting-description" && buildingUnderstanding?.kind === "clarify" ? buildingUnderstanding.choices ?? [] : []).length > 0 && (
                     <div className="mt-3 flex flex-wrap gap-2">
-                      {(buildingStage === "naming" ? NAMING_CHOICES : buildingStage === "named" ? ["This structure is right"] : (buildingUnderstanding?.kind === "clarify" && buildingUnderstanding.choices) || []).map(choice => (
-                        <button key={choice} type="button" onClick={() => answerBuilding(choice)} className="min-h-11 rounded-full border border-border bg-secondary/40 px-3.5 py-2 text-left text-sm text-foreground transition-colors hover:bg-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">{choice}</button>
+                      {(buildingStage === "naming" ? NAMING_CHOICES : buildingStage === "named" ? ["This structure is right"] : buildingStage === "ready" ? ["Create this structure", "Make another change"] : buildingStage === "created" ? AFTER_CREATION : (buildingUnderstanding?.kind === "clarify" && buildingUnderstanding.choices) || []).map(choice => (
+                        <button key={choice} type="button" onClick={() => answerBuilding(choice)} className={`min-h-11 rounded-full border px-3.5 py-2 ${choice === "Create this structure" ? "border-primary bg-primary font-semibold text-primary-foreground shadow-sm hover:bg-primary/90" : "border-border bg-secondary/40"}`}  >{choice}</button>
                       ))}
                     </div>
                   )}
