@@ -4395,7 +4395,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
               const conversation = chatBodyRef.current;
               if (conversation) conversation.scrollTop = conversation.scrollHeight;
             });
-          }} />
+          }} /></PaperPreviewContext.Provider>
         )}
         {/* "Show everything" — unified back-office workbench overlay on the right stage.
             Display-only; sections collapsed by default. Suppressed in admin mode (the
