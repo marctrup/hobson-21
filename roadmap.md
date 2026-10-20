@@ -1,7 +1,7 @@
 # Roadmap
 
 ## Prototype Unit — publishing password
-- [ ] Configure a separate server-held Unit password and admission flag; verify refusal and admission without publishing the website.
+- [x] Configure a separate server-held Unit password and admission flag; 34 targeted checks passed and browser verified wrong-password refusal, configured-password admission, reload persistence and independent Work protection. Password verification deployed; website not published.
 
 ## Prototype Unit — Paragon map entry
 - [x] Open on the full map with the existing Paragon sample marker and conversational setup invitation; add an illustrative group cover. All 33 targeted checks pass; browser verified opening, photograph loading, returning to the full map and starting setup with no page errors. Not published.
