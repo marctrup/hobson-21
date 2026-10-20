@@ -132,11 +132,10 @@ describe("Prototype Unit location confirmation", () => {
     expect(screen.getByLabelText("Location map")).toBeInTheDocument();
   });
 
-  it("requires a candidate selection then explicit confirmation for the natural Finchley address", async () => {
+  it("proposes a full address directly but still requires explicit confirmation", async () => {
     const user = await startGroup();
     await user.type(screen.getByRole("textbox"), "Stanley House 1115 Finchley Road NW11 0QD{Enter}");
-    expect(screen.queryByRole("button", { name: "Yes, that's the place" })).toBeNull();
-    await user.click(screen.getByRole("button", { name: "Stanley House 1115 Finchley Road, London, NW11 0QD" }));
+    expect(screen.getByRole("button", { name: "Yes, that's the place" })).toBeInTheDocument();
     expect(within(screen.getByRole("status")).getByText("Awaiting confirmation")).toBeInTheDocument();
     await user.click(screen.getByRole("button", { name: "Yes, that's the place" }));
     expect(within(screen.getByRole("status")).getByText("Location confirmed")).toBeInTheDocument();
@@ -149,11 +148,63 @@ describe("Prototype Unit location confirmation", () => {
     await user.type(screen.getByRole("textbox"), "Stanley House Finchley Road{Enter}");
     expect(screen.queryByRole("button", { name: "Yes, that's the place" })).toBeNull();
     await user.type(screen.getByRole("textbox"), "NW11 0QD{Enter}");
-    await user.click(screen.getByRole("button", { name: "None of these is right" }));
+    await user.click(screen.getByRole("button", { name: "None of these" }));
     expect(screen.queryByRole("status")).toBeNull();
     await user.type(screen.getByRole("textbox"), "Stanley House, 1115 Finchley Road, London, NW11 0QD{Enter}");
     expect(screen.getByRole("button", { name: "Yes, that's the place" })).toBeInTheDocument();
-    expect(screen.queryByRole("button", { name: "None of these is right" })).toBeNull();
+    expect(screen.queryByRole("button", { name: "None of these" })).toBeNull();
+  });
+
+  it("offers four postcode matches initially and lets either extra address be proposed", async () => {
+    const user = await startGroup();
+    await user.type(screen.getByRole("textbox"), "NW11 0QD{Enter}");
+    for (const name of ["Stanley House", "Flat 1, Stanley House", "Flat 2, Stanley House", "Flat 3, Stanley House"]) {
+      expect(screen.getByRole("button", { name: `${name} 1115 Finchley Road, London, NW11 0QD` })).toBeInTheDocument();
+    }
+    expect(screen.queryByRole("button", { name: "1113 Finchley Road London, NW11 0QD" })).toBeNull();
+    expect(screen.queryByRole("button", { name: "1117 Finchley Road London, NW11 0QD" })).toBeNull();
+    expect(screen.queryByRole("button", { name: "Yes, that's the place" })).toBeNull();
+    await user.click(screen.getByRole("button", { name: "Show more addresses" }));
+    await user.click(screen.getByRole("button", { name: "1113 Finchley Road London, NW11 0QD" }));
+    expect(within(screen.getByRole("status")).getByText("Awaiting confirmation")).toBeInTheDocument();
+    await user.click(screen.getByRole("button", { name: "No, let's check again" }));
+    await user.type(screen.getByRole("textbox"), "NW11 0QD{Enter}");
+    expect(screen.getByRole("button", { name: "Show more addresses" })).toBeInTheDocument();
+    await user.click(screen.getByRole("button", { name: "Show more addresses" }));
+    await user.click(screen.getByRole("button", { name: "1117 Finchley Road London, NW11 0QD" }));
+    await user.click(screen.getByRole("button", { name: "Yes, that's the place" }));
+    expect(within(screen.getByRole("status")).getByText("1117 Finchley Road")).toBeInTheDocument();
+    expect(within(screen.getByRole("status")).getByText("Location confirmed")).toBeInTheDocument();
+    expect(screen.queryByRole("region", { name: "Proposed building structure" })).toBeNull();
+  });
+
+  it.each([true, false])("resolves the Flat 2 intention before confirming the location (whole building: %s)", async whole => {
+    const user = await startGroup();
+    await user.type(screen.getByRole("textbox"), "NW11 0QD{Enter}");
+    await user.click(screen.getByRole("button", { name: "Flat 2, Stanley House 1115 Finchley Road, London, NW11 0QD" }));
+    expect(screen.queryByRole("button", { name: "Yes, that's the place" })).toBeNull();
+    expect(within(screen.getByRole("status")).queryByText("Location confirmed")).toBeNull();
+    await user.click(screen.getByRole("button", { name: whole ? "The whole of Stanley House" : "Just Flat 2" }));
+    expect(within(screen.getByRole("status")).getByText(whole ? "Stanley House" : "Flat 2, Stanley House")).toBeInTheDocument();
+    await user.click(screen.getByRole("button", { name: "Yes, that's the place" }));
+    expect(within(screen.getByRole("status")).getByText("Location confirmed")).toBeInTheDocument();
+    await user.type(screen.getByRole("textbox"), "Ground, First, Second and Third Floors.{Enter}");
+    expect(Boolean(screen.queryByRole("region", { name: "Proposed building structure" }))).toBe(whole);
+  });
+
+  it("requires the same intention decision for a typed Flat 2 address and preserves a missing-postcode continuation", async () => {
+    const user = await startGroup();
+    await user.type(screen.getByRole("textbox"), "Flat 2 Stanley House NW11 0QD{Enter}");
+    expect(screen.getByRole("button", { name: "Just Flat 2" })).toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "Yes, that's the place" })).toBeNull();
+    await user.type(screen.getByRole("textbox"), "The whole of Stanley House{Enter}");
+    await user.click(screen.getByRole("button", { name: "No, let's check again" }));
+    await user.type(screen.getByRole("textbox"), "Stanley House Finchley Road{Enter}");
+    await user.type(screen.getByRole("textbox"), "NW11 0QD{Enter}");
+    expect(screen.queryByRole("button", { name: "Show more addresses" })).toBeNull();
+    expect(screen.getByRole("button", { name: "Flat 3, Stanley House 1115 Finchley Road, London, NW11 0QD" })).toBeInTheDocument();
+    await user.click(screen.getByRole("button", { name: "None of these" }));
+    expect(screen.queryByRole("status")).toBeNull();
   });
 });
 
