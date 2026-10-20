@@ -17,6 +17,7 @@ const characterKeeper = characterKeeperAsset.url;
 import { DocumentsLibrary } from "@/components/prototype/DocumentsLibrary";
 import { CollapsibleSection } from "@/components/prototype/CollapsibleSection";
 import { WorkOverview } from "@/components/prototype/WorkOverview";
+import { PaperPreviewContext, isPaperRecordMessage } from "@/components/prototype/paperPreviewContext";
 import { applyWorkGuidance, applyPaperPlacement, type PaperPlace, type PaperPlacementAction, initialWorkGuidance, SIDE_LETTER_INSTRUCTION, SIDE_LETTER_ATTACHMENT_ID, SIDE_LETTER_ATTACHMENT_INSTRUCTION, SIDE_LETTER_FILENAME } from "@/components/prototype/workGuidance";
 import { FileText as FileTextIcon, Paperclip, X as XIcon } from "lucide-react";
 import { createRoofWork, roofOverviewCounts } from "@/components/prototype/roofWorkLifecycle";
@@ -1433,6 +1434,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
   const [guidingRenewal, setGuidingRenewal] = useState(false);
   const [workGuidance, setWorkGuidance] = useState(initialWorkGuidance);
   const [pendingAttachment, setPendingAttachment] = useState(false);
+  const [paperPreviewActive, setPaperPreviewActive] = useState(false);
   useEffect(() => {
     const paper = workGuidance.suppliedPapers.find(p => p.progress === "received" || p.progress === "identified-linked");
     if (!paper) return;
@@ -2762,7 +2764,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
     return { total: selectedProperty.units.length, let: selectedProperty.units.length - vacant, vacant, alerts };
   }, [selectedProperty]);
 
-  const messageGroups = useMemo(() => groupChatMessages(messages), [messages]);
+  const messageGroups = useMemo(() => groupChatMessages(paperPreviewActive ? messages.filter(m => !isPaperRecordMessage(m.id)) : messages), [messages, paperPreviewActive]);
 
   /* ----- scroll behaviour: pin to top when entering a property/unit so the
      owl intro, tiles, and intelligent actions are visible from the top.
@@ -4369,7 +4371,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
           />
         )}
         {showWhatIveDone && (
-          <WorkOverview onClose={resetToMap} sideLetterRequested={workGuidance.sideLetterRequested} suppliedPapers={workGuidance.suppliedPapers} paperPlaces={PAPER_PLACES} onPaperPlacement={placeSuppliedPaper} roofGuidance={roofGuidance} roofWork={roofWork} onRoofWorkChange={(next) => {
+          <PaperPreviewContext.Provider value={setPaperPreviewActive}><WorkOverview onClose={resetToMap} sideLetterRequested={workGuidance.sideLetterRequested} suppliedPapers={workGuidance.suppliedPapers} paperPlaces={PAPER_PLACES} onPaperPlacement={placeSuppliedPaper} roofGuidance={roofGuidance} roofWork={roofWork} onRoofWorkChange={(next) => {
             setRoofWork(next);
             if (guideScope !== "renewal" && (next.ended !== roofWork.ended || next.number !== roofWork.number)) { setGuidingRenewal(false); setInput(""); }
           }} focusNeedsYou={needsYouFocus} onJourneyBack={() => setGuidingRenewal(false)} onGuide={(scope, suggestion) => {
@@ -4393,7 +4395,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
               const conversation = chatBodyRef.current;
               if (conversation) conversation.scrollTop = conversation.scrollHeight;
             });
-          }} />
+          }} /></PaperPreviewContext.Provider>
         )}
         {/* "Show everything" — unified back-office workbench overlay on the right stage.
             Display-only; sections collapsed by default. Suppressed in admin mode (the
