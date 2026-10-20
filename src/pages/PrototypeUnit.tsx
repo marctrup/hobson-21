@@ -238,9 +238,9 @@ function PrototypeUnitShell() {
                     </Button>
                   )}
                   {setupPromptId === message.id && (
-                    <div className="mt-3 flex flex-col items-start gap-1">
+                    <div className="mt-3 flex w-full flex-col items-stretch gap-2">
                       {SETUP_CHOICES.map((choice) => (
-                        <Button key={choice.label} variant="ghost" onClick={() => chooseSetup(choice)} className="h-auto max-w-full justify-start whitespace-normal px-0 py-1.5 text-left text-sm font-normal leading-relaxed text-ink-muted hover:bg-transparent hover:text-ink">
+                        <Button key={choice.label} variant="outline" onClick={() => chooseSetup(choice)} className="h-auto min-h-11 w-full justify-start whitespace-normal border-border bg-background px-3 py-2.5 text-left text-sm font-normal leading-relaxed text-ink hover:border-ring hover:bg-secondary hover:text-secondary-foreground">
                           {choice.label}
                         </Button>
                       ))}
