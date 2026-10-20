@@ -6,7 +6,7 @@ import owlDefault from "@/assets/prototype/owl-default.png";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { discoverAddress, MOCK_ADDRESSES, type AddressParts, type AddressRecord } from "./prototypeUnitAddress";
-import { editUnits, summarise, namingProposal, numberUnits, restoreUnit, understandBuilding, type BuildingUnderstanding, type ProposedUnit } from "./prototypeUnitStructure";
+import { countsReply, proposeCounts, editUnits, summarise, namingProposal, numberUnits, restoreUnit, understandBuilding, type BuildingUnderstanding, type ProposedUnit } from "./prototypeUnitStructure";
 import { PrototypeUnitStructure } from "./PrototypeUnitStructure";
 
 const RAIL_WIDTH = 68;
@@ -14,7 +14,7 @@ const DEFAULT_CHAT_WIDTH = 380;
 const MIN_CHAT_WIDTH = 280;
 const MIN_CANVAS_WIDTH = 320;
 
-type UnitMessage = { id: number; text: string; role: "user" | "hobson"; examples?: string };
+type UnitMessage = { id: number; text: string; role: "user" | "hobson"; examples?: string; counts?: boolean };
 
 type PortfolioGroup = { id: string; name: string; line: string; record: AddressRecord; units: ProposedUnit[] };
 
@@ -221,6 +221,31 @@ function PortfolioGroupView({ group }: { group: PortfolioGroup }) {
   );
 }
 
+// Quick conversational counts — blank never means zero; at least one Unit overall.
+function UnitCountInputs({ onContinue }: { onContinue: (residential: number, commercial: number) => void }) {
+  const [residential, setResidential] = useState("");
+  const [commercial, setCommercial] = useState("");
+  const parse = (v: string) => /^\d{1,3}$/.test(v.trim()) ? Number(v) : null;
+  const r = parse(residential), c = parse(commercial);
+  const valid = r !== null && c !== null && r + c >= 1 && r + c <= 100;
+  const field = (label: string, value: string, set: (v: string) => void) => (
+    <label className="flex items-center justify-between gap-3 text-sm text-foreground">
+      <span>{label}</span>
+      <input type="number" inputMode="numeric" min={0} max={100} value={value} onChange={e => set(e.target.value)} aria-label={label} className="h-9 w-20 rounded-md border border-input bg-background px-2 text-right text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring" />
+    </label>
+  );
+  return (
+    <form onSubmit={e => { e.preventDefault(); if (valid) onContinue(r!, c!); }} className="mt-3 flex max-w-xs flex-col gap-2 rounded-md border border-border bg-secondary/30 px-3 py-3">
+      {field("Residential Units", residential, setResidential)}
+      {field("Commercial Units", commercial, setCommercial)}
+      <div className="flex items-center justify-between gap-3 border-t border-border pt-2">
+        <span className="text-xs text-muted-foreground" aria-live="polite">{r !== null || c !== null ? `${(r ?? 0) + (c ?? 0)} Units in total` : "Enter a number for each, 0 if none"}</span>
+        <button type="submit" disabled={!valid} className="min-h-9 rounded-md px-3 text-sm font-medium text-foreground hover:bg-secondary disabled:opacity-40">Continue →</button>
+      </div>
+    </form>
+  );
+}
+
 function PrototypeUnitShell() {
   const [chatWidth, setChatWidth] = useState(DEFAULT_CHAT_WIDTH);
   const [input, setInput] = useState("");
@@ -324,7 +349,7 @@ function PrototypeUnitShell() {
     setLocationStage("confirmed");
     setLocationPromptId(null);
     if (selectedAddress.id === "stanley-finchley") {
-      setMessages(previous => [...previous, { id: nextId.current++, role: "hobson", text: "How many separate spaces are there in Stanley House, and what are they used for?", examples: "For example, you could say '11 flats and a shop' or '4 offices'. I'll organise them for you." }]);
+      setMessages(previous => [...previous, { id: nextId.current++, role: "hobson", text: "How many Units are there at Stanley House?", examples: "Tell me how many of each, and I'll lay them out for you.", counts: true }]);
       setBuildingStage("awaiting-description");
     }
   };
@@ -406,6 +431,16 @@ function PrototypeUnitShell() {
       setSetupPromptId(id); setInput(""); return;
     }
     if (choice === "Done for now") { setMapExpanded(false); appendExchange(choice, `Very good. ${name} is in your portfolio whenever you need it.`); resetSetup(); setBuildingStage("idle"); }
+  };
+
+  const submitCounts = (residential: number, commercial: number) => {
+    if (buildingStage !== "awaiting-description") return;
+    const proposal = proposeCounts(residential, commercial);
+    if (proposal.kind !== "proposal") return;
+    setLastRemoved(null);
+    setBuildingUnderstanding(proposal);
+    setBuildingPromptId(appendExchange(`${residential} residential, ${commercial} commercial`, countsReply(proposal.units)));
+    setBuildingStage("named");
   };
 
   const answerBuilding = (text: string) => {
@@ -540,6 +575,7 @@ function PrototypeUnitShell() {
                   <p className="mb-1 text-xs font-semibold text-ink-muted">Hobson</p>
                   <p className={`whitespace-pre-line break-words leading-relaxed ${message.examples ? "text-base font-semibold" : "text-sm"}`}>{message.text}</p>
                   {message.examples && <p className="mt-2 break-words text-xs leading-relaxed text-muted-foreground">{message.examples}</p>}
+                  {message.counts && buildingStage === "awaiting-description" && !buildingUnderstanding && <UnitCountInputs onContinue={submitCounts} />}
                   {buildingPromptId === message.id && (buildingStage === "naming" ? NAMING_CHOICES : buildingStage === "named" ? ["This structure is right"] : buildingStage === "ready" ? ["Create this structure", "Make another change"] : buildingStage === "created" ? AFTER_CREATION : buildingStage === "awaiting-description" && buildingUnderstanding?.kind === "clarify" ? buildingUnderstanding.choices ?? [] : []).length > 0 && (
                     <div className="mt-3 flex flex-wrap gap-2">
                       {(buildingStage === "naming" ? NAMING_CHOICES : buildingStage === "named" ? ["This structure is right"] : buildingStage === "ready" ? ["Create this structure", "Make another change"] : buildingStage === "created" ? AFTER_CREATION : (buildingUnderstanding?.kind === "clarify" && buildingUnderstanding.choices) || []).map(choice => (

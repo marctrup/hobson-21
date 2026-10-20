@@ -140,7 +140,7 @@ describe("Prototype Unit location confirmation", () => {
     await user.click(screen.getByRole("button", { name: "Yes, that's the place" }));
     expect(within(screen.getByRole("status", { name: "Location status" })).getByText("Location confirmed")).toBeInTheDocument();
     expect(within(screen.getByRole("main")).getByText("1115 Finchley Road, London, NW11 0QD")).toBeInTheDocument();
-    expect(within(screen.getByRole("log")).queryAllByRole("button")).toHaveLength(0);
+    expect(within(screen.getByRole("log")).queryAllByRole("button").filter(b => b.textContent !== "Continue →")).toHaveLength(0);
   });
 
   it("keeps partial details for a postcode reply and allows rejection of every candidate", async () => {
@@ -394,5 +394,32 @@ describe("Prototype Unit proposed building", () => {
     await user.click(screen.getByRole("button", { name: "Set up another place" }));
     expect(screen.getByRole("button", { name: "A Unit Group with several Units" })).toBeInTheDocument();
     expect(screen.getAllByRole("region", { name: "Stanley House Unit Group" })).toHaveLength(1);
+  });
+
+  it("asks for two counts, never treating blank as zero, and lays out Units ready for editing", async () => {
+    const user = await confirmedStanley();
+    expect(screen.getByText("How many Units are there at Stanley House?")).toBeInTheDocument();
+    const cont = screen.getByRole("button", { name: "Continue →" });
+    await user.type(screen.getByLabelText("Residential Units"), "11");
+    expect(cont).toBeDisabled();
+    await user.type(screen.getByLabelText("Commercial Units"), "1");
+    expect(screen.getByText("12 Units in total")).toBeInTheDocument();
+    await user.click(cont);
+    expect(screen.getByText("I've laid out 12 Units — 11 residential and one commercial. I've suggested names for them. Have a look on the right.")).toBeInTheDocument();
+    const proposal = screen.getByRole("region", { name: "Proposed building structure" });
+    expect(within(proposal).getByText("Flat 11")).toBeInTheDocument();
+    expect(within(proposal).getByText("Shop")).toBeInTheDocument();
+    expect(screen.queryByLabelText("Residential Units")).toBeNull();
+    expect(screen.getByRole("button", { name: "This structure is right" })).toBeInTheDocument();
+  });
+
+  it("rejects zero overall and accepts counts typed in conversation", async () => {
+    const user = await confirmedStanley();
+    await user.type(screen.getByLabelText("Residential Units"), "0");
+    await user.type(screen.getByLabelText("Commercial Units"), "0");
+    expect(screen.getByRole("button", { name: "Continue →" })).toBeDisabled();
+    await user.type(screen.getByRole("textbox", { name: "Ask Hobson" }), "4 residential and 2 commercial{Enter}");
+    const proposal = screen.getByRole("region", { name: "Proposed building structure" });
+    expect(within(proposal).getByText("6 Units · 4 Residential · 2 Commercial")).toBeInTheDocument();
   });
 });
