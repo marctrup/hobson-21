@@ -230,12 +230,15 @@ describe("Prototype Unit proposed building", () => {
     expect(screen.getByLabelText("Location map")).toBe(map);
     expect(within(screen.getByRole("status")).getByText("Location confirmed")).toBeInTheDocument();
     expect(within(screen.getByRole("main")).queryAllByRole("button")).toHaveLength(0);
-    await user.type(screen.getByRole("textbox"), "Create them{Enter}");
-    expect(within(proposal).getAllByRole("listitem")).toHaveLength(12);
-    expect(within(proposal).queryByText("Structure confirmed · illustrative only")).toBeNull();
-    await user.click(screen.getByRole("button", { name: "Yes, that's right" }));
-    expect(within(proposal).getByText("Structure confirmed · illustrative only")).toBeInTheDocument();
-    expect(within(proposal).getByText("Nothing added yet")).toBeInTheDocument();
+    expect(within(proposal).getByText("12 Units · 11 Residential · 1 Commercial")).toBeInTheDocument();
+    expect(screen.getByText(/I've called them Flat 1 to Flat 11 and Shop for now/)).toBeInTheDocument();
+    await user.click(screen.getByRole("button", { name: "Just number them" }));
+    expect(within(proposal).getByText("11")).toBeInTheDocument();
+    expect(within(proposal).getByText("Shop")).toBeInTheDocument();
+    await user.type(screen.getByRole("textbox"), "Call them Apartments 1 to 11. Call the shop Ground Floor Shop.{Enter}");
+    expect(within(proposal).getByText("Apartment 11")).toBeInTheDocument();
+    expect(within(proposal).getByText("Ground Floor Shop")).toBeInTheDocument();
+    expect(within(proposal).getByText("Nothing created yet")).toBeInTheDocument();
     await user.click(screen.getByRole("button", { name: "A new conversation" }));
     expect(screen.queryByRole("region", { name: "Proposed building structure" })).toBeNull();
     expect(screen.queryByRole("status")).toBeNull();
@@ -246,12 +249,24 @@ describe("Prototype Unit proposed building", () => {
     const user = await confirmedStanley();
     await user.type(screen.getByRole("textbox"), "12 units{Enter}");
     expect(within(screen.getByRole("main")).queryAllByRole("listitem")).toHaveLength(0);
+    await user.click(screen.getByRole("button", { name: "A mixture" }));
+    expect(within(screen.getByRole("main")).queryAllByRole("listitem")).toHaveLength(0);
+    await user.type(screen.getByRole("textbox"), "9 residential and 3 commercial{Enter}");
+    expect(screen.getByText(/9 residential flats and 3 commercial units/)).toBeInTheDocument();
+    await user.click(screen.getByRole("button", { name: "Let me describe them" }));
+    await user.type(screen.getByRole("textbox"), "The flats are numbered 101 to 109{Enter}");
+    expect(screen.getByText("Flat 109")).toBeInTheDocument();
+  });
+
+  it("accepts a typed kinds answer after a bare total", async () => {
+    const user = await confirmedStanley();
+    await user.type(screen.getByRole("textbox"), "12 units{Enter}");
     await user.type(screen.getByRole("textbox"), "All offices{Enter}");
     const proposal = screen.getByRole("region", { name: "Proposed building structure" });
     expect(within(proposal).getAllByRole("listitem")).toHaveLength(12);
     expect(within(proposal).getByText("Office 12")).toBeInTheDocument();
-    await user.type(screen.getByRole("textbox"), "Yes, that's right{Enter}");
-    expect(within(proposal).getByText("Structure confirmed · illustrative only")).toBeInTheDocument();
+    await user.click(screen.getByRole("button", { name: "Yes, those names are fine" }));
+    expect(within(proposal).getByText("Proposed structure · names chosen")).toBeInTheDocument();
   });
 
   it("does not assume floors are Units and retains floor context through two short clarifications", async () => {
@@ -277,6 +292,6 @@ describe("Prototype Unit proposed building", () => {
     await user.type(screen.getByRole("textbox"), "4 offices{Enter}");
     expect(within(proposal).getAllByRole("listitem")).toHaveLength(4);
     expect(within(proposal).getByText("Office 4")).toBeInTheDocument();
-    expect(within(proposal).queryByText("Structure confirmed · illustrative only")).toBeNull();
+    expect(within(proposal).queryByText("Proposed structure · names chosen")).toBeNull();
   });
 });

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { understandBuilding } from "@/pages/prototypeUnitStructure";
+import { namingProposal, numberUnits, renameUnits, understandBuilding } from "@/pages/prototypeUnitStructure";
 
 describe("Illustrative building understanding", () => {
   it("proposes eleven residential flats and one commercial shop, named and numbered", () => {
@@ -76,5 +76,23 @@ describe("Illustrative building understanding", () => {
   });
   it.each(["Three floors", "The lease says there are four Units", "An unusual building"])("does not fabricate Units from unclear input: %s", text => {
     expect(understandBuilding(text).kind).toBe("clarify");
+  });
+  it("proposes names for 11 flats and a shop and accepts bulk renames", () => {
+    const r = understandBuilding("It is 11 flats and a shop.");
+    if (r.kind !== "proposal") throw new Error("Missing proposal");
+    expect(namingProposal(r.units)).toContain("12 Units — 11 residential flats and one commercial shop");
+    expect(numberUnits(r.units).map(u => u.name).slice(-2)).toEqual(["11", "Shop"]);
+    expect(renameUnits("The flats are numbered 101 to 111.", r.units)?.[10].name).toBe("Flat 111");
+    expect(renameUnits("Call the shop Ground Floor Shop.", r.units)?.[11]).toMatchObject({ name: "Ground Floor Shop" });
+    expect(renameUnits("Call the shop Ground Floor Shop.", r.units)?.[11].location).toBeUndefined();
+  });
+  it("asks residential, commercial or mixture for a bare count, then counts", () => {
+    const t = understandBuilding("There are 12 units.");
+    expect(t).toMatchObject({ kind: "clarify", choices: ["Residential", "Commercial", "A mixture"] });
+    const m = understandBuilding("A mixture", t);
+    expect(m).toMatchObject({ kind: "clarify", mixture: true });
+    const r = understandBuilding("9 residential and 3 commercial", m);
+    if (r.kind !== "proposal") throw new Error("Missing proposal");
+    expect(r.units.filter(u => u.classification === "Commercial")).toHaveLength(3);
   });
 });
