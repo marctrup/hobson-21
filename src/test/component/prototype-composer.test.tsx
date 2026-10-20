@@ -14,6 +14,7 @@ describe("Prototype conversation composer", () => {
     const box = screen.getByLabelText("Ask Hobson");
     expect(box).toBeEnabled();
 
+    await user.clear(box);
     await user.type(box, "what is the rent?");
     await user.click(screen.getByRole("button", { name: "Send" }));
 
