@@ -1,5 +1,8 @@
 # Roadmap
 
+## Prototype Unit — map as part of the conversation
+- [x] Keep the real map visible throughout; animate the Stanley House proposal, use a compact adjacent label and distinct confirmed marker, preserve correction and unknown-address safeguards, and stop before structure setup. Nine focused tests pass; tiles, confirmation, correction, return to the example, persistent map and divider resizing verified in the browser without page errors. Not published.
+
 ## Prototype Unit — finding the location
 - [x] Extend only Unit Group setup with an address conversation, a Stanley House map proposal, explicit confirmation and correction; preserve other paths and create no records. Nine focused tests pass; real map tiles, proposal, alternative-address safeguards, return to the example, confirmation, divider resizing and restart verified in the browser without runtime errors. Not published.
 
