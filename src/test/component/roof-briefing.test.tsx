@@ -24,6 +24,31 @@ function renderJourney(work: RoofWorkState = createRoofWork(), initialView: "bri
 }
 
 describe("Roof leak — glass workboard briefing", () => {
+  it("keeps all three activity round trips read-only and scopes lease guidance without granting authority", async () => {
+    const user = userEvent.setup();
+    const work = createRoofWork();
+    const before = structuredClone(work);
+    const onWorkUpdate = vi.fn();
+    const onGuide = vi.fn();
+    render(<RoofLeakJourney work={work} onWorkUpdate={onWorkUpdate} onEnd={vi.fn()} onRestart={vi.fn()} paused={false} onPauseChange={vi.fn()} onBack={vi.fn()} onGuide={onGuide} guidance={work.guidance} help={work.help} onHelpChange={vi.fn()} />);
+    for (const activity of [/Establish repairing responsibility/, /Contractor inspection/, /Contact the insurer/]) {
+      await user.click(screen.getByRole("button", { name: activity }));
+      if (activity.source === "Establish repairing responsibility") {
+        await user.click(screen.getByRole("button", { name: "Guide Hobson" }));
+        expect(onGuide).toHaveBeenLastCalledWith("lease");
+        await user.click(screen.getByRole("button", { name: "Found the Business Lease" }));
+        await user.click(screen.getByRole("button", { name: "Hide supporting detail" }));
+      }
+      await user.click(screen.getByRole("button", { name: "Back to roof leak investigation" }));
+    }
+    expect(onWorkUpdate).not.toHaveBeenCalled();
+    expect(work).toEqual(before);
+    expect(work.insurerApproval).toBeUndefined();
+    expect(work.insurerSent).toBe(false);
+    expect(work.contractorRequestSent).toBe(true);
+    expect(work.help).toEqual({ shown: false, choice: null });
+  });
+
   it("opens with the plan, what's been done and what's left — and no detailed surface", () => {
     renderJourney();
     expect(screen.getByRole("heading", { name: "The plan" })).toBeVisible();
