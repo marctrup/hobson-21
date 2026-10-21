@@ -105,8 +105,40 @@ export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initia
       </AlertDialog>
 
       <div className="hobson-scroll min-h-0 shrink-0 [@container_work_(min-width:48rem)]:flex-1 [@container_work_(min-width:48rem)]:overflow-y-auto">
+        {briefing && !work.ended ? (
+        <div className="mx-auto w-full max-w-3xl px-5 pb-12 pt-8 [@container_work_(min-width:40rem)]:px-8 [@container_work_(min-width:40rem)]:pt-10">
+          {paused && <p role="status" className="mb-8 flex items-center gap-2 text-sm leading-relaxed text-muted-foreground"><Pause aria-hidden="true" className="h-3.5 w-3.5 shrink-0" strokeWidth={1.6} />I've paused this investigation at your request. What I've found is preserved.</p>}
+          <section aria-labelledby="briefing-plan" className="mb-10">
+            <h3 id="briefing-plan" className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">The plan</h3>
+            <p className="mt-3 max-w-xl text-lg leading-relaxed">Establish who's responsible for the affected roof, arrange an inspection and decide what needs to happen next.</p>
+          </section>
+          <section aria-labelledby="briefing-done" className="mb-10">
+            <h3 id="briefing-done" className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">What's been done</h3>
+            {doneItems.length > 0 ? <ul className="mt-4 space-y-2.5">
+              {doneItems.map((label) => <li key={label} className="flex items-start gap-2.5 text-sm leading-relaxed text-muted-foreground"><Check aria-hidden="true" className="mt-0.5 h-4 w-4 shrink-0" strokeWidth={1.6} />{label}</li>)}
+            </ul> : <p className="mt-4 text-sm leading-relaxed text-muted-foreground">Nothing yet in this fresh investigation. The earlier attempt remains in the history.</p>}
+          </section>
+          <section aria-labelledby="briefing-left">
+            <h3 id="briefing-left" className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">What's left</h3>
+            <p className="mt-3 text-xs leading-relaxed text-muted-foreground">These can move forward in any order. Select one to see the detail.</p>
+            <div className="mt-2 divide-y divide-border">
+              {outstanding.map((item) => (
+                <Button key={item.id} variant="ghost" onClick={() => openActivity(item.id)} className="h-auto w-full items-start justify-between gap-4 whitespace-normal rounded-none px-1 py-4 text-left">
+                  <span className="min-w-0">
+                    <span className="block text-sm font-semibold leading-snug">{item.title}</span>
+                    <span className="mt-1 block text-sm font-normal leading-relaxed text-muted-foreground">{item.status}</span>
+                  </span>
+                  <ArrowUpRight aria-hidden="true" className="mt-1 h-4 w-4 shrink-0 text-muted-foreground" />
+                </Button>
+              ))}
+            </div>
+          </section>
+        </div>
+        ) : (
         <div className="grid grid-cols-1 items-stretch gap-3 p-3 [@container_work_(min-width:40rem)]:p-5 [@container_work_(min-width:48rem)]:min-h-full [@container_work_(min-width:48rem)]:grid-cols-[minmax(0,0.35fr)_minmax(0,0.65fr)] [@container_work_(min-width:48rem)]:gap-0">
           <JourneyNavigation label="The Journey" selectedTitle={selected === "closing" ? "Closing summary" : previousAttempt ? "Previous attempt" : selectedDone ? selectedDone.label : selectedActivity?.title}>
+            {!work.ended && <Button variant="ghost" size="sm" onClick={() => setBriefing(true)} className="mb-4 h-auto gap-2 px-0 text-xs text-muted-foreground"><ArrowLeft className="h-3.5 w-3.5" aria-hidden="true" />Back to job overview</Button>}
+  
   
             {work.ended && <Button variant="ghost" size="sm" onClick={() => setSelected("closing")} aria-current={selected === "closing" ? "step" : undefined} className="mb-4 h-auto max-w-full whitespace-normal px-0 text-left text-xs text-muted-foreground">Closing summary</Button>}
 
