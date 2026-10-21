@@ -61,9 +61,9 @@ export function roofAttention(work: RoofWorkState) {
   };
 }
 
-export function roofOverviewCounts(work: RoofWorkState) {
+export function roofOverviewCounts(work: RoofWorkState, renewalAwaitingApproval = false) {
   const attention = roofAttention(work);
-  return { accomplished: accomplished.length, active: lookingAfter.filter(item => item.place !== roofLeakWork.place || !work.ended).length, needsYou: decisions.length + Number(attention.insurer) + Number(attention.help) };
+  return { accomplished: accomplished.length, active: lookingAfter.filter(item => item.place !== roofLeakWork.place || !work.ended).length, needsYou: new Set(decisions.map(item => item.place)).size + Number(attention.insurer || attention.help) + Number(renewalAwaitingApproval) };
 }
 
 /** Approval belongs only to this notification and exact version; it does not execute it. */

@@ -7,37 +7,12 @@ import { createRenewalWork, type RenewalActivity, type RenewalWork } from "./ren
 import { WorkJourney } from "./WorkJourney";
 import { RoofLeakJourney } from "./RoofLeakJourney";
 import { CompletedLeaseJourney } from "./CompletedLeaseJourney";
-import { roofInsurerDecision, roofLeakWork, type RoofActivityId } from "./roofLeakWork";
-import { createRoofWork, endRoofWork, restartRoofWork, roofAttention, type RoofWorkState } from "./roofWorkLifecycle";
-import { accomplished, decisions, lookingAfter } from "./workOverviewData";
+import { roofLeakWork, type RoofActivityId } from "./roofLeakWork";
+import { createRoofWork, endRoofWork, restartRoofWork, roofAttention, roofOverviewCounts, type RoofWorkState } from "./roofWorkLifecycle";
+import { accomplished, lookingAfter } from "./workOverviewData";
 import { initialRoofGuidance, LEASE_PLANS_INSTRUCTION, type RoofGuidanceState, type RoofGuideScope, type RoofHelpState } from "./roofGuidance";
 
-const roofHelpDecision = {
-  place: "Burlington Gardens — Roof leak",
-  title: "Clarify responsibility for the shopfront roof",
-  why: "I haven't been able to establish which part of the roof the lease covers.",
-  decision: "I have a suggested next step.",
-};
-
-const renewalDecision = {
-  place: "Stanley House · Flat 6",
-  title: "Getting the tenancy renewal ready",
-  decision: "May I send the renewal email to the tenant?",
-  why: "I've prepared an email asking the tenant to discuss the tenancy renewal. It proposes no terms, so I'd like your approval before anything is sent.",
-};
-
-type OverviewView = "needs-you" | "all" | "completed";
-
-type NeedsYouItem = {
-  key: string;
-  place: string;
-  jobTitle: string;
-  matter: string;
-  why: string;
-  decision: string;
-  actionLabel: string;
-  open?: () => void;
-};
+type OverviewView = "ongoing" | "completed";
 
 const INITIAL_ROWS = 10;
 
@@ -53,10 +28,10 @@ export function WorkOverview({ onClose, onGuide, sideLetterRequested = false, su
   const approval = renewalWork.approval;
   const [openAtApproval, setOpenAtApproval] = useState(false);
   const awaitingApproval = approval === "awaiting";
-  const sentApproval = approval === "sent";
   const [roofActivity, setRoofActivity] = useState<RoofActivityId>("lease");
   const [roofEntry, setRoofEntry] = useState<"briefing" | "detail">("briefing");
-  const [view, setView] = useState<OverviewView>("all");
+  const [view, setView] = useState<OverviewView>("ongoing");
+  const [needsAttention, setNeedsAttention] = useState(false);
   const [query, setQuery] = useState("");
   const [showAll, setShowAll] = useState(false);
   const [localRoofWork, setLocalRoofWork] = useState(createRoofWork);
@@ -72,26 +47,12 @@ export function WorkOverview({ onClose, onGuide, sideLetterRequested = false, su
   const openRoofJourney = (activity: RoofActivityId, entry: "briefing" | "detail" = "briefing") => { setRoofActivity(activity); setRoofEntry(entry); setJourney("roof"); };
   const closeJourney = () => { setJourney(null); setOpenAtApproval(false); onJourneyBack?.(); };
   useEffect(() => {
-    if (focusNeedsYou > 0 && !journey) setView("needs-you");
-  }, [focusNeedsYou, journey]);
+    if (focusNeedsYou > 0) { setView("ongoing"); setNeedsAttention(true); setShowAll(false); }
+  }, [focusNeedsYou]);
 
-  // One collection of jobs; the three views are different ways of looking at the same records.
+  // Both views and the attention filter use jobs, never separate decision rows.
   const activeWork = lookingAfter.filter(work => work.place !== roofLeakWork.place || !currentRoofWork.ended);
-
-  const needsYouItems: NeedsYouItem[] = [
-    ...(awaitingApproval ? [{ key: "renewal", place: renewalDecision.place, jobTitle: renewalDecision.title, matter: "Renewal email", why: renewalDecision.why, decision: renewalDecision.decision, actionLabel: "Review decision", open: () => openJourney(true) }] : []),
-    ...(helpAwaitingDirection ? [{ key: "roof-help", place: roofHelpDecision.place, jobTitle: roofLeakWork.title, matter: roofHelpDecision.title, why: roofHelpDecision.why, decision: roofHelpDecision.decision, actionLabel: "Review suggestion", open: () => openRoofJourney("lease", "detail") }] : []),
-    ...(insurerActionable ? [{ key: "roof-insurer", place: roofInsurerDecision.place, jobTitle: roofLeakWork.title, matter: roofInsurerDecision.title, why: roofInsurerDecision.why, decision: roofInsurerDecision.decision, actionLabel: "Review notification", open: () => openRoofJourney("insurer", "detail") }] : []),
-    ...decisions.map((item) => ({
-      key: item.place,
-      place: item.place,
-      jobTitle: lookingAfter.find((work) => work.place === item.place)?.title ?? item.title,
-      matter: item.title,
-      why: item.why,
-      decision: item.decision,
-      actionLabel: item.place === "Stanley House · Flat 8" ? "Review proposed rent" : "Review assessor instruction",
-    })),
-  ];
+  const counts = roofOverviewCounts(currentRoofWork, awaitingApproval);
 
   const attentionFor = (work: (typeof lookingAfter)[number]): string | null => {
     if (work.place === roofLeakWork.place) {
@@ -117,18 +78,15 @@ export function WorkOverview({ onClose, onGuide, sideLetterRequested = false, su
     return !q || text.some((t) => t.toLowerCase().includes(q));
   };
 
-  const filteredNeedsYou = needsYouItems.filter((item) => matches([item.place, item.jobTitle, item.decision]));
-  const sortedWork = [...activeWork].sort((a, b) => Number(attentionFor(b) !== null) - Number(attentionFor(a) !== null));
-  const filteredWork = sortedWork.filter((work) => matches([work.place, work.title, work.summary]));
+  const sortedWork = [...activeWork].sort((a, b) => Number(attentionFor(b)?.startsWith("Needs you") ?? false) - Number(attentionFor(a)?.startsWith("Needs you") ?? false));
+  const filteredWork = sortedWork.filter((work) => (!needsAttention || attentionFor(work)?.startsWith("Needs you")) && matches([work.place, work.title, work.summary]));
   const filteredAccomplished = accomplished.filter((work) => matches([work.place, work.title, work.outcome]));
 
   const visibleWork = showAll ? filteredWork : filteredWork.slice(0, INITIAL_ROWS);
-  const visibleNeedsYou = showAll ? filteredNeedsYou : filteredNeedsYou.slice(0, INITIAL_ROWS);
   const visibleAccomplished = showAll ? filteredAccomplished : filteredAccomplished.slice(0, INITIAL_ROWS);
 
   const tabs: { id: OverviewView; label: string; count: number }[] = [
-    { id: "needs-you", label: "Needs you", count: needsYouItems.length },
-    { id: "all", label: "All work", count: activeWork.length },
+    { id: "ongoing", label: "Ongoing", count: activeWork.length },
     { id: "completed", label: "Completed", count: accomplished.length },
   ];
 
@@ -148,14 +106,15 @@ export function WorkOverview({ onClose, onGuide, sideLetterRequested = false, su
             <div className="mt-5 flex items-center gap-3 [@container_work_(min-width:40rem)]:gap-4">
               <img src={owlReading} alt="Hobson reading" className="h-12 w-12 shrink-0 [@container_work_(min-width:40rem)]:h-16 [@container_work_(min-width:40rem)]:w-16 object-contain" />
               <p className="max-w-xl text-base leading-relaxed text-muted-foreground">
-                I'm looking after <span className="font-medium text-foreground">{activeWork.length} {plural(activeWork.length, "piece", "pieces")} of work</span>. <span className="font-medium text-foreground">{needsYouItems.length} {plural(needsYouItems.length, "decision needs", "decisions need")} your attention</span>, and I've completed <span className="font-medium text-foreground">{accomplished.length} {plural(accomplished.length, "piece", "pieces")} of work</span>.
+                I'm looking after <span className="font-medium text-foreground">{activeWork.length} {plural(activeWork.length, "piece", "pieces")} of work</span>. <span className="font-medium text-foreground">{counts.needsYou} {plural(counts.needsYou, "job needs", "jobs need")} your attention</span>, and I've completed <span className="font-medium text-foreground">{accomplished.length} {plural(accomplished.length, "piece", "pieces")} of work</span>.
               </p>
             </div>
           </header>
 
           <div role="tablist" aria-label="Work views" className="mb-5 flex items-center gap-1 border-b border-border">
             {tabs.map((tab) => (
-              <button
+              <Button
+                variant="ghost"
                 key={tab.id}
                 role="tab"
                 aria-selected={view === tab.id}
@@ -163,7 +122,7 @@ export function WorkOverview({ onClose, onGuide, sideLetterRequested = false, su
                 className={`-mb-px border-b-2 px-3 pb-2.5 pt-1 text-sm transition-colors ${view === tab.id ? "border-foreground font-medium text-foreground" : "border-transparent text-muted-foreground hover:text-foreground"}`}
               >
                 {tab.label} <span className="ml-1 tabular-nums text-xs text-muted-foreground">{tab.count}</span>
-              </button>
+              </Button>
             ))}
           </div>
 
@@ -173,39 +132,26 @@ export function WorkOverview({ onClose, onGuide, sideLetterRequested = false, su
               type="search"
               value={query}
               onChange={(e) => { setQuery(e.target.value); setShowAll(false); }}
-              placeholder="Find a job or place..."
-              aria-label="Find a job or place"
+              placeholder="Find work or a place..."
+              aria-label="Find work or a place"
               className="h-10 w-full rounded-lg border border-border bg-background pl-9 pr-3 text-sm outline-none placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-ring"
             />
           </div>
 
-          {view === "needs-you" && (
-            <section aria-label="Needs you">
-              {visibleNeedsYou.length === 0 ? <p className="py-8 text-sm text-muted-foreground">{query ? "Nothing needing you matches that search." : "Nothing needs your attention just now."}</p> : (
-                <div className="divide-y divide-border">
-                  {visibleNeedsYou.map((item) => (
-                    <article key={item.key} className="flex flex-wrap items-center gap-x-6 gap-y-2 py-4">
-                      <div className="min-w-0 flex-1 basis-72">
-                        <p className="text-xs text-muted-foreground">{item.place}</p>
-                        <h3 className="mt-1 text-sm font-semibold leading-snug">{item.jobTitle}</h3>
-                        <p className="mt-1 text-sm font-medium leading-snug">{item.matter}</p>
-                        <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">{item.why}</p>
-                        <p className="mt-1.5 text-sm font-medium leading-relaxed">{item.decision}</p>
-                      </div>
-                      {item.open
-                        ? <Button variant="outline" size="sm" onClick={item.open} className="shrink-0 gap-2">{item.actionLabel}<ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" /></Button>
-                        : <Button variant="ghost" size="sm" className="shrink-0 gap-2 text-muted-foreground" disabled>{item.actionLabel}</Button>}
-                    </article>
-                  ))}
-                </div>
-              )}
-              {!showAll && filteredNeedsYou.length > INITIAL_ROWS && <Button variant="link" size="sm" onClick={() => setShowAll(true)} className="mt-2 h-auto p-0 text-sm">Show all {filteredNeedsYou.length}</Button>}
-            </section>
+          {view === "ongoing" && (
+            <div className="mb-4 flex items-center justify-between gap-3">
+              <Button variant="ghost" size="sm" aria-pressed={needsAttention} onClick={() => { setNeedsAttention(value => !value); setShowAll(false); }} className="gap-2 text-muted-foreground">
+                <Hand className="h-3.5 w-3.5" aria-hidden="true" />
+                Needs attention <span className="text-xs tabular-nums">{counts.needsYou}</span>
+                {needsAttention && <Check className="h-3.5 w-3.5 text-foreground" aria-hidden="true" />}
+              </Button>
+              {needsAttention && <Button variant="link" size="sm" onClick={() => { setNeedsAttention(false); setShowAll(false); }} className="text-muted-foreground">Clear filter</Button>}
+            </div>
           )}
 
-          {view === "all" && (
-            <section aria-label="All work">
-              {visibleWork.length === 0 ? <p className="py-8 text-sm text-muted-foreground">No ongoing work matches that search.</p> : (
+          {view === "ongoing" && (
+            <section aria-label="Ongoing">
+              {visibleWork.length === 0 ? <p className="py-8 text-sm text-muted-foreground">{needsAttention && !query ? "Nothing needs your attention just now." : "No ongoing work matches that search."}</p> : (
                 <div className="divide-y divide-border">
                   {visibleWork.map((work) => {
                     const attention = attentionFor(work);
@@ -234,7 +180,7 @@ export function WorkOverview({ onClose, onGuide, sideLetterRequested = false, su
               )}
               {!showAll && filteredWork.length > INITIAL_ROWS && <Button variant="link" size="sm" onClick={() => setShowAll(true)} className="mt-2 h-auto p-0 text-sm">Show all {filteredWork.length} jobs</Button>}
 
-              {currentRoofWork.ended && (
+              {currentRoofWork.ended && !needsAttention && matches([roofLeakWork.place, roofLeakWork.title]) && (
                 <section aria-label="Ended work" className="mt-8 border-t border-border pt-5">
                   <h3 className="text-sm font-semibold text-muted-foreground">Ended work</h3>
                   <p className="mt-3 text-xs text-muted-foreground">Burlington Gardens · Ended by you</p>

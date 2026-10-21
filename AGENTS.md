@@ -10,7 +10,7 @@
 - Treat guidance about an unavailable paper as an awaiting-paper state; reuse the existing resizable conversation beside work on desktop and overlay it on narrow screens so guidance never fabricates access or compresses the work surface.
 - Keep independent roof scenarios in parent-owned local state; explicit starts record preparation, not authority. End guards and fresh-attempt resets preserve snapshots without leaking guidance, approvals or pause state across scenarios or jobs.
 - Keep jobs and focused subtasks distinct; roof attempts and renewal preparation/draft state are parent-owned. Evidence is requested; browsing never acts.
-- Keep workload entries in one typed collection shared by overview and briefing count derivation; roof work uses only its parent-owned investigation state, and the completed lease is the read-only completion example.
+- Keep workload entries in one typed collection shared by overview and briefing count derivation; attention filters and counts deduplicate jobs, and overview entry opens the parent briefing rather than an approval; roof work uses only its parent-owned investigation state, and the completed lease is the read-only completion example.
 - Job Papers / Map controls open a context-only layer without navigating the shell or unmounting the journey; use job-specific illustrative papers and explicitly label approximate locations so state is preserved and unrelated evidence is never shown.
 - The completed lease is a read-only journey from one typed source; opening it never alters counts or starts work.
 - Keep the prototype demonstration behind a pass phrase verified by a server function; the browser holds only a session flag, and any direct address must reveal the entrance rather than the work.
