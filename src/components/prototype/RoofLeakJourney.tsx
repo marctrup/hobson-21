@@ -62,6 +62,17 @@ export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initia
   const selectedActivity = activities.find((activity) => activity.id === selected);
   const selectedDone = typeof selected === "string" && selected.startsWith("done-") ? completed[Number(selected.slice(5))] : null;
 
+  /** The calm opening briefing — every line is derived from the live illustrative state. */
+  const doneItems = work.number > 1
+    ? work.history.map((item) => item.label)
+    : ["Received the report of the leak.", "Found the relevant Business Lease.", "Sent the contractor inspection request.", ...work.history.slice(3).map((item) => item.label)];
+  const outstanding: { id: ActivityId; title: string; status: string }[] = [
+    { id: "lease", title: "Establish repairing responsibility", status: help.shown ? "Needs your help — I can't establish whether the affected roof forms part of the tenant's premises." : "Reviewing the lease — responsibility not yet established." },
+    { id: "contractor", title: "Contractor inspection", status: work.contractorRequestSent ? `Request sent — awaiting a response.${guidance.contactOnHold ? " Further contact is on hold at your request." : ""}` : "No inspection requested yet in this investigation." },
+    { id: "insurer", title: "Contact the insurer", status: work.insurerSent ? "Sent — awaiting a response." : !work.insurerPrepared ? "No notification prepared yet." : guidance.contactOnHold ? "On hold at your request — the prepared notification has not been sent." : "Notification prepared but not sent — needs your approval." },
+  ];
+  const openActivity = (id: ActivityId) => { setSelected(id); setPaperOpen(false); setBriefing(false); };
+
   return (
     <div className="flex min-h-0 flex-1 flex-col overflow-y-auto [@container_work_(min-width:48rem)]:overflow-hidden" role="region" aria-label="Roof leak investigation work journey">
       <header className="shrink-0 border-b border-border px-5 pb-5 pt-4 [@container_work_(min-width:40rem)]:px-6">
