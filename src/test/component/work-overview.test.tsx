@@ -150,7 +150,7 @@ describe("Illustrative work journey", () => {
     await user.click(screen.getByRole("button", { name: "Approve and send" }));
     expect(screen.getAllByRole("status").some((el) => el.textContent === "Email sent.")).toBe(true);
     expect(screen.getByText(/I'll wait for the tenant's response/)).toBeVisible();
-    expect(screen.getByRole("status")).toHaveTextContent("Email sent — awaiting a response");
+    expect(screen.getAllByRole("status").some(el => el.textContent === "Email sent — awaiting a response")).toBe(true);
     await user.click(screen.getByRole("button", { name: "Return to the investigation" }));
     await user.click(screen.getAllByRole("button", { name: "View supporting detail" })[1]);
     expect(screen.getByRole("button", { name: /Checking the tenancy history/ })).toHaveAttribute("aria-current", "step");
