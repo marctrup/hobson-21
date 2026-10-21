@@ -47,6 +47,8 @@ describe("Roof leak — glass workboard briefing", () => {
     const user = userEvent.setup();
     renderJourney();
     await user.click(screen.getByRole("button", { name: /Contact the insurer/ }));
+    expect(screen.queryByRole("article", { name: "Draft insurer notification preview" })).not.toBeInTheDocument();
+    await user.click(screen.getByRole("button", { name: "Review notification" }));
     expect(screen.getByRole("article", { name: "Draft insurer notification preview" })).toBeVisible();
     expect(screen.getByRole("button", { name: /Contact the insurer/ })).toHaveAttribute("aria-current", "step");
     expect(screen.queryByRole("heading", { name: "The plan" })).not.toBeInTheDocument();

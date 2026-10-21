@@ -192,6 +192,7 @@ describe("Illustrative work journey", () => {
     await user.click(screen.getByRole("tab", { name: /All work/ }));
     await user.click(within(screen.getByRole("region", { name: "All work" })).getByRole("button", { name: /Investigating the roof leak/ }));
     await user.click(screen.getByRole("button", { name: /Contact the insurer/ }));
+    await user.click(screen.getByRole("button", { name: "Review notification" }));
     await user.click(screen.getByRole("button", { name: "Change before sending" }));
     const box = screen.getByLabelText("Edit the notification");
     await user.clear(box);
@@ -244,17 +245,20 @@ describe("Illustrative work journey", () => {
     // Each activity is selectable and only changes what is viewed.
     const lease = screen.getByRole("button", { name: /Reviewing repairing obligations/ });
     expect(lease).toHaveAttribute("aria-current", "step");
+    await user.click(screen.getByRole("button", { name: "Review repairing obligations" }));
     expect(screen.getByText("Who is responsible for repairing the affected roof?")).toBeVisible();
     expect(screen.getByText(/I haven't finished reviewing the relevant repairing obligations\./)).toBeVisible();
     await user.click(screen.getByRole("button", { name: /Business Lease · View paper/ }));
     expect(screen.getByLabelText("Business Lease illustrative extract")).toBeVisible();
 
     await user.click(screen.getByRole("button", { name: /Contractor inspection/ }));
+    await user.click(screen.getByRole("button", { name: "Sent inspection request" }));
     expect(screen.getByText(/I'm awaiting a response\./)).toBeVisible();
     expect(screen.getByText("No inspection report has been received.")).toBeVisible();
     expect(screen.getByRole("article", { name: "Inspection request record" })).toBeVisible();
 
     await user.click(screen.getByRole("button", { name: /Contact the insurer/ }));
+    await user.click(screen.getByRole("button", { name: "Review notification" }));
     expect(screen.getByText("Needs your approval")).toBeVisible();
     expect(screen.getByRole("article", { name: "Draft insurer notification preview" })).toHaveTextContent("Insurer (illustrative recipient)");
     expect(screen.getByRole("button", { name: "Approve and send" })).toBeEnabled();
