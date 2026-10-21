@@ -225,18 +225,18 @@ export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initia
               </>}
               {selectedActivity && (evidence || (selected === "insurer" && !work.insurerPrepared)) && <div aria-label="Activity supporting detail" className="mt-4 border-t border-border pt-4">
               {selected === "lease" && <>
-                {work.number > 1 && <div className="mt-4 space-y-4 border-y border-border py-4">
+                {evidence === "findings" && work.number > 1 && <div className="mt-4 space-y-4 border-y border-border py-4">
                   <div><h5 className="text-xs font-semibold">Information already available</h5><ul className="mt-2 space-y-1 text-sm leading-relaxed text-muted-foreground"><li>Tenant's report.</li><li>Business Lease.</li><li>Record of the previous contractor inspection request.</li></ul></div>
                   <div><h5 className="text-xs font-semibold">What I'm checking again</h5><ul className="mt-2 space-y-1 text-sm leading-relaxed text-muted-foreground"><li>The relevant repairing obligations.</li><li>Whether the earlier findings remain applicable.</li></ul></div>
                 </div>}
-                <article className="mt-4 border-y border-border py-4">
+                {evidence === "paper" && <article className="mt-4 border-y border-border py-4">
                   <div className="flex flex-wrap items-center justify-between gap-2">
                     <h5 className="flex items-center gap-2 text-sm font-semibold"><FileText className="h-4 w-4 text-muted-foreground" />Business Lease</h5>
                     <span className="flex items-center gap-1.5 text-xs text-muted-foreground"><span aria-hidden="true" className={`h-1.5 w-1.5 rounded-full ${paused ? "bg-muted-foreground" : "bg-ring"}`} />{paused ? "Review paused" : "Reviewing"}</span>
                   </div>
                   <p className="mt-3 text-sm leading-relaxed text-muted-foreground">What I'm examining</p>
-                </article>
-                <div className="mt-5 border-l-2 border-ring pl-3">
+                </article>}
+                {evidence === "findings" && <><div className="mt-5 border-l-2 border-ring pl-3">
                   <h5 className="text-xs font-semibold">What I'm trying to establish</h5>
                   <p className="mt-2 text-sm leading-relaxed">Who is responsible for repairing the affected roof?</p>
                 </div>
@@ -244,7 +244,9 @@ export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initia
                   <h5 className="text-xs font-semibold">Not yet established</h5>
                   <p className="mt-2 text-sm leading-relaxed text-muted-foreground">I haven't finished reviewing the relevant repairing obligations.</p>
                 </div>}
-                {help.shown && <section aria-label="Hobson needs your help" className="relative mt-5 rounded-md border border-border bg-muted/40 px-4 py-4">
+                {help.shown && <div className="mt-4 border-l-2 border-border pl-3"><h5 className="text-xs font-semibold">Not yet established</h5><p className="mt-2 text-sm leading-relaxed text-muted-foreground">The lease contains repairing obligations relevant to the premises, but I cannot confirm whether the affected roof falls within them.</p></div>}
+                </>}
+                {evidence === "clarification" && help.shown && <section aria-label="Hobson needs your help" className="relative mt-5 rounded-md border border-border bg-muted/40 px-4 py-4">
                   <Button variant="ghost" size="icon" onClick={() => onHelpChange({ ...help, shown: false })} aria-label="Close this demonstration" title="Close this demonstration" className="absolute right-1.5 top-1.5 h-7 w-7 text-muted-foreground"><X className="h-4 w-4" aria-hidden="true" /></Button>
                   <h5 className="flex items-center gap-2 text-sm font-semibold"><CircleHelp className="h-4 w-4" aria-hidden="true" strokeWidth={1.6} />Hobson needs your help</h5>
                   <p className="mt-2 text-sm leading-relaxed">I've reviewed the relevant lease provisions, but I can't establish whether the roof above the shopfront forms part of the tenant's premises.</p>
@@ -255,7 +257,7 @@ export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initia
                   </dl>
                   <p className="mt-3 text-xs text-muted-foreground">Illustrative unresolved finding — not a legal conclusion.</p>
                 </section>}
-                {help.shown && help.choice !== "enquiry" && <div className="mt-4 border-l-2 border-ring pl-3">
+                {evidence === "clarification" && help.shown && help.choice !== "enquiry" && <div className="mt-4 border-l-2 border-ring pl-3">
                   <h5 className="text-xs font-semibold">What I suggest</h5>
                   <p className="mt-2 text-sm leading-relaxed">I suggest asking the surveyor to clarify whether the affected roof forms part of the tenant's premises. I can prepare the enquiry for your approval.</p>
                   {help.choice === "unresolved" && <p role="status" className="mt-3 text-sm leading-relaxed text-muted-foreground">I'll leave the responsibility question open for now and continue with the other parts of the investigation. The question remains open.</p>}
@@ -265,7 +267,7 @@ export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initia
                     {help.choice !== "unresolved" && <Button size="sm" variant="ghost" onClick={() => onHelpChange({ ...help, choice: "unresolved" })} className="text-muted-foreground">Leave unresolved</Button>}
                   </div>
                 </div>}
-                {help.shown && help.choice === "enquiry" && <div className="mt-4">
+                {evidence === "clarification" && help.shown && help.choice === "enquiry" && <div className="mt-4">
                   <p role="status" className="text-sm font-semibold">Enquiry prepared — Not sent</p>
                   <p className="mt-1 text-sm leading-relaxed text-muted-foreground">The draft asks the surveyor to clarify which area the lease covers. The responsibility question stays open until that's established.</p>
                   <article aria-label="Draft surveyor enquiry preview" className="mt-3 rounded-md border border-border bg-popover px-4 py-4">
@@ -278,12 +280,12 @@ export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initia
                   </article>
                   <p className="mt-3 text-xs leading-relaxed text-muted-foreground">{guidance.contactOnHold ? "On hold at your request. I've prepared the enquiry, but I can't send it while your hold on further contact stands." : "Still required: Your approval. Preparing a message is not the same as sending it; I won't send this without your approval."}</p>
                 </div>}
-                {guidance.leasePlansRequested && <div className="mt-4 border-l-2 border-ring pl-3">
+                {evidence === "findings" && guidance.leasePlansRequested && <div className="mt-4 border-l-2 border-ring pl-3">
                   <h5 className="text-xs font-semibold">Added at your request</h5>
                   <p className="mt-2 text-sm leading-relaxed">{LEASE_PLANS_INSTRUCTION}</p>
                   <p className="mt-2 text-xs leading-relaxed text-muted-foreground">I haven't reviewed the plans yet. The responsibility question stays open until I've established what they show.</p>
                 </div>}
-                {guidance.shopfrontRequested && <div className="mt-4 border-l-2 border-ring pl-3">
+                {evidence === "findings" && guidance.shopfrontRequested && <div className="mt-4 border-l-2 border-ring pl-3">
                   <h5 className="text-xs font-semibold">Added at your request</h5>
                   <p className="mt-2 text-sm leading-relaxed">Check whether the shopfront roof forms part of the tenant's premises.</p>
                   <p className="mt-2 text-xs leading-relaxed text-muted-foreground">I'll check how the premises are described in the lease before reaching a conclusion. The check hasn't been completed, and the roof isn't assumed to be included.</p>
@@ -308,7 +310,7 @@ export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initia
                   <div className="mt-2 flex flex-wrap items-center gap-2">
                     {help.shown
                       ? <DeskActionButton icon={<Undo2 className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />} label="Return to investigation" tooltip="Close this example and return to the investigation as it was." onClick={() => onHelpChange({ ...help, shown: false })} />
-                      : <DeskActionButton demo icon={<HelpCircle className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />} label="Preview needs help" tooltip="See how Hobson explains what is missing and asks for your help." onClick={() => onHelpChange({ ...help, shown: true })} />}
+                      : <DeskActionButton demo icon={<HelpCircle className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />} label="Preview needs help" tooltip="See how Hobson explains what is missing and asks for your help." onClick={() => { onHelpChange({ ...help, shown: true }); setEvidence("clarification"); }} />}
                   </div>
                 </div>
               </>}

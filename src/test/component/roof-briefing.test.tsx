@@ -39,7 +39,7 @@ describe("Roof leak — glass workboard briefing", () => {
     // None of the detailed surface is shown until an activity is selected.
     expect(screen.queryByText("On Hobson's Desk")).not.toBeInTheDocument();
     expect(screen.queryByRole("button", { name: "Preview needs help" })).not.toBeInTheDocument();
-    expect(screen.queryByRole("button", { name: /What I've done/ })).not.toBeInTheDocument();
+    expect(screen.queryByText("Read the tenant's report.")).not.toBeInTheDocument();
     expect(screen.queryByText(/I'm continuing my review of the lease/)).not.toBeInTheDocument();
   });
 
@@ -50,9 +50,9 @@ describe("Roof leak — glass workboard briefing", () => {
     expect(screen.queryByRole("article", { name: "Draft insurer notification preview" })).not.toBeInTheDocument();
     await user.click(screen.getByRole("button", { name: "Review notification" }));
     expect(screen.getByRole("article", { name: "Draft insurer notification preview" })).toBeVisible();
-    expect(screen.getByRole("button", { name: /Contact the insurer/ })).toHaveAttribute("aria-current", "step");
+    expect(screen.getByRole("heading", { level: 2, name: "Contact the insurer" })).toBeVisible();
     expect(screen.queryByRole("heading", { name: "The plan" })).not.toBeInTheDocument();
-    await user.click(screen.getByRole("button", { name: "Back to job overview" }));
+    await user.click(screen.getByRole("button", { name: "Back to roof leak investigation" }));
     expect(screen.getByRole("heading", { name: "The plan" })).toBeVisible();
     expect(screen.queryByRole("article", { name: "Draft insurer notification preview" })).not.toBeInTheDocument();
   });
@@ -60,7 +60,7 @@ describe("Roof leak — glass workboard briefing", () => {
   it("opens the detail directly when entered from a decision", () => {
     renderJourney(createRoofWork(), "detail");
     expect(screen.queryByRole("heading", { name: "The plan" })).not.toBeInTheDocument();
-    expect(screen.getByText("On Hobson's Desk")).toBeVisible();
+    expect(screen.getByRole("region", { name: "Focused activity work" })).toBeVisible();
   });
 
   it("shows the insurer notification as on hold, never as needing you, while contact is held", () => {
