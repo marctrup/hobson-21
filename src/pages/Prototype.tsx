@@ -20,7 +20,7 @@ import { WorkOverview } from "@/components/prototype/WorkOverview";
 import { PaperPreviewContext, isPaperRecordMessage } from "@/components/prototype/paperPreviewContext";
 import { applyWorkGuidance, applyPaperPlacement, type PaperPlace, type PaperPlacementAction, initialWorkGuidance, SIDE_LETTER_INSTRUCTION, SIDE_LETTER_ATTACHMENT_ID, SIDE_LETTER_ATTACHMENT_INSTRUCTION, SIDE_LETTER_FILENAME } from "@/components/prototype/workGuidance";
 import { FileText as FileTextIcon, Paperclip, X as XIcon } from "lucide-react";
-import { createRoofWork, roofOverviewCounts } from "@/components/prototype/roofWorkLifecycle";
+import { createUnstartedRoofWork, roofOverviewCounts } from "@/components/prototype/roofWorkLifecycle";
 import { applyRoofGuidance, initialRoofGuidance, HOLD_CONTACT_INSTRUCTION, LIFT_HOLD_INSTRUCTION, SHOPFRONT_INSTRUCTION, type RoofGuideScope } from "@/components/prototype/roofGuidance";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -1445,7 +1445,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
     }, 1800);
     return () => window.clearTimeout(timer);
   }, [workGuidance]);
-  const [roofWork, setRoofWork] = useState(createRoofWork);
+  const [roofWork, setRoofWork] = useState(createUnstartedRoofWork);
   const roofCounts = roofOverviewCounts(roofWork);
   useEffect(() => {
     if (testerMode) return;

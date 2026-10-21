@@ -13,25 +13,45 @@ export type RoofAttempt = {
   insurerSent: boolean;
   insurerApproval?: { to: string; subject: string; body: string; attachments: string[] };
   contractorRequestSent: boolean;
+  scenario?: "not-commenced";
+  contractorStarted?: boolean;
+  insurerStarted?: boolean;
   history: typeof roofLeakWork.completed;
 };
-export type RoofWorkState = RoofAttempt & { ended: boolean; previous: RoofAttempt[] };
+export type RoofWorkState = RoofAttempt & { ended: boolean; previous: RoofAttempt[]; alternate?: RoofWorkState };
 
 export function createRoofWork(): RoofWorkState {
   return { number: 1, guidance: { ...initialRoofGuidance }, help: { ...initialRoofHelp }, paused: false, insurerPrepared: true, insurerDraft: INSURER_BODY, insurerSent: false, contractorRequestSent: true, history: [...roofLeakWork.completed], ended: false, previous: [] };
 }
 
+/** A separate scenario, never a rewrite of the earlier sent/prepared example. */
+export function createUnstartedRoofWork(): RoofWorkState {
+  return { ...createRoofWork(), scenario: "not-commenced", contractorStarted: false, insurerStarted: false, contractorRequestSent: false, insurerPrepared: false, insurerDraft: "", history: roofLeakWork.completed.slice(0, 2) };
+}
+
+export function switchRoofScenario(work: RoofWorkState): RoofWorkState {
+  const { alternate, ...current } = work;
+  return { ...(alternate ?? (work.scenario ? createRoofWork() : createUnstartedRoofWork())), alternate: current };
+}
+
+export function startRoofActivity(work: RoofWorkState, activity: "contractor" | "insurer"): RoofWorkState {
+  const key = activity === "contractor" ? "contractorStarted" : "insurerStarted";
+  if (work.ended || work.paused || !work.scenario || work[key]) return work;
+  const acknowledgement = activity === "contractor" ? "I'll begin preparing the contractor inspection request." : "I'll begin reviewing what we know and preparing the insurer notification.";
+  return { ...work, [key]: true, history: [...work.history, { label: activity === "contractor" ? "Asked me to begin the contractor inspection work." : "Asked me to begin the insurer notification work.", outcome: `${acknowledgement} Starting this work authorises internal preparation only; no external contact has been approved or made.` }] };
+}
+
 /** Ending records a snapshot; nothing is sent, recalled or marked accomplished. */
 export function endRoofWork(work: RoofWorkState): RoofWorkState {
   if (work.ended) return work;
-  const { ended: _, previous, ...attempt } = work;
+  const { ended: _, previous, alternate: __, ...attempt } = work;
   return { ...work, ended: true, previous: [...previous, structuredClone(attempt)] };
 }
 
 /** A fresh attempt has no inherited instructions, approval, drafts or sent requests. */
 export function restartRoofWork(work: RoofWorkState): RoofWorkState {
   if (!work.ended) return work;
-  return { ...createRoofWork(), number: work.number + 1, insurerPrepared: false, contractorRequestSent: false, history: [], previous: work.previous };
+  return { ...(work.scenario ? createUnstartedRoofWork() : createRoofWork()), number: work.number + 1, insurerPrepared: false, contractorRequestSent: false, history: [], previous: work.previous, alternate: work.alternate };
 }
 
 export function roofAttention(work: RoofWorkState) {
