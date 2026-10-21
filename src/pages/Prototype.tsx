@@ -4373,7 +4373,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
         {showWhatIveDone && (
           <PaperPreviewContext.Provider value={setPaperPreviewActive}><WorkOverview onClose={resetToMap} sideLetterRequested={workGuidance.sideLetterRequested} suppliedPapers={workGuidance.suppliedPapers} paperPlaces={PAPER_PLACES} onPaperPlacement={placeSuppliedPaper} roofGuidance={roofGuidance} roofWork={roofWork} onRoofWorkChange={(next) => {
             setRoofWork(next);
-            if (guideScope !== "renewal" && (next.ended !== roofWork.ended || next.number !== roofWork.number)) { setGuidingRenewal(false); setInput(""); }
+            if (guideScope !== "renewal" && (next.ended !== roofWork.ended || next.number !== roofWork.number || next.scenario !== roofWork.scenario)) { setGuidingRenewal(false); setInput(""); }
           }} focusNeedsYou={needsYouFocus} onJourneyBack={() => setGuidingRenewal(false)} onGuide={(scope, suggestion) => {
             if (scope !== "renewal" && (roofWork.ended)) return;
             expandChat();

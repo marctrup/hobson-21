@@ -215,7 +215,7 @@ export function WorkOverview({ onClose, onGuide, sideLetterRequested = false, su
                               ? <Button variant="link" onClick={() => openWork(work)} className="h-auto max-w-full justify-start gap-2 whitespace-normal p-0 text-left text-sm font-semibold leading-snug">{work.title}<ArrowUpRight className="h-3.5 w-3.5 shrink-0" aria-hidden="true" /></Button>
                               : work.title}
                           </h3>
-                          <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{work.summary}</p>
+                          <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{work.place === roofLeakWork.place && currentRoofWork.scenario ? "Reviewing repairing responsibility; inspection and insurer work begin at your request." : work.summary}</p>
                         </div>
                         {attention && (
                           <p className={`flex shrink-0 items-center gap-1.5 text-xs ${attention.startsWith("Needs you") ? "font-medium text-foreground" : "text-muted-foreground"}`}>
