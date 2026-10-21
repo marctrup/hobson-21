@@ -3,15 +3,15 @@ import { createRoofWork, endRoofWork, restartRoofWork, roofAttention, roofOvervi
 
 describe("Roof investigation attempt safety", () => {
   it("retains three accomplishments, five ongoing jobs and three actionable decisions", () => {
-    expect(roofOverviewCounts(createRoofWork())).toEqual({ accomplished: 3, active: 5, needsYou: 3 });
+    expect(roofOverviewCounts(createRoofWork())).toEqual({ accomplished: 3, active: 7, needsYou: 3 });
   });
   it("counts only actionable roof decisions without changing accomplishments", () => {
     const work = createRoofWork();
     work.guidance.contactOnHold = true;
-    expect(roofOverviewCounts(work)).toEqual({ accomplished: 3, active: 5, needsYou: 2 });
+    expect(roofOverviewCounts(work)).toEqual({ accomplished: 3, active: 7, needsYou: 2 });
     work.help.shown = true;
-    expect(roofOverviewCounts(work)).toEqual({ accomplished: 3, active: 5, needsYou: 3 });
-    expect(roofOverviewCounts(endRoofWork(work))).toEqual({ accomplished: 3, active: 4, needsYou: 2 });
+    expect(roofOverviewCounts(work)).toEqual({ accomplished: 3, active: 7, needsYou: 3 });
+    expect(roofOverviewCounts(endRoofWork(work))).toEqual({ accomplished: 3, active: 6, needsYou: 2 });
   });
   it("closes an attempt and removes every pending attention request", () => {
     const work = createRoofWork();

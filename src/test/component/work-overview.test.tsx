@@ -3,6 +3,10 @@ import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { WorkOverview } from "@/components/prototype/WorkOverview";
 
+const openNeedsYou = async (user: ReturnType<typeof userEvent.setup>) => {
+  await user.click(screen.getByRole("tab", { name: /Needs you/ }));
+};
+
 describe("Illustrative work journey", () => {
   it("preserves the selected evidence and pause state when guidance adds a paper", async () => {
     const user = userEvent.setup();
@@ -96,13 +100,16 @@ describe("Illustrative work journey", () => {
     await user.click(screen.getByRole("button", { name: "Not now" }));
     expect(screen.getByRole("button", { name: /Checking the tenancy history/ })).toHaveAttribute("aria-current", "step");
     await user.click(screen.getByRole("button", { name: "Back to What I'm Up To" }));
-    const needsYou = screen.getByRole("region", { name: /Needs you/ });
+    await openNeedsYou(user);
+    const needsYou = screen.getByRole("region", { name: "Needs you" });
     expect(within(needsYou).getByText("Stanley House · Flat 6")).toBeInTheDocument();
-    // One job, one place: Flat 6 stays in What I'm looking after, not duplicated.
-    const lookingAfter = screen.getByRole("region", { name: /What I'm looking after/ });
-    expect(lookingAfter).toHaveTextContent("Stanley House · Flat 6");
-    expect(within(lookingAfter).getByText("Renewal email — your approval needed")).toBeInTheDocument();
-    const renewalDecision = within(needsYou).getByText("Stanley House · Flat 6").closest("article")!;
+    // One job, one place: Flat 6 stays in All work, not duplicated.
+    await user.click(screen.getByRole("tab", { name: /All work/ }));
+    const allWork = screen.getByRole("region", { name: "All work" });
+    expect(allWork).toHaveTextContent("Stanley House · Flat 6");
+    expect(allWork).toHaveTextContent("Needs you — Renewal email");
+    await openNeedsYou(user);
+    const renewalDecision = within(screen.getByRole("region", { name: "Needs you" })).getByText("Stanley House · Flat 6").closest("article")!;
     await user.click(within(renewalDecision).getByRole("button", { name: "Review decision" }));
     expect(screen.getByText("May I send this email?")).toBeVisible();
     await user.click(screen.getByRole("button", { name: "Change before sending" }));
@@ -119,8 +126,11 @@ describe("Illustrative work journey", () => {
     expect(screen.getByRole("button", { name: /Checking the tenancy history/ })).toHaveAttribute("aria-current", "step");
     expect(screen.getByRole("button", { name: /Original annual rent\s*£24,000/ })).toBeInTheDocument();
     await user.click(screen.getByRole("button", { name: "Back to What I'm Up To" }));
-    expect(screen.getByRole("region", { name: /What I'm looking after/ })).toHaveTextContent("Renewal email sent — awaiting the tenant's response");
-    expect(screen.getByRole("region", { name: /Needs you/ })).not.toHaveTextContent("Stanley House · Flat 6");
+    // Sent: the job stays in All work; the decision leaves Needs you.
+    expect(screen.getByRole("region", { name: "All work" })).toHaveTextContent("Stanley House · Flat 6");
+    expect(screen.getByRole("region", { name: "All work" })).not.toHaveTextContent("Needs you — Renewal email");
+    await openNeedsYou(user);
+    expect(screen.getByRole("region", { name: "Needs you" })).not.toHaveTextContent("Stanley House · Flat 6");
   });
 
   it("keeps approval inside the journey and gates approval on the draft's readiness", async () => {
@@ -169,13 +179,17 @@ describe("Illustrative work journey", () => {
   it("approves the insurer notification once, from either route, and removes it from Needs you", async () => {
     const user = userEvent.setup();
     render(<WorkOverview onClose={vi.fn()} onGuide={vi.fn()} />);
-    const needsYou = () => screen.getByRole("region", { name: /Needs you/ });
-    await user.click(within(within(needsYou()).getByText("Contact the insurer").closest("article")!).getByRole("button", { name: "Review decision" }));
+    await openNeedsYou(user);
+    const needsYou = () => screen.getByRole("region", { name: "Needs you" });
+    await user.click(within(within(needsYou()).getByText("Contact the insurer").closest("article")!).getByRole("button", { name: "Review notification" }));
     await user.click(screen.getByRole("button", { name: "Not now" }));
     await user.click(screen.getByRole("button", { name: "Back to What I'm Up To" }));
+    // The selected view is remembered when returning from a job.
+    expect(screen.getByRole("tab", { name: /Needs you/ })).toHaveAttribute("aria-selected", "true");
     expect(within(needsYou()).getByText("Contact the insurer")).toBeInTheDocument();
     // Route B reaches the same draft; an edit is shown back for explicit approval, never sent automatically.
-    await user.click(within(screen.getByRole("region", { name: /What I'm looking after/ })).getByRole("button", { name: /Investigating the roof leak/ }));
+    await user.click(screen.getByRole("tab", { name: /All work/ }));
+    await user.click(within(screen.getByRole("region", { name: "All work" })).getByRole("button", { name: /Investigating the roof leak/ }));
     await user.click(screen.getByRole("button", { name: /Contact the insurer/ }));
     await user.click(screen.getByRole("button", { name: "Change before sending" }));
     const box = screen.getByLabelText("Edit the notification");
@@ -186,19 +200,20 @@ describe("Illustrative work journey", () => {
     await user.click(screen.getByRole("button", { name: "Approve and send" }));
     expect(screen.getByRole("article", { name: "Sent insurer notification" })).toHaveTextContent("Revised wording.");
     await user.click(screen.getByRole("button", { name: "Back to What I'm Up To" }));
+    await openNeedsYou(user);
     expect(within(needsYou()).queryByText("Contact the insurer")).not.toBeInTheDocument();
-    expect(screen.getByText("2 things I'd like you to review.")).toBeInTheDocument();
+    expect(screen.getByText("2 decisions need your attention")).toBeInTheDocument();
   });
-  it("shows the roof leak as one piece of work with three parallel activities", async () => {
+
+  it("shows the roof leak as one piece of work in All work, flagged as needing you", async () => {
     const user = userEvent.setup();
     render(<WorkOverview onClose={vi.fn()} onGuide={vi.fn()} />);
-    const lookingAfter = screen.getByRole("region", { name: /What I'm looking after/ });
-    // One job, one place: the investigation appears once, with its three activities inside it.
-    expect(within(lookingAfter).getAllByText("Investigating the roof leak")).toHaveLength(1);
-    expect(within(lookingAfter).getByText("Reviewing the lease")).toBeInTheDocument();
-    expect(within(lookingAfter).getByText("Contractor inspection")).toBeInTheDocument();
-    expect(within(lookingAfter).getByText("Contact the insurer")).toBeInTheDocument();
-    expect(screen.getByText("5 more")).toBeInTheDocument();
+    const allWork = screen.getByRole("region", { name: "All work" });
+    // One job, one place: the investigation appears once, flagged with its outstanding decision.
+    expect(within(allWork).getAllByText("Investigating the roof leak")).toHaveLength(1);
+    expect(within(allWork).getByText("Checking repairing responsibility and waiting for the contractor.")).toBeInTheDocument();
+    expect(within(allWork).getByText("Needs you — Insurer notification")).toBeInTheDocument();
+    expect(screen.getByText("7 pieces of work")).toBeInTheDocument();
 
     await user.click(screen.getByRole("button", { name: "Investigating the roof leak" }));
     expect(screen.getByRole("region", { name: "Roof leak investigation work journey" })).toBeVisible();
@@ -254,26 +269,41 @@ describe("Illustrative work journey", () => {
     const user = userEvent.setup();
     render(<WorkOverview onClose={vi.fn()} onGuide={vi.fn()} />);
     // Three outstanding decisions: Flat 8 rent review, EPC assessor, and the insurer notification.
-    const needsYou = screen.getByRole("region", { name: /Needs you/ });
+    await openNeedsYou(user);
+    const needsYou = screen.getByRole("region", { name: "Needs you" });
     expect(within(needsYou).getByText("Burlington Gardens")).toBeInTheDocument();
     expect(within(needsYou).getByText("Contact the insurer")).toBeInTheDocument();
     expect(within(needsYou).getByText(/I've prepared a notification about the reported roof leak\./)).toBeInTheDocument();
-    expect(screen.getByText("3 things I'd like you to review.")).toBeInTheDocument();
-    // The roof leak remains one piece of work in What I'm looking after, with readable states.
-    const lookingAfter = screen.getByRole("region", { name: /What I'm looking after/ });
-    expect(within(lookingAfter).getAllByText("Investigating the roof leak")).toHaveLength(1);
-    expect(within(lookingAfter).getByText(/Reviewing the lease/)).toHaveTextContent("— Working");
-    expect(within(lookingAfter).getByText(/Contractor inspection/)).toHaveTextContent("— Waiting");
-    expect(within(lookingAfter).getByText(/Contact the insurer/)).toHaveTextContent("— Needs you");
-    // Review decision opens the existing roof leak Work Surface with Contact the insurer selected.
+    expect(screen.getByText("3 decisions need your attention")).toBeInTheDocument();
+    // Review notification opens the existing roof leak Work Surface with Contact the insurer selected.
     const insurerDecision = within(needsYou).getByText("Burlington Gardens").closest("article")!;
-    await user.click(within(insurerDecision).getByRole("button", { name: "Review decision" }));
+    await user.click(within(insurerDecision).getByRole("button", { name: "Review notification" }));
     expect(screen.getByRole("region", { name: "Roof leak investigation work journey" })).toBeVisible();
     expect(screen.getByRole("button", { name: /Contact the insurer/ })).toHaveAttribute("aria-current", "step");
     expect(screen.getByText("Needs your approval")).toBeVisible();
     // Selecting the activity did not change its status.
     await user.click(screen.getByRole("button", { name: "Back to What I'm Up To" }));
-    expect(within(screen.getByRole("region", { name: /What I'm looking after/ })).getByText(/Contact the insurer/)).toHaveTextContent("— Needs you");
+    await user.click(screen.getByRole("tab", { name: /All work/ }));
+    expect(within(screen.getByRole("region", { name: "All work" })).getByText("Needs you — Insurer notification")).toBeInTheDocument();
+  });
+
+  it("filters the current view by job, unit or place", async () => {
+    const user = userEvent.setup();
+    render(<WorkOverview onClose={vi.fn()} onGuide={vi.fn()} />);
+    const search = screen.getByLabelText("Find a job or place");
+    await user.type(search, "Burlington");
+    const allWork = screen.getByRole("region", { name: "All work" });
+    expect(within(allWork).getByText("Investigating the roof leak")).toBeInTheDocument();
+    expect(within(allWork).queryByText("Getting the tenancy renewal ready")).not.toBeInTheDocument();
+    await user.clear(search);
+    await user.type(search, "Flat 8");
+    expect(within(allWork).getByText("Reviewing the rent")).toBeInTheDocument();
+    expect(within(allWork).queryByText("Investigating the roof leak")).not.toBeInTheDocument();
+    // Search filters the selected view only: Needs you shows the Flat 8 decision.
+    await openNeedsYou(user);
+    const needsYou = screen.getByRole("region", { name: "Needs you" });
+    expect(within(needsYou).getByText("Stanley House · Flat 8")).toBeInTheDocument();
+    expect(within(needsYou).queryByText("Burlington Gardens")).not.toBeInTheDocument();
   });
 });
 describe("Roof leak — when Hobson needs help", () => {
@@ -287,9 +317,10 @@ describe("Roof leak — when Hobson needs help", () => {
     expect(screen.getByRole("button", { name: /Reviewing repairing obligations/ })).toHaveTextContent("Needs clarification");
     expect(screen.getByRole("button", { name: /Contractor inspection/ })).toHaveTextContent("Waiting");
     await user.click(screen.getByRole("button", { name: "Back to What I'm Up To" }));
-    const needsYou = screen.getByRole("region", { name: /Needs you/ });
+    await openNeedsYou(user);
+    const needsYou = screen.getByRole("region", { name: "Needs you" });
     expect(within(needsYou).getByText("Clarify responsibility for the shopfront roof")).toBeInTheDocument();
-    expect(screen.getByText("4 things I'd like you to review.")).toBeInTheDocument();
+    expect(screen.getByText("4 decisions need your attention")).toBeInTheDocument();
     await user.click(within(needsYou).getByRole("button", { name: "Review suggestion" }));
     await user.click(screen.getByRole("button", { name: "Prepare the enquiry" }));
     expect(screen.getByText("Enquiry prepared — Not sent")).toBeVisible();
@@ -310,7 +341,7 @@ describe("Roof leak — when Hobson needs help", () => {
     expect(screen.getByRole("button", { name: /Reviewing repairing obligations/ })).toHaveTextContent("Working");
     await user.click(screen.getByRole("button", { name: "Back to What I'm Up To" }));
     expect(screen.queryByText("Clarify responsibility for the shopfront roof")).not.toBeInTheDocument();
-    expect(screen.getByText("3 things I'd like you to review.")).toBeInTheDocument();
+    expect(screen.getByText("3 decisions need your attention")).toBeInTheDocument();
   });
 
   it("keeps an enquiry unsendable while contact is on hold, and leaving unresolved sends nothing", async () => {
@@ -365,11 +396,12 @@ describe("Roof leak — end or start again", () => {
     expect(screen.getByRole("region", { name: "Recorded investigation history" })).toHaveTextContent("The tenant reported water coming through");
     expect(screen.queryByRole("article", { name: "Insurer notification historical draft" })).not.toBeInTheDocument();
     await user.click(screen.getByRole("button", { name: "Back to What I'm Up To" }));
-    expect(screen.getByRole("region", { name: "What I'm looking after" })).not.toHaveTextContent("Investigating the roof leak");
-    expect(screen.getByRole("region", { name: "Needs you" })).not.toHaveTextContent("Burlington Gardens");
-    expect(screen.getByText("4 more")).toBeVisible();
-    expect(screen.getByText("2 things I'd like you to review.")).toBeVisible();
-    expect(screen.getByRole("region", { name: "What I've accomplished" })).not.toHaveTextContent("Burlington Gardens");
+    expect(screen.getByRole("region", { name: "All work" })).not.toHaveTextContent("Investigating the roof leak");
+    expect(screen.getByText("6 pieces of work")).toBeVisible();
+    expect(screen.getByText("2 decisions need your attention")).toBeVisible();
+    await user.click(screen.getByRole("tab", { name: /Completed/ }));
+    expect(screen.getByRole("region", { name: "Completed" })).not.toHaveTextContent("Burlington Gardens");
+    await user.click(screen.getByRole("tab", { name: /All work/ }));
     await user.click(within(screen.getByRole("region", { name: "Ended work" })).getByRole("button", { name: "Investigating the roof leak" }));
     await user.click(screen.getByRole("button", { name: "Start again" }));
     await user.click(within(screen.getByRole("alertdialog")).getByRole("button", { name: "Cancel" }));
@@ -389,8 +421,8 @@ describe("Roof leak — end or start again", () => {
     expect(screen.getByRole("article", { name: "Surveyor enquiry historical draft" })).toBeVisible();
     expect(guide).not.toHaveBeenCalled();
     await user.click(screen.getByRole("button", { name: "Back to What I'm Up To" }));
-    expect(screen.getByText("5 more")).toBeVisible();
+    expect(screen.getByText("7 pieces of work")).toBeVisible();
     expect(screen.queryByRole("region", { name: "Ended work" })).not.toBeInTheDocument();
-    expect(within(screen.getByRole("region", { name: "What I'm looking after" })).getAllByText("Investigating the roof leak")).toHaveLength(1);
+    expect(within(screen.getByRole("region", { name: "All work" })).getAllByText("Investigating the roof leak")).toHaveLength(1);
   });
 });
