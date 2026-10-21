@@ -31,6 +31,7 @@ type NeedsYouItem = {
   key: string;
   place: string;
   jobTitle: string;
+  matter: string;
   why: string;
   decision: string;
   actionLabel: string;
@@ -74,13 +75,14 @@ export function WorkOverview({ onClose, onGuide, sideLetterRequested = false, su
   const activeWork = lookingAfter.filter(work => work.place !== roofLeakWork.place || !currentRoofWork.ended);
 
   const needsYouItems: NeedsYouItem[] = [
-    ...(awaitingApproval ? [{ key: "renewal", place: renewalDecision.place, jobTitle: renewalDecision.title, why: renewalDecision.why, decision: renewalDecision.decision, actionLabel: "Review decision", open: () => openJourney(true) }] : []),
-    ...(helpAwaitingDirection ? [{ key: "roof-help", place: roofHelpDecision.place, jobTitle: roofLeakWork.title, why: roofHelpDecision.why, decision: roofHelpDecision.decision, actionLabel: "Review suggestion", open: () => openRoofJourney("lease", "detail") }] : []),
-    ...(insurerActionable ? [{ key: "roof-insurer", place: roofInsurerDecision.place, jobTitle: roofLeakWork.title, why: roofInsurerDecision.why, decision: roofInsurerDecision.decision, actionLabel: "Review notification", open: () => openRoofJourney("insurer", "detail") }] : []),
+    ...(awaitingApproval ? [{ key: "renewal", place: renewalDecision.place, jobTitle: renewalDecision.title, matter: "Renewal email", why: renewalDecision.why, decision: renewalDecision.decision, actionLabel: "Review decision", open: () => openJourney(true) }] : []),
+    ...(helpAwaitingDirection ? [{ key: "roof-help", place: roofHelpDecision.place, jobTitle: roofLeakWork.title, matter: roofHelpDecision.title, why: roofHelpDecision.why, decision: roofHelpDecision.decision, actionLabel: "Review suggestion", open: () => openRoofJourney("lease", "detail") }] : []),
+    ...(insurerActionable ? [{ key: "roof-insurer", place: roofInsurerDecision.place, jobTitle: roofLeakWork.title, matter: roofInsurerDecision.title, why: roofInsurerDecision.why, decision: roofInsurerDecision.decision, actionLabel: "Review notification", open: () => openRoofJourney("insurer", "detail") }] : []),
     ...decisions.map((item) => ({
       key: item.place,
       place: item.place,
       jobTitle: item.title,
+      matter: item.title,
       why: item.why,
       decision: item.decision,
       actionLabel: item.place === "Stanley House · Flat 8" ? "Review proposed rent" : "Review assessor instruction",
