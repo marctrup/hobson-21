@@ -340,6 +340,7 @@ describe("Roof leak — end or start again", () => {
     await user.click(screen.getByRole("menuitem", { name: "End work" }));
     const confirm = screen.getByRole("alertdialog");
     await user.click(within(confirm).getByRole("button", { name: "Keep working" }));
+    await user.click(screen.getByRole("button", { name: "More work options" }));
     expect(screen.getByRole("menuitem", { name: "Pause work" })).toBeEnabled();
     await user.keyboard("{Escape}");
     await user.click(screen.getByRole("button", { name: "More work options" }));
