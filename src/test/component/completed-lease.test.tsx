@@ -9,7 +9,8 @@ describe("Completed Flat 3 lease exploration", () => {
     const change = vi.fn();
     const guide = vi.fn();
     render(<WorkOverview onClose={vi.fn()} onGuide={guide} onRoofWorkChange={change} />);
-    const accomplishments = screen.getByRole("region", { name: "What I've accomplished" });
+    await user.click(screen.getByRole("tab", { name: /Completed/ }));
+    const accomplishments = screen.getByRole("region", { name: "Completed" });
     expect(within(accomplishments).getAllByRole("article")).toHaveLength(3);
     await user.click(within(accomplishments).getByRole("button", { name: "The lease, made clear" }));
     expect(screen.queryByRole("button", { name: /^(Pause|Resume) work$/ })).not.toBeInTheDocument();
@@ -25,8 +26,10 @@ describe("Completed Flat 3 lease exploration", () => {
     await user.click(screen.getByRole("button", { name: /^Map$/ }));
     expect(screen.getByRole("group", { name: "Stanley House · Flat 3 Papers / Map" })).toBeVisible();
     await user.click(screen.getByRole("button", { name: "Back to What I'm Up To" }));
-    expect(within(screen.getByRole("region", { name: "What I've accomplished" })).getAllByRole("article")).toHaveLength(3);
-    expect(screen.getByRole("region", { name: "What I'm looking after" })).not.toHaveTextContent("The lease, made clear");
+    // The Completed view is remembered when returning from the journey.
+    expect(within(screen.getByRole("region", { name: "Completed" })).getAllByRole("article")).toHaveLength(3);
+    await user.click(screen.getByRole("tab", { name: /All work/ }));
+    expect(screen.getByRole("region", { name: "All work" })).not.toHaveTextContent("The lease, made clear");
     expect(change).not.toHaveBeenCalled();
     expect(guide).not.toHaveBeenCalled();
   });
