@@ -18,18 +18,43 @@ export function roofActivityJourney(activity: RoofActivityId, work: RoofWorkStat
     if (guidance.leasePlansRequested) changes.push("You asked me to check the lease plans before contacting the surveyor. That check comes first; no plans finding has been recorded.");
     return {
       title: "Establish repairing responsibility",
-      intent: "Review the relevant lease provisions and establish who is responsible for repairing the affected roof.",
+      intent: "Review the relevant lease provisions to establish who is responsible for repairing the affected roof.",
       position: work.paused ? "The lease review is paused; repairing responsibility remains unresolved." : guidance.leasePlansRequested ? "I shall check the lease plans first; responsibility remains unresolved." : help.shown ? "The lease provisions are relevant, but I cannot establish whether they cover the affected roof." : "I am reviewing the lease; responsibility has not yet been established.",
       changes,
       steps: [
         { id: "found", title: "Found the Business Lease", state: work.number === 1 ? "done" : "reviewing", position: work.number === 1 ? "Done" : "Checking again", outcome: work.number === 1 ? "The relevant paper is available." : "The retained lease is available; earlier findings must be checked again.", evidence: "paper" },
-        { id: "review", title: "Review repairing obligations", state: help.shown ? "done" : "reviewing", position: help.shown ? "Done" : work.paused ? "Paused" : "Reviewing", outcome: help.shown ? "The lease contains repairing obligations relevant to the premises; roof coverage remains uncertain." : "I am checking what the lease provides.", evidence: "findings" },
+        { id: "review", title: "Review repairing obligations", state: help.shown ? "done" : "reviewing", position: help.shown ? "Done" : work.paused ? "Paused" : work.scenario ? "In progress" : "Reviewing", outcome: help.shown ? "The lease contains repairing obligations relevant to the premises; roof coverage remains uncertain." : "I am checking what the lease provides.", evidence: "findings" },
         ...(guidance.leasePlansRequested ? [{ id: "plans", title: "Check the lease plans first", state: "not-started" as const, position: "Not started", outcome: "Added at your request before any surveyor enquiry; what the plans show is not established.", evidence: "findings" as const }] : []),
         { id: "extent", title: "Establish whether the roof is included", state: "reviewing", position: "Not yet established", outcome: "The extent of the premises remains uncertain.", evidence: "findings" },
         { id: "clarify", title: "Consider whether clarification is needed", state: help.shown ? help.choice ? "waiting" : "needs-you" : "not-started", position: !help.shown ? "Not started" : help.choice === "enquiry" ? "Enquiry prepared — not sent" : help.choice === "unresolved" ? "Left open at your request" : "Needs you", outcome: !help.shown ? "If the papers do not resolve the issue, I shall explain what is missing and suggest how to establish it." : help.choice === "enquiry" ? "The surveyor enquiry is a separate draft and has no authority to send." : "The responsibility question remains open.", evidence: "clarification" },
       ],
     };
   }
+  if (work.scenario && activity === "contractor" && !work.contractorRequestSent) return {
+    title: "Contractor inspection",
+    intent: "I'll prepare an inspection request for your review. Once you approve it, I can contact the contractor and await their findings.",
+    position: work.contractorStarted ? "I am preparing the inspection request. Nothing has been sent." : "Not commenced yet",
+    changes,
+    steps: work.contractorStarted ? [
+      { id: "prepare", title: "Prepare inspection request", state: "reviewing", position: work.paused ? "Paused" : "In progress", outcome: "I am preparing the request; no draft is ready yet." },
+      { id: "approval", title: "Review proposed instruction and approve", state: "not-started", position: "Not started", outcome: "You will inspect the exact request before authorising contact." },
+      { id: "send", title: "Send approved request", state: "not-started", position: "Not started", outcome: "Starting work grants no permission to contact the contractor." },
+      { id: "response", title: "Await contractor response", state: "not-started", position: "Not started", outcome: "This begins only after the specifically approved request is sent." },
+    ] : [],
+  };
+  if (work.scenario && activity === "insurer" && !work.insurerPrepared) return {
+    title: "Contact the insurer",
+    intent: "I'll review what's known about the leak and prepare a notification for your approval. I won't contact the insurer without your permission.",
+    position: work.insurerStarted ? "I am reviewing the available information. No notification is ready or sent." : "Not commenced yet",
+    changes,
+    steps: work.insurerStarted ? [
+      { id: "known", title: "Review available information", state: "reviewing", position: work.paused ? "Paused" : "In progress", outcome: "I am reviewing the report and available papers; responsibility remains unresolved." },
+      { id: "draft", title: "Prepare notification", state: "not-started", position: "Not started", outcome: "No draft has been prepared yet." },
+      { id: "approval", title: "Your approval", state: "not-started", position: "Not started", outcome: "You will inspect the exact notification before authorising it." },
+      { id: "send", title: "Send approved notification", state: "not-started", position: "Not started", outcome: "Starting work does not authorise contact with the insurer." },
+      { id: "response", title: "Await insurer response", state: "not-started", position: "Not started", outcome: "This begins only after the specifically approved notification is sent." },
+    ] : [],
+  };
   if (activity === "contractor") return {
     title: "Contractor inspection",
     intent: "Obtain the contractor's findings about the reported leak so we can decide what needs to happen next.",

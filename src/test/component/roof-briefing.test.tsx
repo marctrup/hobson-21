@@ -2,7 +2,8 @@ import { describe, expect, it, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { RoofLeakJourney } from "@/components/prototype/RoofLeakJourney";
-import { createRoofWork, endRoofWork, sendInsurerNotification, type RoofWorkState } from "@/components/prototype/roofWorkLifecycle";
+import { createRoofWork, createUnstartedRoofWork, endRoofWork, sendInsurerNotification, type RoofWorkState } from "@/components/prototype/roofWorkLifecycle";
+import { WorkOverview } from "@/components/prototype/WorkOverview";
 
 function renderJourney(work: RoofWorkState = createRoofWork(), initialView: "briefing" | "detail" = "briefing") {
   return render(
@@ -24,6 +25,21 @@ function renderJourney(work: RoofWorkState = createRoofWork(), initialView: "bri
 }
 
 describe("Roof leak — glass workboard briefing", () => {
+  it.each(["Contractor inspection", "Contact the insurer"])("requires an explicit start for %s and retains the instruction on return", async title => {
+    const user = userEvent.setup();
+    render(<WorkOverview onClose={vi.fn()} onGuide={vi.fn()} />);
+    await user.click(screen.getByRole("button", { name: "Investigating the roof leak" }));
+    await user.click(screen.getByRole("button", { name: "View not-commenced demonstration" }));
+    await user.click(screen.getByRole("button", { name: new RegExp(title) }));
+    await user.click(screen.getByRole("button", { name: "Start this work" }));
+    await user.click(screen.getByRole("button", { name: "Back to roof leak investigation" }));
+    await user.click(screen.getByRole("button", { name: /What I've done/ }));
+    expect(screen.getAllByRole("button", { name: /Asked me to begin/ })).toHaveLength(1);
+    await user.click(screen.getByRole("button", { name: new RegExp(title) }));
+    expect(screen.queryByRole("button", { name: "Start this work" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "Approve and send" })).not.toBeInTheDocument();
+  });
+
   it("keeps all three activity round trips read-only and scopes lease guidance without granting authority", async () => {
     const user = userEvent.setup();
     const work = createRoofWork();
