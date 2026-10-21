@@ -89,11 +89,11 @@ export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initia
             {work.ended && <Button variant="outline" size="sm" onClick={() => setConfirmation("restart")}>Start again</Button>}
           </div>
         </div>
-        <div className="mt-3 flex items-center gap-3">
+        {!briefing && <div className="mt-3 flex items-center gap-3">
           <img src={owlReading} alt="Hobson reading" className="h-10 w-10 shrink-0 object-contain" />
           <p className="max-w-2xl text-sm leading-relaxed text-muted-foreground">{work.ended ? "The papers, findings and earlier actions remain available below." : roofLeakWork.explanation}</p>
-        </div>
-        {!work.ended && <p className="mt-3 max-w-2xl text-sm leading-relaxed">{work.number > 1 ? "I've started a fresh investigation. I still have the lease, the tenant's report and the record of the contractor inspection request. I'll check the earlier findings before deciding what needs doing next. I won't repeat external actions without the required authority." : roofSummary(guidance)}</p>}
+        </div>}
+        {!briefing && !work.ended && <p className="mt-3 max-w-2xl text-sm leading-relaxed">{work.number > 1 ? "I've started a fresh investigation. I still have the lease, the tenant's report and the record of the contractor inspection request. I'll check the earlier findings before deciding what needs doing next. I won't repeat external actions without the required authority." : roofSummary(guidance)}</p>}
         <p role="status" className="mt-3 flex items-center gap-2 text-xs font-medium"><span className={`h-1.5 w-1.5 rounded-full ${paused || work.ended ? "bg-muted-foreground" : "bg-ring"}`} aria-hidden="true" />{work.ended ? "Ended by you" : paused ? "Work paused · What I've found is preserved" : "I'm working on this now"}</p>
       </header>
       <AlertDialog open={confirmation !== null} onOpenChange={(open) => { if (!open) setConfirmation(null); }}>
