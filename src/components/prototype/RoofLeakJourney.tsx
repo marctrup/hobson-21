@@ -380,6 +380,7 @@ export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initia
             </div>
           </section>
         </div>
+        )}
         <footer className="flex flex-wrap items-center justify-between gap-3 border-t border-border px-5 py-4 [@container_work_(min-width:40rem)]:px-6">
           <p className="max-w-md text-xs leading-relaxed text-muted-foreground">Illustrative work and paper extracts only — no live work is running.</p>
         </footer>
