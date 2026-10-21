@@ -202,6 +202,15 @@ describe("Illustrative work journey", () => {
 
     await user.click(screen.getByRole("button", { name: "Investigating the roof leak" }));
     expect(screen.getByRole("region", { name: "Roof leak investigation work journey" })).toBeVisible();
+    // The calm briefing opens first: the plan, what's done and what's left — no detailed surface.
+    expect(screen.getByRole("heading", { name: "The plan" })).toBeVisible();
+    expect(screen.getByText(/Establish who's responsible for the affected roof/)).toBeVisible();
+    expect(screen.getByRole("heading", { name: "What's been done" })).toBeVisible();
+    expect(screen.getByRole("heading", { name: "What's left" })).toBeVisible();
+    expect(screen.queryByText(/I'm continuing my review of the lease/)).not.toBeInTheDocument();
+    expect(screen.queryByText("Read the tenant's report.")).not.toBeInTheDocument();
+    // Selecting an outstanding item opens the detailed Work Surface at that activity.
+    await user.click(screen.getByRole("button", { name: /Establish repairing responsibility/ }));
     expect(screen.getByText(/I'm continuing my review of the lease, waiting for the contractor and need your approval before contacting the insurer\./)).toBeVisible();
     // Completed work is a quiet, collapsed history; no cause or responsibility is implied.
     expect(screen.queryByText("Read the tenant's report.")).not.toBeInTheDocument();
@@ -272,6 +281,7 @@ describe("Roof leak — when Hobson needs help", () => {
     const user = userEvent.setup();
     render(<WorkOverview onClose={vi.fn()} onGuide={vi.fn()} />);
     await user.click(screen.getByRole("button", { name: "Investigating the roof leak" }));
+    await user.click(screen.getByRole("button", { name: /Establish repairing responsibility/ }));
     await user.click(screen.getByRole("button", { name: "Preview needs help" }));
     expect(screen.getByRole("region", { name: "Hobson needs your help" })).toBeVisible();
     expect(screen.getByRole("button", { name: /Reviewing repairing obligations/ })).toHaveTextContent("Needs clarification");
@@ -292,6 +302,7 @@ describe("Roof leak — when Hobson needs help", () => {
     const user = userEvent.setup();
     render(<WorkOverview onClose={vi.fn()} onGuide={vi.fn()} />);
     await user.click(screen.getByRole("button", { name: "Investigating the roof leak" }));
+    await user.click(screen.getByRole("button", { name: /Establish repairing responsibility/ }));
     await user.click(screen.getByRole("button", { name: "Preview needs help" }));
     expect(screen.getByRole("region", { name: "Hobson needs your help" })).toBeVisible();
     await user.click(screen.getByRole("button", { name: "Close this demonstration" }));
@@ -306,6 +317,7 @@ describe("Roof leak — when Hobson needs help", () => {
     const user = userEvent.setup();
     render(<WorkOverview onClose={vi.fn()} onGuide={vi.fn()} roofGuidance={{ shopfrontRequested: false, contactOnHold: true, holdWasLifted: false, leasePlansRequested: false }} />);
     await user.click(screen.getByRole("button", { name: "Investigating the roof leak" }));
+    await user.click(screen.getByRole("button", { name: /Establish repairing responsibility/ }));
     await user.click(screen.getByRole("button", { name: "Preview needs help" }));
     await user.click(screen.getByRole("button", { name: "Leave unresolved" }));
     expect(screen.getByText(/I'll leave the responsibility question open for now/)).toBeVisible();
@@ -321,17 +333,20 @@ describe("Roof leak — end or start again", () => {
     const guide = vi.fn();
     render(<WorkOverview onClose={vi.fn()} onGuide={guide} />);
     await user.click(screen.getByRole("button", { name: "Investigating the roof leak" }));
+    await user.click(screen.getByRole("button", { name: /Establish repairing responsibility/ }));
     await user.click(screen.getByRole("button", { name: "Preview needs help" }));
     await user.click(screen.getByRole("button", { name: "Prepare the enquiry" }));
     await user.click(screen.getByRole("button", { name: "More work options" }));
     await user.click(screen.getByRole("menuitem", { name: "End work" }));
     const confirm = screen.getByRole("alertdialog");
     await user.click(within(confirm).getByRole("button", { name: "Keep working" }));
-    expect(screen.getByRole("button", { name: "Pause work" })).toBeEnabled();
+    await user.click(screen.getByRole("button", { name: "More work options" }));
+    expect(screen.getByRole("menuitem", { name: "Pause work" })).toBeEnabled();
+    await user.keyboard("{Escape}");
     await user.click(screen.getByRole("button", { name: "More work options" }));
     await user.click(screen.getByRole("menuitem", { name: "End work" }));
     await user.click(within(screen.getByRole("alertdialog")).getByRole("button", { name: "End work" }));
-    expect(screen.queryByRole("button", { name: "Pause work" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "More work options" })).not.toBeInTheDocument();
     expect(screen.queryByRole("button", { name: "Guide Hobson" })).not.toBeInTheDocument();
     expect(screen.queryByRole("region", { name: "Recorded investigation history" })).not.toBeInTheDocument();
     await user.click(screen.getByRole("button", { name: /Reviewing repairing obligations/ }));
@@ -361,7 +376,9 @@ describe("Roof leak — end or start again", () => {
     expect(screen.getByRole("status")).toHaveTextContent("Ended by you");
     await user.click(screen.getByRole("button", { name: "Start again" }));
     await user.click(within(screen.getByRole("alertdialog")).getByRole("button", { name: "Start again" }));
-    expect(screen.getByRole("button", { name: "Pause work" })).toBeEnabled();
+    await user.click(screen.getByRole("button", { name: "More work options" }));
+    expect(screen.getByRole("menuitem", { name: "Pause work" })).toBeEnabled();
+    await user.keyboard("{Escape}");
     await user.click(screen.getByRole("button", { name: /Contractor inspection/ }));
     expect(screen.queryByRole("article", { name: "Inspection request record" })).not.toBeInTheDocument();
     await user.click(screen.getByRole("button", { name: /Contact the insurer/ }));

@@ -1,6 +1,6 @@
 import { JourneyNavigation } from "./JourneyNavigation";
 import { useEffect, useState } from "react";
-import { ArrowLeft, Check, ChevronDown, CircleHelp, FileText, Hand, HelpCircle, Mail, MessageCircle, Pause, Play, Undo2, X, MoreHorizontal } from "lucide-react";
+import { ArrowLeft, ArrowUpRight, Check, ChevronDown, CircleHelp, FileText, Hand, HelpCircle, Mail, MessageCircle, Pause, Play, Undo2, X, MoreHorizontal } from "lucide-react";
 import { DeskActionButton } from "./DeskActionButton";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import { AlertDialog, AlertDialogPortal, AlertDialogOverlay, AlertDialogTitle, AlertDialogDescription, AlertDialogFooter, AlertDialogAction, AlertDialogCancel } from "@/components/ui/alert-dialog";
@@ -28,7 +28,7 @@ function stateDot(state: ActivityState) {
 const stateLabel: Record<ActivityState, string> = { working: "Working", waiting: "Waiting", "needs-you": "Needs you" };
 
 /** Illustrative parallel-activities demonstration only — no real work, approvals or integrations. */
-export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initialActivity = "lease", guidance, help, onHelpChange, work, onEnd, onRestart, onWorkUpdate }: {
+export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initialActivity = "lease", initialView = "briefing", guidance, help, onHelpChange, work, onEnd, onRestart, onWorkUpdate }: {
   work: RoofWorkState;
   onWorkUpdate: (work: RoofWorkState) => void;
   onEnd: () => void;
@@ -38,12 +38,16 @@ export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initia
   onBack: () => void;
   onGuide: (scope: RoofGuideScope) => void;
   initialActivity?: ActivityId;
+  /** "briefing" opens the calm job overview; "detail" opens the two-panel Work Surface at initialActivity. */
+  initialView?: "briefing" | "detail";
   guidance: RoofGuidanceState;
   help: RoofHelpState;
   onHelpChange: (help: RoofHelpState) => void;
 }) {
   const [selected, setSelected] = useState<ActivityId | "closing" | `done-${number}` | `previous-${number}`>(work.ended ? "closing" : initialActivity);
+  const [briefing, setBriefing] = useState(initialView === "briefing" && !work.ended);
   useEffect(() => { if (work.ended) setSelected("closing"); }, [work.ended]);
+  useEffect(() => { if (work.ended) setBriefing(false); }, [work.ended]);
   const completed = work.history;
   const [confirmation, setConfirmation] = useState<"end" | "restart" | null>(null);
   const previousAttempt = selected.startsWith("previous-") ? work.previous[Number(selected.slice(9))] : undefined;
@@ -58,6 +62,17 @@ export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initia
   const selectedActivity = activities.find((activity) => activity.id === selected);
   const selectedDone = typeof selected === "string" && selected.startsWith("done-") ? completed[Number(selected.slice(5))] : null;
 
+  /** The calm opening briefing — every line is derived from the live illustrative state. */
+  const doneItems = work.number > 1
+    ? work.history.map((item) => item.label)
+    : ["Received the report of the leak.", "Found the relevant Business Lease.", "Sent the contractor inspection request.", ...work.history.slice(3).map((item) => item.label)];
+  const outstanding: { id: ActivityId; title: string; status: string }[] = [
+    { id: "lease", title: "Establish repairing responsibility", status: help.shown ? "Needs your help — I can't establish whether the affected roof forms part of the tenant's premises." : "Reviewing the lease — responsibility not yet established." },
+    { id: "contractor", title: "Contractor inspection", status: work.contractorRequestSent ? `Request sent — awaiting a response.${guidance.contactOnHold ? " Further contact is on hold at your request." : ""}` : "No inspection requested yet in this investigation." },
+    { id: "insurer", title: "Contact the insurer", status: work.insurerSent ? "Sent — awaiting a response." : !work.insurerPrepared ? "No notification prepared yet." : guidance.contactOnHold ? "On hold at your request — the prepared notification has not been sent." : "Notification prepared but not sent — needs your approval." },
+  ];
+  const openActivity = (id: ActivityId) => { setSelected(id); setPaperOpen(false); setBriefing(false); };
+
   return (
     <div className="flex min-h-0 flex-1 flex-col overflow-y-auto [@container_work_(min-width:48rem)]:overflow-hidden" role="region" aria-label="Roof leak investigation work journey">
       <header className="shrink-0 border-b border-border px-5 pb-5 pt-4 [@container_work_(min-width:40rem)]:px-6">
@@ -69,17 +84,16 @@ export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initia
           </div>
           <div className="flex min-w-0 w-full flex-wrap items-center gap-2 [@container_work_(min-width:48rem)]:w-auto [@container_work_(min-width:48rem)]:shrink-0">
             <JobPapersMap job="roof" />
-            {!work.ended && <><Button variant="outline" size="sm" onClick={() => onPauseChange(!paused)} className="shrink-0 gap-2">{paused ? <Play className="h-4 w-4" /> : <Pause className="h-4 w-4" />}{paused ? "Resume work" : "Pause work"}</Button>
-            <Button variant="secondary" size="sm" onClick={() => onGuide("overall")} className="gap-2"><MessageCircle className="h-4 w-4" />Guide Hobson</Button>
-            <DropdownMenu.Root modal={false}><DropdownMenu.Trigger asChild><Button variant="ghost" size="icon" aria-label="More work options" title="More work options" className="h-8 w-8"><MoreHorizontal className="h-4 w-4" /></Button></DropdownMenu.Trigger><DropdownMenu.Portal><DropdownMenu.Content align="end" className="z-[1500] min-w-36 rounded-md border border-border bg-popover p-1 shadow-md"><DropdownMenu.Item asChild onSelect={() => setConfirmation("end")}><Button variant="ghost" size="sm" className="w-full justify-start">End work</Button></DropdownMenu.Item></DropdownMenu.Content></DropdownMenu.Portal></DropdownMenu.Root></>}
+            {!work.ended && <><Button variant="secondary" size="sm" onClick={() => onGuide("overall")} className="gap-2"><MessageCircle className="h-4 w-4" />Guide Hobson</Button>
+            <DropdownMenu.Root modal={false}><DropdownMenu.Trigger asChild><Button variant="ghost" size="icon" aria-label="More work options" title="More work options" className="h-8 w-8"><MoreHorizontal className="h-4 w-4" /></Button></DropdownMenu.Trigger><DropdownMenu.Portal><DropdownMenu.Content align="end" className="z-[1500] min-w-36 rounded-md border border-border bg-popover p-1 shadow-md"><DropdownMenu.Item asChild onSelect={() => onPauseChange(!paused)}><Button variant="ghost" size="sm" className="w-full justify-start gap-2">{paused ? <Play className="h-4 w-4" /> : <Pause className="h-4 w-4" />}{paused ? "Resume work" : "Pause work"}</Button></DropdownMenu.Item><DropdownMenu.Item asChild onSelect={() => setConfirmation("end")}><Button variant="ghost" size="sm" className="w-full justify-start">End work</Button></DropdownMenu.Item></DropdownMenu.Content></DropdownMenu.Portal></DropdownMenu.Root></>}
             {work.ended && <Button variant="outline" size="sm" onClick={() => setConfirmation("restart")}>Start again</Button>}
           </div>
         </div>
-        <div className="mt-3 flex items-center gap-3">
+        {!briefing && <div className="mt-3 flex items-center gap-3">
           <img src={owlReading} alt="Hobson reading" className="h-10 w-10 shrink-0 object-contain" />
           <p className="max-w-2xl text-sm leading-relaxed text-muted-foreground">{work.ended ? "The papers, findings and earlier actions remain available below." : roofLeakWork.explanation}</p>
-        </div>
-        {!work.ended && <p className="mt-3 max-w-2xl text-sm leading-relaxed">{work.number > 1 ? "I've started a fresh investigation. I still have the lease, the tenant's report and the record of the contractor inspection request. I'll check the earlier findings before deciding what needs doing next. I won't repeat external actions without the required authority." : roofSummary(guidance)}</p>}
+        </div>}
+        {!briefing && !work.ended && <p className="mt-3 max-w-2xl text-sm leading-relaxed">{work.number > 1 ? "I've started a fresh investigation. I still have the lease, the tenant's report and the record of the contractor inspection request. I'll check the earlier findings before deciding what needs doing next. I won't repeat external actions without the required authority." : roofSummary(guidance)}</p>}
         <p role="status" className="mt-3 flex items-center gap-2 text-xs font-medium"><span className={`h-1.5 w-1.5 rounded-full ${paused || work.ended ? "bg-muted-foreground" : "bg-ring"}`} aria-hidden="true" />{work.ended ? "Ended by you" : paused ? "Work paused · What I've found is preserved" : "I'm working on this now"}</p>
       </header>
       <AlertDialog open={confirmation !== null} onOpenChange={(open) => { if (!open) setConfirmation(null); }}>
@@ -91,8 +105,40 @@ export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initia
       </AlertDialog>
 
       <div className="hobson-scroll min-h-0 shrink-0 [@container_work_(min-width:48rem)]:flex-1 [@container_work_(min-width:48rem)]:overflow-y-auto">
+        {briefing && !work.ended ? (
+        <div className="mx-auto w-full max-w-3xl px-5 pb-12 pt-8 [@container_work_(min-width:40rem)]:px-8 [@container_work_(min-width:40rem)]:pt-10">
+          {paused && <p role="status" className="mb-8 flex items-center gap-2 text-sm leading-relaxed text-muted-foreground"><Pause aria-hidden="true" className="h-3.5 w-3.5 shrink-0" strokeWidth={1.6} />I've paused this investigation at your request. What I've found is preserved.</p>}
+          <section aria-labelledby="briefing-plan" className="mb-10">
+            <h3 id="briefing-plan" className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">The plan</h3>
+            <p className="mt-3 max-w-xl text-lg leading-relaxed">Establish who's responsible for the affected roof, arrange an inspection and decide what needs to happen next.</p>
+          </section>
+          <section aria-labelledby="briefing-done" className="mb-10">
+            <h3 id="briefing-done" className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">What's been done</h3>
+            {doneItems.length > 0 ? <ul className="mt-4 space-y-2.5">
+              {doneItems.map((label) => <li key={label} className="flex items-start gap-2.5 text-sm leading-relaxed text-muted-foreground"><Check aria-hidden="true" className="mt-0.5 h-4 w-4 shrink-0" strokeWidth={1.6} />{label}</li>)}
+            </ul> : <p className="mt-4 text-sm leading-relaxed text-muted-foreground">Nothing yet in this fresh investigation. The earlier attempt remains in the history.</p>}
+          </section>
+          <section aria-labelledby="briefing-left">
+            <h3 id="briefing-left" className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">What's left</h3>
+            <p className="mt-3 text-xs leading-relaxed text-muted-foreground">These can move forward in any order. Select one to see the detail.</p>
+            <div className="mt-2 divide-y divide-border">
+              {outstanding.map((item) => (
+                <Button key={item.id} variant="ghost" onClick={() => openActivity(item.id)} className="h-auto w-full items-start justify-between gap-4 whitespace-normal rounded-none px-1 py-4 text-left">
+                  <span className="min-w-0">
+                    <span className="block text-sm font-semibold leading-snug">{item.title}</span>
+                    <span className="mt-1 block text-sm font-normal leading-relaxed text-muted-foreground">{item.status}</span>
+                  </span>
+                  <ArrowUpRight aria-hidden="true" className="mt-1 h-4 w-4 shrink-0 text-muted-foreground" />
+                </Button>
+              ))}
+            </div>
+          </section>
+        </div>
+        ) : (
         <div className="grid grid-cols-1 items-stretch gap-3 p-3 [@container_work_(min-width:40rem)]:p-5 [@container_work_(min-width:48rem)]:min-h-full [@container_work_(min-width:48rem)]:grid-cols-[minmax(0,0.35fr)_minmax(0,0.65fr)] [@container_work_(min-width:48rem)]:gap-0">
           <JourneyNavigation label="The Journey" selectedTitle={selected === "closing" ? "Closing summary" : previousAttempt ? "Previous attempt" : selectedDone ? selectedDone.label : selectedActivity?.title}>
+  
+  
   
             {work.ended && <Button variant="ghost" size="sm" onClick={() => setSelected("closing")} aria-current={selected === "closing" ? "step" : undefined} className="mb-4 h-auto max-w-full whitespace-normal px-0 text-left text-xs text-muted-foreground">Closing summary</Button>}
 
@@ -138,6 +184,7 @@ export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initia
           </JourneyNavigation>
 
           <section aria-labelledby="desk-heading" className="relative min-w-0 rounded-2xl border border-border bg-card px-5 py-5 shadow-sm [@container_work_(min-width:48rem)]:-ml-px [@container_work_(min-width:40rem)]:px-7">
+            {!work.ended && <Button variant="ghost" size="sm" onClick={() => setBriefing(true)} className="mb-4 h-auto gap-2 px-0 text-xs text-muted-foreground"><ArrowLeft className="h-3.5 w-3.5" aria-hidden="true" />Back to job overview</Button>}
             <h3 id="desk-heading" className="mb-5 text-xs font-semibold text-muted-foreground">On Hobson's Desk</h3>
             <div key={selected}>
               <h4 className="text-lg font-semibold leading-snug">{selected === "closing" ? "Investigation ended by you" : previousAttempt ? "Previous attempt" : selectedDone ? selectedDone.label : selectedActivity?.title}</h4>
@@ -334,6 +381,7 @@ export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initia
             </div>
           </section>
         </div>
+        )}
         <footer className="flex flex-wrap items-center justify-between gap-3 border-t border-border px-5 py-4 [@container_work_(min-width:40rem)]:px-6">
           <p className="max-w-md text-xs leading-relaxed text-muted-foreground">Illustrative work and paper extracts only — no live work is running.</p>
         </footer>

@@ -8,7 +8,8 @@ describe("Job-scoped Papers / Map", () => {
     const user = userEvent.setup();
     render(<WorkOverview onGuide={vi.fn()} onClose={vi.fn()} />);
     await user.click(screen.getByRole("button", { name: "Investigating the roof leak" }));
-    await user.click(screen.getByRole("button", { name: "Pause work" }));
+    await user.click(screen.getByRole("button", { name: "More work options" }));
+    await user.click(screen.getByRole("menuitem", { name: "Pause work" }));
     await user.click(screen.getByRole("button", { name: "Papers" }));
     const dialog = screen.getByRole("dialog");
     expect(within(dialog).getByRole("button", { name: /Tenant's report/ })).toBeInTheDocument();
@@ -16,7 +17,8 @@ describe("Job-scoped Papers / Map", () => {
     await user.click(within(dialog).getByRole("button", { name: "Map" }));
     expect(within(dialog).getByRole("img", { name: "Burlington Gardens job map" })).toBeInTheDocument();
     await user.click(within(dialog).getByRole("button", { name: "Back to job" }));
-    expect(screen.getByRole("button", { name: "Resume work" })).toBeEnabled();
+    await user.click(screen.getByRole("button", { name: "More work options" }));
+    expect(screen.getByRole("menuitem", { name: "Resume work" })).toBeEnabled();
   });
 
   it("shows only renewal papers, keeps the missing side letter unavailable and points to Stanley House", async () => {

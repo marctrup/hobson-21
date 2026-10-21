@@ -70,6 +70,7 @@ export function WorkOverview({ onClose, onGuide, sideLetterRequested = false, su
   const awaitingApproval = approval === "awaiting";
   const sentApproval = approval === "sent";
   const [roofActivity, setRoofActivity] = useState<RoofActivityId>("lease");
+  const [roofEntry, setRoofEntry] = useState<"briefing" | "detail">("briefing");
   const [localRoofWork, setLocalRoofWork] = useState(createRoofWork);
   const storedRoofWork = roofWork ?? localRoofWork;
   const roofGuidance = roofWork || storedRoofWork.number > 1 ? storedRoofWork.guidance : suppliedRoofGuidance;
@@ -88,7 +89,7 @@ export function WorkOverview({ onClose, onGuide, sideLetterRequested = false, su
     ...decisions,
   ];
   const openJourney = (atApproval: boolean) => { setOpenAtApproval(atApproval); setJourney("renewal"); };
-  const openRoofJourney = (activity: RoofActivityId) => { setRoofActivity(activity); setJourney("roof"); };
+  const openRoofJourney = (activity: RoofActivityId, entry: "briefing" | "detail" = "briefing") => { setRoofActivity(activity); setRoofEntry(entry); setJourney("roof"); };
   const closeJourney = () => { setJourney(null); setOpenAtApproval(false); onJourneyBack?.(); };
   useEffect(() => {
     if (focusNeedsYou > 0 && !journey) {
@@ -125,7 +126,7 @@ export function WorkOverview({ onClose, onGuide, sideLetterRequested = false, su
         </Button>
       </div>
 
-      {journey === "completed-lease" ? <CompletedLeaseJourney onBack={closeJourney} /> : journey === "renewal" ? <WorkJourney paused={paused} onPauseChange={setPaused} onBack={closeJourney} onGuide={() => onGuide("renewal")} sideLetterRequested={sideLetterRequested} suppliedPapers={suppliedPapers} paperPlaces={paperPlaces} onPaperPlacement={onPaperPlacement} approval={approval} onApprovalChange={setApproval} approvalOpen={openAtApproval} /> : journey === "roof" ? <RoofLeakJourney key={currentRoofWork.number} work={currentRoofWork} onEnd={() => updateRoofWork(endRoofWork(currentRoofWork))} onRestart={() => updateRoofWork(restartRoofWork(currentRoofWork))} paused={currentRoofWork.paused} onPauseChange={(paused) => { if (!currentRoofWork.ended) updateRoofWork({ ...currentRoofWork, paused }); }} onBack={closeJourney} onGuide={(scope) => { if (!currentRoofWork.ended) onGuide(scope, scope === "lease" && roofHelp.shown ? LEASE_PLANS_INSTRUCTION : undefined); }} initialActivity={roofActivity} guidance={roofGuidance} help={roofHelp} onHelpChange={setRoofHelp} onWorkUpdate={(next) => { if (!currentRoofWork.ended) updateRoofWork(next); }} /> : <div className="hobson-scroll min-h-0 flex-1 overflow-y-auto">
+      {journey === "completed-lease" ? <CompletedLeaseJourney onBack={closeJourney} /> : journey === "renewal" ? <WorkJourney paused={paused} onPauseChange={setPaused} onBack={closeJourney} onGuide={() => onGuide("renewal")} sideLetterRequested={sideLetterRequested} suppliedPapers={suppliedPapers} paperPlaces={paperPlaces} onPaperPlacement={onPaperPlacement} approval={approval} onApprovalChange={setApproval} approvalOpen={openAtApproval} /> : journey === "roof" ? <RoofLeakJourney key={currentRoofWork.number} work={currentRoofWork} onEnd={() => updateRoofWork(endRoofWork(currentRoofWork))} onRestart={() => updateRoofWork(restartRoofWork(currentRoofWork))} paused={currentRoofWork.paused} onPauseChange={(paused) => { if (!currentRoofWork.ended) updateRoofWork({ ...currentRoofWork, paused }); }} onBack={closeJourney} onGuide={(scope) => { if (!currentRoofWork.ended) onGuide(scope, scope === "lease" && roofHelp.shown ? LEASE_PLANS_INSTRUCTION : undefined); }} initialActivity={roofActivity} initialView={roofEntry} guidance={roofGuidance} help={roofHelp} onHelpChange={setRoofHelp} onWorkUpdate={(next) => { if (!currentRoofWork.ended) updateRoofWork(next); }} /> : <div className="hobson-scroll min-h-0 flex-1 overflow-y-auto">
         <div className="mx-auto w-full max-w-5xl px-3 pb-16 pt-8 [@container_work_(min-width:40rem)]:px-8 [@container_work_(min-width:40rem)]:pt-10">
           <header className="mb-10">
             <h2 className="text-3xl font-semibold leading-tight">What I'm Up To</h2>
@@ -149,11 +150,11 @@ export function WorkOverview({ onClose, onGuide, sideLetterRequested = false, su
                     <p className="mt-1.5 text-sm font-medium leading-relaxed">{item.decision}</p>
                   </div>
                   {item.title === roofHelpDecision.title
-                    ? <Button variant="outline" size="sm" onClick={() => openRoofJourney("lease")} className="shrink-0 gap-2">Review suggestion<ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" /></Button>
+                    ? <Button variant="outline" size="sm" onClick={() => openRoofJourney("lease", "detail")} className="shrink-0 gap-2">Review suggestion<ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" /></Button>
                     : item.place === "Stanley House · Flat 6"
                     ? <Button variant="outline" size="sm" onClick={() => openJourney(true)} className="shrink-0 gap-2">Review decision<ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" /></Button>
                     : item.place === roofLeakWork.place
-                      ? <Button variant="outline" size="sm" onClick={() => openRoofJourney("insurer")} className="shrink-0 gap-2">Review decision<ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" /></Button>
+                      ? <Button variant="outline" size="sm" onClick={() => openRoofJourney("insurer", "detail")} className="shrink-0 gap-2">Review decision<ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" /></Button>
                       : <Button variant="ghost" size="sm" className="shrink-0 gap-2 text-muted-foreground" disabled>Review decision</Button>}
                 </article>
               ))}
