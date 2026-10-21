@@ -70,6 +70,7 @@ export function WorkOverview({ onClose, onGuide, sideLetterRequested = false, su
   const awaitingApproval = approval === "awaiting";
   const sentApproval = approval === "sent";
   const [roofActivity, setRoofActivity] = useState<RoofActivityId>("lease");
+  const [roofEntry, setRoofEntry] = useState<"briefing" | "detail">("briefing");
   const [localRoofWork, setLocalRoofWork] = useState(createRoofWork);
   const storedRoofWork = roofWork ?? localRoofWork;
   const roofGuidance = roofWork || storedRoofWork.number > 1 ? storedRoofWork.guidance : suppliedRoofGuidance;
@@ -88,7 +89,7 @@ export function WorkOverview({ onClose, onGuide, sideLetterRequested = false, su
     ...decisions,
   ];
   const openJourney = (atApproval: boolean) => { setOpenAtApproval(atApproval); setJourney("renewal"); };
-  const openRoofJourney = (activity: RoofActivityId) => { setRoofActivity(activity); setJourney("roof"); };
+  const openRoofJourney = (activity: RoofActivityId, entry: "briefing" | "detail" = "briefing") => { setRoofActivity(activity); setRoofEntry(entry); setJourney("roof"); };
   const closeJourney = () => { setJourney(null); setOpenAtApproval(false); onJourneyBack?.(); };
   useEffect(() => {
     if (focusNeedsYou > 0 && !journey) {
