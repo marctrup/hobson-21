@@ -376,7 +376,9 @@ describe("Roof leak — end or start again", () => {
     expect(screen.getByRole("status")).toHaveTextContent("Ended by you");
     await user.click(screen.getByRole("button", { name: "Start again" }));
     await user.click(within(screen.getByRole("alertdialog")).getByRole("button", { name: "Start again" }));
-    expect(screen.getByRole("button", { name: "Pause work" })).toBeEnabled();
+    await user.click(screen.getByRole("button", { name: "More work options" }));
+    expect(screen.getByRole("menuitem", { name: "Pause work" })).toBeEnabled();
+    await user.keyboard("{Escape}");
     await user.click(screen.getByRole("button", { name: /Contractor inspection/ }));
     expect(screen.queryByRole("article", { name: "Inspection request record" })).not.toBeInTheDocument();
     await user.click(screen.getByRole("button", { name: /Contact the insurer/ }));
