@@ -1,8 +1,8 @@
 # Roadmap
 
 ## Prototype Work — ongoing and completed overview
-- [ ] Simplify to two job views with an Ongoing attention filter, parent-job entry and consistent deduplicated briefing counts.
-- [ ] Verify filtering, search, navigation, dynamic decisions and preserved journeys; do not change Prototype Unit or publish.
+- [x] Simplify to two job views with an Ongoing attention filter, parent-job entry and consistent deduplicated briefing counts.
+- [x] Verify filtering, search, parent-first navigation, dynamic decisions and completed-lease navigation in the live preview without page errors; all 246 frontend checks pass and preview is clean. Prototype Unit unchanged; not published.
 
 ## Prototype Work — tenancy renewal alignment
 - [x] Align the renewal briefing and focused subtasks while preserving paper review, conversation, draft and approval state.
