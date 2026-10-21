@@ -60,6 +60,13 @@ describe("Roof investigation attempt safety", () => {
     expect(roofOverviewCounts(work)).toEqual({ accomplished: 3, active: 7, needsYou: 3 });
     expect(roofOverviewCounts(endRoofWork(work))).toEqual({ accomplished: 3, active: 6, needsYou: 2 });
   });
+  it("counts two roof matters as one attention job, alongside a renewal job", () => {
+    const work = createRoofWork();
+    work.help.shown = true;
+    expect(roofOverviewCounts(work)).toEqual({ accomplished: 3, active: 7, needsYou: 3 });
+    expect(roofOverviewCounts(work, true)).toEqual({ accomplished: 3, active: 7, needsYou: 4 });
+    expect(roofOverviewCounts(endRoofWork(work), true)).toEqual({ accomplished: 3, active: 6, needsYou: 3 });
+  });
   it("closes an attempt and removes every pending attention request", () => {
     const work = createRoofWork();
     work.help.shown = true;

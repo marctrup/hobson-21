@@ -28,8 +28,8 @@ describe("Completed Flat 3 lease exploration", () => {
     await user.click(screen.getByRole("button", { name: "Back to What I'm Up To" }));
     // The Completed view is remembered when returning from the journey.
     expect(within(screen.getByRole("region", { name: "Completed" })).getAllByRole("article")).toHaveLength(3);
-    await user.click(screen.getByRole("tab", { name: /All work/ }));
-    expect(screen.getByRole("region", { name: "All work" })).not.toHaveTextContent("The lease, made clear");
+    await user.click(screen.getByRole("tab", { name: /Ongoing/ }));
+    expect(screen.getByRole("region", { name: "Ongoing" })).not.toHaveTextContent("The lease, made clear");
     expect(change).not.toHaveBeenCalled();
     expect(guide).not.toHaveBeenCalled();
   });
