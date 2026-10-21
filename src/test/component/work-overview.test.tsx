@@ -16,6 +16,8 @@ const openCommunication = async (user: ReturnType<typeof userEvent.setup>) => {
   await user.click(screen.getByRole("button", { name: /Prepare the tenant communication/ }));
   const start = screen.queryByRole("button", { name: "Start this work" });
   if (start) await user.click(start);
+  const review = screen.queryByRole("button", { name: "Review decision" });
+  if (review) await user.click(review);
 };
 const pauseWork = async (user: ReturnType<typeof userEvent.setup>) => {
   await user.click(screen.getByRole("button", { name: "More work options" }));
