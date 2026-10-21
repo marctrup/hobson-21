@@ -127,6 +127,7 @@ describe("Illustrative work journey", () => {
     expect(screen.getByRole("button", { name: /Original annual rent\s*£24,000/ })).toBeInTheDocument();
     await user.click(screen.getByRole("button", { name: "Back to What I'm Up To" }));
     // Sent: the job stays in All work; the decision leaves Needs you.
+    await user.click(screen.getByRole("tab", { name: /All work/ }));
     expect(screen.getByRole("region", { name: "All work" })).toHaveTextContent("Stanley House · Flat 6");
     expect(screen.getByRole("region", { name: "All work" })).not.toHaveTextContent("Needs you — Renewal email");
     await openNeedsYou(user);
@@ -396,7 +397,9 @@ describe("Roof leak — end or start again", () => {
     expect(screen.getByRole("region", { name: "Recorded investigation history" })).toHaveTextContent("The tenant reported water coming through");
     expect(screen.queryByRole("article", { name: "Insurer notification historical draft" })).not.toBeInTheDocument();
     await user.click(screen.getByRole("button", { name: "Back to What I'm Up To" }));
-    expect(screen.getByRole("region", { name: "All work" })).not.toHaveTextContent("Investigating the roof leak");
+    // Ended: the investigation leaves the ongoing list and appears only in the ended-work history.
+    expect(within(screen.getByRole("region", { name: "All work" })).getAllByText("Investigating the roof leak")).toHaveLength(1);
+    expect(screen.getByRole("region", { name: "Ended work" })).toHaveTextContent("Investigating the roof leak");
     expect(screen.getByText("6 pieces of work")).toBeVisible();
     expect(screen.getByText("2 decisions need your attention")).toBeVisible();
     await user.click(screen.getByRole("tab", { name: /Completed/ }));
