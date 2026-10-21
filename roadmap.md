@@ -1,5 +1,9 @@
 # Roadmap
 
+## Prototype Work — clear activity journeys
+- [ ] Add independent roof-activity timelines with requested evidence and existing approval views.
+- [ ] Verify action-specific approval, contact holds, fresh attempts and overview consistency; leave Prototype Unit unchanged.
+
 ## Prototype Documents — adding a paper
 - [x] Move PDF image decoders to public/wasm and fetch after client mount; no source binary imports remain, genuine lease rendering and Stage 1 browser flow pass, eleven tests pass and preview build is clean. Not published.
 - [x] Implement and verify the local Stage 1 conversation, paper selection, confirmation/change and restart; eleven focused tests pass, example and arbitrary-upload paths checked in-browser with no page errors. Not published.
