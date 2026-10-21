@@ -56,7 +56,7 @@ export function WorkJourney({ paused, onPauseChange, onBack, onGuide, sideLetter
   const [localWork, setLocalWork] = useState(createRenewalWork);
   const work = suppliedWork ?? localWork;
   const updateWork = (next: RenewalWork) => { if (onWorkChange) onWorkChange(next); else setLocalWork(next); };
-  const effectiveApproval = suppliedWork ? work.approval : approval;
+  const effectiveApproval = suppliedWork || approval === "idle" ? work.approval : approval;
   const [activity, setActivity] = useState<RenewalActivity | null>(approvalOpen ? "communication" : null);
   const [selected, setSelected] = useState<Step>(approvalOpen ? "approve" : "history");
   const [evidence, setEvidence] = useState<Evidence | null>(null);
@@ -177,6 +177,7 @@ export function WorkJourney({ paused, onPauseChange, onBack, onGuide, sideLetter
       {sent ? <>
         <p role="status" className="mt-3 flex items-center gap-2 text-sm font-medium"><Check className="h-4 w-4 text-muted-foreground" aria-hidden="true" />Email sent.</p>
         <p className="mt-3 text-sm leading-relaxed text-muted-foreground">I've sent the email inviting the tenant to discuss the renewal. No tenancy terms have been agreed.</p>
+        <article aria-label="Sent renewal email" className="mt-4 border-y border-border py-4"><p className="text-xs text-muted-foreground">Approved and sent · {EMAIL_TO}</p><p className="mt-2 text-sm font-medium">{EMAIL_SUBJECT}</p><blockquote className="mt-3 whitespace-pre-line text-sm leading-relaxed">{emailBody}</blockquote><p className="mt-3 text-xs text-muted-foreground">Attachments: None</p></article>
         <div className="mt-5 border-l-2 border-ring pl-3"><h5 className="text-xs font-semibold">What happens next</h5><p className="mt-2 text-sm leading-relaxed">I'll wait for the tenant's response and bring it to you when it arrives.</p></div>
       </> : <>
         <h5 className="mt-2 text-base font-semibold">May I send this email?</h5>
