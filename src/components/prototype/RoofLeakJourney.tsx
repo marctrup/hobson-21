@@ -1,6 +1,6 @@
 import { JourneyNavigation } from "./JourneyNavigation";
 import { RoofActivityJourney } from "./RoofActivityJourney";
-import type { RoofEvidence } from "./roofActivityJourney";
+import { roofActivityJourney, type RoofEvidence } from "./roofActivityJourney";
 import { useEffect, useState } from "react";
 import { ArrowLeft, ArrowUpRight, Check, ChevronDown, CircleHelp, FileText, Hand, HelpCircle, Mail, MessageCircle, Pause, Play, Undo2, X, MoreHorizontal } from "lucide-react";
 import { DeskActionButton } from "./DeskActionButton";
@@ -64,6 +64,9 @@ export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initia
   const [historyOpen, setHistoryOpen] = useState(false);
   const selectedActivity = activities.find((activity) => activity.id === selected);
   const selectedDone = typeof selected === "string" && selected.startsWith("done-") ? completed[Number(selected.slice(5))] : null;
+  const focused = !briefing && !work.ended && !previousAttempt && !!selectedActivity;
+  const activityPlan = selectedActivity ? roofActivityJourney(selectedActivity.id, { ...work, paused, guidance, help }) : null;
+  const returnToJob = () => { setBriefing(true); setEvidence(null); setPaperOpen(false); };
 
   /** The calm opening briefing — every line is derived from the live illustrative state. */
   const doneItems = work.number > 1
@@ -82,22 +85,23 @@ export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initia
         <Button variant="ghost" size="sm" onClick={onBack} className="mb-4 gap-2 px-0 text-muted-foreground"><ArrowLeft className="h-4 w-4" />Back to What I'm Up To</Button>
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div className="min-w-0 flex-1 basis-64">
-            <p className="mb-2 text-xs text-muted-foreground">Burlington Gardens</p>
-            <h2 className="text-2xl font-semibold leading-tight">Investigating the roof leak</h2>
+            <p className="mb-2 text-xs text-muted-foreground">{focused ? "Burlington Gardens · Investigating the roof leak" : "Burlington Gardens"}</p>
+            <h2 className="text-2xl font-semibold leading-tight">{focused ? activityPlan?.title : "Investigating the roof leak"}</h2>
+            {focused && <Button variant="ghost" size="sm" onClick={returnToJob} className="mt-3 h-auto gap-2 whitespace-normal px-0 text-left text-xs text-muted-foreground"><ArrowLeft className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />Back to roof leak investigation</Button>}
           </div>
           <div className="flex min-w-0 w-full flex-wrap items-center gap-2 [@container_work_(min-width:48rem)]:w-auto [@container_work_(min-width:48rem)]:shrink-0">
             <JobPapersMap job="roof" />
-            {!work.ended && <><Button variant="secondary" size="sm" onClick={() => onGuide("overall")} className="gap-2"><MessageCircle className="h-4 w-4" />Guide Hobson</Button>
+            {!work.ended && <><Button variant="secondary" size="sm" onClick={() => onGuide(focused && selected === "lease" ? "lease" : "overall")} className="gap-2"><MessageCircle className="h-4 w-4" />Guide Hobson</Button>
             <DropdownMenu.Root modal={false}><DropdownMenu.Trigger asChild><Button variant="ghost" size="icon" aria-label="More work options" title="More work options" className="h-8 w-8"><MoreHorizontal className="h-4 w-4" /></Button></DropdownMenu.Trigger><DropdownMenu.Portal><DropdownMenu.Content align="end" className="z-[1500] min-w-36 rounded-md border border-border bg-popover p-1 shadow-md"><DropdownMenu.Item asChild onSelect={() => onPauseChange(!paused)}><Button variant="ghost" size="sm" className="w-full justify-start gap-2">{paused ? <Play className="h-4 w-4" /> : <Pause className="h-4 w-4" />}{paused ? "Resume work" : "Pause work"}</Button></DropdownMenu.Item><DropdownMenu.Item asChild onSelect={() => setConfirmation("end")}><Button variant="ghost" size="sm" className="w-full justify-start">End work</Button></DropdownMenu.Item></DropdownMenu.Content></DropdownMenu.Portal></DropdownMenu.Root></>}
             {work.ended && <Button variant="outline" size="sm" onClick={() => setConfirmation("restart")}>Start again</Button>}
           </div>
         </div>
-        {!briefing && <div className="mt-3 flex items-center gap-3">
+        {!briefing && !focused && <div className="mt-3 flex items-center gap-3">
           <img src={owlReading} alt="Hobson reading" className="h-10 w-10 shrink-0 object-contain" />
           <p className="max-w-2xl text-sm leading-relaxed text-muted-foreground">{work.ended ? "The papers, findings and earlier actions remain available below." : roofLeakWork.explanation}</p>
         </div>}
-        {!briefing && !work.ended && <p className="mt-3 max-w-2xl text-sm leading-relaxed">{work.number > 1 ? "I've started a fresh investigation. I still have the lease, the tenant's report and the record of the contractor inspection request. I'll check the earlier findings before deciding what needs doing next. I won't repeat external actions without the required authority." : work.insurerSent ? "I am continuing the lease review and awaiting the contractor and insurer responses. Repairing responsibility remains unresolved." : roofSummary(guidance)}</p>}
-        <p role="status" className="mt-3 flex items-center gap-2 text-xs font-medium"><span className={`h-1.5 w-1.5 rounded-full ${paused || work.ended ? "bg-muted-foreground" : "bg-ring"}`} aria-hidden="true" />{work.ended ? "Ended by you" : paused ? "Work paused · What I've found is preserved" : "I'm working on this now"}</p>
+        {!briefing && !focused && !work.ended && <p className="mt-3 max-w-2xl text-sm leading-relaxed">{work.number > 1 ? "I've started a fresh investigation. I still have the lease, the tenant's report and the record of the contractor inspection request. I'll check the earlier findings before deciding what needs doing next. I won't repeat external actions without the required authority." : work.insurerSent ? "I am continuing the lease review and awaiting the contractor and insurer responses. Repairing responsibility remains unresolved." : roofSummary(guidance)}</p>}
+        <p role="status" className="mt-3 flex items-center gap-2 text-xs font-medium"><span className={`h-1.5 w-1.5 rounded-full ${paused || work.ended ? "bg-muted-foreground" : "bg-ring"}`} aria-hidden="true" />{work.ended ? "Ended by you" : paused ? "Work paused · What I've found is preserved" : focused ? activityPlan?.position : "I'm working on this now"}</p>
       </header>
       <AlertDialog open={confirmation !== null} onOpenChange={(open) => { if (!open) setConfirmation(null); }}>
         <AlertDialogPortal><AlertDialogOverlay className="z-[1500] bg-background/80" /><AlertDialogPrimitive.Content className="fixed left-1/2 top-1/2 z-[1501] w-[calc(100%_-_2rem)] max-w-lg max-h-[85dvh] overflow-y-auto -translate-x-1/2 -translate-y-1/2 space-y-4 rounded-md border border-border bg-background p-4 [@container_work_(min-width:40rem)]:p-6 shadow-lg">
@@ -136,10 +140,17 @@ export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initia
               ))}
             </div>
           </section>
+          <section className="mt-8 border-t border-border pt-4" aria-label="Investigation history">
+            <Button variant="ghost" size="sm" onClick={() => setHistoryOpen(!historyOpen)} aria-expanded={historyOpen} aria-controls="briefing-history" className="h-auto gap-2 px-0 text-xs text-muted-foreground">What I've done<span className="tabular-nums">{completed.length + work.previous.length}</span><ChevronDown aria-hidden="true" className={`h-3.5 w-3.5 ${historyOpen ? "rotate-180" : ""}`} /></Button>
+            {historyOpen && <div id="briefing-history" className="mt-3 space-y-2">
+              {work.previous.map((attempt, index) => <Button key={attempt.number} variant="ghost" onClick={() => { setSelected(`previous-${index}`); setBriefing(false); }} className="h-auto w-full justify-start whitespace-normal text-left">Previous attempt {attempt.number}</Button>)}
+              {completed.map((item, index) => <Button key={item.label} variant="ghost" onClick={() => { setSelected(`done-${index}`); setBriefing(false); setEvidence(null); }} className="h-auto w-full justify-start whitespace-normal text-left text-sm">{item.label}</Button>)}
+            </div>}
+          </section>
         </div>
         ) : (
-        <div className="grid grid-cols-1 items-stretch gap-3 p-3 [@container_work_(min-width:40rem)]:p-5 [@container_work_(min-width:48rem)]:min-h-full [@container_work_(min-width:48rem)]:grid-cols-[minmax(0,0.35fr)_minmax(0,0.65fr)] [@container_work_(min-width:48rem)]:gap-0">
-          <JourneyNavigation label="The Journey" selectedTitle={selected === "closing" ? "Closing summary" : previousAttempt ? "Previous attempt" : selectedDone ? selectedDone.label : selectedActivity?.title}>
+        <div className={focused ? "mx-auto w-full max-w-3xl px-5 py-8 [@container_work_(min-width:40rem)]:px-8" : "grid grid-cols-1 items-stretch gap-3 p-3 [@container_work_(min-width:40rem)]:p-5 [@container_work_(min-width:48rem)]:min-h-full [@container_work_(min-width:48rem)]:grid-cols-[minmax(0,0.35fr)_minmax(0,0.65fr)] [@container_work_(min-width:48rem)]:gap-0"}>
+          {!focused && <JourneyNavigation label="The Journey" selectedTitle={selected === "closing" ? "Closing summary" : previousAttempt ? "Previous attempt" : selectedDone ? selectedDone.label : selectedActivity?.title}>
   
   
   
@@ -148,7 +159,7 @@ export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initia
             <p className="mb-2 text-xs font-medium text-muted-foreground">{work.ended ? "Where we stopped" : "Happening now"}</p>
             <div>
               {activities.map((activity) => (
-                <Button key={activity.id} variant="ghost" aria-current={selected === activity.id ? "step" : undefined} onClick={() => { setSelected(activity.id); setPaperOpen(false); setEvidence(null); }} className={`mb-2 h-auto w-full items-start justify-start gap-2 rounded-md border px-2 py-3 text-left whitespace-normal ${selected === activity.id ? "border-border bg-card shadow-sm [@container_work_(min-width:48rem)]:w-[calc(100%+17px)] [@container_work_(min-width:48rem)]:max-w-none [@container_work_(min-width:48rem)]:rounded-r-none [@container_work_(min-width:48rem)]:border-r-card relative z-10" : "border-transparent hover:bg-background/60"}`}>
+                <Button key={activity.id} variant="ghost" aria-current={selected === activity.id ? "step" : undefined} onClick={() => openActivity(activity.id)} className={`mb-2 h-auto w-full items-start justify-start gap-2 rounded-md border px-2 py-3 text-left whitespace-normal ${selected === activity.id ? "border-border bg-card shadow-sm [@container_work_(min-width:48rem)]:w-[calc(100%+17px)] [@container_work_(min-width:48rem)]:max-w-none [@container_work_(min-width:48rem)]:rounded-r-none [@container_work_(min-width:48rem)]:border-r-card relative z-10" : "border-transparent hover:bg-background/60"}`}>
                   <span aria-hidden="true" className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center">{!work.ended && activity.id === "lease" && help.shown ? <CircleHelp aria-hidden="true" className="h-3.5 w-3.5 text-foreground" strokeWidth={1.6} /> : stateDot(work.ended || (work.number > 1 && activity.id !== "lease") ? "waiting" : activity.id === "insurer" && (guidance.contactOnHold || work.insurerSent) ? "waiting" : activity.state)}</span>
                   <span className="min-w-0">
                     <span className="block text-sm font-semibold leading-snug">{activity.title}</span>
@@ -184,11 +195,11 @@ export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initia
                 ))}
               </div>}
             </div>
-          </JourneyNavigation>
+          </JourneyNavigation>}
 
-          <section aria-labelledby="desk-heading" className="relative min-w-0 rounded-2xl border border-border bg-card px-5 py-5 shadow-sm [@container_work_(min-width:48rem)]:-ml-px [@container_work_(min-width:40rem)]:px-7">
-            {!work.ended && <Button variant="ghost" size="sm" onClick={() => setBriefing(true)} className="mb-4 h-auto gap-2 px-0 text-xs text-muted-foreground"><ArrowLeft className="h-3.5 w-3.5" aria-hidden="true" />Back to job overview</Button>}
-            <h3 id="desk-heading" className="mb-5 text-xs font-semibold text-muted-foreground">On Hobson's Desk</h3>
+          <section aria-label={focused ? "Focused activity work" : "On Hobson's Desk"} className={focused ? "relative min-w-0" : "relative min-w-0 rounded-2xl border border-border bg-card px-5 py-5 shadow-sm [@container_work_(min-width:48rem)]:-ml-px [@container_work_(min-width:40rem)]:px-7"}>
+            {!work.ended && !focused && <Button variant="ghost" size="sm" onClick={returnToJob} className="mb-4 h-auto gap-2 px-0 text-xs text-muted-foreground"><ArrowLeft className="h-3.5 w-3.5" aria-hidden="true" />Back to roof leak investigation</Button>}
+            {!focused && <h3 id="desk-heading" className="mb-5 text-xs font-semibold text-muted-foreground">On Hobson's Desk</h3>}
             <div key={selected}>
               {(!selectedActivity || work.ended || previousAttempt) && <h4 className="text-lg font-semibold leading-snug">{selected === "closing" ? "Investigation ended by you" : previousAttempt ? "Previous attempt" : selectedDone ? selectedDone.label : selectedActivity?.title}</h4>}
 
@@ -205,7 +216,7 @@ export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initia
               </>}
 
               {selectedActivity && <>
-                <RoofActivityJourney activity={selectedActivity.id} work={{ ...work, paused, guidance, help }} onEvidence={(item) => { setEvidence(item); setPaperOpen(item === "paper"); }} />
+                <RoofActivityJourney activity={selectedActivity.id} work={{ ...work, paused, guidance, help }} showTitle={!focused} onEvidence={(item) => { setEvidence(item); setPaperOpen(item === "paper"); }} />
                 {selected === "lease" && !evidence && <div className="mt-4 flex flex-wrap gap-3">
                   <Button variant="ghost" size="sm" className="px-0 text-xs text-muted-foreground" onClick={() => onGuide("lease")}>Guide this activity</Button>
                   <Button variant="ghost" size="sm" className="px-0 text-xs text-muted-foreground" onClick={() => { onHelpChange({ ...help, shown: !help.shown }); setEvidence("clarification"); }}>{help.shown ? "Return to investigation" : "Preview needs help"}</Button>
