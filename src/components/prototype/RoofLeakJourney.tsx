@@ -137,7 +137,7 @@ export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initia
         ) : (
         <div className="grid grid-cols-1 items-stretch gap-3 p-3 [@container_work_(min-width:40rem)]:p-5 [@container_work_(min-width:48rem)]:min-h-full [@container_work_(min-width:48rem)]:grid-cols-[minmax(0,0.35fr)_minmax(0,0.65fr)] [@container_work_(min-width:48rem)]:gap-0">
           <JourneyNavigation label="The Journey" selectedTitle={selected === "closing" ? "Closing summary" : previousAttempt ? "Previous attempt" : selectedDone ? selectedDone.label : selectedActivity?.title}>
-            {!work.ended && <Button variant="ghost" size="sm" onClick={() => setBriefing(true)} className="mb-4 h-auto gap-2 px-0 text-xs text-muted-foreground"><ArrowLeft className="h-3.5 w-3.5" aria-hidden="true" />Back to job overview</Button>}
+  
   
   
             {work.ended && <Button variant="ghost" size="sm" onClick={() => setSelected("closing")} aria-current={selected === "closing" ? "step" : undefined} className="mb-4 h-auto max-w-full whitespace-normal px-0 text-left text-xs text-muted-foreground">Closing summary</Button>}
@@ -184,6 +184,7 @@ export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initia
           </JourneyNavigation>
 
           <section aria-labelledby="desk-heading" className="relative min-w-0 rounded-2xl border border-border bg-card px-5 py-5 shadow-sm [@container_work_(min-width:48rem)]:-ml-px [@container_work_(min-width:40rem)]:px-7">
+            {!work.ended && <Button variant="ghost" size="sm" onClick={() => setBriefing(true)} className="mb-4 h-auto gap-2 px-0 text-xs text-muted-foreground"><ArrowLeft className="h-3.5 w-3.5" aria-hidden="true" />Back to job overview</Button>}
             <h3 id="desk-heading" className="mb-5 text-xs font-semibold text-muted-foreground">On Hobson's Desk</h3>
             <div key={selected}>
               <h4 className="text-lg font-semibold leading-snug">{selected === "closing" ? "Investigation ended by you" : previousAttempt ? "Previous attempt" : selectedDone ? selectedDone.label : selectedActivity?.title}</h4>
