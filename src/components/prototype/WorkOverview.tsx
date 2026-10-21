@@ -184,6 +184,7 @@ export function WorkOverview({ onClose, onGuide, sideLetterRequested = false, su
                       <div className="min-w-0 flex-1 basis-72">
                         <p className="text-xs text-muted-foreground">{item.place}</p>
                         <h3 className="mt-1 text-sm font-semibold leading-snug">{item.jobTitle}</h3>
+                        <p className="mt-1 text-sm font-medium leading-snug">{item.matter}</p>
                         <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">{item.why}</p>
                         <p className="mt-1.5 text-sm font-medium leading-relaxed">{item.decision}</p>
                       </div>
