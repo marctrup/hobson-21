@@ -1,5 +1,9 @@
 # Roadmap
 
+## Prototype Work — focused subtasks
+- [x] Separate each roof activity from the parent briefing, retaining requested evidence, guidance, controls and job-level history.
+- [x] Verify all three journeys, evidence and edited-notification approval in the browser without page errors; component regression checks and state/authority tests pass, preview clean. Prototype Unit unchanged; not published.
+
 ## Prototype Work — clear activity journeys
 - [x] Add independent roof-activity timelines with requested evidence and existing approval views.
 - [x] Verify action-specific approval, contact holds, fresh attempts and overview consistency; 228 frontend tests pass and all three activities plus edited-notification sending verified in-browser without page errors. Prototype Unit unchanged; not published.
