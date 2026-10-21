@@ -16,9 +16,9 @@ describe("Focused renewal preparation", () => {
     expect(screen.queryByRole("button", { name: "Approve and send" })).not.toBeInTheDocument();
     await user.click(screen.getByRole("button", { name: "Back to tenancy renewal" }));
     await user.click(screen.getByRole("button", { name: "Back to What I'm Up To" }));
-    await user.click(screen.getByRole("tab", { name: /Needs you/ }));
-    expect(screen.getByRole("region", { name: "Needs you" })).not.toHaveTextContent("Stanley House · Flat 6");
-    await user.click(screen.getByRole("tab", { name: /All work/ }));
+    await user.click(screen.getByRole("button", { name: /Needs attention/ }));
+    expect(screen.getByRole("region", { name: "Ongoing" })).not.toHaveTextContent("Stanley House · Flat 6");
+    await user.click(screen.getByRole("button", { name: "Clear filter" }));
     await user.click(screen.getByRole("button", { name: "Getting the tenancy renewal ready" }));
     await user.click(screen.getByRole("button", { name: new RegExp(title) }));
     expect(screen.queryByRole("button", { name: "Start this work" })).not.toBeInTheDocument();

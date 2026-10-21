@@ -1,5 +1,9 @@
 # Roadmap
 
+## Prototype Work — ongoing and completed overview
+- [x] Simplify to two job views with an Ongoing attention filter, parent-job entry and consistent deduplicated briefing counts.
+- [x] Verify filtering, search, parent-first navigation, dynamic decisions and completed-lease navigation in the live preview without page errors; all 246 frontend checks pass and preview is clean. Prototype Unit unchanged; not published.
+
 ## Prototype Work — tenancy renewal alignment
 - [x] Align the renewal briefing and focused subtasks while preserving paper review, conversation, draft and approval state.
 - [x] Verify starts, evidence, Side Letter finding/uncertainty, contextual guidance and edited-email approval/history round trips in the browser without errors; 132 component checks pass, preview clean. Prototype Unit and Burlington Gardens unchanged; not published.

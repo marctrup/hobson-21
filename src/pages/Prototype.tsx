@@ -1449,10 +1449,10 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
     return () => window.clearTimeout(timer);
   }, [workGuidance]);
   const [roofWork, setRoofWork] = useState(createUnstartedRoofWork);
-  const roofCounts = roofOverviewCounts(roofWork);
+  const roofCounts = roofOverviewCounts(roofWork, renewalWork.approval === "awaiting");
   useEffect(() => {
     if (testerMode) return;
-    const greeting = `Good morning, ${FIRST_NAME}. I've finished ${roofCounts.accomplished} pieces of work, I'm looking after ${roofCounts.active} more, and there are ${(roofCounts.needsYou + Number(renewalWork.approval === "awaiting"))} things I'd like you to review.`;
+    const greeting = `Good morning, ${FIRST_NAME}. I've finished ${roofCounts.accomplished} pieces of work, I'm looking after ${roofCounts.active} more, and there are ${roofCounts.needsYou} things I'd like you to review.`;
     setMessages(previous => previous.map(message => message.id === "portfolio-welcome" || message.id === "p-greet-0" ? { ...message, text: greeting } : message));
   }, [roofCounts.accomplished, roofCounts.active, roofCounts.needsYou, renewalWork.approval, testerMode]);
   const roofGuidance = roofWork.guidance;
@@ -2977,7 +2977,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
       ? [
           `Good morning, ${FIRST_NAME}. For today's testing, go straight to your unit — by the map or the search. That is where I can answer your questions.`,
         ]
-      : [`Good morning, ${FIRST_NAME}. I've finished ${roofCounts.accomplished} pieces of work, I'm looking after ${roofCounts.active} more, and there are ${(roofCounts.needsYou + Number(renewalWork.approval === "awaiting"))} things I'd like you to review.`];
+      : [`Good morning, ${FIRST_NAME}. I've finished ${roofCounts.accomplished} pieces of work, I'm looking after ${roofCounts.active} more, and there are ${roofCounts.needsYou} things I'd like you to review.`];
 
 
 
