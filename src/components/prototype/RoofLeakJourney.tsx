@@ -1,6 +1,6 @@
 import { JourneyNavigation } from "./JourneyNavigation";
 import { useEffect, useState } from "react";
-import { ArrowLeft, Check, ChevronDown, CircleHelp, FileText, Hand, HelpCircle, Mail, MessageCircle, Pause, Play, Undo2, X, MoreHorizontal } from "lucide-react";
+import { ArrowLeft, ArrowUpRight, Check, ChevronDown, CircleHelp, FileText, Hand, HelpCircle, Mail, MessageCircle, Pause, Play, Undo2, X, MoreHorizontal } from "lucide-react";
 import { DeskActionButton } from "./DeskActionButton";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import { AlertDialog, AlertDialogPortal, AlertDialogOverlay, AlertDialogTitle, AlertDialogDescription, AlertDialogFooter, AlertDialogAction, AlertDialogCancel } from "@/components/ui/alert-dialog";
@@ -28,7 +28,7 @@ function stateDot(state: ActivityState) {
 const stateLabel: Record<ActivityState, string> = { working: "Working", waiting: "Waiting", "needs-you": "Needs you" };
 
 /** Illustrative parallel-activities demonstration only — no real work, approvals or integrations. */
-export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initialActivity = "lease", guidance, help, onHelpChange, work, onEnd, onRestart, onWorkUpdate }: {
+export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initialActivity = "lease", initialView = "briefing", guidance, help, onHelpChange, work, onEnd, onRestart, onWorkUpdate }: {
   work: RoofWorkState;
   onWorkUpdate: (work: RoofWorkState) => void;
   onEnd: () => void;
@@ -38,12 +38,16 @@ export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initia
   onBack: () => void;
   onGuide: (scope: RoofGuideScope) => void;
   initialActivity?: ActivityId;
+  /** "briefing" opens the calm job overview; "detail" opens the two-panel Work Surface at initialActivity. */
+  initialView?: "briefing" | "detail";
   guidance: RoofGuidanceState;
   help: RoofHelpState;
   onHelpChange: (help: RoofHelpState) => void;
 }) {
   const [selected, setSelected] = useState<ActivityId | "closing" | `done-${number}` | `previous-${number}`>(work.ended ? "closing" : initialActivity);
+  const [briefing, setBriefing] = useState(initialView === "briefing" && !work.ended);
   useEffect(() => { if (work.ended) setSelected("closing"); }, [work.ended]);
+  useEffect(() => { if (work.ended) setBriefing(false); }, [work.ended]);
   const completed = work.history;
   const [confirmation, setConfirmation] = useState<"end" | "restart" | null>(null);
   const previousAttempt = selected.startsWith("previous-") ? work.previous[Number(selected.slice(9))] : undefined;
