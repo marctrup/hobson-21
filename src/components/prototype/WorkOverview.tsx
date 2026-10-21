@@ -81,7 +81,7 @@ export function WorkOverview({ onClose, onGuide, sideLetterRequested = false, su
     ...decisions.map((item) => ({
       key: item.place,
       place: item.place,
-      jobTitle: item.title,
+      jobTitle: lookingAfter.find((work) => work.place === item.place)?.title ?? item.title,
       matter: item.title,
       why: item.why,
       decision: item.decision,
