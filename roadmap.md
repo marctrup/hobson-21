@@ -1,8 +1,8 @@
 # Roadmap
 
 ## Prototype Work — working and not commenced
-- [ ] Add an independent not-commenced scenario with explicit, recorded internal start actions and planned journeys; retain the earlier scenario.
-- [ ] Verify starts, parent status, authority boundaries, scenario restoration and existing controls; do not publish or change Prototype Unit.
+- [x] Add an independent not-commenced scenario with explicit, recorded internal start actions and planned journeys; retain the earlier scenario.
+- [x] Verify both starts, parent status and scenario restoration in the browser without errors; 126 component checks and 22 activity/lifecycle checks pass, preview clean. Prototype Unit unchanged; not published.
 
 ## Prototype Work — focused subtasks
 - [x] Separate each roof activity from the parent briefing, retaining requested evidence, guidance, controls and job-level history.
