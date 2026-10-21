@@ -8,7 +8,7 @@ import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import { AlertDialog, AlertDialogPortal, AlertDialogOverlay, AlertDialogTitle, AlertDialogDescription, AlertDialogFooter, AlertDialogAction, AlertDialogCancel } from "@/components/ui/alert-dialog";
 import * as AlertDialogPrimitive from "@radix-ui/react-alert-dialog";
 import { RoofAttemptHistory, RoofClosingSummary } from "./RoofAttemptHistory";
-import { resetRoofDemo, sendInsurerNotification, type RoofWorkState } from "./roofWorkLifecycle";
+import { resetRoofDemo, sendInsurerNotification, startRoofActivity, switchRoofScenario, type RoofWorkState } from "./roofWorkLifecycle";
 import { INSURER_TO, INSURER_SUBJECT, INSURER_BODY, SURVEYOR_TO, SURVEYOR_SUBJECT, SURVEYOR_BODY } from "./roofDrafts";
 import { Button } from "@/components/ui/button";
 import { JobPapersMap } from "./JobPapersMap";
@@ -67,17 +67,34 @@ export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initia
   const focused = !briefing && !work.ended && !previousAttempt && !!selectedActivity;
   const activityPlan = selectedActivity ? roofActivityJourney(selectedActivity.id, { ...work, paused, guidance, help }) : null;
   const returnToJob = () => { setBriefing(true); setEvidence(null); setPaperOpen(false); };
+  const unstarted = focused && work.scenario && (selected === "contractor" ? !work.contractorStarted : selected === "insurer" ? !work.insurerStarted : false);
+  const [startNotice, setStartNotice] = useState<string | null>(null);
+  const beginActivity = () => {
+    if (selected !== "contractor" && selected !== "insurer") return;
+    const next = startRoofActivity({ ...work, paused }, selected);
+    if (next.contractorStarted === work.contractorStarted && next.insurerStarted === work.insurerStarted) return;
+    onWorkUpdate(next);
+    setStartNotice(selected === "contractor" ? "I'll begin preparing the contractor inspection request." : "I'll begin reviewing what we know and preparing the insurer notification.");
+  };
 
   /** The calm opening briefing — every line is derived from the live illustrative state. */
-  const doneItems = work.number > 1
+  const doneItems = work.scenario || work.number > 1
     ? work.history.map((item) => item.label)
     : ["Received the report of the leak.", "Found the relevant Business Lease.", "Sent the contractor inspection request.", ...work.history.slice(3).map((item) => item.label)];
-  const outstanding: { id: ActivityId; title: string; status: string }[] = [
+  const outstanding: { id: ActivityId; title: string; status: string; description?: string }[] = [
     { id: "lease", title: "Establish repairing responsibility", status: help.shown ? "Needs your help — I can't establish whether the affected roof forms part of the tenant's premises." : "Reviewing the lease — responsibility not yet established." },
     { id: "contractor", title: "Contractor inspection", status: work.contractorRequestSent ? `Request sent — awaiting a response.${guidance.contactOnHold ? " Further contact is on hold at your request." : ""}` : "No inspection requested yet in this investigation." },
     { id: "insurer", title: "Contact the insurer", status: work.insurerSent ? "Sent — awaiting a response." : !work.insurerPrepared ? "No notification prepared yet." : guidance.contactOnHold ? "On hold at your request — the prepared notification has not been sent." : "Notification prepared but not sent — needs your approval." },
   ];
-  const openActivity = (id: ActivityId) => { setSelected(id); setPaperOpen(false); setEvidence(null); setBriefing(false); };
+  if (work.scenario) {
+    outstanding[0].status = help.shown ? "Needs your help — repairing responsibility remains unresolved." : paused ? "Work paused" : "I'm working on this at the moment";
+    outstanding[0].description = "Reviewing the lease to establish responsibility for the affected roof.";
+    outstanding[1].status = work.contractorRequestSent ? "Request sent — awaiting a response." : work.contractorStarted ? paused ? "Work paused" : "I'm working on this at the moment" : "Not yet started";
+    outstanding[1].description = "Arrange an inspection to establish the cause and extent of the leak.";
+    outstanding[2].status = work.insurerSent ? "Sent — awaiting a response." : work.insurerPrepared ? guidance.contactOnHold ? "On hold at your request" : "Needs your approval" : work.insurerStarted ? paused ? "Work paused" : "I'm working on this at the moment" : "Not yet started";
+    outstanding[2].description = "Prepare a notification about the reported leak for your approval.";
+  }
+  const openActivity = (id: ActivityId) => { setSelected(id); setPaperOpen(false); setEvidence(null); setBriefing(false); setStartNotice(null); };
 
   return (
     <div className="flex min-h-0 flex-1 flex-col overflow-y-auto [@container_work_(min-width:48rem)]:overflow-hidden" role="region" aria-label="Roof leak investigation work journey">
@@ -101,7 +118,7 @@ export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initia
           <p className="max-w-2xl text-sm leading-relaxed text-muted-foreground">{work.ended ? "The papers, findings and earlier actions remain available below." : roofLeakWork.explanation}</p>
         </div>}
         {!briefing && !focused && !work.ended && <p className="mt-3 max-w-2xl text-sm leading-relaxed">{work.number > 1 ? "I've started a fresh investigation. I still have the lease, the tenant's report and the record of the contractor inspection request. I'll check the earlier findings before deciding what needs doing next. I won't repeat external actions without the required authority." : work.insurerSent ? "I am continuing the lease review and awaiting the contractor and insurer responses. Repairing responsibility remains unresolved." : roofSummary(guidance)}</p>}
-        <p role="status" className="mt-3 flex items-center gap-2 text-xs font-medium"><span className={`h-1.5 w-1.5 rounded-full ${paused || work.ended ? "bg-muted-foreground" : "bg-ring"}`} aria-hidden="true" />{work.ended ? "Ended by you" : paused ? "Work paused · What I've found is preserved" : focused ? activityPlan?.position : "I'm working on this now"}</p>
+        <p role="status" className="mt-3 flex items-center gap-2 text-xs font-medium"><span className={`h-1.5 w-1.5 rounded-full ${paused || work.ended ? "bg-muted-foreground" : "bg-ring"}`} aria-hidden="true" />{work.ended ? "Ended by you" : paused ? "Work paused · What I've found is preserved" : unstarted ? "Not commenced yet" : focused && work.scenario && !work.insurerSent && !work.contractorRequestSent ? "I'm working on this at the moment" : focused ? activityPlan?.position : "I'm working on this now"}</p>
       </header>
       <AlertDialog open={confirmation !== null} onOpenChange={(open) => { if (!open) setConfirmation(null); }}>
         <AlertDialogPortal><AlertDialogOverlay className="z-[1500] bg-background/80" /><AlertDialogPrimitive.Content className="fixed left-1/2 top-1/2 z-[1501] w-[calc(100%_-_2rem)] max-w-lg max-h-[85dvh] overflow-y-auto -translate-x-1/2 -translate-y-1/2 space-y-4 rounded-md border border-border bg-background p-4 [@container_work_(min-width:40rem)]:p-6 shadow-lg">
@@ -134,6 +151,7 @@ export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initia
                   <span className="min-w-0">
                     <span className="block text-sm font-semibold leading-snug">{item.title}</span>
                     <span className="mt-1 block text-sm font-normal leading-relaxed text-muted-foreground">{item.status}</span>
+                    {item.description && <span className="mt-1 block text-sm font-normal leading-relaxed text-muted-foreground">{item.description}</span>}
                   </span>
                   <ArrowUpRight aria-hidden="true" className="mt-1 h-4 w-4 shrink-0 text-muted-foreground" />
                 </Button>
@@ -141,6 +159,7 @@ export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initia
             </div>
           </section>
           <section className="mt-8 border-t border-border pt-4" aria-label="Investigation history">
+            <Button variant="ghost" size="sm" className="mb-4 h-auto whitespace-normal px-0 text-xs text-muted-foreground" onClick={() => onWorkUpdate(switchRoofScenario(work))}>{work.scenario ? "View earlier demonstration" : "View not-commenced demonstration"}</Button>
             <Button variant="ghost" size="sm" onClick={() => setHistoryOpen(!historyOpen)} aria-expanded={historyOpen} aria-controls="briefing-history" className="h-auto gap-2 px-0 text-xs text-muted-foreground">What I've done<span className="tabular-nums">{completed.length + work.previous.length}</span><ChevronDown aria-hidden="true" className={`h-3.5 w-3.5 ${historyOpen ? "rotate-180" : ""}`} /></Button>
             {historyOpen && <div id="briefing-history" className="mt-3 space-y-2">
               {work.previous.map((attempt, index) => <Button key={attempt.number} variant="ghost" onClick={() => { setSelected(`previous-${index}`); setBriefing(false); }} className="h-auto w-full justify-start whitespace-normal text-left">Previous attempt {attempt.number}</Button>)}
@@ -215,7 +234,9 @@ export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initia
                 <p className="mt-4 text-xs leading-relaxed text-muted-foreground">This is part of the investigation's history. The current activities are above, under Happening now.</p>
               </>}
 
-              {selectedActivity && <>
+              {selectedActivity && unstarted && <div><h5 className="text-xs font-semibold text-muted-foreground">What I'm planning</h5><p className="mt-2 text-sm leading-relaxed">{activityPlan?.intent}</p><Button size="sm" className="mt-6" disabled={paused} onClick={beginActivity}>Start this work</Button></div>}
+              {startNotice && <p role="status" className="mb-5 text-sm leading-relaxed text-muted-foreground">{startNotice}</p>}
+              {selectedActivity && !unstarted && <>
                 <RoofActivityJourney activity={selectedActivity.id} work={{ ...work, paused, guidance, help }} showTitle={!focused} onEvidence={(item) => { setEvidence(item); setPaperOpen(item === "paper"); }} />
                 {selected === "lease" && !evidence && <div className="mt-4 flex flex-wrap gap-3">
                   <Button variant="ghost" size="sm" className="px-0 text-xs text-muted-foreground" onClick={() => onGuide("lease")}>Guide this activity</Button>
@@ -223,7 +244,7 @@ export function RoofLeakJourney({ paused, onPauseChange, onBack, onGuide, initia
                 </div>}
                 {evidence && <Button variant="ghost" size="sm" className="mt-5 px-0 text-xs text-muted-foreground" onClick={() => setEvidence(null)}>Hide supporting detail</Button>}
               </>}
-              {selectedActivity && (evidence || (selected === "insurer" && !work.insurerPrepared)) && <div aria-label="Activity supporting detail" className="mt-4 border-t border-border pt-4">
+              {selectedActivity && !unstarted && (evidence || (selected === "insurer" && !work.insurerPrepared && !work.scenario)) && <div aria-label="Activity supporting detail" className="mt-4 border-t border-border pt-4">
               {selected === "lease" && <>
                 {evidence === "findings" && work.number > 1 && <div className="mt-4 space-y-4 border-y border-border py-4">
                   <div><h5 className="text-xs font-semibold">Information already available</h5><ul className="mt-2 space-y-1 text-sm leading-relaxed text-muted-foreground"><li>Tenant's report.</li><li>Business Lease.</li><li>Record of the previous contractor inspection request.</li></ul></div>

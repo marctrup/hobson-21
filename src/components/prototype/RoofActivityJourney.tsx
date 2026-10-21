@@ -11,7 +11,7 @@ export function RoofActivityJourney({ activity, work, onEvidence, showTitle = tr
     <h5 className="mt-5 text-xs font-semibold text-muted-foreground">What I'm planning</h5>
     <p className="mt-2 text-sm leading-relaxed">{plan.intent}</p>
     {plan.changes.length > 0 && <aside aria-label="Current instructions" className="mt-4 border-l-2 border-ring pl-3">{plan.changes.map(change => <p key={change} className="mt-2 text-xs leading-relaxed text-muted-foreground">{change}</p>)}</aside>}
-    <h5 className="mt-6 text-xs font-semibold text-muted-foreground">The journey</h5>
+    <h5 className="mt-6 text-xs font-semibold text-muted-foreground">{work.scenario ? "My progress" : "The journey"}</h5>
     <ol className="mt-4 space-y-0">
       {plan.steps.map((step, index) => {
         const Icon = step.state === "done" ? Check : step.state === "needs-you" ? CircleHelp : step.state === "waiting" ? Clock : work.paused && step.state === "reviewing" ? Pause : Circle;
