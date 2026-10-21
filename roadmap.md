@@ -1,5 +1,9 @@
 # Roadmap
 
+## Prototype Work — tenancy renewal alignment
+- [x] Align the renewal briefing and focused subtasks while preserving paper review, conversation, draft and approval state.
+- [x] Verify starts, evidence, Side Letter finding/uncertainty, contextual guidance and edited-email approval/history round trips in the browser without errors; 132 component checks pass, preview clean. Prototype Unit and Burlington Gardens unchanged; not published.
+
 ## Prototype Work — working and not commenced
 - [x] Add an independent not-commenced scenario with explicit, recorded internal start actions and planned journeys; retain the earlier scenario.
 - [x] Verify both starts, parent status and scenario restoration in the browser without errors; 126 component checks and 22 activity/lifecycle checks pass, preview clean. Prototype Unit unchanged; not published.

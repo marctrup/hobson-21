@@ -19,6 +19,8 @@ describe("Prototype conversation composer", () => {
     expect(screen.getByLabelText("Guide Hobson about the tenancy renewal")).toHaveValue("");
     expect(screen.queryByLabelText(`Attached: ${SIDE_LETTER_FILENAME}`)).not.toBeInTheDocument();
     await user.click(screen.getByRole("button", { name: "Getting the tenancy renewal ready" }));
+    await user.click(screen.getByRole("button", { name: /Establish the current tenancy terms/ }));
+    await user.click(screen.getAllByRole("button", { name: "View supporting detail" })[1]);
     await waitFor(() => expect(screen.getByText("Related to the existing Business Lease")).toBeInTheDocument(), { timeout: 5000 });
     await user.click(screen.getByRole("button", { name: /^Guide Hobson$/ }));
     expect(screen.getByLabelText("Guide Hobson about the tenancy renewal")).toHaveValue("");

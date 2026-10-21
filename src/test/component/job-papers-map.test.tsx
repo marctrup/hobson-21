@@ -34,6 +34,6 @@ describe("Job-scoped Papers / Map", () => {
     await user.click(within(dialog).getByRole("button", { name: "Map" }));
     expect(within(dialog).getByRole("img", { name: "Stanley House · Flat 6 job map" })).toBeInTheDocument();
     await user.click(within(dialog).getByRole("button", { name: "Back to job" }));
-    expect(screen.getByRole("button", { name: /Checking the tenancy history/ })).toHaveAttribute("aria-current", "step");
+    expect(screen.getByRole("button", { name: /Establish the current tenancy terms/ })).toBeVisible();
   });
 });

@@ -63,6 +63,8 @@ describe("Iteration 22A paper placement", () => {
     const user = userEvent.setup();
     render(<Desk />);
     await user.click(screen.getByRole("button", { name: "Getting the tenancy renewal ready" }));
+    await user.click(screen.getByRole("button", { name: /Establish the current tenancy terms/ }));
+    await user.click(screen.getAllByRole("button", { name: "View supporting detail" })[1]);
     expect(screen.queryByRole("article", { name: "Side Letter — 2024" })).not.toBeInTheDocument();
     await user.click(screen.getByRole("button", { name: "Preview uncertainty" }));
     await user.click(screen.getByRole("button", { name: "Choose somewhere else" }));
@@ -75,6 +77,9 @@ describe("Iteration 22A paper placement", () => {
     await user.click(screen.getByRole("button", { name: "Back to job" }));
     await user.click(screen.getByRole("button", { name: /Reviewed the rent/ }));
     expect(screen.getByText("£24,000")).toBeVisible();
+    await user.click(screen.getByRole("button", { name: "Back to tenancy renewal" }));
+    await user.click(screen.getByRole("button", { name: /Prepare the tenant communication/ }));
+    await user.click(screen.getByRole("button", { name: "Start this work" }));
     await user.click(screen.getByRole("button", { name: "Preview approval stage" }));
     expect(screen.getByRole("button", { name: "Approve and send" })).toBeEnabled();
     expect(screen.getByLabelText("Draft email preview")).not.toHaveTextContent("£24,000");
@@ -95,13 +100,17 @@ describe("Iteration 22B next action clarity", () => {
     render(<WorkOverview onClose={vi.fn()} onGuide={vi.fn()} sideLetterRequested suppliedPapers={checking().suppliedPapers} />);
     const user = userEvent.setup();
     await user.click(screen.getByRole("button", { name: "Getting the tenancy renewal ready" }));
+    await user.click(screen.getByRole("button", { name: /Establish the current tenancy terms/ }));
+    await user.click(screen.getAllByRole("button", { name: "View supporting detail" })[1]);
     expect(screen.getByRole("heading", { name: "Checking the Side Letter" })).toBeInTheDocument();
     expect(screen.getByText(/I'm examining whether the Side Letter changes the rent recorded in the Business Lease/)).toBeInTheDocument();
     expect(screen.getByText("Added to Papers")).toBeInTheDocument();
     expect(screen.getByText("Related to the existing Business Lease")).toBeInTheDocument();
     expect(screen.getByText("In progress")).toBeInTheDocument();
-    expect(screen.getByText(/Waiting for the Side Letter check/)).toBeInTheDocument();
     expect(screen.getByText("£24,000")).toBeVisible();
+    await user.click(screen.getByRole("button", { name: "Back to tenancy renewal" }));
+    await user.click(screen.getByRole("button", { name: /Prepare the renewal summary/ }));
+    expect(screen.getByRole("button", { name: "Start this work" })).toBeEnabled();
   });
 });
 import { applyPaperPlacement as examinePlacement, initialWorkGuidance as baseGuidance, applyPaperAttachment as attachPaper, SIDE_LETTER_ATTACHMENT_ID as SL_ID, SIDE_LETTER_ATTACHMENT_INSTRUCTION as SL_TEXT, SIDE_LETTER_FINDING_REPLY } from "@/components/prototype/workGuidance";
