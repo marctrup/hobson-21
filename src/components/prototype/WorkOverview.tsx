@@ -3,7 +3,8 @@ import { useEffect, useState } from "react";
 import { ArrowUpRight, Check, Hand, Search, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import owlReading from "@/assets/prototype/owl-reading.png";
-import { WorkJourney, type ApprovalStatus } from "./WorkJourney";
+import { createRenewalWork, type RenewalActivity, type RenewalWork } from "./renewalWork";
+import { WorkJourney } from "./WorkJourney";
 import { RoofLeakJourney } from "./RoofLeakJourney";
 import { CompletedLeaseJourney } from "./CompletedLeaseJourney";
 import { roofInsurerDecision, roofLeakWork, type RoofActivityId } from "./roofLeakWork";
@@ -43,10 +44,13 @@ const INITIAL_ROWS = 10;
 const plural = (n: number, one: string, many: string) => (n === 1 ? one : many);
 
 /** Illustrative work only: deliberately independent of action-card state and approvals. */
-export function WorkOverview({ onClose, onGuide, sideLetterRequested = false, suppliedPapers = [], paperPlaces = [], onPaperPlacement, onJourneyBack, focusNeedsYou = 0, roofGuidance: suppliedRoofGuidance = initialRoofGuidance, roofWork, onRoofWorkChange }: { onClose: () => void; onGuide: (scope: "renewal" | RoofGuideScope, suggestion?: string) => void; sideLetterRequested?: boolean; suppliedPapers?: SuppliedPaper[]; paperPlaces?: PaperPlace[]; onPaperPlacement?: (id: string, action: PaperPlacementAction) => void; onJourneyBack?: () => void; focusNeedsYou?: number; roofGuidance?: RoofGuidanceState; roofWork?: RoofWorkState; onRoofWorkChange?: (work: RoofWorkState) => void }) {
+export function WorkOverview({ onClose, onGuide, sideLetterRequested = false, suppliedPapers = [], paperPlaces = [], onPaperPlacement, onJourneyBack, focusNeedsYou = 0, roofGuidance: suppliedRoofGuidance = initialRoofGuidance, roofWork, onRoofWorkChange, renewalWork: suppliedRenewalWork, onRenewalWorkChange }: { onClose: () => void; onGuide: (scope: "renewal" | RoofGuideScope, suggestion?: string, renewalActivity?: RenewalActivity) => void; sideLetterRequested?: boolean; suppliedPapers?: SuppliedPaper[]; paperPlaces?: PaperPlace[]; onPaperPlacement?: (id: string, action: PaperPlacementAction) => void; onJourneyBack?: () => void; focusNeedsYou?: number; roofGuidance?: RoofGuidanceState; roofWork?: RoofWorkState; onRoofWorkChange?: (work: RoofWorkState) => void; renewalWork?: RenewalWork; onRenewalWorkChange?: (work: RenewalWork) => void }) {
   const [journey, setJourney] = useState<"renewal" | "roof" | "completed-lease" | null>(null);
   const [paused, setPaused] = useState(false);
-  const [approval, setApproval] = useState<ApprovalStatus>("idle");
+  const [localRenewalWork, setLocalRenewalWork] = useState(createRenewalWork);
+  const renewalWork = suppliedRenewalWork ?? localRenewalWork;
+  const updateRenewalWork = onRenewalWorkChange ?? setLocalRenewalWork;
+  const approval = renewalWork.approval;
   const [openAtApproval, setOpenAtApproval] = useState(false);
   const awaitingApproval = approval === "awaiting";
   const sentApproval = approval === "sent";
@@ -137,7 +141,7 @@ export function WorkOverview({ onClose, onGuide, sideLetterRequested = false, su
         </Button>
       </div>
 
-      {journey === "completed-lease" ? <CompletedLeaseJourney onBack={closeJourney} /> : journey === "renewal" ? <WorkJourney paused={paused} onPauseChange={setPaused} onBack={closeJourney} onGuide={() => onGuide("renewal")} sideLetterRequested={sideLetterRequested} suppliedPapers={suppliedPapers} paperPlaces={paperPlaces} onPaperPlacement={onPaperPlacement} approval={approval} onApprovalChange={setApproval} approvalOpen={openAtApproval} /> : journey === "roof" ? <RoofLeakJourney key={`${currentRoofWork.scenario ?? "earlier"}-${currentRoofWork.number}`} work={currentRoofWork} onEnd={() => updateRoofWork(endRoofWork(currentRoofWork))} onRestart={() => updateRoofWork(restartRoofWork(currentRoofWork))} paused={currentRoofWork.paused} onPauseChange={(paused) => { if (!currentRoofWork.ended) updateRoofWork({ ...currentRoofWork, paused }); }} onBack={closeJourney} onGuide={(scope) => { if (!currentRoofWork.ended) onGuide(scope, scope === "lease" && roofHelp.shown ? LEASE_PLANS_INSTRUCTION : undefined); }} initialActivity={roofActivity} initialView={roofEntry} guidance={roofGuidance} help={roofHelp} onHelpChange={setRoofHelp} onWorkUpdate={(next) => { if (!currentRoofWork.ended) updateRoofWork(next); }} /> : <div className="hobson-scroll min-h-0 flex-1 overflow-y-auto">
+      {journey === "completed-lease" ? <CompletedLeaseJourney onBack={closeJourney} /> : journey === "renewal" ? <WorkJourney paused={paused} onPauseChange={setPaused} onBack={closeJourney} onGuide={(activity) => onGuide("renewal", undefined, activity)} sideLetterRequested={sideLetterRequested} suppliedPapers={suppliedPapers} paperPlaces={paperPlaces} onPaperPlacement={onPaperPlacement} work={renewalWork} onWorkChange={updateRenewalWork} approvalOpen={openAtApproval} /> : journey === "roof" ? <RoofLeakJourney key={`${currentRoofWork.scenario ?? "earlier"}-${currentRoofWork.number}`} work={currentRoofWork} onEnd={() => updateRoofWork(endRoofWork(currentRoofWork))} onRestart={() => updateRoofWork(restartRoofWork(currentRoofWork))} paused={currentRoofWork.paused} onPauseChange={(paused) => { if (!currentRoofWork.ended) updateRoofWork({ ...currentRoofWork, paused }); }} onBack={closeJourney} onGuide={(scope) => { if (!currentRoofWork.ended) onGuide(scope, scope === "lease" && roofHelp.shown ? LEASE_PLANS_INSTRUCTION : undefined); }} initialActivity={roofActivity} initialView={roofEntry} guidance={roofGuidance} help={roofHelp} onHelpChange={setRoofHelp} onWorkUpdate={(next) => { if (!currentRoofWork.ended) updateRoofWork(next); }} /> : <div className="hobson-scroll min-h-0 flex-1 overflow-y-auto">
         <div className="mx-auto w-full max-w-4xl px-3 pb-16 pt-8 [@container_work_(min-width:40rem)]:px-8 [@container_work_(min-width:40rem)]:pt-10">
           <header className="mb-8">
             <h2 className="text-3xl font-semibold leading-tight">What I'm Up To</h2>

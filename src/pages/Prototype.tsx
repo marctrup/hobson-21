@@ -1,3 +1,4 @@
+import { createRenewalWork, type RenewalActivity } from "@/components/prototype/renewalWork";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import L from "leaflet";
@@ -1432,6 +1433,8 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
   const [showDocuments, setShowDocuments] = useState(false);
   const [showWhatIveDone, setShowWhatIveDone] = useState(false);
   const [guidingRenewal, setGuidingRenewal] = useState(false);
+  const [renewalWork, setRenewalWork] = useState(createRenewalWork);
+  const [renewalGuideActivity, setRenewalGuideActivity] = useState<RenewalActivity | undefined>();
   const [workGuidance, setWorkGuidance] = useState(initialWorkGuidance);
   const [pendingAttachment, setPendingAttachment] = useState(false);
   const [paperPreviewActive, setPaperPreviewActive] = useState(false);
@@ -1449,9 +1452,9 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
   const roofCounts = roofOverviewCounts(roofWork);
   useEffect(() => {
     if (testerMode) return;
-    const greeting = `Good morning, ${FIRST_NAME}. I've finished ${roofCounts.accomplished} pieces of work, I'm looking after ${roofCounts.active} more, and there are ${roofCounts.needsYou} things I'd like you to review.`;
+    const greeting = `Good morning, ${FIRST_NAME}. I've finished ${roofCounts.accomplished} pieces of work, I'm looking after ${roofCounts.active} more, and there are ${(roofCounts.needsYou + Number(renewalWork.approval === "awaiting"))} things I'd like you to review.`;
     setMessages(previous => previous.map(message => message.id === "portfolio-welcome" || message.id === "p-greet-0" ? { ...message, text: greeting } : message));
-  }, [roofCounts.accomplished, roofCounts.active, roofCounts.needsYou, testerMode]);
+  }, [roofCounts.accomplished, roofCounts.active, roofCounts.needsYou, renewalWork.approval, testerMode]);
   const roofGuidance = roofWork.guidance;
   const setRoofGuidance = (guidance: typeof roofGuidance) => setRoofWork(previous => previous.ended ? previous : { ...previous, guidance });
   const [guidedRoofAttempt, setGuidedRoofAttempt] = useState(1);
@@ -2974,7 +2977,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
       ? [
           `Good morning, ${FIRST_NAME}. For today's testing, go straight to your unit — by the map or the search. That is where I can answer your questions.`,
         ]
-      : [`Good morning, ${FIRST_NAME}. I've finished ${roofCounts.accomplished} pieces of work, I'm looking after ${roofCounts.active} more, and there are ${roofCounts.needsYou} things I'd like you to review.`];
+      : [`Good morning, ${FIRST_NAME}. I've finished ${roofCounts.accomplished} pieces of work, I'm looking after ${roofCounts.active} more, and there are ${(roofCounts.needsYou + Number(renewalWork.approval === "awaiting"))} things I'd like you to review.`];
 
 
 
@@ -4057,7 +4060,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
           {guidingRenewal && showWhatIveDone ? (
             <>
               <p id="renewal-chat-context" className="mb-2 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs leading-relaxed text-muted-foreground">
-                <span>Regarding: {guideScope === "renewal" ? "Tenancy renewal · Stanley House, Flat 6" : guideScope === "lease" ? "Roof leak · Reviewing repairing obligations" : "Roof leak investigation · Burlington Gardens"}</span>
+                <span>Regarding: {guideScope === "renewal" ? `Tenancy renewal · Stanley House, Flat 6${renewalGuideActivity ? " · " + ({ terms: "Establish the current tenancy terms", summary: "Prepare the renewal summary", communication: "Prepare the tenant communication" }[renewalGuideActivity]) : ""}` : guideScope === "lease" ? "Roof leak · Reviewing repairing obligations" : "Roof leak investigation · Burlington Gardens"}</span>
                 {guideScope === "lease" && <button type="button" onClick={() => setGuideScope("overall")} className="underline decoration-dotted underline-offset-2 hover:text-foreground">Guide the whole investigation instead</button>}
               </p>
               {guideScope === "renewal" && pendingAttachment && (
@@ -4371,10 +4374,11 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
           />
         )}
         {showWhatIveDone && (
-          <PaperPreviewContext.Provider value={setPaperPreviewActive}><WorkOverview onClose={resetToMap} sideLetterRequested={workGuidance.sideLetterRequested} suppliedPapers={workGuidance.suppliedPapers} paperPlaces={PAPER_PLACES} onPaperPlacement={placeSuppliedPaper} roofGuidance={roofGuidance} roofWork={roofWork} onRoofWorkChange={(next) => {
+          <PaperPreviewContext.Provider value={setPaperPreviewActive}><WorkOverview renewalWork={renewalWork} onRenewalWorkChange={setRenewalWork} onClose={resetToMap} sideLetterRequested={workGuidance.sideLetterRequested} suppliedPapers={workGuidance.suppliedPapers} paperPlaces={PAPER_PLACES} onPaperPlacement={placeSuppliedPaper} roofGuidance={roofGuidance} roofWork={roofWork} onRoofWorkChange={(next) => {
             setRoofWork(next);
             if (guideScope !== "renewal" && (next.ended !== roofWork.ended || next.number !== roofWork.number || next.scenario !== roofWork.scenario)) { setGuidingRenewal(false); setInput(""); }
-          }} focusNeedsYou={needsYouFocus} onJourneyBack={() => setGuidingRenewal(false)} onGuide={(scope, suggestion) => {
+          }} focusNeedsYou={needsYouFocus} onJourneyBack={() => setGuidingRenewal(false)} onGuide={(scope, suggestion, renewalActivity) => {
+            setRenewalGuideActivity(renewalActivity);
             if (scope !== "renewal" && (roofWork.ended)) return;
             expandChat();
             if (!guidingRenewal) {
