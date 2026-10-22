@@ -200,28 +200,47 @@ export function placeRows(rs: Responsibility[], only: GroupId | null = null): Pl
   return rows;
 }
 
-/**
- * Coverage matrix per Unit Group: one row per compliance item (grouped by category),
- * one column for shared parts plus one per Unit. Derived only from the records, so any
- * automated feed that updates records updates this view with no layout change.
- */
-export type MatrixRow = { key: string; name: string; category: Category; controlIds: string[]; shared: boolean; units: Record<string, boolean> };
-export type PlaceMatrix = { id: string; name: string; columns: string[]; rows: MatrixRow[] };
+/** Expand a recorded range such as "Flats 1–8" into individual Units (Flat 1 … Flat 8). */
+export function expandUnits(units: string[]): string[] {
+  return units.flatMap((u) => {
+    const m = /^(\w+?)s?\s*(\d+)[–-](\d+)$/i.exec(u);
+    if (!m) return [u];
+    return Array.from({ length: +m[3] - +m[2] + 1 }, (_, i) => `${m[1]} ${+m[2] + i}`);
+  });
+}
 
-export function placeMatrix(rs: Responsibility[], only: GroupId | null = null): PlaceMatrix[] {
-  const blocks: { id: string; name: string; units: string[] }[] = GROUPS.filter((g) => !only || g.id === only);
+/** Does a record cover one individual Unit, including ranges written in the record ("Flats 1–8")? */
+function coversOne(appliesTo: string, unit: string): boolean {
+  if (covers(appliesTo, unit)) return true;
+  const range = /(\w+?)s?\s*(\d+)[–-](\d+)/i.exec(appliesTo);
+  const one = /(\w+)\s*(\d+)$/i.exec(unit);
+  return !!range && !!one && range[1].toLowerCase() === one[1].toLowerCase() && +one[2] >= +range[2] && +one[2] <= +range[3];
+}
+
+/**
+ * Per-place liabilities, one line per individual Unit, derived only from the records so an
+ * automated feed updates it without layout change. Scales to blocks of any size.
+ */
+export type Liabilities = { category: Category; names: string[] }[];
+export type UnitLiabilities = { unit: string; items: Liabilities; controlIds: string[] };
+export type PlaceLiabilities = { id: string; name: string; shared: Liabilities; units: UnitLiabilities[] };
+
+const byCategory = (recs: Responsibility[]): Liabilities =>
+  CATEGORIES.map((c) => ({ category: c.id, names: [...new Set(recs.filter((r) => r.category === c.id).map((r) => r.name))] })).filter((x) => x.names.length);
+
+export function placeLiabilities(rs: Responsibility[], only: GroupId | null = null): PlaceLiabilities[] {
+  const blocks: { id: string; name: string; units: string[] }[] = GROUPS.filter((g) => !only || g.id === only).map((g) => ({ ...g, units: expandUnits(g.units) }));
   if (!only) blocks.push({ id: "portfolio", name: "Portfolio", units: [] });
   return blocks.map((b) => {
     const mine = rs.filter((r) => r.group === b.id);
-    const rows: MatrixRow[] = [];
-    for (const c of CATEGORIES) {
-      for (const name of [...new Set(mine.filter((r) => r.category === c.id).map((r) => r.name))]) {
-        const recs = mine.filter((r) => r.category === c.id && r.name === name);
-        const units = Object.fromEntries(b.units.map((u) => [u, recs.some((r) => covers(r.appliesTo, u))]));
-        const shared = recs.some((r) => GROUP_WIDE.some((w) => r.appliesTo.toLowerCase().includes(w)) || !b.units.some((u) => covers(r.appliesTo, u)));
-        rows.push({ key: `${b.id}:${c.id}:${name}`, name, category: c.id, controlIds: recs.map((r) => r.id), shared, units });
-      }
-    }
-    return { id: b.id, name: b.name, columns: b.units, rows };
+    const isWide = (r: Responsibility) => GROUP_WIDE.some((w) => r.appliesTo.toLowerCase().includes(w)) || !b.units.some((u) => coversOne(r.appliesTo, u));
+    return {
+      id: b.id, name: b.name,
+      shared: byCategory(mine.filter(isWide)),
+      units: b.units.map((u) => {
+        const recs = mine.filter((r) => coversOne(r.appliesTo, u));
+        return { unit: u, items: byCategory(recs), controlIds: recs.map((r) => r.id) };
+      }),
+    };
   });
 }

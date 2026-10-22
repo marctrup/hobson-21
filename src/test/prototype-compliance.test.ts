@@ -74,11 +74,19 @@ describe("places listed by category", () => {
   });
 });
 
-import { placeMatrix } from "@/pages/prototypeComplianceResponsibilities";
-describe("by place coverage table", () => {
-  it("marks an item only against the Units it applies to", () => {
-    const nt = placeMatrix(INITIAL).find((b) => b.id === "nugent")!;
-    const epc = nt.rows.find((r) => r.name === "Energy Performance Certificate")!;
-    expect(epc.units).toEqual({ Shop: true, "Flat 1": false, "Flat 2": false });
+import { placeLiabilities, expandUnits } from "@/pages/prototypeComplianceResponsibilities";
+describe("by place, per Unit", () => {
+  it("lists Flats 1–8 as eight separate flats", () => {
+    expect(expandUnits(["Flats 1–8"])).toEqual(["Flat 1","Flat 2","Flat 3","Flat 4","Flat 5","Flat 6","Flat 7","Flat 8"]);
+  });
+  it("gives each flat in the block its own HMO licence liability", () => {
+    const sh = placeLiabilities(INITIAL).find((p) => p.id === "stanley")!;
+    expect(sh.units).toHaveLength(8);
+    sh.units.forEach((u) => expect(u.items.find((i) => i.category === "licences")?.names).toEqual(["HMO licence"]));
+  });
+  it("keeps the shop's EPC off the flats", () => {
+    const nt = placeLiabilities(INITIAL).find((p) => p.id === "nugent")!;
+    const has = (u: string) => nt.units.find((x) => x.unit === u)!.items.some((i) => i.names.includes("Energy Performance Certificate"));
+    expect([has("Shop"), has("Flat 1"), has("Flat 2")]).toEqual([true, false, false]);
   });
 });
