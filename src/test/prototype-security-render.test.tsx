@@ -18,6 +18,8 @@ describe("prototype security page", () => {
     // Full Access reads as one clear line, with the details folded away.
     expect(screen.getByText("All locations · All papers")).toBeTruthy();
     expect(screen.queryByText("Flat 8")).toBeNull();
+    // Areas of Hobson is admin-only: a Full Access person is about places and papers.
+    expect(screen.queryByText("Areas of Hobson")).toBeNull();
     fireEvent.click(screen.getByRole("button", { name: /Places/ }));
     expect(screen.getByText("Places")).toBeTruthy();
     fireEvent.click(screen.getByRole("button", { name: "Flat 8" }));
