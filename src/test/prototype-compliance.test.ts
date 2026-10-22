@@ -73,3 +73,12 @@ describe("places listed by category", () => {
     expect(one.map((r) => r.label)).toEqual(["Stanley Mews", "No. 1", "No. 2"]);
   });
 });
+
+import { placeMatrix } from "@/pages/prototypeComplianceResponsibilities";
+describe("by place coverage table", () => {
+  it("marks an item only against the Units it applies to", () => {
+    const nt = placeMatrix(INITIAL).find((b) => b.id === "nugent")!;
+    const epc = nt.rows.find((r) => r.name === "Energy Performance Certificate")!;
+    expect(epc.units).toEqual({ Shop: true, "Flat 1": false, "Flat 2": false });
+  });
+});
