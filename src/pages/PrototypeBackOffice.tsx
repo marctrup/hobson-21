@@ -120,7 +120,7 @@ export default function PrototypeBackOffice() {
                 </button>
                 <p id={`about-${c.id}`} className="sr-only">{c.area}. {c.contribution}</p>
                 {peek === c.id && (
-                  <div role="tooltip" className="pointer-events-none absolute left-full top-0 z-30 ml-2 w-[264px] rounded-xl border border-bone bg-background p-4 shadow-lg">
+                  <div role="tooltip" className="pointer-events-none absolute bottom-0 left-full z-30 ml-2 w-[264px] rounded-xl border border-bone bg-background p-4 shadow-lg">
                     <p className="text-[13px] font-semibold leading-snug text-ink">{c.name}</p>
                     <p className="mt-1 text-[10px] uppercase leading-none tracking-[0.14em] text-ink-muted">{c.area}</p>
                     <p className="mt-2.5 text-[12px] leading-relaxed text-ink-muted">{c.contribution}</p>
