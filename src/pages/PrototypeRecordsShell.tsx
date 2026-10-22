@@ -80,11 +80,12 @@ type ShellProps = {
   suggestions: string[];
   respond: (text: string, place: PlaceContext) => Turn;
   onReset: () => void;
+  sections?: SectionKey[];
   renderSection: (key: SectionKey, place: PlaceContext) => ReactNode;
   sectionCount: (key: SectionKey, place: PlaceContext) => number | undefined;
 };
 
-export function PrototypeRecordsShell({ focus, opening, suggestions, respond, onReset, renderSection, sectionCount }: ShellProps) {
+export function PrototypeRecordsShell({ focus, opening, suggestions, respond, onReset, sections = ["about", "legal", "contacts"], renderSection, sectionCount }: ShellProps) {
   const nextId = useRef(1);
   const [messages, setMessages] = useState<Message[]>([{ id: 0, role: "hobson", text: opening }]);
   const [input, setInput] = useState("");
@@ -127,9 +128,9 @@ export function PrototypeRecordsShell({ focus, opening, suggestions, respond, on
 
   const placeLabel = groupOpen ? `${PLACE.name}${place !== null ? ` › ${PLACE.units.find(u => u.number === place)?.name}` : ""}` : "Portfolio";
 
-  const sections = (ctx: PlaceContext) => (
+  const renderSections = (ctx: PlaceContext) => (
     <div className="flex flex-col gap-2">
-      {(["about", "legal", "contacts"] as SectionKey[]).map(key => (
+      {sections.map(key => (
         <RecordSection key={key} title={key === "about" ? "About" : key === "legal" ? "Legal responsibilities" : "Preferred contractors"} count={sectionCount(key, ctx)} open={open[key]} onToggle={() => setOpen(o => ({ ...o, [key]: !o[key] }))} focus={key === focus} onAsk={key === focus ? () => { setPlace(ctx); ask(); } : undefined}>
           {renderSection(key, ctx)}
         </RecordSection>
@@ -209,7 +210,7 @@ export function PrototypeRecordsShell({ focus, opening, suggestions, respond, on
                     </div>
                     <Button variant="outline" size="sm" onClick={() => { setGroupOpen(false); setPlace(null); }}>Back to map</Button>
                   </div>
-                  {sections(null)}
+                  {renderSections(null)}
                   <ul aria-label="Units" className="divide-y divide-border rounded-lg border border-border bg-background">
                     {PLACE.units.map(u => (
                       <li key={u.number}>
@@ -217,7 +218,7 @@ export function PrototypeRecordsShell({ focus, opening, suggestions, respond, on
                           <span><span className="block text-sm font-medium text-foreground">{u.name}</span><span className="block text-xs text-muted-foreground">{u.classification} · {u.tenancy}</span></span>
                           <ChevronDown className={`h-4 w-4 text-muted-foreground transition-transform ${place === u.number ? "" : "-rotate-90"}`} aria-hidden />
                         </button>
-                        {place === u.number && <div className="border-t border-border bg-bone-wash/40 p-3">{sections(u.number)}</div>}
+                        {place === u.number && <div className="border-t border-border bg-bone-wash/40 p-3">{renderSections(u.number)}</div>}
                       </li>
                     ))}
                   </ul>

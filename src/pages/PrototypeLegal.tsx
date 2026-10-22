@@ -1,4 +1,4 @@
-import { AboutContent, GroupLabel, PrototypeRecordsShell, RecordRow, useSessionState, type Turn } from "./PrototypeRecordsShell";
+import { GroupLabel, PrototypeRecordsShell, RecordRow, useSessionState, type Turn } from "./PrototypeRecordsShell";
 import { applyLegal, groupRecords, INITIAL_LEGAL, interpretLegal, recordedForUnit, scopeLabel, sharedWithUnit, unitScopedRecords, type LegalState, type Responsibility } from "./prototypeLegalRecords";
 import { PLACE, unitName, type PlaceContext } from "./prototypeRecordsPlace";
 import { ContactsPreview } from "./PrototypeContacts";
@@ -62,8 +62,9 @@ export default function PrototypeLegal() {
       suggestions={SUGGESTIONS}
       respond={respond}
       onReset={() => setState(INITIAL_LEGAL)}
+      sections={["legal", "contacts"]}
       sectionCount={(key, place) => key === "legal" ? (place === null ? state.records.length : recordedForUnit(state, place).length + sharedWithUnit(state, place).length) : undefined}
-      renderSection={(key, place) => key === "about" ? <AboutContent place={place} /> : key === "legal" ? <LegalContent state={state} place={place} /> : <ContactsPreview place={place} />}
+      renderSection={(key, place) => key === "legal" ? <LegalContent state={state} place={place} /> : <ContactsPreview place={place} />}
     />
   );
 }
