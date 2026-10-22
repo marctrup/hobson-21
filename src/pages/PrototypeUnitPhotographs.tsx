@@ -9,8 +9,8 @@ type Props = { unit: UnitPhotographs & { name: string }; onChange: (photos: Unit
 
 // A hover preview floats above everything else, so it can be far larger than the row it sits in
 // without being clipped by the panel around it.
-const PREVIEW_MAX_W = 420;
-const PREVIEW_MAX_H = 300;
+const PREVIEW_MAX_W = 480;
+const PREVIEW_MAX_H = 340;
 
 function useHoverPreview() {
   const [rect, setRect] = useState<DOMRect | null>(null);
