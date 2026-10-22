@@ -70,6 +70,7 @@ export default function PrototypeBackOffice() {
   const [input, setInput] = useState("");
   const [active, setActive] = useState<ColleagueId | null>(null);
   const [opened, setOpened] = useState<ColleagueId[]>([]);
+  const [peek, setPeek] = useState<ColleagueId | null>(null);
   const nextId = useRef(1);
   const logEnd = useRef<HTMLDivElement>(null);
   useEffect(() => { logEnd.current?.scrollIntoView?.({ block: "end" }); }, [messages, active]);
@@ -97,16 +98,34 @@ export default function PrototypeBackOffice() {
 
   return (
     <div className="flex h-screen w-full overflow-hidden bg-bone-wash text-ink">
-      <aside className="flex w-[68px] shrink-0 flex-col items-center border-r border-bone bg-background py-4">
-        <div className="grid h-10 w-10 place-items-center" aria-hidden><img src={owlDefault} alt="" className="h-10 w-10 object-contain" /></div>
-        <nav aria-label="Back Office" className="mt-auto flex w-full flex-col items-center gap-1 border-t border-faint-rule pt-3">
-          <button type="button" aria-current={!active ? "page" : undefined} onClick={() => active && home()} className={`flex w-14 flex-col items-center gap-1 rounded-lg py-2 text-[10px] font-medium leading-tight text-ink ${!active ? "bg-secondary" : "hover:bg-paper"}`}><Briefcase className="h-4 w-4" aria-hidden />Back Office</button>
-          <ul aria-label="My colleagues" className="flex w-full flex-col items-center gap-0.5 border-l-2 border-primary/20 ml-2 pl-0">
+      <aside className="relative flex w-[132px] shrink-0 flex-col border-r border-bone bg-background py-4">
+        <div className="grid h-10 w-10 place-items-center self-center" aria-hidden><img src={owlDefault} alt="" className="h-10 w-10 object-contain" /></div>
+        <nav aria-label="Back Office" className="mt-auto flex w-full flex-col gap-1 border-t border-faint-rule px-2 pt-3">
+          <button type="button" aria-current={!active ? "page" : undefined} onClick={() => active && home()} className={`rounded-lg px-3 py-2 text-left text-[11px] font-medium leading-tight text-ink transition ${!active ? "bg-secondary" : "hover:bg-paper"}`}>Back Office</button>
+          <ul aria-label="My colleagues" className="mt-1 flex flex-col gap-0.5 border-l-2 border-primary/20 pl-1.5">
             {COLLEAGUES.map((c) => (
-              <li key={c.id}>
-                <button type="button" onClick={() => (active === c.id ? undefined : choose(c.id))} aria-current={active === c.id ? "page" : undefined} title={`${c.name} — ${c.choice}`} className={`flex w-14 flex-col items-center rounded-lg px-0.5 py-1 text-[9px] leading-tight transition ${active === c.id ? "bg-secondary font-medium text-ink" : "text-ink-muted hover:bg-paper"}`}>
-                  <img src={c.img} alt="" aria-hidden className="h-7 w-7 object-contain" />{c.name.replace("The ", "")}
+              <li key={c.id} className="relative">
+                <button
+                  type="button"
+                  onClick={() => (active === c.id ? undefined : choose(c.id))}
+                  onMouseEnter={() => setPeek(c.id)}
+                  onMouseLeave={() => setPeek((p) => (p === c.id ? null : p))}
+                  onFocus={() => setPeek(c.id)}
+                  onBlur={() => setPeek((p) => (p === c.id ? null : p))}
+                  aria-current={active === c.id ? "page" : undefined}
+                  aria-describedby={`about-${c.id}`}
+                  className={`w-full rounded-lg px-2.5 py-1.5 text-left text-[11px] leading-tight transition ${active === c.id ? "bg-secondary font-medium text-ink" : "text-ink-muted hover:bg-paper hover:text-ink"}`}
+                >
+                  {c.name}
                 </button>
+                <p id={`about-${c.id}`} className="sr-only">{c.area}. {c.contribution}</p>
+                {peek === c.id && (
+                  <div role="tooltip" className="pointer-events-none absolute left-full top-0 z-30 ml-2 w-[264px] rounded-xl border border-bone bg-background p-4 shadow-lg">
+                    <p className="text-[13px] font-semibold leading-snug text-ink">{c.name}</p>
+                    <p className="mt-1 text-[10px] uppercase leading-none tracking-[0.14em] text-ink-muted">{c.area}</p>
+                    <p className="mt-2.5 text-[12px] leading-relaxed text-ink-muted">{c.contribution}</p>
+                  </div>
+                )}
               </li>
             ))}
           </ul>
