@@ -2,9 +2,10 @@ import { useEffect, useMemo, useState } from "react";
 import { Check, ChevronLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { PrototypeUnitPhotographs } from "./PrototypeUnitPhotographs";
+import { LegalResponsibilitiesSection, PreferredContactsSection } from "./PrototypeUnitRecords";
 import { copyDescription, groupedNames, listNames, unitSpecificPhrases, applyChanges, FIELD_LABELS, fieldsFor, formatValue, proposeChanges, setDetails, suggestDescription, type DetailField, type DetailedUnit, type UnitDetails } from "./prototypeUnitDetails";
 
-type Props = { unit: DetailedUnit; units: DetailedUnit[]; groupName: string; onChange: (units: DetailedUnit[]) => void; onBack: () => void; onRename?: boolean };
+type Props = { unit: DetailedUnit; units: DetailedUnit[]; groupName: string; groupId?: string | null; onChange: (units: DetailedUnit[]) => void; onBack: () => void; onRename?: boolean };
 
 const toText = (n?: number) => n === undefined ? "" : String(n);
 const parseCount = (v: string) => v.trim() === "" ? undefined : /^\d{1,2}$/.test(v.trim()) ? Number(v) : NaN;
@@ -14,7 +15,7 @@ const inputCls = "h-9 w-20 rounded-md border border-input bg-background px-2 tex
 const pill = (on: boolean) => `min-h-8 rounded-full border px-3 text-xs transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${on ? "border-foreground/40 bg-background font-medium text-foreground" : "border-border text-muted-foreground hover:bg-secondary"}`;
 
 // One Unit's optional details, edited in place beside its Unit Group. Nothing is required.
-export function PrototypeUnitDetails({ unit, units, groupName, onChange, onBack, onRename }: Props) {
+export function PrototypeUnitDetails({ unit, units, groupName, groupId, onChange, onBack, onRename }: Props) {
   const d = unit.details ?? {};
   const [area, setArea] = useState(toText(d.area));
   const [areaUnit, setAreaUnit] = useState(d.areaUnit ?? "ft²");
@@ -125,6 +126,10 @@ export function PrototypeUnitDetails({ unit, units, groupName, onChange, onBack,
         <Button variant="ghost" size="sm" onClick={() => setApplying(v => !v)} disabled={invalid || !hasDetails} aria-expanded={applying} className="ml-auto text-muted-foreground">Apply details to other Units</Button>
       </div>
       {applying && <ApplyToOthers unit={currentUnit} units={currentUnits} onApply={next => { onChange(next); setApplying(false); setSaved(true); }} onCancel={() => setApplying(false)} />}
+      {groupId && <div className="mt-3 flex flex-col gap-2">
+        <LegalResponsibilitiesSection recordId={groupId} unit={unit.number} groupName={groupName} />
+        <PreferredContactsSection recordId={groupId} unit={unit.number} groupName={groupName} />
+      </div>}
     </section>
   );
 }

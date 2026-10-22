@@ -1,5 +1,9 @@
 # Roadmap
 
+## Prototype Unit — legal responsibilities and preferred contacts
+- [x] Add read-only Legal responsibilities and Preferred contacts sections at Unit Group and Unit level from one typed simulated module (scoped records, shared Legionella referenced not duplicated, Flat's plumbing exception overrides the group default, no dashboard/dates/statuses).
+- [x] Verify group, Gym and Flat views in the preview; 63 Prototype Unit checks pass and the build is clean. Not published.
+
 ## Homepage — customer testimonials
 - [x] Redesign as two equal remarks (no ranked weight) with the user's new attributions ("CEO of a Family Office", "CEO of a large central London commercial agent"); two columns on desktop, stacked on mobile.
 - [x] Verify wording, attributions, placement, both widths in the preview; homepage checks pass and the build is clean. Not published.
