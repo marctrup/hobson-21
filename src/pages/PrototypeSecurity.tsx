@@ -108,7 +108,7 @@ function AccessEditor({ a, set, locked, quiet, top }: { a: Access; set: (a: Acce
         )}
         <p className="mt-2 text-xs text-ink-muted">Access to a Unit never opens every paper about it — both the place and the paper type must be allowed.</p>
       </Fold>
-      <Fold title="Areas of Hobson" hint={AREAS.filter((x) => a.areas[x.id] !== "none").map((x) => x.label).join(" · ") || "None"}>
+      {top && <Fold title="Areas of Hobson" hint={AREAS.filter((x) => a.areas[x.id] !== "none").map((x) => x.label).join(" · ") || "None"}>
         <div className="grid gap-2 [@container_sec_(min-width:40rem)]:grid-cols-2">
           {AREAS.map((x) => (
             <div key={x.id} className="rounded-lg bg-paper/50 p-3">
