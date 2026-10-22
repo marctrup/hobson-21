@@ -40,6 +40,7 @@ export type Responsibility = {
   evidence: string | null;
   source: string;
   note?: string; // what remains uncertain
+  legalFrequency?: string; // the usual legal or standard interval; frequency is the business's own
   establish?: boolean; // applicability or interval not yet established
 };
 
@@ -59,7 +60,7 @@ export function positionOf(r: Responsibility): Position {
   return "current";
 }
 
-export const INITIAL: Responsibility[] = [
+const BASE: Responsibility[] = [
   { id: "gas-sh", name: "Gas Safety", category: "health", timing: "recurring", requirement: "Annual gas safety inspection where gas appliances are provided.", group: "stanley", appliesTo: "Flats 1–8", frequency: "Every 12 months", last: "2026-03-15", next: "2027-03-15", responsible: "Landlord", evidence: "Gas Safety Record dated 15 March 2026", source: "Legislation" },
   { id: "gas-nt", name: "Gas Safety", category: "health", timing: "recurring", requirement: "Annual gas safety inspection where gas appliances are provided.", group: "nugent", appliesTo: "Flat 1, Flat 2", frequency: "Every 12 months", last: "2025-11-30", next: "2026-11-30", responsible: "Landlord", evidence: "Gas Safety Record dated 30 November 2025", source: "Legislation" },
   { id: "eicr-nt", name: "Electrical Safety — EICR", category: "health", timing: "recurring", requirement: "Electrical installation inspected and tested.", group: "nugent", appliesTo: "Whole building", frequency: "Normally within five years, or sooner if the report requires", last: "2021-09-10", next: "2026-09-10", responsible: "Landlord", evidence: "EICR dated 10 September 2021", source: "Legislation", note: "The recorded inspection date has passed and I have no newer report." },
@@ -83,6 +84,10 @@ export const INITIAL: Responsibility[] = [
   { id: "s20-bg", name: "Section 20 consultation", category: "notices", timing: "event", requirement: "Consult leaseholders before qualifying works.", group: "burlington", appliesTo: "Upper Floors", frequency: "Before qualifying works", last: null, next: null, responsible: "Landlord", evidence: null, source: "Legislation", note: "The proposed roof works may need consultation before they're instructed." },
   { id: "s48-sh", name: "Section 48 landlord address notice", category: "notices", timing: "event", requirement: "Give tenants an address in England and Wales for notices.", group: "stanley", appliesTo: "Flats 1–8", frequency: "When a tenancy begins or the address changes", last: "2024-02-01", next: null, responsible: "Landlord", evidence: "Notices served 1 February 2024", source: "Legislation" },
 ];
+
+export const INITIAL: Responsibility[] = BASE.map((r) => ({ ...r, legalFrequency: r.frequency }));
+export const FREQUENCY_PRESETS = ["Every 3 months", "Every 6 months", "Every 12 months", "Every 2 years", "Every 3 years", "Every 5 years", "Every 10 years", "When an event occurs"];
+export const isCustom = (r: Responsibility) => !!r.legalFrequency && r.frequency !== r.legalFrequency;
 
 export const where = (r: Responsibility) => (r.group === "portfolio" ? "Across the portfolio" : groupName(r.group));
 
