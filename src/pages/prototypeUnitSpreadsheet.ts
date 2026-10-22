@@ -50,6 +50,10 @@ export function reviewPhysicalWorkbook(book: ExcelJS.Workbook, groups: PhysicalG
   for (const sheetName of ["Unit Groups", "Units"]) {
     const sheet = book.getWorksheet(sheetName);
     if (!sheet) { review.checks.push({ key: sheetName, sheet: sheetName, row: 0, name: sheetName, reason: "Required sheet missing.", matchable: false }); continue; }
+    const expected = sheetName === "Units" ? ["Unit name", "Unit address", "Type", "Size (m²)", "Bedrooms", "Bathrooms", "Outdoor space", "Shared facilities", "Description", "Record ID", "Unit Group ID"] : ["Unit Group name", "Address", "Description", "Record ID"];
+    if (expected.some((header, i) => sheet.getRow(1).getCell(i + 1).text !== header)) {
+      review.checks.push({ key: sheetName, sheet: sheetName, row: 1, name: sheetName, reason: "Column headings have changed. Please use a fresh downloaded workbook.", matchable: false }); continue;
+    }
     const seen = new Set<string>();
     const idColumn = sheetName === "Units" ? 10 : 4;
     const counts = new Map<string, number>();

@@ -48,6 +48,12 @@ export function PrototypeUnitDetails({ unit, units, groupName, groupId, onChange
   const draft: UnitDetails = { area: parseArea(area), areaUnit: area.trim() ? areaUnit : undefined, bedrooms: residential ? parseCount(bedrooms) : undefined, doubleBedrooms: residential && !bedrooms.trim() ? parseCount(dbl) : undefined, singleBedrooms: residential && !bedrooms.trim() ? parseCount(sgl) : undefined, bathrooms: residential ? parseCount(bath) : undefined, outsideSpace: residential ? outside : undefined, sharedFacilities: residential ? shared : undefined, gasSupply: residential ? gas : undefined, description: description.trim() || undefined };
   const invalid = Object.values(draft).some(v => typeof v === "number" && Number.isNaN(v));
   const dirty = JSON.stringify(setDetails([unit], unit.number, draft)[0].details) !== JSON.stringify(setDetails([unit], unit.number, unit.details ?? {})[0].details);
+  useEffect(() => {
+    if (!dirty && !nameChanged) return;
+    const block = (event: Event) => event.preventDefault();
+    window.addEventListener("prototype-unit-before-workbook", block);
+    return () => window.removeEventListener("prototype-unit-before-workbook", block);
+  }, [dirty, nameChanged]);
 
   const save = () => { if (invalid) return; onChange(named(setDetails(units, unit.number, draft))); setSaved(true); };
   const currentUnit = { ...unit, details: draft };

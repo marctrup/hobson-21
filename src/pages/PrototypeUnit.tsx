@@ -20,7 +20,7 @@ import { PrototypeUnitGroupCard, type GroupCard } from "./PrototypeUnitGroupCard
 import { applyChanges, FIELD_LABELS, interpretDetails, summaryLine, type DetailInstruction } from "./prototypeUnitDetails";
 import { LegalResponsibilitiesSection, PreferredContactsSection } from "./PrototypeUnitRecords";
 import ExcelJS from "exceljs";
-import { applyPhysicalChanges, bedroomCount, downloadPhysicalWorkbook, reviewPhysicalWorkbook, type PhysicalReview } from "./prototypeUnitSpreadsheet";
+import { applyPhysicalChanges, bedroomCount, downloadPhysicalWorkbook, makePhysicalWorkbook, reviewPhysicalWorkbook, type PhysicalReview } from "./prototypeUnitSpreadsheet";
 import { PrototypeUnitSpreadsheetReview } from "./PrototypeUnitSpreadsheetReview";
 
 const RAIL_WIDTH = 68;
@@ -401,6 +401,7 @@ function PrototypeUnitShell() {
       setPhysicalPrompt(null); const id = appendExchange(choice, "Of course. You can add those details whenever you're ready."); if (buildingStage === "created") setBuildingPromptId(id); return;
     }
     if (choice === "Download spreadsheet") {
+      if (!window.dispatchEvent(new Event("prototype-unit-before-workbook", { cancelable: true }))) { appendExchange(choice, "Please save your current edits first so the spreadsheet uses the latest details."); return; }
       try { await downloadPhysicalWorkbook([g]); appendExchange(choice, "Your spreadsheet is ready. Attach the completed workbook whenever it suits you; I shall show the changes before recording them."); }
       catch { appendExchange(choice, "I couldn't prepare that workbook. Please try again."); }
       return;
@@ -413,6 +414,7 @@ function PrototypeUnitShell() {
   };
   const receiveSpreadsheet = async (file?: File) => {
     if (!file) return;
+    if (!window.dispatchEvent(new Event("prototype-unit-before-workbook", { cancelable: true }))) { appendExchange(file.name, "Please save your current edits first, then attach the workbook again."); return; }
     try {
       const book = new ExcelJS.Workbook(); await book.xlsx.load(await file.arrayBuffer());
       const review = reviewPhysicalWorkbook(book, allGroups);
@@ -440,6 +442,13 @@ function PrototypeUnitShell() {
       void physicalChoice(["Add physical details", "I'll do this later", "Download spreadsheet", "Upload spreadsheet", "Add details in Chat", "Edit directly"].find(c => c.toLowerCase() === normal) ?? text); return true;
     }
     const g = allGroups.find(g => normal.includes(g.name.toLowerCase())) ?? allGroups.find(g => g.units.some(u => normal.includes(u.name.toLowerCase()))) ?? allGroups.find(g => g.id === physicalGroupId) ?? (groupOpen ? demoGroup : undefined);
+    const description = text.match(/^(?:please )?add (?:this|a|the following) description:\s*(.+)$/i);
+    if (g && description) {
+      const book = makePhysicalWorkbook([g]); const sheet = book.getWorksheet("Unit Groups");
+      if (sheet) sheet.getCell("C2").value = description[1];
+      setWorkbookReview({ book, matches: {}, review: reviewPhysicalWorkbook(book, allGroups), version: 0 });
+      appendExchange(text, `Here is the description proposed for ${g.name}.`); return true;
+    }
     if (g && /(?:add|update).*(?:description|physical details)|physical details.*existing units/.test(normal)) { offerPhysical(g.id, text); return true; }
     if (g && /(?:describe|what.*know|how many.*bedroom|show.*details)/.test(normal)) {
       const mentioned = g.units.filter(u => normal.includes(u.name.toLowerCase()));
@@ -789,7 +798,7 @@ Would you like to add their physical details now, or leave that until later?`);
             type="button"
             className="grid h-11 w-11 place-items-center rounded-full bg-[#56514A] text-white shadow-md transition hover:bg-[#56514A]"
             aria-label="A new conversation"
-            onClick={() => { setMessages([OPENING_MESSAGE]); setInput(""); setSetupPromptId(null); setSetupUnderway(false); setShowInvitation(true); setLocationStage("idle"); setLocationPromptId(null); setLocationAddress(""); setAddressParts({}); setAddressCandidates([]); setSelectedAddress(null); setBuildingUnderstanding(null); setBuildingStage("idle"); setBuildingPromptId(null); setLastRemoved(null); setMapExpanded(false); setGroupOpen(false); setShowSummaryUnits(false); setOpenUnit(null); setDetailsOffered(false); setDetailsPromptId(null); setPendingDetail(null); setDraftCard(null); setAddrChange(null); }}
+            onClick={() => { setPhysicalGroupId(null); setPhysicalPrompt(null); setWorkbookReview(null); setMessages([OPENING_MESSAGE]); setInput(""); setSetupPromptId(null); setSetupUnderway(false); setShowInvitation(true); setLocationStage("idle"); setLocationPromptId(null); setLocationAddress(""); setAddressParts({}); setAddressCandidates([]); setSelectedAddress(null); setBuildingUnderstanding(null); setBuildingStage("idle"); setBuildingPromptId(null); setLastRemoved(null); setMapExpanded(false); setGroupOpen(false); setShowSummaryUnits(false); setOpenUnit(null); setDetailsOffered(false); setDetailsPromptId(null); setPendingDetail(null); setDraftCard(null); setAddrChange(null); }}
           >
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" aria-hidden><path d="M12 5v14M5 12h14" /></svg>
           </button>

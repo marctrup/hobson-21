@@ -38,4 +38,18 @@ describe("Optional physical details workbook", () => {
     s.getCell("J3").value = "flat"; s.addRow(s.getRow(3).values); s.getCell("E3").value = 2;
     const r = reviewPhysicalWorkbook(b, g); expect(r.checks).toHaveLength(2); expect(r.changes).toHaveLength(0);
   });
+  it("keeps No and zero as explicit answers without converting blanks", () => {
+    const g = groups(), b = makePhysicalWorkbook(g); const s = b.getWorksheet("Units"); if (!s) throw Error();
+    s.getCell("E3").value = 0; s.getCell("H3").value = "No";
+    const r = reviewPhysicalWorkbook(b, g), saved = applyPhysicalChanges(g, r.changes, r.changes.map(c => c.key));
+    expect(saved[0].units[1].details).toMatchObject({ bedrooms: 0, sharedFacilities: "No", outsideSpace: "No" });
+  });
+  it("holds reordered columns and formula values out of changes", () => {
+    const g = groups(), b = makePhysicalWorkbook(g); const s = b.getWorksheet("Units"); if (!s) throw Error();
+    s.getCell("I3").value = { formula: '"Invented description"' };
+    expect(reviewPhysicalWorkbook(b, g).checks).toHaveLength(1);
+    s.getCell("E1").value = "Bathrooms";
+    expect(reviewPhysicalWorkbook(b, g).checks[0].reason).toContain("Column headings");
+    expect(reviewPhysicalWorkbook(b, g).changes).toHaveLength(0);
+  });
 });

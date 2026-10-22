@@ -38,6 +38,12 @@ export function PrototypeUnitGroupCard({ card, address, summary, label, onChange
   const photo = card.photo;
   const setPhoto = (p: Partial<GroupPhoto>) => photo && onChange({ ...card, photo: { ...photo, ...p } });
   const save = () => { const n = name.trim(); if (!n) return; onChange({ ...card, name: n, description: description.trim() || undefined }); setEditing(false); };
+  useEffect(() => {
+    if (!editing || (name === card.name && description === (card.description ?? ""))) return;
+    const block = (event: Event) => event.preventDefault();
+    window.addEventListener("prototype-unit-before-workbook", block);
+    return () => window.removeEventListener("prototype-unit-before-workbook", block);
+  }, [editing, name, description, card.name, card.description]);
 
   return (
     <div className="min-w-0">
