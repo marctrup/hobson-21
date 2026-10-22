@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { setColleague, unreadablePapers, accessGroups, areaChips, canSeeUnit, groupKeyFor, initialState, interpret, isRestricted, paperChip, peopleForPlace, placeChips, setUnit, typesFor, visiblePeople, visiblePapers, INITIAL_PEOPLE, type Person } from "@/pages/prototypeSecurityAccess";
+import { setColleague, setRank, rankOf, unreadablePapers, accessGroups, areaChips, canSeeUnit, groupKeyFor, initialState, interpret, isRestricted, paperChip, peopleForPlace, placeChips, setUnit, typesFor, visiblePeople, visiblePapers, INITIAL_PEOPLE, type Person } from "@/pages/prototypeSecurityAccess";
 
 const say = (texts: string[]) => texts.reduce((s, t) => interpret(s, t).state, initialState());
 const person = (s: ReturnType<typeof initialState>, id: string) => s.people.find((p) => p.id === id)!;
@@ -107,5 +107,20 @@ describe("prototype security", () => {
     expect(setColleague(person(st, "priya"), "professor", false).blockedColleagues).toContain("professor");
     expect(setColleague(person(st, "oliver"), "professor", true).blockedColleagues).not.toContain("professor");
     expect(setColleague(person(st, "james"), "architect", false).blockedColleagues).toBeUndefined();
+  });
+});
+
+describe("rights level changes", () => {
+  const get = (id: string) => INITIAL_PEOPLE.find((p) => p.id === id)!;
+  it("upgrades a Limited person to Superuser or Admin", () => {
+    expect(rankOf(setRank(get("emily"), "superuser"))).toBe("superuser");
+    expect(rankOf(setRank(get("emily"), "admin"))).toBe("admin");
+  });
+  it("downgrades an Admin to Full Access and to Limited Access", () => {
+    expect(rankOf(setRank(get("oliver"), "full"))).toBe("full");
+    expect(rankOf(setRank(get("oliver"), "limited"))).toBe("limited");
+  });
+  it("never changes your own level", () => {
+    expect(rankOf(setRank(get("sarah"), "limited"))).toBe("superuser");
   });
 });

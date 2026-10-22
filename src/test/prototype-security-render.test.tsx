@@ -24,8 +24,8 @@ describe("prototype security page", () => {
     expect(screen.getByText("Places")).toBeTruthy();
     fireEvent.click(screen.getByRole("button", { name: "Flat 8" }));
     expect(screen.getByText("Here is what will change")).toBeTruthy();
-    fireEvent.click(screen.getByRole("button", { name: /View access as James/ }));
-    expect(screen.getByText("Hobson as James sees it")).toBeTruthy();
+    expect(screen.queryByRole("button", { name: /View access as/ })).toBeNull();
+    expect(screen.getByLabelText("Rights level for James")).toBeTruthy();
   });
 
   it("shows a Superuser without a locked-access note", () => {

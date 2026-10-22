@@ -6,7 +6,7 @@ import {
   AREAS, FAMILIES, GROUPS, PAGE, PRESETS, type Access, type AreaId, type Level, type Person, type SecState,
   accessGroups, diff, firstName, glance, groupName, initialState, interpret, isRestricted, levelLabel, matchesQuery, paperLine,
   peopleForArea, peopleForPlace, placeLines, reviewInvite, saveDraft, setAllPapers, setArea, setFamily, setGroup, setPortfolio, setType, setUnit,
-  typesFor, isTop, rankLabel, COLLEAGUES, setColleague, unitsFor, visiblePeople, visiblePapers,
+  typesFor, isTop, rankLabel, COLLEAGUES, setColleague, unitsFor, visiblePeople, visiblePapers, RANKS, rankOf, setRank, type Rank,
 } from "./prototypeSecurityAccess";
 
 // Prototype Security: the Superuser tells Hobson who should reach what; Hobson explains and asks before saving.
@@ -25,7 +25,6 @@ const TRY: { label: string; text: string }[] = [
   { label: "Review access by area", text: "Who can make changes to My Compliance Responsibilities?" },
   { label: "Suspend access", text: "Suspend Tom's access." },
   { label: "Cancel an invitation", text: "Cancel Mark's invitation." },
-  { label: "See someone's view", text: "View access as James." },
 ];
 
 const ring = "rounded-xl bg-background ring-1 ring-bone";
@@ -257,13 +256,18 @@ export default function PrototypeSecurity() {
           <div className="flex flex-wrap items-end justify-between gap-3">
             <div><h2 className="font-serif text-3xl text-ink">{p.name}</h2><p className="mt-1 text-sm text-ink-muted">{p.role} · {p.status === "invited" ? "Invitation awaiting acceptance" : p.status === "suspended" ? "Suspended" : "Active"}{` · ${rankLabel(p)}`}{p.you && " · you"}</p></div>
             <div className="flex flex-wrap gap-1.5">
-              <Button size="sm" variant="ghost" onClick={() => setS((x) => ({ ...x, view: { kind: "preview", id: p.id } }))}><Eye className="mr-1.5 h-3.5 w-3.5" />View access as {n}</Button>
+              {!p.you && (
+                <select aria-label={`Rights level for ${n}`} value={rankOf(p)}
+                  onChange={(e) => { const r = e.target.value as Rank; const label = RANKS.find((x) => x.key === r)!.label; setS((x) => ({ ...x, draft: null, pending: null, people: x.people.map((q) => (q.id === p.id ? setRank(q, r) : q)) })); say("hobson", `${n} is now ${label}.`); }}
+                  className="h-9 rounded-md border border-border bg-background px-3 text-sm text-ink">
+                  {RANKS.map((r) => <option key={r.key} value={r.key}>{r.label}</option>)}
+                </select>
+              )}
               {p.status === "invited" ? <>
                 <Button size="sm" variant="ghost" onClick={() => send(`Resend ${n}'s invitation`)}>Resend</Button>
                 <Button size="sm" variant="ghost" onClick={() => send(`Cancel ${n}'s invitation`)}>Cancel invitation</Button>
               </> : !p.you && <>
                 {p.status === "suspended" ? <Button size="sm" variant="outline" onClick={() => send(`Restore ${n}'s access`)}>Restore access</Button> : <Button size="sm" variant="ghost" onClick={() => send(`Suspend ${n}'s access`)}>Suspend</Button>}
-                {!p.superuser && <Button size="sm" variant="ghost" onClick={() => send(`Make ${n} a Superuser`)}>Make Superuser</Button>}
               </>}
             </div>
           </div>
