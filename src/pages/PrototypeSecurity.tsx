@@ -6,7 +6,7 @@ import {
   AREAS, FAMILIES, GROUPS, PAGE, PRESETS, type Access, type AreaId, type Level, type Person, type SecState,
   accessGroups, diff, firstName, glance, groupName, initialState, interpret, isRestricted, levelLabel, matchesQuery, paperLine,
   peopleForArea, peopleForPlace, placeLines, reviewInvite, saveDraft, setAllPapers, setArea, setFamily, setGroup, setPortfolio, setType, setUnit,
-  summarise, typesFor, unitsFor, visiblePeople, visiblePapers,
+  summarise, typesFor, isTop, rankLabel, unreadablePapers, COLLEAGUES, setColleague, unitsFor, visiblePeople, visiblePapers,
 } from "./prototypeSecurityAccess";
 
 // Prototype Security: the Superuser tells Hobson who should reach what; Hobson explains and asks before saving.
@@ -240,7 +240,7 @@ export default function PrototypeSecurity() {
             <BackLink onClick={() => open(p.id)} label={`Back to ${n}'s access`} />
             <div><h2 className="font-serif text-2xl">Hobson as {n} sees it</h2><p className="mt-1 text-sm text-ink-muted">A read-only preview. You are still signed in as yourself.</p></div>
             <div className="grid gap-4 [@container_sec_(min-width:40rem)]:grid-cols-[12rem_1fr]">
-              <div className={`${ring} p-4`}><p className="mb-2 text-[10px] uppercase tracking-[0.14em] text-ink-muted">Menu</p>{["Portfolio", ...AREAS.filter((x) => p.superuser || a.areas[x.id] !== "none").map((x) => x.label), ...(p.superuser ? ["Security"] : [])].map((m) => <p key={m} className="py-1 text-sm">{m}</p>)}</div>
+              <div className={`${ring} p-4`}><p className="mb-2 text-[10px] uppercase tracking-[0.14em] text-ink-muted">Menu</p>{["Portfolio", ...AREAS.filter((x) => isTop(p) || a.areas[x.id] !== "none").map((x) => x.label), ...(p.superuser ? ["Security"] : [])].map((m) => <p key={m} className="py-1 text-sm">{m}</p>)}</div>
               <div className="grid gap-4">
                 <div className={`${ring} p-4`}><p className="mb-2 text-[10px] uppercase tracking-[0.14em] text-ink-muted">Places</p>{GROUPS.filter((g) => unitsFor(a, g.id).length).map((g) => <p key={g.id} className="py-1 text-sm"><span className="font-medium">{g.name}</span> <span className="text-ink-muted">· {unitsFor(a, g.id).join(", ")}</span></p>)}{!GROUPS.some((g) => unitsFor(a, g.id).length) && <p className="text-sm italic text-ink-muted">No places</p>}</div>
                 <div className={`${ring} p-4`}><p className="mb-2 text-[10px] uppercase tracking-[0.14em] text-ink-muted">Papers {n} could open</p>
@@ -256,7 +256,7 @@ export default function PrototypeSecurity() {
         <div className="grid gap-6">
           <BackLink onClick={back} label="Security overview" />
           <div className="flex flex-wrap items-end justify-between gap-3">
-            <div><h2 className="font-serif text-3xl text-ink">{p.name}</h2><p className="mt-1 text-sm text-ink-muted">{p.role} · {p.status === "invited" ? "Invitation awaiting acceptance" : p.status === "suspended" ? "Suspended" : "Active"}{p.superuser && " · Superuser"}{p.you && " · you"}</p></div>
+            <div><h2 className="font-serif text-3xl text-ink">{p.name}</h2><p className="mt-1 text-sm text-ink-muted">{p.role} · {p.status === "invited" ? "Invitation awaiting acceptance" : p.status === "suspended" ? "Suspended" : "Active"}{` · ${rankLabel(p)}`}{p.you && " · you"}</p></div>
             <div className="flex flex-wrap gap-1.5">
               <Button size="sm" variant="ghost" onClick={() => setS((x) => ({ ...x, view: { kind: "preview", id: p.id } }))}><Eye className="mr-1.5 h-3.5 w-3.5" />View access as {n}</Button>
               {p.status === "invited" ? <>
@@ -271,6 +271,40 @@ export default function PrototypeSecurity() {
           {p.status === "suspended" && <p className="rounded-lg bg-secondary/50 px-4 py-2.5 text-sm">{n} can't use Hobson at the moment. Everything below is kept and will apply again when restored.</p>}
           <Glance p={p} a={a} />
           <div className="grid gap-4 [@container_sec_(min-width:40rem)]:grid-cols-2">
+            <div className={`${ring} p-4`}>
+              <p className="mb-2 text-[10px] uppercase tracking-[0.14em] text-ink-muted">Location access</p>
+              {isTop(p) || a.portfolio ? <p className="text-sm">Every Unit Group and Unit</p> : GROUPS.filter((g) => unitsFor(a, g.id).length).map((g) => {
+                const u = unitsFor(a, g.id);
+                return <p key={g.id} className="py-1 text-sm"><span className="font-medium">{g.name}</span> <span className="text-ink-muted">· {u.length === g.units.length ? "whole Unit Group" : u.join(", ")}</span></p>;
+              })}
+              {!isTop(p) && !a.portfolio && !GROUPS.some((g) => unitsFor(a, g.id).length) && <p className="text-sm italic text-ink-muted">No places yet</p>}
+            </div>
+            <div className={`${ring} p-4`}>
+              <p className="mb-2 text-[10px] uppercase tracking-[0.14em] text-ink-muted">Papers {n} cannot read</p>
+              {unreadablePapers(p, a).length ? <ul className="grid gap-1 text-sm">{unreadablePapers(p, a).map((t) => <li key={t}>{t}</li>)}</ul> : <p className="text-sm">None — {rankLabel(p)} reads every paper, including Valuation Reports and Loan Agreements.</p>}
+            </div>
+          </div>
+          {p.admin && (
+            <div className={`${ring} p-4`}>
+              <p className="text-sm font-medium">Back Office colleagues {n} may work with</p>
+              <p className="mb-3 mt-0.5 text-xs text-ink-muted">Only a Superuser can close a colleague to an Admin.</p>
+              <div className="grid gap-2 [@container_sec_(min-width:40rem)]:grid-cols-2">
+                {COLLEAGUES.map((c) => {
+                  const open = !p.blockedColleagues?.includes(c.id);
+                  const me = s.people.find((x) => x.you);
+                  return (
+                    <label key={c.id} className="flex items-center justify-between gap-3 rounded-lg bg-secondary/40 px-3 py-2 text-sm">
+                      <span><span className="font-medium">{c.name}</span> <span className="text-ink-muted">· {c.area}</span></span>
+                      <span className="flex items-center gap-2 text-xs text-ink-muted">{open ? "Allowed" : "Restricted"}
+                        <input type="checkbox" aria-label={`${c.name} for ${n}`} checked={open} disabled={!me?.superuser} onChange={(e) => setS((x) => ({ ...x, people: x.people.map((q) => (q.id === p.id ? setColleague(q, c.id, e.target.checked) : q)) }))} className="h-4 w-4 accent-primary" />
+                      </span>
+                    </label>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+          <div className="grid gap-4 [@container_sec_(min-width:40rem)]:grid-cols-2">
             <div><p className="mb-2 text-sm font-medium">{n} can currently</p><ul className="grid gap-1.5 text-sm">{sum.can.map((c) => <li key={c} className="flex gap-2"><span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-primary" />{c}</li>)}</ul></div>
             {sum.cannot.length > 0 && <div><p className="mb-2 text-sm font-medium">{n} cannot</p><ul className="grid gap-1.5 text-sm text-ink-muted">{sum.cannot.map((c) => <li key={c} className="flex gap-2"><span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-muted-foreground/50" />{c}</li>)}</ul></div>}
           </div>
@@ -281,7 +315,7 @@ export default function PrototypeSecurity() {
               <div className="mt-3 flex gap-2"><Button size="sm" onClick={saveNow}>Save changes</Button><Button size="sm" variant="ghost" onClick={discard}>Discard</Button></div>
             </div>
           )}
-          <div><p className="mb-2 text-sm font-medium">What {n} can access</p><AccessEditor a={a} locked={p.superuser} set={(x) => editPerson(p, x)} /></div>
+          <div><p className="mb-2 text-sm font-medium">What {n} can access</p><AccessEditor a={a} locked={isTop(p)} set={(x) => editPerson(p, x)} /></div>
         </div>
       );
     }
