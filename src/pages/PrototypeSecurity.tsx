@@ -54,12 +54,12 @@ function Fold({ title, hint, children, start = false }: { title: string; hint?: 
 }
 
 /** The one permission editor used for existing people and invitations alike. */
-function AccessEditor({ a, set, locked }: { a: Access; set: (a: Access) => void; locked?: boolean }) {
+function AccessEditor({ a, set, locked, quiet }: { a: Access; set: (a: Access) => void; locked?: boolean; quiet?: boolean }) {
   const types = typesFor(a);
   if (locked) return null;
   return (
     <div className="grid gap-3">
-      <Fold title="Places" hint={placeLines(a).join(" · ") || "None yet"} start>
+      <Fold title="Places" hint={placeLines(a).join(" · ") || "None yet"} start={!quiet}>
         <label className="mb-3 flex items-center gap-2.5 text-sm"><Check on={a.portfolio} label="The whole portfolio" onChange={(v) => set(setPortfolio(a, v))} />The whole portfolio <span className="text-xs text-ink-muted">— including places added later</span></label>
         <div className="grid gap-2">
           {GROUPS.map((g) => {
