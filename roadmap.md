@@ -190,3 +190,7 @@
 - [x] Enlarged further on request: hovering or focusing a thumbnail now floats a 480×340 preview beside it (outside the panel, so nothing clips it); clicking or tapping still opens the full view. Verified 478×338 in the live preview at desktop, four thumbnail checks pass, build clean. Not published.
 
 - [x] Replace /prototype-contacts with conversation-led Contacts simulation (people / services / places, spreadsheet review)
+
+## Prototype Compliance — Compliance controls
+- [x] Rename the area to "Compliance controls" across the menu, headings, search, buttons and Hobson's copy; note plainly that frequencies are set by hand for now, automatic refreshing from external sources being deliberately not built yet.
+- [x] Remove the "Next renewal" and "Where" columns from the list, leaving each control with its renewal frequency and the edit control; six compliance checks pass and the page was checked in the preview. Not published.
