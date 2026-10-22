@@ -102,8 +102,8 @@ export function PrototypeUnitPhotographs({ unit, onChange }: Props) {
     </div>
     {photos.length > 0 && <ul className="mt-2 flex flex-wrap gap-3">{photos.map(photo => <li key={photo.id} className="w-24">
       <Button variant="ghost" className="relative h-20 w-24 overflow-visible p-0 hover:z-20 focus-visible:z-20" aria-label={`Preview ${photo.name}`}
-        onMouseEnter={e => hover.show(e.currentTarget)} onMouseLeave={hover.hide}
-        onFocus={e => hover.show(e.currentTarget)} onBlur={hover.hide}
+        onMouseEnter={e => { setHoverId(photo.id); hover.show(e.currentTarget); }} onMouseLeave={() => { setHoverId(null); hover.hide(); }}
+        onFocus={e => { setHoverId(photo.id); hover.show(e.currentTarget); }} onBlur={() => { setHoverId(null); hover.hide(); }}
         onClick={() => setPreviewId(photo.id)}><img src={photo.url} alt={photo.name} className="h-full w-full rounded-md object-cover shadow-sm transition-transform duration-200 ease-out hover:scale-[1.15] hover:shadow-lg" /></Button>
       <div className="mt-1 flex items-center justify-between">
         <Button variant="ghost" size="sm" className="h-7 px-1 text-xs" aria-label={`Make ${photo.name} main photograph`} aria-pressed={main?.id === photo.id} title="Choose main photograph" onClick={() => onChange({ photos, mainPhotoId: photo.id })}><Star className="h-3 w-3" />{main?.id === photo.id ? "Main" : ""}</Button>
