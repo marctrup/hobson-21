@@ -1,8 +1,8 @@
 import { describe, expect, it } from "vitest";
 import { INITIAL, interpret, positionOf } from "@/pages/prototypeComplianceResponsibilities";
 
-describe("compliance responsibilities prototype", () => {
-  it("never gives event-triggered responsibilities a calendar date", () => {
+describe("compliance controls prototype", () => {
+  it("never gives an event-triggered control a calendar date", () => {
     INITIAL.filter((r) => r.timing === "event").forEach((r) => expect(r.next).toBeNull());
   });
   it("treats an unstated review interval as still to establish", () => {

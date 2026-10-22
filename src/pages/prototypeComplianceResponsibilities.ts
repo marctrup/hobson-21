@@ -1,4 +1,4 @@
-// Prototype Compliance: pure, illustrative responsibilities data and conversation interpreter.
+// Prototype Compliance: pure, illustrative compliance controls data and conversation interpreter.
 // Local demonstration state only; never shares state with Contacts, Documents or Unit.
 
 export type GroupId = "stanley" | "nugent" | "burlington" | "mews";
@@ -155,8 +155,8 @@ export function interpret(rs: Responsibility[], pending: Pending, raw: string): 
     const mine = rs.filter((r) => r.group === g);
     if (!mine.length) return { reply: `I have nothing recorded for ${groupName(g)} yet. I won't assume what applies from the type of building — tell me how it's used, or attach any certificates, and I'll work it out with you.`, filter: { group: g, position: null }, pending: null };
     const c = counts(mine);
-    return { reply: `I'll bring together the requirements that appear relevant to ${groupName(g)} and check what I have recorded.\n\n${mine.length} responsibilities: ${c.attention} need attention, ${c.coming} coming up, ${c.current} current, ${c.establish} still to establish.`, filter: { group: g, position: null }, pending: null };
+    return { reply: `I'll bring together the requirements that appear relevant to ${groupName(g)} and check what I have recorded.\n\n${mine.length} controls: ${c.attention} need attention, ${c.coming} coming up, ${c.current} current, ${c.establish} still to establish.`, filter: { group: g, position: null }, pending: null };
   }
   if (/all|everything|portfolio|clear|reset/.test(s)) return { reply: "Here is everything across the portfolio.", filter: { group: null, position: null }, pending: null };
-  return { reply: "I'm not sure I follow. You could ask about a place, what's coming up, what needs attention, or a particular responsibility such as gas safety.", pending: null };
+  return { reply: "I'm not sure I follow. You could ask about a place, what's coming up, what needs attention, or a particular control such as gas safety.", pending: null };
 }
