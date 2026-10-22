@@ -1,5 +1,5 @@
 import { lazy, Suspense, useEffect, useRef, useState } from "react";
-import { ArrowRight, Briefcase, X } from "lucide-react";
+import { ArrowRight, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { PrototypeGateAdmitted } from "@/components/prototype/PrototypeGate";
 import owlDefault from "@/assets/prototype/owl-default.png";
@@ -18,12 +18,12 @@ const PrototypeSecurity = lazy(() => import("./PrototypeSecurity"));
 const PrototypeCompliance = lazy(() => import("./PrototypeCompliance"));
 
 export type ColleagueId = "professor" | "architect" | "broker" | "keeper" | "inspector";
-export const COLLEAGUES: { id: ColleagueId; name: string; area: string; choice: string; img: string; handover: string; Comp: React.ComponentType }[] = [
-  { id: "professor", name: "The Professor", area: "Portfolio Knowledge", choice: "Add or review papers", img: professor, handover: "Of course. My colleague the Professor will take a look — attach the paper and we'll begin.", Comp: PrototypeDocuments },
-  { id: "architect", name: "The Architect", area: "Portfolio Structure", choice: "Add or organise Units", img: architect, handover: "Let's establish the address first. My colleague the Architect has the map ready.", Comp: PrototypeUnit },
-  { id: "broker", name: "The Broker", area: "Relationships", choice: "Manage people and contacts", img: broker, handover: "Here are the people we know. Tell me who to add or change, and I'll check for anyone we already have.", Comp: PrototypeContacts },
-  { id: "keeper", name: "The Keeper", area: "Security & Access", choice: "Manage access", img: keeper, handover: "Here is who has access. Nothing changes until you approve it.", Comp: PrototypeSecurity },
-  { id: "inspector", name: "The Inspector", area: "Compliance Position", choice: "Review compliance", img: inspector, handover: "I'll bring together the compliance responsibilities and what we have recorded.", Comp: PrototypeCompliance },
+export const COLLEAGUES: { id: ColleagueId; name: string; area: string; choice: string; contribution: string; img: string; handover: string; Comp: React.ComponentType }[] = [
+  { id: "professor", name: "The Professor", area: "Portfolio Knowledge", choice: "Add or review papers", contribution: "I maintain everything Hobson knows from your documents — leases, licences, plans, reports and every other record you entrust to us.", img: professor, handover: "Of course. My colleague the Professor will take a look — attach the paper and we'll begin.", Comp: PrototypeDocuments },
+  { id: "architect", name: "The Architect", area: "Portfolio Structure", choice: "Add or organise Units", contribution: "I keep the structure of your estate accurate — units, properties, hierarchies and groupings — so Hobson always understands how everything fits together.", img: architect, handover: "Let's establish the address first. My colleague the Architect has the map ready.", Comp: PrototypeUnit },
+  { id: "broker", name: "The Broker", area: "Relationships", choice: "Manage people and contacts", contribution: "I maintain Hobson's understanding of the people and organisations connected to your portfolio, so Hobson always knows who's involved in your work.", img: broker, handover: "Here are the people we know. Tell me who to add or change, and I'll check for anyone we already have.", Comp: PrototypeContacts },
+  { id: "keeper", name: "The Keeper", area: "Security & Access", choice: "Manage access", contribution: "I keep watch over who may see and change what, so nothing in your portfolio moves without the right authority.", img: keeper, handover: "Here is who has access. Nothing changes until you approve it.", Comp: PrototypeSecurity },
+  { id: "inspector", name: "The Inspector", area: "Compliance Position", choice: "Review compliance", contribution: "I compare what is known against what is required, helping Hobson understand your compliance position and quietly identifying anything that's missing.", img: inspector, handover: "I'll bring together the compliance responsibilities and what we have recorded.", Comp: PrototypeCompliance },
 ];
 
 /** Which colleague a request belongs to; null when Hobson should ask. */
