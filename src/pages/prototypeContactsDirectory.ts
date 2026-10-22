@@ -85,8 +85,7 @@ export type Pending =
   | { kind: "same"; draft: Draft; candidateId: string }
   | { kind: "who"; group: GroupId; unit: string; service: string }
   | { kind: "phone"; contactId: string };
-export type Tab = "people" | "places";
-export type ViewChange = { tab?: Tab; focusContact?: string | null; focusGroup?: GroupId | null; highlight?: string[] };
+export type ViewChange = { focusContact?: string | null; query?: string | null; highlight?: string[] };
 export type Outcome = { reply: string; pending: Pending | null; directory?: Directory; view?: ViewChange; choices?: string[] };
 
 const YES = /^(yes|yep|yeah|correct|that's right|go ahead|please do|ok|okay)\b/i;
@@ -217,9 +216,9 @@ export function interpret(d: Directory, pending: Pending | null, raw: string): O
     if (svc && (g || u)) {
       const group = (u?.group ?? g)!;
       const eff = effectivePreferred(d, group, svc[1], u?.unit);
-      if (!eff) return { reply: `I don't have a preferred ${svc[2]} recorded for ${groupName(group)}.`, pending: null, view: { tab: "places", focusGroup: group, focusContact: null } };
+      if (!eff) return { reply: `I don't have a preferred ${svc[2]} recorded for ${groupName(group)}.`, pending: null, view: { query: groupName(group), focusContact: null } };
       const c = contactById(d, eff.relation.contactId)!;
-      return { reply: `${contactName(c)}${c.person && c.org ? `, through ${c.person}` : ""}. I have them recorded for ${eff.exception ? `${u!.unit} specifically` : groupName(group)}.`, pending: null, view: { tab: "places", focusGroup: group, focusContact: null, highlight: [eff.relation.id] } };
+      return { reply: `${contactName(c)}${c.person && c.org ? `, through ${c.person}` : ""}. I have them recorded for ${eff.exception ? `${u!.unit} specifically` : groupName(group)}.`, pending: null, view: { query: groupName(group), focusContact: null, highlight: [eff.relation.id] } };
     }
   }
 
@@ -227,9 +226,9 @@ export function interpret(d: Directory, pending: Pending | null, raw: string): O
   m = text.match(/show (?:me )?(?:all )?(?:the |our )?(contractors|contacts|people)(?: (?:at|for) (.+))?/i);
   if (m) {
     const g = groupIn(m[2] ?? "");
-    if (!g) return { reply: "Here is everyone I know, by who they are.", pending: null, view: { tab: "people", focusContact: null, focusGroup: null } };
+    if (!g) return { reply: "Here is everyone I know, by who they are.", pending: null, view: { focusContact: null, query: null } };
     const rs = d.relations.filter((r) => inGroup(r.scope, g) && (m![1].toLowerCase() !== "contractors" || r.role === "Preferred contractor"));
-    return { reply: rs.length ? `At ${groupName(g)} I have ${new Set(rs.map((r) => r.contactId)).size} ${m[1].toLowerCase() === "contractors" ? "contractors" : "people and organisations"}. They're on the right.` : `I have no ${m[1].toLowerCase()} recorded at ${groupName(g)} yet.`, pending: null, view: { tab: "places", focusGroup: g, focusContact: null, highlight: rs.map((r) => r.id) } };
+    return { reply: rs.length ? `At ${groupName(g)} I have ${new Set(rs.map((r) => r.contactId)).size} ${m[1].toLowerCase() === "contractors" ? "contractors" : "people and organisations"}. I've shown them.` : `I have no ${m[1].toLowerCase()} recorded at ${groupName(g)} yet.`, pending: null, view: { query: groupName(g), focusContact: null, highlight: rs.map((r) => r.id) } };
   }
 
   // Add another phone number for X.
@@ -278,7 +277,7 @@ export function interpret(d: Directory, pending: Pending | null, raw: string): O
     if (svc && u) {
       const eff = effectivePreferred(d, u.group, svc[1]);
       const now = eff ? `${contactName(contactById(d, eff.relation.contactId)!)} looks after ${svc[1].toLowerCase()} for the whole of ${groupName(u.group)}. ` : "";
-      return { reply: `${now}I'll keep that for the rest of the building and record a different ${svc[2]} for ${u.unit} specifically.\n\nWho should it be?`, pending: { kind: "who", group: u.group, unit: u.unit, service: svc[1] }, view: { tab: "places", focusGroup: u.group, focusContact: null, highlight: eff ? [eff.relation.id] : [] } };
+      return { reply: `${now}I'll keep that for the rest of the building and record a different ${svc[2]} for ${u.unit} specifically.\n\nWho should it be?`, pending: { kind: "who", group: u.group, unit: u.unit, service: svc[1] }, view: { query: groupName(u.group), focusContact: null, highlight: eff ? [eff.relation.id] : [] } };
     }
     if (svc) return { reply: `Which Unit do you mean? For example, Flat 8 at Stanley House.`, pending: null };
   }
