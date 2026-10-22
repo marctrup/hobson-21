@@ -25,7 +25,6 @@ const TRY: { label: string; text: string }[] = [
   { label: "Review access by area", text: "Who can make changes to My Compliance Responsibilities?" },
   { label: "Suspend access", text: "Suspend Tom's access." },
   { label: "Cancel an invitation", text: "Cancel Mark's invitation." },
-  { label: "See someone's view", text: "View access as James." },
 ];
 
 const ring = "rounded-xl bg-background ring-1 ring-bone";
