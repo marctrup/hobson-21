@@ -65,8 +65,8 @@ describe("places listed by category", () => {
   });
   it("counts a control for one flat against the block of flats it belongs to", () => {
     const base = INITIAL.find((r) => r.id === "hmo-sh")!;
-    expect(placeRows([{ ...base, id: "hmo-6", appliesTo: "Flat 6" }]).find((r) => r.label === "Flats 1–8")!.categories).toEqual(["Licences"]);
-    expect(placeRows([{ ...base, id: "hmo-9", appliesTo: "Flat 9" }]).find((r) => r.label === "Flats 1–8")!.categories).toEqual([]);
+    expect(placeRows([{ ...base, id: "hmo-6", appliesTo: "Flat 6" }]).find((r) => r.label === "Flats 1–8")!.categories.map(categoryLabel)).toEqual(["Licences"]);
+    expect(placeRows([{ ...base, id: "hmo-9", appliesTo: "Flat 9" }]).find((r) => r.label === "Flats 1–8")!.categories.map(categoryLabel)).toEqual([]);
   });
   it("shows one Unit Group alone when one is selected", () => {
     const one = placeRows(INITIAL, "mews");
