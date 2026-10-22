@@ -52,7 +52,7 @@ function Row({ r, open, toggle, lit }: { r: Responsibility; open: boolean; toggl
   ];
   return (
     <li className={`rounded-md transition ${lit ? "bg-primary/[0.06]" : ""} ${open ? "bg-background ring-1 ring-bone" : ""}`}>
-      <button type="button" onClick={toggle} aria-expanded={open} className="grid w-full grid-cols-[auto_1fr_auto] items-center gap-x-3 px-2 py-2.5 text-left hover:bg-background focus:outline-none focus-visible:ring-2 focus-visible:ring-ring [@container_comp_(min-width:44rem)]:grid-cols-[auto_minmax(0,1.2fr)_minmax(0,1.3fr)_minmax(0,0.9fr)_auto]">
+      <button type="button" onClick={toggle} aria-expanded={open} className="grid w-full grid-cols-[auto_1fr_auto] items-center gap-x-3 px-2 py-2.5 text-left hover:bg-background focus:outline-none focus-visible:ring-2 focus-visible:ring-ring [@container_comp_(min-width:44rem)]:grid-cols-[auto_minmax(0,1.1fr)_minmax(0,1.6fr)_minmax(0,0.8fr)_auto]">
         <Dot p={p} />
         <span className="min-w-0">
           <span className="block truncate text-sm font-medium text-ink">{r.name}</span>
@@ -120,10 +120,10 @@ function ByCategory({ rs, openId, setOpen, lit }: { rs: Responsibility[]; openId
 }
 
 /** Chart in the Services style: categories down the side, places across the top. */
-function ByPlace({ rs, pick }: { rs: Responsibility[]; pick: (g: GroupId | null, c: Category) => void }) {
-  const cols: (GroupId | "portfolio")[] = [...GROUPS.map((g) => g.id), "portfolio"];
+function ByPlace({ rs, all, only, pick }: { rs: Responsibility[]; all: Responsibility[]; only: GroupId | null; pick: (g: GroupId | null, c: Category) => void }) {
+  const cols: (GroupId | "portfolio")[] = only ? [only] : [...GROUPS.map((g) => g.id), "portfolio"];
   const label = (g: GroupId | "portfolio") => (g === "portfolio" ? "Portfolio" : GROUPS.find((x) => x.id === g)!.name);
-  const empty = GROUPS.filter((g) => !rs.some((r) => r.group === g.id));
+  const empty = GROUPS.filter((g) => cols.includes(g.id) && !all.some((r) => r.group === g.id));
   return (
     <div>
       <Insight>Each cell shows what I'm keeping track of for that place.{empty.length ? <> I have nothing recorded for <b className="font-semibold">{empty.map((g) => g.name).join(", ")}</b> — shown with a dashed line; I won't assume what applies.</> : ""}</Insight>
@@ -299,7 +299,7 @@ export default function PrototypeCompliance() {
             )}
             <Overview rs={scoped} active={filter.position} set={(p) => setFilter((f) => ({ ...f, position: p }))} />
             {tab === "categories" && <ByCategory rs={shown} openId={openId} setOpen={setOpenId} lit={lit} />}
-            {tab === "places" && <ByPlace rs={shown} pick={(g) => { setFilter((f) => ({ ...f, group: g })); setTab("categories"); }} />}
+            {tab === "places" && <ByPlace rs={shown} all={rs} only={filter.group} pick={(g) => { setFilter((f) => ({ ...f, group: g })); setTab("categories"); }} />}
             {tab === "calendar" && <Calendar rs={shown} setOpen={(id) => { setOpenId(id); setTab("categories"); }} />}
           </div>
         </div>
