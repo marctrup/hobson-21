@@ -19,6 +19,9 @@ import { PARAGON_GROUP_ID, paperById } from "./prototypeUnitPapers";
 import { PrototypeUnitGroupCard, type GroupCard } from "./PrototypeUnitGroupCard";
 import { applyChanges, FIELD_LABELS, interpretDetails, summaryLine, type DetailInstruction } from "./prototypeUnitDetails";
 import { LegalResponsibilitiesSection, PreferredContactsSection } from "./PrototypeUnitRecords";
+import ExcelJS from "exceljs";
+import { applyPhysicalChanges, bedroomCount, downloadPhysicalWorkbook, makePhysicalWorkbook, reviewPhysicalWorkbook, type PhysicalReview } from "./prototypeUnitSpreadsheet";
+import { PrototypeUnitSpreadsheetReview } from "./PrototypeUnitSpreadsheetReview";
 
 const RAIL_WIDTH = 68;
 const DEFAULT_CHAT_WIDTH = 380;
@@ -27,7 +30,7 @@ const MIN_CANVAS_WIDTH = 320;
 
 type UnitMessage = { id: number; text: string; role: "user" | "hobson"; examples?: string; counts?: boolean };
 
-type PortfolioGroup = { id: string; name: string; line: string; record: AddressRecord; units: ProposedUnit[]; description?: string; photo?: GroupCard["photo"] };
+export type PortfolioGroup = { id: string; name: string; line: string; record: AddressRecord; units: ProposedUnit[]; description?: string; photo?: GroupCard["photo"] };
 
 const OPENING_MESSAGE: UnitMessage = { id: 0, role: "hobson", text: "I can help you organise the places in your portfolio. Shall we get started?" };
 
@@ -229,13 +232,24 @@ const PARAGON_DEMO: PortfolioGroup = {
   photo: { url: paragonBuildingPhoto, x: 50, y: 50, zoom: 1 },
 };
 
+const PHYSICAL_STORAGE = "hobson-unit-physical-portfolio-v1";
+function persistentGroup(g: PortfolioGroup): PortfolioGroup {
+  return { ...g, photo: g.photo?.url.startsWith("blob:") ? undefined : g.photo, units: g.units.map(u => ({ ...u, photos: u.photos?.filter(p => !p.url.startsWith("blob:")) })) };
+}
+function readPrototypePortfolio(): { demoGroup: PortfolioGroup; portfolio: PortfolioGroup[] } | null {
+  try {
+    const raw = JSON.parse(localStorage.getItem(PHYSICAL_STORAGE) ?? "null");
+    return raw?.demoGroup?.id === PARAGON_GROUP_ID && Array.isArray(raw.demoGroup.units) && Array.isArray(raw.portfolio) ? raw : null;
+  } catch { return null; }
+}
+
 // An established Unit Group in the simulated portfolio: names, uses and order exactly as authorised.
-function PortfolioGroupView({ group, onClose, onOpenUnit, onCardChange, onChangeAddress, onViewPaper, label, openNumber, editor }: { group: PortfolioGroup; onViewPaper?: (id: string) => void; label?: string; onClose?: () => void; onOpenUnit?: (unit: ProposedUnit) => void; onCardChange?: (card: GroupCard) => void; onChangeAddress?: () => void; openNumber?: number | null; editor?: React.ReactNode }) {
+function PortfolioGroupView({ onPhysicalDetails, group, onClose, onOpenUnit, onCardChange, onChangeAddress, onViewPaper, label, openNumber, editor }: { onPhysicalDetails?: () => void; group: PortfolioGroup; onViewPaper?: (id: string) => void; label?: string; onClose?: () => void; onOpenUnit?: (unit: ProposedUnit) => void; onCardChange?: (card: GroupCard) => void; onChangeAddress?: () => void; openNumber?: number | null; editor?: React.ReactNode }) {
   const [open, setOpen] = useState(true);
   const totals = summarise(group.units);
   return (
     <section aria-label={`${group.name} Unit Group`} className="min-w-0 rounded-md border border-border bg-background px-4 py-3 motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-2 motion-safe:duration-300">
-      <PrototypeUnitGroupCard card={{ name: group.name, description: group.description, photo: group.photo }} address={group.line} label={label ?? "Unit Group · in your portfolio"} summary={`${totals.total} Unit${totals.total === 1 ? "" : "s"} · ${totals.residential} Residential · ${totals.commercial} Commercial`} onChange={c => onCardChange?.(c)} onChangeAddress={onChangeAddress} actions={<>
+      <PrototypeUnitGroupCard card={{ name: group.name, description: group.description, photo: group.photo }} address={group.line} label={label ?? "Unit Group · in your portfolio"} summary={`${totals.total} Unit${totals.total === 1 ? "" : "s"} · ${totals.residential} Residential · ${totals.commercial} Commercial`} onChange={c => onCardChange?.(c)} onChangeAddress={onChangeAddress} onPhysicalDetails={onPhysicalDetails} actions={<>
           <button type="button" aria-expanded={open} onClick={() => setOpen(v => !v)} className="min-h-9 rounded-md px-2 text-sm text-muted-foreground hover:text-foreground">{open ? "Hide Units" : "Show Units"}</button>
           {onClose && <button type="button" onClick={onClose} className="inline-flex min-h-9 items-center gap-1.5 rounded-md border border-primary bg-primary px-3 text-sm font-medium text-primary-foreground shadow-sm hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"><span aria-hidden>←</span>Back to map</button>}
         </>} />
@@ -294,7 +308,7 @@ function PrototypeUnitShell() {
   const [showMoreAddresses, setShowMoreAddresses] = useState(false);
   const [buildingUnderstanding, setBuildingUnderstanding] = useState<BuildingUnderstanding | null>(null);
   const [buildingStage, setBuildingStage] = useState<"idle" | "awaiting-description" | "naming" | "describing" | "named" | "ready" | "created">("idle");
-  const [portfolio, setPortfolio] = useState<PortfolioGroup[]>([]);
+  const [portfolio, setPortfolio] = useState<PortfolioGroup[]>(() => readPrototypePortfolio()?.portfolio ?? []);
   const [mapExpanded, setMapExpanded] = useState(true);
   const [groupOpen, setGroupOpen] = useState(false);
   const [showSummaryUnits, setShowSummaryUnits] = useState(false);
@@ -306,7 +320,15 @@ function PrototypeUnitShell() {
   const [detailsPromptId, setDetailsPromptId] = useState<number | null>(null);
   const [pendingDetail, setPendingDetail] = useState<{ id: number; ctx: "proposal" | string; instruction: Extract<DetailInstruction, { kind: "proposal" }> } | null>(null);
   // The group's own card (name, description, photo) while proposed; carried into the portfolio on creation.
-  const [demoGroup, setDemoGroup] = useState<PortfolioGroup>(PARAGON_DEMO);
+  const [demoGroup, setDemoGroup] = useState<PortfolioGroup>(() => readPrototypePortfolio()?.demoGroup ?? PARAGON_DEMO);
+  const [physicalPrompt, setPhysicalPrompt] = useState<{ id: number; groupId: string; stage: "offer" | "methods" } | null>(null);
+  const [physicalGroupId, setPhysicalGroupId] = useState<string | null>(null);
+  const [workbookReview, setWorkbookReview] = useState<{ book: ExcelJS.Workbook; matches: Record<string, string>; review: PhysicalReview; version: number } | null>(null);
+  const spreadsheetInput = useRef<HTMLInputElement>(null);
+  const allGroups = [demoGroup, ...portfolio];
+  useEffect(() => {
+    try { localStorage.setItem(PHYSICAL_STORAGE, JSON.stringify({ demoGroup: persistentGroup(demoGroup), portfolio: portfolio.map(persistentGroup) })); } catch { /* Browser storage may be unavailable. */ }
+  }, [demoGroup, portfolio]);
   const [paperOpen, setPaperOpen] = useState<string | null>(null);
   const [draftCard, setDraftCard] = useState<GroupCard | null>(null);
   const [addrChange, setAddrChange] = useState<{ ctx: "proposal" | string; record?: AddressRecord; options?: AddressRecord[]; promptId: number } | null>(null);
@@ -325,6 +347,7 @@ function PrototypeUnitShell() {
 
   const startSetup = (reply = "Set up a place") => {
     if (!showInvitation) return;
+    setPhysicalGroupId(null); setPhysicalPrompt(null); setWorkbookReview(null);
     setSetupUnderway(true);
     setGroupOpen(false);
     setOpenUnit(null);
@@ -361,6 +384,82 @@ function PrototypeUnitShell() {
     ]);
     setInput("");
     return id;
+  };
+
+  const offerPhysical = (groupId: string, userText = "Add or update physical details") => {
+    const g = allGroups.find(g => g.id === groupId);
+    if (!g) return;
+    setPhysicalGroupId(g.id);
+    const id = appendExchange(userText, `I have the ${g.units.length} Unit${g.units.length === 1 ? "" : "s"} at ${g.name}. I can prepare a spreadsheet with their current details, or we can go through them here.`);
+    setPhysicalPrompt({ id, groupId: g.id, stage: "methods" });
+  };
+  const physicalChoice = async (choice: string) => {
+    const g = allGroups.find(g => g.id === physicalPrompt?.groupId);
+    if (!g) return;
+    if (choice === "Add physical details") { offerPhysical(g.id, choice); return; }
+    if (choice === "I'll do this later") {
+      setPhysicalPrompt(null); const id = appendExchange(choice, "Of course. You can add those details whenever you're ready."); if (buildingStage === "created") setBuildingPromptId(id); return;
+    }
+    if (choice === "Download spreadsheet") {
+      if (!window.dispatchEvent(new Event("prototype-unit-before-workbook", { cancelable: true }))) { appendExchange(choice, "Please save your current edits first so the spreadsheet uses the latest details."); return; }
+      try { await downloadPhysicalWorkbook([g]); appendExchange(choice, "Your spreadsheet is ready. Attach the completed workbook whenever it suits you; I shall show the changes before recording them."); }
+      catch { appendExchange(choice, "I couldn't prepare that workbook. Please try again."); }
+      return;
+    }
+    if (choice === "Upload spreadsheet") { spreadsheetInput.current?.click(); return; }
+    if (choice === "Add details in Chat") {
+      appendExchange(choice, `Tell me what you know about ${g.units.map(u => u.name).join(" or ")}. I shall show any proposed changes first.`); return;
+    }
+    if (choice === "Edit directly") { setPhysicalGroupId(g.id); setGroupOpen(true); setMapExpanded(false); setOpenUnit({ ctx: g.id, number: g.units[0]?.number ?? 1 }); }
+  };
+  const receiveSpreadsheet = async (file?: File) => {
+    if (!file) return;
+    if (!window.dispatchEvent(new Event("prototype-unit-before-workbook", { cancelable: true }))) { appendExchange(file.name, "Please save your current edits first, then attach the workbook again."); return; }
+    try {
+      const book = new ExcelJS.Workbook(); await book.xlsx.load(await file.arrayBuffer());
+      const review = reviewPhysicalWorkbook(book, allGroups);
+      setWorkbookReview({ book, matches: {}, review, version: 0 });
+      appendExchange(file.name, "Here are the physical details I can add. Existing values change only where you confirm a replacement.");
+    } catch { appendExchange(file.name, "I couldn't read that workbook. Please attach an Excel .xlsx file with the Unit Groups and Units sheets."); }
+  };
+  const saveSpreadsheet = (keys: string[]) => {
+    if (!workbookReview) return;
+    const fresh = reviewPhysicalWorkbook(workbookReview.book, allGroups, workbookReview.matches);
+    if (JSON.stringify(fresh) !== JSON.stringify(workbookReview.review)) {
+      setWorkbookReview(w => w && { ...w, review: fresh, version: w.version + 1 });
+      appendExchange("Save physical details", "Some records have changed since this review. Please check the current differences before saving."); return;
+    }
+    const updated = applyPhysicalChanges(allGroups, fresh.changes, keys);
+    const demo = updated.find(g => g.id === demoGroup.id);
+    if (demo) setDemoGroup(demo);
+    setPortfolio(updated.filter(g => g.id !== demoGroup.id));
+    setWorkbookReview(null);
+    appendExchange("Save physical details", "Done. I've recorded the approved physical details in this demonstration.");
+  };
+  const answerPhysical = (text: string): boolean => {
+    const normal = text.toLowerCase();
+    if (physicalPrompt && ["Add physical details", "I'll do this later", "Download spreadsheet", "Upload spreadsheet", "Add details in Chat", "Edit directly"].some(c => c.toLowerCase() === normal)) {
+      void physicalChoice(["Add physical details", "I'll do this later", "Download spreadsheet", "Upload spreadsheet", "Add details in Chat", "Edit directly"].find(c => c.toLowerCase() === normal) ?? text); return true;
+    }
+    const g = allGroups.find(g => normal.includes(g.name.toLowerCase())) ?? allGroups.find(g => g.units.some(u => normal.includes(u.name.toLowerCase()))) ?? allGroups.find(g => g.id === physicalGroupId) ?? (groupOpen ? demoGroup : undefined);
+    const description = text.match(/^(?:please )?add (?:this|a|the following) description:\s*(.+)$/i);
+    if (g && description) {
+      const book = makePhysicalWorkbook([g]); const sheet = book.getWorksheet("Unit Groups");
+      if (sheet) sheet.getCell("C2").value = description[1];
+      setWorkbookReview({ book, matches: {}, review: reviewPhysicalWorkbook(book, allGroups), version: 0 });
+      appendExchange(text, `Here is the description proposed for ${g.name}.`); return true;
+    }
+    if (g && /(?:add|update).*(?:description|physical details)|physical details.*existing units/.test(normal)) { offerPhysical(g.id, text); return true; }
+    if (g && /(?:describe|what.*know|how many.*bedroom|show.*details)/.test(normal)) {
+      const mentioned = g.units.filter(u => normal.includes(u.name.toLowerCase()));
+      const selected = mentioned.length ? mentioned : g.units;
+      appendExchange(text, selected.map(u => {
+        const d = u.details ?? {}; const bedrooms = bedroomCount(d);
+        return `${u.name}: ${[d.description, d.area === undefined ? undefined : `${d.area} ${d.areaUnit ?? "ft²"}`, bedrooms === undefined ? undefined : `${bedrooms} bedroom${bedrooms === 1 ? "" : "s"}`, d.bathrooms === undefined ? undefined : `${d.bathrooms} bathroom${d.bathrooms === 1 ? "" : "s"}`, d.outsideSpace ? `Outside space: ${d.outsideSpace}` : undefined, d.sharedFacilities ? `Shared facilities: ${d.sharedFacilities}` : undefined].filter(Boolean).join(" · ") || "No physical details recorded."}`;
+      }).join("\n\n")); return true;
+    }
+    if (g && !setupUnderway) { setPhysicalGroupId(g.id); const instruction = interpretDetails(text, g.units); if (instruction) { if (instruction.kind === "question") appendExchange(text, instruction.reply); else { const id = appendExchange(text, instruction.reply); setPendingDetail({ id, ctx: g.id, instruction }); } return true; } }
+    return false;
   };
 
   const checkAgain = (reply: string) => {
@@ -450,7 +549,7 @@ function PrototypeUnitShell() {
     else if (ctx === demoGroup.id) setDemoGroup(g => ({ ...g, units: next }));
     else setPortfolio(previous => previous.map(g => g.id === ctx ? { ...g, units: next } : g));
   };
-  const detailCtx = (): "proposal" | string | null => buildingStage === "created" || (!units && portfolio.length) ? portfolio[portfolio.length - 1]?.id ?? null : units ? "proposal" : null;
+  const detailCtx = (): "proposal" | string | null => physicalGroupId ?? openUnit?.ctx ?? (groupOpen && !setupUnderway ? demoGroup.id : null) ?? (buildingStage === "created" || (!units && portfolio.length) ? portfolio[portfolio.length - 1]?.id ?? null : units ? "proposal" : null);
 
   const applyDirectEdit = (next: ProposedUnit[], note: string, removed?: { unit: ProposedUnit; index: number }) => {
     setBuildingUnderstanding({ kind: "proposal", units: next });
@@ -473,17 +572,22 @@ function PrototypeUnitShell() {
   // The simulated portfolio survives new setups and conversations within this session.
   const createGroup = (text: string) => {
     if (buildingStage !== "ready" || !units || !selectedAddress) return;
-    const group: PortfolioGroup = { id: `${selectedAddress.id}-${Date.now()}`, name: draftCard?.name ?? selectedAddress.name, description: draftCard?.description, photo: draftCard?.photo, line: selectedAddress.line, record: selectedAddress, units: units.map(u => ({ ...u })) };
+    const group: PortfolioGroup = { id: `${selectedAddress.id}-${Date.now()}`, name: draftCard?.name ?? selectedAddress.name, description: draftCard?.description, photo: draftCard?.photo, line: selectedAddress.line, record: selectedAddress, units: units.map(u => ({ ...u, id: crypto.randomUUID() })) };
     if (openUnit?.ctx === "proposal") setOpenUnit({ ctx: group.id, number: openUnit.number });
     setPortfolio(previous => previous.some(g => g.record.id === group.record.id) ? previous : [...previous, group]);
     setBuildingStage("created");
     // Creation always returns to the full map; the marker opens the Unit Group.
     setMapExpanded(true);
     setGroupOpen(false);
-    setBuildingPromptId(appendExchange(text, `Done. ${group.name} is now in your portfolio with ${group.units.length} Unit${group.units.length === 1 ? "" : "s"}. Here it is on the map — select the marker whenever you'd like to step back inside.`));
+    setBuildingPromptId(null);
+    const id = appendExchange(text, `Done. I've added ${group.name} and its ${group.units.length} Unit${group.units.length === 1 ? "" : "s"} to your Portfolio.
+
+Would you like to add their physical details now, or leave that until later?`);
+    setPhysicalGroupId(group.id); setPhysicalPrompt({ id, groupId: group.id, stage: "offer" });
   };
 
   const resetSetup = () => {
+    setPhysicalGroupId(null); setPhysicalPrompt(null); setWorkbookReview(null);
     setSetupUnderway(false);
     setSetupPromptId(null); setLocationStage("idle"); setLocationPromptId(null); setLocationAddress(""); setAddressParts({}); setAddressCandidates([]); setSelectedAddress(null);
     setBuildingUnderstanding(null); setBuildingStage("idle"); setBuildingPromptId(null); setLastRemoved(null); setShowSummaryUnits(false);
@@ -641,6 +745,8 @@ function PrototypeUnitShell() {
     const text = input.trim();
     if (!text) return;
     const normalised = text.toLowerCase().replace(/[.!?]+$/, "");
+    if (pendingDetail && answerDetails(text, normalised.trim())) return;
+    if (answerPhysical(text)) return;
     if (addrChange) { answerAddressChange(text); return; }
     if (locationStage === "confirmed" && buildingStage !== "idle") { answerBuilding(text); return; }
     if (locationStage === "idle" && portfolio.length && answerCard(text)) return;
@@ -692,7 +798,7 @@ function PrototypeUnitShell() {
             type="button"
             className="grid h-11 w-11 place-items-center rounded-full bg-[#56514A] text-white shadow-md transition hover:bg-[#56514A]"
             aria-label="A new conversation"
-            onClick={() => { setMessages([OPENING_MESSAGE]); setInput(""); setSetupPromptId(null); setSetupUnderway(false); setShowInvitation(true); setLocationStage("idle"); setLocationPromptId(null); setLocationAddress(""); setAddressParts({}); setAddressCandidates([]); setSelectedAddress(null); setBuildingUnderstanding(null); setBuildingStage("idle"); setBuildingPromptId(null); setLastRemoved(null); setMapExpanded(false); setGroupOpen(false); setShowSummaryUnits(false); setOpenUnit(null); setDetailsOffered(false); setDetailsPromptId(null); setPendingDetail(null); setDraftCard(null); setAddrChange(null); }}
+            onClick={() => { setPhysicalGroupId(null); setPhysicalPrompt(null); setWorkbookReview(null); setMessages([OPENING_MESSAGE]); setInput(""); setSetupPromptId(null); setSetupUnderway(false); setShowInvitation(true); setLocationStage("idle"); setLocationPromptId(null); setLocationAddress(""); setAddressParts({}); setAddressCandidates([]); setSelectedAddress(null); setBuildingUnderstanding(null); setBuildingStage("idle"); setBuildingPromptId(null); setLastRemoved(null); setMapExpanded(false); setGroupOpen(false); setShowSummaryUnits(false); setOpenUnit(null); setDetailsOffered(false); setDetailsPromptId(null); setPendingDetail(null); setDraftCard(null); setAddrChange(null); }}
           >
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" aria-hidden><path d="M12 5v14M5 12h14" /></svg>
           </button>
@@ -730,6 +836,7 @@ function PrototypeUnitShell() {
                 <div className="min-w-0 flex-1 py-2 text-ink">
                   <p className="mb-1 text-xs font-semibold text-ink-muted">Hobson</p>
                   <p className={`whitespace-pre-line break-words leading-relaxed ${message.examples ? "text-base font-semibold" : "text-sm"}`}>{message.text}</p>
+                  {physicalPrompt?.id === message.id && <div className="mt-3 flex flex-wrap gap-2">{(physicalPrompt.stage === "offer" ? ["Add physical details", "I'll do this later"] : ["Download spreadsheet", "Upload spreadsheet", "Add details in Chat", "Edit directly"]).map(choice => <Button key={choice} variant="outline" size="sm" onClick={() => void physicalChoice(choice)} className="h-auto min-h-9 whitespace-normal text-left">{choice}</Button>)}</div>}
                   {message.examples && <p className="mt-2 break-words text-xs leading-relaxed text-muted-foreground">{message.examples}</p>}
                   {message.counts && buildingStage === "awaiting-description" && !buildingUnderstanding && <UnitCountInputs onContinue={submitCounts} />}
                   {buildingPromptId === message.id && (buildingStage === "naming" ? NAMING_CHOICES : buildingStage === "named" ? ["This structure is right"] : buildingStage === "ready" ? ["Create this structure", "Make another change"] : buildingStage === "created" ? AFTER_CREATION : buildingStage === "awaiting-description" && buildingUnderstanding?.kind === "clarify" ? buildingUnderstanding.choices ?? [] : []).length > 0 && (
@@ -808,7 +915,8 @@ function PrototypeUnitShell() {
             onSubmit={(event) => { event.preventDefault(); send(); }}
             className="flex items-center gap-2 rounded-full border border-input bg-background px-4 py-2.5 focus-within:ring-2 focus-within:ring-ring"
           >
-            <Button type="button" variant="ghost" size="icon" aria-label="Attach a paper" title="Attach a paper" className="h-9 w-9 shrink-0 text-foreground">
+            <input ref={spreadsheetInput} type="file" accept=".xlsx" aria-label="Upload physical details workbook" className="hidden" onChange={e => { void receiveSpreadsheet(e.target.files?.[0]); e.target.value = ""; }} />
+            <Button onClick={() => spreadsheetInput.current?.click()} type="button" variant="ghost" size="icon" aria-label="Attach a paper" title="Attach spreadsheet" className="h-9 w-9 shrink-0 text-foreground">
               <Paperclip className="h-5 w-5" aria-hidden="true" />
             </Button>
             <input
@@ -832,11 +940,12 @@ function PrototypeUnitShell() {
       <main className="flex min-w-0 flex-1 flex-col gap-4 overflow-y-auto p-4" aria-label="Prototype Unit canvas">
         <header className="flex flex-wrap items-center justify-between gap-3">
           <h2 className="text-[15px] font-semibold text-ink">Portfolio</h2>
+          <Button variant="ghost" size="sm" className="text-muted-foreground" onClick={() => { if (!window.confirm("Reset all demonstration physical details and created places?")) return; setDemoGroup(PARAGON_DEMO); setPortfolio([]); resetSetup(); setPhysicalGroupId(null); setPhysicalPrompt(null); setWorkbookReview(null); setGroupOpen(false); setMapExpanded(true); setMessages([OPENING_MESSAGE]); setShowInvitation(true); }}>Reset demonstration</Button>
         </header>
         {(() => {
           const showingGroup = buildingStage === "created" ? portfolio[portfolio.length - 1] : null;
           const portfolioOnly = !buildingUnderstanding && locationStage === "idle" && portfolio.length > 0;
-          const focus = showingGroup ?? (portfolioOnly ? portfolio[portfolio.length - 1] : !setupUnderway && locationStage === "idle" && !buildingUnderstanding ? demoGroup : null);
+          const focus = allGroups.find(g => g.id === physicalGroupId) ?? showingGroup ?? (portfolioOnly ? portfolio[portfolio.length - 1] : !setupUnderway && locationStage === "idle" && !buildingUnderstanding ? demoGroup : null);
           const exploring = Boolean(focus) && (mapExpanded || groupOpen || focus?.id === demoGroup.id);
           const compact = !mapExpanded && !groupOpen && (Boolean(buildingUnderstanding) || portfolioOnly);
           const totals = units ? summarise(units) : null;
@@ -847,11 +956,11 @@ function PrototypeUnitShell() {
           const detailPanel = openUnit && opened ? <PrototypeUnitDetails unit={opened} units={openList} groupName={openedName} groupId={openUnit.ctx === "proposal" ? null : (openUnit.ctx === demoGroup.id ? demoGroup : portfolio.find(g => g.id === openUnit.ctx))?.record.id ?? null} onChange={next => updateUnitsIn(openUnit.ctx, next)} onBack={() => setOpenUnit(null)} /> : null;
           const openFrom = (ctx: string) => (u: ProposedUnit) => setOpenUnit({ ctx, number: u.number });
           return (<>
-            <div className={`flex min-h-0 flex-col gap-2 transition-all duration-500 ease-out motion-reduce:transition-none ${groupOpen && focus && !paper ? "h-[200px] shrink-0" : detailPanel ? "h-[140px] shrink-0" : groupOpen && focus ? "h-[200px] shrink-0" : compact ? "h-[300px] shrink-0" : "min-h-[300px] flex-1"}`}>
+            <div className={`flex min-h-0 flex-col gap-2 transition-all duration-500 ease-out motion-reduce:transition-none ${workbookReview ? "h-[200px] shrink-0" : groupOpen && focus && !paper ? "h-[200px] shrink-0" : detailPanel ? "h-[140px] shrink-0" : groupOpen && focus ? "h-[200px] shrink-0" : compact ? "h-[300px] shrink-0" : "min-h-[300px] flex-1"}`}>
               {buildingUnderstanding && !showingGroup && <div className="text-xs leading-relaxed text-muted-foreground"><p>{selectedAddress?.line}</p><p className="mt-1 text-[10px]">Illustrative mock lookup · approximate location</p></div>}
               <UnitLocationMap compact={compact || Boolean(detailPanel) || groupOpen} group={focus ? { name: focus.name, units: focus.units.length } : null} onOpenGroup={focus ? () => { setGroupOpen(true); setMapExpanded(false); } : undefined} stage={focus ? "confirmed" : locationStage} address={focus ? focus.line : locationAddress} candidate={focus ? focus.record : selectedAddress ?? addressCandidates[0] ?? null} />
             </div>
-            {paper ? (
+            {workbookReview ? <PrototypeUnitSpreadsheetReview key={workbookReview.version} groups={allGroups} review={workbookReview.review} onMatch={(key, id) => { const matches = { ...workbookReview.matches, [key]: id }; setWorkbookReview(w => w && { ...w, matches, review: reviewPhysicalWorkbook(w.book, allGroups, matches), version: w.version + 1 }); }} onSave={saveSpreadsheet} onCancel={() => setWorkbookReview(null)} /> : paper ? (
               <section aria-label="Supporting paper" className="min-w-0 rounded-md border border-border bg-background px-4 py-3 motion-safe:animate-in motion-safe:fade-in motion-safe:duration-200">
                 <button type="button" onClick={() => setPaperOpen(null)} className="-ml-2 min-h-8 rounded-md px-2 text-xs text-muted-foreground hover:text-foreground">← Back</button>
                 <p className="mt-1 text-xs font-medium text-muted-foreground">Papers · {paper.kind} · {paper.dated}</p>
@@ -859,7 +968,7 @@ function PrototypeUnitShell() {
                 <blockquote className="mt-3 border-l-2 border-border pl-3 text-sm leading-relaxed text-foreground">{paper.excerpt}</blockquote>
                 <p className="mt-3 text-[10px] text-muted-foreground">Illustrative extract for this demonstration</p>
               </section>
-            ) : exploring && focus ? (groupOpen ? (<PortfolioGroupView group={focus} openNumber={openUnit?.ctx === focus.id ? openUnit.number : null} editor={openUnit?.ctx === focus.id && opened ? <PrototypeUnitDetails key={`${focus.id}-${opened.number}`} onRename unit={opened} units={openList} groupName={openedName} groupId={focus.record.id} onChange={next => updateUnitsIn(focus.id, next)} onBack={() => setOpenUnit(null)} /> : null} label={focus.id === demoGroup.id ? "Illustrative example · Unit Group · sample photograph" : undefined} onViewPaper={setPaperOpen} onCardChange={c => updateCard(focus.id, c)} onChangeAddress={focus.id === demoGroup.id ? undefined : () => startAddressChange(focus.id)} onOpenUnit={u => setOpenUnit(o => o?.ctx === focus.id && o.number === u.number ? null : { ctx: focus.id, number: u.number })} onClose={() => { setGroupOpen(false); setMapExpanded(true); setOpenUnit(null); }} />) : null) : detailPanel && !(buildingStage === "ready" && openUnit?.ctx === "proposal" && !showSummaryUnits) ? detailPanel : buildingStage === "ready" && units && totals ? (
+            ) : exploring && focus ? (groupOpen ? (<PortfolioGroupView onPhysicalDetails={() => offerPhysical(focus.id)} group={focus} openNumber={openUnit?.ctx === focus.id ? openUnit.number : null} editor={openUnit?.ctx === focus.id && opened ? <PrototypeUnitDetails key={`${focus.id}-${opened.number}`} onRename unit={opened} units={openList} groupName={openedName} groupId={focus.record.id} onChange={next => updateUnitsIn(focus.id, next)} onBack={() => setOpenUnit(null)} /> : null} label={focus.id === demoGroup.id ? "Illustrative example · Unit Group · sample photograph" : undefined} onViewPaper={setPaperOpen} onCardChange={c => updateCard(focus.id, c)} onChangeAddress={focus.id === demoGroup.id ? undefined : () => startAddressChange(focus.id)} onOpenUnit={u => setOpenUnit(o => o?.ctx === focus.id && o.number === u.number ? null : { ctx: focus.id, number: u.number })} onClose={() => { setGroupOpen(false); setMapExpanded(true); setOpenUnit(null); }} />) : null) : detailPanel && !(buildingStage === "ready" && openUnit?.ctx === "proposal" && !showSummaryUnits) ? detailPanel : buildingStage === "ready" && units && totals ? (
               <section aria-label="Ready to create" className="min-w-0 py-3">
                 <p className="text-xs font-medium text-muted-foreground">Ready to add · nothing created yet</p>
                 {draftCard && <div className="mt-2"><PrototypeUnitGroupCard card={draftCard} address={selectedAddress?.line ?? ""} label="Unit Group · proposed" summary={`${totals.total} Unit${totals.total === 1 ? "" : "s"} · ${totals.residential} Residential · ${totals.commercial} Commercial`} onChange={setDraftCard} onChangeAddress={() => startAddressChange("proposal")} /></div>}
@@ -872,12 +981,12 @@ function PrototypeUnitShell() {
                 {showSummaryUnits && <PrototypeUnitStructure understanding={{ kind: "proposal", units }} onOpenUnit={u => setOpenUnit({ ctx: "proposal", number: u.number })} />}
               </section>
             ) : showingGroup ? (
-              <PortfolioGroupView group={showingGroup} onCardChange={c => updateCard(showingGroup.id, c)} onChangeAddress={() => startAddressChange(showingGroup.id)} onOpenUnit={openFrom(showingGroup.id)} />
+              <PortfolioGroupView onPhysicalDetails={() => offerPhysical(showingGroup.id)} group={showingGroup} onCardChange={c => updateCard(showingGroup.id, c)} onChangeAddress={() => startAddressChange(showingGroup.id)} onOpenUnit={openFrom(showingGroup.id)} />
             ) : buildingUnderstanding ? (<div className="flex flex-col gap-1">
               {draftCard && units && totals && <PrototypeUnitGroupCard card={draftCard} address={selectedAddress?.line ?? ""} label="Unit Group · proposed" summary={`${totals.total} Unit${totals.total === 1 ? "" : "s"} · ${totals.residential} Residential · ${totals.commercial} Commercial`} onChange={setDraftCard} onChangeAddress={() => startAddressChange("proposal")} />}
               <PrototypeUnitStructure recordId={selectedAddress?.id} title={draftCard && units ? undefined : draftCard?.name ?? selectedAddress?.name} understanding={buildingUnderstanding} editable={buildingStage !== "awaiting-description"} lastRemoved={lastRemoved?.unit.name ?? null} onUndo={() => undoRemoval()} onSave={(next, note) => applyDirectEdit(next, note)} onAdd={next => applyDirectEdit(next, "")} onOpenUnit={u => setOpenUnit({ ctx: "proposal", number: u.number })} onRemove={(unit, index) => applyDirectEdit(units!.filter(u => u.number !== unit.number), `I've removed ${unit.name}.`, { unit, index })} /></div>
             ) : portfolio.length > 0 && (
-              <div className="flex flex-col gap-3">{portfolio.map(group => <PortfolioGroupView key={group.id} group={group} onCardChange={c => updateCard(group.id, c)} onChangeAddress={() => startAddressChange(group.id)} onOpenUnit={openFrom(group.id)} />)}</div>
+              <div className="flex flex-col gap-3">{portfolio.map(group => <PortfolioGroupView onPhysicalDetails={() => offerPhysical(group.id)} key={group.id} group={group} onCardChange={c => updateCard(group.id, c)} onChangeAddress={() => startAddressChange(group.id)} onOpenUnit={openFrom(group.id)} />)}</div>
             )}
           </>);
         })()}

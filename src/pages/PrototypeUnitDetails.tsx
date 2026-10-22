@@ -20,6 +20,7 @@ export function PrototypeUnitDetails({ unit, units, groupName, groupId, onChange
   const [area, setArea] = useState(toText(d.area));
   const [areaUnit, setAreaUnit] = useState(d.areaUnit ?? "ft²");
   const [dbl, setDbl] = useState(toText(d.doubleBedrooms));
+  const [bedrooms, setBedrooms] = useState(toText(d.bedrooms));
   const [sgl, setSgl] = useState(toText(d.singleBedrooms));
   const [bath, setBath] = useState(toText(d.bathrooms));
   const [outside, setOutside] = useState<"Yes" | "No" | undefined>(d.outsideSpace);
@@ -37,15 +38,22 @@ export function PrototypeUnitDetails({ unit, units, groupName, groupId, onChange
   // Reload whenever a different Unit opens or its record changes elsewhere (e.g. from the conversation).
   useEffect(() => {
     const x = unit.details ?? {};
+    setBedrooms(toText(x.bedrooms));
     setArea(toText(x.area)); setAreaUnit(x.areaUnit ?? "ft²"); setDbl(toText(x.doubleBedrooms)); setSgl(toText(x.singleBedrooms)); setBath(toText(x.bathrooms)); setOutside(x.outsideSpace); setShared(x.sharedFacilities); setGas(x.gasSupply); setDescription(x.description ?? ""); setSuggestion(null);
   }, [unit.number, unit.details]);
   useEffect(() => { if (!saved) return; const t = window.setTimeout(() => setSaved(false), 2000); return () => window.clearTimeout(t); }, [saved]);
   useEffect(() => { setApplying(false); }, [unit.number]);
 
   const residential = unit.classification === "Residential";
-  const draft: UnitDetails = { area: parseArea(area), areaUnit: area.trim() ? areaUnit : undefined, doubleBedrooms: residential ? parseCount(dbl) : undefined, singleBedrooms: residential ? parseCount(sgl) : undefined, bathrooms: residential ? parseCount(bath) : undefined, outsideSpace: residential ? outside : undefined, sharedFacilities: residential ? shared : undefined, gasSupply: residential ? gas : undefined, description: description.trim() || undefined };
+  const draft: UnitDetails = { area: parseArea(area), areaUnit: area.trim() ? areaUnit : undefined, bedrooms: residential ? parseCount(bedrooms) : undefined, doubleBedrooms: residential && !bedrooms.trim() ? parseCount(dbl) : undefined, singleBedrooms: residential && !bedrooms.trim() ? parseCount(sgl) : undefined, bathrooms: residential ? parseCount(bath) : undefined, outsideSpace: residential ? outside : undefined, sharedFacilities: residential ? shared : undefined, gasSupply: residential ? gas : undefined, description: description.trim() || undefined };
   const invalid = Object.values(draft).some(v => typeof v === "number" && Number.isNaN(v));
   const dirty = JSON.stringify(setDetails([unit], unit.number, draft)[0].details) !== JSON.stringify(setDetails([unit], unit.number, unit.details ?? {})[0].details);
+  useEffect(() => {
+    if (!dirty && !nameChanged) return;
+    const block = (event: Event) => event.preventDefault();
+    window.addEventListener("prototype-unit-before-workbook", block);
+    return () => window.removeEventListener("prototype-unit-before-workbook", block);
+  }, [dirty, nameChanged]);
 
   const save = () => { if (invalid) return; onChange(named(setDetails(units, unit.number, draft))); setSaved(true); };
   const currentUnit = { ...unit, details: draft };
@@ -89,8 +97,11 @@ export function PrototypeUnitDetails({ unit, units, groupName, groupId, onChange
           </div>
         </div>
         {residential && <>
+          {count("Bedrooms", bedrooms, setBedrooms)}
+          {!bedrooms.trim() && <>
           {count("Double bedrooms", dbl, setDbl)}
           {count("Single bedrooms", sgl, setSgl)}
+          </>}
           {count("Bathrooms", bath, setBath)}
           {yesNo("Shared facilities", shared, setShared)}
           {yesNo("Outside space", outside, setOutside)}
