@@ -1,5 +1,4 @@
 import type { ReactNode } from "react";
-import * as HoverCard from "@radix-ui/react-hover-card";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Info } from "lucide-react";
 import { knowledgeFor, paperById } from "./prototypeUnitPapers";
@@ -69,17 +68,10 @@ const panel = "z-[1000] w-80 rounded-md border border-border bg-background p-3 s
 export function UnitKnowledgeRow({ unit, groupId, onViewPaper, onAddDescription, children }: Props) {
   return (
     <div className="flex min-w-0 flex-1 items-center gap-1">
-      <HoverCard.Root openDelay={250} closeDelay={250}>
-        <HoverCard.Trigger asChild><div className="min-w-0 flex-1 self-stretch">{children}</div></HoverCard.Trigger>
-        <HoverCard.Portal>
-          <HoverCard.Content side="right" align="start" sideOffset={8} collisionPadding={12} avoidCollisions className={panel}>
-            <Preview unit={unit} groupId={groupId} onViewPaper={onViewPaper} onAddDescription={onAddDescription} />
-          </HoverCard.Content>
-        </HoverCard.Portal>
-      </HoverCard.Root>
+      <div className="min-w-0 flex-1 self-stretch">{children}</div>
       <Popover>
-        <PopoverTrigger aria-label={`What Hobson knows about ${unit.name}`} className="grid h-8 w-8 shrink-0 place-items-center rounded-md text-muted-foreground hover:bg-secondary hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
-          <Info className="h-3.5 w-3.5" aria-hidden />
+        <PopoverTrigger aria-label={`What Hobson knows about ${unit.name}`} title="What I know about this Unit" className="mr-1 inline-flex min-h-8 shrink-0 items-center gap-1 rounded-full border border-border bg-background px-2.5 text-xs font-medium text-foreground shadow-sm hover:bg-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+          <Info className="h-4 w-4" aria-hidden />Info
         </PopoverTrigger>
         <PopoverContent side="left" align="start" className={panel}>
           <Preview unit={unit} groupId={groupId} onViewPaper={onViewPaper} onAddDescription={onAddDescription} />
