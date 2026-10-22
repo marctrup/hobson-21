@@ -268,7 +268,7 @@ export default function PrototypeSecurity() {
             </div>
           </div>
           {p.status === "suspended" && <p className="rounded-lg bg-secondary/50 px-4 py-2.5 text-sm">{n} can't use Hobson at the moment. Everything below is kept and will apply again when restored.</p>}
-          {a.portfolio && a.papers === "all" && <p className="font-serif text-lg text-ink">All locations · All papers</p>}
+          {!isTop(p) && a.portfolio && a.papers === "all" && <p className="font-serif text-lg text-ink">All locations · All papers</p>}
           {p.admin && (
             <div className={`${ring} p-4`}>
               <p className="text-sm font-medium">Back Office colleagues {n} may work with</p>
