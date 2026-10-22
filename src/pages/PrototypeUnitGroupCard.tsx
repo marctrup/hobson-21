@@ -43,7 +43,7 @@ export function PrototypeUnitGroupCard({ card, address, summary, label, onChange
         onDragOver={e => { e.preventDefault(); setDragOver(true); }}
         onDragLeave={() => setDragOver(false)}
         onDrop={e => { e.preventDefault(); setDragOver(false); take(e.dataTransfer.files?.[0]); }}
-        className={`relative mb-3 h-36 overflow-hidden rounded-md border ${dragOver ? "border-ring bg-secondary/50" : photo ? "border-border" : "border-dashed border-border bg-secondary/20"}`}
+        className={`relative mb-3 h-24 overflow-hidden rounded-md border ${dragOver ? "border-ring bg-secondary/50" : photo ? "border-border" : "border-dashed border-border bg-secondary/20"}`}
       >
         <input ref={fileRef} type="file" accept="image/*" className="hidden" aria-label="Choose a photograph" onChange={e => { take(e.target.files?.[0]); e.target.value = ""; }} />
         {photo ? <>

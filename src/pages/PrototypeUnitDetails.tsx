@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { PrototypeUnitPhotographs } from "./PrototypeUnitPhotographs";
 import { copyDescription, groupedNames, listNames, unitSpecificPhrases, applyChanges, FIELD_LABELS, fieldsFor, formatValue, proposeChanges, setDetails, suggestDescription, type DetailField, type DetailedUnit, type UnitDetails } from "./prototypeUnitDetails";
 
-type Props = { unit: DetailedUnit; units: DetailedUnit[]; groupName: string; onChange: (units: DetailedUnit[]) => void; onBack: () => void };
+type Props = { unit: DetailedUnit; units: DetailedUnit[]; groupName: string; onChange: (units: DetailedUnit[]) => void; onBack: () => void; onRename?: boolean };
 
 const toText = (n?: number) => n === undefined ? "" : String(n);
 const parseCount = (v: string) => v.trim() === "" ? undefined : /^\d{1,2}$/.test(v.trim()) ? Number(v) : NaN;
@@ -14,7 +14,7 @@ const inputCls = "h-9 w-20 rounded-md border border-input bg-background px-2 tex
 const pill = (on: boolean) => `min-h-8 rounded-full border px-3 text-xs transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${on ? "border-foreground/40 bg-background font-medium text-foreground" : "border-border text-muted-foreground hover:bg-secondary"}`;
 
 // One Unit's optional details, edited in place beside its Unit Group. Nothing is required.
-export function PrototypeUnitDetails({ unit, units, groupName, onChange, onBack }: Props) {
+export function PrototypeUnitDetails({ unit, units, groupName, onChange, onBack, onRename }: Props) {
   const d = unit.details ?? {};
   const [area, setArea] = useState(toText(d.area));
   const [areaUnit, setAreaUnit] = useState(d.areaUnit ?? "ft²");
@@ -22,25 +22,31 @@ export function PrototypeUnitDetails({ unit, units, groupName, onChange, onBack 
   const [sgl, setSgl] = useState(toText(d.singleBedrooms));
   const [bath, setBath] = useState(toText(d.bathrooms));
   const [outside, setOutside] = useState<"Yes" | "No" | undefined>(d.outsideSpace);
+  const [shared, setShared] = useState<"Yes" | "No" | undefined>(d.sharedFacilities);
+  const [gas, setGas] = useState<"Yes" | "No" | undefined>(d.gasSupply);
   const [description, setDescription] = useState(d.description ?? "");
   const [suggestion, setSuggestion] = useState<string | null>(null);
   const [saved, setSaved] = useState(false);
   const [applying, setApplying] = useState(false);
+  const [name, setName] = useState(unit.name);
+  useEffect(() => { setName(unit.name); }, [unit.number, unit.name]);
+  const nameChanged = Boolean(onRename) && name.trim() !== "" && name.trim() !== unit.name;
+  const named = (list: DetailedUnit[]) => nameChanged ? list.map(u => u.number === unit.number ? { ...u, name: name.trim() } : u) : list;
 
   // Reload whenever a different Unit opens or its record changes elsewhere (e.g. from the conversation).
   useEffect(() => {
     const x = unit.details ?? {};
-    setArea(toText(x.area)); setAreaUnit(x.areaUnit ?? "ft²"); setDbl(toText(x.doubleBedrooms)); setSgl(toText(x.singleBedrooms)); setBath(toText(x.bathrooms)); setOutside(x.outsideSpace); setDescription(x.description ?? ""); setSuggestion(null);
+    setArea(toText(x.area)); setAreaUnit(x.areaUnit ?? "ft²"); setDbl(toText(x.doubleBedrooms)); setSgl(toText(x.singleBedrooms)); setBath(toText(x.bathrooms)); setOutside(x.outsideSpace); setShared(x.sharedFacilities); setGas(x.gasSupply); setDescription(x.description ?? ""); setSuggestion(null);
   }, [unit.number, unit.details]);
   useEffect(() => { if (!saved) return; const t = window.setTimeout(() => setSaved(false), 2000); return () => window.clearTimeout(t); }, [saved]);
   useEffect(() => { setApplying(false); }, [unit.number]);
 
   const residential = unit.classification === "Residential";
-  const draft: UnitDetails = { area: parseArea(area), areaUnit: area.trim() ? areaUnit : undefined, doubleBedrooms: residential ? parseCount(dbl) : undefined, singleBedrooms: residential ? parseCount(sgl) : undefined, bathrooms: residential ? parseCount(bath) : undefined, outsideSpace: residential ? outside : undefined, description: description.trim() || undefined };
+  const draft: UnitDetails = { area: parseArea(area), areaUnit: area.trim() ? areaUnit : undefined, doubleBedrooms: residential ? parseCount(dbl) : undefined, singleBedrooms: residential ? parseCount(sgl) : undefined, bathrooms: residential ? parseCount(bath) : undefined, outsideSpace: residential ? outside : undefined, sharedFacilities: residential ? shared : undefined, gasSupply: residential ? gas : undefined, description: description.trim() || undefined };
   const invalid = Object.values(draft).some(v => typeof v === "number" && Number.isNaN(v));
   const dirty = JSON.stringify(setDetails([unit], unit.number, draft)[0].details) !== JSON.stringify(setDetails([unit], unit.number, unit.details ?? {})[0].details);
 
-  const save = () => { if (invalid) return; onChange(setDetails(units, unit.number, draft)); setSaved(true); };
+  const save = () => { if (invalid) return; onChange(named(setDetails(units, unit.number, draft))); setSaved(true); };
   const currentUnit = { ...unit, details: draft };
   const currentUnits = setDetails(units, unit.number, draft);
   const hasDetails = fieldsFor(unit).some(f => draft[f] !== undefined && draft[f] !== "");
@@ -53,10 +59,21 @@ export function PrototypeUnitDetails({ unit, units, groupName, onChange, onBack 
     </label>
   );
 
+  const yesNo = (label: string, value: "Yes" | "No" | undefined, set: (v: "Yes" | "No" | undefined) => void) => (
+    <div className="flex flex-wrap items-center justify-between gap-2 py-1.5 text-sm text-foreground">
+      <span>{label}</span>
+      <div role="group" aria-label={label} className="flex gap-1">
+        {(["Yes", "No", undefined] as const).map(v => <button key={v ?? "none"} type="button" aria-pressed={value === v} onClick={() => set(v)} className={pill(value === v)}>{v ?? "Not recorded"}</button>)}
+      </div>
+    </div>
+  );
+
   return (
     <section aria-label={`${unit.name} details`} className="min-w-0 py-3 motion-safe:animate-in motion-safe:fade-in motion-safe:duration-200">
       <button type="button" onClick={() => { keepDraft(); onBack(); }} className="-ml-2 inline-flex min-h-8 items-center gap-1 rounded-md px-2 text-xs text-muted-foreground hover:text-foreground"><ChevronLeft className="h-3.5 w-3.5" aria-hidden />All Units in {groupName}</button>
-      <h3 className="mt-1 text-xl font-semibold text-foreground">{unit.name}</h3>
+      {onRename ? <label className="mt-1 block text-xs text-muted-foreground">Unit name
+        <input value={name} onChange={e => setName(e.target.value)} className="mt-0.5 h-9 w-full max-w-sm rounded-md border border-input bg-background px-2 text-base font-semibold text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring" />
+      </label> : <h3 className="mt-1 text-xl font-semibold text-foreground">{unit.name}</h3>}
       <p className="mt-0.5 text-sm text-muted-foreground">{groupName} · {unit.classification}</p>
       <PrototypeUnitPhotographs unit={unit} onChange={photos => onChange(units.map(u => u.number === unit.number ? { ...u, ...photos } : u))} />
 
@@ -74,12 +91,9 @@ export function PrototypeUnitDetails({ unit, units, groupName, onChange, onBack 
           {count("Double bedrooms", dbl, setDbl)}
           {count("Single bedrooms", sgl, setSgl)}
           {count("Bathrooms", bath, setBath)}
-          <div className="flex flex-wrap items-center justify-between gap-2 py-1.5 text-sm text-foreground">
-            <span id="outside-label">Outside space</span>
-            <div role="group" aria-labelledby="outside-label" className="flex gap-1">
-              {(["Yes", "No", undefined] as const).map(v => <button key={v ?? "none"} type="button" aria-pressed={outside === v} onClick={() => setOutside(v)} className={pill(outside === v)}>{v ?? "Not entered"}</button>)}
-            </div>
-          </div>
+          {yesNo("Shared facilities", shared, setShared)}
+          {yesNo("Outside space", outside, setOutside)}
+          {yesNo("Gas supply", gas, setGas)}
         </>}
         <div className="py-2">
           <div className="flex items-center justify-between gap-2">
@@ -106,8 +120,8 @@ export function PrototypeUnitDetails({ unit, units, groupName, onChange, onBack 
       </div>
 
       <div className="mt-3 flex flex-wrap items-center gap-2">
-        <button type="button" onClick={save} disabled={!dirty || invalid} className="inline-flex min-h-9 items-center gap-1.5 rounded-md bg-primary px-3 text-sm font-medium text-primary-foreground disabled:opacity-40">Save</button>
-        <span aria-live="polite" className="text-xs text-muted-foreground">{invalid ? "Use whole numbers — leave blank if not known." : saved ? <span className="inline-flex items-center gap-1"><Check className="h-3 w-3" aria-hidden />Saved</span> : dirty ? "Unsaved changes" : ""}</span>
+        <button type="button" onClick={save} disabled={(!dirty && !nameChanged) || invalid} className="inline-flex min-h-9 items-center gap-1.5 rounded-md bg-primary px-3 text-sm font-medium text-primary-foreground disabled:opacity-40">Save</button>
+        <span aria-live="polite" className="text-xs text-muted-foreground">{invalid ? "Use whole numbers — leave blank if not known." : saved ? <span className="inline-flex items-center gap-1"><Check className="h-3 w-3" aria-hidden />Changes saved.</span> : dirty || nameChanged ? "Unsaved changes" : ""}</span>
         <Button variant="ghost" size="sm" onClick={() => setApplying(v => !v)} disabled={invalid || !hasDetails} aria-expanded={applying} className="ml-auto text-muted-foreground">Apply details to other Units</Button>
       </div>
       {applying && <ApplyToOthers unit={currentUnit} units={currentUnits} onApply={next => { onChange(next); setApplying(false); setSaved(true); }} onCancel={() => setApplying(false)} />}

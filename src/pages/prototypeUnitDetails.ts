@@ -9,15 +9,18 @@ export type UnitDetails = {
   singleBedrooms?: number;
   bathrooms?: number;
   outsideSpace?: "Yes" | "No";
+  sharedFacilities?: "Yes" | "No";
+  // Whether gas is supplied to the Unit — never evidence of gas safety certification.
+  gasSupply?: "Yes" | "No";
   description?: string;
 };
 export type DetailField = keyof UnitDetails;
 export type DetailedUnit = ProposedUnit & { details?: UnitDetails };
 
-export const RESIDENTIAL_FIELDS: DetailField[] = ["area", "doubleBedrooms", "singleBedrooms", "bathrooms", "outsideSpace", "description"];
+export const RESIDENTIAL_FIELDS: DetailField[] = ["area", "doubleBedrooms", "singleBedrooms", "bathrooms", "sharedFacilities", "outsideSpace", "gasSupply", "description"];
 export const COMMERCIAL_FIELDS: DetailField[] = ["area", "description"];
 export const fieldsFor = (u: ProposedUnit) => u.classification === "Residential" ? RESIDENTIAL_FIELDS : COMMERCIAL_FIELDS;
-export const FIELD_LABELS: Record<DetailField, string> = { area: "Floor area", areaUnit: "Area measurement", doubleBedrooms: "Double bedrooms", singleBedrooms: "Single bedrooms", bathrooms: "Bathrooms", outsideSpace: "Outside space", description: "Description" };
+export const FIELD_LABELS: Record<DetailField, string> = { area: "Floor area", areaUnit: "Area measurement", doubleBedrooms: "Double bedrooms", singleBedrooms: "Single bedrooms", bathrooms: "Bathrooms", outsideSpace: "Outside space", sharedFacilities: "Shared facilities", gasSupply: "Gas supply", description: "Description" };
 
 const plural = (n: number, word: string) => `${n} ${word}${n === 1 ? "" : "s"}`;
 

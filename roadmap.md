@@ -177,3 +177,6 @@
 - [x] Label renamed "What I've Done" → "What I'm Up To" (overview heading, aria-label, nav rail item, breadcrumb, both "Back to…" buttons, tests). The roof journey's own past-tense "What I've done" history list and the mobile work log keep their wording.
 - [x] Hobson's owl in conversations: the purple owl now sits beside Hobson's opening message in every conversation (/prototype-unit and /prototype-work), never repeated beside later messages and never on user messages; later Hobson messages keep alignment with an invisible spacer.
 - [x] Owl beside every Hobson turn (user request): the owl now returns with the first message of each of Hobson's turns in both prototype conversations, not just the conversation opening; continuation messages stay aligned with the spacer and user messages still never show it. All 91 checks pass; verified in a test browser on both pages. Not published.
+
+## Prototype Unit — map, Unit details and descriptions
+- [x] Paragon Centre with gym and illustrative flat, lifted map, compact rows, Unit/occupation hover, inline editor with shared facilities and gas supply, place context; 54 Unit checks pass, browser verified. Not published.
