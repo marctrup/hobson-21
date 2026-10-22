@@ -1,10 +1,9 @@
-import { Fragment } from "react";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { ArrowRight, FileText, Pencil, Plus, Lightbulb, MessageCircle, Paperclip, RotateCcw, Search, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import owlDefault from "@/assets/prototype/owl-default.png";
 import {
-  CATEGORIES, FREQUENCY_PRESETS, GROUPS, INITIAL, categoryLabel, interpret, isCustom, placeMatrix, placeRows, where,
+  CATEGORIES, FREQUENCY_PRESETS, GROUPS, INITIAL, categoryLabel, interpret, isCustom, placeLiabilities, placeRows, where,
   type Category, type Filter, type GroupId, type Pending, type Responsibility,
 } from "./prototypeComplianceResponsibilities";
 
@@ -113,50 +112,72 @@ function ByCategory({ rs, openId, setOpen, lit, save, remove }: { rs: Responsibi
   );
 }
 
-/** Coverage matrix: per Unit Group, each item (by category) against shared parts and each Unit. */
-function ByPlace({ rs, only }: { rs: Responsibility[]; only: GroupId | null }) {
-  const blocks = placeMatrix(rs, only);
-  const tick = (on: boolean, label: string) => (
-    <td className="px-2 py-1.5 text-center">
-      {on ? <span role="img" aria-label={`Applies: ${label}`} className="mx-auto block h-2.5 w-2.5 rounded-full bg-primary" /> : <span aria-label={`Not applicable: ${label}`} className="mx-auto block h-px w-2.5 bg-faint-rule" />}
-    </td>
+function LiabilityList({ items }: { items: { category: string; names: string[] }[] }) {
+  if (!items.length) return <span className="text-sm italic text-ink-muted">Nothing recorded yet</span>;
+  return (
+    <dl className="grid gap-1">
+      {items.map((it) => (
+        <div key={it.category} className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
+          <dt className="w-28 shrink-0 text-[11px] uppercase tracking-wide text-ink-muted">{categoryLabel(it.category as never)}</dt>
+          <dd className="flex flex-wrap gap-1">
+            {it.names.map((n) => <span key={n} className="rounded-full bg-secondary px-2 py-0.5 text-xs text-ink">{n}</span>)}
+          </dd>
+        </div>
+      ))}
+    </dl>
   );
+}
+
+const PAGE = 12;
+
+function PlaceCard({ p }: { p: ReturnType<typeof placeLiabilities>[number] }) {
+  const [q, setQ] = useState("");
+  const [all, setAll] = useState(false);
+  const big = p.units.length > PAGE;
+  const matches = p.units.filter((u) => !q || u.unit.toLowerCase().includes(q.toLowerCase()) || u.items.some((i) => i.names.some((n) => n.toLowerCase().includes(q.toLowerCase()))));
+  const visible = all || q ? matches : matches.slice(0, PAGE);
+  const empty = !p.shared.length && p.units.every((u) => !u.items.length);
+  return (
+    <section aria-label={p.name} data-place-id={p.id} className="overflow-hidden rounded-lg bg-background ring-1 ring-bone">
+      <header className="flex flex-wrap items-center justify-between gap-3 border-b border-faint-rule px-4 py-2.5">
+        <h3 className="font-medium text-ink">{p.name}</h3>
+        <div className="flex items-center gap-3">
+          {big && <input value={q} onChange={(e) => setQ(e.target.value)} placeholder={`Find among ${p.units.length} Units`} aria-label={`Find a Unit in ${p.name}`} className="w-48 rounded-md border border-input bg-background px-2 py-1 text-xs outline-none focus:ring-2 focus:ring-ring" />}
+          <span className="text-xs text-ink-muted">{empty ? "Nothing recorded yet" : p.units.length ? `${p.units.length} Unit${p.units.length === 1 ? "" : "s"}` : ""}</span>
+        </div>
+      </header>
+      {!empty && (
+        <ul className="divide-y divide-faint-rule">
+          {p.shared.length > 0 && (
+            <li className="grid gap-2 bg-paper/60 px-4 py-2.5 [@container_comp_(min-width:44rem)]:grid-cols-[10rem_1fr]">
+              <span className="text-sm font-medium text-ink">{p.units.length ? "Shared parts" : "Portfolio-wide"}</span>
+              <LiabilityList items={p.shared} />
+            </li>
+          )}
+          {visible.map((u) => (
+            <li key={u.unit} data-unit={u.unit} data-control-ids={u.controlIds.join(" ")} className="grid gap-2 px-4 py-2.5 [@container_comp_(min-width:44rem)]:grid-cols-[10rem_1fr]">
+              <span className="text-sm text-ink">{u.unit}</span>
+              <LiabilityList items={u.items} />
+            </li>
+          ))}
+          {q && !matches.length && <li className="px-4 py-2.5 text-sm italic text-ink-muted">No Unit matches “{q}”.</li>}
+        </ul>
+      )}
+      {big && !q && !empty && (
+        <button type="button" onClick={() => setAll(!all)} className="w-full border-t border-faint-rule px-4 py-2 text-left text-xs text-primary hover:bg-paper">
+          {all ? "Show fewer" : `Show all ${p.units.length} Units`}
+        </button>
+      )}
+    </section>
+  );
+}
+
+/** Per place: shared parts, then every individual Unit with what it is liable for. */
+function ByPlace({ rs, only }: { rs: Responsibility[]; only: GroupId | null }) {
   return (
     <div className="grid gap-5">
-      <Insight>Each place and what it is liable for. A dot means the item applies there; this view is drawn entirely from the recorded controls, so it updates as they do.</Insight>
-      {blocks.map((b) => (
-        <section key={b.id} aria-label={b.name} data-place-id={b.id} className="overflow-hidden rounded-lg bg-background ring-1 ring-bone">
-          <header className="flex items-baseline justify-between gap-3 border-b border-faint-rule px-4 py-2.5">
-            <h3 className="font-medium text-ink">{b.name}</h3>
-            <span className="text-xs text-ink-muted">{b.rows.length ? `${b.rows.length} item${b.rows.length === 1 ? "" : "s"}` : "Nothing recorded yet"}</span>
-          </header>
-          {b.rows.length > 0 && (
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm">
-                <thead>
-                  <tr className="text-[10px] uppercase tracking-wider text-ink-muted">
-                    <th scope="col" className="px-4 py-2 text-left font-normal">Item</th>
-                    {b.columns.length > 0 && <th scope="col" className="px-2 py-2 font-normal">Shared</th>}
-                    {b.columns.map((u) => <th key={u} scope="col" className="whitespace-nowrap px-2 py-2 font-normal">{u}</th>)}
-                  </tr>
-                </thead>
-                {CATEGORIES.filter((c) => b.rows.some((r) => r.category === c.id)).map((c) => (
-                  <tbody key={c.id} data-category={c.id}>
-                    <tr><th colSpan={b.columns.length + 2} scope="colgroup" className="bg-paper px-4 py-1 text-left text-[11px] font-medium text-ink-muted">{c.label}</th></tr>
-                    {b.rows.filter((r) => r.category === c.id).map((r) => (
-                      <tr key={r.key} data-control-ids={r.controlIds.join(" ")} className="border-t border-faint-rule">
-                        <th scope="row" className="px-4 py-1.5 text-left font-normal text-ink">{r.name}</th>
-                        {b.columns.length > 0 && tick(r.shared, `${r.name}, shared parts`)}
-                        {b.columns.map((u) => <Fragment key={u}>{tick(r.units[u], `${r.name}, ${u}`)}</Fragment>)}
-                      </tr>
-                    ))}
-                  </tbody>
-                ))}
-              </table>
-            </div>
-          )}
-        </section>
-      ))}
+      <Insight>Each Unit and what it is liable for, with shared parts listed once above. Drawn entirely from the recorded controls, so it updates as they do.</Insight>
+      {placeLiabilities(rs, only).map((p) => <PlaceCard key={p.id} p={p} />)}
     </div>
   );
 }
