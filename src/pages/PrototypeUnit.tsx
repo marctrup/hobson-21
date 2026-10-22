@@ -347,6 +347,7 @@ function PrototypeUnitShell() {
 
   const startSetup = (reply = "Set up a place") => {
     if (!showInvitation) return;
+    setPhysicalGroupId(null); setPhysicalPrompt(null); setWorkbookReview(null);
     setSetupUnderway(true);
     setGroupOpen(false);
     setOpenUnit(null);
@@ -397,7 +398,7 @@ function PrototypeUnitShell() {
     if (!g) return;
     if (choice === "Add physical details") { offerPhysical(g.id, choice); return; }
     if (choice === "I'll do this later") {
-      setPhysicalPrompt(null); appendExchange(choice, "Of course. You can add those details whenever you're ready."); return;
+      setPhysicalPrompt(null); const id = appendExchange(choice, "Of course. You can add those details whenever you're ready."); if (buildingStage === "created") setBuildingPromptId(id); return;
     }
     if (choice === "Download spreadsheet") {
       try { await downloadPhysicalWorkbook([g]); appendExchange(choice, "Your spreadsheet is ready. Attach the completed workbook whenever it suits you; I shall show the changes before recording them."); }
@@ -438,7 +439,7 @@ function PrototypeUnitShell() {
     if (physicalPrompt && ["Add physical details", "I'll do this later", "Download spreadsheet", "Upload spreadsheet", "Add details in Chat", "Edit directly"].some(c => c.toLowerCase() === normal)) {
       void physicalChoice(["Add physical details", "I'll do this later", "Download spreadsheet", "Upload spreadsheet", "Add details in Chat", "Edit directly"].find(c => c.toLowerCase() === normal) ?? text); return true;
     }
-    const g = allGroups.find(g => normal.includes(g.name.toLowerCase())) ?? allGroups.find(g => g.id === physicalGroupId) ?? (groupOpen ? demoGroup : undefined);
+    const g = allGroups.find(g => normal.includes(g.name.toLowerCase())) ?? allGroups.find(g => g.units.some(u => normal.includes(u.name.toLowerCase()))) ?? allGroups.find(g => g.id === physicalGroupId) ?? (groupOpen ? demoGroup : undefined);
     if (g && /(?:add|update).*(?:description|physical details)|physical details.*existing units/.test(normal)) { offerPhysical(g.id, text); return true; }
     if (g && /(?:describe|what.*know|how many.*bedroom|show.*details)/.test(normal)) {
       const mentioned = g.units.filter(u => normal.includes(u.name.toLowerCase()));
@@ -577,6 +578,7 @@ Would you like to add their physical details now, or leave that until later?`);
   };
 
   const resetSetup = () => {
+    setPhysicalGroupId(null); setPhysicalPrompt(null); setWorkbookReview(null);
     setSetupUnderway(false);
     setSetupPromptId(null); setLocationStage("idle"); setLocationPromptId(null); setLocationAddress(""); setAddressParts({}); setAddressCandidates([]); setSelectedAddress(null);
     setBuildingUnderstanding(null); setBuildingStage("idle"); setBuildingPromptId(null); setLastRemoved(null); setShowSummaryUnits(false);

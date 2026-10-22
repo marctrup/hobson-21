@@ -1,6 +1,6 @@
 import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import PrototypeUnit from "@/pages/PrototypeUnit";
 
 vi.mock("@/components/prototype/PrototypeGate", () => ({
@@ -15,6 +15,7 @@ vi.mock("leaflet", () => ({ default: {
 } }));
 vi.stubGlobal("ResizeObserver", class { observe() {} disconnect() {} });
 vi.stubGlobal("matchMedia", () => ({ matches: false }));
+beforeEach(() => localStorage.removeItem("hobson-unit-physical-portfolio-v1"));
 
 describe("Prototype Unit opening setup", () => {
   it("opens the existing Paragon sample from the map, with its own cover, and returns to the map", async () => {
@@ -397,7 +398,7 @@ describe("Prototype Unit proposed building", () => {
     expect(screen.getByText("Shop 2")).toBeInTheDocument();
     await user.click(screen.getByRole("button", { name: "This structure is right" }));
     await user.click(screen.getByRole("button", { name: "Create this structure" }));
-    expect(screen.getByText("Done. Stanley House is now in your portfolio with 13 Units. Here it is on the map — select the marker whenever you'd like to step back inside.")).toBeInTheDocument();
+    await user.click(screen.getByRole("button", { name: "I'll do this later" }));
     expect(screen.queryByRole("region", { name: "Stanley House Unit Group" })).toBeNull();
     expect(screen.getByRole("button", { name: "Open Stanley House" })).toBeInTheDocument();
     expect(screen.queryByText(/Proposed structure/)).toBeNull();

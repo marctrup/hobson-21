@@ -8,7 +8,7 @@ export const unitIdentity = (g: PhysicalGroup, u: ProposedUnit) => u.id ?? `${g.
 export type PhysicalChange = { key: string; groupId: string; unitId?: string; name: string; field: keyof UnitDetails | "groupDescription"; before?: string | number; after: string | number; changed: boolean };
 export type RowCheck = { key: string; sheet: string; row: number; name: string; reason: string; matchable: boolean };
 export type PhysicalReview = { changes: PhysicalChange[]; checks: RowCheck[]; unchanged: number; groups: string[] };
-const value = (cell: ExcelJS.Cell): unknown => cell.type === ExcelJS.ValueType.Formula ? "[Formula — enter a value]" : cell.text === "" ? undefined : cell.value;
+const value = (cell: ExcelJS.Cell): unknown => cell.text === "" ? undefined : cell.value;
 const text = (v: unknown) => v === undefined || v === null ? "" : String(v).trim();
 
 export function makePhysicalWorkbook(groups: PhysicalGroup[]) {
@@ -21,7 +21,7 @@ export function makePhysicalWorkbook(groups: PhysicalGroup[]) {
     gs.addRow([g.name, g.line, g.description ?? null, g.id]);
     for (const u of g.units) {
       const d = u.details ?? {};
-      us.addRow([u.name, g.line, u.classification, d.area === undefined ? null : d.areaUnit === "ft²" ? Math.round(d.area * 0.09290304 * 10000) / 10000 : d.area, bedroomCount(d) ?? null, d.bathrooms ?? null, d.outsideSpace ?? null, d.sharedFacilities ?? null, d.description ?? null, unitIdentity(g, u), g.id]);
+      us.addRow([u.name, g.line, u.classification, d.area === undefined ? null : d.areaUnit === "ft²" ? Math.round(d.area * 0.09290304 * 10000) / 10000 : d.area, u.classification === "Residential" ? bedroomCount(d) ?? null : null, u.classification === "Residential" ? d.bathrooms ?? null : null, u.classification === "Residential" ? d.outsideSpace ?? null : null, u.classification === "Residential" ? d.sharedFacilities ?? null : null, d.description ?? null, unitIdentity(g, u), g.id]);
     }
   }
   gs.getColumn(4).hidden = true; us.getColumn(10).hidden = true; us.getColumn(11).hidden = true;
