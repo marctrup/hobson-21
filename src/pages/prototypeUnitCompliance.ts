@@ -74,9 +74,10 @@ export const contractorById = (id: string) => CONTRACTORS.find(c => c.id === id)
 const coversUnit = (scope: RequirementScope, unit: number) =>
   scope.kind === "unit" ? scope.unit === unit : scope.kind === "units" && scope.units.includes(unit);
 
-// Requirements recorded for the Unit Group itself, in recorded order.
+// Requirements recorded at Unit Group level: the group's own records and any
+// single record shared by selected Units. Records for one Unit stay with that Unit.
 export const groupRequirements = (recordId: string | null | undefined) =>
-  recordId ? COMPLIANCE_REQUIREMENTS.filter(r => r.recordId === recordId && r.scope.kind === "group") : [];
+  recordId ? COMPLIANCE_REQUIREMENTS.filter(r => r.recordId === recordId && r.scope.kind !== "unit") : [];
 
 // What a Unit sees: its own records first, then shared records whose recorded
 // scope explicitly covers it. Group-scoped (shared-area) records stay at group level.

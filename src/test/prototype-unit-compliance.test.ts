@@ -8,13 +8,11 @@ const PARAGON = "demo-paragon-centre";
 const NAME = "The Paragon Centre";
 
 describe("legal responsibilities", () => {
-  it("shows the two shared-area records at Unit Group level", () => {
+  it("shows the two recorded requirements at Unit Group level", () => {
     const rows = groupRequirements(PARAGON);
-    expect(rows.map(r => r.name)).toEqual(["Fire alarm servicing"]);
-    // Legionella is scoped to selected Units, so it is not a group-level row;
-    // the group view counts it through the Units. Fire alarm is the group record.
-    expect(rows[0].frequency).toBe("Quarterly");
-    expect(rows[0].note).toBe("Shared areas only");
+    expect(rows.map(r => `${r.name} — ${r.frequency}`)).toEqual(["Legionella — Every 12 months", "Fire alarm servicing — Quarterly"]);
+    expect(rows[1].note).toBe("Shared areas only");
+    expect(rows.some(r => r.name === "Gas Safety" || r.name === "EICR")).toBe(false);
   });
 
   it("keeps Legionella as one shared record covering both Units", () => {
@@ -80,7 +78,7 @@ describe("preferred contacts", () => {
 
   it("keeps one identity per contractor, referenced by every preference", () => {
     const ids = CONTRACTOR_PREFERENCES.map(p => p.contractorId);
-    expect(new Set(ids).size).toBe(ids.length === 5 ? 5 : ids.length); // no duplicate preference rows
+    expect(new Set(ids).size).toBe(5); // five preferences, five distinct contractor identities
     const abc = CONTRACTOR_PREFERENCES.filter(p => p.contractorId === "abc-plumbing");
     expect(abc).toHaveLength(1); // one preference record, one contractor identity
   });
