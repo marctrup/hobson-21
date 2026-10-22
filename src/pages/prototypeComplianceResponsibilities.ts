@@ -84,7 +84,6 @@ export const INITIAL: Responsibility[] = [
   { id: "s48-sh", name: "Section 48 landlord address notice", category: "notices", timing: "event", requirement: "Give tenants an address in England and Wales for notices.", group: "stanley", appliesTo: "Flats 1–8", frequency: "When a tenancy begins or the address changes", last: "2024-02-01", next: null, responsible: "Landlord", evidence: "Notices served 1 February 2024", source: "Legislation" },
 ];
 
-export const rec = (rs: Responsibility[]) => (r.rec);
 export const where = (r: Responsibility) => (r.group === "portfolio" ? "Across the portfolio" : groupName(r.group));
 
 export type Filter = { group: GroupId | null; position: Position | null };
