@@ -3,7 +3,7 @@ import { ArrowRight, FileText, Pencil, Plus, Lightbulb, MessageCircle, Paperclip
 import { Button } from "@/components/ui/button";
 import owlDefault from "@/assets/prototype/owl-default.png";
 import {
-  CATEGORIES, FREQUENCY_PRESETS, GROUPS, INITIAL, categoryLabel, interpret, isCustom, placeLiabilities, placeRows, where,
+  CATEGORIES, FREQUENCY_PRESETS, GROUPS, INITIAL, categoryLabel, interpret, isCustom, latestUpdate, placeLiabilities, placeRows, where,
   type Category, type Filter, type GroupId, type Pending, type Responsibility,
 } from "./prototypeComplianceResponsibilities";
 
@@ -32,7 +32,8 @@ function Insight({ children }: { children: ReactNode }) {
 
 const field = "w-full rounded-md border border-input bg-background px-2.5 py-1.5 text-sm outline-none focus:ring-2 focus:ring-ring";
 const PLACES: { id: GroupId | "portfolio"; name: string }[] = [...GROUPS.map((g) => ({ id: g.id, name: g.name })), { id: "portfolio", name: "Across the portfolio" }];
-const COLS = "[@container_comp_(min-width:44rem)]:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)_auto]";
+const COLS = "[@container_comp_(min-width:44rem)]:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)_6.5rem_auto]";
+const fmtDate = (d?: string | null) => (d ? new Date(d + "T00:00:00").toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" }) : "—");
 
 /** Inline editor: every business may keep its own frequency, so each repository field can be changed by hand. */
 function Editor({ r, save, cancel, remove }: { r: Responsibility; save: (r: Responsibility) => void; cancel: () => void; remove?: () => void }) {
@@ -76,10 +77,45 @@ function Row({ r, open, toggle, lit, save, remove }: { r: Responsibility; open: 
           <span className="block truncate text-xs text-ink-muted [@container_comp_(min-width:44rem)]:hidden">{r.frequency}</span>
         </span>
         <span className="hidden min-w-0 items-center gap-2 text-xs text-ink [@container_comp_(min-width:44rem)]:flex"><span className="truncate">{r.frequency}</span>{isCustom(r) && <span className="shrink-0 rounded-full bg-secondary px-1.5 text-[10px] uppercase tracking-wide text-ink-muted">Your own</span>}</span>
+        <span className="hidden text-xs tabular-nums text-ink-muted [@container_comp_(min-width:44rem)]:block">{fmtDate(r.updated)}</span>
         <Pencil className={`h-3.5 w-3.5 ${open ? "text-primary" : "text-ink-muted"}`} aria-hidden />
       </button>
       {open && <Editor r={r} save={save} cancel={toggle} remove={remove} />}
     </li>
+  );
+}
+
+/** Category card: mirrors the By place cards — collapsible, scalable, with a last-updated row ready for a legislation feed. */
+function CategoryCard({ id, label, items, openId, setOpen, lit, save, remove }: { id: string; label: string; items: Responsibility[]; openId: string | null; setOpen: (id: string | null) => void; lit: Set<string>; save: (r: Responsibility) => void; remove: (id: string) => void }) {
+  const big = items.length > PAGE;
+  const [open, setOpenCard] = useState(!big);
+  const [all, setAll] = useState(false);
+  const shown = open || items.some((r) => r.id === openId || lit.has(r.id));
+  const visible = all ? items : items.slice(0, PAGE);
+  const bodyId = `cat-body-${id}`;
+  const latest = latestUpdate(items);
+  return (
+    <section id={`cat-${id}`} aria-label={label} className="scroll-mt-4 overflow-hidden rounded-lg bg-background ring-1 ring-bone">
+      <header className="flex items-center justify-between gap-3 border-b border-faint-rule px-4 py-2.5">
+        <button type="button" onClick={() => setOpenCard(!open)} aria-expanded={shown} aria-controls={bodyId} className="flex min-w-0 flex-1 items-center gap-2 rounded-md text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+          <svg viewBox="0 0 16 16" aria-hidden className={`h-3.5 w-3.5 shrink-0 text-ink-muted transition-transform ${shown ? "rotate-90" : ""}`}><path d="M5 3l6 5-6 5" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
+          <h3 className="truncate font-medium text-ink">{label}</h3>
+        </button>
+        <span className="text-xs text-ink-muted">{items.length} control{items.length === 1 ? "" : "s"}</span>
+      </header>
+      {shown && (
+        <div id={bodyId} className="px-4 pt-1.5">
+          <div className={`hidden gap-x-3 border-b border-faint-rule pb-1.5 text-[10px] uppercase tracking-wider text-ink-muted/70 [@container_comp_(min-width:44rem)]:grid ${COLS}`}>
+            <span>Control</span><span>Renewal frequency</span><span>Last updated</span><span className="w-3.5" />
+          </div>
+          <ul className="-mx-2 grid gap-0.5 py-1">{visible.map((r) => <Row key={r.id} r={r} open={openId === r.id} toggle={() => setOpen(openId === r.id ? null : r.id)} lit={lit.has(r.id)} save={(x) => { save(x); setOpen(null); }} remove={() => remove(r.id)} />)}</ul>
+          {big && <button type="button" onClick={() => setAll(!all)} className="-mx-4 w-[calc(100%+2rem)] border-t border-faint-rule px-4 py-2 text-left text-xs text-primary hover:bg-paper">{all ? "Show fewer" : `Show all ${items.length} controls`}</button>}
+        </div>
+      )}
+      <div className="flex items-center justify-between gap-3 border-t border-faint-rule bg-paper/60 px-4 py-2 text-xs text-ink-muted">
+        <span>Last updated</span><span className="tabular-nums text-ink">{fmtDate(latest)}</span>
+      </div>
+    </section>
   );
 }
 
@@ -97,15 +133,7 @@ function ByCategory({ rs, openId, setOpen, lit, save, remove }: { rs: Responsibi
         {CATEGORIES.map((c) => {
           const items = rs.filter((r) => r.category === c.id).sort((a, b) => a.name.localeCompare(b.name));
           if (!items.length) return null;
-          return (
-            <section key={c.id} id={`cat-${c.id}`} aria-label={c.label} className="scroll-mt-4">
-              <div className={`mb-1 grid grid-cols-[1fr] gap-x-3 border-b border-faint-rule pb-1.5 text-[10px] uppercase tracking-wider text-ink-muted/70 ${COLS}`}>
-                <h3 className="text-[11px] font-medium tracking-[0.12em] text-ink-muted">{c.label}</h3>
-                <span className="hidden [@container_comp_(min-width:44rem)]:block">Renewal frequency</span><span className="hidden w-3.5 [@container_comp_(min-width:44rem)]:block" />
-              </div>
-              <ul className="-mx-2 grid gap-0.5">{items.map((r) => <Row key={r.id} r={r} open={openId === r.id} toggle={() => setOpen(openId === r.id ? null : r.id)} lit={lit.has(r.id)} save={(x) => { save(x); setOpen(null); }} remove={() => remove(r.id)} />)}</ul>
-            </section>
-          );
+          return <CategoryCard key={c.id} id={c.id} label={c.label} items={items} openId={openId} setOpen={setOpen} lit={lit} save={save} remove={remove} />;
         })}
       </div>
     </div>
@@ -230,9 +258,9 @@ export default function PrototypeCompliance() {
     }, 350);
   };
 
-  const saveItem = (r: Responsibility) => { setRs((x) => x.map((y) => (y.id === r.id ? r : y))); setHighlight([r.id]); };
+  const saveItem = (r0: Responsibility) => { const r = { ...r0, updated: new Date().toISOString().slice(0, 10) }; setRs((x) => x.map((y) => (y.id === r.id ? r : y))); setHighlight([r.id]); };
   const addItem = () => {
-    const r: Responsibility = { id: `item-${Date.now()}`, name: "New control", category: "health", timing: "recurring", requirement: "", group: filter.group ?? "portfolio", appliesTo: "", frequency: "Every 12 months", last: null, next: null, responsible: null, evidence: null, source: "Your own arrangement" };
+    const r: Responsibility = { id: `item-${Date.now()}`, name: "New control", category: "health", timing: "recurring", requirement: "", group: filter.group ?? "portfolio", appliesTo: "", frequency: "Every 12 months", last: null, next: null, responsible: null, evidence: null, source: "Your own arrangement", updated: new Date().toISOString().slice(0, 10) };
     setRs((x) => [...x, r]); setTab("categories"); setQuery(""); setOpenId(r.id);
   };
 
