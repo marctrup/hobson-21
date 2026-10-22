@@ -7,7 +7,7 @@ export type AreaId = "papers" | "people" | "compliance" | "reading";
 export type GroupScope = "all" | string[];
 export type Access = { portfolio: boolean; groups: Record<string, GroupScope>; papers: "all" | string[]; areas: Record<AreaId, Level> };
 export type Status = "active" | "suspended" | "invited";
-export type Person = { id: string; name: string; role: string; email: string; superuser?: boolean; you?: boolean; status: Status; access: Access; note?: string };
+export type Person = { id: string; name: string; role: string; email: string; superuser?: boolean; admin?: boolean; blockedColleagues?: string[]; you?: boolean; status: Status; access: Access; note?: string };
 
 export const GROUPS = [
   { id: "burlington", name: "Burlington Gardens", units: ["Unit 1", "Unit 2", "Unit 3", "Part Basement"] },
@@ -43,6 +43,30 @@ export const FAMILIES: { id: string; code: string; label: string; types: PaperTy
 ];
 export const ALL_TYPES = FAMILIES.flatMap((f) => f.types);
 export const typeById = (id: string) => ALL_TYPES.find((t) => t.id === id)!;
+/** Papers only Superusers and Admins may read; never grantable to anyone else. */
+export const RESTRICTED_TYPES: PaperType[] = [
+  { id: "valuation-report", label: "Valuation Report", plural: "Valuation Reports" },
+  { id: "loan-agreement", label: "Loan Agreement", plural: "Loan Agreements" },
+];
+/** Back Office colleagues a Superuser may close to an individual Admin. */
+export const COLLEAGUES: { id: string; name: string; area: string }[] = [
+  { id: "professor", name: "The Professor", area: "Portfolio Knowledge" },
+  { id: "architect", name: "The Architect", area: "Portfolio Structure" },
+  { id: "broker", name: "The Broker", area: "Relationships" },
+  { id: "keeper", name: "The Keeper", area: "Security" },
+  { id: "inspector", name: "The Inspector", area: "Compliance Position" },
+];
+export const isTop = (p: Person) => !!(p.superuser || p.admin);
+export const rankLabel = (p: Person) => (p.superuser ? "Superuser" : p.admin ? "Admin" : p.access.portfolio ? "Full Access" : "Limited Access");
+/** Papers this person cannot read: restricted papers unless Superuser/Admin, plus types not granted. */
+export const unreadablePapers = (p: Person, a: Access = p.access): string[] =>
+  isTop(p) ? [] : [...RESTRICTED_TYPES.map((t) => t.plural), ...(a.papers === "all" ? [] : ALL_TYPES.filter((t) => !a.papers.includes(t.id)).map((t) => t.plural))];
+export const setColleague = (p: Person, cid: string, open: boolean): Person => {
+  if (!p.admin) return p;
+  const b = new Set(p.blockedColleagues ?? []);
+  if (open) b.delete(cid); else b.add(cid);
+  return { ...p, blockedColleagues: [...b] };
+};
 const ACCOUNTING = ALL_TYPES.filter((t) => t.accounting).map((t) => t.id);
 
 export const AREAS: { id: AreaId; label: string; explain: string; levels: Level[] }[] = [
@@ -59,11 +83,11 @@ const allBut = (ids: string[]) => ALL_TYPES.map((t) => t.id).filter((x) => !ids.
 
 export const INITIAL_PEOPLE: Person[] = [
   { id: "sarah", name: "Sarah Mitchell", role: "Portfolio Manager", email: "sarah@hobsonproperty.co.uk", superuser: true, you: true, status: "active", access: FULL },
-  { id: "oliver", name: "Oliver Grant", role: "Director", email: "oliver@hobsonproperty.co.uk", superuser: true, status: "active", access: FULL },
+  { id: "oliver", name: "Oliver Grant", role: "Director", email: "oliver@hobsonproperty.co.uk", admin: true, blockedColleagues: ["professor"], status: "active", access: FULL },
   { id: "james", name: "James Carter", role: "Building Manager", email: "james@hobsonproperty.co.uk", status: "active", access: { portfolio: false, groups: { burlington: "all", stanley: ["Flat 6"] }, papers: allBut(ACCOUNTING), areas: areas("view", "view", "change", "change") } },
   { id: "emily", name: "Emily Clarke", role: "External Solicitor", email: "emily.clarke@clarkelaw.co.uk", status: "active", access: { portfolio: false, groups: { burlington: ["Unit 1", "Unit 2"] }, papers: ["business-lease", "deed-variation", "rent-review"], areas: areas("view", "none", "none", "none") } },
   { id: "daniel", name: "Daniel Reed", role: "Accounts", email: "daniel@hobsonproperty.co.uk", status: "active", access: { portfolio: true, groups: {}, papers: ACCOUNTING, areas: areas("view", "view", "none", "none") } },
-  { id: "priya", name: "Priya Shah", role: "Asset Manager", email: "priya@hobsonproperty.co.uk", status: "active", access: { portfolio: true, groups: {}, papers: "all", areas: areas("change", "change", "view", "change") } },
+  { id: "priya", name: "Priya Shah", role: "Asset Manager", email: "priya@hobsonproperty.co.uk", admin: true, blockedColleagues: ["architect"], status: "active", access: FULL },
   { id: "tom", name: "Tom Walsh", role: "Lettings", email: "tom@walshlettings.co.uk", status: "active", access: { portfolio: false, groups: { stanley: ["Flat 6", "Flat 8"] }, papers: ["residential-tenancy", "epc", "gas"], areas: areas("view", "view", "none", "change") } },
   { id: "hannah", name: "Hannah Brooks", role: "Facilities Coordinator", email: "hannah@hobsonproperty.co.uk", status: "active", access: { portfolio: false, groups: { nugent: "all" }, papers: ["epc", "gas", "eicr", "asbestos"], areas: areas("view", "view", "change", "none") } },
   { id: "lucy", name: "Lucy Bennett", role: "Managing Agent", email: "lucy@bennettmanagement.co.uk", status: "invited", access: { portfolio: false, groups: { stanley: "all" }, papers: allBut(ACCOUNTING), areas: areas("view", "view", "view", "none") } },
@@ -148,7 +172,8 @@ export const firstName = (p: Person) => p.name.split(" ")[0];
 export type Summary = { can: string[]; cannot: string[] };
 export function summarise(p: Person, a: Access = p.access): Summary {
   const n = firstName(p);
-  if (p.superuser) return { can: ["Access the whole portfolio and every paper.", "Use every area of Hobson.", "Invite people and change their access."], cannot: [] };
+  if (p.superuser) return { can: ["Access the whole portfolio and every paper, including Valuation Reports and Loan Agreements.", "Use every area of Hobson and every Back Office colleague.", "Invite people, change their access and restrict Admins."], cannot: [] };
+  if (p.admin) return { can: ["Access the whole portfolio and every paper, including Valuation Reports and Loan Agreements.", "Use every area of Hobson.", "Invite people and change their access."], cannot: [...COLLEAGUES.filter((c) => p.blockedColleagues?.includes(c.id)).map((c) => `Work with ${c.name} (${c.area}).`), "Change a Superuser's access."] };
   const can: string[] = [], cannot: string[] = [];
   const gs = groupsWithAccess(a);
   if (a.portfolio) can.push("Access the whole portfolio.");
@@ -169,6 +194,7 @@ export function summarise(p: Person, a: Access = p.access): Summary {
     if (!a.papers.some((t) => ACCOUNTING.includes(t))) cannot.push("View accounting papers.");
     if (!a.papers.some((t) => typeById(t).lease)) cannot.push("View leases or tenancy agreements.");
   }
+  cannot.push(`Read ${list(RESTRICTED_TYPES.map((t) => t.plural))} — Admin only.`);
   if (a.areas.papers === "none") cannot.push("Open Papers.");
   if (a.areas.people === "none") cannot.push("See People We Know.");
   if (a.areas.compliance === "none") cannot.push("See compliance responsibilities.");
@@ -178,14 +204,14 @@ export function summarise(p: Person, a: Access = p.access): Summary {
 }
 
 export function glance(p: Person, a: Access = p.access) {
-  if (p.superuser) return { where: "The whole portfolio", what: "All papers", doing: "Everything, including Security" };
+  if (isTop(p)) return { where: "The whole portfolio", what: "All papers", doing: "Everything, including Security" };
   const doing = AREAS.filter((x) => a.areas[x.id] !== "none").map((x) => `${a.areas[x.id] === "change" ? (x.id === "reading" ? "Add papers" : "Update") : "View"} ${x.id === "reading" ? "" : x.label.replace("My Compliance Responsibilities", "compliance").replace("People We Know", "contacts").replace("Papers", "papers")}`.trim());
   return { where: a.portfolio ? "The whole portfolio" : groupsWithAccess(a).map((g) => (a.groups[g.id] === "all" ? g.name : `${g.name} (${list(unitsFor(a, g.id))})`)).join(" · ") || "No places", what: paperLine(a), doing: doing.join(" · ") || "Nothing yet" };
 }
 
-export const isRestricted = (p: Person) => !p.superuser && !p.access.portfolio && Object.keys(p.access.groups).length <= 1;
+export const isRestricted = (p: Person) => !isTop(p) && !p.access.portfolio && Object.keys(p.access.groups).length <= 1;
 export const cardLine = (p: Person) => {
-  if (p.superuser) return "Access to all Units and areas";
+  if (isTop(p)) return "Access to all Units and areas";
   const a = p.access;
   const where = a.portfolio ? "All Units" : (() => { const gs = groupsWithAccess(a); return gs.length === 1 ? (a.groups[gs[0].id] === "all" ? gs[0].name : `${gs[0].name} · ${list(unitsFor(a, gs[0].id))}`) : `${gs.length} Unit Groups`; })();
   const what = a.papers === "all" ? "All papers" : a.papers.every((t) => ACCOUNTING.includes(t)) ? "Accounting papers" : "Selected papers";
@@ -243,16 +269,17 @@ export const peopleForArea = (people: Person[], area: AreaId, atLeast: Level) =>
 
 // ---------- Overview presentation: grouping, chips and search ----------
 export type Chip = { label: string; detail?: string; title?: string };
-export type GroupKey = "admin" | "full" | "limited";
+export type GroupKey = "superuser" | "admin" | "full" | "limited";
 /** Rights are shown as three simple levels, so the overview answers "who has what rights" at a glance. */
 export const GROUP_META: { key: GroupKey; title: string; explain: string }[] = [
-  { key: "admin", title: "Admin", explain: "Everything — the whole portfolio, every paper and every area, including Security itself." },
+  { key: "superuser", title: "Superuser", explain: "Everything, including restricting what each Admin may do." },
+  { key: "admin", title: "Admin", explain: "The whole portfolio and every paper — a Superuser may close particular colleagues to them." },
   { key: "full", title: "Full Access", explain: "Every place, but only the papers and areas their work needs." },
   { key: "limited", title: "Limited Access", explain: "Only the buildings or Units you've chosen — never the rest of the portfolio." },
 ];
 export const AREA_SHORT: Record<AreaId, string> = { papers: "Papers", people: "People", compliance: "Compliance", reading: "Reading" };
 export const initials = (p: Person) => p.name.split(/\s+/).filter(Boolean).slice(0, 2).map((x) => x[0]!.toUpperCase()).join("");
-export const groupKeyFor = (p: Person): GroupKey => (p.superuser ? "admin" : p.access.portfolio ? "full" : "limited");
+export const groupKeyFor = (p: Person): GroupKey => (p.superuser ? "superuser" : p.admin ? "admin" : p.access.portfolio ? "full" : "limited");
 
 export const placeChips = (a: Access): Chip[] =>
   a.portfolio
@@ -274,7 +301,7 @@ export const areaChips = (a: Access): { area: AreaId; level: Level }[] => AREAS.
 const haystack = (p: Person) =>
   [
     p.name, p.role, p.email,
-    p.superuser ? "superuser" : "",
+    p.superuser ? "superuser" : p.admin ? "admin" : "",
     p.status === "suspended" ? "suspended" : p.status === "invited" ? "invited awaiting acceptance" : "active",
     p.access.portfolio ? `the whole portfolio ${GROUPS.map((g) => g.name).join(" ")}` : groupsWithAccess(p.access).map((g) => `${g.name} ${unitsFor(p.access, g.id).join(" ")}`).join(" "),
     paperChip(p.access).label,
@@ -427,7 +454,7 @@ export function interpret(s: SecState, raw: string): Out {
       return { state: { ...s, view: { kind: "person", id: p.id }, pending: { kind: "superuser", id: p.id } }, reply: `A Superuser sees the whole portfolio and every paper, uses every area, and can invite people and change anyone's access — including yours. Shall I make ${n} a Superuser?`, choices: ["Make Superuser", "Not now"] };
     }
     const give = /\b(give|add|grant|allow|let)\b/i.test(t), remove = /\b(remove|revoke|take away|stop|withdraw)\b/i.test(t);
-    if ((give || remove) && p.superuser) return { state: { ...s, view: { kind: "person", id: p.id } }, reply: p.you ? "That's your own access — as a Superuser it stays complete." : `${n} is a Superuser, so has everything already.` };
+    if ((give || remove) && isTop(p)) return { state: { ...s, view: { kind: "person", id: p.id } }, reply: p.you ? "That's your own access — as a Superuser it stays complete." : `${n} is ${p.superuser ? "a Superuser" : "an Admin"}, so has every place and paper already.` };
     if (give || remove) {
       const base = s.draft?.id === p.id ? s.draft.access : p.access;
       const types = findTypes(t.replace(/papers?\b/i, (m) => m));
