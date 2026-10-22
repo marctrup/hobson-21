@@ -183,4 +183,4 @@
 
 ## Prototype Unit — larger Unit photographs
 - [x] Make each Unit's photograph in the units list expand on hover and open large when tapped or clicked, so small thumbnails are usable on mobile.
-- [x] Verify hover enlargement (40px → 96px, not cut off by the panel edge), desktop click and mobile tap each open the large view; thumbnail and Unit editor checks pass, preview clean. Not published.
+- [x] Enlarged further on request: hovering or focusing a thumbnail now floats a 480×340 preview beside it (outside the panel, so nothing clips it); clicking or tapping still opens the full view. Verified 478×338 in the live preview at desktop, four thumbnail checks pass, build clean. Not published.
