@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { PrototypeGate } from "@/components/prototype/PrototypeGate";
 import owlDefault from "@/assets/prototype/owl-default.png";
 import paragonPhoto from "@/assets/prototype/paragon-centre-sample.jpg";
+import paragonBuildingPhoto from "@/assets/prototype/paragon-building-sample.jpg";
 import paragonFlatPhoto from "@/assets/prototype/paragon-flat-sample.jpg";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
@@ -221,10 +222,10 @@ const PARAGON_DEMO: PortfolioGroup = {
   record: { id: PARAGON_GROUP_ID, name: "The Paragon Centre", line: "3 Reading Lane, London E8 1GQ", postcode: "E8 1GQ", coordinates: [51.5465, -0.0553], number: "3" },
   // Illustrative details only — the Second Floor Flat is prototype data, not a claim about the real building.
   units: [
-    { number: 1, name: "First Floor Gym", type: "Unit", classification: "Commercial", details: { area: 210, areaUnit: "m²", description: "First-floor commercial accommodation arranged for gym use, with open exercise areas and associated facilities." } },
+    { number: 1, name: "First Floor Gym", type: "Unit", classification: "Commercial", details: { area: 210, areaUnit: "m²", description: "First-floor commercial accommodation arranged for gym use, with open exercise areas and associated facilities." }, photos: [{ id: "paragon-gym-sample", url: paragonPhoto, name: "Illustrative gym photograph" }], mainPhotoId: "paragon-gym-sample" },
     { number: 2, name: "Second Floor Flat", type: "Flat", classification: "Residential", details: { doubleBedrooms: 1, bathrooms: 1, sharedFacilities: "Yes", outsideSpace: "No", area: 62, areaUnit: "m²", gasSupply: "No", description: "Self-contained second-floor flat comprising one bedroom, a bathroom and living accommodation, accessed through the shared building entrance." }, photos: [{ id: "paragon-flat-sample", url: paragonFlatPhoto, name: "Illustrative sample photograph" }], mainPhotoId: "paragon-flat-sample" },
   ],
-  photo: { url: paragonPhoto, x: 50, y: 50, zoom: 1 },
+  photo: { url: paragonBuildingPhoto, x: 50, y: 50, zoom: 1 },
 };
 
 // An established Unit Group in the simulated portfolio: names, uses and order exactly as authorised.
