@@ -3,19 +3,19 @@ import { ArrowRight, FileText, Pencil, Plus, Lightbulb, MessageCircle, Paperclip
 import { Button } from "@/components/ui/button";
 import owlDefault from "@/assets/prototype/owl-default.png";
 import {
-  CATEGORIES, fmt, FREQUENCY_PRESETS, GROUPS, INITIAL, interpret, isCustom, where,
+  CATEGORIES, FREQUENCY_PRESETS, GROUPS, INITIAL, interpret, isCustom, where,
   type Category, type Filter, type GroupId, type Pending, type Responsibility,
 } from "./prototypeComplianceResponsibilities";
 
-// Prototype Compliance: Hobson keeps track of compliance responsibilities through conversation.
+// Prototype Compliance: Hobson keeps a repository of compliance controls through conversation.
 // Shares styling with People We Know; never its data or state. Local demonstration state only.
 
 type Message = { id: number; role: "user" | "hobson"; text: string; attachment?: string; choices?: string[] };
 type Tab = "categories" | "places";
 
-const OPENING = "This is where your compliance items are kept, each with how often it must be renewed. Change any frequency to suit how you work. If you want to know where you stand, just ask me here.";
+const OPENING = "This is where your compliance controls are kept, each with how often it must be renewed. For now you set each frequency by hand; in time I can keep them up to date automatically. If you want to know where you stand, just ask me here.";
 const SCENARIOS: { label: string; text: string; attach?: string }[] = [
-  { label: "Responsibilities at a place", text: "What are my compliance responsibilities at Stanley House?" },
+  { label: "Controls at a place", text: "What are my compliance controls at Stanley House?" },
   { label: "What's coming up", text: "What's coming up in the next few months?" },
   { label: "What needs attention", text: "What needs my attention?" },
   { label: "Supply missing evidence", text: "I've found the new electrical report for 5 Nugent Terrace.", attach: "EICR - 5 Nugent Terrace - Oct 2026.pdf" },
@@ -23,7 +23,7 @@ const SCENARIOS: { label: string; text: string; attach?: string }[] = [
   { label: "A risk-based interval", text: "When should the Legionella assessment be reviewed?" },
   { label: "Does it apply?", text: "Does asbestos management apply at Burlington Gardens?" },
   { label: "A place with nothing recorded", text: "What about Stanley Mews?" },
-  { label: "One kind of responsibility", text: "Where is gas safety recorded?" },
+  { label: "One kind of control", text: "Where is gas safety recorded?" },
 ];
 
 function Insight({ children }: { children: ReactNode }) {
@@ -32,7 +32,7 @@ function Insight({ children }: { children: ReactNode }) {
 
 const field = "w-full rounded-md border border-input bg-background px-2.5 py-1.5 text-sm outline-none focus:ring-2 focus:ring-ring";
 const PLACES: { id: GroupId | "portfolio"; name: string }[] = [...GROUPS.map((g) => ({ id: g.id, name: g.name })), { id: "portfolio", name: "Across the portfolio" }];
-const COLS = "[@container_comp_(min-width:44rem)]:grid-cols-[minmax(0,1.2fr)_minmax(0,1.2fr)_minmax(0,0.9fr)_minmax(0,0.8fr)_auto]";
+const COLS = "[@container_comp_(min-width:44rem)]:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)_auto]";
 
 /** Inline editor: every business may keep its own frequency, so each repository field can be changed by hand. */
 function Editor({ r, save, cancel, remove }: { r: Responsibility; save: (r: Responsibility) => void; cancel: () => void; remove?: () => void }) {
@@ -42,7 +42,7 @@ function Editor({ r, save, cancel, remove }: { r: Responsibility; save: (r: Resp
   const event = /event/i.test(d.frequency);
   return (
     <form onSubmit={(e) => { e.preventDefault(); if (d.name.trim() && d.frequency.trim()) save({ ...d, timing: event ? "event" : d.timing === "event" ? "recurring" : d.timing, next: event ? null : d.next }); }} className="grid gap-3 px-2 pb-4 pt-2 text-xs [@container_comp_(min-width:44rem)]:grid-cols-2">
-      <label className="grid gap-1"><span className="text-ink-muted">Compliance item</span><input className={field} value={d.name} onChange={(e) => set("name", e.target.value)} required /></label>
+      <label className="grid gap-1"><span className="text-ink-muted">Control</span><input className={field} value={d.name} onChange={(e) => set("name", e.target.value)} required /></label>
       <label className="grid gap-1"><span className="text-ink-muted">Category</span><select className={field} value={d.category} onChange={(e) => set("category", e.target.value as Category)}>{CATEGORIES.map((c) => <option key={c.id} value={c.id}>{c.label}</option>)}</select></label>
       <div className="grid gap-1 [@container_comp_(min-width:44rem)]:col-span-2">
         <span className="text-ink-muted">Your renewal frequency</span>
@@ -73,11 +73,9 @@ function Row({ r, open, toggle, lit, save, remove }: { r: Responsibility; open: 
       <button type="button" onClick={toggle} aria-expanded={open} aria-label={`Edit ${r.name}, ${where(r)}`} className={`grid w-full grid-cols-[1fr_auto] items-center gap-x-3 px-2 py-2.5 text-left hover:bg-background focus:outline-none focus-visible:ring-2 focus-visible:ring-ring ${COLS}`}>
         <span className="min-w-0">
           <span className="block truncate text-sm font-medium text-ink">{r.name}</span>
-          <span className="block truncate text-xs text-ink-muted [@container_comp_(min-width:44rem)]:hidden">{r.frequency} · {where(r)}</span>
+          <span className="block truncate text-xs text-ink-muted [@container_comp_(min-width:44rem)]:hidden">{r.frequency}</span>
         </span>
         <span className="hidden min-w-0 items-center gap-2 text-xs text-ink [@container_comp_(min-width:44rem)]:flex"><span className="truncate">{r.frequency}</span>{isCustom(r) && <span className="shrink-0 rounded-full bg-secondary px-1.5 text-[10px] uppercase tracking-wide text-ink-muted">Your own</span>}</span>
-        <span className="hidden min-w-0 truncate text-xs text-ink-muted [@container_comp_(min-width:44rem)]:block">{r.next ? fmt(r.next) : /event/i.test(r.frequency) ? "When it arises" : "—"}</span>
-        <span className="hidden min-w-0 truncate text-xs text-ink-muted [@container_comp_(min-width:44rem)]:block">{where(r)}</span>
         <Pencil className={`h-3.5 w-3.5 ${open ? "text-primary" : "text-ink-muted"}`} aria-hidden />
       </button>
       {open && <Editor r={r} save={save} cancel={toggle} remove={remove} />}
@@ -103,7 +101,7 @@ function ByCategory({ rs, openId, setOpen, lit, save, remove }: { rs: Responsibi
             <section key={c.id} id={`cat-${c.id}`} aria-label={c.label} className="scroll-mt-4">
               <div className={`mb-1 grid grid-cols-[1fr] gap-x-3 border-b border-faint-rule pb-1.5 text-[10px] uppercase tracking-wider text-ink-muted/70 ${COLS}`}>
                 <h3 className="text-[11px] font-medium tracking-[0.12em] text-ink-muted">{c.label}</h3>
-                <span className="hidden [@container_comp_(min-width:44rem)]:block">Renewal frequency</span><span className="hidden [@container_comp_(min-width:44rem)]:block">Next renewal</span><span className="hidden [@container_comp_(min-width:44rem)]:block">Where</span><span className="hidden w-3.5 [@container_comp_(min-width:44rem)]:block" />
+                <span className="hidden [@container_comp_(min-width:44rem)]:block">Renewal frequency</span><span className="hidden w-3.5 [@container_comp_(min-width:44rem)]:block" />
               </div>
               <ul className="-mx-2 grid gap-0.5">{items.map((r) => <Row key={r.id} r={r} open={openId === r.id} toggle={() => setOpen(openId === r.id ? null : r.id)} lit={lit.has(r.id)} save={(x) => { save(x); setOpen(null); }} remove={() => remove(r.id)} />)}</ul>
             </section>
@@ -121,7 +119,7 @@ function ByPlace({ rs, all, only, pick }: { rs: Responsibility[]; all: Responsib
   const empty = GROUPS.filter((g) => cols.includes(g.id) && !all.some((r) => r.group === g.id));
   return (
     <div>
-      <Insight>Each cell shows the compliance items held for that place, with their renewal frequency.{empty.length ? <> I have nothing recorded for <b className="font-semibold">{empty.map((g) => g.name).join(", ")}</b> — shown with a dashed line.</> : ""}</Insight>
+      <Insight>Each cell shows the controls held for that place, with the frequency you've set.{empty.length ? <> I have nothing recorded for <b className="font-semibold">{empty.map((g) => g.name).join(", ")}</b> — shown with a dashed line.</> : ""}</Insight>
       <div className="-mx-1 overflow-x-auto px-1">
         <table className="w-full min-w-[40rem] border-separate border-spacing-0 text-left">
           <thead><tr><th className="sticky left-0 bg-bone-wash pb-2 pr-3 text-[10px] font-medium uppercase tracking-wider text-ink-muted">Category</th>{cols.map((g) => <th key={g} className="pb-2 pr-2 text-[11px] font-medium text-ink">{label(g)}</th>)}</tr></thead>
@@ -178,7 +176,7 @@ export default function PrototypeCompliance() {
 
   const saveItem = (r: Responsibility) => { setRs((x) => x.map((y) => (y.id === r.id ? r : y))); setHighlight([r.id]); };
   const addItem = () => {
-    const r: Responsibility = { id: `item-${Date.now()}`, name: "New compliance item", category: "health", timing: "recurring", requirement: "", group: filter.group ?? "portfolio", appliesTo: "", frequency: "Every 12 months", last: null, next: null, responsible: null, evidence: null, source: "Your own arrangement" };
+    const r: Responsibility = { id: `item-${Date.now()}`, name: "New control", category: "health", timing: "recurring", requirement: "", group: filter.group ?? "portfolio", appliesTo: "", frequency: "Every 12 months", last: null, next: null, responsible: null, evidence: null, source: "Your own arrangement" };
     setRs((x) => [...x, r]); setTab("categories"); setQuery(""); setOpenId(r.id);
   };
 
@@ -197,7 +195,7 @@ export default function PrototypeCompliance() {
     <div className="flex h-screen w-full overflow-hidden bg-bone-wash text-ink">
       <aside className="flex w-[68px] shrink-0 flex-col items-center gap-2 border-r border-bone bg-background py-4">
         <div className="mb-2 grid h-10 w-10 place-items-center" aria-hidden><img src={owlDefault} alt="" className="h-10 w-10 object-contain" /></div>
-        {[["Portfolio", false], ["Papers", false], ["People We Know", false], ["My compliance responsibilities", true], ["Conversations", false]].map(([label, active]) => (
+        {[["Portfolio", false], ["Papers", false], ["People We Know", false], ["Compliance controls", true], ["Conversations", false]].map(([label, active]) => (
           <button key={label as string} type="button" aria-current={active ? "page" : undefined} className={`w-12 rounded-lg py-2 text-center text-[10px] leading-tight ${active ? "bg-secondary font-medium text-ink" : "text-ink-muted hover:bg-paper"}`}>{label as string}</button>
         ))}
         <div className="mt-auto grid h-9 w-9 place-items-center rounded-full bg-bone text-xs font-semibold text-charcoal">MT</div>
@@ -206,7 +204,7 @@ export default function PrototypeCompliance() {
       <section aria-label="Chat with Hobson" className={`relative z-20 w-full shrink-0 flex-col border-r border-bone bg-background max-md:absolute max-md:inset-y-0 max-md:left-[68px] max-md:w-[calc(100%-68px)] md:w-[380px] ${showChat ? "flex" : "hidden md:flex"}`}>
         <header className="flex h-14 shrink-0 items-center justify-between border-b border-faint-rule px-5">
           <h1 className="text-[15px] font-semibold">Chat with Hobson</h1>
-          <Button variant="ghost" size="sm" className="md:hidden" onClick={() => setShowChat(false)}>View responsibilities</Button>
+          <Button variant="ghost" size="sm" className="md:hidden" onClick={() => setShowChat(false)}>View controls</Button>
         </header>
         <div role="log" aria-label="Conversation" className="flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto px-5 py-4">
           {messages.map((m, i) => {
@@ -242,31 +240,31 @@ export default function PrototypeCompliance() {
         </div>
       </section>
 
-      <main aria-label="My compliance responsibilities" className="[container-type:inline-size] [container-name:comp] flex min-w-0 flex-1 flex-col">
+      <main aria-label="Compliance controls" className="[container-type:inline-size] [container-name:comp] flex min-w-0 flex-1 flex-col">
         <header className="flex h-14 shrink-0 items-center justify-between gap-2 border-b border-bone bg-background px-5">
-          <div className="min-w-0"><p className="text-sm font-medium">My compliance responsibilities</p><p className="hidden truncate text-[11px] text-ink-muted [@container_comp_(min-width:28rem)]:block">Repository of compliance items · demonstration only, nothing is saved</p></div>
+          <div className="min-w-0"><p className="text-sm font-medium">Compliance controls</p><p className="hidden truncate text-[11px] text-ink-muted [@container_comp_(min-width:28rem)]:block">Repository of controls · frequencies set by hand for now · nothing is saved</p></div>
           <div className="flex shrink-0 items-center gap-1">
             <Button variant="ghost" size="icon" className="md:hidden" aria-label="Chat with Hobson" onClick={() => setShowChat(true)}><MessageCircle className="h-4 w-4" /></Button>
             <Button variant="ghost" size="sm" aria-label="Restart demo" onClick={restart}><RotateCcw className="h-3.5 w-3.5 [@container_comp_(min-width:28rem)]:mr-2" /><span className="hidden [@container_comp_(min-width:28rem)]:inline">Restart demo</span></Button>
           </div>
         </header>
-        <div role="tablist" aria-label="Ways of seeing your responsibilities" className="flex shrink-0 flex-wrap items-center gap-1 border-b border-bone bg-background px-5 py-2">
+        <div role="tablist" aria-label="Ways of seeing your controls" className="flex shrink-0 flex-wrap items-center gap-1 border-b border-bone bg-background px-5 py-2">
           {([["categories", "By category"], ["places", "By place"]] as [Tab, string][]).map(([k, l]) => (
             <Button key={k} role="tab" size="sm" aria-selected={tab === k} variant={tab === k ? "secondary" : "ghost"} onClick={() => setTab(k)}>{l}</Button>
           ))}
           <label className="ml-auto flex min-w-0 items-center gap-2 rounded-full bg-secondary/50 px-3 focus-within:ring-2 focus-within:ring-ring">
             <Search className="h-3.5 w-3.5 shrink-0 text-ink-muted" aria-hidden />
-            <input value={query} onChange={(e) => setQuery(e.target.value)} aria-label="Find a responsibility or place" placeholder="Find a responsibility or place" className="w-full min-w-0 bg-transparent py-1.5 text-xs outline-none placeholder:text-ink-muted [@container_comp_(min-width:44rem)]:w-56" />
+            <input value={query} onChange={(e) => setQuery(e.target.value)} aria-label="Find a control or place" placeholder="Find a control or place" className="w-full min-w-0 bg-transparent py-1.5 text-xs outline-none placeholder:text-ink-muted [@container_comp_(min-width:44rem)]:w-56" />
             {query && <button type="button" aria-label="Clear search" onClick={() => setQuery("")}><X className="h-3.5 w-3.5 text-ink-muted" /></button>}
           </label>
         </div>
         <div className="min-h-0 flex-1 overflow-y-auto px-5 py-6 [@container_comp_(min-width:42rem)]:px-8">
           <div className="mx-auto max-w-5xl">
-            <h2 className="font-serif text-2xl text-ink">{groupLabel ? `${groupLabel}` : "My compliance responsibilities"}</h2>
-            <p className="mb-5 mt-1 text-sm text-ink-muted">{groupLabel ? `Compliance items held for ${groupLabel}.` : "Each compliance item and how often it must be renewed. Select any item to change it."}</p>
+            <h2 className="font-serif text-2xl text-ink">{groupLabel ? `${groupLabel}` : "Compliance controls"}</h2>
+            <p className="mb-5 mt-1 text-sm text-ink-muted">{groupLabel ? `Controls held for ${groupLabel}.` : "Each control and how often it must be renewed. You set the frequency here; select any control to change it."}</p>
             <div className="mb-6 flex flex-wrap items-center justify-between gap-2">
               {filter.group ? <button type="button" onClick={() => setFilter((f) => ({ ...f, group: null }))} className="flex items-center gap-1.5 rounded-full bg-secondary px-3 py-1 text-xs">{groupLabel}<X className="h-3 w-3" aria-label="Show all places" /></button> : <span />}
-              <Button size="sm" variant="outline" onClick={addItem}><Plus className="mr-1.5 h-3.5 w-3.5" />Add a compliance item</Button>
+              <Button size="sm" variant="outline" onClick={addItem}><Plus className="mr-1.5 h-3.5 w-3.5" />Add a control</Button>
             </div>
             {tab === "categories" && <ByCategory rs={shown} openId={openId} setOpen={setOpenId} lit={lit} save={saveItem} remove={(id) => { setRs((x) => x.filter((r) => r.id !== id)); setOpenId(null); }} />}
             {tab === "places" && <ByPlace rs={shown} all={rs} only={filter.group} pick={(g) => { setFilter((f) => ({ ...f, group: g })); setTab("categories"); }} />}
