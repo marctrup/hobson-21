@@ -5,6 +5,7 @@ export type AreaMeasure = "ft²" | "m²";
 export type UnitDetails = {
   area?: number;
   areaUnit?: AreaMeasure;
+  bedrooms?: number;
   doubleBedrooms?: number;
   singleBedrooms?: number;
   bathrooms?: number;
@@ -17,10 +18,10 @@ export type UnitDetails = {
 export type DetailField = keyof UnitDetails;
 export type DetailedUnit = ProposedUnit & { details?: UnitDetails };
 
-export const RESIDENTIAL_FIELDS: DetailField[] = ["area", "doubleBedrooms", "singleBedrooms", "bathrooms", "sharedFacilities", "outsideSpace", "gasSupply", "description"];
+export const RESIDENTIAL_FIELDS: DetailField[] = ["area", "bedrooms", "doubleBedrooms", "singleBedrooms", "bathrooms", "sharedFacilities", "outsideSpace", "gasSupply", "description"];
 export const COMMERCIAL_FIELDS: DetailField[] = ["area", "description"];
 export const fieldsFor = (u: ProposedUnit) => u.classification === "Residential" ? RESIDENTIAL_FIELDS : COMMERCIAL_FIELDS;
-export const FIELD_LABELS: Record<DetailField, string> = { area: "Floor area", areaUnit: "Area measurement", doubleBedrooms: "Double bedrooms", singleBedrooms: "Single bedrooms", bathrooms: "Bathrooms", outsideSpace: "Outside space", sharedFacilities: "Shared facilities", gasSupply: "Gas supply", description: "Description" };
+export const FIELD_LABELS: Record<DetailField, string> = { area: "Floor area", areaUnit: "Area measurement", bedrooms: "Bedrooms", doubleBedrooms: "Double bedrooms", singleBedrooms: "Single bedrooms", bathrooms: "Bathrooms", outsideSpace: "Outside space", sharedFacilities: "Shared facilities", gasSupply: "Gas supply", description: "Description" };
 
 const plural = (n: number, word: string) => `${n} ${word}${n === 1 ? "" : "s"}`;
 
@@ -36,6 +37,7 @@ export function summaryLine(u: DetailedUnit, status?: string): string {
   const parts: string[] = [u.classification];
   if (status) parts.push(status);
   if (u.classification === "Residential") {
+    if (d.bedrooms !== undefined) parts.push(plural(d.bedrooms, "bedroom"));
     if (d.doubleBedrooms !== undefined) parts.push(plural(d.doubleBedrooms, "double bedroom"));
     if (d.singleBedrooms !== undefined) parts.push(plural(d.singleBedrooms, "single bedroom"));
     if (d.bathrooms !== undefined) parts.push(plural(d.bathrooms, "bathroom"));
@@ -95,6 +97,8 @@ export function applyChanges(units: DetailedUnit[], patch: UnitDetails, accepted
     for (const c of mine) {
       if (c.field === "area") { details.area = patch.area; details.areaUnit = patch.areaUnit ?? details.areaUnit ?? "ft²"; }
       else (details as Record<string, unknown>)[c.field] = patch[c.field];
+      if (c.field === "bedrooms") { delete details.doubleBedrooms; delete details.singleBedrooms; }
+      if (c.field === "doubleBedrooms" || c.field === "singleBedrooms") delete details.bedrooms;
     }
     return { ...u, details };
   });
@@ -131,6 +135,8 @@ export function interpretDetails(raw: string, units: DetailedUnit[]): DetailInst
   if (/\brename\b/.test(text) || /^(?:please )?(?:call|name)\b/.test(text)) return null;
   const patch: UnitDetails = {};
   let feature: string | undefined;
+  const bedrooms = text.match(new RegExp(`\\b${N} bedrooms?\\b`));
+  if (bedrooms) patch.bedrooms = num(bedrooms[1]);
   const dbl = text.match(new RegExp(`\\b${N} double(?:[- ]bed(?:room)?s?)?\\b`));
   if (dbl) patch.doubleBedrooms = num(dbl[1]);
   const sgl = text.match(new RegExp(`\\b${N} single(?:[- ]bed(?:room)?s?)?\\b`));
@@ -155,7 +161,7 @@ export function interpretDetails(raw: string, units: DetailedUnit[]): DetailInst
     patch.description = source.details.description;
   }
 
-  const residentialOnly = (["doubleBedrooms", "singleBedrooms", "bathrooms", "outsideSpace"] as DetailField[]).some(f => patch[f] !== undefined);
+  const residentialOnly = (["bedrooms", "doubleBedrooms", "singleBedrooms", "bathrooms", "outsideSpace"] as DetailField[]).some(f => patch[f] !== undefined);
   if (residentialOnly && picked.every(u => u.classification === "Commercial")) return { kind: "question", reply: "Those are commercial Units, so I don't record bedrooms, bathrooms or outside space for them. Did you mean some of the flats?" };
 
   // A single Unit described in a sentence: offer a description drawn only from what was said.

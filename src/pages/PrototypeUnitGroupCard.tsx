@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Check, ImagePlus, Pencil } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 // The Unit Group's own card details. The photograph belongs to the group only, never to its Units.
 export type GroupPhoto = { url: string; x: number; y: number; zoom: number };
@@ -12,12 +13,13 @@ type Props = {
   label: string;
   onChange: (card: GroupCard) => void;
   onChangeAddress?: () => void;
+  onPhysicalDetails?: () => void;
   actions?: React.ReactNode;
 };
 
 const textBtn = "min-h-8 rounded-md px-2 text-xs text-muted-foreground hover:bg-secondary hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring";
 
-export function PrototypeUnitGroupCard({ card, address, summary, label, onChange, onChangeAddress, actions }: Props) {
+export function PrototypeUnitGroupCard({ card, address, summary, label, onChange, onChangeAddress, onPhysicalDetails, actions }: Props) {
   const fileRef = useRef<HTMLInputElement>(null);
   const [dragOver, setDragOver] = useState(false);
   const [adjusting, setAdjusting] = useState(false);
@@ -106,6 +108,7 @@ export function PrototypeUnitGroupCard({ card, address, summary, label, onChange
         </div>
         {actions && !editing && <div className="flex items-center gap-1">{actions}</div>}
       </div>
+      {onPhysicalDetails && <details className="mt-3 border-t border-border pt-2"><summary className="cursor-pointer text-sm text-muted-foreground">About</summary><Button variant="ghost" size="sm" onClick={onPhysicalDetails} className="mt-1 h-auto whitespace-normal text-left">Add or update physical details</Button></details>}
     </div>
   );
 }
