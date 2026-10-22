@@ -296,7 +296,7 @@ export default function PrototypeSecurity() {
               <div className="mt-3 flex gap-2"><Button size="sm" onClick={saveNow}>Save changes</Button><Button size="sm" variant="ghost" onClick={discard}>Discard</Button></div>
             </div>
           )}
-          <AccessEditor a={a} locked={isTop(p)} quiet={!isTop(p) && a.portfolio && a.papers === "all"} set={(x) => editPerson(p, x)} />
+          <AccessEditor a={a} locked={isTop(p)} quiet={!isTop(p) && a.portfolio && a.papers === "all"} top={isTop(p)} set={(x) => editPerson(p, x)} />
         </div>
       );
     }
