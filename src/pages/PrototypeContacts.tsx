@@ -118,7 +118,7 @@ function Proposal({ pending, d }: { pending: Pending; d: Directory }) {
 
 const searchable = (d: Directory, c: Contact) => [c.person, c.org, ...relationsOf(d, c.id).flatMap((r) => [r.role, r.service, scopeLabel(r.scope)])].filter(Boolean).join(" ").toLowerCase();
 const matchesQuery = (d: Directory, c: Contact, q: string) => !q.trim() || q.toLowerCase().trim().split(/\s+/).every((w) => searchable(d, c).includes(w));
-const relLabel = (r: Relation) => (r.role === "Preferred contractor" ? r.service! : r.service && r.service !== r.role ? `${r.role} · ${r.service}` : r.role);
+const relLabel = (r: Relation) => (r.role === "Preferred contractor" ? r.service! : r.role);
 
 function Insight({ children }: { children: ReactNode }) {
   return <p className="mb-6 flex items-start gap-2.5 text-sm leading-relaxed text-ink"><img src={owlDefault} alt="" aria-hidden className="mt-[-2px] h-6 w-6 shrink-0 object-contain" /><span>{children}</span></p>;
@@ -161,7 +161,7 @@ function People({ d, open, lit, q }: { d: Directory; open: (id: string) => void;
       <Insight>{q ? `${shown.length} of ${d.contacts.length} match “${q}”.` : <>I know <b className="font-semibold">{d.contacts.length}</b> people and organisations across {PEOPLE_KINDS.filter((k) => d.contacts.some((c) => c.kind === k)).length} kinds of work.{noDetails ? ` ${noDetails} ${noDetails === 1 ? "has" : "have"} no telephone or email yet.` : ""}</>}</Insight>
       <div className={`grid gap-8 [@container_contacts_(min-width:44rem)]:grid-cols-[11rem_1fr]`}>
         <nav aria-label="Kinds of people" className={`flex flex-wrap gap-1.5 [@container_contacts_(min-width:44rem)]:sticky [@container_contacts_(min-width:44rem)]:top-0 [@container_contacts_(min-width:44rem)]:flex-col [@container_contacts_(min-width:44rem)]:self-start [@container_contacts_(min-width:44rem)]:gap-0.5`}>
-          {groups.map(({ k, cs }) => <button key={k} type="button" onClick={() => jump(k)} className={`flex items-center justify-between gap-3 rounded-full bg-background px-3 py-1 text-left text-xs text-ink ring-1 ring-bone hover:bg-paper [@container_contacts_(min-width:44rem)]:rounded-md [@container_contacts_(min-width:44rem)]:bg-transparent [@container_contacts_(min-width:44rem)]:px-2 [@container_contacts_(min-width:44rem)]:py-1.5 [@container_contacts_(min-width:44rem)]:ring-0`}><span className="truncate">{KIND_LABEL[k]}</span><span className="tabular-nums text-ink-muted">{cs.length}</span></button>)}
+          {groups.map(({ k, cs }) => <button key={k} type="button" onClick={() => jump(k)} className={`flex min-w-0 items-center justify-between gap-3 rounded-full bg-background px-3 py-1 text-left text-xs text-ink ring-1 ring-bone hover:bg-paper [@container_contacts_(min-width:44rem)]:rounded-md [@container_contacts_(min-width:44rem)]:bg-transparent [@container_contacts_(min-width:44rem)]:px-2 [@container_contacts_(min-width:44rem)]:py-1.5 [@container_contacts_(min-width:44rem)]:ring-0`}><span className="min-w-0 truncate">{KIND_LABEL[k]}</span><span className="tabular-nums text-ink-muted">{cs.length}</span></button>)}
         </nav>
         <div className="grid gap-7">
           {groups.length === 0 && <p className="text-sm text-ink-muted">No one matches. Ask me in the conversation and I'll look more widely.</p>}
@@ -510,7 +510,7 @@ export default function PrototypeContacts() {
         {!showBatch && !focused && (
           <div role="tablist" aria-label="Ways of seeing your contacts" className="flex shrink-0 flex-wrap items-center gap-1 border-b border-bone bg-background px-5 py-2">
             {([["people", "People and organisations"], ["services", "Services and responsibilities"], ["places", "Places"]] as [Tab, string][]).map(([k, l]) => (
-              <Button key={k} role="tab" size="sm" aria-selected={view.tab === k} variant={view.tab === k ? "secondary" : "ghost"} onClick={() => setView((v) => ({ ...v, tab: k }))}>{l}</Button>
+              <Button key={k} role="tab" size="sm" aria-selected={view.tab === k} variant={view.tab === k ? "secondary" : "ghost"} onClick={() => setView((v) => ({ ...v, tab: k, highlight: [] }))}>{l}</Button>
             ))}
             <label className="ml-auto flex min-w-0 items-center gap-2 rounded-full bg-secondary/50 px-3 focus-within:ring-2 focus-within:ring-ring">
               <Search className="h-3.5 w-3.5 shrink-0 text-ink-muted" aria-hidden />
