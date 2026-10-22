@@ -80,11 +80,12 @@ type ShellProps = {
   suggestions: string[];
   respond: (text: string, place: PlaceContext) => Turn;
   onReset: () => void;
+  sections?: SectionKey[];
   renderSection: (key: SectionKey, place: PlaceContext) => ReactNode;
   sectionCount: (key: SectionKey, place: PlaceContext) => number | undefined;
 };
 
-export function PrototypeRecordsShell({ focus, opening, suggestions, respond, onReset, renderSection, sectionCount }: ShellProps) {
+export function PrototypeRecordsShell({ focus, opening, suggestions, respond, onReset, sections = ["about", "legal", "contacts"], renderSection, sectionCount }: ShellProps) {
   const nextId = useRef(1);
   const [messages, setMessages] = useState<Message[]>([{ id: 0, role: "hobson", text: opening }]);
   const [input, setInput] = useState("");
@@ -129,7 +130,7 @@ export function PrototypeRecordsShell({ focus, opening, suggestions, respond, on
 
   const sections = (ctx: PlaceContext) => (
     <div className="flex flex-col gap-2">
-      {(["about", "legal", "contacts"] as SectionKey[]).map(key => (
+      {sections.map(key => (
         <RecordSection key={key} title={key === "about" ? "About" : key === "legal" ? "Legal responsibilities" : "Preferred contractors"} count={sectionCount(key, ctx)} open={open[key]} onToggle={() => setOpen(o => ({ ...o, [key]: !o[key] }))} focus={key === focus} onAsk={key === focus ? () => { setPlace(ctx); ask(); } : undefined}>
           {renderSection(key, ctx)}
         </RecordSection>
