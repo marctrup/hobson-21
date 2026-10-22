@@ -48,7 +48,7 @@ describe("Current Unit drafts and photographs", () => {
     await user.type(screen.getByLabelText("Floor area"), "750");
     await user.type(screen.getByLabelText("Double bedrooms"), "2");
     await user.type(screen.getByLabelText("Bathrooms"), "1");
-    await user.click(screen.getByRole("button", { name: "No" }));
+    await user.click(within(screen.getByRole("group", { name: "Outside space" })).getByRole("button", { name: "No" }));
     await user.click(screen.getByRole("button", { name: "Apply details to other Units" }));
     const panel = screen.getByLabelText("Apply to other Units");
     expect(within(panel).queryByRole("checkbox", { name: /Single bedrooms/ })).toBeNull();
