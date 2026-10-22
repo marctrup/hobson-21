@@ -168,16 +168,19 @@ function People({ d, open, lit, q }: { d: Directory; open: (id: string) => void;
         {groups.map(({ k, cs }) => <Pill key={k} k={k} label={KIND_LABEL[k]} n={cs.length} />)}
       </nav>
       {visible.length === 0 ? <p className="text-sm text-ink-muted">No one matches. Ask me in the conversation and I'll look more widely.</p> : (
-        <div className="overflow-hidden rounded-xl bg-background ring-1 ring-bone">
-          <div className="hidden grid-cols-[minmax(0,2.3fr)_minmax(0,1fr)] gap-x-3 border-b border-faint-rule px-4 py-2 text-[10px] uppercase tracking-wider text-ink-muted [@container_contacts_(min-width:44rem)]:grid">
-            <span className="grid grid-cols-[auto_minmax(0,1.3fr)_minmax(0,1fr)_auto] gap-x-3"><span className="w-9" /><span>Name</span><span>What</span><span className="w-9" /></span><span>Places</span>
-          </div>
+        <div className="space-y-8">
           {visible.map(({ k, cs }) => {
             const all = !!q || kind !== "all" || expanded.has(k) || cs.length <= PREVIEW + 1;
             return (
               <section key={k} aria-label={KIND_LABEL[k]}>
-                {kind === "all" && <h3 className="bg-paper/60 px-4 py-1.5 text-[11px] font-medium uppercase tracking-[0.12em] text-ink-muted">{KIND_LABEL[k]}</h3>}
-                <ul className="grid divide-y divide-faint-rule px-2">{(all ? cs : cs.slice(0, PREVIEW)).map((c) => <ContactRow key={c.id} c={c} d={d} onOpen={() => open(c.id)} lit={relationsOf(d, c.id).some((r) => lit.has(r.id))} />)}</ul>
+                <div className="mb-2 flex items-baseline gap-3 border-b-2 border-bone px-2 pb-3">
+                  <h3 className="text-base font-semibold text-ink">{KIND_LABEL[k]}</h3>
+                  <span className="text-xs tabular-nums text-ink-muted">{cs.length}</span>
+                </div>
+                <div className="hidden grid-cols-[minmax(0,2.3fr)_minmax(0,1fr)] gap-x-3 px-4 py-2 text-[10px] uppercase tracking-wider text-ink-muted [@container_contacts_(min-width:44rem)]:grid">
+                  <span className="grid grid-cols-[auto_minmax(0,1.3fr)_minmax(0,1fr)_auto] gap-x-3"><span className="w-9" /><span>Name</span><span>What</span><span className="w-9" /></span><span>Places</span>
+                </div>
+                <ul className="grid divide-y divide-faint-rule border-b border-faint-rule px-2">{(all ? cs : cs.slice(0, PREVIEW)).map((c) => <ContactRow key={c.id} c={c} d={d} onOpen={() => open(c.id)} lit={relationsOf(d, c.id).some((r) => lit.has(r.id))} />)}</ul>
                 {!all && <button type="button" onClick={() => setExpanded((s) => new Set(s).add(k))} className="px-4 pb-2 text-xs font-medium text-primary hover:underline">Show all {cs.length}</button>}
               </section>
             );
