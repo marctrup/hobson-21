@@ -54,7 +54,7 @@ function Fold({ title, hint, children, start = false }: { title: string; hint?: 
 }
 
 /** The one permission editor used for existing people and invitations alike. */
-function AccessEditor({ a, set, locked, quiet }: { a: Access; set: (a: Access) => void; locked?: boolean; quiet?: boolean }) {
+function AccessEditor({ a, set, locked, quiet, top }: { a: Access; set: (a: Access) => void; locked?: boolean; quiet?: boolean; top?: boolean }) {
   const types = typesFor(a);
   if (locked) return null;
   return (
@@ -108,7 +108,7 @@ function AccessEditor({ a, set, locked, quiet }: { a: Access; set: (a: Access) =
         )}
         <p className="mt-2 text-xs text-ink-muted">Access to a Unit never opens every paper about it — both the place and the paper type must be allowed.</p>
       </Fold>
-      <Fold title="Areas of Hobson" hint={AREAS.filter((x) => a.areas[x.id] !== "none").map((x) => x.label).join(" · ") || "None"}>
+      {top && <Fold title="Areas of Hobson" hint={AREAS.filter((x) => a.areas[x.id] !== "none").map((x) => x.label).join(" · ") || "None"}>
         <div className="grid gap-2 [@container_sec_(min-width:40rem)]:grid-cols-2">
           {AREAS.map((x) => (
             <div key={x.id} className="rounded-lg bg-paper/50 p-3">
@@ -120,7 +120,7 @@ function AccessEditor({ a, set, locked, quiet }: { a: Access; set: (a: Access) =
             </div>
           ))}
         </div>
-      </Fold>
+      </Fold>}
     </div>
   );
 }
@@ -296,7 +296,7 @@ export default function PrototypeSecurity() {
               <div className="mt-3 flex gap-2"><Button size="sm" onClick={saveNow}>Save changes</Button><Button size="sm" variant="ghost" onClick={discard}>Discard</Button></div>
             </div>
           )}
-          <AccessEditor a={a} locked={isTop(p)} quiet={!isTop(p) && a.portfolio && a.papers === "all"} set={(x) => editPerson(p, x)} />
+          <AccessEditor a={a} locked={isTop(p)} quiet={!isTop(p) && a.portfolio && a.papers === "all"} top={isTop(p)} set={(x) => editPerson(p, x)} />
         </div>
       );
     }
