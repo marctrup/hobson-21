@@ -5,7 +5,7 @@ import PrototypeSecurity from "@/pages/PrototypeSecurity";
 describe("prototype security page", () => {
   it("renders the overview and opens a person with a live summary", () => {
     render(<PrototypeSecurity />);
-    expect(screen.getByText("People with access")).toBeTruthy();
+    expect(screen.getByRole("heading", { name: "People with access" })).toBeTruthy();
     fireEvent.click(screen.getByRole("button", { name: "Open James Carter's access" }));
     expect(screen.getByText("James can currently")).toBeTruthy();
     fireEvent.click(screen.getByRole("button", { name: "Flat 8" }));
