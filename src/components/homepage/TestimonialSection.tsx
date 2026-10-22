@@ -39,7 +39,7 @@ export const TestimonialSection = () => (
     <div className="container mx-auto px-4">
       <div className="max-w-3xl mx-auto">
         {/* Heading */}
-        <div className="text-center mb-14 sm:mb-18">
+        <div className="text-center mb-14 sm:mb-16">
           <span
             className="inline-block text-xs font-semibold tracking-[0.2em] uppercase mb-4"
             style={{ color: "#8E7133" }}
