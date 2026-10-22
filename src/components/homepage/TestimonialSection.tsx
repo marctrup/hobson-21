@@ -42,7 +42,7 @@ export const TestimonialSection = () => (
         <div className="text-center mb-14 sm:mb-16">
           <span
             className="inline-block text-xs font-semibold tracking-[0.2em] uppercase mb-4"
-            style={{ color: "#8E7133" }}
+            style={{ color: "#7A5C22" }}
           >
             In their words
           </span>
@@ -78,7 +78,7 @@ export const TestimonialSection = () => (
               </blockquote>
               <figcaption
                 className="mt-6 sm:mt-7 flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.18em]"
-                style={{ color: "#8E7133" }}
+                style={{ color: "#7A5C22" }}
               >
                 <span
                   aria-hidden="true"
@@ -94,7 +94,7 @@ export const TestimonialSection = () => (
           {secondary.map((t) => (
             <figure
               key={t.quote}
-              className="border-t pt-10 sm:pt-12"
+              className="border-t pt-10 sm:pt-12 pl-6 sm:pl-9"
               style={{ borderColor: "#D8CDB6" }}
             >
               <blockquote
