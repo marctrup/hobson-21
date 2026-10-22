@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { ArrowRight, Building2, ChevronLeft, FileSpreadsheet, Lightbulb, Mail, MessageCircle, Paperclip, Phone, RotateCcw, Search, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { ContactPlaces } from "./ContactPlaces";
 import owlDefault from "@/assets/prototype/owl-default.png";
 import {
   applyBatch, effectivePreferred, inGroup, tradeWord, BATCH_CHECKS, BATCH_STRAIGHT, BATCH_TOTAL, contactById, contactName, GROUPS, groupName, INITIAL_DIRECTORY, interpret, KIND_LABEL, relationsOf, scopeLabel, SPREADSHEET_NAME,
@@ -127,22 +128,21 @@ function Insight({ children }: { children: ReactNode }) {
 function ContactRow({ c, d, onOpen, lit }: { c: Contact; d: Directory; onOpen: () => void; lit: boolean }) {
   const rs = relationsOf(d, c.id);
   const what = Array.from(new Set(rs.map(relLabel)));
-  const where = Array.from(new Set(rs.map((r) => scopeLabel(r.scope))));
   return (
-    <li>
-      <button type="button" onClick={onOpen} className={`group grid w-full grid-cols-[auto_1fr_auto] items-center gap-x-3 rounded-md px-2 py-2 text-left transition hover:bg-background focus:outline-none focus-visible:ring-2 focus-visible:ring-ring [@container_contacts_(min-width:44rem)]:grid-cols-[auto_minmax(0,1.3fr)_minmax(0,1fr)_minmax(0,1fr)_auto] ${lit ? "bg-primary/[0.06]" : ""}`}>
+    <li className={`grid grid-cols-[minmax(0,1fr)] items-start gap-x-3 px-2 py-3 [@container_contacts_(min-width:44rem)]:grid-cols-[minmax(0,2.3fr)_minmax(0,1fr)] ${lit ? "bg-primary/[0.06]" : ""}`}>
+      <Button variant="ghost" onClick={onOpen} className="grid h-auto w-full grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-x-3 whitespace-normal rounded-md px-2 py-1 text-left font-normal [@container_contacts_(min-width:44rem)]:grid-cols-[auto_minmax(0,1.3fr)_minmax(0,1fr)_auto]">
         <Avatar c={c} />
         <span className="min-w-0">
           <span className="block truncate text-sm font-medium text-ink">{contactName(c)}</span>
-          <span className={`block truncate text-xs text-ink-muted [@container_contacts_(min-width:44rem)]:hidden`}>{[what.join(", "), where.join(", ")].filter(Boolean).join(" — ")}</span>
-          {c.person && c.org && <span className={`hidden truncate text-xs text-ink-muted [@container_contacts_(min-width:44rem)]:block`}>{c.person}</span>}
+          {c.person && c.org && <span className="block truncate text-xs text-ink-muted">{c.person}</span>}
+          <span className="block truncate text-xs text-ink-muted [@container_contacts_(min-width:44rem)]:hidden">{what.join(", ")}</span>
         </span>
         <span className={`hidden min-w-0 truncate text-xs text-ink [@container_contacts_(min-width:44rem)]:block`}>{what.join(", ") || "—"}</span>
-        <span className={`hidden min-w-0 truncate text-xs text-ink-muted [@container_contacts_(min-width:44rem)]:block`}>{where.length > 2 ? `${where[0]} +${where.length - 1}` : where.join(", ") || "—"}</span>
         <span className="flex gap-1.5 text-ink-muted/70" aria-label={`${c.phones.length ? "Telephone" : "No telephone"}, ${c.email ? "email" : "no email"} recorded`}>
           <Phone className={`h-3.5 w-3.5 ${c.phones.length ? "" : "opacity-25"}`} aria-hidden /><Mail className={`h-3.5 w-3.5 ${c.email ? "" : "opacity-25"}`} aria-hidden />
         </span>
-      </button>
+      </Button>
+      <div className="ml-12 [@container_contacts_(min-width:44rem)]:ml-0"><ContactPlaces relations={rs} name={contactName(c)} /></div>
     </li>
   );
 }
@@ -169,8 +169,8 @@ function People({ d, open, lit, q }: { d: Directory; open: (id: string) => void;
       </nav>
       {visible.length === 0 ? <p className="text-sm text-ink-muted">No one matches. Ask me in the conversation and I'll look more widely.</p> : (
         <div className="overflow-hidden rounded-xl bg-background ring-1 ring-bone">
-          <div className="hidden grid-cols-[auto_minmax(0,1.3fr)_minmax(0,1fr)_minmax(0,1fr)_auto] gap-x-3 border-b border-faint-rule px-4 py-2 text-[10px] uppercase tracking-wider text-ink-muted [@container_contacts_(min-width:44rem)]:grid">
-            <span className="w-8" /><span>Name</span><span>What</span><span>Where</span><span className="w-10" />
+          <div className="hidden grid-cols-[minmax(0,2.3fr)_minmax(0,1fr)] gap-x-3 border-b border-faint-rule px-4 py-2 text-[10px] uppercase tracking-wider text-ink-muted [@container_contacts_(min-width:44rem)]:grid">
+            <span className="grid grid-cols-[auto_minmax(0,1.3fr)_minmax(0,1fr)_auto] gap-x-3"><span className="w-9" /><span>Name</span><span>What</span><span className="w-9" /></span><span>Places</span>
           </div>
           {visible.map(({ k, cs }) => {
             const all = !!q || kind !== "all" || expanded.has(k) || cs.length <= PREVIEW + 1;
