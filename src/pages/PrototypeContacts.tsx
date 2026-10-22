@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { ArrowRight, Building2, ChevronLeft, FileSpreadsheet, Lightbulb, Mail, MessageCircle, Paperclip, Phone, RotateCcw, Search, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ContactPlaces } from "./ContactPlaces";
 import owlDefault from "@/assets/prototype/owl-default.png";
 import {
@@ -156,17 +157,23 @@ function People({ d, open, lit, q }: { d: Directory; open: (id: string) => void;
   const shown = d.contacts.filter((c) => matchesQuery(d, c, q));
   const groups = PEOPLE_KINDS.map((k) => ({ k, cs: shown.filter((c) => c.kind === k).sort((a, b) => contactName(a).localeCompare(contactName(b))) })).filter((g) => g.cs.length);
   const visible = kind === "all" ? groups : groups.filter((g) => g.k === kind);
-  const Pill = ({ k, label, n }: { k: Kind | "all"; label: string; n: number }) => (
-    <button type="button" aria-pressed={kind === k} onClick={() => setKind(k)} className={`flex shrink-0 items-center gap-1.5 rounded-full px-3 py-1 text-xs transition ${kind === k ? "bg-ink text-background" : "bg-background text-ink ring-1 ring-bone hover:bg-paper"}`}>
-      {label}<span className={`tabular-nums ${kind === k ? "opacity-70" : "text-ink-muted"}`}>{n}</span>
-    </button>
-  );
+  const entryCount = visible.reduce((n, g) => n + g.cs.length, 0);
   return (
     <div>
-      <nav aria-label="Kinds of people" className="mb-5 flex flex-wrap gap-1.5">
-        <Pill k="all" label="Everyone" n={shown.length} />
-        {groups.map(({ k, cs }) => <Pill key={k} k={k} label={KIND_LABEL[k]} n={cs.length} />)}
-      </nav>
+      <div className="mb-6 flex flex-wrap items-center justify-between gap-3 border-b border-bone pb-4">
+        <Select value={kind} onValueChange={(value) => {
+          if (value === "all" || PEOPLE_KINDS.some((k) => k === value)) setKind(value as Kind | "all");
+        }}>
+          <SelectTrigger aria-label="Directory category" className="h-auto min-h-10 w-full max-w-sm [&>span]:line-clamp-none [&>span]:text-left">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">Everyone</SelectItem>
+            {PEOPLE_KINDS.map((k) => <SelectItem key={k} value={k}>{KIND_LABEL[k]}</SelectItem>)}
+          </SelectContent>
+        </Select>
+        <span className="text-xs tabular-nums text-ink-muted">{entryCount} {entryCount === 1 ? "entry" : "entries"}</span>
+      </div>
       {visible.length === 0 ? <p className="text-sm text-ink-muted">No one matches. Ask me in the conversation and I'll look more widely.</p> : (
         <div className="space-y-8">
           {visible.map(({ k, cs }) => {
