@@ -229,9 +229,9 @@ export type GroupKey = "superuser" | "admin" | "full" | "limited";
 /** Rights are shown as three simple levels, so the overview answers "who has what rights" at a glance. */
 export const GROUP_META: { key: GroupKey; title: string; explain: string }[] = [
   { key: "superuser", title: "Superuser", explain: "Everything, including restricting what each Admin may do." },
-  { key: "admin", title: "Admin", explain: "The whole portfolio and every paper — a Superuser may close particular colleagues to them." },
-  { key: "full", title: "Full Access", explain: "Every place, but only the papers and areas their work needs." },
-  { key: "limited", title: "Limited Access", explain: "Only the buildings or Units you've chosen — never the rest of the portfolio." },
+  { key: "admin", title: "Admin", explain: "All locations and every paper — a Superuser may close particular colleagues to them." },
+  { key: "full", title: "Full Access", explain: "All locations and every paper — without Admin rights." },
+  { key: "limited", title: "Limited Access", explain: "Only the places, papers and areas chosen for their work." },
 ];
 export const AREA_SHORT: Record<AreaId, string> = { papers: "Papers", people: "People", compliance: "Compliance", reading: "Reading" };
 export const initials = (p: Person) => p.name.split(/\s+/).filter(Boolean).slice(0, 2).map((x) => x[0]!.toUpperCase()).join("");
