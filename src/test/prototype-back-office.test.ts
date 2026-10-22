@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { routeRequest } from "@/pages/PrototypeBackOffice";
+import { COLLEAGUES, routeRequest } from "@/pages/PrototypeBackOffice";
 
 describe("back office routing", () => {
   it.each([
@@ -11,4 +11,12 @@ describe("back office routing", () => {
     ["Now add the managing agent's contact details.", "broker"],
   ])("%s → %s", (text, who) => expect(routeRequest(text)).toBe(who));
   it("asks when unclear", () => expect(routeRequest("hello")).toBeNull());
+
+  it("gives every colleague an area and a description for the menu reveal", () => {
+    for (const c of COLLEAGUES) {
+      expect(c.name).toMatch(/^The /);
+      expect(c.area.length).toBeGreaterThan(0);
+      expect(c.contribution.length).toBeGreaterThan(30);
+    }
+  });
 });
