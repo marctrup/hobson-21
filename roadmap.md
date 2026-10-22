@@ -1,5 +1,8 @@
 # Roadmap
 
+## Prototype Contacts — Places view removed
+- [x] Remove the Places view and its tab, leaving one directory with a search field; a place named in conversation now filters that directory. 8 checks pass; browser verified no Places control, filtered answers and unchanged person cards. Not published.
+
 ## Prototype Unit — compliance responsibilities and preferred contacts
 - [x] Add read-only Compliance Responsibilities and Preferred contacts sections at Unit Group and Unit level from one typed simulated module (scoped records, shared Legionella referenced not duplicated, Flat's plumbing exception overrides the group default, no dashboard/dates/statuses). Label renamed from "Legal responsibilities" to "Compliance Responsibilities" on request.
 - [x] Verify group, Gym and Flat views in the preview; 63 Prototype Unit checks pass and the build is clean. Not published.
