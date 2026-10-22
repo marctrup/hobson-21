@@ -74,7 +74,7 @@ export const TestimonialSection = () => (
               {t.quote}
             </blockquote>
             <figcaption
-              className="mt-6 pt-5 border-t flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.18em] mt-auto"
+              className="mt-auto pt-6 border-t flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.18em]"
               style={{ borderColor: "#D8CDB6", color: "#7A5C22" }}
             >
               <span
