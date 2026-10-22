@@ -210,7 +210,7 @@ export function PrototypeRecordsShell({ focus, opening, suggestions, respond, on
                     </div>
                     <Button variant="outline" size="sm" onClick={() => { setGroupOpen(false); setPlace(null); }}>Back to map</Button>
                   </div>
-                  {sections(null)}
+                  {renderSections(null)}
                   <ul aria-label="Units" className="divide-y divide-border rounded-lg border border-border bg-background">
                     {PLACE.units.map(u => (
                       <li key={u.number}>
