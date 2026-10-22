@@ -25,3 +25,14 @@ describe("compliance responsibilities prototype", () => {
     expect(out.filter?.group).toBe("mews");
   });
 });
+
+import { isCustom } from "@/pages/prototypeComplianceResponsibilities";
+describe("own renewal frequency", () => {
+  it("keeps the legal frequency and marks a business's own change", () => {
+    const r = INITIAL.find((x) => x.id === "gas-sh")!;
+    expect(isCustom(r)).toBe(false);
+    const edited = { ...r, frequency: "Every 6 months" };
+    expect(isCustom(edited)).toBe(true);
+    expect(edited.legalFrequency).toBe("Every 12 months");
+  });
+});
