@@ -138,9 +138,7 @@ export function LegalResponsibilitiesSection({ recordId, unit, groupName }: { re
             </p>
           )}
           <RequirementStack>
-            {shared.map(r => (
-              <RequirementRow key={r.id} requirement={r} origin={`Shared through ${groupName}`} />
-            ))}
+            {shared.map(r => <RequirementRow key={r.id} requirement={r} />)}
           </RequirementStack>
         </>
       )}
