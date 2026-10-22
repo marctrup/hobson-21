@@ -1,9 +1,10 @@
+import { Fragment } from "react";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { ArrowRight, FileText, Pencil, Plus, Lightbulb, MessageCircle, Paperclip, RotateCcw, Search, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import owlDefault from "@/assets/prototype/owl-default.png";
 import {
-  CATEGORIES, FREQUENCY_PRESETS, GROUPS, INITIAL, categoryLabel, interpret, isCustom, placeRows, where,
+  CATEGORIES, FREQUENCY_PRESETS, GROUPS, INITIAL, categoryLabel, interpret, isCustom, placeMatrix, placeRows, where,
   type Category, type Filter, type GroupId, type Pending, type Responsibility,
 } from "./prototypeComplianceResponsibilities";
 
@@ -112,31 +113,50 @@ function ByCategory({ rs, openId, setOpen, lit, save, remove }: { rs: Responsibi
   );
 }
 
-/** Simple list: each place and the compliance items it is liable for, grouped by category. */
+/** Coverage matrix: per Unit Group, each item (by category) against shared parts and each Unit. */
 function ByPlace({ rs, only }: { rs: Responsibility[]; only: GroupId | null }) {
-  const rows = placeRows(rs, only);
+  const blocks = placeMatrix(rs, only);
+  const tick = (on: boolean, label: string) => (
+    <td className="px-2 py-1.5 text-center">
+      {on ? <span role="img" aria-label={`Applies: ${label}`} className="mx-auto block h-2.5 w-2.5 rounded-full bg-primary" /> : <span aria-label={`Not applicable: ${label}`} className="mx-auto block h-px w-2.5 bg-faint-rule" />}
+    </td>
+  );
   return (
-    <div>
-      <Insight>Each place lists the compliance items it is responsible for, under their category.</Insight>
-      <ul className="grid">
-        {rows.map((row) => (
-          <li key={row.id} className={`grid gap-x-3 gap-y-1 border-b border-faint-rule py-2 [@container_comp_(min-width:44rem)]:grid-cols-[16rem_1fr] ${row.level === "unit" ? "pl-4" : "mt-1"}`}>
-            <span className={row.level === "unit" ? "text-sm text-ink-muted" : "text-sm font-medium text-ink"}>{row.label}</span>
-            {row.items.length ? (
-              <dl className="grid gap-1">
-                {row.items.map((it) => (
-                  <div key={it.category} className="grid gap-x-3 [@container_comp_(min-width:44rem)]:grid-cols-[9rem_1fr]">
-                    <dt className="text-xs uppercase tracking-wide text-ink-muted">{categoryLabel(it.category)}</dt>
-                    <dd className="text-sm text-ink">{it.names.join(" · ")}</dd>
-                  </div>
+    <div className="grid gap-5">
+      <Insight>Each place and what it is liable for. A dot means the item applies there; this view is drawn entirely from the recorded controls, so it updates as they do.</Insight>
+      {blocks.map((b) => (
+        <section key={b.id} aria-label={b.name} data-place-id={b.id} className="overflow-hidden rounded-lg bg-background ring-1 ring-bone">
+          <header className="flex items-baseline justify-between gap-3 border-b border-faint-rule px-4 py-2.5">
+            <h3 className="font-medium text-ink">{b.name}</h3>
+            <span className="text-xs text-ink-muted">{b.rows.length ? `${b.rows.length} item${b.rows.length === 1 ? "" : "s"}` : "Nothing recorded yet"}</span>
+          </header>
+          {b.rows.length > 0 && (
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="text-[10px] uppercase tracking-wider text-ink-muted">
+                    <th scope="col" className="px-4 py-2 text-left font-normal">Item</th>
+                    {b.columns.length > 0 && <th scope="col" className="px-2 py-2 font-normal">Shared</th>}
+                    {b.columns.map((u) => <th key={u} scope="col" className="whitespace-nowrap px-2 py-2 font-normal">{u}</th>)}
+                  </tr>
+                </thead>
+                {CATEGORIES.filter((c) => b.rows.some((r) => r.category === c.id)).map((c) => (
+                  <tbody key={c.id} data-category={c.id}>
+                    <tr><th colSpan={b.columns.length + 2} scope="colgroup" className="bg-paper px-4 py-1 text-left text-[11px] font-medium text-ink-muted">{c.label}</th></tr>
+                    {b.rows.filter((r) => r.category === c.id).map((r) => (
+                      <tr key={r.key} data-control-ids={r.controlIds.join(" ")} className="border-t border-faint-rule">
+                        <th scope="row" className="px-4 py-1.5 text-left font-normal text-ink">{r.name}</th>
+                        {b.columns.length > 0 && tick(r.shared, `${r.name}, shared parts`)}
+                        {b.columns.map((u) => <Fragment key={u}>{tick(r.units[u], `${r.name}, ${u}`)}</Fragment>)}
+                      </tr>
+                    ))}
+                  </tbody>
                 ))}
-              </dl>
-            ) : (
-              <span className="text-sm italic text-ink-muted">Nothing recorded yet</span>
-            )}
-          </li>
-        ))}
-      </ul>
+              </table>
+            </div>
+          )}
+        </section>
+      ))}
     </div>
   );
 }

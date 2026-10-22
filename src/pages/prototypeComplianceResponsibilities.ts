@@ -199,3 +199,29 @@ export function placeRows(rs: Responsibility[], only: GroupId | null = null): Pl
   if (!only) rows.push(build("portfolio", "Portfolio", "portfolio", (r) => r.group === "portfolio"));
   return rows;
 }
+
+/**
+ * Coverage matrix per Unit Group: one row per compliance item (grouped by category),
+ * one column for shared parts plus one per Unit. Derived only from the records, so any
+ * automated feed that updates records updates this view with no layout change.
+ */
+export type MatrixRow = { key: string; name: string; category: Category; controlIds: string[]; shared: boolean; units: Record<string, boolean> };
+export type PlaceMatrix = { id: string; name: string; columns: string[]; rows: MatrixRow[] };
+
+export function placeMatrix(rs: Responsibility[], only: GroupId | null = null): PlaceMatrix[] {
+  const blocks: { id: string; name: string; units: string[] }[] = GROUPS.filter((g) => !only || g.id === only);
+  if (!only) blocks.push({ id: "portfolio", name: "Portfolio", units: [] });
+  return blocks.map((b) => {
+    const mine = rs.filter((r) => r.group === b.id);
+    const rows: MatrixRow[] = [];
+    for (const c of CATEGORIES) {
+      for (const name of [...new Set(mine.filter((r) => r.category === c.id).map((r) => r.name))]) {
+        const recs = mine.filter((r) => r.category === c.id && r.name === name);
+        const units = Object.fromEntries(b.units.map((u) => [u, recs.some((r) => covers(r.appliesTo, u))]));
+        const shared = recs.some((r) => GROUP_WIDE.some((w) => r.appliesTo.toLowerCase().includes(w)) || !b.units.some((u) => covers(r.appliesTo, u)));
+        rows.push({ key: `${b.id}:${c.id}:${name}`, name, category: c.id, controlIds: recs.map((r) => r.id), shared, units });
+      }
+    }
+    return { id: b.id, name: b.name, columns: b.units, rows };
+  });
+}
