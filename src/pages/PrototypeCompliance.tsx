@@ -133,7 +133,8 @@ const PAGE = 12;
 function PlaceCard({ p }: { p: ReturnType<typeof placeLiabilities>[number] }) {
   const [q, setQ] = useState("");
   const [all, setAll] = useState(false);
-  const [open, setOpen] = useState(p.units.length <= PAGE); // large blocks start folded so 500+ Units stay navigable
+  const big = p.units.length > PAGE;
+  const [open, setOpen] = useState(!big); // large blocks start folded so 500+ Units stay navigable
   const searching = q.trim().length > 0;
   const shown = open || searching;
   const matches = p.units.filter((u) => !q || u.unit.toLowerCase().includes(q.toLowerCase()) || u.items.some((i) => i.names.some((n) => n.toLowerCase().includes(q.toLowerCase()))));
