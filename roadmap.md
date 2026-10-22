@@ -1,8 +1,8 @@
 # Roadmap
 
 ## Homepage — customer testimonials
-- [x] Add a quiet testimonial band between the benefits and the closing invitation, carrying only the two supplied remarks and their supplied attributions.
-- [x] Verify wording, attributions, placement, both widths and label contrast in the preview; homepage checks pass and the build is clean. Not published.
+- [x] Redesign as two equal remarks (no ranked weight) with the user's new attributions ("CEO of a Family Office", "CEO of a large central London commercial agent"); two columns on desktop, stacked on mobile.
+- [x] Verify wording, attributions, placement, both widths in the preview; homepage checks pass and the build is clean. Not published.
 
 
 ## Prototype Work — ongoing and completed overview
