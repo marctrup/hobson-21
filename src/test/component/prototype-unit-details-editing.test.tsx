@@ -20,7 +20,7 @@ const base = () => { const result = proposeCounts(11, 1); if (result.kind !== "p
 describe("Current Unit drafts and photographs", () => {
   it("copies Flat 2's unsaved description exactly to Flats 4, 6 and 8 and saves the source", async () => {
     const user = userEvent.setup(); render(<Harness />);
-    await user.click(screen.getByRole("button", { name: "All Units in Stanley House" }));
+    await user.click(screen.getByRole("button", { name: "Back to all Units" }));
     await user.click(screen.getByRole("button", { name: "Open Flat 2" }));
     const text = "Two-bedroom flat with a fitted kitchen.";
     await user.type(screen.getByLabelText("Description"), text);
@@ -36,7 +36,7 @@ describe("Current Unit drafts and photographs", () => {
     await user.click(screen.getByRole("button", { name: "Save" }));
     expect(records()[3].details?.description).toBe(text);
     for (const n of [4, 6, 8]) {
-      await user.click(screen.getByRole("button", { name: "All Units in Stanley House" }));
+      await user.click(screen.getByRole("button", { name: "Back to all Units" }));
       await user.click(screen.getByRole("button", { name: `Open Flat ${n}` }));
       expect(screen.getByLabelText("Description")).toHaveValue(text);
     }
@@ -79,10 +79,10 @@ describe("Current Unit drafts and photographs", () => {
     await user.upload(screen.getByLabelText("Choose photographs for Flat 1"), files);
     await waitFor(() => expect(records()[0].photos).toHaveLength(3));
     await user.click(screen.getByRole("button", { name: "Make photo-2.png main photograph" }));
-    await user.click(screen.getByRole("button", { name: "All Units in Stanley House" }));
+    await user.click(screen.getByRole("button", { name: "Back to all Units" }));
     await user.click(screen.getByRole("button", { name: "Open Flat 3" }));
     expect(screen.queryByRole("img", { name: "photo-2.png" })).toBeNull();
-    await user.click(screen.getByRole("button", { name: "All Units in Stanley House" }));
+    await user.click(screen.getByRole("button", { name: "Back to all Units" }));
     await user.click(screen.getByRole("button", { name: "Open Flat 1" }));
     expect(screen.getByRole("button", { name: "Make photo-2.png main photograph" })).toHaveAttribute("aria-pressed", "true");
     expect(mainUnitPhoto(records()[0])?.name).toBe("photo-2.png");
