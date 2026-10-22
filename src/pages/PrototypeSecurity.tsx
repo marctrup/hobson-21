@@ -182,9 +182,9 @@ function PersonCard({ p, onOpen, lit, scope }: { p: Person; onOpen: () => void; 
   return (
     <li>
       <button type="button" onClick={onOpen} aria-label={`Open ${p.name}'s access`} className={`group flex h-full w-full flex-col gap-3 rounded-xl bg-background p-4 text-left ring-1 transition duration-200 hover:-translate-y-0.5 hover:shadow-[0_14px_28px_-22px_rgba(45,45,45,0.55)] hover:ring-primary/40 focus:outline-none focus-visible:ring-2 focus-visible:ring-ring ${lit ? "bg-primary/[0.04] ring-primary/60" : "ring-bone"}`}>
-        <span className="flex items-start gap-3">
+        <span className="flex flex-wrap items-start gap-x-3 gap-y-1.5">
           <span aria-hidden className={`grid h-10 w-10 shrink-0 place-items-center rounded-full text-xs font-semibold tracking-wide ${monogramTone(p)}`}>{initials(p)}</span>
-          <span className="min-w-0 flex-1">
+          <span className="min-w-0 flex-1 basis-40">
             <span className="flex flex-wrap items-baseline gap-x-2">
               <span className="truncate font-serif text-[17px] leading-snug text-ink">{p.name}</span>
               {p.superuser && <span className="rounded-full bg-primary px-2 py-0.5 text-[9px] uppercase tracking-[0.14em] text-primary-foreground">Superuser</span>}
