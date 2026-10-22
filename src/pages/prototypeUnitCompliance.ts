@@ -1,9 +1,9 @@
-// Simulated legal responsibilities and preferred contacts for the Map workspace.
+// Simulated compliance responsibilities and preferred contacts for the Map workspace.
 // All records are illustrative, user-recorded information — never Hobson's legal
 // assessment, never inferred from a Unit's classification, and never given
 // statutory intervals, due dates, statuses or certificates.
 
-// --- Legal responsibilities -------------------------------------------------
+// --- Compliance Responsibilities --------------------------------------------
 
 export type RequirementScope =
   | { kind: "group" } // recorded for the Unit Group itself (e.g. shared areas)

@@ -7,7 +7,7 @@ import {
 const PARAGON = "demo-paragon-centre";
 const NAME = "The Paragon Centre";
 
-describe("legal responsibilities", () => {
+describe("compliance responsibilities", () => {
   it("shows the two recorded requirements at Unit Group level", () => {
     const rows = groupRequirements(PARAGON);
     expect(rows.map(r => `${r.name} — ${r.frequency}`)).toEqual(["Legionella — Every 12 months", "Fire alarm servicing — Quarterly"]);

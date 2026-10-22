@@ -107,8 +107,8 @@ export function LegalResponsibilitiesSection({ recordId, unit, groupName }: { re
     return (
       <CollapsibleSection
         className={sectionCls} headerClassName={headerCls} contentClassName={contentCls}
-        ariaLabel="Legal responsibilities"
-        summary={<SectionTitle title="Legal responsibilities" summary={`${requirements.length} recorded requirement${requirements.length === 1 ? "" : "s"}`} />}
+        ariaLabel="Compliance Responsibilities"
+        summary={<SectionTitle title="Compliance Responsibilities" summary={`${requirements.length} recorded requirement${requirements.length === 1 ? "" : "s"}`} />}
       >
         <RequirementStack>
           {requirements.map(r => <RequirementRow key={r.id} requirement={r} />)}
@@ -122,8 +122,8 @@ export function LegalResponsibilitiesSection({ recordId, unit, groupName }: { re
   return (
     <CollapsibleSection
       className={sectionCls} headerClassName={headerCls} contentClassName={contentCls}
-      ariaLabel="Legal responsibilities"
-      summary={<SectionTitle title="Legal responsibilities" summary={`${own.length + shared.length} recorded requirement${own.length + shared.length === 1 ? "" : "s"}`} />}
+      ariaLabel="Compliance Responsibilities"
+      summary={<SectionTitle title="Compliance Responsibilities" summary={`${own.length + shared.length} recorded requirement${own.length + shared.length === 1 ? "" : "s"}`} />}
     >
       {own.length > 0 && (
         <RequirementStack>
