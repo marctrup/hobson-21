@@ -11,13 +11,13 @@ export const GROUPS: { id: GroupId; name: string; units: string[] }[] = [
 export const groupName = (g: GroupId) => GROUPS.find((x) => x.id === g)!.name;
 
 export type Scope = { kind: "portfolio" } | { kind: "group"; group: GroupId } | { kind: "unit"; group: GroupId; unit: string };
-export type Kind = "contractor" | "legal" | "accounting" | "design" | "team" | "adviser" | "landlord" | "tenant" | "other";
+export type Kind = "contractor" | "legal" | "accounting" | "design" | "team" | "adviser" | "landlord" | "tenant" | "occupant" | "other";
 export type Contact = { id: string; person: string | null; org: string | null; kind: Kind; phones: string[]; email: string | null };
 /** service is the matter looked after (Plumbing, Legal advice…); role is how they relate (Preferred contractor, Tenant…). */
 export type Relation = { id: string; contactId: string; role: string; service: string | null; scope: Scope };
 export type Directory = { contacts: Contact[]; relations: Relation[] };
 
-export const KIND_LABEL: Record<Kind, string> = { contractor: "Contractors", legal: "Legal services", accounting: "Accounting services", design: "Architectural and surveying services", team: "Staff", adviser: "Other advisers", landlord: "Landlords", tenant: "Tenants", other: "Others" };
+export const KIND_LABEL: Record<Kind, string> = { contractor: "Contractors", legal: "Legal services", accounting: "Accounting services", design: "Architectural and surveying services", team: "Staff", adviser: "Other advisers", landlord: "Landlords", tenant: "Tenants", occupant: "Occupants' contacts", other: "Others" };
 
 const rel = (contactId: string, role: string, service: string | null, scope: Scope): Relation => ({ id: `${contactId}:${role}:${service ?? ""}:${scopeKey(scope)}`, contactId, role, service, scope });
 export const scopeKey = (s: Scope) => (s.kind === "portfolio" ? "portfolio" : s.kind === "group" ? s.group : `${s.group}/${s.unit}`);
@@ -33,6 +33,8 @@ export const INITIAL_DIRECTORY: Directory = {
     { id: "clarke-accountancy", person: "Raj Patel", org: "Clarke Accountancy", kind: "accounting", phones: ["020 7946 0588"], email: "raj@clarkeaccountancy.co.uk" },
     { id: "foster-architects", person: "Nina Foster", org: "Foster Architects", kind: "design", phones: ["020 7946 0264"], email: null },
     { id: "ruth-okoye", person: "Ruth Okoye", org: null, kind: "team", phones: ["07700 900271"], email: "ruth.okoye@example.com" },
+    { id: "maya-singh", person: "Maya Singh", org: "Arden Studio", kind: "occupant", phones: ["07700 900318"], email: "office@ardenstudio.example" },
+    { id: "leo-grant", person: "Leo Grant", org: null, kind: "occupant", phones: ["07700 900562"], email: null },
     { id: "ashdown", person: "Helen Carr", org: "Ashdown Estates", kind: "landlord", phones: [], email: "helen.carr@ashdownestates.co.uk" },
   ],
   relations: [
@@ -45,6 +47,8 @@ export const INITIAL_DIRECTORY: Directory = {
     rel("clarke-accountancy", "Accountant", "Accounting", { kind: "portfolio" }),
     rel("foster-architects", "Architect", "Architecture", { kind: "group", group: "burlington" }),
     rel("ruth-okoye", "Property administrator", "Administration", { kind: "portfolio" }),
+    rel("maya-singh", "Occupant contact", "Office manager", { kind: "unit", group: "burlington", unit: "Ground Floor" }),
+    rel("leo-grant", "Occupant contact", "Day-to-day access", { kind: "unit", group: "nugent", unit: "Flat 2" }),
     rel("ashdown", "Landlord", null, { kind: "group", group: "burlington" }),
   ],
 };

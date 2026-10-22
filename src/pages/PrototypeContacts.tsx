@@ -136,7 +136,7 @@ function ContactRow({ c, d, onOpen, lit }: { c: Contact; d: Directory; onOpen: (
 }
 
 function People({ d, open, lit }: { d: Directory; open: (id: string) => void; lit: Set<string> }) {
-  const kinds: Kind[] = ["contractor", "legal", "accounting", "design", "team", "adviser", "landlord", "tenant", "other"];
+  const kinds: Kind[] = ["contractor", "legal", "accounting", "design", "team", "adviser", "landlord", "tenant", "occupant", "other"];
   return (
     <div className="grid gap-8 [@container_contacts_(min-width:52rem)]:grid-cols-2">
       {kinds.map((k) => { const cs = d.contacts.filter((c) => c.kind === k); if (!cs.length) return null; return (
