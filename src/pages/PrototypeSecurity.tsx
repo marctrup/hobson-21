@@ -6,7 +6,7 @@ import {
   AREAS, FAMILIES, GROUPS, PAGE, PRESETS, type Access, type AreaId, type Level, type Person, type SecState,
   accessGroups, diff, firstName, glance, groupName, initialState, interpret, isRestricted, levelLabel, matchesQuery, paperLine,
   peopleForArea, peopleForPlace, placeLines, reviewInvite, saveDraft, setAllPapers, setArea, setFamily, setGroup, setPortfolio, setType, setUnit,
-  typesFor, isTop, rankLabel, unreadablePapers, COLLEAGUES, setColleague, unitsFor, visiblePeople, visiblePapers,
+  typesFor, isTop, rankLabel, COLLEAGUES, setColleague, unitsFor, visiblePeople, visiblePapers,
 } from "./prototypeSecurityAccess";
 
 // Prototype Security: the Superuser tells Hobson who should reach what; Hobson explains and asks before saving.
