@@ -85,7 +85,7 @@ export type Pending =
   | { kind: "same"; draft: Draft; candidateId: string }
   | { kind: "who"; group: GroupId; unit: string; service: string }
   | { kind: "phone"; contactId: string };
-export type Tab = "people" | "services" | "places";
+export type Tab = "people" | "places";
 export type ViewChange = { tab?: Tab; focusContact?: string | null; focusGroup?: GroupId | null; highlight?: string[] };
 export type Outcome = { reply: string; pending: Pending | null; directory?: Directory; view?: ViewChange; choices?: string[] };
 
