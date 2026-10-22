@@ -151,35 +151,39 @@ const PEOPLE_KINDS: Kind[] = ["contractor", "legal", "accounting", "design", "te
 const PREVIEW = 5;
 
 function People({ d, open, lit, q }: { d: Directory; open: (id: string) => void; lit: Set<string>; q: string }) {
+  const [kind, setKind] = useState<Kind | "all">("all");
   const [expanded, setExpanded] = useState<Set<Kind>>(new Set());
   const shown = d.contacts.filter((c) => matchesQuery(d, c, q));
   const groups = PEOPLE_KINDS.map((k) => ({ k, cs: shown.filter((c) => c.kind === k).sort((a, b) => contactName(a).localeCompare(contactName(b))) })).filter((g) => g.cs.length);
-  const noDetails = d.contacts.filter((c) => !c.phones.length && !c.email).length;
-  const jump = (k: Kind) => document.getElementById(`people-${k}`)?.scrollIntoView({ behavior: "smooth", block: "start" });
+  const visible = kind === "all" ? groups : groups.filter((g) => g.k === kind);
+  const Pill = ({ k, label, n }: { k: Kind | "all"; label: string; n: number }) => (
+    <button type="button" aria-pressed={kind === k} onClick={() => setKind(k)} className={`flex shrink-0 items-center gap-1.5 rounded-full px-3 py-1 text-xs transition ${kind === k ? "bg-ink text-background" : "bg-background text-ink ring-1 ring-bone hover:bg-paper"}`}>
+      {label}<span className={`tabular-nums ${kind === k ? "opacity-70" : "text-ink-muted"}`}>{n}</span>
+    </button>
+  );
   return (
     <div>
-      <Insight>{q ? `${shown.length} of ${d.contacts.length} match “${q}”.` : <>I know <b className="font-semibold">{d.contacts.length}</b> people and organisations across {PEOPLE_KINDS.filter((k) => d.contacts.some((c) => c.kind === k)).length} kinds of work.{noDetails ? ` ${noDetails} ${noDetails === 1 ? "has" : "have"} no telephone or email yet.` : ""}</>}</Insight>
-      <div className={`grid gap-8 [@container_contacts_(min-width:44rem)]:grid-cols-[12rem_minmax(0,1fr)]`}>
-        <nav aria-label="Kinds of people" className={`flex min-w-0 flex-wrap gap-1.5 [@container_contacts_(min-width:44rem)]:sticky [@container_contacts_(min-width:44rem)]:top-0 [@container_contacts_(min-width:44rem)]:flex-col [@container_contacts_(min-width:44rem)]:self-start [@container_contacts_(min-width:44rem)]:gap-0.5`}>
-          {groups.map(({ k, cs }) => <button key={k} type="button" onClick={() => jump(k)} className={`flex min-w-0 items-center justify-between gap-3 rounded-full bg-background px-3 py-1 text-left text-xs text-ink ring-1 ring-bone hover:bg-paper [@container_contacts_(min-width:44rem)]:w-full [@container_contacts_(min-width:44rem)]:rounded-md [@container_contacts_(min-width:44rem)]:bg-transparent [@container_contacts_(min-width:44rem)]:px-2 [@container_contacts_(min-width:44rem)]:py-1.5 [@container_contacts_(min-width:44rem)]:ring-0`}><span className="min-w-0 leading-snug">{KIND_LABEL[k]}</span><span className="shrink-0 tabular-nums text-ink-muted">{cs.length}</span></button>)}
-        </nav>
-        <div className="grid gap-7">
-          {groups.length === 0 && <p className="text-sm text-ink-muted">No one matches. Ask me in the conversation and I'll look more widely.</p>}
-          {groups.map(({ k, cs }) => {
-            const all = !!q || expanded.has(k) || cs.length <= PREVIEW + 1;
+      <nav aria-label="Kinds of people" className="mb-5 flex flex-wrap gap-1.5">
+        <Pill k="all" label="Everyone" n={shown.length} />
+        {groups.map(({ k, cs }) => <Pill key={k} k={k} label={KIND_LABEL[k]} n={cs.length} />)}
+      </nav>
+      {visible.length === 0 ? <p className="text-sm text-ink-muted">No one matches. Ask me in the conversation and I'll look more widely.</p> : (
+        <div className="overflow-hidden rounded-xl bg-background ring-1 ring-bone">
+          <div className="hidden grid-cols-[auto_minmax(0,1.3fr)_minmax(0,1fr)_minmax(0,1fr)_auto] gap-x-3 border-b border-faint-rule px-4 py-2 text-[10px] uppercase tracking-wider text-ink-muted [@container_contacts_(min-width:44rem)]:grid">
+            <span className="w-8" /><span>Name</span><span>What</span><span>Where</span><span className="w-10" />
+          </div>
+          {visible.map(({ k, cs }) => {
+            const all = !!q || kind !== "all" || expanded.has(k) || cs.length <= PREVIEW + 1;
             return (
-              <section key={k} id={`people-${k}`} aria-label={KIND_LABEL[k]} className="scroll-mt-4">
-                <div className="mb-1 flex items-baseline justify-between border-b border-faint-rule pb-1.5">
-                  <h3 className="text-[11px] font-medium uppercase tracking-[0.12em] text-ink-muted">{KIND_LABEL[k]}</h3>
-                  <span className={`hidden gap-6 text-[10px] uppercase tracking-wider text-ink-muted/70 [@container_contacts_(min-width:44rem)]:flex`}><span>What</span><span>Where</span></span>
-                </div>
-                <ul className="-mx-2 grid">{(all ? cs : cs.slice(0, PREVIEW)).map((c) => <ContactRow key={c.id} c={c} d={d} onOpen={() => open(c.id)} lit={relationsOf(d, c.id).some((r) => lit.has(r.id))} />)}</ul>
-                {!all && <button type="button" onClick={() => setExpanded((s) => new Set(s).add(k))} className="mt-1 text-xs font-medium text-primary hover:underline">Show all {cs.length}</button>}
+              <section key={k} aria-label={KIND_LABEL[k]}>
+                {kind === "all" && <h3 className="bg-paper/60 px-4 py-1.5 text-[11px] font-medium uppercase tracking-[0.12em] text-ink-muted">{KIND_LABEL[k]}</h3>}
+                <ul className="grid divide-y divide-faint-rule px-2">{(all ? cs : cs.slice(0, PREVIEW)).map((c) => <ContactRow key={c.id} c={c} d={d} onOpen={() => open(c.id)} lit={relationsOf(d, c.id).some((r) => lit.has(r.id))} />)}</ul>
+                {!all && <button type="button" onClick={() => setExpanded((s) => new Set(s).add(k))} className="px-4 pb-2 text-xs font-medium text-primary hover:underline">Show all {cs.length}</button>}
               </section>
             );
           })}
         </div>
-      </div>
+      )}
     </div>
   );
 }
