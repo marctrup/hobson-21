@@ -36,3 +36,40 @@ describe("own renewal frequency", () => {
     expect(edited.legalFrequency).toBe("Every 12 months");
   });
 });
+
+import { placeRows, categoryLabel } from "@/pages/prototypeComplianceResponsibilities";
+
+describe("places listed by category", () => {
+  const rows = placeRows(INITIAL);
+  const cats = (label: string) => rows.find((r) => r.label === label)!.categories.map(categoryLabel);
+  it("lists every Unit Group and Unit in order", () => {
+    expect(rows.map((r) => r.label)).toEqual([
+      "Stanley House", "Flats 1–8",
+      "5 Nugent Terrace", "Shop", "Flat 1", "Flat 2",
+      "Burlington Gardens", "Ground Floor", "Upper Floors",
+      "Stanley Mews", "No. 1", "No. 2",
+      "Portfolio",
+    ]);
+  });
+  it("gives each place only the categories it needs", () => {
+    expect(cats("Stanley House")).toEqual(["Health & Safety", "Licences", "Accounting", "Notices"]);
+    expect(cats("5 Nugent Terrace")).toEqual(["Health & Safety", "Licences"]);
+    expect(cats("Shop")).toEqual(["Health & Safety"]);
+    expect(cats("Flat 1")).toEqual(["Health & Safety", "Licences"]);
+    expect(cats("Ground Floor")).toEqual(["Health & Safety", "Licences"]);
+    expect(cats("Upper Floors")).toEqual(["Health & Safety", "Notices"]);
+    expect(cats("Portfolio")).toEqual(["Accounting"]);
+  });
+  it("shows nothing for a place with no controls recorded", () => {
+    rows.filter((r) => r.id.startsWith("mews")).forEach((r) => expect(r.categories).toEqual([]));
+  });
+  it("counts a control for one flat against the block of flats it belongs to", () => {
+    const base = INITIAL.find((r) => r.id === "hmo-sh")!;
+    expect(placeRows([{ ...base, id: "hmo-6", appliesTo: "Flat 6" }]).find((r) => r.label === "Flats 1–8")!.categories.map(categoryLabel)).toEqual(["Licences"]);
+    expect(placeRows([{ ...base, id: "hmo-9", appliesTo: "Flat 9" }]).find((r) => r.label === "Flats 1–8")!.categories.map(categoryLabel)).toEqual([]);
+  });
+  it("shows one Unit Group alone when one is selected", () => {
+    const one = placeRows(INITIAL, "mews");
+    expect(one.map((r) => r.label)).toEqual(["Stanley Mews", "No. 1", "No. 2"]);
+  });
+});

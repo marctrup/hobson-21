@@ -160,3 +160,37 @@ export function interpret(rs: Responsibility[], pending: Pending, raw: string): 
   if (/all|everything|portfolio|clear|reset/.test(s)) return { reply: "Here is everything across the portfolio.", filter: { group: null, position: null }, pending: null };
   return { reply: "I'm not sure I follow. You could ask about a place, what's coming up, what needs attention, or a particular control such as gas safety.", pending: null };
 }
+
+/** The usual label for a category. */
+export const categoryLabel = (c: Category) => CATEGORIES.find((x) => x.id === c)!.label;
+
+/** Scopes that cover every unit at a place rather than one named unit. */
+const GROUP_WIDE = ["whole building", "common parts", "portfolio", "any periodic tenancy", "all units"];
+const escapeRe = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+/** Does a recorded control's scope cover this unit? */
+function covers(appliesTo: string, unit: string): boolean {
+  const a = appliesTo.toLowerCase();
+  if (GROUP_WIDE.some((w) => a.includes(w))) return true;
+  if (new RegExp(`\\b${escapeRe(unit.toLowerCase())}\\b`).test(a)) return true;
+  const range = /flats?\s*(\d+)[–-](\d+)/i.exec(unit);
+  const flat = /flat\s*(\d+)/i.exec(appliesTo);
+  return !!range && !!flat && +flat[1] >= +range[1] && +flat[1] <= +range[2];
+}
+
+/** Simple list of places — each Unit Group, its Units, then the portfolio — with the categories each needs. */
+export type PlaceRow = { id: string; label: string; level: "group" | "unit" | "portfolio"; categories: Category[] };
+
+export function placeRows(rs: Responsibility[], only: GroupId | null = null): PlaceRow[] {
+  const held = (pred: (r: Responsibility) => boolean) =>
+    CATEGORIES.filter((c) => rs.some((r) => r.category === c.id && pred(r))).map((c) => c.id);
+  const rows: PlaceRow[] = [];
+  for (const g of GROUPS) {
+    if (only && g.id !== only) continue;
+    rows.push({ id: g.id, label: g.name, level: "group", categories: held((r) => r.group === g.id) });
+    for (const u of g.units)
+      rows.push({ id: `${g.id}-${u}`, label: u, level: "unit", categories: held((r) => r.group === g.id && covers(r.appliesTo, u)) });
+  }
+  if (!only) rows.push({ id: "portfolio", label: "Portfolio", level: "portfolio", categories: held((r) => r.group === "portfolio") });
+  return rows;
+}

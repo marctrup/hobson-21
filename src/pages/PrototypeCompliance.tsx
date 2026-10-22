@@ -3,7 +3,7 @@ import { ArrowRight, FileText, Pencil, Plus, Lightbulb, MessageCircle, Paperclip
 import { Button } from "@/components/ui/button";
 import owlDefault from "@/assets/prototype/owl-default.png";
 import {
-  CATEGORIES, FREQUENCY_PRESETS, GROUPS, INITIAL, interpret, isCustom, where,
+  CATEGORIES, FREQUENCY_PRESETS, GROUPS, INITIAL, categoryLabel, interpret, isCustom, placeRows, where,
   type Category, type Filter, type GroupId, type Pending, type Responsibility,
 } from "./prototypeComplianceResponsibilities";
 
@@ -112,29 +112,20 @@ function ByCategory({ rs, openId, setOpen, lit, save, remove }: { rs: Responsibi
   );
 }
 
-/** Chart in the Services style: categories down the side, places across the top. */
-function ByPlace({ rs, all, only, pick }: { rs: Responsibility[]; all: Responsibility[]; only: GroupId | null; pick: (g: GroupId | null, c: Category) => void }) {
-  const cols: (GroupId | "portfolio")[] = only ? [only] : [...GROUPS.map((g) => g.id), "portfolio"];
-  const label = (g: GroupId | "portfolio") => (g === "portfolio" ? "Portfolio" : GROUPS.find((x) => x.id === g)!.name);
-  const empty = GROUPS.filter((g) => cols.includes(g.id) && !all.some((r) => r.group === g.id));
+/** Simple list: each place and the categories of compliance it needs. */
+function ByPlace({ rs, only }: { rs: Responsibility[]; only: GroupId | null }) {
+  const rows = placeRows(rs, only);
   return (
     <div>
-      <Insight>Each cell shows the controls held for that place, with the frequency you've set.{empty.length ? <> I have nothing recorded for <b className="font-semibold">{empty.map((g) => g.name).join(", ")}</b> — shown with a dashed line.</> : ""}</Insight>
-      <div className="-mx-1 overflow-x-auto px-1">
-        <table className="w-full min-w-[40rem] border-separate border-spacing-0 text-left">
-          <thead><tr><th className="sticky left-0 bg-bone-wash pb-2 pr-3 text-[10px] font-medium uppercase tracking-wider text-ink-muted">Category</th>{cols.map((g) => <th key={g} className="pb-2 pr-2 text-[11px] font-medium text-ink">{label(g)}</th>)}</tr></thead>
-          <tbody>{CATEGORIES.map((c) => (
-            <tr key={c.id}>
-              <th scope="row" className="sticky left-0 border-t border-faint-rule bg-bone-wash py-2.5 pr-3 align-top text-sm font-medium text-ink">{c.label}</th>
-              {cols.map((g) => { const items = rs.filter((r) => r.category === c.id && r.group === g); return (
-                <td key={g} className="border-t border-faint-rule py-2 pr-2 align-top">
-                  {items.length ? items.map((r) => <button key={r.id} type="button" onClick={() => pick(g === "portfolio" ? null : g, c.id)} className="flex max-w-full items-center gap-1.5 rounded px-1 py-0.5 text-left text-xs text-ink hover:bg-paper"><span className="truncate">{r.name}</span><span className="shrink-0 text-[10px] text-ink-muted">{r.frequency}</span></button>)
-                    : g !== "portfolio" && empty.some((e) => e.id === g) ? <span className="inline-block rounded border border-dashed border-ink-muted/40 px-1.5 text-[11px] text-ink-muted">Nothing held</span>
-                    : <span className="px-1 text-xs text-ink-muted/40" aria-label="Nothing recorded">·</span>}
-                </td>); })}
-            </tr>))}</tbody>
-        </table>
-      </div>
+      <Insight>A category appears against a place only where a control is recorded for it.</Insight>
+      <ul className="grid">
+        {rows.map((row) => (
+          <li key={row.id} className={`grid gap-x-3 gap-y-0.5 border-b border-faint-rule py-2 [@container_comp_(min-width:44rem)]:grid-cols-[16rem_1fr] ${row.level === "unit" ? "pl-4" : "mt-1"}`}>
+            <span className={row.level === "unit" ? "text-sm text-ink-muted" : "text-sm font-medium text-ink"}>{row.label}</span>
+            <span className={row.categories.length ? "text-sm text-ink" : "text-sm italic text-ink-muted"}>{row.categories.length ? row.categories.map(categoryLabel).join(" · ") : "Nothing recorded yet"}</span>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
@@ -267,7 +258,7 @@ export default function PrototypeCompliance() {
               <Button size="sm" variant="outline" onClick={addItem}><Plus className="mr-1.5 h-3.5 w-3.5" />Add a control</Button>
             </div>
             {tab === "categories" && <ByCategory rs={shown} openId={openId} setOpen={setOpenId} lit={lit} save={saveItem} remove={(id) => { setRs((x) => x.filter((r) => r.id !== id)); setOpenId(null); }} />}
-            {tab === "places" && <ByPlace rs={shown} all={rs} only={filter.group} pick={(g) => { setFilter((f) => ({ ...f, group: g })); setTab("categories"); }} />}
+            {tab === "places" && <ByPlace rs={shown} only={filter.group} />}
           </div>
         </div>
       </main>
