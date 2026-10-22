@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
-import { ArrowLeft, ArrowRight, ChevronRight, Eye, FileText, Lightbulb, MessageCircle, Pencil, Plus, RotateCcw, Search, Shield, X } from "lucide-react";
+import { ArrowLeft, ArrowRight, ChevronRight, Eye, Lightbulb, MessageCircle, RotateCcw, Search, Shield, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import owlDefault from "@/assets/prototype/owl-default.png";
 import {
-  AREAS, FAMILIES, GROUPS, PAGE, PRESETS, type Access, type AreaId, type Chip, type Level, type Person, type SecState,
-  AREA_SHORT, accessGroups, areaChips, diff, firstName, glance, groupName, initials, initialState, interpret, isRestricted, levelLabel, matchesQuery, paperChip, paperLine,
-  peopleForArea, peopleForPlace, placeChips, placeLines, reviewInvite, saveDraft, setAllPapers, setArea, setFamily, setGroup, setPortfolio, setType, setUnit,
+  AREAS, FAMILIES, GROUPS, PAGE, PRESETS, type Access, type AreaId, type Level, type Person, type SecState,
+  accessGroups, diff, firstName, glance, groupName, initialState, interpret, isRestricted, levelLabel, matchesQuery, paperLine,
+  peopleForArea, peopleForPlace, placeLines, reviewInvite, saveDraft, setAllPapers, setArea, setFamily, setGroup, setPortfolio, setType, setUnit,
   summarise, typesFor, unitsFor, visiblePeople, visiblePapers,
 } from "./prototypeSecurityAccess";
 
@@ -30,12 +30,6 @@ const TRY: { label: string; text: string }[] = [
 
 const ring = "rounded-xl bg-background ring-1 ring-bone";
 
-const monogramTone = (p: Person) =>
-  p.status === "invited" ? "border border-dashed border-bone-strong bg-background text-ink-muted"
-    : p.status === "suspended" ? "bg-bone text-ink-muted"
-      : p.superuser ? "bg-primary text-primary-foreground"
-        : p.access.portfolio ? "bg-secondary text-ink"
-          : "bg-background text-charcoal ring-1 ring-bone-strong";
 
 function Check({ on, part, label, onChange }: { on: boolean; part?: boolean; label: string; onChange: (v: boolean) => void }) {
   return (
