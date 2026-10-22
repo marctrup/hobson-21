@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { canSeeUnit, initialState, interpret, isRestricted, peopleForPlace, setUnit, visiblePapers, typesFor, INITIAL_PEOPLE } from "@/pages/prototypeSecurityAccess";
+import { accessGroups, areaChips, canSeeUnit, groupKeyFor, initialState, interpret, isRestricted, paperChip, peopleForPlace, placeChips, setUnit, typesFor, visiblePeople, visiblePapers, INITIAL_PEOPLE, type Person } from "@/pages/prototypeSecurityAccess";
 
 const say = (texts: string[]) => texts.reduce((s, t) => interpret(s, t).state, initialState());
 const person = (s: ReturnType<typeof initialState>, id: string) => s.people.find((p) => p.id === id)!;
@@ -67,5 +67,32 @@ describe("prototype security", () => {
     const rows = peopleForPlace(initialState().people, "burlington");
     expect(rows.find((r) => r.person.id === "emily")!.scope).toBe("Unit 1 and Unit 2");
     expect(rows.find((r) => r.person.id === "james")!.scope).toBe("All 4 Units");
+  });
+  it("groups people by what their access actually means", () => {
+    const active = INITIAL_PEOPLE.filter((p) => p.status !== "invited");
+    expect(accessGroups(active).map((g) => [g.key, g.people.length])).toEqual([["superuser", 2], ["portfolio", 2], ["places", 4]]);
+    const nobody: Person = { id: "x", name: "New Contractor", role: "Contractor", email: "n@example.co.uk", status: "active", access: { portfolio: false, groups: {}, papers: [], areas: { papers: "none", people: "none", compliance: "none", reading: "none" } } };
+    expect(groupKeyFor(nobody)).toBe("none");
+  });
+  it("finds people by place, role or area without matching everyone", () => {
+    const active = INITIAL_PEOPLE.filter((p) => p.status !== "invited");
+    expect(accessGroups(active, "flat 8").flatMap((g) => g.people.map((p) => p.name))).toEqual(["Tom Walsh"]);
+    expect(accessGroups(active, "solicitor").flatMap((g) => g.people.map((p) => p.name))).toEqual(["Emily Clarke"]);
+    const compliance = accessGroups(active, "compliance").flatMap((g) => g.people.map((p) => p.id));
+    expect(compliance).toEqual(expect.arrayContaining(["james", "hannah"]));
+    expect(compliance).not.toContain("emily");
+  });
+  it("shows each place and paper remit as short chips", () => {
+    const james = INITIAL_PEOPLE.find((p) => p.id === "james")!;
+    expect(placeChips(james.access)).toEqual([{ label: "Burlington Gardens", detail: "All 4 Units" }, { label: "Stanley House", detail: "Flat 6" }]);
+    expect(paperChip(INITIAL_PEOPLE.find((p) => p.id === "daniel")!.access).label).toBe("Accounting papers");
+    expect(areaChips(james.access).map((x) => x.area)).toEqual(["papers", "people", "compliance", "reading"]);
+  });
+  it("keeps a large team scannable behind Show all", () => {
+    const many: Person[] = Array.from({ length: 20 }, (_, i) => ({ id: `p${i}`, name: `Person ${i}`, role: "Manager", email: `p${i}@example.co.uk`, status: "active", access: { portfolio: false, groups: { nugent: ["Shop"] }, papers: [], areas: { papers: "view", people: "none", compliance: "none", reading: "none" } } }));
+    expect(accessGroups(many).map((g) => g.people.length)).toEqual([20]);
+    expect(visiblePeople(many, false, false)).toHaveLength(6);
+    expect(visiblePeople(many, true, false)).toHaveLength(20);
+    expect(visiblePeople(many, false, true)).toHaveLength(20);
   });
 });

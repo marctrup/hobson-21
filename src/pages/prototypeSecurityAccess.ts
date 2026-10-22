@@ -241,6 +241,57 @@ export function losses(a: Access, gid: string): string[] {
 export const peopleForPlace = (people: Person[], gid: string) => people.filter((p) => p.status !== "invited" && unitsFor(p.access, gid).length).map((p) => ({ person: p, scope: scopeLabel(p.access, gid)! }));
 export const peopleForArea = (people: Person[], area: AreaId, atLeast: Level) => people.filter((p) => p.status !== "invited" && (atLeast === "change" ? p.access.areas[area] === "change" : p.access.areas[area] !== "none")).map((p) => ({ person: p, scope: `${levelLabel(area, p.access.areas[area])} · ${placeLines(p.access).join("; ")}` }));
 
+// ---------- Overview presentation: grouping, chips and search ----------
+export type Chip = { label: string; detail?: string; title?: string };
+export type GroupKey = "superuser" | "portfolio" | "places" | "none";
+export const GROUP_META: { key: GroupKey; title: string; explain: string }[] = [
+  { key: "superuser", title: "Superusers", explain: "The whole portfolio, every paper, every area — and Security itself." },
+  { key: "portfolio", title: "The whole portfolio", explain: "Every place, but only the papers and areas their work needs." },
+  { key: "places", title: "Certain places", explain: "Only the buildings or Units you've chosen — never the rest of the portfolio." },
+  { key: "none", title: "No places yet", explain: "Set up, but nothing to open until you choose a place for them." },
+];
+export const AREA_SHORT: Record<AreaId, string> = { papers: "Papers", people: "People", compliance: "Compliance", reading: "Reading" };
+export const initials = (p: Person) => p.name.split(/\s+/).filter(Boolean).slice(0, 2).map((x) => x[0]!.toUpperCase()).join("");
+export const groupKeyFor = (p: Person): GroupKey => (p.superuser ? "superuser" : p.access.portfolio ? "portfolio" : groupsWithAccess(p.access).length ? "places" : "none");
+
+export const placeChips = (a: Access): Chip[] =>
+  a.portfolio
+    ? [{ label: "The whole portfolio" }]
+    : groupsWithAccess(a).map((g) => {
+        const u = unitsFor(a, g.id);
+        const detail = a.groups[g.id] === "all" || u.length === g.units.length ? `All ${g.units.length} Units` : u.length <= 2 ? list(u) : `${u.length} Units`;
+        return { label: g.name, detail };
+      });
+
+export const paperChip = (a: Access): Chip => {
+  if (a.papers === "all") return { label: "All papers", title: paperLine(a) };
+  if (!a.papers.length) return { label: "No papers" };
+  if (a.papers.every((t) => ACCOUNTING.includes(t))) return { label: "Accounting papers", detail: `${a.papers.length} types`, title: paperLine(a) };
+  return { label: "Selected papers", detail: `${a.papers.length} of ${ALL_TYPES.length}`, title: paperLine(a) };
+};
+export const areaChips = (a: Access): { area: AreaId; level: Level }[] => AREAS.filter((x) => a.areas[x.id] !== "none").map((x) => ({ area: x.id, level: a.areas[x.id] }));
+
+const haystack = (p: Person) =>
+  [
+    p.name, p.role, p.email,
+    p.superuser ? "superuser" : "",
+    p.status === "suspended" ? "suspended" : p.status === "invited" ? "invited awaiting acceptance" : "active",
+    p.access.portfolio ? `the whole portfolio ${GROUPS.map((g) => g.name).join(" ")}` : groupsWithAccess(p.access).map((g) => `${g.name} ${unitsFor(p.access, g.id).join(" ")}`).join(" "),
+    paperChip(p.access).label,
+    ...areaChips(p.access).map((x) => `${AREA_SHORT[x.area]} ${x.level === "change" ? "make changes" : "view"}`),
+  ].join(" ").toLowerCase();
+
+export const matchesQuery = (p: Person, q: string) => {
+  const t = q.trim().toLowerCase();
+  return !t || t.split(/\s+/).every((w) => haystack(p).includes(w));
+};
+export const accessGroups = (people: Person[], query = "") =>
+  GROUP_META.map((meta) => ({ ...meta, people: people.filter((p) => groupKeyFor(p) === meta.key && matchesQuery(p, query)) })).filter((g) => g.people.length > 0);
+
+export const PAGE = 6;
+/** A group longer than PAGE shows only its first PAGE until asked, so a large team stays scannable. */
+export const visiblePeople = (people: Person[], showAll: boolean, expand: boolean) => (showAll || expand || people.length <= PAGE ? people : people.slice(0, PAGE));
+
 // ---------- Presets for invitations (editable starting points, never unrestricted by default) ----------
 export const PRESETS: { id: string; label: string; access: Access }[] = [
   { id: "custom", label: "Custom access", access: { portfolio: false, groups: {}, papers: [], areas: areas("none", "none", "none", "none") } },

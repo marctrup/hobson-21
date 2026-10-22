@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
-import { ArrowLeft, ArrowRight, ChevronRight, Eye, Lightbulb, MessageCircle, RotateCcw, Shield, X } from "lucide-react";
+import { ArrowLeft, ArrowRight, ChevronRight, Eye, FileText, Lightbulb, MessageCircle, Pencil, Plus, RotateCcw, Search, Shield, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import owlDefault from "@/assets/prototype/owl-default.png";
 import {
-  AREAS, FAMILIES, GROUPS, PRESETS, type Access, type AreaId, type Level, type Person, type SecState,
-  cardLine, diff, firstName, glance, groupName, initialState, interpret, isRestricted, levelLabel, paperLine, peopleForArea,
-  peopleForPlace, placeLines, reviewInvite, saveDraft, setAllPapers, setArea, setFamily, setGroup, setPortfolio, setType, setUnit,
-  summarise, typesFor, unitsFor, visiblePapers,
+  AREAS, FAMILIES, GROUPS, PAGE, PRESETS, type Access, type AreaId, type Chip, type Level, type Person, type SecState,
+  AREA_SHORT, accessGroups, areaChips, diff, firstName, glance, groupName, initials, initialState, interpret, isRestricted, levelLabel, matchesQuery, paperChip, paperLine,
+  peopleForArea, peopleForPlace, placeChips, placeLines, reviewInvite, saveDraft, setAllPapers, setArea, setFamily, setGroup, setPortfolio, setType, setUnit,
+  summarise, typesFor, unitsFor, visiblePeople, visiblePapers,
 } from "./prototypeSecurityAccess";
 
 // Prototype Security: the Superuser tells Hobson who should reach what; Hobson explains and asks before saving.
@@ -29,7 +29,13 @@ const TRY: { label: string; text: string }[] = [
 ];
 
 const ring = "rounded-xl bg-background ring-1 ring-bone";
-const toneFor = (p: Person) => (p.status === "suspended" ? "bg-muted-foreground/30" : p.superuser ? "bg-primary" : isRestricted(p) ? "bg-primary/25" : "bg-primary/55");
+
+const monogramTone = (p: Person) =>
+  p.status === "invited" ? "border border-dashed border-bone-strong bg-background text-ink-muted"
+    : p.status === "suspended" ? "bg-bone text-ink-muted"
+      : p.superuser ? "bg-primary text-primary-foreground"
+        : p.access.portfolio ? "bg-secondary text-ink"
+          : "bg-background text-charcoal ring-1 ring-bone-strong";
 
 function Check({ on, part, label, onChange }: { on: boolean; part?: boolean; label: string; onChange: (v: boolean) => void }) {
   return (
@@ -136,21 +142,102 @@ function Glance({ p, a }: { p: Person; a: Access }) {
   );
 }
 
-function PersonCard({ p, onOpen, lit }: { p: Person; onOpen: () => void; lit?: boolean }) {
-  const status = p.status === "invited" ? "Awaiting acceptance" : p.status === "suspended" ? "Suspended" : isRestricted(p) ? "Restricted access" : "Active";
+// ---------- People, presented as cards rather than rows ----------
+function StatusPill({ p }: { p: Person }) {
+  const [label, cls, dot] = p.status === "invited"
+    ? ["Awaiting acceptance", "border-dashed border-bone-strong text-ink-muted", ""]
+    : p.status === "suspended"
+      ? ["Suspended", "border-bone-strong bg-bone text-charcoal", "bg-ink-muted"]
+      : ["Active", "border-bone bg-paper text-ink", "bg-primary"];
+  return (
+    <span className={`inline-flex shrink-0 items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-[11px] ${cls}`}>
+      {dot && <span className={`h-1.5 w-1.5 rounded-full ${dot}`} aria-hidden />}
+      {label}
+    </span>
+  );
+}
+
+function ChipView({ c, icon }: { c: Chip; icon?: boolean }) {
+  return (
+    <span className="inline-flex max-w-full items-baseline gap-1.5 rounded-full bg-paper px-2.5 py-1 text-xs ring-1 ring-bone" title={c.title}>
+      {icon && <FileText className="h-3 w-3 shrink-0 self-center text-ink-muted" aria-hidden />}
+      <span className="truncate text-ink">{c.label}</span>
+      {c.detail && <span className="shrink-0 text-[10px] text-ink-muted">{c.detail}</span>}
+    </span>
+  );
+}
+
+function AreaPill({ area, level }: { area: AreaId; level: Level }) {
+  const Icon = level === "change" ? (area === "reading" ? Plus : Pencil) : Eye;
+  return (
+    <span className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[11px] ${level === "change" ? "bg-secondary text-ink" : "text-ink-muted ring-1 ring-bone"}`} title={levelLabel(area, level)}>
+      <Icon className="h-2.5 w-2.5 shrink-0" aria-hidden />{AREA_SHORT[area]}
+    </span>
+  );
+}
+
+function PersonCard({ p, onOpen, lit, scope }: { p: Person; onOpen: () => void; lit?: boolean; scope?: string }) {
+  const places = placeChips(p.access);
+  const areas = areaChips(p.access);
   return (
     <li>
-      <button type="button" onClick={onOpen} aria-label={`Open ${p.name}'s access`} className={`group flex w-full items-center gap-4 ${ring} px-4 py-3 text-left transition hover:ring-primary/40 ${lit ? "ring-primary/50" : ""}`}>
-        <span className={`h-9 w-1 shrink-0 rounded-full ${toneFor(p)}`} aria-hidden />
-        <span className="min-w-0 flex-1">
-          <span className="flex items-baseline gap-2"><span className="truncate font-medium text-ink">{p.name}</span>{p.superuser && <span className="text-[10px] uppercase tracking-wider text-primary">Superuser</span>}{p.you && <span className="text-[10px] text-ink-muted">(you)</span>}</span>
-          <span className="block truncate text-xs text-ink-muted">{p.role}</span>
-          <span className="mt-0.5 block truncate text-xs text-ink">{p.status === "invited" ? p.email : cardLine(p)}</span>
+      <button type="button" onClick={onOpen} aria-label={`Open ${p.name}'s access`} className={`group flex h-full w-full flex-col gap-3 rounded-xl bg-background p-4 text-left ring-1 transition duration-200 hover:-translate-y-0.5 hover:shadow-[0_14px_28px_-22px_rgba(45,45,45,0.55)] hover:ring-primary/40 focus:outline-none focus-visible:ring-2 focus-visible:ring-ring ${lit ? "bg-primary/[0.04] ring-primary/60" : "ring-bone"}`}>
+        <span className="flex items-start gap-3">
+          <span aria-hidden className={`grid h-10 w-10 shrink-0 place-items-center rounded-full text-xs font-semibold tracking-wide ${monogramTone(p)}`}>{initials(p)}</span>
+          <span className="min-w-0 flex-1">
+            <span className="flex flex-wrap items-baseline gap-x-2">
+              <span className="truncate font-serif text-[17px] leading-snug text-ink">{p.name}</span>
+              {p.superuser && <span className="rounded-full bg-primary px-2 py-0.5 text-[9px] uppercase tracking-[0.14em] text-primary-foreground">Superuser</span>}
+              {p.you && <span className="text-[10px] text-ink-muted">(you)</span>}
+            </span>
+            <span className="mt-0.5 block truncate text-xs text-ink-muted">{p.role}</span>
+            {p.status === "invited" && <span className="block truncate text-[11px] text-ink-faint" title={p.email}>{p.email}</span>}
+          </span>
+          <StatusPill p={p} />
         </span>
-        <span className="shrink-0 text-[11px] text-ink-muted">{p.note ?? status}</span>
-        <ChevronRight className="h-4 w-4 shrink-0 text-ink-muted/60 group-hover:text-primary" aria-hidden />
+        <span className="flex flex-wrap gap-1.5">
+          {places.length ? places.map((c) => <ChipView key={c.label} c={c} />) : <span className="text-xs italic text-ink-muted">No places yet</span>}
+        </span>
+        <span className="mt-auto flex flex-wrap items-center gap-1.5 border-t border-faint-rule pt-2.5">
+          <ChipView c={paperChip(p.access)} icon />
+          {areas.map((x) => <AreaPill key={x.area} area={x.area} level={x.level} />)}
+          {scope && <span className="ml-auto shrink-0 text-[11px] text-ink-muted">{scope}</span>}
+        </span>
       </button>
     </li>
+  );
+}
+
+/** One group of people, explained in a line, so a long team reads as sections rather than a wall of rows. */
+function PersonGroup({ title, explain, people, lit, expand, onOpen }: { title: string; explain: string; people: Person[]; lit: string[]; expand: boolean; onOpen: (id: string) => void }) {
+  const [all, setAll] = useState(false);
+  const big = people.length > PAGE;
+  const shown = visiblePeople(people, all, expand);
+  return (
+    <section aria-label={title} className="grid gap-3">
+      <header>
+        <div className="flex items-baseline gap-3">
+          <h4 className="font-serif text-lg leading-none text-ink">{title}</h4>
+          <span aria-hidden className="h-px min-w-8 flex-1 bg-bone" />
+          <span className="shrink-0 text-xs tabular-nums text-ink-muted">{people.length} {people.length === 1 ? "person" : "people"}</span>
+        </div>
+        <p className="mt-1 text-xs italic text-ink-muted">{explain}</p>
+      </header>
+      <ul className="grid gap-3 [@container_sec_(min-width:44rem)]:grid-cols-2">
+        {shown.map((p) => <PersonCard key={p.id} p={p} lit={lit.includes(p.id)} onOpen={() => onOpen(p.id)} />)}
+      </ul>
+      {big && !expand && <Button type="button" variant="ghost" size="sm" className="w-fit px-2 text-xs text-primary" onClick={() => setAll(!all)}>{all ? "Show fewer" : `Show all ${people.length}`}</Button>}
+    </section>
+  );
+}
+
+function SectionRule({ title, count }: { title: string; count?: number }) {
+  return (
+    <div className="flex items-baseline gap-3">
+      <h3 className="font-serif text-xl leading-none text-ink">{title}</h3>
+      <span aria-hidden className="h-px min-w-8 flex-1 bg-bone" />
+      {count !== undefined && <span className="shrink-0 text-xs tabular-nums text-ink-muted">{count}</span>}
+    </div>
   );
 }
 
@@ -160,6 +247,7 @@ export default function PrototypeSecurity() {
   const [input, setInput] = useState("");
   const [tryOpen, setTryOpen] = useState(false);
   const [showChat, setShowChat] = useState(true);
+  const [query, setQuery] = useState("");
   const nextId = useRef(1);
   const logEnd = useRef<HTMLDivElement>(null);
   const noted = useRef<string | null>(null);
@@ -185,11 +273,13 @@ export default function PrototypeSecurity() {
   const discard = () => { setS((x) => ({ ...x, draft: null, pending: null })); noted.current = null; say("hobson", "I've put everything back as it was."); };
   const open = (id: string) => { setS((x) => ({ ...x, view: { kind: "person", id }, draft: x.draft?.id === id ? x.draft : null, pending: x.draft?.id === id ? x.pending : null })); noted.current = null; };
   const back = () => { setS((x) => ({ ...x, view: { kind: "overview" }, draft: null, pending: null, invite: null })); noted.current = null; };
-  const restart = () => { setS(initialState()); nextId.current = 1; noted.current = null; setMessages([{ id: 0, role: "hobson", text: OPENING, choices: STARTERS }]); };
+  const restart = () => { setS(initialState()); nextId.current = 1; noted.current = null; setQuery(""); setMessages([{ id: 0, role: "hobson", text: OPENING, choices: STARTERS }]); };
   const startInvite = () => send("Invite someone");
 
   const active = s.people.filter((p) => p.status !== "invited");
-  const invited = s.people.filter((p) => p.status === "invited");
+  const allInvited = s.people.filter((p) => p.status === "invited");
+  const invited = allInvited.filter((p) => matchesQuery(p, query));
+  const groups = accessGroups(active, query);
   const v = s.view;
 
   const workspace = (() => {
@@ -282,7 +372,7 @@ export default function PrototypeSecurity() {
         <div className="grid gap-6">
           <BackLink onClick={back} label="Security overview" />
           <div><h2 className="font-serif text-3xl">{groupName(v.gid)}</h2><p className="mt-1 text-sm text-ink-muted">{rows.length} people with access</p></div>
-          <ul className="grid gap-2">{rows.map(({ person, scope }) => <li key={person.id}><button type="button" onClick={() => open(person.id)} className={`flex w-full items-center gap-4 ${ring} px-4 py-3 text-left hover:ring-primary/40`}><span className={`h-8 w-1 rounded-full ${toneFor(person)}`} /><span className="flex-1"><span className="block font-medium">{person.name}</span><span className="text-xs text-ink-muted">{person.role}{person.status === "suspended" ? " · suspended" : ""}</span></span><span className="text-sm">{scope}</span></button></li>)}</ul>
+          <ul className="grid gap-3 [@container_sec_(min-width:44rem)]:grid-cols-2">{rows.map(({ person, scope }) => <PersonCard key={person.id} p={person} onOpen={() => open(person.id)} scope={scope} />)}</ul>
         </div>
       );
     }
@@ -293,23 +383,36 @@ export default function PrototypeSecurity() {
         <div className="grid gap-6">
           <BackLink onClick={back} label="Security overview" />
           <div><h2 className="font-serif text-3xl">{label}</h2><p className="mt-1 text-sm text-ink-muted">{rows.length} people who can {v.level === "change" ? "make changes" : "see it"}</p></div>
-          <ul className="grid gap-2">{rows.map(({ person, scope }) => <li key={person.id}><button type="button" onClick={() => open(person.id)} className={`grid w-full gap-1 ${ring} px-4 py-3 text-left hover:ring-primary/40`}><span className="font-medium">{person.name} <span className="text-xs font-normal text-ink-muted">· {person.role}</span></span><span className="text-xs text-ink-muted">{scope}</span></button></li>)}</ul>
+          <ul className="grid gap-3 [@container_sec_(min-width:44rem)]:grid-cols-2">{rows.map(({ person, scope }) => <PersonCard key={person.id} p={person} onOpen={() => open(person.id)} scope={scope} />)}</ul>
         </div>
       );
     }
     return (
       <div className="grid gap-8">
         <div className="flex flex-wrap items-end justify-between gap-4">
-          <div><h2 className="font-serif text-3xl">Security</h2><p className="mt-1 text-sm italic text-ink-muted">Decide who has access to Hobson and what they can work with.</p></div>
+          <div><h2 className="font-serif text-3xl text-ink">Security</h2><p className="mt-1 text-sm italic text-ink-muted">Decide who has access to Hobson and what they can work with.</p></div>
           <Button onClick={startInvite}>Invite someone</Button>
         </div>
         <dl className="grid grid-cols-3 gap-3">
-          {([[active.length, "People with access"], [invited.length, "Invitations awaiting acceptance"], [s.people.filter((p) => p.status !== "invited" && isRestricted(p)).length, "Users with restricted access"]] as const).map(([n, l]) => (
+          {([[active.length, "People with access"], [allInvited.length, "Invitations awaiting acceptance"], [s.people.filter((p) => p.status !== "invited" && isRestricted(p)).length, "Users with restricted access"]] as const).map(([n, l]) => (
             <div key={l} className="border-l border-bone pl-3"><dt className="order-2 text-xs text-ink-muted">{l}</dt><dd className="font-serif text-3xl tabular-nums text-ink">{n}</dd></div>
           ))}
         </dl>
-        <section aria-label="People with access"><h3 className="mb-3 text-sm font-medium">People with access</h3><ul className="grid gap-2">{active.map((p) => <PersonCard key={p.id} p={p} onOpen={() => open(p.id)} lit={s.lit.includes(p.id)} />)}</ul></section>
-        <section aria-label="Pending invitations"><h3 className="mb-3 text-xs uppercase tracking-[0.14em] text-ink-muted">Pending invitations</h3>{invited.length ? <ul className="grid gap-2">{invited.map((p) => <PersonCard key={p.id} p={p} onOpen={() => open(p.id)} lit={s.lit.includes(p.id)} />)}</ul> : <p className="text-sm italic text-ink-muted">None waiting.</p>}</section>
+        <section aria-label="People with access" className="grid gap-4">
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <h3 className="font-serif text-xl leading-none text-ink">People with access</h3>
+            <label className="flex min-w-0 items-center gap-2 rounded-full bg-secondary/50 px-3 ring-1 ring-bone focus-within:ring-2 focus-within:ring-ring">
+              <Search className="h-3.5 w-3.5 shrink-0 text-ink-muted" aria-hidden />
+              <input value={query} onChange={(e) => setQuery(e.target.value)} aria-label="Find a person, place or role" placeholder="Find a person, place or role" className="w-48 min-w-0 bg-transparent py-1.5 text-xs outline-none placeholder:text-ink-muted [@container_sec_(min-width:44rem)]:w-64" />
+              {query && <button type="button" onClick={() => setQuery("")} aria-label="Clear search"><X className="h-3 w-3 text-ink-muted" /></button>}
+            </label>
+          </div>
+          {groups.length ? <div className="grid gap-6">{groups.map((g) => <PersonGroup key={g.key} title={g.title} explain={g.explain} people={g.people} lit={s.lit} expand={query.trim().length > 0} onOpen={open} />)}</div> : <p className="text-sm italic text-ink-muted">No one matches “{query}”.</p>}
+        </section>
+        <section aria-label="Pending invitations" className="grid gap-3">
+          <SectionRule title="Pending invitations" count={invited.length} />
+          {invited.length ? <ul className="grid gap-3 [@container_sec_(min-width:44rem)]:grid-cols-2">{invited.map((p) => <PersonCard key={p.id} p={p} onOpen={() => open(p.id)} lit={s.lit.includes(p.id)} />)}</ul> : <p className="text-sm italic text-ink-muted">{query.trim() ? `No invitation matches “${query}”.` : "None waiting."}</p>}
+        </section>
       </div>
     );
   })();
