@@ -39,16 +39,27 @@ export function routeRequest(text: string): ColleagueId | null {
   return null;
 }
 
-/** Inside a colleague's work, the speaker is that colleague: swap Hobson's owl for theirs. */
+/** Inside a colleague's work, the speaker is that colleague: swap Hobson's owl and chat title for theirs. */
 const voiced = new WeakSet<HTMLElement>();
-function voiceAs(el: HTMLElement | null, img: string, name: string) {
+export function voiceAs(el: HTMLElement | null, img: string, name: string) {
   if (!el || voiced.has(el)) return;
   voiced.add(el);
-  const apply = () => el.querySelectorAll<HTMLImageElement>("img").forEach((i) => {
-    if (i.getAttribute("src") === owlDefault) { i.src = img; if (i.alt) i.alt = name; }
-  });
+  const title = `Chat with ${name.replace(/^The /, "the ")}`;
+  const apply = () => {
+    el.querySelectorAll<HTMLImageElement>("img").forEach((i) => {
+      if (i.getAttribute("src") === owlDefault) { i.src = img; if (i.alt) i.alt = name; }
+    });
+    el.querySelectorAll<HTMLElement>("h1").forEach((h) => {
+      if (h.textContent?.trim() === "Chat with Hobson") h.textContent = title;
+    });
+    el.querySelectorAll<HTMLElement>("[aria-label], [title]").forEach((n) => {
+      (["aria-label", "title"] as const).forEach((a) => {
+        if (n.getAttribute(a) === "Chat with Hobson") n.setAttribute(a, title);
+      });
+    });
+  };
   apply();
-  new MutationObserver(apply).observe(el, { subtree: true, childList: true, attributes: true, attributeFilter: ["src"] });
+  new MutationObserver(apply).observe(el, { subtree: true, childList: true, attributes: true, attributeFilter: ["src"], characterData: true });
 }
 
 type Message = { id: number; role: "user" | "hobson"; text: string; choices?: boolean };
