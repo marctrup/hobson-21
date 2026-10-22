@@ -86,7 +86,7 @@ function Proposal({ pending, d }: { pending: Pending; d: Directory }) {
         <div className="min-w-0 flex-1">
           <p className="text-lg font-semibold leading-tight text-ink">{c.person ?? c.org}</p>
           {c.person && c.org && <p className="text-sm text-ink-muted">{c.org}</p>}
-          <p className="mt-1 text-xs text-ink-muted">{draft.existing ? "Already known to me" : "New contact"} · {KIND_LABEL[c.kind].replace(/s$/, "").replace("Your team", "Your team")}</p>
+          <p className="mt-1 text-xs text-ink-muted">{draft.existing ? "Already known to me" : "New contact"} · {KIND_LABEL[c.kind]}</p>
           <div className="mt-3 grid gap-1.5">
             <Detail icon={<Phone className="h-3.5 w-3.5 text-ink-muted" />} value={c.phones.join(" · ") || null} missing={stageIndex < 2 ? "Not yet given" : "Not given"} />
             <Detail icon={<Mail className="h-3.5 w-3.5 text-ink-muted" />} value={c.email} missing={stageIndex < 2 ? "Not yet given" : "Not given"} />
@@ -136,7 +136,7 @@ function ContactRow({ c, d, onOpen, lit }: { c: Contact; d: Directory; onOpen: (
 }
 
 function People({ d, open, lit }: { d: Directory; open: (id: string) => void; lit: Set<string> }) {
-  const kinds: Kind[] = ["contractor", "team", "adviser", "landlord", "tenant", "other"];
+  const kinds: Kind[] = ["contractor", "legal", "accounting", "design", "team", "adviser", "landlord", "tenant", "other"];
   return (
     <div className="grid gap-8 [@container_contacts_(min-width:52rem)]:grid-cols-2">
       {kinds.map((k) => { const cs = d.contacts.filter((c) => c.kind === k); if (!cs.length) return null; return (
@@ -222,7 +222,7 @@ function ContactDetail({ c, d, lit, back }: { c: Contact; d: Directory; lit: Set
   const rs = relationsOf(d, c.id);
   return (
     <div className="mx-auto max-w-2xl">
-      <button type="button" onClick={back} className="mb-5 flex items-center gap-1 text-xs text-ink-muted hover:text-ink"><ChevronLeft className="h-3.5 w-3.5" />All contacts</button>
+      <button type="button" onClick={back} className="mb-5 flex items-center gap-1 text-xs text-ink-muted hover:text-ink"><ChevronLeft className="h-3.5 w-3.5" />Everyone we know</button>
       <div className="flex items-start gap-4">
         <Avatar c={c} size="lg" />
         <div className="min-w-0">
@@ -374,7 +374,7 @@ export default function PrototypeContacts() {
     <div className="flex h-screen w-full overflow-hidden bg-bone-wash text-ink">
       <aside className="flex w-[68px] shrink-0 flex-col items-center gap-2 border-r border-bone bg-background py-4">
         <div className="mb-2 grid h-10 w-10 place-items-center" aria-hidden><img src={owlDefault} alt="" className="h-10 w-10 object-contain" /></div>
-        {[["Portfolio", false], ["Papers", false], ["Contacts", true], ["Conversations", false]].map(([label, active]) => (
+        {[["Portfolio", false], ["Papers", false], ["People We Know", true], ["Conversations", false]].map(([label, active]) => (
           <button key={label as string} type="button" aria-current={active ? "page" : undefined} className={`w-12 rounded-lg py-2 text-center text-[10px] leading-tight ${active ? "bg-secondary font-medium text-ink" : "text-ink-muted hover:bg-paper"}`}>{label as string}</button>
         ))}
         <div className="mt-auto grid h-9 w-9 place-items-center rounded-full bg-bone text-xs font-semibold text-charcoal">MT</div>
@@ -419,9 +419,9 @@ export default function PrototypeContacts() {
         </div>
       </section>
 
-      <main aria-label="Contacts workspace" className="[container-type:inline-size] [container-name:contacts] flex min-w-0 flex-1 flex-col">
+      <main aria-label="People We Know workspace" className="[container-type:inline-size] [container-name:contacts] flex min-w-0 flex-1 flex-col">
         <header className="flex h-14 shrink-0 items-center justify-between gap-2 border-b border-bone bg-background px-5">
-          <div className="min-w-0"><p className="text-sm font-medium">Contacts</p><p className="hidden truncate text-[11px] text-ink-muted [@container_contacts_(min-width:28rem)]:block">Who helps look after your portfolio · demonstration only, nothing is saved</p></div>
+          <div className="min-w-0"><p className="text-sm font-medium">People We Know</p><p className="hidden truncate text-[11px] text-ink-muted [@container_contacts_(min-width:28rem)]:block">Who helps look after your portfolio · demonstration only, nothing is saved</p></div>
           <div className="flex shrink-0 items-center gap-1">
             <Button variant="ghost" size="icon" className="md:hidden" aria-label="Chat with Hobson" onClick={() => setShowChat(true)}><MessageCircle className="h-4 w-4" /></Button>
             <Button variant="ghost" size="sm" aria-label="Restart demo" onClick={restart}><RotateCcw className="h-3.5 w-3.5 [@container_contacts_(min-width:28rem)]:mr-2" /><span className="hidden [@container_contacts_(min-width:28rem)]:inline">Restart demo</span></Button>

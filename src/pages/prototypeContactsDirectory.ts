@@ -11,13 +11,13 @@ export const GROUPS: { id: GroupId; name: string; units: string[] }[] = [
 export const groupName = (g: GroupId) => GROUPS.find((x) => x.id === g)!.name;
 
 export type Scope = { kind: "portfolio" } | { kind: "group"; group: GroupId } | { kind: "unit"; group: GroupId; unit: string };
-export type Kind = "contractor" | "team" | "adviser" | "landlord" | "tenant" | "other";
+export type Kind = "contractor" | "legal" | "accounting" | "design" | "team" | "adviser" | "landlord" | "tenant" | "other";
 export type Contact = { id: string; person: string | null; org: string | null; kind: Kind; phones: string[]; email: string | null };
 /** service is the matter looked after (Plumbing, Legal advice…); role is how they relate (Preferred contractor, Tenant…). */
 export type Relation = { id: string; contactId: string; role: string; service: string | null; scope: Scope };
 export type Directory = { contacts: Contact[]; relations: Relation[] };
 
-export const KIND_LABEL: Record<Kind, string> = { contractor: "Contractors", team: "Your team", adviser: "Advisers", landlord: "Landlords", tenant: "Tenants", other: "Others" };
+export const KIND_LABEL: Record<Kind, string> = { contractor: "Contractors", legal: "Legal services", accounting: "Accounting services", design: "Architectural and surveying services", team: "Staff", adviser: "Other advisers", landlord: "Landlords", tenant: "Tenants", other: "Others" };
 
 const rel = (contactId: string, role: string, service: string | null, scope: Scope): Relation => ({ id: `${contactId}:${role}:${service ?? ""}:${scopeKey(scope)}`, contactId, role, service, scope });
 export const scopeKey = (s: Scope) => (s.kind === "portfolio" ? "portfolio" : s.kind === "group" ? s.group : `${s.group}/${s.unit}`);
@@ -29,6 +29,10 @@ export const INITIAL_DIRECTORY: Directory = {
     { id: "skyline", person: null, org: "Skyline Roofing", kind: "contractor", phones: ["020 7946 0447"], email: null },
     { id: "cleanwell", person: "Amy Fox", org: "Cleanwell Services", kind: "contractor", phones: [], email: "amy@cleanwell.co.uk" },
     { id: "pipeline", person: null, org: "Pipeline Plumbing", kind: "contractor", phones: ["020 7946 0730"], email: null },
+    { id: "hammond-reed", person: "Claire Hammond", org: "Hammond & Reed Solicitors", kind: "legal", phones: ["020 7946 0310"], email: "claire@hammondreed.co.uk" },
+    { id: "clarke-accountancy", person: "Raj Patel", org: "Clarke Accountancy", kind: "accounting", phones: ["020 7946 0588"], email: "raj@clarkeaccountancy.co.uk" },
+    { id: "foster-architects", person: "Nina Foster", org: "Foster Architects", kind: "design", phones: ["020 7946 0264"], email: null },
+    { id: "ruth-okoye", person: "Ruth Okoye", org: null, kind: "team", phones: ["07700 900271"], email: "ruth.okoye@example.com" },
     { id: "ashdown", person: "Helen Carr", org: "Ashdown Estates", kind: "landlord", phones: [], email: "helen.carr@ashdownestates.co.uk" },
   ],
   relations: [
@@ -37,6 +41,10 @@ export const INITIAL_DIRECTORY: Directory = {
     rel("skyline", "Preferred contractor", "Roofing", { kind: "group", group: "burlington" }),
     rel("pipeline", "Preferred contractor", "Plumbing", { kind: "group", group: "burlington" }),
     rel("cleanwell", "Preferred contractor", "Cleaning", { kind: "group", group: "stanley" }),
+    rel("hammond-reed", "Lawyer", "Legal advice", { kind: "group", group: "stanley" }),
+    rel("clarke-accountancy", "Accountant", "Accounting", { kind: "portfolio" }),
+    rel("foster-architects", "Architect", "Architecture", { kind: "group", group: "burlington" }),
+    rel("ruth-okoye", "Property administrator", "Administration", { kind: "portfolio" }),
     rel("ashdown", "Landlord", null, { kind: "group", group: "burlington" }),
   ],
 };
@@ -309,7 +317,7 @@ export function interpret(d: Directory, pending: Pending | null, raw: string): O
     if (g) {
       const legal = /lease|legal|lawyer|solicitor|conveyanc/i.test(matter + org);
       const exact = d.contacts.find((c) => c.org?.toLowerCase() === org.toLowerCase());
-      const contact: Contact = exact ?? { id: slug(org), person, org, kind: "adviser", phones: [], email: null };
+      const contact: Contact = exact ?? { id: slug(org), person, org, kind: legal ? "legal" : "adviser", phones: [], email: null };
       const r = rel(contact.id, legal ? "Lawyer" : "Adviser", legal ? "Legal advice" : matter.replace(/^\w/, (x) => x.toUpperCase()), { kind: "group", group: g });
       const draft: Draft = { contact, existing: !!exact, relations: [r], stage: "belongs", note: `Handles ${matter}.`, done: `Done. ${person} at ${org} is recorded for ${matter} at ${groupName(g)}.` };
       return confirm(draft, `I'll add ${person} at ${org} as your ${legal ? "lawyer" : "adviser"} for ${matter} at ${groupName(g)}. I don't have a telephone number or email yet, so I'll leave those blank.\n\nIs that right?`);
@@ -347,10 +355,10 @@ export const BATCH_STRAIGHT: BatchEntry[] = [
   entry(C("price-locks", "Owen Price", "Price Locksmiths", "contractor", "020 7946 0254", null), "Preferred contractor", "Locksmith", { kind: "portfolio" }),
   entry(C("fiona-grant", "Fiona Grant", null, "team", null, "fiona.grant@example.com"), "Accounts assistant", "Accounts", { kind: "portfolio" }),
   entry(C("ben-adeyemi", "Ben Adeyemi", null, "team", "07700 900402", "ben.adeyemi@example.com"), "Property manager", "Property management", { kind: "group", group: "stanley" }),
-  entry(C("moss", "Clara Moss", "Moss & Partners", "adviser", "020 7946 0918", "clara@mosspartners.co.uk"), "Accountant", "Accounting", { kind: "portfolio" }),
+  entry(C("moss", "Clara Moss", "Moss & Partners", "accounting", "020 7946 0918", "clara@mosspartners.co.uk"), "Accountant", "Accounting", { kind: "portfolio" }),
   entry(C("safegas", "Ian Fletcher", "SafeGas Heating", "contractor", "07700 900127", null), "Preferred contractor", "Gas & heating", { kind: "group", group: "stanley" }),
   entry(C("liftcare", "Nadia Rahman", "LiftCare UK", "contractor", "020 7946 0377", "service@liftcare.example"), "Preferred contractor", "Lift maintenance", { kind: "group", group: "burlington" }),
-  entry(C("whitaker", "Hugh Whitaker", "Whitaker Surveyors", "adviser", "020 7946 0860", null), "Surveyor", "Surveying", { kind: "portfolio" }),
+  entry(C("whitaker", "Hugh Whitaker", "Whitaker Surveyors", "design", "020 7946 0860", null), "Surveyor", "Surveying", { kind: "portfolio" }),
   entry(C("ella-turner", "Ella Turner", null, "tenant", "07700 900588", null), "Tenant", null, { kind: "unit", group: "nugent", unit: "Flat 1" }),
   entry(C("george-lim", "George Lim", null, "tenant", null, "george.lim@example.com"), "Tenant", null, { kind: "unit", group: "stanley", unit: "Flat 8" }),
   entry(C("pemberton", "Alice Pemberton", "Pemberton Estates", "landlord", "020 7946 0145", null), "Landlord", null, { kind: "group", group: "nugent" }),
