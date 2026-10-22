@@ -116,7 +116,6 @@ function Proposal({ pending, d }: { pending: Pending; d: Directory }) {
   );
 }
 
-const W = "[@container_contacts_(min-width:44rem)]";
 const searchable = (d: Directory, c: Contact) => [c.person, c.org, ...relationsOf(d, c.id).flatMap((r) => [r.role, r.service, scopeLabel(r.scope)])].filter(Boolean).join(" ").toLowerCase();
 const matchesQuery = (d: Directory, c: Contact, q: string) => !q.trim() || q.toLowerCase().trim().split(/\s+/).every((w) => searchable(d, c).includes(w));
 const relLabel = (r: Relation) => (r.role === "Preferred contractor" ? r.service! : r.service && r.service !== r.role ? `${r.role} · ${r.service}` : r.role);
@@ -131,15 +130,15 @@ function ContactRow({ c, d, onOpen, lit }: { c: Contact; d: Directory; onOpen: (
   const where = Array.from(new Set(rs.map((r) => scopeLabel(r.scope))));
   return (
     <li>
-      <button type="button" onClick={onOpen} className={`group grid w-full grid-cols-[auto_1fr_auto] items-center gap-x-3 rounded-md px-2 py-2 text-left transition hover:bg-background focus:outline-none focus-visible:ring-2 focus-visible:ring-ring ${W}:grid-cols-[auto_minmax(0,1.3fr)_minmax(0,1fr)_minmax(0,1fr)_auto] ${lit ? "bg-primary/5 ring-1 ring-primary/25" : ""}`}>
+      <button type="button" onClick={onOpen} className={`group grid w-full grid-cols-[auto_1fr_auto] items-center gap-x-3 rounded-md px-2 py-2 text-left transition hover:bg-background focus:outline-none focus-visible:ring-2 focus-visible:ring-ring [@container_contacts_(min-width:44rem)]:grid-cols-[auto_minmax(0,1.3fr)_minmax(0,1fr)_minmax(0,1fr)_auto] ${lit ? "bg-primary/[0.06]" : ""}`}>
         <Avatar c={c} />
         <span className="min-w-0">
           <span className="block truncate text-sm font-medium text-ink">{contactName(c)}</span>
-          <span className={`block truncate text-xs text-ink-muted ${W}:hidden`}>{[what.join(", "), where.join(", ")].filter(Boolean).join(" — ")}</span>
-          {c.person && c.org && <span className={`hidden truncate text-xs text-ink-muted ${W}:block`}>{c.person}</span>}
+          <span className={`block truncate text-xs text-ink-muted [@container_contacts_(min-width:44rem)]:hidden`}>{[what.join(", "), where.join(", ")].filter(Boolean).join(" — ")}</span>
+          {c.person && c.org && <span className={`hidden truncate text-xs text-ink-muted [@container_contacts_(min-width:44rem)]:block`}>{c.person}</span>}
         </span>
-        <span className={`hidden min-w-0 truncate text-xs text-ink ${W}:block`}>{what.join(", ") || "—"}</span>
-        <span className={`hidden min-w-0 truncate text-xs text-ink-muted ${W}:block`}>{where.length > 2 ? `${where[0]} +${where.length - 1}` : where.join(", ") || "—"}</span>
+        <span className={`hidden min-w-0 truncate text-xs text-ink [@container_contacts_(min-width:44rem)]:block`}>{what.join(", ") || "—"}</span>
+        <span className={`hidden min-w-0 truncate text-xs text-ink-muted [@container_contacts_(min-width:44rem)]:block`}>{where.length > 2 ? `${where[0]} +${where.length - 1}` : where.join(", ") || "—"}</span>
         <span className="flex gap-1.5 text-ink-muted/70" aria-label={`${c.phones.length ? "Telephone" : "No telephone"}, ${c.email ? "email" : "no email"} recorded`}>
           <Phone className={`h-3.5 w-3.5 ${c.phones.length ? "" : "opacity-25"}`} aria-hidden /><Mail className={`h-3.5 w-3.5 ${c.email ? "" : "opacity-25"}`} aria-hidden />
         </span>
@@ -160,9 +159,9 @@ function People({ d, open, lit, q }: { d: Directory; open: (id: string) => void;
   return (
     <div>
       <Insight>{q ? `${shown.length} of ${d.contacts.length} match “${q}”.` : <>I know <b className="font-semibold">{d.contacts.length}</b> people and organisations across {PEOPLE_KINDS.filter((k) => d.contacts.some((c) => c.kind === k)).length} kinds of work.{noDetails ? ` ${noDetails} ${noDetails === 1 ? "has" : "have"} no telephone or email yet.` : ""}</>}</Insight>
-      <div className={`grid gap-8 ${W}:grid-cols-[11rem_1fr]`}>
-        <nav aria-label="Kinds of people" className={`flex flex-wrap gap-1.5 ${W}:sticky ${W}:top-0 ${W}:flex-col ${W}:self-start ${W}:gap-0.5`}>
-          {groups.map(({ k, cs }) => <button key={k} type="button" onClick={() => jump(k)} className={`flex items-center justify-between gap-3 rounded-full bg-background px-3 py-1 text-left text-xs text-ink ring-1 ring-bone hover:bg-paper ${W}:rounded-md ${W}:bg-transparent ${W}:px-2 ${W}:py-1.5 ${W}:ring-0`}><span className="truncate">{KIND_LABEL[k]}</span><span className="tabular-nums text-ink-muted">{cs.length}</span></button>)}
+      <div className={`grid gap-8 [@container_contacts_(min-width:44rem)]:grid-cols-[11rem_1fr]`}>
+        <nav aria-label="Kinds of people" className={`flex flex-wrap gap-1.5 [@container_contacts_(min-width:44rem)]:sticky [@container_contacts_(min-width:44rem)]:top-0 [@container_contacts_(min-width:44rem)]:flex-col [@container_contacts_(min-width:44rem)]:self-start [@container_contacts_(min-width:44rem)]:gap-0.5`}>
+          {groups.map(({ k, cs }) => <button key={k} type="button" onClick={() => jump(k)} className={`flex items-center justify-between gap-3 rounded-full bg-background px-3 py-1 text-left text-xs text-ink ring-1 ring-bone hover:bg-paper [@container_contacts_(min-width:44rem)]:rounded-md [@container_contacts_(min-width:44rem)]:bg-transparent [@container_contacts_(min-width:44rem)]:px-2 [@container_contacts_(min-width:44rem)]:py-1.5 [@container_contacts_(min-width:44rem)]:ring-0`}><span className="truncate">{KIND_LABEL[k]}</span><span className="tabular-nums text-ink-muted">{cs.length}</span></button>)}
         </nav>
         <div className="grid gap-7">
           {groups.length === 0 && <p className="text-sm text-ink-muted">No one matches. Ask me in the conversation and I'll look more widely.</p>}
@@ -172,7 +171,7 @@ function People({ d, open, lit, q }: { d: Directory; open: (id: string) => void;
               <section key={k} id={`people-${k}`} aria-label={KIND_LABEL[k]} className="scroll-mt-4">
                 <div className="mb-1 flex items-baseline justify-between border-b border-faint-rule pb-1.5">
                   <h3 className="text-[11px] font-medium uppercase tracking-[0.12em] text-ink-muted">{KIND_LABEL[k]}</h3>
-                  <span className={`hidden gap-6 text-[10px] uppercase tracking-wider text-ink-muted/70 ${W}:flex`}><span>What</span><span>Where</span></span>
+                  <span className={`hidden gap-6 text-[10px] uppercase tracking-wider text-ink-muted/70 [@container_contacts_(min-width:44rem)]:flex`}><span>What</span><span>Where</span></span>
                 </div>
                 <ul className="-mx-2 grid">{(all ? cs : cs.slice(0, PREVIEW)).map((c) => <ContactRow key={c.id} c={c} d={d} onOpen={() => open(c.id)} lit={relationsOf(d, c.id).some((r) => lit.has(r.id))} />)}</ul>
                 {!all && <button type="button" onClick={() => setExpanded((s) => new Set(s).add(k))} className="mt-1 text-xs font-medium text-primary hover:underline">Show all {cs.length}</button>}
@@ -197,12 +196,13 @@ function Services({ d, open, lit, q }: { d: Directory; open: (id: string) => voi
     const ex = prefs.filter((r) => r.service === s && r.scope.kind === "unit" && r.scope.group === g);
     return { main: whole ?? wide, inherited: !whole && !!wide, ex };
   };
-  const gaps = services.reduce((n, s) => n + GROUPS.filter((g) => !cellFor(s, g.id).main).length, 0);
-  const Name = ({ r, faint }: { r: Relation; faint?: boolean }) => <button type="button" onClick={() => open(r.contactId)} className={`block max-w-full truncate rounded px-1 text-left text-xs hover:bg-paper ${faint ? "text-ink-muted" : "font-medium text-ink"} ${lit.has(r.id) ? "bg-primary/10 ring-1 ring-primary/30" : ""}`}>{contactName(contactById(d, r.contactId)!)}</button>;
+  const CORE = ["Plumbing", "Electrical", "Roofing", "Cleaning"];
+  const gaps = services.filter((s) => CORE.includes(s)).reduce((n, s) => n + GROUPS.filter((g) => !cellFor(s, g.id).main).length, 0);
+  const Name = ({ r, faint }: { r: Relation; faint?: boolean }) => <button type="button" onClick={() => open(r.contactId)} className={`block max-w-full truncate rounded px-1 text-left text-xs hover:bg-paper ${faint ? "text-ink-muted" : "font-medium text-ink"} ${lit.has(r.id) ? "bg-primary/10" : ""}`}>{contactName(contactById(d, r.contactId)!)}</button>;
   return (
     <div className="grid gap-10">
       <div>
-        <Insight>{services.length} services with a preferred contractor. {gaps ? <>I can see <b className="font-semibold">{gaps}</b> place{gaps === 1 ? "" : "s"} where no one is chosen yet — marked with a dashed line.</> : "Every place has someone chosen."}</Insight>
+        <Insight>{services.length} services with a preferred contractor. {gaps ? <>I can see <b className="font-semibold">{gaps}</b> gap{gaps === 1 ? "" : "s"} in the essentials — plumbing, electrical, roofing and cleaning — marked with a dashed line.</> : "Every place has someone chosen."}</Insight>
         <div className="-mx-1 overflow-x-auto px-1">
           <table className="w-full min-w-[36rem] border-separate border-spacing-0 text-left">
             <thead><tr><th className="sticky left-0 bg-bone-wash pb-2 pr-3 text-[10px] font-medium uppercase tracking-wider text-ink-muted">Service</th>{GROUPS.map((g) => <th key={g.id} className="pb-2 pr-2 text-[11px] font-medium text-ink">{g.name}</th>)}</tr></thead>
@@ -211,7 +211,7 @@ function Services({ d, open, lit, q }: { d: Directory; open: (id: string) => voi
                 <th scope="row" className="sticky left-0 border-t border-faint-rule bg-bone-wash py-2.5 pr-3 align-top text-sm font-medium text-ink">{s}</th>
                 {GROUPS.map((g) => { const cell = cellFor(s, g.id); return (
                   <td key={g.id} className="border-t border-faint-rule py-2 pr-2 align-top">
-                    {cell.main ? <Name r={cell.main} faint={cell.inherited} /> : <span className="inline-block rounded border border-dashed border-bone px-1.5 text-[11px] text-ink-muted/70">No one chosen</span>}
+                    {cell.main ? <Name r={cell.main} faint={cell.inherited} /> : CORE.includes(s) ? <span className="inline-block rounded border border-dashed border-ink-muted/40 px-1.5 text-[11px] text-ink-muted">No one chosen</span> : <span className="px-1 text-xs text-ink-muted/40" aria-label="Not needed or not recorded">·</span>}
                     {cell.inherited && <span className="block px-1 text-[10px] text-ink-muted/70">portfolio-wide</span>}
                     {cell.ex.map((r) => <div key={r.id} className="mt-1 border-l border-dashed border-primary/50 pl-1.5"><span className="block text-[10px] uppercase tracking-wide text-ink-muted">{r.scope.kind === "unit" && r.scope.unit} instead</span><Name r={r} /></div>)}
                   </td>); })}
@@ -222,7 +222,7 @@ function Services({ d, open, lit, q }: { d: Directory; open: (id: string) => voi
       {otherServices.length > 0 && (
         <div>
           <Eyebrow>Other responsibilities</Eyebrow>
-          <dl className={`grid gap-x-8 ${W}:grid-cols-2`}>
+          <dl className={`grid gap-x-8 [@container_contacts_(min-width:44rem)]:grid-cols-2`}>
             {otherServices.map((s) => (
               <div key={s} className="flex items-baseline justify-between gap-4 border-t border-faint-rule py-2.5">
                 <dt className="text-sm text-ink">{s}</dt>
@@ -256,7 +256,7 @@ function Places({ d, open, lit, focus, setFocus, q }: { d: Directory; open: (id:
   const whole = rs.filter((r) => r.scope.kind !== "unit");
   const units = sel === "portfolio" ? [] : GROUPS.find((g) => g.id === sel)!.units.map((u) => ({ u, rs: rs.filter((r) => r.scope.kind === "unit" && r.scope.unit === u) }));
   const Line = ({ r }: { r: Relation }) => { const c = contactById(d, r.contactId)!; return (
-    <li><button type="button" onClick={() => open(c.id)} className={`flex w-full items-center gap-3 rounded-md px-2 py-1.5 text-left hover:bg-background ${lit.has(r.id) ? "bg-primary/5 ring-1 ring-primary/25" : ""}`}>
+    <li><button type="button" onClick={() => open(c.id)} className={`flex w-full items-center gap-3 rounded-md px-2 py-1.5 text-left hover:bg-background ${lit.has(r.id) ? "bg-primary/[0.06]" : ""}`}>
       <Avatar c={c} /><span className="min-w-0 flex-1"><span className="block truncate text-sm font-medium text-ink">{contactName(c)}</span><span className="block truncate text-xs text-ink-muted">{relLabel(r)}</span></span>
     </button></li>); };
   const used = new Set<string>();
@@ -264,8 +264,8 @@ function Places({ d, open, lit, focus, setFocus, q }: { d: Directory; open: (id:
   const places: { k: PlaceKey; name: string; sub: string }[] = [...GROUPS.map((g) => ({ k: g.id as PlaceKey, name: g.name, sub: `${g.units.length} Units` })), { k: "portfolio", name: "Across the portfolio", sub: "Not tied to one place" }];
   const gapsHere = sel === "portfolio" ? [] : missing(sel);
   return (
-    <div className={`grid gap-6 ${W}:grid-cols-[13rem_1fr] ${W}:gap-10`}>
-      <nav aria-label="Places" className={`flex gap-1.5 overflow-x-auto ${W}:sticky ${W}:top-0 ${W}:flex-col ${W}:self-start ${W}:overflow-visible`}>
+    <div className={`grid gap-6 [@container_contacts_(min-width:44rem)]:grid-cols-[13rem_1fr] [@container_contacts_(min-width:44rem)]:gap-10`}>
+      <nav aria-label="Places" className={`flex gap-1.5 overflow-x-auto [@container_contacts_(min-width:44rem)]:sticky [@container_contacts_(min-width:44rem)]:top-0 [@container_contacts_(min-width:44rem)]:flex-col [@container_contacts_(min-width:44rem)]:self-start [@container_contacts_(min-width:44rem)]:overflow-visible`}>
         {places.map((p) => { const n = new Set(at(p.k).map((r) => r.contactId)).size; const gaps = p.k === "portfolio" ? 0 : missing(p.k).length; const on = p.k === sel; return (
           <button key={p.k} type="button" aria-current={on ? "true" : undefined} onClick={() => pick(p.k)} className={`shrink-0 rounded-lg px-3 py-2 text-left transition ${on ? "bg-background shadow-sm ring-1 ring-bone" : "hover:bg-background/60"}`}>
             <span className="block text-sm font-medium text-ink">{p.name}</span>
@@ -276,7 +276,7 @@ function Places({ d, open, lit, focus, setFocus, q }: { d: Directory; open: (id:
         <h2 className="text-xl font-semibold text-ink">{places.find((p) => p.k === sel)!.name}</h2>
         <p className="mb-5 text-xs text-ink-muted">{places.find((p) => p.k === sel)!.sub}</p>
         <Insight>{new Set(rs.map((r) => r.contactId)).size} people and organisations are associated here.{gapsHere.length ? ` I have no preferred ${gapsHere.map((s) => tradeWord(s)).join(" or ")} recorded.` : ""}{units.some((u) => u.rs.some((r) => r.role === "Preferred contractor")) ? " One or more Units use their own contractor — shown under that Unit." : ""}</Insight>
-        <div className={`grid gap-6 ${W}:grid-cols-2`}>
+        <div className={`grid gap-6 [@container_contacts_(min-width:44rem)]:grid-cols-2`}>
           {sections.map((s) => <section key={s.label} aria-label={s.label}><Eyebrow>{s.label}</Eyebrow><ul className="-mx-2 grid">{s.items.map((r) => <Line key={r.id} r={r} />)}</ul></section>)}
         </div>
         {units.length > 0 && (
@@ -316,7 +316,7 @@ function ContactDetail({ c, d, lit, back }: { c: Contact; d: Directory; lit: Set
       </div>
       <div className="mt-6">
         <Eyebrow>What they do, and where</Eyebrow>
-        {rs.length ? <ul className="grid gap-2">{rs.map((r) => <li key={r.id} className={`rounded-lg px-3 py-2 ${lit.has(r.id) ? "bg-primary/5 ring-1 ring-primary/25" : "bg-background ring-1 ring-bone"}`}><Chain r={r} c={c} /></li>)}</ul> : <p className="text-sm text-ink-muted">No responsibilities recorded at present. I've kept their details.</p>}
+        {rs.length ? <ul className="grid gap-2">{rs.map((r) => <li key={r.id} className={`rounded-lg px-3 py-2 ${lit.has(r.id) ? "bg-primary/[0.06]" : "bg-background ring-1 ring-bone"}`}><Chain r={r} c={c} /></li>)}</ul> : <p className="text-sm text-ink-muted">No responsibilities recorded at present. I've kept their details.</p>}
       </div>
     </div>
   );
