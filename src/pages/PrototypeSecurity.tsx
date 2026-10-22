@@ -54,7 +54,7 @@ function Fold({ title, hint, children, start = false }: { title: string; hint?: 
 }
 
 /** The one permission editor used for existing people and invitations alike. */
-function AccessEditor({ a, set, locked, quiet }: { a: Access; set: (a: Access) => void; locked?: boolean; quiet?: boolean }) {
+function AccessEditor({ a, set, locked, quiet, top }: { a: Access; set: (a: Access) => void; locked?: boolean; quiet?: boolean; top?: boolean }) {
   const types = typesFor(a);
   if (locked) return null;
   return (
