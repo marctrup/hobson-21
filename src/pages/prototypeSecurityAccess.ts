@@ -259,8 +259,9 @@ export type SecState = { people: Person[]; view: View; draft: { id: string; acce
 export const initialState = (): SecState => ({ people: INITIAL_PEOPLE, view: { kind: "overview" }, draft: null, pending: null, invite: null, lit: [] });
 export type Out = { state: SecState; reply: string; choices?: string[] };
 
-const findPerson = (people: Person[], t: string) => people.find((p) => new RegExp(`\\b(${p.name.split(" ")[0]}|${p.name.split(" ")[1]})\\b`, "i").test(t));
-const findGroup = (t: string) => GROUPS.find((g) => t.toLowerCase().includes(g.name.toLowerCase()) || t.toLowerCase().includes(g.name.split(" ")[0].toLowerCase()) && !/flat \d/i.test(g.name));
+const findPerson = (people: Person[], t: string) => people.find((p) => new RegExp(`\\b${p.name.split(" ")[0]}\\b`, "i").test(t));
+const ALIASES: Record<string, RegExp> = { burlington: /burlington/i, stanley: /stanley/i, nugent: /nugent/i };
+const findGroup = (t: string) => GROUPS.find((g) => ALIASES[g.id].test(t));
 const findUnit = (t: string, gid?: string) => {
   for (const g of GROUPS.filter((x) => !gid || x.id === gid)) for (const u of g.units) if (new RegExp(`\\b${u.replace(/ /g, "\\s*")}\\b`, "i").test(t)) return { gid: g.id, unit: u };
   return null;
