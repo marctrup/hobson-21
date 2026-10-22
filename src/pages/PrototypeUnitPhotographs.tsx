@@ -48,7 +48,7 @@ export function PrototypeUnitPhotographs({ unit, onChange }: Props) {
       <input ref={picker} type="file" accept="image/*" multiple aria-label={`Choose photographs for ${unit.name}`} className="hidden" onChange={e => { if (e.target.files) void take(e.target.files); e.target.value = ""; }} />
     </div>
     {photos.length > 0 && <ul className="mt-2 flex flex-wrap gap-3">{photos.map(photo => <li key={photo.id} className="w-24">
-      <Button variant="ghost" className="h-20 w-24 overflow-hidden p-0" aria-label={`Preview ${photo.name}`} onClick={() => setPreviewId(photo.id)}><img src={photo.url} alt={photo.name} className="h-full w-full object-cover" /></Button>
+      <Button variant="ghost" className="relative h-20 w-24 overflow-visible p-0 hover:z-20 focus-visible:z-20" aria-label={`Preview ${photo.name}`} onClick={() => setPreviewId(photo.id)}><img src={photo.url} alt={photo.name} className="h-full w-full rounded-md object-cover shadow-sm transition-transform duration-200 ease-out hover:scale-[2.2] hover:shadow-xl" /></Button>
       <div className="mt-1 flex items-center justify-between">
         <Button variant="ghost" size="sm" className="h-7 px-1 text-xs" aria-label={`Make ${photo.name} main photograph`} aria-pressed={main?.id === photo.id} title="Choose main photograph" onClick={() => onChange({ photos, mainPhotoId: photo.id })}><Star className="h-3 w-3" />{main?.id === photo.id ? "Main" : ""}</Button>
         <Button variant="ghost" size="icon" className="h-7 w-7" aria-label={`Remove ${photo.name}`} title="Remove photograph" onClick={() => onChange(removeUnitPhoto(unit, photo.id))}><Trash2 className="h-3 w-3" /></Button>
