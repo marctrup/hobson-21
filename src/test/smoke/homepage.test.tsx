@@ -29,9 +29,19 @@ describe("Homepage", () => {
     const captions = Array.from(container.querySelectorAll("figcaption")).map(
       (el) => el.textContent?.trim()
     );
-    expect(captions).toEqual(["Early customer feedback", "CEO"]);
+    expect(captions).toEqual([
+      "CEO of a Family Office",
+      "CEO of a large central London commercial agent",
+    ]);
     expect(container.textContent).not.toMatch(/[★☆]/);
     expect(container.textContent).not.toMatch(/\b\d+(\.\d+)?\s*(out of|\/)\s*5\b/i);
+  });
+
+  it("treats the two remarks alike: same blockquote style, no ranked weight", () => {
+    const { container } = renderWithProviders(<Homepage />);
+    const quotes = Array.from(container.querySelectorAll("blockquote"));
+    expect(quotes).toHaveLength(2);
+    expect(quotes[0].className).toBe(quotes[1].className);
   });
 
   it("places the remarks after the benefits and before the closing invitation", () => {
