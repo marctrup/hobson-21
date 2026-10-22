@@ -180,3 +180,7 @@
 
 ## Prototype Unit — map, Unit details and descriptions
 - [x] Paragon Centre with gym and illustrative flat, lifted map, compact rows, Unit/occupation hover, inline editor with shared facilities and gas supply, place context; 54 Unit checks pass, browser verified. Not published.
+
+## Prototype Unit — larger Unit photographs
+- [x] Make each Unit's photograph in the units list expand on hover and open large when tapped or clicked, so small thumbnails are usable on mobile.
+- [x] Verify hover enlargement (40px → 96px, not cut off by the panel edge), desktop click and mobile tap each open the large view; thumbnail and Unit editor checks pass, preview clean. Not published.

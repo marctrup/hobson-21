@@ -8,7 +8,14 @@ type Props = { unit: UnitPhotographs & { name: string }; onChange: (photos: Unit
 
 export function UnitPhotoThumbnail({ unit }: { unit: UnitPhotographs & { name: string } }) {
   const photo = mainUnitPhoto(unit);
-  return photo ? <img src={photo.url} alt={`${unit.name} main photograph`} className="mr-2 h-10 w-10 shrink-0 rounded object-cover" /> : null;
+  const [open, setOpen] = useState(false);
+  if (!photo) return null;
+  return <>
+    <button type="button" aria-label={`Enlarge ${unit.name} photograph`} title="Enlarge photograph" onClick={() => setOpen(true)} className="group/thumb relative z-0 mr-2 h-10 w-10 shrink-0 self-center rounded hover:z-20 focus-visible:z-20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+      <img src={photo.url} alt={`${unit.name} main photograph`} className="h-full w-full rounded object-cover shadow-sm transition-transform duration-200 ease-out group-hover/thumb:scale-[2.4] group-focus-visible/thumb:scale-[2.4] group-hover/thumb:shadow-xl" style={{ transformOrigin: "left center" }} />
+    </button>
+    <Dialog open={open} onOpenChange={setOpen}><DialogContent className="max-w-3xl"><DialogTitle>{unit.name}</DialogTitle><img src={photo.url} alt={`${unit.name} main photograph`} className="max-h-[70vh] w-full object-contain" /></DialogContent></Dialog>
+  </>;
 }
 
 export function PrototypeUnitPhotographs({ unit, onChange }: Props) {
