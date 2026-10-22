@@ -235,7 +235,7 @@ export const GROUP_META: { key: GroupKey; title: string; explain: string }[] = [
 ];
 export const AREA_SHORT: Record<AreaId, string> = { papers: "Papers", people: "People", compliance: "Compliance", reading: "Reading" };
 export const initials = (p: Person) => p.name.split(/\s+/).filter(Boolean).slice(0, 2).map((x) => x[0]!.toUpperCase()).join("");
-export const groupKeyFor = (p: Person): GroupKey => (p.superuser ? "superuser" : p.admin ? "admin" : p.access.portfolio ? "full" : "limited");
+export const groupKeyFor = (p: Person): GroupKey => (p.superuser ? "superuser" : p.admin ? "admin" : p.access.portfolio && p.access.papers === "all" ? "full" : "limited");
 
 export const placeChips = (a: Access): Chip[] =>
   a.portfolio
