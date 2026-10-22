@@ -1,7 +1,7 @@
 import { GroupLabel, PrototypeRecordsShell, RecordRow, useSessionState, type Turn } from "./PrototypeRecordsShell";
 import { applyLegal, groupRecords, INITIAL_LEGAL, interpretLegal, recordedForUnit, scopeLabel, sharedWithUnit, unitScopedRecords, type LegalState, type Responsibility } from "./prototypeLegalRecords";
 import { PLACE, unitName, type PlaceContext } from "./prototypeRecordsPlace";
-import { ContactsPreview } from "./PrototypeContacts";
+import { ContactsPreview } from "./PrototypeLegalContactsPreview";
 
 const SUGGESTIONS = [
   "Record that we need to establish who is responsible for the shared roof at The Paragon Centre.",
