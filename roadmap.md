@@ -1,7 +1,7 @@
 # Roadmap
 
-## Prototype Unit — legal responsibilities and preferred contacts
-- [x] Add read-only Legal responsibilities and Preferred contacts sections at Unit Group and Unit level from one typed simulated module (scoped records, shared Legionella referenced not duplicated, Flat's plumbing exception overrides the group default, no dashboard/dates/statuses).
+## Prototype Unit — compliance responsibilities and preferred contacts
+- [x] Add read-only Compliance Responsibilities and Preferred contacts sections at Unit Group and Unit level from one typed simulated module (scoped records, shared Legionella referenced not duplicated, Flat's plumbing exception overrides the group default, no dashboard/dates/statuses). Label renamed from "Legal responsibilities" to "Compliance Responsibilities" on request.
 - [x] Verify group, Gym and Flat views in the preview; 63 Prototype Unit checks pass and the build is clean. Not published.
 
 ## Homepage — customer testimonials
