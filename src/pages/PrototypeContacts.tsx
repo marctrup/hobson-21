@@ -2,7 +2,7 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 import { ArrowRight, Building2, ChevronLeft, FileSpreadsheet, Lightbulb, Mail, MessageCircle, Paperclip, Phone, RotateCcw, Search, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { ContactPlaces } from "./ContactPlaces";
+import { LocationsList, LocationsPanel, LocationsToggle, placeRows } from "./ContactPlaces";
 import owlDefault from "@/assets/prototype/owl-default.png";
 import {
   applyBatch, effectivePreferred, inGroup, tradeWord, BATCH_CHECKS, BATCH_STRAIGHT, BATCH_TOTAL, contactById, contactName, GROUPS, groupName, INITIAL_DIRECTORY, interpret, KIND_LABEL, relationsOf, scopeLabel, SPREADSHEET_NAME,
@@ -129,6 +129,7 @@ function Insight({ children }: { children: ReactNode }) {
 function ContactRow({ c, d, onOpen, lit }: { c: Contact; d: Directory; onOpen: () => void; lit: boolean }) {
   const rs = relationsOf(d, c.id);
   const what = Array.from(new Set(rs.map(relLabel)));
+  const [open, setOpen] = useState(false);
   return (
     <li className={`grid grid-cols-[minmax(0,1fr)] items-start gap-x-3 px-2 py-3 [@container_contacts_(min-width:44rem)]:grid-cols-[minmax(0,2.3fr)_minmax(0,1fr)] ${lit ? "bg-primary/[0.06]" : ""}`}>
       <Button variant="ghost" onClick={onOpen} className="grid h-auto w-full grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-x-3 whitespace-normal rounded-md px-2 py-1 text-left font-normal [@container_contacts_(min-width:44rem)]:grid-cols-[auto_minmax(0,1.3fr)_minmax(0,1fr)_auto]">
@@ -143,7 +144,8 @@ function ContactRow({ c, d, onOpen, lit }: { c: Contact; d: Directory; onOpen: (
           <Phone className={`h-3.5 w-3.5 ${c.phones.length ? "" : "opacity-25"}`} aria-hidden /><Mail className={`h-3.5 w-3.5 ${c.email ? "" : "opacity-25"}`} aria-hidden />
         </span>
       </Button>
-      <div className="ml-12 [@container_contacts_(min-width:44rem)]:ml-0"><ContactPlaces relations={rs} name={contactName(c)} /></div>
+      <div className="ml-12 [@container_contacts_(min-width:44rem)]:ml-0"><LocationsToggle relations={rs} name={contactName(c)} open={open} onToggle={() => setOpen((o) => !o)} /></div>
+      {open && <div className="col-span-full mt-2 ml-12 rounded-lg bg-background px-4 py-1 ring-1 ring-bone [@container_contacts_(min-width:44rem)]:ml-0"><LocationsPanel relations={rs} name={contactName(c)} /></div>}
     </li>
   );
 }
@@ -185,7 +187,7 @@ function People({ d, open, lit, q }: { d: Directory; open: (id: string) => void;
                   <span className="text-xs tabular-nums text-ink-muted">{cs.length}</span>
                 </div>
                 <div className="hidden grid-cols-[minmax(0,2.3fr)_minmax(0,1fr)] gap-x-3 px-4 py-2 text-[10px] uppercase tracking-wider text-ink-muted [@container_contacts_(min-width:44rem)]:grid">
-                  <span className="grid grid-cols-[auto_minmax(0,1.3fr)_minmax(0,1fr)_auto] gap-x-3"><span className="w-9" /><span>Name</span><span>What</span><span className="w-9" /></span><span>Places</span>
+                  <span className="grid grid-cols-[auto_minmax(0,1.3fr)_minmax(0,1fr)_auto] gap-x-3"><span className="w-9" /><span>Name</span><span>What</span><span className="w-9" /></span><span>Locations</span>
                 </div>
                 <ul className="grid divide-y divide-faint-rule border-b border-faint-rule px-2">{(all ? cs : cs.slice(0, PREVIEW)).map((c) => <ContactRow key={c.id} c={c} d={d} onOpen={() => open(c.id)} lit={relationsOf(d, c.id).some((r) => lit.has(r.id))} />)}</ul>
                 {!all && <button type="button" onClick={() => setExpanded((s) => new Set(s).add(k))} className="px-4 pb-2 text-xs font-medium text-primary hover:underline">Show all {cs.length}</button>}
@@ -329,8 +331,8 @@ function ContactDetail({ c, d, lit, back }: { c: Contact; d: Directory; lit: Set
         <Detail icon={<Mail className="h-3.5 w-3.5 text-ink-muted" />} value={c.email} missing="No email recorded" />
       </div>
       <div className="mt-6">
-        <Eyebrow>What they do, and where</Eyebrow>
-        {rs.length ? <ul className="grid gap-2">{rs.map((r) => <li key={r.id} className={`rounded-lg px-3 py-2 ${lit.has(r.id) ? "bg-primary/[0.06]" : "bg-background ring-1 ring-bone"}`}><Chain r={r} c={c} /></li>)}</ul> : <p className="text-sm text-ink-muted">No responsibilities recorded at present. I've kept their details.</p>}
+        <Eyebrow>Locations</Eyebrow>
+        {rs.length ? <div className="rounded-xl border border-bone bg-background px-4 py-1"><LocationsList rows={placeRows(rs)} lit={lit} /></div> : <p className="text-sm text-ink-muted">No responsibilities recorded at present. I've kept their details.</p>}
       </div>
     </div>
   );
