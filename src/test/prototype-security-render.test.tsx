@@ -11,10 +11,21 @@ describe("prototype security page", () => {
     expect(screen.queryByText("Accounting papers")).toBeNull();
     expect(screen.queryByText("All 4 Units")).toBeNull();
     fireEvent.click(screen.getByRole("button", { name: "Open James Carter's access" }));
-    expect(screen.getByText("James can currently")).toBeTruthy();
+    // The person page carries facts and controls only — no can/cannot narrative.
+    expect(screen.queryByText("James can currently")).toBeNull();
+    expect(screen.queryByText("James cannot")).toBeNull();
+    expect(screen.queryByText("What James can access")).toBeNull();
+    expect(screen.getByText("Places")).toBeTruthy();
     fireEvent.click(screen.getByRole("button", { name: "Flat 8" }));
     expect(screen.getByText("Here is what will change")).toBeTruthy();
     fireEvent.click(screen.getByRole("button", { name: /View access as James/ }));
     expect(screen.getByText("Hobson as James sees it")).toBeTruthy();
+  });
+
+  it("shows a Superuser without a locked-access note", () => {
+    render(<PrototypeSecurity />);
+    fireEvent.click(screen.getByRole("button", { name: "Open Sarah Mitchell's access" }));
+    expect(screen.queryByText(/can't be narrowed here/)).toBeNull();
+    expect(screen.queryByText(/Superusers always/)).toBeNull();
   });
 });

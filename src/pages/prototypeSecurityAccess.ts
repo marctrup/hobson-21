@@ -155,53 +155,9 @@ export const paperLine = (a: Access): string => {
   }).filter(Boolean) as string[];
   return parts.join(" · ");
 };
-const paperWords = (a: Access) => {
-  if (a.papers === "all") return "all papers";
-  const t = a.papers.map(typeById);
-  const words: string[] = [];
-  if (t.some((x) => x.lease)) words.push("leases and tenancies");
-  if (t.some((x) => x.compliance)) words.push("compliance papers");
-  if (t.some((x) => x.accounting)) words.push("accounting papers");
-  const other = t.filter((x) => !x.lease && !x.compliance && !x.accounting);
-  if (other.length) words.push(other.map((x) => x.plural.toLowerCase().replace(/^epcs$/, "EPCs")).join(", "));
-  return words.length ? list(words) : "no papers";
-};
 
 // ---------- Plain-language summaries ----------
 export const firstName = (p: Person) => p.name.split(" ")[0];
-export type Summary = { can: string[]; cannot: string[] };
-export function summarise(p: Person, a: Access = p.access): Summary {
-  const n = firstName(p);
-  if (p.superuser) return { can: ["Access the whole portfolio and every paper, including Valuation Reports and Loan Agreements.", "Use every area of Hobson and every Back Office colleague.", "Invite people, change their access and restrict Admins."], cannot: [] };
-  if (p.admin) return { can: ["Access the whole portfolio and every paper, including Valuation Reports and Loan Agreements.", "Use every area of Hobson.", "Invite people and change their access."], cannot: [...COLLEAGUES.filter((c) => p.blockedColleagues?.includes(c.id)).map((c) => `Work with ${c.name} (${c.area}).`), "Change a Superuser's access."] };
-  const can: string[] = [], cannot: string[] = [];
-  const gs = groupsWithAccess(a);
-  if (a.portfolio) can.push("Access the whole portfolio.");
-  else if (gs.length) can.push(`Access ${list(gs.map((g) => (a.groups[g.id] === "all" ? g.name : `${list(unitsFor(a, g.id))} at ${g.name}`)))}.`);
-  if (a.areas.papers !== "none" && typesFor(a).length) can.push(`${a.areas.papers === "change" ? "Work with" : "See"} the ${paperWords(a)} for ${a.portfolio || gs.length > 1 ? "those places" : "that place"}.`);
-  if (a.areas.people !== "none") can.push(`${a.areas.people === "change" ? "View and update" : "View"} relevant contacts in People We Know.`);
-  if (a.areas.compliance !== "none") can.push(a.areas.compliance === "change" ? "Review and update compliance responsibilities." : "Review compliance responsibilities.");
-  if (a.areas.reading !== "none") can.push("Add permitted papers through Reading.");
-  if (!can.length) can.push("Nothing yet.");
-  if (!a.portfolio) {
-    GROUPS.forEach((g) => {
-      const u = unitsFor(a, g.id);
-      if (!u.length) cannot.push(`Access ${g.name}.`);
-      else if (u.length < g.units.length) cannot.push(`See the rest of ${g.name} (${list(g.units.filter((x) => !u.includes(x)))}).`);
-    });
-  }
-  if (a.papers !== "all") {
-    if (!a.papers.some((t) => ACCOUNTING.includes(t))) cannot.push("View accounting papers.");
-    if (!a.papers.some((t) => typeById(t).lease)) cannot.push("View leases or tenancy agreements.");
-  }
-  cannot.push(`Read ${list(RESTRICTED_TYPES.map((t) => t.plural))} — Admin only.`);
-  if (a.areas.papers === "none") cannot.push("Open Papers.");
-  if (a.areas.people === "none") cannot.push("See People We Know.");
-  if (a.areas.compliance === "none") cannot.push("See compliance responsibilities.");
-  cannot.push("Manage other people's access.");
-  void n;
-  return { can, cannot };
-}
 
 export function glance(p: Person, a: Access = p.access) {
   if (isTop(p)) return { where: "The whole portfolio", what: "All papers", doing: "Everything, including Security" };

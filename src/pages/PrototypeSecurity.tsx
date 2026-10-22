@@ -6,7 +6,7 @@ import {
   AREAS, FAMILIES, GROUPS, PAGE, PRESETS, type Access, type AreaId, type Level, type Person, type SecState,
   accessGroups, diff, firstName, glance, groupName, initialState, interpret, isRestricted, levelLabel, matchesQuery, paperLine,
   peopleForArea, peopleForPlace, placeLines, reviewInvite, saveDraft, setAllPapers, setArea, setFamily, setGroup, setPortfolio, setType, setUnit,
-  summarise, typesFor, isTop, rankLabel, unreadablePapers, COLLEAGUES, setColleague, unitsFor, visiblePeople, visiblePapers,
+  typesFor, isTop, rankLabel, unreadablePapers, COLLEAGUES, setColleague, unitsFor, visiblePeople, visiblePapers,
 } from "./prototypeSecurityAccess";
 
 // Prototype Security: the Superuser tells Hobson who should reach what; Hobson explains and asks before saving.
@@ -56,7 +56,7 @@ function Fold({ title, hint, children, start = false }: { title: string; hint?: 
 /** The one permission editor used for existing people and invitations alike. */
 function AccessEditor({ a, set, locked }: { a: Access; set: (a: Access) => void; locked?: boolean }) {
   const types = typesFor(a);
-  if (locked) return <p className="text-sm text-ink-muted">Superusers always have the whole portfolio, every paper and every area. That can't be narrowed here.</p>;
+  if (locked) return null;
   return (
     <div className="grid gap-3">
       <Fold title="Places" hint={placeLines(a).join(" · ") || "None yet"} start>
@@ -231,7 +231,6 @@ export default function PrototypeSecurity() {
       if (!p) return null;
       const a = s.draft?.id === p.id ? s.draft.access : p.access;
       const changes = diff(p.access, a);
-      const sum = summarise(p, a);
       const n = firstName(p);
       if (v.kind === "preview") {
         const papers = visiblePapers(a);
@@ -304,10 +303,6 @@ export default function PrototypeSecurity() {
               </div>
             </div>
           )}
-          <div className="grid gap-4 [@container_sec_(min-width:40rem)]:grid-cols-2">
-            <div><p className="mb-2 text-sm font-medium">{n} can currently</p><ul className="grid gap-1.5 text-sm">{sum.can.map((c) => <li key={c} className="flex gap-2"><span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-primary" />{c}</li>)}</ul></div>
-            {sum.cannot.length > 0 && <div><p className="mb-2 text-sm font-medium">{n} cannot</p><ul className="grid gap-1.5 text-sm text-ink-muted">{sum.cannot.map((c) => <li key={c} className="flex gap-2"><span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-muted-foreground/50" />{c}</li>)}</ul></div>}
-          </div>
           {changes.length > 0 && (
             <div className="rounded-xl bg-primary/[0.06] p-4 ring-1 ring-primary/30" role="status">
               <p className="text-sm font-medium">Here is what will change</p>
@@ -315,7 +310,7 @@ export default function PrototypeSecurity() {
               <div className="mt-3 flex gap-2"><Button size="sm" onClick={saveNow}>Save changes</Button><Button size="sm" variant="ghost" onClick={discard}>Discard</Button></div>
             </div>
           )}
-          <div><p className="mb-2 text-sm font-medium">What {n} can access</p><AccessEditor a={a} locked={isTop(p)} set={(x) => editPerson(p, x)} /></div>
+          <AccessEditor a={a} locked={isTop(p)} set={(x) => editPerson(p, x)} />
         </div>
       );
     }
