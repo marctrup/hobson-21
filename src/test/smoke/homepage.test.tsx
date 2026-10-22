@@ -31,7 +31,7 @@ describe("Homepage", () => {
     );
     expect(captions).toEqual(["Early customer feedback", "CEO"]);
     expect(container.textContent).not.toMatch(/[★☆]/);
-    expect(container.textContent).not.toMatch(/\b\d+(\.\d+)?\s*(out of|/)\s*5\b/i);
+    expect(container.textContent).not.toMatch(/\b\d+(\.\d+)?\s*(out of|\/)\s*5\b/i);
   });
 
   it("places the remarks after the benefits and before the closing invitation", () => {
