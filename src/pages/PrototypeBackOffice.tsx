@@ -39,6 +39,18 @@ export function routeRequest(text: string): ColleagueId | null {
   return null;
 }
 
+/** Inside a colleague's work, the speaker is that colleague: swap Hobson's owl for theirs. */
+const voiced = new WeakSet<HTMLElement>();
+function voiceAs(el: HTMLElement | null, img: string, name: string) {
+  if (!el || voiced.has(el)) return;
+  voiced.add(el);
+  const apply = () => el.querySelectorAll<HTMLImageElement>("img").forEach((i) => {
+    if (i.getAttribute("src") === owlDefault) { i.src = img; if (i.alt) i.alt = name; }
+  });
+  apply();
+  new MutationObserver(apply).observe(el, { subtree: true, childList: true, attributes: true, attributeFilter: ["src"] });
+}
+
 type Message = { id: number; role: "user" | "hobson"; text: string; choices?: boolean };
 const WELCOME = "Welcome to the Back Office.\n\nThis is where my colleagues and I look after the information that keeps your portfolio in order.\n\nWhat would you like us to help you with?";
 
@@ -103,18 +115,6 @@ export default function PrototypeBackOffice() {
                   {m.role === "hobson" && (cont ? <span className="w-10 shrink-0" /> : <img src={owlDefault} alt="Hobson" className="h-10 w-10 shrink-0 object-contain" />)}
                   <div className={`min-w-0 rounded-lg px-3.5 py-2.5 ${m.role === "user" ? "bg-secondary" : ""}`}><p className="whitespace-pre-line break-words text-sm leading-relaxed">{m.text}</p></div>
                 </div>
-                {m.choices && (
-                  <ul aria-label="My colleagues" className="ml-12 grid w-[calc(100%-3rem)] gap-1.5">
-                    {COLLEAGUES.map((c) => (
-                      <li key={c.id}>
-                        <button type="button" onClick={() => choose(c.id)} className="flex w-full items-center gap-3 rounded-lg px-2 py-1.5 text-left ring-1 ring-bone transition hover:bg-paper hover:ring-primary/30">
-                          <img src={c.img} alt="" aria-hidden className="h-9 w-9 shrink-0 object-contain" />
-                          <span className="min-w-0"><span className="block text-sm font-medium text-ink">{c.name}</span><span className="block truncate text-xs text-ink-muted">{c.choice}</span></span>
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
-                )}
               </div>
             );
           })}
@@ -142,7 +142,7 @@ export default function PrototypeBackOffice() {
           {opened.map((id) => {
             const c = COLLEAGUES.find((x) => x.id === id)!;
             return (
-              <div key={id} data-colleague={id} hidden={id !== active} className="absolute inset-0 [&>div]:!h-full [&>div>aside:first-child]:hidden">
+              <div key={id} ref={(el) => voiceAs(el, c.img, c.name)} data-colleague={id} hidden={id !== active} className="absolute inset-0 [&>div]:!h-full [&>div>aside:first-child]:hidden">
                 <PrototypeGateAdmitted.Provider value={true}><Suspense fallback={null}><c.Comp /></Suspense></PrototypeGateAdmitted.Provider>
               </div>
             );
