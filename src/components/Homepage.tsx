@@ -17,6 +17,7 @@ import { PilotApplicationForm } from "@/components/homepage/PilotApplicationForm
 
 import { AudienceStrip } from "@/components/homepage/AudienceStrip";
 import { TrustStrip } from "@/components/homepage/TrustStrip";
+import { TestimonialSection } from "@/components/homepage/TestimonialSection";
 
 
 import { TrustedConversationSection } from "@/components/homepage/TrustedConversationSection";
@@ -345,6 +346,10 @@ export const Homepage = () => {
 
           {/* Trust Strip */}
           <TrustStrip />
+
+          {/* Remarks from visitors, before the final invitation */}
+          <TestimonialSection />
+
 
 
           <PilotApplicationForm showForm={showPilotForm} setShowForm={setShowPilotForm} />
