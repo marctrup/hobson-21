@@ -218,7 +218,7 @@ export function PrototypeRecordsShell({ focus, opening, suggestions, respond, on
                           <span><span className="block text-sm font-medium text-foreground">{u.name}</span><span className="block text-xs text-muted-foreground">{u.classification} · {u.tenancy}</span></span>
                           <ChevronDown className={`h-4 w-4 text-muted-foreground transition-transform ${place === u.number ? "" : "-rotate-90"}`} aria-hidden />
                         </button>
-                        {place === u.number && <div className="border-t border-border bg-bone-wash/40 p-3">{sections(u.number)}</div>}
+                        {place === u.number && <div className="border-t border-border bg-bone-wash/40 p-3">{renderSections(u.number)}</div>}
                       </li>
                     ))}
                   </ul>
