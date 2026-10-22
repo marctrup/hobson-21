@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { accessGroups, areaChips, canSeeUnit, groupKeyFor, initialState, interpret, isRestricted, paperChip, peopleForPlace, placeChips, setUnit, typesFor, visiblePeople, visiblePapers, INITIAL_PEOPLE, type Person } from "@/pages/prototypeSecurityAccess";
+import { setColleague, unreadablePapers, accessGroups, areaChips, canSeeUnit, groupKeyFor, initialState, interpret, isRestricted, paperChip, peopleForPlace, placeChips, setUnit, typesFor, visiblePeople, visiblePapers, INITIAL_PEOPLE, type Person } from "@/pages/prototypeSecurityAccess";
 
 const say = (texts: string[]) => texts.reduce((s, t) => interpret(s, t).state, initialState());
 const person = (s: ReturnType<typeof initialState>, id: string) => s.people.find((p) => p.id === id)!;
@@ -23,8 +23,8 @@ describe("prototype security", () => {
     expect(canSeeUnit(person(saved, "james").access, "stanley", "Flat 8")).toBe(true);
   });
   it("removing accounting papers removes only those", () => {
-    const s = say(["Remove Priya's access to all accounting papers.", "Save changes"]);
-    const t = typesFor(person(s, "priya").access);
+    const s = say(["Remove James's access to all accounting papers.", "Save changes"]);
+    const t = typesFor(person(s, "james").access);
     expect(t).not.toContain("service-charge-accounts");
     expect(t).toContain("business-lease");
   });
@@ -68,9 +68,9 @@ describe("prototype security", () => {
     expect(rows.find((r) => r.person.id === "emily")!.scope).toBe("Unit 1 and Unit 2");
     expect(rows.find((r) => r.person.id === "james")!.scope).toBe("All 4 Units");
   });
-  it("splits people into Admin, Full Access and Limited Access", () => {
+  it("splits people into Superuser, Admin, Full Access and Limited Access", () => {
     const active = INITIAL_PEOPLE.filter((p) => p.status !== "invited");
-    expect(accessGroups(active).map((g) => [g.key, g.title, g.people.length])).toEqual([["admin", "Admin", 2], ["full", "Full Access", 2], ["limited", "Limited Access", 4]]);
+    expect(accessGroups(active).map((g) => [g.key, g.title, g.people.length])).toEqual([["superuser", "Superuser", 1], ["admin", "Admin", 2], ["full", "Full Access", 1], ["limited", "Limited Access", 4]]);
     const nobody: Person = { id: "x", name: "New Contractor", role: "Contractor", email: "n@example.co.uk", status: "active", access: { portfolio: false, groups: {}, papers: [], areas: { papers: "none", people: "none", compliance: "none", reading: "none" } } };
     expect(groupKeyFor(nobody)).toBe("limited");
   });
@@ -94,5 +94,17 @@ describe("prototype security", () => {
     expect(visiblePeople(many, false, false)).toHaveLength(6);
     expect(visiblePeople(many, true, false)).toHaveLength(20);
     expect(visiblePeople(many, false, true)).toHaveLength(20);
+  });
+  it("only Superusers and Admins can read Valuation Reports and Loan Agreements", () => {
+    const st = initialState();
+    expect(unreadablePapers(person(st, "james"))).toEqual(expect.arrayContaining(["Valuation Reports", "Loan Agreements"]));
+    expect(unreadablePapers(person(st, "oliver"))).toEqual([]);
+    expect(unreadablePapers(person(st, "sarah"))).toEqual([]);
+  });
+  it("a Superuser can restrict an Admin from a colleague, but not a non-Admin", () => {
+    const st = initialState();
+    expect(setColleague(person(st, "priya"), "professor", false).blockedColleagues).toContain("professor");
+    expect(setColleague(person(st, "oliver"), "professor", true).blockedColleagues).not.toContain("professor");
+    expect(setColleague(person(st, "james"), "architect", false).blockedColleagues).toBeUndefined();
   });
 });
