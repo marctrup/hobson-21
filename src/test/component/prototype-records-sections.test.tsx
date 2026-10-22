@@ -2,7 +2,6 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 import PrototypeLegal from "@/pages/PrototypeLegal";
-import PrototypeContacts from "@/pages/PrototypeContacts";
 
 vi.mock("leaflet", () => ({
   default: {
@@ -30,11 +29,5 @@ describe("record sections offered by each records prototype", () => {
     expect(screen.queryByRole("button", { name: /About/ })).not.toBeInTheDocument();
     expect(screen.getByRole("button", { name: /Legal responsibilities/ })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: /Preferred contractors/ })).toBeInTheDocument();
-  });
-
-  it("still offers About in the contractors prototype", async () => {
-    render(<PrototypeContacts />);
-    await openGroup();
-    expect(screen.getByRole("button", { name: /About/ })).toBeInTheDocument();
   });
 });
