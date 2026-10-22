@@ -137,66 +137,15 @@ function Glance({ p, a }: { p: Person; a: Access }) {
 }
 
 // ---------- People, presented as cards rather than rows ----------
-function StatusPill({ p }: { p: Person }) {
-  const [label, cls, dot] = p.status === "invited"
-    ? ["Awaiting acceptance", "border-dashed border-bone-strong text-ink-muted", ""]
-    : p.status === "suspended"
-      ? ["Suspended", "border-bone-strong bg-bone text-charcoal", "bg-ink-muted"]
-      : ["Active", "border-bone bg-paper text-ink", "bg-primary"];
-  return (
-    <span className={`inline-flex shrink-0 items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-[11px] ${cls}`}>
-      {dot && <span className={`h-1.5 w-1.5 rounded-full ${dot}`} aria-hidden />}
-      {label}
-    </span>
-  );
-}
-
-function ChipView({ c, icon }: { c: Chip; icon?: boolean }) {
-  return (
-    <span className="inline-flex max-w-full items-baseline gap-1.5 rounded-full bg-paper px-2.5 py-1 text-xs ring-1 ring-bone" title={c.title}>
-      {icon && <FileText className="h-3 w-3 shrink-0 self-center text-ink-muted" aria-hidden />}
-      <span className="truncate text-ink">{c.label}</span>
-      {c.detail && <span className="shrink-0 text-[10px] text-ink-muted">{c.detail}</span>}
-    </span>
-  );
-}
-
-function AreaPill({ area, level }: { area: AreaId; level: Level }) {
-  const Icon = level === "change" ? (area === "reading" ? Plus : Pencil) : Eye;
-  return (
-    <span className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[11px] ${level === "change" ? "bg-secondary text-ink" : "text-ink-muted ring-1 ring-bone"}`} title={levelLabel(area, level)}>
-      <Icon className="h-2.5 w-2.5 shrink-0" aria-hidden />{AREA_SHORT[area]}
-    </span>
-  );
-}
-
+/** People are presented as name-only cards: the rights above them say who has what, so cards stay quiet. */
 function PersonCard({ p, onOpen, lit, scope }: { p: Person; onOpen: () => void; lit?: boolean; scope?: string }) {
-  const places = placeChips(p.access);
-  const areas = areaChips(p.access);
   return (
     <li>
-      <button type="button" onClick={onOpen} aria-label={`Open ${p.name}'s access`} className={`group flex h-full w-full flex-col gap-3 rounded-xl bg-background p-4 text-left ring-1 transition duration-200 hover:-translate-y-0.5 hover:shadow-[0_14px_28px_-22px_rgba(45,45,45,0.55)] hover:ring-primary/40 focus:outline-none focus-visible:ring-2 focus-visible:ring-ring ${lit ? "bg-primary/[0.04] ring-primary/60" : "ring-bone"}`}>
-        <span className="flex flex-wrap items-start gap-x-3 gap-y-1.5">
-          <span aria-hidden className={`grid h-10 w-10 shrink-0 place-items-center rounded-full text-xs font-semibold tracking-wide ${monogramTone(p)}`}>{initials(p)}</span>
-          <span className="min-w-0 flex-1 basis-40">
-            <span className="flex flex-wrap items-baseline gap-x-2">
-              <span className="truncate font-serif text-[17px] leading-snug text-ink">{p.name}</span>
-              {p.superuser && <span className="rounded-full bg-primary px-2 py-0.5 text-[9px] uppercase tracking-[0.14em] text-primary-foreground">Superuser</span>}
-              {p.you && <span className="text-[10px] text-ink-muted">(you)</span>}
-            </span>
-            <span className="mt-0.5 block truncate text-xs text-ink-muted">{p.role}</span>
-          </span>
-          <StatusPill p={p} />
-        </span>
-        {p.status === "invited" && <span className="-mt-1.5 block truncate text-[11px] text-ink-faint" title={p.email}>{p.email}</span>}
-        <span className="flex flex-wrap gap-1.5">
-          {places.length ? places.map((c) => <ChipView key={c.label} c={c} />) : <span className="text-xs italic text-ink-muted">No places yet</span>}
-        </span>
-        <span className="mt-auto flex flex-wrap items-center gap-1.5 border-t border-faint-rule pt-2.5">
-          <ChipView c={paperChip(p.access)} icon />
-          {areas.map((x) => <AreaPill key={x.area} area={x.area} level={x.level} />)}
-          {scope && <span className="ml-auto shrink-0 text-[11px] text-ink-muted">{scope}</span>}
-        </span>
+      <button type="button" onClick={onOpen} aria-label={`Open ${p.name}'s access`} title={p.status === "suspended" ? "Suspended" : undefined} className={`group flex max-w-full items-center gap-2.5 rounded-xl bg-background px-4 py-2.5 text-left ring-1 transition duration-200 hover:-translate-y-0.5 hover:shadow-[0_14px_28px_-22px_rgba(45,45,45,0.55)] hover:ring-primary/40 focus:outline-none focus-visible:ring-2 focus-visible:ring-ring ${lit ? "bg-primary/[0.04] ring-primary/60" : "ring-bone"}`}>
+        {p.status === "suspended" && <span aria-label="Suspended" title="Suspended" className="h-1.5 w-1.5 shrink-0 rounded-full bg-ink-muted" />}
+        <span className="truncate whitespace-nowrap font-serif text-[15px] leading-snug text-ink">{p.name}</span>
+        {p.you && <span className="shrink-0 text-[10px] text-ink-muted">(you)</span>}
+        {scope && <span className="shrink-0 text-[11px] text-ink-muted">{scope}</span>}
       </button>
     </li>
   );
