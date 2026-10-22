@@ -67,6 +67,7 @@ export function PrototypeUnitPhotographs({ unit, onChange }: Props) {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const hover = useHoverPreview();
+  const [hoverId, setHoverId] = useState<string | null>(null);
   const latest = useRef(unit);
   latest.current = unit;
   const photos = unit.photos ?? [];
