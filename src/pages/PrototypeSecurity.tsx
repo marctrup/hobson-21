@@ -318,7 +318,6 @@ export default function PrototypeSecurity() {
     <div className="flex h-screen w-full overflow-hidden bg-bone-wash text-ink">
       <aside className="flex w-[68px] shrink-0 flex-col items-center gap-2 border-r border-bone bg-background py-4">
         <div className="mb-2 grid h-10 w-10 place-items-center" aria-hidden><img src={owlDefault} alt="" className="h-10 w-10 object-contain" /></div>
-        {["Portfolio", "Papers", "People We Know", "Compliance", "Conversations"].map((label) => <button key={label} type="button" className="w-12 rounded-lg py-2 text-center text-[10px] leading-tight text-ink-muted hover:bg-paper">{label}</button>)}
         <button type="button" aria-current="page" title="Security — Superusers only" className="flex w-12 flex-col items-center gap-1 rounded-lg bg-secondary py-2 text-[10px] font-medium leading-tight text-ink"><Shield className="h-3.5 w-3.5" aria-hidden />Security</button>
         <div className="mt-auto grid h-9 w-9 place-items-center rounded-full bg-bone text-xs font-semibold text-charcoal" title="Sarah Mitchell · Superuser">SM</div>
       </aside>

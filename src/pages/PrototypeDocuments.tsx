@@ -540,10 +540,8 @@ export default function PrototypeDocuments() {
         <div className="mb-2 grid h-10 w-10 place-items-center overflow-hidden rounded-xl" aria-hidden>
           <img src={owlDefault} alt="" className="h-10 w-10 object-contain" />
         </div>
-        <RailItem icon="pin" label="Portfolio" />
         <RailItem icon="doc" label="Papers" active={section === "papers"} onClick={() => setSection("papers")} />
         <RailItem icon="book" label="Reading" active={section === "reading" || section === "current"} count={activeReadings(readings).length} onClick={() => setSection("reading")} />
-        <RailItem icon="chat" label="Conversations" active={section === "conversations"} onClick={() => setSection("conversations")} />
         <div className="mt-auto flex flex-col items-center gap-3 pb-2">
           <Button
             type="button"
@@ -554,7 +552,6 @@ export default function PrototypeDocuments() {
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" aria-hidden><path d="M12 5v14M5 12h14" /></svg>
           </Button>
           <span className="w-full px-1 text-center text-[9px] leading-tight text-ink-muted">A new conversation</span>
-          <RailItem icon="gear" label="Back Office" />
           <div className="grid h-9 w-9 place-items-center rounded-full bg-bone text-xs font-semibold text-charcoal">MT</div>
         </div>
       </aside>
