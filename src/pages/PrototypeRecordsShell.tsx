@@ -128,7 +128,7 @@ export function PrototypeRecordsShell({ focus, opening, suggestions, respond, on
 
   const placeLabel = groupOpen ? `${PLACE.name}${place !== null ? ` › ${PLACE.units.find(u => u.number === place)?.name}` : ""}` : "Portfolio";
 
-  const sections = (ctx: PlaceContext) => (
+  const renderSections = (ctx: PlaceContext) => (
     <div className="flex flex-col gap-2">
       {sections.map(key => (
         <RecordSection key={key} title={key === "about" ? "About" : key === "legal" ? "Legal responsibilities" : "Preferred contractors"} count={sectionCount(key, ctx)} open={open[key]} onToggle={() => setOpen(o => ({ ...o, [key]: !o[key] }))} focus={key === focus} onAsk={key === focus ? () => { setPlace(ctx); ask(); } : undefined}>
