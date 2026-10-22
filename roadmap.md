@@ -187,7 +187,8 @@
 
 ## Prototype Unit — map, Unit details and descriptions
 - [x] Add optional physical-details Excel download/upload, identity matching and confirmed review, shared with current Map editors and Chat; retain map and add resettable browser persistence. 57 targeted checks pass; genuine download/upload, replacement approval, direct editing, Chat read-back, fresh download and reload verified in browser. Not published.
-- [x] Paragon Centre with gym and illustrative flat, lifted map, compact rows, Unit/occupation hover, inline editor with shared facilities and gas supply, place context; 54 Unit checks pass, browser verified. Not published.
+- [x] Paragon Centre with gym and illustrative flat, lifted map, compact rows, Unit/occupation hover, inline editor with shared facilities, place context; 54 Unit checks pass, browser verified. Not published.
+- [x] Remove Gas supply from Unit facilities: the field, its label and its sample value are gone from the Unit editor, the details model and the demonstration record. 52 Unit checks pass; live preview shows Floor area, Bedrooms, Bathrooms, Shared facilities and Outside space only. Not published.
 
 ## Prototype Unit — larger Unit photographs
 - [x] Make each Unit's photograph in the units list expand on hover and open large when tapped or clicked, so small thumbnails are usable on mobile.
