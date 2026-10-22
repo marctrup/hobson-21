@@ -68,11 +68,11 @@ describe("prototype security", () => {
     expect(rows.find((r) => r.person.id === "emily")!.scope).toBe("Unit 1 and Unit 2");
     expect(rows.find((r) => r.person.id === "james")!.scope).toBe("All 4 Units");
   });
-  it("groups people by what their access actually means", () => {
+  it("splits people into Admin, Full Access and Limited Access", () => {
     const active = INITIAL_PEOPLE.filter((p) => p.status !== "invited");
-    expect(accessGroups(active).map((g) => [g.key, g.people.length])).toEqual([["superuser", 2], ["portfolio", 2], ["places", 4]]);
+    expect(accessGroups(active).map((g) => [g.key, g.title, g.people.length])).toEqual([["admin", "Admin", 2], ["full", "Full Access", 2], ["limited", "Limited Access", 4]]);
     const nobody: Person = { id: "x", name: "New Contractor", role: "Contractor", email: "n@example.co.uk", status: "active", access: { portfolio: false, groups: {}, papers: [], areas: { papers: "none", people: "none", compliance: "none", reading: "none" } } };
-    expect(groupKeyFor(nobody)).toBe("none");
+    expect(groupKeyFor(nobody)).toBe("limited");
   });
   it("finds people by place, role or area without matching everyone", () => {
     const active = INITIAL_PEOPLE.filter((p) => p.status !== "invited");

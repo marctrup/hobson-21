@@ -6,6 +6,10 @@ describe("prototype security page", () => {
   it("renders the overview and opens a person with a live summary", () => {
     render(<PrototypeSecurity />);
     expect(screen.getByRole("heading", { name: "People with access" })).toBeTruthy();
+    // Cards carry the name only: the rights groups above them say who has what.
+    expect(screen.getByText("James Carter")).toBeTruthy();
+    expect(screen.queryByText("Accounting papers")).toBeNull();
+    expect(screen.queryByText("All 4 Units")).toBeNull();
     fireEvent.click(screen.getByRole("button", { name: "Open James Carter's access" }));
     expect(screen.getByText("James can currently")).toBeTruthy();
     fireEvent.click(screen.getByRole("button", { name: "Flat 8" }));

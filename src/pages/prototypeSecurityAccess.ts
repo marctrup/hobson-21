@@ -243,16 +243,16 @@ export const peopleForArea = (people: Person[], area: AreaId, atLeast: Level) =>
 
 // ---------- Overview presentation: grouping, chips and search ----------
 export type Chip = { label: string; detail?: string; title?: string };
-export type GroupKey = "superuser" | "portfolio" | "places" | "none";
+export type GroupKey = "admin" | "full" | "limited";
+/** Rights are shown as three simple levels, so the overview answers "who has what rights" at a glance. */
 export const GROUP_META: { key: GroupKey; title: string; explain: string }[] = [
-  { key: "superuser", title: "Superusers", explain: "The whole portfolio, every paper, every area — and Security itself." },
-  { key: "portfolio", title: "The whole portfolio", explain: "Every place, but only the papers and areas their work needs." },
-  { key: "places", title: "Certain places", explain: "Only the buildings or Units you've chosen — never the rest of the portfolio." },
-  { key: "none", title: "No places yet", explain: "Set up, but nothing to open until you choose a place for them." },
+  { key: "admin", title: "Admin", explain: "Everything — the whole portfolio, every paper and every area, including Security itself." },
+  { key: "full", title: "Full Access", explain: "Every place, but only the papers and areas their work needs." },
+  { key: "limited", title: "Limited Access", explain: "Only the buildings or Units you've chosen — never the rest of the portfolio." },
 ];
 export const AREA_SHORT: Record<AreaId, string> = { papers: "Papers", people: "People", compliance: "Compliance", reading: "Reading" };
 export const initials = (p: Person) => p.name.split(/\s+/).filter(Boolean).slice(0, 2).map((x) => x[0]!.toUpperCase()).join("");
-export const groupKeyFor = (p: Person): GroupKey => (p.superuser ? "superuser" : p.access.portfolio ? "portfolio" : groupsWithAccess(p.access).length ? "places" : "none");
+export const groupKeyFor = (p: Person): GroupKey => (p.superuser ? "admin" : p.access.portfolio ? "full" : "limited");
 
 export const placeChips = (a: Access): Chip[] =>
   a.portfolio

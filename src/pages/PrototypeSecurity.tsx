@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
-import { ArrowLeft, ArrowRight, ChevronRight, Eye, FileText, Lightbulb, MessageCircle, Pencil, Plus, RotateCcw, Search, Shield, X } from "lucide-react";
+import { ArrowLeft, ArrowRight, ChevronRight, Eye, Lightbulb, MessageCircle, RotateCcw, Search, Shield, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import owlDefault from "@/assets/prototype/owl-default.png";
 import {
-  AREAS, FAMILIES, GROUPS, PAGE, PRESETS, type Access, type AreaId, type Chip, type Level, type Person, type SecState,
-  AREA_SHORT, accessGroups, areaChips, diff, firstName, glance, groupName, initials, initialState, interpret, isRestricted, levelLabel, matchesQuery, paperChip, paperLine,
-  peopleForArea, peopleForPlace, placeChips, placeLines, reviewInvite, saveDraft, setAllPapers, setArea, setFamily, setGroup, setPortfolio, setType, setUnit,
+  AREAS, FAMILIES, GROUPS, PAGE, PRESETS, type Access, type AreaId, type Level, type Person, type SecState,
+  accessGroups, diff, firstName, glance, groupName, initialState, interpret, isRestricted, levelLabel, matchesQuery, paperLine,
+  peopleForArea, peopleForPlace, placeLines, reviewInvite, saveDraft, setAllPapers, setArea, setFamily, setGroup, setPortfolio, setType, setUnit,
   summarise, typesFor, unitsFor, visiblePeople, visiblePapers,
 } from "./prototypeSecurityAccess";
 
@@ -30,12 +30,6 @@ const TRY: { label: string; text: string }[] = [
 
 const ring = "rounded-xl bg-background ring-1 ring-bone";
 
-const monogramTone = (p: Person) =>
-  p.status === "invited" ? "border border-dashed border-bone-strong bg-background text-ink-muted"
-    : p.status === "suspended" ? "bg-bone text-ink-muted"
-      : p.superuser ? "bg-primary text-primary-foreground"
-        : p.access.portfolio ? "bg-secondary text-ink"
-          : "bg-background text-charcoal ring-1 ring-bone-strong";
 
 function Check({ on, part, label, onChange }: { on: boolean; part?: boolean; label: string; onChange: (v: boolean) => void }) {
   return (
@@ -143,66 +137,15 @@ function Glance({ p, a }: { p: Person; a: Access }) {
 }
 
 // ---------- People, presented as cards rather than rows ----------
-function StatusPill({ p }: { p: Person }) {
-  const [label, cls, dot] = p.status === "invited"
-    ? ["Awaiting acceptance", "border-dashed border-bone-strong text-ink-muted", ""]
-    : p.status === "suspended"
-      ? ["Suspended", "border-bone-strong bg-bone text-charcoal", "bg-ink-muted"]
-      : ["Active", "border-bone bg-paper text-ink", "bg-primary"];
-  return (
-    <span className={`inline-flex shrink-0 items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-[11px] ${cls}`}>
-      {dot && <span className={`h-1.5 w-1.5 rounded-full ${dot}`} aria-hidden />}
-      {label}
-    </span>
-  );
-}
-
-function ChipView({ c, icon }: { c: Chip; icon?: boolean }) {
-  return (
-    <span className="inline-flex max-w-full items-baseline gap-1.5 rounded-full bg-paper px-2.5 py-1 text-xs ring-1 ring-bone" title={c.title}>
-      {icon && <FileText className="h-3 w-3 shrink-0 self-center text-ink-muted" aria-hidden />}
-      <span className="truncate text-ink">{c.label}</span>
-      {c.detail && <span className="shrink-0 text-[10px] text-ink-muted">{c.detail}</span>}
-    </span>
-  );
-}
-
-function AreaPill({ area, level }: { area: AreaId; level: Level }) {
-  const Icon = level === "change" ? (area === "reading" ? Plus : Pencil) : Eye;
-  return (
-    <span className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[11px] ${level === "change" ? "bg-secondary text-ink" : "text-ink-muted ring-1 ring-bone"}`} title={levelLabel(area, level)}>
-      <Icon className="h-2.5 w-2.5 shrink-0" aria-hidden />{AREA_SHORT[area]}
-    </span>
-  );
-}
-
+/** People are presented as name-only cards: the rights above them say who has what, so cards stay quiet. */
 function PersonCard({ p, onOpen, lit, scope }: { p: Person; onOpen: () => void; lit?: boolean; scope?: string }) {
-  const places = placeChips(p.access);
-  const areas = areaChips(p.access);
   return (
     <li>
-      <button type="button" onClick={onOpen} aria-label={`Open ${p.name}'s access`} className={`group flex h-full w-full flex-col gap-3 rounded-xl bg-background p-4 text-left ring-1 transition duration-200 hover:-translate-y-0.5 hover:shadow-[0_14px_28px_-22px_rgba(45,45,45,0.55)] hover:ring-primary/40 focus:outline-none focus-visible:ring-2 focus-visible:ring-ring ${lit ? "bg-primary/[0.04] ring-primary/60" : "ring-bone"}`}>
-        <span className="flex flex-wrap items-start gap-x-3 gap-y-1.5">
-          <span aria-hidden className={`grid h-10 w-10 shrink-0 place-items-center rounded-full text-xs font-semibold tracking-wide ${monogramTone(p)}`}>{initials(p)}</span>
-          <span className="min-w-0 flex-1 basis-40">
-            <span className="flex flex-wrap items-baseline gap-x-2">
-              <span className="truncate font-serif text-[17px] leading-snug text-ink">{p.name}</span>
-              {p.superuser && <span className="rounded-full bg-primary px-2 py-0.5 text-[9px] uppercase tracking-[0.14em] text-primary-foreground">Superuser</span>}
-              {p.you && <span className="text-[10px] text-ink-muted">(you)</span>}
-            </span>
-            <span className="mt-0.5 block truncate text-xs text-ink-muted">{p.role}</span>
-          </span>
-          <StatusPill p={p} />
-        </span>
-        {p.status === "invited" && <span className="-mt-1.5 block truncate text-[11px] text-ink-faint" title={p.email}>{p.email}</span>}
-        <span className="flex flex-wrap gap-1.5">
-          {places.length ? places.map((c) => <ChipView key={c.label} c={c} />) : <span className="text-xs italic text-ink-muted">No places yet</span>}
-        </span>
-        <span className="mt-auto flex flex-wrap items-center gap-1.5 border-t border-faint-rule pt-2.5">
-          <ChipView c={paperChip(p.access)} icon />
-          {areas.map((x) => <AreaPill key={x.area} area={x.area} level={x.level} />)}
-          {scope && <span className="ml-auto shrink-0 text-[11px] text-ink-muted">{scope}</span>}
-        </span>
+      <button type="button" onClick={onOpen} aria-label={`Open ${p.name}'s access`} title={p.status === "suspended" ? "Suspended" : undefined} className={`group flex max-w-full items-center gap-2.5 rounded-xl bg-background px-4 py-2.5 text-left ring-1 transition duration-200 hover:-translate-y-0.5 hover:shadow-[0_14px_28px_-22px_rgba(45,45,45,0.55)] hover:ring-primary/40 focus:outline-none focus-visible:ring-2 focus-visible:ring-ring ${lit ? "bg-primary/[0.04] ring-primary/60" : "ring-bone"}`}>
+        {p.status === "suspended" && <span aria-label="Suspended" title="Suspended" className="h-1.5 w-1.5 shrink-0 rounded-full bg-ink-muted" />}
+        <span className="truncate whitespace-nowrap font-serif text-[15px] leading-snug text-ink">{p.name}</span>
+        {p.you && <span className="shrink-0 text-[10px] text-ink-muted">(you)</span>}
+        {scope && <span className="shrink-0 text-[11px] text-ink-muted">{scope}</span>}
       </button>
     </li>
   );
@@ -223,7 +166,7 @@ function PersonGroup({ title, explain, people, lit, expand, onOpen }: { title: s
         </div>
         <p className="mt-1 text-xs italic text-ink-muted">{explain}</p>
       </header>
-      <ul className="grid gap-3 [@container_sec_(min-width:44rem)]:grid-cols-2">
+      <ul className="flex flex-wrap gap-2">
         {shown.map((p) => <PersonCard key={p.id} p={p} lit={lit.includes(p.id)} onOpen={() => onOpen(p.id)} />)}
       </ul>
       {big && !expand && <Button type="button" variant="ghost" size="sm" className="w-fit px-2 text-xs text-primary" onClick={() => setAll(!all)}>{all ? "Show fewer" : `Show all ${people.length}`}</Button>}
@@ -372,7 +315,7 @@ export default function PrototypeSecurity() {
         <div className="grid gap-6">
           <BackLink onClick={back} label="Security overview" />
           <div><h2 className="font-serif text-3xl">{groupName(v.gid)}</h2><p className="mt-1 text-sm text-ink-muted">{rows.length} people with access</p></div>
-          <ul className="grid gap-3 [@container_sec_(min-width:44rem)]:grid-cols-2">{rows.map(({ person, scope }) => <PersonCard key={person.id} p={person} onOpen={() => open(person.id)} scope={scope} />)}</ul>
+          <ul className="flex flex-wrap gap-2">{rows.map(({ person, scope }) => <PersonCard key={person.id} p={person} onOpen={() => open(person.id)} scope={scope} />)}</ul>
         </div>
       );
     }
@@ -383,7 +326,7 @@ export default function PrototypeSecurity() {
         <div className="grid gap-6">
           <BackLink onClick={back} label="Security overview" />
           <div><h2 className="font-serif text-3xl">{label}</h2><p className="mt-1 text-sm text-ink-muted">{rows.length} people who can {v.level === "change" ? "make changes" : "see it"}</p></div>
-          <ul className="grid gap-3 [@container_sec_(min-width:44rem)]:grid-cols-2">{rows.map(({ person, scope }) => <PersonCard key={person.id} p={person} onOpen={() => open(person.id)} scope={scope} />)}</ul>
+          <ul className="flex flex-wrap gap-2">{rows.map(({ person, scope }) => <PersonCard key={person.id} p={person} onOpen={() => open(person.id)} scope={scope} />)}</ul>
         </div>
       );
     }
@@ -411,7 +354,7 @@ export default function PrototypeSecurity() {
         </section>
         <section aria-label="Pending invitations" className="grid gap-3">
           <SectionRule title="Pending invitations" count={invited.length} />
-          {invited.length ? <ul className="grid gap-3 [@container_sec_(min-width:44rem)]:grid-cols-2">{invited.map((p) => <PersonCard key={p.id} p={p} onOpen={() => open(p.id)} lit={s.lit.includes(p.id)} />)}</ul> : <p className="text-sm italic text-ink-muted">{query.trim() ? `No invitation matches “${query}”.` : "None waiting."}</p>}
+          {invited.length ? <ul className="flex flex-wrap gap-2">{invited.map((p) => <PersonCard key={p.id} p={p} onOpen={() => open(p.id)} lit={s.lit.includes(p.id)} />)}</ul> : <p className="text-sm italic text-ink-muted">{query.trim() ? `No invitation matches “${query}”.` : "None waiting."}</p>}
         </section>
       </div>
     );
