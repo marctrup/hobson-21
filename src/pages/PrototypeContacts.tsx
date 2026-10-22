@@ -129,7 +129,7 @@ function ContactRow({ c, d, onOpen, lit }: { c: Contact; d: Directory; onOpen: (
           <span className="block truncate text-xs text-ink-muted">{[c.org && c.person, summary].filter(Boolean).join(" — ")}</span>
           {places.length > 0 && <span className="mt-1 block truncate text-[11px] text-ink-muted/80">{places.join(", ")}</span>}
         </span>
-        <span className="hidden shrink-0 text-right text-[11px] text-ink-muted @md:block">{c.phones[0] ?? c.email ?? ""}</span>
+        <span className="hidden shrink-0 text-right text-[11px] text-ink-muted [@container_contacts_(min-width:28rem)]:block">{c.phones[0] ?? c.email ?? ""}</span>
       </button>
     </li>
   );
@@ -138,7 +138,7 @@ function ContactRow({ c, d, onOpen, lit }: { c: Contact; d: Directory; onOpen: (
 function People({ d, open, lit }: { d: Directory; open: (id: string) => void; lit: Set<string> }) {
   const kinds: Kind[] = ["contractor", "team", "adviser", "landlord", "tenant", "other"];
   return (
-    <div className="grid gap-8 @3xl:grid-cols-2">
+    <div className="grid gap-8 [@container_contacts_(min-width:52rem)]:grid-cols-2">
       {kinds.map((k) => { const cs = d.contacts.filter((c) => c.kind === k); if (!cs.length) return null; return (
         <section key={k} aria-label={KIND_LABEL[k]}>
           <Eyebrow>{KIND_LABEL[k]} · {cs.length}</Eyebrow>
@@ -171,8 +171,8 @@ function Services({ d, open, lit }: { d: Directory; open: (id: string) => void; 
   };
   return (
     <div className="grid gap-8">
-      <div><Eyebrow>Preferred contractors</Eyebrow><div className="grid gap-3 @2xl:grid-cols-2">{contractorServices.map((s) => <Card key={s} s={s} />)}</div></div>
-      {others.length > 0 && <div><Eyebrow>Other responsibilities</Eyebrow><div className="grid gap-3 @2xl:grid-cols-2">{others.map((s) => <Card key={s} s={s} />)}</div></div>}
+      <div><Eyebrow>Preferred contractors</Eyebrow><div className="grid gap-3 [@container_contacts_(min-width:42rem)]:grid-cols-2">{contractorServices.map((s) => <Card key={s} s={s} />)}</div></div>
+      {others.length > 0 && <div><Eyebrow>Other responsibilities</Eyebrow><div className="grid gap-3 [@container_contacts_(min-width:42rem)]:grid-cols-2">{others.map((s) => <Card key={s} s={s} />)}</div></div>}
     </div>
   );
 }
@@ -188,7 +188,7 @@ function Places({ d, open, lit, focus, clearFocus }: { d: Directory; open: (id: 
   return (
     <div className="grid gap-4">
       {focus && <button type="button" onClick={clearFocus} className="flex w-fit items-center gap-1 text-xs text-ink-muted hover:text-ink"><ChevronLeft className="h-3.5 w-3.5" />All places</button>}
-      <div className="grid gap-4 @3xl:grid-cols-2">
+      <div className="grid gap-4 [@container_contacts_(min-width:52rem)]:grid-cols-2">
         {groups.map((g) => {
           const whole = d.relations.filter((r) => r.scope.kind === "group" && r.scope.group === g.id);
           const units = g.units.map((u) => ({ u, rs: d.relations.filter((r) => r.scope.kind === "unit" && r.scope.group === g.id && r.scope.unit === u) })).filter((x) => x.rs.length);
@@ -419,12 +419,12 @@ export default function PrototypeContacts() {
         </div>
       </section>
 
-      <main aria-label="Contacts workspace" className="@container flex min-w-0 flex-1 flex-col">
+      <main aria-label="Contacts workspace" className="[container-type:inline-size] [container-name:contacts] flex min-w-0 flex-1 flex-col">
         <header className="flex h-14 shrink-0 items-center justify-between gap-2 border-b border-bone bg-background px-5">
-          <div className="min-w-0"><p className="text-sm font-medium">Contacts</p><p className="hidden truncate text-[11px] text-ink-muted @md:block">Who helps look after your portfolio · demonstration only, nothing is saved</p></div>
+          <div className="min-w-0"><p className="text-sm font-medium">Contacts</p><p className="hidden truncate text-[11px] text-ink-muted [@container_contacts_(min-width:28rem)]:block">Who helps look after your portfolio · demonstration only, nothing is saved</p></div>
           <div className="flex shrink-0 items-center gap-1">
             <Button variant="ghost" size="icon" className="md:hidden" aria-label="Chat with Hobson" onClick={() => setShowChat(true)}><MessageCircle className="h-4 w-4" /></Button>
-            <Button variant="ghost" size="sm" aria-label="Restart demo" onClick={restart}><RotateCcw className="h-3.5 w-3.5 @md:mr-2" /><span className="hidden @md:inline">Restart demo</span></Button>
+            <Button variant="ghost" size="sm" aria-label="Restart demo" onClick={restart}><RotateCcw className="h-3.5 w-3.5 [@container_contacts_(min-width:28rem)]:mr-2" /><span className="hidden [@container_contacts_(min-width:28rem)]:inline">Restart demo</span></Button>
           </div>
         </header>
         {!showBatch && !focused && (
@@ -434,7 +434,7 @@ export default function PrototypeContacts() {
             ))}
           </div>
         )}
-        <div className="min-h-0 flex-1 overflow-y-auto px-5 py-6 @2xl:px-8">
+        <div className="min-h-0 flex-1 overflow-y-auto px-5 py-6 [@container_contacts_(min-width:42rem)]:px-8">
           {showProposal && <div className="mx-auto mb-8 max-w-2xl"><Proposal pending={pending!} d={d} /></div>}
           {showBatch ? <BatchView batch={batch!} /> : focused ? <ContactDetail c={focused} d={d} lit={lit} back={() => setView((v) => ({ ...v, focusContact: null }))} /> : (
             <div className={showProposal ? "opacity-60 transition-opacity" : ""}>
