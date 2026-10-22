@@ -25,7 +25,6 @@ export function PrototypeUnitDetails({ unit, units, groupName, groupId, onChange
   const [bath, setBath] = useState(toText(d.bathrooms));
   const [outside, setOutside] = useState<"Yes" | "No" | undefined>(d.outsideSpace);
   const [shared, setShared] = useState<"Yes" | "No" | undefined>(d.sharedFacilities);
-  const [gas, setGas] = useState<"Yes" | "No" | undefined>(d.gasSupply);
   const [description, setDescription] = useState(d.description ?? "");
   const [suggestion, setSuggestion] = useState<string | null>(null);
   const [saved, setSaved] = useState(false);
@@ -39,13 +38,13 @@ export function PrototypeUnitDetails({ unit, units, groupName, groupId, onChange
   useEffect(() => {
     const x = unit.details ?? {};
     setBedrooms(toText(x.bedrooms));
-    setArea(toText(x.area)); setAreaUnit(x.areaUnit ?? "ft²"); setDbl(toText(x.doubleBedrooms)); setSgl(toText(x.singleBedrooms)); setBath(toText(x.bathrooms)); setOutside(x.outsideSpace); setShared(x.sharedFacilities); setGas(x.gasSupply); setDescription(x.description ?? ""); setSuggestion(null);
+    setArea(toText(x.area)); setAreaUnit(x.areaUnit ?? "ft²"); setDbl(toText(x.doubleBedrooms)); setSgl(toText(x.singleBedrooms)); setBath(toText(x.bathrooms)); setOutside(x.outsideSpace); setShared(x.sharedFacilities); setDescription(x.description ?? ""); setSuggestion(null);
   }, [unit.number, unit.details]);
   useEffect(() => { if (!saved) return; const t = window.setTimeout(() => setSaved(false), 2000); return () => window.clearTimeout(t); }, [saved]);
   useEffect(() => { setApplying(false); }, [unit.number]);
 
   const residential = unit.classification === "Residential";
-  const draft: UnitDetails = { area: parseArea(area), areaUnit: area.trim() ? areaUnit : undefined, bedrooms: residential ? parseCount(bedrooms) : undefined, doubleBedrooms: residential && !bedrooms.trim() ? parseCount(dbl) : undefined, singleBedrooms: residential && !bedrooms.trim() ? parseCount(sgl) : undefined, bathrooms: residential ? parseCount(bath) : undefined, outsideSpace: residential ? outside : undefined, sharedFacilities: residential ? shared : undefined, gasSupply: residential ? gas : undefined, description: description.trim() || undefined };
+  const draft: UnitDetails = { area: parseArea(area), areaUnit: area.trim() ? areaUnit : undefined, bedrooms: residential ? parseCount(bedrooms) : undefined, doubleBedrooms: residential && !bedrooms.trim() ? parseCount(dbl) : undefined, singleBedrooms: residential && !bedrooms.trim() ? parseCount(sgl) : undefined, bathrooms: residential ? parseCount(bath) : undefined, outsideSpace: residential ? outside : undefined, sharedFacilities: residential ? shared : undefined, description: description.trim() || undefined };
   const invalid = Object.values(draft).some(v => typeof v === "number" && Number.isNaN(v));
   const dirty = JSON.stringify(setDetails([unit], unit.number, draft)[0].details) !== JSON.stringify(setDetails([unit], unit.number, unit.details ?? {})[0].details);
   useEffect(() => {
@@ -105,7 +104,6 @@ export function PrototypeUnitDetails({ unit, units, groupName, groupId, onChange
           {count("Bathrooms", bath, setBath)}
           {yesNo("Shared facilities", shared, setShared)}
           {yesNo("Outside space", outside, setOutside)}
-          {yesNo("Gas supply", gas, setGas)}
         </>}
         <div className="py-2">
           <div className="flex items-center justify-between gap-2">
