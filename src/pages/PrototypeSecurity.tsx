@@ -6,7 +6,7 @@ import {
   AREAS, FAMILIES, GROUPS, PAGE, PRESETS, type Access, type AreaId, type Level, type Person, type SecState,
   accessGroups, diff, firstName, glance, groupName, initialState, interpret, isRestricted, levelLabel, matchesQuery, paperLine,
   peopleForArea, peopleForPlace, placeLines, reviewInvite, saveDraft, setAllPapers, setArea, setFamily, setGroup, setPortfolio, setType, setUnit,
-  typesFor, isTop, rankLabel, unreadablePapers, COLLEAGUES, setColleague, unitsFor, visiblePeople, visiblePapers,
+  typesFor, isTop, rankLabel, COLLEAGUES, setColleague, unitsFor, visiblePeople, visiblePapers,
 } from "./prototypeSecurityAccess";
 
 // Prototype Security: the Superuser tells Hobson who should reach what; Hobson explains and asks before saving.
@@ -268,21 +268,6 @@ export default function PrototypeSecurity() {
             </div>
           </div>
           {p.status === "suspended" && <p className="rounded-lg bg-secondary/50 px-4 py-2.5 text-sm">{n} can't use Hobson at the moment. Everything below is kept and will apply again when restored.</p>}
-          <Glance p={p} a={a} />
-          <div className="grid gap-4 [@container_sec_(min-width:40rem)]:grid-cols-2">
-            <div className={`${ring} p-4`}>
-              <p className="mb-2 text-[10px] uppercase tracking-[0.14em] text-ink-muted">Location access</p>
-              {isTop(p) || a.portfolio ? <p className="text-sm">Every Unit Group and Unit</p> : GROUPS.filter((g) => unitsFor(a, g.id).length).map((g) => {
-                const u = unitsFor(a, g.id);
-                return <p key={g.id} className="py-1 text-sm"><span className="font-medium">{g.name}</span> <span className="text-ink-muted">· {u.length === g.units.length ? "whole Unit Group" : u.join(", ")}</span></p>;
-              })}
-              {!isTop(p) && !a.portfolio && !GROUPS.some((g) => unitsFor(a, g.id).length) && <p className="text-sm italic text-ink-muted">No places yet</p>}
-            </div>
-            <div className={`${ring} p-4`}>
-              <p className="mb-2 text-[10px] uppercase tracking-[0.14em] text-ink-muted">Papers {n} cannot read</p>
-              {unreadablePapers(p, a).length ? <ul className="grid gap-1 text-sm">{unreadablePapers(p, a).map((t) => <li key={t}>{t}</li>)}</ul> : <p className="text-sm">None — {rankLabel(p)} reads every paper, including Valuation Reports and Loan Agreements.</p>}
-            </div>
-          </div>
           {p.admin && (
             <div className={`${ring} p-4`}>
               <p className="text-sm font-medium">Back Office colleagues {n} may work with</p>
