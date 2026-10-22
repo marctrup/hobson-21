@@ -6,6 +6,9 @@ import owlDefault from "@/assets/prototype/owl-default.png";
 
 const SESSION_KEY = "hobson_prototype_open";
 
+/** Set by an already-admitted container (Back Office) so prototypes embedded inside it don't ask again. */
+export const PrototypeGateAdmitted = React.createContext(false);
+
 function alreadyAdmitted(sessionKey: string): boolean {
   try {
     return window.sessionStorage.getItem(sessionKey) === "granted";
@@ -23,7 +26,12 @@ type PrototypeGateProps = {
  * Doors the prototype behind a pass phrase checked on the server, so the phrase
  * never ships in the site's code and a stray link shows only a quiet entrance.
  */
-export function PrototypeGate({ children, scope = "work" }: PrototypeGateProps) {
+export function PrototypeGate(props: PrototypeGateProps) {
+  const inside = React.useContext(PrototypeGateAdmitted);
+  return inside ? <>{props.children}</> : <PrototypeGateDoor {...props} />;
+}
+
+function PrototypeGateDoor({ children, scope = "work" }: PrototypeGateProps) {
   const sessionKey = scope === "unit" ? "hobson_prototype_unit_open" : scope === "documents" ? "hobson_prototype_documents_open" : scope === "backoffice" ? "hobson_prototype_backoffice_open" : SESSION_KEY;
   const [admitted, setAdmitted] = useState<boolean>(() => alreadyAdmitted(sessionKey));
   const [passphrase, setPassphrase] = useState("");
