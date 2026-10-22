@@ -84,7 +84,7 @@ const allBut = (ids: string[]) => ALL_TYPES.map((t) => t.id).filter((x) => !ids.
 export const INITIAL_PEOPLE: Person[] = [
   { id: "sarah", name: "Sarah Mitchell", role: "Portfolio Manager", email: "sarah@hobsonproperty.co.uk", superuser: true, you: true, status: "active", access: FULL },
   { id: "oliver", name: "Oliver Grant", role: "Director", email: "oliver@hobsonproperty.co.uk", admin: true, blockedColleagues: ["professor"], status: "active", access: FULL },
-  { id: "james", name: "James Carter", role: "Building Manager", email: "james@hobsonproperty.co.uk", status: "active", access: { portfolio: false, groups: { burlington: "all", stanley: ["Flat 6"] }, papers: allBut(ACCOUNTING), areas: areas("view", "view", "change", "change") } },
+  { id: "james", name: "James Carter", role: "Building Manager", email: "james@hobsonproperty.co.uk", status: "active", access: FULL },
   { id: "emily", name: "Emily Clarke", role: "External Solicitor", email: "emily.clarke@clarkelaw.co.uk", status: "active", access: { portfolio: false, groups: { burlington: ["Unit 1", "Unit 2"] }, papers: ["business-lease", "deed-variation", "rent-review"], areas: areas("view", "none", "none", "none") } },
   { id: "daniel", name: "Daniel Reed", role: "Accounts", email: "daniel@hobsonproperty.co.uk", status: "active", access: { portfolio: true, groups: {}, papers: ACCOUNTING, areas: areas("view", "view", "none", "none") } },
   { id: "priya", name: "Priya Shah", role: "Asset Manager", email: "priya@hobsonproperty.co.uk", admin: true, blockedColleagues: ["architect"], status: "active", access: FULL },
