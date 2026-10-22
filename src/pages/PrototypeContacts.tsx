@@ -118,7 +118,7 @@ function Proposal({ pending, d }: { pending: Pending; d: Directory }) {
 
 const W = "[@container_contacts_(min-width:44rem)]";
 const searchable = (d: Directory, c: Contact) => [c.person, c.org, ...relationsOf(d, c.id).flatMap((r) => [r.role, r.service, scopeLabel(r.scope)])].filter(Boolean).join(" ").toLowerCase();
-export const matchesQuery = (d: Directory, c: Contact, q: string) => !q.trim() || q.toLowerCase().trim().split(/\s+/).every((w) => searchable(d, c).includes(w));
+const matchesQuery = (d: Directory, c: Contact, q: string) => !q.trim() || q.toLowerCase().trim().split(/\s+/).every((w) => searchable(d, c).includes(w));
 const relLabel = (r: Relation) => (r.role === "Preferred contractor" ? r.service! : r.service && r.service !== r.role ? `${r.role} · ${r.service}` : r.role);
 
 function Insight({ children }: { children: ReactNode }) {
