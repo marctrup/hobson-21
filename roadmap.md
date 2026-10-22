@@ -188,3 +188,4 @@
 ## Prototype Unit — larger Unit photographs
 - [x] Make each Unit's photograph in the units list expand on hover and open large when tapped or clicked, so small thumbnails are usable on mobile.
 - [x] Enlarged further on request: hovering or focusing a thumbnail now floats a 480×340 preview beside it (outside the panel, so nothing clips it); clicking or tapping still opens the full view. Verified 478×338 in the live preview at desktop, four thumbnail checks pass, build clean. Not published.
+- [x] /prototype-legal and /prototype-contacts built (Paragon Centre only)
