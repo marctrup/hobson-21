@@ -17,10 +17,10 @@ describe("prototype security", () => {
     expect(canSeeUnit(a, "stanley", "Flat 8")).toBe(false);
   });
   it("adding Flat 8 waits for confirmation, then saves", () => {
-    const pending = say(["Give James access to Flat 8 at Stanley House."]);
-    expect(canSeeUnit(person(pending, "james").access, "stanley", "Flat 8")).toBe(false);
+    const pending = say(["Give Emily access to Flat 8 at Stanley House."]);
+    expect(canSeeUnit(person(pending, "emily").access, "stanley", "Flat 8")).toBe(false);
     const saved = interpret(pending, "Save changes").state;
-    expect(canSeeUnit(person(saved, "james").access, "stanley", "Flat 8")).toBe(true);
+    expect(canSeeUnit(person(saved, "emily").access, "stanley", "Flat 8")).toBe(true);
   });
   it("removing accounting papers removes only those", () => {
     const s = say(["Remove James's access to all accounting papers.", "Save changes"]);
@@ -84,7 +84,8 @@ describe("prototype security", () => {
   });
   it("shows each place and paper remit as short chips", () => {
     const james = INITIAL_PEOPLE.find((p) => p.id === "james")!;
-    expect(placeChips(james.access)).toEqual([{ label: "Burlington Gardens", detail: "All 4 Units" }, { label: "Stanley House", detail: "Flat 6" }]);
+    expect(placeChips(james.access)).toEqual([{ label: "The whole portfolio" }]);
+    expect(paperChip(james.access).label).toBe("All papers");
     expect(paperChip(INITIAL_PEOPLE.find((p) => p.id === "daniel")!.access).label).toBe("Accounting papers");
     expect(areaChips(james.access).map((x) => x.area)).toEqual(["papers", "people", "compliance", "reading"]);
   });

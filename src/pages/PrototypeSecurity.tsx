@@ -54,12 +54,12 @@ function Fold({ title, hint, children, start = false }: { title: string; hint?: 
 }
 
 /** The one permission editor used for existing people and invitations alike. */
-function AccessEditor({ a, set, locked }: { a: Access; set: (a: Access) => void; locked?: boolean }) {
+function AccessEditor({ a, set, locked, quiet }: { a: Access; set: (a: Access) => void; locked?: boolean; quiet?: boolean }) {
   const types = typesFor(a);
   if (locked) return null;
   return (
     <div className="grid gap-3">
-      <Fold title="Places" hint={placeLines(a).join(" · ") || "None yet"} start>
+      <Fold title="Places" hint={placeLines(a).join(" · ") || "None yet"} start={!quiet}>
         <label className="mb-3 flex items-center gap-2.5 text-sm"><Check on={a.portfolio} label="The whole portfolio" onChange={(v) => set(setPortfolio(a, v))} />The whole portfolio <span className="text-xs text-ink-muted">— including places added later</span></label>
         <div className="grid gap-2">
           {GROUPS.map((g) => {
@@ -268,6 +268,7 @@ export default function PrototypeSecurity() {
             </div>
           </div>
           {p.status === "suspended" && <p className="rounded-lg bg-secondary/50 px-4 py-2.5 text-sm">{n} can't use Hobson at the moment. Everything below is kept and will apply again when restored.</p>}
+          {!isTop(p) && a.portfolio && a.papers === "all" && <p className="font-serif text-lg text-ink">All locations · All papers</p>}
           {p.admin && (
             <div className={`${ring} p-4`}>
               <p className="text-sm font-medium">Back Office colleagues {n} may work with</p>
@@ -295,7 +296,7 @@ export default function PrototypeSecurity() {
               <div className="mt-3 flex gap-2"><Button size="sm" onClick={saveNow}>Save changes</Button><Button size="sm" variant="ghost" onClick={discard}>Discard</Button></div>
             </div>
           )}
-          <AccessEditor a={a} locked={isTop(p)} set={(x) => editPerson(p, x)} />
+          <AccessEditor a={a} locked={isTop(p)} quiet={!isTop(p) && a.portfolio && a.papers === "all"} set={(x) => editPerson(p, x)} />
         </div>
       );
     }
