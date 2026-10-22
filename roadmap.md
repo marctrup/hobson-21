@@ -186,7 +186,7 @@
 - [x] Owl beside every Hobson turn (user request): the owl now returns with the first message of each of Hobson's turns in both prototype conversations, not just the conversation opening; continuation messages stay aligned with the spacer and user messages still never show it. All 91 checks pass; verified in a test browser on both pages. Not published.
 
 ## Prototype Unit — map, Unit details and descriptions
-- [ ] Add optional physical-details Excel download/upload, identity matching and confirmed review, shared with current Map editors and Chat; retain map and add resettable browser persistence.
+- [x] Add optional physical-details Excel download/upload, identity matching and confirmed review, shared with current Map editors and Chat; retain map and add resettable browser persistence. 57 targeted checks pass; genuine download/upload, replacement approval, direct editing, Chat read-back, fresh download and reload verified in browser. Not published.
 - [x] Paragon Centre with gym and illustrative flat, lifted map, compact rows, Unit/occupation hover, inline editor with shared facilities and gas supply, place context; 54 Unit checks pass, browser verified. Not published.
 
 ## Prototype Unit — larger Unit photographs
