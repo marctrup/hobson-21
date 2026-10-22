@@ -157,6 +157,7 @@ function People({ d, open, lit, q }: { d: Directory; open: (id: string) => void;
   const shown = d.contacts.filter((c) => matchesQuery(d, c, q));
   const groups = PEOPLE_KINDS.map((k) => ({ k, cs: shown.filter((c) => c.kind === k).sort((a, b) => contactName(a).localeCompare(contactName(b))) })).filter((g) => g.cs.length);
   const visible = kind === "all" ? groups : groups.filter((g) => g.k === kind);
+  const entryCount = visible.reduce((n, g) => n + g.cs.length, 0);
   return (
     <div>
       <div className="mb-6 flex flex-wrap items-center justify-between gap-3 border-b border-bone pb-4">
@@ -171,7 +172,7 @@ function People({ d, open, lit, q }: { d: Directory; open: (id: string) => void;
             {PEOPLE_KINDS.map((k) => <SelectItem key={k} value={k}>{KIND_LABEL[k]}</SelectItem>)}
           </SelectContent>
         </Select>
-        <span className="text-xs tabular-nums text-ink-muted">{visible.reduce((n, g) => n + g.cs.length, 0)} entries</span>
+        <span className="text-xs tabular-nums text-ink-muted">{entryCount} {entryCount === 1 ? "entry" : "entries"}</span>
       </div>
       {visible.length === 0 ? <p className="text-sm text-ink-muted">No one matches. Ask me in the conversation and I'll look more widely.</p> : (
         <div className="space-y-8">
