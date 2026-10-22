@@ -166,7 +166,7 @@ function PersonGroup({ title, explain, people, lit, expand, onOpen }: { title: s
         </div>
         <p className="mt-1 text-xs italic text-ink-muted">{explain}</p>
       </header>
-      <ul className="grid gap-3 [@container_sec_(min-width:44rem)]:grid-cols-2">
+      <ul className="flex flex-wrap gap-2">
         {shown.map((p) => <PersonCard key={p.id} p={p} lit={lit.includes(p.id)} onOpen={() => onOpen(p.id)} />)}
       </ul>
       {big && !expand && <Button type="button" variant="ghost" size="sm" className="w-fit px-2 text-xs text-primary" onClick={() => setAll(!all)}>{all ? "Show fewer" : `Show all ${people.length}`}</Button>}
@@ -315,7 +315,7 @@ export default function PrototypeSecurity() {
         <div className="grid gap-6">
           <BackLink onClick={back} label="Security overview" />
           <div><h2 className="font-serif text-3xl">{groupName(v.gid)}</h2><p className="mt-1 text-sm text-ink-muted">{rows.length} people with access</p></div>
-          <ul className="grid gap-3 [@container_sec_(min-width:44rem)]:grid-cols-2">{rows.map(({ person, scope }) => <PersonCard key={person.id} p={person} onOpen={() => open(person.id)} scope={scope} />)}</ul>
+          <ul className="flex flex-wrap gap-2">{rows.map(({ person, scope }) => <PersonCard key={person.id} p={person} onOpen={() => open(person.id)} scope={scope} />)}</ul>
         </div>
       );
     }
@@ -326,7 +326,7 @@ export default function PrototypeSecurity() {
         <div className="grid gap-6">
           <BackLink onClick={back} label="Security overview" />
           <div><h2 className="font-serif text-3xl">{label}</h2><p className="mt-1 text-sm text-ink-muted">{rows.length} people who can {v.level === "change" ? "make changes" : "see it"}</p></div>
-          <ul className="grid gap-3 [@container_sec_(min-width:44rem)]:grid-cols-2">{rows.map(({ person, scope }) => <PersonCard key={person.id} p={person} onOpen={() => open(person.id)} scope={scope} />)}</ul>
+          <ul className="flex flex-wrap gap-2">{rows.map(({ person, scope }) => <PersonCard key={person.id} p={person} onOpen={() => open(person.id)} scope={scope} />)}</ul>
         </div>
       );
     }
@@ -354,7 +354,7 @@ export default function PrototypeSecurity() {
         </section>
         <section aria-label="Pending invitations" className="grid gap-3">
           <SectionRule title="Pending invitations" count={invited.length} />
-          {invited.length ? <ul className="grid gap-3 [@container_sec_(min-width:44rem)]:grid-cols-2">{invited.map((p) => <PersonCard key={p.id} p={p} onOpen={() => open(p.id)} lit={s.lit.includes(p.id)} />)}</ul> : <p className="text-sm italic text-ink-muted">{query.trim() ? `No invitation matches “${query}”.` : "None waiting."}</p>}
+          {invited.length ? <ul className="flex flex-wrap gap-2">{invited.map((p) => <PersonCard key={p.id} p={p} onOpen={() => open(p.id)} lit={s.lit.includes(p.id)} />)}</ul> : <p className="text-sm italic text-ink-muted">{query.trim() ? `No invitation matches “${query}”.` : "None waiting."}</p>}
         </section>
       </div>
     );
