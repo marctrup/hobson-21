@@ -45,7 +45,7 @@ describe("The Paragon Centre in place", () => {
     const user = await open();
     await user.click(screen.getByRole("button", { name: "Open First Floor Gym" }));
     expect(screen.getByRole("button", { name: "Back to map" })).toBeInTheDocument();
-    expect(screen.queryByRole("group", { name: "Gas supply" })).toBeNull();
+    expect(screen.queryByRole("group", { name: "Shared facilities" })).toBeNull();
     const d = screen.getByLabelText("Description");
     await user.clear(d); await user.type(d, "Open-plan gym floor.");
     await user.click(screen.getByRole("button", { name: "Save" }));
@@ -57,7 +57,6 @@ describe("The Paragon Centre in place", () => {
   it("opens the residential editor with its illustrative answers and updates Hobson's place", async () => {
     const user = await open();
     await user.click(screen.getByRole("button", { name: "Open Second Floor Flat" }));
-    expect(within(screen.getByRole("group", { name: "Gas supply" })).getByRole("button", { name: "No" })).toHaveAttribute("aria-pressed", "true");
     expect(within(screen.getByRole("group", { name: "Shared facilities" })).getByRole("button", { name: "Yes" })).toHaveAttribute("aria-pressed", "true");
     expect(screen.getByLabelText("Hobson's current place")).toHaveTextContent("The Paragon Centre › Second Floor Flat");
   });

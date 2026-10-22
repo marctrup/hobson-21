@@ -227,7 +227,7 @@ const PARAGON_DEMO: PortfolioGroup = {
   // Illustrative details only — the Second Floor Flat is prototype data, not a claim about the real building.
   units: [
     { number: 1, name: "First Floor Gym", type: "Unit", classification: "Commercial", details: { area: 210, areaUnit: "m²", description: "First-floor commercial accommodation arranged for gym use, with open exercise areas and associated facilities." }, photos: [{ id: "paragon-gym-sample", url: paragonPhoto, name: "Illustrative gym photograph" }], mainPhotoId: "paragon-gym-sample" },
-    { number: 2, name: "Second Floor Flat", type: "Flat", classification: "Residential", details: { doubleBedrooms: 1, bathrooms: 1, sharedFacilities: "Yes", outsideSpace: "No", area: 62, areaUnit: "m²", gasSupply: "No", description: "Self-contained second-floor flat comprising one bedroom, a bathroom and living accommodation, accessed through the shared building entrance." }, photos: [{ id: "paragon-flat-sample", url: paragonFlatPhoto, name: "Illustrative sample photograph" }], mainPhotoId: "paragon-flat-sample" },
+    { number: 2, name: "Second Floor Flat", type: "Flat", classification: "Residential", details: { doubleBedrooms: 1, bathrooms: 1, sharedFacilities: "Yes", outsideSpace: "No", area: 62, areaUnit: "m²", description: "Self-contained second-floor flat comprising one bedroom, a bathroom and living accommodation, accessed through the shared building entrance." }, photos: [{ id: "paragon-flat-sample", url: paragonFlatPhoto, name: "Illustrative sample photograph" }], mainPhotoId: "paragon-flat-sample" },
   ],
   photo: { url: paragonBuildingPhoto, x: 50, y: 50, zoom: 1 },
 };
