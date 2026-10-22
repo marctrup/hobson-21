@@ -30,8 +30,8 @@ describe("Homepage", () => {
       (el) => el.textContent?.trim()
     );
     expect(captions).toEqual([
-      "CEO of a Family Office",
       "CEO of a large central London commercial agent",
+      "CEO of a Family Office",
     ]);
     expect(container.textContent).not.toMatch(/[★☆]/);
     expect(container.textContent).not.toMatch(/\b\d+(\.\d+)?\s*(out of|\/)\s*5\b/i);

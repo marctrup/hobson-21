@@ -14,12 +14,12 @@ type Testimonial = {
 const testimonials: Testimonial[] = [
   {
     quote: "I was very impressed by where you have got to.",
-    attribution: "CEO of a Family Office",
+    attribution: "CEO of a large central London commercial agent",
   },
   {
     quote:
       "Just used Hobson for the first time as I was updating a tenancy schedule and it was brilliant. Just a simple inquiry, but it means I don’t have to reopen the lease. It saves time.",
-    attribution: "CEO of a large central London commercial agent",
+    attribution: "CEO of a Family Office",
   },
 ];
 
