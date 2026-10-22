@@ -194,3 +194,6 @@
 ## Prototype Compliance — Compliance controls
 - [x] Rename the area to "Compliance controls" across the menu, headings, search, buttons and Hobson's copy; note plainly that frequencies are set by hand for now, automatic refreshing from external sources being deliberately not built yet.
 - [x] Remove the "Next renewal" and "Where" columns from the list, leaving each control with its renewal frequency and the edit control; six compliance checks pass and the page was checked in the preview. Not published.
+
+## Prototype Compliance — By place as a simple list
+- [x] Replace the By place coverage chart with a plain list of each Unit Group and Unit showing only the categories of compliance it needs; nothing else shown, places with nothing recorded say so. Eleven compliance checks pass and the list was verified in the preview. Not published.
