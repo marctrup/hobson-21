@@ -191,10 +191,10 @@ function PersonCard({ p, onOpen, lit, scope }: { p: Person; onOpen: () => void; 
               {p.you && <span className="text-[10px] text-ink-muted">(you)</span>}
             </span>
             <span className="mt-0.5 block truncate text-xs text-ink-muted">{p.role}</span>
-            {p.status === "invited" && <span className="block truncate text-[11px] text-ink-faint" title={p.email}>{p.email}</span>}
           </span>
           <StatusPill p={p} />
         </span>
+        {p.status === "invited" && <span className="-mt-1.5 block truncate text-[11px] text-ink-faint" title={p.email}>{p.email}</span>}
         <span className="flex flex-wrap gap-1.5">
           {places.length ? places.map((c) => <ChipView key={c.label} c={c} />) : <span className="text-xs italic text-ink-muted">No places yet</span>}
         </span>
