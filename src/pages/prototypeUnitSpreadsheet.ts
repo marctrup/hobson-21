@@ -8,7 +8,7 @@ export const unitIdentity = (g: PhysicalGroup, u: ProposedUnit) => u.id ?? `${g.
 export type PhysicalChange = { key: string; groupId: string; unitId?: string; name: string; field: keyof UnitDetails | "groupDescription"; before?: string | number; after: string | number; changed: boolean };
 export type RowCheck = { key: string; sheet: string; row: number; name: string; reason: string; matchable: boolean };
 export type PhysicalReview = { changes: PhysicalChange[]; checks: RowCheck[]; unchanged: number; groups: string[] };
-const value = (cell: ExcelJS.Cell): unknown => cell.text === "" ? undefined : cell.value;
+const value = (cell: ExcelJS.Cell): unknown => cell.type === ExcelJS.ValueType.Formula ? cell.value : cell.text === "" ? undefined : cell.value;
 const text = (v: unknown) => v === undefined || v === null ? "" : String(v).trim();
 
 export function makePhysicalWorkbook(groups: PhysicalGroup[]) {
