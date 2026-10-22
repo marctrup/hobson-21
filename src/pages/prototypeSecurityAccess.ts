@@ -94,6 +94,22 @@ export const INITIAL_PEOPLE: Person[] = [
   { id: "mark", name: "Mark Owens", role: "Building Surveyor", email: "mark@owenssurveying.co.uk", status: "invited", access: { portfolio: false, groups: { burlington: "all" }, papers: ["asbestos", "eicr", "licence-alterations"], areas: areas("view", "none", "view", "none") } },
 ];
 
+// ---------- Rights level (upgrade / downgrade) ----------
+export type Rank = "superuser" | "admin" | "full" | "limited";
+export const RANKS: { key: Rank; label: string }[] = [
+  { key: "superuser", label: "Superuser" }, { key: "admin", label: "Admin" }, { key: "full", label: "Full Access" }, { key: "limited", label: "Limited Access" },
+];
+export const rankOf = (p: Person): Rank => (p.superuser ? "superuser" : p.admin ? "admin" : p.access.portfolio && p.access.papers === "all" ? "full" : "limited");
+/** Moves a person to a rights level. Your own level is never changed here. Limited starts empty so places are chosen deliberately. */
+export const setRank = (p: Person, r: Rank): Person => {
+  if (p.you || rankOf(p) === r) return p;
+  const base = { ...p, superuser: false, admin: false, blockedColleagues: [] as string[] };
+  if (r === "superuser") return { ...base, superuser: true, access: FULL };
+  if (r === "admin") return { ...base, admin: true, access: FULL };
+  if (r === "full") return { ...base, access: FULL };
+  return { ...base, access: { portfolio: false, groups: {}, papers: [], areas: areas("view", "none", "none", "none") } };
+};
+
 // ---------- Places ----------
 export const unitsFor = (a: Access, gid: string): string[] => {
   const g = GROUPS.find((x) => x.id === gid)!;
