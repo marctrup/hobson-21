@@ -133,21 +133,33 @@ const PAGE = 12;
 function PlaceCard({ p }: { p: ReturnType<typeof placeLiabilities>[number] }) {
   const [q, setQ] = useState("");
   const [all, setAll] = useState(false);
-  const big = p.units.length > PAGE;
+  const [open, setOpen] = useState(p.units.length <= PAGE); // large blocks start folded so 500+ Units stay navigable
+  const searching = q.trim().length > 0;
+  const shown = open || searching;
   const matches = p.units.filter((u) => !q || u.unit.toLowerCase().includes(q.toLowerCase()) || u.items.some((i) => i.names.some((n) => n.toLowerCase().includes(q.toLowerCase()))));
-  const visible = all || q ? matches : matches.slice(0, PAGE);
+  const visible = all || searching ? matches : matches.slice(0, PAGE);
   const empty = !p.shared.length && p.units.every((u) => !u.items.length);
+  const bodyId = `place-body-${p.id}`;
+  const summary = p.shared.length
+    ? p.shared.map((s) => categoryLabel(s.category as never)).join(" · ")
+    : p.units.length ? "Nothing recorded yet" : "";
   return (
     <section aria-label={p.name} data-place-id={p.id} className="overflow-hidden rounded-lg bg-background ring-1 ring-bone">
       <header className="flex flex-wrap items-center justify-between gap-3 border-b border-faint-rule px-4 py-2.5">
-        <h3 className="font-medium text-ink">{p.name}</h3>
+        <button type="button" onClick={() => setOpen(!open)} aria-expanded={open} aria-controls={bodyId} className="flex min-w-0 flex-1 items-center gap-2 rounded-md text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+          <svg viewBox="0 0 16 16" aria-hidden className={`h-3.5 w-3.5 shrink-0 text-ink-muted transition-transform ${open ? "rotate-90" : ""}`}><path d="M5 3l6 5-6 5" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
+          <span className="min-w-0">
+            <h3 className="truncate font-medium text-ink">{p.name}</h3>
+            {!open && !empty && <span className="block truncate text-xs text-ink-muted">{summary}</span>}
+          </span>
+        </button>
         <div className="flex items-center gap-3">
-          {big && <input value={q} onChange={(e) => setQ(e.target.value)} placeholder={`Find among ${p.units.length} Units`} aria-label={`Find a Unit in ${p.name}`} className="w-48 rounded-md border border-input bg-background px-2 py-1 text-xs outline-none focus:ring-2 focus:ring-ring" />}
+          {big && shown && <input value={q} onChange={(e) => setQ(e.target.value)} placeholder={`Find among ${p.units.length} Units`} aria-label={`Find a Unit in ${p.name}`} className="w-48 rounded-md border border-input bg-background px-2 py-1 text-xs outline-none focus:ring-2 focus:ring-ring" />}
           <span className="text-xs text-ink-muted">{empty ? "Nothing recorded yet" : p.units.length ? `${p.units.length} Unit${p.units.length === 1 ? "" : "s"}` : ""}</span>
         </div>
       </header>
-      {!empty && (
-        <ul className="divide-y divide-faint-rule">
+      {shown && !empty && (
+        <ul id={bodyId} className="divide-y divide-faint-rule">
           {p.shared.length > 0 && (
             <li className="grid gap-2 bg-paper/60 px-4 py-2.5 [@container_comp_(min-width:44rem)]:grid-cols-[10rem_1fr]">
               <span className="text-sm font-medium text-ink">{p.units.length ? "Shared parts" : "Portfolio-wide"}</span>
@@ -160,10 +172,10 @@ function PlaceCard({ p }: { p: ReturnType<typeof placeLiabilities>[number] }) {
               <LiabilityList items={u.items} />
             </li>
           ))}
-          {q && !matches.length && <li className="px-4 py-2.5 text-sm italic text-ink-muted">No Unit matches “{q}”.</li>}
+          {searching && !matches.length && <li className="px-4 py-2.5 text-sm italic text-ink-muted">No Unit matches “{q}”.</li>}
         </ul>
       )}
-      {big && !q && !empty && (
+      {big && shown && !searching && !empty && (
         <button type="button" onClick={() => setAll(!all)} className="w-full border-t border-faint-rule px-4 py-2 text-left text-xs text-primary hover:bg-paper">
           {all ? "Show fewer" : `Show all ${p.units.length} Units`}
         </button>
