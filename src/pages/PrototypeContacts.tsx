@@ -5,15 +5,15 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { LocationsList, LocationsPanel, LocationsToggle, placeRows } from "./ContactPlaces";
 import owlDefault from "@/assets/prototype/owl-default.png";
 import {
-  applyBatch, effectivePreferred, inGroup, tradeWord, BATCH_CHECKS, BATCH_STRAIGHT, BATCH_TOTAL, contactById, contactName, GROUPS, groupName, INITIAL_DIRECTORY, interpret, KIND_LABEL, relationsOf, scopeLabel, SPREADSHEET_NAME,
-  type Contact, type Directory, type Draft, type GroupId, type Kind, type Pending, type Relation, type Resolution, type Tab,
+  applyBatch, BATCH_CHECKS, BATCH_STRAIGHT, BATCH_TOTAL, contactById, contactName, groupName, INITIAL_DIRECTORY, interpret, KIND_LABEL, relationsOf, scopeLabel, SPREADSHEET_NAME,
+  type Contact, type Directory, type Draft, type Kind, type Pending, type Relation, type Resolution,
 } from "./prototypeContactsDirectory";
 
 // Prototype Contacts: Hobson learns who helps look after the portfolio through conversation.
 // Local demonstration state only; shares styling with Prototype Documents, never its state.
 
 type Message = { id: number; role: "user" | "hobson"; text: string; attachment?: string; choices?: string[] };
-type View = { tab: Tab; focusContact: string | null; focusGroup: GroupId | null; highlight: string[] };
+type View = { focusContact: string | null; highlight: string[] };
 type Batch = { stage: "looking" | "first" | "review" | "summary" | "done"; index: number; answers: Record<string, Resolution>; result?: { added: string[]; updated: string[]; unresolved: string[] } };
 
 const OPENING = "These are the people I know who help look after your portfolio. Tell me about anyone new — as you would a colleague — or attach a spreadsheet and I'll go through it.";
@@ -122,10 +122,6 @@ const searchable = (d: Directory, c: Contact) => [c.person, c.org, ...relationsO
 const matchesQuery = (d: Directory, c: Contact, q: string) => !q.trim() || q.toLowerCase().trim().split(/\s+/).every((w) => searchable(d, c).includes(w));
 const relLabel = (r: Relation) => (r.role === "Preferred contractor" ? r.service! : r.role);
 
-function Insight({ children }: { children: ReactNode }) {
-  return <p className="mb-6 flex items-start gap-2.5 text-sm leading-relaxed text-ink"><img src={owlDefault} alt="" aria-hidden className="mt-[-2px] h-6 w-6 shrink-0 object-contain" /><span>{children}</span></p>;
-}
-
 function ContactRow({ c, d, onOpen, lit }: { c: Contact; d: Directory; onOpen: () => void; lit: boolean }) {
   const rs = relationsOf(d, c.id);
   const what = Array.from(new Set(rs.map(relLabel)));
@@ -197,67 +193,6 @@ function People({ d, open, lit, q }: { d: Directory; open: (id: string) => void;
   );
 }
 
-type PlaceKey = GroupId | "portfolio";
-const PLACE_SECTIONS: { label: string; test: (r: Relation, c: Contact) => boolean }[] = [
-  { label: "Preferred contractors", test: (r) => r.role === "Preferred contractor" },
-  { label: "Professional services", test: (_r, c) => ["legal", "accounting", "design", "adviser"].includes(c.kind) },
-  { label: "Your staff", test: (_r, c) => c.kind === "team" },
-  { label: "Landlord", test: (_r, c) => c.kind === "landlord" },
-  { label: "Others", test: () => true },
-];
-
-function Places({ d, open, lit, focus, setFocus, q }: { d: Directory; open: (id: string) => void; lit: Set<string>; focus: GroupId | null; setFocus: (g: GroupId | null) => void; q: string }) {
-  const [portfolio, setPortfolio] = useState(false);
-  const sel: PlaceKey = portfolio && !focus ? "portfolio" : focus ?? "stanley";
-  const visible = new Set(d.contacts.filter((c) => matchesQuery(d, c, q)).map((c) => c.id));
-  const at = (k: PlaceKey) => d.relations.filter((r) => (k === "portfolio" ? r.scope.kind === "portfolio" : inGroup(r.scope, k)) && visible.has(r.contactId));
-  const missing = (g: GroupId) => ["Plumbing", "Electrical", "Roofing", "Cleaning"].filter((s) => !effectivePreferred(d, g, s));
-  const pick = (k: PlaceKey) => { if (k === "portfolio") { setPortfolio(true); setFocus(null); } else { setPortfolio(false); setFocus(k); } };
-  const rs = at(sel);
-  const whole = rs.filter((r) => r.scope.kind !== "unit");
-  const units = sel === "portfolio" ? [] : GROUPS.find((g) => g.id === sel)!.units.map((u) => ({ u, rs: rs.filter((r) => r.scope.kind === "unit" && r.scope.unit === u) }));
-  const Line = ({ r }: { r: Relation }) => { const c = contactById(d, r.contactId)!; return (
-    <li><button type="button" onClick={() => open(c.id)} className={`flex w-full items-center gap-3 rounded-md px-2 py-1.5 text-left hover:bg-background ${lit.has(r.id) ? "bg-primary/[0.06]" : ""}`}>
-      <Avatar c={c} /><span className="min-w-0 flex-1"><span className="block truncate text-sm font-medium text-ink">{contactName(c)}</span><span className="block truncate text-xs text-ink-muted">{relLabel(r)}</span></span>
-    </button></li>); };
-  const used = new Set<string>();
-  const sections = PLACE_SECTIONS.map((s) => { const items = whole.filter((r) => !used.has(r.id) && s.test(r, contactById(d, r.contactId)!)); items.forEach((r) => used.add(r.id)); return { label: s.label, items }; }).filter((s) => s.items.length);
-  const places: { k: PlaceKey; name: string; sub: string }[] = [...GROUPS.map((g) => ({ k: g.id as PlaceKey, name: g.name, sub: `${g.units.length} Units` })), { k: "portfolio", name: "Across the portfolio", sub: "Not tied to one place" }];
-  const gapsHere = sel === "portfolio" ? [] : missing(sel);
-  return (
-    <div className={`grid gap-6 [@container_contacts_(min-width:44rem)]:grid-cols-[13rem_1fr] [@container_contacts_(min-width:44rem)]:gap-10`}>
-      <nav aria-label="Places" className={`flex gap-1.5 overflow-x-auto [@container_contacts_(min-width:44rem)]:sticky [@container_contacts_(min-width:44rem)]:top-0 [@container_contacts_(min-width:44rem)]:flex-col [@container_contacts_(min-width:44rem)]:self-start [@container_contacts_(min-width:44rem)]:overflow-visible`}>
-        {places.map((p) => { const n = new Set(at(p.k).map((r) => r.contactId)).size; const gaps = p.k === "portfolio" ? 0 : missing(p.k).length; const on = p.k === sel; return (
-          <button key={p.k} type="button" aria-current={on ? "true" : undefined} onClick={() => pick(p.k)} className={`shrink-0 rounded-lg px-3 py-2 text-left transition ${on ? "bg-background shadow-sm ring-1 ring-bone" : "hover:bg-background/60"}`}>
-            <span className="block text-sm font-medium text-ink">{p.name}</span>
-            <span className="block text-[11px] text-ink-muted">{n} {n === 1 ? "person" : "people"}{gaps ? ` · ${gaps} gap${gaps === 1 ? "" : "s"}` : ""}</span>
-          </button>); })}
-      </nav>
-      <div>
-        <h2 className="text-xl font-semibold text-ink">{places.find((p) => p.k === sel)!.name}</h2>
-        <p className="mb-5 text-xs text-ink-muted">{places.find((p) => p.k === sel)!.sub}</p>
-        <Insight>{new Set(rs.map((r) => r.contactId)).size} people and organisations are associated here.{gapsHere.length ? ` I have no preferred ${gapsHere.map((s) => tradeWord(s)).join(" or ")} recorded.` : ""}{units.some((u) => u.rs.some((r) => r.role === "Preferred contractor")) ? " One or more Units use their own contractor — shown under that Unit." : ""}</Insight>
-        <div className={`grid gap-6 [@container_contacts_(min-width:44rem)]:grid-cols-2`}>
-          {sections.map((s) => <section key={s.label} aria-label={s.label}><Eyebrow>{s.label}</Eyebrow><ul className="-mx-2 grid">{s.items.map((r) => <Line key={r.id} r={r} />)}</ul></section>)}
-        </div>
-        {units.length > 0 && (
-          <div className="mt-8">
-            <Eyebrow>Units</Eyebrow>
-            <ul className="divide-y divide-faint-rule rounded-xl bg-background ring-1 ring-bone">
-              {units.map(({ u, rs: urs }) => (
-                <li key={u} className="px-4 py-3">
-                  <div className="flex items-baseline justify-between gap-3"><span className="text-sm font-medium text-ink">{u}</span><span className="text-[11px] text-ink-muted">{urs.length ? `${urs.length} associated` : "Uses the building's arrangements"}</span></div>
-                  {urs.length > 0 && <ul className="-mx-2 mt-1 grid border-l border-dashed border-primary/40 pl-2">{urs.map((r) => <Line key={r.id} r={r} />)}</ul>}
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
-      </div>
-    </div>
-  );
-}
-
 function ContactDetail({ c, d, lit, back }: { c: Contact; d: Directory; lit: Set<string>; back: () => void }) {
   const rs = relationsOf(d, c.id);
   return (
@@ -317,7 +252,7 @@ export default function PrototypeContacts() {
   const [d, setD] = useState<Directory>(INITIAL_DIRECTORY);
   const [pending, setPending] = useState<Pending | null>(null);
   const [messages, setMessages] = useState<Message[]>([{ id: 0, role: "hobson", text: OPENING }]);
-  const [view, setView] = useState<View>({ tab: "people", focusContact: null, focusGroup: null, highlight: [] });
+  const [view, setView] = useState<View>({ focusContact: null, highlight: [] });
   const [batch, setBatch] = useState<Batch | null>(null);
   const [input, setInput] = useState("");
   const [query, setQuery] = useState("");
@@ -367,7 +302,7 @@ export default function PrototypeContacts() {
         const r = applyBatch(d, batch.answers);
         setD(r.directory);
         setBatch({ ...batch, stage: "done", result: r });
-        setView({ tab: "people", focusContact: null, focusGroup: null, highlight: r.directory.relations.filter((x) => !d.relations.some((y) => y.id === x.id)).map((x) => x.id) });
+        setView({ focusContact: null, highlight: r.directory.relations.filter((x) => !d.relations.some((y) => y.id === x.id)).map((x) => x.id) });
         say("hobson", `Done. I've added ${r.added.length} and brought ${r.updated.length} up to date.${r.unresolved.length ? ` I've kept ${r.unresolved.join(" and ")} aside until you're sure.` : ""}`);
         return true;
       }
@@ -387,7 +322,11 @@ export default function PrototypeContacts() {
     setTimeout(() => {
       if (out.directory) setD(out.directory);
       setPending(out.pending);
-      if (out.view) setView((v) => ({ ...v, ...out.view, highlight: out.view!.highlight ?? (out.view!.focusContact !== undefined || out.view!.tab ? [] : v.highlight) }));
+      if (out.view) {
+        const { query: q, ...rest } = out.view;
+        setView((v) => ({ ...v, ...rest, highlight: out.view!.highlight ?? (out.view!.focusContact !== undefined || q !== undefined ? [] : v.highlight) }));
+        if (q !== undefined) setQuery(q ?? "");
+      }
       say("hobson", out.reply, out.choices);
     }, 350);
   };
@@ -402,7 +341,7 @@ export default function PrototypeContacts() {
 
   const restart = () => {
     setD(INITIAL_DIRECTORY); setPending(null); setBatch(null); setInput("");
-    setView({ tab: "people", focusContact: null, focusGroup: null, highlight: [] });
+    setView({ focusContact: null, highlight: [] }); setQuery("");
     nextId.current = 1; setMessages([{ id: 0, role: "hobson", text: OPENING }]);
   };
 
@@ -469,13 +408,10 @@ export default function PrototypeContacts() {
           </div>
         </header>
         {!showBatch && !focused && (
-          <div role="tablist" aria-label="Ways of seeing your contacts" className="flex shrink-0 flex-wrap items-center gap-1 border-b border-bone bg-background px-5 py-2">
-            {([["people", "People and organisations"], ["places", "Places"]] as [Tab, string][]).map(([k, l]) => (
-              <Button key={k} role="tab" size="sm" aria-selected={view.tab === k} variant={view.tab === k ? "secondary" : "ghost"} onClick={() => setView((v) => ({ ...v, tab: k, highlight: [] }))}>{l}</Button>
-            ))}
-            <label className="ml-auto flex min-w-0 items-center gap-2 rounded-full bg-secondary/50 px-3 focus-within:ring-2 focus-within:ring-ring">
+          <div className="flex shrink-0 items-center gap-3 border-b border-bone bg-background px-5 py-2">
+            <label className="flex w-full min-w-0 items-center gap-2 rounded-full bg-secondary/50 px-3 focus-within:ring-2 focus-within:ring-ring [@container_contacts_(min-width:44rem)]:w-80">
               <Search className="h-3.5 w-3.5 shrink-0 text-ink-muted" aria-hidden />
-              <input value={query} onChange={(e) => setQuery(e.target.value)} aria-label="Find a person, service or place" placeholder="Find a person, service or place" className="w-full min-w-0 bg-transparent py-1.5 text-xs outline-none placeholder:text-ink-muted [@container_contacts_(min-width:44rem)]:w-56" />
+              <input value={query} onChange={(e) => setQuery(e.target.value)} aria-label="Find a person, service or place" placeholder="Find a person, service or place" className="w-full min-w-0 bg-transparent py-1.5 text-xs outline-none placeholder:text-ink-muted" />
               {query && <button type="button" aria-label="Clear search" onClick={() => setQuery("")}><X className="h-3.5 w-3.5 text-ink-muted" /></button>}
             </label>
           </div>
@@ -485,8 +421,7 @@ export default function PrototypeContacts() {
           {showBatch ? <BatchView batch={batch!} /> : focused ? <ContactDetail c={focused} d={d} lit={lit} back={() => setView((v) => ({ ...v, focusContact: null }))} /> : (
             <div className={showProposal ? "opacity-60 transition-opacity" : ""}>
               {batch?.result && <p className="mb-6 rounded-lg bg-secondary/40 px-4 py-3 text-xs text-ink-muted">From the spreadsheet: {batch.result.added.length} new · {batch.result.updated.length} brought up to date ({batch.result.updated.join(", ") || "none"}) · {batch.result.unresolved.length} unresolved{batch.result.unresolved.length ? ` (${batch.result.unresolved.join(", ")})` : ""}</p>}
-              {view.tab === "people" && <People d={d} open={open} lit={lit} q={query} />}
-              {view.tab === "places" && <Places d={d} open={open} lit={lit} q={query} focus={view.focusGroup} setFocus={(g) => setView((v) => ({ ...v, focusGroup: g }))} />}
+              <People d={d} open={open} lit={lit} q={query} />
             </div>
           )}
         </div>
