@@ -132,7 +132,7 @@ function ContactRow({ c, d, onOpen, lit }: { c: Contact; d: Directory; onOpen: (
   const [open, setOpen] = useState(false);
   return (
     <li className={`grid grid-cols-[minmax(0,1fr)] items-start gap-x-3 px-2 py-3 [@container_contacts_(min-width:44rem)]:grid-cols-[minmax(0,2.3fr)_minmax(0,1fr)] ${lit ? "bg-primary/[0.06]" : ""}`}>
-      <Button variant="ghost" onClick={onOpen} className="grid h-auto w-full grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-x-3 whitespace-normal rounded-md px-2 py-1 text-left font-normal [@container_contacts_(min-width:44rem)]:grid-cols-[auto_minmax(0,1.3fr)_minmax(0,1fr)_auto]">
+      <Button variant="ghost" onClick={onOpen} className="grid h-auto w-full grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-x-3 whitespace-normal rounded-md px-2 py-1 text-left font-normal [@container_contacts_(min-width:44rem)]:grid-cols-[auto_minmax(0,1.3fr)_minmax(0,1fr)]">
         <Avatar c={c} />
         <span className="min-w-0">
           <span className="block truncate text-sm font-medium text-ink">{contactName(c)}</span>
