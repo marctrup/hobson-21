@@ -70,7 +70,7 @@ export function PrototypeUnitDetails({ unit, units, groupName, onChange, onBack,
 
   return (
     <section aria-label={`${unit.name} details`} className="min-w-0 py-3 motion-safe:animate-in motion-safe:fade-in motion-safe:duration-200">
-      <button type="button" onClick={() => { keepDraft(); onBack(); }} className="mb-2 inline-flex min-h-8 items-center gap-1 rounded px-1 text-sm text-muted-foreground hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"><ChevronLeft className="h-4 w-4" aria-hidden />Back to all Units</button>
+      <button type="button" onClick={() => { keepDraft(); onBack(); }} className="mb-3 inline-flex min-h-9 items-center gap-1.5 rounded-md border border-border bg-secondary px-3 text-sm font-medium text-foreground shadow-sm hover:bg-secondary/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"><ChevronLeft className="h-4 w-4" aria-hidden />Back to all Units</button>
       {onRename ? <label className="mt-1 block text-xs text-muted-foreground">Unit name
         <input value={name} onChange={e => setName(e.target.value)} className="mt-0.5 h-9 w-full max-w-sm rounded-md border border-input bg-background px-2 text-base font-semibold text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring" />
       </label> : <h3 className="mt-1 text-xl font-semibold text-foreground">{unit.name}</h3>}
