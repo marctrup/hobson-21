@@ -15,6 +15,10 @@ describe("prototype security page", () => {
     expect(screen.queryByText("James can currently")).toBeNull();
     expect(screen.queryByText("James cannot")).toBeNull();
     expect(screen.queryByText("What James can access")).toBeNull();
+    // Full Access reads as one clear line, with the details folded away.
+    expect(screen.getByText("All locations · All papers")).toBeTruthy();
+    expect(screen.queryByText("Flat 8")).toBeNull();
+    fireEvent.click(screen.getByRole("button", { name: /Places/ }));
     expect(screen.getByText("Places")).toBeTruthy();
     fireEvent.click(screen.getByRole("button", { name: "Flat 8" }));
     expect(screen.getByText("Here is what will change")).toBeTruthy();
