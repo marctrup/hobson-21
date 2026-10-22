@@ -10,7 +10,7 @@ describe("Optional physical details workbook", () => {
     expect((await b.xlsx.writeBuffer()).byteLength).toBeGreaterThan(1000);
   });
   it("preserves existing fields and photographs when blank cells are returned", () => {
-    const g = groups(), b = makePhysicalWorkbook(g); b.getWorksheet("Units")?.getCell("F3").value = null;
+    const g = groups(), b = makePhysicalWorkbook(g); const sheet = b.getWorksheet("Units"); if (!sheet) throw Error(); sheet.getCell("F3").value = null;
     const r = reviewPhysicalWorkbook(b, g); expect(r.changes).toHaveLength(0);
     expect(applyPhysicalChanges(g, r.changes, [])[0].units[1]).toEqual(g[0].units[1]);
   });
