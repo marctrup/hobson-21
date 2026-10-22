@@ -112,17 +112,28 @@ function ByCategory({ rs, openId, setOpen, lit, save, remove }: { rs: Responsibi
   );
 }
 
-/** Simple list: each place and the categories of compliance it needs. */
+/** Simple list: each place and the compliance items it is liable for, grouped by category. */
 function ByPlace({ rs, only }: { rs: Responsibility[]; only: GroupId | null }) {
   const rows = placeRows(rs, only);
   return (
     <div>
-      <Insight>A category appears against a place only where a control is recorded for it.</Insight>
+      <Insight>Each place lists the compliance items it is responsible for, under their category.</Insight>
       <ul className="grid">
         {rows.map((row) => (
-          <li key={row.id} className={`grid gap-x-3 gap-y-0.5 border-b border-faint-rule py-2 [@container_comp_(min-width:44rem)]:grid-cols-[16rem_1fr] ${row.level === "unit" ? "pl-4" : "mt-1"}`}>
+          <li key={row.id} className={`grid gap-x-3 gap-y-1 border-b border-faint-rule py-2 [@container_comp_(min-width:44rem)]:grid-cols-[16rem_1fr] ${row.level === "unit" ? "pl-4" : "mt-1"}`}>
             <span className={row.level === "unit" ? "text-sm text-ink-muted" : "text-sm font-medium text-ink"}>{row.label}</span>
-            <span className={row.categories.length ? "text-sm text-ink" : "text-sm italic text-ink-muted"}>{row.categories.length ? row.categories.map(categoryLabel).join(" · ") : "Nothing recorded yet"}</span>
+            {row.items.length ? (
+              <dl className="grid gap-1">
+                {row.items.map((it) => (
+                  <div key={it.category} className="grid gap-x-3 [@container_comp_(min-width:44rem)]:grid-cols-[9rem_1fr]">
+                    <dt className="text-xs uppercase tracking-wide text-ink-muted">{categoryLabel(it.category)}</dt>
+                    <dd className="text-sm text-ink">{it.names.join(" · ")}</dd>
+                  </div>
+                ))}
+              </dl>
+            ) : (
+              <span className="text-sm italic text-ink-muted">Nothing recorded yet</span>
+            )}
           </li>
         ))}
       </ul>

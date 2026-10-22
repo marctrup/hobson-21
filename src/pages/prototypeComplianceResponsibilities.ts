@@ -179,18 +179,23 @@ function covers(appliesTo: string, unit: string): boolean {
 }
 
 /** Simple list of places — each Unit Group, its Units, then the portfolio — with the categories each needs. */
-export type PlaceRow = { id: string; label: string; level: "group" | "unit" | "portfolio"; categories: Category[] };
+export type PlaceRow = { id: string; label: string; level: "group" | "unit" | "portfolio"; categories: Category[]; items: { category: Category; names: string[] }[] };
 
 export function placeRows(rs: Responsibility[], only: GroupId | null = null): PlaceRow[] {
-  const held = (pred: (r: Responsibility) => boolean) =>
-    CATEGORIES.filter((c) => rs.some((r) => r.category === c.id && pred(r))).map((c) => c.id);
+  const build = (id: string, label: string, level: PlaceRow["level"], pred: (r: Responsibility) => boolean): PlaceRow => {
+    const items = CATEGORIES.map((c) => ({
+      category: c.id,
+      names: [...new Set(rs.filter((r) => r.category === c.id && pred(r)).map((r) => r.name))],
+    })).filter((x) => x.names.length);
+    return { id, label, level, categories: items.map((x) => x.category), items };
+  };
   const rows: PlaceRow[] = [];
   for (const g of GROUPS) {
     if (only && g.id !== only) continue;
-    rows.push({ id: g.id, label: g.name, level: "group", categories: held((r) => r.group === g.id) });
+    rows.push(build(g.id, g.name, "group", (r) => r.group === g.id));
     for (const u of g.units)
-      rows.push({ id: `${g.id}-${u}`, label: u, level: "unit", categories: held((r) => r.group === g.id && covers(r.appliesTo, u)) });
+      rows.push(build(`${g.id}-${u}`, u, "unit", (r) => r.group === g.id && covers(r.appliesTo, u)));
   }
-  if (!only) rows.push({ id: "portfolio", label: "Portfolio", level: "portfolio", categories: held((r) => r.group === "portfolio") });
+  if (!only) rows.push(build("portfolio", "Portfolio", "portfolio", (r) => r.group === "portfolio"));
   return rows;
 }
