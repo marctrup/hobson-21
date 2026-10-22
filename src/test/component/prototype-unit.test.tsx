@@ -23,7 +23,7 @@ describe("Prototype Unit opening setup", () => {
     expect(screen.queryByRole("region", { name: "The Paragon Centre Unit Group" })).not.toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Set up a place →" })).toBeInTheDocument();
     await user.click(screen.getByRole("button", { name: "Open The Paragon Centre" }));
-    expect(screen.getByRole("img", { name: "The Paragon Centre cover photograph" })).toHaveAttribute("src", expect.stringContaining("paragon-centre-sample"));
+    expect(screen.getByRole("img", { name: "The Paragon Centre cover photograph" })).toHaveAttribute("src", expect.stringContaining("paragon-building-sample"));
     expect(screen.getByRole("button", { name: "Open First Floor Gym" })).toBeInTheDocument();
     await user.click(screen.getByRole("button", { name: "Back to map" }));
     expect(screen.queryByRole("button", { name: "Open First Floor Gym" })).not.toBeInTheDocument();
