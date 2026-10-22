@@ -120,7 +120,7 @@ function AccessEditor({ a, set, locked, quiet, top }: { a: Access; set: (a: Acce
             </div>
           ))}
         </div>
-      </Fold>
+      </Fold>}
     </div>
   );
 }
