@@ -1,6 +1,7 @@
 import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import { ArrowRight, Briefcase, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { PrototypeGateAdmitted } from "@/components/prototype/PrototypeGate";
 import owlDefault from "@/assets/prototype/owl-default.png";
 import professor from "@/assets/prototype/character-professor-transparent.png";
 import architect from "@/assets/prototype/character-architect-transparent.png";
@@ -75,10 +76,19 @@ export default function PrototypeBackOffice() {
     <div className="flex h-screen w-full overflow-hidden bg-bone-wash text-ink">
       <aside className="flex w-[68px] shrink-0 flex-col items-center border-r border-bone bg-background py-4">
         <div className="grid h-10 w-10 place-items-center" aria-hidden><img src={owlDefault} alt="" className="h-10 w-10 object-contain" /></div>
-        <div className="mt-auto flex w-full flex-col items-center gap-3 border-t border-faint-rule pt-3">
-          <button type="button" aria-current="page" onClick={() => active && home()} className="flex w-12 flex-col items-center gap-1 rounded-lg bg-secondary py-2 text-[10px] font-medium leading-tight text-ink"><Briefcase className="h-4 w-4" aria-hidden />Back Office</button>
-          <div className="grid h-9 w-9 place-items-center rounded-full bg-bone text-xs font-semibold text-charcoal">MT</div>
-        </div>
+        <nav aria-label="Back Office" className="mt-auto flex w-full flex-col items-center gap-1 border-t border-faint-rule pt-3">
+          <button type="button" aria-current={!active ? "page" : undefined} onClick={() => active && home()} className={`flex w-14 flex-col items-center gap-1 rounded-lg py-2 text-[10px] font-medium leading-tight text-ink ${!active ? "bg-secondary" : "hover:bg-paper"}`}><Briefcase className="h-4 w-4" aria-hidden />Back Office</button>
+          <ul aria-label="My colleagues" className="flex w-full flex-col items-center gap-0.5 border-l-2 border-primary/20 ml-2 pl-0">
+            {COLLEAGUES.map((c) => (
+              <li key={c.id}>
+                <button type="button" onClick={() => (active === c.id ? undefined : choose(c.id))} aria-current={active === c.id ? "page" : undefined} title={`${c.name} — ${c.choice}`} className={`flex w-14 flex-col items-center rounded-lg px-0.5 py-1 text-[9px] leading-tight transition ${active === c.id ? "bg-secondary font-medium text-ink" : "text-ink-muted hover:bg-paper"}`}>
+                  <img src={c.img} alt="" aria-hidden className="h-7 w-7 object-contain" />{c.name.replace("The ", "")}
+                </button>
+              </li>
+            ))}
+          </ul>
+          <div className="mt-2 grid h-9 w-9 place-items-center rounded-full bg-bone text-xs font-semibold text-charcoal" title="Admin">MT</div>
+        </nav>
       </aside>
 
       {/* Back Office conversation: visible until a colleague's work is brought into view */}
@@ -124,11 +134,7 @@ export default function PrototypeBackOffice() {
           <div className="flex h-11 shrink-0 items-center gap-3 border-b border-bone bg-background px-4">
             <img src={current.img} alt="" aria-hidden className="h-7 w-7 object-contain" />
             <p className="min-w-0 truncate text-sm"><span className="font-medium">{current.name}</span> <span className="text-ink-muted">· {current.area}</span></p>
-            <nav aria-label="Other colleagues" className="ml-auto hidden items-center gap-1 lg:flex">
-              {COLLEAGUES.filter((c) => c.id !== active).map((c) => (
-                <button key={c.id} type="button" onClick={() => bring(c.id)} title={`${c.name} — ${c.choice}`} aria-label={`Switch to ${c.name}`} className="rounded-full p-0.5 opacity-70 ring-1 ring-transparent transition hover:opacity-100 hover:ring-bone"><img src={c.img} alt="" className="h-7 w-7 object-contain" /></button>
-              ))}
-            </nav>
+            <span className="ml-auto" />
             <Button size="sm" variant="ghost" onClick={home} aria-label="Back to the Back Office conversation"><X className="mr-1 h-3.5 w-3.5" />Back Office</Button>
           </div>
         )}
@@ -137,7 +143,7 @@ export default function PrototypeBackOffice() {
             const c = COLLEAGUES.find((x) => x.id === id)!;
             return (
               <div key={id} data-colleague={id} hidden={id !== active} className="absolute inset-0 [&>div]:!h-full [&>div>aside:first-child]:hidden">
-                <Suspense fallback={null}><c.Comp /></Suspense>
+                <PrototypeGateAdmitted.Provider value={true}><Suspense fallback={null}><c.Comp /></Suspense></PrototypeGateAdmitted.Provider>
               </div>
             );
           })}
