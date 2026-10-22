@@ -71,10 +71,10 @@ serve(async (req) => {
     try {
       const body = await req.json();
       passphrase = typeof body?.passphrase === "string" ? body.passphrase : "";
-      if (body?.scope !== undefined && body.scope !== "unit" && body.scope !== "work" && body.scope !== "documents") {
+      if (body?.scope !== undefined && body.scope !== "unit" && body.scope !== "work" && body.scope !== "documents" && body.scope !== "backoffice") {
         return json({ error: "Invalid prototype scope" }, 400);
       }
-      scope = body?.scope === "unit" || body?.scope === "documents" ? body.scope : "work";
+      scope = body?.scope === "unit" || body?.scope === "documents" || body?.scope === "backoffice" ? body.scope : "work";
     } catch {
       return json({ error: "Pass phrase is required" }, 400);
     }
@@ -89,7 +89,7 @@ serve(async (req) => {
       return json({ error: "Invalid pass phrase format" }, 400);
     }
 
-    const expected = Deno.env.get(scope === "unit" ? "PROTOTYPE_UNIT_PASS_PHRASE" : scope === "documents" ? "PROTOTYPE_DOCUMENTS_PASS_PHRASE" : "PROTOTYPE_PASS_PHRASE");
+    const expected = Deno.env.get(scope === "unit" ? "PROTOTYPE_UNIT_PASS_PHRASE" : scope === "documents" ? "PROTOTYPE_DOCUMENTS_PASS_PHRASE" : scope === "backoffice" ? "PROTOTYPE_BACKOFFICE_PASS_PHRASE" : "PROTOTYPE_PASS_PHRASE");
     if (!expected) {
       // Fail closed: without a configured phrase nobody is admitted.
       console.error("PROTOTYPE_PASS_PHRASE is not configured");

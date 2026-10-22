@@ -16,7 +16,7 @@ function alreadyAdmitted(sessionKey: string): boolean {
 
 type PrototypeGateProps = {
   children: React.ReactNode;
-  scope?: "work" | "unit" | "documents";
+  scope?: "work" | "unit" | "documents" | "backoffice";
 };
 
 /**
@@ -24,7 +24,7 @@ type PrototypeGateProps = {
  * never ships in the site's code and a stray link shows only a quiet entrance.
  */
 export function PrototypeGate({ children, scope = "work" }: PrototypeGateProps) {
-  const sessionKey = scope === "unit" ? "hobson_prototype_unit_open" : scope === "documents" ? "hobson_prototype_documents_open" : SESSION_KEY;
+  const sessionKey = scope === "unit" ? "hobson_prototype_unit_open" : scope === "documents" ? "hobson_prototype_documents_open" : scope === "backoffice" ? "hobson_prototype_backoffice_open" : SESSION_KEY;
   const [admitted, setAdmitted] = useState<boolean>(() => alreadyAdmitted(sessionKey));
   const [passphrase, setPassphrase] = useState("");
   const [checking, setChecking] = useState(false);
@@ -96,7 +96,7 @@ export function PrototypeGate({ children, scope = "work" }: PrototypeGateProps) 
           aria-hidden="true"
           className="h-20 w-20 mx-auto mb-6 object-contain"
         />
-        <h1 className="text-2xl font-semibold text-foreground">This room is private</h1>
+        <h1 className="text-2xl font-semibold text-foreground">{scope === "backoffice" ? "The Back Office" : "This room is private"}</h1>
         <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
           I'm afraid I can't show you around without being asked. If you were given a pass phrase,
           do use it.
