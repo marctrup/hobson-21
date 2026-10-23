@@ -35,9 +35,31 @@ describe("colleague voice inside a colleague's work", () => {
     const el = host();
     voiceAs(el, "keeper.png", "The Keeper");
     voiceAs(el, "keeper.png", "The Keeper");
-    const img = el.querySelector("img")!;
-    expect(img.getAttribute("src")).toBe("keeper.png");
-    expect(img.getAttribute("alt")).toBe("The Keeper");
+    const img = el.querySelector("img");
+    expect(img?.getAttribute("src")).toBe("keeper.png");
+    expect(img?.getAttribute("alt")).toBe("The Keeper");
     expect(el.querySelectorAll("h1")[0].textContent).toBe("Chat with the Keeper");
+  });
+
+  it("adds one introduction before a lazily mounted conversation and preserves its existing turns", async () => {
+    const el = host();
+    voiceAs(el, "professor.png", "The Professor", "An introduction");
+    const log = document.createElement("div");
+    log.setAttribute("role", "log");
+    log.setAttribute("aria-label", "Conversation");
+    const original = document.createElement("div");
+    log.append(original);
+    el.append(log);
+    await new Promise((resolve) => setTimeout(resolve, 0));
+    const introduction = log.querySelector('[data-colleague-introduction="true"]');
+    expect(introduction).not.toBeNull();
+    expect(log.firstElementChild).toBe(introduction);
+    expect(log.lastElementChild).toBe(original);
+    voiceAs(el, "professor.png", "The Professor", "An introduction");
+    const followup = document.createElement("div");
+    log.append(followup);
+    await new Promise((resolve) => setTimeout(resolve, 0));
+    expect(log.querySelectorAll('[data-colleague-introduction="true"]')).toHaveLength(1);
+    expect(log.lastElementChild).toBe(followup);
   });
 });

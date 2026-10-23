@@ -204,5 +204,6 @@
 - [x] Replace the By place coverage chart with a plain list of each Unit Group and Unit showing only the categories of compliance it needs; nothing else shown, places with nothing recorded say so. Eleven compliance checks pass and the list was verified in the preview. Not published.
 
 ## Prototype Contacts — plain Locations card
+- [x] Back Office: each selected colleague introduces themselves first using their existing hover contribution and own owl; embedded work and independent prototypes are preserved. All five verified live, return visits show no duplicates, and 12 checks pass. Not published.
 - [x] Inside a contact's card show only **Locations**: each place with what they do and where, no pills/arrows, no summary counts, no repeated name; the same list opens full-width under a directory row with a finder for long lists.
 - [x] Verified the contact card and an expanded directory row in the live preview (no console errors); contacts checks pass and the build is clean. Not published.
