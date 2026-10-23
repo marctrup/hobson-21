@@ -41,11 +41,31 @@ export function routeRequest(text: string): ColleagueId | null {
 
 /** Inside a colleague's work, the speaker is that colleague: swap Hobson's owl and chat title for theirs. */
 const voiced = new WeakSet<HTMLElement>();
-export function voiceAs(el: HTMLElement | null, img: string, name: string) {
+export function voiceAs(el: HTMLElement | null, img: string, name: string, contribution?: string) {
   if (!el || voiced.has(el)) return;
   voiced.add(el);
   const title = `Chat with ${name.replace(/^The /, "the ")}`;
+  const introduction = contribution ? document.createElement("div") : null;
+  if (introduction) {
+    introduction.className = "flex min-w-0 shrink-0 items-start gap-2";
+    introduction.dataset.colleagueIntroduction = "true";
+    const portrait = document.createElement("img");
+    portrait.src = img;
+    portrait.alt = name;
+    portrait.className = "h-10 w-10 shrink-0 object-contain";
+    const body = document.createElement("div");
+    body.className = "min-w-0 px-3.5 py-2.5";
+    const text = document.createElement("p");
+    text.className = "whitespace-pre-line break-words text-sm leading-relaxed";
+    text.textContent = contribution ?? "";
+    body.append(text);
+    introduction.append(portrait, body);
+  }
   const apply = () => {
+    const conversation = el.querySelector<HTMLElement>('[role="log"][aria-label="Conversation"]');
+    if (introduction && conversation && conversation.firstElementChild !== introduction) {
+      conversation.prepend(introduction);
+    }
     el.querySelectorAll<HTMLImageElement>("img").forEach((i) => {
       if (i.getAttribute("src") === owlDefault) { i.src = img; if (i.alt) i.alt = name; }
     });
@@ -170,9 +190,10 @@ export default function PrototypeBackOffice() {
         )}
         <div className="relative min-h-0 flex-1">
           {opened.map((id) => {
-            const c = COLLEAGUES.find((x) => x.id === id)!;
+            const c = COLLEAGUES.find((x) => x.id === id);
+            if (!c) return null;
             return (
-              <div key={id} ref={(el) => voiceAs(el, c.img, c.name)} data-colleague={id} hidden={id !== active} className="absolute inset-0 [&>div]:!h-full [&>div>aside:first-child]:hidden">
+              <div key={id} ref={(el) => voiceAs(el, c.img, c.name, c.contribution)} data-colleague={id} hidden={id !== active} className="absolute inset-0 [&>div]:!h-full [&>div>aside:first-child]:hidden">
                 <PrototypeGateAdmitted.Provider value={true}><Suspense fallback={null}><c.Comp /></Suspense></PrototypeGateAdmitted.Provider>
               </div>
             );
