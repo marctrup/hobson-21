@@ -272,13 +272,13 @@ All colors MUST be HSL.
   .classroom-tab { padding: 0 3px; height: 42px; font-size: 12px; }
   .classroom-environment { min-height: 600px; }
   .classroom-stage { aspect-ratio: .67; max-width: 500px; }
-  .classroom-pupil { width: 27%; top: 10%; }
+  .classroom-pupil { width: 27%; top: 6%; }
   .classroom-inspector { left: 3%; }
-  .classroom-keeper { left: 36.5%; top: 8%; }
+  .classroom-keeper { left: 36.5%; top: 4%; }
   .classroom-professor { right: 3%; }
-  .classroom-broker { left: 8%; top: 40%; width: 32%; }
-  .classroom-architect { right: 8%; top: 40%; width: 32%; }
-  .classroom-teacher { left: 31%; top: 65%; width: 38%; }
+  .classroom-broker { left: 8%; top: 32%; width: 32%; }
+  .classroom-architect { right: 8%; top: 32%; width: 32%; }
+  .classroom-teacher { left: 32%; top: 66%; width: 36%; }
 }
 
 @layer components {
