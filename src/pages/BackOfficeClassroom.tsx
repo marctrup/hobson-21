@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import room from "@/assets/back-office-illustrated-room.png.asset.json";
 import "./BackOfficeIllustratedRoom.css";
@@ -34,12 +34,49 @@ function WrittenIntroduction({ name, text }: { name: string; text: string }) {
 }
 
 /** Image-relative targets preserve the supplied room and existing colleague handovers. */
+const ART_ASPECT = 1060 / 1223;
+/** Fill the space, trimming at most a thin edge and stretching gently before falling back to centring. */
+const MAX_EDGE_TRIM = 0.08;
+const MAX_STRETCH = 1.18;
+
+function useRoomFill() {
+  const ref = useRef<HTMLElement | null>(null);
+  const [size, setSize] = useState<{ w: number; h: number } | null>(null);
+  useEffect(() => {
+    const host = ref.current;
+    if (!host || typeof ResizeObserver === "undefined") return;
+    const measure = () => {
+      const bw = host.clientWidth, bh = host.clientHeight;
+      if (!bw || !bh) return;
+      const boxAspect = bw / bh;
+      let w: number, h: number;
+      if (boxAspect >= ART_ASPECT) {
+        const trim = Math.min(MAX_EDGE_TRIM, Math.max(0, 1 - ART_ASPECT / boxAspect));
+        h = bh / (1 - trim); w = h * ART_ASPECT;
+        if (bw / w > MAX_STRETCH) { w = bw / MAX_STRETCH; h = w / ART_ASPECT; }
+      } else {
+        const trim = Math.min(MAX_EDGE_TRIM, Math.max(0, 1 - boxAspect / ART_ASPECT));
+        w = bw / (1 - trim); h = w / ART_ASPECT;
+        if (bh / h > MAX_STRETCH) { h = bh / MAX_STRETCH; w = h * ART_ASPECT; }
+        if (w / bw > 1.35) { w = Math.min(bw, bh * ART_ASPECT); h = w / ART_ASPECT; }
+      }
+      setSize({ w, h });
+    };
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(host);
+    return () => observer.disconnect();
+  }, []);
+  return { ref, size };
+}
+
 export default function BackOfficeClassroom({ onOpen, introductions = [] }: {
   onOpen?: (id: string) => void;
   introductions?: readonly { id: string; contribution: string }[];
 }) {
   const [hovered, setHovered] = useState<string | null>(null);
   const [details, setDetails] = useState(false);
+  const { ref, size } = useRoomFill();
   useEffect(() => {
     if (document.querySelector('[data-classroom-handwriting]')) return;
     const font = document.createElement("link");
