@@ -471,13 +471,13 @@ html { caret-color: #2D2D2D; }
 /* Classroom: staggered rows of desks facing Hobson at the front. */
 .classroom-desk { position: relative; z-index: 3; display: block; width: 96%; margin: -30% 0 0 2%; aspect-ratio: 4.2; border-radius: 4px 4px 2px 2px; background: linear-gradient(hsl(var(--classroom-wood-light)), hsl(var(--classroom-wood)) 38%, hsl(var(--classroom-wood-dark))); box-shadow: 0 10px 14px -6px hsl(var(--classroom-shadow) / .35); clip-path: polygon(4% 0, 96% 0, 100% 100%, 0 100%); }
 .classroom-pupil, .classroom-broker, .classroom-architect, .classroom-inspector, .classroom-keeper, .classroom-professor { width: 14%; }
-.classroom-inspector { left: 22%; top: 3%; } .classroom-keeper { left: 43%; top: 0%; } .classroom-professor { left: 64%; top: 3%; }
-.classroom-broker { left: 2%; top: 30%; z-index: 2; } .classroom-architect { left: 84%; top: 30%; z-index: 2; }
+.classroom-inspector { left: 18%; top: 8%; } .classroom-keeper { left: 43%; top: 3%; } .classroom-professor { left: 68%; top: 8%; }
+.classroom-broker { left: 4%; top: 33%; z-index: 2; } .classroom-architect { left: 82%; top: 33%; z-index: 2; }
 .classroom-teacher { left: 32%; top: 40%; width: 36%; }
 @container (max-width: 640px) {
   .classroom-pupil, .classroom-broker, .classroom-architect, .classroom-inspector, .classroom-keeper, .classroom-professor { width: 15%; }
-  .classroom-inspector { left: 21%; top: 3%; } .classroom-keeper { left: 42.5%; top: 0%; } .classroom-professor { left: 63.5%; top: 3%; }
-  .classroom-broker { left: 1.5%; top: 28%; } .classroom-architect { left: 83.5%; top: 28%; }
+  .classroom-inspector { left: 18%; top: 8%; } .classroom-keeper { left: 43%; top: 3%; } .classroom-professor { left: 68%; top: 8%; }
+  .classroom-broker { left: 4%; top: 31%; } .classroom-architect { left: 81%; top: 31%; }
   .classroom-teacher { left: 25%; top: 42%; width: 50%; }
 }
 
@@ -490,8 +490,8 @@ html { caret-color: #2D2D2D; }
 .classroom-desk::before { content: ""; position: absolute; inset: 0; background: inherit; filter: brightness(0) blur(3px); opacity: .26; transform: translateY(6px); z-index: -1; }
 
 /* Suspended brass dome lights illuminate their colleague, never the front-of-house owl. */
-.classroom-inspector, .classroom-professor { top: 12%; }
-.classroom-keeper { top: 9%; }
+.classroom-inspector, .classroom-professor { top: 8%; }
+.classroom-keeper { top: 3%; }
 .classroom-lamp { position: absolute; left: 29%; top: -34%; width: 42%; height: 24%; z-index: 4; pointer-events: none; }
 .classroom-lamp-cord { position: absolute; left: calc(50% - 1px); top: 0; width: 2px; height: 42%; background: hsl(var(--classroom-shadow) / .7); }
 .classroom-lamp-shade { position: absolute; left: 0; top: 38%; width: 100%; height: 54%; border-radius: 50% 50% 8% 8% / 85% 85% 12% 12%;
