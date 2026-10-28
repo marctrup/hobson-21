@@ -57,7 +57,7 @@ export default function BackOfficeClassroom({ onOpen, introductions = [] }: {
   return (
     <main className="illustrated-classroom" aria-label="Back Office classroom">
       <div className="illustrated-room">
-        <img className="illustrated-room-art" src={room.url} alt="Hobson at the front of his team's classroom" width={768} height={888} draggable={false} />
+        <img className="illustrated-room-art" src={room.url} alt="Hobson at the front of his team's classroom" width={1059} height={1223} draggable={false} />
         <Button variant="ghost" className="illustrated-colleague illustrated-hobson" aria-label="Hobson"
           aria-expanded={details} aria-describedby={hovered === "hobson" ? "classroom-introduction" : undefined}
           onMouseEnter={() => setHovered("hobson")} onMouseLeave={() => setHovered(null)}
