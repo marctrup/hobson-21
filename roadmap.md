@@ -1,6 +1,7 @@
 # Roadmap
 
 ## Back Office — classroom Phase 1A
+- [x] Restore the original sidebar and chat; float the owls only in the right-hand workspace without scenery, adapting to its available width.
 - [x] Replace the entrance with the classroom layout, five section tabs and six exact supplied owl images, retaining the admin gate and existing destinations.
 - [x] Verify desktop/mobile arrangement, private entrance and layout-only selection; 19 checks pass, all six hosted images return 200 image/png, preview build clean. Local screenshot checks used exact uploaded-image responses because localhost does not serve hosted asset URLs. Not published.
 - [ ] Add animations and destination transitions only after Marc approves the Phase 1A classroom arrangement.

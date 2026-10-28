@@ -245,7 +245,8 @@ All colors MUST be HSL.
 }
 
 /* The classroom is a single unframed scene. Artwork remains independent of scenery. */
-.back-office-classroom { min-height: 100svh; display: flex; flex-direction: column; background: hsl(var(--background)); }
+.back-office-team-workspace { container-type: inline-size; }
+.back-office-classroom { min-height: 100%; display: flex; flex-direction: column; background: hsl(var(--background)); }
 .classroom-header { z-index: 10; flex: 0 0 auto; background: hsl(var(--classroom-plum)); border-bottom: 2px solid hsl(var(--classroom-gold)); box-shadow: 0 5px 22px hsl(var(--classroom-shadow) / .18); }
 .classroom-navigation { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); max-width: 1000px; margin: auto; padding: 17px 24px; gap: 12px; }
 .classroom-tab { height: 46px; border-radius: 4px; font-size: 15px; color: hsl(var(--classroom-tab-text)); border: 1px solid transparent; }
@@ -265,7 +266,7 @@ All colors MUST be HSL.
 .classroom-pupil[data-selected="true"] .classroom-character { outline: 2px solid hsl(var(--classroom-gold)); outline-offset: 6px; }
 .classroom-teacher { position: absolute; left: 36.9%; top: 44%; width: 26.2%; z-index: 5; }
 .classroom-teacher img { width: 100%; height: auto; filter: drop-shadow(0 13px 7px hsl(var(--classroom-shadow) / .2)); }
-@media (max-width: 700px) {
+@container (max-width: 700px) {
   .classroom-navigation { gap: 4px; padding: 13px 10px; }
   .classroom-tab { padding: 0 3px; height: 42px; font-size: 12px; }
   .classroom-environment { min-height: 600px; }

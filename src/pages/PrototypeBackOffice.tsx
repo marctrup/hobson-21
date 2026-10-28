@@ -117,9 +117,6 @@ export default function PrototypeBackOffice() {
 
   const current = COLLEAGUES.find((c) => c.id === active);
 
-  // Phase 1A replaces only the entrance; destination journeys remain intact for later handovers.
-  if (!active) return <BackOfficeClassroom />;
-
   return (
     <div className="flex h-screen w-full overflow-hidden bg-bone-wash text-ink">
       <aside className="relative flex w-[132px] shrink-0 flex-col border-r border-bone bg-background py-4">
@@ -182,7 +179,7 @@ export default function PrototypeBackOffice() {
         </div>
       </section>
 
-      {/* Workspace: blank on entry; each colleague's existing prototype once brought into view */}
+      {/* Floating team occupies the workspace beside the original sidebar and conversation. */}
       <main aria-label="Back Office workspace" className={`min-w-0 flex-1 flex-col ${active ? "flex" : "hidden md:flex"}`}>
         {current && (
           <div className="flex h-11 shrink-0 items-center gap-3 border-b border-bone bg-background px-4">
@@ -192,7 +189,8 @@ export default function PrototypeBackOffice() {
             <Button size="sm" variant="ghost" onClick={home} aria-label="Back to the Back Office conversation"><X className="mr-1 h-3.5 w-3.5" />Back Office</Button>
           </div>
         )}
-        <div className="relative min-h-0 flex-1">
+        <div className="back-office-team-workspace relative min-h-0 flex-1 overflow-auto">
+          {!active && <BackOfficeClassroom />}
           {opened.map((id) => {
             const c = COLLEAGUES.find((x) => x.id === id);
             if (!c) return null;
