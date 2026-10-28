@@ -405,26 +405,7 @@ html::-webkit-scrollbar-thumb:hover,
 html { caret-color: #2D2D2D; }
 
 
-/* Hobson's pointing cue: hop, spin to face, lean in; gold beam draws to the chosen colleague. */
-.classroom-teacher-figure { transform-origin: 50% 90%; }
-.classroom-teacher-figure[data-pointing] { animation: hobson-point 1.1s cubic-bezier(.34,1.4,.5,1) forwards; }
-@keyframes hobson-point {
-  0% { transform: none; }
-  18% { transform: translateY(4%) scale(1.04, .94); }
-  42% { transform: translateY(-16%) rotate(calc(var(--lean) * -.6)) scaleX(calc(var(--flip) * -1)); }
-  62% { transform: translateY(0) rotate(0) scaleX(var(--flip)); }
-  78% { transform: rotate(calc(var(--lean) * 1.3)) scaleX(var(--flip)) translateX(calc(var(--lean) * .4%)); }
-  100% { transform: rotate(var(--lean)) scaleX(var(--flip)); }
-}
-.classroom-beam { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 3; overflow: visible; }
-.classroom-beam line { stroke: hsl(var(--classroom-gold)); stroke-width: 3; stroke-linecap: round; stroke-dasharray: 2 4; stroke-dashoffset: 100; opacity: 0; animation: beam-draw .55s .65s ease-out forwards; }
-@keyframes beam-draw { from { opacity: 1; stroke-dasharray: 0 100; } to { opacity: .85; stroke-dasharray: 100 0; } }
-.classroom-beam-spark { fill: hsl(var(--classroom-gold) / .55); transform-box: fill-box; transform-origin: center; opacity: 0; animation: beam-spark .9s 1.15s ease-out forwards; }
-@keyframes beam-spark { 0% { opacity: 1; transform: scale(.3); } 100% { opacity: 0; transform: scale(5); } }
-.classroom-pupil[data-selected="true"] .classroom-character { animation: pupil-wave .8s 1.15s ease-in-out both; }
-@keyframes pupil-wave { 0%,100% { transform: none; } 30% { transform: translateY(-9%) rotate(-5deg); } 60% { transform: translateY(-4%) rotate(4deg); } }
-@media (prefers-reduced-motion: reduce) {
-  .classroom-teacher-figure[data-pointing], .classroom-pupil[data-selected="true"] .classroom-character { animation: none; transform: rotate(var(--lean)) scaleX(var(--flip)); }
-  .classroom-pupil[data-selected="true"] .classroom-character { transform: none; }
-  .classroom-beam line, .classroom-beam-spark { animation-duration: 1ms; animation-delay: 0s; }
-}
+/* Chosen colleague spins quickly once when picked from the menu. */
+.classroom-pupil[data-selected="true"] .classroom-character { animation: pupil-spin .6s cubic-bezier(.3,.9,.4,1.1) both; }
+@keyframes pupil-spin { from { transform: rotate(0); } to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .classroom-pupil[data-selected="true"] .classroom-character { animation: none; } }

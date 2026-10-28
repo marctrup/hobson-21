@@ -57,12 +57,6 @@ export default function BackOfficeClassroom() {
       </header>
       <div className="classroom-environment">
         <div className="classroom-stage" ref={stage}>
-          {pointer && (
-            <svg key={`beam-${cue}`} className="classroom-beam" aria-hidden="true">
-              <line x1={pointer.x1} y1={pointer.y1} x2={pointer.x2} y2={pointer.y2} pathLength={100} />
-              <circle className="classroom-beam-spark" cx={pointer.x2} cy={pointer.y2} r={7} />
-            </svg>
-          )}
           {specialists.map((c) => (
             <div key={c.id} ref={(el) => { pupils.current[c.id] = el; }} className={`classroom-pupil classroom-${c.id}`} data-selected={selected === c.id}>
               <Button key={selected === c.id ? `on-${cue}` : "off"} variant="ghost" className="classroom-character" aria-label={`${c.name} — ${c.section}`} aria-pressed={selected === c.id} onClick={() => choose(c.id)} title={c.section}>
@@ -74,10 +68,8 @@ export default function BackOfficeClassroom() {
             <div
               key={`hobson-${cue}`}
               className="classroom-teacher-figure"
-              data-pointing={selected ?? undefined}
-              style={pointer ? ({ "--lean": `${pointer.lean}deg`, "--flip": pointer.x2 < pointer.x1 ? -1 : 1 } as React.CSSProperties) : undefined}
             >
-              <img src={hobson.url} alt={selected ? `Hobson pointing to ${specialists.find((c) => c.id === selected)?.name}` : "Hobson, the teacher"} width={768} height={768} draggable={false} />
+              <img src={hobson.url} alt="Hobson, the teacher" width={768} height={768} draggable={false} />
             </div>
           </div>
         </div>
