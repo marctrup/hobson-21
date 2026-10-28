@@ -61,21 +61,30 @@ it("clicking Hobson shows each colleague in detail without starting their work",
 
 /** The staff room (narrow workspace) writes each colleague onto the board as you reach them. */
 function inStaffRoom(rendered: () => void) {
-  const RO = global.ResizeObserver;
-  const proto = HTMLElement.prototype;
-  const cw = Object.getOwnPropertyDescriptor(proto, "clientWidth");
-  const ch = Object.getOwnPropertyDescriptor(proto, "clientHeight");
-  class Stub { cb: (entries: unknown[]) => void; constructor(cb: (entries: unknown[]) => void) { this.cb = cb; } observe(el: unknown) { this.cb([el]); } unobserve() {} disconnect() {} }
-  // @ts-expect-error test stub
-  global.ResizeObserver = Stub;
-  Object.defineProperty(proto, "clientWidth", { configurable: true, value: 320 });
-  Object.defineProperty(proto, "clientHeight", { configurable: true, value: 700 });
+  const proto = Element.prototype;
+  const sizes = ["clientWidth", "clientHeight"] as const;
+  const values = { clientWidth: 320, clientHeight: 700 } as const;
+  const saved = sizes.map((k) => Object.getOwnPropertyDescriptor(proto, k));
+  const observer = globalThis.ResizeObserver;
+  class Stub {
+    cb: (entries: unknown[]) => void;
+    constructor(cb: (entries: unknown[]) => void) { this.cb = cb; }
+    observe(el: unknown) { this.cb([el]); }
+    unobserve() {}
+    disconnect() {}
+  }
+  globalThis.ResizeObserver = Stub as unknown as typeof ResizeObserver;
+  sizes.forEach((k) => Object.defineProperty(proto, k, { configurable: true, value: values[k] }));
   try { rendered(); } finally {
-    if (cw) Object.defineProperty(proto, "clientWidth", cw); else delete (proto as Record<string, unknown>).clientWidth;
-    if (ch) Object.defineProperty(proto, "clientHeight", ch); else delete (proto as Record<string, unknown>).clientHeight;
-    global.ResizeObserver = RO;
+    sizes.forEach((k, i) => {
+      const d = saved[i];
+      if (d) Object.defineProperty(proto, k, d);
+      else delete (proto as unknown as Record<string, unknown>)[k];
+    });
+    globalThis.ResizeObserver = observer;
   }
 }
+
 
 it("the staff room writes a colleague's own words on the board when you reach them", () => {
   const onOpen = vi.fn();
