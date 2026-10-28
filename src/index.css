@@ -407,7 +407,12 @@ html::-webkit-scrollbar-thumb:hover,
 html { caret-color: #2D2D2D; }
 
 
-/* Chosen colleague spins quickly once when picked from the menu. */
-.classroom-pupil[data-selected="true"] .classroom-character { animation: pupil-spin .6s cubic-bezier(.3,.9,.4,1.1) both; }
-@keyframes pupil-spin { from { transform: rotate(0); } to { transform: rotate(360deg); } }
+/* Chosen colleague steps forward horizontally when picked from the menu. */
+.classroom-pupil[data-selected="true"] .classroom-character { animation: pupil-step .55s cubic-bezier(.3,.9,.35,1.05) both; }
+@keyframes pupil-step {
+  0% { transform: translateX(0); }
+  35% { transform: translateX(var(--pupil-step, 0px)) scale(.97); }
+  70% { transform: translateX(calc(var(--pupil-step, 0px) * .5)) scale(1); }
+  100% { transform: translateX(0); }
+}
 @media (prefers-reduced-motion: reduce) { .classroom-pupil[data-selected="true"] .classroom-character { animation: none; } }
