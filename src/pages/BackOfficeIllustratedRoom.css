@@ -23,7 +23,7 @@
   box-shadow: none;
   cursor: pointer;
 }
-.illustrated-room .illustrated-colleague:hover,
+.illustrated-room .illustrated-colleague:hover { background: transparent; box-shadow: none; }
 .illustrated-room .illustrated-colleague:focus-visible {
   background: transparent;
   outline: 2px solid hsl(var(--classroom-gold));
