@@ -37,7 +37,7 @@ function WrittenIntroduction({ name, text }: { name: string; text: string }) {
 const ART_ASPECT = 1060 / 1223;
 /** Fill the space, trimming at most a thin edge and stretching gently before falling back to centring. */
 const MAX_EDGE_TRIM = 0.10;
-const MAX_STRETCH = 1.30;
+const MAX_STRETCH = 1.35;
 
 function useRoomFill() {
   const ref = useRef<HTMLElement | null>(null);
@@ -54,7 +54,7 @@ function useRoomFill() {
         const trim = Math.min(MAX_EDGE_TRIM, Math.max(0, 1 - ART_ASPECT / boxAspect));
         h = bh / (1 - trim); w = h * ART_ASPECT;
         if (bw / w > MAX_STRETCH) { w = bw / MAX_STRETCH; h = w / ART_ASPECT; }
-        if (h / bh > 1.25) { w = Math.min(bw, bh * ART_ASPECT); h = w / ART_ASPECT; }
+        if (h / bh > 1.30) { w = Math.min(bw, bh * ART_ASPECT); h = w / ART_ASPECT; }
       } else {
         const trim = Math.min(MAX_EDGE_TRIM, Math.max(0, 1 - boxAspect / ART_ASPECT));
         w = bw / (1 - trim); h = w / ART_ASPECT;
