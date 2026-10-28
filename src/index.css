@@ -476,9 +476,9 @@ html { caret-color: #2D2D2D; }
 .classroom-teacher { left: 32%; top: 40%; width: 36%; }
 @container (max-width: 640px) {
   .classroom-pupil, .classroom-broker, .classroom-architect, .classroom-inspector, .classroom-keeper, .classroom-professor { width: 14%; }
-  .classroom-inspector { left: 18%; top: 19%; } .classroom-keeper { left: 43%; top: 15%; } .classroom-professor { left: 68%; top: 19%; }
-  .classroom-broker { left: 4%; top: 36%; } .classroom-architect { left: 82%; top: 36%; }
-  .classroom-teacher { left: 25%; top: 42%; width: 50%; }
+  .classroom-inspector { left: 12%; top: 19%; } .classroom-keeper { left: 43%; top: 15%; } .classroom-professor { left: 74%; top: 19%; }
+  .classroom-broker { left: 4%; top: 38%; } .classroom-architect { left: 82%; top: 38%; }
+  .classroom-teacher { left: 28%; top: 42%; width: 44%; }
 }
 
 /* Desks: thin top on two legs so the owls' feet show beneath. */
