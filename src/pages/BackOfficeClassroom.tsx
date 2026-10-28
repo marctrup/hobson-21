@@ -12,8 +12,14 @@ import architectOwl from "@/assets/back-office/architect.png.asset.json";
 const OWLS: Record<string, string> = { hobson: hobsonOwl.url, keeper: keeperOwl.url, broker: brokerOwl.url, inspector: inspectorOwl.url, professor: professorOwl.url, architect: architectOwl.url };
 /** Below this workspace width the illustrated room is unreadable, so a dedicated staff-room list replaces it. */
 const COMPACT_WIDTH = 600;
-/** How far down the staff room a colleague must come before the board takes their dictation. */
-const READING_LINE = 0.7;
+
+/** Where a colleague must come before the board takes their dictation: just beneath the whiteboard. */
+function readingLine(host: HTMLElement) {
+  const h = host.getBoundingClientRect();
+  const head = host.querySelector<HTMLElement>(".compact-head")?.getBoundingClientRect();
+  return head ? Math.min(head.bottom + 80, h.bottom - 80) : h.top + h.height / 2;
+}
+
 
 
 const specialists = [
