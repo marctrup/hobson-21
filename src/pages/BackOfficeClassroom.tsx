@@ -185,9 +185,14 @@ export default function BackOfficeClassroom({ onOpen, introductions = [] }: {
             </li>;
           })}
         </ul>
+        <p className="compact-signoff">
+          <img src={OWLS.hobson} alt="" />
+          <span>That is the team. Shall I show you anyone's work?</span>
+        </p>
       </main>
     );
   }
+
 
   return (
     <main ref={ref} className="illustrated-classroom" aria-label="Back Office classroom">
