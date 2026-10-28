@@ -145,12 +145,14 @@ export default function BackOfficeClassroom({ onOpen, introductions = [] }: {
         const s = distance(row);
         if (s < bestScore) { best = row; bestScore = s; }
       }
+      if (bestScore > 90) return;
       const id = best.dataset.colleague ?? null;
       setFocused((current) => {
         const resting = rows.find((r) => r.dataset.colleague === current);
         return resting && distance(resting) <= bestScore + 24 ? current : id;
       });
     };
+
     host.addEventListener("scroll", pick, { passive: true });
     list.addEventListener("mouseleave", pick);
     const observer = new ResizeObserver(pick);
@@ -178,7 +180,9 @@ export default function BackOfficeClassroom({ onOpen, introductions = [] }: {
           </section>
           <p className="compact-today">Today's work · 28 Oct</p>
         </div>
+        <p className="compact-hint"><span>Please scroll — each colleague in turn will write themselves on the board.</span><span aria-hidden="true">↓</span></p>
         <ul className="compact-team" ref={listRef}>
+
           {specialists.map((c) => {
             const active = written === c.id;
             return <li key={c.id} data-colleague={c.id} className={active ? "is-active" : ""}>
