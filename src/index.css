@@ -45,6 +45,16 @@ All colors MUST be HSL.
   }
 
   :root {
+    /* Back Office classroom: scoped scenery and navigation roles. */
+    --classroom-wall: 275 15% 88%;
+    --classroom-plum: 274 33% 23%;
+    --classroom-gold: 40 51% 65%;
+    --classroom-tab-text: 42 37% 92%;
+    --classroom-selected: 273 31% 35%;
+    --classroom-wood: 28 35% 48%;
+    --classroom-wood-light: 31 43% 65%;
+    --classroom-wood-dark: 26 33% 27%;
+    --classroom-shadow: 270 23% 13%;
     /* Editorial stationery tokens */
     --paper: #FCFAF7;
     --bone-wash: #F1EBDE;
@@ -232,6 +242,53 @@ All colors MUST be HSL.
     clip: auto;
     white-space: normal;
   }
+}
+
+/* The classroom is a single unframed scene. Artwork remains independent of scenery. */
+.back-office-classroom { min-height: 100svh; display: flex; flex-direction: column; background: hsl(var(--classroom-wall)); }
+.classroom-header { z-index: 10; flex: 0 0 auto; background: hsl(var(--classroom-plum)); border-bottom: 2px solid hsl(var(--classroom-gold)); box-shadow: 0 5px 22px hsl(var(--classroom-shadow) / .18); }
+.classroom-navigation { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); max-width: 1000px; margin: auto; padding: 17px 24px; gap: 12px; }
+.classroom-tab { height: 46px; border-radius: 4px; font-size: 15px; color: hsl(var(--classroom-tab-text)); border: 1px solid transparent; }
+.classroom-tab:hover, .classroom-tab[aria-pressed="true"] { color: hsl(var(--classroom-tab-text)); background: hsl(var(--classroom-selected)); border-color: hsl(var(--classroom-gold) / .65); }
+.classroom-tab:focus-visible, .classroom-character:focus-visible { outline: 2px solid hsl(var(--classroom-gold)); outline-offset: 4px; box-shadow: none; }
+.classroom-environment { position: relative; flex: 1; display: grid; place-items: center; min-height: 680px; overflow: hidden; }
+.classroom-background { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; }
+.classroom-stage { position: relative; width: min(100%, 1180px); aspect-ratio: 1.5; flex-shrink: 0; }
+.classroom-pupil { position: absolute; width: 19%; top: 9%; z-index: 2; }
+.classroom-inspector { left: 12%; }
+.classroom-keeper { left: 40.5%; top: 6%; }
+.classroom-professor { right: 12%; }
+.classroom-broker { left: 6%; top: 47%; width: 22%; z-index: 4; }
+.classroom-architect { right: 6%; top: 47%; width: 22%; z-index: 4; }
+.classroom-character { position: relative; display: block; width: 100%; height: auto; padding: 0; background: transparent; border-radius: 8px; white-space: normal; z-index: 2; }
+.classroom-character:hover { background: transparent; }
+.classroom-character img { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: contain; filter: drop-shadow(0 8px 5px hsl(var(--classroom-shadow) / .16)); }
+.classroom-pupil[data-selected="true"] .classroom-character { outline: 2px solid hsl(var(--classroom-gold)); outline-offset: 6px; }
+.classroom-teacher { position: absolute; left: 36.9%; top: 44%; width: 26.2%; z-index: 5; }
+.classroom-teacher img { width: 100%; height: auto; filter: drop-shadow(0 13px 7px hsl(var(--classroom-shadow) / .2)); }
+.classroom-desk { position: relative; width: 108%; height: 70px; margin: -8px -4% 0; filter: drop-shadow(0 15px 8px hsl(var(--classroom-shadow) / .22)); z-index: 3; }
+.classroom-desk-top { position: absolute; left: 0; top: 0; height: 24px; width: 100%; background: linear-gradient(165deg, hsl(var(--classroom-wood-light)), hsl(var(--classroom-wood))); clip-path: polygon(6% 0, 94% 0, 100% 75%, 0 75%); border-radius: 4px; }
+.classroom-desk-front { position: absolute; top: 17px; left: 0; width: 100%; height: 12px; background: hsl(var(--classroom-wood-dark)); border-bottom: 2px solid hsl(var(--classroom-gold) / .6); border-radius: 0 0 3px 3px; }
+.classroom-desk-leg { position: absolute; top: 28px; width: 7px; height: 40px; background: hsl(var(--classroom-wood-dark)); border-bottom: 6px solid hsl(var(--classroom-gold)); }
+.classroom-desk-leg-left { left: 8%; }
+.classroom-desk-leg-right { right: 8%; }
+@media (max-width: 700px) {
+  .classroom-navigation { gap: 4px; padding: 13px 10px; }
+  .classroom-tab { padding: 0 3px; height: 42px; font-size: 12px; }
+  .classroom-environment { min-height: 600px; }
+  .classroom-background { object-position: center; }
+  .classroom-stage { aspect-ratio: .67; max-width: 500px; }
+  .classroom-pupil { width: 27%; top: 10%; }
+  .classroom-inspector { left: 3%; }
+  .classroom-keeper { left: 36.5%; top: 8%; }
+  .classroom-professor { right: 3%; }
+  .classroom-broker { left: 8%; top: 40%; width: 32%; }
+  .classroom-architect { right: 8%; top: 40%; width: 32%; }
+  .classroom-teacher { left: 31%; top: 65%; width: 38%; }
+  .classroom-desk { height: 45px; margin-top: -3px; }
+  .classroom-desk-top { height: 16px; }
+  .classroom-desk-front { top: 11px; height: 8px; }
+  .classroom-desk-leg { top: 18px; height: 25px; width: 5px; border-bottom-width: 4px; }
 }
 
 @layer components {

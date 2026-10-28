@@ -22,6 +22,7 @@
 - Prototype Unit is independent of Prototype Work: share only gate and shell styling, never work components, data or state. Conversation handlers create no records. Separate proposed and confirmed location state drives a continuously mounted Leaflet map, with resize observation and coordinate-based labels, so conversation and divider changes preserve map context without geocoding.
 - Hobson's owl marks each Hobson turn, never user messages; a spacer aligns continuations.
 - Subdirectories have their own AGENTS.md (e.g. src/pages); read it before changing files there.
+- Back Office classroom entry is isolated from existing colleague journeys, with independently rendered owl assets and scoped scenery tokens; staged layout approval must not execute destination work.
 - Prototype Documents (/prototype-documents) is independently gated with its own local state; see src/pages/AGENTS.md.
 - PDF image decoders live under public/wasm and are fetched by URL from the mounted client viewer, never imported into source bundles, to preserve deployment compatibility.
 - Paper-to-tenancy matching uses one shared Stage 3 module (prototypeDocumentsRelationships) for single and batch journeys: evidence-only proposals, confirmation whenever relationships compete; never key on Unit, filename or paper date.

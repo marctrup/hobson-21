@@ -1,5 +1,9 @@
 # Roadmap
 
+## Back Office — classroom Phase 1A
+- [x] Replace the entrance with the classroom layout, five section tabs and six exact supplied owl images, retaining the admin gate and existing destinations.
+- [ ] Verify desktop/mobile arrangement, asset loading and layout-only selection; stop before animations or navigation pending visual approval.
+
 ## Prototype Contacts — Places view removed
 - [x] Remove the Places view and its tab, leaving one directory with a search field; a place named in conversation now filters that directory. 8 checks pass; browser verified no Places control, filtered answers and unchanged person cards. Not published.
 

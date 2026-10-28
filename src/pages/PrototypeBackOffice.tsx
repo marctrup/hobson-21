@@ -8,6 +8,7 @@ import architect from "@/assets/prototype/character-architect-transparent.png";
 import broker from "@/assets/prototype/character-broker-transparent.png";
 import keeper from "@/assets/prototype/character-keeper-transparent.png";
 import inspector from "@/assets/prototype/character-inspector-transparent.png";
+import BackOfficeClassroom from "./BackOfficeClassroom";
 
 // Back Office: one Hobson conversation that brings the right colleague's existing prototype into view.
 // The five prototypes are reused unchanged (their own menu hidden) and stay mounted once opened, so work survives switching.
@@ -115,6 +116,9 @@ export default function PrototypeBackOffice() {
   const home = () => { setActive(null); say("hobson", "Back in the Back Office. Everything you confirmed is kept. What next?", true); };
 
   const current = COLLEAGUES.find((c) => c.id === active);
+
+  // Phase 1A replaces only the entrance; destination journeys remain intact for later handovers.
+  if (!active) return <BackOfficeClassroom />;
 
   return (
     <div className="flex h-screen w-full overflow-hidden bg-bone-wash text-ink">
