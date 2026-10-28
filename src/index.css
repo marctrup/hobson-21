@@ -267,9 +267,9 @@ All colors MUST be HSL.
 .classroom-pupil[data-selected="true"] .classroom-character::after {
   content: "";
   position: absolute;
-  inset: -10% -6%;
+  inset: -14% -10%;
   border-radius: 50%;
-  background: radial-gradient(closest-side, hsl(var(--classroom-gold) / .26), hsl(var(--classroom-gold) / .07) 55%, transparent 76%);
+  background: radial-gradient(closest-side, hsl(var(--classroom-gold) / .45), hsl(var(--classroom-gold) / .16) 55%, transparent 78%);
   z-index: -1;
 }
 /* Hobson stands clearly in front; the team is arranged behind him. */
