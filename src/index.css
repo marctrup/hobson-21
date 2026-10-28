@@ -264,14 +264,17 @@ All colors MUST be HSL.
 .classroom-character { position: relative; display: block; width: 100%; height: auto; padding: 0; background: transparent; border-radius: 8px; white-space: normal; z-index: 2; }
 .classroom-character:hover { background: transparent; }
 .classroom-character img { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: contain; filter: drop-shadow(0 8px 5px hsl(var(--classroom-shadow) / .16)); }
-.classroom-pupil[data-selected="true"] .classroom-character::after {
+.classroom-pupil[data-selected="true"]::before {
   content: "";
   position: absolute;
-  inset: -14% -10%;
+  inset: -16% -12%;
   border-radius: 50%;
-  background: radial-gradient(closest-side, hsl(var(--classroom-gold) / .45), hsl(var(--classroom-gold) / .16) 55%, transparent 78%);
+  background: hsl(var(--classroom-gold) / .5);
+  filter: blur(30px);
   z-index: -1;
+  animation: pupil-glow .55s ease-out both;
 }
+@keyframes pupil-glow { from { opacity: 0; } to { opacity: 1; } }
 /* Hobson stands clearly in front; the team is arranged behind him. */
 .classroom-teacher { position: absolute; left: 29%; top: 44%; width: 42%; z-index: 6; }
 .classroom-teacher::before { content: ""; position: absolute; left: 12%; bottom: -5%; width: 76%; height: 14%; border-radius: 50%; background: radial-gradient(closest-side, hsl(var(--classroom-shadow) / .3), transparent 70%); z-index: -1; }
