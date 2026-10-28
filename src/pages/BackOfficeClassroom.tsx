@@ -59,8 +59,9 @@ export default function BackOfficeClassroom() {
         <div className="classroom-stage" ref={stage}>
           {specialists.map((c) => (
             <div key={c.id} ref={(el) => { pupils.current[c.id] = el; }} className={`classroom-pupil classroom-${c.id}`} data-selected={selected === c.id}>
-              <Button key={selected === c.id ? `on-${cue}` : "off"} variant="ghost" className="classroom-character" aria-label={`${c.name} — ${c.section}`} aria-pressed={selected === c.id} onClick={() => choose(c.id)} title={c.section}>
+              <Button key={selected === c.id ? `on-${cue}` : "off"} variant="ghost" className="classroom-character" aria-label={`${c.name} — ${c.section}`} aria-pressed={selected === c.id} onClick={() => choose(c.id)}>
                 <img src={c.image.url} alt={c.name} width={768} height={768} draggable={false} />
+                <span className="classroom-name" aria-hidden="true">{c.name}</span>
               </Button>
             </div>
           ))}
@@ -70,6 +71,7 @@ export default function BackOfficeClassroom() {
               className="classroom-teacher-figure"
             >
               <img src={hobson.url} alt="Hobson, the teacher" width={768} height={768} draggable={false} />
+              <span className="classroom-name" aria-hidden="true">Hobson</span>
             </div>
           </div>
         </div>
