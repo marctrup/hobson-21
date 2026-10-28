@@ -84,7 +84,7 @@ export function voiceAs(el: HTMLElement | null, img: string, name: string, contr
 }
 
 type Message = { id: number; role: "user" | "hobson"; text: string; choices?: boolean };
-const WELCOME = "Welcome to the Back Office.\n\nThis is where my colleagues and I look after the information that keeps your portfolio in order.\n\nWhat would you like us to help you with?";
+const WELCOME = "Good day, and welcome to the Back Office.\n\nMy colleagues and I keep watch over the records that hold your portfolio together — papers, Units, people, access and compliance.\n\nMight I ask what you would like us to look at first?";
 
 export default function PrototypeBackOffice() {
   const [messages, setMessages] = useState<Message[]>([{ id: 0, role: "hobson", text: WELCOME, choices: true }]);
