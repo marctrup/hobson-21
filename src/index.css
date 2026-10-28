@@ -524,15 +524,15 @@ html { caret-color: #2D2D2D; }
 @media (prefers-reduced-motion: reduce) { .classroom-spotlight, .classroom-lamp-shade, .classroom-lamp-bulb { transition: none; } }
 
 /* Whiteboard behind the team; everyone shifted down to make room. */
-.classroom-whiteboard { position: absolute; left: 22%; top: 1%; width: 56%; height: 22%; z-index: 0; padding: 1.2% 2.4%; background: linear-gradient(160deg, hsl(0 0% 100%), hsl(220 20% 96%)); border: 6px solid hsl(var(--classroom-wood-dark) / .55); border-radius: 6px; box-shadow: 0 10px 22px -12px hsl(var(--classroom-shadow) / .45); font-family: 'Caveat', cursive; color: hsl(220 60% 30%); overflow: hidden; }
+.classroom-whiteboard { position: absolute; left: 22%; top: 0; width: 56%; height: 18%; z-index: 0; padding: 0.9% 2.4%; background: linear-gradient(160deg, hsl(0 0% 100%), hsl(220 20% 96%)); border: 5px solid hsl(var(--classroom-wood-dark) / .55); border-radius: 6px; box-shadow: 0 10px 22px -12px hsl(var(--classroom-shadow) / .45); font-family: 'Caveat', cursive; color: hsl(220 60% 30%); overflow: hidden; }
 .classroom-wb-title { font-size: clamp(16px, 2.6cqw, 30px); font-weight: 700; color: hsl(var(--classroom-plum)); margin: 0 0 .2em; transform: rotate(-1deg); text-decoration: underline wavy hsl(var(--classroom-gold) / .7); }
 .classroom-whiteboard ul { margin: 0; padding: 0; list-style: none; font-size: clamp(12px, 1.8cqw, 21px); line-height: 1.15; }
 .classroom-whiteboard li::before { content: "☐ "; }
 .classroom-whiteboard li:nth-child(odd) { transform: rotate(-.6deg); } .classroom-whiteboard li:nth-child(2) { color: hsl(0 60% 40%); }
 .classroom-wb-tray { position: absolute; left: 10%; right: 10%; bottom: 0; height: 4px; background: hsl(var(--classroom-wood-dark) / .5); }
-.classroom-inspector { top: 30%; } .classroom-keeper { top: 26%; } .classroom-professor { top: 30%; }
-.classroom-broker { top: 49%; } .classroom-architect { top: 49%; }
-.classroom-teacher { top: 56%; }
+.classroom-inspector { top: 38%; } .classroom-keeper { top: 34%; } .classroom-professor { top: 38%; }
+.classroom-broker { top: 56%; } .classroom-architect { top: 56%; }
+.classroom-teacher { top: 58%; }
 @container (max-width: 640px) {
   .classroom-whiteboard { left: 8%; width: 84%; height: 20%; }
   .classroom-inspector { top: 33%; } .classroom-keeper { top: 29%; } .classroom-professor { top: 33%; }
