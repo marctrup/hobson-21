@@ -92,8 +92,8 @@ export default function BackOfficeClassroom({ onOpen, introductions = [] }: {
     : colleague ? { name: colleague.name, text: contribution } : null;
   const open = (id: string) => { setDetails(false); onOpen?.(id); };
   return (
-    <main className="illustrated-classroom" aria-label="Back Office classroom">
-      <div className="illustrated-room">
+    <main ref={ref} className="illustrated-classroom" aria-label="Back Office classroom">
+      <div className="illustrated-room" style={size ? { width: size.w, height: size.h } : undefined}>
         <img className="illustrated-room-art" src={room.url} alt="Hobson at the front of his team's classroom" width={1060} height={1223} draggable={false} />
         <Button variant="ghost" className="illustrated-colleague illustrated-hobson" aria-label="Hobson"
           aria-expanded={details} aria-describedby={hovered === "hobson" ? "classroom-introduction" : undefined}

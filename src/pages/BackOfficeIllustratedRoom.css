@@ -3,11 +3,13 @@
   place-items: center;
   height: 100%;
   min-height: 0;
+  overflow: hidden;
   background: hsl(var(--background));
   container-type: size;
 }
 .illustrated-room {
   position: relative;
+  /* Measured to fill the workspace; these values hold only until the fill effect reports. */
   width: min(100%, 86.69cqh);
   aspect-ratio: 1060 / 1223;
   max-height: 100%;
