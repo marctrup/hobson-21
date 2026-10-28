@@ -475,9 +475,9 @@ html { caret-color: #2D2D2D; }
 .classroom-broker { left: 4%; top: 33%; z-index: 2; } .classroom-architect { left: 82%; top: 33%; z-index: 2; }
 .classroom-teacher { left: 32%; top: 40%; width: 36%; }
 @container (max-width: 640px) {
-  .classroom-pupil, .classroom-broker, .classroom-architect, .classroom-inspector, .classroom-keeper, .classroom-professor { width: 15%; }
+  .classroom-pupil, .classroom-broker, .classroom-architect, .classroom-inspector, .classroom-keeper, .classroom-professor { width: 14%; }
   .classroom-inspector { left: 18%; top: 14%; } .classroom-keeper { left: 43%; top: 10%; } .classroom-professor { left: 68%; top: 14%; }
-  .classroom-broker { left: 4%; top: 31%; } .classroom-architect { left: 81%; top: 31%; }
+  .classroom-broker { left: 4%; top: 33%; } .classroom-architect { left: 82%; top: 33%; }
   .classroom-teacher { left: 25%; top: 42%; width: 50%; }
 }
 
