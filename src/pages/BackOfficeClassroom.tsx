@@ -31,7 +31,7 @@ export default function BackOfficeClassroom() {
         </nav>
       </header>
       <div className="classroom-environment">
-        <img className="classroom-background" src={room} width={1536} height={1024} alt="" fetchPriority="high" />
+        <img className="classroom-background" src={room} width={1536} height={1024} alt="" loading="eager" />
         <div className="classroom-stage">
           {specialists.map((colleague) => (
             <div key={colleague.id} className={`classroom-pupil classroom-${colleague.id}`} data-selected={selected === colleague.id}>
