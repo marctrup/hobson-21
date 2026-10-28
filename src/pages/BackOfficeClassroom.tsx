@@ -136,7 +136,7 @@ export default function BackOfficeClassroom({ onOpen, introductions = [] }: {
     const distance = (el: HTMLElement) => {
       const r = el.getBoundingClientRect(), h = host.getBoundingClientRect();
       if (Math.min(r.bottom, h.bottom) - Math.max(r.top, h.top) <= 0) return Number.POSITIVE_INFINITY;
-      return Math.abs(r.top + r.height / 2 - (h.top + h.height * READING_LINE));
+      return Math.abs(r.top + r.height / 2 - readingLine(host));
     };
     const pick = () => {
       if (host.scrollTop < 4) { if (!selectedRef.current) setFocused(null); return; }
@@ -191,7 +191,7 @@ export default function BackOfficeClassroom({ onOpen, introductions = [] }: {
                   const host = ref.current, row = e.currentTarget.closest("li");
                   if (next && host && row) {
                     const r = row.getBoundingClientRect(), h = host.getBoundingClientRect();
-                    host.scrollTo({ top: host.scrollTop + (r.top + r.height / 2) - (h.top + h.height * READING_LINE), behavior: "smooth" });
+                    host.scrollTo({ top: host.scrollTop + (r.top + r.height / 2) - readingLine(host), behavior: "smooth" });
                   }
                 }}>
 
@@ -205,7 +205,9 @@ export default function BackOfficeClassroom({ onOpen, introductions = [] }: {
         <p className="compact-signoff">
           <img src={OWLS.hobson} alt="" />
           <span>That is the team. Shall I show you anyone's work?</span>
+          <Button variant="ghost" size="sm" className="compact-top" onClick={() => ref.current?.scrollTo({ top: 0, behavior: "smooth" })}>Back to the top</Button>
         </p>
+
       </main>
     );
   }

@@ -104,13 +104,15 @@
 .compact-team { display: grid; gap: 0.5rem; margin: 0; padding: 0; list-style: none; }
 .compact-team li { border: 1px solid hsl(var(--border)); border-radius: 12px; background: hsl(var(--card)); overflow: hidden; }
 .compact-team li.is-active { border-color: hsl(var(--primary)); }
-.compact-member { display: flex; width: 100%; align-items: center; gap: 0.75rem; padding: 0.6rem 0.75rem; text-align: left; background: transparent; min-height: 9rem; }
+.compact-member { display: flex; width: 100%; align-items: center; gap: 0.75rem; padding: 0.6rem 0.75rem; text-align: left; background: transparent; min-height: 11rem; }
 
 .compact-member img { width: 4rem; height: 4rem; object-fit: contain; }
 
 .compact-member span { display: flex; flex-direction: column; }
 .compact-member small { color: hsl(var(--muted-foreground)); font-size: 0.8rem; }
 .compact-open { margin: 0 0.75rem 0.75rem; width: calc(100% - 1.5rem); }
-.compact-signoff { display: flex; align-items: center; justify-content: center; gap: 0.75rem; min-height: 26cqh; padding: 1rem; margin: 0.5rem 0 0; border-top: 1px dashed hsl(var(--border)); font-family: "Caveat", cursive; font-size: 1.3rem; color: hsl(var(--primary)); text-align: center; }
+.compact-signoff { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.5rem; min-height: 40cqh; padding: 1rem; margin: 0.5rem 0 0; border-top: 1px dashed hsl(var(--border)); font-family: "Caveat", cursive; font-size: 1.3rem; color: hsl(var(--primary)); text-align: center; }
 .compact-signoff img { width: 3rem; height: 3rem; object-fit: contain; flex-shrink: 0; }
+.compact-top { font-family: inherit; font-size: 1.05rem; text-decoration: underline; text-underline-offset: 3px; }
+
 
