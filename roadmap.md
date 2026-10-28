@@ -209,9 +209,6 @@
 
 - [x] Replace /prototype-contacts with conversation-led Contacts simulation (people / services / places, spreadsheet review)
 
-## Prototype Back Office — staff room writes as you scroll
-- [x] In the narrow (mobile) staff room, the whiteboard writes each colleague's own words as you scroll them under it; Hobson greets at the top, an invitation band lets the first colleague arrive, and a closing card returns you to the top. Hovering and tapping still write and open as before. Checked live (wheel trail Hobson → Keeper → Broker → Inspector → Professor → Architect) and at three workspace sizes; 338 checks pass, build clean. Not published.
-
 ## Prototype Compliance — Compliance controls
 
 - [x] Rename the area to "Compliance controls" across the menu, headings, search, buttons and Hobson's copy; note plainly that frequencies are set by hand for now, automatic refreshing from external sources being deliberately not built yet.
@@ -224,3 +221,6 @@
 - [x] Back Office: each selected colleague introduces themselves first using their existing hover contribution and own owl; embedded work and independent prototypes are preserved. All five verified live, return visits show no duplicates, and 12 checks pass. Not published.
 - [x] Inside a contact's card show only **Locations**: each place with what they do and where, no pills/arrows, no summary counts, no repeated name; the same list opens full-width under a directory row with a finder for long lists.
 - [x] Verified the contact card and an expanded directory row in the live preview (no console errors); contacts checks pass and the build is clean. Not published.
+
+## Prototype Back Office — staff room writes as you scroll
+- [x] In the narrow (mobile) staff room, the whiteboard writes each colleague's own words as you scroll them under it; Hobson greets at the top, an invitation band lets the first colleague arrive, and a closing card returns you to the top. Hovering and tapping still write and open as before. Checked live (wheel trail Hobson → Keeper → Broker → Inspector → Professor → Architect) and at three workspace sizes; 338 checks pass, build clean. Not published.
