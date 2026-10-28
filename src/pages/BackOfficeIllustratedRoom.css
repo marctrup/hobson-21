@@ -53,3 +53,40 @@
 }
 .illustrated-introduction strong { display: block; font-size: 3.5cqw; line-height: 1.15; font-weight: 700; }
 .illustrated-introduction p { margin: 1% 0 0; font-size: 2.9cqw; line-height: 1.08; font-weight: 500; }
+.illustrated-hobson { left: 36%; top: 55%; width: 28%; height: 30% !important; }
+.illustrated-introduction-hobson p { font-size: 2.35cqw; line-height: 1.12; }
+.illustrated-hobson-details {
+  position: absolute;
+  z-index: 4;
+  left: 9%;
+  top: 40%;
+  width: 82%;
+  max-height: 54%;
+  overflow-y: auto;
+  padding: 2.2cqw 2.6cqw;
+  border: 1px solid hsl(var(--classroom-gold));
+  border-radius: 10px;
+  background: hsl(var(--background));
+  box-shadow: 0 1.2cqh 3cqh hsl(0 0% 0% / 0.18);
+}
+.illustrated-hobson-details-head { position: relative; padding-right: 7cqw; }
+.illustrated-hobson-details-title { font-size: 2.6cqw; font-weight: 600; color: hsl(var(--classroom-plum)); }
+.illustrated-hobson-details-note { margin-top: 0.6cqw; font-size: 1.55cqw; line-height: 1.35; color: hsl(var(--ink-muted)); }
+.illustrated-hobson-details-close { position: absolute; top: -0.6cqw; right: 0; height: auto; padding: 0.3cqw 0.9cqw; font-size: 1.5cqw; }
+.illustrated-hobson-details-list { margin-top: 1.4cqw; display: grid; gap: 0.5cqw; }
+.illustrated-hobson-details-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr);
+  align-items: baseline;
+  gap: 0.2cqw 1.2cqw;
+  width: 100%;
+  height: auto;
+  padding: 0.9cqw 1.1cqw;
+  border-radius: 8px;
+  text-align: left;
+  white-space: normal;
+}
+.illustrated-hobson-details-row:hover { background: hsl(var(--secondary)); }
+.illustrated-hobson-details-name { font-size: 1.75cqw; font-weight: 600; color: hsl(var(--classroom-plum)); }
+.illustrated-hobson-details-area { font-size: 1.4cqw; color: hsl(var(--ink-muted)); }
+.illustrated-hobson-details-text { grid-column: 1 / -1; font-size: 1.45cqw; line-height: 1.35; color: hsl(var(--ink-muted)); }
