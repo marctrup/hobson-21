@@ -209,7 +209,11 @@
 
 - [x] Replace /prototype-contacts with conversation-led Contacts simulation (people / services / places, spreadsheet review)
 
+## Prototype Back Office — staff room writes as you scroll
+- [x] In the narrow (mobile) staff room, the whiteboard writes each colleague's own words as you scroll them under it; Hobson greets at the top, an invitation band lets the first colleague arrive, and a closing card returns you to the top. Hovering and tapping still write and open as before. Checked live (wheel trail Hobson → Keeper → Broker → Inspector → Professor → Architect) and at three workspace sizes; 338 checks pass, build clean. Not published.
+
 ## Prototype Compliance — Compliance controls
+
 - [x] Rename the area to "Compliance controls" across the menu, headings, search, buttons and Hobson's copy; note plainly that frequencies are set by hand for now, automatic refreshing from external sources being deliberately not built yet.
 - [x] Remove the "Next renewal" and "Where" columns from the list, leaving each control with its renewal frequency and the edit control; six compliance checks pass and the page was checked in the preview. Not published.
 
