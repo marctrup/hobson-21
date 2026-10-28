@@ -1,19 +1,16 @@
 import { fireEvent, render, screen, cleanup } from "@testing-library/react";
-import { afterEach, expect, it } from "vitest";
+import { afterEach, expect, it, vi } from "vitest";
 import BackOfficeClassroom from "@/pages/BackOfficeClassroom";
 
 afterEach(cleanup);
 
-it("Phase 1A selections remain local and never navigate to operational work", () => {
-  const initialAddress = window.location.href;
-  render(<BackOfficeClassroom />);
-  for (const section of ["Permissions", "Contacts", "Compliance", "Papers", "Units"]) {
+it("each labelled area opens its own colleague", () => {
+  const onOpen = vi.fn();
+  render(<BackOfficeClassroom onOpen={onOpen} />);
+  const map = { Permissions: "keeper", Contacts: "broker", Compliance: "inspector", Papers: "professor", Units: "architect" };
+  for (const [section, id] of Object.entries(map)) {
     fireEvent.click(screen.getByRole("button", { name: section }));
-    expect(window.location.href).toBe(initialAddress);
-    expect(screen.getByRole("button", { name: section }).getAttribute("aria-pressed")).toBe("true");
+    expect(onOpen).toHaveBeenLastCalledWith(id);
   }
-  fireEvent.click(screen.getByRole("button", { name: "The Keeper — Permissions" }));
-  expect(screen.getByRole("button", { name: "Permissions" }).getAttribute("aria-pressed")).toBe("true");
-  expect(screen.getByRole("button", { name: "Units" }).getAttribute("aria-pressed")).toBe("false");
-  expect(window.location.href).toBe(initialAddress);
+  expect(screen.queryByRole("navigation", { name: "Back Office sections" })).toBeNull();
 });

@@ -451,3 +451,11 @@ html { caret-color: #2D2D2D; }
   .classroom-pupil[data-selected="true"] .classroom-character,
   .classroom-pupil[data-selected="true"] .classroom-character img { animation: none; }
 }
+
+/* Top menu removed: the scene fills the whole workspace and each owl carries its area label. */
+.back-office-classroom { height: 100%; background: radial-gradient(ellipse at 50% 70%, hsl(var(--classroom-wall) / .55), hsl(var(--background)) 70%); }
+.classroom-environment { min-height: 0; height: 100%; }
+.classroom-stage { width: auto; height: min(100%, 100cqw / 1.1); max-height: 100%; max-width: 100%; aspect-ratio: 1.1; }
+.back-office-team-workspace { container-type: size; }
+.classroom-section { display: block; margin-top: 4px; font-size: clamp(11px, 1.4cqw, 15px); font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: hsl(var(--classroom-tab-text)); background: hsl(var(--classroom-plum)); border: 1px solid hsl(var(--classroom-gold) / .7); border-radius: 999px; padding: 4px 12px; width: max-content; margin-inline: auto; transition: background .2s ease; }
+.classroom-character:hover .classroom-section, .classroom-character:focus-visible .classroom-section { background: hsl(var(--classroom-selected)); }
