@@ -97,7 +97,7 @@ export default function BackOfficeClassroom({ onOpen, introductions = [] }: {
   introductions?: readonly { id: string; contribution: string }[];
 }) {
   const [hovered, setHovered] = useState<string | null>(null);
-  const [details, setDetails] = useState(false);
+
   /** Staff-room state: the board follows whichever colleague the list is resting on. */
   const [focused, setFocused] = useState<string | null>(null);
   const [selected, setSelected] = useState<string | null>(null);
@@ -116,7 +116,7 @@ export default function BackOfficeClassroom({ onOpen, introductions = [] }: {
   const writing = hovered === "hobson"
     ? { name: "Hobson", text: HOBSON_INTRODUCTION }
     : colleague ? { name: colleague.name, text: contribution } : null;
-  const open = (id: string) => { setDetails(false); onOpen?.(id); };
+  const open = (id: string) => { onOpen?.(id); };
 
   /** Whose turn it is to speak on the staff-room board, in the butler's own mobile wording. */
   const writtenFor = (id: string | null) => {
@@ -225,12 +225,12 @@ export default function BackOfficeClassroom({ onOpen, introductions = [] }: {
       } : undefined}>
         <img className="illustrated-room-art" src={room.url} alt="Hobson at the front of his team's classroom" width={1162} height={1374} draggable={false} />
         <Button variant="ghost" className="illustrated-colleague illustrated-hobson" aria-label="Hobson"
-          aria-expanded={details} aria-describedby={hovered === "hobson" ? "classroom-introduction" : undefined}
+          aria-describedby={hovered === "hobson" ? "classroom-introduction" : undefined}
           onMouseEnter={() => setHovered("hobson")} onMouseLeave={() => setHovered(null)}
-          onFocus={() => setHovered("hobson")} onBlur={() => setHovered(null)}
-          onClick={() => setDetails((d) => !d)}>
-          <span className="sr-only">Hobson — hover or click for more details</span>
+          onFocus={() => setHovered("hobson")} onBlur={() => setHovered(null)}>
+          <span className="sr-only">Hobson — hover for an introduction to his colleagues</span>
         </Button>
+
         {specialists.map((c) => (
           <Button key={c.id} variant="ghost" className={`illustrated-colleague illustrated-${c.id}`}
             aria-label={c.section} aria-describedby={hovered === c.id ? "classroom-introduction" : undefined}
@@ -241,23 +241,6 @@ export default function BackOfficeClassroom({ onOpen, introductions = [] }: {
         ))}
         {writing && <div id="classroom-introduction" role="tooltip" className={`illustrated-introduction ${hovered === "hobson" ? "illustrated-introduction-hobson" : ""}`}>
           <WrittenIntroduction key={hovered ?? "none"} name={writing.name} text={writing.text} />
-        </div>}
-        {details && <div className="illustrated-hobson-details" role="region" aria-label="Hobson's colleagues">
-          <header className="illustrated-hobson-details-head">
-            <p className="illustrated-hobson-details-title">My colleagues</p>
-            <p className="illustrated-hobson-details-note">Each keeps a particular part of your portfolio in order. Hover over any colleague to hear from them in person, or select a name and I shall show you their work.</p>
-            <Button variant="ghost" size="sm" className="illustrated-hobson-details-close" aria-label="Close Hobson's introduction" onClick={() => setDetails(false)}>Close</Button>
-          </header>
-          <ul className="illustrated-hobson-details-list">
-            {specialists.map((c) => (
-              <li key={c.id}>
-                <Button variant="ghost" className="illustrated-hobson-details-row" onClick={() => open(c.id)}>
-                  <span className="illustrated-hobson-details-name">{c.name}</span>
-                  <span className="illustrated-hobson-details-area">{c.section}</span>
-                </Button>
-              </li>
-            ))}
-          </ul>
         </div>}
       </div>
     </main>

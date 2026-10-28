@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, cleanup, within } from "@testing-library/react";
+import { fireEvent, render, screen, cleanup } from "@testing-library/react";
 import { afterEach, expect, it, vi } from "vitest";
 import BackOfficeClassroom from "@/pages/BackOfficeClassroom";
 
@@ -42,21 +42,18 @@ it("Hobson presents his specialist assistance and invites hover or click for det
   expect(onOpen).not.toHaveBeenCalled();
 });
 
-it("clicking Hobson shows each colleague in detail without starting their work", () => {
+it("Hobson answers to hover alone while his colleagues keep their clickable function", () => {
   const onOpen = vi.fn();
   render(<BackOfficeClassroom onOpen={onOpen} introductions={ROSTER} />);
   fireEvent.click(screen.getByRole("button", { name: "Hobson" }));
-  const roster = screen.getByRole("region", { name: "Hobson's colleagues" });
-  expect(roster).toHaveTextContent("Each keeps a particular part of your portfolio in order");
-  for (const [name, area] of [["The Keeper", "Permissions"], ["The Broker", "Contacts"], ["The Inspector", "Compliance"], ["The Professor", "Papers"], ["The Architect", "Units"]]) {
-    expect(roster).toHaveTextContent(name);
-    expect(roster).toHaveTextContent(area);
-  }
   expect(onOpen).not.toHaveBeenCalled();
-  fireEvent.click(within(roster).getByRole("button", { name: /^The Professor/ }));
-  expect(onOpen).toHaveBeenLastCalledWith("professor");
   expect(screen.queryByRole("region", { name: "Hobson's colleagues" })).toBeNull();
+  fireEvent.mouseEnter(screen.getByRole("button", { name: "Hobson" }));
+  expect(screen.getByRole("tooltip").querySelector(".sr-only")?.textContent).toMatch(/May I present my colleagues/i);
+  fireEvent.click(screen.getByRole("button", { name: "Papers" }));
+  expect(onOpen).toHaveBeenLastCalledWith("professor");
 });
+
 
 
 /** The staff room (narrow workspace) writes each colleague onto the board as you reach them. */
