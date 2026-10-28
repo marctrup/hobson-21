@@ -490,7 +490,7 @@ html { caret-color: #2D2D2D; }
 .classroom-desk::before { content: ""; position: absolute; inset: 0; background: inherit; filter: brightness(0) blur(3px); opacity: .26; transform: translateY(6px); z-index: -1; }
 
 /* Desk lamp: a small jointed-arm lamp — flat brass base, elbowed arm, tilted cone shade — with a warm light that grows when you hover. */
-.classroom-lamp { position: absolute; right: 10%; bottom: 92%; width: 32%; height: 78%; z-index: 4; pointer-events: none; }
+.classroom-lamp { position: absolute; right: 3%; bottom: 86%; width: 32%; height: 108%; z-index: 4; pointer-events: none; }
 .classroom-lamp-base { position: absolute; left: 50%; bottom: 0; width: 44%; height: 12%; border-radius: 50%;
   background: radial-gradient(ellipse at 50% 26%, hsl(var(--classroom-gold)) 0 42%, hsl(var(--classroom-wood-dark)));
   box-shadow: 0 2px 3px hsl(var(--classroom-shadow) / .4); }
