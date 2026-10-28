@@ -89,6 +89,10 @@ export default function BackOfficeClassroom({ onOpen, introductions = [] }: {
 }) {
   const [hovered, setHovered] = useState<string | null>(null);
   const [details, setDetails] = useState(false);
+  /** Staff-room state: the board follows whichever colleague the list is resting on. */
+  const [focused, setFocused] = useState<string | null>(null);
+  const [selected, setSelected] = useState<string | null>(null);
+  const listRef = useRef<HTMLUListElement | null>(null);
   const { ref, size, compact } = useRoomFill();
   useEffect(() => {
     if (document.querySelector('[data-classroom-handwriting]')) return;
@@ -104,30 +108,87 @@ export default function BackOfficeClassroom({ onOpen, introductions = [] }: {
     ? { name: "Hobson", text: HOBSON_INTRODUCTION }
     : colleague ? { name: colleague.name, text: contribution } : null;
   const open = (id: string) => { setDetails(false); onOpen?.(id); };
-  if (compact) return (
-    <main ref={ref} className="illustrated-classroom compact-classroom" aria-label="Back Office classroom">
-      <section className="compact-board" aria-live="polite">
-        <img src={OWLS[hovered ?? "hobson"]} alt="" className="compact-board-owl" />
-        <div className="compact-board-text">
-          <WrittenIntroduction key={hovered ?? "hobson"} name={writing?.name ?? "Hobson"} text={(writing?.text ?? HOBSON_INTRODUCTION).replace("Hover over any of them, or click, for more details.", "Tap any of them to hear from them in person.")} />
+
+  /** Whose turn it is to speak on the staff-room board, in the butler's own mobile wording. */
+  const writtenFor = (id: string | null) => {
+    const person = specialists.find((c) => c.id === id);
+    if (!person) return { name: "Hobson", text: HOBSON_INTRODUCTION.replace("Hover over any of them, or click, for more details.", "Tap any of them to hear from them in person.") };
+    return { name: person.name, text: introductions.find((c) => c.id === id)?.contribution ?? "" };
+  };
+
+  /** The board writes whichever colleague the list is resting on, so the room reads as you scroll. */
+  useEffect(() => {
+    if (!compact) return;
+    const host = ref.current, list = listRef.current;
+    if (!host || !list || typeof ResizeObserver === "undefined") return;
+    const rows = Array.from(list.querySelectorAll<HTMLElement>("li[data-colleague]"));
+    if (!rows.length) return;
+    const distance = (el: HTMLElement) => {
+      const r = el.getBoundingClientRect(), h = host.getBoundingClientRect();
+      if (Math.min(r.bottom, h.bottom) - Math.max(r.top, h.top) <= 0) return Number.POSITIVE_INFINITY;
+      return Math.abs(r.top + r.height / 2 - (h.top + h.height / 2));
+    };
+    const pick = () => {
+      if (host.scrollTop < 4) { setFocused(null); return; }
+      let best = rows[0], bestScore = distance(rows[0]);
+      for (const row of rows) {
+        const s = distance(row);
+        if (s < bestScore) { best = row; bestScore = s; }
+      }
+      const id = best.dataset.colleague ?? null;
+      setFocused((current) => {
+        const resting = rows.find((r) => r.dataset.colleague === current);
+        return resting && distance(resting) <= bestScore + 24 ? current : id;
+      });
+    };
+    host.addEventListener("scroll", pick, { passive: true });
+    list.addEventListener("mouseleave", pick);
+    const observer = new ResizeObserver(pick);
+    observer.observe(list);
+    pick();
+    return () => {
+      host.removeEventListener("scroll", pick);
+      list.removeEventListener("mouseleave", pick);
+      observer.disconnect();
+    };
+  }, [compact]);
+
+  if (compact) {
+    const written = focused ?? selected;
+    const board = writtenFor(written);
+    return (
+      <main ref={ref} className="illustrated-classroom compact-classroom" aria-label="Back Office classroom">
+        <div className="compact-head">
+          <section className="compact-board" aria-live="polite">
+            <img src={OWLS[written ?? "hobson"]} alt="" className="compact-board-owl" />
+            <div className="compact-board-text">
+              <WrittenIntroduction key={written ?? "hobson"} name={board.name} text={board.text} />
+            </div>
+          </section>
+          <p className="compact-today">Today's work · 28 Oct</p>
         </div>
-      </section>
-      <p className="compact-today">Today's work · 28 Oct</p>
-      <ul className="compact-team">
-        {specialists.map((c) => {
-          const active = hovered === c.id;
-          return <li key={c.id} className={active ? "is-active" : ""}>
-            <button type="button" className="compact-member" aria-expanded={active} aria-label={c.section}
-              onClick={() => setHovered(active ? null : c.id)}>
-              <img src={OWLS[c.id]} alt="" />
-              <span><strong>{c.name}</strong><small>{c.section}</small></span>
-            </button>
-            {active && <Button size="sm" className="compact-open" onClick={() => open(c.id)}>Open {c.section.toLowerCase()}</Button>}
-          </li>;
-        })}
-      </ul>
-    </main>
-  );
+        <ul className="compact-team" ref={listRef}>
+          {specialists.map((c) => {
+            const active = written === c.id;
+            return <li key={c.id} data-colleague={c.id} className={active ? "is-active" : ""}>
+              <button type="button" className="compact-member" aria-expanded={selected === c.id} aria-label={c.section}
+                onMouseEnter={() => setFocused(c.id)}
+                onClick={(e) => {
+                  const next = selected === c.id ? null : c.id;
+                  setSelected(next); setFocused(next);
+                  if (next) e.currentTarget.closest("li")?.scrollIntoView({ behavior: "smooth", block: "center" });
+                }}>
+                <img src={OWLS[c.id]} alt="" />
+                <span><strong>{c.name}</strong><small>{c.section}</small></span>
+              </button>
+              {selected === c.id && <Button size="sm" className="compact-open" onClick={() => open(c.id)}>Open {c.section.toLowerCase()}</Button>}
+            </li>;
+          })}
+        </ul>
+      </main>
+    );
+  }
+
   return (
     <main ref={ref} className="illustrated-classroom" aria-label="Back Office classroom">
       <div className="illustrated-room" style={size ? {
