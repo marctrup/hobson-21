@@ -190,7 +190,7 @@ export default function PrototypeBackOffice() {
           </div>
         )}
         <div className="back-office-team-workspace relative min-h-0 flex-1 overflow-auto">
-          {!active && <BackOfficeClassroom onOpen={choose} />}
+          {!active && <BackOfficeClassroom onOpen={(id) => choose(id as ColleagueId)} />}
           {opened.map((id) => {
             const c = COLLEAGUES.find((x) => x.id === id);
             if (!c) return null;
