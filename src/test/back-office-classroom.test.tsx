@@ -15,14 +15,10 @@ it("each labelled area opens its own colleague", () => {
   expect(screen.queryByRole("navigation", { name: "Back Office sections" })).toBeNull();
 });
 
-it("Hobson carries no name label but waves his own pointer layer", () => {
-  const { container } = render(<BackOfficeClassroom />);
-  const teacher = container.querySelector(".classroom-teacher");
-  expect(teacher).not.toBeNull();
-  // everyone knows Hobson: no popped-up label of any kind on him
-  expect(teacher!.querySelector(".classroom-name")).toBeNull();
-  expect(teacher!.textContent).toBe("");
-  // his pointer sits on its own layer above his body, so it can wave
-  expect(container.querySelectorAll(".classroom-hobson-stick")).toHaveLength(1);
-  expect(screen.getByAltText("Hobson")).toBeTruthy();
+it("inspecting a colleague does not open their work", () => {
+  const onOpen = vi.fn();
+  render(<BackOfficeClassroom onOpen={onOpen} />);
+  fireEvent.mouseEnter(screen.getByRole("button", { name: "Contacts" }));
+  fireEvent.focus(screen.getByRole("button", { name: "Papers" }));
+  expect(onOpen).not.toHaveBeenCalled();
 });

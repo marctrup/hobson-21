@@ -1,5 +1,8 @@
 # Roadmap
 
+## Back Office — illustrated room alternative
+- [x] Use the supplied classroom image beside the retained chat, show existing introductions on hover/focus, and verify all five colleague destinations; 14 targeted checks pass and hover layout visually verified. Not published.
+
 ## Back Office — classroom Phase 1A
 - [x] Restore the original sidebar and chat; float the owls only in the right-hand workspace without scenery, adapting to its available width.
 - [x] Replace the entrance with the classroom layout, five section tabs and six exact supplied owl images, retaining the admin gate and existing destinations.
