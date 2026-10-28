@@ -251,7 +251,7 @@ All colors MUST be HSL.
 .classroom-navigation { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); max-width: 1000px; margin: auto; padding: 17px 24px; gap: 12px; }
 .classroom-tab { height: 46px; border-radius: 4px; font-size: 15px; color: hsl(var(--classroom-tab-text)); border: 1px solid transparent; }
 .classroom-tab:hover, .classroom-tab[aria-pressed="true"] { color: hsl(var(--classroom-tab-text)); background: hsl(var(--classroom-selected)); border-color: hsl(var(--classroom-gold) / .65); }
-.classroom-tab:focus-visible, .classroom-character:focus-visible { outline: 2px solid hsl(var(--classroom-gold)); outline-offset: 4px; box-shadow: none; }
+.classroom-tab:focus-visible { outline: 2px solid hsl(var(--classroom-gold)); outline-offset: 4px; box-shadow: none; }
 .classroom-environment { position: relative; flex: 1; display: grid; place-items: center; min-height: 680px; overflow: hidden; }
 .classroom-stage { position: relative; width: min(100%, 1180px); aspect-ratio: 1.1; flex-shrink: 0; }
 /* Depth: rows recede in size and softness as they go back; Hobson fronts the group. */
@@ -261,9 +261,16 @@ All colors MUST be HSL.
 .classroom-professor { right: 19%; }
 .classroom-broker { left: 19%; top: 29%; width: 19%; z-index: 2; filter: saturate(.94); opacity: .97; }
 .classroom-architect { right: 19%; top: 29%; width: 19%; z-index: 2; filter: saturate(.94); opacity: .97; }
-.classroom-character { position: relative; display: block; width: 100%; height: auto; padding: 0; background: transparent; border-radius: 8px; white-space: normal; z-index: 2; }
-.classroom-character:hover { background: transparent; }
-.classroom-character img { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: contain; filter: drop-shadow(0 8px 5px hsl(var(--classroom-shadow) / .16)); }
+.classroom-character { position: relative; display: block; width: 100%; height: auto; padding: 0; background: transparent; border: 0; border-radius: 0; white-space: normal; z-index: 2; box-shadow: none; transition: transform .3s cubic-bezier(.2,.9,.3,1.35), filter .3s ease; }
+.classroom-character:hover, .classroom-character:focus, .classroom-character:focus-visible, .classroom-character:active { background: transparent !important; box-shadow: none !important; outline: none !important; }
+.classroom-character img { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: contain; filter: drop-shadow(0 8px 5px hsl(var(--classroom-shadow) / .16)); transition: filter .3s ease; }
+/* Hovering a colleague: their name rises and they light up and lean in — no box, no backdrop. */
+.classroom-pupil { transition: filter .3s ease, opacity .3s ease; }
+.classroom-pupil:hover { filter: saturate(1); opacity: 1; }
+.classroom-pupil:hover .classroom-character { transform: translateY(-7px) scale(1.05) rotate(-1.6deg); filter: brightness(1.07) saturate(1.1); }
+.classroom-pupil:hover .classroom-character img { filter: drop-shadow(0 14px 10px hsl(var(--classroom-shadow) / .26)); }
+.classroom-name { position: absolute; left: 50%; bottom: 100%; transform: translate(-50%, 8px); opacity: 0; pointer-events: none; font-size: 12px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: hsl(var(--classroom-plum)); white-space: nowrap; text-shadow: 0 0 9px hsl(var(--background) / .95), 0 1px 0 hsl(var(--background)); transition: opacity .18s ease, transform .26s cubic-bezier(.2,.9,.3,1.25); }
+.classroom-character:hover .classroom-name, .classroom-character:focus-visible .classroom-name { opacity: 1; transform: translate(-50%, -4px); }
 .classroom-pupil[data-selected="true"]::before {
   content: "";
   position: absolute;
@@ -277,6 +284,8 @@ All colors MUST be HSL.
 @keyframes pupil-glow { from { opacity: 0; } to { opacity: 1; } }
 /* Hobson stands clearly in front; the team is arranged behind him. */
 .classroom-teacher { position: absolute; left: 29%; top: 44%; width: 42%; z-index: 6; }
+.classroom-teacher-figure { position: relative; }
+.classroom-teacher:hover .classroom-name { opacity: 1; transform: translate(-50%, -4px); }
 .classroom-teacher::before { content: ""; position: absolute; left: 12%; bottom: -5%; width: 76%; height: 14%; border-radius: 50%; background: radial-gradient(closest-side, hsl(var(--classroom-shadow) / .3), transparent 70%); z-index: -1; }
 .classroom-teacher img { width: 100%; height: auto; filter: drop-shadow(0 18px 12px hsl(var(--classroom-shadow) / .3)); }
 @container (max-width: 700px) {
