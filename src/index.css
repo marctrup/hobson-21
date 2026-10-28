@@ -459,3 +459,13 @@ html { caret-color: #2D2D2D; }
 .back-office-team-workspace { container-type: size; }
 .classroom-section { display: block; margin-top: 4px; font-size: clamp(11px, 1.4cqw, 15px); font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: hsl(var(--classroom-tab-text)); background: hsl(var(--classroom-plum)); border: 1px solid hsl(var(--classroom-gold) / .7); border-radius: 999px; padding: 4px 12px; width: max-content; margin-inline: auto; transition: background .2s ease; }
 .classroom-character:hover .classroom-section, .classroom-character:focus-visible .classroom-section { background: hsl(var(--classroom-selected)); }
+
+/* Team in one even back row, all the same size; Hobson below so his pointer clears everyone. */
+.classroom-pupil, .classroom-broker, .classroom-architect, .classroom-inspector, .classroom-keeper, .classroom-professor { width: 16%; top: 4%; right: auto; z-index: 1; filter: saturate(.94); opacity: .97; }
+.classroom-inspector { left: 2%; } .classroom-broker { left: 22%; } .classroom-keeper { left: 42%; } .classroom-architect { left: 62%; } .classroom-professor { left: 82%; }
+.classroom-teacher { left: 30%; top: 34%; width: 40%; }
+@container (max-width: 640px) {
+  .classroom-pupil, .classroom-broker, .classroom-architect, .classroom-inspector, .classroom-keeper, .classroom-professor { width: 18%; top: 4%; }
+  .classroom-inspector { left: 1%; } .classroom-broker { left: 21%; } .classroom-keeper { left: 41%; } .classroom-architect { left: 61%; } .classroom-professor { left: 81%; }
+  .classroom-teacher { left: 22%; top: 34%; width: 56%; }
+}
