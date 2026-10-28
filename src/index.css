@@ -534,8 +534,8 @@ html { caret-color: #2D2D2D; }
 .classroom-broker { top: 56%; } .classroom-architect { top: 56%; }
 .classroom-teacher { top: 58%; }
 @container (max-width: 640px) {
-  .classroom-whiteboard { left: 8%; width: 84%; height: 20%; }
-  .classroom-inspector { top: 33%; } .classroom-keeper { top: 29%; } .classroom-professor { top: 33%; }
-  .classroom-broker { top: 60%; } .classroom-architect { top: 60%; }
+  .classroom-whiteboard { left: 8%; top: 0; width: 84%; height: 16%; }
+  .classroom-inspector { top: 40%; } .classroom-keeper { top: 36%; } .classroom-professor { top: 40%; }
+  .classroom-broker { top: 62%; } .classroom-architect { top: 62%; }
   .classroom-teacher { top: 56%; }
 }
