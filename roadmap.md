@@ -1,5 +1,8 @@
 # Roadmap
 
+## Back Office — Hobson presents his team
+- [x] Hovering Hobson writes his butler-register introduction on the whiteboard, presenting all five colleagues and inviting hover or click for more details; clicking him opens a compact "My colleagues" roster over the upper wall (no owl hidden) that uses the existing handovers. His chat wording made very polite, very English. 16 checks pass, build clean, live preview verified. Not published.
+
 ## Back Office — illustrated room alternative
 - [x] Use the supplied classroom image beside the retained chat, show existing introductions on hover/focus, and verify all five colleague destinations; 14 targeted checks pass and hover layout visually verified. Not published.
 
