@@ -44,7 +44,7 @@ function WrittenIntroduction({ name, text }: { name: string; text: string }) {
 }
 
 /** Image-relative targets preserve the supplied room and existing colleague handovers. */
-const ART_ASPECT = 1060 / 1223;
+const ART_ASPECT = 1162 / 1374;
 /** Fill the space, trimming at most a thin edge and stretching gently before falling back to centring. */
 const MAX_EDGE_TRIM = 0.10;
 const MAX_STRETCH = 1.35;
@@ -134,7 +134,7 @@ export default function BackOfficeClassroom({ onOpen, introductions = [] }: {
         width: size.w, height: size.h, position: "absolute",
         left: "50%", top: "50%", transform: "translate(-50%, -50%)",
       } : undefined}>
-        <img className="illustrated-room-art" src={room.url} alt="Hobson at the front of his team's classroom" width={1060} height={1223} draggable={false} />
+        <img className="illustrated-room-art" src={room.url} alt="Hobson at the front of his team's classroom" width={1162} height={1374} draggable={false} />
         <Button variant="ghost" className="illustrated-colleague illustrated-hobson" aria-label="Hobson"
           aria-expanded={details} aria-describedby={hovered === "hobson" ? "classroom-introduction" : undefined}
           onMouseEnter={() => setHovered("hobson")} onMouseLeave={() => setHovered(null)}
