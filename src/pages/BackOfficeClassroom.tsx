@@ -59,7 +59,7 @@ function useRoomFill() {
         const trim = Math.min(MAX_EDGE_TRIM, Math.max(0, 1 - boxAspect / ART_ASPECT));
         w = bw / (1 - trim); h = w / ART_ASPECT;
         if (bh / h > MAX_STRETCH) { h = bh / MAX_STRETCH; w = h * ART_ASPECT; }
-        if (w / bw > 1.35) { w = Math.min(bw, bh * ART_ASPECT); h = w / ART_ASPECT; }
+        if (w / bw > 1.40) { w = Math.min(bw, bh * ART_ASPECT); h = w / ART_ASPECT; }
       }
       setSize({ w, h });
     };
