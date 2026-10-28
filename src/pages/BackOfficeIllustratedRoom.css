@@ -12,7 +12,6 @@
   /* Measured to fill the workspace; these values hold only until the fill effect reports. */
   width: min(100%, 86.69cqh);
   aspect-ratio: 1060 / 1223;
-  max-height: 100%;
   container-type: inline-size;
 }
 .illustrated-room-art { display: block; width: 100%; height: 100%; object-fit: contain; }
