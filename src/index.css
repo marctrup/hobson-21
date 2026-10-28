@@ -433,7 +433,7 @@ html { caret-color: #2D2D2D; }
 }
 @keyframes pupil-step-shadow {
   0%, 100% { filter: drop-shadow(0 8px 5px hsl(var(--classroom-shadow) / .16)); }
-  58% { filter: drop-shadow(0 26px 16px hsl(var(--classroom-shadow) / .36)); }
+  52% { filter: drop-shadow(0 34px 22px hsl(var(--classroom-shadow) / .42)); }
 }
 @media (prefers-reduced-motion: reduce) {
   .classroom-pupil[data-selected="true"] .classroom-character,
