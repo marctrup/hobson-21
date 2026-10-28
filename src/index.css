@@ -265,7 +265,7 @@ All colors MUST be HSL.
 .classroom-character img { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: contain; filter: drop-shadow(0 8px 5px hsl(var(--classroom-shadow) / .16)); }
 .classroom-pupil[data-selected="true"] .classroom-character { outline: 2px solid hsl(var(--classroom-gold)); outline-offset: 6px; }
 /* Hobson stands clearly in front; the team is arranged behind him. */
-.classroom-teacher { position: absolute; left: 35%; top: 58%; width: 30%; z-index: 6; }
+.classroom-teacher { position: absolute; left: 33%; top: 54%; width: 34%; z-index: 6; }
 .classroom-teacher img { width: 100%; height: auto; filter: drop-shadow(0 13px 7px hsl(var(--classroom-shadow) / .2)); }
 @container (max-width: 700px) {
   .classroom-navigation { gap: 4px; padding: 13px 10px; }
@@ -278,7 +278,7 @@ All colors MUST be HSL.
   .classroom-professor { right: 3%; }
   .classroom-broker { left: 8%; top: 32%; width: 32%; }
   .classroom-architect { right: 8%; top: 32%; width: 32%; }
-  .classroom-teacher { left: 30%; top: 64%; width: 40%; }
+  .classroom-teacher { left: 28%; top: 62%; width: 44%; }
 }
 
 @layer components {
