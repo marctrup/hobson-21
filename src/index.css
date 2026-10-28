@@ -49,6 +49,8 @@ All colors MUST be HSL.
     --classroom-wall: 275 15% 88%;
     --classroom-plum: 274 33% 23%;
     --classroom-gold: 40 51% 65%;
+    /* The whiteboard's own near-white, so written introductions read as being on the board. */
+    --classroom-board: 240 33% 98%;
     --classroom-tab-text: 42 37% 92%;
     --classroom-selected: 273 31% 35%;
     --classroom-wood: 28 35% 48%;

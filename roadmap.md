@@ -5,6 +5,7 @@
 
 ## Back Office — illustrated room alternative
 - [x] Use the supplied classroom image beside the retained chat, show existing introductions on hover/focus, and verify all five colleague destinations; 14 targeted checks pass and hover layout visually verified. Not published.
+- [x] Replace the classroom artwork with the supplied transparent-background version, trimmed to its content so the workspace surface shows through; hotspots, whiteboard writing and colleague handovers re-verified. 16 checks pass. Not published.
 
 ## Back Office — classroom Phase 1A
 - [x] Restore the original sidebar and chat; float the owls only in the right-hand workspace without scenery, adapting to its available width.
