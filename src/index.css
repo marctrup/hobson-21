@@ -256,15 +256,25 @@ All colors MUST be HSL.
 .classroom-stage { position: relative; width: min(100%, 1180px); aspect-ratio: 1.1; flex-shrink: 0; }
 /* Depth: rows recede in size and softness as they go back; Hobson fronts the group. */
 .classroom-pupil { position: absolute; width: 14%; top: 3%; z-index: 1; filter: saturate(.88); opacity: .94; }
-.classroom-inspector { left: 19%; --pupil-step: 26px; }
-.classroom-keeper { left: 43%; top: 1%; --pupil-step: 0px; }
-.classroom-professor { right: 19%; --pupil-step: -26px; }
-.classroom-broker { left: 19%; top: 29%; width: 19%; z-index: 2; --pupil-step: 36px; filter: saturate(.94); opacity: .97; }
-.classroom-architect { right: 19%; top: 29%; width: 19%; z-index: 2; --pupil-step: -36px; filter: saturate(.94); opacity: .97; }
+.classroom-inspector { left: 19%; }
+.classroom-keeper { left: 43%; top: 1%; }
+.classroom-professor { right: 19%; }
+.classroom-broker { left: 19%; top: 29%; width: 19%; z-index: 2; filter: saturate(.94); opacity: .97; }
+.classroom-architect { right: 19%; top: 29%; width: 19%; z-index: 2; filter: saturate(.94); opacity: .97; }
 .classroom-character { position: relative; display: block; width: 100%; height: auto; padding: 0; background: transparent; border-radius: 8px; white-space: normal; z-index: 2; }
 .classroom-character:hover { background: transparent; }
 .classroom-character img { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: contain; filter: drop-shadow(0 8px 5px hsl(var(--classroom-shadow) / .16)); }
-.classroom-pupil[data-selected="true"] .classroom-character { outline: 2px solid hsl(var(--classroom-gold)); outline-offset: 6px; }
+.classroom-pupil[data-selected="true"]::before {
+  content: "";
+  position: absolute;
+  inset: -16% -12%;
+  border-radius: 50%;
+  background: hsl(var(--classroom-gold) / .5);
+  filter: blur(30px);
+  z-index: -1;
+  animation: pupil-glow .55s ease-out both;
+}
+@keyframes pupil-glow { from { opacity: 0; } to { opacity: 1; } }
 /* Hobson stands clearly in front; the team is arranged behind him. */
 .classroom-teacher { position: absolute; left: 29%; top: 44%; width: 42%; z-index: 6; }
 .classroom-teacher::before { content: ""; position: absolute; left: 12%; bottom: -5%; width: 76%; height: 14%; border-radius: 50%; background: radial-gradient(closest-side, hsl(var(--classroom-shadow) / .3), transparent 70%); z-index: -1; }
@@ -408,12 +418,27 @@ html::-webkit-scrollbar-thumb:hover,
 html { caret-color: #2D2D2D; }
 
 
-/* Chosen colleague steps forward horizontally when picked from the menu. */
-.classroom-pupil[data-selected="true"] .classroom-character { animation: pupil-step .55s cubic-bezier(.3,.9,.35,1.05) both; }
-@keyframes pupil-step {
-  0% { transform: translateX(0); }
-  35% { transform: translateX(var(--pupil-step, 0px)) scale(.97); }
-  70% { transform: translateX(calc(var(--pupil-step, 0px) * .5)) scale(1); }
-  100% { transform: translateX(0); }
+/* Chosen colleague steps off the back row and towards the screen, then settles back. */
+.classroom-pupil[data-selected="true"] { z-index: 5; }
+.classroom-pupil[data-selected="true"] .classroom-character {
+  transform-origin: 50% 100%;
+  animation: pupil-step .68s cubic-bezier(.32,.9,.36,1.02) both;
 }
-@media (prefers-reduced-motion: reduce) { .classroom-pupil[data-selected="true"] .classroom-character { animation: none; } }
+@keyframes pupil-step {
+  0% { transform: translateY(0) scale(1); }
+  18% { transform: translateY(8px) scale(.95); }
+  52% { transform: translateY(54px) scale(1.3); }
+  74% { transform: translateY(28px) scale(1.1); }
+  100% { transform: translateY(0) scale(1); }
+}
+.classroom-pupil[data-selected="true"] .classroom-character img {
+  animation: pupil-step-shadow .68s ease-out both;
+}
+@keyframes pupil-step-shadow {
+  0%, 100% { filter: drop-shadow(0 8px 5px hsl(var(--classroom-shadow) / .16)); }
+  52% { filter: drop-shadow(0 34px 22px hsl(var(--classroom-shadow) / .42)); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .classroom-pupil[data-selected="true"] .classroom-character,
+  .classroom-pupil[data-selected="true"] .classroom-character img { animation: none; }
+}
