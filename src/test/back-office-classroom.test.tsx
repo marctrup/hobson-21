@@ -48,7 +48,10 @@ it("clicking Hobson shows each colleague in detail without starting their work",
   fireEvent.click(screen.getByRole("button", { name: "Hobson" }));
   const roster = screen.getByRole("region", { name: "Hobson's colleagues" });
   expect(roster).toHaveTextContent("Each keeps a particular part of your portfolio in order");
-  expect(roster).toHaveTextContent("I maintain everything Hobson knows from your documents.");
+  for (const [name, area] of [["The Keeper", "Permissions"], ["The Broker", "Contacts"], ["The Inspector", "Compliance"], ["The Professor", "Papers"], ["The Architect", "Units"]]) {
+    expect(roster).toHaveTextContent(name);
+    expect(roster).toHaveTextContent(area);
+  }
   expect(onOpen).not.toHaveBeenCalled();
   fireEvent.click(within(roster).getByRole("button", { name: /^The Professor/ }));
   expect(onOpen).toHaveBeenLastCalledWith("professor");
