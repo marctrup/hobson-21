@@ -21,6 +21,17 @@ export default function BackOfficeClassroom({ onOpen }: { onOpen?: (id: string) 
     <main className="back-office-classroom" aria-label="Back Office classroom">
       <div className="classroom-environment">
         <div className="classroom-stage">
+          <div className="classroom-whiteboard" aria-label="Today's work">
+            <p className="classroom-wb-title">Today's work — 28 Oct</p>
+            <ul>
+              <li>Professor — read papers for 1115 Finchley Road</li>
+              <li>Inspector — check compliance, gas &amp; fire certs</li>
+              <li>Architect — tidy Unit list, Paragon Centre</li>
+              <li>Broker — confirm new electrician contact</li>
+              <li>Keeper — review access for new starter</li>
+            </ul>
+            <span className="classroom-wb-tray" aria-hidden="true" />
+          </div>
           {specialists.map((c) => (
             <div key={c.id} className={`classroom-pupil classroom-${c.id}`}>
               <Button variant="ghost" className="classroom-character" aria-label={c.section} title="" onClick={() => onOpen?.(c.id)}>
