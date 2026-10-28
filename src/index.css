@@ -455,7 +455,7 @@ html { caret-color: #2D2D2D; }
 .classroom-environment { min-height: 0; height: 100%; }
 .classroom-stage { width: auto; height: min(100%, 100cqw / 1.1); max-height: 100%; max-width: 100%; aspect-ratio: 1.1; }
 .back-office-team-workspace { container-type: size; }
-.classroom-section { display: block; margin-top: 4px; font-size: clamp(11px, 1.4cqw, 15px); font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: hsl(var(--classroom-tab-text)); background: hsl(var(--classroom-plum)); border: 1px solid hsl(var(--classroom-gold) / .7); border-radius: 999px; padding: 4px 12px; width: max-content; margin-inline: auto; transition: background .2s ease; }
+.classroom-section { position: relative; z-index: 5; display: block; margin-top: 4px; font-size: clamp(11px, 1.4cqw, 15px); font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: hsl(var(--classroom-tab-text)); background: hsl(var(--classroom-plum)); border: 1px solid hsl(var(--classroom-gold) / .7); border-radius: 999px; padding: 4px 12px; width: max-content; margin-inline: auto; transition: background .2s ease; }
 .classroom-character:hover .classroom-section, .classroom-character:focus-visible .classroom-section { background: hsl(var(--classroom-selected)); }
 
 /* Team in one even back row, all the same size; Hobson below so his pointer clears everyone. */
@@ -472,7 +472,7 @@ html { caret-color: #2D2D2D; }
 .classroom-desk { position: relative; z-index: 3; display: block; width: 112%; margin: -30% 0 0 -6%; aspect-ratio: 4.2; border-radius: 4px 4px 2px 2px; background: linear-gradient(hsl(var(--classroom-wood-light)), hsl(var(--classroom-wood)) 38%, hsl(var(--classroom-wood-dark))); box-shadow: 0 10px 14px -6px hsl(var(--classroom-shadow) / .35); clip-path: polygon(4% 0, 96% 0, 100% 100%, 0 100%); }
 .classroom-pupil, .classroom-broker, .classroom-architect, .classroom-inspector, .classroom-keeper, .classroom-professor { width: 15%; }
 .classroom-inspector { left: 14%; top: 3%; } .classroom-keeper { left: 42.5%; top: 0%; } .classroom-professor { left: 71%; top: 3%; }
-.classroom-broker { left: 4%; top: 20%; z-index: 2; } .classroom-architect { left: 81%; top: 20%; z-index: 2; }
+.classroom-broker { left: 4%; top: 24%; z-index: 2; } .classroom-architect { left: 81%; top: 24%; z-index: 2; }
 .classroom-teacher { left: 32%; top: 40%; width: 36%; }
 @container (max-width: 640px) {
   .classroom-pupil, .classroom-broker, .classroom-architect, .classroom-inspector, .classroom-keeper, .classroom-professor { width: 19%; }
@@ -492,7 +492,7 @@ html { caret-color: #2D2D2D; }
 /* Suspended brass dome lights illuminate their colleague, never the front-of-house owl. */
 .classroom-inspector, .classroom-professor { top: 12%; }
 .classroom-keeper { top: 9%; }
-.classroom-lamp { position: absolute; left: 29%; top: -39%; width: 42%; height: 30%; z-index: 4; pointer-events: none; }
+.classroom-lamp { position: absolute; left: 29%; top: -34%; width: 42%; height: 24%; z-index: 4; pointer-events: none; }
 .classroom-lamp-cord { position: absolute; left: calc(50% - 1px); top: 0; width: 2px; height: 42%; background: hsl(var(--classroom-shadow) / .7); }
 .classroom-lamp-shade { position: absolute; left: 0; top: 38%; width: 100%; height: 54%; border-radius: 50% 50% 8% 8% / 85% 85% 12% 12%;
   background: linear-gradient(100deg, hsl(var(--classroom-wood-dark)), hsl(var(--classroom-gold)) 48%, hsl(var(--classroom-wood-dark)));
