@@ -490,25 +490,25 @@ html { caret-color: #2D2D2D; }
 .classroom-desk::before { content: ""; position: absolute; inset: 0; background: inherit; filter: brightness(0) blur(3px); opacity: .26; transform: translateY(6px); z-index: -1; }
 
 /* Desk lamp: brass base and stem under a dome shade, with a warm light that grows when you hover. */
-.classroom-lamp { position: absolute; right: 7%; bottom: 93%; width: 52%; height: 96%; z-index: 4; pointer-events: none; }
-.classroom-lamp-base { position: absolute; left: 20%; bottom: 0; width: 60%; height: 13%; border-radius: 50%;
+.classroom-lamp { position: absolute; right: 8%; bottom: 93%; width: 50%; height: 118%; z-index: 4; pointer-events: none; }
+.classroom-lamp-base { position: absolute; left: 20%; bottom: 0; width: 60%; height: 11%; border-radius: 50%;
   background: radial-gradient(ellipse at 50% 28%, hsl(var(--classroom-gold)) 0 45%, hsl(var(--classroom-wood-dark)));
   box-shadow: 0 2px 3px hsl(var(--classroom-shadow) / .45); }
-.classroom-lamp-stem { position: absolute; left: 45%; bottom: 8%; width: 10%; height: 48%; border-radius: 4px;
+.classroom-lamp-stem { position: absolute; left: 45%; bottom: 7%; width: 9%; height: 55%; border-radius: 4px;
   background: linear-gradient(90deg, hsl(var(--classroom-wood-dark)), hsl(var(--classroom-gold)) 45%, hsl(var(--classroom-wood-dark))); }
-.classroom-lamp-shade { position: absolute; left: 0; bottom: 48%; width: 100%; height: 42%;
+.classroom-lamp-shade { position: absolute; left: 0; bottom: 62%; width: 100%; height: 30%;
   border-radius: 50% 50% 8% 8% / 92% 92% 10% 10%;
   background: linear-gradient(180deg, hsl(var(--classroom-gold)) 0 42%, hsl(var(--classroom-wood-dark)) 96%);
   box-shadow: inset 0 -3px 4px hsl(var(--classroom-shadow) / .35); transition: filter .3s ease; }
-.classroom-lamp-bulb { position: absolute; left: 24%; bottom: 40%; width: 52%; height: 14%; border-radius: 50%;
+.classroom-lamp-bulb { position: absolute; left: 24%; bottom: 55%; width: 52%; height: 12%; border-radius: 50%;
   background: radial-gradient(ellipse at 50% 30%, hsl(48 100% 95%), hsl(41 90% 68%));
   box-shadow: 0 0 8px 3px hsl(var(--classroom-gold) / .55); transition: box-shadow .3s ease, transform .3s ease; }
-.classroom-lamp-beam { position: absolute; left: -16%; bottom: -24%; width: 132%; height: 60%;
-  background: linear-gradient(hsl(46 96% 82% / .72), hsl(46 96% 82% / 0) 82%);
-  clip-path: polygon(24% 0, 76% 0, 100% 100%, 0 100%); opacity: .5;
+.classroom-lamp-beam { position: absolute; left: -14%; bottom: -16%; width: 128%; height: 62%;
+  background: linear-gradient(hsl(46 96% 82% / .7), hsl(46 96% 82% / 0) 84%);
+  clip-path: polygon(26% 0, 74% 0, 100% 100%, 0 100%); filter: blur(2px); opacity: .5;
   transform-origin: 50% 0; transition: opacity .3s ease, transform .3s ease; }
-.classroom-lamp-pool { position: absolute; left: -34%; bottom: -26%; width: 168%; height: 44%; transform: translateX(-50%); transform-origin: 50% 100%;
-  background: radial-gradient(ellipse at 50% 62%, hsl(46 94% 78% / .9), hsl(46 94% 78% / 0) 72%);
+.classroom-lamp-pool { position: absolute; left: -12%; bottom: -20%; width: 124%; height: 30%; transform: translateX(-50%); transform-origin: 50% 100%;
+  background: radial-gradient(ellipse at 50% 62%, hsl(46 94% 78% / .78), hsl(46 94% 78% / 0) 70%);
   opacity: .5; transition: opacity .3s ease, transform .3s ease; }
 .classroom-pupil:hover .classroom-lamp-shade, .classroom-character:focus-visible .classroom-lamp-shade { filter: brightness(1.2); }
 .classroom-pupil:hover .classroom-lamp-bulb, .classroom-character:focus-visible .classroom-lamp-bulb { box-shadow: 0 0 22px 11px hsl(var(--classroom-gold) / .9); transform: scale(1.15); }
