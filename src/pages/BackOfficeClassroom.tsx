@@ -25,12 +25,9 @@ export default function BackOfficeClassroom({ onOpen }: { onOpen?: (id: string) 
               <Button variant="ghost" className="classroom-character" aria-label={c.section} title="" onClick={() => onOpen?.(c.id)}>
                 <img src={c.image.url} alt={c.name} width={768} height={768} draggable={false} />
                 <span className="classroom-desk" aria-hidden="true" />
+                <span className="classroom-spotlight" aria-hidden="true" />
                 <span className="classroom-lamp" aria-hidden="true">
-                  <span className="classroom-lamp-pool" />
-                  <span className="classroom-lamp-beam" />
-                  <span className="classroom-lamp-halo" />
-                  <span className="classroom-lamp-base" />
-                  <span className="classroom-lamp-stem" />
+                  <span className="classroom-lamp-cord" />
                   <span className="classroom-lamp-shade" />
                   <span className="classroom-lamp-bulb" />
                 </span>
