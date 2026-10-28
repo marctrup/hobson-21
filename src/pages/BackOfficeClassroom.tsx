@@ -27,10 +27,11 @@ export default function BackOfficeClassroom({ onOpen }: { onOpen?: (id: string) 
                 <span className="classroom-desk" aria-hidden="true">
                   <span className="classroom-lamp">
                     <span className="classroom-lamp-pool" />
+                    <span className="classroom-lamp-beam" />
                     <span className="classroom-lamp-base" />
                     <span className="classroom-lamp-stem" />
-                    <span className="classroom-lamp-arm" />
                     <span className="classroom-lamp-shade" />
+                    <span className="classroom-lamp-bulb" />
                   </span>
                 </span>
                 <span className="classroom-name" aria-hidden="true">{c.name}</span>
