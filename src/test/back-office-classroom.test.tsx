@@ -58,3 +58,36 @@ it("clicking Hobson shows each colleague in detail without starting their work",
   expect(screen.queryByRole("region", { name: "Hobson's colleagues" })).toBeNull();
 });
 
+
+/** The staff room (narrow workspace) writes each colleague onto the board as you reach them. */
+function inStaffRoom(rendered: () => void) {
+  const RO = global.ResizeObserver;
+  const proto = HTMLElement.prototype;
+  const cw = Object.getOwnPropertyDescriptor(proto, "clientWidth");
+  const ch = Object.getOwnPropertyDescriptor(proto, "clientHeight");
+  class Stub { cb: (entries: unknown[]) => void; constructor(cb: (entries: unknown[]) => void) { this.cb = cb; } observe(el: unknown) { this.cb([el]); } unobserve() {} disconnect() {} }
+  // @ts-expect-error test stub
+  global.ResizeObserver = Stub;
+  Object.defineProperty(proto, "clientWidth", { configurable: true, value: 320 });
+  Object.defineProperty(proto, "clientHeight", { configurable: true, value: 700 });
+  try { rendered(); } finally {
+    if (cw) Object.defineProperty(proto, "clientWidth", cw); else delete (proto as Record<string, unknown>).clientWidth;
+    if (ch) Object.defineProperty(proto, "clientHeight", ch); else delete (proto as Record<string, unknown>).clientHeight;
+    global.ResizeObserver = RO;
+  }
+}
+
+it("the staff room writes a colleague's own words on the board when you reach them", () => {
+  const onOpen = vi.fn();
+  const board = () => document.querySelector(".compact-board .sr-only")?.textContent ?? "";
+  inStaffRoom(() => {
+    render(<BackOfficeClassroom onOpen={onOpen} introductions={ROSTER} />);
+    expect(screen.getByText(/Please scroll/i)).toBeInTheDocument();
+    expect(board()).toMatch(/^Hobson\./);
+    fireEvent.mouseEnter(screen.getByRole("button", { name: "Papers" }));
+    expect(board()).toMatch(/^The Professor\. I maintain everything Hobson knows from your documents/);
+    expect(onOpen).not.toHaveBeenCalled();
+    fireEvent.click(screen.getByRole("button", { name: "Papers" }));
+    expect(screen.getByRole("button", { name: "Open papers" })).toBeInTheDocument();
+  });
+});
