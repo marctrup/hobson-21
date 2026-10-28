@@ -222,5 +222,9 @@
 - [x] Inside a contact's card show only **Locations**: each place with what they do and where, no pills/arrows, no summary counts, no repeated name; the same list opens full-width under a directory row with a finder for long lists.
 - [x] Verified the contact card and an expanded directory row in the live preview (no console errors); contacts checks pass and the build is clean. Not published.
 
+## Prototype Back Office — Hobson answers to hover alone
+- [x] The main owl is no longer clickable: hovering or focusing him still writes his introduction on the whiteboard, but clicking opens nothing and his cursor no longer invites a click; the colleague roster card he used to open is withdrawn. The five colleagues keep their clickable handover. Verified live (hover writes, click does nothing, Papers still opens The Professor); 5 classroom checks pass, build clean. Not published.
+
 ## Prototype Back Office — staff room writes as you scroll
+
 - [x] In the narrow (mobile) staff room, the whiteboard writes each colleague's own words as you scroll them under it; Hobson greets at the top, an invitation band lets the first colleague arrive, and a closing card returns you to the top. Hovering and tapping still write and open as before. Checked live (wheel trail Hobson → Keeper → Broker → Inspector → Professor → Architect) and at three workspace sizes; 338 checks pass, build clean. Not published.
