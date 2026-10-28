@@ -2,6 +2,16 @@ import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import room from "@/assets/back-office-illustrated-room.png.asset.json";
 import "./BackOfficeIllustratedRoom.css";
+import hobsonOwl from "@/assets/back-office/hobson.png.asset.json";
+import keeperOwl from "@/assets/back-office/keeper.png.asset.json";
+import brokerOwl from "@/assets/back-office/broker.png.asset.json";
+import inspectorOwl from "@/assets/back-office/inspector.png.asset.json";
+import professorOwl from "@/assets/back-office/professor.png.asset.json";
+import architectOwl from "@/assets/back-office/architect.png.asset.json";
+
+const OWLS: Record<string, string> = { hobson: hobsonOwl.url, keeper: keeperOwl.url, broker: brokerOwl.url, inspector: inspectorOwl.url, professor: professorOwl.url, architect: architectOwl.url };
+/** Below this workspace width the illustrated room is unreadable, so a dedicated staff-room list replaces it. */
+const COMPACT_WIDTH = 600;
 
 const specialists = [
   { id: "keeper", name: "The Keeper", section: "Permissions" },
@@ -42,12 +52,14 @@ const MAX_STRETCH = 1.35;
 function useRoomFill() {
   const ref = useRef<HTMLElement | null>(null);
   const [size, setSize] = useState<{ w: number; h: number } | null>(null);
+  const [compact, setCompact] = useState(false);
   useEffect(() => {
     const host = ref.current;
     if (!host || typeof ResizeObserver === "undefined") return;
     const measure = () => {
       const bw = host.clientWidth, bh = host.clientHeight;
       if (!bw || !bh) return;
+      setCompact(bw < COMPACT_WIDTH);
       const boxAspect = bw / bh;
       let w: number, h: number;
       if (boxAspect >= ART_ASPECT) {
@@ -68,7 +80,7 @@ function useRoomFill() {
     observer.observe(host);
     return () => observer.disconnect();
   }, []);
-  return { ref, size };
+  return { ref, size, compact };
 }
 
 export default function BackOfficeClassroom({ onOpen, introductions = [] }: {
@@ -77,7 +89,7 @@ export default function BackOfficeClassroom({ onOpen, introductions = [] }: {
 }) {
   const [hovered, setHovered] = useState<string | null>(null);
   const [details, setDetails] = useState(false);
-  const { ref, size } = useRoomFill();
+  const { ref, size, compact } = useRoomFill();
   useEffect(() => {
     if (document.querySelector('[data-classroom-handwriting]')) return;
     const font = document.createElement("link");
@@ -92,6 +104,30 @@ export default function BackOfficeClassroom({ onOpen, introductions = [] }: {
     ? { name: "Hobson", text: HOBSON_INTRODUCTION }
     : colleague ? { name: colleague.name, text: contribution } : null;
   const open = (id: string) => { setDetails(false); onOpen?.(id); };
+  if (compact) return (
+    <main ref={ref} className="illustrated-classroom compact-classroom" aria-label="Back Office classroom">
+      <section className="compact-board" aria-live="polite">
+        <img src={OWLS[hovered ?? "hobson"]} alt="" className="compact-board-owl" />
+        <div className="compact-board-text">
+          <WrittenIntroduction key={hovered ?? "hobson"} name={writing?.name ?? "Hobson"} text={(writing?.text ?? HOBSON_INTRODUCTION).replace("Hover over any of them, or click, for more details.", "Tap any of them to hear from them in person.")} />
+        </div>
+      </section>
+      <p className="compact-today">Today's work · 28 Oct</p>
+      <ul className="compact-team">
+        {specialists.map((c) => {
+          const active = hovered === c.id;
+          return <li key={c.id} className={active ? "is-active" : ""}>
+            <button type="button" className="compact-member" aria-expanded={active} aria-label={c.section}
+              onClick={() => setHovered(active ? null : c.id)}>
+              <img src={OWLS[c.id]} alt="" />
+              <span><strong>{c.name}</strong><small>{c.section}</small></span>
+            </button>
+            {active && <Button size="sm" className="compact-open" onClick={() => open(c.id)}>Open {c.section.toLowerCase()}</Button>}
+          </li>;
+        })}
+      </ul>
+    </main>
+  );
   return (
     <main ref={ref} className="illustrated-classroom" aria-label="Back Office classroom">
       <div className="illustrated-room" style={size ? {
