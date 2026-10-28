@@ -117,6 +117,7 @@ export default function BackOfficeClassroom({ onOpen, introductions = [] }: {
   };
 
   /** The board writes whichever colleague the list is resting on, so the room reads as you scroll. */
+  const selectedRef = useRef<string | null>(null);
   useEffect(() => {
     if (!compact) return;
     const host = ref.current, list = listRef.current;
@@ -126,10 +127,10 @@ export default function BackOfficeClassroom({ onOpen, introductions = [] }: {
     const distance = (el: HTMLElement) => {
       const r = el.getBoundingClientRect(), h = host.getBoundingClientRect();
       if (Math.min(r.bottom, h.bottom) - Math.max(r.top, h.top) <= 0) return Number.POSITIVE_INFINITY;
-      return Math.abs(r.top + r.height / 2 - (h.top + h.height / 2));
+      return Math.abs(r.top + r.height / 2 - (h.top + h.height * READING_LINE));
     };
     const pick = () => {
-      if (host.scrollTop < 4) { setFocused(null); return; }
+      if (host.scrollTop < 4) { if (!selectedRef.current) setFocused(null); return; }
       let best = rows[0], bestScore = distance(rows[0]);
       for (const row of rows) {
         const s = distance(row);
@@ -152,6 +153,7 @@ export default function BackOfficeClassroom({ onOpen, introductions = [] }: {
       observer.disconnect();
     };
   }, [compact]);
+
 
   if (compact) {
     const written = focused ?? selected;
