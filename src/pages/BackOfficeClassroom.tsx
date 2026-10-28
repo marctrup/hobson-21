@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
-import hobson from "@/assets/back-office/hobson.png.asset.json";
+import hobsonBase from "@/assets/back-office/hobson-base.png";
+import hobsonStick from "@/assets/back-office/hobson-stick.png";
 import keeper from "@/assets/back-office/keeper.png.asset.json";
 import broker from "@/assets/back-office/broker.png.asset.json";
 import inspector from "@/assets/back-office/inspector.png.asset.json";
@@ -38,8 +39,8 @@ export default function BackOfficeClassroom({ onOpen }: { onOpen?: (id: string) 
           ))}
           <div className="classroom-teacher">
             <div className="classroom-teacher-figure">
-              <img src={hobson.url} alt="Hobson" width={768} height={768} draggable={false} />
-              <span className="classroom-name" aria-hidden="true">Hobson</span>
+              <img src={hobsonBase} alt="Hobson" width={768} height={768} draggable={false} />
+              <img src={hobsonStick} alt="" aria-hidden="true" width={768} height={768} draggable={false} className="classroom-hobson-stick" />
             </div>
           </div>
         </div>

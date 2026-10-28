@@ -283,9 +283,22 @@ All colors MUST be HSL.
 /* Hobson stands clearly in front; the team is arranged behind him. */
 .classroom-teacher { position: absolute; left: 29%; top: 44%; width: 42%; z-index: 6; }
 .classroom-teacher-figure { position: relative; }
-.classroom-teacher:hover .classroom-name { opacity: 1; transform: translate(-50%, -4px); }
+/* Hobson waves his pointer when greeted: the pointer is its own layer, pivoting where his wing holds it. */
+.classroom-hobson-stick { position: absolute; inset: 0; height: 100%; pointer-events: none; transform-origin: 24.41% 44.66%; }
+.classroom-teacher:hover .classroom-hobson-stick, .classroom-teacher:focus-within .classroom-hobson-stick { animation: hobson-wave 1.2s ease-in-out; }
+@keyframes hobson-wave {
+  0%, 100% { transform: rotate(0deg); }
+  12% { transform: rotate(13deg); }
+  30% { transform: rotate(-10deg); }
+  48% { transform: rotate(11deg); }
+  66% { transform: rotate(-7deg); }
+  82% { transform: rotate(5deg); }
+}
 .classroom-teacher::before { content: ""; position: absolute; left: 12%; bottom: -5%; width: 76%; height: 14%; border-radius: 50%; background: radial-gradient(closest-side, hsl(var(--classroom-shadow) / .3), transparent 70%); z-index: -1; }
 .classroom-teacher img { width: 100%; height: auto; filter: drop-shadow(0 18px 12px hsl(var(--classroom-shadow) / .3)); }
+@media (prefers-reduced-motion: reduce) {
+  .classroom-teacher:hover .classroom-hobson-stick, .classroom-teacher:focus-within .classroom-hobson-stick { animation: none; }
+}
 @container (max-width: 700px) {
   .classroom-navigation { gap: 4px; padding: 13px 10px; }
   .classroom-tab { padding: 0 3px; height: 42px; font-size: 12px; }
