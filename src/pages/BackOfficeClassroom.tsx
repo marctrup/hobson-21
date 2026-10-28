@@ -79,7 +79,7 @@ export default function BackOfficeClassroom({ onOpen, introductions = [] }: {
         {details && <div className="illustrated-hobson-details" role="region" aria-label="Hobson's colleagues">
           <header className="illustrated-hobson-details-head">
             <p className="illustrated-hobson-details-title">My colleagues</p>
-            <p className="illustrated-hobson-details-note">Each keeps a particular part of your portfolio in order. Select a name and I shall show you their work.</p>
+            <p className="illustrated-hobson-details-note">Each keeps a particular part of your portfolio in order. Hover over any colleague to hear from them in person, or select a name and I shall show you their work.</p>
             <Button variant="ghost" size="sm" className="illustrated-hobson-details-close" aria-label="Close Hobson's introduction" onClick={() => setDetails(false)}>Close</Button>
           </header>
           <ul className="illustrated-hobson-details-list">
@@ -88,7 +88,6 @@ export default function BackOfficeClassroom({ onOpen, introductions = [] }: {
                 <Button variant="ghost" className="illustrated-hobson-details-row" onClick={() => open(c.id)}>
                   <span className="illustrated-hobson-details-name">{c.name}</span>
                   <span className="illustrated-hobson-details-area">{c.section}</span>
-                  <span className="illustrated-hobson-details-text">{introductions.find((i) => i.id === c.id)?.contribution ?? ""}</span>
                 </Button>
               </li>
             ))}
