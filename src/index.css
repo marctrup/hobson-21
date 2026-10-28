@@ -254,30 +254,31 @@ All colors MUST be HSL.
 .classroom-tab:focus-visible, .classroom-character:focus-visible { outline: 2px solid hsl(var(--classroom-gold)); outline-offset: 4px; box-shadow: none; }
 .classroom-environment { position: relative; flex: 1; display: grid; place-items: center; min-height: 680px; overflow: hidden; }
 .classroom-stage { position: relative; width: min(100%, 1180px); aspect-ratio: 1.5; flex-shrink: 0; }
-.classroom-pupil { position: absolute; width: 19%; top: 9%; z-index: 2; }
-.classroom-inspector { left: 12%; }
-.classroom-keeper { left: 40.5%; top: 6%; }
-.classroom-professor { right: 12%; }
-.classroom-broker { left: 6%; top: 47%; width: 22%; z-index: 4; }
-.classroom-architect { right: 6%; top: 47%; width: 22%; z-index: 4; }
+.classroom-pupil { position: absolute; width: 19%; top: 4%; z-index: 1; }
+.classroom-inspector { left: 13%; }
+.classroom-keeper { left: 40.5%; top: 2%; }
+.classroom-professor { right: 13%; }
+.classroom-broker { left: 9%; top: 34%; width: 21.5%; z-index: 2; }
+.classroom-architect { right: 9%; top: 34%; width: 21.5%; z-index: 2; }
 .classroom-character { position: relative; display: block; width: 100%; height: auto; padding: 0; background: transparent; border-radius: 8px; white-space: normal; z-index: 2; }
 .classroom-character:hover { background: transparent; }
 .classroom-character img { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: contain; filter: drop-shadow(0 8px 5px hsl(var(--classroom-shadow) / .16)); }
 .classroom-pupil[data-selected="true"] .classroom-character { outline: 2px solid hsl(var(--classroom-gold)); outline-offset: 6px; }
-.classroom-teacher { position: absolute; left: 36.9%; top: 44%; width: 26.2%; z-index: 5; }
+/* Hobson stands clearly in front; the team is arranged behind him. */
+.classroom-teacher { position: absolute; left: 33%; top: 54%; width: 34%; z-index: 6; }
 .classroom-teacher img { width: 100%; height: auto; filter: drop-shadow(0 13px 7px hsl(var(--classroom-shadow) / .2)); }
 @container (max-width: 700px) {
   .classroom-navigation { gap: 4px; padding: 13px 10px; }
   .classroom-tab { padding: 0 3px; height: 42px; font-size: 12px; }
   .classroom-environment { min-height: 600px; }
   .classroom-stage { aspect-ratio: .67; max-width: 500px; }
-  .classroom-pupil { width: 27%; top: 10%; }
+  .classroom-pupil { width: 27%; top: 6%; }
   .classroom-inspector { left: 3%; }
-  .classroom-keeper { left: 36.5%; top: 8%; }
+  .classroom-keeper { left: 36.5%; top: 4%; }
   .classroom-professor { right: 3%; }
-  .classroom-broker { left: 8%; top: 40%; width: 32%; }
-  .classroom-architect { right: 8%; top: 40%; width: 32%; }
-  .classroom-teacher { left: 31%; top: 65%; width: 38%; }
+  .classroom-broker { left: 8%; top: 32%; width: 32%; }
+  .classroom-architect { right: 8%; top: 32%; width: 32%; }
+  .classroom-teacher { left: 28%; top: 62%; width: 44%; }
 }
 
 @layer components {
