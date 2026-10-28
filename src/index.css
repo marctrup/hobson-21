@@ -256,11 +256,11 @@ All colors MUST be HSL.
 .classroom-stage { position: relative; width: min(100%, 1180px); aspect-ratio: 1.1; flex-shrink: 0; }
 /* Depth: rows recede in size as they go back; Hobson fronts the group. */
 .classroom-pupil { position: absolute; width: 16%; top: 5%; z-index: 1; filter: saturate(.96); }
-.classroom-inspector { left: 17%; }
-.classroom-keeper { left: 42%; top: 2%; }
-.classroom-professor { right: 17%; }
-.classroom-broker { left: 16%; top: 31%; width: 20.5%; z-index: 2; filter: saturate(.98); }
-.classroom-architect { right: 16%; top: 31%; width: 20.5%; z-index: 2; filter: saturate(.98); }
+.classroom-inspector { left: 17%; --pupil-step: 26px; }
+.classroom-keeper { left: 42%; top: 2%; --pupil-step: 0px; }
+.classroom-professor { right: 17%; --pupil-step: -26px; }
+.classroom-broker { left: 16%; top: 31%; width: 20.5%; z-index: 2; --pupil-step: 36px; filter: saturate(.98); }
+.classroom-architect { right: 16%; top: 31%; width: 20.5%; z-index: 2; --pupil-step: -36px; filter: saturate(.98); }
 .classroom-character { position: relative; display: block; width: 100%; height: auto; padding: 0; background: transparent; border-radius: 8px; white-space: normal; z-index: 2; }
 .classroom-character:hover { background: transparent; }
 .classroom-character img { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: contain; filter: drop-shadow(0 8px 5px hsl(var(--classroom-shadow) / .16)); }
