@@ -2,7 +2,8 @@
 
 ## Back Office — classroom Phase 1A
 - [x] Replace the entrance with the classroom layout, five section tabs and six exact supplied owl images, retaining the admin gate and existing destinations.
-- [ ] Verify desktop/mobile arrangement, asset loading and layout-only selection; stop before animations or navigation pending visual approval.
+- [x] Verify desktop/mobile arrangement, private entrance and layout-only selection; 18 existing checks pass, all six hosted images return 200 image/png, preview build clean. Local screenshot checks used exact uploaded-image responses because localhost does not serve hosted asset URLs. Not published.
+- [ ] Add animations and destination transitions only after Marc approves the Phase 1A classroom arrangement.
 
 ## Prototype Contacts — Places view removed
 - [x] Remove the Places view and its tab, leaving one directory with a search field; a place named in conversation now filters that directory. 8 checks pass; browser verified no Places control, filtered answers and unchanged person cards. Not published.
