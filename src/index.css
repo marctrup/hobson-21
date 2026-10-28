@@ -505,7 +505,7 @@ html { caret-color: #2D2D2D; }
   box-shadow: 0 0 8px 3px hsl(var(--classroom-gold) / .55); transition: box-shadow .3s ease, transform .3s ease; }
 .classroom-lamp-beam { position: absolute; left: -14%; bottom: -34%; width: 128%; height: 82%;
   background: linear-gradient(hsl(46 96% 82% / .66), hsl(46 96% 82% / 0) 62%);
-  clip-path: polygon(26% 0, 74% 0, 100% 100%, 0 100%); filter: blur(6px); opacity: .4;
+  clip-path: polygon(26% 0, 74% 0, 100% 100%, 0 100%); filter: blur(8px); opacity: .4;
   transform-origin: 50% 0; transition: opacity .3s ease, transform .3s ease; }
 .classroom-lamp-pool { position: absolute; left: 4%; bottom: -30%; width: 92%; height: 56%; transform-origin: 50% 100%;
   background: radial-gradient(ellipse at 50% 55%, hsl(46 94% 80% / .72), hsl(46 94% 80% / 0) 68%);
