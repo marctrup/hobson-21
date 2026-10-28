@@ -481,12 +481,41 @@ html { caret-color: #2D2D2D; }
   .classroom-teacher { left: 25%; top: 42%; width: 50%; }
 }
 
-/* Desks: thin top on two legs so the owls' feet show beneath, with a small brass lamp. */
+/* Desks: thin top on two legs so the owls' feet show beneath. */
 .classroom-desk { aspect-ratio: 3.2; clip-path: none; box-shadow: none; border-radius: 0; overflow: visible;
   background:
     linear-gradient(hsl(var(--classroom-wood-light)), hsl(var(--classroom-wood)) 60%, hsl(var(--classroom-wood-dark))) top / 100% 20% no-repeat,
     linear-gradient(hsl(var(--classroom-wood-dark)), hsl(var(--classroom-wood-dark))) 7% 0 / 5% 100% no-repeat,
-    linear-gradient(hsl(var(--classroom-wood-dark)), hsl(var(--classroom-wood-dark))) 93% 0 / 5% 100% no-repeat;
-  filter: drop-shadow(0 6px 5px hsl(var(--classroom-shadow) / .3)); }
-.classroom-desk::after { content: ""; position: absolute; right: 9%; bottom: 80%; width: 2.5%; height: 55%; background: hsl(var(--classroom-gold)); border-radius: 2px; }
-.classroom-desk::before { content: ""; position: absolute; right: 2%; bottom: 128%; width: 17%; height: 22%; background: linear-gradient(hsl(var(--classroom-gold)), hsl(var(--classroom-plum))); clip-path: polygon(25% 0, 75% 0, 100% 100%, 0 100%); box-shadow: 0 0 0 0 transparent; filter: drop-shadow(0 6px 8px hsl(var(--classroom-gold) / .9)); }
+    linear-gradient(hsl(var(--classroom-wood-dark)), hsl(var(--classroom-wood-dark))) 93% 0 / 5% 100% no-repeat; }
+.classroom-desk::before { content: ""; position: absolute; inset: 0; background: inherit; filter: brightness(0) blur(3px); opacity: .26; transform: translateY(6px); z-index: -1; }
+
+/* Desk lamp: brass base, stem and jointed arm under a cone shade, throwing light onto the desk. */
+.classroom-lamp { position: absolute; right: 3%; bottom: 78%; width: 36%; height: 70%; z-index: 4; pointer-events: none; }
+.classroom-lamp-base { position: absolute; left: 0; bottom: 0; width: 46%; height: 12%; border-radius: 50%;
+  background: radial-gradient(ellipse at 50% 30%, hsl(var(--classroom-gold)) 0 42%, hsl(var(--classroom-wood-dark)));
+  box-shadow: 0 2px 3px hsl(var(--classroom-shadow) / .4); }
+.classroom-lamp-stem { position: absolute; left: 19%; bottom: 7%; width: 8%; height: 42%; border-radius: 3px;
+  background: linear-gradient(90deg, hsl(var(--classroom-wood-dark)), hsl(var(--classroom-gold)) 45%, hsl(var(--classroom-wood-dark))); }
+.classroom-lamp-arm { position: absolute; left: 21%; bottom: 46%; width: 7%; height: 34%; border-radius: 3px;
+  transform: rotate(24deg); transform-origin: 50% 100%;
+  background: linear-gradient(90deg, hsl(var(--classroom-wood-dark)), hsl(var(--classroom-gold)) 45%, hsl(var(--classroom-wood-dark))); }
+.classroom-lamp-arm::before { content: ""; position: absolute; left: -75%; top: -14%; width: 250%; height: 30%; border-radius: 50%;
+  background: radial-gradient(ellipse at 50% 35%, hsl(var(--classroom-gold)), hsl(var(--classroom-wood-dark))); }
+.classroom-lamp-shade { position: absolute; left: 24%; bottom: 64%; width: 64%; height: 34%;
+  background: linear-gradient(155deg, hsl(var(--classroom-gold)) 0 32%, hsl(var(--classroom-wood-dark)));
+  clip-path: polygon(33% 0, 69% 0, 100% 100%, 0 100%);
+  transform: rotate(-9deg); transform-origin: 50% 100%; transition: filter .3s ease; }
+.classroom-lamp-shade::after { content: ""; position: absolute; left: 10%; bottom: -10%; width: 80%; height: 22%; border-radius: 50%;
+  background: radial-gradient(ellipse at 50% 35%, hsl(48 100% 93%), hsl(41 88% 66%));
+  box-shadow: 0 0 7px 2px hsl(var(--classroom-gold) / .5); transition: box-shadow .3s ease; }
+.classroom-lamp-shade::before { content: ""; position: absolute; left: 2%; top: 94%; width: 96%; height: 170%;
+  background: linear-gradient(hsl(46 95% 80% / .62), hsl(46 95% 80% / 0) 74%);
+  clip-path: polygon(29% 0, 71% 0, 100% 100%, 0 100%); opacity: .5;
+  transform-origin: 50% 0; transition: opacity .3s ease, transform .3s ease; }
+.classroom-lamp-pool { position: absolute; left: 58%; bottom: -16%; width: 130%; height: 34%; transform: translateX(-50%);
+  background: radial-gradient(ellipse at 50% 50%, hsl(46 92% 76% / .85), hsl(46 92% 76% / 0) 72%);
+  opacity: .45; transition: opacity .3s ease, transform .3s ease; }
+.classroom-pupil:hover .classroom-lamp-shade, .classroom-character:focus-visible .classroom-lamp-shade { filter: brightness(1.16); }
+.classroom-pupil:hover .classroom-lamp-shade::after, .classroom-character:focus-visible .classroom-lamp-shade::after { box-shadow: 0 0 20px 9px hsl(var(--classroom-gold) / .85); }
+.classroom-pupil:hover .classroom-lamp-shade::before, .classroom-character:focus-visible .classroom-lamp-shade::before { opacity: 1; transform: scaleY(1.35); }
+.classroom-pupil:hover .classroom-lamp-pool, .classroom-character:focus-visible .classroom-lamp-pool { opacity: 1; transform: translateX(-50%) scale(1.4, 1.3); }
