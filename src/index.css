@@ -416,9 +416,9 @@ html { caret-color: #2D2D2D; }
 }
 @keyframes pupil-step {
   0% { transform: translateY(0) scale(1); }
-  22% { transform: translateY(3px) scale(.965); }
-  58% { transform: translateY(20px) scale(1.17); }
-  78% { transform: translateY(11px) scale(1.06); }
+  18% { transform: translateY(6px) scale(.96); }
+  52% { transform: translateY(38px) scale(1.2); }
+  74% { transform: translateY(20px) scale(1.08); }
   100% { transform: translateY(0) scale(1); }
 }
 .classroom-pupil[data-selected="true"] .classroom-character img {
