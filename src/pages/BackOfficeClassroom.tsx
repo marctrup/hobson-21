@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import room from "@/assets/back-office-classroom.jpg";
 import hobson from "@/assets/back-office/hobson.png.asset.json";
 import keeper from "@/assets/back-office/keeper.png.asset.json";
 import broker from "@/assets/back-office/broker.png.asset.json";
@@ -31,14 +30,12 @@ export default function BackOfficeClassroom() {
         </nav>
       </header>
       <div className="classroom-environment">
-        <img className="classroom-background" src={room} width={1536} height={1024} alt="" loading="eager" />
         <div className="classroom-stage">
           {specialists.map((colleague) => (
             <div key={colleague.id} className={`classroom-pupil classroom-${colleague.id}`} data-selected={selected === colleague.id}>
               <Button variant="ghost" className="classroom-character" aria-label={`${colleague.name} — ${colleague.section}`} aria-pressed={selected === colleague.id} onClick={() => setSelected(colleague.id)} title={colleague.section}>
                 <img src={colleague.image.url} alt={colleague.name} width={768} height={768} draggable={false} />
               </Button>
-              <div className="classroom-desk" aria-hidden="true"><span className="classroom-desk-top" /><span className="classroom-desk-front" /><span className="classroom-desk-leg classroom-desk-leg-left" /><span className="classroom-desk-leg classroom-desk-leg-right" /></div>
             </div>
           ))}
           <div className="classroom-teacher">
