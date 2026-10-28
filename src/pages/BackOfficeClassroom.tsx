@@ -12,6 +12,9 @@ import architectOwl from "@/assets/back-office/architect.png.asset.json";
 const OWLS: Record<string, string> = { hobson: hobsonOwl.url, keeper: keeperOwl.url, broker: brokerOwl.url, inspector: inspectorOwl.url, professor: professorOwl.url, architect: architectOwl.url };
 /** Below this workspace width the illustrated room is unreadable, so a dedicated staff-room list replaces it. */
 const COMPACT_WIDTH = 600;
+/** How far down the staff room a colleague must come before the board takes their dictation. */
+const READING_LINE = 0.7;
+
 
 const specialists = [
   { id: "keeper", name: "The Keeper", section: "Permissions" },
@@ -177,9 +180,15 @@ export default function BackOfficeClassroom({ onOpen, introductions = [] }: {
                 onMouseEnter={() => setFocused(c.id)}
                 onClick={(e) => {
                   const next = selected === c.id ? null : c.id;
+                  selectedRef.current = next;
                   setSelected(next); setFocused(next);
-                  if (next) e.currentTarget.closest("li")?.scrollIntoView({ behavior: "smooth", block: "center" });
+                  const host = ref.current, row = e.currentTarget.closest("li");
+                  if (next && host && row) {
+                    const r = row.getBoundingClientRect(), h = host.getBoundingClientRect();
+                    host.scrollTo({ top: host.scrollTop + (r.top + r.height / 2) - (h.top + h.height * READING_LINE), behavior: "smooth" });
+                  }
                 }}>
+
                 <img src={OWLS[c.id]} alt="" />
                 <span><strong>{c.name}</strong><small>{c.section}</small></span>
               </button>
