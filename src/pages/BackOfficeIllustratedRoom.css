@@ -71,7 +71,7 @@
 }
 .illustrated-hobson-details-head { position: relative; padding-right: 7cqw; }
 .illustrated-hobson-details-title { font-size: 2.6cqw; font-weight: 600; color: hsl(var(--classroom-plum)); }
-.illustrated-hobson-details-note { margin-top: 0.6cqw; font-size: 1.55cqw; line-height: 1.35; color: hsl(var(--ink-muted)); }
+.illustrated-hobson-details-note { margin-top: 0.6cqw; font-size: 1.55cqw; line-height: 1.35; color: var(--ink-muted); }
 .illustrated-hobson-details-close { position: absolute; top: -0.6cqw; right: 0; height: auto; padding: 0.3cqw 0.9cqw; font-size: 1.5cqw; }
 .illustrated-hobson-details-list { margin-top: 1.4cqw; display: grid; gap: 0.5cqw; }
 .illustrated-hobson-details-row {
@@ -88,5 +88,5 @@
 }
 .illustrated-hobson-details-row:hover { background: hsl(var(--secondary)); }
 .illustrated-hobson-details-name { font-size: 1.75cqw; font-weight: 600; color: hsl(var(--classroom-plum)); }
-.illustrated-hobson-details-area { font-size: 1.4cqw; color: hsl(var(--ink-muted)); }
-.illustrated-hobson-details-text { grid-column: 1 / -1; font-size: 1.45cqw; line-height: 1.35; color: hsl(var(--ink-muted)); }
+.illustrated-hobson-details-area { font-size: 1.4cqw; color: var(--ink-muted); }
+.illustrated-hobson-details-text { grid-column: 1 / -1; font-size: 1.45cqw; line-height: 1.35; color: var(--ink-muted); }
