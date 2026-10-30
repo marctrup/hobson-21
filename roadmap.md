@@ -228,3 +228,6 @@
 
 ## Prototype Back Office — Hobson answers to hover alone
 - [x] The main owl is no longer clickable: hovering or focusing him still writes his introduction on the whiteboard, but clicking opens nothing and his cursor no longer invites a click; the colleague roster card he used to open is withdrawn. The five colleagues keep their clickable handover. Verified live (hover writes, click does nothing, Papers still opens The Professor); 5 classroom checks pass, build clean. Not published.
+
+## Prototype Back Office — the room at nine tenths
+- [x] The illustrated room now fills nine tenths of the workspace instead of all of it (measured 732×865 within an 813×936 workspace), keeping the team centred with an even margin. Hover introductions and colleague handovers unchanged; 5 classroom checks pass. Not published.
