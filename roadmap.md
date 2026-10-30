@@ -234,3 +234,4 @@
 
 ## Prototype Back Office — Hobson's standing message on the board
 - [x] The whiteboard now carries Hobson's own invitation at all times — "My Back Office will be opened to you soon. To introduce my team please hover over them so they can introduce themselves to you." — written out on entry and returned to whenever the mouse leaves a colleague. Hobson himself is no longer a hover target: his target has been withdrawn, so only the five colleagues write themselves and open their work. The staff room asks for a scroll instead of a hover. 5 classroom checks pass; measured in the preview with no clipping. Not published.
+- [ ] Board text made larger and clearer to read, keeping Hobson's permanent wording and colleague overwrites exactly as they are.
