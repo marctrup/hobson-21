@@ -111,6 +111,7 @@ export default function PrototypeBackOffice() {
       bring(id);
     }, 300);
   };
+  /** Kept for when click-through returns to the room: colleagues currently introduce themselves on hover alone. */
   const choose = (id: ColleagueId) => { const c = COLLEAGUES.find((x) => x.id === id)!; say("user", `${c.name} — ${c.choice}`); setTimeout(() => { say("hobson", c.handover); bring(id); }, 250); };
   const home = () => { setActive(null); say("hobson", "We are back in the Back Office, and everything you confirmed is kept. How may I help you next?", true); };
 
@@ -168,7 +169,7 @@ export default function PrototypeBackOffice() {
           </div>
         )}
         <div className="back-office-team-workspace relative min-h-0 flex-1 overflow-auto">
-          {!active && <BackOfficeClassroom introductions={COLLEAGUES} onOpen={(id) => choose(id as ColleagueId)} />}
+          {!active && <BackOfficeClassroom introductions={COLLEAGUES} />}
           {opened.map((id) => {
             const c = COLLEAGUES.find((x) => x.id === id);
             if (!c) return null;

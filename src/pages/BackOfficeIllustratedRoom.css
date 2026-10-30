@@ -24,7 +24,8 @@
   border-radius: 8px;
   background: transparent;
   box-shadow: none;
-  cursor: pointer;
+  /* Hovering writes the board; clicking opens nothing for now. */
+  cursor: default;
 }
 .illustrated-room .illustrated-colleague:hover { background: transparent; box-shadow: none; }
 .illustrated-room .illustrated-colleague:focus-visible {
@@ -82,7 +83,6 @@
 
 .compact-member span { display: flex; flex-direction: column; }
 .compact-member small { color: hsl(var(--muted-foreground)); font-size: 0.8rem; }
-.compact-open { margin: 0 0.75rem 0.75rem; width: calc(100% - 1.5rem); }
 .compact-signoff { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.5rem; min-height: 42cqh; padding: 1.25rem; margin: 0.5rem 0 0; border: 1px solid hsl(var(--border)); border-radius: 12px; background: hsl(var(--card)); font-family: "Caveat", cursive; font-size: 1.3rem; color: hsl(var(--primary)); text-align: center; }
 .compact-signoff img { width: 3rem; height: 3rem; object-fit: contain; flex-shrink: 0; }
 .compact-top { font-family: inherit; font-size: 1.05rem; text-decoration: underline; text-underline-offset: 3px; }
