@@ -55,7 +55,7 @@ function WrittenIntroduction({ name, text, titled = true }: { name: string; text
   </>;
 }
 
-/** Image-relative targets preserve the supplied room: each colleague writes themselves on the board when hovered. */
+/** Image-relative targets preserve the supplied room and existing colleague handovers. */
 const ART_ASPECT = 1162 / 1374;
 /** Fill the space, trimming at most a thin edge and stretching gently before falling back to centring. */
 const MAX_EDGE_TRIM = 0.10;
@@ -97,14 +97,15 @@ function useRoomFill() {
   return { ref, size, compact };
 }
 
-/** Click-through to a colleague's work is withdrawn for now: hovering (or focusing) writes their introduction on the board. */
-export default function BackOfficeClassroom({ introductions = [] }: {
+export default function BackOfficeClassroom({ onOpen, introductions = [] }: {
+  onOpen?: (id: string) => void;
   introductions?: readonly { id: string; contribution: string }[];
 }) {
   const [hovered, setHovered] = useState<string | null>(null);
 
   /** Staff-room state: the board follows whichever colleague the list is resting on. */
   const [focused, setFocused] = useState<string | null>(null);
+  const [selected, setSelected] = useState<string | null>(null);
   const listRef = useRef<HTMLUListElement | null>(null);
   const { ref, size, compact } = useRoomFill();
   useEffect(() => {
@@ -119,6 +120,7 @@ export default function BackOfficeClassroom({ introductions = [] }: {
   const contribution = introductions.find((c) => c.id === hovered)?.contribution ?? "";
   /** Hobson himself is never a target: the board carries his invitation until a colleague is reached. */
   const writing = colleague ? { name: colleague.name, text: contribution } : { name: "Hobson", text: BOARD_INVITATION };
+  const open = (id: string) => { onOpen?.(id); };
 
   /** Whose turn it is to speak on the staff-room board, in the butler's own mobile wording. */
   const writtenFor = (id: string | null) => {
@@ -128,6 +130,7 @@ export default function BackOfficeClassroom({ introductions = [] }: {
   };
 
   /** The board writes whichever colleague the list is resting on, so the room reads as you scroll. */
+  const selectedRef = useRef<string | null>(null);
   useEffect(() => {
     if (!compact) return;
     const host = ref.current, list = listRef.current;
@@ -140,7 +143,7 @@ export default function BackOfficeClassroom({ introductions = [] }: {
       return Math.abs(r.top + r.height / 2 - readingLine(host));
     };
     const pick = () => {
-      if (host.scrollTop < 4) { setFocused(null); return; }
+      if (host.scrollTop < 4) { if (!selectedRef.current) setFocused(null); return; }
       let best = rows[0], bestScore = distance(rows[0]);
       for (const row of rows) {
         const s = distance(row);
@@ -168,7 +171,7 @@ export default function BackOfficeClassroom({ introductions = [] }: {
 
 
   if (compact) {
-    const written = focused;
+    const written = focused ?? selected;
     const board = writtenFor(written);
     return (
       <main ref={ref} className="illustrated-classroom compact-classroom" aria-label="Back Office classroom">
@@ -186,12 +189,14 @@ export default function BackOfficeClassroom({ introductions = [] }: {
           {specialists.map((c) => {
             const active = written === c.id;
             return <li key={c.id} data-colleague={c.id} className={active ? "is-active" : ""}>
-              <button type="button" className="compact-member" aria-label={c.section}
-                onMouseEnter={() => setFocused(c.id)} onFocus={() => setFocused(c.id)}
+              <button type="button" className="compact-member" aria-expanded={selected === c.id} aria-label={c.section}
+                onMouseEnter={() => setFocused(c.id)}
                 onClick={(e) => {
-                  setFocused(c.id);
+                  const next = selected === c.id ? null : c.id;
+                  selectedRef.current = next;
+                  setSelected(next); setFocused(next);
                   const host = ref.current, row = e.currentTarget.closest("li");
-                  if (host && row) {
+                  if (next && host && row) {
                     const r = row.getBoundingClientRect(), h = host.getBoundingClientRect();
                     host.scrollTo({ top: host.scrollTop + (r.top + r.height / 2) - readingLine(host), behavior: "smooth" });
                   }
@@ -200,6 +205,7 @@ export default function BackOfficeClassroom({ introductions = [] }: {
                 <img src={OWLS[c.id]} alt="" />
                 <span><strong>{c.name}</strong><small>{c.section}</small></span>
               </button>
+              {selected === c.id && <Button size="sm" className="compact-open" onClick={() => open(c.id)}>Open {c.section.toLowerCase()}</Button>}
             </li>;
           })}
         </ul>
@@ -226,7 +232,7 @@ export default function BackOfficeClassroom({ introductions = [] }: {
           <Button key={c.id} variant="ghost" className={`illustrated-colleague illustrated-${c.id}`}
             aria-label={c.section} aria-describedby={hovered === c.id ? "classroom-introduction" : undefined}
             onMouseEnter={() => setHovered(c.id)} onMouseLeave={() => setHovered(null)}
-            onFocus={() => setHovered(c.id)} onBlur={() => setHovered(null)}>
+            onFocus={() => setHovered(c.id)} onBlur={() => setHovered(null)} onClick={() => open(c.id)}>
             <span className="sr-only">{c.name}</span>
           </Button>
         ))}
