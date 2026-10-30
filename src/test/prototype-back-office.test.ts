@@ -21,6 +21,6 @@ describe("back office routing", () => {
   });
 
   it("makes every colleague introduce themselves by name", () => {
-    for (const c of COLLEAGUES) expect(c.contribution.startsWith(`Hello, I'm ${c.name}. `)).toBe(true);
+    for (const c of COLLEAGUES) expect(c.contribution.startsWith(`Hello, I'm ${c.name}.\n`)).toBe(true);
   });
 });

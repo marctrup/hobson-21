@@ -56,7 +56,7 @@
 }
 .illustrated-introduction strong { display: block; font-size: 3.5cqw; line-height: 1.15; font-weight: 700; }
 /* The largest writing that still sits inside the drawn whiteboard, for Hobson's message and the longest colleague line alike. */
-.illustrated-introduction p { margin: 1% 0 0; font-size: 3.1cqw; line-height: 1.05; font-weight: 500; }
+.illustrated-introduction p { margin: 1% 0 0; font-size: 3.1cqw; line-height: 1.05; font-weight: 500; white-space: pre-line; }
 
 
 
@@ -68,7 +68,7 @@
 .compact-board-owl { width: 3.5rem; height: 3.5rem; object-fit: contain; flex-shrink: 0; }
 .compact-board-text { font-family: "Caveat", cursive; color: hsl(var(--primary)); line-height: 1.2; }
 .compact-board-text strong { font-size: 1.5rem; }
-.compact-board-text p { margin: 0.25rem 0 0; font-size: 1.2rem; }
+.compact-board-text p { margin: 0.25rem 0 0; font-size: 1.2rem; white-space: pre-line; }
 .compact-today { margin: 0.5rem 0 0; font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: hsl(var(--muted-foreground)); }
 .compact-hint { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.4rem; min-height: 11rem; margin: 0; padding: 1rem; font-family: "Caveat", cursive; font-size: 1.35rem; line-height: 1.25; color: hsl(var(--primary)); text-align: center; opacity: 0.85; }
 .compact-hint span:last-child { font-size: 1.6rem; }
