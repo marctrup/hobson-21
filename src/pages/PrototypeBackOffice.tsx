@@ -145,7 +145,6 @@ export default function PrototypeBackOffice() {
                 <span className="rounded border border-bone bg-paper px-3 py-1 font-serif text-sm font-semibold tracking-[0.2em] text-charcoal shadow-sm">CLOSED</span>
               </div>
               <p className="text-sm font-semibold leading-snug">Conversations are temporarily unavailable from here.</p>
-              <p className="mt-1.5 text-sm leading-relaxed text-ink-muted">For today, please hover over my colleagues to meet them, and click one to open their work.</p>
             </div>
           </div>
           <div ref={logEnd} />
