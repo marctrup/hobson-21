@@ -30,8 +30,10 @@ const specialists = [
   { id: "architect", name: "The Architect", section: "Units" },
 ] as const;
 
-/** Hobson speaks for the whole team: his own introduction presents the specialists beside him. */
-const HOBSON_INTRODUCTION = "Good day. I am Hobson. May I present my colleagues — the Professor, the Architect, the Broker, the Keeper and the Inspector. Hover over any of them, or click, for more details.";
+/** Hobson's standing words on the board: they stay written until a colleague takes the pen. */
+const BOARD_INVITATION = "My Back Office will be opened to you soon. To introduce my team please hover over them so they can introduce themselves to you.";
+/** The staff room is scrolled and tapped rather than hovered, so the invitation asks for that. */
+const BOARD_INVITATION_COMPACT = "My Back Office will be opened to you soon. To introduce my team please scroll to them so they can introduce themselves to you.";
 
 function WrittenIntroduction({ name, text }: { name: string; text: string }) {
   const [length, setLength] = useState(0);
@@ -115,15 +117,14 @@ export default function BackOfficeClassroom({ onOpen, introductions = [] }: {
   }, []);
   const colleague = specialists.find((c) => c.id === hovered);
   const contribution = introductions.find((c) => c.id === hovered)?.contribution ?? "";
-  const writing = hovered === "hobson"
-    ? { name: "Hobson", text: HOBSON_INTRODUCTION }
-    : colleague ? { name: colleague.name, text: contribution } : null;
+  /** Hobson himself is never a target: the board carries his invitation until a colleague is reached. */
+  const writing = colleague ? { name: colleague.name, text: contribution } : { name: "Hobson", text: BOARD_INVITATION };
   const open = (id: string) => { onOpen?.(id); };
 
   /** Whose turn it is to speak on the staff-room board, in the butler's own mobile wording. */
   const writtenFor = (id: string | null) => {
     const person = specialists.find((c) => c.id === id);
-    if (!person) return { name: "Hobson", text: HOBSON_INTRODUCTION.replace("Hover over any of them, or click, for more details.", "Tap any of them to hear from them in person.") };
+    if (!person) return { name: "Hobson", text: BOARD_INVITATION_COMPACT };
     return { name: person.name, text: introductions.find((c) => c.id === id)?.contribution ?? "" };
   };
 
@@ -226,12 +227,6 @@ export default function BackOfficeClassroom({ onOpen, introductions = [] }: {
         left: "50%", top: "50%", transform: "translate(-50%, -50%)",
       } : undefined}>
         <img className="illustrated-room-art" src={room.url} alt="Hobson at the front of his team's classroom" width={1162} height={1374} draggable={false} />
-        <Button variant="ghost" className="illustrated-colleague illustrated-hobson" aria-label="Hobson"
-          aria-describedby={hovered === "hobson" ? "classroom-introduction" : undefined}
-          onMouseEnter={() => setHovered("hobson")} onMouseLeave={() => setHovered(null)}
-          onFocus={() => setHovered("hobson")} onBlur={() => setHovered(null)}>
-          <span className="sr-only">Hobson — hover for an introduction to his colleagues</span>
-        </Button>
 
         {specialists.map((c) => (
           <Button key={c.id} variant="ghost" className={`illustrated-colleague illustrated-${c.id}`}
@@ -241,9 +236,10 @@ export default function BackOfficeClassroom({ onOpen, introductions = [] }: {
             <span className="sr-only">{c.name}</span>
           </Button>
         ))}
-        {writing && <div id="classroom-introduction" role="tooltip" className={`illustrated-introduction ${hovered === "hobson" ? "illustrated-introduction-hobson" : ""}`}>
-          <WrittenIntroduction key={hovered ?? "none"} name={writing.name} text={writing.text} />
-        </div>}
+        <div id="classroom-introduction" role="region" aria-label="Hobson's whiteboard" aria-live="polite"
+          className={`illustrated-introduction ${colleague ? "" : "illustrated-introduction-standby"}`}>
+          <WrittenIntroduction key={hovered ?? "invitation"} name={writing.name} text={writing.text} />
+        </div>
       </div>
     </main>
   );
