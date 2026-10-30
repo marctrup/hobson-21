@@ -1,5 +1,5 @@
 import { lazy, Suspense, useEffect, useRef, useState } from "react";
-import { ArrowRight, X } from "lucide-react";
+import { ArrowRight, FileText, MapPin, MessageCircle, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { PrototypeGateAdmitted } from "@/components/prototype/PrototypeGate";
 import owlDefault from "@/assets/prototype/owl-default.png";
@@ -120,33 +120,40 @@ export default function PrototypeBackOffice() {
     <div className="flex h-screen w-full overflow-hidden bg-bone-wash text-ink">
       <aside className="relative flex w-[132px] shrink-0 flex-col border-r border-bone bg-background py-4">
         <div className="grid h-10 w-10 place-items-center self-center" aria-hidden><img src={owlDefault} alt="" className="h-10 w-10 object-contain" /></div>
-        <nav aria-label="Back Office" className="mt-auto flex w-full flex-col gap-1 border-t border-faint-rule px-2 pt-3">
-          <button type="button" aria-current={!active ? "page" : undefined} onClick={() => active && home()} className={`rounded-lg px-3 py-2 text-left text-[11px] font-medium leading-tight text-ink transition ${!active ? "bg-secondary" : "hover:bg-paper"}`}>Back Office</button>
-          <div className="mt-2 grid h-9 w-9 place-items-center rounded-full bg-bone text-xs font-semibold text-charcoal" title="Admin">MT</div>
+        <nav aria-label="Hobson" className="mt-6 flex w-full flex-col items-center gap-3 px-2">
+          {[{ label: "Portfolio", Icon: MapPin }, { label: "Papers", Icon: FileText }, { label: "Conversations", Icon: MessageCircle }].map(({ label, Icon }) => (
+            <button key={label} type="button" disabled title="Closed for now" className="flex flex-col items-center gap-1 rounded-lg px-2 py-1.5 text-[12px] text-ink opacity-80">
+              <Icon className="h-4 w-4" aria-hidden />{label}
+            </button>
+          ))}
         </nav>
+        <nav aria-label="Back Office" className="mt-4 flex w-full flex-col gap-1 border-t border-faint-rule px-2 pt-3">
+          <button type="button" aria-current={!active ? "page" : undefined} onClick={() => active && home()} className={`rounded-lg px-3 py-2 text-center text-[12px] font-medium leading-tight text-ink transition ${!active ? "bg-secondary" : "hover:bg-paper"}`}>Back Office</button>
+        </nav>
+        <div className="mt-auto grid h-9 w-9 place-items-center self-center rounded-full bg-bone text-xs font-semibold text-charcoal" title="Admin">MT</div>
       </aside>
 
-      {/* Back Office conversation: visible until a colleague's work is brought into view */}
+      {/* Back Office conversation: closed for now — a banner says so and the composer is disabled. */}
       <section aria-label="Chat with Hobson" className={`w-full shrink-0 flex-col border-r border-bone bg-background md:w-[380px] ${active ? "hidden" : "flex"}`}>
         <header className="flex h-14 shrink-0 items-center border-b border-faint-rule px-5"><h1 className="text-[15px] font-semibold">Back Office</h1></header>
         <div role="log" aria-label="Conversation" className="flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto px-5 py-4">
-          {messages.map((m, i) => {
-            const cont = i > 0 && messages[i - 1].role === "hobson" && m.role === "hobson";
-            return (
-              <div key={m.id} className={`flex min-w-0 flex-col gap-2 ${m.role === "user" ? "items-end" : "items-start"}`}>
-                <div className="flex min-w-0 gap-2">
-                  {m.role === "hobson" && (cont ? <span className="w-10 shrink-0" /> : <img src={owlDefault} alt="Hobson" className="h-10 w-10 shrink-0 object-contain" />)}
-                  <div className={`min-w-0 rounded-lg px-3.5 py-2.5 ${m.role === "user" ? "bg-secondary" : ""}`}><p className="whitespace-pre-line break-words text-sm leading-relaxed">{m.text}</p></div>
-                </div>
+          <div className="flex min-w-0 items-start gap-2">
+            <img src={owlDefault} alt="Hobson" className="h-10 w-10 shrink-0 object-contain" />
+            <div className="min-w-0 flex-1 rounded-xl bg-secondary px-4 pb-4 pt-3">
+              <div className="mx-auto mb-3 flex w-fit flex-col items-center" aria-hidden>
+                <span className="h-2 w-2 rounded-full bg-primary/60" />
+                <span className="rounded border border-bone bg-paper px-3 py-1 font-serif text-sm font-semibold tracking-[0.2em] text-charcoal shadow-sm">CLOSED</span>
               </div>
-            );
-          })}
+              <p className="text-sm font-semibold leading-snug">Conversations are temporarily unavailable from here.</p>
+              <p className="mt-1.5 text-sm leading-relaxed text-ink-muted">For today, please hover over my colleagues to meet them, and click one to open their work.</p>
+            </div>
+          </div>
           <div ref={logEnd} />
         </div>
         <div className="border-t border-faint-rule px-5 pb-4 pt-3">
-          <form onSubmit={(e) => { e.preventDefault(); send(input); }} className="flex items-center gap-1 rounded-full border border-input bg-background px-4 py-2 focus-within:ring-2 focus-within:ring-ring">
-            <input value={input} onChange={(e) => setInput(e.target.value)} aria-label="Ask Hobson" placeholder="How may I help?" className="min-w-0 flex-1 bg-transparent text-sm outline-none placeholder:text-muted-foreground" />
-            <Button type="submit" size="icon" variant="ghost" disabled={!input.trim()} aria-label="Send message" className="h-8 w-8 shrink-0"><ArrowRight className="h-5 w-5" /></Button>
+          <form onSubmit={(e) => e.preventDefault()} className="flex items-center gap-1 rounded-full border border-input bg-background px-4 py-2">
+            <input disabled aria-label="Ask Hobson" placeholder="Conversations are temporarily unavailable" className="min-w-0 flex-1 bg-transparent text-sm outline-none placeholder:text-muted-foreground" />
+            <Button type="submit" size="icon" variant="ghost" disabled aria-label="Send message" className="h-8 w-8 shrink-0"><ArrowRight className="h-5 w-5" /></Button>
           </form>
         </div>
       </section>
