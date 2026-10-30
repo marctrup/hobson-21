@@ -31,25 +31,25 @@ const ROSTER = [
   { id: "architect", contribution: "I keep the structure of your estate accurate." },
 ];
 
-it("Hobson presents his specialist assistance and invites hover or click for details", () => {
+it("the board carries Hobson's invitation until a colleague takes the pen", () => {
   const onOpen = vi.fn();
   render(<BackOfficeClassroom onOpen={onOpen} introductions={ROSTER} />);
-  fireEvent.mouseEnter(screen.getByRole("button", { name: "Hobson" }));
-  const board = screen.getByRole("tooltip").querySelector(".sr-only")?.textContent ?? "";
-  expect(board).toMatch(/May I present my colleagues/i);
-  expect(board).toMatch(/the Professor, the Architect, the Broker, the Keeper and the Inspector/);
-  expect(board).toMatch(/Hover over any of them, or click, for more details/i);
+  const board = () => screen.getByRole("region", { name: "Hobson's whiteboard" }).querySelector(".sr-only")?.textContent ?? "";
+  expect(board()).toMatch(/^Hobson\. My Back Office will be opened to you soon\./);
+  expect(board()).toMatch(/To introduce my team please hover over them so they can introduce themselves to you/);
   expect(onOpen).not.toHaveBeenCalled();
 });
 
-it("Hobson answers to hover alone while his colleagues keep their clickable function", () => {
+it("Hobson himself is no longer a target, while his colleagues keep theirs", () => {
   const onOpen = vi.fn();
   render(<BackOfficeClassroom onOpen={onOpen} introductions={ROSTER} />);
-  fireEvent.click(screen.getByRole("button", { name: "Hobson" }));
+  const board = () => screen.getByRole("region", { name: "Hobson's whiteboard" }).querySelector(".sr-only")?.textContent ?? "";
+  expect(screen.queryByRole("button", { name: "Hobson" })).toBeNull();
+  fireEvent.mouseEnter(screen.getByRole("button", { name: "Papers" }));
+  expect(board()).toMatch(/^The Professor\. I maintain everything Hobson knows from your documents/);
   expect(onOpen).not.toHaveBeenCalled();
-  expect(screen.queryByRole("region", { name: "Hobson's colleagues" })).toBeNull();
-  fireEvent.mouseEnter(screen.getByRole("button", { name: "Hobson" }));
-  expect(screen.getByRole("tooltip").querySelector(".sr-only")?.textContent).toMatch(/May I present my colleagues/i);
+  fireEvent.mouseLeave(screen.getByRole("button", { name: "Papers" }));
+  expect(board()).toMatch(/My Back Office will be opened to you soon/);
   fireEvent.click(screen.getByRole("button", { name: "Papers" }));
   expect(onOpen).toHaveBeenLastCalledWith("professor");
 });
@@ -88,7 +88,7 @@ it("the staff room writes a colleague's own words on the board when you reach th
   const board = () => document.querySelector(".compact-board .sr-only")?.textContent ?? "";
   inStaffRoom(() => {
     render(<BackOfficeClassroom onOpen={onOpen} introductions={ROSTER} />);
-    expect(screen.getByText(/Please scroll/i)).toBeInTheDocument();
+    expect(screen.getByText(/each colleague in turn/i)).toBeInTheDocument();
     expect(board()).toMatch(/^Hobson\./);
     fireEvent.mouseEnter(screen.getByRole("button", { name: "Papers" }));
     expect(board()).toMatch(/^The Professor\. I maintain everything Hobson knows from your documents/);
