@@ -57,6 +57,8 @@ const ART_ASPECT = 1162 / 1374;
 /** Fill the space, trimming at most a thin edge and stretching gently before falling back to centring. */
 const MAX_EDGE_TRIM = 0.10;
 const MAX_STRETCH = 1.35;
+/** The room keeps a little air around it: everything within it — board, colleagues, targets — shrinks together. */
+const ROOM_SCALE = 0.9;
 
 function useRoomFill() {
   const ref = useRef<HTMLElement | null>(null);
@@ -82,7 +84,7 @@ function useRoomFill() {
         if (bh / h > MAX_STRETCH) { h = bh / MAX_STRETCH; w = h * ART_ASPECT; }
         if (w / bw > 1.40) { w = Math.min(bw, bh * ART_ASPECT); h = w / ART_ASPECT; }
       }
-      setSize({ w, h });
+      setSize({ w: w * ROOM_SCALE, h: h * ROOM_SCALE });
     };
     measure();
     const observer = new ResizeObserver(measure);

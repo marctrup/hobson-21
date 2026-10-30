@@ -10,8 +10,8 @@
 }
 .illustrated-room {
   position: relative;
-  /* Measured to fill the workspace; these values hold only until the fill effect reports. */
-  width: min(100%, 84.57cqh);
+  /* Measured to fill the workspace at nine tenths; these values hold only until the fill effect reports. */
+  width: min(90%, 76.11cqh);
   aspect-ratio: 1162 / 1374;
   container-type: inline-size;
 }
