@@ -19,4 +19,8 @@ describe("back office routing", () => {
       expect(c.contribution.length).toBeGreaterThan(30);
     }
   });
+
+  it("makes every colleague introduce themselves by name", () => {
+    for (const c of COLLEAGUES) expect(c.contribution.startsWith(`Hello, I'm ${c.name}. `)).toBe(true);
+  });
 });

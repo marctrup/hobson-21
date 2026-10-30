@@ -35,7 +35,8 @@ const BOARD_INVITATION = "My Back Office will be opened to you soon. To introduc
 /** The staff room is scrolled and tapped rather than hovered, so the invitation asks for that. */
 const BOARD_INVITATION_COMPACT = "My Back Office will be opened to you soon. To introduce my team please scroll to them so they can introduce themselves to you.";
 
-function WrittenIntroduction({ name, text }: { name: string; text: string }) {
+/** The board writes a colleague's own words; `titled` adds a separate name line, which Hobson's invitation needs and a colleague's greeting already carries. */
+function WrittenIntroduction({ name, text, titled = true }: { name: string; text: string; titled?: boolean }) {
   const [length, setLength] = useState(0);
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
@@ -50,7 +51,7 @@ function WrittenIntroduction({ name, text }: { name: string; text: string }) {
   }, [text]);
   return <>
     <span className="sr-only">{name}. {text}</span>
-    <div aria-hidden="true"><strong>{name}</strong><p>{text.slice(0, length)}</p></div>
+    <div aria-hidden="true">{titled && <strong>{name}</strong>}<p>{text.slice(0, length)}</p></div>
   </>;
 }
 
@@ -238,7 +239,7 @@ export default function BackOfficeClassroom({ onOpen, introductions = [] }: {
         ))}
         <div id="classroom-introduction" role="region" aria-label="Hobson's whiteboard" aria-live="polite"
           className="illustrated-introduction">
-          <WrittenIntroduction key={hovered ?? "invitation"} name={writing.name} text={writing.text} />
+          <WrittenIntroduction key={hovered ?? "invitation"} name={writing.name} text={writing.text} titled={hovered === null} />
         </div>
       </div>
     </main>
