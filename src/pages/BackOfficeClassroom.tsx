@@ -237,7 +237,7 @@ export default function BackOfficeClassroom({ onOpen, introductions = [] }: {
           </Button>
         ))}
         <div id="classroom-introduction" role="region" aria-label="Hobson's whiteboard" aria-live="polite"
-          className={`illustrated-introduction ${colleague ? "" : "illustrated-introduction-standby"}`}>
+          className="illustrated-introduction">
           <WrittenIntroduction key={hovered ?? "invitation"} name={writing.name} text={writing.text} />
         </div>
       </div>

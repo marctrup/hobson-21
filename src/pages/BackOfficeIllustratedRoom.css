@@ -41,10 +41,11 @@
 .illustrated-introduction {
   position: absolute;
   z-index: 3;
-  top: 17%;
-  left: 26.5%;
-  width: 47%;
-  height: 15.5%;
+  /* Traced to the drawn whiteboard's own edges (15.6%-33.3% high, 25.5%-74.4% wide) so writing uses all of it. */
+  top: 16.1%;
+  left: 26%;
+  width: 47.9%;
+  height: 16.7%;
   padding: 1% 1.8%;
   border-radius: 0;
   background: hsl(var(--classroom-board));
@@ -54,9 +55,8 @@
   pointer-events: none;
 }
 .illustrated-introduction strong { display: block; font-size: 3.5cqw; line-height: 1.15; font-weight: 700; }
-.illustrated-introduction p { margin: 1% 0 0; font-size: 2.9cqw; line-height: 1.08; font-weight: 500; }
-/* Hobson's standing invitation runs longer than a colleague's line, so it is written a touch smaller to stay on the board. */
-.illustrated-introduction-standby p { font-size: 2.35cqw; line-height: 1.12; }
+/* The largest writing that still sits inside the drawn whiteboard, for Hobson's message and the longest colleague line alike. */
+.illustrated-introduction p { margin: 1% 0 0; font-size: 3.1cqw; line-height: 1.05; font-weight: 500; }
 
 
 
