@@ -55,9 +55,8 @@
   pointer-events: none;
 }
 .illustrated-introduction strong { display: block; font-size: 3.5cqw; line-height: 1.15; font-weight: 700; }
-.illustrated-introduction p { margin: 1% 0 0; font-size: 2.9cqw; line-height: 1.08; font-weight: 500; }
-/* Hobson's standing invitation runs longer than a colleague's line, so it is written a touch smaller to stay on the board. */
-.illustrated-introduction-standby p { font-size: 2.35cqw; line-height: 1.12; }
+/* The largest writing that still sits inside the drawn whiteboard, for Hobson's message and the longest colleague line alike. */
+.illustrated-introduction p { margin: 1% 0 0; font-size: 3.1cqw; line-height: 1.05; font-weight: 500; }
 
 
 
