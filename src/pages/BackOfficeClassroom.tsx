@@ -184,7 +184,6 @@ export default function BackOfficeClassroom({ onOpen, introductions = [] }: {
           </section>
           <p className="compact-today">Today's work · 28 Oct</p>
         </div>
-        <p className="compact-hint"><span>Please scroll — each colleague in turn will write themselves on the board.</span><span aria-hidden="true">↓</span></p>
         <ul className="compact-team" ref={listRef}>
 
           {specialists.map((c) => {

@@ -88,7 +88,7 @@ it("the staff room writes a colleague's own words on the board when you reach th
   const board = () => document.querySelector(".compact-board .sr-only")?.textContent ?? "";
   inStaffRoom(() => {
     render(<BackOfficeClassroom onOpen={onOpen} introductions={ROSTER} />);
-    expect(screen.getByText(/each colleague in turn/i)).toBeInTheDocument();
+    expect(screen.queryByText(/each colleague in turn/i)).not.toBeInTheDocument();
     expect(board()).toMatch(/^Hobson\./);
     fireEvent.mouseEnter(screen.getByRole("button", { name: "Papers" }));
     expect(board()).toMatch(/^The Professor\. I maintain everything Hobson knows from your documents/);
