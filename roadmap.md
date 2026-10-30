@@ -231,3 +231,6 @@
 
 ## Prototype Back Office — the room at nine tenths
 - [x] The illustrated room now fills nine tenths of the workspace instead of all of it (measured 732×865 within an 813×936 workspace), keeping the team centred with an even margin. Hover introductions and colleague handovers unchanged; 5 classroom checks pass. Not published.
+
+## Prototype Back Office — Hobson's standing message on the board
+- [x] The whiteboard now carries Hobson's own invitation at all times — "My Back Office will be opened to you soon. To introduce my team please hover over them so they can introduce themselves to you." — written out on entry and returned to whenever the mouse leaves a colleague. Hobson himself is no longer a hover target: his target has been withdrawn, so only the five colleagues write themselves and open their work. The staff room asks for a scroll instead of a hover. 5 classroom checks pass; measured in the preview with no clipping. Not published.
