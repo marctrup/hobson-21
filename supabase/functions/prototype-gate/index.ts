@@ -89,7 +89,8 @@ serve(async (req) => {
       return json({ error: "Invalid pass phrase format" }, 400);
     }
 
-    const expected = Deno.env.get(scope === "unit" ? "PROTOTYPE_UNIT_PASS_PHRASE" : scope === "documents" ? "PROTOTYPE_DOCUMENTS_PASS_PHRASE" : scope === "backoffice" ? "PROTOTYPE_BACKOFFICE_PASS_PHRASE" : "PROTOTYPE_PASS_PHRASE");
+    // One shared admin phrase for every prototype; each scope keeps its own admission flag.
+    const expected = Deno.env.get("PROTOTYPE_ADMIN_PASS_PHRASE");
     if (!expected) {
       // Fail closed: without a configured phrase nobody is admitted.
       console.error("PROTOTYPE_PASS_PHRASE is not configured");
