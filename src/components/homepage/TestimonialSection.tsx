@@ -4,7 +4,10 @@ import { serifStack } from "@/components/HobsonGateway";
  * Only genuine remarks belong here. Nothing is invented: no names, companies,
  * photographs, ratings or statistics. Every remark is treated alike — the same
  * type size, the same rule, the same caption — because none outweighs another.
- * Add a further remark to the collection and it joins the pair on equal terms.
+ * Add a further remark to the collection and it joins the rest on equal terms.
+ *
+ * A remark may be written in several paragraphs: separate them with a blank
+ * line and each is set as its own paragraph, in the order it was given.
  */
 type Testimonial = {
   quote: string;
@@ -20,6 +23,11 @@ const testimonials: Testimonial[] = [
     quote:
       "Just used Hobson for the first time as I was updating a tenancy schedule and it was brilliant. Just a simple inquiry, but it means I don’t have to reopen the lease. It saves time.",
     attribution: "CEO of a Family Office",
+  },
+  {
+    quote:
+      "Last week I didn’t need to refer to any documentation so it was Friday pm until it was used.\n\nBut that doesn’t diminish the value – it’s one of those things that you may not use everyday (although in larger clients you will) but when do use it – it’s wonderful.\n\nAnd having the documents all so well structured is very valuable too",
+    attribution: "COO of a Family Office",
   },
 ];
 
@@ -42,23 +50,23 @@ export const TestimonialSection = () => (
           id="testimonial-heading"
           className="text-3xl sm:text-4xl font-bold text-foreground tracking-tight mb-4"
         >
-          Two things people have said{" "}
+          Three things people have said{" "}
           <span style={{ color: "#B4914F" }}>to me.</span>
         </h2>
         <p
           className="text-base sm:text-lg leading-relaxed max-w-xl mx-auto"
           style={{ color: "#56514A" }}
         >
-          I would rather show you two honest remarks than a wall of praise.
+          I would rather show you three honest remarks than a wall of praise.
         </p>
       </div>
 
-      {/* Two remarks, neither above the other */}
-      <div className="max-w-5xl mx-auto grid md:grid-cols-2 md:divide-x md:divide-[#D8CDB6] gap-12 md:gap-0">
+      {/* Three remarks, none above the others */}
+      <div className="max-w-6xl mx-auto grid lg:grid-cols-3 gap-y-12 lg:gap-y-0 divide-y divide-[#D8CDB6] lg:divide-y-0 lg:divide-x">
         {testimonials.map((t) => (
           <figure
-            key={t.quote}
-            className="px-0 md:px-10 lg:px-14 flex flex-col"
+            key={t.attribution}
+            className="flex flex-col pt-12 first:pt-0 lg:pt-0 lg:px-8 lg:first:pl-0 lg:last:pr-0"
           >
             <span
               aria-hidden="true"
@@ -68,10 +76,12 @@ export const TestimonialSection = () => (
               “
             </span>
             <blockquote
-              className="font-serif italic text-xl sm:text-2xl leading-[1.5] text-foreground [text-wrap:balance] mt-3"
+              className="font-serif italic text-lg sm:text-xl leading-[1.5] text-foreground [text-wrap:balance] mt-3 space-y-4"
               style={serifStack}
             >
-              {t.quote}
+              {t.quote.split("\n\n").map((paragraph) => (
+                <p key={paragraph}>{paragraph}</p>
+              ))}
             </blockquote>
             <figcaption
               className="mt-auto pt-6 border-t flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.18em]"
