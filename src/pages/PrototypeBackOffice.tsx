@@ -40,47 +40,33 @@ export function routeRequest(text: string): ColleagueId | null {
   return null;
 }
 
-/** Inside a colleague's work, the speaker is that colleague: swap Hobson's owl and chat title for theirs. */
-const voiced = new WeakSet<HTMLElement>();
-export function voiceAs(el: HTMLElement | null, img: string, name: string, contribution?: string) {
-  if (!el || voiced.has(el)) return;
-  voiced.add(el);
-  const title = `Chat with ${name.replace(/^The /, "the ")}`;
-  const introduction = contribution ? document.createElement("div") : null;
-  if (introduction) {
-    introduction.className = "flex min-w-0 shrink-0 items-start gap-2";
-    introduction.dataset.colleagueIntroduction = "true";
-    const portrait = document.createElement("img");
-    portrait.src = img;
-    portrait.alt = name;
-    portrait.className = "h-10 w-10 shrink-0 object-contain";
-    const body = document.createElement("div");
-    body.className = "min-w-0 px-3.5 py-2.5";
-    const text = document.createElement("p");
-    text.className = "whitespace-pre-line break-words text-sm leading-relaxed";
-    text.textContent = contribution ?? "";
-    body.append(text);
-    introduction.append(portrait, body);
-  }
+/** Inside a colleague's work, Hobson remains the speaker: his owl and chat title stay, and he opens the conversation with his own handover words. The colleagues never address the user directly. */
+const fronted = new WeakSet<HTMLElement>();
+export function hobsonFronts(el: HTMLElement | null, handover: string) {
+  if (!el || fronted.has(el)) return;
+  fronted.add(el);
+  const introduction = document.createElement("div");
+  introduction.className = "flex min-w-0 shrink-0 items-start gap-2";
+  introduction.dataset.hobsonHandover = "true";
+  const portrait = document.createElement("img");
+  portrait.src = owlDefault;
+  portrait.alt = "Hobson";
+  portrait.className = "h-10 w-10 shrink-0 object-contain";
+  const body = document.createElement("div");
+  body.className = "min-w-0 px-3.5 py-2.5";
+  const text = document.createElement("p");
+  text.className = "whitespace-pre-line break-words text-sm leading-relaxed";
+  text.textContent = handover;
+  body.append(text);
+  introduction.append(portrait, body);
   const apply = () => {
     const conversation = el.querySelector<HTMLElement>('[role="log"][aria-label="Conversation"]');
-    if (introduction && conversation && conversation.firstElementChild !== introduction) {
+    if (conversation && conversation.firstElementChild !== introduction) {
       conversation.prepend(introduction);
     }
-    el.querySelectorAll<HTMLImageElement>("img").forEach((i) => {
-      if (i.getAttribute("src") === owlDefault) { i.src = img; if (i.alt) i.alt = name; }
-    });
-    el.querySelectorAll<HTMLElement>("h1").forEach((h) => {
-      if (h.textContent?.trim() === "Chat with Hobson") h.textContent = title;
-    });
-    el.querySelectorAll<HTMLElement>("[aria-label], [title]").forEach((n) => {
-      (["aria-label", "title"] as const).forEach((a) => {
-        if (n.getAttribute(a) === "Chat with Hobson") n.setAttribute(a, title);
-      });
-    });
   };
   apply();
-  new MutationObserver(apply).observe(el, { subtree: true, childList: true, attributes: true, attributeFilter: ["src"], characterData: true });
+  new MutationObserver(apply).observe(el, { subtree: true, childList: true });
 }
 
 type Message = { id: number; role: "user" | "hobson"; text: string; choices?: boolean };
@@ -173,7 +159,7 @@ export default function PrototypeBackOffice() {
             const c = COLLEAGUES.find((x) => x.id === id);
             if (!c) return null;
             return (
-              <div key={id} ref={(el) => voiceAs(el, c.img, c.name, c.contribution)} data-colleague={id} hidden={id !== active} className="absolute inset-0 [&>div]:!h-full [&>div>aside:first-child]:hidden">
+              <div key={id} ref={(el) => hobsonFronts(el, c.handover)} data-colleague={id} hidden={id !== active} className="absolute inset-0 [&>div]:!h-full [&>div>aside:first-child]:hidden">
                 <PrototypeGateAdmitted.Provider value={true}><Suspense fallback={null}><c.Comp /></Suspense></PrototypeGateAdmitted.Provider>
               </div>
             );
