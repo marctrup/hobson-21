@@ -25,18 +25,15 @@
   background: transparent;
   box-shadow: none;
   cursor: pointer;
-  /* A gold ring on hover says "press me" without covering the character. */
-  outline: 2px solid transparent;
-  outline-offset: 3px;
-  transition: background 160ms ease, outline-color 160ms ease;
+  transition: background 160ms ease;
 }
+/* A soft glow, not a box: it says "press me" without drawing a frame over the character. */
 .illustrated-room .illustrated-colleague:hover {
-  background: hsl(var(--classroom-gold) / 0.10);
-  outline-color: hsl(var(--classroom-gold) / 0.75);
+  background: radial-gradient(ellipse at 50% 55%, hsl(var(--classroom-gold) / 0.26), transparent 72%);
   box-shadow: none;
 }
 .illustrated-room .illustrated-colleague:focus-visible {
-  background: hsl(var(--classroom-gold) / 0.10);
+  background: radial-gradient(ellipse at 50% 55%, hsl(var(--classroom-gold) / 0.26), transparent 72%);
   outline: 2px solid hsl(var(--classroom-gold));
   outline-offset: 3px;
   box-shadow: none;
