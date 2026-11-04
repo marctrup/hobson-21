@@ -29,7 +29,7 @@
 }
 /* A soft glow, not a box: it says "press me" without drawing a frame over the character. */
 .illustrated-room .illustrated-colleague:hover {
-  background: radial-gradient(ellipse at 50% 55%, hsl(var(--classroom-gold) / 0.26), transparent 72%);
+  background: radial-gradient(ellipse at 50% 55%, hsl(var(--classroom-gold) / 0.34), transparent 78%);
   box-shadow: none;
 }
 .illustrated-room .illustrated-colleague:focus-visible {
