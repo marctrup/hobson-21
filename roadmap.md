@@ -1,5 +1,8 @@
 # Roadmap
 
+## Prototype Back Office — the whole character is pressable
+- [x] The owls in the classroom picture now open their work wherever you press: each colleague's target was grown from a tight box around the head and torso to cover the entire visible character and the desk in front of it, so a press on a hat, a held item or a desk counts. A soft warm glow, not a drawn frame, marks whoever is being hovered. Verified by pressing five points across each of the five characters at 1307×927 — 25 presses, all opening the right colleague — and by measuring the glow (mean warm gain 8.9 over the character's area); 5 classroom checks pass, build clean. Not published.
+
 ## Back Office — Hobson presents his team
 - [x] Hovering Hobson writes his butler-register introduction on the whiteboard, presenting all five colleagues and inviting hover or click for more details; clicking him opens a compact "My colleagues" roster over the upper wall (no owl hidden) that uses the existing handovers. His chat wording made very polite, very English. 16 checks pass, build clean, live preview verified. Not published.
 
