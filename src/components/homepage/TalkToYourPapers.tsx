@@ -1,0 +1,249 @@
+import { useEffect, useState } from "react";
+import { BookOpen, GitCommitVertical, MessageCircle, FileText, Send, Map as MapIcon } from "lucide-react";
+import hobsonOwl from "@/assets/owl-mascot.png";
+import professorImg from "@/assets/prototype/character-professor-transparent.png";
+
+/* Talk to your papers — who wants their papers read, ordered and summarised, and asked about on the go. */
+
+const STEPS = [
+  {
+    icon: BookOpen,
+    kicker: "First, we read",
+    title: "My team reads every paper you give me.",
+    body: "Leases, deeds, licences, side letters, wayleaves — my colleague the Professor reads each one properly, so you never have to open a folder to find out what it says.",
+  },
+  {
+    icon: GitCommitVertical,
+    kicker: "Then, we organise",
+    title: "Everything set out in order, with a summary.",
+    body: "Each paper takes its place on a timeline for the unit it concerns — what's current, what came before — with a short plain-English summary of what it does.",
+  },
+  {
+    icon: MessageCircle,
+    kicker: "Now, you ask",
+    title: "Talk to your papers, wherever you are.",
+    body: "On your phone between viewings, or at your desk on a Friday afternoon: ask me a question and I'll answer from the papers themselves, showing you the source.",
+  },
+];
+
+const WHO = [
+  "Asset managers who inherit decades of papers with every acquisition",
+  "Operators who need the lease terms before a landlord meeting, not after",
+  "Family offices whose deeds sit in three different filing cabinets",
+  "Agents asked a question on site, with the file back at the office",
+];
+
+const TIMELINE = [
+  { type: "Deed of release", title: "Release of guarantor", date: "7 Aug 2025", summary: "Releases the former guarantor from all future obligations under the current lease." },
+  { type: "Deed of surrender", title: "Surrender of earlier lease", date: "20 Mar 2023", summary: "Records the surrender of the 2021 lease to the landlord, with the management company consenting." },
+  { type: "Business lease", title: "Lease of Units 1 & 2", date: "20 Mar 2023", summary: "Ten-year lease from 20 March 2023. Rent review at year five; tenant break at year five on six months' notice." },
+  { type: "Wayleave agreement", title: "Telecoms wayleave", date: "1 Mar 2023", summary: "Permits a broadband provider to install and keep equipment in the riser." },
+];
+
+const PhoneScreen = ({ stage }: { stage: number }) => (
+  <div className="relative mx-auto w-[300px] sm:w-[320px]">
+    <div className="absolute -inset-10 rounded-[3rem] blur-3xl opacity-70" style={{ background: "radial-gradient(circle at 50% 40%, rgba(180,145,79,0.22), transparent 70%)" }} aria-hidden />
+    <div className="relative rounded-[2.75rem] p-2.5 shadow-[0_40px_90px_-25px_rgba(45,45,45,0.45)]" style={{ background: "#2D2D2D" }}>
+      <div className="relative rounded-[2.2rem] overflow-hidden h-[600px] flex flex-col" style={{ background: "#FFFFFF" }}>
+        {/* Notch */}
+        <div className="absolute top-2 left-1/2 -translate-x-1/2 w-24 h-6 rounded-full z-20" style={{ background: "#2D2D2D" }} aria-hidden />
+        {/* Top bar */}
+        <div className="pt-11 px-4 pb-3 flex justify-center">
+          <div className="flex items-center gap-1 rounded-full p-1 text-[11px] border" style={{ borderColor: "#F7EDDC" }}>
+            <span className="flex items-center gap-1 px-2.5 py-1 text-muted-foreground"><MapIcon className="w-3 h-3" />Map</span>
+            <span className={`flex items-center gap-1 px-2.5 py-1 rounded-full transition-colors ${stage < 2 ? "font-semibold" : "text-muted-foreground"}`} style={stage < 2 ? { background: "#F7EDDC", color: "#8F5A14" } : undefined}><FileText className="w-3 h-3" />Papers</span>
+            <span className={`flex items-center gap-1 px-2.5 py-1 rounded-full transition-colors ${stage === 2 ? "font-semibold" : "text-muted-foreground"}`} style={stage === 2 ? { background: "#F7EDDC", color: "#8F5A14" } : undefined}><MessageCircle className="w-3 h-3" />Chat</span>
+          </div>
+        </div>
+
+        {/* Header */}
+        <div className="px-4 py-3 flex gap-3 items-start border-y" style={{ borderColor: "#F7EDDC", background: "#FCFAF7" }}>
+          <img src={hobsonOwl} alt="" className="w-10 h-10 object-contain shrink-0" />
+          <div className="min-w-0">
+            <p className="text-sm font-bold" style={{ color: "#2D2D2D" }}>What I have for 1 The Avenue</p>
+            <p className="text-[11px] text-muted-foreground">37 papers · read and in order</p>
+          </div>
+        </div>
+
+        <div className="flex-1 relative overflow-hidden">
+          {/* Stage 0 — reading */}
+          <div className={`absolute inset-0 px-4 py-5 transition-all duration-700 ${stage === 0 ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-3 pointer-events-none"}`}>
+            <div className="flex items-center gap-3 mb-4">
+              <img src={professorImg} alt="" className="w-14 h-14 object-contain" />
+              <p className="text-xs leading-snug" style={{ color: "#56514A" }}><span className="font-semibold" style={{ color: "#2D2D2D" }}>My colleague the Professor</span> is reading your papers, so you needn't.</p>
+            </div>
+            <ul className="space-y-2.5">
+              {["Lease — Units 1 & 2.pdf", "Deed of surrender.pdf", "Licence to alter.pdf", "Wayleave — signed.pdf", "Release of guarantor.pdf"].map((f, i) => (
+                <li key={f} className="flex items-center gap-2.5 rounded-lg px-3 py-2 border text-xs" style={{ borderColor: "#F7EDDC" }}>
+                  <FileText className="w-3.5 h-3.5 shrink-0" style={{ color: "#B4914F" }} />
+                  <span className="flex-1 truncate" style={{ color: "#2D2D2D" }}>{f}</span>
+                  <span className="text-[10px] font-medium" style={{ color: i < 3 ? "#3F7A52" : "#B4914F" }}>{i < 3 ? "Read" : "Reading…"}</span>
+                </li>
+              ))}
+            </ul>
+            <div className="mt-4 h-1.5 rounded-full overflow-hidden" style={{ background: "#F7EDDC" }}>
+              <div className="h-full rounded-full" style={{ width: "64%", background: "#B4914F" }} />
+            </div>
+          </div>
+
+          {/* Stage 1 — timeline with summary */}
+          <div className={`absolute inset-0 px-4 py-4 transition-all duration-700 ${stage === 1 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3 pointer-events-none"}`}>
+            <p className="text-[10px] font-semibold tracking-[0.15em] uppercase text-muted-foreground mb-2">Occupation history</p>
+            <div className="flex items-center gap-2 mb-3">
+              <span className="text-sm font-semibold" style={{ color: "#2D2D2D" }}>Business lease</span>
+              <span className="text-[10px] font-semibold rounded-full px-2 py-0.5 border" style={{ color: "#3F7A52", borderColor: "#BFD9C7", background: "#F1F8F3" }}>● Current</span>
+            </div>
+            <ol className="relative pl-5 space-y-3 before:absolute before:left-[5px] before:top-1 before:bottom-1 before:w-px before:bg-border">
+              {TIMELINE.map((t, i) => (
+                <li key={t.title} className="relative">
+                  <span className="absolute -left-5 top-1 w-2.5 h-2.5 rounded-full" style={{ background: "#3F7A52" }} />
+                  <span className="inline-block text-[9px] font-semibold uppercase tracking-wider rounded px-1.5 py-0.5 mb-1" style={{ background: "#F7EDDC", color: "#8F5A14" }}>{t.type}</span>
+                  <p className="text-xs font-semibold" style={{ color: "#2D2D2D" }}>{t.title}</p>
+                  <p className="text-[10px] text-muted-foreground">{t.date}</p>
+                  {i === 2 && (
+                    <div className="mt-1.5 rounded-lg p-2.5 text-[11px] leading-snug shadow-md border" style={{ background: "#FFFFFF", borderColor: "#E6D2AE", color: "#56514A" }}>
+                      <span className="font-semibold" style={{ color: "#2D2D2D" }}>In brief: </span>{t.summary}
+                    </div>
+                  )}
+                </li>
+              ))}
+            </ol>
+          </div>
+
+          {/* Stage 2 — talk */}
+          <div className={`absolute inset-0 px-4 py-4 flex flex-col gap-3 transition-all duration-700 ${stage === 2 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3 pointer-events-none"}`}>
+            <div className="self-end max-w-[85%] rounded-2xl rounded-br-sm px-3 py-2 text-xs" style={{ background: "#2D2D2D", color: "#FCFAF7" }}>
+              When can the tenant at Units 1 & 2 break?
+            </div>
+            <div className="flex gap-2 items-start">
+              <img src={hobsonOwl} alt="" className="w-7 h-7 object-contain shrink-0" />
+              <div className="rounded-2xl rounded-tl-sm px-3 py-2 text-xs leading-relaxed border" style={{ background: "#FCFAF7", borderColor: "#F7EDDC", color: "#2D2D2D" }}>
+                On 20 March 2028, giving at least six months' notice — so by 20 September 2027.
+                <div className="mt-2 flex items-center gap-1.5 rounded-md px-2 py-1 text-[10px] border" style={{ borderColor: "#E6D2AE", color: "#8F5A14", background: "#FFFFFF" }}>
+                  <FileText className="w-3 h-3" />Lease of Units 1 & 2 · clause 9.1
+                </div>
+              </div>
+            </div>
+            <div className="self-end max-w-[85%] rounded-2xl rounded-br-sm px-3 py-2 text-xs" style={{ background: "#2D2D2D", color: "#FCFAF7" }}>
+              And who released the guarantor?
+            </div>
+            <div className="flex gap-1 pl-9" aria-hidden>
+              {[0, 1, 2].map((d) => (
+                <span key={d} className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: "#B4914F", animationDelay: `${d * 200}ms` }} />
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Composer */}
+        <div className="px-3 pb-5 pt-2">
+          <div className="flex items-center gap-2 rounded-full border px-3 py-2" style={{ borderColor: "#E6D2AE" }}>
+            <span className="flex-1 text-[11px] text-muted-foreground">Ask me about your papers…</span>
+            <span className="w-6 h-6 rounded-full flex items-center justify-center" style={{ background: "#B4914F" }}><Send className="w-3 h-3" style={{ color: "#FFFFFF" }} /></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+);
+
+export const TalkToYourPapers = () => {
+  const [stage, setStage] = useState(0);
+  const [paused, setPaused] = useState(false);
+
+  useEffect(() => {
+    if (paused) return;
+    if (typeof window !== "undefined" && window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) return;
+    const t = window.setInterval(() => setStage((s) => (s + 1) % STEPS.length), 4500);
+    return () => window.clearInterval(t);
+  }, [paused]);
+
+  return (
+    <section className="py-16 sm:py-20 md:py-28 overflow-hidden" aria-labelledby="talk-papers-heading" style={{ background: "#FFFFFF" }}>
+      <div className="container mx-auto px-4">
+        <div className="max-w-6xl mx-auto">
+          <div className="max-w-3xl mx-auto text-center mb-12 md:mb-16">
+            <span className="inline-block text-xs font-semibold tracking-[0.2em] uppercase mb-4" style={{ color: "#B4914F" }}>
+              Talk to your papers
+            </span>
+            <h2 id="talk-papers-heading" className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-5 tracking-tight">
+              Your own assistant,{" "}
+              <span style={{ color: "#B4914F" }}>who has read every paper.</span>
+            </h2>
+            <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
+              My team and I take the time to read your papers, put them in order on a timeline and write you a short summary of each — so when you need an answer, on the go or at your desk, you simply ask.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+            <div className="lg:col-span-5 order-2 lg:order-1" onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}>
+              <ol className="space-y-3">
+                {STEPS.map((s, i) => {
+                  const Icon = s.icon;
+                  const active = i === stage;
+                  return (
+                    <li key={s.kicker}>
+                      <button
+                        type="button"
+                        onClick={() => setStage(i)}
+                        onFocus={() => { setStage(i); setPaused(true); }}
+                        onBlur={() => setPaused(false)}
+                        aria-pressed={active}
+                        className="w-full text-left rounded-2xl p-5 border transition-all duration-500"
+                        style={active
+                          ? { background: "#FCFAF7", borderColor: "#E6D2AE", boxShadow: "0 18px 40px -20px rgba(180,145,79,0.45)" }
+                          : { background: "transparent", borderColor: "transparent" }}
+                      >
+                        <div className="flex gap-4">
+                          <span className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 transition-colors" style={active ? { background: "#B4914F" } : { background: "#F7EDDC" }}>
+                            <Icon className="w-5 h-5" style={{ color: active ? "#FFFFFF" : "#8F5A14" }} />
+                          </span>
+                          <div>
+                            <p className="text-[11px] font-semibold tracking-[0.15em] uppercase" style={{ color: "#B4914F" }}>{s.kicker}</p>
+                            <p className="text-lg font-bold mt-0.5" style={{ color: "#2D2D2D" }}>{s.title}</p>
+                            <p className={`text-sm leading-relaxed text-muted-foreground transition-all duration-500 overflow-hidden ${active ? "max-h-40 mt-2 opacity-100" : "max-h-0 opacity-0"}`}>{s.body}</p>
+                          </div>
+                        </div>
+                      </button>
+                    </li>
+                  );
+                })}
+              </ol>
+            </div>
+
+            <div className="lg:col-span-7 order-1 lg:order-2">
+              <PhoneScreen stage={stage} />
+            </div>
+          </div>
+
+          {/* Who it's for */}
+          <div className="mt-16 md:mt-20 grid grid-cols-1 md:grid-cols-2 gap-10 items-start">
+            <div>
+              <h3 className="text-2xl sm:text-3xl font-bold tracking-tight" style={{ color: "#2D2D2D" }}>Who would like their papers read for them?</h3>
+              <p className="mt-3 text-base text-muted-foreground leading-relaxed">Anyone who has ever hunted through a folder for one clause.</p>
+            </div>
+            <ul className="space-y-3">
+              {WHO.map((w) => (
+                <li key={w} className="flex gap-3 text-base" style={{ color: "#56514A" }}>
+                  <span className="mt-2 w-1.5 h-1.5 rounded-full shrink-0" style={{ background: "#B4914F" }} />
+                  {w}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Foundation */}
+          <div className="mt-14 rounded-3xl p-8 sm:p-10 text-center" style={{ background: "#2D2D2D" }}>
+            <p className="text-xs font-semibold tracking-[0.2em] uppercase mb-3" style={{ color: "#E6D2AE" }}>The start, not the end</p>
+            <p className="text-2xl sm:text-3xl font-bold tracking-tight max-w-3xl mx-auto" style={{ color: "#FCFAF7" }}>
+              Well-read, well-ordered papers are the foundation for everything I do next.
+            </p>
+            <p className="mt-4 text-base max-w-2xl mx-auto leading-relaxed" style={{ color: "#D9D3C7" }}>
+              Once I truly know what your papers say, I can watch your dates, prepare your renewals and keep your compliance in hand — always from the source.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};

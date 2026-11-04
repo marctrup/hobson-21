@@ -16,6 +16,7 @@ import { HomepageFooter } from "@/components/homepage/HomepageFooter";
 import { PilotApplicationForm } from "@/components/homepage/PilotApplicationForm";
 
 import { AudienceStrip } from "@/components/homepage/AudienceStrip";
+import { TalkToYourPapers } from "@/components/homepage/TalkToYourPapers";
 import { TrustStrip } from "@/components/homepage/TrustStrip";
 import { TestimonialSection } from "@/components/homepage/TestimonialSection";
 
@@ -262,6 +263,9 @@ export const Homepage = () => {
 
           {/* Audience Strip */}
           <AudienceStrip />
+
+          {/* Talk to your papers */}
+          <TalkToYourPapers />
 
           {/* Product Screenshot — Document Q&A */}
           <section className="py-16 sm:py-20 md:py-28 overflow-hidden" aria-labelledby="screenshot-heading" style={{ background: '#FCFAF7' }}>
