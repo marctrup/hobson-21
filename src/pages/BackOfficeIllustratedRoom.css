@@ -21,23 +21,32 @@
   height: auto;
   padding: 0;
   border: 0;
-  border-radius: 8px;
+  border-radius: 14px;
   background: transparent;
   box-shadow: none;
   cursor: pointer;
+  /* A gold ring on hover says "press me" without covering the character. */
+  outline: 2px solid transparent;
+  outline-offset: 3px;
+  transition: background 160ms ease, outline-color 160ms ease;
 }
-.illustrated-room .illustrated-colleague:hover { background: transparent; box-shadow: none; }
+.illustrated-room .illustrated-colleague:hover {
+  background: hsl(var(--classroom-gold) / 0.10);
+  outline-color: hsl(var(--classroom-gold) / 0.75);
+  box-shadow: none;
+}
 .illustrated-room .illustrated-colleague:focus-visible {
-  background: transparent;
+  background: hsl(var(--classroom-gold) / 0.10);
   outline: 2px solid hsl(var(--classroom-gold));
   outline-offset: 3px;
   box-shadow: none;
 }
-.illustrated-inspector { left: 15%; top: 36.5%; width: 20%; height: 11.3% !important; }
-.illustrated-keeper { left: 41%; top: 35.2%; width: 17.5%; height: 12.8% !important; }
-.illustrated-professor { left: 69%; top: 37%; width: 15.5%; height: 10% !important; }
-.illustrated-broker { left: 3.5%; top: 53.8%; width: 18%; height: 16.7% !important; }
-.illustrated-architect { left: 75%; top: 54%; width: 22.5%; height: 16.5% !important; }
+/* Each target covers its whole owl and the desk in front of it, so a press anywhere on the character counts. */
+.illustrated-inspector { left: 12.5%; top: 36.0%; width: 24.5%; height: 17.0% !important; }
+.illustrated-keeper { left: 38.0%; top: 34.0%; width: 24.5%; height: 19.0% !important; }
+.illustrated-professor { left: 64.0%; top: 36.5%; width: 25.5%; height: 16.5% !important; }
+.illustrated-broker { left: 1.0%; top: 53.0%; width: 26.5%; height: 22.0% !important; }
+.illustrated-architect { left: 72.0%; top: 53.5%; width: 26.5%; height: 21.5% !important; }
 .illustrated-introduction {
   position: absolute;
   z-index: 3;
