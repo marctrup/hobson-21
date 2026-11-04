@@ -1,5 +1,9 @@
 # Roadmap
 
+## Homepage — "Talk to your papers" gains its map screen
+- [x] The phone mock-up now opens on your places: a stylised drawing of Britain and Ireland with purple cluster counts (36 places) and a dark "1 The Avenue" chip, then reads, organises and answers — four steps, map first. Coastlines simplified from Natural Earth into `src/components/homepage/portfolioMapGeometry.ts`; the composer is withheld on the map screen. 10 checks pass (3 new), build clean, verified at 1307×1100 and 390×844. Not published.
+
+
 ## Prototype Back Office — the whole character is pressable
 - [x] The owls in the classroom picture now open their work wherever you press: each colleague's target was grown from a tight box around the head and torso to cover the entire visible character and the desk in front of it, so a press on a hat, a held item or a desk counts. A soft warm glow, not a drawn frame, marks whoever is being hovered. Verified by pressing five points across each of the five characters at 1307×927 — 25 presses, all opening the right colleague — and by measuring the glow (mean warm gain 8.9 over the character's area); 5 classroom checks pass, build clean. Not published.
 
