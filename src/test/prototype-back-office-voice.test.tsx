@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { voiceAs } from "@/pages/PrototypeBackOffice";
+import { hobsonFronts } from "@/pages/PrototypeBackOffice";
 import owlDefault from "@/assets/prototype/owl-default.png";
 
 const SAMPLE =
@@ -15,35 +15,27 @@ function host() {
   return el;
 }
 
-describe("colleague voice inside a colleague's work", () => {
-  it("renames the chat heading to that colleague", () => {
+describe("Hobson's voice inside a colleague's work", () => {
+  it("keeps the chat heading as Hobson's", () => {
     const el = host();
-    voiceAs(el, "architect.png", "The Architect");
-    expect(el.querySelectorAll("h1")[0].textContent).toBe("Chat with the Architect");
+    hobsonFronts(el, "My colleague the Architect has the map ready.");
+    expect(el.querySelectorAll("h1")[0].textContent).toBe("Chat with Hobson");
   });
 
-  it("renames the matching aria-label and title, leaving other text alone", () => {
+  it("leaves every label, title and owl as Hobson's", () => {
     const el = host();
-    voiceAs(el, "professor.png", "The Professor");
-    expect(el.querySelector("section")?.getAttribute("aria-label")).toBe("Chat with the Professor");
-    expect(el.querySelector("button")?.getAttribute("title")).toBe("Chat with the Professor");
+    hobsonFronts(el, "My colleague the Professor will take a look.");
+    expect(el.querySelector("section")?.getAttribute("aria-label")).toBe("Chat with Hobson");
+    expect(el.querySelector("button")?.getAttribute("title")).toBe("Chat with Hobson");
     expect(el.querySelectorAll("h1")[1].textContent).toBe("People with access");
-    expect(el.querySelector("p")?.textContent).toBe("Chat with Hobson is also mentioned in body copy.");
-  });
-
-  it("swaps Hobson's owl for the colleague's and is safe to apply twice", () => {
-    const el = host();
-    voiceAs(el, "keeper.png", "The Keeper");
-    voiceAs(el, "keeper.png", "The Keeper");
     const img = el.querySelector("img");
-    expect(img?.getAttribute("src")).toBe("keeper.png");
-    expect(img?.getAttribute("alt")).toBe("The Keeper");
-    expect(el.querySelectorAll("h1")[0].textContent).toBe("Chat with the Keeper");
+    expect(img?.getAttribute("src")).toBe(owlDefault);
+    expect(img?.getAttribute("alt")).toBe("Hobson");
   });
 
-  it("adds one introduction before a lazily mounted conversation and preserves its existing turns", async () => {
+  it("opens the conversation with Hobson's handover, spoken with his owl", async () => {
     const el = host();
-    voiceAs(el, "professor.png", "The Professor", "An introduction");
+    hobsonFronts(el, "My colleague the Professor will take a look.");
     const log = document.createElement("div");
     log.setAttribute("role", "log");
     log.setAttribute("aria-label", "Conversation");
@@ -51,15 +43,28 @@ describe("colleague voice inside a colleague's work", () => {
     log.append(original);
     el.append(log);
     await new Promise((resolve) => setTimeout(resolve, 0));
-    const introduction = log.querySelector('[data-colleague-introduction="true"]');
-    expect(introduction).not.toBeNull();
-    expect(log.firstElementChild).toBe(introduction);
+    const handover = log.querySelector('[data-hobson-handover="true"]');
+    expect(handover).not.toBeNull();
+    expect(log.firstElementChild).toBe(handover);
+    expect(handover?.textContent).toContain("My colleague the Professor will take a look.");
+    expect(handover?.querySelector("img")?.getAttribute("src")).toBe(owlDefault);
+    expect(handover?.querySelector("img")?.getAttribute("alt")).toBe("Hobson");
     expect(log.lastElementChild).toBe(original);
-    voiceAs(el, "professor.png", "The Professor", "An introduction");
+  });
+
+  it("is safe to apply twice and preserves later turns", async () => {
+    const el = host();
+    hobsonFronts(el, "Here is who has access.");
+    hobsonFronts(el, "Here is who has access.");
+    const log = document.createElement("div");
+    log.setAttribute("role", "log");
+    log.setAttribute("aria-label", "Conversation");
+    el.append(log);
+    await new Promise((resolve) => setTimeout(resolve, 0));
     const followup = document.createElement("div");
     log.append(followup);
     await new Promise((resolve) => setTimeout(resolve, 0));
-    expect(log.querySelectorAll('[data-colleague-introduction="true"]')).toHaveLength(1);
+    expect(log.querySelectorAll('[data-hobson-handover="true"]')).toHaveLength(1);
     expect(log.lastElementChild).toBe(followup);
   });
 });
