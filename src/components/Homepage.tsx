@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import { Link } from "react-router-dom";
-import { Menu, X, ArrowRight, FileText, CheckCircle, Building2 } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { SimpleButton } from "@/components/ui/simple-button";
 import { EventStrip } from "@/components/EventStrip";
 import { HobsonGateway, HobsonGatewayMobile, serifStack } from "@/components/HobsonGateway";
@@ -26,7 +26,6 @@ import { TestimonialSection } from "@/components/homepage/TestimonialSection";
 
 import { structuredData } from "@/utils/seo-data";
 import { CONTENT } from "@/config/content";
-import hobsonAnswerSources from "@/assets/hobson-answer-sources.png.asset.json";
 
 export const Homepage = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -223,86 +222,6 @@ export const Homepage = () => {
 
           {/* Talk to your papers */}
           <TalkToYourPapers />
-
-          {/* Product Screenshot — Document Q&A */}
-          <section className="py-16 sm:py-20 md:py-28 overflow-hidden" aria-labelledby="screenshot-heading" style={{ background: 'var(--paper)' }}>
-            <div className="container mx-auto px-4">
-              <div className="max-w-6xl mx-auto">
-                <div className="max-w-3xl mx-auto text-center mb-14 md:mb-20">
-                  <span className="inline-block text-xs font-semibold tracking-[0.2em] uppercase mb-4" style={{ color: 'var(--brass)' }}>
-                    See me in action
-                  </span>
-                  <h2
-                    id="screenshot-heading"
-                    className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-5 tracking-tight"
-                  >
-                    Ask once.{" "}
-                    <span className="text-foreground">
-                      I bring the full picture.
-                    </span>
-                  </h2>
-                  <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
-                    Every document you share becomes part of my understanding of your portfolio. Ask me a question and I shall bring together the right knowledge — always showing you the evidence behind my answer.
-                  </p>
-                </div>
-
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-                  {/* Screenshot — tight, polished frame */}
-                  <div className="lg:col-span-6">
-                    <div className="relative mx-auto max-w-md lg:max-w-none">
-                      <div className="relative rounded-2xl overflow-hidden" style={{ border: '1px solid var(--bone-wash)', background: '#FFFFFF', boxShadow: '0 30px 80px -20px hsl(var(--shadow-colour) / 0.20)' }}>
-                        {/* faux browser chrome */}
-                        <div className="flex items-center gap-1.5 px-4 py-3 border-b" style={{ borderColor: 'var(--bone-wash)', background: 'var(--paper)' }}>
-                          <span className="w-2.5 h-2.5 rounded-full bg-danger-border/70" />
-                          <span className="w-2.5 h-2.5 rounded-full bg-warning-border/70" />
-                          <span className="w-2.5 h-2.5 rounded-full bg-success-border/70" />
-                        </div>
-                        <img loading="lazy" decoding="async"
-                          src={hobsonAnswerSources.url}
-                          alt="Hobson answering a rent question by citing the relevant lease document, with page references shown in the sources panel"
-                          className="w-full h-auto block"
-                        />
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Feature narrative */}
-                  <div className="lg:col-span-6 space-y-8">
-                    <div className="flex gap-5">
-                      <div className="shrink-0 w-12 h-12 rounded-xl flex items-center justify-center" style={{ background: 'var(--paper)', border: '1px solid var(--bone-wash)' }}>
-                        <FileText className="w-6 h-6" style={{ color: 'var(--brass)' }} />
-                      </div>
-                      <div>
-                        <h3 className="text-lg font-semibold text-foreground mb-1.5">Understanding built over time</h3>
-                        <p className="text-muted-foreground leading-relaxed">Every document you share becomes part of my understanding of your portfolio, allowing me to connect information across leases, plans, reports and every other record you entrust to me.</p>
-                      </div>
-                    </div>
-
-                    <div className="flex gap-5">
-                      <div className="shrink-0 w-12 h-12 rounded-xl flex items-center justify-center" style={{ background: 'var(--paper)', border: '1px solid var(--bone-wash)' }}>
-                        <CheckCircle className="w-6 h-6" style={{ color: 'var(--brass)' }} />
-                      </div>
-                      <div>
-                        <h3 className="text-lg font-semibold text-foreground mb-1.5">Evidence you can trust</h3>
-                        <p className="text-muted-foreground leading-relaxed">Every answer I give is supported by the evidence behind it, with clear references back to the relevant documents and clauses.</p>
-                      </div>
-                    </div>
-
-                    <div className="flex gap-5">
-                      <div className="shrink-0 w-12 h-12 rounded-xl flex items-center justify-center" style={{ background: 'var(--paper)', border: '1px solid var(--bone-wash)' }}>
-                        <Building2 className="w-6 h-6" style={{ color: 'var(--brass)' }} />
-                      </div>
-                      <div>
-                        <h3 className="text-lg font-semibold text-foreground mb-1.5">Understanding beyond the documents</h3>
-                        <p className="text-muted-foreground leading-relaxed">I build an understanding of your portfolio, your properties, your people and your obligations, so every answer reflects your business—not just the words in a document.</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-
 
           {/* Trust Strip */}
           <TrustStrip />
