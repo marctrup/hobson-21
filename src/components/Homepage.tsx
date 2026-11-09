@@ -22,7 +22,6 @@ import { TestimonialSection } from "@/components/homepage/TestimonialSection";
 
 
 import { TrustedConversationSection } from "@/components/homepage/TrustedConversationSection";
-import { TheTeamSection } from "@/components/homepage/TheTeamSection";
 
 
 
@@ -222,9 +221,6 @@ export const Homepage = () => {
 
           {/* One Trusted Conversation */}
           <TrustedConversationSection />
-
-          {/* The Team */}
-          <TheTeamSection />
 
 
           {/* Founder CTA card */}
