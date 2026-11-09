@@ -32,7 +32,6 @@ ROUTES = [
     "/blog/how-ai-recognises-patterns-tenancy-agreements",
     "/contact",
     "/press",
-    "/web-summit",
     "/founder",
     "/learn",
     "/learn/faq",

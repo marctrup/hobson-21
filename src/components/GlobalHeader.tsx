@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button";
 import { OptimizedImage } from "@/components/OptimizedImage";
 import { CONTENT } from "@/config/content";
 import { HobsonGateway, HobsonGatewayMobile, serifStack } from "@/components/HobsonGateway";
-import { EventStrip } from "@/components/EventStrip";
 
 export const GlobalHeader = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -80,7 +79,6 @@ export const GlobalHeader = () => {
 
   return (
     <>
-      <EventStrip />
       <header className="border-b bg-background sticky top-0 z-50" role="banner">
       <div className="container mx-auto px-4 py-1">
         <div className="flex justify-between items-center">

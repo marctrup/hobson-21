@@ -58,7 +58,6 @@ const PrototypeGate = lazy(() =>
 
 const MeetTheFounder = lazy(() => import("../pages/MeetTheFounder"));
 const Press = lazy(() => import("../pages/Press"));
-const WebSummit = lazy(() => import("../pages/WebSummit"));
 const LeaseManagementSoftware = lazy(() => import("../pages/LeaseManagementSoftware"));
 const PropertyManagementSoftware = lazy(() => import("../pages/PropertyManagementSoftware"));
 const PropertyPortfolioSoftware = lazy(() => import("../pages/PropertyPortfolioSoftware"));
@@ -161,7 +160,7 @@ const AppContent = () => {
                 <Route path="/pricing" element={<Pricing />} />
                 <Route path="/founder" element={<MeetTheFounder />} />
                 <Route path="/press" element={<Press />} />
-                <Route path="/web-summit" element={<WebSummit />} />
+                <Route path="/web-summit" element={<Navigate to="/" replace />} />
                 <Route path="/meet-the-founder" element={<Navigate to="/founder" replace />} />
                 <Route path="/blog" element={<Blog />} />
                 <Route path="/blog/:slug" element={<BlogPost />} />

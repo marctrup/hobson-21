@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 export const HomepageFooter = () => {
   return (
-    <footer className="py-12 md:py-20 border-t bg-background">
+    <footer className="py-12 md:py-20 border-t bg-wash">
       <div className="container mx-auto px-4 max-w-6xl">
         <div className="grid md:grid-cols-4 gap-10 md:gap-12">
           {/* Logo & tagline */}
@@ -31,7 +31,6 @@ export const HomepageFooter = () => {
               <Link to="/founder" className="block text-sm text-muted-foreground hover:text-primary transition-colors">Founders</Link>
               <Link to="/blog" className="block text-sm text-muted-foreground hover:text-primary transition-colors">Blog</Link>
               <Link to="/press" className="block text-sm text-muted-foreground hover:text-primary transition-colors">Press</Link>
-              <Link to="/web-summit" className="block text-sm text-muted-foreground hover:text-primary transition-colors">Web Summit 2026</Link>
               <Link to="/contact" className="block text-sm text-muted-foreground hover:text-primary transition-colors">Contact</Link>
               <Link to="/privacy-policy" className="block text-sm text-muted-foreground hover:text-primary transition-colors">Privacy Policy</Link>
               <Link to="/data-protection" className="block text-sm text-muted-foreground hover:text-primary transition-colors">Data Protection</Link>

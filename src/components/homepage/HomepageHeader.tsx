@@ -4,7 +4,6 @@ import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { CONTENT } from "@/config/content";
 import { HobsonGateway, HobsonGatewayMobile, serifStack } from "@/components/HobsonGateway";
-import { EventStrip } from "@/components/EventStrip";
 import hobsonLogo from "/hobson-logo.png";
 
 
@@ -48,7 +47,6 @@ export const HomepageHeader = () => {
 
   return (
     <>
-    <EventStrip />
     <header
       className="border-b bg-background sticky top-0 z-50"
       role="banner"

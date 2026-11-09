@@ -10,7 +10,7 @@ export const ScrollToTop = () => {
 
   useEffect(() => {
     if (hash) {
-      // A section anchor (e.g. /web-summit#questions): glide to it instead
+      // A section anchor (e.g. /press#questions): glide to it instead
       // of the top. Retry briefly so lazy-rendered sections are present.
       let attempts = 0;
       const tryScroll = () => {
