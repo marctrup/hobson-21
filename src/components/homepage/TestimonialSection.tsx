@@ -24,11 +24,6 @@ const testimonials: Testimonial[] = [
       "Just used Hobson for the first time as I was updating a tenancy schedule and it was brilliant. Just a simple inquiry, but it means I don’t have to reopen the lease. It saves time.",
     attribution: "CEO of a Family Office",
   },
-  {
-    quote:
-      "Last week I didn’t need to refer to any documentation so it was Friday pm until it was used.\n\nBut that doesn’t diminish the value – it’s one of those things that you may not use everyday (although in larger clients you will) but when do use it – it’s wonderful.\n\nAnd having the documents all so well structured is very valuable too",
-    attribution: "COO of a Family Office",
-  },
 ];
 
 export const TestimonialSection = () => (
@@ -50,19 +45,19 @@ export const TestimonialSection = () => (
           id="testimonial-heading"
           className="text-3xl sm:text-4xl font-bold text-foreground tracking-tight mb-4"
         >
-          Three things people have said{" "}
+          Two things people have said{" "}
           <span className="text-foreground">to me.</span>
         </h2>
         <p
           className="text-base sm:text-lg leading-relaxed max-w-xl mx-auto"
           style={{ color: "var(--charcoal)" }}
         >
-          I would rather show you three honest remarks than a wall of praise.
+          I would rather show you two honest remarks than a wall of praise.
         </p>
       </div>
 
-      {/* Three remarks, none above the others */}
-      <div className="max-w-6xl mx-auto grid lg:grid-cols-3 gap-y-12 lg:gap-y-0 divide-y divide-bone-strong lg:divide-y-0 lg:divide-x">
+      {/* Two remarks, neither above the other */}
+      <div className="max-w-4xl mx-auto grid lg:grid-cols-2 gap-y-12 lg:gap-y-0 divide-y divide-bone-strong lg:divide-y-0 lg:divide-x">
         {testimonials.map((t) => (
           <figure
             key={t.attribution}
