@@ -153,7 +153,7 @@ export const Homepage = () => {
 
         <main id="main-content" className="min-h-screen bg-background overflow-x-hidden" role="main">
           {/* Hero Section - Two Column Layout */}
-          <section className="relative pt-12 sm:pt-16 pb-4 overflow-hidden bg-background" aria-labelledby="hero-heading">
+          <section className="relative pt-12 sm:pt-16 pb-4 overflow-hidden bg-wash" aria-labelledby="hero-heading">
             <div className="container mx-auto px-4 relative">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 items-center py-6 sm:py-8 lg:py-12">
                 {/* Left Container - H1 and Strap Line */}

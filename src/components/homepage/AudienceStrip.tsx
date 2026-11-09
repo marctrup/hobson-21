@@ -32,7 +32,7 @@ const palette = [
 
 export const AudienceStrip = () => {
   return (
-    <section className="py-12 sm:py-16 md:py-20 bg-wash" aria-labelledby="audience-heading">
+    <section className="py-12 sm:py-16 md:py-20 bg-background" aria-labelledby="audience-heading">
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-10 sm:mb-14">
@@ -54,7 +54,7 @@ export const AudienceStrip = () => {
               return (
                 <div
                   key={i}
-                  className="text-center space-y-4 p-6 rounded-xl bg-background border border-border/50 hover:border-border hover:shadow-md transition-all duration-300"
+                  className="text-center space-y-4 p-6 rounded-xl bg-wash border border-border/50 hover:border-border hover:shadow-md transition-all duration-300"
                 >
                   <div className={`w-14 h-14 mx-auto rounded-xl ${tone.bg} flex items-center justify-center`}>
                     <Icon className={`w-7 h-7 ${tone.icon}`} />

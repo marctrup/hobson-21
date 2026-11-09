@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 export const HomepageFooter = () => {
   return (
-    <footer className="py-12 md:py-20 border-t bg-wash">
+    <footer className="py-12 md:py-20 border-t bg-background">
       <div className="container mx-auto px-4 max-w-6xl">
         <div className="grid md:grid-cols-4 gap-10 md:gap-12">
           {/* Logo & tagline */}
