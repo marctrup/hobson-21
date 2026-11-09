@@ -21,7 +21,6 @@ import { TrustStrip } from "@/components/homepage/TrustStrip";
 import { TestimonialSection } from "@/components/homepage/TestimonialSection";
 
 
-import { TrustedConversationSection } from "@/components/homepage/TrustedConversationSection";
 
 
 
@@ -216,39 +215,6 @@ export const Homepage = () => {
               >
                 Where to meet me
               </Link>
-            </div>
-          </section>
-
-          {/* One Trusted Conversation */}
-          <TrustedConversationSection />
-
-
-          {/* Founder CTA card */}
-          <section className="py-12 sm:py-16" aria-labelledby="founder-cta-heading">
-            <div className="container mx-auto px-4">
-              <div
-                className="max-w-3xl mx-auto rounded-2xl p-8 sm:p-10 shadow-sm"
-                style={{ background: "var(--paper)", border: "1px solid var(--bone)" }}
-              >
-                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
-                  <div className="space-y-2">
-                    <h2 id="founder-cta-heading" className="text-xl sm:text-2xl font-bold" style={{ color: "var(--ink)" }}>
-                      The people behind me
-                    </h2>
-                    <p className="text-base leading-relaxed max-w-xl" style={{ color: "var(--charcoal)" }}>
-                      I was created by people who understand the day-to-day reality of property work — because they have lived it.
-                    </p>
-                  </div>
-                  <Link
-                    to="/founder"
-                    className="inline-flex items-center justify-center gap-2 rounded-md px-5 py-3 text-sm font-medium transition-opacity hover:opacity-90 whitespace-nowrap shrink-0"
-                    style={{ background: "var(--ink)", color: "var(--paper)" }}
-                  >
-                    Hear how I came to be
-                    <ArrowRight className="h-4 w-4" />
-                  </Link>
-                </div>
-              </div>
             </div>
           </section>
 
