@@ -26,7 +26,7 @@ describe("Homepage", () => {
   it("shows all three supplied remarks word for word", () => {
     const { container } = renderWithProviders(<Homepage />);
     expect(container.textContent).toContain(
-      "Walking down the street, I saw our building and wanted to know the next break. I used my phone. Amazing"
+      "Walking down the street, I saw our building and wanted to know the next break. I used my phone and asked Hobson. Amazing"
     );
     expect(container.textContent).toContain(FAMILY_OFFICE_CEO);
     for (const paragraph of FAMILY_OFFICE_COO) {
