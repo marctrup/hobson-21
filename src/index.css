@@ -117,8 +117,9 @@ All colors MUST be HSL.
     --vellum: hsl(var(--popover));
     --zebra: hsl(var(--secondary));
     /* Pale lavender used for every other homepage section; white is the default.
-       Held as a triplet so Tailwind's bg-wash alias can take an alpha value. */
-    --section-alt: var(--accent);
+       Held as a triplet so Tailwind's bg-wash alias can take an alpha value.
+       Slightly lighter than --accent so the wash reads as a whisper, not a tint. */
+    --section-alt: 270 30% 98.5%;
     --section-alt-surface: hsl(var(--section-alt));
     --code-surface: hsl(var(--secondary));
     --row-hover: hsl(var(--accent));
