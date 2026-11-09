@@ -1069,7 +1069,7 @@ const InvestmentOpportunity = () => {
                   Mission Statement
                 </h2>
                 <p className="text-base sm:text-lg md:text-xl text-foreground leading-relaxed text-center max-w-4xl mx-auto">
-                  <span className="text-primary font-semibold">Innovation without disruption.</span> To become the intelligence layer real estate runs on—ensuring every operational decision is based on instant, auditable insight rather than manual search, institutional memory, or guesswork.
+                  <span className="text-foreground font-semibold">Innovation without disruption.</span> To become the intelligence layer real estate runs on—ensuring every operational decision is based on instant, auditable insight rather than manual search, institutional memory, or guesswork.
                 </p>
               </div>
 
@@ -1079,20 +1079,20 @@ const InvestmentOpportunity = () => {
                   Positioning Statement
                 </h2>
                 <p className="text-base sm:text-lg md:text-xl text-foreground leading-relaxed text-center max-w-4xl mx-auto">
-                  <span className="text-primary font-semibold">Disruption without displacement.</span> Hobson replaces manual document work in real estate with AI-driven reasoning, delivering instant, traceable answers that reduce staffing costs, prevent costly errors, and accelerate operational decision-making. It embeds directly into existing workflows, becoming the intelligence infrastructure modern real estate operations require to compete.
+                  <span className="text-foreground font-semibold">Disruption without displacement.</span> Hobson replaces manual document work in real estate with AI-driven reasoning, delivering instant, traceable answers that reduce staffing costs, prevent costly errors, and accelerate operational decision-making. It embeds directly into existing workflows, becoming the intelligence infrastructure modern real estate operations require to compete.
                 </p>
               </div>
 
               {/* Funding Requirement Section */}
               <div className="flex justify-center">
-                <div className="bg-gradient-to-br from-primary/10 via-primary/5 to-transparent border border-primary/20 rounded-2xl p-6 sm:p-8 text-center max-w-sm">
+                <div className="bg-secondary border border-border rounded-2xl p-6 sm:p-8 text-center max-w-sm">
                   <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
                     <TrendingUp className="w-7 h-7 sm:w-8 sm:h-8 text-primary" />
                   </div>
                   <p className="text-xs sm:text-sm font-medium text-muted-foreground uppercase tracking-wider mb-2">
                     Funding Requirement
                   </p>
-                  <p className="text-2xl sm:text-3xl font-bold text-primary">£5M</p>
+                  <p className="text-2xl sm:text-3xl font-bold text-foreground">£5M</p>
                 </div>
               </div>
 
@@ -1678,7 +1678,7 @@ const InvestmentOpportunity = () => {
                             <div className={`relative overflow-hidden rounded-xl border p-6 sm:p-8 ${
                               isAdvisoryPage 
                                 ? "bg-gradient-to-r from-paper via-bone-wash/50 to-paper border-bone/40" 
-                                : "bg-gradient-to-r from-primary/5 via-primary/10 to-primary/5 border-primary/20"
+                                : "bg-secondary border-border"
                             }`}>
                               <div className={`absolute top-0 right-0 w-32 h-32 rounded-full -translate-y-1/2 translate-x-1/2 ${
                                 isAdvisoryPage ? "bg-bone/30" : "bg-primary/5"

@@ -159,14 +159,7 @@ export const Homepage = () => {
 
         <main id="main-content" className="min-h-screen bg-background overflow-x-hidden" role="main">
           {/* Hero Section - Two Column Layout */}
-          <section className="relative pt-12 sm:pt-16 pb-4 overflow-hidden" aria-labelledby="hero-heading" style={{ background: "var(--bone-wash)" }}>
-            {/* Subtle brass glow behind the headline */}
-            <div
-              className="pointer-events-none absolute inset-0"
-              style={{
-                background: 'radial-gradient(circle at 30% 40%, hsl(var(--highlight-colour) / 0.08) 0%, transparent 55%)',
-              }}
-            />
+          <section className="relative pt-12 sm:pt-16 pb-4 overflow-hidden bg-background" aria-labelledby="hero-heading">
             <div className="container mx-auto px-4 relative">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 items-center py-6 sm:py-8 lg:py-12">
                 {/* Left Container - H1 and Strap Line */}
@@ -181,7 +174,7 @@ export const Homepage = () => {
                         : highlight + " ";
                       return (
                         <>
-                          <span style={{ color: 'var(--brass)' }}>{prefix}{lastWord}</span>
+                          <span className="text-foreground">{prefix}{lastWord}</span>
                         </>
                       );
 
@@ -190,7 +183,7 @@ export const Homepage = () => {
                   <p className="text-muted-foreground leading-relaxed text-lg sm:text-xl">{content.hero.subtitle}</p>
                   <p className="text-xl sm:text-2xl lg:text-3xl font-semibold leading-snug tracking-tight pt-4 sm:pt-6">
                     <span className="text-muted-foreground">Claude reads your documents.</span>{" "}
-                    <span style={{ color: 'var(--brass)' }}>I understand your business.</span>
+                    <span className="text-foreground">I understand your business.</span>
 
                   </p>
                   
@@ -280,7 +273,7 @@ export const Homepage = () => {
                     className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-5 tracking-tight"
                   >
                     Ask once.{" "}
-                    <span style={{ color: 'var(--brass)' }}>
+                    <span className="text-foreground">
                       I bring the full picture.
                     </span>
                   </h2>
@@ -293,7 +286,6 @@ export const Homepage = () => {
                   {/* Screenshot — tight, polished frame */}
                   <div className="lg:col-span-6">
                     <div className="relative mx-auto max-w-md lg:max-w-none">
-                      <div className="absolute -inset-8 rounded-[2.5rem] blur-3xl opacity-60" style={{ background: 'radial-gradient(circle at 30% 30%, hsl(var(--highlight-colour) / 0.20), transparent 70%)' }} />
                       <div className="relative rounded-2xl overflow-hidden" style={{ border: '1px solid var(--bone-wash)', background: '#FFFFFF', boxShadow: '0 30px 80px -20px hsl(var(--shadow-colour) / 0.20)' }}>
                         {/* faux browser chrome */}
                         <div className="flex items-center gap-1.5 px-4 py-3 border-b" style={{ borderColor: 'var(--bone-wash)', background: 'var(--paper)' }}>

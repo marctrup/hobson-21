@@ -51,7 +51,7 @@ export const TestimonialSection = () => (
           className="text-3xl sm:text-4xl font-bold text-foreground tracking-tight mb-4"
         >
           Three things people have said{" "}
-          <span style={{ color: "var(--brass)" }}>to me.</span>
+          <span className="text-foreground">to me.</span>
         </h2>
         <p
           className="text-base sm:text-lg leading-relaxed max-w-xl mx-auto"
@@ -85,7 +85,7 @@ export const TestimonialSection = () => (
             </blockquote>
             <figcaption
               className="mt-auto pt-6 border-t flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.18em]"
-              style={{ borderColor: "var(--bone-strong)", color: "var(--brass-text)" }}
+              style={{ borderColor: "var(--bone-strong)", color: "var(--charcoal)" }}
             >
               <span
                 aria-hidden="true"

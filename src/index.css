@@ -67,13 +67,13 @@ All colors MUST be HSL.
     --primary: 262.122905 83.255814% 57.843137%;
     --primary-foreground: 0 0% 100%;
     --primary-light: 262 83% 66%;
-    --primary-soft: 257.142857 41.176471% 96.666667%;
+    --primary-soft: 260 33% 98.8%;
     --primary-soft-foreground: var(--foreground);
-    --secondary: 257.142857 41.176471% 96.666667%;
+    --secondary: 260 33% 98.8%;
     --secondary-foreground: var(--foreground);
-    --muted: 257.142857 41.176471% 96.666667%;
+    --muted: 260 20% 98%;
     --muted-foreground: 255 7% 43%;
-    --accent: 260 38% 94%;
+    --accent: 260 30% 97%;
     --accent-foreground: var(--foreground);
     --filter-active: var(--accent);
     --filter-active-foreground: var(--primary);
@@ -96,7 +96,7 @@ All colors MUST be HSL.
     --inverse-muted: 255 16% 85%;
     --map-water: 255 13% 93%;
     --shadow-colour: var(--foreground);
-    --highlight-colour: var(--primary);
+    --highlight-colour: var(--foreground);
 
     --paper: hsl(var(--background));
     --bone-wash: hsl(var(--secondary));

@@ -255,7 +255,7 @@ export const TalkToYourPapers = () => {
             </span>
             <h2 id="talk-papers-heading" className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-5 tracking-tight">
               Your own assistant,{" "}
-              <span style={{ color: "var(--brass)" }}>who has read every paper.</span>
+              <span className="text-foreground">who has read every paper.</span>
             </h2>
             <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
               My team and I take the time to read your papers, put them in order on a timeline and write you a short summary of each — so whether you're looking at your whole portfolio or one clause, you simply ask.
@@ -278,7 +278,7 @@ export const TalkToYourPapers = () => {
                         aria-pressed={active}
                         className="w-full text-left rounded-2xl p-5 border transition-all duration-500"
                         style={active
-                          ? { background: "var(--paper)", borderColor: "var(--bone)", boxShadow: "0 18px 40px -20px hsl(var(--highlight-colour) / 0.45)" }
+                          ? { background: "var(--paper)", borderColor: "var(--bone)", boxShadow: "0 18px 40px -20px hsl(var(--shadow-colour) / 0.18)" }
                           : { background: "transparent", borderColor: "transparent" }}
                       >
                         <div className="flex gap-4">

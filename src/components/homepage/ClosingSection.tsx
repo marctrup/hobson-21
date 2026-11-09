@@ -5,7 +5,7 @@ export const ClosingSection = () => (
     <div className="container mx-auto px-6 max-w-3xl text-center">
       <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight leading-tight" style={{ color: "var(--ink)" }}>
         One conversation. One voice.<br />
-        <span style={{ color: "var(--brass)" }}>
+        <span className="text-foreground">
           Unlimited capabilities.
         </span>
       </h2>
