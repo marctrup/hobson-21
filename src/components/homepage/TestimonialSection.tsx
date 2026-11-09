@@ -17,7 +17,7 @@ type Testimonial = {
 const testimonials: Testimonial[] = [
   {
     quote: "Walking down the street, I saw our building and wanted to know the next break. I used my phone and asked Hobson. Amazing",
-    attribution: "CEO of a large central London commercial agent",
+    attribution: "CEO of an Asset Management company",
   },
   {
     quote:

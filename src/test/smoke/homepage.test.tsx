@@ -34,7 +34,7 @@ describe("Homepage", () => {
       (el) => el.textContent?.trim()
     );
     expect(captions).toEqual([
-      "CEO of a large central London commercial agent",
+      "CEO of an Asset Management company",
       "CEO of a Family Office",
     ]);
     expect(container.textContent).not.toContain(REMOVED_COO_REMARK);
