@@ -131,8 +131,8 @@ const CaseStudies = () => {
                         className="inline-flex items-center rounded-full px-2.5 py-1 text-[10px] font-medium uppercase tracking-[0.12em]"
                         style={
                           card.live
-                            ? { backgroundColor: PAPER, color: MUTED, border: `1px solid ${RULE}` }
-                            : { backgroundColor: "var(--bone-wash)", color: "var(--ink-muted)", border: "1px dashed var(--bone)" }
+                            ? { backgroundColor: PAPER, color: INK, border: `1px solid ${RULE}` }
+                            : { backgroundColor: "var(--bone-wash)", color: INK, border: "1px dashed var(--bone)" }
                         }
                       >
                         {c}

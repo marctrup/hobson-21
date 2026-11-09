@@ -21,23 +21,23 @@ export const EventStrip = () => {
 
   return (
     <div
-      className="relative bg-ink border-y border-brass overflow-hidden"
+      className="relative bg-secondary border-y border-border overflow-hidden"
       role="region"
       aria-label="Exhibition announcement"
     >
       {/* Stationery hairlines, inset from each edge */}
-      <div className="absolute inset-y-0 left-2 w-px bg-brass/30 pointer-events-none" aria-hidden="true" />
-      <div className="absolute inset-y-0 right-2 w-px bg-brass/30 pointer-events-none" aria-hidden="true" />
+      <div className="absolute inset-y-0 left-2 w-px bg-border pointer-events-none" aria-hidden="true" />
+      <div className="absolute inset-y-0 right-2 w-px bg-border pointer-events-none" aria-hidden="true" />
 
       <div className="relative container mx-auto px-10 py-3 lg:py-2.5 lg:pr-12">
         {/* On phones: the sentence on its own line, the link beneath it.
             From tablet up: everything on one line again. */}
         <div className="flex flex-col items-center justify-center gap-2.5 text-center lg:flex-row lg:gap-4">
-          <p className="text-[13px] sm:text-sm font-serif text-bone-wash leading-snug min-w-0 tracking-wide">
+          <p className="text-[13px] sm:text-sm font-serif text-foreground leading-snug min-w-0 tracking-wide">
             We shall be at{" "}
             <Link
               to="/web-summit"
-              className="italic text-lavender-highlight underline decoration-lavender-highlight/40 underline-offset-4 hover:decoration-lavender-highlight transition-all duration-300"
+              className="italic text-foreground underline decoration-border underline-offset-4 hover:text-primary hover:decoration-primary transition-all duration-300"
             >
               Web Summit Lisbon 2026
             </Link>
@@ -60,7 +60,7 @@ export const EventStrip = () => {
                   ?.scrollIntoView({ behavior: "smooth", block: "start" });
               }
             }}
-            className="shrink-0 text-[10px] sm:text-[11px] font-medium uppercase tracking-[0.18em] text-lavender-highlight border-b border-lavender-highlight/60 pb-0.5 hover:border-lavender-highlight transition-colors"
+            className="shrink-0 text-[10px] sm:text-[11px] font-medium uppercase tracking-[0.18em] text-foreground border-b border-border pb-0.5 hover:text-primary hover:border-primary transition-colors"
           >
             Where to meet me
           </Link>
@@ -75,7 +75,7 @@ export const EventStrip = () => {
             setDismissed(true);
           }}
           aria-label="Dismiss announcement"
-          className="absolute right-1.5 top-1/2 -translate-y-1/2 p-1.5 rounded-sm text-lavender-highlight/80 hover:text-lavender-highlight transition-colors lg:right-4 lg:p-1"
+          className="absolute right-1.5 top-1/2 -translate-y-1/2 p-1.5 rounded-sm text-muted-foreground hover:text-foreground transition-colors lg:right-4 lg:p-1"
         >
           <X className="h-3.5 w-3.5" aria-hidden="true" />
         </button>
