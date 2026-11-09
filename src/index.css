@@ -116,6 +116,8 @@ All colors MUST be HSL.
     --document-white: hsl(var(--card));
     --vellum: hsl(var(--popover));
     --zebra: hsl(var(--secondary));
+    /* Pale lavender used for every other homepage section; white is the default. */
+    --section-alt: hsl(var(--accent));
     --code-surface: hsl(var(--secondary));
     --row-hover: hsl(var(--accent));
     --disabled: hsl(var(--muted));

@@ -35,6 +35,7 @@ export default {
 				'document-white': 'hsl(var(--card) / <alpha-value>)',
 				vellum: 'hsl(var(--popover) / <alpha-value>)',
 				zebra: 'hsl(var(--secondary) / <alpha-value>)',
+				wash: 'hsl(var(--section-alt) / <alpha-value>)',
 				'code-surface': 'hsl(var(--secondary) / <alpha-value>)',
 				'row-hover': 'hsl(var(--accent) / <alpha-value>)',
 				'disabled-fill': 'hsl(var(--muted) / <alpha-value>)',

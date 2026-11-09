@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
 export const ClosingSection = () => (
-  <section className="py-24" style={{ background: "var(--paper)" }}>
+  <section className="py-24" style={{ background: "var(--section-alt)" }}>
     <div className="container mx-auto px-6 max-w-3xl text-center">
       <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight leading-tight" style={{ color: "var(--ink)" }}>
         One conversation. One voice.<br />

@@ -202,7 +202,7 @@ export const Homepage = () => {
           <section
             className="border-b border-bone py-5"
             aria-label="Where to meet me"
-            style={{ background: "var(--zebra)" }}
+            style={{ background: "var(--section-alt)" }}
           >
             <div className="container mx-auto px-4 flex flex-col sm:flex-row items-center justify-center gap-1.5 sm:gap-4 text-center">
               <p className="text-sm text-muted-foreground">

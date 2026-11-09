@@ -34,7 +34,7 @@ const testimonials: Testimonial[] = [
 export const TestimonialSection = () => (
   <section
     className="py-20 sm:py-24 md:py-28 border-y border-bone"
-    style={{ background: "var(--bone-wash)" }}
+    style={{ background: "var(--paper)" }}
     aria-labelledby="testimonial-heading"
   >
     <div className="container mx-auto px-4">
