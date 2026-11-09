@@ -85,7 +85,7 @@ export const HomepageHeader = () => {
                   />
                 </span>
                 <span
-                  className="mt-2 text-[10px] font-bold text-brass-text italic leading-none"
+                  className="mt-2 text-[10px] font-bold text-muted-foreground italic leading-none"
                   style={serifStack}
                 >
                   {link.voice}
@@ -108,7 +108,7 @@ export const HomepageHeader = () => {
                   />
                 </span>
                 <span
-                  className="mt-2 text-[10px] font-bold text-brass-text italic leading-none"
+                  className="mt-2 text-[10px] font-bold text-muted-foreground italic leading-none"
                   style={serifStack}
                 >
                   {link.voice}
@@ -145,11 +145,11 @@ export const HomepageHeader = () => {
             <div className="flex flex-col">
               <Link
                 to="/"
-                className="group flex flex-col border-b border-bone-wash py-3"
+                className="group flex flex-col border-b border-border py-3"
                 onClick={() => { handleNavClick('/'); closeMobileMenu(); }}
               >
                 <span className="text-lg text-ink leading-tight">Home</span>
-                <span className="mt-1 text-xs font-bold text-brass-text italic leading-tight" style={serifStack}>
+                <span className="mt-1 text-xs font-bold text-muted-foreground italic leading-tight" style={serifStack}>
                   Start with me
                 </span>
               </Link>
@@ -157,12 +157,12 @@ export const HomepageHeader = () => {
                 <Link
                   key={link.to}
                   to={link.to}
-                  className="group flex flex-col border-b border-bone-wash py-3"
+                  className="group flex flex-col border-b border-border py-3"
                   onClick={() => { handleNavClick(link.to); closeMobileMenu(); }}
                   title={link.title}
                 >
                   <span className="text-lg text-ink leading-tight">{link.label}</span>
-                  <span className="mt-1 text-xs font-bold text-brass-text italic leading-tight" style={serifStack}>
+                  <span className="mt-1 text-xs font-bold text-muted-foreground italic leading-tight" style={serifStack}>
                     {link.voice}
                   </span>
                 </Link>
@@ -171,12 +171,12 @@ export const HomepageHeader = () => {
                 <Link
                   key={link.to}
                   to={link.to}
-                  className="group flex flex-col border-b border-bone-wash py-3"
+                  className="group flex flex-col border-b border-border py-3"
                   onClick={() => { handleNavClick(link.to); closeMobileMenu(); }}
                   title={link.title}
                 >
                   <span className="text-lg text-ink leading-tight">{link.label}</span>
-                  <span className="mt-1 text-xs font-bold text-brass-text italic leading-tight" style={serifStack}>
+                  <span className="mt-1 text-xs font-bold text-muted-foreground italic leading-tight" style={serifStack}>
                     {link.voice}
                   </span>
                 </Link>

@@ -77,7 +77,7 @@ All colors MUST be HSL.
     --accent-foreground: var(--foreground);
     --filter-active: var(--accent);
     --filter-active-foreground: var(--primary);
-    --border: 255 18% 89%;
+    --border: 255 6% 83%;
     --input: var(--border);
     --ring: var(--primary);
     --link: var(--primary);

@@ -1,6 +1,7 @@
 # Roadmap
 
 ## Site-wide product colour palette
+- [x] Final contrast refinements: muted navigation captions, clearer neutral borders and quieter decorative labels and quotation marks; desktop/mobile checked, 30 smoke tests pass. Unpublished.
 - [x] Refine palette: white dominant, lighter lavender washes, charcoal headlines and neutral shadows; desktop/mobile preview checked and 30 smoke tests pass. Unpublished.
 - [x] Apply white, lavender-grey, charcoal and purple across shared colours and page-specific warm colours without changing content or behaviour; owl artwork and functional status colours preserved.
 - [x] Check desktop and mobile pages and existing frontend tests; 343 frontend tests pass, preview has no runtime errors. Unpublished for review.

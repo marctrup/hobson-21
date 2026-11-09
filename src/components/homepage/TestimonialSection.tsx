@@ -42,7 +42,7 @@ export const TestimonialSection = () => (
       <div className="text-center mb-14 sm:mb-16">
         <span
           className="inline-block text-xs font-semibold tracking-[0.2em] uppercase mb-4"
-          style={{ color: "var(--brass-text)" }}
+          style={{ color: "var(--charcoal)" }}
         >
           In their words
         </span>
@@ -71,7 +71,7 @@ export const TestimonialSection = () => (
             <span
               aria-hidden="true"
               className="font-serif leading-none text-5xl sm:text-6xl select-none"
-              style={{ ...serifStack, color: "var(--brass)" }}
+              style={{ ...serifStack, color: "var(--charcoal)" }}
             >
               “
             </span>
@@ -90,7 +90,7 @@ export const TestimonialSection = () => (
               <span
                 aria-hidden="true"
                 className="inline-block h-px w-8"
-                style={{ background: "var(--brass)" }}
+                style={{ background: "var(--bone-strong)" }}
               />
               {t.attribution}
             </figcaption>

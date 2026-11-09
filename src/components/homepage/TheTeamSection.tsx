@@ -41,19 +41,19 @@ const SERVICES: Specialist[] = [
 const SpecialistCard: React.FC<{ s: Specialist; index: number }> = ({ s, index }) => (
   <article
     className="group relative rounded-3xl p-6 shadow-[0_8px_30px_-12px_hsl(var(--highlight-colour)_/_0.18)] hover:shadow-[0_20px_50px_-15px_hsl(var(--highlight-colour)_/_0.35)] hover:-translate-y-1 transition-all duration-500"
-    style={{ animation: `fade-up 0.6s ease ${index * 80}ms both`, background: "#FFFFFF", border: "1px solid var(--bone-wash)" }}
+    style={{ animation: `fade-up 0.6s ease ${index * 80}ms both`, background: "#FFFFFF", border: "1px solid var(--bone)" }}
   >
     <div className="absolute -top-3 left-6 px-3 py-1 rounded-full text-[10px] font-semibold uppercase tracking-wider"
       style={s.tone === "persistent"
         ? { background: "var(--ink)", color: "var(--paper)" }
-        : { background: "var(--bone-wash)", color: "var(--brass-text)", border: "1px solid var(--bone)" }}>
+        : { background: "var(--bone-wash)", color: "var(--charcoal)", border: "1px solid var(--bone)" }}>
       {s.tone === "persistent" ? "Maintains" : "Provides"}
     </div>
     <div className="flex items-start gap-4">
       <img loading="lazy" decoding="async" width={96} height={96} src={s.img} alt={s.name} className="w-24 h-24 shrink-0 object-contain group-hover:scale-110 transition-transform duration-500" />
       <div className="min-w-0">
         <h3 className="text-lg font-bold" style={{ color: "var(--ink)" }}>{s.name}</h3>
-        <p className="text-sm font-medium" style={{ color: "var(--brass)" }}>{s.owns}</p>
+        <p className="text-sm font-medium" style={{ color: "var(--charcoal)" }}>{s.owns}</p>
         <p className="mt-2 text-sm text-charcoal leading-relaxed">{s.blurb}</p>
       </div>
     </div>
@@ -68,7 +68,7 @@ export const TheTeamSection = () => {
       `}</style>
       <div className="container mx-auto px-4 sm:px-6">
         <div className="max-w-3xl mx-auto text-center">
-          <p className="text-xs font-semibold tracking-[0.2em] uppercase" style={{ color: "var(--brass)" }}>The team</p>
+          <p className="text-xs font-semibold tracking-[0.2em] uppercase" style={{ color: "var(--charcoal)" }}>The team</p>
           <h2 className="mt-3 text-3xl sm:text-4xl md:text-5xl font-bold text-foreground tracking-tight">Two kinds of specialist.</h2>
           <p className="mt-4 text-lg text-charcoal">
             Some of my agents quietly maintain my understanding of your portfolio over time. Others provide expert services whenever I need them. Together, they help me understand your business, complete work on your behalf and give you one clear answer.
@@ -82,7 +82,7 @@ export const TheTeamSection = () => {
               <h3 className="text-2xl font-bold text-foreground">My Permanent Memory</h3>
               <p className="text-charcoal text-sm mt-1">Four of my colleagues quietly maintain everything I know about your portfolio.</p>
             </div>
-            <span className="hidden sm:inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider rounded-full px-3 py-1.5" style={{ color: "var(--brass-text)", background: "#FFFFFF", border: "1px solid var(--bone)" }}>
+            <span className="hidden sm:inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider rounded-full px-3 py-1.5" style={{ color: "var(--charcoal)", background: "#FFFFFF", border: "1px solid var(--bone)" }}>
               Always on
             </span>
           </div>
@@ -98,7 +98,7 @@ export const TheTeamSection = () => {
               <h3 className="text-2xl font-bold text-foreground">My Specialist Services</h3>
               <p className="text-charcoal text-sm mt-1">When a matter calls for specialist expertise, these are the four I call upon.</p>
             </div>
-            <span className="hidden sm:inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider rounded-full px-3 py-1.5" style={{ color: "var(--brass-text)", background: "#FFFFFF", border: "1px solid var(--bone)" }}>
+            <span className="hidden sm:inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider rounded-full px-3 py-1.5" style={{ color: "var(--charcoal)", background: "#FFFFFF", border: "1px solid var(--bone)" }}>
               On demand
             </span>
           </div>
