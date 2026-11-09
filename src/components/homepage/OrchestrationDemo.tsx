@@ -156,7 +156,7 @@ export const OrchestrationDemo: React.FC = () => {
         @keyframes pulse-ring { 0% { transform: scale(0.9); opacity:0.7;} 100% { transform: scale(1.6); opacity:0;} }
       `}</style>
 
-      <div className="rounded-3xl flex flex-col h-[600px] max-h-[80vh] overflow-hidden" style={{ border: '1px solid var(--bone)', background: 'var(--paper)', boxShadow: '0 24px 60px -24px rgba(45,45,45,0.18)' }}>
+      <div className="rounded-3xl flex flex-col h-[600px] max-h-[80vh] overflow-hidden" style={{ border: '1px solid var(--bone)', background: 'var(--paper)', boxShadow: '0 24px 60px -24px hsl(var(--shadow-colour) / 0.18)' }}>
         <div
           ref={scrollRef}
           onScroll={handleScroll}
@@ -168,7 +168,7 @@ export const OrchestrationDemo: React.FC = () => {
           style={{ animation: hasStarted ? "fade-up 0.4s ease both" : undefined }}
         >
           <img src={hobsonOwl} alt="Hobson" className="w-10 h-10 object-contain" />
-          <div className="rounded-2xl rounded-tl-sm px-4 py-3 text-sm max-w-[85%]" style={{ background: 'var(--bone-wash)', color: 'var(--ink)', border: '1px solid #E6D2AE' }}>
+          <div className="rounded-2xl rounded-tl-sm px-4 py-3 text-sm max-w-[85%]" style={{ background: 'var(--bone-wash)', color: 'var(--ink)', border: '1px solid var(--bone)' }}>
             {HOBSON_PROACTIVE.slice(0, introProactiveIdx)}
             {introPhase === 1 && <span className="animate-pulse">|</span>}
           </div>
@@ -203,7 +203,7 @@ export const OrchestrationDemo: React.FC = () => {
           style={{ animation: introPhase >= 4 ? "fade-up 0.4s ease both" : undefined }}
         >
           <img src={hobsonOwl} alt="Hobson" className="w-10 h-10 object-contain" />
-          <div className="rounded-2xl rounded-tl-sm px-4 py-3 text-sm" style={{ background: 'var(--bone-wash)', color: 'var(--ink)', border: '1px solid #E6D2AE' }}>
+          <div className="rounded-2xl rounded-tl-sm px-4 py-3 text-sm" style={{ background: 'var(--bone-wash)', color: 'var(--ink)', border: '1px solid var(--bone)' }}>
 
             {HOBSON_INTRO.slice(0, introHobsonIdx)}
             {introPhase === 4 && <span className="animate-pulse">|</span>}
@@ -225,7 +225,7 @@ export const OrchestrationDemo: React.FC = () => {
                   <div className="relative w-9 h-9 shrink-0 grid place-items-center">
                     <img src={b.img} alt="" className="w-9 h-9 object-contain" />
                     {p.isActive && (
-                      <span className="absolute inset-0 rounded-xl ring-2 ring-[#B4914F]" style={{ animation: "pulse-ring 1.6s ease-out infinite" }} />
+                      <span className="absolute inset-0 rounded-xl ring-2 ring-primary" style={{ animation: "pulse-ring 1.6s ease-out infinite" }} />
                     )}
                   </div>
                   <div className="min-w-0 flex-1">
@@ -271,7 +271,7 @@ export const OrchestrationDemo: React.FC = () => {
         <div className={`mt-5 transition-all duration-500 ${finalShown ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2 pointer-events-none h-0 overflow-hidden"}`}>
           <div className="flex items-start gap-3">
             <img src={hobsonOwl} alt="Hobson" className="w-10 h-10 object-contain" />
-            <div className="rounded-2xl rounded-tl-sm px-4 py-3 text-sm max-w-[90%]" style={{ background: 'var(--bone-wash)', color: 'var(--ink)', border: '1px solid #E6D2AE' }}>
+            <div className="rounded-2xl rounded-tl-sm px-4 py-3 text-sm max-w-[90%]" style={{ background: 'var(--bone-wash)', color: 'var(--ink)', border: '1px solid var(--bone)' }}>
               <p>
                 I've finished preparing your rent review for <span className="font-semibold" style={{ color: 'var(--ink)' }}>32 Hamilton Gardens</span>.
                 Here is what I have for your approval:

@@ -50,7 +50,7 @@ const PLGrowthVisual = () => {
         <CardContent>
           <ResponsiveContainer width="100%" height={320}>
             <BarChart data={plData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#E8E1D4" />
+              <CartesianGrid strokeDasharray="3 3" stroke="var(--bone)" />
               <XAxis dataKey="year" tick={{ fontSize: 12 }} />
               <YAxis 
                 tick={{ fontSize: 11 }} 
@@ -60,12 +60,12 @@ const PLGrowthVisual = () => {
               <Tooltip 
                 formatter={(value: number, name: string) => [formatCurrency(value), name]}
                 labelStyle={{ fontWeight: "bold" }}
-                contentStyle={{ borderRadius: "8px", border: "1px solid #E8E1D4" }}
+                contentStyle={{ borderRadius: "8px", border: "1px solid var(--bone)" }}
               />
               <Legend wrapperStyle={{ paddingTop: "10px" }} />
-              <ReferenceLine y={0} stroke="#6E6A62" strokeWidth={1} />
+              <ReferenceLine y={0} stroke="var(--ink-muted)" strokeWidth={1} />
               <Bar dataKey="cogs" name="COGS" fill="#8F5A14" stackId="costs" radius={[0, 0, 0, 0]} />
-              <Bar dataKey="opex" name="Operating Expenses" fill="#56514A" stackId="costs" radius={[4, 4, 0, 0]} />
+              <Bar dataKey="opex" name="Operating Expenses" fill="var(--charcoal)" stackId="costs" radius={[4, 4, 0, 0]} />
               <Bar dataKey="ebitda" name="EBITDA" fill="#5E6B33" radius={[4, 4, 4, 4]} />
             </BarChart>
           </ResponsiveContainer>

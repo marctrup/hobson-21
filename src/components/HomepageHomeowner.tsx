@@ -181,7 +181,7 @@ export const HomepageHomeowner = () => {
                 {/* Right Content - Georgia Video */}
                 <div>
                   <div className="aspect-[3/2] bg-bone-wash rounded-xl overflow-hidden relative" style={{
-                  border: '10px solid #F1EBDE'
+                  border: '10px solid var(--bone-wash)'
                 }}>
                      <HomepageGeorgiaVideoHomeowner />
                   </div>

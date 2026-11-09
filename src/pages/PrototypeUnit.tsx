@@ -113,17 +113,17 @@ function RailItem({ icon, label, active, onClick }: { icon: "pin" | "doc" | "cha
     <button
       type="button"
       onClick={onClick}
-      className={`w-12 flex flex-col items-center gap-0.5 py-2 rounded-lg transition focus:outline-none focus:ring-2 focus:ring-[#56514A]/40 ${active ? "bg-[#F1EBDE]" : "hover:bg-paper"}`}
+      className={`w-12 flex flex-col items-center gap-0.5 py-2 rounded-lg transition focus:outline-none focus:ring-2 focus:ring-primary/40 ${active ? "bg-secondary" : "hover:bg-paper"}`}
       aria-current={active ? "page" : undefined}
       aria-label={label}
     >
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#56514A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--charcoal)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
         {icon === "pin" && (<><path d="M12 22s-7-6.5-7-12a7 7 0 1114 0c0 5.5-7 12-7 12z" /><circle cx="12" cy="10" r="2.5" /></>)}
         {icon === "doc" && (<><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" /><path d="M14 2v6h6" /></>)}
         {icon === "chat" && (<><path d="M21 12a8 8 0 11-3-6.2L21 3v6h-6" /></>)}
         {icon === "gear" && (<><circle cx="12" cy="12" r="3" /><path d="M19.4 15a1.6 1.6 0 00.3 1.8l.1.1a2 2 0 11-2.8 2.8l-.1-.1a1.6 1.6 0 00-1.8-.3 1.6 1.6 0 00-1 1.5V21a2 2 0 11-4 0v-.1a1.6 1.6 0 00-1-1.5" /></>)}
       </svg>
-      <span className={`w-full px-0.5 text-center text-[10px] leading-tight [overflow-wrap:anywhere] ${active ? "text-[#56514A] font-medium" : "text-ink-muted"}`}>{label}</span>
+      <span className={`w-full px-0.5 text-center text-[10px] leading-tight [overflow-wrap:anywhere] ${active ? "text-primary font-medium" : "text-ink-muted"}`}>{label}</span>
     </button>
   );
 }
@@ -193,10 +193,10 @@ function UnitResizeDivider({ width, setWidth, onReset, isDefault }: { width: num
       }}
       onDoubleClick={onReset}
       title="Drag to resize · double-click to reset"
-      className={`group relative w-1.5 shrink-0 cursor-col-resize select-none focus:outline-none ${active ? "bg-[#56514A]/30" : "bg-bone-wash hover:bg-[#56514A]/20"} focus-visible:bg-[#56514A]/30`}
+      className={`group relative w-1.5 shrink-0 cursor-col-resize select-none focus:outline-none ${active ? "bg-primary/30" : "bg-bone-wash hover:bg-primary/20"} focus-visible:bg-primary/30`}
     >
-      <div className={`absolute inset-y-0 left-1/2 -translate-x-1/2 w-px ${active ? "bg-[#56514A]" : "bg-bone group-hover:bg-[#56514A]/60"}`} />
-      <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center justify-center gap-0.5 px-0.5 py-2 rounded ${active ? "bg-[#56514A] text-white" : "bg-white border border-bone text-ink-muted group-hover:text-[#56514A]"}`}>
+      <div className={`absolute inset-y-0 left-1/2 -translate-x-1/2 w-px ${active ? "bg-primary" : "bg-bone group-hover:bg-primary/60"}`} />
+      <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center justify-center gap-0.5 px-0.5 py-2 rounded ${active ? "bg-primary text-white" : "bg-white border border-bone text-ink-muted group-hover:text-primary"}`}>
         <span className="block w-0.5 h-0.5 rounded-full bg-current" />
         <span className="block w-0.5 h-0.5 rounded-full bg-current" />
         <span className="block w-0.5 h-0.5 rounded-full bg-current" />
@@ -209,7 +209,7 @@ function UnitResizeDivider({ width, setWidth, onReset, isDefault }: { width: num
           onDoubleClick={(e) => e.stopPropagation()}
           aria-label="Reset layout to default"
           title="Reset layout (double-click divider)"
-          className="absolute left-1/2 -translate-x-1/2 top-[calc(50%+28px)] opacity-0 group-hover:opacity-100 focus-visible:opacity-100 focus:outline-none transition-opacity duration-200 motion-reduce:transition-none w-6 h-6 rounded-full bg-white border border-[#56514A]/40 text-[#56514A] hover:bg-[#F1EBDE] shadow-sm flex items-center justify-center focus-visible:ring-2 focus-visible:ring-[#56514A]"
+          className="absolute left-1/2 -translate-x-1/2 top-[calc(50%+28px)] opacity-0 group-hover:opacity-100 focus-visible:opacity-100 focus:outline-none transition-opacity duration-200 motion-reduce:transition-none w-6 h-6 rounded-full bg-white border border-primary/40 text-primary hover:bg-secondary shadow-sm flex items-center justify-center focus-visible:ring-2 focus-visible:ring-primary"
         >
           <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
             <path d="M3 12a9 9 0 1 0 3-6.7L3 8" /><path d="M3 3v5h5" />
@@ -796,7 +796,7 @@ Would you like to add their physical details now, or leave that until later?`);
         <div className="mt-auto flex flex-col items-center gap-3 pb-2">
           <button
             type="button"
-            className="grid h-11 w-11 place-items-center rounded-full bg-[#56514A] text-white shadow-md transition hover:bg-[#56514A]"
+            className="grid h-11 w-11 place-items-center rounded-full bg-primary text-white shadow-md transition hover:bg-primary"
             aria-label="A new conversation"
             onClick={() => { setPhysicalGroupId(null); setPhysicalPrompt(null); setWorkbookReview(null); setMessages([OPENING_MESSAGE]); setInput(""); setSetupPromptId(null); setSetupUnderway(false); setShowInvitation(true); setLocationStage("idle"); setLocationPromptId(null); setLocationAddress(""); setAddressParts({}); setAddressCandidates([]); setSelectedAddress(null); setBuildingUnderstanding(null); setBuildingStage("idle"); setBuildingPromptId(null); setLastRemoved(null); setMapExpanded(false); setGroupOpen(false); setShowSummaryUnits(false); setOpenUnit(null); setDetailsOffered(false); setDetailsPromptId(null); setPendingDetail(null); setDraftCard(null); setAddrChange(null); }}
           >

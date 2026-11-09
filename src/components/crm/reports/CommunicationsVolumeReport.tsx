@@ -12,15 +12,15 @@ import { useCommunicationsVolume } from "@/hooks/crm/reports/useActivityReports"
 import { downloadCsv } from "@/lib/crm/reportsExport";
 
 const CHANNEL_COLOR: Record<string, string> = {
-  email: "#56514A",
+  email: "var(--charcoal)",
   call: "#5E6B33",
-  meeting: "#8A8478",
+  meeting: "var(--ink-faint)",
   video_call: "#8b5cf6",
   sms: "#8F5A14",
   whatsapp: "#5E6B33",
-  linkedin_message: "#56514A",
-  letter: "#56514A",
-  other: "#8A8478",
+  linkedin_message: "var(--charcoal)",
+  letter: "var(--charcoal)",
+  other: "var(--ink-faint)",
 };
 
 export const CommunicationsVolumeReport = () => {
@@ -62,7 +62,7 @@ export const CommunicationsVolumeReport = () => {
               dataKey={c.key}
               name={c.label}
               stackId="a"
-              fill={CHANNEL_COLOR[c.key] ?? "#8A8478"}
+              fill={CHANNEL_COLOR[c.key] ?? "var(--ink-faint)"}
             />
           ))}
         </BarChart>

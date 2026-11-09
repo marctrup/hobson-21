@@ -140,7 +140,7 @@ function Glance({ p, a }: { p: Person; a: Access }) {
 function PersonCard({ p, onOpen, lit, scope }: { p: Person; onOpen: () => void; lit?: boolean; scope?: string }) {
   return (
     <li>
-      <button type="button" onClick={onOpen} aria-label={`Open ${p.name}'s access`} title={p.status === "suspended" ? "Suspended" : undefined} className={`group flex max-w-full items-center gap-2.5 rounded-xl bg-background px-4 py-2.5 text-left ring-1 transition duration-200 hover:-translate-y-0.5 hover:shadow-[0_14px_28px_-22px_rgba(45,45,45,0.55)] hover:ring-primary/40 focus:outline-none focus-visible:ring-2 focus-visible:ring-ring ${lit ? "bg-primary/[0.04] ring-primary/60" : "ring-bone"}`}>
+      <button type="button" onClick={onOpen} aria-label={`Open ${p.name}'s access`} title={p.status === "suspended" ? "Suspended" : undefined} className={`group flex max-w-full items-center gap-2.5 rounded-xl bg-background px-4 py-2.5 text-left ring-1 transition duration-200 hover:-translate-y-0.5 hover:shadow-[0_14px_28px_-22px_hsl(var(--shadow-colour)_/_0.55)] hover:ring-primary/40 focus:outline-none focus-visible:ring-2 focus-visible:ring-ring ${lit ? "bg-primary/[0.04] ring-primary/60" : "ring-bone"}`}>
         {p.status === "suspended" && <span aria-label="Suspended" title="Suspended" className="h-1.5 w-1.5 shrink-0 rounded-full bg-ink-muted" />}
         <span className="truncate whitespace-nowrap font-serif text-[15px] leading-snug text-ink">{p.name}</span>
         {p.you && <span className="shrink-0 text-[10px] text-ink-muted">(you)</span>}

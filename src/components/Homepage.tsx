@@ -123,7 +123,7 @@ export const Homepage = () => {
 
               {/* Mobile Menu Button */}
               <SimpleButton variant="ghost" size="icon" className="md:hidden bg-bone-wash hover:bg-bone border border-bone rounded-md" onClick={toggleMobileMenu} aria-label="Toggle mobile menu">
-                {isMobileMenuOpen ? <X className="h-6 w-6" style={{ color: "#2D2D2D" }} strokeWidth={1.5} /> : <Menu className="h-6 w-6" style={{ color: "#2D2D2D" }} strokeWidth={1.5} />}
+                {isMobileMenuOpen ? <X className="h-6 w-6" style={{ color: "var(--ink)" }} strokeWidth={1.5} /> : <Menu className="h-6 w-6" style={{ color: "var(--ink)" }} strokeWidth={1.5} />}
               </SimpleButton>
             </div>
 
@@ -159,12 +159,12 @@ export const Homepage = () => {
 
         <main id="main-content" className="min-h-screen bg-background overflow-x-hidden" role="main">
           {/* Hero Section - Two Column Layout */}
-          <section className="relative pt-12 sm:pt-16 pb-4 overflow-hidden" aria-labelledby="hero-heading" style={{ background: "#F1EBDE" }}>
+          <section className="relative pt-12 sm:pt-16 pb-4 overflow-hidden" aria-labelledby="hero-heading" style={{ background: "var(--bone-wash)" }}>
             {/* Subtle brass glow behind the headline */}
             <div
               className="pointer-events-none absolute inset-0"
               style={{
-                background: 'radial-gradient(circle at 30% 40%, rgba(180,145,79,0.08) 0%, transparent 55%)',
+                background: 'radial-gradient(circle at 30% 40%, hsl(var(--highlight-colour) / 0.08) 0%, transparent 55%)',
               }}
             />
             <div className="container mx-auto px-4 relative">
@@ -181,7 +181,7 @@ export const Homepage = () => {
                         : highlight + " ";
                       return (
                         <>
-                          <span style={{ color: '#B4914F' }}>{prefix}{lastWord}</span>
+                          <span style={{ color: 'var(--brass)' }}>{prefix}{lastWord}</span>
                         </>
                       );
 
@@ -190,7 +190,7 @@ export const Homepage = () => {
                   <p className="text-muted-foreground leading-relaxed text-lg sm:text-xl">{content.hero.subtitle}</p>
                   <p className="text-xl sm:text-2xl lg:text-3xl font-semibold leading-snug tracking-tight pt-4 sm:pt-6">
                     <span className="text-muted-foreground">Claude reads your documents.</span>{" "}
-                    <span style={{ color: '#B4914F' }}>I understand your business.</span>
+                    <span style={{ color: 'var(--brass)' }}>I understand your business.</span>
 
                   </p>
                   
@@ -210,7 +210,7 @@ export const Homepage = () => {
           <section
             className="border-b border-bone py-5"
             aria-label="Where to meet me"
-            style={{ background: "#FAF7F2" }}
+            style={{ background: "var(--zebra)" }}
           >
             <div className="container mx-auto px-4 flex flex-col sm:flex-row items-center justify-center gap-1.5 sm:gap-4 text-center">
               <p className="text-sm text-muted-foreground">
@@ -237,21 +237,21 @@ export const Homepage = () => {
             <div className="container mx-auto px-4">
               <div
                 className="max-w-3xl mx-auto rounded-2xl p-8 sm:p-10 shadow-sm"
-                style={{ background: "#FCFAF7", border: "1px solid #E6D2AE" }}
+                style={{ background: "var(--paper)", border: "1px solid var(--bone)" }}
               >
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
                   <div className="space-y-2">
-                    <h2 id="founder-cta-heading" className="text-xl sm:text-2xl font-bold" style={{ color: "#2D2D2D" }}>
+                    <h2 id="founder-cta-heading" className="text-xl sm:text-2xl font-bold" style={{ color: "var(--ink)" }}>
                       The people behind me
                     </h2>
-                    <p className="text-base leading-relaxed max-w-xl" style={{ color: "#56514A" }}>
+                    <p className="text-base leading-relaxed max-w-xl" style={{ color: "var(--charcoal)" }}>
                       I was created by people who understand the day-to-day reality of property work — because they have lived it.
                     </p>
                   </div>
                   <Link
                     to="/founder"
                     className="inline-flex items-center justify-center gap-2 rounded-md px-5 py-3 text-sm font-medium transition-opacity hover:opacity-90 whitespace-nowrap shrink-0"
-                    style={{ background: "#2D2D2D", color: "#FCFAF7" }}
+                    style={{ background: "var(--ink)", color: "var(--paper)" }}
                   >
                     Hear how I came to be
                     <ArrowRight className="h-4 w-4" />
@@ -268,11 +268,11 @@ export const Homepage = () => {
           <TalkToYourPapers />
 
           {/* Product Screenshot — Document Q&A */}
-          <section className="py-16 sm:py-20 md:py-28 overflow-hidden" aria-labelledby="screenshot-heading" style={{ background: '#FCFAF7' }}>
+          <section className="py-16 sm:py-20 md:py-28 overflow-hidden" aria-labelledby="screenshot-heading" style={{ background: 'var(--paper)' }}>
             <div className="container mx-auto px-4">
               <div className="max-w-6xl mx-auto">
                 <div className="max-w-3xl mx-auto text-center mb-14 md:mb-20">
-                  <span className="inline-block text-xs font-semibold tracking-[0.2em] uppercase mb-4" style={{ color: '#B4914F' }}>
+                  <span className="inline-block text-xs font-semibold tracking-[0.2em] uppercase mb-4" style={{ color: 'var(--brass)' }}>
                     See me in action
                   </span>
                   <h2
@@ -280,7 +280,7 @@ export const Homepage = () => {
                     className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-5 tracking-tight"
                   >
                     Ask once.{" "}
-                    <span style={{ color: '#B4914F' }}>
+                    <span style={{ color: 'var(--brass)' }}>
                       I bring the full picture.
                     </span>
                   </h2>
@@ -293,10 +293,10 @@ export const Homepage = () => {
                   {/* Screenshot — tight, polished frame */}
                   <div className="lg:col-span-6">
                     <div className="relative mx-auto max-w-md lg:max-w-none">
-                      <div className="absolute -inset-8 rounded-[2.5rem] blur-3xl opacity-60" style={{ background: 'radial-gradient(circle at 30% 30%, rgba(180,145,79,0.20), transparent 70%)' }} />
-                      <div className="relative rounded-2xl overflow-hidden" style={{ border: '1px solid #F7EDDC', background: '#FFFFFF', boxShadow: '0 30px 80px -20px rgba(45,45,45,0.20)' }}>
+                      <div className="absolute -inset-8 rounded-[2.5rem] blur-3xl opacity-60" style={{ background: 'radial-gradient(circle at 30% 30%, hsl(var(--highlight-colour) / 0.20), transparent 70%)' }} />
+                      <div className="relative rounded-2xl overflow-hidden" style={{ border: '1px solid var(--bone-wash)', background: '#FFFFFF', boxShadow: '0 30px 80px -20px hsl(var(--shadow-colour) / 0.20)' }}>
                         {/* faux browser chrome */}
-                        <div className="flex items-center gap-1.5 px-4 py-3 border-b" style={{ borderColor: '#F7EDDC', background: '#FCFAF7' }}>
+                        <div className="flex items-center gap-1.5 px-4 py-3 border-b" style={{ borderColor: 'var(--bone-wash)', background: 'var(--paper)' }}>
                           <span className="w-2.5 h-2.5 rounded-full bg-danger-border/70" />
                           <span className="w-2.5 h-2.5 rounded-full bg-warning-border/70" />
                           <span className="w-2.5 h-2.5 rounded-full bg-success-border/70" />
@@ -313,8 +313,8 @@ export const Homepage = () => {
                   {/* Feature narrative */}
                   <div className="lg:col-span-6 space-y-8">
                     <div className="flex gap-5">
-                      <div className="shrink-0 w-12 h-12 rounded-xl flex items-center justify-center" style={{ background: '#FCFAF7', border: '1px solid #F7EDDC' }}>
-                        <FileText className="w-6 h-6" style={{ color: '#B4914F' }} />
+                      <div className="shrink-0 w-12 h-12 rounded-xl flex items-center justify-center" style={{ background: 'var(--paper)', border: '1px solid var(--bone-wash)' }}>
+                        <FileText className="w-6 h-6" style={{ color: 'var(--brass)' }} />
                       </div>
                       <div>
                         <h3 className="text-lg font-semibold text-foreground mb-1.5">Understanding built over time</h3>
@@ -323,8 +323,8 @@ export const Homepage = () => {
                     </div>
 
                     <div className="flex gap-5">
-                      <div className="shrink-0 w-12 h-12 rounded-xl flex items-center justify-center" style={{ background: '#FCFAF7', border: '1px solid #F7EDDC' }}>
-                        <CheckCircle className="w-6 h-6" style={{ color: '#B4914F' }} />
+                      <div className="shrink-0 w-12 h-12 rounded-xl flex items-center justify-center" style={{ background: 'var(--paper)', border: '1px solid var(--bone-wash)' }}>
+                        <CheckCircle className="w-6 h-6" style={{ color: 'var(--brass)' }} />
                       </div>
                       <div>
                         <h3 className="text-lg font-semibold text-foreground mb-1.5">Evidence you can trust</h3>
@@ -333,8 +333,8 @@ export const Homepage = () => {
                     </div>
 
                     <div className="flex gap-5">
-                      <div className="shrink-0 w-12 h-12 rounded-xl flex items-center justify-center" style={{ background: '#FCFAF7', border: '1px solid #F7EDDC' }}>
-                        <Building2 className="w-6 h-6" style={{ color: '#B4914F' }} />
+                      <div className="shrink-0 w-12 h-12 rounded-xl flex items-center justify-center" style={{ background: 'var(--paper)', border: '1px solid var(--bone-wash)' }}>
+                        <Building2 className="w-6 h-6" style={{ color: 'var(--brass)' }} />
                       </div>
                       <div>
                         <h3 className="text-lg font-semibold text-foreground mb-1.5">Understanding beyond the documents</h3>

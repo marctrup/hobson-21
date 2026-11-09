@@ -10,15 +10,15 @@ import {
 import { useCommsByChannel } from "@/hooks/crm/dashboard/useCommsByChannel";
 
 const CHANNEL_COLOR: Record<string, string> = {
-  email: "#56514A",
+  email: "var(--charcoal)",
   call: "#5E6B33",
-  meeting: "#8A8478",
+  meeting: "var(--ink-faint)",
   video_call: "#8b5cf6",
   sms: "#8F5A14",
   whatsapp: "#5E6B33",
-  linkedin_message: "#56514A",
-  letter: "#56514A",
-  other: "#8A8478",
+  linkedin_message: "var(--charcoal)",
+  letter: "var(--charcoal)",
+  other: "var(--ink-faint)",
 };
 
 export const CommsByChannelCard = () => {
@@ -56,7 +56,7 @@ export const CommsByChannelCard = () => {
                 {(data ?? []).map((b) => (
                   <Cell
                     key={b.channel}
-                    fill={CHANNEL_COLOR[b.channel] ?? "#8A8478"}
+                    fill={CHANNEL_COLOR[b.channel] ?? "var(--ink-faint)"}
                   />
                 ))}
               </Bar>

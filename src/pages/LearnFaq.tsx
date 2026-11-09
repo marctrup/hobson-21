@@ -301,7 +301,7 @@ const LearnFaq = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ backgroundColor: "#FCFAF7" }}>
+    <div className="min-h-screen flex flex-col" style={{ backgroundColor: "var(--paper)" }}>
       <Helmet>
         <title>Hobson AI FAQ — questions, answered</title>
         <meta
@@ -320,26 +320,26 @@ const LearnFaq = () => {
         {/* Hero */}
         <section
           style={{
-            backgroundColor: "#F1EBDE",
-            borderBottom: "1px solid rgba(180,145,79,0.2)",
+            backgroundColor: "var(--bone-wash)",
+            borderBottom: "1px solid hsl(var(--highlight-colour) / 0.2)",
           }}
         >
           <div className="mx-auto max-w-3xl px-6 pt-16 pb-12 text-center">
             <p
               className="text-[11px] font-semibold uppercase tracking-[0.24em]"
-              style={{ color: "#B4914F" }}
+              style={{ color: "var(--brass)" }}
             >
-              Learn <span style={{ color: "#B4914F", opacity: 0.5 }}>/</span> FAQ
+              Learn <span style={{ color: "var(--brass)", opacity: 0.5 }}>/</span> FAQ
             </p>
             <h1
               className="mt-4 font-serif text-3xl sm:text-4xl md:text-5xl font-normal tracking-tight"
-              style={{ color: "#2D2D2D" }}
+              style={{ color: "var(--ink)" }}
             >
               Questions, answered.
             </h1>
             <p
               className="mt-5 text-base sm:text-lg leading-relaxed max-w-xl mx-auto"
-              style={{ color: "#6E6A62" }}
+              style={{ color: "var(--ink-muted)" }}
             >
               How Hobson thinks about your property documents — and why you
               can trust the answers it gives.
@@ -351,7 +351,7 @@ const LearnFaq = () => {
               from. It works only from your own documents, so nothing is invented. These
               answers cover documents, evidence, security and pricing.
             </AnswerFirst>
-            <div className="mx-auto mt-8 h-px w-24" style={{ backgroundColor: "#F7EDDC" }} />
+            <div className="mx-auto mt-8 h-px w-24" style={{ backgroundColor: "var(--bone-wash)" }} />
           </div>
         </section>
 
@@ -360,7 +360,7 @@ const LearnFaq = () => {
         <section className="mx-auto max-w-3xl px-6 py-16">
           {noResults ? (
             <div className="text-center py-16">
-              <p style={{ color: "#6E6A62" }}>
+              <p style={{ color: "var(--ink-muted)" }}>
                 No questions match your search. Try a different word.
               </p>
             </div>
@@ -371,17 +371,17 @@ const LearnFaq = () => {
                   <div className="flex items-baseline gap-4 mb-6">
                     <span
                       className="font-serif italic text-xl"
-                      style={{ color: "#B4914F" }}
+                      style={{ color: "var(--brass)" }}
                     >
                       {String(catIdx + 1).padStart(2, "0")}.
                     </span>
                     <h2
                       className="font-serif text-2xl sm:text-[1.75rem] font-normal tracking-tight"
-                      style={{ color: "#2D2D2D" }}
+                      style={{ color: "var(--ink)" }}
                     >
                       {cat.name}
                     </h2>
-                    <div className="flex-1 h-px" style={{ backgroundColor: "#F7EDDC" }} />
+                    <div className="flex-1 h-px" style={{ backgroundColor: "var(--bone-wash)" }} />
                   </div>
                   <Accordion type="multiple" className="space-y-4">
                     {cat.items.map((item, idx) => {
@@ -390,25 +390,25 @@ const LearnFaq = () => {
                         <AccordionItem
                           key={value}
                           value={value}
-                          className="group rounded-xl overflow-hidden bg-white transition-all duration-300 data-[state=open]:shadow-[0_8px_20px_-6px_rgba(180,145,79,0.18)]"
+                          className="group rounded-xl overflow-hidden bg-white transition-all duration-300 data-[state=open]:shadow-[0_8px_20px_-6px_hsl(var(--highlight-colour)_/_0.18)]"
                           style={{
-                            border: "1px solid #E8E1D4",
+                            border: "1px solid var(--bone)",
                           }}
                         >
-                          <AccordionTrigger className="px-6 py-6 hover:no-underline [&>svg]:hidden text-left group-data-[state=open]:border-b group-data-[state=open]:border-[#F1EBDE]">
+                          <AccordionTrigger className="px-6 py-6 hover:no-underline [&>svg]:hidden text-left group-data-[state=open]:border-b group-data-[state=open]:border-secondary">
                             <div className="flex items-center gap-4 flex-1">
                               <div className="flex-1">
                                 <div className="flex flex-wrap items-center gap-2">
                                   <span
                                     className="font-serif text-lg sm:text-xl font-medium"
-                                    style={{ color: "#2D2D2D" }}
+                                    style={{ color: "var(--ink)" }}
                                   >
                                     {item.q}
                                   </span>
                                   {item.mostAsked && (
                                     <Badge
                                       className="border-0 font-medium"
-                                      style={{ backgroundColor: "#F1EBDE", color: "#B4914F" }}
+                                      style={{ backgroundColor: "var(--bone-wash)", color: "var(--brass)" }}
                                     >
                                       Most asked
                                     </Badge>
@@ -419,11 +419,11 @@ const LearnFaq = () => {
                               <span className="relative flex-shrink-0 ml-4 w-6 h-6" aria-hidden>
                                 <span
                                   className="absolute top-1/2 left-0 w-6 h-[2px] -translate-y-1/2 transition-transform duration-300"
-                                  style={{ backgroundColor: "#B4914F" }}
+                                  style={{ backgroundColor: "var(--brass)" }}
                                 />
                                 <span
                                   className="absolute top-1/2 left-0 w-6 h-[2px] -translate-y-1/2 rotate-90 transition-all duration-300 group-data-[state=open]:rotate-0 group-data-[state=open]:opacity-0"
-                                  style={{ backgroundColor: "#B4914F" }}
+                                  style={{ backgroundColor: "var(--brass)" }}
                                 />
                               </span>
                             </div>
@@ -431,12 +431,12 @@ const LearnFaq = () => {
                           <AccordionContent className="px-6 pb-8 pt-6">
                             <div
                               className="prose max-w-none text-[15px] leading-relaxed prose-p:my-3 prose-strong:font-semibold prose-em:italic"
-                              style={{ color: "#56514A" }}
+                              style={{ color: "var(--charcoal)" }}
                             >
                               <ReactMarkdown
                                 components={{
                                   strong: ({ node, ...props }) => (
-                                    <strong style={{ color: "#2D2D2D" }} {...props} />
+                                    <strong style={{ color: "var(--ink)" }} {...props} />
                                   ),
                                 }}
                               >
@@ -447,7 +447,7 @@ const LearnFaq = () => {
                               <figure className="mt-8 mb-2">
                                 <div
                                   className="text-right text-[12px] mb-2"
-                                  style={{ color: "#8A8378" }}
+                                  style={{ color: "var(--ink-faint)" }}
                                 >
                                   {item.image.label}
                                 </div>
@@ -455,11 +455,11 @@ const LearnFaq = () => {
                                   src={item.image.src}
                                   alt={item.image.alt}
                                   className="w-full h-auto rounded-2xl block"
-                                  style={{ border: "1px solid #E8E1D4" }}
+                                  style={{ border: "1px solid var(--bone)" }}
                                 />
                                 <figcaption
                                   className="mt-2 text-[12.5px] leading-relaxed"
-                                  style={{ color: "#8A8378" }}
+                                  style={{ color: "var(--ink-faint)" }}
                                 >
                                   {item.image.caption}
                                 </figcaption>
@@ -482,14 +482,14 @@ const LearnFaq = () => {
             <div
               className="rounded-2xl p-10 sm:p-14 text-center"
               style={{
-                backgroundColor: "#2D2D2D",
-                color: "#FCFAF7",
-                boxShadow: "0 20px 40px -20px rgba(45,45,45,0.35)",
+                backgroundColor: "var(--ink)",
+                color: "var(--paper)",
+                boxShadow: "0 20px 40px -20px hsl(var(--shadow-colour) / 0.35)",
               }}
             >
               <div
                 className="inline-flex items-center justify-center w-14 h-14 mb-6 rounded-full"
-                style={{ backgroundColor: "rgba(180,145,79,0.15)", border: "1px solid rgba(180,145,79,0.35)" }}
+                style={{ backgroundColor: "hsl(var(--highlight-colour) / 0.15)", border: "1px solid hsl(var(--highlight-colour) / 0.35)" }}
               >
                 <img src={owlMascot} alt="Hobson the owl mascot" className="w-9 h-9" />
               </div>
@@ -498,7 +498,7 @@ const LearnFaq = () => {
               </h3>
               <p
                 className="mt-3 max-w-xl mx-auto leading-relaxed italic"
-                style={{ color: "rgba(252,250,247,0.7)" }}
+                style={{ color: "hsl(var(--primary-foreground) / 0.7)" }}
               >
                 If there's something we haven't covered, we'd be glad to walk
                 you through it — and show you Hobson on your own documents.
@@ -508,7 +508,7 @@ const LearnFaq = () => {
                   asChild
                   size="lg"
                   className="rounded-full px-8 font-semibold"
-                  style={{ backgroundColor: "#B4914F", color: "#2D2D2D" }}
+                  style={{ backgroundColor: "var(--brass)", color: "hsl(var(--primary-foreground))" }}
                 >
                   <a href="mailto:info@hobsonschoice.ai?subject=Hobson%20enquiry">
                     Email us

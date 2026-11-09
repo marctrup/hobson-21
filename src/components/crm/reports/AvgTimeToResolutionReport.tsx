@@ -12,8 +12,8 @@ import { useAvgTimeToResolution } from "@/hooks/crm/reports/useServiceReports";
 import { downloadCsv } from "@/lib/crm/reportsExport";
 
 const PRIORITY_COLOR: Record<string, string> = {
-  low: "#8A8478",
-  medium: "#56514A",
+  low: "var(--ink-faint)",
+  medium: "var(--charcoal)",
   high: "#8F5A14",
   urgent: "#9C4A38",
 };

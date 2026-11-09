@@ -67,13 +67,13 @@ const CARDS: HubCard[] = [
   ...propertyGuides.map(guide => ({ to: `/learn/${guide.slug}`, icon: BookOpen, title: guide.title, description: guide.description, cta: "Read the guide", status: "", available: true })),
 ];
 
-const BRASS = "#B4914F";
-const INK = "#2D2D2D";
-const MUTED = "#6E6A62";
-const LAVENDER_BG = "#F1EBDE";
-const LAVENDER_BORDER = "#E8E1D4";
-const PAPER = "#FCFAF7";
-const RULE = "#F7EDDC";
+const BRASS = "var(--brass)";
+const INK = "var(--ink)";
+const MUTED = "var(--ink-muted)";
+const LAVENDER_BG = "var(--bone-wash)";
+const LAVENDER_BORDER = "var(--bone)";
+const PAPER = "var(--paper)";
+const RULE = "var(--bone-wash)";
 
 const Learn = () => {
   return (
@@ -95,8 +95,8 @@ const Learn = () => {
         {/* Hero */}
         <section
           style={{
-            backgroundColor: "#F1EBDE",
-            borderBottom: `1px solid rgba(180,145,79,0.2)`,
+            backgroundColor: "var(--bone-wash)",
+            borderBottom: `1px solid hsl(var(--highlight-colour) / 0.2)`,
           }}
         >
           <div className="mx-auto max-w-3xl px-6 pt-20 pb-12 text-center">
@@ -144,7 +144,7 @@ const Learn = () => {
               const statusPill = card.available ? null : (
                 <span
                   className="inline-flex items-center rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em]"
-                  style={{ backgroundColor: "#F1EBDE", color: "#6E6A62", border: "1px dashed #D8CDB6" }}
+                  style={{ backgroundColor: "var(--bone-wash)", color: "var(--ink-muted)", border: "1px dashed var(--bone-strong)" }}
                 >
                   {card.status}
                 </span>
@@ -156,13 +156,13 @@ const Learn = () => {
                   className={[
                     "group h-full rounded-[20px] p-7 sm:p-8 transition-all duration-300 flex flex-col",
                     card.available
-                      ? "bg-white shadow-sm hover:shadow-[0_12px_28px_-10px_rgba(180,145,79,0.28)] hover:-translate-y-0.5"
+                      ? "bg-white shadow-sm hover:shadow-[0_12px_28px_-10px_hsl(var(--highlight-colour)_/_0.28)] hover:-translate-y-0.5"
                       : "",
                   ].join(" ")}
                   style={
                     card.available
                       ? { border: `1px solid ${LAVENDER_BORDER}` }
-                      : { backgroundColor: "#F7EDDC", border: "1px dashed #E6D2AE" }
+                      : { backgroundColor: "var(--bone-wash)", border: "1px dashed var(--bone)" }
                   }
                 >
                   <div className="flex items-start justify-between gap-3">
@@ -171,12 +171,12 @@ const Learn = () => {
                       style={
                         card.available
                           ? { backgroundColor: LAVENDER_BG, border: `1px solid ${LAVENDER_BORDER}` }
-                          : { backgroundColor: "#F7EDDC", border: "1px dashed #E6D2AE" }
+                          : { backgroundColor: "var(--bone-wash)", border: "1px dashed var(--bone)" }
                       }
                     >
                       <Icon
                         className="h-5 w-5"
-                        style={{ color: card.available ? BRASS : "#8A8478" }}
+                        style={{ color: card.available ? BRASS : "var(--ink-faint)" }}
                       />
                     </div>
                     {statusPill}
@@ -184,13 +184,13 @@ const Learn = () => {
 
                   <h2
                     className="mt-6 font-serif text-2xl font-normal tracking-tight"
-                    style={{ color: card.available ? INK : "#6E6A62" }}
+                    style={{ color: card.available ? INK : "var(--ink-muted)" }}
                   >
                     {card.title}
                   </h2>
                   <p
                     className="mt-3 text-[15px] leading-relaxed"
-                    style={{ color: card.available ? MUTED : "#8A8478" }}
+                    style={{ color: card.available ? MUTED : "var(--ink-faint)" }}
                   >
                     {card.description}
                   </p>
@@ -199,9 +199,9 @@ const Learn = () => {
 
                   <div
                     className="mt-8 pt-5 flex items-center justify-between text-sm font-medium"
-                    style={{ borderTop: `1px solid ${card.available ? RULE : "#E6D2AE"}` }}
+                    style={{ borderTop: `1px solid ${card.available ? RULE : "var(--bone)"}` }}
                   >
-                    <span style={{ color: card.available ? BRASS : "#8A8478" }}>
+                    <span style={{ color: card.available ? BRASS : "var(--ink-faint)" }}>
                       {card.cta}
                     </span>
                     {card.available && (

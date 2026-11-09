@@ -8,13 +8,13 @@ import { GlobalHeader } from "@/components/GlobalHeader";
 import { Button } from "@/components/ui/button";
 import owlMascot from "@/assets/owl-mascot.png";
 
-const BRASS = "#B4914F";
-const INK = "#2D2D2D";
-const MUTED = "#6E6A62";
-const LAVENDER_BG = "#F1EBDE";
-const LAVENDER_BORDER = "#E8E1D4";
-const PAPER = "#FCFAF7";
-const RULE = "#F7EDDC";
+const BRASS = "var(--brass)";
+const INK = "var(--ink)";
+const MUTED = "var(--ink-muted)";
+const LAVENDER_BG = "var(--bone-wash)";
+const LAVENDER_BORDER = "var(--bone)";
+const PAPER = "var(--paper)";
+const RULE = "var(--bone-wash)";
 
 const META = ["Large enterprise", "Central London", "Commercial & ground rents", "Major portfolio"];
 
@@ -42,7 +42,7 @@ const Section = ({ title, children }: { title: string; children: React.ReactNode
     >
       {title}
     </h2>
-    <div className="prose max-w-none text-[17px] leading-relaxed" style={{ color: "#2D2D2D" }}>
+    <div className="prose max-w-none text-[17px] leading-relaxed" style={{ color: "var(--ink)" }}>
       {children}
     </div>
   </section>
@@ -279,7 +279,7 @@ For a portfolio like this, that means the knowledge held across leases, deeds, s
               style={{
                 backgroundColor: "#FFFFFF",
                 border: `1px solid ${LAVENDER_BORDER}`,
-                boxShadow: "0 8px 20px -12px rgba(180,145,79,0.25)",
+                boxShadow: "0 8px 20px -12px hsl(var(--highlight-colour) / 0.25)",
               }}
             >
               <span
@@ -299,18 +299,18 @@ For a portfolio like this, that means the knowledge held across leases, deeds, s
             </div>
             <div
               className="rounded-2xl p-6"
-              style={{ backgroundColor: "#F7EDDC", border: "1px dashed #E6D2AE" }}
+              style={{ backgroundColor: "var(--bone-wash)", border: "1px dashed var(--bone)" }}
             >
               <span
                 className="inline-flex items-center rounded-full px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.14em]"
-                style={{ backgroundColor: "#F1EBDE", color: "#6E6A62", border: "1px dashed #D8CDB6" }}
+                style={{ backgroundColor: "var(--bone-wash)", color: "var(--ink-muted)", border: "1px dashed var(--bone-strong)" }}
               >
                 Phase 2 · coming
               </span>
-              <h3 className="mt-4 font-serif text-xl font-normal" style={{ color: "#6E6A62" }}>
+              <h3 className="mt-4 font-serif text-xl font-normal" style={{ color: "var(--ink-muted)" }}>
                 Staying ahead of the estate
               </h3>
-              <p className="mt-2 text-[15px] leading-relaxed" style={{ color: "#8A8478" }}>
+              <p className="mt-2 text-[15px] leading-relaxed" style={{ color: "var(--ink-faint)" }}>
                 A co-worker that watches the dates, rights and obligations
                 across the portfolio and brings the important ones forward — a
                 review, consent, expiry, notice or other event — before the team
@@ -341,21 +341,21 @@ For a portfolio like this, that means the knowledge held across leases, deeds, s
               style={{
                 backgroundColor: INK,
                 color: PAPER,
-                boxShadow: "0 20px 40px -20px rgba(45,45,45,0.35)",
+                boxShadow: "0 20px 40px -20px hsl(var(--shadow-colour) / 0.35)",
               }}
             >
               <div
                 className="inline-flex items-center justify-center w-14 h-14 mb-6 rounded-full"
                 style={{
-                  backgroundColor: "rgba(180,145,79,0.15)",
-                  border: "1px solid rgba(180,145,79,0.35)",
+                  backgroundColor: "hsl(var(--highlight-colour) / 0.15)",
+                  border: "1px solid hsl(var(--highlight-colour) / 0.35)",
                 }}
               >
                 <img src={owlMascot} alt="Hobson the owl mascot" className="w-9 h-9" />
               </div>
               <p
                 className="max-w-xl mx-auto leading-relaxed text-[17px]"
-                style={{ color: "rgba(252,250,247,0.85)" }}
+                style={{ color: "hsl(var(--primary-foreground) / 0.85)" }}
               >
                 <strong style={{ color: PAPER }}>If this is you</strong> — you
                 look after an estate whose history is spread across generations
@@ -368,7 +368,7 @@ For a portfolio like this, that means the knowledge held across leases, deeds, s
                   asChild
                   size="lg"
                   className="rounded-full px-8 font-semibold"
-                  style={{ backgroundColor: BRASS, color: INK }}
+                  style={{ backgroundColor: BRASS, color: "hsl(var(--primary-foreground))" }}
                 >
                   <a href="mailto:info@hobsonschoice.ai?subject=Hobson%20enquiry">
                     Email us →

@@ -267,7 +267,7 @@ export const HomepageABTest = () => {
                   <div
                     className="aspect-[3/2] bg-bone-wash rounded-xl overflow-hidden relative"
                     style={{
-                      border: "6px solid #F1EBDE",
+                      border: "6px solid var(--bone-wash)",
                     }}
                   >
                     <HomepageGeorgiaVideo />

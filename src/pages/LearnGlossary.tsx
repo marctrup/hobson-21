@@ -7,14 +7,14 @@ import { Search } from "lucide-react";
 import { GlobalHeader } from "@/components/GlobalHeader";
 import { getDefinedTermSetStructuredData } from "@/utils/seo-data";
 
-const BRASS = "#B4914F";
-const INK = "#2D2D2D";
-const MUTED = "#6E6A62";
-const FAINT = "#8A8478";
-const LAVENDER_BG = "#F1EBDE";
-const LAVENDER_BORDER = "#E8E1D4";
-const PAPER = "#FCFAF7";
-const RULE = "#F7EDDC";
+const BRASS = "var(--brass)";
+const INK = "var(--ink)";
+const MUTED = "var(--ink-muted)";
+const FAINT = "var(--ink-faint)";
+const LAVENDER_BG = "var(--bone-wash)";
+const LAVENDER_BORDER = "var(--bone)";
+const PAPER = "var(--paper)";
+const RULE = "var(--bone-wash)";
 
 const LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 
@@ -336,7 +336,7 @@ const LearnGlossary = () => {
         <section
           style={{
             backgroundColor: LAVENDER_BG,
-            borderBottom: `1px solid rgba(180,145,79,0.2)`,
+            borderBottom: `1px solid hsl(var(--highlight-colour) / 0.2)`,
           }}
         >
           <div className="mx-auto max-w-3xl px-6 pt-20 pb-12 text-center">
@@ -386,7 +386,7 @@ const LearnGlossary = () => {
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Search the definitions"
               aria-label="Search the definitions"
-              className="w-full bg-transparent text-[15px] outline-none placeholder:text-[#8A8478]"
+              className="w-full bg-transparent text-[15px] outline-none placeholder:text-ink-faint"
               style={{ color: INK }}
             />
           </div>
@@ -409,7 +409,7 @@ const LearnGlossary = () => {
                   key={letter}
                   aria-disabled="true"
                   className="inline-flex h-8 w-8 items-center justify-center rounded-full text-sm"
-                  style={{ color: "#C9C2B4" }}
+                  style={{ color: "var(--bone-strong)" }}
                 >
                   {letter}
                 </span>

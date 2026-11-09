@@ -142,7 +142,7 @@ const BROKER_TYPE_META: Record<BrokerContactType, { label: string; plural: strin
   },
   occupant: {
     label: "Occupants", plural: "Occupants",
-    tone: "purple", ring: "ring-bone", bg: "bg-[#F1EBDE]", text: "text-[#56514A]",
+    tone: "purple", ring: "ring-bone", bg: "bg-secondary", text: "text-primary",
     iconPath: (<><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-5h4v5"/></>),
   },
   misc: {
@@ -1272,7 +1272,7 @@ function HobsonMap({
           m.getElement()?.classList.add("is-overlap-spread");
           try {
             const line = L.polyline([points[k].orig, newLatLng], {
-              color: "#8A8478",
+              color: "var(--ink-faint)",
               weight: 1,
               opacity: 0.65,
               interactive: false,
@@ -3376,7 +3376,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
   const isExpanded = chatExpanded && view !== "onboarding" && !hasRightOverlay && !adminMode;
 
   return (
-    <div className="hobson-proto fixed inset-0 flex bg-white text-[#2D2D2D]">
+    <div className="hobson-proto fixed inset-0 flex bg-white text-foreground">
 
       <StyleTag />
 
@@ -3387,7 +3387,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
           onClick={adminMode ? exitAdmin : undefined}
           aria-label={adminMode ? "Exit Admin" : "Hobson"}
           title={adminMode ? "Exit Admin" : "Hobson"}
-          className={`w-10 h-10 rounded-xl overflow-hidden grid place-items-center mb-2 focus:outline-none focus:ring-2 focus:ring-[#56514A]/40 ${adminMode ? "cursor-pointer hover:brightness-110" : "cursor-default"}`}
+          className={`w-10 h-10 rounded-xl overflow-hidden grid place-items-center mb-2 focus:outline-none focus:ring-2 focus:ring-primary/40 ${adminMode ? "cursor-pointer hover:brightness-110" : "cursor-default"}`}
         >
           <img src={owlDefault} alt="" aria-hidden className="w-10 h-10 object-contain" />
         </button>
@@ -3402,7 +3402,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
               onClick={exitAdmin}
               aria-label="Exit Back Office and return to main menu"
               title="Exit Back Office"
-              className="mt-6 w-[56px] flex flex-col items-center gap-1 py-1.5 rounded-lg text-ink-muted hover:text-[#56514A] hover:bg-paper focus:outline-none focus-visible:ring-2 focus-visible:ring-[#56514A]"
+              className="mt-6 w-[56px] flex flex-col items-center gap-1 py-1.5 rounded-lg text-ink-muted hover:text-primary hover:bg-paper focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
             >
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
                 <path d="M15 18l-6-6 6-6"/>
@@ -3423,7 +3423,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
             {!testerMode && <RailItem icon="clock" label={"What I'm Up To"} active={view !== "onboarding" && showWhatIveDone} onClick={() => { setShowDocuments(false); setShowWhatIveDone(true); }} />}
             <RailItem icon="chat" label="Chat History" />
             <div className="mt-auto flex flex-col items-center gap-3 pb-2">
-              <button className="w-11 h-11 rounded-full bg-[#56514A] text-white grid place-items-center shadow-md hover:bg-[#56514A] transition" aria-label="A new conversation">
+              <button className="w-11 h-11 rounded-full bg-primary text-white grid place-items-center shadow-md hover:bg-primary transition" aria-label="A new conversation">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><path d="M12 5v14M5 12h14"/></svg>
               </button>
               <span className="text-[10px] text-ink-muted">A new conversation</span>
@@ -3444,7 +3444,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 rounded-xl bg-[#56514A]/10 grid place-items-center text-[#56514A]">
+              <div className="w-10 h-10 rounded-xl bg-primary/10 grid place-items-center text-primary">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
               </div>
               <div>
@@ -3466,7 +3466,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                 value={backOfficeGatePassword}
                 onChange={(e) => setBackOfficeGatePassword(e.target.value)}
                 placeholder="Password"
-                className="w-full h-10 rounded-md border border-bone px-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#56514A]/40"
+                className="w-full h-10 rounded-md border border-bone px-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/40"
               />
               <div className="mt-4 flex items-center justify-end gap-2">
                 <button
@@ -3478,7 +3478,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                 </button>
                 <button
                   type="submit"
-                  className="h-9 px-4 rounded-md text-sm font-medium bg-[#56514A] text-white hover:bg-[#56514A]"
+                  className="h-9 px-4 rounded-md text-sm font-medium bg-primary text-white hover:bg-primary"
                 >
                   Enter
                 </button>
@@ -3516,13 +3516,13 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
             onClick={expandChat}
             aria-label="Expand chat panel"
             title="Expand chat"
-            className="absolute inset-0 z-40 flex flex-col items-center justify-start pt-4 gap-3 bg-white border-r border-bone hover:bg-[#F1EBDE] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#56514A]"
+            className="absolute inset-0 z-40 flex flex-col items-center justify-start pt-4 gap-3 bg-white border-r border-bone hover:bg-secondary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
           >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#56514A" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--charcoal)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
               <path d="M9 6l6 6-6 6"/>
             </svg>
             <span
-              className="text-[10px] font-semibold tracking-wide text-[#56514A] uppercase"
+              className="text-[10px] font-semibold tracking-wide text-primary uppercase"
               style={{ writingMode: "vertical-rl" as const, transform: "rotate(180deg)" }}
             >
               Expand chat
@@ -3530,10 +3530,10 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
           </button>
         )}
         {!chatCollapsed && chatDropOver && adminMode && adminCharacter === "professor" && (
-          <div className="absolute inset-0 z-30 grid place-items-center bg-[#F1EBDE]/95 border-2 border-dashed border-[#56514A] rounded-none pointer-events-none">
+          <div className="absolute inset-0 z-30 grid place-items-center bg-secondary/95 border-2 border-dashed border-primary rounded-none pointer-events-none">
             <div className="text-center px-6">
-              <div className="text-[#56514A] text-3xl mb-2" aria-hidden>↑</div>
-              <div className="text-sm font-semibold text-[#56514A]">Drop documents for the Professor to read</div>
+              <div className="text-primary text-3xl mb-2" aria-hidden>↑</div>
+              <div className="text-sm font-semibold text-primary">Drop documents for the Professor to read</div>
               <div className="text-[12px] text-charcoal mt-1">Leases, certificates, correspondence — one or many</div>
             </div>
           </div>
@@ -3553,7 +3553,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                           const wb = document.getElementById("back-office-workbench");
                 if (wb) wb.scrollTo({ top: 0, behavior: "smooth" });
               }}
-              className="ml-1 inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-[12px] font-semibold text-[#56514A] hover:text-[#2D2D2D] hover:bg-[#F1EBDE] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#56514A] transition-colors motion-reduce:transition-none"
+              className="ml-1 inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-[12px] font-semibold text-primary hover:text-foreground hover:bg-secondary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary transition-colors motion-reduce:transition-none"
             >
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
                 <path d="M12 3l9 5-9 5-9-5 9-5z" />
@@ -3575,7 +3575,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                 <span>Step {Math.min(beatIdx + 1, BEATS.length)} of {BEATS.length}</span>
                 <button
                   onClick={skipIntro}
-                  className="text-[#56514A] hover:underline focus:outline-none focus:ring-2 focus:ring-[#56514A] rounded"
+                  className="text-primary hover:underline focus:outline-none focus:ring-2 focus:ring-primary rounded"
                 >
                   Skip intro
                 </button>
@@ -3583,7 +3583,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
             </div>
             <div className="h-1 rounded-full bg-bone-wash overflow-hidden">
               <div
-                className="h-full bg-[#56514A] transition-all duration-500"
+                className="h-full bg-primary transition-all duration-500"
                 style={{ width: `${progressPct}%` }}
               />
             </div>
@@ -3604,7 +3604,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                         <button
                           type="button"
                           onClick={c.onClick}
-                          className="text-[#56514A] hover:underline hover:text-[#56514A] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#56514A] rounded px-0.5 cursor-pointer truncate max-w-[180px] inline-block align-bottom"
+                          className="text-primary hover:underline hover:text-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded px-0.5 cursor-pointer truncate max-w-[180px] inline-block align-bottom"
                         >
                           {c.label}
                         </button>
@@ -3637,7 +3637,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                 onClick={() => setPinnedQuickOpen((v) => !v)}
                 aria-expanded={pinnedQuickOpen}
                 aria-controls="pinned-quick-panel"
-                className="w-full flex items-center justify-between gap-3 py-2 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-[#56514A]/40 rounded"
+                className="w-full flex items-center justify-between gap-3 py-2 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 rounded"
               >
                 <span className="text-[11.5px] uppercase tracking-wide text-ink-muted font-semibold truncate">
                   Quick overviews{view === "property" ? " · Open a unit" : (view === "unit" && selectedProperty && !selectedProperty.standalone) ? " · Open a unit" : ""}
@@ -3669,17 +3669,17 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                         type="button"
                         onClick={() => setOpenUnitsSignal((n) => n + 1)}
                         className="w-full flex items-center justify-between gap-3 px-4 py-3.5 rounded-xl text-left cursor-pointer
-                          bg-gradient-to-r from-[#F1EBDE] to-white
-                          border-2 border-[#E8E1D4]
-                          shadow-sm hover:shadow-md hover:border-[#56514A] hover:from-[#F1EBDE] hover:to-[#F1EBDE]
+                          bg-gradient-to-r from-secondary to-white
+                          border-2 border-border
+                          shadow-sm hover:shadow-md hover:border-primary hover:from-secondary hover:to-secondary
                           active:shadow-sm active:translate-y-px
                           transition-[box-shadow,border-color,background-color,transform] motion-reduce:transition-none
-                          focus:outline-none focus-visible:ring-2 focus-visible:ring-[#56514A]/40 focus-visible:ring-offset-2"
+                          focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2"
                       >
                         <span className="flex items-center gap-3 min-w-0">
                           <span
                             aria-hidden
-                            className="flex items-center justify-center w-9 h-9 rounded-lg bg-[#56514A] text-white shadow-sm"
+                            className="flex items-center justify-center w-9 h-9 rounded-lg bg-primary text-white shadow-sm"
                           >
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                               <path d="M4 21V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v17" />
@@ -3697,10 +3697,10 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                           </span>
                         </span>
                         <span className="flex items-center gap-2 shrink-0">
-                          <span className="hidden sm:inline text-[11px] uppercase tracking-wide text-[#56514A] font-semibold">Tap to choose</span>
+                          <span className="hidden sm:inline text-[11px] uppercase tracking-wide text-primary font-semibold">Tap to choose</span>
                           <span
                             aria-hidden
-                            className="flex items-center justify-center w-6 h-6 rounded-full bg-white border border-[#E8E1D4] text-[#56514A]"
+                            className="flex items-center justify-center w-6 h-6 rounded-full bg-white border border-border text-primary"
                           >
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                               <path d="M6 9l6 6 6-6" />
@@ -3721,7 +3721,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                         <button
                           type="button"
                           onClick={() => { const pid = selectedPropertyId; if (pid) goProperty(pid); }}
-                          className="w-full flex items-center justify-between gap-3 px-3 py-2 rounded-lg border border-[#E8E1D4] bg-gradient-to-r from-[#F1EBDE] to-white text-left hover:border-[#56514A] hover:from-[#F1EBDE] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#56514A]/40 transition motion-reduce:transition-none"
+                          className="w-full flex items-center justify-between gap-3 px-3 py-2 rounded-lg border border-border bg-gradient-to-r from-secondary to-white text-left hover:border-primary hover:from-secondary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 transition motion-reduce:transition-none"
                         >
                           <span className="flex flex-col min-w-0">
                             <span className="text-[13px] font-semibold text-ink">Open another unit</span>
@@ -3729,7 +3729,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                               {selectedProperty.units.length} units in {selectedProperty.name}
                             </span>
                           </span>
-                          <span aria-hidden className="text-[#56514A] text-[11px] uppercase tracking-wide font-semibold">Open ↓</span>
+                          <span aria-hidden className="text-primary text-[11px] uppercase tracking-wide font-semibold">Open ↓</span>
                         </button>
                       )}
                     </>
@@ -3849,7 +3849,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                       On this unit's desk · {unitOwnCards.length}
                     </div>
                     {unitOwnCards.map((c) => (
-                      <div key={c.id} className={c.id === carriedCardId ? "rounded-xl ring-2 ring-[#56514A]/50 ring-offset-2 ring-offset-white" : ""}>
+                      <div key={c.id} className={c.id === carriedCardId ? "rounded-xl ring-2 ring-primary/50 ring-offset-2 ring-offset-white" : ""}>
                       <ActionCardItem
                         key={c.id}
                         card={c}
@@ -3965,9 +3965,9 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                           {i === 0 ? <OwlAvatar state={owl} /> : <div aria-hidden className="w-10 h-10 shrink-0" />}
                           <div className="flex-1 min-w-0 space-y-2">
                             {m.text && (
-                              <div className="max-w-[420px] bg-[#F1EBDE] text-[#2D2D2D] text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-bl-md">
+                              <div className="max-w-[420px] bg-secondary text-foreground text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-bl-md">
                                 {m.text}
-                                {m.streaming && <span className="inline-block w-1.5 h-3.5 ml-0.5 bg-[#56514A] align-middle animate-pulse" />}
+                                {m.streaming && <span className="inline-block w-1.5 h-3.5 ml-0.5 bg-primary align-middle animate-pulse" />}
                               </div>
                             )}
                             {!m.streaming && (
@@ -4087,7 +4087,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
             <>
               {chipVisible && (
                 <div className="mb-2 flex items-center justify-end gap-2">
-                  <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#56514A] text-white text-[11px] font-semibold shadow-sm animate-[pulse_1.6s_ease-in-out_infinite]">
+                  <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-primary text-white text-[11px] font-semibold shadow-sm animate-[pulse_1.6s_ease-in-out_infinite]">
                     Press send to continue
                     <span aria-hidden className="animate-bounce">↓</span>
                   </span>
@@ -4101,9 +4101,9 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                   if (!chipVisible) return;
                   advanceBeat(q);
                 }}
-                className={`flex items-center gap-2 px-4 py-2.5 rounded-full border bg-white focus-within:border-[#56514A] focus-within:ring-2 focus-within:ring-[#56514A]/20 transition ${
+                className={`flex items-center gap-2 px-4 py-2.5 rounded-full border bg-white focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/20 transition ${
                   chipVisible
-                    ? "border-[#56514A] ring-2 ring-[#56514A]/40 bg-[#F1EBDE] shadow-[0_0_0_4px_rgba(180,145,79,0.12)] animate-[pulse_1.6s_ease-in-out_infinite]"
+                    ? "border-primary ring-2 ring-primary/40 bg-secondary shadow-[0_0_0_4px_hsl(var(--highlight-colour)_/_0.12)] animate-[pulse_1.6s_ease-in-out_infinite]"
                     : "border-bone"
                 }`}
               >
@@ -4114,15 +4114,15 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                   onClick={() => { if (chipVisible) advanceBeat(input); }}
                   readOnly
                   placeholder={!chipVisible ? "Hobson is talking…" : "Ask Hobson…"}
-                  className={`flex-1 outline-none text-sm bg-transparent placeholder:text-ink-muted cursor-text ${chipVisible ? "text-[#56514A] font-semibold" : ""}`}
+                  className={`flex-1 outline-none text-sm bg-transparent placeholder:text-ink-muted cursor-text ${chipVisible ? "text-primary font-semibold" : ""}`}
                   aria-label="Ask Hobson"
                 />
                 <button
                   type="submit"
                   className={`flex items-center justify-center rounded-full transition ${
                     chipVisible
-                      ? "h-9 w-9 bg-[#56514A] text-white hover:bg-[#56514A] shadow-md ring-2 ring-[#56514A]/30 animate-[pulse_1.6s_ease-in-out_infinite]"
-                      : "h-8 w-8 text-[#56514A] hover:text-[#56514A] disabled:text-ink-faint"
+                      ? "h-9 w-9 bg-primary text-white hover:bg-primary shadow-md ring-2 ring-primary/30 animate-[pulse_1.6s_ease-in-out_infinite]"
+                      : "h-8 w-8 text-primary hover:text-primary disabled:text-ink-faint"
                   }`}
                   aria-label="Send to continue"
                   disabled={!input.trim() || !chipVisible}
@@ -4169,7 +4169,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                 if (!q) return;
                 sendUnitQuestion(q);
               }}
-              className="flex items-center gap-2 px-4 py-2.5 rounded-full border border-bone bg-white focus-within:border-[#56514A] focus-within:ring-2 focus-within:ring-[#56514A]/20 transition"
+              className="flex items-center gap-2 px-4 py-2.5 rounded-full border border-bone bg-white focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/20 transition"
             >
               <input
                 value={input}
@@ -4181,7 +4181,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
               <button
                 type="submit"
                 disabled={!input.trim()}
-                className="flex items-center justify-center h-9 w-9 rounded-full bg-[#56514A] text-white hover:bg-[#56514A] transition disabled:bg-bone disabled:text-ink-muted"
+                className="flex items-center justify-center h-9 w-9 rounded-full bg-primary text-white hover:bg-primary transition disabled:bg-bone disabled:text-ink-muted"
                 aria-label="Send"
               >
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -4198,7 +4198,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                 askHobsonFromAnywhere(q);
                 setInput("");
               }}
-              className="flex items-center gap-2 px-4 py-2.5 rounded-full border border-bone bg-white focus-within:border-[#56514A] focus-within:ring-2 focus-within:ring-[#56514A]/20 transition"
+              className="flex items-center gap-2 px-4 py-2.5 rounded-full border border-bone bg-white focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/20 transition"
             >
               <Button type="button" variant="ghost" size="icon" onClick={attachSampleSideLetter} aria-label="Attach a paper (sample Side Letter 2024.pdf)" title="Attach a paper (sample Side Letter 2024.pdf)" className="h-9 w-9 shrink-0 text-foreground"><Paperclip className="h-5 w-5" aria-hidden="true" /></Button>
               <input
@@ -4212,7 +4212,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
               <button
                 type="submit"
                 disabled={!input.trim()}
-                className="flex items-center justify-center h-9 w-9 rounded-full bg-[#56514A] text-white hover:bg-[#56514A] transition disabled:bg-bone disabled:text-ink-muted"
+                className="flex items-center justify-center h-9 w-9 rounded-full bg-primary text-white hover:bg-primary transition disabled:bg-bone disabled:text-ink-muted"
                 aria-label="Send"
               >
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -4252,7 +4252,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
           onClick={resetLayout}
           title="Reset layout (Alt+0)"
           aria-label="Reset layout to default"
-          className="fixed bottom-4 right-4 z-[700] inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white border border-[#56514A]/30 text-[#56514A] text-xs font-medium shadow-md hover:bg-[#F1EBDE] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#56514A] transition-opacity duration-200 motion-reduce:transition-none"
+          className="fixed bottom-4 right-4 z-[700] inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white border border-primary/30 text-primary text-xs font-medium shadow-md hover:bg-secondary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary transition-opacity duration-200 motion-reduce:transition-none"
         >
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
             <path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/>
@@ -4274,13 +4274,13 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
             onClick={expandMain}
             aria-label="Expand work area"
             title="Expand work area"
-            className="absolute inset-0 z-[600] flex flex-col items-center justify-start pt-4 gap-3 bg-white border-l border-bone hover:bg-[#F1EBDE] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#56514A]"
+            className="absolute inset-0 z-[600] flex flex-col items-center justify-start pt-4 gap-3 bg-white border-l border-bone hover:bg-secondary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
           >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#56514A" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--charcoal)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
               <path d="M15 6l-6 6 6 6"/>
             </svg>
             <span
-              className="text-[10px] font-semibold tracking-wide text-[#56514A] uppercase"
+              className="text-[10px] font-semibold tracking-wide text-primary uppercase"
               style={{ writingMode: "vertical-rl" as const, transform: "rotate(180deg)" }}
             >
               Expand work area
@@ -4408,7 +4408,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
           <div className="absolute inset-0 z-[540] bg-white flex flex-col motion-reduce:transition-none">
             <div className="flex items-center justify-between px-5 h-14 border-b border-faint-rule shrink-0">
               <div className="flex items-center gap-2">
-                <span className="text-[11px] uppercase tracking-wider text-[#56514A] font-semibold">Hobson's back office</span>
+                <span className="text-[11px] uppercase tracking-wider text-primary font-semibold">Hobson's back office</span>
                 <span aria-hidden className="text-ink-faint">·</span>
                 <h2 className="text-[15px] font-semibold text-ink">Everything my team holds</h2>
               </div>
@@ -4416,7 +4416,7 @@ const Prototype: React.FC<{ testerMode?: boolean }> = ({ testerMode = false }) =
                 type="button"
                 onClick={() => setShowWorkbench(false)}
                 aria-label="Close workbench"
-                className="inline-flex items-center justify-center w-8 h-8 rounded-md text-ink-muted hover:text-ink hover:bg-bone-wash focus:outline-none focus-visible:ring-2 focus-visible:ring-[#56514A]"
+                className="inline-flex items-center justify-center w-8 h-8 rounded-md text-ink-muted hover:text-ink hover:bg-bone-wash focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
               >
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M6 6l12 12M18 6L6 18"/></svg>
               </button>
@@ -4701,10 +4701,10 @@ function ResizeDivider({
           ? "Drag left or double-click to expand work area"
           : "Drag to resize · double-click to reset · Enter to collapse"
       }
-      className={`group relative w-1.5 shrink-0 cursor-col-resize select-none focus:outline-none ${active ? "bg-[#56514A]/30" : "bg-bone-wash hover:bg-[#56514A]/20"} focus-visible:bg-[#56514A]/30`}
+      className={`group relative w-1.5 shrink-0 cursor-col-resize select-none focus:outline-none ${active ? "bg-primary/30" : "bg-bone-wash hover:bg-primary/20"} focus-visible:bg-primary/30`}
     >
-      <div className={`absolute inset-y-0 left-1/2 -translate-x-1/2 w-px ${active ? "bg-[#56514A]" : "bg-bone group-hover:bg-[#56514A]/60"}`} />
-      <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center justify-center gap-0.5 px-0.5 py-2 rounded ${active ? "bg-[#56514A] text-white" : "bg-white border border-bone text-ink-muted group-hover:text-[#56514A]"}`}>
+      <div className={`absolute inset-y-0 left-1/2 -translate-x-1/2 w-px ${active ? "bg-primary" : "bg-bone group-hover:bg-primary/60"}`} />
+      <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center justify-center gap-0.5 px-0.5 py-2 rounded ${active ? "bg-primary text-white" : "bg-white border border-bone text-ink-muted group-hover:text-primary"}`}>
         {collapsed ? (
           <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
             <path d="M9 6l6 6-6 6"/>
@@ -4729,7 +4729,7 @@ function ResizeDivider({
           onDoubleClick={(e) => e.stopPropagation()}
           aria-label="Reset layout to default"
           title="Reset layout (double-click divider or Alt+0)"
-          className="absolute left-1/2 -translate-x-1/2 top-[calc(50%+28px)] opacity-0 group-hover:opacity-100 focus-visible:opacity-100 focus:outline-none transition-opacity duration-200 motion-reduce:transition-none w-6 h-6 rounded-full bg-white border border-[#56514A]/40 text-[#56514A] hover:bg-[#F1EBDE] shadow-sm flex items-center justify-center focus-visible:ring-2 focus-visible:ring-[#56514A]"
+          className="absolute left-1/2 -translate-x-1/2 top-[calc(50%+28px)] opacity-0 group-hover:opacity-100 focus-visible:opacity-100 focus:outline-none transition-opacity duration-200 motion-reduce:transition-none w-6 h-6 rounded-full bg-white border border-primary/40 text-primary hover:bg-secondary shadow-sm flex items-center justify-center focus-visible:ring-2 focus-visible:ring-primary"
         >
           <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
             <path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/>
@@ -4742,13 +4742,13 @@ function ResizeDivider({
 
 
 function RailItem({ icon, label, active, onClick }: { icon: "pin" | "doc" | "chat" | "gear" | "clock"; label: string; active?: boolean; onClick?: () => void }) {
-  const stroke = active ? "#56514A" : "#56514A";
+  const stroke = active ? "var(--charcoal)" : "var(--charcoal)";
   return (
     <button
       type="button"
       onClick={onClick}
-      className={`w-12 flex flex-col items-center gap-0.5 py-2 rounded-lg transition focus:outline-none focus:ring-2 focus:ring-[#56514A]/40 ${
-        active ? "bg-[#F1EBDE]" : "hover:bg-paper"
+      className={`w-12 flex flex-col items-center gap-0.5 py-2 rounded-lg transition focus:outline-none focus:ring-2 focus:ring-primary/40 ${
+        active ? "bg-secondary" : "hover:bg-paper"
       }`}
       aria-current={active ? "page" : undefined}
       aria-label={label}
@@ -4760,7 +4760,7 @@ function RailItem({ icon, label, active, onClick }: { icon: "pin" | "doc" | "cha
         {icon === "clock" && (<><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></>)}
         {icon === "gear" && (<><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.6 1.6 0 00.3 1.8l.1.1a2 2 0 11-2.8 2.8l-.1-.1a1.6 1.6 0 00-1.8-.3 1.6 1.6 0 00-1 1.5V21a2 2 0 11-4 0v-.1a1.6 1.6 0 00-1-1.5"/></>)}
       </svg>
-      <span className={`text-[10px] text-center leading-tight ${active ? "text-[#56514A] font-medium" : "text-ink-muted"}`}>{label}</span>
+      <span className={`text-[10px] text-center leading-tight ${active ? "text-primary font-medium" : "text-ink-muted"}`}>{label}</span>
     </button>
   );
 }
@@ -4775,18 +4775,18 @@ function CharacterRailItem({ name, src, active, onClick, disabled, disabledLabel
       aria-current={active ? "page" : undefined}
       aria-label={disabled && disabledLabel ? `${name} — ${disabledLabel}` : name}
       title={disabled && disabledLabel ? `${name} — ${disabledLabel}` : undefined}
-      className={`w-14 flex flex-col items-center gap-1 py-1.5 rounded-lg transition focus:outline-none focus:ring-2 focus:ring-[#56514A]/40 ${
+      className={`w-14 flex flex-col items-center gap-1 py-1.5 rounded-lg transition focus:outline-none focus:ring-2 focus:ring-primary/40 ${
         disabled
           ? "cursor-not-allowed opacity-60"
           : active
-            ? "bg-[#F1EBDE] ring-1 ring-[#56514A]/40"
+            ? "bg-secondary ring-1 ring-primary/40"
             : "hover:bg-paper"
       }`}
     >
-      <div className={`w-11 h-11 rounded-full overflow-hidden bg-[#F1EBDE] grid place-items-center ${active && !disabled ? "ring-2 ring-[#56514A]" : "ring-1 ring-bone"} ${disabled ? "grayscale" : ""}`}>
+      <div className={`w-11 h-11 rounded-full overflow-hidden bg-secondary grid place-items-center ${active && !disabled ? "ring-2 ring-primary" : "ring-1 ring-bone"} ${disabled ? "grayscale" : ""}`}>
         <img src={src} alt="" aria-hidden className="w-[120%] h-[120%] object-contain object-center" />
       </div>
-      <span className={`text-[10px] text-center leading-tight ${disabled ? "text-ink-muted" : active ? "text-[#56514A] font-medium" : "text-charcoal"}`}>{name}</span>
+      <span className={`text-[10px] text-center leading-tight ${disabled ? "text-ink-muted" : active ? "text-primary font-medium" : "text-charcoal"}`}>{name}</span>
       {disabled && disabledLabel && (
         <span className="text-[9px] leading-tight text-ink-muted">{disabledLabel}</span>
       )}
@@ -4912,7 +4912,7 @@ function BackOfficeOfferChips({ offers, onPick, ariaLabel }: { offers: BackOffic
           type="button"
           onClick={() => onPick(o)}
           aria-label={o.text}
-          className="group w-full text-left rounded-2xl px-4 py-2.5 text-[13.5px] leading-snug bg-white border border-[#E8E1D4] text-ink hover:bg-[#56514A]/5 hover:border-[#E8E1D4] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#56514A] transition motion-reduce:transition-none shadow-sm"
+          className="group w-full text-left rounded-2xl px-4 py-2.5 text-[13.5px] leading-snug bg-white border border-border text-ink hover:bg-primary/5 hover:border-border focus:outline-none focus-visible:ring-2 focus-visible:ring-primary transition motion-reduce:transition-none shadow-sm"
         >
           <span className="inline-flex items-center gap-2">
             <span>{o.text}</span>
@@ -4948,10 +4948,10 @@ function JobGrid({ helpers, onPick }: { helpers: BackOfficeHelper[]; onPick: (h:
             onClick={() => { if (!disabled) onPick(h); }}
             disabled={disabled}
             aria-label={disabled ? `${job.offer} (coming soon)` : job.offer}
-            className={`group w-full text-left rounded-xl px-4 py-2.5 text-[13.5px] leading-snug transition focus:outline-none focus-visible:ring-2 focus-visible:ring-[#56514A] motion-reduce:transition-none ${
+            className={`group w-full text-left rounded-xl px-4 py-2.5 text-[13.5px] leading-snug transition focus:outline-none focus-visible:ring-2 focus-visible:ring-primary motion-reduce:transition-none ${
               disabled
                 ? "bg-paper/70 text-ink-muted cursor-not-allowed italic"
-                : "bg-[#56514A]/5 text-ink hover:bg-[#56514A]/10"
+                : "bg-primary/5 text-ink hover:bg-primary/10"
             }`}
           >
             <span className="inline-flex items-center gap-2">
@@ -5044,7 +5044,7 @@ function AdminChat({ character, owl, professorEvents, onAssignProfessorType, bro
       {phase === "typing" && (
         <div key={`${keyId}-typing`} className="flex items-end gap-2" aria-live="polite" aria-label="Hobson is typing">
           {Avatar}
-          <div className="bg-[#F1EBDE] px-4 py-3 rounded-2xl rounded-bl-md flex items-center gap-1">
+          <div className="bg-secondary px-4 py-3 rounded-2xl rounded-bl-md flex items-center gap-1">
             <Dot delay={0} /><Dot delay={150} /><Dot delay={300} />
           </div>
         </div>
@@ -5052,10 +5052,10 @@ function AdminChat({ character, owl, professorEvents, onAssignProfessorType, bro
       {phase !== "typing" && (
         <div key={keyId} className="flex items-end gap-2" aria-live="polite">
           {Avatar}
-          <div className="max-w-[420px] bg-[#F1EBDE] text-[#2D2D2D] text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-bl-md whitespace-pre-line">
+          <div className="max-w-[420px] bg-secondary text-foreground text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-bl-md whitespace-pre-line">
             {shown}
             {phase === "streaming" && (
-              <span className="inline-block w-1.5 h-3.5 ml-0.5 bg-[#56514A] align-middle animate-pulse" />
+              <span className="inline-block w-1.5 h-3.5 ml-0.5 bg-primary align-middle animate-pulse" />
             )}
           </div>
         </div>
@@ -5067,7 +5067,7 @@ function AdminChat({ character, owl, professorEvents, onAssignProfessorType, bro
         if (ev.kind === "user") {
           return (
             <div key={ev.id} className="flex justify-end">
-              <div className="max-w-[420px] bg-[#56514A] text-white text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-br-md">{ev.text}</div>
+              <div className="max-w-[420px] bg-primary text-white text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-br-md">{ev.text}</div>
             </div>
           );
         }
@@ -5076,7 +5076,7 @@ function AdminChat({ character, owl, professorEvents, onAssignProfessorType, bro
             <div key={ev.id} className="flex flex-col gap-1.5">
               <div className="flex items-end gap-2">
                 <OwlAvatar state={owl} />
-                <div className="max-w-[420px] bg-[#F1EBDE] text-[#2D2D2D] text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-bl-md">
+                <div className="max-w-[420px] bg-secondary text-foreground text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-bl-md">
                   A few things I could take on for you —
                 </div>
               </div>
@@ -5092,7 +5092,7 @@ function AdminChat({ character, owl, professorEvents, onAssignProfessorType, bro
         return (
           <div key={ev.id} className="flex items-end gap-2">
             <OwlAvatar state={owl} />
-            <div className="max-w-[420px] bg-[#F1EBDE] text-[#2D2D2D] text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-bl-md whitespace-pre-line">{ev.text}</div>
+            <div className="max-w-[420px] bg-secondary text-foreground text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-bl-md whitespace-pre-line">{ev.text}</div>
           </div>
         );
       })}
@@ -5105,16 +5105,16 @@ function AdminChat({ character, owl, professorEvents, onAssignProfessorType, bro
             if (ev.kind === "user") {
               return (
                 <div key={ev.id} className="flex justify-end">
-                  <div className="max-w-[420px] bg-[#56514A] text-white text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-br-md">{ev.text}</div>
+                  <div className="max-w-[420px] bg-primary text-white text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-br-md">{ev.text}</div>
                 </div>
               );
             }
             if (ev.kind === "built") {
               return (
-                <div key={ev.id} className="ml-12 max-w-[460px] rounded-xl border border-[#56514A]/30 bg-[#F1EBDE] p-3">
-                  <div className="text-[11px] uppercase tracking-wide text-[#56514A] font-semibold mb-1">Built into the workshop</div>
+                <div key={ev.id} className="ml-12 max-w-[460px] rounded-xl border border-primary/30 bg-secondary p-3">
+                  <div className="text-[11px] uppercase tracking-wide text-primary font-semibold mb-1">Built into the workshop</div>
                   <div className="text-[12px] text-charcoal"><span className="font-semibold">{ev.name}</span> — {ev.stepCount}-step workflow, ending in your approval.</div>
-                  <button type="button" onClick={() => magHandlers?.onOpenBuilt(ev.workflowId)} className="mt-2 text-[12px] font-semibold text-[#56514A] hover:underline focus:outline-none focus:ring-2 focus:ring-[#56514A]/40 rounded">View workflow →</button>
+                  <button type="button" onClick={() => magHandlers?.onOpenBuilt(ev.workflowId)} className="mt-2 text-[12px] font-semibold text-primary hover:underline focus:outline-none focus:ring-2 focus:ring-primary/40 rounded">View workflow →</button>
                 </div>
               );
             }
@@ -5122,12 +5122,12 @@ function AdminChat({ character, owl, professorEvents, onAssignProfessorType, bro
               return (
                 <div
                   key={ev.id}
-                  className="ml-12 max-w-[460px] rounded-xl border-2 border-dashed border-[#56514A]/40 bg-[#F1EBDE]/70 p-3"
+                  className="ml-12 max-w-[460px] rounded-xl border-2 border-dashed border-primary/40 bg-secondary/70 p-3"
                   role="status"
                   aria-label={`Simulation of ${ev.workflowName}`}
                 >
                   <div className="flex items-center gap-1.5 mb-1">
-                    <span className="text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded bg-[#56514A] text-white">Simulation</span>
+                    <span className="text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded bg-primary text-white">Simulation</span>
                     <span className="text-[11px] text-ink-muted">safe preview · nothing is sent</span>
                   </div>
                   <div className="text-[12px] text-charcoal">
@@ -5167,7 +5167,7 @@ function AdminChat({ character, owl, professorEvents, onAssignProfessorType, bro
                 <div key={ev.id} className="flex items-end gap-2">
                   <OwlAvatar state={owl} />
 
-                  <div className="max-w-[360px] bg-[#F1EBDE] text-[#2D2D2D] text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-bl-md">
+                  <div className="max-w-[360px] bg-secondary text-foreground text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-bl-md">
                     {ev.text}
                   </div>
                 </div>
@@ -5175,7 +5175,7 @@ function AdminChat({ character, owl, professorEvents, onAssignProfessorType, bro
             }
             // ask-type
             return (
-              <div key={ev.id} className="ml-12 max-w-[420px] rounded-xl border border-[#56514A]/30 bg-white p-3 shadow-sm">
+              <div key={ev.id} className="ml-12 max-w-[420px] rounded-xl border border-primary/30 bg-white p-3 shadow-sm">
                 <div className="text-[11px] uppercase tracking-wide text-ink-muted font-semibold mb-2">
                   Assign document type · {ev.docIds.length} file{ev.docIds.length === 1 ? "" : "s"} · all the same type
                 </div>
@@ -5204,7 +5204,7 @@ function AdminChat({ character, owl, professorEvents, onAssignProfessorType, bro
               return (
                 <div key={ev.id} className="flex items-end gap-2">
                   <OwlAvatar state={owl} />
-                  <div className="max-w-[420px] bg-[#F1EBDE] text-[#2D2D2D] text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-bl-md">
+                  <div className="max-w-[420px] bg-secondary text-foreground text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-bl-md">
                     {ev.text}
                   </div>
                 </div>
@@ -5213,7 +5213,7 @@ function AdminChat({ character, owl, professorEvents, onAssignProfessorType, bro
             if (ev.kind === "user") {
               return (
                 <div key={ev.id} className="flex justify-end">
-                  <div className="max-w-[420px] bg-[#56514A] text-white text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-br-md">
+                  <div className="max-w-[420px] bg-primary text-white text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-br-md">
                     {ev.text}
                   </div>
                 </div>
@@ -5221,8 +5221,8 @@ function AdminChat({ character, owl, professorEvents, onAssignProfessorType, bro
             }
             if (ev.kind === "summary") {
               return (
-                <div key={ev.id} className="ml-12 max-w-[420px] rounded-xl border border-[#56514A]/30 bg-[#F1EBDE] p-3">
-                  <div className="text-[11px] uppercase tracking-wide text-[#56514A] font-semibold mb-1">Added to the black book</div>
+                <div key={ev.id} className="ml-12 max-w-[420px] rounded-xl border border-primary/30 bg-secondary p-3">
+                  <div className="text-[11px] uppercase tracking-wide text-primary font-semibold mb-1">Added to the black book</div>
                   <div className="text-[12px] text-charcoal"><span className="font-semibold">{ev.name}</span> · pinned at the top of the book on the right.</div>
                 </div>
               );
@@ -5235,12 +5235,12 @@ function AdminChat({ character, owl, professorEvents, onAssignProfessorType, bro
               { key: "misc", label: "Other" },
             ];
             return (
-              <div key={ev.id} className="ml-12 max-w-[460px] rounded-xl border border-[#56514A]/30 bg-[#F1EBDE] p-3.5">
+              <div key={ev.id} className="ml-12 max-w-[460px] rounded-xl border border-primary/30 bg-secondary p-3.5">
                 <div className="flex items-center gap-2 mb-1.5">
-                  <span className="inline-flex items-center justify-center w-5 h-5 rounded bg-[#56514A]/10 text-[#56514A]" aria-hidden>
+                  <span className="inline-flex items-center justify-center w-5 h-5 rounded bg-primary/10 text-primary" aria-hidden>
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 7h18M3 12h18M3 17h18"/></svg>
                   </span>
-                  <div className="text-[11px] uppercase tracking-wide text-[#56514A] font-semibold">Imported into the black book</div>
+                  <div className="text-[11px] uppercase tracking-wide text-primary font-semibold">Imported into the black book</div>
                 </div>
                 <div className="text-[12px] text-charcoal mb-2">
                   Read <span className="font-semibold">{ev.total} contacts</span> from <span className="font-mono text-[11.5px]">{ev.filename}</span> · linked across <span className="font-semibold">{ev.linkedProperties}</span> propert{ev.linkedProperties === 1 ? "y" : "ies"}.
@@ -5312,16 +5312,16 @@ function MagicianStreamingBubble({ id, text, src, stream, onDone }: { id: string
       {phase === "typing" ? (
         <div className="flex items-end gap-2" aria-live="polite">
           <OwlAvatar state="talking" />
-          <div className="bg-[#F1EBDE] px-4 py-3 rounded-2xl rounded-bl-md flex items-center gap-1">
+          <div className="bg-secondary px-4 py-3 rounded-2xl rounded-bl-md flex items-center gap-1">
             <Dot delay={0} /><Dot delay={150} /><Dot delay={300} />
           </div>
         </div>
       ) : (
         <div className="flex items-end gap-2" aria-live="polite">
           <OwlAvatar state={phase === "streaming" ? "talking" : "default"} />
-          <div className="max-w-[420px] bg-[#F1EBDE] text-[#2D2D2D] text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-bl-md">
+          <div className="max-w-[420px] bg-secondary text-foreground text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-bl-md">
             {shown}
-            {phase === "streaming" && <span className="inline-block w-1.5 h-3.5 ml-0.5 bg-[#56514A] align-middle animate-pulse" />}
+            {phase === "streaming" && <span className="inline-block w-1.5 h-3.5 ml-0.5 bg-primary align-middle animate-pulse" />}
           </div>
         </div>
       )}
@@ -5335,7 +5335,7 @@ function MagOptionButton({ children, onClick, disabled }: { children: React.Reac
       type="button"
       onClick={onClick}
       disabled={disabled}
-      className="px-3 py-1.5 rounded-full border border-[#56514A]/40 bg-white text-[12.5px] font-medium text-[#2D2D2D] hover:bg-[#F1EBDE] focus:outline-none focus:ring-2 focus:ring-[#56514A]/40 disabled:opacity-40 disabled:cursor-not-allowed"
+      className="px-3 py-1.5 rounded-full border border-primary/40 bg-white text-[12.5px] font-medium text-foreground hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-primary/40 disabled:opacity-40 disabled:cursor-not-allowed"
     >
       {children}
     </button>
@@ -5372,8 +5372,8 @@ function MagicianIntake({ onSubmit, initial, onCancel }: { onSubmit: MagHandlers
     });
   };
 
-  const fieldLabel = "block text-[11px] uppercase tracking-wide text-[#56514A] font-semibold mb-1";
-  const inputCls = "w-full text-[13px] border border-bone rounded-md px-2.5 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-[#56514A]/40";
+  const fieldLabel = "block text-[11px] uppercase tracking-wide text-primary font-semibold mb-1";
+  const inputCls = "w-full text-[13px] border border-bone rounded-md px-2.5 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-primary/40";
 
   return (
     <div className="space-y-3">
@@ -5396,8 +5396,8 @@ function MagicianIntake({ onSubmit, initial, onCancel }: { onSubmit: MagHandlers
                 type="button"
                 onClick={() => setWhenKey(o.k)}
                 aria-pressed={active}
-                className={`px-3 py-1.5 rounded-full border text-[12.5px] font-medium focus:outline-none focus:ring-2 focus:ring-[#56514A]/40 ${
-                  active ? "bg-[#56514A] text-white border-[#56514A]" : "bg-white text-[#2D2D2D] border-[#56514A]/40 hover:bg-[#F1EBDE]"
+                className={`px-3 py-1.5 rounded-full border text-[12.5px] font-medium focus:outline-none focus:ring-2 focus:ring-primary/40 ${
+                  active ? "bg-primary text-white border-primary" : "bg-white text-foreground border-primary/40 hover:bg-secondary"
                 }`}
               >
                 {o.label}
@@ -5408,8 +5408,8 @@ function MagicianIntake({ onSubmit, initial, onCancel }: { onSubmit: MagHandlers
             type="button"
             onClick={() => setWhenKey("custom")}
             aria-pressed={whenKey === "custom"}
-            className={`px-3 py-1.5 rounded-full border text-[12.5px] font-medium focus:outline-none focus:ring-2 focus:ring-[#56514A]/40 ${
-              whenKey === "custom" ? "bg-[#56514A] text-white border-[#56514A]" : "bg-white text-[#2D2D2D] border-dashed border-[#56514A]/50 hover:bg-[#F1EBDE]"
+            className={`px-3 py-1.5 rounded-full border text-[12.5px] font-medium focus:outline-none focus:ring-2 focus:ring-primary/40 ${
+              whenKey === "custom" ? "bg-primary text-white border-primary" : "bg-white text-foreground border-dashed border-primary/50 hover:bg-secondary"
             }`}
           >
             Custom…
@@ -5433,7 +5433,7 @@ function MagicianIntake({ onSubmit, initial, onCancel }: { onSubmit: MagHandlers
       </div>
       <div>
         <span className={fieldLabel}>Visibility <span className="text-danger">*</span></span>
-        <div className="inline-flex rounded-full border border-[#56514A]/40 p-0.5 bg-white" role="group" aria-label="Visibility">
+        <div className="inline-flex rounded-full border border-primary/40 p-0.5 bg-white" role="group" aria-label="Visibility">
           {([
             { k: "personal", label: "Personal" },
             { k: "company", label: "Company-wide" },
@@ -5445,8 +5445,8 @@ function MagicianIntake({ onSubmit, initial, onCancel }: { onSubmit: MagHandlers
                 type="button"
                 onClick={() => setVisibility(v.k)}
                 aria-pressed={active}
-                className={`px-3 py-1.5 rounded-full text-[12.5px] font-medium focus:outline-none focus:ring-2 focus:ring-[#56514A]/40 ${
-                  active ? "bg-[#56514A] text-white" : "text-[#2D2D2D] hover:bg-[#F1EBDE]"
+                className={`px-3 py-1.5 rounded-full text-[12.5px] font-medium focus:outline-none focus:ring-2 focus:ring-primary/40 ${
+                  active ? "bg-primary text-white" : "text-foreground hover:bg-secondary"
                 }`}
               >
                 {v.label}
@@ -5459,13 +5459,13 @@ function MagicianIntake({ onSubmit, initial, onCancel }: { onSubmit: MagHandlers
         <span className="text-[11px] text-ink-muted">Required fields marked <span className="text-danger">*</span></span>
         <div className="flex items-center gap-1.5">
           {onCancel && (
-            <button type="button" onClick={onCancel} className="px-3 py-1.5 rounded-full text-[12.5px] text-charcoal hover:bg-bone-wash focus:outline-none focus:ring-2 focus:ring-[#56514A]/40">Cancel</button>
+            <button type="button" onClick={onCancel} className="px-3 py-1.5 rounded-full text-[12.5px] text-charcoal hover:bg-bone-wash focus:outline-none focus:ring-2 focus:ring-primary/40">Cancel</button>
           )}
           <button
             type="button"
             onClick={submit}
             disabled={!canSubmit}
-            className="px-3.5 py-1.5 rounded-full bg-[#56514A] text-white text-[12.5px] font-semibold hover:bg-[#56514A] disabled:bg-bone disabled:text-ink-muted focus:outline-none focus:ring-2 focus:ring-[#56514A]/40"
+            className="px-3.5 py-1.5 rounded-full bg-primary text-white text-[12.5px] font-semibold hover:bg-primary disabled:bg-bone disabled:text-ink-muted focus:outline-none focus:ring-2 focus:ring-primary/40"
           >
             {initial ? "Save changes" : "Start building →"}
           </button>
@@ -5480,7 +5480,7 @@ function MagicianStepRow({ s, i, total, handlers }: { s: MagBuildStep; i: number
   const [draft, setDraft] = useState(s.label);
   if (editing) {
     return (
-      <li className="flex items-start gap-2 rounded-md border border-[#56514A]/40 bg-[#F1EBDE] px-2 py-1.5">
+      <li className="flex items-start gap-2 rounded-md border border-primary/40 bg-secondary px-2 py-1.5">
         <span className="text-[11px] font-semibold text-ink-muted mt-1.5 w-4 text-right">{i + 1}.</span>
         <input
           autoFocus
@@ -5490,11 +5490,11 @@ function MagicianStepRow({ s, i, total, handlers }: { s: MagBuildStep; i: number
             if (e.key === "Enter") { e.preventDefault(); handlers.onRenameStep(s.uid, draft); setEditing(false); }
             if (e.key === "Escape") { setDraft(s.label); setEditing(false); }
           }}
-          className="flex-1 text-[12.5px] border border-bone rounded-md px-2 py-1 bg-white focus:outline-none focus:ring-2 focus:ring-[#56514A]/40"
+          className="flex-1 text-[12.5px] border border-bone rounded-md px-2 py-1 bg-white focus:outline-none focus:ring-2 focus:ring-primary/40"
           aria-label={`Edit step ${i + 1}`}
         />
-        <button type="button" onClick={() => { handlers.onRenameStep(s.uid, draft); setEditing(false); }} className="px-2 py-1 rounded-md bg-[#56514A] text-white text-[11.5px] font-semibold hover:bg-[#56514A] focus:outline-none focus:ring-2 focus:ring-[#56514A]/40">Save</button>
-        <button type="button" onClick={() => { setDraft(s.label); setEditing(false); }} className="px-2 py-1 rounded-md text-[11.5px] text-ink-muted hover:bg-white focus:outline-none focus:ring-2 focus:ring-[#56514A]/40">Cancel</button>
+        <button type="button" onClick={() => { handlers.onRenameStep(s.uid, draft); setEditing(false); }} className="px-2 py-1 rounded-md bg-primary text-white text-[11.5px] font-semibold hover:bg-primary focus:outline-none focus:ring-2 focus:ring-primary/40">Save</button>
+        <button type="button" onClick={() => { setDraft(s.label); setEditing(false); }} className="px-2 py-1 rounded-md text-[11.5px] text-ink-muted hover:bg-white focus:outline-none focus:ring-2 focus:ring-primary/40">Cancel</button>
       </li>
     );
   }
@@ -5505,10 +5505,10 @@ function MagicianStepRow({ s, i, total, handlers }: { s: MagBuildStep; i: number
         <span className="text-[11px] font-semibold text-ink-muted mt-0.5 w-4 text-right">{i + 1}.</span>
         <span className="flex-1 text-[12.5px] text-ink leading-snug">{s.label}</span>
         <div className="flex items-center gap-0.5">
-          <button type="button" aria-label={`Edit step ${i + 1}`} onClick={() => setEditing(true)} className="px-1.5 h-6 grid place-items-center rounded text-[11px] font-medium text-[#56514A] hover:bg-white focus:outline-none focus:ring-2 focus:ring-[#56514A]/40">Edit</button>
-          <button type="button" aria-label="Move up" disabled={i === 0} onClick={() => handlers.onMoveStep(s.uid, -1)} className="w-6 h-6 grid place-items-center rounded text-ink-muted hover:bg-white disabled:opacity-30 focus:outline-none focus:ring-2 focus:ring-[#56514A]/40">↑</button>
-          <button type="button" aria-label="Move down" disabled={i === total - 1} onClick={() => handlers.onMoveStep(s.uid, 1)} className="w-6 h-6 grid place-items-center rounded text-ink-muted hover:bg-white disabled:opacity-30 focus:outline-none focus:ring-2 focus:ring-[#56514A]/40">↓</button>
-          <button type="button" aria-label="Remove step" onClick={() => handlers.onRemoveStep(s.uid)} className="w-6 h-6 grid place-items-center rounded text-ink-muted hover:bg-white hover:text-danger focus:outline-none focus:ring-2 focus:ring-[#56514A]/40">×</button>
+          <button type="button" aria-label={`Edit step ${i + 1}`} onClick={() => setEditing(true)} className="px-1.5 h-6 grid place-items-center rounded text-[11px] font-medium text-primary hover:bg-white focus:outline-none focus:ring-2 focus:ring-primary/40">Edit</button>
+          <button type="button" aria-label="Move up" disabled={i === 0} onClick={() => handlers.onMoveStep(s.uid, -1)} className="w-6 h-6 grid place-items-center rounded text-ink-muted hover:bg-white disabled:opacity-30 focus:outline-none focus:ring-2 focus:ring-primary/40">↑</button>
+          <button type="button" aria-label="Move down" disabled={i === total - 1} onClick={() => handlers.onMoveStep(s.uid, 1)} className="w-6 h-6 grid place-items-center rounded text-ink-muted hover:bg-white disabled:opacity-30 focus:outline-none focus:ring-2 focus:ring-primary/40">↓</button>
+          <button type="button" aria-label="Remove step" onClick={() => handlers.onRemoveStep(s.uid)} className="w-6 h-6 grid place-items-center rounded text-ink-muted hover:bg-white hover:text-danger focus:outline-none focus:ring-2 focus:ring-primary/40">×</button>
         </div>
       </div>
       {docStep && (
@@ -5542,14 +5542,14 @@ function StepTemplatePicker({ s, onSet }: { s: MagBuildStep; onSet: (mode: "stan
               onClick={() => setOpen((v) => !v)}
               aria-haspopup="menu"
               aria-expanded={open}
-              className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full border border-bone bg-white text-charcoal hover:border-[#56514A]/60 focus:outline-none focus:ring-2 focus:ring-[#56514A]/40"
+              className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full border border-bone bg-white text-charcoal hover:border-primary/60 focus:outline-none focus:ring-2 focus:ring-primary/40"
             >
               Hobson's standard <span aria-hidden>▾</span>
             </button>
             {open && (
               <div role="menu" className="absolute z-10 mt-1 left-0 w-[200px] rounded-md border border-bone bg-white shadow-md p-1 text-[11.5px]">
                 <button type="button" role="menuitem" onClick={() => { onSet("standard"); setOpen(false); }} className="w-full text-left px-2 py-1.5 rounded hover:bg-paper text-charcoal flex items-center justify-between focus:outline-none focus:bg-paper">
-                  Use Hobson's standard <span className="text-[#56514A]">✓</span>
+                  Use Hobson's standard <span className="text-primary">✓</span>
                 </button>
                 <button type="button" role="menuitem" onClick={onPick} className="w-full text-left px-2 py-1.5 rounded hover:bg-paper text-charcoal focus:outline-none focus:bg-paper">
                   Use my own…
@@ -5561,12 +5561,12 @@ function StepTemplatePicker({ s, onSet }: { s: MagBuildStep; onSet: (mode: "stan
         </>
       ) : (
         <>
-          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full border border-[#56514A]/40 bg-[#F1EBDE] text-[#56514A]" title={tpl.filename}>
+          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full border border-primary/40 bg-secondary text-primary" title={tpl.filename}>
             <svg aria-hidden width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/></svg>
             Using your template: <span className="font-medium truncate max-w-[140px] inline-block align-bottom">{tpl.filename}</span>
           </span>
-          <button type="button" onClick={onPick} className="text-[#56514A] hover:underline focus:outline-none focus:ring-2 focus:ring-[#56514A]/40 rounded px-1">Replace</button>
-          <button type="button" onClick={() => onSet("standard")} className="text-ink-muted hover:text-charcoal hover:underline focus:outline-none focus:ring-2 focus:ring-[#56514A]/40 rounded px-1">Use standard instead</button>
+          <button type="button" onClick={onPick} className="text-primary hover:underline focus:outline-none focus:ring-2 focus:ring-primary/40 rounded px-1">Replace</button>
+          <button type="button" onClick={() => onSet("standard")} className="text-ink-muted hover:text-charcoal hover:underline focus:outline-none focus:ring-2 focus:ring-primary/40 rounded px-1">Use standard instead</button>
           <input ref={fileRef} type="file" className="sr-only" aria-label="Replace your template" onChange={onFile} />
         </>
       )}
@@ -5590,7 +5590,7 @@ function MagicianSoFar({ build, handlers }: { build: MagBuildState; handlers: Ma
   return (
     <div className="rounded-md border border-bone bg-paper/70 p-2.5">
       <div className="flex items-center justify-between mb-1.5">
-        <div className="text-[11px] uppercase tracking-wide text-[#56514A] font-semibold">So far</div>
+        <div className="text-[11px] uppercase tracking-wide text-primary font-semibold">So far</div>
         <div className="text-[10.5px] text-ink-muted">Tap a line to change it</div>
       </div>
       <ul className="space-y-1">
@@ -5602,7 +5602,7 @@ function MagicianSoFar({ build, handlers }: { build: MagBuildState; handlers: Ma
               <button
                 type="button"
                 onClick={() => handlers.onBeginEdit(r.field!)}
-                className="text-[11px] font-semibold text-[#56514A] hover:underline focus:outline-none focus:ring-2 focus:ring-[#56514A]/40 rounded px-1"
+                className="text-[11px] font-semibold text-primary hover:underline focus:outline-none focus:ring-2 focus:ring-primary/40 rounded px-1"
                 aria-label={`Change ${r.label.toLowerCase()}`}
               >
                 Change
@@ -5618,7 +5618,7 @@ function MagicianSoFar({ build, handlers }: { build: MagBuildState; handlers: Ma
               <span className="flex-1 text-ink">
                 {build.steps.length} · {build.steps.map((s) => s.phrase).join(" · ")}
                 {ownTpls.length > 0 && (
-                  <span className="block mt-0.5 text-[11px] text-[#56514A]">
+                  <span className="block mt-0.5 text-[11px] text-primary">
                     {ownTpls.length === 1 ? "1 step using your template" : `${ownTpls.length} steps using your templates`}
                     {": "}
                     {ownTpls.map((s) => s.template?.filename).filter(Boolean).join(", ")}
@@ -5629,7 +5629,7 @@ function MagicianSoFar({ build, handlers }: { build: MagBuildState; handlers: Ma
                 <button
                   type="button"
                   onClick={handlers.onKeepEditing}
-                  className="text-[11px] font-semibold text-[#56514A] hover:underline focus:outline-none focus:ring-2 focus:ring-[#56514A]/40 rounded px-1"
+                  className="text-[11px] font-semibold text-primary hover:underline focus:outline-none focus:ring-2 focus:ring-primary/40 rounded px-1"
                 >
                   Change
                 </button>
@@ -5648,7 +5648,7 @@ function MagBackBar({ onBack, editing, onCancelEdit }: { onBack: () => void; edi
       <button
         type="button"
         onClick={onBack}
-        className="text-[11.5px] text-ink-muted hover:text-[#56514A] focus:outline-none focus:ring-2 focus:ring-[#56514A]/40 rounded px-1"
+        className="text-[11.5px] text-ink-muted hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary/40 rounded px-1"
         aria-label="Back to previous question"
       >
         ← Back
@@ -5657,7 +5657,7 @@ function MagBackBar({ onBack, editing, onCancelEdit }: { onBack: () => void; edi
         <button
           type="button"
           onClick={onCancelEdit}
-          className="text-[11.5px] text-ink-muted hover:text-[#56514A] focus:outline-none focus:ring-2 focus:ring-[#56514A]/40 rounded px-1"
+          className="text-[11.5px] text-ink-muted hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary/40 rounded px-1"
         >
           Cancel change
         </button>
@@ -5739,11 +5739,11 @@ function ScopePicker({ initial, onCommit }: { initial?: ScopeSelection; onCommit
         onClick={() => setLevel(key)}
         aria-pressed={active}
         className={cn(
-          "px-3 py-1.5 rounded-full border text-[12.5px] font-medium focus:outline-none focus:ring-2 focus:ring-[#56514A]/40",
+          "px-3 py-1.5 rounded-full border text-[12.5px] font-medium focus:outline-none focus:ring-2 focus:ring-primary/40",
           reduced ? "" : "transition-colors",
           active
-            ? "bg-[#56514A] text-white border-[#56514A]"
-            : "bg-white text-charcoal border-bone hover:border-[#56514A]/60 hover:text-[#56514A]",
+            ? "bg-primary text-white border-primary"
+            : "bg-white text-charcoal border-bone hover:border-primary/60 hover:text-primary",
         )}
       >
         {label}
@@ -5754,7 +5754,7 @@ function ScopePicker({ initial, onCommit }: { initial?: ScopeSelection; onCommit
   return (
     <div className="space-y-3">
       <div>
-        <div className="text-[11px] uppercase tracking-wide text-[#56514A] font-semibold mb-2">Where should this apply?</div>
+        <div className="text-[11px] uppercase tracking-wide text-primary font-semibold mb-2">Where should this apply?</div>
         <div className="text-[12px] text-charcoal mb-2">Choose as many as you like.</div>
         <div className="flex flex-wrap gap-2" role="group" aria-label="Scope level">
           {levelBtn("portfolio", "The whole portfolio")}
@@ -5772,7 +5772,7 @@ function ScopePicker({ initial, onCommit }: { initial?: ScopeSelection; onCommit
               onChange={(e) => setQuery(e.target.value)}
               placeholder={sel.level === "properties" ? "Search properties…" : "Search units or properties…"}
               aria-label="Search"
-              className="flex-1 h-8 rounded-md border border-bone px-2 text-[12.5px] focus:outline-none focus:ring-2 focus:ring-[#56514A]/40"
+              className="flex-1 h-8 rounded-md border border-bone px-2 text-[12.5px] focus:outline-none focus:ring-2 focus:ring-primary/40"
             />
             <button
               type="button"
@@ -5784,7 +5784,7 @@ function ScopePicker({ initial, onCommit }: { initial?: ScopeSelection; onCommit
                   unitIds: every ? s.unitIds.filter((id) => !allIds.includes(id)) : Array.from(new Set([...s.unitIds, ...allIds])),
                 }));
               }}
-              className="text-[11.5px] font-semibold text-[#56514A] hover:underline focus:outline-none focus:ring-2 focus:ring-[#56514A]/40 rounded px-1"
+              className="text-[11.5px] font-semibold text-primary hover:underline focus:outline-none focus:ring-2 focus:ring-primary/40 rounded px-1"
             >
               Select all{query ? " (matching)" : ""}
             </button>
@@ -5799,7 +5799,7 @@ function ScopePicker({ initial, onCommit }: { initial?: ScopeSelection; onCommit
                     type="checkbox"
                     checked={checked}
                     onChange={() => togglePropertyId(p.id)}
-                    className="h-4 w-4 accent-[#56514A]"
+                    className="h-4 w-4 accent-primary"
                   />
                   <span className="flex-1 text-ink">{p.name}</span>
                   <span className="text-ink-muted text-[11px]">{p.units.length} units</span>
@@ -5820,7 +5820,7 @@ function ScopePicker({ initial, onCommit }: { initial?: ScopeSelection; onCommit
                     <button
                       type="button"
                       onClick={() => selectAllInProperty(g.p)}
-                      className="text-[11px] text-[#56514A] hover:underline focus:outline-none focus:ring-2 focus:ring-[#56514A]/40 rounded px-1"
+                      className="text-[11px] text-primary hover:underline focus:outline-none focus:ring-2 focus:ring-primary/40 rounded px-1"
                     >
                       {everySelected ? "Clear" : `Select all in ${g.p.name}`}
                     </button>
@@ -5833,7 +5833,7 @@ function ScopePicker({ initial, onCommit }: { initial?: ScopeSelection; onCommit
                           type="checkbox"
                           checked={checked}
                           onChange={() => toggleUnitId(u.id)}
-                          className="h-4 w-4 accent-[#56514A]"
+                          className="h-4 w-4 accent-primary"
                         />
                         <span className="flex-1 text-ink">{u.label}</span>
                         <span className="text-ink-muted text-[11px]">{u.status}</span>
@@ -5863,8 +5863,8 @@ function ScopePicker({ initial, onCommit }: { initial?: ScopeSelection; onCommit
                       aria-checked={active}
                       onClick={() => setSel((s) => ({ ...s, propertyGranularity: g }))}
                       className={cn(
-                        "px-2.5 py-1 rounded-full border text-[11.5px] focus:outline-none focus:ring-2 focus:ring-[#56514A]/40",
-                        active ? "bg-[#56514A] text-white border-[#56514A]" : "bg-white text-charcoal border-bone hover:border-[#56514A]/60",
+                        "px-2.5 py-1 rounded-full border text-[11.5px] focus:outline-none focus:ring-2 focus:ring-primary/40",
+                        active ? "bg-primary text-white border-primary" : "bg-white text-charcoal border-bone hover:border-primary/60",
                       )}
                     >
                       {label}
@@ -5885,8 +5885,8 @@ function ScopePicker({ initial, onCommit }: { initial?: ScopeSelection; onCommit
           disabled={!canCommit}
           onClick={() => onCommit(sel)}
           className={cn(
-            "px-3 py-1.5 rounded-full text-[12.5px] font-semibold focus:outline-none focus:ring-2 focus:ring-[#56514A]/40",
-            canCommit ? "bg-[#56514A] text-white hover:bg-[#56514A]" : "bg-bone text-ink-muted cursor-not-allowed",
+            "px-3 py-1.5 rounded-full text-[12.5px] font-semibold focus:outline-none focus:ring-2 focus:ring-primary/40",
+            canCommit ? "bg-primary text-white hover:bg-primary" : "bg-bone text-ink-muted cursor-not-allowed",
           )}
         >
           Use this scope
@@ -5902,12 +5902,12 @@ function MagicianBuildPanel({ build, handlers }: { build: MagBuildState; handler
   const canBack = build.step !== "intake" && !isEditing;
   const [confirmCancel, setConfirmCancel] = useState(false);
   return (
-    <div className="ml-12 max-w-[480px] rounded-xl border border-[#56514A]/30 bg-white p-3 shadow-sm space-y-3">
+    <div className="ml-12 max-w-[480px] rounded-xl border border-primary/30 bg-white p-3 shadow-sm space-y-3">
 
       {isEditing && build.editing?.field !== "intake" && (
-        <div className="flex items-center justify-between rounded-md bg-[#F1EBDE] border border-[#56514A]/30 px-2.5 py-1.5">
-          <span className="text-[11.5px] text-[#56514A] font-medium">Changing your earlier answer</span>
-          <button type="button" onClick={handlers.onCancelEdit} className="text-[11.5px] text-[#56514A] hover:underline focus:outline-none focus:ring-2 focus:ring-[#56514A]/40 rounded px-1">Cancel</button>
+        <div className="flex items-center justify-between rounded-md bg-secondary border border-primary/30 px-2.5 py-1.5">
+          <span className="text-[11.5px] text-primary font-medium">Changing your earlier answer</span>
+          <button type="button" onClick={handlers.onCancelEdit} className="text-[11.5px] text-primary hover:underline focus:outline-none focus:ring-2 focus:ring-primary/40 rounded px-1">Cancel</button>
         </div>
       )}
 
@@ -5924,7 +5924,7 @@ function MagicianBuildPanel({ build, handlers }: { build: MagBuildState; handler
       )}
       {build.step === "q1" && (
         <div>
-          <div className="text-[11px] uppercase tracking-wide text-[#56514A] font-semibold mb-2">{isEditing ? "Change what I watch" : "Choose one"}</div>
+          <div className="text-[11px] uppercase tracking-wide text-primary font-semibold mb-2">{isEditing ? "Change what I watch" : "Choose one"}</div>
           <div className="flex flex-wrap gap-2">
             <MagOptionButton onClick={() => handlers.onQ1("rent_reviews", "Rent reviews")}>Rent reviews</MagOptionButton>
             <MagOptionButton onClick={() => handlers.onQ1("compliance", "Compliance certificates")}>Compliance certificates</MagOptionButton>
@@ -5935,7 +5935,7 @@ function MagicianBuildPanel({ build, handlers }: { build: MagBuildState; handler
       )}
       {build.step === "q2" && (
         <div>
-          <div className="text-[11px] uppercase tracking-wide text-[#56514A] font-semibold mb-2">How far ahead?</div>
+          <div className="text-[11px] uppercase tracking-wide text-primary font-semibold mb-2">How far ahead?</div>
           <div className="flex flex-wrap gap-2">
             <MagOptionButton onClick={() => handlers.onQ2("6m", "6 months ahead", "6 months away")}>6 months ahead</MagOptionButton>
             <MagOptionButton onClick={() => handlers.onQ2("3m", "3 months ahead", "3 months away")}>3 months ahead</MagOptionButton>
@@ -5952,7 +5952,7 @@ function MagicianBuildPanel({ build, handlers }: { build: MagBuildState; handler
 
       {build.step === "q4" && (
         <div>
-          <div className="text-[11px] uppercase tracking-wide text-[#56514A] font-semibold mb-2">Who should own it?</div>
+          <div className="text-[11px] uppercase tracking-wide text-primary font-semibold mb-2">Who should own it?</div>
           <div className="flex flex-wrap gap-2">
             <MagOptionButton onClick={() => handlers.onQ4({ kind: "all_teams" }, "All teams")}>All teams</MagOptionButton>
             <MagOptionButton onClick={() => handlers.onQ4({ kind: "person", name: "Sarah Chen", role: "Asset Manager", initials: "SC" }, "Sarah Chen · Asset Manager")}>Sarah Chen · Asset Manager</MagOptionButton>
@@ -5962,7 +5962,7 @@ function MagicianBuildPanel({ build, handlers }: { build: MagBuildState; handler
       )}
       {build.step === "q5" && (
         <div>
-          <div className="text-[11px] uppercase tracking-wide text-[#56514A] font-semibold mb-2">Steps · {build.steps.length}</div>
+          <div className="text-[11px] uppercase tracking-wide text-primary font-semibold mb-2">Steps · {build.steps.length}</div>
           <ol className="space-y-1.5 mb-2">
             {build.steps.map((s, i) => (
               <MagicianStepRow key={s.uid} s={s} i={i} total={build.steps.length} handlers={handlers} />
@@ -5973,15 +5973,15 @@ function MagicianBuildPanel({ build, handlers }: { build: MagBuildState; handler
           </ol>
           {!build.addOpen ? (
             <div className="flex flex-wrap gap-2">
-              <button type="button" onClick={() => handlers.onToggleAdd(true)} className="px-3 py-1.5 rounded-full border border-dashed border-[#56514A]/50 text-[12.5px] font-medium text-[#56514A] hover:bg-[#F1EBDE] focus:outline-none focus:ring-2 focus:ring-[#56514A]/40">+ Add a step</button>
-              <button type="button" onClick={handlers.onFinishSteps} className="px-3 py-1.5 rounded-full bg-[#56514A] text-white text-[12.5px] font-semibold hover:bg-[#56514A] focus:outline-none focus:ring-2 focus:ring-[#56514A]/40">Looks good — continue</button>
+              <button type="button" onClick={() => handlers.onToggleAdd(true)} className="px-3 py-1.5 rounded-full border border-dashed border-primary/50 text-[12.5px] font-medium text-primary hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-primary/40">+ Add a step</button>
+              <button type="button" onClick={handlers.onFinishSteps} className="px-3 py-1.5 rounded-full bg-primary text-white text-[12.5px] font-semibold hover:bg-primary focus:outline-none focus:ring-2 focus:ring-primary/40">Looks good — continue</button>
             </div>
           ) : (
-            <div className="rounded-md border border-[#56514A]/30 bg-[#F1EBDE] p-2 space-y-2">
-              <div className="text-[11px] uppercase tracking-wide text-[#56514A] font-semibold">Add a step</div>
+            <div className="rounded-md border border-primary/30 bg-secondary p-2 space-y-2">
+              <div className="text-[11px] uppercase tracking-wide text-primary font-semibold">Add a step</div>
               <div className="flex flex-wrap gap-1.5">
                 {MAG_ADD_OPTIONS.map((o) => (
-                  <button key={o.id} type="button" onClick={() => handlers.onAddStep(o)} className="px-2.5 py-1 rounded-full border border-[#56514A]/40 bg-white text-[12px] text-[#2D2D2D] hover:bg-white/80 focus:outline-none focus:ring-2 focus:ring-[#56514A]/40">
+                  <button key={o.id} type="button" onClick={() => handlers.onAddStep(o)} className="px-2.5 py-1 rounded-full border border-primary/40 bg-white text-[12px] text-foreground hover:bg-white/80 focus:outline-none focus:ring-2 focus:ring-primary/40">
                     + {o.label}{usedStepIds.has(o.id) ? " (again)" : ""}
                   </button>
                 ))}
@@ -5992,10 +5992,10 @@ function MagicianBuildPanel({ build, handlers }: { build: MagBuildState; handler
                   onChange={(e) => handlers.onSetCustomDraft(e.target.value)}
                   onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); handlers.onAddCustomStep(build.customDraft || ""); } }}
                   placeholder="Add custom step…"
-                  className="flex-1 text-[12px] border border-bone rounded-md px-2 py-1.5 bg-white focus:outline-none focus:ring-2 focus:ring-[#56514A]/40"
+                  className="flex-1 text-[12px] border border-bone rounded-md px-2 py-1.5 bg-white focus:outline-none focus:ring-2 focus:ring-primary/40"
                 />
-                <button type="button" onClick={() => handlers.onAddCustomStep(build.customDraft || "")} className="px-2.5 py-1.5 rounded-md bg-[#56514A] text-white text-[12px] font-semibold hover:bg-[#56514A] focus:outline-none focus:ring-2 focus:ring-[#56514A]/40">Add</button>
-                <button type="button" onClick={() => handlers.onToggleAdd(false)} className="px-2 py-1.5 rounded-md text-[12px] text-ink-muted hover:bg-white focus:outline-none focus:ring-2 focus:ring-[#56514A]/40">Cancel</button>
+                <button type="button" onClick={() => handlers.onAddCustomStep(build.customDraft || "")} className="px-2.5 py-1.5 rounded-md bg-primary text-white text-[12px] font-semibold hover:bg-primary focus:outline-none focus:ring-2 focus:ring-primary/40">Add</button>
+                <button type="button" onClick={() => handlers.onToggleAdd(false)} className="px-2 py-1.5 rounded-md text-[12px] text-ink-muted hover:bg-white focus:outline-none focus:ring-2 focus:ring-primary/40">Cancel</button>
               </div>
             </div>
           )}
@@ -6003,7 +6003,7 @@ function MagicianBuildPanel({ build, handlers }: { build: MagBuildState; handler
       )}
       {build.step === "q6" && (
         <div>
-          <div className="text-[11px] uppercase tracking-wide text-[#56514A] font-semibold mb-2">Ready when you are</div>
+          <div className="text-[11px] uppercase tracking-wide text-primary font-semibold mb-2">Ready when you are</div>
           <div className="text-[12px] text-charcoal mb-2">Tap any line in “So far” above to change it before we build.</div>
           <div className="flex flex-wrap gap-2">
             <MagOptionButton onClick={handlers.onBuild}>Build it</MagOptionButton>
@@ -6032,7 +6032,7 @@ function MagicianBuildPanel({ build, handlers }: { build: MagBuildState; handler
               <button
                 type="button"
                 onClick={() => setConfirmCancel(false)}
-                className="px-3 py-1.5 rounded-md border border-bone bg-white text-[12.5px] font-medium text-charcoal hover:bg-paper focus:outline-none focus:ring-2 focus:ring-[#56514A]/40"
+                className="px-3 py-1.5 rounded-md border border-bone bg-white text-[12.5px] font-medium text-charcoal hover:bg-paper focus:outline-none focus:ring-2 focus:ring-primary/40"
               >
                 Keep building
               </button>
@@ -6045,7 +6045,7 @@ function MagicianBuildPanel({ build, handlers }: { build: MagBuildState; handler
               <button
                 type="button"
                 onClick={handlers.onPauseSave}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md border border-[#56514A]/40 bg-white text-[12.5px] font-semibold text-[#56514A] hover:bg-[#F1EBDE] focus:outline-none focus:ring-2 focus:ring-[#56514A]/40"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md border border-primary/40 bg-white text-[12.5px] font-semibold text-primary hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-primary/40"
               >
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><rect x="6" y="5" width="4" height="14"/><rect x="14" y="5" width="4" height="14"/></svg>
                 Pause &amp; save
@@ -6084,7 +6084,7 @@ function ProfTypeAssigner({ onAssign }: { onAssign: (type: string) => void }) {
       <select
         value={val}
         onChange={(e) => setVal(e.target.value)}
-        className="flex-1 text-[12px] border border-bone rounded-md px-2 py-1.5 bg-white focus:outline-none focus:ring-2 focus:ring-[#56514A]/40"
+        className="flex-1 text-[12px] border border-bone rounded-md px-2 py-1.5 bg-white focus:outline-none focus:ring-2 focus:ring-primary/40"
         aria-label="Document type"
       >
         <option value="">Choose a type…</option>
@@ -6096,7 +6096,7 @@ function ProfTypeAssigner({ onAssign }: { onAssign: (type: string) => void }) {
         type="button"
         disabled={!val}
         onClick={() => onAssign(val)}
-        className="text-[12px] font-semibold px-3 py-1.5 rounded-md bg-[#56514A] text-white hover:bg-[#56514A] disabled:bg-bone disabled:text-ink-muted focus:outline-none focus:ring-2 focus:ring-[#56514A]/40"
+        className="text-[12px] font-semibold px-3 py-1.5 rounded-md bg-primary text-white hover:bg-primary disabled:bg-bone disabled:text-ink-muted focus:outline-none focus:ring-2 focus:ring-primary/40"
       >
         Assign
       </button>
@@ -6110,7 +6110,7 @@ function AdminWorkArea({ character }: { character: { id: AdminCharacter; name: s
     <div className="absolute inset-0 bg-white z-[450] flex flex-col">
       <header className="h-14 px-5 flex items-center border-b border-bone">
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-full overflow-hidden bg-[#F1EBDE] ring-1 ring-bone grid place-items-center">
+          <div className="w-9 h-9 rounded-full overflow-hidden bg-secondary ring-1 ring-bone grid place-items-center">
             <img src={character.src} alt="" aria-hidden className="w-[120%] h-[120%] object-contain" />
           </div>
           <div>
@@ -6164,7 +6164,7 @@ function CharacterNotesStrip({
 
   return (
     <section
-      className="border-b border-faint-rule bg-[#F1EBDE] shrink-0"
+      className="border-b border-faint-rule bg-secondary shrink-0"
       aria-label={`${character.name}'s notes`}
     >
       <button
@@ -6172,19 +6172,19 @@ function CharacterNotesStrip({
         aria-expanded={open}
         aria-controls={panelId}
         onClick={() => setOpen((v) => !v)}
-        className="w-full flex items-center gap-2 px-5 py-2 text-left hover:bg-[#F1EBDE] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#56514A]"
+        className="w-full flex items-center gap-2 px-5 py-2 text-left hover:bg-secondary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
       >
-        <div className="w-6 h-6 rounded-full overflow-hidden bg-white ring-1 ring-[#56514A]/20 grid place-items-center shrink-0">
+        <div className="w-6 h-6 rounded-full overflow-hidden bg-white ring-1 ring-primary/20 grid place-items-center shrink-0">
           <img src={character.src} alt="" aria-hidden className="w-[120%] h-[120%] object-contain" />
         </div>
-        <h3 className="text-[12px] font-semibold uppercase tracking-wide text-[#56514A] shrink-0">{title}</h3>
+        <h3 className="text-[12px] font-semibold uppercase tracking-wide text-primary shrink-0">{title}</h3>
         <span className="text-[11px] text-ink-muted truncate min-w-0">· {tagline ?? subtitle}</span>
         {badge && (
-          <span className="ml-1 shrink-0 inline-flex items-center px-1.5 py-0.5 rounded-full bg-[#56514A]/10 text-[#56514A] text-[10px] font-semibold tracking-wide uppercase">
+          <span className="ml-1 shrink-0 inline-flex items-center px-1.5 py-0.5 rounded-full bg-primary/10 text-primary text-[10px] font-semibold tracking-wide uppercase">
             {badge}
           </span>
         )}
-        <span className="ml-auto shrink-0 text-[#56514A]" aria-hidden>
+        <span className="ml-auto shrink-0 text-primary" aria-hidden>
           <svg
             className={`w-4 h-4 transition-transform ${open ? "rotate-90" : ""}`}
             viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
@@ -6203,15 +6203,15 @@ function CharacterNotesStrip({
                 <li key={n.id}>
                   <Tag
                     {...(clickable ? { onClick: n.onClick, type: "button" } : {})}
-                    className={`w-full text-left flex items-start gap-2 px-3 py-2 rounded-md border border-[#56514A]/15 bg-white ${
-                      clickable ? "hover:bg-[#F1EBDE] focus:outline-none focus:ring-2 focus:ring-[#56514A]" : ""
+                    className={`w-full text-left flex items-start gap-2 px-3 py-2 rounded-md border border-primary/15 bg-white ${
+                      clickable ? "hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-primary" : ""
                     }`}
                   >
                     <CharNoteIcon kind={n.kind} />
                     <div className="min-w-0">
                       <p className="text-[12px] text-ink leading-snug">{n.text}</p>
                       {clickable && (
-                        <span className="mt-0.5 inline-block text-[11px] text-[#56514A]">
+                        <span className="mt-0.5 inline-block text-[11px] text-primary">
                           {n.ctaLabel ?? "open →"}
                         </span>
                       )}
@@ -6232,14 +6232,14 @@ function CharNoteIcon({ kind }: { kind: CharacterNote["kind"] }) {
   const common = "w-4 h-4 shrink-0 mt-0.5";
   if (kind === "recent") {
     return (
-      <svg className={common} viewBox="0 0 24 24" fill="none" stroke="#56514A" strokeWidth="2" aria-label="Recent activity">
+      <svg className={common} viewBox="0 0 24 24" fill="none" stroke="var(--charcoal)" strokeWidth="2" aria-label="Recent activity">
         <circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>
       </svg>
     );
   }
   if (kind === "totals") {
     return (
-      <svg className={common} viewBox="0 0 24 24" fill="none" stroke="#56514A" strokeWidth="2" aria-label="Totals">
+      <svg className={common} viewBox="0 0 24 24" fill="none" stroke="var(--charcoal)" strokeWidth="2" aria-label="Totals">
         <rect x="3" y="4" width="18" height="4" rx="1"/><path d="M5 8v12h14V8"/><path d="M9 12h6M9 16h4"/>
       </svg>
     );
@@ -6252,7 +6252,7 @@ function CharNoteIcon({ kind }: { kind: CharacterNote["kind"] }) {
     );
   }
   return (
-    <svg className={common} viewBox="0 0 24 24" fill="none" stroke="#2D2D2D" strokeWidth="2" aria-label="Coverage">
+    <svg className={common} viewBox="0 0 24 24" fill="none" stroke="var(--ink)" strokeWidth="2" aria-label="Coverage">
       <path d="M5 12l4 4 10-10"/>
     </svg>
   );
@@ -6266,7 +6266,7 @@ function ProfessorWorkArea({ character, docs }: { character: { id: AdminCharacte
     <div className="absolute inset-0 bg-white z-[450] flex flex-col">
       <header className="h-14 px-5 flex items-center border-b border-bone shrink-0">
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-full overflow-hidden bg-[#F1EBDE] ring-1 ring-bone grid place-items-center">
+          <div className="w-9 h-9 rounded-full overflow-hidden bg-secondary ring-1 ring-bone grid place-items-center">
             <img src={character.src} alt="" aria-hidden className="w-[120%] h-[120%] object-contain" />
           </div>
           <div>
@@ -6286,10 +6286,10 @@ function ProfessorWorkArea({ character, docs }: { character: { id: AdminCharacte
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search by document name"
-            className="text-[12px] pl-7 pr-3 py-1.5 rounded-md border border-bone bg-white focus:outline-none focus:ring-2 focus:ring-[#56514A]/40 w-64"
+            className="text-[12px] pl-7 pr-3 py-1.5 rounded-md border border-bone bg-white focus:outline-none focus:ring-2 focus:ring-primary/40 w-64"
             aria-label="Search by document name"
           />
-          <svg aria-hidden width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8A8478" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="absolute left-2 top-1/2 -translate-y-1/2">
+          <svg aria-hidden width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--ink-faint)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="absolute left-2 top-1/2 -translate-y-1/2">
             <circle cx="11" cy="11" r="7"/><path d="M21 21l-3.5-3.5"/>
           </svg>
         </div>
@@ -6297,7 +6297,7 @@ function ProfessorWorkArea({ character, docs }: { character: { id: AdminCharacte
           <button
             key={label}
             type="button"
-            className="text-[11px] font-medium px-2.5 py-1.5 rounded-md border border-dashed border-bone bg-white text-charcoal hover:border-[#56514A]/50 hover:text-[#56514A] focus:outline-none focus:ring-2 focus:ring-[#56514A]/30"
+            className="text-[11px] font-medium px-2.5 py-1.5 rounded-md border border-dashed border-bone bg-white text-charcoal hover:border-primary/50 hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary/30"
           >
             {label}
           </button>
@@ -6344,7 +6344,7 @@ function ProfessorWorkArea({ character, docs }: { character: { id: AdminCharacte
                         type="button"
                         title={a.label}
                         aria-label={`${a.label} — ${d.name}`}
-                        className="h-7 w-7 grid place-items-center rounded text-ink-muted hover:bg-bone-wash hover:text-ink focus:outline-none focus:ring-2 focus:ring-[#56514A]/40"
+                        className="h-7 w-7 grid place-items-center rounded text-ink-muted hover:bg-bone-wash hover:text-ink focus:outline-none focus:ring-2 focus:ring-primary/40"
                       >
                         <span aria-hidden className="text-[12px]">{a.icon}</span>
                       </button>
@@ -6368,7 +6368,7 @@ function ProfessorWorkArea({ character, docs }: { character: { id: AdminCharacte
 
 function FamilyChip({ family }: { family: DocFamily }) {
   const map: Record<DocFamily, { label: string; cls: string }> = {
-    rto: { label: "RTO", cls: "border-[#56514A]/40 text-[#56514A] bg-[#F1EBDE]" },
+    rto: { label: "RTO", cls: "border-primary/40 text-primary bg-secondary" },
     amd: { label: "AMD", cls: "border-warning-border text-warning bg-warning-bg" },
     acd: { label: "ACD", cls: "border-bone text-ink bg-paper" },
   };
@@ -6388,7 +6388,7 @@ function StatusChip({ status }: { status: DocStatus }) {
   }
   if (status === "extracting") {
     return (
-      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md border border-[#56514A]/40 bg-[#F1EBDE] text-[#56514A] text-[11px] font-semibold">
+      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md border border-primary/40 bg-secondary text-primary text-[11px] font-semibold">
         <span aria-hidden className="animate-pulse">◐</span> Extracting…
       </span>
     );
@@ -6435,7 +6435,7 @@ function CharacterSpeechBubble({ name, src, text }: { name: string; src: string;
     return (
       <div className="flex items-end gap-2" aria-live="polite" aria-label={`${name} is typing`}>
         <CharacterAvatar src={src} />
-        <div className="bg-[#F1EBDE] px-4 py-3 rounded-2xl rounded-bl-md flex items-center gap-1">
+        <div className="bg-secondary px-4 py-3 rounded-2xl rounded-bl-md flex items-center gap-1">
           <Dot delay={0} /><Dot delay={150} /><Dot delay={300} />
         </div>
       </div>
@@ -6444,11 +6444,11 @@ function CharacterSpeechBubble({ name, src, text }: { name: string; src: string;
   return (
     <div className="flex items-start gap-2" aria-live="polite">
       <CharacterAvatar src={src} />
-      <div className="max-w-[560px] bg-white border border-bone text-[#2D2D2D] text-sm leading-relaxed px-4 py-3 rounded-2xl rounded-bl-md shadow-sm">
+      <div className="max-w-[560px] bg-white border border-bone text-foreground text-sm leading-relaxed px-4 py-3 rounded-2xl rounded-bl-md shadow-sm">
         <div className="text-[12px] font-semibold text-ink mb-1">{name}</div>
         {shown}
         {phase === "streaming" && (
-          <span className="inline-block w-1.5 h-3.5 ml-0.5 bg-[#56514A] align-middle animate-pulse" />
+          <span className="inline-block w-1.5 h-3.5 ml-0.5 bg-primary align-middle animate-pulse" />
         )}
       </div>
     </div>
@@ -6467,9 +6467,9 @@ function HobsonBubble({ text, owl, streaming, showAvatar = true }: { text: strin
   return (
     <div className="flex items-end gap-2">
       {AvatarSlot}
-      <div className="max-w-[340px] bg-[#F1EBDE] text-[#2D2D2D] text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-bl-md">
+      <div className="max-w-[340px] bg-secondary text-foreground text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-bl-md">
         {text}
-        {streaming && <span className="inline-block w-1.5 h-3.5 ml-0.5 bg-[#56514A] align-middle animate-pulse" />}
+        {streaming && <span className="inline-block w-1.5 h-3.5 ml-0.5 bg-primary align-middle animate-pulse" />}
       </div>
     </div>
   );
@@ -6560,7 +6560,7 @@ function FeedbackBubble({
     return (
       <>
         {text.slice(0, shown)}
-        {!done && <span className="inline-block w-1.5 h-3.5 ml-0.5 bg-[#56514A] align-middle animate-pulse" />}
+        {!done && <span className="inline-block w-1.5 h-3.5 ml-0.5 bg-primary align-middle animate-pulse" />}
       </>
     );
   }
@@ -6572,7 +6572,7 @@ function FeedbackBubble({
   ];
 
   const Bubble: React.FC<{ children: React.ReactNode; className?: string }> = ({ children, className = "" }) => (
-    <div className={`max-w-[420px] bg-[#F1EBDE] text-[#2D2D2D] text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-bl-md ${className}`}>
+    <div className={`max-w-[420px] bg-secondary text-foreground text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-bl-md ${className}`}>
       {children}
     </div>
   );
@@ -6595,7 +6595,7 @@ function FeedbackBubble({
       <Row>
         <Bubble>
           {text}
-          {streaming && <span className="inline-block w-1.5 h-3.5 ml-0.5 bg-[#56514A] align-middle animate-pulse" />}
+          {streaming && <span className="inline-block w-1.5 h-3.5 ml-0.5 bg-primary align-middle animate-pulse" />}
         </Bubble>
         {/* Inline reply: grade buttons sit immediately under his question */}
         {!streaming && (
@@ -6614,10 +6614,10 @@ function FeedbackBubble({
                   aria-pressed={selected}
                   aria-label={g.aria}
                   disabled={graded}
-                  className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full border text-[12px] transition focus:outline-none focus-visible:ring-2 focus-visible:ring-[#56514A] focus-visible:ring-offset-1 ${
+                  className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full border text-[12px] transition focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-1 ${
                     selected
-                      ? "bg-white border-[#56514A] text-[#2D2D2D] font-medium shadow-sm"
-                      : "bg-white border-bone text-charcoal hover:border-[#56514A] hover:text-[#2D2D2D]"
+                      ? "bg-white border-primary text-foreground font-medium shadow-sm"
+                      : "bg-white border-bone text-charcoal hover:border-primary hover:text-foreground"
                   } ${graded && !selected ? "opacity-50 cursor-default" : ""} ${graded ? "cursor-default" : ""}`}
                 >
                   <span aria-hidden className="font-semibold leading-none">{g.glyph}</span>
@@ -6654,10 +6654,10 @@ function FeedbackBubble({
                       type="button"
                       onClick={() => onToggleChip(c)}
                       aria-pressed={on}
-                      className={`text-[11px] px-2 py-0.5 rounded-full border transition focus:outline-none focus-visible:ring-2 focus-visible:ring-[#56514A] focus-visible:ring-offset-1 ${
+                      className={`text-[11px] px-2 py-0.5 rounded-full border transition focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-1 ${
                         on
-                          ? "bg-[#56514A] border-[#56514A] text-white"
-                          : "bg-white border-bone text-charcoal hover:border-[#56514A]"
+                          ? "bg-primary border-primary text-white"
+                          : "bg-white border-bone text-charcoal hover:border-primary"
                       }`}
                     >
                       {c}
@@ -6674,20 +6674,20 @@ function FeedbackBubble({
                 onChange={(e) => setNote(e.target.value)}
                 rows={2}
                 placeholder="Optional — a line is fine"
-                className="w-full text-[13px] rounded-xl border border-bone bg-white px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#56514A]"
+                className="w-full text-[13px] rounded-xl border border-bone bg-white px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
               />
               <div className="flex items-center gap-2 mt-1.5">
                 <button
                   type="button"
                   onClick={() => onSubmitNote(note.trim())}
-                  className="text-[12px] px-3 py-1 rounded-md bg-[#56514A] text-white hover:bg-[#56514A] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#56514A] focus-visible:ring-offset-1"
+                  className="text-[12px] px-3 py-1 rounded-md bg-primary text-white hover:bg-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-1"
                 >
                   Send
                 </button>
                 <button
                   type="button"
                   onClick={() => onSkipNote()}
-                  className="text-[12px] px-2 py-1 rounded-md text-charcoal hover:text-ink focus:outline-none focus-visible:ring-2 focus-visible:ring-[#56514A] focus-visible:ring-offset-1"
+                  className="text-[12px] px-2 py-1 rounded-md text-charcoal hover:text-ink focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-1"
                 >
                   Skip
                 </button>
@@ -6740,7 +6740,7 @@ function FeedbackBubble({
 function UserBubble({ text, attachment }: { text: string; attachment?: string }) {
   return (
     <div className="flex justify-end">
-      <div className="max-w-[340px] bg-[#56514A] text-white text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-br-md">
+      <div className="max-w-[340px] bg-primary text-white text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-br-md">
         {attachment && (
           <span aria-label={`Attached paper: ${attachment}`} className="mb-2 flex items-center gap-1.5 rounded-md bg-white/15 px-2 py-1 text-xs">
             <FileTextIcon className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />{attachment}
@@ -6760,7 +6760,7 @@ function TypingBubble({ owl, showAvatar = true }: { owl: OwlState; showAvatar?: 
     <div className="flex items-end gap-2">
 
       {AvatarSlot}
-      <div className="bg-[#F1EBDE] px-4 py-3 rounded-2xl rounded-bl-md flex items-center gap-1">
+      <div className="bg-secondary px-4 py-3 rounded-2xl rounded-bl-md flex items-center gap-1">
         <Dot delay={0} /><Dot delay={150} /><Dot delay={300} />
       </div>
     </div>
@@ -6771,7 +6771,7 @@ function TypingBubble({ owl, showAvatar = true }: { owl: OwlState; showAvatar?: 
 function Dot({ delay }: { delay: number }) {
   return (
     <span
-      className="w-1.5 h-1.5 rounded-full bg-[#56514A]/70 animate-typing-bounce"
+      className="w-1.5 h-1.5 rounded-full bg-primary/70 animate-typing-bounce"
       style={{ animationDelay: `${delay}ms` }}
     />
   );
@@ -6814,7 +6814,7 @@ function IntelligenceLadder({ view }: { view: View }) {
             )}
             <span className="text-ink">{r.label}</span>
             {r.upNext && (
-              <span className="text-[10px] uppercase tracking-wide text-[#56514A] bg-[#F1EBDE] px-1.5 py-0.5 rounded">Up next</span>
+              <span className="text-[10px] uppercase tracking-wide text-primary bg-secondary px-1.5 py-0.5 rounded">Up next</span>
             )}
           </div>
           <span className={`text-[11px] ${r.tone === "good" ? "text-success" : "text-ink-muted"}`}>{r.status}</span>
@@ -6855,7 +6855,7 @@ function PortfolioContent({
             <button
               key={q}
               onClick={() => onPreviewQuestion(q)}
-              className="text-xs px-3 py-1.5 rounded-full border border-bone text-charcoal hover:bg-paper hover:border-bone transition focus:outline-none focus:ring-2 focus:ring-[#56514A]/30"
+              className="text-xs px-3 py-1.5 rounded-full border border-bone text-charcoal hover:bg-paper hover:border-bone transition focus:outline-none focus:ring-2 focus:ring-primary/30"
             >
               {q}
             </button>
@@ -6869,13 +6869,13 @@ function PortfolioContent({
             <button
               key={p.id}
               onClick={() => onOpenProperty(p.id)}
-              className="w-full flex items-center justify-between px-3 py-2.5 rounded-lg border border-bone hover:border-[#56514A] hover:bg-[#F1EBDE] transition text-left focus:outline-none focus:ring-2 focus:ring-[#56514A]/30"
+              className="w-full flex items-center justify-between px-3 py-2.5 rounded-lg border border-bone hover:border-primary hover:bg-secondary transition text-left focus:outline-none focus:ring-2 focus:ring-primary/30"
             >
               <div>
                 <div className="text-sm font-medium text-ink">{p.name}</div>
                 <div className="text-[11px] text-ink-muted">{p.area} · {p.units.length} units</div>
               </div>
-              <span className="text-[#56514A] text-sm">→</span>
+              <span className="text-primary text-sm">→</span>
             </button>
           ))}
         </div>
@@ -7197,17 +7197,17 @@ function UnitTile({
         aria-haspopup="dialog"
         aria-expanded={open}
         aria-label={`${unit.label}, ${occupancyLabel}. ${alertSummary}. Open unit.`}
-        className={`relative w-full text-left p-3 rounded-xl border bg-gradient-to-br from-white to-[#F1EBDE] shadow-sm cursor-pointer transition-all duration-150 motion-reduce:transition-none focus:outline-none focus:ring-2 focus:ring-[#56514A]/50 focus:border-[#56514A] ${
+        className={`relative w-full text-left p-3 rounded-xl border bg-gradient-to-br from-white to-secondary shadow-sm cursor-pointer transition-all duration-150 motion-reduce:transition-none focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary ${
           isVacant
-            ? "border-bone hover:border-[#56514A] hover:shadow-md hover:-translate-y-0.5 motion-reduce:hover:translate-y-0"
-            : "border-bone hover:border-[#56514A] hover:shadow-md hover:-translate-y-0.5 motion-reduce:hover:translate-y-0"
+            ? "border-bone hover:border-primary hover:shadow-md hover:-translate-y-0.5 motion-reduce:hover:translate-y-0"
+            : "border-bone hover:border-primary hover:shadow-md hover:-translate-y-0.5 motion-reduce:hover:translate-y-0"
         }`}
       >
         {/* top row: icon + name + alert */}
         <div className="flex items-start gap-2">
           <span
             aria-hidden
-            className="mt-0.5 inline-flex items-center justify-center w-7 h-7 rounded-md bg-[#F1EBDE] text-[#56514A] border border-[#F1EBDE] group-hover:bg-[#F1EBDE] transition-colors motion-reduce:transition-none"
+            className="mt-0.5 inline-flex items-center justify-center w-7 h-7 rounded-md bg-secondary text-primary border border-secondary group-hover:bg-secondary transition-colors motion-reduce:transition-none"
           >
             {isShop ? (
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 9l1-5h16l1 5"/><path d="M4 9v11h16V9"/><path d="M9 22V12h6v10"/></svg>
@@ -7250,7 +7250,7 @@ function UnitTile({
           </span>
           <span
             aria-hidden
-            className="text-[11px] font-medium text-[#56514A] opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity motion-reduce:transition-none"
+            className="text-[11px] font-medium text-primary opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity motion-reduce:transition-none"
           >
             Open →
           </span>
@@ -7415,9 +7415,9 @@ function PropertyContent({
     <button
       key={key}
       onClick={() => setQuick(key)}
-      className={`text-[11px] px-2.5 py-1 rounded-full border transition focus:outline-none focus:ring-2 focus:ring-[#56514A]/30 ${
+      className={`text-[11px] px-2.5 py-1 rounded-full border transition focus:outline-none focus:ring-2 focus:ring-primary/30 ${
         quick === key
-          ? "bg-[#56514A] text-white border-[#56514A]"
+          ? "bg-primary text-white border-primary"
           : "bg-white text-charcoal border-bone hover:border-bone"
       }`}
       aria-pressed={quick === key}
@@ -7446,7 +7446,7 @@ function PropertyContent({
             <button
               type="button"
               onClick={() => setUnitsOpen(false)}
-              className="text-[11px] font-medium text-[#56514A] hover:text-[#56514A] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#56514A]/40 rounded px-2 py-1"
+              className="text-[11px] font-medium text-primary hover:text-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 rounded px-2 py-1"
               aria-label="Close unit picker"
             >
               Close
@@ -7472,7 +7472,7 @@ function PropertyContent({
           )}
 
           {!testerMode && property.units.length > 8 && (
-            <div className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-bone bg-white focus-within:border-[#56514A] focus-within:ring-2 focus-within:ring-[#56514A]/20 transition">
+            <div className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-bone bg-white focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/20 transition">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-ink-muted">
                 <circle cx="11" cy="11" r="7" /><path d="M21 21l-4-4" />
               </svg>
@@ -7523,7 +7523,7 @@ function PropertyContent({
                       onClick={() =>
                         setCollapsed((c) => ({ ...c, [group.key]: !c[group.key] }))
                       }
-                      className="sticky top-0 z-[1] w-full flex items-center justify-between bg-white/95 backdrop-blur px-1 py-1.5 text-[10px] uppercase tracking-wide text-ink-muted font-medium border-b border-faint-rule hover:text-charcoal focus:outline-none focus:ring-2 focus:ring-[#56514A]/30 rounded"
+                      className="sticky top-0 z-[1] w-full flex items-center justify-between bg-white/95 backdrop-blur px-1 py-1.5 text-[10px] uppercase tracking-wide text-ink-muted font-medium border-b border-faint-rule hover:text-charcoal focus:outline-none focus:ring-2 focus:ring-primary/30 rounded"
                       aria-expanded={!isCollapsed}
                     >
                       <span>
@@ -7593,7 +7593,7 @@ function UnitStarters({ unit, onAsk }: { unit: Unit; onAsk: (q: string) => void 
           <button
             key={q}
             onClick={() => onAsk(q)}
-            className="text-xs px-3 py-1.5 rounded-full bg-[#F1EBDE] text-[#56514A] hover:bg-[#E8E1D4] transition focus:outline-none focus:ring-2 focus:ring-[#56514A]"
+            className="text-xs px-3 py-1.5 rounded-full bg-secondary text-primary hover:bg-border transition focus:outline-none focus:ring-2 focus:ring-primary"
           >
             {q}
           </button>
@@ -7616,7 +7616,7 @@ function ChatComposer({
   return (
     <form
       onSubmit={(e) => { e.preventDefault(); const t = val.trim(); if (!t) return; onSubmit(t); setVal(""); }}
-      className="flex items-center gap-2 px-4 py-2.5 rounded-full border border-bone bg-white focus-within:border-[#56514A] focus-within:ring-2 focus-within:ring-[#56514A]/20 transition"
+      className="flex items-center gap-2 px-4 py-2.5 rounded-full border border-bone bg-white focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/20 transition"
     >
       <input
         value={val}
@@ -7629,7 +7629,7 @@ function ChatComposer({
         type="submit"
         disabled={!val.trim()}
         aria-label="Send"
-        className="flex items-center justify-center h-9 w-9 rounded-full bg-[#56514A] text-white hover:bg-[#56514A] transition disabled:bg-bone disabled:text-ink-muted"
+        className="flex items-center justify-center h-9 w-9 rounded-full bg-primary text-white hover:bg-primary transition disabled:bg-bone disabled:text-ink-muted"
       >
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <path d="M5 12h14M13 6l6 6-6 6"/>
@@ -7644,7 +7644,7 @@ function BackOfficeComposer({ onSubmit }: { onSubmit: (text: string) => void }) 
   return (
     <form
       onSubmit={(e) => { e.preventDefault(); const t = val.trim(); if (!t) return; onSubmit(t); setVal(""); }}
-      className="flex items-center gap-2 px-4 py-2.5 rounded-full border border-bone bg-white focus-within:border-[#56514A] focus-within:ring-2 focus-within:ring-[#56514A]/20 transition"
+      className="flex items-center gap-2 px-4 py-2.5 rounded-full border border-bone bg-white focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/20 transition"
     >
       <input
         value={val}
@@ -7657,7 +7657,7 @@ function BackOfficeComposer({ onSubmit }: { onSubmit: (text: string) => void }) 
         type="submit"
         disabled={!val.trim()}
         aria-label="Send"
-        className="flex items-center justify-center h-9 w-9 rounded-full bg-[#56514A] text-white hover:bg-[#56514A] transition disabled:bg-bone disabled:text-ink-muted"
+        className="flex items-center justify-center h-9 w-9 rounded-full bg-primary text-white hover:bg-primary transition disabled:bg-bone disabled:text-ink-muted"
       >
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <path d="M5 12h14M13 6l6 6-6 6"/>
@@ -7750,7 +7750,7 @@ function BackOfficeStage({
             Coming soon
           </div>
           <div>
-            <button onClick={onReturnHallway} className="text-sm text-[#56514A] hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-[#56514A] rounded px-2 py-1">
+            <button onClick={onReturnHallway} className="text-sm text-primary hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded px-2 py-1">
               ← Back to hallway
             </button>
           </div>
@@ -7761,13 +7761,13 @@ function BackOfficeStage({
 
   if (mode === "hallway") {
     return (
-      <div className="absolute inset-0 bg-gradient-to-b from-[#F1EBDE] via-white to-paper overflow-auto">
+      <div className="absolute inset-0 bg-gradient-to-b from-secondary via-white to-paper overflow-auto">
         <div className="max-w-4xl mx-auto px-6 py-10">
           <div className="text-center mb-10">
             <div className="flex justify-center mb-3">
               <OwlAvatar state="default" />
             </div>
-            <p className="text-[11px] uppercase tracking-wider text-[#56514A] font-semibold mb-2">Hobson's back office</p>
+            <p className="text-[11px] uppercase tracking-wider text-primary font-semibold mb-2">Hobson's back office</p>
             <h1 className="text-2xl font-semibold text-ink mb-4">Meet My Team</h1>
             <div className="max-w-lg mx-auto text-sm text-charcoal leading-relaxed space-y-3">
               <p>I may be the one you'll always speak to, but I don't work alone.</p>
@@ -8146,7 +8146,7 @@ function BackOfficeWorkbench({
   ];
 
   return (
-    <div ref={containerRef} id="back-office-workbench" className="absolute inset-0 bg-[#FAF7F2] overflow-auto">
+    <div ref={containerRef} id="back-office-workbench" className="absolute inset-0 bg-secondary overflow-auto">
       <div className="max-w-3xl mx-auto px-6 py-8 space-y-5">
         {/* Page header */}
         <header className="flex items-start justify-between gap-4">
@@ -8161,7 +8161,7 @@ function BackOfficeWorkbench({
               type="button"
               onClick={onClearScope}
               aria-label={`Clear scope ${scopeChip.text}`}
-              className="inline-flex items-center gap-1.5 text-[12px] px-2.5 py-1 rounded-full border border-bone bg-white hover:bg-paper focus:outline-none focus-visible:ring-2 focus-visible:ring-[#56514A]"
+              className="inline-flex items-center gap-1.5 text-[12px] px-2.5 py-1 rounded-full border border-bone bg-white hover:bg-paper focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
             >
               <span className="text-charcoal">{scopeChip.text}</span>
               <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden><path d="M6 6l12 12M18 6L6 18"/></svg>
@@ -8175,9 +8175,9 @@ function BackOfficeWorkbench({
             type="button"
             aria-expanded={notesOpen}
             onClick={() => setNotesOpen((v) => !v)}
-            className="w-full flex items-center gap-3 px-4 py-3.5 text-left hover:bg-paper rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-[#56514A]"
+            className="w-full flex items-center gap-3 px-4 py-3.5 text-left hover:bg-paper rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
           >
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#56514A" strokeWidth="2" aria-hidden><circle cx="9" cy="8" r="3"/><circle cx="17" cy="10" r="2.5"/><path d="M3 20v-1a5 5 0 015-5h2a5 5 0 015 5v1"/><path d="M14 20v-.5a4 4 0 014-4h1a4 4 0 014 4V20"/></svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--charcoal)" strokeWidth="2" aria-hidden><circle cx="9" cy="8" r="3"/><circle cx="17" cy="10" r="2.5"/><path d="M3 20v-1a5 5 0 015-5h2a5 5 0 015 5v1"/><path d="M14 20v-.5a4 4 0 014-4h1a4 4 0 014 4V20"/></svg>
             <span className="text-[14px] font-semibold text-ink">Agents' notes</span>
             <span className="text-[12px] text-ink-muted hidden sm:inline">· what your team has been doing</span>
             <span className="ml-auto flex items-center gap-2">
@@ -8193,11 +8193,11 @@ function BackOfficeWorkbench({
                 {agentNotes.map((n, idx) => (
                   <React.Fragment key={n.id}>
                     {idx === 1 && <div role="separator" className="col-span-2 border-t border-bone my-1" />}
-                    <dt className={`flex items-center gap-2 ${n.isHobson ? "text-[#56514A]" : "text-charcoal"}`}>
+                    <dt className={`flex items-center gap-2 ${n.isHobson ? "text-primary" : "text-charcoal"}`}>
                       {n.src && <img src={n.src} alt="" aria-hidden className="w-5 h-5 object-contain" />}
                       <span className="font-medium">{n.name}</span>
                     </dt>
-                    <dd className={n.isHobson ? "text-[#56514A]" : "text-charcoal"}>{n.text}</dd>
+                    <dd className={n.isHobson ? "text-primary" : "text-charcoal"}>{n.text}</dd>
                   </React.Fragment>
                 ))}
               </dl>
@@ -8215,14 +8215,14 @@ function BackOfficeWorkbench({
               <section
                 key={s.id}
                 ref={(el) => { sectionRefs.current[s.id] = el; }}
-                className={`rounded-2xl border bg-white transition ${open ? "border-[#56514A]/50 shadow-sm" : "border-bone"}`}
+                className={`rounded-2xl border bg-white transition ${open ? "border-primary/50 shadow-sm" : "border-bone"}`}
               >
                 <button
                   type="button"
                   aria-expanded={open}
                   aria-controls={`bo-sec-${s.id}`}
                   onClick={() => toggle(s.id)}
-                  className="w-full flex items-center gap-3 px-4 py-3.5 text-left hover:bg-paper rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-[#56514A]"
+                  className="w-full flex items-center gap-3 px-4 py-3.5 text-left hover:bg-paper rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
                 >
                   <span className="w-9 h-9 rounded-lg bg-paper grid place-items-center text-charcoal shrink-0">{s.icon}</span>
                   <div className="min-w-0 flex-1">
@@ -8231,7 +8231,7 @@ function BackOfficeWorkbench({
                       <span>{s.summary}</span>
                       <span aria-hidden>·</span>
                       {s.id === "workflows" ? (
-                        <span className="inline-flex items-center gap-1.5 text-[#56514A] font-medium">
+                        <span className="inline-flex items-center gap-1.5 text-primary font-medium">
                           <img src={owlDefault} alt="" aria-hidden className="w-3.5 h-3.5 object-contain" />
                           <span>Built by Hobson</span>
                         </span>
@@ -8285,7 +8285,7 @@ function BackOfficeWorkbench({
 
 function AdminBuildActiveBanner({ label }: { label: string }) {
   return (
-    <div className="flex items-center gap-2 px-4 py-2.5 rounded-full border border-dashed border-[#56514A]/40 bg-[#F1EBDE] text-[12px] text-[#56514A]/80">
+    <div className="flex items-center gap-2 px-4 py-2.5 rounded-full border border-dashed border-primary/40 bg-secondary text-[12px] text-primary/80">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
         <path d="M12 6v6l4 2"/><circle cx="12" cy="12" r="9"/>
       </svg>
@@ -8298,7 +8298,7 @@ function ChatInviteShell({ avatarSrc, children }: { avatarSrc: string; children:
   return (
     <div className="flex items-end gap-2">
       <CharacterAvatar src={avatarSrc} />
-      <div className="max-w-[460px] bg-[#F1EBDE] text-[#2D2D2D] text-sm leading-relaxed px-4 py-3 rounded-2xl rounded-bl-md flex flex-col gap-2.5">
+      <div className="max-w-[460px] bg-secondary text-foreground text-sm leading-relaxed px-4 py-3 rounded-2xl rounded-bl-md flex flex-col gap-2.5">
         {children}
       </div>
     </div>
@@ -8318,7 +8318,7 @@ function MagicianBuildInviteCard({ onStart }: { onStart: () => void }) {
       <button
         type="button"
         onClick={onStart}
-        className="self-start inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#56514A] text-white text-[12.5px] font-semibold shadow-sm hover:bg-[#56514A] focus:outline-none focus:ring-2 focus:ring-[#56514A]/40"
+        className="self-start inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary text-white text-[12.5px] font-semibold shadow-sm hover:bg-primary focus:outline-none focus:ring-2 focus:ring-primary/40"
       >
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M15 4l5 5-11 11H4v-5L15 4z"/><path d="M14 5l5 5"/></svg>
         Build a workflow
@@ -8337,7 +8337,7 @@ function ProfessorBuildInviteCard({ onUpload }: { onUpload: (count: number) => v
         <button
           type="button"
           onClick={() => fileRef.current?.click()}
-          className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#56514A] text-white text-[12.5px] font-semibold shadow-sm hover:bg-[#56514A] focus:outline-none focus:ring-2 focus:ring-[#56514A]/40"
+          className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary text-white text-[12.5px] font-semibold shadow-sm hover:bg-primary focus:outline-none focus:ring-2 focus:ring-primary/40"
         >
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M12 16V4M6 10l6-6 6 6"/><path d="M4 20h16"/></svg>
           Upload documents
@@ -8369,7 +8369,7 @@ function BrokerBuildInviteCard({ onAdd, onUpload }: { onAdd: () => void; onUploa
         <button
           type="button"
           onClick={onAdd}
-          className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#56514A] text-white text-[12.5px] font-semibold shadow-sm hover:bg-[#56514A] focus:outline-none focus:ring-2 focus:ring-[#56514A]/40"
+          className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary text-white text-[12.5px] font-semibold shadow-sm hover:bg-primary focus:outline-none focus:ring-2 focus:ring-primary/40"
         >
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/></svg>
           Add a contact
@@ -8378,7 +8378,7 @@ function BrokerBuildInviteCard({ onAdd, onUpload }: { onAdd: () => void; onUploa
         <button
           type="button"
           onClick={() => fileRef.current?.click()}
-          className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[#56514A]/60 bg-white text-[#56514A] text-[12.5px] font-semibold hover:bg-[#F1EBDE] focus:outline-none focus:ring-2 focus:ring-[#56514A]/40"
+          className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-primary/60 bg-white text-primary text-[12.5px] font-semibold hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-primary/40"
         >
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M3 7h6v4H3zM3 13h6v4H3zM11 7h10v10H11z"/></svg>
           Upload contacts
@@ -8419,13 +8419,13 @@ function ProfessorComposer({ onUpload }: { onUpload: (count: number) => void }) 
           handleFiles(n || 3);
         }}
         className={`flex items-center gap-3 px-4 py-3 rounded-2xl border-2 border-dashed transition ${
-          dragOver ? "border-[#56514A] bg-[#F1EBDE]" : "border-[#56514A]/40 bg-white"
+          dragOver ? "border-primary bg-secondary" : "border-primary/40 bg-white"
         }`}
       >
         <button
           type="button"
           onClick={() => fileRef.current?.click()}
-          className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full bg-[#56514A] text-white text-[13px] font-semibold shadow-sm hover:bg-[#56514A] focus:outline-none focus:ring-2 focus:ring-[#56514A]/40"
+          className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full bg-primary text-white text-[13px] font-semibold shadow-sm hover:bg-primary focus:outline-none focus:ring-2 focus:ring-primary/40"
         >
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
             <path d="M12 16V4M6 10l6-6 6 6"/><path d="M4 20h16"/>
@@ -8492,7 +8492,7 @@ function PortfolioFirstVisit({
               <button
                 key={p.id}
                 onClick={() => onOpenProperty(p.id)}
-                className="w-full flex items-center justify-between px-3 py-2.5 rounded-lg border border-bone hover:border-[#56514A] hover:bg-[#F1EBDE] transition text-left focus:outline-none focus:ring-2 focus:ring-[#56514A]/30"
+                className="w-full flex items-center justify-between px-3 py-2.5 rounded-lg border border-bone hover:border-primary hover:bg-secondary transition text-left focus:outline-none focus:ring-2 focus:ring-primary/30"
               >
                 <div>
                   <div className="text-sm font-medium text-ink">{p.name}</div>
@@ -8500,7 +8500,7 @@ function PortfolioFirstVisit({
                     {p.area} · {p.standalone ? "single unit" : `${p.units.length} units`}
                   </div>
                 </div>
-                <span className="text-[#56514A] text-sm">→</span>
+                <span className="text-primary text-sm">→</span>
               </button>
             ))}
           </div>
@@ -8519,7 +8519,7 @@ function PortfolioFirstVisit({
                     <button
                       key={u.id}
                       onClick={() => onOpenUnit(p.id, u.id)}
-                      className="w-full flex items-center justify-between px-3 py-2 rounded-lg border border-bone hover:border-[#56514A] hover:bg-[#F1EBDE] transition text-left focus:outline-none focus:ring-2 focus:ring-[#56514A]/30"
+                      className="w-full flex items-center justify-between px-3 py-2 rounded-lg border border-bone hover:border-primary hover:bg-secondary transition text-left focus:outline-none focus:ring-2 focus:ring-primary/30"
                     >
                       <div>
                         <div className="text-sm font-medium text-ink">{u.label}</div>
@@ -8636,7 +8636,7 @@ function ReturningSearchPanel({
   return (
     <div className="space-y-3">
       <div className="relative">
-        <div className="flex items-center gap-2 px-3 py-2.5 rounded-full border border-bone bg-white focus-within:border-[#56514A] focus-within:ring-2 focus-within:ring-[#56514A]/20 transition">
+        <div className="flex items-center gap-2 px-3 py-2.5 rounded-full border border-bone bg-white focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/20 transition">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-ink-muted">
             <circle cx="11" cy="11" r="7" /><path d="M21 21l-4-4" />
           </svg>
@@ -8683,7 +8683,7 @@ function ReturningSearchPanel({
                         onMouseLeave={() => onHoverProperty(null)}
                         onClick={() => openResult(r)}
                         className={`w-full flex items-center justify-between px-3 py-2 text-left transition focus:outline-none ${
-                          isActive ? "bg-[#F1EBDE]" : "hover:bg-paper"
+                          isActive ? "bg-secondary" : "hover:bg-paper"
                         }`}
                       >
                         <div>
@@ -8702,7 +8702,7 @@ function ReturningSearchPanel({
                           </span>
                         )}
                         {r.type === "property" && (
-                          <span className="text-[10px] uppercase font-medium px-1.5 py-0.5 rounded bg-[#F1EBDE] text-[#56514A]">Building</span>
+                          <span className="text-[10px] uppercase font-medium px-1.5 py-0.5 rounded bg-secondary text-primary">Building</span>
                         )}
                       </button>
                     );
@@ -8727,13 +8727,13 @@ function ReturningSearchPanel({
                     onClick={() => onOpenUnit(r.propertyId, r.unitId)}
                     onMouseEnter={() => onHoverProperty(r.propertyId)}
                     onMouseLeave={() => onHoverProperty(null)}
-                    className="w-full flex items-center justify-between px-3 py-2.5 rounded-lg border border-bone hover:border-[#56514A] hover:bg-[#F1EBDE] transition text-left focus:outline-none focus:ring-2 focus:ring-[#56514A]/30"
+                    className="w-full flex items-center justify-between px-3 py-2.5 rounded-lg border border-bone hover:border-primary hover:bg-secondary transition text-left focus:outline-none focus:ring-2 focus:ring-primary/30"
                   >
                     <div>
                       <div className="text-sm font-medium text-ink">{r.label}</div>
                       <div className="text-[11px] text-ink-muted">{r.sub}</div>
                     </div>
-                    <span className="text-[#56514A] text-sm">→</span>
+                    <span className="text-primary text-sm">→</span>
                   </button>
                 );
               })}
@@ -8866,7 +8866,7 @@ function MapSearch({
             if (open) collapse();
             else setOpen(true);
           }}
-          className="shrink-0 w-10 h-10 flex items-center justify-center text-charcoal hover:text-[#56514A] focus:outline-none focus:ring-2 focus:ring-[#56514A]/40 rounded-full transition"
+          className="shrink-0 w-10 h-10 flex items-center justify-center text-charcoal hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary/40 rounded-full transition"
           aria-label={open ? "Close search" : "Search properties, units, addresses"}
           aria-expanded={open}
           style={open ? { width: 28, height: 28 } : undefined}
@@ -8891,7 +8891,7 @@ function MapSearch({
             <button
               type="button"
               onClick={collapse}
-              className="shrink-0 w-7 h-7 flex items-center justify-center rounded-full text-ink-muted hover:text-charcoal hover:bg-bone-wash focus:outline-none focus:ring-2 focus:ring-[#56514A]/30"
+              className="shrink-0 w-7 h-7 flex items-center justify-center rounded-full text-ink-muted hover:text-charcoal hover:bg-bone-wash focus:outline-none focus:ring-2 focus:ring-primary/30"
               aria-label="Close search"
             >
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -8928,7 +8928,7 @@ function MapSearch({
                       onMouseLeave={() => onHoverProperty(null)}
                       onClick={() => openResult(r)}
                       className={`w-full flex items-center justify-between px-3 py-2 text-left transition focus:outline-none ${
-                        isActive ? "bg-[#F1EBDE]" : "hover:bg-paper"
+                        isActive ? "bg-secondary" : "hover:bg-paper"
                       }`}
                     >
                       <div>
@@ -8947,7 +8947,7 @@ function MapSearch({
                         </span>
                       )}
                       {r.type === "property" && (
-                        <span className="text-[10px] uppercase font-medium px-1.5 py-0.5 rounded bg-[#F1EBDE] text-[#56514A]">Building</span>
+                        <span className="text-[10px] uppercase font-medium px-1.5 py-0.5 rounded bg-secondary text-primary">Building</span>
                       )}
                     </button>
                   );
@@ -9031,7 +9031,7 @@ function PortfolioBriefing({
       <div className="flex flex-col items-end gap-1.5">
         <button
           onClick={onShowNeedsYou}
-          className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold shadow-sm transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#56514A] bg-[#F1EBDE] text-[#56514A] hover:bg-[#E8E1D4] border border-[#E8E1D4]"
+          className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold shadow-sm transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary bg-secondary text-primary hover:bg-border border border-border"
         >
           Show me what needs me
         </button>
@@ -9061,14 +9061,14 @@ function PortfolioBriefing({
           {choice === "urgent" && pending.length > urgent.length && (
             <button
               onClick={() => setChoice("all")}
-              className="text-[11px] text-[#56514A] hover:underline focus:outline-none focus:ring-2 focus:ring-[#56514A] rounded"
+              className="text-[11px] text-primary hover:underline focus:outline-none focus:ring-2 focus:ring-primary rounded"
             >
               Show all ({pending.length})
             </button>
           )}
           <button
             onClick={() => setChoice(null)}
-            className="text-[11px] text-ink-muted hover:text-charcoal focus:outline-none focus:ring-2 focus:ring-[#56514A] rounded"
+            className="text-[11px] text-ink-muted hover:text-charcoal focus:outline-none focus:ring-2 focus:ring-primary rounded"
           >
             Reset
           </button>
@@ -9107,7 +9107,7 @@ function PortfolioBriefing({
       {restCount > 0 && choice === "urgent" && (
         <button
           onClick={() => setChoice("all")}
-          className="w-full text-left text-[12px] text-ink-muted px-3 py-2 rounded-lg border border-dashed border-bone hover:border-bone hover:bg-paper transition focus:outline-none focus:ring-2 focus:ring-[#56514A]/30"
+          className="w-full text-left text-[12px] text-ink-muted px-3 py-2 rounded-lg border border-dashed border-bone hover:border-bone hover:bg-paper transition focus:outline-none focus:ring-2 focus:ring-primary/30"
         >
           {restCount} more this week →
         </button>
@@ -9173,7 +9173,7 @@ function PropertyActions({
           </div>
           <div className="grid gap-3" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))" }}>
             {g.cards.map((c) => (
-              <div key={c.id} className={c.id === carriedCardId ? "rounded-xl ring-2 ring-[#56514A]/50 ring-offset-2 ring-offset-white" : ""}>
+              <div key={c.id} className={c.id === carriedCardId ? "rounded-xl ring-2 ring-primary/50 ring-offset-2 ring-offset-white" : ""}>
                 <ActionCardItem
                   card={c}
                   level="property"
@@ -9493,8 +9493,8 @@ function SuggestedRentGate({ ctx, yesIdx, noIdx }: { ctx: PerformCtx; yesIdx: nu
   const suggested = 49500;
   return (
     <div className="pl-[44px]">
-      <div className="inline-block max-w-[640px] rounded-2xl border border-[#E8E1D4] bg-[#F1EBDE] px-3 py-2.5 space-y-2">
-        <div className="text-[11px] uppercase tracking-wide text-[#56514A] font-semibold">
+      <div className="inline-block max-w-[640px] rounded-2xl border border-border bg-secondary px-3 py-2.5 space-y-2">
+        <div className="text-[11px] uppercase tracking-wide text-primary font-semibold">
           Awaiting your instruction
         </div>
         <div className="text-[12px] text-charcoal">
@@ -9504,13 +9504,13 @@ function SuggestedRentGate({ ctx, yesIdx, noIdx }: { ctx: PerformCtx; yesIdx: nu
           <button
             autoFocus
             onClick={() => { ctx.setChosenRent(suggested); ctx.advance(yesIdx, `Continue — prepare at ${fmtGBP(suggested)}`, "approve"); }}
-            className="text-xs px-3 py-1.5 rounded-full bg-[#56514A] text-white hover:bg-[#56514A] focus:outline-none focus:ring-2 focus:ring-[#56514A] transition"
+            className="text-xs px-3 py-1.5 rounded-full bg-primary text-white hover:bg-primary focus:outline-none focus:ring-2 focus:ring-primary transition"
           >
             Continue — prepare at £49,500
           </button>
           <button
             onClick={() => { ctx.setChosenRent(null); ctx.advance(noIdx, "Continue — leave new rent blank", "modify"); }}
-            className="text-xs px-3 py-1.5 rounded-full bg-white border border-bone text-charcoal hover:border-[#56514A] hover:bg-[#F1EBDE] focus:outline-none focus:ring-2 focus:ring-[#56514A] transition"
+            className="text-xs px-3 py-1.5 rounded-full bg-white border border-bone text-charcoal hover:border-primary hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-primary transition"
           >
             Continue — leave it blank
           </button>
@@ -9560,15 +9560,15 @@ function RentChoiceGate({ ctx, nextIdx }: { ctx: PerformCtx; nextIdx: number }) 
   ];
   return (
     <div className="pl-[44px]">
-      <div className="inline-block max-w-[640px] rounded-2xl border border-[#E8E1D4] bg-[#F1EBDE] px-3 py-2.5 space-y-2">
-        <div className="text-[11px] uppercase tracking-wide text-[#56514A] font-semibold">Choose the new rent to propose</div>
+      <div className="inline-block max-w-[640px] rounded-2xl border border-border bg-secondary px-3 py-2.5 space-y-2">
+        <div className="text-[11px] uppercase tracking-wide text-primary font-semibold">Choose the new rent to propose</div>
         <div className="space-y-1.5">
           {options.map((o, i) => (
             <button
               key={o.amount}
               autoFocus={i === 0}
               onClick={() => choose(o.amount, `New rent ${fmtGBP(o.amount)}`)}
-              className="w-full text-left px-3 py-2 rounded-lg bg-white border border-bone hover:border-[#56514A] hover:bg-[#F1EBDE] focus:outline-none focus:ring-2 focus:ring-[#56514A] transition"
+              className="w-full text-left px-3 py-2 rounded-lg bg-white border border-bone hover:border-primary hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-primary transition"
             >
               <div className="text-[13px] font-semibold text-ink">{o.title}</div>
               <div className="text-[11.5px] text-charcoal mt-0.5">{o.basis}</div>
@@ -9577,7 +9577,7 @@ function RentChoiceGate({ ctx, nextIdx }: { ctx: PerformCtx; nextIdx: number }) 
           {!customMode ? (
             <button
               onClick={() => setCustomMode(true)}
-              className="w-full text-left px-3 py-2 rounded-lg bg-white border border-dashed border-bone hover:border-[#56514A] hover:bg-[#F1EBDE] focus:outline-none focus:ring-2 focus:ring-[#56514A] transition"
+              className="w-full text-left px-3 py-2 rounded-lg bg-white border border-dashed border-bone hover:border-primary hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-primary transition"
             >
               <div className="text-[13px] font-semibold text-ink">A figure of your own</div>
               <div className="text-[11.5px] text-charcoal mt-0.5">Enter a custom annual rent.</div>
@@ -9594,11 +9594,11 @@ function RentChoiceGate({ ctx, nextIdx }: { ctx: PerformCtx; nextIdx: number }) 
                   onChange={(e) => setCustom(e.target.value)}
                   onKeyDown={(e) => { if (e.key === "Enter") submitCustom(); }}
                   placeholder="e.g. 51000"
-                  className="flex-1 text-[13px] px-2 py-1.5 rounded-md border border-bone focus:outline-none focus:ring-2 focus:ring-[#56514A]"
+                  className="flex-1 text-[13px] px-2 py-1.5 rounded-md border border-bone focus:outline-none focus:ring-2 focus:ring-primary"
                 />
                 <button
                   onClick={submitCustom}
-                  className="text-xs px-3 py-1.5 rounded-full bg-[#56514A] text-white hover:bg-[#56514A] focus:outline-none focus:ring-2 focus:ring-[#56514A]"
+                  className="text-xs px-3 py-1.5 rounded-full bg-primary text-white hover:bg-primary focus:outline-none focus:ring-2 focus:ring-primary"
                 >
                   Use this
                 </button>
@@ -9623,8 +9623,8 @@ function Section13NoticePreview({ chosenRent, template }: { chosenRent: number |
   const pct = hasRent ? ((increase / FLAT8_CURRENT_RENT) * 100).toFixed(1) : "";
   const ownTpl = template && template.mode === "own";
   return (
-    <div className={`rounded-lg border ${ownTpl ? "border-[#56514A]/40 bg-[#F1EBDE]" : "border-success-border bg-success-bg/60"} p-3 text-[12px] text-charcoal`}>
-      <div className={`text-[10px] uppercase tracking-wide ${ownTpl ? "text-[#56514A]" : "text-success"} font-semibold mb-2 flex items-center justify-between gap-2`}>
+    <div className={`rounded-lg border ${ownTpl ? "border-primary/40 bg-secondary" : "border-success-border bg-success-bg/60"} p-3 text-[12px] text-charcoal`}>
+      <div className={`text-[10px] uppercase tracking-wide ${ownTpl ? "text-primary" : "text-success"} font-semibold mb-2 flex items-center justify-between gap-2`}>
         <span>Prepared — Section 13 Notice</span>
         {ownTpl && <span className="normal-case tracking-normal font-normal text-[10.5px]">from your template: <span className="font-medium">{template?.filename}</span></span>}
       </div>
@@ -9710,8 +9710,8 @@ function AddToOutlookGate({ advance, nextIdx }: { advance: PerformAdvance; nextI
   }
   return (
     <div className="pl-[44px]">
-      <div className="inline-block max-w-[640px] rounded-2xl border border-[#E8E1D4] bg-[#F1EBDE] px-3 py-2.5 space-y-2">
-        <div className="text-[11px] uppercase tracking-wide text-[#56514A] font-semibold">Send via Outlook</div>
+      <div className="inline-block max-w-[640px] rounded-2xl border border-border bg-secondary px-3 py-2.5 space-y-2">
+        <div className="text-[11px] uppercase tracking-wide text-primary font-semibold">Send via Outlook</div>
         <div className="flex flex-wrap gap-1.5">
           <button
             autoFocus
@@ -9719,7 +9719,7 @@ function AddToOutlookGate({ advance, nextIdx }: { advance: PerformAdvance; nextI
               setQueued(true);
               setTimeout(() => advance(nextIdx, "Add to Outlook", "approve"), 700);
             }}
-            className="inline-flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-full bg-[#56514A] text-white hover:bg-[#56514A] focus:outline-none focus:ring-2 focus:ring-[#56514A]"
+            className="inline-flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-full bg-primary text-white hover:bg-primary focus:outline-none focus:ring-2 focus:ring-primary"
           >
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden><path d="M4 4h16v16H4z"/><path d="m4 7 8 6 8-6"/></svg>
             Add to Outlook
@@ -9843,7 +9843,7 @@ function TenantNoticesGroup({ tenants }: { tenants: FireAlarmTenant[] }) {
           type="text"
           value={sharedWindow}
           onChange={(e) => setSharedWindow(e.target.value)}
-          className="w-full text-[12px] px-2 py-1 border border-bone rounded focus:outline-none focus:ring-2 focus:ring-[#56514A]/40"
+          className="w-full text-[12px] px-2 py-1 border border-bone rounded focus:outline-none focus:ring-2 focus:ring-primary/40"
           aria-label="Shared visit window"
         />
       </div>
@@ -9858,14 +9858,14 @@ function TenantNoticesGroup({ tenants }: { tenants: FireAlarmTenant[] }) {
                 type="button"
                 onClick={() => setOpenId(isOpen ? null : t.unitId)}
                 aria-expanded={isOpen}
-                className="w-full flex items-center justify-between gap-3 px-2.5 py-1.5 text-left hover:bg-paper focus:outline-none focus:ring-2 focus:ring-[#56514A]/40 rounded"
+                className="w-full flex items-center justify-between gap-3 px-2.5 py-1.5 text-left hover:bg-paper focus:outline-none focus:ring-2 focus:ring-primary/40 rounded"
               >
                 <span className="flex items-center gap-2 min-w-0">
                   <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-success-bg text-success text-[10px] font-bold" aria-hidden>✓</span>
                   <span className="font-medium text-ink truncate">{t.unitLabel}</span>
                   <span className="text-ink-muted truncate">· {t.tenantName} · {t.email}</span>
                 </span>
-                <span className="text-[11px] text-[#56514A]">{isOpen ? "Hide" : "View / edit"}</span>
+                <span className="text-[11px] text-primary">{isOpen ? "Hide" : "View / edit"}</span>
               </button>
               {isOpen && (
                 <div className="px-2.5 pb-2">
@@ -9873,7 +9873,7 @@ function TenantNoticesGroup({ tenants }: { tenants: FireAlarmTenant[] }) {
                     value={body}
                     onChange={(e) => setOverrides((o) => ({ ...o, [t.unitId]: e.target.value }))}
                     rows={7}
-                    className="w-full text-[12px] font-mono px-2 py-1.5 border border-bone rounded focus:outline-none focus:ring-2 focus:ring-[#56514A]/40 whitespace-pre-wrap"
+                    className="w-full text-[12px] font-mono px-2 py-1.5 border border-bone rounded focus:outline-none focus:ring-2 focus:ring-primary/40 whitespace-pre-wrap"
                     aria-label={`Notice body for ${t.unitLabel}`}
                   />
                 </div>
@@ -10381,7 +10381,7 @@ function PerformWorkspace({
                     isDone
                       ? "bg-success-bg border-success-border text-success"
                       : isCurrent
-                      ? "bg-[#56514A] border-[#56514A] text-white"
+                      ? "bg-primary border-primary text-white"
                       : "bg-white border-bone text-ink-muted"
                   }`}
                 >
@@ -10402,9 +10402,9 @@ function PerformWorkspace({
         {mode === "review" && !isComplete && (
           <div className="flex items-start gap-2">
             <OwlAvatar state={recapStreaming ? "talking" : "default"} />
-            <div className="inline-block max-w-[640px] bg-[#F1EBDE] text-[#2D2D2D] text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-bl-md">
+            <div className="inline-block max-w-[640px] bg-secondary text-foreground text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-bl-md">
               {recapStream || (reducedMotion ? recapNarration : "")}
-              {recapStreaming && <span className="inline-block w-1.5 h-3.5 ml-0.5 bg-[#56514A] align-middle animate-pulse" />}
+              {recapStreaming && <span className="inline-block w-1.5 h-3.5 ml-0.5 bg-primary align-middle animate-pulse" />}
             </div>
           </div>
         )}
@@ -10414,7 +10414,7 @@ function PerformWorkspace({
               type="button"
               onClick={() => setRecapOpen((o) => !o)}
               aria-expanded={recapOpen}
-              className="w-full flex items-center justify-between gap-2 px-3 py-2 text-left focus:outline-none focus:ring-2 focus:ring-[#56514A]/40 rounded-lg"
+              className="w-full flex items-center justify-between gap-2 px-3 py-2 text-left focus:outline-none focus:ring-2 focus:ring-primary/40 rounded-lg"
             >
               <span className="text-[12px] font-medium text-charcoal inline-flex items-center gap-2">
                 <span aria-hidden className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-success-bg text-success text-[10px] font-bold">✓</span>
@@ -10422,7 +10422,7 @@ function PerformWorkspace({
                   ? `Recorded — ${previousBeats.length + 1} steps complete`
                   : `Recap — ${previousBeats.length} steps already done, parked at the final approval`}
               </span>
-              <span className="text-[11px] text-[#56514A]">{recapOpen ? "Hide details" : "Show details"}</span>
+              <span className="text-[11px] text-primary">{recapOpen ? "Hide details" : "Show details"}</span>
             </button>
             {recapOpen && (
               <div className="px-3 pb-3 pt-1 space-y-3 border-t border-bone">
@@ -10450,13 +10450,13 @@ function PerformWorkspace({
             {!streamingActive && !isComplete && currentBeat.gateFn && currentBeat.gateFn({ chosenRent, setChosenRent, advance, section13Template: section13Template ?? null })}
             {!streamingActive && !isComplete && !currentBeat.gateFn && currentBeat.gate && (
               <div className="pl-[44px]">
-                <div className="inline-block max-w-[640px] rounded-2xl border border-[#E8E1D4] bg-[#F1EBDE] px-3 py-2.5 space-y-2">
-                  <div className="text-[11px] uppercase tracking-wide text-[#56514A] font-semibold">{currentBeat.gate.label}</div>
+                <div className="inline-block max-w-[640px] rounded-2xl border border-border bg-secondary px-3 py-2.5 space-y-2">
+                  <div className="text-[11px] uppercase tracking-wide text-primary font-semibold">{currentBeat.gate.label}</div>
                   <div className="flex flex-wrap gap-1.5">
                     {currentBeat.gate.options.map((opt, idx) => {
                       const primary = opt.kind === "approve" || opt.kind === "continue";
                       const cls = primary
-                        ? "bg-[#56514A] text-white hover:bg-[#56514A] focus:ring-[#56514A]"
+                        ? "bg-primary text-white hover:bg-primary focus:ring-primary"
                         : opt.kind === "cancel"
                         ? "text-ink-muted hover:text-charcoal hover:bg-white border border-transparent focus:ring-bone"
                         : "text-charcoal bg-white border border-bone hover:bg-paper focus:ring-bone";
@@ -10489,7 +10489,7 @@ function PerformWorkspace({
         <footer className="border-t border-bone px-5 py-3 bg-white flex justify-end">
           <button
             onClick={onCancel}
-            className="text-xs px-3 py-1.5 rounded-full bg-[#56514A] text-white hover:bg-[#56514A] focus:outline-none focus:ring-2 focus:ring-[#56514A]"
+            className="text-xs px-3 py-1.5 rounded-full bg-primary text-white hover:bg-primary focus:outline-none focus:ring-2 focus:ring-primary"
           >
             Close
           </button>
@@ -10505,9 +10505,9 @@ function BeatBubble({ beat, streamingText, streaming, done, detailOverride }: { 
     <div className={`flex items-start gap-2 ${done ? "opacity-80" : ""}`}>
       <OwlAvatar state={streaming ? "talking" : "default"} />
       <div className="flex-1 min-w-0 space-y-1.5">
-        <div className="inline-block max-w-[640px] bg-[#F1EBDE] text-[#2D2D2D] text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-bl-md">
+        <div className="inline-block max-w-[640px] bg-secondary text-foreground text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-bl-md">
           {text}
-          {streaming && <span className="inline-block w-1.5 h-3.5 ml-0.5 bg-[#56514A] align-middle animate-pulse" />}
+          {streaming && <span className="inline-block w-1.5 h-3.5 ml-0.5 bg-primary align-middle animate-pulse" />}
         </div>
         {!streaming && beat.flag && (
           <div className="inline-flex items-start gap-1.5 max-w-[640px] text-[12px] text-warning bg-warning-bg border border-warning-border px-2.5 py-1.5 rounded-lg">
@@ -10596,7 +10596,7 @@ function ActionCardItem({
       className={`rounded-xl border bg-white p-3 transition ${
         readOnly
           ? "border-bone bg-paper/30"
-          : isInferred ? "border-warning-border" : "border-bone hover:border-[#56514A]/40"
+          : isInferred ? "border-warning-border" : "border-bone hover:border-primary/40"
       }`}
     >
       {/* Top row: location + anchor + origin marker */}
@@ -10670,12 +10670,12 @@ function ActionCardItem({
               disabled={reviewActuallyDisabled}
               aria-disabled={reviewActuallyDisabled}
               title={reviewTip}
-              className={`text-xs px-3 py-1.5 rounded-full transition inline-flex items-center gap-1 focus:outline-none focus:ring-2 focus:ring-[#56514A] ${
+              className={`text-xs px-3 py-1.5 rounded-full transition inline-flex items-center gap-1 focus:outline-none focus:ring-2 focus:ring-primary ${
                 reviewActuallyDisabled
                   ? "bg-bone-wash text-ink-muted border border-bone cursor-not-allowed"
                   : isCompleted
-                  ? "bg-white text-[#56514A] border border-[#56514A]/40 hover:bg-[#F1EBDE]"
-                  : "bg-[#56514A] text-white hover:bg-[#56514A]"
+                  ? "bg-white text-primary border border-primary/40 hover:bg-secondary"
+                  : "bg-primary text-white hover:bg-primary"
               }`}
             >
               <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M5 13l4 4L19 7"/></svg>
@@ -10746,7 +10746,7 @@ function ActionCardItem({
                 onChange={(e) => setNoteText(e.target.value)}
                 placeholder="e.g. Called the tenant and agreed a renewal in principle — confirming by email."
                 rows={3}
-                className="w-full text-[12.5px] rounded-md border border-bone bg-white p-2 leading-relaxed focus:outline-none focus:ring-2 focus:ring-[#56514A]/40"
+                className="w-full text-[12.5px] rounded-md border border-bone bg-white p-2 leading-relaxed focus:outline-none focus:ring-2 focus:ring-primary/40"
               />
               <div className="flex items-center gap-1.5">
                 <button
@@ -10774,16 +10774,16 @@ function ActionCardItem({
 
           {/* Existing inline approve-expand panel (kept for backwards compatibility) */}
           {expanded && !isInferred && (
-            <div className="mt-2 rounded-lg border border-[#E8E1D4] bg-[#F1EBDE] p-2.5 space-y-2">
+            <div className="mt-2 rounded-lg border border-border bg-secondary p-2.5 space-y-2">
               <div>
-                <div className="text-[10px] uppercase tracking-wide text-[#56514A] font-semibold mb-1">What I'll do</div>
+                <div className="text-[10px] uppercase tracking-wide text-primary font-semibold mb-1">What I'll do</div>
                 <p className="text-[12px] text-charcoal leading-relaxed">{card.preparedDetail}</p>
               </div>
               <div className="flex flex-wrap gap-1.5 pt-1">
                 <button
                   onClick={onApprove}
                   autoFocus
-                  className="text-xs px-3 py-1.5 rounded-full bg-[#56514A] text-white hover:bg-[#56514A] transition focus:outline-none focus:ring-2 focus:ring-[#56514A]"
+                  className="text-xs px-3 py-1.5 rounded-full bg-primary text-white hover:bg-primary transition focus:outline-none focus:ring-2 focus:ring-primary"
                 >
                   Approve
                 </button>
@@ -10806,7 +10806,7 @@ function ActionCardItem({
 function OriginMarker({ origin }: { origin: CardOrigin }) {
   if (origin.kind === "hobson") {
     return (
-      <span className="inline-flex items-center gap-1 text-[10px] font-medium text-[#56514A] bg-[#F1EBDE] border border-[#E8E1D4] rounded-full pl-0.5 pr-1.5 py-0.5">
+      <span className="inline-flex items-center gap-1 text-[10px] font-medium text-primary bg-secondary border border-border rounded-full pl-0.5 pr-1.5 py-0.5">
         <img src={owlDefault} alt="" aria-hidden className="w-3.5 h-3.5 object-contain" />
         Added by Hobson
       </span>
@@ -10839,7 +10839,7 @@ function WorkflowRefTag({ refId, onOpen }: { refId?: string; onOpen?: (ref: stri
     <button
       onClick={() => onOpen?.(refId)}
       title={name ? `${refId} · ${name} — open in The Magician's workshop` : `Open ${refId} in The Magician's workshop`}
-      className="inline-flex items-center gap-1 text-[10px] font-medium text-[#56514A] bg-white border border-[#E8E1D4] rounded-full px-1.5 py-0.5 hover:bg-[#F1EBDE] focus:outline-none focus:ring-2 focus:ring-[#56514A]/40 transition"
+      className="inline-flex items-center gap-1 text-[10px] font-medium text-primary bg-white border border-border rounded-full px-1.5 py-0.5 hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-primary/40 transition"
     >
       <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
       {refId}
@@ -10871,11 +10871,11 @@ function StyleTag() {
 
       .hp-marker { background: transparent !important; border: none !important; }
       .leaflet-tooltip.hp-tooltip {
-        background: #2D2D2D; color: #fff; border: none; border-radius: 6px;
+        background: var(--ink); color: #fff; border: none; border-radius: 6px;
         padding: 4px 8px; font-size: 11px; font-weight: 500; box-shadow: 0 2px 6px rgba(0,0,0,0.2);
         white-space: nowrap;
       }
-      .leaflet-tooltip.hp-tooltip::before { border-top-color: #2D2D2D; }
+      .leaflet-tooltip.hp-tooltip::before { border-top-color: var(--ink); }
 
       /* Overlap spiderfy: pin keeps its true identity & count; thin connector shows true location */
       .hp-marker.is-overlap-spread .hp-cluster,
@@ -10889,7 +10889,7 @@ function StyleTag() {
       }
       .hp-pin::before {
         content: ""; position: absolute; inset: 0;
-        background: #2D2D2D;
+        background: var(--ink);
         clip-path: path("M14 0C6.27 0 0 6.27 0 14c0 9.5 14 24 14 24s14-14.5 14-24C28 6.27 21.73 0 14 0z");
       }
       .hp-pin-dot {
@@ -10898,8 +10898,8 @@ function StyleTag() {
       }
       .hp-cluster {
         width: 38px; height: 38px; border-radius: 999px;
-        background: #56514A; color: #fff; display: grid; place-items: center;
-        font-weight: 700; font-size: 14px; box-shadow: 0 2px 6px rgba(180,145,79,0.4);
+        background: var(--charcoal); color: #fff; display: grid; place-items: center;
+        font-weight: 700; font-size: 14px; box-shadow: 0 2px 6px hsl(var(--highlight-colour) / 0.4);
         border: 3px solid #fff;
         transition: transform .2s;
       }
@@ -10915,11 +10915,11 @@ function StyleTag() {
       .hp-marker.is-spread .hp-pin,
       .hp-marker.is-spread .hp-cluster {
         animation: spreadPulse 1.8s ease-in-out infinite;
-        box-shadow: 0 0 0 0 rgba(180,145,79,0.5);
+        box-shadow: 0 0 0 0 hsl(var(--highlight-colour) / 0.5);
       }
       @keyframes spreadPulse {
-        0% { box-shadow: 0 0 0 0 rgba(180,145,79,0.55); }
-        100% { box-shadow: 0 0 0 18px rgba(180,145,79,0); }
+        0% { box-shadow: 0 0 0 0 hsl(var(--highlight-colour) / 0.55); }
+        100% { box-shadow: 0 0 0 18px hsl(var(--highlight-colour) / 0); }
       }
       .hp-marker.has-doc::after {
         content: "📄"; position: absolute; top: -6px; right: -10px;
@@ -10943,21 +10943,21 @@ function StyleTag() {
       .hp-unit-marker { background: transparent !important; border: none !important; }
       .hp-unit {
         padding: 3px 8px; border-radius: 999px; font-size: 11px; font-weight: 600;
-        color: #2D2D2D; background: #fff; border: 1.5px solid #56514A;
+        color: var(--ink); background: #fff; border: 1.5px solid var(--charcoal);
         box-shadow: 0 2px 4px rgba(0,0,0,0.12);
         white-space: nowrap; text-align: center;
         transition: transform .15s, box-shadow .15s, background .15s;
         cursor: pointer;
       }
-      .hp-unit.is-vacant { border-color: #8A8478; color: #2D2D2D; }
-      .hp-unit:hover { transform: scale(1.08); box-shadow: 0 3px 8px rgba(180,145,79,0.35); }
+      .hp-unit.is-vacant { border-color: var(--ink-faint); color: var(--ink); }
+      .hp-unit:hover { transform: scale(1.08); box-shadow: 0 3px 8px hsl(var(--highlight-colour) / 0.35); }
       .hp-unit-marker.is-active .hp-unit {
-        background: #56514A; color: #fff; border-color: #56514A;
-        box-shadow: 0 0 0 4px rgba(180,145,79,0.25);
+        background: var(--charcoal); color: #fff; border-color: var(--charcoal);
+        box-shadow: 0 0 0 4px hsl(var(--highlight-colour) / 0.25);
       }
       .hp-marker.is-match .hp-pin,
       .hp-marker.is-match .hp-cluster {
-        filter: drop-shadow(0 0 6px rgba(180,145,79,0.55));
+        filter: drop-shadow(0 0 6px hsl(var(--highlight-colour) / 0.55));
         transform: scale(1.12);
         transition: transform .2s, filter .2s;
       }
@@ -10984,7 +10984,7 @@ function StyleTag() {
 
 function WorkflowIcon({ icon, tone }: { icon: WorkflowIconKey; tone: Workflow["tone"] }) {
   const toneCls: Record<Workflow["tone"], string> = {
-    purple: "bg-[#F1EBDE] text-[#56514A] ring-[#56514A]/30",
+    purple: "bg-secondary text-primary ring-primary/30",
     teal:   "bg-paper text-charcoal ring-bone/60",
     amber:  "bg-warning-bg text-warning ring-warning-border/60",
     slate:  "bg-paper text-charcoal ring-bone/60",
@@ -11009,7 +11009,7 @@ function WorkflowIcon({ icon, tone }: { icon: WorkflowIconKey; tone: Workflow["t
 function WorkflowStatusPill({ status, isPausedDraft }: { status: WorkflowStatus; isPausedDraft?: boolean }) {
   if (status === "built") {
     return (
-      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full border border-[#56514A]/40 bg-[#F1EBDE] text-[#56514A] text-[11px] font-semibold">
+      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full border border-primary/40 bg-secondary text-primary text-[11px] font-semibold">
         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M15 4l5 5-11 11H4v-5L15 4z"/><path d="M14 5l5 5"/></svg>
         Built
       </span>
@@ -11049,7 +11049,7 @@ function OwnerChip({ owner }: { owner: WorkflowOwner }) {
   }
   return (
     <span className="inline-flex items-center gap-1.5 px-2 py-1 rounded-full border border-bone bg-white text-[11px] text-charcoal">
-      <span className="w-5 h-5 rounded-full bg-[#F1EBDE] text-[#56514A] grid place-items-center text-[10px] font-semibold" aria-hidden>{owner.initials}</span>
+      <span className="w-5 h-5 rounded-full bg-secondary text-primary grid place-items-center text-[10px] font-semibold" aria-hidden>{owner.initials}</span>
       Owner: {owner.name}{owner.role ? <span className="text-ink-muted"> · {owner.role}</span> : null}
     </span>
   );
@@ -11060,7 +11060,7 @@ function MagicianComposer({ onCreate, buildActive }: { onCreate: () => void; bui
     return (
       <div
         aria-live="polite"
-        className="flex items-center gap-2 px-4 py-3 rounded-2xl border border-dashed border-[#56514A]/30 bg-[#F1EBDE] text-[12px] text-[#56514A]"
+        className="flex items-center gap-2 px-4 py-3 rounded-2xl border border-dashed border-primary/30 bg-secondary text-[12px] text-primary"
       >
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden><path d="M15 4l5 5-11 11H4v-5L15 4z"/><path d="M14 5l5 5"/></svg>
         <span>Building a workflow above — pause or cancel it to start another.</span>
@@ -11069,11 +11069,11 @@ function MagicianComposer({ onCreate, buildActive }: { onCreate: () => void; bui
   }
   return (
     <div className="flex flex-col gap-2">
-      <div className="flex items-center gap-3 px-4 py-3 rounded-2xl border-2 border-dashed border-[#56514A]/40 bg-white">
+      <div className="flex items-center gap-3 px-4 py-3 rounded-2xl border-2 border-dashed border-primary/40 bg-white">
         <button
           type="button"
           onClick={onCreate}
-          className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full bg-[#56514A] text-white text-[13px] font-semibold shadow-sm hover:bg-[#56514A] focus:outline-none focus:ring-2 focus:ring-[#56514A]/40"
+          className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full bg-primary text-white text-[13px] font-semibold shadow-sm hover:bg-primary focus:outline-none focus:ring-2 focus:ring-primary/40"
         >
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M15 4l5 5-11 11H4v-5L15 4z"/><path d="M14 5l5 5"/><path d="M5 3v2M3 4h2M19 16v2M18 17h2"/></svg>
           Create a workflow
@@ -11148,7 +11148,7 @@ function MagicianWorkArea({ character, workflows, onCreate, onAdjust, onView, on
     <div className="absolute inset-0 bg-white z-[450] flex flex-col">
       <header className="h-14 px-5 flex items-center justify-between border-b border-bone shrink-0">
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-full overflow-hidden bg-[#F1EBDE] ring-1 ring-bone grid place-items-center">
+          <div className="w-9 h-9 rounded-full overflow-hidden bg-secondary ring-1 ring-bone grid place-items-center">
             <img src={character.src} alt="" aria-hidden className="w-[120%] h-[120%] object-contain" />
           </div>
           <div>
@@ -11256,15 +11256,15 @@ function MagicianWorkArea({ character, workflows, onCreate, onAdjust, onView, on
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search by workflow name"
-            className="text-[12px] pl-7 pr-3 py-1.5 rounded-md border border-bone bg-white focus:outline-none focus:ring-2 focus:ring-[#56514A]/40 w-64"
+            className="text-[12px] pl-7 pr-3 py-1.5 rounded-md border border-bone bg-white focus:outline-none focus:ring-2 focus:ring-primary/40 w-64"
             aria-label="Search by workflow name"
           />
-          <svg aria-hidden width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8A8478" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="absolute left-2 top-1/2 -translate-y-1/2">
+          <svg aria-hidden width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--ink-faint)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="absolute left-2 top-1/2 -translate-y-1/2">
             <circle cx="11" cy="11" r="7"/><path d="M21 21l-3.5-3.5"/>
           </svg>
         </div>
 
-        <label className="inline-flex items-center gap-1 text-[11px] font-medium px-2.5 py-1.5 rounded-md border border-dashed border-bone bg-white text-charcoal focus-within:border-[#56514A]/50">
+        <label className="inline-flex items-center gap-1 text-[11px] font-medium px-2.5 py-1.5 rounded-md border border-dashed border-bone bg-white text-charcoal focus-within:border-primary/50">
           + Owner
           <select
             value={ownerFilter}
@@ -11279,7 +11279,7 @@ function MagicianWorkArea({ character, workflows, onCreate, onAdjust, onView, on
           </select>
         </label>
 
-        <label className="inline-flex items-center gap-1 text-[11px] font-medium px-2.5 py-1.5 rounded-md border border-dashed border-bone bg-white text-charcoal focus-within:border-[#56514A]/50">
+        <label className="inline-flex items-center gap-1 text-[11px] font-medium px-2.5 py-1.5 rounded-md border border-dashed border-bone bg-white text-charcoal focus-within:border-primary/50">
           + Status
           <select
             value={statusFilter}
@@ -11293,7 +11293,7 @@ function MagicianWorkArea({ character, workflows, onCreate, onAdjust, onView, on
           </select>
         </label>
 
-        <label className="inline-flex items-center gap-1 text-[11px] font-medium px-2.5 py-1.5 rounded-md border border-dashed border-bone bg-white text-charcoal focus-within:border-[#56514A]/50">
+        <label className="inline-flex items-center gap-1 text-[11px] font-medium px-2.5 py-1.5 rounded-md border border-dashed border-bone bg-white text-charcoal focus-within:border-primary/50">
           + Applies to
           <select
             value={scopeFilter}
@@ -11313,7 +11313,7 @@ function MagicianWorkArea({ character, workflows, onCreate, onAdjust, onView, on
             type="checkbox"
             checked={groupByOwner}
             onChange={(e) => setGroupByOwner(e.target.checked)}
-            className="accent-[#56514A]"
+            className="accent-primary"
           />
           Group by owner
         </label>
@@ -11346,7 +11346,7 @@ function MagicianWorkArea({ character, workflows, onCreate, onAdjust, onView, on
                       <CollapsibleSection
                         key={w.id}
                         className="bg-white border border-bone/70 rounded-lg shadow-[0_0.5px_0_rgba(0,0,0,0.04)]"
-                        headerClassName="w-full flex items-center gap-2.5 px-3 py-2.5 text-left hover:bg-paper focus:outline-none focus-visible:ring-2 focus-visible:ring-[#56514A] rounded-lg"
+                        headerClassName="w-full flex items-center gap-2.5 px-3 py-2.5 text-left hover:bg-paper focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-lg"
                         contentClassName="px-2 pb-2 pt-2 border-t border-faint-rule"
                         ariaLabel={`Toggle ${w.name}`}
                         summary={
@@ -11424,7 +11424,7 @@ function WorkflowCard({ w, onAdjust, onView, onResume, onDiscard, onSimulate }: 
             {w.visibility && !isPausedDraft && (
               <span className={`text-[10px] font-semibold px-1.5 py-0.5 rounded-full border ${
                 w.visibility === "company"
-                  ? "border-[#56514A]/40 bg-[#F1EBDE] text-[#56514A]"
+                  ? "border-primary/40 bg-secondary text-primary"
                   : "border-bone bg-paper text-charcoal"
               }`}>
                 {w.visibility === "company" ? "Company-wide" : "Personal"}
@@ -11482,7 +11482,7 @@ function WorkflowCard({ w, onAdjust, onView, onResume, onDiscard, onSimulate }: 
             </div>
           )}
           <div className="flex gap-2">
-            <dt className="text-[#56514A] font-medium shrink-0 w-[80px]">I will</dt>
+            <dt className="text-primary font-medium shrink-0 w-[80px]">I will</dt>
             <dd className="text-ink">{w.action}</dd>
           </div>
           <div className="flex gap-2">
@@ -11493,7 +11493,7 @@ function WorkflowCard({ w, onAdjust, onView, onResume, onDiscard, onSimulate }: 
                 <button
                   type="button"
                   onClick={() => setScopeOpen((v) => !v)}
-                  className="ml-2 text-[11px] text-[#56514A] hover:underline focus:outline-none focus:ring-2 focus:ring-[#56514A]/40 rounded"
+                  className="ml-2 text-[11px] text-primary hover:underline focus:outline-none focus:ring-2 focus:ring-primary/40 rounded"
                   aria-expanded={scopeOpen}
                 >
                   {scopeOpen ? "hide" : "show all"}
@@ -11510,11 +11510,11 @@ function WorkflowCard({ w, onAdjust, onView, onResume, onDiscard, onSimulate }: 
       )}
 
       {!isPausedDraft && w.stepTemplates && Object.keys(w.stepTemplates).length > 0 && (
-        <div className="text-[11.5px] text-[#56514A] -mt-1 flex flex-wrap items-center gap-1.5">
+        <div className="text-[11.5px] text-primary -mt-1 flex flex-wrap items-center gap-1.5">
           <span aria-hidden>📎</span>
           <span>Using your template{Object.keys(w.stepTemplates).length === 1 ? "" : "s"}:</span>
           {Object.entries(w.stepTemplates).map(([k, t]) => (
-            <span key={k} className="inline-flex items-center px-1.5 py-0.5 rounded-full border border-[#56514A]/30 bg-[#F1EBDE]" title={`${k}: ${t.filename ?? "uploaded"}`}>
+            <span key={k} className="inline-flex items-center px-1.5 py-0.5 rounded-full border border-primary/30 bg-secondary" title={`${k}: ${t.filename ?? "uploaded"}`}>
               {t.filename ?? "uploaded"}
             </span>
           ))}
@@ -11548,7 +11548,7 @@ function WorkflowCard({ w, onAdjust, onView, onResume, onDiscard, onSimulate }: 
               <button
                 type="button"
                 onClick={() => setActivityOpen((v) => !v)}
-                className="text-[11px] text-[#56514A] hover:underline focus:outline-none focus:ring-2 focus:ring-[#56514A]/40 rounded px-1"
+                className="text-[11px] text-primary hover:underline focus:outline-none focus:ring-2 focus:ring-primary/40 rounded px-1"
                 aria-expanded={activityOpen}
                 aria-controls={`activity-${w.id}`}
               >
@@ -11579,7 +11579,7 @@ function WorkflowCard({ w, onAdjust, onView, onResume, onDiscard, onSimulate }: 
                     <button
                       type="button"
                       onClick={() => setConfirmDiscard(false)}
-                      className="px-2 py-0.5 rounded border border-bone bg-white text-charcoal hover:bg-paper focus:outline-none focus:ring-2 focus:ring-[#56514A]/40"
+                      className="px-2 py-0.5 rounded border border-bone bg-white text-charcoal hover:bg-paper focus:outline-none focus:ring-2 focus:ring-primary/40"
                     >
                       Keep
                     </button>
@@ -11598,7 +11598,7 @@ function WorkflowCard({ w, onAdjust, onView, onResume, onDiscard, onSimulate }: 
                 <button
                   type="button"
                   onClick={onResume}
-                  className="inline-flex items-center gap-1.5 text-[12px] font-semibold px-3 py-1.5 rounded-md bg-[#56514A] text-white hover:bg-[#56514A] focus:outline-none focus:ring-2 focus:ring-[#56514A]/40"
+                  className="inline-flex items-center gap-1.5 text-[12px] font-semibold px-3 py-1.5 rounded-md bg-primary text-white hover:bg-primary focus:outline-none focus:ring-2 focus:ring-primary/40"
                 >
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden><path d="M8 5v14l11-7z"/></svg>
                   Resume
@@ -11611,7 +11611,7 @@ function WorkflowCard({ w, onAdjust, onView, onResume, onDiscard, onSimulate }: 
                 <button
                   type="button"
                   onClick={onSimulate}
-                  className="inline-flex items-center gap-1 text-[12px] px-2.5 py-1.5 rounded-md border border-[#56514A]/40 bg-white text-[#56514A] hover:bg-[#F1EBDE] focus:outline-none focus:ring-2 focus:ring-[#56514A]/40"
+                  className="inline-flex items-center gap-1 text-[12px] px-2.5 py-1.5 rounded-md border border-primary/40 bg-white text-primary hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-primary/40"
                   title="Safe preview — plays the workflow out in chat. Nothing is sent."
                   aria-label={`Run a simulation of ${w.name} — safe preview, nothing is sent`}
                 >
@@ -11621,14 +11621,14 @@ function WorkflowCard({ w, onAdjust, onView, onResume, onDiscard, onSimulate }: 
               <button
                 type="button"
                 onClick={onView}
-                className="text-[12px] px-2.5 py-1.5 rounded-md text-charcoal hover:bg-bone-wash focus:outline-none focus:ring-2 focus:ring-[#56514A]/40"
+                className="text-[12px] px-2.5 py-1.5 rounded-md text-charcoal hover:bg-bone-wash focus:outline-none focus:ring-2 focus:ring-primary/40"
               >
                 View
               </button>
               <button
                 type="button"
                 onClick={onAdjust}
-                className="text-[12px] font-semibold px-3 py-1.5 rounded-md bg-[#56514A] text-white hover:bg-[#56514A] focus:outline-none focus:ring-2 focus:ring-[#56514A]/40"
+                className="text-[12px] font-semibold px-3 py-1.5 rounded-md bg-primary text-white hover:bg-primary focus:outline-none focus:ring-2 focus:ring-primary/40"
               >
                 Adjust
               </button>
@@ -11671,7 +11671,7 @@ function WorkflowCard({ w, onAdjust, onView, onResume, onDiscard, onSimulate }: 
 function ActorAvatar({ actor }: { actor: ActivityActor }) {
   return (
     <span
-      className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-[#F1EBDE] text-[9.5px] font-semibold text-[#56514A] shrink-0"
+      className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-secondary text-[9.5px] font-semibold text-primary shrink-0"
       aria-label={`${actor.name}${actor.role ? `, ${actor.role}` : ""}`}
       title={`${actor.name}${actor.role ? ` · ${actor.role}` : ""}`}
     >
@@ -11709,13 +11709,13 @@ function WorkflowViewDialog({ workflow, onClose, onAdjust }: { workflow: Workflo
         </div>
         <dl className="text-[13px] space-y-2 mb-4">
           <div><dt className="text-ink-muted text-[11px] uppercase tracking-wide">When</dt><dd className="text-ink">{workflow.trigger}</dd></div>
-          <div><dt className="text-[#56514A] text-[11px] uppercase tracking-wide">I will</dt><dd className="text-ink">{workflow.action}</dd></div>
+          <div><dt className="text-primary text-[11px] uppercase tracking-wide">I will</dt><dd className="text-ink">{workflow.action}</dd></div>
           <div><dt className="text-ink-muted text-[11px] uppercase tracking-wide">Applies to</dt><dd className="text-ink">{workflow.scopeLabel}{workflow.scopeDetail && <ul className="list-disc pl-5 mt-1 text-[12px] text-charcoal">{workflow.scopeDetail.map((l, i) => <li key={i}>{l}</li>)}</ul>}</dd></div>
           <div><dt className="text-ink-muted text-[11px] uppercase tracking-wide">Owner</dt><dd className="mt-1"><OwnerChip owner={workflow.owner} /></dd></div>
         </dl>
         <div className="flex items-center justify-end gap-2">
-          <button type="button" onClick={onClose} className="text-[12px] px-3 py-1.5 rounded-md text-charcoal hover:bg-bone-wash focus:outline-none focus:ring-2 focus:ring-[#56514A]/40">Close</button>
-          <button type="button" onClick={onAdjust} className="text-[12px] font-semibold px-3.5 py-1.5 rounded-md bg-[#56514A] text-white hover:bg-[#56514A] focus:outline-none focus:ring-2 focus:ring-[#56514A]/40">Adjust</button>
+          <button type="button" onClick={onClose} className="text-[12px] px-3 py-1.5 rounded-md text-charcoal hover:bg-bone-wash focus:outline-none focus:ring-2 focus:ring-primary/40">Close</button>
+          <button type="button" onClick={onAdjust} className="text-[12px] font-semibold px-3.5 py-1.5 rounded-md bg-primary text-white hover:bg-primary focus:outline-none focus:ring-2 focus:ring-primary/40">Adjust</button>
         </div>
       </div>
     </div>
@@ -11745,7 +11745,7 @@ function WorkflowAdjustDialog({ workflow, staff, onClose, onSave }: {
             <input
               value={draft.name}
               onChange={(e) => setDraft({ ...draft, name: e.target.value })}
-              className="w-full text-[15px] font-semibold text-ink border-b border-bone focus:border-[#56514A] outline-none pb-0.5"
+              className="w-full text-[15px] font-semibold text-ink border-b border-bone focus:border-primary outline-none pb-0.5"
               aria-label="Workflow name"
             />
             <input
@@ -11763,17 +11763,17 @@ function WorkflowAdjustDialog({ workflow, staff, onClose, onSave }: {
             <input
               value={draft.trigger}
               onChange={(e) => setDraft({ ...draft, trigger: e.target.value })}
-              className="mt-1 w-full px-2.5 py-2 rounded-md border border-bone focus:border-[#56514A] focus:ring-2 focus:ring-[#56514A]/30 outline-none"
+              className="mt-1 w-full px-2.5 py-2 rounded-md border border-bone focus:border-primary focus:ring-2 focus:ring-primary/30 outline-none"
               placeholder="a rent review is 6 months away"
             />
           </label>
           <label className="block">
-            <span className="text-[#56514A] text-[11px] uppercase tracking-wide">I will</span>
+            <span className="text-primary text-[11px] uppercase tracking-wide">I will</span>
             <textarea
               value={draft.action}
               onChange={(e) => setDraft({ ...draft, action: e.target.value })}
               rows={2}
-              className="mt-1 w-full px-2.5 py-2 rounded-md border border-bone focus:border-[#56514A] focus:ring-2 focus:ring-[#56514A]/30 outline-none"
+              className="mt-1 w-full px-2.5 py-2 rounded-md border border-bone focus:border-primary focus:ring-2 focus:ring-primary/30 outline-none"
               placeholder="prepare the work and bring it to you for approval"
             />
             <span className="text-[11px] text-ink-muted">Always ends in bringing it to you for approval.</span>
@@ -11783,7 +11783,7 @@ function WorkflowAdjustDialog({ workflow, staff, onClose, onSave }: {
             <input
               value={draft.scopeLabel}
               onChange={(e) => setDraft({ ...draft, scopeLabel: e.target.value })}
-              className="mt-1 w-full px-2.5 py-2 rounded-md border border-bone focus:border-[#56514A] focus:ring-2 focus:ring-[#56514A]/30 outline-none"
+              className="mt-1 w-full px-2.5 py-2 rounded-md border border-bone focus:border-primary focus:ring-2 focus:ring-primary/30 outline-none"
               placeholder="All units across the portfolio · or specific properties / units"
             />
             <span className="text-[11px] text-ink-muted">Portfolio-wide, specific properties, specific units, or a mix. Long scopes will be summarised on the card.</span>
@@ -11793,11 +11793,11 @@ function WorkflowAdjustDialog({ workflow, staff, onClose, onSave }: {
             <legend className="text-ink-muted text-[11px] uppercase tracking-wide">Owner</legend>
             <div className="flex items-center gap-3">
               <label className="inline-flex items-center gap-1.5 text-[12px]">
-                <input type="radio" name="owner-kind" checked={draft.owner.kind === "all_teams"} onChange={() => setOwnerKind("all_teams")} className="accent-[#56514A]" />
+                <input type="radio" name="owner-kind" checked={draft.owner.kind === "all_teams"} onChange={() => setOwnerKind("all_teams")} className="accent-primary" />
                 All teams
               </label>
               <label className="inline-flex items-center gap-1.5 text-[12px]">
-                <input type="radio" name="owner-kind" checked={draft.owner.kind === "person"} onChange={() => setOwnerKind("person")} className="accent-[#56514A]" />
+                <input type="radio" name="owner-kind" checked={draft.owner.kind === "person"} onChange={() => setOwnerKind("person")} className="accent-primary" />
                 A specific person
               </label>
             </div>
@@ -11808,7 +11808,7 @@ function WorkflowAdjustDialog({ workflow, staff, onClose, onSave }: {
                   const s = staff.find((x) => x.name === e.target.value);
                   if (s) setDraft({ ...draft, owner: { kind: "person", name: s.name, role: s.role, initials: s.initials } });
                 }}
-                className="w-full px-2.5 py-2 rounded-md border border-bone focus:border-[#56514A] focus:ring-2 focus:ring-[#56514A]/30 outline-none text-[12px]"
+                className="w-full px-2.5 py-2 rounded-md border border-bone focus:border-primary focus:ring-2 focus:ring-primary/30 outline-none text-[12px]"
                 aria-label="Owner"
               >
                 {staff.map((s) => <option key={s.name} value={s.name}>{s.name} — {s.role}</option>)}
@@ -11821,7 +11821,7 @@ function WorkflowAdjustDialog({ workflow, staff, onClose, onSave }: {
             <select
               value={draft.status}
               onChange={(e) => setDraft({ ...draft, status: e.target.value as WorkflowStatus })}
-              className="mt-1 w-full px-2.5 py-2 rounded-md border border-bone focus:border-[#56514A] focus:ring-2 focus:ring-[#56514A]/30 outline-none text-[12px]"
+              className="mt-1 w-full px-2.5 py-2 rounded-md border border-bone focus:border-primary focus:ring-2 focus:ring-primary/30 outline-none text-[12px]"
             >
               <option value="draft">Draft</option>
               <option value="built">Built</option>
@@ -11830,11 +11830,11 @@ function WorkflowAdjustDialog({ workflow, staff, onClose, onSave }: {
         </div>
 
         <div className="flex items-center justify-end gap-2 mt-5">
-          <button type="button" onClick={onClose} className="text-[12px] px-3 py-1.5 rounded-md text-charcoal hover:bg-bone-wash focus:outline-none focus:ring-2 focus:ring-[#56514A]/40">Cancel</button>
+          <button type="button" onClick={onClose} className="text-[12px] px-3 py-1.5 rounded-md text-charcoal hover:bg-bone-wash focus:outline-none focus:ring-2 focus:ring-primary/40">Cancel</button>
           <button
             type="button"
             onClick={() => onSave({ ...draft, lastAdjusted: draft.status === "built" ? "Today" : draft.lastAdjusted })}
-            className="text-[12px] font-semibold px-3.5 py-1.5 rounded-md bg-[#56514A] text-white hover:bg-[#56514A] focus:outline-none focus:ring-2 focus:ring-[#56514A]/40"
+            className="text-[12px] font-semibold px-3.5 py-1.5 rounded-md bg-primary text-white hover:bg-primary focus:outline-none focus:ring-2 focus:ring-primary/40"
           >
             Save
           </button>
@@ -11868,7 +11868,7 @@ function BrokerComposer({ onAdd, onUpload, flow, onSubmitAnswer, onCancel }: {
   if (!flow) {
     return (
       <div className="flex flex-col gap-2">
-        <div className="px-4 py-3 rounded-2xl border-2 border-dashed border-[#56514A]/40 bg-white flex flex-col gap-2.5">
+        <div className="px-4 py-3 rounded-2xl border-2 border-dashed border-primary/40 bg-white flex flex-col gap-2.5">
           <div className="text-[12px] text-charcoal leading-snug">
             Add a contact and I'll take you through it — or hand me a spreadsheet of your contacts and I'll read them in. Either way, I'll connect each one to the right properties and remember how they relate.
           </div>
@@ -11876,7 +11876,7 @@ function BrokerComposer({ onAdd, onUpload, flow, onSubmitAnswer, onCancel }: {
             <button
               type="button"
               onClick={onAdd}
-              className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full bg-[#56514A] text-white text-[13px] font-semibold shadow-sm hover:bg-[#56514A] focus:outline-none focus:ring-2 focus:ring-[#56514A]/40"
+              className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full bg-primary text-white text-[13px] font-semibold shadow-sm hover:bg-primary focus:outline-none focus:ring-2 focus:ring-primary/40"
             >
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
                 <path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/>
@@ -11889,7 +11889,7 @@ function BrokerComposer({ onAdd, onUpload, flow, onSubmitAnswer, onCancel }: {
             <button
               type="button"
               onClick={() => fileRef.current?.click()}
-              className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full border border-[#56514A]/60 bg-white text-[#56514A] text-[13px] font-semibold hover:bg-[#F1EBDE] focus:outline-none focus:ring-2 focus:ring-[#56514A]/40"
+              className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full border border-primary/60 bg-white text-primary text-[13px] font-semibold hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-primary/40"
             >
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
                 <path d="M3 7h6v4H3zM3 13h6v4H3zM11 7h10v10H11z"/>
@@ -11930,18 +11930,18 @@ function BrokerComposer({ onAdd, onUpload, flow, onSubmitAnswer, onCancel }: {
   return (
     <form onSubmit={submit} className="flex flex-col gap-1.5">
       <div className="flex items-center justify-between px-1">
-        <div className="text-[11px] uppercase tracking-wide font-semibold text-[#56514A]">
+        <div className="text-[11px] uppercase tracking-wide font-semibold text-primary">
           The Broker · question {flow.step + 1} of {total}
         </div>
         <button
           type="button"
           onClick={onCancel}
-          className="text-[11px] font-medium text-ink-muted hover:text-charcoal focus:outline-none focus:ring-2 focus:ring-[#56514A]/30 rounded px-1.5 py-0.5"
+          className="text-[11px] font-medium text-ink-muted hover:text-charcoal focus:outline-none focus:ring-2 focus:ring-primary/30 rounded px-1.5 py-0.5"
         >
           Cancel
         </button>
       </div>
-      <div className="flex items-center gap-2 px-4 py-2.5 rounded-full border border-[#56514A]/40 bg-white focus-within:border-[#56514A] focus-within:ring-2 focus-within:ring-[#56514A]/20 transition">
+      <div className="flex items-center gap-2 px-4 py-2.5 rounded-full border border-primary/40 bg-white focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/20 transition">
         <input
           ref={inputRef}
           value={value}
@@ -11953,7 +11953,7 @@ function BrokerComposer({ onAdd, onUpload, flow, onSubmitAnswer, onCancel }: {
         <button
           type="submit"
           disabled={!value.trim()}
-          className="flex items-center justify-center h-9 w-9 rounded-full bg-[#56514A] text-white hover:bg-[#56514A] transition disabled:bg-bone disabled:text-ink-muted focus:outline-none focus:ring-2 focus:ring-[#56514A]/40"
+          className="flex items-center justify-center h-9 w-9 rounded-full bg-primary text-white hover:bg-primary transition disabled:bg-bone disabled:text-ink-muted focus:outline-none focus:ring-2 focus:ring-primary/40"
           aria-label="Send answer"
         >
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -11989,7 +11989,7 @@ function BrokerWorkArea({ character, contacts, onAdd }: {
     <div className="absolute inset-0 bg-white z-[450] flex flex-col">
       <header className="h-14 px-5 flex items-center border-b border-bone shrink-0">
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-full overflow-hidden bg-[#F1EBDE] ring-1 ring-bone grid place-items-center">
+          <div className="w-9 h-9 rounded-full overflow-hidden bg-secondary ring-1 ring-bone grid place-items-center">
             <img src={character.src} alt="" aria-hidden className="w-[120%] h-[120%] object-contain" />
           </div>
           <div>
@@ -12006,10 +12006,10 @@ function BrokerWorkArea({ character, contacts, onAdd }: {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search by contact name"
-            className="text-[12px] pl-7 pr-3 py-1.5 rounded-md border border-bone bg-white focus:outline-none focus:ring-2 focus:ring-[#56514A]/40 w-64"
+            className="text-[12px] pl-7 pr-3 py-1.5 rounded-md border border-bone bg-white focus:outline-none focus:ring-2 focus:ring-primary/40 w-64"
             aria-label="Search by contact name"
           />
-          <svg aria-hidden width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8A8478" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="absolute left-2 top-1/2 -translate-y-1/2">
+          <svg aria-hidden width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--ink-faint)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="absolute left-2 top-1/2 -translate-y-1/2">
             <circle cx="11" cy="11" r="7"/><path d="M21 21l-3.5-3.5"/>
           </svg>
         </div>
@@ -12023,8 +12023,8 @@ function BrokerWorkArea({ character, contacts, onAdd }: {
                 type="button"
                 onClick={() => setTypeFilter(t)}
                 aria-pressed={active}
-                className={`text-[11px] font-medium px-2.5 py-1.5 rounded-full border focus:outline-none focus:ring-2 focus:ring-[#56514A]/30 ${
-                  active ? "border-[#56514A] bg-[#F1EBDE] text-[#56514A]" : "border-bone bg-white text-charcoal hover:border-[#56514A]/50 hover:text-[#56514A]"
+                className={`text-[11px] font-medium px-2.5 py-1.5 rounded-full border focus:outline-none focus:ring-2 focus:ring-primary/30 ${
+                  active ? "border-primary bg-secondary text-primary" : "border-bone bg-white text-charcoal hover:border-primary/50 hover:text-primary"
                 }`}
               >
                 {label}
@@ -12034,7 +12034,7 @@ function BrokerWorkArea({ character, contacts, onAdd }: {
           <button
             type="button"
             aria-disabled="true"
-            className="text-[11px] font-medium px-2.5 py-1.5 rounded-full border border-bone bg-white text-ink-muted hover:border-[#56514A]/40 hover:text-[#56514A] focus:outline-none focus:ring-2 focus:ring-[#56514A]/30"
+            className="text-[11px] font-medium px-2.5 py-1.5 rounded-full border border-bone bg-white text-ink-muted hover:border-primary/40 hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary/30"
             title="Filter by linked property or unit"
           >
             Linked property/unit
@@ -12043,7 +12043,7 @@ function BrokerWorkArea({ character, contacts, onAdd }: {
             type="button"
             onClick={() => setFlaggedOnly((v) => !v)}
             aria-pressed={flaggedOnly}
-            className={`text-[11px] font-medium px-2.5 py-1.5 rounded-full border focus:outline-none focus:ring-2 focus:ring-[#56514A]/30 ${
+            className={`text-[11px] font-medium px-2.5 py-1.5 rounded-full border focus:outline-none focus:ring-2 focus:ring-primary/30 ${
               flaggedOnly ? "border-warning-border bg-warning-bg text-warning" : "border-bone bg-white text-charcoal hover:border-warning-border/60 hover:text-warning"
             }`}
           >
@@ -12064,7 +12064,7 @@ function BrokerWorkArea({ character, contacts, onAdd }: {
             <div key={g.type} className="mb-3 last:mb-0">
               <CollapsibleSection
                 className="bg-white border border-bone rounded-xl"
-                headerClassName="w-full flex items-center gap-2.5 px-4 py-3 text-left hover:bg-paper focus:outline-none focus-visible:ring-2 focus-visible:ring-[#56514A] rounded-xl"
+                headerClassName="w-full flex items-center gap-2.5 px-4 py-3 text-left hover:bg-paper focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-xl"
                 contentClassName="px-4 pb-4 pt-3 border-t border-faint-rule"
                 ariaLabel={`Toggle ${meta.label}`}
                 summary={
@@ -12095,7 +12095,7 @@ function BrokerContactCard({ contact }: { contact: BrokerContact }) {
   const meta = BROKER_TYPE_META[contact.type];
   const stop = (e: React.SyntheticEvent) => e.stopPropagation();
   return (
-    <div className="group rounded-xl border border-bone bg-white p-3.5 hover:border-[#56514A]/50 hover:shadow-sm transition focus-within:ring-2 focus-within:ring-[#56514A]/40">
+    <div className="group rounded-xl border border-bone bg-white p-3.5 hover:border-primary/50 hover:shadow-sm transition focus-within:ring-2 focus-within:ring-primary/40">
       {/* Header */}
       <div className="flex items-start gap-3">
         <div className={`w-10 h-10 rounded-full grid place-items-center ${meta.bg} ${meta.text} ring-1 ${meta.ring} text-[12px] font-semibold shrink-0`} aria-hidden>
@@ -12119,22 +12119,22 @@ function BrokerContactCard({ contact }: { contact: BrokerContact }) {
       {/* Details */}
       <dl className="mt-3 space-y-1.5 text-[11.5px] text-charcoal">
         <div className="flex items-start gap-2">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#56514A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mt-0.5 shrink-0" aria-hidden><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
-          <a href={`mailto:${contact.email}`} onClick={stop} className="truncate text-charcoal hover:text-[#56514A] hover:underline focus:outline-none focus:ring-2 focus:ring-[#56514A]/30 rounded-sm">{contact.email}</a>
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--charcoal)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mt-0.5 shrink-0" aria-hidden><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+          <a href={`mailto:${contact.email}`} onClick={stop} className="truncate text-charcoal hover:text-primary hover:underline focus:outline-none focus:ring-2 focus:ring-primary/30 rounded-sm">{contact.email}</a>
         </div>
         <div className="flex items-start gap-2">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#56514A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mt-0.5 shrink-0" aria-hidden><path d="M22 16.92V21a1 1 0 01-1.1 1A19 19 0 012 4.1 1 1 0 013 3h4.09a1 1 0 011 .75l1 4a1 1 0 01-.27 1L7 10.5a16 16 0 006.5 6.5l1.75-1.82a1 1 0 011-.27l4 1a1 1 0 01.75 1z"/></svg>
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--charcoal)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mt-0.5 shrink-0" aria-hidden><path d="M22 16.92V21a1 1 0 01-1.1 1A19 19 0 012 4.1 1 1 0 013 3h4.09a1 1 0 011 .75l1 4a1 1 0 01-.27 1L7 10.5a16 16 0 006.5 6.5l1.75-1.82a1 1 0 011-.27l4 1a1 1 0 01.75 1z"/></svg>
           <div className="min-w-0">
-            <a href={`tel:${contact.phone.replace(/\s+/g, "")}`} onClick={stop} className="text-charcoal hover:text-[#56514A] hover:underline focus:outline-none focus:ring-2 focus:ring-[#56514A]/30 rounded-sm">{contact.phone}</a>
+            <a href={`tel:${contact.phone.replace(/\s+/g, "")}`} onClick={stop} className="text-charcoal hover:text-primary hover:underline focus:outline-none focus:ring-2 focus:ring-primary/30 rounded-sm">{contact.phone}</a>
             <span className="text-ink-muted"> · {contact.contactPref}</span>
           </div>
         </div>
         <div className="flex items-start gap-2">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#56514A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mt-0.5 shrink-0" aria-hidden><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--charcoal)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mt-0.5 shrink-0" aria-hidden><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
           <span className="truncate">{contact.address}</span>
         </div>
         <div className="flex items-start gap-2">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#56514A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mt-0.5 shrink-0" aria-hidden><path d="M10 13a5 5 0 007 0l3-3a5 5 0 00-7-7l-1 1"/><path d="M14 11a5 5 0 00-7 0l-3 3a5 5 0 007 7l1-1"/></svg>
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--charcoal)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mt-0.5 shrink-0" aria-hidden><path d="M10 13a5 5 0 007 0l3-3a5 5 0 00-7-7l-1 1"/><path d="M14 11a5 5 0 00-7 0l-3 3a5 5 0 007 7l1-1"/></svg>
           <span className="text-charcoal"><span className="text-ink-muted">Related: </span>{contact.relatedTo}</span>
         </div>
       </dl>
@@ -12144,14 +12144,14 @@ function BrokerContactCard({ contact }: { contact: BrokerContact }) {
         <button
           type="button"
           onClick={stop}
-          className="text-[11px] font-medium px-2 py-1 rounded-md text-charcoal hover:bg-bone-wash focus:outline-none focus:ring-2 focus:ring-[#56514A]/30"
+          className="text-[11px] font-medium px-2 py-1 rounded-md text-charcoal hover:bg-bone-wash focus:outline-none focus:ring-2 focus:ring-primary/30"
         >
           Edit
         </button>
         <button
           type="button"
           onClick={stop}
-          className="text-[11px] font-medium px-2 py-1 rounded-md text-[#56514A] hover:bg-[#F1EBDE] focus:outline-none focus:ring-2 focus:ring-[#56514A]/30"
+          className="text-[11px] font-medium px-2 py-1 rounded-md text-primary hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-primary/30"
         >
           Open →
         </button>
@@ -12207,12 +12207,12 @@ function SampleWfCardShell({ state, title, summary, children, defaultOpen = fals
   const [open, setOpen] = useState(defaultOpen);
   const isDraft = state === "draft";
   return (
-    <section className={`rounded-lg bg-white border ${isDraft ? "border-dashed border-warning-border" : open ? "border-[#56514A]/50 shadow-sm" : "border-bone"}`}>
+    <section className={`rounded-lg bg-white border ${isDraft ? "border-dashed border-warning-border" : open ? "border-primary/50 shadow-sm" : "border-bone"}`}>
       <button
         type="button"
         aria-expanded={open}
         onClick={() => setOpen((v) => !v)}
-        className="w-full flex items-start gap-3 px-3.5 py-3 text-left hover:bg-paper rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-[#56514A]"
+        className="w-full flex items-start gap-3 px-3.5 py-3 text-left hover:bg-paper rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
       >
         <SampleStateBadge state={state} />
         <div className="min-w-0 flex-1">
@@ -12268,8 +12268,8 @@ function BreakClauseSample() {
                 role="radio"
                 aria-checked={sel}
                 onClick={() => setLead(p.key)}
-                className={`inline-flex items-center gap-1.5 text-[12px] px-2.5 py-1 rounded-full border bg-white focus:outline-none focus-visible:ring-2 focus-visible:ring-[#56514A] ${
-                  sel ? "border-[#56514A] text-[#56514A] font-semibold" : "border-bone text-charcoal hover:bg-paper"
+                className={`inline-flex items-center gap-1.5 text-[12px] px-2.5 py-1 rounded-full border bg-white focus:outline-none focus-visible:ring-2 focus-visible:ring-primary ${
+                  sel ? "border-primary text-primary font-semibold" : "border-bone text-charcoal hover:bg-paper"
                 }`}
               >
                 {p.label}
@@ -12283,15 +12283,15 @@ function BreakClauseSample() {
       </div>
 
       <div className="flex flex-wrap items-center gap-2 pt-1">
-        <button type="button" className="inline-flex items-center gap-1.5 text-[12px] px-3 py-1.5 rounded-md border border-bone bg-white hover:bg-paper focus:outline-none focus-visible:ring-2 focus-visible:ring-[#56514A]">
+        <button type="button" className="inline-flex items-center gap-1.5 text-[12px] px-3 py-1.5 rounded-md border border-bone bg-white hover:bg-paper focus:outline-none focus-visible:ring-2 focus-visible:ring-primary">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 113 3L7 19l-4 1 1-4 12.5-12.5z"/></svg>
           Adjust the rules
         </button>
-        <button type="button" className="inline-flex items-center gap-1.5 text-[12px] px-3 py-1.5 rounded-md border border-bone bg-white hover:bg-paper focus:outline-none focus-visible:ring-2 focus-visible:ring-[#56514A]">
+        <button type="button" className="inline-flex items-center gap-1.5 text-[12px] px-3 py-1.5 rounded-md border border-bone bg-white hover:bg-paper focus:outline-none focus-visible:ring-2 focus-visible:ring-primary">
           <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" aria-hidden><path d="M8 5v14l11-7z"/></svg>
           Run a simulation
         </button>
-        <button type="button" className="inline-flex items-center gap-1.5 text-[12px] px-3 py-1.5 rounded-md border border-bone bg-white hover:bg-paper focus:outline-none focus-visible:ring-2 focus-visible:ring-[#56514A]">
+        <button type="button" className="inline-flex items-center gap-1.5 text-[12px] px-3 py-1.5 rounded-md border border-bone bg-white hover:bg-paper focus:outline-none focus-visible:ring-2 focus-visible:ring-primary">
           <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" aria-hidden><rect x="6" y="5" width="4" height="14"/><rect x="14" y="5" width="4" height="14"/></svg>
           Pause
         </button>
@@ -12324,7 +12324,7 @@ function EicrCompletedSample() {
             </li>
           ))}
           <li className="flex items-start gap-2 text-[12.5px]">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#56514A" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="mt-0.5 shrink-0" aria-hidden><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--charcoal)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="mt-0.5 shrink-0" aria-hidden><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg>
             <span className="text-ink"><strong className="font-semibold">Hobson</strong> — assembled the renewal instruction & the workflow, presented for your approval</span>
           </li>
         </ul>
@@ -12333,25 +12333,25 @@ function EicrCompletedSample() {
       <div className="border-t border-faint-rule pt-3">
         <div className="text-[10.5px] uppercase tracking-wide font-semibold text-ink-muted mb-2">The output</div>
         <div className="flex items-center gap-3 rounded-md border border-bone bg-paper/60 px-3 py-2.5">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2D2D2D" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--ink)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/></svg>
           <div className="flex-1 min-w-0">
             <div className="text-[12.5px] font-semibold text-ink truncate">Renewal instruction — Health & Safety Certificates</div>
           </div>
-          <button type="button" className="text-[12px] font-medium text-[#56514A] hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-[#56514A] rounded">View</button>
+          <button type="button" className="text-[12px] font-medium text-primary hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded">View</button>
         </div>
         <div className="text-[11.5px] text-ink-muted mt-1.5">Certificate expires 30 Jun 2026 · contractor Firewatch · all 12 units <span className="text-ink-muted">· example data</span></div>
       </div>
 
       <div className="flex flex-wrap items-center gap-2">
-        <button type="button" className="inline-flex items-center gap-1.5 text-[12px] px-3 py-1.5 rounded-md border border-bone bg-white hover:bg-paper focus:outline-none focus-visible:ring-2 focus-visible:ring-[#56514A]">
+        <button type="button" className="inline-flex items-center gap-1.5 text-[12px] px-3 py-1.5 rounded-md border border-bone bg-white hover:bg-paper focus:outline-none focus-visible:ring-2 focus-visible:ring-primary">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg>
           View the output
         </button>
-        <button type="button" className="inline-flex items-center gap-1.5 text-[12px] px-3 py-1.5 rounded-md border border-bone bg-white hover:bg-paper focus:outline-none focus-visible:ring-2 focus-visible:ring-[#56514A]">
+        <button type="button" className="inline-flex items-center gap-1.5 text-[12px] px-3 py-1.5 rounded-md border border-bone bg-white hover:bg-paper focus:outline-none focus-visible:ring-2 focus-visible:ring-primary">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M3 12a9 9 0 109-9"/><path d="M3 4v5h5"/></svg>
           Run again
         </button>
-        <button type="button" className="inline-flex items-center gap-1.5 text-[12px] px-3 py-1.5 rounded-md border border-bone bg-white hover:bg-paper focus:outline-none focus-visible:ring-2 focus-visible:ring-[#56514A]">
+        <button type="button" className="inline-flex items-center gap-1.5 text-[12px] px-3 py-1.5 rounded-md border border-bone bg-white hover:bg-paper focus:outline-none focus-visible:ring-2 focus-visible:ring-primary">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
           Duplicate
         </button>
@@ -12367,7 +12367,7 @@ function WorkflowsBackOfficeSection() {
     <div className="absolute inset-0 overflow-auto bg-white">
       <div className="px-5 py-5 space-y-4">
         {/* Hobson-voiced intro */}
-        <div className="flex items-start gap-3 rounded-lg border border-bone bg-[#FAF7F2] px-3.5 py-3">
+        <div className="flex items-start gap-3 rounded-lg border border-bone bg-secondary px-3.5 py-3">
           <img src={owlDefault} alt="" aria-hidden className="w-7 h-7 object-contain shrink-0" />
           <p className="text-[12.5px] text-charcoal leading-relaxed">
             These are the routines I've set up for you. Here you set the rules — when each one watches, and how far ahead it should warn you. You'll see the actual upcoming items in your day-to-day view, not here.
@@ -12382,15 +12382,15 @@ function WorkflowsBackOfficeSection() {
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search workflows"
               aria-label="Search workflows"
-              className="w-full text-[12.5px] pl-8 pr-3 py-2 rounded-md border border-bone bg-white focus:outline-none focus:ring-2 focus:ring-[#56514A]/40"
+              className="w-full text-[12.5px] pl-8 pr-3 py-2 rounded-md border border-bone bg-white focus:outline-none focus:ring-2 focus:ring-primary/40"
             />
-            <svg aria-hidden width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8A8478" strokeWidth="2" className="absolute left-2.5 top-1/2 -translate-y-1/2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-3.5-3.5"/></svg>
+            <svg aria-hidden width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--ink-faint)" strokeWidth="2" className="absolute left-2.5 top-1/2 -translate-y-1/2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-3.5-3.5"/></svg>
           </div>
           <select
             value={stateFilter}
             onChange={(e) => setStateFilter(e.target.value as "all" | SampleWfState)}
             aria-label="Filter by state"
-            className="text-[12px] px-2.5 py-2 rounded-md border border-bone bg-white focus:outline-none focus:ring-2 focus:ring-[#56514A]/40"
+            className="text-[12px] px-2.5 py-2 rounded-md border border-bone bg-white focus:outline-none focus:ring-2 focus:ring-primary/40"
           >
             <option value="all">All states</option>
             <option value="active">Active</option>
@@ -12398,10 +12398,10 @@ function WorkflowsBackOfficeSection() {
             <option value="paused">Paused</option>
             <option value="completed">Completed</option>
           </select>
-          <select aria-label="Filter by owner" className="text-[12px] px-2.5 py-2 rounded-md border border-bone bg-white focus:outline-none focus:ring-2 focus:ring-[#56514A]/40">
+          <select aria-label="Filter by owner" className="text-[12px] px-2.5 py-2 rounded-md border border-bone bg-white focus:outline-none focus:ring-2 focus:ring-primary/40">
             <option>All owners</option>
           </select>
-          <select aria-label="Filter by applies-to" className="text-[12px] px-2.5 py-2 rounded-md border border-bone bg-white focus:outline-none focus:ring-2 focus:ring-[#56514A]/40">
+          <select aria-label="Filter by applies-to" className="text-[12px] px-2.5 py-2 rounded-md border border-bone bg-white focus:outline-none focus:ring-2 focus:ring-primary/40">
             <option>Applies to: anywhere</option>
           </select>
         </div>

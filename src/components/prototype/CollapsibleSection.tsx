@@ -44,11 +44,11 @@ export function CollapsibleSection({
         onClick={() => setOpen((v) => !v)}
         className={
           headerClassName ??
-          "w-full flex items-center gap-3 px-4 py-3 text-left hover:bg-paper focus:outline-none focus-visible:ring-2 focus-visible:ring-[#56514A] rounded-xl"
+          "w-full flex items-center gap-3 px-4 py-3 text-left hover:bg-paper focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-xl"
         }
       >
         <svg
-          className={`w-4 h-4 text-[#56514A] shrink-0 transition-transform ${open ? "rotate-90" : ""}`}
+          className={`w-4 h-4 text-primary shrink-0 transition-transform ${open ? "rotate-90" : ""}`}
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"

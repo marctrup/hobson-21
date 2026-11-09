@@ -64,7 +64,7 @@ const RevenueGrowthVisual = () => {
         <CardContent>
           <ResponsiveContainer width="100%" height={320}>
             <BarChart data={revenueData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#E8E1D4" />
+              <CartesianGrid strokeDasharray="3 3" stroke="var(--bone)" />
               <XAxis dataKey="year" tick={{ fontSize: 12 }} />
               <YAxis 
                 tick={{ fontSize: 11 }} 
@@ -74,11 +74,11 @@ const RevenueGrowthVisual = () => {
               <Tooltip 
                 formatter={(value: number, name: string) => [formatCurrency(value), name]}
                 labelStyle={{ fontWeight: "bold" }}
-                contentStyle={{ borderRadius: "8px", border: "1px solid #E8E1D4" }}
+                contentStyle={{ borderRadius: "8px", border: "1px solid var(--bone)" }}
               />
               <Legend wrapperStyle={{ paddingTop: "10px" }} />
               <Bar dataKey="uk" name="UK Revenue" fill="#8F5A14" stackId="revenue" radius={[0, 0, 0, 0]} />
-              <Bar dataKey="global" name="Global Revenue" fill="#56514A" stackId="revenue" radius={[4, 4, 0, 0]} />
+              <Bar dataKey="global" name="Global Revenue" fill="var(--charcoal)" stackId="revenue" radius={[4, 4, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
           <div className="flex justify-center gap-6 mt-2 text-xs text-muted-foreground">

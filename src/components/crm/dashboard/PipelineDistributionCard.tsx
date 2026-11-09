@@ -4,9 +4,9 @@ import { usePipelineDistribution } from "@/hooks/crm/dashboard/usePipelineDistri
 // Map pipeline-stage colour token names to actual hex for chart slices.
 // (Recharts can't read CSS variables at render time without extra wiring.)
 const COLOR_HEX: Record<string, string> = {
-  muted: "#8A8478",       // slate-400
-  secondary: "#56514A",   // blue-500
-  accent: "#8A8478",      // purple-500
+  muted: "var(--ink-faint)",       // slate-400
+  secondary: "var(--charcoal)",   // blue-500
+  accent: "var(--ink-faint)",      // purple-500
   primary: "#8F5A14",     // amber-500
   success: "#5E6B33",     // emerald-500
   destructive: "#9C4A38", // rose-500

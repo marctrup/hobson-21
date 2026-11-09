@@ -30,7 +30,7 @@ export const AnswerFirst = ({
           </span>
           <div className="h-px flex-grow bg-bone" aria-hidden="true" />
         </header>
-        <div className="border border-bone bg-document-white px-7 py-8 shadow-[0_4px_20px_-12px_rgba(45,45,45,0.12)] sm:px-10 sm:py-10">
+        <div className="border border-bone bg-document-white px-7 py-8 shadow-[0_4px_20px_-12px_hsl(var(--shadow-colour)_/_0.12)] sm:px-10 sm:py-10">
           <p className="font-serif text-xl italic leading-relaxed text-ink sm:text-2xl">
             {children}
           </p>
@@ -44,18 +44,18 @@ export const AnswerFirst = ({
       className={`mx-auto mt-8 max-w-2xl rounded-2xl px-6 py-5 text-left ${className}`}
       style={{
         backgroundColor: "#FFFFFF",
-        border: "1px solid #E8E1D4",
+        border: "1px solid var(--bone)",
       }}
     >
       <p
         className="text-[11px] font-semibold uppercase tracking-[0.24em]"
-        style={{ color: "#B4914F" }}
+        style={{ color: "var(--brass)" }}
       >
         In short
       </p>
       <p
         className="mt-3 text-[15px] sm:text-base leading-relaxed"
-        style={{ color: "#2D2D2D" }}
+        style={{ color: "var(--ink)" }}
       >
         {children}
       </p>

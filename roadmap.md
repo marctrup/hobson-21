@@ -1,5 +1,9 @@
 # Roadmap
 
+## Site-wide product colour palette
+- [x] Apply white, lavender-grey, charcoal and purple across shared colours and page-specific warm colours without changing content or behaviour; owl artwork and functional status colours preserved.
+- [x] Check desktop and mobile pages and existing frontend tests; 343 frontend tests pass, preview has no runtime errors. Unpublished for review.
+
 ## Homepage — "Talk to your papers" gains its map screen
 - [x] The phone mock-up now opens on your places: a stylised drawing of Britain and Ireland with purple cluster counts (36 places) and a dark "1 The Avenue" chip, then reads, organises and answers — four steps, map first. Coastlines simplified from Natural Earth into `src/components/homepage/portfolioMapGeometry.ts`; the composer is withheld on the map screen. 10 checks pass (3 new), build clean, verified at 1307×1100 and 390×844. Not published.
 

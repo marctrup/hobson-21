@@ -13,7 +13,7 @@ import { downloadCsv } from "@/lib/crm/reportsExport";
 const COLORS: Record<string, string> = {
   Won: "#5E6B33",
   Lost: "#9C4A38",
-  Open: "#8A8478",
+  Open: "var(--ink-faint)",
 };
 
 export const WonLostRatioReport = () => {

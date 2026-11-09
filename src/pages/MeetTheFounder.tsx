@@ -22,7 +22,7 @@ const MeetTheFounder = () => {
         </script>
         </Helmet>
 
-      <div className="min-h-screen" style={{ background: '#FCFAF7' }}>
+      <div className="min-h-screen" style={{ background: 'var(--paper)' }}>
         <GlobalHeader />
 
         <main id="main-content" className="overflow-x-hidden">
@@ -30,19 +30,19 @@ const MeetTheFounder = () => {
           <section
             className="pt-16 sm:pt-20 pb-10 sm:pb-14"
             style={{
-              backgroundColor: '#F1EBDE',
-              borderBottom: '1px solid rgba(180,145,79,0.2)',
+              backgroundColor: 'var(--bone-wash)',
+              borderBottom: '1px solid hsl(var(--highlight-colour) / 0.2)',
             }}
           >
             <div className="container mx-auto px-4 max-w-3xl text-center">
               <p
                 className="text-[11px] font-semibold uppercase tracking-[0.24em] mb-4"
-                style={{ color: '#B4914F' }}
+                style={{ color: 'var(--brass)' }}
               >
                 Founders
               </p>
               <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl font-normal tracking-tight text-foreground">
-                How I <span style={{ color: '#B4914F' }}>came to be</span>
+                How I <span style={{ color: 'var(--brass)' }}>came to be</span>
               </h1>
 
               <p className="mt-6 text-lg sm:text-xl text-muted-foreground leading-relaxed">
@@ -54,7 +54,7 @@ const MeetTheFounder = () => {
                 In this short video, Marc Trup explains the vision behind me —
                 and why property deserves an AI co-worker of its own.
               </p>
-              <div className="mx-auto mt-10 h-px w-24" style={{ backgroundColor: '#F7EDDC' }} />
+              <div className="mx-auto mt-10 h-px w-24" style={{ backgroundColor: 'var(--bone-wash)' }} />
             </div>
           </section>
 
@@ -65,7 +65,7 @@ const MeetTheFounder = () => {
               <div className="relative max-w-[420px] mx-auto">
                 <div
                   className="absolute -inset-8 rounded-[2.5rem] blur-3xl opacity-60 pointer-events-none"
-                  style={{ background: 'radial-gradient(circle at 30% 30%, rgba(180,145,79,0.18), transparent 70%)' }}
+                  style={{ background: 'radial-gradient(circle at 30% 30%, hsl(var(--highlight-colour) / 0.18), transparent 70%)' }}
                 />
                 <div className="relative">
                   <FounderShortVideo />
@@ -81,8 +81,8 @@ const MeetTheFounder = () => {
                 className="rounded-2xl p-8 sm:p-12"
                 style={{
                   background: '#FFFFFF',
-                  border: '1px solid #F7EDDC',
-                  boxShadow: '0 10px 30px -20px rgba(45,45,45,0.15)',
+                  border: '1px solid var(--bone-wash)',
+                  boxShadow: '0 10px 30px -20px hsl(var(--shadow-colour) / 0.15)',
                 }}
               >
               <div className="flex flex-col items-center gap-4 mb-8">
@@ -90,7 +90,7 @@ const MeetTheFounder = () => {
                   src={marcTalkingToPhone.url}
                   alt="Marc Trup, one of Hobson's Founders"
                   className="w-16 h-16 sm:w-20 sm:h-20 rounded-full object-cover shadow-lg"
-                  style={{ border: '2px solid #B4914F', objectPosition: '50% 30%' }}
+                  style={{ border: '2px solid var(--brass)', objectPosition: '50% 30%' }}
                 />
                 <h2 className="text-2xl sm:text-3xl font-bold text-foreground text-center">
                   Why we Built Hobson

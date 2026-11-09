@@ -18,9 +18,9 @@ export const FounderShortVideo = () => {
         className="relative w-full max-w-[340px] rounded-[2.25rem] p-2.5"
         style={{
           background: "#FFFFFF",
-          border: "1px solid #F7EDDC",
+          border: "1px solid var(--bone-wash)",
           boxShadow:
-            "0 30px 60px -30px rgba(45,45,45,0.30), 0 10px 30px -15px rgba(45,45,45,0.18)",
+            "0 30px 60px -30px hsl(var(--shadow-colour) / 0.30), 0 10px 30px -15px hsl(var(--shadow-colour) / 0.18)",
         }}
       >
         <div className="relative overflow-hidden rounded-[1.75rem] bg-[#111111] aspect-[9/16]">

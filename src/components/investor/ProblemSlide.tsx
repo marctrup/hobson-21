@@ -5,23 +5,23 @@ export const ProblemSlide = () => {
     region: 'UK',
     value: '£6B',
     size: 'w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16',
-    gradient: 'from-[#D2D8BC] to-[#8A8478]'
+    gradient: 'from-[#D2D8BC] to-ink-faint'
   }, {
     region: 'Europe',
     value: '£66B',
     size: 'w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24',
-    gradient: 'from-[#8A8478] to-[#56514A]'
+    gradient: 'from-ink-faint to-muted-foreground'
   }, {
     region: 'Global',
     value: '£708B',
     size: 'w-20 h-20 sm:w-28 sm:h-28 md:w-32 md:h-32',
-    gradient: 'from-[#56514A] to-[#56514A]'
+    gradient: 'from-muted-foreground to-muted-foreground'
   }];
 
   return (
     <div className="h-full flex items-center justify-center px-4 sm:px-6 pb-8 sm:pb-16">
       <div className="text-center max-w-2xl space-y-3 sm:space-y-4">
-        <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-[#2D2D2D] leading-tight">
+        <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-foreground leading-tight">
           The AI Opportunity
         </h2>
         
@@ -33,17 +33,17 @@ export const ProblemSlide = () => {
                   {item.value}
                 </span>
               </div>
-              <span className="text-[10px] sm:text-xs md:text-sm font-semibold text-[#2D2D2D] mt-2">
+              <span className="text-[10px] sm:text-xs md:text-sm font-semibold text-foreground mt-2">
                 {item.region}
               </span>
-              <span className="text-[8px] sm:text-[9px] md:text-[10px] text-[#56514A]">
+              <span className="text-[8px] sm:text-[9px] md:text-[10px] text-muted-foreground">
                 Efficiency savings
               </span>
             </div>
           ))}
         </div>
 
-        <p className="text-xs sm:text-sm md:text-base text-[#2D2D2D] leading-relaxed max-w-md mx-auto px-2 pt-2">
+        <p className="text-xs sm:text-sm md:text-base text-foreground leading-relaxed max-w-md mx-auto px-2 pt-2">
           Built in the UK. Designed for the world
         </p>
       </div>

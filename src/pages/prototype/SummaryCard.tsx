@@ -134,7 +134,7 @@ function OccupationalView({ scope, onOpenUnit }: { scope: SummaryScope; onOpenUn
           onOpenUnit?.(r.propertyId, r.unitId);
         }
       }}
-      className="cursor-pointer border-b border-faint-rule last:border-b-0 hover:bg-[#F1EBDE] focus:bg-[#F1EBDE] focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#56514A]/40"
+      className="cursor-pointer border-b border-faint-rule last:border-b-0 hover:bg-secondary focus:bg-secondary focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary/40"
     >
       <td className="px-3 py-2 align-middle truncate">
         <span className="text-ink font-medium">{r.unitLabel}</span>
@@ -328,7 +328,7 @@ function ComplianceTr({
           onClick();
         }
       }}
-      className={`border-b border-faint-rule last:border-b-0 ${clickable ? "cursor-pointer hover:bg-[#F1EBDE] focus:bg-[#F1EBDE] focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#56514A]/40" : ""} ${bg}`}
+      className={`border-b border-faint-rule last:border-b-0 ${clickable ? "cursor-pointer hover:bg-secondary focus:bg-secondary focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary/40" : ""} ${bg}`}
     >
       {showUnit && unitColumn && (
         <td className="px-3 py-2 align-middle text-charcoal truncate">
@@ -392,7 +392,7 @@ function ExportButton({ kind, scope }: { kind: Kind; scope: SummaryScope }) {
     <button
       type="button"
       onClick={onClick}
-      className="text-[12px] text-[#56514A] hover:underline inline-flex items-center gap-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#56514A]/40 rounded px-1"
+      className="text-[12px] text-primary hover:underline inline-flex items-center gap-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 rounded px-1"
     >
       ↓ Export CSV
     </button>
@@ -469,9 +469,9 @@ function OverviewChip({
     <button
       type="button"
       onClick={onClick}
-      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[12px] font-medium border border-[#E8E1D4] bg-[#F1EBDE] text-[#56514A] hover:bg-[#F1EBDE] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#56514A]/40"
+      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[12px] font-medium border border-border bg-secondary text-primary hover:bg-secondary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
     >
-      <span className="text-[#56514A]">{icon}</span>
+      <span className="text-primary">{icon}</span>
       <span>{name}</span>
       <span className="text-ink-muted font-normal">· {hint}</span>
     </button>

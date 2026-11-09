@@ -53,7 +53,7 @@ const TutorialCard = ({ tutorial }: { tutorial: Tutorial }) => {
               <DialogDescription className="sr-only">{tutorial.description}</DialogDescription>
               <div
                 className="relative rounded-sm border border-bone bg-bone-wash p-2 sm:p-3"
-                style={{ boxShadow: '0 30px 60px -30px rgba(45,45,45,0.45), 0 10px 30px -15px rgba(45,45,45,0.20)' }}
+                style={{ boxShadow: '0 30px 60px -30px hsl(var(--shadow-colour) / 0.45), 0 10px 30px -15px hsl(var(--shadow-colour) / 0.20)' }}
               >
                 <DialogClose
                   aria-label="Stop the demonstration"

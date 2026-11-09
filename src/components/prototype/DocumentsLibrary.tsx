@@ -362,7 +362,7 @@ function DocRow({
               <span>·</span>
               <button
                 onClick={() => onJumpToCurrent(doc.supersededBy!)}
-                className="text-[#56514A] hover:underline focus:outline-none focus:ring-2 focus:ring-[#56514A] rounded"
+                className="text-primary hover:underline focus:outline-none focus:ring-2 focus:ring-primary rounded"
               >
                 superseded by →
               </button>
@@ -373,13 +373,13 @@ function DocRow({
       <div className="flex items-center gap-1 shrink-0">
         <button
           onClick={() => onView(doc)}
-          className="px-2 py-1 text-[11px] font-medium rounded border border-bone text-charcoal hover:bg-paper focus:outline-none focus:ring-2 focus:ring-[#56514A]"
+          className="px-2 py-1 text-[11px] font-medium rounded border border-bone text-charcoal hover:bg-paper focus:outline-none focus:ring-2 focus:ring-primary"
         >
           View
         </button>
         <button
           onClick={() => onDownload(doc)}
-          className="px-2 py-1 text-[11px] font-medium rounded border border-bone text-charcoal hover:bg-paper focus:outline-none focus:ring-2 focus:ring-[#56514A]"
+          className="px-2 py-1 text-[11px] font-medium rounded border border-bone text-charcoal hover:bg-paper focus:outline-none focus:ring-2 focus:ring-primary"
         >
           Download
         </button>
@@ -410,7 +410,7 @@ function TenancyChain({
     <div className="rounded-lg border border-bone bg-white">
       <button
         onClick={() => setOpen((o) => !o)}
-        className="w-full flex items-center justify-between gap-3 px-3 py-2.5 hover:bg-paper rounded-t-lg focus:outline-none focus:ring-2 focus:ring-[#56514A]"
+        className="w-full flex items-center justify-between gap-3 px-3 py-2.5 hover:bg-paper rounded-t-lg focus:outline-none focus:ring-2 focus:ring-primary"
         aria-expanded={open}
       >
         <div className="flex items-center gap-2 min-w-0">
@@ -481,7 +481,7 @@ function AcdGroup({
         <div className="pl-3">
           <button
             onClick={() => setOpenPrev((o) => !o)}
-            className="text-[11px] text-ink-muted hover:text-ink focus:outline-none focus:ring-2 focus:ring-[#56514A] rounded"
+            className="text-[11px] text-ink-muted hover:text-ink focus:outline-none focus:ring-2 focus:ring-primary rounded"
             aria-expanded={openPrev}
           >
             {openPrev ? "▾" : "▸"} previous versions ({previous.length})
@@ -553,7 +553,7 @@ function AssetSection({
         onClick={() => setOpen((o) => !o)}
         className={`w-full flex items-center gap-2 py-1.5 ${
           level === "property" ? "text-[13px] font-semibold text-ink" : "text-[12px] font-medium text-charcoal"
-        } hover:text-[#56514A] focus:outline-none focus:ring-2 focus:ring-[#56514A] rounded`}
+        } hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary rounded`}
         aria-expanded={open}
       >
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"
@@ -634,7 +634,7 @@ function DocViewer({ doc, onClose }: { doc: DocItem; onClose: () => void }) {
           <button
             onClick={onClose}
             autoFocus
-            className="p-1.5 text-ink-muted hover:text-charcoal focus:outline-none focus:ring-2 focus:ring-[#56514A] rounded"
+            className="p-1.5 text-ink-muted hover:text-charcoal focus:outline-none focus:ring-2 focus:ring-primary rounded"
             aria-label="Close preview"
           >
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -645,7 +645,7 @@ function DocViewer({ doc, onClose }: { doc: DocItem; onClose: () => void }) {
         <div className="flex-1 grid place-items-center bg-paper p-10 overflow-auto">
           <div className="text-center max-w-md">
             <div className="w-16 h-20 mx-auto rounded-md bg-white border border-bone shadow-sm grid place-items-center mb-3">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#8A8478" strokeWidth="1.6" aria-hidden>
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--ink-faint)" strokeWidth="1.6" aria-hidden>
                 <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
                 <path d="M14 2v6h6" />
               </svg>
@@ -815,7 +815,7 @@ export function DocumentsLibrary({
   return (
     <div className="absolute inset-0 z-[450] bg-white flex flex-col">
       {/* Top bar — The Professor presents his library */}
-      <header className="px-6 py-4 border-b border-bone flex items-start gap-4 bg-gradient-to-b from-[#F1EBDE] to-white">
+      <header className="px-6 py-4 border-b border-bone flex items-start gap-4 bg-gradient-to-b from-secondary to-white">
         <div className="relative shrink-0">
           <img
             src={characterProfessor}
@@ -828,7 +828,7 @@ export function DocumentsLibrary({
           <nav aria-label="Breadcrumb" className="text-[11px] text-ink-muted mb-1 flex items-center gap-1 flex-wrap">
             <button
               onClick={() => { onNavigatePortfolio?.(); }}
-              className="hover:text-[#56514A] focus:outline-none focus:ring-2 focus:ring-[#56514A] rounded"
+              className="hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary rounded"
             >
               Portfolio
             </button>
@@ -837,7 +837,7 @@ export function DocumentsLibrary({
                 <span aria-hidden>›</span>
                 <button
                   onClick={() => { onNavigateProperty?.(scopePropertyAsset.propertyId); }}
-                  className="hover:text-[#56514A] focus:outline-none focus:ring-2 focus:ring-[#56514A] rounded"
+                  className="hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary rounded"
                 >
                   {scopePropertyAsset.propertyName}
                 </button>
@@ -855,7 +855,7 @@ export function DocumentsLibrary({
 
           <div className="flex items-center gap-2 flex-wrap">
             <h2 className="text-base font-semibold text-ink">The Professor's library</h2>
-            <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-semibold uppercase tracking-wide bg-[#F1EBDE] text-[#56514A] border border-[#56514A]/20">
+            <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-semibold uppercase tracking-wide bg-secondary text-primary border border-primary/20">
               Curated by The Professor
             </span>
           </div>
@@ -867,13 +867,13 @@ export function DocumentsLibrary({
             aria-live="polite"
           >
             &ldquo;{typed}
-            {!greetingDone && <span className="inline-block w-1 h-3 ml-0.5 bg-[#56514A] align-middle animate-pulse" aria-hidden />}
+            {!greetingDone && <span className="inline-block w-1 h-3 ml-0.5 bg-primary align-middle animate-pulse" aria-hidden />}
             {greetingDone && <span>&rdquo;</span>}
           </p>
         </div>
         <button
           onClick={onClose}
-          className="p-1.5 text-ink-muted hover:text-charcoal focus:outline-none focus:ring-2 focus:ring-[#56514A] rounded"
+          className="p-1.5 text-ink-muted hover:text-charcoal focus:outline-none focus:ring-2 focus:ring-primary rounded"
           aria-label="Close documents"
         >
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -885,12 +885,12 @@ export function DocumentsLibrary({
 
       {/* Scope chips */}
       {(scopePropertyAsset || scopeUnitNode) && (
-        <div className="px-6 py-2 border-b border-faint-rule flex flex-wrap items-center gap-2 bg-[#F1EBDE]">
+        <div className="px-6 py-2 border-b border-faint-rule flex flex-wrap items-center gap-2 bg-secondary">
           <span className="text-[11px] uppercase tracking-wide font-semibold text-ink-muted">Scope</span>
           {scopePropertyAsset && (
             <button
               onClick={clearScope}
-              className="inline-flex items-center gap-1.5 pl-2.5 pr-1.5 py-1 rounded-full bg-white border border-[#56514A]/30 text-[12px] text-[#56514A] font-medium hover:bg-[#F1EBDE] focus:outline-none focus:ring-2 focus:ring-[#56514A]"
+              className="inline-flex items-center gap-1.5 pl-2.5 pr-1.5 py-1 rounded-full bg-white border border-primary/30 text-[12px] text-primary font-medium hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-primary"
               aria-label={`Remove ${scopePropertyAsset.propertyName} scope`}
             >
               <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" aria-hidden><rect x="4" y="4" width="16" height="16" rx="2"/></svg>
@@ -900,7 +900,7 @@ export function DocumentsLibrary({
               {scopeUnitNode && !scopePropertyAsset.standalone && (
                 <span className="text-ink-muted">› {scopeUnitNode.label}</span>
               )}
-              <span className="ml-1 inline-flex items-center justify-center w-4 h-4 rounded-full hover:bg-[#56514A] hover:text-white" aria-hidden>
+              <span className="ml-1 inline-flex items-center justify-center w-4 h-4 rounded-full hover:bg-primary hover:text-white" aria-hidden>
                 <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M6 6l12 12M18 6L6 18"/></svg>
               </span>
             </button>
@@ -908,14 +908,14 @@ export function DocumentsLibrary({
           {scopePropertyAsset && scopeUnitNode && !scopePropertyAsset.standalone && (
             <button
               onClick={clearUnitScope}
-              className="text-[11px] text-ink-muted hover:text-[#56514A] underline focus:outline-none focus:ring-2 focus:ring-[#56514A] rounded"
+              className="text-[11px] text-ink-muted hover:text-primary underline focus:outline-none focus:ring-2 focus:ring-primary rounded"
             >
               widen to whole property
             </button>
           )}
           <button
             onClick={clearScope}
-            className="text-[11px] text-ink-muted hover:text-[#56514A] underline focus:outline-none focus:ring-2 focus:ring-[#56514A] rounded"
+            className="text-[11px] text-ink-muted hover:text-primary underline focus:outline-none focus:ring-2 focus:ring-primary rounded"
           >
             show all documents
           </button>
@@ -927,23 +927,23 @@ export function DocumentsLibrary({
         <div
           role="status"
           aria-live="polite"
-          className="px-6 py-2 border-b border-[#56514A]/15 bg-[#F1EBDE] flex items-center gap-3"
+          className="px-6 py-2 border-b border-primary/15 bg-secondary flex items-center gap-3"
         >
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#56514A" strokeWidth="2" aria-hidden>
-            <circle cx="12" cy="12" r="9"/><path d="M12 8v5"/><circle cx="12" cy="16.5" r="0.9" fill="#56514A"/>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--charcoal)" strokeWidth="2" aria-hidden>
+            <circle cx="12" cy="12" r="9"/><path d="M12 8v5"/><circle cx="12" cy="16.5" r="0.9" fill="var(--charcoal)"/>
           </svg>
-          <p className="text-[12px] text-[#2D2D2D] flex-1">
+          <p className="text-[12px] text-foreground flex-1">
             Showing documents for <span className="font-semibold">{scopeLabel}</span> — because that's where you are.{" "}
             <button
               onClick={clearScope}
-              className="underline font-medium hover:text-[#56514A] focus:outline-none focus:ring-2 focus:ring-[#56514A] rounded"
+              className="underline font-medium hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary rounded"
             >
               Show all documents
             </button>
           </p>
           <button
             onClick={() => setScopeBannerDismissed(true)}
-            className="p-1 text-[#56514A]/60 hover:text-[#56514A] focus:outline-none focus:ring-2 focus:ring-[#56514A] rounded"
+            className="p-1 text-primary/60 hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary rounded"
             aria-label="Dismiss scope notice"
           >
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M6 6l12 12M18 6L6 18"/></svg>
@@ -953,8 +953,8 @@ export function DocumentsLibrary({
 
       {/* Filters */}
       <div className="px-6 py-3 border-b border-faint-rule flex flex-wrap items-center gap-2">
-        <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-bone bg-white focus-within:ring-2 focus-within:ring-[#56514A]/30">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#56514A" strokeWidth="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+        <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-bone bg-white focus-within:ring-2 focus-within:ring-primary/30">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--charcoal)" strokeWidth="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
           <input
             value={q}
             onChange={(e) => setQ(e.target.value)}
@@ -974,7 +974,7 @@ export function DocumentsLibrary({
         <select
           value={type}
           onChange={(e) => setType(e.target.value as any)}
-          className="text-[12px] px-2.5 py-1.5 rounded-md border border-bone bg-white text-charcoal focus:outline-none focus:ring-2 focus:ring-[#56514A]"
+          className="text-[12px] px-2.5 py-1.5 rounded-md border border-bone bg-white text-charcoal focus:outline-none focus:ring-2 focus:ring-primary"
           aria-label="Filter by type"
         >
           <option value="all">All types</option>
@@ -988,7 +988,7 @@ export function DocumentsLibrary({
             if (v === "all") { setScopeProperty(null); setScopeUnit(null); }
             else { setScopeProperty(v); setScopeUnit(null); }
           }}
-          className="text-[12px] px-2.5 py-1.5 rounded-md border border-bone bg-white text-charcoal focus:outline-none focus:ring-2 focus:ring-[#56514A]"
+          className="text-[12px] px-2.5 py-1.5 rounded-md border border-bone bg-white text-charcoal focus:outline-none focus:ring-2 focus:ring-primary"
           aria-label="Filter by property"
         >
           <option value="all">All properties</option>
@@ -999,7 +999,7 @@ export function DocumentsLibrary({
           <select
             value={scopeUnit ?? "all"}
             onChange={(e) => setScopeUnit(e.target.value === "all" ? null : e.target.value)}
-            className="text-[12px] px-2.5 py-1.5 rounded-md border border-bone bg-white text-charcoal focus:outline-none focus:ring-2 focus:ring-[#56514A]"
+            className="text-[12px] px-2.5 py-1.5 rounded-md border border-bone bg-white text-charcoal focus:outline-none focus:ring-2 focus:ring-primary"
             aria-label="Filter by unit"
           >
             <option value="all">All units</option>
@@ -1014,7 +1014,7 @@ export function DocumentsLibrary({
             type="checkbox"
             checked={includeSuperseded}
             onChange={(e) => setIncludeSuperseded(e.target.checked)}
-            className="accent-[#56514A]"
+            className="accent-primary"
           />
           Include superseded
         </label>
@@ -1022,14 +1022,14 @@ export function DocumentsLibrary({
         <div className="ml-auto inline-flex rounded-md border border-bone overflow-hidden">
           <button
             onClick={() => setMode("tree")}
-            className={`px-3 py-1.5 text-[12px] font-medium ${mode === "tree" ? "bg-ink text-white" : "bg-white text-charcoal hover:bg-paper"} focus:outline-none focus:ring-2 focus:ring-[#56514A]`}
+            className={`px-3 py-1.5 text-[12px] font-medium ${mode === "tree" ? "bg-ink text-white" : "bg-white text-charcoal hover:bg-paper"} focus:outline-none focus:ring-2 focus:ring-primary`}
             aria-pressed={mode === "tree"}
           >
             By asset
           </button>
           <button
             onClick={() => setMode("all")}
-            className={`px-3 py-1.5 text-[12px] font-medium border-l border-bone ${mode === "all" ? "bg-ink text-white" : "bg-white text-charcoal hover:bg-paper"} focus:outline-none focus:ring-2 focus:ring-[#56514A]`}
+            className={`px-3 py-1.5 text-[12px] font-medium border-l border-bone ${mode === "all" ? "bg-ink text-white" : "bg-white text-charcoal hover:bg-paper"} focus:outline-none focus:ring-2 focus:ring-primary`}
             aria-pressed={mode === "all"}
           >
             All documents
@@ -1093,8 +1093,8 @@ function SegBar<T extends string>({
           onClick={() => onChange(o.v)}
           aria-pressed={value === o.v}
           className={`px-2.5 py-1 text-[12px] rounded ${
-            value === o.v ? "bg-[#F1EBDE] text-[#56514A] font-medium" : "text-charcoal hover:bg-paper"
-          } focus:outline-none focus:ring-2 focus:ring-[#56514A]`}
+            value === o.v ? "bg-secondary text-primary font-medium" : "text-charcoal hover:bg-paper"
+          } focus:outline-none focus:ring-2 focus:ring-primary`}
         >
           {o.l}
         </button>

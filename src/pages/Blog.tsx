@@ -162,7 +162,7 @@ const Blog = () => {
 
   return (
     <HelmetProvider>
-      <div className="min-h-screen" style={{ background: '#FCFAF7' }}>
+      <div className="min-h-screen" style={{ background: 'var(--paper)' }}>
         <Helmet>
           <title>Blog | Hobson AI</title>
           <meta name="description" content="Notes from our desk — what we have learned from working with our clients, operators, occupiers and owners of real estate." />

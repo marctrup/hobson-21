@@ -13,7 +13,7 @@ interface LastUpdatedProps {
 export const LastUpdated = ({ date, className = "" }: LastUpdatedProps) => (
   <p
     className={`text-[13px] tracking-wide ${className}`}
-    style={{ color: "#6E6A62" }}
+    style={{ color: "var(--ink-muted)" }}
   >
     Last updated{" "}
     <time dateTime={date}>{formatUpdatedDate(date)}</time>

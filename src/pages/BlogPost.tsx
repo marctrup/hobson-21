@@ -315,7 +315,7 @@ const BlogPost = () => {
         </script>
       </Helmet>
 
-      <div className="min-h-screen" style={{ background: '#FCFAF7' }}>
+      <div className="min-h-screen" style={{ background: 'var(--paper)' }}>
         <HomepageHeader />
         
         <div className="container mx-auto px-4 py-8 max-w-4xl">
@@ -331,7 +331,7 @@ const BlogPost = () => {
 
           <article
             className="bg-background rounded-2xl p-6 md:p-12 lg:p-16"
-            style={{ boxShadow: '0 10px 40px -20px rgba(180, 145, 79, 0.25), 0 2px 8px -2px rgba(45, 45, 45, 0.06)' }}
+            style={{ boxShadow: '0 10px 40px -20px hsl(var(--highlight-colour) / 0.25), 0 2px 8px -2px hsl(var(--shadow-colour) / 0.06)' }}
           >
             {/* Featured Image */}
             {post.featured_image_url && (

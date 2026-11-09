@@ -21,24 +21,24 @@ export default {
 				'montserrat': ['Montserrat', 'system-ui', 'sans-serif'],
 			},
 			colors: {
-				/* Editorial Stationery raw tokens */
-				paper: '#FCFAF7',
-				'bone-wash': '#F1EBDE',
-				bone: '#E8E1D4',
-				'bone-strong': '#D8CDB6',
-				ink: '#2D2D2D',
-				charcoal: '#56514A',
-				'ink-muted': '#6E6A62',
-				'ink-faint': '#8A8478',
-				brass: '#B4914F',
-				'brass-text': '#8E7133',
-				'document-white': '#FFFFFF',
-				vellum: '#FFFDFA',
-				zebra: '#FAF7F2',
-				'code-surface': '#F7F3EC',
-				'row-hover': '#F4EFE4',
-				'disabled-fill': '#F4F0E9',
-				'faint-rule': '#EDE5D6',
+				/* Shared product palette aliases */
+				paper: 'hsl(var(--background) / <alpha-value>)',
+				'bone-wash': 'hsl(var(--secondary) / <alpha-value>)',
+				bone: 'hsl(var(--border) / <alpha-value>)',
+				'bone-strong': 'var(--bone-strong)',
+				ink: 'hsl(var(--foreground) / <alpha-value>)',
+				charcoal: 'hsl(var(--muted-foreground) / <alpha-value>)',
+				'ink-muted': 'hsl(var(--muted-foreground) / <alpha-value>)',
+				'ink-faint': 'hsl(var(--faint-foreground) / <alpha-value>)',
+				brass: 'hsl(var(--primary) / <alpha-value>)',
+				'brass-text': 'hsl(var(--primary) / <alpha-value>)',
+				'document-white': 'hsl(var(--card) / <alpha-value>)',
+				vellum: 'hsl(var(--popover) / <alpha-value>)',
+				zebra: 'hsl(var(--secondary) / <alpha-value>)',
+				'code-surface': 'hsl(var(--secondary) / <alpha-value>)',
+				'row-hover': 'hsl(var(--accent) / <alpha-value>)',
+				'disabled-fill': 'hsl(var(--muted) / <alpha-value>)',
+				'faint-rule': 'hsl(var(--border) / <alpha-value>)',
 				danger: {
 					DEFAULT: '#9C4A38',
 					bg: '#F7EAE5',
@@ -58,21 +58,21 @@ export default {
 					solid: '#74480F'
 				},
 				lavender: {
-					highlight: '#EDE3FB',
-					wash: '#F3EFFA',
-					marker: '#5B3A96'
+					highlight: 'hsl(var(--accent) / <alpha-value>)',
+					wash: 'hsl(var(--secondary) / <alpha-value>)',
+					marker: 'hsl(var(--primary) / <alpha-value>)'
 				},
 				'owl-purple': {
-					DEFAULT: '#8B5CF6',
-					deep: '#7C3AED'
+					DEFAULT: 'hsl(var(--primary-light) / <alpha-value>)',
+					deep: 'hsl(var(--primary) / <alpha-value>)'
 				},
 				chart: {
-					1: '#B4914F',
-					2: '#56514A',
-					3: '#5E6B33',
-					4: '#9C4A38',
-					5: '#8A8478',
-					6: '#7A5C8A'
+					1: 'var(--chart-1)',
+					2: 'var(--chart-2)',
+					3: 'var(--chart-3)',
+					4: 'var(--chart-4)',
+					5: 'var(--chart-5)',
+					6: 'var(--chart-6)'
 				},
 
 				border: 'hsl(var(--border))',

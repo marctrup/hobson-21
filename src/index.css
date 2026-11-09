@@ -57,36 +57,71 @@ All colors MUST be HSL.
     --classroom-wood-light: 31 43% 65%;
     --classroom-wood-dark: 26 33% 27%;
     --classroom-shadow: 270 23% 13%;
-    /* Editorial stationery tokens */
-    --paper: #FCFAF7;
-    --bone-wash: #F1EBDE;
-    --bone: #E8E1D4;
-    --bone-strong: #D8CDB6;
-    --ink: #2D2D2D;
-    --ink-muted: #6E6A62;
-    --ink-faint: #8A8478;
-    --charcoal: #56514A;
-    --brass: #B4914F;
-    --brass-text: #8E7133;
-    /* Purple is identity only: owl avatar, logo, favicon */
-    --purple: #8B5CF6;
-    --purple-deep: #7C3AED;
-    /* Evidence provenance only */
-    --lavender-highlight: #EDE3FB;
-    --lavender-wash: #F3EFFA;
-    --purple-marker: #5B3A96;
+    /* Product-matched palette. Legacy names remain aliases for existing pages. */
+    --background: 0 0% 100%;
+    --foreground: 255 13.333333% 17.647059%;
+    --card: 0 0% 100%;
+    --card-foreground: var(--foreground);
+    --popover: 0 0% 100%;
+    --popover-foreground: var(--foreground);
+    --primary: 262.122905 83.255814% 57.843137%;
+    --primary-foreground: 0 0% 100%;
+    --primary-light: 262 83% 66%;
+    --primary-soft: 257.142857 41.176471% 96.666667%;
+    --primary-soft-foreground: var(--foreground);
+    --secondary: 257.142857 41.176471% 96.666667%;
+    --secondary-foreground: var(--foreground);
+    --muted: 257.142857 41.176471% 96.666667%;
+    --muted-foreground: 255 7% 43%;
+    --accent: 260 38% 94%;
+    --accent-foreground: var(--foreground);
+    --filter-active: var(--accent);
+    --filter-active-foreground: var(--primary);
+    --border: 255 18% 89%;
+    --input: var(--border);
+    --ring: var(--primary);
+    --link: var(--primary);
+    --link-hover: 262 83% 48%;
+    --brand-orange: var(--primary);
+    --brand-orange-foreground: var(--primary-foreground);
+    --accent-amber: var(--primary);
+    --accent-amber-foreground: var(--primary-foreground);
+    --accent-teal: var(--primary);
+    --accent-teal-foreground: var(--primary-foreground);
+    --accent-rose: var(--primary);
+    --accent-rose-foreground: var(--primary-foreground);
+    --destructive: 12 48% 42%;
+    --destructive-foreground: 0 0% 100%;
+    --faint-foreground: 255 6% 48%;
+    --inverse-muted: 255 16% 85%;
+    --map-water: 255 13% 93%;
+    --shadow-colour: var(--foreground);
+    --highlight-colour: var(--primary);
 
-    /* Extended warm neutrals */
-    --document-white: #FFFFFF;
-    --vellum: #FFFDFA;
-    --zebra: #FAF7F2;
-    --code-surface: #F7F3EC;
-    --row-hover: #F4EFE4;
-    --disabled: #F4F0E9;
-    --faint-rule: #EDE5D6;
+    --paper: hsl(var(--background));
+    --bone-wash: hsl(var(--secondary));
+    --bone: hsl(var(--border));
+    --bone-strong: hsl(255 14% 80%);
+    --ink: hsl(var(--foreground));
+    --ink-muted: hsl(var(--muted-foreground));
+    --ink-faint: hsl(var(--faint-foreground));
+    --charcoal: hsl(var(--muted-foreground));
+    --brass: hsl(var(--primary));
+    --brass-text: hsl(var(--primary));
+    --purple: hsl(var(--primary-light));
+    --purple-deep: hsl(var(--primary));
+    --lavender-highlight: hsl(var(--accent));
+    --lavender-wash: hsl(var(--secondary));
+    --purple-marker: hsl(var(--primary));
+    --document-white: hsl(var(--card));
+    --vellum: hsl(var(--popover));
+    --zebra: hsl(var(--secondary));
+    --code-surface: hsl(var(--secondary));
+    --row-hover: hsl(var(--accent));
+    --disabled: hsl(var(--muted));
+    --faint-rule: hsl(var(--border));
 
-
-    /* Semantic (warm, palette-compatible) */
+    /* Functional status colours stay distinct from the brand accent. */
     --danger: #9C4A38;
     --danger-bg: #F7EAE5;
     --danger-border: #E4C6BD;
@@ -99,72 +134,17 @@ All colors MUST be HSL.
     --info: var(--ink);
     --info-bg: var(--bone-wash);
     --info-border: var(--bone);
-
-    /* Categorical chart ramp */
-    --chart-1: #B4914F;
-    --chart-2: #56514A;
-    --chart-3: #5E6B33;
-    --chart-4: #9C4A38;
-    --chart-5: #8A8478;
-    --chart-6: #7A5C8A;
-    /* Sequential brass ramp */
-    --ramp-1: #F5EEDF;
-    --ramp-2: #E7D6B4;
-    --ramp-3: #D2B57E;
-    --ramp-4: #B4914F;
-    --ramp-5: #8E7133;
-
-    /* shadcn tokens mapped onto Editorial Stationery */
-    --background: 36 46% 98%;   /* paper */
-    --foreground: 0 0% 18%;     /* ink */
-
-    --card: 36 46% 98%;
-    --card-foreground: 0 0% 18%;
-
-    --popover: 40 100% 99%;     /* #FFFDFA */
-    --popover-foreground: 0 0% 18%;
-
-    --primary: 0 0% 18%;        /* ink */
-    --primary-foreground: 36 46% 98%;
-    --primary-light: 35 8% 31%;
-    --primary-soft: 41 40% 91%;
-    --primary-soft-foreground: 0 0% 18%;
-
-    /* Retired orange CTA — now brass */
-    --brand-orange: 39 40% 51%;
-    --brand-orange-foreground: 0 0% 18%;
-
-    /* Legacy accent aliases remapped to the palette */
-    --accent-amber: 39 40% 51%;
-    --accent-amber-foreground: 0 0% 18%;
-    --accent-teal: 74 35% 31%;
-    --accent-teal-foreground: 36 46% 98%;
-    --accent-rose: 12 48% 42%;
-    --accent-rose-foreground: 36 46% 98%;
-
-    --secondary: 41 40% 91%;    /* bone-wash */
-    --secondary-foreground: 0 0% 18%;
-
-    --muted: 41 40% 91%;
-    --muted-foreground: 40 6% 41%;  /* ink-muted */
-
-    --accent: 39 30% 87%;       /* bone */
-    --accent-foreground: 0 0% 18%;
-
-    /* Filter button highlighting */
-    --filter-active: 39 30% 87%;
-    --filter-active-foreground: 0 0% 18%;
-
-    --destructive: 12 48% 42%;  /* #9C4A38 */
-    --destructive-foreground: 36 46% 98%;
-
-    --border: 39 30% 87%;
-    --input: 39 30% 87%;
-    --ring: 39 40% 51%;         /* brass */
-
-    /* Inline content hyperlinks */
-    --link: 214 88% 40%;
-    --link-hover: 214 88% 32%;
+    --chart-1: var(--brass);
+    --chart-2: var(--charcoal);
+    --chart-3: var(--success);
+    --chart-4: var(--danger);
+    --chart-5: var(--ink-faint);
+    --chart-6: var(--purple-marker);
+    --ramp-1: hsl(var(--secondary));
+    --ramp-2: hsl(var(--accent));
+    --ramp-3: hsl(262 70% 82%);
+    --ramp-4: hsl(var(--primary));
+    --ramp-5: hsl(var(--link-hover));
 
     --radius: 0.5rem;
 
@@ -172,41 +152,29 @@ All colors MUST be HSL.
 
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-
-    --link: 213 92% 70%;
-    --link-hover: 213 92% 78%;
+    --background: 255 13% 10%;
+    --foreground: 255 16% 96%;
+    --card: 255 13% 13%;
+    --popover: 255 13% 13%;
+    --primary: 262 90% 76%;
+    --primary-foreground: 255 13% 10%;
+    --primary-light: 262 90% 82%;
+    --primary-soft: 255 13% 18%;
+    --secondary: 255 13% 18%;
+    --muted: 255 13% 18%;
+    --muted-foreground: 255 10% 73%;
+    --accent: 255 16% 22%;
+    --border: 255 13% 26%;
+    --faint-foreground: 255 10% 65%;
+    --inverse-muted: 255 10% 30%;
+    --map-water: 255 13% 20%;
+    --link-hover: 262 90% 84%;
+    --destructive: 0 63% 48%;
   }
 }
 
 @layer base {
-  /* Editorial Stationery is a light-only identity. Force native UI (form
+  /* The public identity is light. Force native UI (form
      controls, scrollbars, autofill) to render light regardless of OS setting. */
   :root {
     color-scheme: light;
@@ -399,7 +367,7 @@ br {
 html,
 .hobson-scroll {
   scrollbar-width: thin;
-  scrollbar-color: #D8CDB6 #F1EBDE;
+  scrollbar-color: var(--bone-strong) var(--bone-wash);
 }
 
 html::-webkit-scrollbar,
@@ -409,35 +377,35 @@ html::-webkit-scrollbar,
 
 html::-webkit-scrollbar-track,
 .hobson-scroll::-webkit-scrollbar-track {
-  background: #F1EBDE;
+  background: var(--bone-wash);
   border-radius: 4px;
 }
 
 html::-webkit-scrollbar-thumb,
 .hobson-scroll::-webkit-scrollbar-thumb {
-  background: #D8CDB6;
+  background: var(--bone-strong);
   border-radius: 4px;
 }
 
 html::-webkit-scrollbar-thumb:hover,
 .hobson-scroll::-webkit-scrollbar-thumb:hover {
-  background: #B4914F;
+  background: var(--brass);
 }
 
-/* Any internally scrolling container inherits the same warm scrollbar */
+/* Any internally scrolling container inherits the same neutral scrollbar */
 *::-webkit-scrollbar { width: 10px; height: 10px; }
-*::-webkit-scrollbar-track { background: #F1EBDE; }
-*::-webkit-scrollbar-thumb { background: #D8CDB6; border-radius: 5px; }
-*::-webkit-scrollbar-thumb:hover { background: #B4914F; }
+*::-webkit-scrollbar-track { background: var(--bone-wash); }
+*::-webkit-scrollbar-thumb { background: var(--bone-strong); border-radius: 5px; }
+*::-webkit-scrollbar-thumb:hover { background: var(--brass); }
 
-::selection { background: #E8E1D4; color: #2D2D2D; }
+::selection { background: var(--bone); color: var(--ink); }
 
 :focus-visible {
-  outline: 2px solid #B4914F;
+  outline: 2px solid var(--brass);
   outline-offset: 2px;
 }
 
-html { caret-color: #2D2D2D; }
+html { caret-color: var(--ink); }
 
 
 /* Chosen colleague steps off the back row and towards the screen, then settles back. */

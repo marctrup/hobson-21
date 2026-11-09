@@ -27,18 +27,18 @@ const PRICING_HEADING = "See what I cost.";
 // Deep pine-ink, paper, antique brass — calm British professional-services feel.
 // ============================================================================
 const TOKENS = {
-  ink: "#2D2D2D", // deep charcoal (matches /learn)
-  paper: "#FCFAF7", // warm cream paper
+  ink: "var(--ink)", // deep charcoal (matches /learn)
+  paper: "var(--paper)", // warm cream paper
   paperSoft: "#FFFFFF",
-  brass: "#B4914F", // antique brass
-  brassLight: "#8F5A14",
-  primary: "#B4914F",
-  primaryLight: "#8F5A14",
+  brass: "var(--brass)", // antique brass
+  brassLight: "var(--brass-text)",
+  primary: "var(--brass)",
+  primaryLight: "var(--brass-text)",
   card: "#FFFFFF",
-  inkSoft: "rgba(45,45,45,0.82)",
-  inkMuted: "rgba(45,45,45,0.65)",
-  hairline: "#F7EDDC",
-  hairlineDark: "rgba(180,145,79,0.4)",
+  inkSoft: "hsl(var(--shadow-colour) / 0.82)",
+  inkMuted: "hsl(var(--shadow-colour) / 0.65)",
+  hairline: "var(--bone-wash)",
+  hairlineDark: "hsl(var(--highlight-colour) / 0.4)",
 };
 
 
@@ -71,7 +71,7 @@ const Pill: React.FC<{ children: React.ReactNode; dark?: boolean }> = ({ childre
       padding: "6px 12px",
       borderRadius: 999,
       border: `1px solid ${dark ? TOKENS.hairlineDark : TOKENS.hairline}`,
-      background: dark ? "rgba(180,145,79,0.10)" : "rgba(255,255,255,0.6)",
+      background: dark ? "hsl(var(--highlight-colour) / 0.10)" : "rgba(255,255,255,0.6)",
       color: dark ? TOKENS.brassLight : TOKENS.ink,
       fontFamily: FONTS.mono,
       fontSize: 12,
@@ -176,7 +176,7 @@ const TogetherCard: React.FC<{ people: number; docEstimate: number; seatsMonthly
         borderRadius: 24,
         background: TOKENS.paper,
         border: `2px solid ${TOKENS.brass}`,
-        boxShadow: "0 12px 40px -20px rgba(180,145,79,0.35)",
+        boxShadow: "0 12px 40px -20px hsl(var(--highlight-colour) / 0.35)",
       }}
     >
       <div
@@ -216,8 +216,8 @@ const TogetherCard: React.FC<{ people: number; docEstimate: number; seatsMonthly
             style={{
               padding: "22px 24px",
               borderRadius: 16,
-              background: "rgba(180,145,79,0.06)",
-              border: `1px solid rgba(180,145,79,0.28)`,
+              background: "hsl(var(--highlight-colour) / 0.06)",
+              border: `1px solid hsl(var(--highlight-colour) / 0.28)`,
             }}
           >
             <div style={{ fontFamily: FONTS.mono, fontSize: 10.5, letterSpacing: "0.18em", color: TOKENS.brass, textTransform: "uppercase", marginBottom: 8 }}>
@@ -339,18 +339,18 @@ const Calculators: React.FC = () => {
 
   // Token shortcuts scoped to this section
   const T = {
-    cream: "#FCFAF7",
-    tint: "#F7EDDC",
-    ink: "#2D2D2D",
-    muted: "#6E6A62",
-    faint: "#8A8478",
-    gold: "#B4914F",
-    goldInk: "#8F5A14",
-    wash: "#F7EDDC",
-    line: "rgba(45,45,45,0.12)",
-    dark: "#2D2D2D",
-    paperSoft: "#FFFDFA",
-    paperGrad: "#F7EDDC",
+    cream: "var(--paper)",
+    tint: "var(--bone-wash)",
+    ink: "var(--ink)",
+    muted: "var(--ink-muted)",
+    faint: "var(--ink-faint)",
+    gold: "var(--brass)",
+    goldInk: "var(--brass-text)",
+    wash: "var(--bone-wash)",
+    line: "hsl(var(--shadow-colour) / 0.12)",
+    dark: "var(--ink)",
+    paperSoft: "var(--vellum)",
+    paperGrad: "var(--bone-wash)",
   };
 
   const Eyebrow: React.FC<{ children: React.ReactNode; color?: string; style?: React.CSSProperties }> = ({ children, color, style }) => (
@@ -516,7 +516,7 @@ const Calculators: React.FC = () => {
             <div
               style={{
                 background: T.paperSoft,
-                border: `1px solid rgba(45,45,45,0.13)`,
+                border: `1px solid hsl(var(--shadow-colour) / 0.13)`,
                 borderRadius: 16,
                 padding: 26,
                 display: "flex",
@@ -560,14 +560,14 @@ const Calculators: React.FC = () => {
                     <div style={{ fontFamily: FONTS.mono, fontSize: 11, color: T.faint, marginTop: 6 }}>
                       {fmtGBP2(readLow)} – {fmtGBP2(readHigh)}
                     </div>
-                    <div style={{ fontFamily: FONTS.sans, fontSize: 10, lineHeight: 1.45, color: "#8A8478", marginTop: 6 }}>
+                    <div style={{ fontFamily: FONTS.sans, fontSize: 10, lineHeight: 1.45, color: "var(--ink-faint)", marginTop: 6 }}>
                       Estimated at 25p a document — the average for a mixed portfolio. The firm quote follows once I have seen the documents.
                     </div>
                   </div>
                 </div>
 
                 {/* ---- Vertical hairline ---- */}
-                <div aria-hidden style={{ background: "rgba(45,45,45,0.08)", width: 1, height: "100%" }} />
+                <div aria-hidden style={{ background: "hsl(var(--shadow-colour) / 0.08)", width: 1, height: "100%" }} />
 
                 {/* ---- Section B: seats ---- */}
                 <div style={{ display: "flex", flexDirection: "column" }}>
@@ -590,8 +590,8 @@ const Calculators: React.FC = () => {
               <div
                 className="hp-includes"
                 style={{
-                  background: "#F7EDDC",
-                  border: "1px solid rgba(45,45,45,0.08)",
+                  background: "var(--bone-wash)",
+                  border: "1px solid hsl(var(--shadow-colour) / 0.08)",
                   borderRadius: 10,
                   padding: "18px 20px",
                   marginTop: 22,
@@ -628,10 +628,10 @@ const Calculators: React.FC = () => {
                     <div key={item.h} style={{ display: "grid", gridTemplateColumns: "auto 1fr", gap: 8 }}>
                       <span style={{ color: T.gold, fontSize: 13, lineHeight: 1.4 }}>✦</span>
                       <div>
-                        <div style={{ fontFamily: FONTS.sans, fontSize: 13, fontWeight: 500, color: "#2D2D2D", lineHeight: 1.3 }}>
+                        <div style={{ fontFamily: FONTS.sans, fontSize: 13, fontWeight: 500, color: "var(--ink)", lineHeight: 1.3 }}>
                           {item.h}
                         </div>
-                        <div style={{ fontFamily: FONTS.sans, fontSize: 12, color: "#6E6A62", lineHeight: 1.5, marginTop: 3 }}>
+                        <div style={{ fontFamily: FONTS.sans, fontSize: 12, color: "var(--ink-muted)", lineHeight: 1.5, marginTop: 3 }}>
                           {item.b}
                         </div>
                       </div>
@@ -877,8 +877,8 @@ const Calculators: React.FC = () => {
           width: 18px;
           height: 18px;
           background: #F3EFFA;
-          border-left: 1px solid #E8E1D4;
-          border-bottom: 1px solid #E8E1D4;
+          border-left: 1px solid var(--bone);
+          border-bottom: 1px solid var(--bone);
           transform: rotate(45deg);
         }
         @media (max-width: 640px) {
@@ -983,8 +983,8 @@ export default function Pricing() {
         @keyframes hpRise { to { opacity: 1; transform: none; } }
         @keyframes hpCaretBlink { 50% { border-color: transparent; } }
         .hp-lift { transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease; }
-        .hp-lift:hover { transform: translateY(-2px); box-shadow: 0 12px 32px -18px rgba(45,45,45,0.25); }
-        .hp-slider { -webkit-appearance: none; appearance: none; height: 4px; background: rgba(180,145,79,0.25); border-radius: 999px; outline: none; }
+        .hp-lift:hover { transform: translateY(-2px); box-shadow: 0 12px 32px -18px hsl(var(--shadow-colour) / 0.25); }
+        .hp-slider { -webkit-appearance: none; appearance: none; height: 4px; background: hsl(var(--highlight-colour) / 0.25); border-radius: 999px; outline: none; }
         .hp-slider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 22px; height: 22px; border-radius: 50%; background: ${TOKENS.brassLight}; border: 3px solid ${TOKENS.ink}; box-shadow: 0 2px 6px rgba(0,0,0,0.3); cursor: pointer; }
         .hp-slider::-moz-range-thumb { width: 22px; height: 22px; border-radius: 50%; background: ${TOKENS.brassLight}; border: 3px solid ${TOKENS.ink}; cursor: pointer; }
         .hp-slider:focus-visible::-webkit-slider-thumb { outline: 2px solid ${TOKENS.brassLight}; outline-offset: 3px; }
@@ -992,16 +992,16 @@ export default function Pricing() {
         .hp-btn-brass { background: ${TOKENS.brass}; color: ${TOKENS.paper}; }
         .hp-btn-brass:hover { background: ${TOKENS.brassLight}; }
         .hp-btn-ghost { background: transparent; color: ${TOKENS.paper}; border-color: ${TOKENS.brassLight}; }
-        .hp-btn-ghost:hover { background: rgba(180,145,79,0.12); }
+        .hp-btn-ghost:hover { background: hsl(var(--highlight-colour) / 0.12); }
         .hp-btn:focus-visible { outline: 2px solid ${TOKENS.brassLight}; outline-offset: 3px; }
         details.hp-faq { background: ${TOKENS.paper}; border: 1px solid ${TOKENS.hairline}; border-radius: 14px; padding: 22px 26px; transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease; }
         details.hp-faq + details.hp-faq { margin-top: 12px; }
-        details.hp-faq:hover { border-color: rgba(180,145,79,0.35); box-shadow: 0 6px 24px -12px rgba(45,45,45,0.14); }
-        details.hp-faq[open] { border-color: rgba(180,145,79,0.45); box-shadow: 0 10px 30px -14px rgba(45,45,45,0.18); }
+        details.hp-faq:hover { border-color: hsl(var(--highlight-colour) / 0.35); box-shadow: 0 6px 24px -12px hsl(var(--shadow-colour) / 0.14); }
+        details.hp-faq[open] { border-color: hsl(var(--highlight-colour) / 0.45); box-shadow: 0 10px 30px -14px hsl(var(--shadow-colour) / 0.18); }
         details.hp-faq summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 24px; font-family: ${FONTS.serif}; font-size: 1.15rem; color: ${TOKENS.ink}; }
         details.hp-faq summary::-webkit-details-marker { display: none; }
-        details.hp-faq summary .hp-plus { display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; border-radius: 999px; background: rgba(180,145,79,0.12); font-family: ${FONTS.mono}; font-size: 18px; line-height: 1; color: ${TOKENS.brass}; transition: transform .25s ease, background .25s ease; flex-shrink: 0; }
-        details.hp-faq[open] summary .hp-plus { transform: rotate(45deg); background: rgba(180,145,79,0.22); }
+        details.hp-faq summary .hp-plus { display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; border-radius: 999px; background: hsl(var(--highlight-colour) / 0.12); font-family: ${FONTS.mono}; font-size: 18px; line-height: 1; color: ${TOKENS.brass}; transition: transform .25s ease, background .25s ease; flex-shrink: 0; }
+        details.hp-faq[open] summary .hp-plus { transform: rotate(45deg); background: hsl(var(--highlight-colour) / 0.22); }
         details.hp-faq p { font-family: ${FONTS.sans}; font-size: 15.5px; line-height: 1.65; color: ${TOKENS.inkSoft}; margin: 16px 0 0; max-width: 68ch; }
         @media (prefers-reduced-motion: reduce) {
           .hp-reveal, .hp-lift, details.hp-faq summary .hp-plus { animation: none !important; transition: none !important; transform: none !important; }
@@ -1017,8 +1017,8 @@ export default function Pricing() {
         <section
           className="hero"
           style={{
-            background: "#F1EBDE",
-            borderBottom: `1px solid rgba(180, 145, 79, 0.2)`,
+            background: "var(--bone-wash)",
+            borderBottom: `1px solid hsl(var(--highlight-colour) / 0.2)`,
             padding: "56px 32px 64px",
             textAlign: "center",
           }}
@@ -1068,7 +1068,7 @@ export default function Pricing() {
                 borderTop: `3px solid ${TOKENS.brass}`,
                 borderRadius: 20,
                 padding: "clamp(36px, 5vw, 64px)",
-                boxShadow: "0 24px 60px -30px rgba(45, 45, 45, 0.08)",
+                boxShadow: "0 24px 60px -30px hsl(var(--shadow-colour) / 0.08)",
                 display: "grid",
                 gridTemplateColumns: "minmax(0, 1fr)",
                 gap: "clamp(28px, 4vw, 48px)",
@@ -1110,7 +1110,7 @@ export default function Pricing() {
         <section
           style={{
             padding: "clamp(80px, 11vw, 150px) 24px",
-            background: "#F7EDDC",
+            background: "var(--bone-wash)",
             borderTop: `1px solid ${TOKENS.hairline}`,
           }}
         >

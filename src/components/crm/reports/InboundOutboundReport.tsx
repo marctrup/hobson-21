@@ -39,9 +39,9 @@ export const InboundOutboundReport = () => {
           <YAxis tick={{ fontSize: 11 }} allowDecimals={false} />
           <Tooltip />
           <Legend wrapperStyle={{ fontSize: 12 }} />
-          <Bar dataKey="inbound" name="Inbound" fill="#56514A" />
+          <Bar dataKey="inbound" name="Inbound" fill="var(--charcoal)" />
           <Bar dataKey="outbound" name="Outbound" fill="#5E6B33" />
-          <Bar dataKey="internal" name="Internal" fill="#8A8478" />
+          <Bar dataKey="internal" name="Internal" fill="var(--ink-faint)" />
         </BarChart>
       </ResponsiveContainer>
     </ReportCard>

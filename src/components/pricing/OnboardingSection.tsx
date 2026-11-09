@@ -131,7 +131,7 @@ export default function OnboardingSection() {
                   value={leases}
                   onChange={(e) => setLeases(Math.max(0, parseInt(e.target.value) || 0))}
                   className="w-20 text-center rounded-lg border border-border px-3 py-2 text-sm appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none focus:outline-none focus:ring-2 focus:ring-primary/30"
-                  style={{ backgroundColor: '#ffffff', color: '#2D2D2D', colorScheme: 'light', WebkitTextFillColor: '#2D2D2D' }}
+                  style={{ backgroundColor: '#ffffff', color: 'var(--ink)', colorScheme: 'light', WebkitTextFillColor: 'var(--ink)' }}
                 />
                 <button
                   type="button"
@@ -164,7 +164,7 @@ export default function OnboardingSection() {
                   value={documents}
                   onChange={(e) => setDocuments(Math.max(0, parseInt(e.target.value) || 0))}
                   className="w-20 text-center rounded-lg border border-border px-3 py-2 text-sm appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none focus:outline-none focus:ring-2 focus:ring-primary/30"
-                  style={{ backgroundColor: '#ffffff', color: '#2D2D2D', colorScheme: 'light', WebkitTextFillColor: '#2D2D2D' }}
+                  style={{ backgroundColor: '#ffffff', color: 'var(--ink)', colorScheme: 'light', WebkitTextFillColor: 'var(--ink)' }}
                 />
                 <button
                   type="button"

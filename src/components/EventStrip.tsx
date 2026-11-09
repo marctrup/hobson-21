@@ -37,7 +37,7 @@ export const EventStrip = () => {
             We shall be at{" "}
             <Link
               to="/web-summit"
-              className="italic text-brass underline decoration-brass/40 underline-offset-4 hover:decoration-brass transition-all duration-300"
+              className="italic text-lavender-highlight underline decoration-lavender-highlight/40 underline-offset-4 hover:decoration-lavender-highlight transition-all duration-300"
             >
               Web Summit Lisbon 2026
             </Link>
@@ -60,7 +60,7 @@ export const EventStrip = () => {
                   ?.scrollIntoView({ behavior: "smooth", block: "start" });
               }
             }}
-            className="shrink-0 text-[10px] sm:text-[11px] font-medium uppercase tracking-[0.18em] text-brass border-b border-brass/60 pb-0.5 hover:border-brass transition-colors"
+            className="shrink-0 text-[10px] sm:text-[11px] font-medium uppercase tracking-[0.18em] text-lavender-highlight border-b border-lavender-highlight/60 pb-0.5 hover:border-lavender-highlight transition-colors"
           >
             Where to meet me
           </Link>
@@ -75,7 +75,7 @@ export const EventStrip = () => {
             setDismissed(true);
           }}
           aria-label="Dismiss announcement"
-          className="absolute right-1.5 top-1/2 -translate-y-1/2 p-1.5 rounded-sm text-brass/60 hover:text-brass transition-colors lg:right-4 lg:p-1"
+          className="absolute right-1.5 top-1/2 -translate-y-1/2 p-1.5 rounded-sm text-lavender-highlight/80 hover:text-lavender-highlight transition-colors lg:right-4 lg:p-1"
         >
           <X className="h-3.5 w-3.5" aria-hidden="true" />
         </button>

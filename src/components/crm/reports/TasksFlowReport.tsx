@@ -33,7 +33,7 @@ export const TasksFlowReport = () => {
     >
       <ResponsiveContainer width="100%" height={240}>
         <LineChart data={points} margin={{ top: 8, right: 12, left: 0, bottom: 4 }}>
-          <CartesianGrid strokeDasharray="3 3" stroke="#E8E1D4" />
+          <CartesianGrid strokeDasharray="3 3" stroke="var(--bone)" />
           <XAxis dataKey="label" tick={{ fontSize: 11 }} />
           <YAxis tick={{ fontSize: 11 }} allowDecimals={false} />
           <Tooltip />
@@ -42,7 +42,7 @@ export const TasksFlowReport = () => {
             type="monotone"
             dataKey="created"
             name="Created"
-            stroke="#56514A"
+            stroke="var(--charcoal)"
             strokeWidth={2}
             dot={{ r: 3 }}
           />

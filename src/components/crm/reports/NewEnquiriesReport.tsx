@@ -11,7 +11,7 @@ import { ReportCard } from "./ReportCard";
 import { useNewEnquiriesOverTime } from "@/hooks/crm/reports/useLeadReports";
 import { downloadCsv } from "@/lib/crm/reportsExport";
 
-const PALETTE = ["#56514A", "#5E6B33", "#8F5A14", "#8A8478", "#9C4A38", "#56514A"];
+const PALETTE = ["var(--charcoal)", "#5E6B33", "#8F5A14", "var(--ink-faint)", "#9C4A38", "var(--charcoal)"];
 
 export const NewEnquiriesReport = () => {
   const { data, isLoading } = useNewEnquiriesOverTime();

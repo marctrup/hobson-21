@@ -4,13 +4,13 @@ import { ArrowRight } from "lucide-react";
 import { GlobalHeader } from "@/components/GlobalHeader";
 
 
-const BRASS = "#B4914F";
-const INK = "#2D2D2D";
-const MUTED = "#6E6A62";
+const BRASS = "var(--brass)";
+const INK = "var(--ink)";
+const MUTED = "var(--ink-muted)";
 
-const LAVENDER_BORDER = "#E8E1D4";
-const PAPER = "#FCFAF7";
-const RULE = "#F7EDDC";
+const LAVENDER_BORDER = "var(--bone)";
+const PAPER = "var(--paper)";
+const RULE = "var(--bone-wash)";
 
 type Card = {
   to?: string;
@@ -78,8 +78,8 @@ const CaseStudies = () => {
       <main className="flex-1">
         <section
           style={{
-            backgroundColor: "#F1EBDE",
-            borderBottom: `1px solid rgba(180,145,79,0.2)`,
+            backgroundColor: "var(--bone-wash)",
+            borderBottom: `1px solid hsl(var(--highlight-colour) / 0.2)`,
           }}
         >
           <div className="mx-auto max-w-3xl px-6 pt-6 pb-12 text-center">
@@ -115,13 +115,13 @@ const CaseStudies = () => {
                   className={[
                     "group h-full rounded-[20px] p-7 sm:p-8 transition-all duration-300 flex flex-col",
                     card.live
-                      ? "bg-white shadow-sm hover:shadow-[0_12px_28px_-10px_rgba(180,145,79,0.28)] hover:-translate-y-0.5"
+                      ? "bg-white shadow-sm hover:shadow-[0_12px_28px_-10px_hsl(var(--highlight-colour)_/_0.28)] hover:-translate-y-0.5"
                       : "",
                   ].join(" ")}
                   style={
                     card.live
                       ? { border: `1px solid ${LAVENDER_BORDER}` }
-                      : { backgroundColor: "#F7EDDC", border: "1px dashed #E6D2AE" }
+                      : { backgroundColor: "var(--bone-wash)", border: "1px dashed var(--bone)" }
                   }
                 >
                   <div className="flex flex-wrap gap-1.5">
@@ -132,7 +132,7 @@ const CaseStudies = () => {
                         style={
                           card.live
                             ? { backgroundColor: PAPER, color: MUTED, border: `1px solid ${RULE}` }
-                            : { backgroundColor: "#F7EDDC", color: "#6E6A62", border: "1px dashed #E6D2AE" }
+                            : { backgroundColor: "var(--bone-wash)", color: "var(--ink-muted)", border: "1px dashed var(--bone)" }
                         }
                       >
                         {c}
@@ -142,13 +142,13 @@ const CaseStudies = () => {
 
                   <h2
                     className="mt-6 font-serif text-2xl font-normal tracking-tight"
-                    style={{ color: card.live ? INK : "#6E6A62" }}
+                    style={{ color: card.live ? INK : "var(--ink-muted)" }}
                   >
                     {card.headline}
                   </h2>
                   <p
                     className="mt-3 text-[15px] leading-relaxed"
-                    style={{ color: card.live ? MUTED : "#8A8478" }}
+                    style={{ color: card.live ? MUTED : "var(--ink-faint)" }}
                   >
                     {card.description}
                   </p>
@@ -157,9 +157,9 @@ const CaseStudies = () => {
 
                   <div
                     className="mt-8 pt-5 flex items-center justify-between text-sm font-medium"
-                    style={{ borderTop: `1px solid ${card.live ? RULE : "#E6D2AE"}` }}
+                    style={{ borderTop: `1px solid ${card.live ? RULE : "var(--bone)"}` }}
                   >
-                    <span style={{ color: card.live ? BRASS : "#8A8478" }}>{card.cta}</span>
+                    <span style={{ color: card.live ? BRASS : "var(--ink-faint)" }}>{card.cta}</span>
                     {card.live && (
                       <ArrowRight
                         className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"

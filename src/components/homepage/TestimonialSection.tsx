@@ -34,7 +34,7 @@ const testimonials: Testimonial[] = [
 export const TestimonialSection = () => (
   <section
     className="py-20 sm:py-24 md:py-28 border-y border-bone"
-    style={{ background: "#F1EBDE" }}
+    style={{ background: "var(--bone-wash)" }}
     aria-labelledby="testimonial-heading"
   >
     <div className="container mx-auto px-4">
@@ -42,7 +42,7 @@ export const TestimonialSection = () => (
       <div className="text-center mb-14 sm:mb-16">
         <span
           className="inline-block text-xs font-semibold tracking-[0.2em] uppercase mb-4"
-          style={{ color: "#7A5C22" }}
+          style={{ color: "var(--brass-text)" }}
         >
           In their words
         </span>
@@ -51,18 +51,18 @@ export const TestimonialSection = () => (
           className="text-3xl sm:text-4xl font-bold text-foreground tracking-tight mb-4"
         >
           Three things people have said{" "}
-          <span style={{ color: "#B4914F" }}>to me.</span>
+          <span style={{ color: "var(--brass)" }}>to me.</span>
         </h2>
         <p
           className="text-base sm:text-lg leading-relaxed max-w-xl mx-auto"
-          style={{ color: "#56514A" }}
+          style={{ color: "var(--charcoal)" }}
         >
           I would rather show you three honest remarks than a wall of praise.
         </p>
       </div>
 
       {/* Three remarks, none above the others */}
-      <div className="max-w-6xl mx-auto grid lg:grid-cols-3 gap-y-12 lg:gap-y-0 divide-y divide-[#D8CDB6] lg:divide-y-0 lg:divide-x">
+      <div className="max-w-6xl mx-auto grid lg:grid-cols-3 gap-y-12 lg:gap-y-0 divide-y divide-bone-strong lg:divide-y-0 lg:divide-x">
         {testimonials.map((t) => (
           <figure
             key={t.attribution}
@@ -71,7 +71,7 @@ export const TestimonialSection = () => (
             <span
               aria-hidden="true"
               className="font-serif leading-none text-5xl sm:text-6xl select-none"
-              style={{ ...serifStack, color: "#B4914F" }}
+              style={{ ...serifStack, color: "var(--brass)" }}
             >
               “
             </span>
@@ -85,12 +85,12 @@ export const TestimonialSection = () => (
             </blockquote>
             <figcaption
               className="mt-auto pt-6 border-t flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.18em]"
-              style={{ borderColor: "#D8CDB6", color: "#7A5C22" }}
+              style={{ borderColor: "var(--bone-strong)", color: "var(--brass-text)" }}
             >
               <span
                 aria-hidden="true"
                 className="inline-block h-px w-8"
-                style={{ background: "#B4914F" }}
+                style={{ background: "var(--brass)" }}
               />
               {t.attribution}
             </figcaption>

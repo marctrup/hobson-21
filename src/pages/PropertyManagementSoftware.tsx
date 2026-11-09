@@ -10,13 +10,13 @@ import { ArrowRight, CheckCircle, Building2, Search, Shield, Users } from "lucid
 import { GlobalHeader } from "@/components/GlobalHeader";
 import { Button } from "@/components/ui/button";
 
-const BRASS = "#B4914F";
-const INK = "#2D2D2D";
-const MUTED = "#6E6A62";
-const LAVENDER_BG = "#F1EBDE";
-const LAVENDER_BORDER = "#E8E1D4";
-const PAPER = "#FCFAF7";
-const RULE = "#F7EDDC";
+const BRASS = "var(--brass)";
+const INK = "var(--ink)";
+const MUTED = "var(--ink-muted)";
+const LAVENDER_BG = "var(--bone-wash)";
+const LAVENDER_BORDER = "var(--bone)";
+const PAPER = "var(--paper)";
+const RULE = "var(--bone-wash)";
 
 const CAPABILITIES = [
   {
@@ -111,7 +111,7 @@ const PropertyManagementSoftware = () => {
         <section
           style={{
             backgroundColor: LAVENDER_BG,
-            borderBottom: `1px solid rgba(180,145,79,0.2)`,
+            borderBottom: `1px solid hsl(var(--highlight-colour) / 0.2)`,
           }}
         >
           <div className="mx-auto max-w-3xl px-6 pt-20 pb-16 text-center">
@@ -200,7 +200,7 @@ const PropertyManagementSoftware = () => {
               return (
                 <div
                   key={cap.title}
-                  className="rounded-[20px] p-7 bg-white shadow-sm transition-all duration-300 hover:shadow-[0_12px_28px_-10px_rgba(180,145,79,0.28)] hover:-translate-y-0.5"
+                  className="rounded-[20px] p-7 bg-white shadow-sm transition-all duration-300 hover:shadow-[0_12px_28px_-10px_hsl(var(--highlight-colour)_/_0.28)] hover:-translate-y-0.5"
                   style={{ border: `1px solid ${LAVENDER_BORDER}` }}
                 >
                   <div
@@ -339,7 +339,7 @@ const PropertyManagementSoftware = () => {
             </h2>
             <p
               className="mt-5 mx-auto max-w-2xl text-[17px] leading-relaxed"
-              style={{ color: "rgba(252,250,247,0.85)" }}
+              style={{ color: "hsl(var(--primary-foreground) / 0.85)" }}
             >
               Hobson does not just tell you the answer. It shows the exact extract, the
               document it came from, and how that document relates to the rest of the
@@ -350,7 +350,7 @@ const PropertyManagementSoftware = () => {
                 asChild
                 size="lg"
                 className="rounded-full px-8 font-semibold"
-                style={{ backgroundColor: BRASS, color: INK }}
+                style={{ backgroundColor: BRASS, color: "hsl(var(--primary-foreground))" }}
               >
                 <Link to="/learn/case-studies">
                   Read the case studies

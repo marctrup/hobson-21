@@ -21,7 +21,7 @@ export const HobsonGateway = ({ className = "" }: { className?: string }) => {
   <a
     href={APP_URL}
     aria-label="Enter this way, please — enter Hobson"
-    className={`group inline-flex items-center gap-3 rounded-none border border-ink/25 bg-paper px-4 py-2 leading-tight shadow-[0_1px_0_rgba(45,45,45,0.06)] outline-none transition-all duration-500 hover:border-brass hover:bg-bone-wash hover:shadow-[0_2px_8px_rgba(45,45,45,0.10)] focus-visible:ring-2 focus-visible:ring-brass/60 ${className}`}
+    className={`group inline-flex items-center gap-3 rounded-none border border-ink/25 bg-paper px-4 py-2 leading-tight shadow-[0_1px_0_hsl(var(--shadow-colour)_/_0.06)] outline-none transition-all duration-500 hover:border-brass hover:bg-bone-wash hover:shadow-[0_2px_8px_hsl(var(--shadow-colour)_/_0.10)] focus-visible:ring-2 focus-visible:ring-brass/60 ${className}`}
   >
     <span className="relative text-[15px] text-ink italic font-bold leading-none tracking-tight" style={serifStack}>
       Enter this way, please
@@ -47,7 +47,7 @@ export const HobsonGatewayMobile = ({ onClick }: { onClick?: () => void }) => {
     href={APP_URL}
     aria-label="Enter this way, please — enter Hobson"
     onClick={onClick}
-    className="group inline-flex w-full max-w-xs items-center justify-between gap-3 rounded-none border border-ink/25 bg-paper px-4 py-3 leading-tight shadow-[0_1px_0_rgba(45,45,45,0.06)] outline-none transition-all duration-500 hover:border-brass hover:bg-bone-wash hover:shadow-[0_2px_8px_rgba(45,45,45,0.10)] focus-visible:ring-2 focus-visible:ring-brass/60"
+    className="group inline-flex w-full max-w-xs items-center justify-between gap-3 rounded-none border border-ink/25 bg-paper px-4 py-3 leading-tight shadow-[0_1px_0_hsl(var(--shadow-colour)_/_0.06)] outline-none transition-all duration-500 hover:border-brass hover:bg-bone-wash hover:shadow-[0_2px_8px_hsl(var(--shadow-colour)_/_0.10)] focus-visible:ring-2 focus-visible:ring-brass/60"
   >
     <span className="relative text-[17px] text-ink italic font-bold leading-none tracking-tight" style={serifStack}>
       Enter this way, please

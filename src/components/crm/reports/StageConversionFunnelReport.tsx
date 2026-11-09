@@ -54,7 +54,7 @@ export const StageConversionFunnelReport = () => {
           <Tooltip formatter={(v: number) => [`${v}`, "Clients"]} />
           <Bar dataKey="count" radius={[0, 4, 4, 0]}>
             {steps.map((s) => (
-              <Cell key={s.key} fill="#8A8478" />
+              <Cell key={s.key} fill="var(--ink-faint)" />
             ))}
           </Bar>
         </BarChart>

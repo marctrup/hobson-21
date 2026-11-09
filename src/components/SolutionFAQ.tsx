@@ -1,7 +1,7 @@
-const BRASS = "#B4914F";
-const INK = "#2D2D2D";
-const MUTED = "#6E6A62";
-const LAVENDER_BORDER = "#E8E1D4";
+const BRASS = "var(--brass)";
+const INK = "var(--ink)";
+const MUTED = "var(--ink-muted)";
+const LAVENDER_BORDER = "var(--bone)";
 
 export type FAQItem = { question: string; answer: string };
 
