@@ -24,6 +24,11 @@ const testimonials: Testimonial[] = [
       "Just used Hobson for the first time as I was updating a tenancy schedule and it was brilliant. Just a simple inquiry, but it means I don’t have to reopen the lease. It saves time.",
     attribution: "CEO of a Family Office",
   },
+  {
+    quote:
+      "If Hobson stayed as it was it would be bloody helpful - Cant wait to see what’s next",
+    attribution: "COO of Asset Management company",
+  },
 ];
 
 export const TestimonialSection = () => (
@@ -45,19 +50,19 @@ export const TestimonialSection = () => (
           id="testimonial-heading"
           className="text-3xl sm:text-4xl font-bold text-foreground tracking-tight mb-4"
         >
-          Two things people have said{" "}
+          Three things people have said{" "}
           <span className="text-foreground">to me.</span>
         </h2>
         <p
           className="text-base sm:text-lg leading-relaxed max-w-xl mx-auto"
           style={{ color: "var(--charcoal)" }}
         >
-          I would rather show you two honest remarks than a wall of praise.
+          I would rather show you three honest remarks than a wall of praise.
         </p>
       </div>
 
-      {/* Two remarks, neither above the other */}
-      <div className="max-w-4xl mx-auto grid lg:grid-cols-2 gap-y-12 lg:gap-y-0 divide-y divide-bone-strong lg:divide-y-0 lg:divide-x">
+      {/* Three remarks, neither above the other */}
+      <div className="max-w-6xl mx-auto grid lg:grid-cols-3 gap-y-12 lg:gap-y-0 divide-y divide-bone-strong lg:divide-y-0 lg:divide-x">
         {testimonials.map((t) => (
           <figure
             key={t.attribution}

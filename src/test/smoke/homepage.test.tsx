@@ -8,6 +8,9 @@ const FAMILY_OFFICE_CEO =
 const REMOVED_COO_REMARK =
   "Last week I didn’t need to refer to any documentation";
 
+const ASSET_MANAGEMENT_COO =
+  "If Hobson stayed as it was it would be bloody helpful - Cant wait to see what’s next";
+
 describe("Homepage", () => {
   it("renders without crashing", () => {
     const { container } = renderWithProviders(<Homepage />);
@@ -20,15 +23,16 @@ describe("Homepage", () => {
     expect(container.textContent).not.toMatch(/Start free\s*—\s*no card required/i);
   });
 
-  it("shows both supplied remarks word for word", () => {
+  it("shows all three supplied remarks word for word", () => {
     const { container } = renderWithProviders(<Homepage />);
     expect(container.textContent).toContain(
       "Walking down the street, I saw our building and wanted to know the next break. I used my phone and asked Hobson. Amazing"
     );
     expect(container.textContent).toContain(FAMILY_OFFICE_CEO);
+    expect(container.textContent).toContain(ASSET_MANAGEMENT_COO);
   });
 
-  it("keeps the remarks to the two supplied attributions and nothing invented", () => {
+  it("keeps the remarks to the three supplied attributions and nothing invented", () => {
     const { container } = renderWithProviders(<Homepage />);
     const captions = Array.from(container.querySelectorAll("figcaption")).map(
       (el) => el.textContent?.trim()
@@ -36,17 +40,19 @@ describe("Homepage", () => {
     expect(captions).toEqual([
       "CEO of an Asset Management company",
       "CEO of a Family Office",
+      "COO of Asset Management company",
     ]);
     expect(container.textContent).not.toContain(REMOVED_COO_REMARK);
     expect(container.textContent).not.toMatch(/[★☆]/);
     expect(container.textContent).not.toMatch(/\b\d+(\.\d+)?\s*(out of|\/)\s*5\b/i);
   });
 
-  it("treats the two remarks alike: same blockquote style, no ranked weight", () => {
+  it("treats the three remarks alike: same blockquote style, no ranked weight", () => {
     const { container } = renderWithProviders(<Homepage />);
     const quotes = Array.from(container.querySelectorAll("blockquote"));
-    expect(quotes).toHaveLength(2);
+    expect(quotes).toHaveLength(3);
     expect(quotes[0].className).toBe(quotes[1].className);
+    expect(quotes[1].className).toBe(quotes[2].className);
   });
 
   it("places the remarks after the benefits and before the closing invitation", () => {
