@@ -26,7 +26,6 @@ const SEED: Message[] = [
   { id: 0, role: "hobson", text: "You've selected 1st Floor at 1 Linear Park.\n\nWhat would you like to know?" },
   { id: 9, role: "user", text: "What is the current rent?" },
   { id: 1, role: "hobson", text: "The current rent is £1,224,882 per annum.\n\nBased on the Underlease and Rent Review Memorandum." },
-  { id: 2, role: "hobson", text: "If something comes to mind that no paper records — an arrangement, a promise, a detail — press + Note below and I'll keep it against this Unit." },
 ];
 
 const SCENARIOS: { label: string; text: string }[] = [
