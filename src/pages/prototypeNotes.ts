@@ -90,6 +90,16 @@ export function confirmationText(note: Note): string {
 /** Notes most recent first, as the header icon lists them. */
 export const byMostRecent = (notes: Note[]) => [...notes].reverse();
 
+/**
+ * Hobson's delete check. He names the note in words rather than re-showing its
+ * card, so pressing Delete never looks like the note has been added again.
+ */
+export function deleteQuestion(note: Note | undefined): string {
+  return note
+    ? `Would you like me to delete this note?\n\n"${note.content}"`
+    : "Would you like me to delete this note?";
+}
+
 /** Hobson's final question: the note itself. */
 export const NOTE_CONTENT_PROMPT = "Please provide the note, which I will keep on file for you.";
 

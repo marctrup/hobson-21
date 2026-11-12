@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   byMostRecent,
   confirmationText,
+  deleteQuestion,
   isListRequest,
   isNoteRequest,
   makeNote,
@@ -89,5 +90,11 @@ describe("prototypeNotes", () => {
     expect(showsNotePrompt({ role: "user", text: "The occupant" }, true)).toBe(false);
     expect(showsNotePrompt(asked, false)).toBe(false);
     expect(showsNotePrompt(undefined, true)).toBe(false);
+  });
+
+  it("asks about deletion in words, naming the note rather than re-showing it", () => {
+    const note = makeNote({ content: "Car space allocated for free", category: "occupancy", visibility: "shared" }, "n1");
+    expect(deleteQuestion(note)).toContain('"Car space allocated for free"');
+    expect(deleteQuestion(undefined)).toBe("Would you like me to delete this note?");
   });
 });

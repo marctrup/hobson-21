@@ -5,6 +5,7 @@ import owlDefault from "@/assets/prototype/owl-default.png";
 import {
   byMostRecent,
   confirmationText,
+  deleteQuestion,
   isListRequest,
   makeNote,
   missingQuestion,
@@ -167,7 +168,7 @@ export default function PrototypeNotes() {
           setDeleting(null);
           say("hobson", "Very well — I've kept the note as it was.");
         } else {
-          say("hobson", "Would you like me to delete this note?", ["Delete note", "Keep note"], note ? [note.id] : undefined);
+          say("hobson", deleteQuestion(note), ["Delete note", "Keep note"]);
         }
         return;
       }
@@ -198,7 +199,7 @@ export default function PrototypeNotes() {
 
   const askDelete = (id: string) => {
     setDeleting(id); setEditingId(null); setDraft(null); setAwaitingContent(false);
-    say("hobson", "Would you like me to delete this note?", ["Delete note", "Keep note"], [id]);
+    say("hobson", deleteQuestion(notes.find((n) => n.id === id)), ["Delete note", "Keep note"]);
   };
 
   const saveEdit = (id: string, text: string) => {
