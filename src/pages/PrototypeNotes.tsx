@@ -8,7 +8,9 @@ import {
   isListRequest,
   makeNote,
   missingQuestion,
+  NOTE_CONTENT_PROMPT,
   parseNoteRequest,
+  showsNotePrompt,
   UNIT_ADDRESS,
   UNIT_LABEL,
   type Note,
@@ -113,6 +115,7 @@ export default function PrototypeNotes() {
     setMessages((m) => [...m.map((x) => ({ ...x, choices: undefined })), { id: nextId.current++, role, text, choices, noteIds }]);
 
   const listNotes = (current: Note[]) => {
+    setDraft(null); setAwaitingContent(false);
     if (current.length === 0) { say("hobson", "I've no notes recorded for the 1st Floor yet. Tell me something and I'll keep one."); return; }
     say("hobson", `Here ${current.length === 1 ? "is the note" : `are the ${current.length} notes`} I've kept for the 1st Floor.`, undefined, byMostRecent(current).map((n) => n.id));
   };
@@ -128,7 +131,7 @@ export default function PrototypeNotes() {
   const askNext = (d: NoteDraft) => {
     if (!d.visibility) say("hobson", "Would you like your note shared or kept private?", ["Shared", "Kept private"]);
     else if (!d.category) say("hobson", "Is your note related to the occupant, or the Unit they reside in?", ["The occupant", "The Unit"]);
-    else if (!d.content) { setAwaitingContent(true); say("hobson", "Please provide the note, which I will keep on file for you."); }
+    else if (!d.content) { setAwaitingContent(true); say("hobson", NOTE_CONTENT_PROMPT); }
     else saveNote(d);
   };
 
@@ -195,7 +198,7 @@ export default function PrototypeNotes() {
   };
 
   const askDelete = (id: string) => {
-    setDeleting(id); setEditingId(null);
+    setDeleting(id); setEditingId(null); setDraft(null); setAwaitingContent(false);
     say("hobson", "Would you like me to delete this note?", ["Delete note", "Keep note"], [id]);
   };
 
@@ -277,7 +280,7 @@ export default function PrototypeNotes() {
               <StickyNote className="h-3.5 w-3.5" aria-hidden />+ Note
             </Button>
             <Button type="button" variant="ghost" size="icon" aria-label="Things you might try" aria-expanded={tryOpen} onClick={() => setTryOpen((o) => !o)} className="h-8 w-8 shrink-0"><Lightbulb className="h-4 w-4" /></Button>
-            <input value={input} onChange={(e) => setInput(e.target.value)} aria-label="Ask Hobson" placeholder={awaitingContent ? "Tell me the note…" : "Ask me about this unit"} className="min-w-0 flex-1 bg-transparent text-sm outline-none placeholder:text-muted-foreground" />
+            <input value={input} onChange={(e) => setInput(e.target.value)} aria-label="Ask Hobson" placeholder={showsNotePrompt(messages[messages.length - 1], !!draft) ? "Tell me the note…" : "Ask me about this unit"} className="min-w-0 flex-1 bg-transparent text-sm outline-none placeholder:text-muted-foreground" />
             <Button type="submit" size="icon" variant="ghost" disabled={!input.trim()} aria-label="Send message" className="h-8 w-8 shrink-0"><ArrowRight className="h-5 w-5" /></Button>
           </form>
         </div>

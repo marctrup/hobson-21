@@ -6,8 +6,10 @@ import {
   isNoteRequest,
   makeNote,
   missingQuestion,
+  NOTE_CONTENT_PROMPT,
   noteContent,
   parseNoteRequest,
+  showsNotePrompt,
   statedCategory,
   statedVisibility,
 } from "./prototypeNotes";
@@ -77,5 +79,15 @@ describe("prototypeNotes", () => {
 
   it("keeps the note body intact when no 'that' phrasing is used", () => {
     expect(noteContent("Note: the lift is out of order.")).toBe("The lift is out of order");
+  });
+
+  it("invites the note only after Hobson has asked for it", () => {
+    const asked = { role: "hobson" as const, text: NOTE_CONTENT_PROMPT };
+    expect(showsNotePrompt(asked, true)).toBe(true);
+    expect(showsNotePrompt({ role: "hobson", text: "Would you like your note shared or kept private?" }, true)).toBe(false);
+    expect(showsNotePrompt({ role: "hobson", text: "Is your note related to the occupant, or the Unit they reside in?" }, true)).toBe(false);
+    expect(showsNotePrompt({ role: "user", text: "The occupant" }, true)).toBe(false);
+    expect(showsNotePrompt(asked, false)).toBe(false);
+    expect(showsNotePrompt(undefined, true)).toBe(false);
   });
 });

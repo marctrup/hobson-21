@@ -89,3 +89,17 @@ export function confirmationText(note: Note): string {
 
 /** Notes most recent first, as the header icon lists them. */
 export const byMostRecent = (notes: Note[]) => [...notes].reverse();
+
+/** Hobson's final question: the note itself. */
+export const NOTE_CONTENT_PROMPT = "Please provide the note, which I will keep on file for you.";
+
+/**
+ * The composer only invites the note once Hobson has actually asked for it:
+ * his request must be the last thing said and a note must still be in progress.
+ */
+export function showsNotePrompt(
+  lastMessage: { role: "user" | "hobson"; text: string } | undefined,
+  hasDraft: boolean,
+): boolean {
+  return hasDraft && lastMessage?.role === "hobson" && lastMessage.text === NOTE_CONTENT_PROMPT;
+}

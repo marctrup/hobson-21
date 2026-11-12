@@ -1,0 +1,58 @@
+import React from "react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { describe, expect, it } from "vitest";
+
+import PrototypeNotes from "@/pages/PrototypeNotes";
+
+const placeholder = () => (screen.getByLabelText("Ask Hobson") as HTMLInputElement).placeholder;
+
+/** Press + Note and answer both questions, so Hobson is now asking for the note itself. */
+async function openNoteToTheContentRequest() {
+  fireEvent.click(screen.getByRole("button", { name: "Add a note" }));
+  expect(placeholder()).toBe("Ask me about this unit");
+
+  fireEvent.click(screen.getByRole("button", { name: "Shared" }));
+  await screen.findByRole("button", { name: "The occupant" });
+  expect(placeholder()).toBe("Ask me about this unit");
+
+  fireEvent.click(screen.getByRole("button", { name: "The occupant" }));
+  await waitFor(() => expect(placeholder()).toBe("Tell me the note…"));
+}
+
+/** Give the note and wait until Hobson has actually kept it. */
+async function giveNote(text: string) {
+  fireEvent.change(screen.getByLabelText("Ask Hobson"), { target: { value: text } });
+  fireEvent.click(screen.getByRole("button", { name: "Send message" }));
+  await screen.findByText(/I've added your note/);
+  await waitFor(() => expect(placeholder()).toBe("Ask me about this unit"));
+}
+
+describe("Prototype Notes composer", () => {
+  it("asks for the note only after the last question", async () => {
+    render(<PrototypeNotes />);
+    expect(placeholder()).toBe("Ask me about this unit");
+    await openNoteToTheContentRequest();
+    expect(screen.getByText("Please provide the note, which I will keep on file for you.")).toBeInTheDocument();
+  });
+
+  it("stops asking for the note once it has been given", async () => {
+    render(<PrototypeNotes />);
+    await openNoteToTheContentRequest();
+    await giveNote("Car space allocated for free to Mr Mark Jones - no paper work provided");
+    const cards = screen.getAllByRole("listitem", { name: /Occupancy note/i });
+    expect(cards[0]).toHaveTextContent("Car space allocated for free to Mr Mark Jones - no paper work provided");
+  });
+
+  it("stops asking for the note when the conversation moves on elsewhere", async () => {
+    render(<PrototypeNotes />);
+    await openNoteToTheContentRequest();
+    await giveNote("Car space allocated for free to Mr Mark Jones - no paper work provided");
+
+    // A second note is underway and Hobson has asked for it...
+    await openNoteToTheContentRequest();
+
+    // ...but the user presses the header note icon instead: the pending note is dropped.
+    fireEvent.click(screen.getByRole("button", { name: /note.*for this Unit/i }));
+    await waitFor(() => expect(placeholder()).toBe("Ask me about this unit"));
+  });
+});
