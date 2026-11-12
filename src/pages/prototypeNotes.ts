@@ -2,7 +2,13 @@
 // Local illustrative state only — nothing is saved anywhere, and notes stay
 // clearly marked as user-added, never confused with knowledge from papers.
 
-export type NoteCategory = "unit" | "occupancy";
+export type NoteCategory = "unit" | "occupancy" | "previous";
+
+/** Previous occupancies, matching the papers marked "No longer current". */
+export const PREVIOUS_OCCUPANCIES = [
+  "Lease · 4 March 2021 · L’Occitane Limited",
+  "Lease · 21 May 2012 · Abbey Cross Trading Limited",
+];
 export type NoteVisibility = "shared" | "private";
 
 export type Note = {
@@ -10,6 +16,7 @@ export type Note = {
   category: NoteCategory;
   visibility: NoteVisibility;
   content: string;
+  occupancy?: string;
   author: string;
   created: string;
   edited?: boolean;
@@ -19,6 +26,7 @@ export type NoteDraft = {
   content: string;
   category?: NoteCategory;
   visibility?: NoteVisibility;
+  occupancy?: string;
 };
 
 export const NOTE_AUTHOR = "Marc T";
@@ -72,6 +80,7 @@ export function makeNote(draft: NoteDraft, id: string): Note {
     category: draft.category ?? "unit",
     visibility: draft.visibility ?? "shared",
     content: draft.content,
+    ...(draft.occupancy ? { occupancy: draft.occupancy } : {}),
     author: NOTE_AUTHOR,
     created: NOTE_DATE,
   };
@@ -79,7 +88,7 @@ export function makeNote(draft: NoteDraft, id: string): Note {
 
 /** Hobson's confirmation once a note is saved. */
 export function confirmationText(note: Note): string {
-  const where = note.category === "occupancy" ? "the current occupancy" : "the Unit";
+  const where = note.category === "occupancy" ? "the current occupancy" : note.category === "previous" ? `the previous occupancy (${note.occupancy})` : "the Unit";
   const who =
     note.visibility === "shared"
       ? "It's shared with everyone who has access to this Unit."

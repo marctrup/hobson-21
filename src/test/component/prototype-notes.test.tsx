@@ -12,10 +12,10 @@ async function openNoteToTheContentRequest() {
   expect(placeholder()).toBe("Ask me about this unit");
 
   fireEvent.click(screen.getByRole("button", { name: "Shared" }));
-  await screen.findByRole("button", { name: "The occupant" });
+  await screen.findByRole("button", { name: "Current Occupancy" });
   expect(placeholder()).toBe("Ask me about this unit");
 
-  fireEvent.click(screen.getByRole("button", { name: "The occupant" }));
+  fireEvent.click(screen.getByRole("button", { name: "Current Occupancy" }));
   await waitFor(() => expect(placeholder()).toBe("Tell me the note…"));
 }
 
@@ -93,5 +93,21 @@ describe("Prototype Notes deleting", () => {
     await screen.findByText(/I've deleted that note/);
     expect(screen.queryByRole("button", { name: /note.*for this Unit/i })).toBeNull();
     expect(screen.queryAllByRole("region", { name: "Saved Unit notes" })).toHaveLength(0);
+  });
+});
+
+describe("Prototype Notes previous occupancy", () => {
+  it("asks which previous occupancy and records it on the note", async () => {
+    render(<PrototypeNotes />);
+    fireEvent.click(screen.getByRole("button", { name: "Add a note" }));
+    fireEvent.click(screen.getByRole("button", { name: "Shared" }));
+    fireEvent.click(await screen.findByRole("button", { name: "Previous Occupancies" }));
+    const lease = await screen.findByRole("button", { name: "Lease · 4 March 2021 · L’Occitane Limited" });
+    expect(screen.getByRole("button", { name: "Lease · 21 May 2012 · Abbey Cross Trading Limited" })).toBeInTheDocument();
+    fireEvent.click(lease);
+    await waitFor(() => expect(placeholder()).toBe("Tell me the note…"));
+    await giveNote("Shop fit-out left in place");
+    const card = screen.getByRole("listitem", { name: "Previous occupancy note" });
+    expect(within(card).getByText(/L’Occitane Limited/)).toBeInTheDocument();
   });
 });

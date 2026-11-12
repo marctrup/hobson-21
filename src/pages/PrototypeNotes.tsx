@@ -16,6 +16,7 @@ import {
   UNIT_LABEL,
   type Note,
   type NoteDraft,
+  PREVIOUS_OCCUPANCIES,
 } from "./prototypeNotes";
 
 // Prototype Notes: adding, seeing, editing and deleting Unit notes entirely
@@ -47,11 +48,12 @@ function NoteEntry({ note, editing, onEdit, onDelete, onSaveEdit, onCancelEdit }
   const [text, setText] = useState(note.content);
   useEffect(() => { if (editing) setText(note.content); }, [editing, note.content]);
   return (
-    <li aria-label={`${note.category === "occupancy" ? "Occupancy" : "Unit"} note`} className="rounded-lg border border-primary/20 bg-background px-3.5 py-3">
+    <li aria-label={`${note.category === "occupancy" ? "Occupancy" : note.category === "previous" ? "Previous occupancy" : "Unit"} note`} className="rounded-lg border border-primary/20 bg-background px-3.5 py-3">
       <div className="flex items-start justify-between gap-2">
         <p className="flex flex-wrap items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-primary">
           User-added note
-          <span className="font-normal normal-case tracking-normal text-ink-muted">· {note.category === "occupancy" ? "Occupant" : "Unit"}</span>
+          <span className="font-normal normal-case tracking-normal text-ink-muted">· {note.category === "occupancy" ? "Current Occupancy" : note.category === "previous" ? "Previous Occupancy" : "Unit"}</span>
+          {note.occupancy && <span className="font-normal normal-case tracking-normal text-ink-muted">· {note.occupancy}</span>}
           {note.visibility === "private" && <span className="flex items-center gap-1 font-normal normal-case tracking-normal text-ink-muted"><Lock className="h-3 w-3" aria-hidden />Private</span>}
         </p>
         {!editing && (
@@ -130,7 +132,8 @@ export default function PrototypeNotes() {
   // + Note flow: Hobson asks (1) shared or private, (2) occupant or Unit, (3) the note itself.
   const askNext = (d: NoteDraft) => {
     if (!d.visibility) say("hobson", "Would you like your note shared or kept private?", ["Shared", "Kept private"]);
-    else if (!d.category) say("hobson", "Is your note related to the occupant, or the Unit they reside in?", ["The occupant", "The Unit"]);
+    else if (!d.category) say("hobson", "Is your note about the Unit, the current occupancy, or a previous occupancy?", ["Unit", "Current Occupancy", "Previous Occupancies"]);
+    else if (d.category === "previous" && !d.occupancy) say("hobson", "Which previous occupancy is your note about? These match the papers marked as “No longer current”.", PREVIOUS_OCCUPANCIES);
     else if (!d.content) { setAwaitingContent(true); say("hobson", NOTE_CONTENT_PROMPT); }
     else saveNote(d);
   };
@@ -180,8 +183,12 @@ export default function PrototypeNotes() {
           if (/private|just me/.test(t)) next = { ...draft, visibility: "private" };
           else if (/share|everyone/.test(t)) next = { ...draft, visibility: "shared" };
         } else if (!draft.category) {
-          if (/occupier|occupant|tenant/.test(t)) next = { ...draft, category: "occupancy" };
+          if (/previous/.test(t)) next = { ...draft, category: "previous" };
+          else if (/current|occupier|occupant|tenant/.test(t)) next = { ...draft, category: "occupancy" };
           else if (/unit/.test(t)) next = { ...draft, category: "unit" };
+        } else if (draft.category === "previous" && !draft.occupancy) {
+          const pick = PREVIOUS_OCCUPANCIES.find((o) => o.toLowerCase() === t || o.toLowerCase().includes(t));
+          if (pick) next = { ...draft, occupancy: pick };
         }
         if (!next) { askNext(draft); return; }
         setDraft(next);
