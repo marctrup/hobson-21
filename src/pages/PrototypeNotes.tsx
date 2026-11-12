@@ -202,7 +202,6 @@ export default function PrototypeNotes() {
     <div className="flex h-screen w-full overflow-hidden bg-bone-wash text-ink">
       <aside className="flex w-[68px] shrink-0 flex-col items-center gap-2 border-r border-bone bg-background py-4">
         <div className="mb-2 grid h-10 w-10 place-items-center" aria-hidden><img src={owlDefault} alt="" className="h-10 w-10 object-contain" /></div>
-        <button type="button" aria-current="page" className="w-12 rounded-lg bg-secondary py-2 text-center text-[10px] font-medium leading-tight text-ink">Unit</button>
         <div className="mt-auto grid h-9 w-9 place-items-center rounded-full bg-bone text-xs font-semibold text-charcoal">MT</div>
       </aside>
 
@@ -220,14 +219,6 @@ export default function PrototypeNotes() {
           </p>
           <Button variant="ghost" size="sm" aria-label="Restart demo" onClick={restart}><RotateCcw className="h-3.5 w-3.5 mr-2" /><span className="max-sm:hidden">Restart demo</span></Button>
         </header>
-
-        <div className="shrink-0 border-b border-bone px-5 pt-3">
-          <p className="text-sm font-semibold">Notes for this Unit</p>
-          <div className="mt-2 flex gap-4 text-xs">
-            <span className="border-b-2 border-ink pb-2 font-medium">Conversation</span>
-            <span className="pb-2 text-ink-muted">Conversations</span>
-          </div>
-        </div>
 
         <div role="log" aria-label="Conversation" className="flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto px-5 py-4">
           {messages.map((m, i) => {
