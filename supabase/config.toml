@@ -75,3 +75,6 @@ verify_jwt = false
 
 [functions.prototype-gate]
 verify_jwt = false
+
+[functions.prototype-transcribe]
+verify_jwt = false

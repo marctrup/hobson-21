@@ -98,3 +98,21 @@ describe("prototypeNotes", () => {
     expect(deleteQuestion(undefined)).toBe("Would you like me to delete this note?");
   });
 });
+
+describe("voice notes", () => {
+  it("keeps the recording with the saved note", async () => {
+    const { makeNote } = await import("./prototypeNotes");
+    const n = makeNote({ content: "Boiler serviced", voice: { url: "blob:x", seconds: 18 } }, "v1");
+    expect(n.voice).toEqual({ url: "blob:x", seconds: 18 });
+  });
+  it("shows length as minutes and seconds", async () => {
+    const { clipLength } = await import("./prototypeNotes");
+    expect(clipLength(18)).toBe("0:18");
+    expect(clipLength(75)).toBe("1:15");
+  });
+  it("asks before keeping what was heard", async () => {
+    const { voiceCheckText, VOICE_CHOICES } = await import("./prototypeNotes");
+    expect(voiceCheckText("Key with porter")).toContain('"Key with porter"');
+    expect(VOICE_CHOICES).toEqual(["Keep note", "Edit wording", "Record again"]);
+  });
+});

@@ -1,9 +1,13 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
-import { ArrowRight, Building2, ChevronDown, ChevronRight, Clock, FileText, Lightbulb, Lock, Map as MapIcon, MessageSquare, Pencil, RotateCcw, StickyNote, Trash2, X } from "lucide-react";
+import { ArrowRight, Building2, ChevronDown, ChevronRight, Clock, FileText, Lightbulb, Loader2, Lock, Mic, Pause, Play, Square, Map as MapIcon, MessageSquare, Pencil, RotateCcw, StickyNote, Trash2, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import owlDefault from "@/assets/prototype/owl-default.png";
 import {
   byMostRecent,
+  clipLength,
+  voiceCheckText,
+  VOICE_CHOICES,
+  type VoiceClip,
   confirmationText,
   deleteQuestion,
   isListRequest,
@@ -18,6 +22,7 @@ import {
   type NoteDraft,
   PREVIOUS_OCCUPANCIES,
 } from "./prototypeNotes";
+import { startRecording, transcribeVoiceNote, type Recording } from "@/lib/voiceNote";
 
 // Prototype Notes: adding, seeing, editing and deleting Unit notes entirely
 // within Hobson's conversation. Local demonstration state only; nothing is saved.
@@ -37,6 +42,33 @@ const SCENARIOS: { label: string; text: string }[] = [
   { label: "Show my notes", text: "Show my notes" },
 ];
 
+const BARS = [5, 9, 14, 8, 12, 18, 11, 7, 15, 10, 6, 13, 17, 9, 12, 7, 14, 10, 5, 11, 16, 8, 12, 6];
+
+function VoicePlayer({ clip }: { clip: VoiceClip }) {
+  const audio = useRef<HTMLAudioElement>(null);
+  const [playing, setPlaying] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const toggle = () => {
+    const a = audio.current;
+    if (!a) return;
+    if (a.paused) void a.play(); else a.pause();
+  };
+  return (
+    <div className="mt-2 flex items-center gap-3 rounded-full border border-primary/20 bg-primary/[0.04] py-1.5 pl-1.5 pr-3.5">
+      <audio ref={audio} src={clip.url} preload="metadata" onPlay={() => setPlaying(true)} onPause={() => setPlaying(false)}
+        onEnded={() => { setPlaying(false); setProgress(0); }}
+        onTimeUpdate={(e) => setProgress(e.currentTarget.currentTime / (clip.seconds || 1))} />
+      <button type="button" onClick={toggle} aria-label={playing ? "Pause voice note" : "Play voice note"} className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-primary text-primary-foreground hover:bg-primary/90">
+        {playing ? <Pause className="h-3.5 w-3.5" aria-hidden /> : <Play className="ml-0.5 h-3.5 w-3.5" aria-hidden />}
+      </button>
+      <span className="flex h-6 flex-1 items-center gap-[3px]" aria-hidden>
+        {BARS.map((h, i) => <span key={i} style={{ height: h }} className={`w-[3px] rounded-full ${i / BARS.length < progress ? "bg-primary" : "bg-primary/30"}`} />)}
+      </span>
+      <span className="shrink-0 text-xs tabular-nums text-ink-muted">{clipLength(clip.seconds)}</span>
+    </div>
+  );
+}
+
 function NoteEntry({ note, editing, onEdit, onDelete, onSaveEdit, onCancelEdit }: {
   note: Note;
   editing: boolean;
@@ -51,7 +83,7 @@ function NoteEntry({ note, editing, onEdit, onDelete, onSaveEdit, onCancelEdit }
     <li aria-label={`${note.category === "occupancy" ? "Occupancy" : note.category === "previous" ? "Previous occupancy" : "Unit"} note`} className="rounded-lg border border-primary/20 bg-background px-3.5 py-3">
       <div className="flex items-start justify-between gap-2">
         <p className="flex flex-wrap items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-primary">
-          User-added note
+          {note.voice ? <span className="flex items-center gap-1"><Mic className="h-3 w-3" aria-hidden />Voice note</span> : "User-added note"}
           <span className="font-normal normal-case tracking-normal text-ink-muted">· {note.category === "occupancy" ? "Current Occupancy" : note.category === "previous" ? "Previous Occupancy" : "Unit"}</span>
           {note.occupancy && <span className="font-normal normal-case tracking-normal text-ink-muted">· {note.occupancy}</span>}
           {note.visibility === "private" && <span className="flex items-center gap-1 font-normal normal-case tracking-normal text-ink-muted"><Lock className="h-3 w-3" aria-hidden />Private</span>}
@@ -63,6 +95,7 @@ function NoteEntry({ note, editing, onEdit, onDelete, onSaveEdit, onCancelEdit }
           </span>
         )}
       </div>
+      {note.voice && <VoicePlayer clip={note.voice} />}
       {editing ? (
         <form className="mt-2 grid gap-2" onSubmit={(e) => { e.preventDefault(); if (text.trim()) onSaveEdit(text.trim()); }}>
           <textarea value={text} onChange={(e) => setText(e.target.value)} aria-label="Edit note" rows={3} autoFocus className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-ring" />
@@ -107,6 +140,13 @@ export default function PrototypeNotes() {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [input, setInput] = useState("");
   const [tryOpen, setTryOpen] = useState(false);
+  const [pendingVoice, setPendingVoice] = useState<{ clip: VoiceClip; text: string } | null>(null);
+  const [recSeconds, setRecSeconds] = useState<number | null>(null);
+  const [levels, setLevels] = useState<number[]>([]);
+  const [hearing, setHearing] = useState(false);
+  const recording = useRef<Recording | null>(null);
+  const recTimer = useRef<number | null>(null);
+  const recStart = useRef(0);
   const nextId = useRef(100);
   const nextNoteId = useRef(1);
   const logEnd = useRef<HTMLDivElement>(null);
@@ -152,11 +192,21 @@ export default function PrototypeNotes() {
     setInput(""); setTryOpen(false);
     say("user", text);
     setTimeout(() => {
+      // Hobson has written out a voice note and is waiting for approval.
+      if (pendingVoice && !awaitingContent) {
+        const t = text.toLowerCase();
+        if (/^keep/.test(t)) { setPendingVoice(null); saveNote({ ...(draft ?? {}), content: pendingVoice.text, voice: pendingVoice.clip }); }
+        else if (/edit|wording|change/.test(t)) { setAwaitingContent(true); setInput(pendingVoice.text); say("hobson", "Of course — adjust the wording below and send it when ready. I'll keep your recording with it."); }
+        else if (/record|again/.test(t)) { URL.revokeObjectURL(pendingVoice.clip.url); setPendingVoice(null); setAwaitingContent(true); say("hobson", NOTE_CONTENT_PROMPT); }
+        else say("hobson", voiceCheckText(pendingVoice.text), VOICE_CHOICES);
+        return;
+      }
       // The + Note button was pressed and Hobson is waiting for the note itself.
       if (awaitingContent) {
         setAwaitingContent(false);
         const body = text.replace(/[.\s]+$/, "");
-        const parsed: NoteDraft = { ...(draft ?? {}), content: body.charAt(0).toUpperCase() + body.slice(1) };
+        const parsed: NoteDraft = { ...(draft ?? {}), content: body.charAt(0).toUpperCase() + body.slice(1), ...(pendingVoice ? { voice: pendingVoice.clip } : {}) };
+        setPendingVoice(null);
         askNext(parsed);
         return;
       }
@@ -164,6 +214,7 @@ export default function PrototypeNotes() {
       if (deleting) {
         const note = notes.find((n) => n.id === deleting);
         if (/^delete/.test(text.toLowerCase())) {
+          if (note?.voice) URL.revokeObjectURL(note.voice.url);
           const remaining = notes.filter((n) => n.id !== deleting);
           setNotes(remaining); setDeleting(null);
           say("hobson", "Done — I've deleted that note. It won't be used in my answers.");
@@ -204,7 +255,52 @@ export default function PrototypeNotes() {
     }, 350);
   };
 
+  const stopTimer = () => { if (recTimer.current) window.clearInterval(recTimer.current); recTimer.current = null; };
+
+  const startVoice = async () => {
+    try {
+      recording.current = await startRecording();
+    } catch {
+      say("hobson", "I couldn't reach your microphone. Please allow microphone access in your browser, or type the note instead.");
+      say("hobson", NOTE_CONTENT_PROMPT);
+      return;
+    }
+    recStart.current = Date.now(); setRecSeconds(0); setLevels([]);
+    recTimer.current = window.setInterval(() => {
+      setRecSeconds((Date.now() - recStart.current) / 1000);
+      setLevels((l) => [...l.slice(-31), recording.current?.level() ?? 0]);
+    }, 120);
+  };
+
+  const cancelVoice = () => { stopTimer(); recording.current?.cancel(); recording.current = null; setRecSeconds(null); };
+
+  const finishVoice = async () => {
+    const rec = recording.current;
+    if (!rec) return;
+    stopTimer(); recording.current = null;
+    const seconds = (Date.now() - recStart.current) / 1000;
+    setRecSeconds(null);
+    let file: File;
+    try { file = await rec.stop(); } catch (e) {
+      say("hobson", e instanceof Error ? e.message : "The recording was empty. Please record again."); say("hobson", NOTE_CONTENT_PROMPT); return;
+    }
+    const clip = { url: URL.createObjectURL(file), seconds };
+    say("user", `Voice note · ${clipLength(seconds)}`);
+    setHearing(true);
+    try {
+      const text = await transcribeVoiceNote(file);
+      setAwaitingContent(false);
+      setPendingVoice({ clip, text });
+      say("hobson", voiceCheckText(text), VOICE_CHOICES);
+    } catch (e) {
+      URL.revokeObjectURL(clip.url);
+      say("hobson", e instanceof Error ? e.message : "I couldn't hear that recording. Please try again.");
+      say("hobson", NOTE_CONTENT_PROMPT);
+    } finally { setHearing(false); }
+  };
+
   const askDelete = (id: string) => {
+    setPendingVoice(null);
     setDeleting(id); setEditingId(null); setDraft(null); setAwaitingContent(false);
     say("hobson", deleteQuestion(notes.find((n) => n.id === id)), ["Delete note", "Keep note"]);
   };
@@ -216,6 +312,7 @@ export default function PrototypeNotes() {
   };
 
   const restart = () => {
+    cancelVoice(); notes.forEach((n) => n.voice && URL.revokeObjectURL(n.voice.url)); setPendingVoice(null);
     setNotes([]); setDraft(null); setAwaitingContent(false); setDeleting(null); setEditingId(null); setInput(""); setTryOpen(false);
     nextId.current = 100; nextNoteId.current = 1; setMessages(SEED);
   };
@@ -289,14 +386,31 @@ export default function PrototypeNotes() {
               {SCENARIOS.map((s) => <button key={s.label} type="button" onClick={() => send(s.text)} className="block w-full rounded-md px-2 py-1.5 text-left hover:bg-paper"><span className="block text-sm text-ink">{s.label}</span><span className="block truncate text-xs text-ink-muted">“{s.text}”</span></button>)}
             </div>
           )}
+          {hearing && <p role="status" className="mb-2 flex items-center gap-2 px-2 text-xs text-ink-muted"><Loader2 className="h-3.5 w-3.5 animate-spin" aria-hidden />Listening to your voice note…</p>}
+          {recSeconds !== null ? (
+            <div role="group" aria-label="Recording a voice note" className="flex items-center gap-3 rounded-full border border-primary/40 bg-primary/[0.04] px-3 py-1.5">
+              <span className="h-2.5 w-2.5 shrink-0 animate-pulse rounded-full bg-destructive" aria-hidden />
+              <span className="w-10 shrink-0 text-sm tabular-nums">{clipLength(recSeconds)}</span>
+              <span className="flex h-7 flex-1 items-center justify-end gap-[3px] overflow-hidden" aria-hidden>
+                {levels.map((l, i) => <span key={i} style={{ height: Math.max(3, l * 26) }} className="w-[3px] shrink-0 rounded-full bg-primary/70" />)}
+              </span>
+              <Button type="button" variant="ghost" size="sm" onClick={cancelVoice} className="h-8 shrink-0 rounded-full text-xs">Cancel</Button>
+              <Button type="button" size="sm" onClick={finishVoice} className="h-8 shrink-0 gap-1 rounded-full text-xs"><Square className="h-3 w-3 fill-current" aria-hidden />Done</Button>
+            </div>
+          ) : (
           <form onSubmit={(e) => { e.preventDefault(); send(input); }} className="flex items-center gap-1 rounded-full border border-input bg-background px-2 py-1.5 focus-within:ring-2 focus-within:ring-ring">
             <Button type="button" variant="outline" size="sm" aria-label="Add a note" onClick={startNote} className="h-8 shrink-0 gap-1 rounded-full border-primary/40 px-3 text-xs font-medium text-primary hover:bg-primary/5 hover:text-primary">
               <StickyNote className="h-3.5 w-3.5" aria-hidden />+ Note
             </Button>
             <Button type="button" variant="ghost" size="icon" aria-label="Things you might try" aria-expanded={tryOpen} onClick={() => setTryOpen((o) => !o)} className="h-8 w-8 shrink-0"><Lightbulb className="h-4 w-4" /></Button>
             <input value={input} onChange={(e) => setInput(e.target.value)} aria-label="Ask Hobson" placeholder={showsNotePrompt(messages[messages.length - 1], !!draft) ? "Tell me the note…" : "Ask me about this unit"} className="min-w-0 flex-1 bg-transparent text-sm outline-none placeholder:text-muted-foreground" />
-            <Button type="submit" size="icon" variant="ghost" disabled={!input.trim()} aria-label="Send message" className="h-8 w-8 shrink-0"><ArrowRight className="h-5 w-5" /></Button>
+            {awaitingContent && !input.trim() && !pendingVoice ? (
+              <Button type="button" size="icon" disabled={hearing} aria-label="Record a voice note" onClick={startVoice} className="h-8 w-8 shrink-0 rounded-full"><Mic className="h-4 w-4" /></Button>
+            ) : (
+              <Button type="submit" size="icon" variant="ghost" disabled={!input.trim()} aria-label="Send message" className="h-8 w-8 shrink-0"><ArrowRight className="h-5 w-5" /></Button>
+            )}
           </form>
+          )}
         </div>
       </section>
 

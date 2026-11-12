@@ -32,7 +32,7 @@ describe("Prototype Notes composer", () => {
     render(<PrototypeNotes />);
     expect(placeholder()).toBe("Ask me about this unit");
     await openNoteToTheContentRequest();
-    expect(screen.getByText("Please provide the note, which I will keep on file for you.")).toBeInTheDocument();
+    expect(screen.getByText("Please provide the note, which I will keep on file for you. You may type it or speak it.")).toBeInTheDocument();
   });
 
   it("stops asking for the note once it has been given", async () => {

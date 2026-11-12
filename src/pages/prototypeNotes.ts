@@ -17,13 +17,18 @@ export type Note = {
   visibility: NoteVisibility;
   content: string;
   occupancy?: string;
+  /** A spoken note keeps its original recording beside the written version. */
+  voice?: VoiceClip;
   author: string;
   created: string;
   edited?: boolean;
 };
 
+export type VoiceClip = { url: string; seconds: number };
+
 export type NoteDraft = {
   content: string;
+  voice?: VoiceClip;
   category?: NoteCategory;
   visibility?: NoteVisibility;
   occupancy?: string;
@@ -81,6 +86,7 @@ export function makeNote(draft: NoteDraft, id: string): Note {
     visibility: draft.visibility ?? "shared",
     content: draft.content,
     ...(draft.occupancy ? { occupancy: draft.occupancy } : {}),
+    ...(draft.voice ? { voice: draft.voice } : {}),
     author: NOTE_AUTHOR,
     created: NOTE_DATE,
   };
@@ -110,7 +116,7 @@ export function deleteQuestion(note: Note | undefined): string {
 }
 
 /** Hobson's final question: the note itself. */
-export const NOTE_CONTENT_PROMPT = "Please provide the note, which I will keep on file for you.";
+export const NOTE_CONTENT_PROMPT = "Please provide the note, which I will keep on file for you. You may type it or speak it.";
 
 /**
  * The composer only invites the note once Hobson has actually asked for it:
@@ -122,3 +128,11 @@ export function showsNotePrompt(
 ): boolean {
   return hasDraft && lastMessage?.role === "hobson" && lastMessage.text === NOTE_CONTENT_PROMPT;
 }
+
+/** Clock-style length of a voice note, e.g. 0:18. */
+export const clipLength = (seconds: number) => `${Math.floor(seconds / 60)}:${String(Math.round(seconds) % 60).padStart(2, "0")}`;
+
+/** Hobson's check after hearing a voice note: the voice is never kept unseen. */
+export const voiceCheckText = (transcript: string) =>
+  `Thank you — I've written out what you said. Shall I keep it as it stands?\n\n"${transcript}"`;
+export const VOICE_CHOICES = ["Keep note", "Edit wording", "Record again"];
