@@ -23,8 +23,8 @@ export type NoteDraft = {
 
 export const NOTE_AUTHOR = "Marc T";
 export const NOTE_DATE = "12 November 2026";
-export const UNIT_LABEL = "1st";
-export const UNIT_ADDRESS = "1 Aldermanbury Square";
+export const UNIT_LABEL = "1st Floor";
+export const UNIT_ADDRESS = "1 Linear Park";
 
 /** True when the message is asking Hobson to keep a note. */
 export const isNoteRequest = (text: string) => /\bnote\b/i.test(text) && !/show|list|what|which|read|see/i.test(text);

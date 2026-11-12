@@ -250,3 +250,5 @@
 
 ## Prototype Back Office — colleagues introduce themselves by name
 - [x] Each colleague's introduction now opens "Hello, I'm The [Name]. " — on the whiteboard and in their chat — before their own words. Because the greeting names them, the illustrated board writes a colleague's sentence without a separate name line above it (Hobson's standing invitation keeps his title), so the full wording still fits at the larger writing size. Measured live: all five sit inside the board at two workspace sizes with nothing clipped; 14 Back Office checks pass. Not published.
+
+- [x] Notes demo: rebuild on supplied background, note icon after creation, notes list output with edit/delete, run through flow
