@@ -248,19 +248,27 @@ export default function PrototypeNotes() {
         </header>
 
         <div role="log" aria-label="Conversation" className="flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto px-5 py-4">
-          {messages.map((m, i) => {
-            const cont = i > 0 && messages[i - 1].role === "hobson" && m.role === "hobson";
+          {messages.map((m) => {
             const shown = (m.noteIds ?? []).map(noteById).filter((n): n is Note => !!n);
             return (
               <div key={m.id} className={`flex min-w-0 flex-col gap-2 ${m.role === "user" ? "items-end" : "items-start"}`}>
                 <div className="flex min-w-0 gap-2">
-                  {m.role === "hobson" && (cont ? <span className="w-9 shrink-0" /> : <img src={owlDefault} alt="Hobson" className="h-9 w-9 shrink-0 object-contain" />)}
+                  {m.role === "hobson" && <img src={owlDefault} alt="Hobson" className="h-9 w-9 shrink-0 object-contain" />}
                   <div className={`min-w-0 rounded-lg px-3.5 py-2.5 ${m.role === "user" ? "bg-primary text-primary-foreground" : "bg-secondary"}`}>
                     <p className="whitespace-pre-line break-words text-sm leading-relaxed">{m.text}</p>
                   </div>
                 </div>
                 {shown.length > 0 && <div className="w-full pl-11"><SavedNotes count={shown.length}>{shown.map(entry(`m${m.id}`))}</SavedNotes></div>}
-                {m.choices && <div className="ml-11 flex flex-wrap gap-2">{m.choices.map((c, k) => <Button key={c} size="sm" variant={k === 0 ? "outline" : "ghost"} onClick={() => send(c)}>{c}</Button>)}</div>}
+                {m.choices && (
+                  <div role="group" aria-label="Choose an answer" className="ml-11 grid gap-1.5">
+                    {m.choices.map((c) => (
+                      <button key={c} type="button" onClick={() => send(c)} className="group flex w-fit items-center gap-2.5 rounded-full border border-primary/25 bg-background px-3.5 py-2 text-left text-sm text-ink transition-colors hover:border-primary hover:bg-primary/5">
+                        <span className="h-3.5 w-3.5 shrink-0 rounded-full border-2 border-primary/50 transition-colors group-hover:border-primary group-hover:bg-primary" aria-hidden />
+                        {c}
+                      </button>
+                    ))}
+                  </div>
+                )}
               </div>
             );
           })}
