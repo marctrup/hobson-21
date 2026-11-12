@@ -110,18 +110,20 @@ export default function PrototypeNotes() {
     say("hobson", confirmationText(note), undefined, [note.id]);
   };
 
+  // + Note flow: Hobson asks (1) shared or private, (2) occupant or Unit, (3) the note itself.
   const askNext = (d: NoteDraft) => {
-    const q = missingQuestion(d);
-    if (q === "category") say("hobson", "Is this note about the current occupier or the Unit generally?", ["Current occupier", "General Unit"]);
-    else if (q === "visibility") say("hobson", "Would you like to share this note with everyone who has access to this Unit, or keep it private?", ["Share with all", "Keep private"]);
+    if (!d.visibility) say("hobson", "Would you like your note shared or kept private?", ["Shared", "Kept private"]);
+    else if (!d.category) say("hobson", "Is your note related to the occupant, or the Unit they reside in?", ["The occupant", "The Unit"]);
+    else if (!d.content) { setAwaitingContent(true); say("hobson", "Please provide the note, which I will keep on file for you."); }
     else saveNote(d);
   };
 
   const startNote = () => {
     setTryOpen(false);
     if (awaitingContent || draft) return;
-    setAwaitingContent(true);
-    say("hobson", "Of course — what would you like me to note?");
+    const fresh: NoteDraft = { content: "" };
+    setDraft(fresh);
+    askNext(fresh);
   };
 
   const send = (raw: string) => {
@@ -133,8 +135,8 @@ export default function PrototypeNotes() {
       // The + Note button was pressed and Hobson is waiting for the note itself.
       if (awaitingContent) {
         setAwaitingContent(false);
-        const parsed: NoteDraft = { content: text.replace(/[.\s]+$/, ""), category: undefined, visibility: undefined };
-        setDraft(parsed);
+        const body = text.replace(/[.\s]+$/, "");
+        const parsed: NoteDraft = { ...(draft ?? {}), content: body.charAt(0).toUpperCase() + body.slice(1) };
         askNext(parsed);
         return;
       }
@@ -157,12 +159,12 @@ export default function PrototypeNotes() {
       if (draft) {
         const t = text.toLowerCase();
         let next: NoteDraft | null = null;
-        if (!draft.category) {
-          if (/current occupier|occupier|occupant|tenant/.test(t)) next = { ...draft, category: "occupancy" };
-          else if (/general unit|unit generally|unit itself/.test(t)) next = { ...draft, category: "unit" };
-        } else if (!draft.visibility) {
-          if (/share with all|share|everyone/.test(t)) next = { ...draft, visibility: "shared" };
-          else if (/keep private|private|just me/.test(t)) next = { ...draft, visibility: "private" };
+        if (!draft.visibility) {
+          if (/private|just me/.test(t)) next = { ...draft, visibility: "private" };
+          else if (/share|everyone/.test(t)) next = { ...draft, visibility: "shared" };
+        } else if (!draft.category) {
+          if (/occupier|occupant|tenant/.test(t)) next = { ...draft, category: "occupancy" };
+          else if (/unit/.test(t)) next = { ...draft, category: "unit" };
         }
         if (!next) { askNext(draft); return; }
         setDraft(next);
