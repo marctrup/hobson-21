@@ -95,7 +95,6 @@ function NoteEntry({ note, editing, onEdit, onDelete, onSaveEdit, onCancelEdit }
           </span>
         )}
       </div>
-      {note.voice && <VoicePlayer clip={note.voice} />}
       {editing ? (
         <form className="mt-2 grid gap-2" onSubmit={(e) => { e.preventDefault(); if (text.trim()) onSaveEdit(text.trim()); }}>
           <textarea value={text} onChange={(e) => setText(e.target.value)} aria-label="Edit note" rows={3} autoFocus className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-ring" />
@@ -107,7 +106,8 @@ function NoteEntry({ note, editing, onEdit, onDelete, onSaveEdit, onCancelEdit }
       ) : (
         <p className="mt-1.5 text-sm leading-relaxed text-ink">{note.content}</p>
       )}
-      <p className="mt-2 flex items-center gap-1.5 text-xs text-ink-muted"><Clock className="h-3 w-3" aria-hidden />{note.created} · Added by {note.author}{note.edited ? " · Edited" : ""}</p>
+      {note.voice && <VoicePlayer clip={note.voice} />}
+      <p className="mt-2 flex items-center gap-1.5 text-xs text-ink-muted"><Clock className="h-3 w-3" aria-hidden />{note.created} · {note.voice ? "Recorded" : "Added"} by {note.author}{note.edited ? " · Edited" : ""}</p>
     </li>
   );
 }
