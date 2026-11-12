@@ -216,7 +216,6 @@ export default function PrototypeNotes() {
   const noteById = (id: string) => notes.find((n) => n.id === id);
 
   const [openUnit, setOpenUnit] = useState("1st Floor");
-  const sorted = byMostRecent(notes);
   const entry = (where: string) => (n: Note) => (
     <NoteEntry key={n.id} note={n} editing={editingId === `${where}:${n.id}`}
       onEdit={() => setEditingId(`${where}:${n.id}`)} onDelete={() => askDelete(n.id)}
@@ -298,19 +297,16 @@ export default function PrototypeNotes() {
           <ul className="mt-2 grid gap-1.5">
             {UNITS.map((u) => {
               const open = openUnit === u.name;
-              const mine = u.name === UNIT_LABEL;
               return (
                 <li key={u.name} className="rounded-lg border border-bone bg-background">
                   <button type="button" aria-expanded={open} onClick={() => setOpenUnit(open ? "" : u.name)} className="flex w-full items-center gap-2 px-3 py-2.5 text-left text-sm">
                     <Building2 className="h-4 w-4 text-ink-muted" aria-hidden />
                     <span className="font-medium">{u.name}</span>
                     <span className="text-xs text-ink-muted">{u.papers} {u.papers === 1 ? "paper" : "papers"}</span>
-                    {mine && notes.length > 0 && <span className="flex items-center gap-1 rounded bg-primary/10 px-1.5 py-0.5 text-[11px] font-semibold text-primary"><StickyNote className="h-3 w-3" aria-hidden />{notes.length}</span>}
                     {open ? <ChevronDown className="ml-auto h-4 w-4 text-ink-muted" /> : <ChevronRight className="ml-auto h-4 w-4 text-ink-muted" />}
                   </button>
                   {open && (
                     <div className="grid gap-2 border-t border-bone px-3 py-3">
-                      {mine && sorted.length > 0 && <SavedNotes count={sorted.length}>{sorted.map(entry("panel"))}</SavedNotes>}
                       <p className="text-[11px] font-medium uppercase tracking-[0.12em] text-ink-muted">Occupation history</p>
                       <p className="flex items-center gap-2 text-sm"><FileText className="h-4 w-4 text-ink-muted" aria-hidden />Renewal Lease <span className="rounded bg-secondary px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide">Current</span></p>
                     </div>

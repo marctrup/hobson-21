@@ -1,5 +1,5 @@
 import React from "react";
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
 import PrototypeNotes from "@/pages/PrototypeNotes";
@@ -54,6 +54,22 @@ describe("Prototype Notes composer", () => {
     // ...but the user presses the header note icon instead: the pending note is dropped.
     fireEvent.click(screen.getByRole("button", { name: /note.*for this Unit/i }));
     await waitFor(() => expect(placeholder()).toBe("Ask me about this unit"));
+  });
+});
+
+describe("Prototype Notes stay in the chat", () => {
+  it("keeps notes out of the Papers panel, which holds only read papers", async () => {
+    render(<PrototypeNotes />);
+    await openNoteToTheContentRequest();
+    await giveNote("Car space allocated for free to Mr Mark Jones");
+
+    const papers = screen.getByRole("region", { name: "Papers" });
+    expect(within(papers).queryAllByRole("region", { name: "Saved Unit notes" })).toHaveLength(0);
+    expect(within(papers).queryByText(/Car space allocated/)).toBeNull();
+    expect(within(papers).queryAllByRole("button", { name: /^Delete note/ })).toHaveLength(0);
+
+    // The note itself is still held in the conversation.
+    expect(screen.getAllByRole("region", { name: "Saved Unit notes" }).length).toBeGreaterThan(0);
   });
 });
 
