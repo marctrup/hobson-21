@@ -23,7 +23,7 @@ type Message = { id: number; role: "user" | "hobson"; text: string; choices?: st
 const SEED: Message[] = [
   { id: 0, role: "user", text: "What is the current rent?" },
   { id: 1, role: "hobson", text: "The current rent is £1,224,882 per annum.\n\nBased on the Underlease and Rent Review Memorandum." },
-  { id: 2, role: "hobson", text: "If something comes to mind that no paper records — an arrangement, a promise, a detail — do tell me and I'll keep a note of it against this Unit." },
+  { id: 2, role: "hobson", text: "If something comes to mind that no paper records — an arrangement, a promise, a detail — press + Note below and I'll keep it against this Unit." },
 ];
 
 const SCENARIOS: { label: string; text: string }[] = [
@@ -84,6 +84,7 @@ export default function PrototypeNotes() {
   const [messages, setMessages] = useState<Message[]>(SEED);
   const [notes, setNotes] = useState<Note[]>([]);
   const [draft, setDraft] = useState<NoteDraft | null>(null);
+  const [awaitingContent, setAwaitingContent] = useState(false);
   const [deleting, setDeleting] = useState<string | null>(null);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [input, setInput] = useState("");
@@ -116,12 +117,27 @@ export default function PrototypeNotes() {
     else saveNote(d);
   };
 
+  const startNote = () => {
+    setTryOpen(false);
+    if (awaitingContent || draft) return;
+    setAwaitingContent(true);
+    say("hobson", "Of course — what would you like me to note?");
+  };
+
   const send = (raw: string) => {
     const text = raw.trim();
     if (!text) return;
     setInput(""); setTryOpen(false);
     say("user", text);
     setTimeout(() => {
+      // The + Note button was pressed and Hobson is waiting for the note itself.
+      if (awaitingContent) {
+        setAwaitingContent(false);
+        const parsed: NoteDraft = { content: text.replace(/[.\s]+$/, ""), category: undefined, visibility: undefined };
+        setDraft(parsed);
+        askNext(parsed);
+        return;
+      }
       // A delete confirmation is awaiting an answer.
       if (deleting) {
         const note = notes.find((n) => n.id === deleting);
@@ -174,7 +190,7 @@ export default function PrototypeNotes() {
   };
 
   const restart = () => {
-    setNotes([]); setDraft(null); setDeleting(null); setEditingId(null); setInput(""); setTryOpen(false);
+    setNotes([]); setDraft(null); setAwaitingContent(false); setDeleting(null); setEditingId(null); setInput(""); setTryOpen(false);
     nextId.current = SEED.length; nextNoteId.current = 1; setMessages(SEED);
   };
 
@@ -184,7 +200,7 @@ export default function PrototypeNotes() {
     <div className="flex h-screen w-full overflow-hidden bg-bone-wash text-ink">
       <aside className="flex w-[68px] shrink-0 flex-col items-center gap-2 border-r border-bone bg-background py-4">
         <div className="mb-2 grid h-10 w-10 place-items-center" aria-hidden><img src={owlDefault} alt="" className="h-10 w-10 object-contain" /></div>
-        <button type="button" aria-current="page" className="w-12 rounded-lg bg-secondary py-2 text-center text-[10px] font-medium leading-tight text-ink">Notes</button>
+        <button type="button" aria-current="page" className="w-12 rounded-lg bg-secondary py-2 text-center text-[10px] font-medium leading-tight text-ink">Unit</button>
         <div className="mt-auto grid h-9 w-9 place-items-center rounded-full bg-bone text-xs font-semibold text-charcoal">MT</div>
       </aside>
 
@@ -249,8 +265,11 @@ export default function PrototypeNotes() {
             </div>
           )}
           <form onSubmit={(e) => { e.preventDefault(); send(input); }} className="flex items-center gap-1 rounded-full border border-input bg-background px-3 py-2 focus-within:ring-2 focus-within:ring-ring">
+            <Button type="button" variant="outline" size="sm" aria-label="Add a note" onClick={startNote} className="h-8 shrink-0 gap-1 rounded-full border-primary/40 px-3 text-xs font-medium text-primary hover:bg-primary/5 hover:text-primary">
+              <StickyNote className="h-3.5 w-3.5" aria-hidden />+ Note
+            </Button>
             <Button type="button" variant="ghost" size="icon" aria-label="Things you might try" aria-expanded={tryOpen} onClick={() => setTryOpen((o) => !o)} className="h-9 w-9 shrink-0"><Lightbulb className="h-5 w-5" /></Button>
-            <input value={input} onChange={(e) => setInput(e.target.value)} aria-label="Ask Hobson" placeholder="Ask me about this unit" className="min-w-0 flex-1 bg-transparent text-sm outline-none placeholder:text-muted-foreground" />
+            <input value={input} onChange={(e) => setInput(e.target.value)} aria-label="Ask Hobson" placeholder={awaitingContent ? "Tell me the note…" : "Ask me about this unit"} className="min-w-0 flex-1 bg-transparent text-sm outline-none placeholder:text-muted-foreground" />
             <Button type="submit" size="icon" variant="ghost" disabled={!input.trim()} aria-label="Send message" className="h-8 w-8 shrink-0"><ArrowRight className="h-5 w-5" /></Button>
           </form>
         </div>
