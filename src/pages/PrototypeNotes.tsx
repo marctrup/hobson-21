@@ -404,11 +404,7 @@ export default function PrototypeNotes() {
             </Button>
             <Button type="button" variant="ghost" size="icon" aria-label="Things you might try" aria-expanded={tryOpen} onClick={() => setTryOpen((o) => !o)} className="h-8 w-8 shrink-0"><Lightbulb className="h-4 w-4" /></Button>
             <input value={input} onChange={(e) => setInput(e.target.value)} aria-label="Ask Hobson" placeholder={showsNotePrompt(messages[messages.length - 1], !!draft) ? "Tell me the note…" : "Ask me about this unit"} className="min-w-0 flex-1 bg-transparent text-sm outline-none placeholder:text-muted-foreground" />
-            {awaitingContent && !input.trim() && !pendingVoice ? (
-              <Button type="button" size="icon" disabled={hearing} aria-label="Record a voice note" onClick={startVoice} className="h-8 w-8 shrink-0 rounded-full"><Mic className="h-4 w-4" /></Button>
-            ) : (
               <Button type="submit" size="icon" variant="ghost" disabled={!input.trim()} aria-label="Send message" className="h-8 w-8 shrink-0"><ArrowRight className="h-5 w-5" /></Button>
-            )}
           </form>
           )}
         </div>

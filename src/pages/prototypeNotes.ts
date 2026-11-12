@@ -17,7 +17,7 @@ export type Note = {
   visibility: NoteVisibility;
   content: string;
   occupancy?: string;
-  /** A spoken note keeps its original recording beside the written version. */
+  /** A spoken note keeps its original recording beside the written version (recording withdrawn from the composer; phone dictation is suggested instead). */
   voice?: VoiceClip;
   author: string;
   created: string;
@@ -116,7 +116,7 @@ export function deleteQuestion(note: Note | undefined): string {
 }
 
 /** Hobson's final question: the note itself. */
-export const NOTE_CONTENT_PROMPT = "Please provide the note, which I will keep on file for you. You may type it or speak it.";
+export const NOTE_CONTENT_PROMPT = "Please provide the note, which I will keep on file for you. Type it, or tap the microphone on your phone's keyboard and simply speak — your phone will write it out for you.";
 
 /**
  * The composer only invites the note once Hobson has actually asked for it:
