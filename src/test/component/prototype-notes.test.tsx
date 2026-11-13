@@ -67,9 +67,13 @@ describe("Prototype Notes composer", () => {
     // A second note is underway and Hobson has asked for it...
     await openNoteToTheContentRequest();
 
-    // ...but the user presses the header note icon instead: the pending note is dropped.
+    // ...viewing notes opens the side panel without disturbing the pending note.
     fireEvent.click(screen.getByRole("button", { name: /note.*for this Unit/i }));
-    await waitFor(() => expect(screen.queryByLabelText("Your note")).toBeNull());
+    const panel = await screen.findByRole("region", { name: "Unit notes" });
+    expect(within(panel).getByText(/Car space allocated/)).toBeTruthy();
+    expect(screen.getByLabelText("Your note")).toBeTruthy();
+    fireEvent.click(within(panel).getByRole("button", { name: "Close notes" }));
+    expect(screen.queryByRole("region", { name: "Unit notes" })).toBeNull();
   });
 });
 

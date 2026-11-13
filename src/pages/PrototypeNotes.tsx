@@ -184,6 +184,7 @@ export default function PrototypeNotes() {
   const [input, setInput] = useState("");
   const [tryOpen, setTryOpen] = useState(false);
   const [actionsOpen, setActionsOpen] = useState(false);
+  const [notesOpen, setNotesOpen] = useState(false);
   const [situation, setSituation] = useState<Situation | null>(null);
   const [askingSituation, setAskingSituation] = useState(false);
   const [pendingVoice, setPendingVoice] = useState<{ clip: VoiceClip; text: string } | null>(null);
@@ -229,7 +230,8 @@ export default function PrototypeNotes() {
   const listNotes = (current: Note[]) => {
     setDraft(null); setAwaitingContent(false);
     if (current.length === 0) { say("hobson", "I've no notes recorded for the 1st Floor yet. Tell me something and I'll keep one."); return; }
-    say("hobson", `Here ${current.length === 1 ? "is the note" : `are the ${current.length} notes`} I've kept for the 1st Floor.`, undefined, byMostRecent(current).map((n) => n.id));
+    setNotesOpen(true);
+    say("hobson", `I've opened ${current.length === 1 ? "the note" : `the ${current.length} notes`} I've kept for the 1st Floor beside our conversation.`);
   };
 
   const saveNote = (complete: NoteDraft) => {
@@ -399,7 +401,7 @@ export default function PrototypeNotes() {
 
   const restart = () => {
     cancelVoice(); notes.forEach((n) => n.voice && URL.revokeObjectURL(n.voice.url)); setPendingVoice(null);
-    setNotes([]); setDraft(null); setAwaitingContent(false); setDeleting(null); setEditingId(null); setInput(""); setTryOpen(false); setActionsOpen(false);
+    setNotes([]); setDraft(null); setAwaitingContent(false); setDeleting(null); setEditingId(null); setInput(""); setTryOpen(false); setActionsOpen(false); setNotesOpen(false);
     nextId.current = 100; nextNoteId.current = 1; setSituation(null); setAskingSituation(false); setMessages(SEED);
   };
 
@@ -413,7 +415,7 @@ export default function PrototypeNotes() {
   );
 
   return (
-    <div className="flex h-screen w-full overflow-hidden bg-background text-ink">
+    <div className="relative flex h-screen w-full overflow-hidden bg-background text-ink">
       <aside className="flex w-[150px] shrink-0 flex-col gap-1 border-r border-bone bg-background px-3 py-4 max-md:hidden">
         <img src={owlDefault} alt="" aria-hidden className="mb-4 h-9 w-9 object-contain" />
         <span className="flex items-center gap-2 rounded-md px-2 py-1.5 text-sm text-ink-muted"><Building2 className="h-4 w-4" aria-hidden />Portfolio</span>
@@ -429,7 +431,7 @@ export default function PrototypeNotes() {
             <span className="text-ink-muted">›</span>
             <span className="shrink-0 font-semibold">{UNIT_LABEL}</span>
             {notes.length > 0 && (
-              <button type="button" onClick={() => listNotes(notes)} aria-label={`Show ${notes.length} ${notes.length === 1 ? "note" : "notes"} for this Unit`} className="ml-1 flex shrink-0 items-center gap-1 rounded-md bg-primary/10 px-2 py-1 text-xs font-semibold text-primary hover:bg-primary/15">
+              <button type="button" onClick={() => setNotesOpen((o) => !o)} aria-pressed={notesOpen} aria-label={`Show ${notes.length} ${notes.length === 1 ? "note" : "notes"} for this Unit`} className="ml-1 flex shrink-0 items-center gap-1 rounded-md bg-primary/10 px-2 py-1 text-xs font-semibold text-primary hover:bg-primary/15">
                 <StickyNote className="h-3.5 w-3.5" aria-hidden />{notes.length}
               </button>
             )}
@@ -513,6 +515,16 @@ export default function PrototypeNotes() {
           )}
         </div>
       </section>
+
+      {notesOpen && notes.length > 0 && (
+        <section aria-label="Unit notes" className="flex w-[340px] shrink-0 flex-col border-r border-bone bg-background shadow-lg max-lg:absolute max-lg:inset-y-0 max-lg:right-0 max-lg:z-30 max-lg:w-[min(340px,92vw)] animate-in slide-in-from-right-4">
+          <header className="flex h-14 shrink-0 items-center justify-between gap-2 border-b border-bone px-4">
+            <p className="flex items-center gap-2 text-sm"><StickyNote className="h-4 w-4 text-primary" aria-hidden /><span className="font-semibold">Notes</span><span className="text-xs text-ink-muted">{notes.length}</span></p>
+            <Button type="button" variant="ghost" size="icon" className="h-8 w-8" aria-label="Close notes" onClick={() => setNotesOpen(false)}><X className="h-4 w-4" aria-hidden /></Button>
+          </header>
+          <ul className="grid flex-1 content-start gap-2 overflow-y-auto p-3">{byMostRecent(notes).map(entry("panel"))}</ul>
+        </section>
+      )}
 
       <section aria-label="Papers" className="flex min-w-0 flex-1 flex-col bg-primary/[0.02] max-lg:hidden">
         <div className="flex h-14 shrink-0 items-center gap-4 border-b border-bone px-6 text-sm">
