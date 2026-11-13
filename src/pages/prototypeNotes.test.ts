@@ -10,7 +10,7 @@ import {
   NOTE_CONTENT_PROMPT,
   noteContent,
   parseNoteRequest,
-  showsNotePrompt,
+  isNoteFieldMessage,
   statedCategory,
   statedVisibility,
 } from "./prototypeNotes";
@@ -83,13 +83,10 @@ describe("prototypeNotes", () => {
   });
 
   it("invites the note only after Hobson has asked for it", () => {
-    const asked = { role: "hobson" as const, text: NOTE_CONTENT_PROMPT };
-    expect(showsNotePrompt(asked, true)).toBe(true);
-    expect(showsNotePrompt({ role: "hobson", text: "Would you like your note shared or kept private?" }, true)).toBe(false);
-    expect(showsNotePrompt({ role: "hobson", text: "Is your note related to the occupant, or the Unit they reside in?" }, true)).toBe(false);
-    expect(showsNotePrompt({ role: "user", text: "The occupant" }, true)).toBe(false);
-    expect(showsNotePrompt(asked, false)).toBe(false);
-    expect(showsNotePrompt(undefined, true)).toBe(false);
+    const asked = { role: "hobson" as const, text: NOTE_CONTENT_PROMPT, noteField: true };
+    expect(isNoteFieldMessage(asked)).toBe(true);
+    expect(isNoteFieldMessage({ role: "hobson", text: "Would you like your note shared or kept private?" })).toBe(false);
+    expect(isNoteFieldMessage({ role: "user", text: "The occupant", noteField: true })).toBe(false);
   });
 
   it("asks about deletion in words, naming the note rather than re-showing it", () => {

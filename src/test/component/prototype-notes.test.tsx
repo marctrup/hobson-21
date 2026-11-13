@@ -16,15 +16,16 @@ async function openNoteToTheContentRequest() {
   expect(placeholder()).toBe("Ask me about this unit");
 
   fireEvent.click(screen.getByRole("button", { name: "Current Occupancy" }));
-  await waitFor(() => expect(placeholder()).toBe("Tell me the note…"));
+  await screen.findByLabelText("Your note");
+  expect(placeholder()).toBe("Ask me about this unit");
 }
 
-/** Give the note and wait until Hobson has actually kept it. */
+/** Give the note through the dedicated field and wait until Hobson has kept it. */
 async function giveNote(text: string) {
-  fireEvent.change(screen.getByLabelText("Ask Hobson"), { target: { value: text } });
-  fireEvent.click(screen.getByRole("button", { name: "Send message" }));
+  fireEvent.change(screen.getByLabelText("Your note"), { target: { value: text } });
+  fireEvent.click(screen.getByRole("button", { name: "Save note" }));
   await screen.findByText(/I've added your note/);
-  await waitFor(() => expect(placeholder()).toBe("Ask me about this unit"));
+  expect(screen.queryByLabelText("Your note")).toBeNull();
 }
 
 describe("Prototype Notes composer", () => {
@@ -53,7 +54,7 @@ describe("Prototype Notes composer", () => {
 
     // ...but the user presses the header note icon instead: the pending note is dropped.
     fireEvent.click(screen.getByRole("button", { name: /note.*for this Unit/i }));
-    await waitFor(() => expect(placeholder()).toBe("Ask me about this unit"));
+    await waitFor(() => expect(screen.queryByLabelText("Your note")).toBeNull());
   });
 });
 
@@ -105,7 +106,7 @@ describe("Prototype Notes previous occupancy", () => {
     const lease = await screen.findByRole("button", { name: "Lease · 4 March 2021 · L’Occitane Limited" });
     expect(screen.getByRole("button", { name: "Lease · 21 May 2012 · Abbey Cross Trading Limited" })).toBeInTheDocument();
     fireEvent.click(lease);
-    await waitFor(() => expect(placeholder()).toBe("Tell me the note…"));
+    await screen.findByLabelText("Your note");
     await giveNote("Shop fit-out left in place");
     const card = screen.getByRole("listitem", { name: "Previous occupancy note" });
     expect(within(card).getByText(/L’Occitane Limited/)).toBeInTheDocument();

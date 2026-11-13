@@ -119,15 +119,11 @@ export function deleteQuestion(note: Note | undefined): string {
 export const NOTE_CONTENT_PROMPT = "Please provide the note, which I will keep on file for you. Type it, or tap the microphone on your phone's keyboard and simply speak — your phone will write it out for you.";
 
 /**
- * The composer only invites the note once Hobson has actually asked for it:
- * his request must be the last thing said and a note must still be in progress.
+ * True when Hobson's message carries the dedicated note field, so the note is
+ * written inside his request rather than in the ordinary chat composer.
  */
-export function showsNotePrompt(
-  lastMessage: { role: "user" | "hobson"; text: string } | undefined,
-  hasDraft: boolean,
-): boolean {
-  return hasDraft && lastMessage?.role === "hobson" && lastMessage.text === NOTE_CONTENT_PROMPT;
-}
+export const isNoteFieldMessage = (m: { role: "user" | "hobson"; text?: string; noteField?: boolean }) =>
+  m.role === "hobson" && m.noteField === true;
 
 /** Clock-style length of a voice note, e.g. 0:18. */
 export const clipLength = (seconds: number) => `${Math.floor(seconds / 60)}:${String(Math.round(seconds) % 60).padStart(2, "0")}`;

@@ -15,7 +15,7 @@ import {
   missingQuestion,
   NOTE_CONTENT_PROMPT,
   parseNoteRequest,
-  showsNotePrompt,
+  isNoteFieldMessage,
   UNIT_ADDRESS,
   UNIT_LABEL,
   type Note,
@@ -27,7 +27,7 @@ import { startRecording, transcribeVoiceNote, type Recording } from "@/lib/voice
 // Prototype Notes: adding, seeing, editing and deleting Unit notes entirely
 // within Hobson's conversation. Local demonstration state only; nothing is saved.
 
-type Message = { id: number; role: "user" | "hobson"; text: string; choices?: string[]; noteIds?: string[] };
+type Message = { id: number; role: "user" | "hobson"; text: string; choices?: string[]; noteIds?: string[]; noteField?: boolean };
 
 const SEED: Message[] = [
   { id: 0, role: "hobson", text: "You've selected 1st Floor at 1 Linear Park.\n\nWhat would you like to know?" },
@@ -112,6 +112,23 @@ function NoteEntry({ note, editing, onEdit, onDelete, onSaveEdit, onCancelEdit }
   );
 }
 
+/** The dedicated note field, written inside Hobson's request so a note is never mistaken for an ordinary chat message. */
+function NoteField({ onSave }: { onSave: (text: string) => void }) {
+  const [text, setText] = useState("");
+  return (
+    <form className="mt-2.5 grid gap-2 border-t border-primary/15 pt-2.5" onSubmit={(e) => { e.preventDefault(); if (text.trim()) onSave(text.trim()); }}>
+      <label htmlFor="note-field" className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-primary">
+        <StickyNote className="h-3 w-3" aria-hidden />Your note
+      </label>
+      <textarea id="note-field" aria-label="Your note" value={text} onChange={(e) => setText(e.target.value)} rows={3} autoFocus
+        placeholder="Write your note here…" className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-ring" />
+      <span className="flex gap-2">
+        <Button type="submit" size="sm" disabled={!text.trim()} className="gap-1.5"><StickyNote className="h-3.5 w-3.5" aria-hidden />Save note</Button>
+      </span>
+    </form>
+  );
+}
+
 function SavedNotes({ count, children }: { count: number; children: ReactNode }) {
   return (
     <section aria-label="Saved Unit notes" className="w-full max-w-xl rounded-xl border border-primary/15 bg-primary/[0.04] p-3">
@@ -153,8 +170,8 @@ export default function PrototypeNotes() {
 
   useEffect(() => { logEnd.current?.scrollIntoView?.({ block: "end" }); }, [messages, editingId]);
 
-  const say = (role: Message["role"], text: string, choices?: string[], noteIds?: string[]) =>
-    setMessages((m) => [...m.map((x) => ({ ...x, choices: undefined })), { id: nextId.current++, role, text, choices, noteIds }]);
+  const say = (role: Message["role"], text: string, choices?: string[], noteIds?: string[], noteField?: boolean) =>
+    setMessages((m) => [...m.map((x) => ({ ...x, choices: undefined })), { id: nextId.current++, role, text, choices, noteIds, noteField }]);
 
   const listNotes = (current: Note[]) => {
     setDraft(null); setAwaitingContent(false);
@@ -174,8 +191,19 @@ export default function PrototypeNotes() {
     if (!d.visibility) say("hobson", "Would you like your note shared or kept private?", ["Shared", "Kept private"]);
     else if (!d.category) say("hobson", "Is your note about the Unit, the current occupancy, or a previous occupancy?", ["Unit", "Current Occupancy", "Previous Occupancies"]);
     else if (d.category === "previous" && !d.occupancy) say("hobson", "Which previous occupancy is your note about? These match the papers marked as “No longer current”.", PREVIOUS_OCCUPANCIES);
-    else if (!d.content) { setAwaitingContent(true); say("hobson", NOTE_CONTENT_PROMPT); }
+    else if (!d.content) { setAwaitingContent(true); say("hobson", NOTE_CONTENT_PROMPT, undefined, undefined, true); }
     else saveNote(d);
+  };
+
+  // The note itself arrives through the dedicated field inside Hobson's
+  // request, never through the ordinary composer.
+  const saveNoteContent = (raw: string) => {
+    if (!awaitingContent) return;
+    setAwaitingContent(false);
+    const body = raw.replace(/[.\s]+$/, "");
+    const parsed: NoteDraft = { ...(draft ?? {}), content: body.charAt(0).toUpperCase() + body.slice(1), ...(pendingVoice ? { voice: pendingVoice.clip } : {}) };
+    setPendingVoice(null);
+    askNext(parsed);
   };
 
   const startNote = () => {
@@ -201,14 +229,12 @@ export default function PrototypeNotes() {
         else say("hobson", voiceCheckText(pendingVoice.text), VOICE_CHOICES);
         return;
       }
-      // The + Note button was pressed and Hobson is waiting for the note itself.
-      if (awaitingContent) {
-        setAwaitingContent(false);
-        const body = text.replace(/[.\s]+$/, "");
-        const parsed: NoteDraft = { ...(draft ?? {}), content: body.charAt(0).toUpperCase() + body.slice(1), ...(pendingVoice ? { voice: pendingVoice.clip } : {}) };
-        setPendingVoice(null);
-        askNext(parsed);
-        return;
+      // A note was awaiting its dedicated field, but the user wrote in the
+      // ordinary composer instead: the pending note is dropped and the
+      // message is treated as a fresh request.
+      const wasAwaitingNote = awaitingContent;
+      if (wasAwaitingNote) {
+        setAwaitingContent(false); setDraft(null); setPendingVoice(null);
       }
       // A delete confirmation is awaiting an answer.
       if (deleting) {
@@ -226,8 +252,8 @@ export default function PrototypeNotes() {
         }
         return;
       }
-      // A draft note is awaiting an answer.
-      if (draft) {
+      // A draft note is awaiting an answer (not its dedicated field).
+      if (draft && !wasAwaitingNote) {
         const t = text.toLowerCase();
         let next: NoteDraft | null = null;
         if (!draft.visibility) {
@@ -352,14 +378,16 @@ export default function PrototypeNotes() {
         </header>
 
         <div role="log" aria-label="Conversation" className="flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto px-5 py-4">
-          {messages.map((m) => {
+          {messages.map((m, i) => {
             const shown = (m.noteIds ?? []).map(noteById).filter((n): n is Note => !!n);
+            const fieldOpen = isNoteFieldMessage(m) && awaitingContent && i === messages.length - 1;
             return (
               <div key={m.id} className={`flex min-w-0 flex-col gap-2 ${m.role === "user" ? "items-end" : "items-start"}`}>
                 <div className="flex min-w-0 gap-2">
                   {m.role === "hobson" && <img src={owlDefault} alt="Hobson" className="h-9 w-9 shrink-0 object-contain" />}
                   <div className={`min-w-0 rounded-lg px-3.5 py-2.5 ${m.role === "user" ? "bg-primary text-primary-foreground" : "bg-secondary"}`}>
                     <p className="whitespace-pre-line break-words text-sm leading-relaxed">{m.text}</p>
+                    {fieldOpen && <NoteField onSave={saveNoteContent} />}
                   </div>
                 </div>
                 {shown.length > 0 && <div className="w-full pl-11"><SavedNotes count={shown.length}>{shown.map(entry(`m${m.id}`))}</SavedNotes></div>}
@@ -403,7 +431,7 @@ export default function PrototypeNotes() {
               <StickyNote className="h-3.5 w-3.5" aria-hidden />+ Note
             </Button>
             <Button type="button" variant="ghost" size="icon" aria-label="Things you might try" aria-expanded={tryOpen} onClick={() => setTryOpen((o) => !o)} className="h-8 w-8 shrink-0"><Lightbulb className="h-4 w-4" /></Button>
-            <input value={input} onChange={(e) => setInput(e.target.value)} aria-label="Ask Hobson" placeholder={showsNotePrompt(messages[messages.length - 1], !!draft) ? "Tell me the note…" : "Ask me about this unit"} className="min-w-0 flex-1 bg-transparent text-sm outline-none placeholder:text-muted-foreground" />
+            <input value={input} onChange={(e) => setInput(e.target.value)} aria-label="Ask Hobson" placeholder="Ask me about this unit" className="min-w-0 flex-1 bg-transparent text-sm outline-none placeholder:text-muted-foreground" />
               <Button type="submit" size="icon" variant="ghost" disabled={!input.trim()} aria-label="Send message" className="h-8 w-8 shrink-0"><ArrowRight className="h-5 w-5" /></Button>
           </form>
           )}
