@@ -129,7 +129,7 @@ describe("Prototype Notes previous occupancy", () => {
 });
 
 describe("Prototype Notes chat actions", () => {
-  it.each(["Upload papers", "Update the unit status"])("keeps %s illustrative and cancels an unfinished note", async (action) => {
+  it.each(["Upload papers"])("keeps %s illustrative and cancels an unfinished note", async (action) => {
     render(<PrototypeNotes />);
     await openNoteToTheContentRequest();
     fireEvent.change(screen.getByLabelText("Your note"), { target: { value: "An unfinished note" } });
@@ -140,5 +140,23 @@ describe("Prototype Notes chat actions", () => {
     expect(screen.getByText(/not available in this Notes demonstration yet/)).toBeInTheDocument();
     startNoteFromMenu();
     expect(screen.getByRole("button", { name: "Shared" })).toBeInTheDocument();
+  });
+
+  it("records several current situations, kept apart from occupation history, and can clear them", () => {
+    render(<PrototypeNotes />);
+    fireEvent.click(screen.getByRole("button", { name: "Chat actions" }));
+    fireEvent.click(screen.getByRole("button", { name: /Record the Unit's current situation/ }));
+    fireEvent.click(screen.getByRole("checkbox", { name: "Vacant" }));
+    fireEvent.click(screen.getByRole("checkbox", { name: "Available to let" }));
+    fireEvent.click(screen.getByRole("button", { name: "Confirm situation" }));
+    expect(screen.getByText(/recorded the 1st Floor as vacant and available to let/)).toBeInTheDocument();
+    expect(screen.getByLabelText(/Current situation: Vacant, Available to let\. Recorded by user, Marc T/)).toBeInTheDocument();
+    expect(screen.getByText("Current")).toBeInTheDocument();
+    fireEvent.click(screen.getByRole("button", { name: "Chat actions" }));
+    fireEvent.click(screen.getByRole("button", { name: /Record the Unit's current situation/ }));
+    fireEvent.click(screen.getByRole("checkbox", { name: "Vacant" }));
+    fireEvent.click(screen.getByRole("checkbox", { name: "Available to let" }));
+    fireEvent.click(screen.getByRole("button", { name: "Clear situation" }));
+    expect(screen.queryByLabelText(/Current situation:/)).toBeNull();
   });
 });

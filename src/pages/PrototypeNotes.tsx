@@ -28,7 +28,31 @@ import { startRecording, transcribeVoiceNote, type Recording } from "@/lib/voice
 // Prototype Notes: adding, seeing, editing and deleting Unit notes entirely
 // within Hobson's conversation. Local demonstration state only; nothing is saved.
 
-type Message = { id: number; role: "user" | "hobson"; text: string; choices?: string[]; noteIds?: string[]; noteField?: boolean };
+type Message = { id: number; role: "user" | "hobson"; text: string; choices?: string[]; noteIds?: string[]; noteField?: boolean; situationField?: boolean };
+
+// The Unit's current situation is the user's own record, kept apart from the
+// occupation history read from papers; labels may combine.
+const SITUATIONS = ["Vacant", "Available to let", "Being refurbished"] as const;
+type Situation = { labels: string[]; by: string; date: string };
+
+function SituationField({ initial, onConfirm }: { initial: string[]; onConfirm: (labels: string[]) => void }) {
+  const [picked, setPicked] = useState<string[]>(initial);
+  const toggle = (l: string) => setPicked((p) => p.includes(l) ? p.filter((x) => x !== l) : [...p, l]);
+  return (
+    <div role="group" aria-label="Current situation" className="mt-3 grid gap-1.5">
+      {SITUATIONS.map((l) => (
+        <label key={l} className="flex cursor-pointer items-center gap-2.5 rounded-md border border-primary/20 bg-background px-3 py-2 text-sm">
+          <input type="checkbox" checked={picked.includes(l)} onChange={() => toggle(l)} className="h-4 w-4 accent-primary" />{l}
+        </label>
+      ))}
+      <Button type="button" size="sm" disabled={picked.length === 0 && initial.length === 0} onClick={() => onConfirm(SITUATIONS.filter((l) => picked.includes(l)))} className="mt-1 w-fit">
+        {picked.length === 0 ? "Clear situation" : "Confirm situation"}
+      </Button>
+    </div>
+  );
+}
+
+const listWords = (ls: string[]) => ls.length < 2 ? ls.join("") : `${ls.slice(0, -1).join(", ")} and ${ls[ls.length - 1]}`;
 
 const SEED: Message[] = [
   { id: 0, role: "hobson", text: "You've selected 1st Floor at 1 Linear Park.\n\nWhat would you like to know?" },
@@ -160,6 +184,8 @@ export default function PrototypeNotes() {
   const [input, setInput] = useState("");
   const [tryOpen, setTryOpen] = useState(false);
   const [actionsOpen, setActionsOpen] = useState(false);
+  const [situation, setSituation] = useState<Situation | null>(null);
+  const [askingSituation, setAskingSituation] = useState(false);
   const [pendingVoice, setPendingVoice] = useState<{ clip: VoiceClip; text: string } | null>(null);
   const [recSeconds, setRecSeconds] = useState<number | null>(null);
   const [levels, setLevels] = useState<number[]>([]);
@@ -173,8 +199,27 @@ export default function PrototypeNotes() {
 
   useEffect(() => { logEnd.current?.scrollIntoView?.({ block: "end" }); }, [messages, editingId]);
 
-  const say = (role: Message["role"], text: string, choices?: string[], noteIds?: string[], noteField?: boolean) =>
-    setMessages((m) => [...m.map((x) => ({ ...x, choices: undefined })), { id: nextId.current++, role, text, choices, noteIds, noteField }]);
+  const say = (role: Message["role"], text: string, choices?: string[], noteIds?: string[], noteField?: boolean, situationField?: boolean) => {
+    if (!situationField) setAskingSituation(false);
+    setMessages((m) => [...m.map((x) => ({ ...x, choices: undefined })), { id: nextId.current++, role, text, choices, noteIds, noteField, situationField }]);
+  };
+
+  const askSituation = () => {
+    setActionsOpen(false); setTryOpen(false);
+    setDraft(null); setAwaitingContent(false); setPendingVoice(null); setDeleting(null); setEditingId(null);
+    setAskingSituation(true);
+    say("hobson", "What is the current situation with the 1st Floor?\n\nYou can choose more than one.", undefined, undefined, false, true);
+  };
+
+  const confirmSituation = (labels: string[]) => {
+    if (labels.length === 0) {
+      setSituation(null);
+      say("hobson", "I've cleared the recorded situation for the 1st Floor. Its occupation history from the papers is unchanged.");
+      return;
+    }
+    setSituation({ labels, by: "Marc T", date: new Date().toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" }) });
+    say("hobson", `I've recorded the 1st Floor as ${listWords(labels.map((l) => l.toLowerCase()))}. I'll keep this separate from its occupation history.`);
+  };
 
   const listNotes = (current: Note[]) => {
     setDraft(null); setAwaitingContent(false);
@@ -218,12 +263,10 @@ export default function PrototypeNotes() {
     askNext(fresh);
   };
 
-  const previewAction = (action: "papers" | "status") => {
+  const previewAction = (action: "papers") => {
     setActionsOpen(false); setTryOpen(false);
     setDraft(null); setAwaitingContent(false); setPendingVoice(null); setDeleting(null); setEditingId(null);
-    say("hobson", action === "papers"
-      ? "Paper uploads are not available in this Notes demonstration yet. I have not uploaded or read any new papers."
-      : "Unit status updates are not available in this Notes demonstration yet. The Unit’s status has not been changed.");
+    if (action === "papers") say("hobson", "Paper uploads are not available in this Notes demonstration yet. I have not uploaded or read any new papers.");
   };
 
   const send = (raw: string) => {
@@ -352,7 +395,7 @@ export default function PrototypeNotes() {
   const restart = () => {
     cancelVoice(); notes.forEach((n) => n.voice && URL.revokeObjectURL(n.voice.url)); setPendingVoice(null);
     setNotes([]); setDraft(null); setAwaitingContent(false); setDeleting(null); setEditingId(null); setInput(""); setTryOpen(false); setActionsOpen(false);
-    nextId.current = 100; nextNoteId.current = 1; setMessages(SEED);
+    nextId.current = 100; nextNoteId.current = 1; setSituation(null); setAskingSituation(false); setMessages(SEED);
   };
 
   const noteById = (id: string) => notes.find((n) => n.id === id);
@@ -386,6 +429,11 @@ export default function PrototypeNotes() {
               </button>
             )}
           </p>
+          {situation && (
+            <span title={`Recorded by user · ${situation.by} · ${situation.date}`} aria-label={`Current situation: ${situation.labels.join(", ")}. Recorded by user, ${situation.by}, ${situation.date}`} className="flex min-w-0 flex-wrap gap-1">
+              {situation.labels.map((l) => <span key={l} className="rounded-full border border-primary/30 px-2 py-0.5 text-[11px] font-medium text-primary">{l}</span>)}
+            </span>
+          )}
           <Button variant="ghost" size="sm" aria-label="Restart demo" onClick={restart}><RotateCcw className="h-3.5 w-3.5 sm:mr-2" /><span className="max-sm:hidden">Restart</span></Button>
         </header>
 
@@ -393,6 +441,7 @@ export default function PrototypeNotes() {
           {messages.map((m, i) => {
             const shown = (m.noteIds ?? []).map(noteById).filter((n): n is Note => !!n);
             const fieldOpen = isNoteFieldMessage(m) && awaitingContent && i === messages.length - 1;
+            const situationOpen = m.situationField && askingSituation && i === messages.length - 1;
             return (
               <div key={m.id} className={`flex min-w-0 flex-col gap-2 ${m.role === "user" ? "items-end" : "items-start"}`}>
                 <div className="flex min-w-0 gap-2">
@@ -400,6 +449,7 @@ export default function PrototypeNotes() {
                   <div className={`min-w-0 rounded-lg px-3.5 py-2.5 ${m.role === "user" ? "bg-primary text-primary-foreground" : "bg-secondary"}`}>
                     <p className="whitespace-pre-line break-words text-sm leading-relaxed">{m.text}</p>
                     {fieldOpen && <NoteField onSave={saveNoteContent} />}
+                    {situationOpen && <SituationField initial={situation?.labels ?? []} onConfirm={confirmSituation} />}
                   </div>
                 </div>
                 {shown.length > 0 && <div className="w-full pl-11"><SavedNotes count={shown.length}>{shown.map(entry(`m${m.id}`))}</SavedNotes></div>}
@@ -445,10 +495,10 @@ export default function PrototypeNotes() {
                   <Plus className="h-5 w-5" aria-hidden />
                 </Button>
               </PopoverTrigger>
-              <PopoverContent side="top" align="start" className="w-64 p-1.5" aria-label="Chat actions">
+              <PopoverContent side="top" align="start" className="w-72 p-1.5" aria-label="Chat actions">
                 <Button type="button" variant="ghost" onClick={startNote} className="w-full justify-start gap-3 px-3 font-normal"><StickyNote className="h-4 w-4 text-primary" aria-hidden />Add a Note</Button>
                 <Button type="button" variant="ghost" onClick={() => previewAction("papers")} className="w-full justify-start gap-3 px-3 font-normal"><Upload className="h-4 w-4 text-muted-foreground" aria-hidden />Upload papers</Button>
-                <Button type="button" variant="ghost" onClick={() => previewAction("status")} className="w-full justify-start gap-3 px-3 font-normal"><Building2 className="h-4 w-4 text-muted-foreground" aria-hidden />Update the unit status</Button>
+                <Button type="button" variant="ghost" onClick={askSituation} className="h-auto w-full items-start justify-start gap-3 whitespace-normal px-3 py-2 text-left font-normal"><Building2 className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground" aria-hidden /><span><span className="block">Record the Unit's current situation</span><span className="block text-xs text-muted-foreground">Tell Hobson whether a Unit is vacant, available to let or being refurbished.</span></span></Button>
               </PopoverContent>
             </Popover>
             <Button type="button" variant="ghost" size="icon" aria-label="Things you might try" aria-expanded={tryOpen} onClick={() => setTryOpen((o) => !o)} className="h-8 w-8 shrink-0"><Lightbulb className="h-4 w-4" /></Button>
@@ -481,6 +531,13 @@ export default function PrototypeNotes() {
                   </button>
                   {open && (
                     <div className="grid gap-2 border-t border-bone px-3 py-3">
+                      {u.name === "1st Floor" && situation && (
+                        <div className="mb-1 rounded-md bg-secondary/60 px-2.5 py-2">
+                          <p className="text-[11px] font-medium uppercase tracking-[0.12em] text-ink-muted">Current situation · Recorded by user</p>
+                          <p className="mt-1 text-sm">{situation.labels.join(" · ")}</p>
+                          <p className="text-xs text-ink-muted">{situation.by} · {situation.date}</p>
+                        </div>
+                      )}
                       <p className="text-[11px] font-medium uppercase tracking-[0.12em] text-ink-muted">Occupation history</p>
                       <p className="flex items-center gap-2 text-sm"><FileText className="h-4 w-4 text-ink-muted" aria-hidden />Renewal Lease <span className="rounded bg-secondary px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide">Current</span></p>
                     </div>
