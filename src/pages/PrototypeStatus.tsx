@@ -62,18 +62,13 @@ const SCENARIOS = [
 const lower = (ls: string[]) => listWords(ls.map((l) => l.toLowerCase()));
 const placeById = (id: string | null) => STATUS_PLACES.find((p) => p.id === id) ?? null;
 
-/** Split ring: a slice per situation, grey for Units with nothing recorded. */
+/** Complete ring: one situation fills it, two split it in half, three into thirds — never a part ring. */
 function ringFor(places: StatusPlace[], book: SituationBook, filter: Filter) {
   const counts = portfolioCounts(book, places);
   const labels = SITUATIONS.filter((l) => counts[l] && (filter === "All" || filter === l));
-  const total = places.reduce((n, p) => n + p.units.length, 0);
-  const recorded = unitsMatching(book, places, filter);
-  const quiet = Math.max(total - recorded, 0);
-  const sum = labels.reduce((n, l) => n + counts[l], 0) + quiet;
-  if (!sum || !labels.length) return null;
-  let at = 0;
-  const parts = labels.map((l) => { const from = at; at += (counts[l] / sum) * 360; return `${TONE[l].color} ${from}deg ${at}deg`; });
-  parts.push(`hsl(var(--border)) ${at}deg 360deg`);
+  if (!labels.length) return null;
+  const step = 360 / labels.length;
+  const parts = labels.map((l, i) => `${TONE[l].color} ${i * step}deg ${(i + 1) * step}deg`);
   return `conic-gradient(${parts.join(", ")})`;
 }
 
