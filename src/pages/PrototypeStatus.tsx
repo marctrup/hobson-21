@@ -20,7 +20,7 @@ const TODAY = "13 November 2026";
 const CURRENT_KEY = unitKey(CURRENT.placeId, CURRENT.unit);
 
 const TONE: Record<SituationLabel, { color: string; Icon: typeof Home; hint: string }> = {
-  Unoccupied: { color: "var(--situation-unoccupied)", Icon: Home, hint: "No one is in occupation" },
+  Vacant: { color: "var(--situation-vacant)", Icon: Home, hint: "No one is in occupation" },
   Available: { color: "var(--situation-available)", Icon: KeyRound, hint: "Being marketed or ready to let" },
 };
 
@@ -33,28 +33,28 @@ const SEED: Message[] = [{
 }];
 
 // A few Units open with situations already recorded, showing the combinations
-// real records carry: unoccupied and available together, or either one alone.
+// real records carry: vacant and available together, or either one alone.
 const SAMPLE: SituationBook = {
-  [unitKey("colmore", "1st Floor")]: { labels: ["Unoccupied", "Available"], by: AUTHOR, date: TODAY },
-  [unitKey("colmore", "2nd Floor")]: { labels: ["Unoccupied"], by: AUTHOR, date: TODAY },
+  [unitKey("colmore", "1st Floor")]: { labels: ["Vacant", "Available"], by: AUTHOR, date: TODAY },
+  [unitKey("colmore", "2nd Floor")]: { labels: ["Vacant"], by: AUTHOR, date: TODAY },
   [unitKey("colmore", "Ground Floor Shop")]: { labels: ["Available"], by: AUTHOR, date: TODAY },
-  [unitKey("st-pauls", "5th Floor")]: { labels: ["Unoccupied", "Available"], by: AUTHOR, date: TODAY },
+  [unitKey("st-pauls", "5th Floor")]: { labels: ["Vacant", "Available"], by: AUTHOR, date: TODAY },
   [unitKey("paragon", "Unit 3")]: { labels: ["Available"], by: AUTHOR, date: TODAY },
-  [unitKey("paragon", "Unit 4")]: { labels: ["Unoccupied"], by: AUTHOR, date: TODAY },
-  [unitKey("clyde", "Workshop")]: { labels: ["Unoccupied"], by: AUTHOR, date: TODAY },
-  [unitKey("wharf", "3rd Floor")]: { labels: ["Unoccupied", "Available"], by: AUTHOR, date: TODAY },
-  [unitKey("wharf", "4th Floor")]: { labels: ["Unoccupied", "Available"], by: AUTHOR, date: TODAY },
+  [unitKey("paragon", "Unit 4")]: { labels: ["Vacant"], by: AUTHOR, date: TODAY },
+  [unitKey("clyde", "Workshop")]: { labels: ["Vacant"], by: AUTHOR, date: TODAY },
+  [unitKey("wharf", "3rd Floor")]: { labels: ["Vacant", "Available"], by: AUTHOR, date: TODAY },
+  [unitKey("wharf", "4th Floor")]: { labels: ["Vacant", "Available"], by: AUTHOR, date: TODAY },
   [unitKey("wharf", "7th Floor")]: { labels: ["Available"], by: AUTHOR, date: TODAY },
   [unitKey("shoreditch", "Ground Floor")]: { labels: ["Available"], by: AUTHOR, date: TODAY },
-  [unitKey("kings-cross", "2nd Floor")]: { labels: ["Unoccupied"], by: AUTHOR, date: TODAY },
-  [unitKey("kings-cross", "5th Floor")]: { labels: ["Unoccupied"], by: AUTHOR, date: TODAY },
-  [unitKey("southwark", "1st Floor")]: { labels: ["Unoccupied", "Available"], by: AUTHOR, date: TODAY },
+  [unitKey("kings-cross", "2nd Floor")]: { labels: ["Vacant"], by: AUTHOR, date: TODAY },
+  [unitKey("kings-cross", "5th Floor")]: { labels: ["Vacant"], by: AUTHOR, date: TODAY },
+  [unitKey("southwark", "1st Floor")]: { labels: ["Vacant", "Available"], by: AUTHOR, date: TODAY },
   [unitKey("camden", "Ground Floor")]: { labels: ["Available"], by: AUTHOR, date: TODAY },
-  [unitKey("stratford", "3rd Floor")]: { labels: ["Unoccupied"], by: AUTHOR, date: TODAY },
+  [unitKey("stratford", "3rd Floor")]: { labels: ["Vacant"], by: AUTHOR, date: TODAY },
 };
 
 const SCENARIOS = [
-  { label: "Find what's unoccupied", text: "Which Units are unoccupied?" },
+  { label: "Find what's vacant", text: "Which Units are vacant?" },
   { label: "Ask about a place", text: "What's happening in Birmingham?" },
 ];
 
@@ -324,7 +324,7 @@ export default function PrototypeStatus() {
     if (intent.kind === "here") return describeCurrent();
     if (intent.kind === "filter") return showFilter(intent.label);
     if (intent.kind === "place") return describePlace(intent.placeId);
-    say("hobson", "In this demonstration I can record how the Unit you're at stands today and show it on the map. Use + to begin, or ask me what's unoccupied or available.");
+    say("hobson", "In this demonstration I can record how the Unit you're at stands today and show it on the map. Use + to begin, or ask me what's vacant or available.");
   };
 
   const restart = () => {
