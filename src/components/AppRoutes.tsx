@@ -50,6 +50,7 @@ const PrototypeContacts = lazy(() => import("../pages/PrototypeContacts"));
 const PrototypeCompliance = lazy(() => import("../pages/PrototypeCompliance"));
 const PrototypeSecurity = lazy(() => import("../pages/PrototypeSecurity"));
 const PrototypeNotes = lazy(() => import("../pages/PrototypeNotes"));
+const PrototypeStatus = lazy(() => import("../pages/PrototypeStatus"));
 const PrototypeBackOffice = lazy(() => import("../pages/PrototypeBackOffice"));
 const PrototypeGate = lazy(() =>
   import("../components/prototype/PrototypeGate").then((m) => ({ default: m.PrototypeGate }))
@@ -221,6 +222,7 @@ const AppContent = () => {
               <Route path="/prototype-compliance" element={<PrototypeGate scope="unit"><PrototypeCompliance /></PrototypeGate>} />
               <Route path="/prototype-security" element={<PrototypeGate scope="unit"><PrototypeSecurity /></PrototypeGate>} />
               <Route path="/prototype-notes" element={<PrototypeGate scope="unit"><PrototypeNotes /></PrototypeGate>} />
+              <Route path="/prototype-status" element={<PrototypeGate scope="unit"><PrototypeStatus /></PrototypeGate>} />
               <Route path="/prototype-back-office" element={<PrototypeGate scope="backoffice"><PrototypeBackOffice /></PrototypeGate>} />
               {/* Old prototype address — redirect, never 404 */}
               <Route path="/prototype" element={<Navigate to="/prototype-work" replace />} />

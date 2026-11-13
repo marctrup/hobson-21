@@ -136,6 +136,10 @@ All colors MUST be HSL.
     --warning: #8F5A14;
     --warning-bg: #F7EDDC;
     --warning-border: #E6D2AE;
+    /* Prototype Status: user-recorded Unit situations on the map. */
+    --situation-vacant: #D9485F;
+    --situation-let: #2F9E6A;
+    --situation-refurb: #E08A1E;
     --info: var(--ink);
     --info-bg: var(--bone-wash);
     --info-border: var(--bone);
@@ -514,3 +518,11 @@ html { caret-color: var(--ink); }
   .classroom-broker { top: 62%; } .classroom-architect { top: 62%; }
   .classroom-teacher { top: 56%; }
 }
+
+/* Prototype Status map: quiet basemap so recorded situations carry the colour. */
+.status-map .leaflet-tile-pane { filter: grayscale(1) contrast(0.9) brightness(1.06); }
+@keyframes status-bloom { 0% { transform: scale(0.4); opacity: 0.9; } 100% { transform: scale(2.6); opacity: 0; } }
+.status-bloom { animation: status-bloom 1.6s ease-out 2; }
+@keyframes status-breathe { 0%,100% { box-shadow: 0 0 0 0 hsl(var(--primary) / 0.35); } 50% { box-shadow: 0 0 0 10px hsl(var(--primary) / 0); } }
+.status-breathe { animation: status-breathe 1.8s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) { .status-bloom, .status-breathe { animation: none; } }
