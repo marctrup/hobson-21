@@ -4,12 +4,12 @@ import { CURRENT, STATUS_PLACES, interpret, labelCounts, placeMatches, situation
 const colmore = STATUS_PLACES.find((p) => p.id === "colmore")!;
 const book: SituationBook = {
   [unitKey("colmore", "1st Floor")]: { labels: ["Unoccupied", "Available"], by: "Marc T", date: "13 November 2026" },
-  [unitKey("colmore", "2nd Floor")]: { labels: ["Being refurbished"], by: "Marc T", date: "13 November 2026" },
+  [unitKey("colmore", "2nd Floor")]: { labels: ["Available"], by: "Marc T", date: "13 November 2026" },
 };
 
 describe("prototype status", () => {
   it("counts a Unit with two labels under both", () => {
-    expect(labelCounts(book, colmore)).toEqual({ Unoccupied: 1, Available: 1, "Being refurbished": 1 });
+    expect(labelCounts(book, colmore)).toEqual({ Unoccupied: 1, Available: 2 });
   });
   it("a place with no recorded situations never matches, even for All", () => {
     expect(placeMatches(book, STATUS_PLACES[0], "All")).toBe(false);
@@ -35,7 +35,7 @@ describe("prototype status", () => {
     const none = withoutLabel(one, key, "Available");
     expect(none[key]).toBeUndefined();
     // other Units are untouched, and an unknown key changes nothing
-    expect(none[unitKey("colmore", "2nd Floor")].labels).toEqual(["Being refurbished"]);
+    expect(none[unitKey("colmore", "2nd Floor")].labels).toEqual(["Available"]);
     expect(withoutLabel(book, "nowhere::nothing", "Unoccupied")).toBe(book);
   });
   it("holds one record for the Unit we are standing at", () => {

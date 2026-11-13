@@ -5,7 +5,7 @@
 import { useEffect, useRef, useState } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
-import { ArrowRight, Building2, FileText, Hammer, Home, KeyRound, Layers, Lightbulb, Map as MapIcon, MapPin, MessageSquare, Plus, RotateCcw, Search, SlidersHorizontal, Upload, X } from "lucide-react";
+import { ArrowRight, Building2, FileText, Home, KeyRound, Layers, Lightbulb, Map as MapIcon, MapPin, MessageSquare, Plus, RotateCcw, Search, SlidersHorizontal, Upload, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import owlDefault from "@/assets/prototype/owl-default.png";
@@ -22,7 +22,6 @@ const CURRENT_KEY = unitKey(CURRENT.placeId, CURRENT.unit);
 const TONE: Record<SituationLabel, { color: string; Icon: typeof Home; hint: string }> = {
   Unoccupied: { color: "var(--situation-unoccupied)", Icon: Home, hint: "No one is in occupation" },
   Available: { color: "var(--situation-available)", Icon: KeyRound, hint: "Being marketed or ready to let" },
-  "Being refurbished": { color: "var(--situation-refurb)", Icon: Hammer, hint: "Works are under way" },
 };
 
 type Message = { id: number; role: "user" | "hobson"; text: string; choices?: string[]; situationField?: boolean };
@@ -34,22 +33,22 @@ const SEED: Message[] = [{
 }];
 
 // A few Units open with situations already recorded, showing the combinations
-// real records carry: unoccupied and available, unoccupied and being refurbished, and all three.
+// real records carry: unoccupied and available together, or either one alone.
 const SAMPLE: SituationBook = {
   [unitKey("colmore", "1st Floor")]: { labels: ["Unoccupied", "Available"], by: AUTHOR, date: TODAY },
-  [unitKey("colmore", "2nd Floor")]: { labels: ["Unoccupied", "Being refurbished"], by: AUTHOR, date: TODAY },
-  [unitKey("colmore", "Ground Floor Shop")]: { labels: ["Available", "Being refurbished"], by: AUTHOR, date: TODAY },
-  [unitKey("st-pauls", "5th Floor")]: { labels: ["Unoccupied", "Available", "Being refurbished"], by: AUTHOR, date: TODAY },
+  [unitKey("colmore", "2nd Floor")]: { labels: ["Unoccupied"], by: AUTHOR, date: TODAY },
+  [unitKey("colmore", "Ground Floor Shop")]: { labels: ["Available"], by: AUTHOR, date: TODAY },
+  [unitKey("st-pauls", "5th Floor")]: { labels: ["Unoccupied", "Available"], by: AUTHOR, date: TODAY },
   [unitKey("paragon", "Unit 3")]: { labels: ["Available"], by: AUTHOR, date: TODAY },
-  [unitKey("paragon", "Unit 4")]: { labels: ["Being refurbished"], by: AUTHOR, date: TODAY },
+  [unitKey("paragon", "Unit 4")]: { labels: ["Unoccupied"], by: AUTHOR, date: TODAY },
   [unitKey("clyde", "Workshop")]: { labels: ["Unoccupied"], by: AUTHOR, date: TODAY },
   [unitKey("wharf", "3rd Floor")]: { labels: ["Unoccupied", "Available"], by: AUTHOR, date: TODAY },
   [unitKey("wharf", "4th Floor")]: { labels: ["Unoccupied", "Available"], by: AUTHOR, date: TODAY },
-  [unitKey("wharf", "7th Floor")]: { labels: ["Being refurbished"], by: AUTHOR, date: TODAY },
+  [unitKey("wharf", "7th Floor")]: { labels: ["Available"], by: AUTHOR, date: TODAY },
   [unitKey("shoreditch", "Ground Floor")]: { labels: ["Available"], by: AUTHOR, date: TODAY },
-  [unitKey("kings-cross", "2nd Floor")]: { labels: ["Unoccupied", "Being refurbished"], by: AUTHOR, date: TODAY },
+  [unitKey("kings-cross", "2nd Floor")]: { labels: ["Unoccupied"], by: AUTHOR, date: TODAY },
   [unitKey("kings-cross", "5th Floor")]: { labels: ["Unoccupied"], by: AUTHOR, date: TODAY },
-  [unitKey("southwark", "1st Floor")]: { labels: ["Unoccupied", "Being refurbished", "Available"], by: AUTHOR, date: TODAY },
+  [unitKey("southwark", "1st Floor")]: { labels: ["Unoccupied", "Available"], by: AUTHOR, date: TODAY },
   [unitKey("camden", "Ground Floor")]: { labels: ["Available"], by: AUTHOR, date: TODAY },
   [unitKey("stratford", "3rd Floor")]: { labels: ["Unoccupied"], by: AUTHOR, date: TODAY },
 };
@@ -62,7 +61,7 @@ const SCENARIOS = [
 const lower = (ls: string[]) => listWords(ls.map((l) => l.toLowerCase()));
 const placeById = (id: string | null) => STATUS_PLACES.find((p) => p.id === id) ?? null;
 
-/** Complete ring: one situation fills it, two split it in half, three into thirds — never a part ring. */
+/** Complete ring: one situation fills it, two split it in half — never a part ring. */
 function ringFor(places: StatusPlace[], book: SituationBook, filter: Filter) {
   const counts = portfolioCounts(book, places);
   const labels = SITUATIONS.filter((l) => counts[l] && (filter === "All" || filter === l));
@@ -325,7 +324,7 @@ export default function PrototypeStatus() {
     if (intent.kind === "here") return describeCurrent();
     if (intent.kind === "filter") return showFilter(intent.label);
     if (intent.kind === "place") return describePlace(intent.placeId);
-    say("hobson", "In this demonstration I can record how the Unit you're at stands today and show it on the map. Use + to begin, or ask me what's unoccupied, available or being refurbished.");
+    say("hobson", "In this demonstration I can record how the Unit you're at stands today and show it on the map. Use + to begin, or ask me what's unoccupied or available.");
   };
 
   const restart = () => {

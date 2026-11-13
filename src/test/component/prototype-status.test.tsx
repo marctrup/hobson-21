@@ -59,7 +59,7 @@ describe("Prototype Status at unit level", () => {
   it("reads the record back with who made it and when, separate from papers", () => {
     render(<PrototypeStatus />);
     openRecordForm();
-    fireEvent.click(within(field()).getByRole("button", { name: "Being refurbished" }));
+    fireEvent.click(within(field()).getByRole("button", { name: "Available" }));
     fireEvent.click(within(field()).getByRole("button", { name: "Put it on the map" }));
     fireEvent.change(screen.getByLabelText("Ask Hobson"), { target: { value: "What's the situation here?" } });
     fireEvent.click(screen.getByRole("button", { name: "Send message" }));
@@ -88,10 +88,9 @@ describe("Prototype Status at unit level", () => {
     for (const unit of ["5th Floor", "4th Floor", "Part 2nd Floor", "Car Park"]) {
       expect(within(card).getByText(unit)).toBeInTheDocument();
     }
-    // the 5th Floor carries all three situations inline, with who and when
+    // the 5th Floor carries both situations inline, with who and when
     expect(within(card).getByText("Unoccupied")).toBeInTheDocument();
     expect(within(card).getByText("Available")).toBeInTheDocument();
-    expect(within(card).getByText("Being refurbished")).toBeInTheDocument();
     expect(within(card).getByText(/Recorded by Marc T on 13 November 2026/)).toBeInTheDocument();
     // unrecorded Units say so, muted — and the chat gained no summary
     expect(within(card).getAllByText("not recorded").length).toBeGreaterThan(0);

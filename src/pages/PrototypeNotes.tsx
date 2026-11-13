@@ -34,7 +34,7 @@ type Message = { id: number; role: "user" | "hobson"; text: string; choices?: st
 
 // The Unit's current situation is the user's own record, kept apart from the
 // occupation history read from papers; labels may combine.
-const SITUATIONS = ["Unoccupied", "Available", "Being refurbished"] as const;
+const SITUATIONS = ["Unoccupied", "Available"] as const;
 type Situation = { labels: string[]; by: string; date: string };
 
 function SituationField({ initial, onConfirm }: { initial: string[]; onConfirm: (labels: string[]) => void }) {
