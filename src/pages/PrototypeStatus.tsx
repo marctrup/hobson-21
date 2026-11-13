@@ -23,7 +23,7 @@ type Message = { id: number; role: "user" | "hobson"; text: string; choices?: st
 
 const SEED: Message[] = [{
   id: 0, role: "hobson",
-  text: `You're at the ${CURRENT.unit} at ${CURRENT_PLACE.name}, ${CURRENT_PLACE.town}.\n\nThe map marks every Unit I read as unoccupied — either no papers are assigned to it, or its last occupancy has ended. Those with no papers are worth checking first; once the papers are in, what remains should be Units whose last occupancy has genuinely ended.`,
+  text: `You're at the ${CURRENT.unit} at ${CURRENT_PLACE.name}, ${CURRENT_PLACE.town}.`,
 }];
 
 // Invented sample findings. Units not listed have a current chain.
