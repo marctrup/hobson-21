@@ -96,12 +96,13 @@ describe("Prototype Notes stay in the chat", () => {
 describe("Prototype Notes deleting", () => {
   it("names the note in words instead of showing it again, and removes the icon with the last note", async () => {
     render(<PrototypeNotes />);
-    expect(screen.queryByRole("button", { name: /note.*for this Unit/i })).toBeNull();
+    // A dummy note is kept from the start, so the icon is already there.
+    expect(screen.getByRole("button", { name: /note.*for this Unit/i })).toHaveTextContent("1");
 
     await openNoteToTheContentRequest();
     await giveNote("Car space allocated for free");
 
-    expect(screen.getByRole("button", { name: /note.*for this Unit/i })).toHaveTextContent("1");
+    expect(screen.getByRole("button", { name: /note.*for this Unit/i })).toHaveTextContent("2");
     const cardsBefore = screen.getAllByRole("region", { name: "Saved Unit notes" }).length;
 
     fireEvent.click(screen.getAllByRole("button", { name: "Delete note: Car space allocated for free" })[0]);
@@ -111,7 +112,15 @@ describe("Prototype Notes deleting", () => {
 
     fireEvent.click(screen.getByRole("button", { name: "Delete note" }));
     await screen.findByText(/I've deleted that note/);
-    expect(screen.queryByRole("button", { name: /note.*for this Unit/i })).toBeNull();
+    expect(screen.getByRole("button", { name: /note.*for this Unit/i })).toHaveTextContent("1");
+
+    // Deleting the dummy note as well takes the icon away with the last note.
+    fireEvent.click(screen.getByRole("button", { name: /note.*for this Unit/i }));
+    const panel = await screen.findByRole("region", { name: "Unit notes" });
+    fireEvent.click(within(panel).getByRole("button", { name: /^Delete note: The porter keeps/ }));
+    await screen.findByText(/"The porter keeps/);
+    fireEvent.click(screen.getByRole("button", { name: "Delete note" }));
+    await waitFor(() => expect(screen.queryByRole("button", { name: /note.*for this Unit/i })).toBeNull());
     expect(screen.queryAllByRole("region", { name: "Saved Unit notes" })).toHaveLength(0);
   });
 });

@@ -15,6 +15,8 @@ import {
   makeNote,
   missingQuestion,
   NOTE_CONTENT_PROMPT,
+  NOTE_AUTHOR,
+  NOTE_DATE,
   parseNoteRequest,
   isNoteFieldMessage,
   UNIT_ADDRESS,
@@ -58,6 +60,20 @@ const SEED: Message[] = [
   { id: 0, role: "hobson", text: "You've selected 1st Floor at 1 Linear Park.\n\nWhat would you like to know?" },
   { id: 9, role: "user", text: "What is the current rent?" },
   { id: 1, role: "hobson", text: "The current rent is £1,224,882 per annum.\n\nBased on the Underlease and Rent Review Memorandum." },
+];
+
+// One dummy note is kept from the start so the header note icon and the Notes
+// panel can be tried without adding one first. It is illustrative only, lives
+// in the panel rather than the chat, and can be deleted like any other note.
+const SEED_NOTES: Note[] = [
+  {
+    id: "seed",
+    category: "unit",
+    visibility: "shared",
+    content: "The porter keeps a spare access card for the 1st Floor.",
+    author: NOTE_AUTHOR,
+    created: NOTE_DATE,
+  },
 ];
 
 const SCENARIOS: { label: string; text: string }[] = [
@@ -176,7 +192,7 @@ const UNITS: { name: string; papers: number }[] = [
 
 export default function PrototypeNotes() {
   const [messages, setMessages] = useState<Message[]>(SEED);
-  const [notes, setNotes] = useState<Note[]>([]);
+  const [notes, setNotes] = useState<Note[]>(SEED_NOTES);
   const [draft, setDraft] = useState<NoteDraft | null>(null);
   const [awaitingContent, setAwaitingContent] = useState(false);
   const [deleting, setDeleting] = useState<string | null>(null);
@@ -401,7 +417,7 @@ export default function PrototypeNotes() {
 
   const restart = () => {
     cancelVoice(); notes.forEach((n) => n.voice && URL.revokeObjectURL(n.voice.url)); setPendingVoice(null);
-    setNotes([]); setDraft(null); setAwaitingContent(false); setDeleting(null); setEditingId(null); setInput(""); setTryOpen(false); setActionsOpen(false); setNotesOpen(false);
+    setNotes(SEED_NOTES); setDraft(null); setAwaitingContent(false); setDeleting(null); setEditingId(null); setInput(""); setTryOpen(false); setActionsOpen(false); setNotesOpen(false);
     nextId.current = 100; nextNoteId.current = 1; setSituation(null); setAskingSituation(false); setMessages(SEED);
   };
 
