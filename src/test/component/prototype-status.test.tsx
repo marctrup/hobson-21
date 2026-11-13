@@ -19,106 +19,38 @@ vi.mock("leaflet", () => {
 });
 vi.stubGlobal("ResizeObserver", class { observe() {} disconnect() {} });
 
-const field = () => screen.getByRole("group", { name: "How the Unit stands today" });
-
-function openRecordForm() {
-  fireEvent.click(screen.getByRole("button", { name: "Chat actions" }));
-  // the menu item shares its words with Hobson's offered answer, so click it inside the menu
-  fireEvent.click(within(screen.getByRole("dialog")).getByRole("button", { name: "Update the Unit's current situation" }));
-}
-
-describe("Prototype Status at unit level", () => {
-  it("opens with a few Units already showing situations, combinations included", () => {
+describe("Prototype Status: Unoccupied read from papers", () => {
+  it("offers no way to record or update a situation from +", () => {
     render(<PrototypeStatus />);
-    expect(screen.getByText(/The map already shows how a few of your other Units stand/)).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "Current situation filters" })).toBeInTheDocument();
+    fireEvent.click(screen.getByRole("button", { name: "Chat actions" }));
+    const menu = screen.getByRole("dialog");
+    expect(within(menu).getByRole("button", { name: "Add a Note" })).toBeEnabled();
+    expect(within(menu).queryByRole("button", { name: /situation/i })).toBeNull();
   });
 
-  it("opens the situation form straight away, listing neither places nor Units", () => {
+  it("filters show both reasons with counts and no Available", () => {
     render(<PrototypeStatus />);
-    openRecordForm();
-    expect(screen.getByText(/What is the current situation with the 1st Floor\?/)).toBeInTheDocument();
-    expect(screen.queryByRole("button", { name: "Colmore Gate" })).toBeNull();
-    expect(screen.queryByRole("button", { name: "Ground Floor Shop" })).toBeNull();
-    expect(field()).toBeInTheDocument();
+    fireEvent.click(screen.getByRole("button", { name: "Unoccupied filters" }));
+    const panel = screen.getByRole("group", { name: "Unoccupied" });
+    expect(within(panel).getByRole("button", { name: /All unoccupied\s*17/ })).toBeInTheDocument();
+    expect(within(panel).getByRole("button", { name: /^No papers\s*10/ })).toBeInTheDocument();
+    expect(within(panel).getByRole("button", { name: /^Chain ended\s*7/ })).toBeInTheDocument();
+    expect(within(panel).queryByText("Available")).toBeNull();
   });
 
-  it("records the Unit we are standing at and puts it on the map", () => {
+  it("answers which Units have no papers", () => {
     render(<PrototypeStatus />);
-    openRecordForm();
-    fireEvent.click(within(field()).getByRole("button", { name: "Unoccupied" }));
-    fireEvent.click(within(field()).getByRole("button", { name: "Available" }));
-    fireEvent.click(within(field()).getByRole("button", { name: "Put it on the map" }));
-    expect(screen.getByText(/The 1st Floor is unoccupied and available — recorded by you today/)).toBeInTheDocument();
-    // the filters stay folded behind a small round button until touched
-    expect(screen.queryByRole("group", { name: "Current situation" })).toBeNull();
-    fireEvent.click(screen.getByRole("button", { name: "Current situation filters" }));
-    expect(screen.getByRole("group", { name: "Current situation" })).toBeInTheDocument();
-  });
-
-  it("reads the record back with who made it and when, separate from papers", () => {
-    render(<PrototypeStatus />);
-    openRecordForm();
-    fireEvent.click(within(field()).getByRole("button", { name: "Available" }));
-    fireEvent.click(within(field()).getByRole("button", { name: "Put it on the map" }));
-    fireEvent.change(screen.getByLabelText("Ask Hobson"), { target: { value: "What's the situation here?" } });
+    fireEvent.change(screen.getByRole("textbox", { name: "Ask Hobson" }), { target: { value: "Which Units have no papers?" } });
     fireEvent.click(screen.getByRole("button", { name: "Send message" }));
-    const log = within(screen.getByRole("log", { name: "Conversation" }));
-    expect(log.getByText(/Recorded by Marc T on 13 November 2026/)).toBeInTheDocument();
-    expect(log.getByText(/not something read from papers/)).toBeInTheDocument();
+    expect(screen.getByText(/10 Units have no papers assigned to them/)).toBeInTheDocument();
   });
 
-  it("offers no situation pills after recording — the map marker carries that", () => {
+  it("saves a note from the + menu", () => {
     render(<PrototypeStatus />);
-    openRecordForm();
-    fireEvent.click(within(field()).getByRole("button", { name: "Unoccupied" }));
-    fireEvent.click(within(field()).getByRole("button", { name: "Put it on the map" }));
-    expect(screen.queryByRole("button", { name: "What's the situation here?" })).toBeNull();
-    expect(screen.queryByRole("button", { name: "Show me everything vacant" })).toBeNull();
-  });
-
-  it("opens one combined card for a place — every Unit with its situation inline, nothing in chat", () => {
-    render(<PrototypeStatus />);
-    const before = within(screen.getByRole("log", { name: "Conversation" })).getAllByText(/./).length;
-    fireEvent.click(screen.getByRole("button", { name: "Search your places" }));
-    fireEvent.click(screen.getByRole("button", { name: /St Pauls House/ }));
-    const card = screen.getByRole("region", { name: "St Pauls House situations" });
-    expect(within(card).getByText("Here is what I have here.")).toBeInTheDocument();
-    // every Unit of the place is listed, recorded or not
-    for (const unit of ["5th Floor", "4th Floor", "Part 2nd Floor", "Car Park"]) {
-      expect(within(card).getByText(unit)).toBeInTheDocument();
-    }
-    // the 5th Floor carries both situations inline, with who and when
-    expect(within(card).getByText("Unoccupied")).toBeInTheDocument();
-    expect(within(card).getByText("Available")).toBeInTheDocument();
-    expect(within(card).getByText(/Recorded by Marc T on 13 November 2026/)).toBeInTheDocument();
-    // unrecorded Units say so, muted — and the chat gained no summary
-    expect(within(card).getAllByText("not recorded").length).toBeGreaterThan(0);
-    expect(within(screen.getByRole("log", { name: "Conversation" })).getAllByText(/./).length).toBe(before);
-  });
-
-  it("clears the record when every situation is unticked", () => {
-    render(<PrototypeStatus />);
-    openRecordForm();
-    fireEvent.click(within(field()).getByRole("button", { name: "Unoccupied" }));
-    fireEvent.click(within(field()).getByRole("button", { name: "Put it on the map" }));
-    openRecordForm();
-    fireEvent.click(within(field()).getByRole("button", { name: "Unoccupied" }));
-    fireEvent.click(within(field()).getByRole("button", { name: "Clear situation" }));
-    expect(screen.getByText(/I've cleared the recorded situation for the 1st Floor/)).toBeInTheDocument();
-  });
-
-  it("removes a label only from the chat header's situation pop-up", () => {
-    render(<PrototypeStatus />);
-    expect(screen.queryByRole("button", { name: "How the 1st Floor stands" })).toBeNull();
-    openRecordForm();
-    fireEvent.click(within(field()).getByRole("button", { name: "Unoccupied" }));
-    fireEvent.click(within(field()).getByRole("button", { name: "Available" }));
-    fireEvent.click(within(field()).getByRole("button", { name: "Put it on the map" }));
-    fireEvent.click(screen.getByRole("button", { name: "How the 1st Floor stands" }));
-    fireEvent.click(screen.getByRole("button", { name: "Remove Unoccupied" }));
-    expect(screen.queryByRole("button", { name: "Remove Unoccupied" })).toBeNull();
-    fireEvent.click(screen.getByRole("button", { name: "Remove Available" }));
-    expect(screen.queryByRole("button", { name: "How the 1st Floor stands" })).toBeNull();
+    fireEvent.click(screen.getByRole("button", { name: "Chat actions" }));
+    fireEvent.click(within(screen.getByRole("dialog")).getByRole("button", { name: "Add a Note" }));
+    fireEvent.change(screen.getByRole("textbox", { name: "Your note" }), { target: { value: "Keys with the porter" } });
+    fireEvent.click(screen.getByRole("button", { name: "Save note" }));
+    expect(screen.getByText(/I've kept that on file for the 1st Floor/)).toBeInTheDocument();
   });
 });

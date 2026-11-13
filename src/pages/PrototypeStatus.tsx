@@ -1,70 +1,66 @@
-// Prototype Status: the user records how the Unit they're standing at stands
-// today, and the map comes alive with it. Unit-level: no place list, no Unit
-// list. Local demonstration state only.
+// Prototype Status: Hobson marks on the map only the Units he reads as
+// Unoccupied — no papers assigned, or the current chain has ended. Nobody records
+// a situation by hand; the map is a statistic to investigate. Local state only.
 
 import { useEffect, useRef, useState } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
-import { ArrowRight, Building2, FileText, Home, KeyRound, Lightbulb, Map as MapIcon, MapPin, MessageSquare, Plus, RotateCcw, Search, SlidersHorizontal, Upload, X } from "lucide-react";
+import { ArrowRight, FileQuestion, FileText, FileX, Lightbulb, Map as MapIcon, MapPin, MessageSquare, Plus, RotateCcw, Search, SlidersHorizontal, StickyNote, Upload, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import owlDefault from "@/assets/prototype/owl-default.png";
 import {
-  CURRENT, CURRENT_PLACE, SITUATIONS, STATUS_PLACES, interpret, labelCounts, listWords, placeMatches, portfolioCounts, unitsMatching,
-  placeSituations, situationOf, unitKey, withoutLabel,
-  type Recorded, type SituationBook, type SituationLabel, type StatusPlace,
+  CURRENT, CURRENT_PLACE, REASONS, STATUS_PLACES, interpret, listWords, placeFindings, placeMatches, reasonCounts, unitKey, unitsMatching,
+  type Filter, type FindingBook, type StatusPlace, type UnoccupiedReason,
 } from "./prototypeStatus";
 
-const AUTHOR = "Marc T";
-const TODAY = "13 November 2026";
-const CURRENT_KEY = unitKey(CURRENT.placeId, CURRENT.unit);
-
-const TONE: Record<SituationLabel, { color: string; Icon: typeof Home; hint: string }> = {
-  Unoccupied: { color: "var(--situation-unoccupied)", Icon: Home, hint: "Not presently being used or occupied" },
-  Available: { color: "var(--situation-available)", Icon: KeyRound, hint: "Being offered for a new occupier" },
+const TONE: Record<UnoccupiedReason, { color: string; Icon: typeof FileX; hint: string }> = {
+  "No papers": { color: "var(--unoccupied-no-papers)", Icon: FileQuestion, hint: "No papers are assigned to the Unit" },
+  "Chain ended": { color: "var(--unoccupied-chain-ended)", Icon: FileX, hint: "Its last chain of papers has ended" },
 };
 
-type Message = { id: number; role: "user" | "hobson"; text: string; choices?: string[]; situationField?: boolean };
-type Filter = SituationLabel | "All";
+type Message = { id: number; role: "user" | "hobson"; text: string; choices?: string[]; noteField?: boolean };
 
 const SEED: Message[] = [{
   id: 0, role: "hobson",
-  text: `You're at the ${CURRENT.unit} at ${CURRENT_PLACE.name}, ${CURRENT_PLACE.town}.\n\nThe map already shows how a few of your other Units stand — some carry more than one situation at once.`,
+  text: `You're at the ${CURRENT.unit} at ${CURRENT_PLACE.name}, ${CURRENT_PLACE.town}.\n\nThe map marks every Unit I read as unoccupied — either no papers are assigned to it, or its current chain has ended. Those with no papers are worth checking first; once the papers are in, what remains should be genuinely ended chains.`,
 }];
 
-// A few Units open with situations already recorded, showing the combinations
-// real records carry: unoccupied and available together, or either one alone.
-const SAMPLE: SituationBook = {
-  [unitKey("colmore", "1st Floor")]: { labels: ["Unoccupied", "Available"], by: AUTHOR, date: TODAY },
-  [unitKey("colmore", "2nd Floor")]: { labels: ["Unoccupied"], by: AUTHOR, date: TODAY },
-  [unitKey("colmore", "Ground Floor Shop")]: { labels: ["Available"], by: AUTHOR, date: TODAY },
-  [unitKey("st-pauls", "5th Floor")]: { labels: ["Unoccupied", "Available"], by: AUTHOR, date: TODAY },
-  [unitKey("paragon", "Unit 3")]: { labels: ["Available"], by: AUTHOR, date: TODAY },
-  [unitKey("paragon", "Unit 4")]: { labels: ["Unoccupied"], by: AUTHOR, date: TODAY },
-  [unitKey("clyde", "Workshop")]: { labels: ["Unoccupied"], by: AUTHOR, date: TODAY },
-  [unitKey("wharf", "3rd Floor")]: { labels: ["Unoccupied", "Available"], by: AUTHOR, date: TODAY },
-  [unitKey("wharf", "4th Floor")]: { labels: ["Unoccupied", "Available"], by: AUTHOR, date: TODAY },
-  [unitKey("wharf", "7th Floor")]: { labels: ["Available"], by: AUTHOR, date: TODAY },
-  [unitKey("shoreditch", "Ground Floor")]: { labels: ["Available"], by: AUTHOR, date: TODAY },
-  [unitKey("kings-cross", "2nd Floor")]: { labels: ["Unoccupied"], by: AUTHOR, date: TODAY },
-  [unitKey("kings-cross", "5th Floor")]: { labels: ["Unoccupied"], by: AUTHOR, date: TODAY },
-  [unitKey("southwark", "1st Floor")]: { labels: ["Unoccupied", "Available"], by: AUTHOR, date: TODAY },
-  [unitKey("camden", "Ground Floor")]: { labels: ["Available"], by: AUTHOR, date: TODAY },
-  [unitKey("stratford", "3rd Floor")]: { labels: ["Unoccupied"], by: AUTHOR, date: TODAY },
+// Invented sample findings. Units not listed have a current chain.
+const ended = (who: string, date: string) => ({ reason: "Chain ended" as const, detail: `Lease to ${who} ended ${date}` });
+const none = { reason: "No papers" as const };
+const SAMPLE: FindingBook = {
+  [unitKey("colmore", "1st Floor")]: ended("Hartwell Partners LLP", "24 June 2025"),
+  [unitKey("colmore", "2nd Floor")]: none,
+  [unitKey("st-pauls", "5th Floor")]: ended("Northgate Media Limited", "28 September 2025"),
+  [unitKey("st-pauls", "Car Park")]: none,
+  [unitKey("paragon", "Unit 3")]: ended("Fern & Finch Limited", "25 March 2026"),
+  [unitKey("paragon", "Unit 4")]: none,
+  [unitKey("clyde", "Workshop")]: none,
+  [unitKey("wharf", "3rd Floor")]: ended("Delta Freight Limited", "29 September 2025"),
+  [unitKey("wharf", "4th Floor")]: none,
+  [unitKey("wharf", "7th Floor")]: none,
+  [unitKey("shoreditch", "Ground Floor")]: ended("Copper Pot Coffee Limited", "24 June 2026"),
+  [unitKey("kings-cross", "2nd Floor")]: none,
+  [unitKey("kings-cross", "5th Floor")]: none,
+  [unitKey("southwark", "1st Floor")]: ended("Brightline Studios Limited", "25 December 2025"),
+  [unitKey("camden", "Ground Floor")]: none,
+  [unitKey("stratford", "3rd Floor")]: none,
+  [unitKey("harbour", "Upper Floor")]: ended("Solent Marine Services Limited", "1 May 2026"),
 };
 
 const SCENARIOS = [
-  { label: "Find what's unoccupied", text: "Which Units are unoccupied?" },
-  { label: "Ask about a place", text: "What's happening in Birmingham?" },
+  { label: "Which Units have no papers?", text: "Which Units have no papers?" },
+  { label: "Show ended chains", text: "Show me the ended chains" },
+  { label: "Ask about a place", text: "What's unoccupied in Birmingham?" },
 ];
 
-const lower = (ls: string[]) => listWords(ls.map((l) => l.toLowerCase()));
 const placeById = (id: string | null) => STATUS_PLACES.find((p) => p.id === id) ?? null;
 
-/** Complete ring: one situation fills it, two split it in half — never a part ring. */
-function ringFor(places: StatusPlace[], book: SituationBook, filter: Filter) {
-  const counts = portfolioCounts(book, places);
-  const labels = SITUATIONS.filter((l) => counts[l] && (filter === "All" || filter === l));
+/** Complete ring: one reason fills it, two split it in half — never a part ring. */
+function ringFor(places: StatusPlace[], book: FindingBook, filter: Filter) {
+  const counts = reasonCounts(book, places);
+  const labels = REASONS.filter((l) => counts[l] && (filter === "All" || filter === l));
   if (!labels.length) return null;
   const step = 360 / labels.length;
   const parts = labels.map((l, i) => `${TONE[l].color} ${i * step}deg ${(i + 1) * step}deg`);
@@ -73,25 +69,23 @@ function ringFor(places: StatusPlace[], book: SituationBook, filter: Filter) {
 
 const esc = (t: string) => t.replace(/&/g, "&amp;").replace(/</g, "&lt;");
 
-function summaryLine(places: StatusPlace[], book: SituationBook) {
-  const c = portfolioCounts(book, places);
-  const bits = SITUATIONS.filter((l) => c[l]).map((l) => `<span class="inline-flex items-center gap-1"><span class="h-2 w-2 rounded-full" style="background:${TONE[l].color}"></span>${c[l]} ${l.toLowerCase()}</span>`);
-  return bits.length ? `<div class="mt-1.5 flex flex-wrap gap-x-2.5 gap-y-1 text-[11px]">${bits.join("")}</div>` : `<div class="mt-1 text-[11px] text-muted-foreground">Nothing recorded yet</div>`;
+function summaryLine(places: StatusPlace[], book: FindingBook) {
+  const c = reasonCounts(book, places);
+  const bits = REASONS.filter((l) => c[l]).map((l) => `<span class="inline-flex items-center gap-1"><span class="h-2 w-2 rounded-full" style="background:${TONE[l].color}"></span>${c[l]} ${l.toLowerCase()}</span>`);
+  return bits.length ? `<div class="mt-1.5 flex flex-wrap gap-x-2.5 gap-y-1 text-[11px]">${bits.join("")}</div>` : `<div class="mt-1 text-[11px] text-muted-foreground">Nothing unoccupied</div>`;
 }
 
 const CLUSTER_PX = 64;
 
-function StatusMap({ book, filter, selectedId, bloomId, onPick, onStatusBadge }: {
-  book: SituationBook; filter: Filter; selectedId: string | null; bloomId: string | null; onPick: (id: string) => void; onStatusBadge: () => void;
+function StatusMap({ book, filter, selectedId, onPick }: {
+  book: FindingBook; filter: Filter; selectedId: string | null; onPick: (id: string) => void;
 }) {
   const box = useRef<HTMLDivElement>(null);
   const map = useRef<L.Map | null>(null);
   const layer = useRef<L.LayerGroup | null>(null);
   const pick = useRef(onPick);
   pick.current = onPick;
-  const statusBadge = useRef(onStatusBadge);
-  statusBadge.current = onStatusBadge;
-  const hasAny = Object.keys(book).length > 0;
+  const hasAny = true;
   const [zoom, setZoom] = useState(0);
 
   useEffect(() => {
@@ -164,22 +158,18 @@ function StatusMap({ book, filter, selectedId, bloomId, onPick, onStatusBadge }:
       const core = bg
         ? `<span style="background:${bg}" class="relative grid h-[46px] w-[46px] place-items-center rounded-full shadow-lg"><span class="grid h-[34px] w-[34px] place-items-center rounded-full bg-background text-sm font-semibold text-foreground">${recorded}</span></span>`
         : `<span class="grid h-8 w-8 place-items-center rounded-full border-2 ${here ? "border-primary text-primary" : "border-background text-muted-foreground"} bg-background text-xs font-semibold shadow-md ${!hasAny && here ? "status-breathe" : ""}">${p.units.length}</span>`;
-      const bloom = bloomId === p.id ? `<span class="status-bloom pointer-events-none absolute inset-0 rounded-full border-4 border-primary"></span>` : "";
+      const bloom = "";
       const label = selected || here
         ? `<span class="absolute left-full top-1/2 ml-2 -translate-y-1/2 whitespace-nowrap rounded-full ${selected ? "bg-primary text-primary-foreground" : "bg-background text-foreground"} px-2.5 py-0.5 text-xs font-medium shadow">${here ? `You are here · ${p.name}` : p.name}</span>`
         : "";
-      const badge = here && book[CURRENT_KEY]
-        ? `<span data-status-badge role="button" aria-label="How the ${CURRENT.unit} stands" title="How the ${CURRENT.unit} stands" class="absolute -right-2 -top-2 z-10 grid h-6 w-6 cursor-pointer place-items-center rounded-full border-2 border-background bg-primary text-[11px] font-bold text-primary-foreground shadow-lg transition-transform hover:scale-110">i</span>`
-        : "";
+      const badge = "";
       const html = `<span class="relative block cursor-pointer transition-opacity duration-500 ${dim ? "opacity-30" : ""} ${selected ? "scale-110" : ""}">${bloom}${core}${badge}${label}</span>`;
       L.marker(p.coords, { icon: L.divIcon({ className: "", html, iconSize: [size, size], iconAnchor: [size / 2, size / 2] }), keyboard: true, title: `${p.name}, ${p.town}`, zIndexOffset: selected ? 1000 : 0 })
-        .on("click", (e: L.LeafletMouseEvent) => {
-          const t = e.originalEvent?.target as HTMLElement | null;
-          if (t?.closest?.("[data-status-badge]")) { statusBadge.current(); return; }
+        .on("click", () => {
           pick.current(p.id);
         }).addTo(g);
     });
-  }, [book, filter, selectedId, bloomId, hasAny, zoom]);
+  }, [book, filter, selectedId, hasAny, zoom]);
 
   useEffect(() => {
     const m = map.current;
@@ -195,45 +185,33 @@ function StatusMap({ book, filter, selectedId, bloomId, onPick, onStatusBadge }:
   return <div ref={box} aria-label="Map of your places" className="status-map absolute inset-0 z-0" />;
 }
 
-function SituationField({ initial, onConfirm }: { initial: SituationLabel[]; onConfirm: (l: SituationLabel[]) => void }) {
-  const [picked, setPicked] = useState<SituationLabel[]>(initial);
-  const toggle = (l: SituationLabel) => setPicked((p) => (p.includes(l) ? p.filter((x) => x !== l) : [...p, l]));
+function NoteField({ onSave }: { onSave: (t: string) => void }) {
+  const [text, setText] = useState("");
   return (
-    <div role="group" aria-label="How the Unit stands today" className="mt-3 grid gap-1.5">
-      {SITUATIONS.map((l) => {
-        const { Icon, color } = TONE[l];
-        const on = picked.includes(l);
-        return (
-          <button key={l} type="button" aria-pressed={on} onClick={() => toggle(l)}
-            style={on ? { borderColor: color, color } : undefined}
-            className={`flex items-center gap-2.5 rounded-full border bg-background px-3.5 py-2 text-left text-sm transition-colors ${on ? "font-medium" : "border-primary/20 text-ink hover:border-primary/50"}`}>
-            <Icon className="h-4 w-4" style={{ color }} aria-hidden />{l}
-          </button>
-        );
-      })}
-      <Button type="button" size="sm" disabled={picked.length === 0 && initial.length === 0} onClick={() => onConfirm(SITUATIONS.filter((l) => picked.includes(l)))} className="mt-1 w-fit">
-        {picked.length === 0 ? "Clear situation" : "Put it on the map"}
-      </Button>
-    </div>
+    <form onSubmit={(e) => { e.preventDefault(); if (text.trim()) onSave(text.trim()); }} className="mt-3 grid gap-2">
+      <textarea autoFocus value={text} onChange={(e) => setText(e.target.value)} aria-label="Your note" rows={3}
+        onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); if (text.trim()) onSave(text.trim()); } }}
+        className="w-full rounded-md border border-primary/20 bg-background px-3 py-2 text-sm outline-none focus:border-primary/50" />
+      <Button type="submit" size="sm" disabled={!text.trim()} className="w-fit">Save note</Button>
+    </form>
   );
 }
 
-function Chip({ label }: { label: SituationLabel }) {
-  const { Icon, color } = TONE[label];
+function Chip({ reason }: { reason: UnoccupiedReason }) {
+  const { Icon, color } = TONE[reason];
   return (
     <span style={{ color, borderColor: color }} className="inline-flex items-center gap-1 rounded-full border bg-background px-2 py-0.5 text-xs font-medium">
-      <Icon className="h-3 w-3" aria-hidden />{label}
+      <Icon className="h-3 w-3" aria-hidden />{reason}
     </span>
   );
 }
 
 export default function PrototypeStatus() {
   const [messages, setMessages] = useState<Message[]>(SEED);
-  const [book, setBook] = useState<SituationBook>(SAMPLE);
-  const [asking, setAsking] = useState(false);
+  const book = SAMPLE;
+  const [noting, setNoting] = useState(false);
   const [placeId, setPlaceId] = useState<string | null>(null);
   const [filter, setFilter] = useState<Filter>("All");
-  const [bloomId, setBloomId] = useState<string | null>(null);
   const [input, setInput] = useState("");
   const [menuOpen, setMenuOpen] = useState(false);
   const [tryOpen, setTryOpen] = useState(false);
@@ -242,99 +220,64 @@ export default function PrototypeStatus() {
   const [searchText, setSearchText] = useState("");
   const nextId = useRef(1);
   const logEnd = useRef<HTMLDivElement>(null);
-  const hasAny = Object.keys(book).length > 0;
-  const situation = situationOf(book);
   const place = placeById(placeId);
 
   useEffect(() => { logEnd.current?.scrollIntoView({ behavior: "smooth", block: "end" }); }, [messages]);
-  useEffect(() => { if (!bloomId) return; const t = setTimeout(() => setBloomId(null), 3400); return () => clearTimeout(t); }, [bloomId]);
 
   const say = (role: Message["role"], text: string, extra: Partial<Message> = {}) =>
     setMessages((ms) => [...ms, { id: nextId.current++, role, text, ...extra }]);
 
-  // Unit level: the Unit is already known, so the form opens straight away.
-  const startRecord = () => {
-    setMenuOpen(false); setFilter("All"); setPlaceId(null);
-    setAsking(true);
-    say("hobson", `What is the current situation with the ${CURRENT.unit}?\n\nYou can choose more than one.`, { situationField: true });
+  const startNote = () => {
+    setMenuOpen(false); setNoting(true);
+    say("user", "Add a Note");
+    say("hobson", `Please provide the note for the ${CURRENT.unit}, which I will keep on file for you.`, { noteField: true });
   };
 
-  const confirm = (labels: SituationLabel[]) => {
-    const first = !situation;
-    say("user", labels.length ? labels.join(", ") : "Clear it");
-    setBook((b) => {
-      const n = { ...b };
-      if (labels.length) n[CURRENT_KEY] = { labels, by: AUTHOR, date: TODAY };
-      else delete n[CURRENT_KEY];
-      return n;
-    });
-    setAsking(false); setBloomId(CURRENT.placeId);
-    if (!labels.length) { say("hobson", `I've cleared the recorded situation for the ${CURRENT.unit}.`); return; }
-    say("hobson", `Noted. The ${CURRENT.unit} is ${lower(labels)} — recorded by you today.${first ? `\n\nA small building mark now sits beside the 1st Floor at the top of our conversation — touch it to see the situation or remove a label.` : ""}`);
+  const saveNote = (text: string) => {
+    setNoting(false);
+    say("user", text);
+    say("hobson", `Noted. I've kept that on file for the ${CURRENT.unit}.`);
   };
 
-  // Labels are removed only from the chat header's situation card; adding or changing stays in the + flow.
-  const removeLabel = (label: SituationLabel) => setBook((b) => withoutLabel(b, CURRENT_KEY, label));
-
-  const describeCurrent = () => {
-    setPlaceId(CURRENT.placeId); setFilter("All");
-    say("hobson", situation
-      ? `The ${CURRENT.unit} at ${CURRENT_PLACE.name} is recorded as ${lower(situation.labels)}.\n\nRecorded by ${situation.by} on ${situation.date}. This is your own record, not something read from papers.`
-      : `Nothing is recorded yet about how the ${CURRENT.unit} stands today. Tell me and I'll put it on the map.`,
-      { choices: [situation ? "Change the situation" : "Update the Unit's current situation"] });
-  };
-
-  const showFilter = (label: Filter) => {
-    setFilter(label); setPlaceId(null);
-    if (label === "All") { say("hobson", hasAny ? "Here is everything you've recorded across your places." : "There's nothing recorded yet."); return; }
-    const rows = STATUS_PLACES.flatMap((p) => placeSituations(book, p).filter((r) => r.labels.includes(label)).map((r) => `${r.unit} at ${p.name}`));
-    say("hobson", rows.length ? `${rows.length === 1 ? "One Unit is" : `${rows.length} Units are`} recorded as ${label.toLowerCase()}: ${listWords(rows)}.\n\nI've faded the other places on the map.` : `Nothing is recorded as ${label.toLowerCase()} yet.`,
-      rows.length ? { choices: ["Show everything"] } : { choices: ["Update the Unit's current situation"] });
+  const showFilter = (f: Filter) => {
+    setFilter(f); setPlaceId(null);
+    const rows = STATUS_PLACES.flatMap((p) => placeFindings(book, p).filter((r) => f === "All" || r.reason === f).map((r) => `${r.unit} at ${p.name}`));
+    const c = reasonCounts(book);
+    if (f === "All") { say("hobson", `${rows.length} Units read as unoccupied: ${c["No papers"]} with no papers and ${c["Chain ended"]} whose chain has ended.\n\nThe ones with no papers may simply be awaiting their papers — worth checking first.`, { choices: ["Which Units have no papers?", "Show me the ended chains"] }); return; }
+    say("hobson", f === "No papers"
+      ? `${rows.length} Units have no papers assigned to them: ${listWords(rows)}.\n\nIf any of these is let, its papers haven't reached me yet — once they do, I'll read it afresh.`
+      : `${rows.length} Units have a chain that has ended: ${listWords(rows)}.\n\nThese are the ones that should genuinely be unoccupied.`,
+      { choices: ["Show everything unoccupied"] });
   };
 
   const describePlace = (id: string) => {
     const p = placeById(id)!;
-    if (p.id === CURRENT.placeId) return describeCurrent();
     setPlaceId(id); setFilter("All");
-    const rows = placeSituations(book, p);
+    const rows = placeFindings(book, p);
     say("hobson", rows.length
-      ? `${p.name}, ${p.town}. ${rows.length} of its ${p.units.length} Units have a situation recorded:\n${rows.map((r) => `• ${r.unit} — ${lower(r.labels)}`).join("\n")}`
-      : `${p.name}, ${p.town} — ${p.units.length} Units. Nothing is recorded yet about how they stand today.`,
-      { choices: ["Show everything"] });
-  };
-
-  // Clicking a place opens one combined card on the map — never a chat summary.
-  const onMapPick = (id: string) => {
-    if (asking) return;
-    setFilter("All");
-    setPlaceId(id);
+      ? `${p.name}, ${p.town}. ${rows.length} of its ${p.units.length} Units read as unoccupied:\n${rows.map((r) => `• ${r.unit} — ${r.reason === "No papers" ? "no papers" : r.detail}`).join("\n")}`
+      : `${p.name}, ${p.town} — every one of its ${p.units.length} Units has a current chain.`,
+      { choices: ["Show everything unoccupied"] });
   };
 
   const send = (raw: string) => {
     const text = raw.trim();
     if (!text) return;
-    setInput(""); setTryOpen(false);
+    setInput(""); setTryOpen(false); setNoting(false);
     say("user", text);
-    setAsking(false);
-    if (text === "Update the Unit's current situation" || text === "Change the situation") return startRecord();
-    if (text === "What's the situation here?") return describeCurrent();
-    if (text === "Show everything") return showFilter("All");
+    if (text === "Show everything unoccupied") return showFilter("All");
     const intent = interpret(text);
-    if (intent.kind === "record") return startRecord();
-    if (intent.kind === "here") return describeCurrent();
-    if (intent.kind === "filter") return showFilter(intent.label);
+    if (intent.kind === "filter") return showFilter(intent.filter);
     if (intent.kind === "place") return describePlace(intent.placeId);
-    say("hobson", "In this demonstration I can record how the Unit you're at stands today and show it on the map. Use + to begin, or ask me what's unoccupied or available.");
+    say("hobson", "In this demonstration I show which Units I read as unoccupied — no papers, or an ended chain. Ask me which have no papers, which chains have ended, or about a place.");
   };
 
   const restart = () => {
-    setMessages(SEED); setBook(SAMPLE); setAsking(false); setPlaceId(null); setFilter("All"); setInput(""); nextId.current = 1;
+    setMessages(SEED); setNoting(false); setPlaceId(null); setFilter("All"); setInput(""); nextId.current = 1;
   };
 
-  // One card per place: every Unit listed with its situation inline, recorded or not.
-  const cardRows: (Recorded & { unit: string })[] = place
-    ? place.units.map((u) => ({ unit: u, ...(book[unitKey(place.id, u)] ?? { labels: [], by: "", date: "" }) }))
-    : [];
+  // One card per place: every Unit listed, unoccupied ones with Hobson's reason.
+  const cardRows = place ? place.units.map((u) => ({ unit: u, finding: book[unitKey(place.id, u)] ?? null })) : [];
 
   return (
     <div className="relative flex h-screen w-full overflow-hidden bg-background text-ink">
@@ -349,25 +292,6 @@ export default function PrototypeStatus() {
       <section aria-label="Chat with Hobson" className="flex w-[420px] min-w-0 shrink-0 flex-col border-r border-bone bg-background max-lg:w-[360px] max-md:w-full">
         <header className="flex h-14 shrink-0 items-center justify-between gap-2 border-b border-bone px-5">
           <p className="truncate text-sm"><span className="font-medium text-primary">Portfolio</span><span className="text-ink-muted"> › </span><span className="font-semibold">{CURRENT_PLACE.name}</span><span className="text-ink-muted"> › </span><span className="font-semibold">{CURRENT.unit}</span></p>
-          {situation && (
-            <Popover>
-              <PopoverTrigger asChild>
-                <button type="button" aria-label={`How the ${CURRENT.unit} stands`} title={`How the ${CURRENT.unit} stands`} className="ml-1 mr-auto grid h-7 w-7 shrink-0 place-items-center rounded-full text-primary transition-colors hover:bg-secondary"><Building2 className="h-4 w-4" aria-hidden /></button>
-              </PopoverTrigger>
-              <PopoverContent align="start" className="w-72 p-4" aria-label={`${CURRENT.unit} situation`}>
-                <p className="text-xs font-medium uppercase tracking-wide text-ink-muted">Current situation</p>
-                <p className="mt-1 text-sm font-semibold">{CURRENT.unit} · {CURRENT_PLACE.name}</p>
-                <ul className="mt-3 flex flex-col gap-1.5">
-                  {situation.labels.map((l) => { const T = TONE[l]; return (
-                    <li key={l} className="flex items-center justify-between gap-2 rounded-md border border-bone px-2.5 py-1.5">
-                      <span className="flex items-center gap-2 text-sm" style={{ color: T.color }}><T.Icon className="h-3.5 w-3.5" aria-hidden />{l}</span>
-                      <button type="button" aria-label={`Remove ${l}`} onClick={() => removeLabel(l)} className="rounded px-1.5 py-0.5 text-xs text-ink-muted hover:bg-secondary hover:text-foreground">Remove</button>
-                    </li>); })}
-                </ul>
-                <p className="mt-3 text-xs text-ink-muted">Recorded by {situation.by} on {situation.date}. Your own record, not read from papers.</p>
-              </PopoverContent>
-            </Popover>
-          )}
           <Button variant="ghost" size="sm" aria-label="Restart demo" onClick={restart}><RotateCcw className="h-3.5 w-3.5 sm:mr-2" /><span className="max-sm:hidden">Restart</span></Button>
         </header>
 
@@ -380,9 +304,7 @@ export default function PrototypeStatus() {
                   {m.role === "hobson" && <img src={owlDefault} alt="Hobson" className="h-9 w-9 shrink-0 object-contain" />}
                   <div className={`min-w-0 rounded-lg px-3.5 py-2.5 ${m.role === "user" ? "bg-primary text-primary-foreground" : "bg-secondary"}`}>
                     <p className="whitespace-pre-line break-words text-sm leading-relaxed">{m.text}</p>
-                    {m.situationField && last && asking && (
-                      <SituationField initial={situation?.labels ?? []} onConfirm={confirm} />
-                    )}
+                    {m.noteField && last && noting && <NoteField onSave={saveNote} />}
                   </div>
                 </div>
                 {m.choices && last && (
@@ -413,19 +335,19 @@ export default function PrototypeStatus() {
                 <Button type="button" variant="ghost" size="icon" aria-label="Chat actions" className="h-8 w-8 shrink-0 rounded-full text-primary hover:bg-primary/5 hover:text-primary"><Plus className="h-5 w-5" aria-hidden /></Button>
               </PopoverTrigger>
               <PopoverContent side="top" align="start" className="w-72 p-1.5" aria-label="Chat actions">
-                <Button type="button" variant="ghost" onClick={() => { say("user", "Update the Unit's current situation"); startRecord(); }} className="w-full justify-start gap-3 px-3 font-normal"><Building2 className="h-4 w-4 text-primary" aria-hidden />Update the Unit's current situation</Button>
+                <Button type="button" variant="ghost" onClick={startNote} className="w-full justify-start gap-3 px-3 font-normal"><StickyNote className="h-4 w-4 text-primary" aria-hidden />Add a Note</Button>
                 <Button type="button" variant="ghost" disabled className="h-auto w-full items-start justify-start gap-3 px-3 py-2 text-left font-normal opacity-50"><Upload className="mt-0.5 h-4 w-4 shrink-0" aria-hidden /><span><span className="block">Upload papers</span><span className="block text-xs text-muted-foreground">Coming soon</span></span></Button>
               </PopoverContent>
             </Popover>
             <Button type="button" variant="ghost" size="icon" aria-label="Things you might try" aria-expanded={tryOpen} onClick={() => setTryOpen((o) => !o)} className="h-8 w-8 shrink-0"><Lightbulb className="h-4 w-4" /></Button>
-            <input value={input} onChange={(e) => setInput(e.target.value)} aria-label="Ask Hobson" placeholder={`Ask me about the ${CURRENT.unit}`} className="min-w-0 flex-1 bg-transparent text-sm outline-none placeholder:text-muted-foreground" />
+            <input value={input} onChange={(e) => setInput(e.target.value)} aria-label="Ask Hobson" placeholder="Ask me what's unoccupied" className="min-w-0 flex-1 bg-transparent text-sm outline-none placeholder:text-muted-foreground" />
             <Button type="submit" size="icon" variant="ghost" disabled={!input.trim()} aria-label="Send message" className="h-8 w-8 shrink-0"><ArrowRight className="h-5 w-5" /></Button>
           </form>
         </div>
       </section>
 
       <section aria-label="Map" className="relative min-w-0 flex-1 max-md:hidden">
-        <StatusMap book={book} filter={filter} selectedId={placeId} bloomId={bloomId} onPick={onMapPick} onStatusBadge={() => { setFilter("All"); setPlaceId(CURRENT.placeId); }} />
+        <StatusMap book={book} filter={filter} selectedId={placeId} onPick={(id) => { setFilter("All"); setPlaceId(id); }} />
 
         <div className="pointer-events-none absolute inset-x-4 top-4 z-[500] flex items-start justify-end gap-2">
           <div className="pointer-events-auto flex flex-col items-end gap-2">
@@ -439,10 +361,10 @@ export default function PrototypeStatus() {
               >
                 <Search className="h-5 w-5 text-primary" aria-hidden />
               </button>
-              {hasAny && (
+              {(
                 <button
                   type="button"
-                  aria-label="Current situation filters"
+                  aria-label="Unoccupied filters"
                   aria-expanded={filtersOpen}
                   onClick={() => { setFiltersOpen((o) => !o); setSearchOpen(false); }}
                   style={filter !== "All" && !filtersOpen ? { color: TONE[filter].color, borderColor: TONE[filter].color } : undefined}
@@ -488,25 +410,25 @@ export default function PrototypeStatus() {
                 </ul>
               </div>
             )}
-            {filtersOpen && hasAny && (
-              <div role="group" aria-label="Current situation" className="rounded-2xl border border-bone bg-background/95 p-1.5 shadow-md backdrop-blur animate-in fade-in slide-in-from-top-2 duration-300">
+            {filtersOpen && (
+              <div role="group" aria-label="Unoccupied" className="rounded-2xl border border-bone bg-background/95 p-1.5 shadow-md backdrop-blur animate-in fade-in slide-in-from-top-2 duration-300">
                 <div className="flex flex-wrap items-center justify-end gap-1.5">
-                {(["All", ...SITUATIONS] as Filter[]).map((f) => {
+                {(["All", ...REASONS] as Filter[]).map((f) => {
                   const on = filter === f;
-                  const n = f === "All" ? unitsMatching(book, STATUS_PLACES, "All") : portfolioCounts(book)[f];
+                  const n = f === "All" ? unitsMatching(book, STATUS_PLACES, "All") : reasonCounts(book)[f];
                   const tone = f === "All" ? null : TONE[f];
                   return (
                     <button key={f} type="button" aria-pressed={on} onClick={() => { setPlaceId(null); setFilter(f); setFiltersOpen(false); }}
                       style={on && tone ? { background: tone.color, borderColor: tone.color } : undefined}
                       className={`flex items-center gap-1.5 rounded-full border px-3 py-1 text-sm transition-colors ${on ? "border-primary bg-primary text-primary-foreground" : "border-bone bg-background hover:border-primary/40"}`}>
-                      {tone && <tone.Icon className="h-3.5 w-3.5" style={on ? undefined : { color: tone.color }} aria-hidden />}{f}
+                      {tone && <tone.Icon className="h-3.5 w-3.5" style={on ? undefined : { color: tone.color }} aria-hidden />}{f === "All" ? "All unoccupied" : f}
                       <span className={`ml-0.5 rounded-full px-1.5 text-xs font-semibold tabular-nums ${on ? "bg-background/25" : "bg-secondary text-foreground"}`}>{n}</span>
                     </button>
                   );
                 })}
                 </div>
                 <div className="mt-1.5 border-t border-bone px-2 pt-1.5">
-                  {SITUATIONS.map((l) => { const { Icon, color, hint } = TONE[l]; return (
+                  {REASONS.map((l) => { const { Icon, color, hint } = TONE[l]; return (
                     <p key={l} className="flex items-center gap-2 py-0.5 text-xs"><Icon className="h-3.5 w-3.5" style={{ color }} aria-hidden /><span className="font-medium">{l}</span><span className="text-ink-muted">{hint}</span></p>
                   ); })}
                 </div>
@@ -516,33 +438,28 @@ export default function PrototypeStatus() {
         </div>
 
         {place && (
-          <div role="region" aria-label={`${place.name} situations`} className="absolute right-4 top-20 z-[500] flex max-h-[calc(100%-7rem)] w-[340px] flex-col rounded-2xl border border-bone bg-background shadow-xl animate-in fade-in slide-in-from-right-2">
+          <div role="region" aria-label={`${place.name} unoccupied Units`} className="absolute right-4 top-20 z-[500] flex max-h-[calc(100%-7rem)] w-[340px] flex-col rounded-2xl border border-bone bg-background shadow-xl animate-in fade-in slide-in-from-right-2">
             <div className="flex items-start justify-between gap-2 p-4 pb-0">
               <div>
                 <p className="flex items-center gap-1.5 font-semibold"><MapPin className="h-4 w-4 text-primary" aria-hidden />{place.name}{place.id === CURRENT.placeId && <span className="text-xs font-normal text-ink-muted">· you are here</span>}</p>
                 <p className="text-xs text-ink-muted">{place.units.length} Units · {place.town}</p>
-                <p className="mt-2 text-sm text-ink-muted">Here is what I have here.</p>
               </div>
               <Button variant="ghost" size="icon" className="h-7 w-7" aria-label="Close place" onClick={() => setPlaceId(null)}><X className="h-4 w-4" /></Button>
             </div>
             <ul className="mt-2 min-h-0 flex-1 overflow-y-auto p-2">
-              {cardRows.map((r) => (
-                <li key={r.unit} className={`rounded-lg px-2.5 py-2 ${r.labels.length ? "" : "opacity-70"}`}>
+              {cardRows.map(({ unit, finding }) => (
+                <li key={unit} className={`rounded-lg px-2.5 py-2 ${finding ? "" : "opacity-70"}`}>
                   <div className="flex flex-wrap items-center justify-between gap-2">
-                    <span className="flex min-w-0 items-center gap-2 text-sm">
-                      <MapPin className={`h-3.5 w-3.5 shrink-0 ${r.labels.length ? "text-primary" : "text-ink-muted"}`} aria-hidden />
-                      <span className={`truncate ${r.labels.length ? "font-medium" : "text-ink-muted"}`}>{r.unit}</span>
-                    </span>
-                    <span className="flex flex-wrap gap-1">{r.labels.length ? r.labels.map((l) => <Chip key={l} label={l} />) : <span className="text-xs text-ink-muted">not recorded</span>}</span>
+                    <span className={`truncate text-sm ${finding ? "font-medium" : "text-ink-muted"}`}>{unit}</span>
+                    {finding ? <Chip reason={finding.reason} /> : <span className="text-xs text-ink-muted">current chain</span>}
                   </div>
-                  {r.labels.length > 0 && <p className="ml-6 mt-1 text-[11px] text-ink-muted">Recorded by {r.by} on {r.date}</p>}
+                  {finding && <p className="mt-1 text-[11px] text-ink-muted">{finding.detail ?? "Nothing assigned yet — worth checking whether papers are missing."}</p>}
                 </li>
               ))}
             </ul>
-            {cardRows.some((r) => r.labels.length > 0) && <p className="border-t border-bone px-4 py-2.5 text-[11px] text-ink-muted">Your own records — not read from papers.</p>}
+            <p className="border-t border-bone px-4 py-2.5 text-[11px] text-ink-muted">Read from the papers I hold — not recorded by hand.</p>
           </div>
         )}
-
       </section>
     </div>
   );

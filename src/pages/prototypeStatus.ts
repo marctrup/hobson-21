@@ -1,14 +1,16 @@
-// Prototype Status: pure, local simulation of user-recorded Unit situations
-// shown on a map. Situations are the user's own record — never read from papers.
-// The demonstration stands at one Unit: recording is unit-level, never a list.
+// Prototype Status: pure, local simulation of Units Hobson derives as Unoccupied
+// from their papers. Nobody records a situation by hand: a Unit is Unoccupied when
+// no papers are assigned to it, or when its current chain has ended. The map turns
+// that into a statistic to investigate — what should remain are genuinely ended chains.
 
-export const SITUATIONS = ["Unoccupied", "Available"] as const;
-export type SituationLabel = (typeof SITUATIONS)[number];
+export const REASONS = ["No papers", "Chain ended"] as const;
+export type UnoccupiedReason = (typeof REASONS)[number];
 
 export type StatusPlace = { id: string; name: string; town: string; coords: [number, number]; units: string[] };
-export type Recorded = { labels: SituationLabel[]; by: string; date: string };
-/** Keyed `${placeId}::${unit}` */
-export type SituationBook = Record<string, Recorded>;
+/** Hobson's reading of why a Unit is Unoccupied. `detail` names the ended chain. */
+export type Finding = { reason: UnoccupiedReason; detail?: string };
+/** Keyed `${placeId}::${unit}`; Units absent from the book are occupied by a current chain. */
+export type FindingBook = Record<string, Finding>;
 
 function floors(n: number) {
   return Array.from({ length: n }, (_, i) => (i === 0 ? "Ground Floor" : `${i}${["st", "nd", "rd"][i - 1] ?? "th"} Floor`));
@@ -22,7 +24,6 @@ export const STATUS_PLACES: StatusPlace[] = [
   { id: "paragon", name: "Paragon Centre", town: "London", coords: [51.5155, -0.0922], units: ["Unit 1", "Unit 2", "Unit 3", "Unit 4", "Unit 5"] },
   { id: "harbour", name: "Harbour House", town: "Southampton", coords: [50.8998, -1.4044], units: ["Ground Floor", "Upper Floor"] },
   { id: "clyde", name: "Clyde Works", town: "Glasgow", coords: [55.8617, -4.2583], units: ["Studio A", "Studio B", "Workshop"] },
-  // London: many Unit Groups close together, so the map must summarise them when zoomed out.
   { id: "wharf", name: "Wharf Point", town: "London", coords: [51.5054, -0.0235], units: floors(8) },
   { id: "shoreditch", name: "Tea Yard", town: "London", coords: [51.5262, -0.0786], units: floors(5) },
   { id: "soho", name: "Dean Street Studios", town: "London", coords: [51.5136, -0.1325], units: floors(4) },
@@ -40,68 +41,37 @@ export const CURRENT_PLACE = STATUS_PLACES.find((p) => p.id === CURRENT.placeId)
 
 export const unitKey = (placeId: string, unit: string) => `${placeId}::${unit}`;
 
-/** The user's own record for the Unit we are standing at, if any. */
-export function situationOf(book: SituationBook): Recorded | null {
-  const r = book[unitKey(CURRENT.placeId, CURRENT.unit)];
-  return r && r.labels.length ? r : null;
+export function placeFindings(book: FindingBook, place: StatusPlace) {
+  return place.units.flatMap((u) => { const f = book[unitKey(place.id, u)]; return f ? [{ unit: u, ...f }] : []; });
 }
 
-/** Remove one label from a Unit's record; the record itself goes when its last label does. */
-export function withoutLabel(book: SituationBook, key: string, label: SituationLabel): SituationBook {
-  const r = book[key];
-  if (!r) return book;
-  const labels = r.labels.filter((l) => l !== label);
-  const next = { ...book };
-  if (labels.length) next[key] = { ...r, labels };
-  else delete next[key];
-  return next;
+export type Filter = UnoccupiedReason | "All";
+
+/** Unoccupied Units across places, overall ("All") or for one reason. */
+export function unitsMatching(book: FindingBook, places: StatusPlace[], filter: Filter) {
+  return places.reduce((n, p) => n + placeFindings(book, p).filter((f) => filter === "All" || f.reason === filter).length, 0);
 }
 
-export function placeSituations(book: SituationBook, place: StatusPlace) {
-  return place.units.flatMap((u) => { const r = book[unitKey(place.id, u)]; return r && r.labels.length ? [{ unit: u, ...r }] : []; });
+export function reasonCounts(book: FindingBook, places: StatusPlace[] = STATUS_PLACES): Record<UnoccupiedReason, number> {
+  return { "No papers": unitsMatching(book, places, "No papers"), "Chain ended": unitsMatching(book, places, "Chain ended") };
 }
 
-/** Count of Units per label at a place (a Unit with two labels counts in both). */
-export function labelCounts(book: SituationBook, place: StatusPlace): Record<SituationLabel, number> {
-  const counts = { Unoccupied: 0, Available: 0 } as Record<SituationLabel, number>;
-  placeSituations(book, place).forEach((r) => r.labels.forEach((l) => { counts[l] += 1; }));
-  return counts;
-}
-
-export function placeMatches(book: SituationBook, place: StatusPlace, filter: SituationLabel | "All") {
-  const rows = placeSituations(book, place);
-  return filter === "All" ? rows.length > 0 : rows.some((r) => r.labels.includes(filter));
-}
+export const placeMatches = (book: FindingBook, place: StatusPlace, filter: Filter) => unitsMatching(book, [place], filter) > 0;
 
 export const listWords = (ls: string[]) => ls.length < 2 ? ls.join("") : `${ls.slice(0, -1).join(", ")} and ${ls[ls.length - 1]}`;
 
 export type Intent =
-  | { kind: "record" }
-  | { kind: "here" }
-  | { kind: "filter"; label: SituationLabel | "All" }
+  | { kind: "filter"; filter: Filter }
   | { kind: "place"; placeId: string }
   | { kind: "unknown" };
 
 export function interpret(raw: string): Intent {
   const t = raw.toLowerCase();
-  if (/\b(record|update|mark|set)\b/.test(t) && /(situation|status|unoccupied|vacant|available|let)/.test(t)) return { kind: "record" };
+  if (/no papers|without papers|missing papers|nothing assigned/.test(t)) return { kind: "filter", filter: "No papers" };
+  if (/ended|expired|chain/.test(t)) return { kind: "filter", filter: "Chain ended" };
+  if (/unoccupied|vacant|empty/.test(t)) return { kind: "filter", filter: "All" };
   const place = STATUS_PLACES.find((p) => t.includes(p.name.toLowerCase()) || t.includes(p.town.toLowerCase()));
-  if (/\b(here|this unit|this floor|the unit|our unit|the 1st floor)\b/.test(t) && /(situation|status|stand|unoccupied|vacant|available|let|occupied|recorded)/.test(t)) return { kind: "here" };
-  const label: SituationLabel | null = /unoccupied|vacant|empty/.test(t) ? "Unoccupied" : /available|to let|marketing/.test(t) ? "Available" : null;
-  if (label) return { kind: "filter", label };
-  if (/\b(everything|all|whole portfolio|clear)\b/.test(t)) return { kind: "filter", label: "All" };
   if (place) return { kind: "place", placeId: place.id };
+  if (/\b(everything|all|whole portfolio)\b/.test(t)) return { kind: "filter", filter: "All" };
   return { kind: "unknown" };
-}
-
-/** Units per label across a set of places (a Unit with two labels counts in both). */
-export function portfolioCounts(book: SituationBook, places: StatusPlace[] = STATUS_PLACES) {
-  const counts = { Unoccupied: 0, Available: 0 } as Record<SituationLabel, number>;
-  places.forEach((p) => SITUATIONS.forEach((l) => { counts[l] += labelCounts(book, p)[l]; }));
-  return counts;
-}
-
-/** Units with any record (filter "All") or carrying the label, across places. */
-export function unitsMatching(book: SituationBook, places: StatusPlace[], filter: SituationLabel | "All") {
-  return places.reduce((n, p) => n + placeSituations(book, p).filter((r) => filter === "All" || r.labels.includes(filter)).length, 0);
 }

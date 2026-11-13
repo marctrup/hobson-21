@@ -1,57 +1,25 @@
 import { describe, expect, it } from "vitest";
-import { CURRENT, STATUS_PLACES, interpret, labelCounts, placeMatches, situationOf, unitKey, withoutLabel, type SituationBook } from "./prototypeStatus";
+import { STATUS_PLACES, interpret, placeFindings, reasonCounts, unitKey, unitsMatching, type FindingBook } from "./prototypeStatus";
 
-const colmore = STATUS_PLACES.find((p) => p.id === "colmore")!;
-const book: SituationBook = {
-  [unitKey("colmore", "1st Floor")]: { labels: ["Unoccupied", "Available"], by: "Marc T", date: "13 November 2026" },
-  [unitKey("colmore", "2nd Floor")]: { labels: ["Available"], by: "Marc T", date: "13 November 2026" },
+const book: FindingBook = {
+  [unitKey("colmore", "1st Floor")]: { reason: "Chain ended", detail: "Lease ended" },
+  [unitKey("colmore", "2nd Floor")]: { reason: "No papers" },
+  [unitKey("clyde", "Workshop")]: { reason: "No papers" },
 };
 
-describe("prototype status", () => {
-  it("counts a Unit with two labels under both", () => {
-    expect(labelCounts(book, colmore)).toEqual({ Unoccupied: 1, Available: 2 });
+describe("Unoccupied means no papers or an ended chain", () => {
+  it("counts the two reasons separately and together", () => {
+    expect(reasonCounts(book)).toEqual({ "No papers": 2, "Chain ended": 1 });
+    expect(unitsMatching(book, STATUS_PLACES, "All")).toBe(3);
   });
-  it("a place with no recorded situations never matches, even for All", () => {
-    expect(placeMatches(book, STATUS_PLACES[0], "All")).toBe(false);
-    expect(placeMatches(book, colmore, "Unoccupied")).toBe(true);
+  it("treats Units without a finding as occupied", () => {
+    const colmore = STATUS_PLACES.find((p) => p.id === "colmore")!;
+    expect(placeFindings(book, colmore).map((f) => f.unit)).toEqual(["1st Floor", "2nd Floor"]);
   });
-  it("reads intents from plain words", () => {
-    expect(interpret("Which units are unoccupied?")).toEqual({ kind: "filter", label: "Unoccupied" });
-    expect(interpret("Which units are vacant?")).toEqual({ kind: "filter", label: "Unoccupied" });
-    expect(interpret("What's available?")).toEqual({ kind: "filter", label: "Available" });
-    expect(interpret("Record a unit's situation")).toEqual({ kind: "record" });
-    expect(interpret("What's happening in Birmingham?")).toEqual({ kind: "place", placeId: "colmore" });
-  });
-  it("keeps a situation asked about here with the Unit we are standing at", () => {
-    expect(interpret("What's the situation here?")).toEqual({ kind: "here" });
-    expect(interpret("What's the situation with the 1st Floor?")).toEqual({ kind: "here" });
-    expect(interpret("How does this Unit stand?")).toEqual({ kind: "here" });
-  });
-  it("removes one label at a time, and the record goes with its last label", () => {
-    const key = unitKey("colmore", "1st Floor");
-    const one = withoutLabel(book, key, "Unoccupied");
-    expect(one[key].labels).toEqual(["Available"]);
-    expect(one[key].by).toBe("Marc T");
-    const none = withoutLabel(one, key, "Available");
-    expect(none[key]).toBeUndefined();
-    // other Units are untouched, and an unknown key changes nothing
-    expect(none[unitKey("colmore", "2nd Floor")].labels).toEqual(["Available"]);
-    expect(withoutLabel(book, "nowhere::nothing", "Unoccupied")).toBe(book);
-  });
-  it("holds one record for the Unit we are standing at", () => {
-    expect(situationOf({})).toBeNull();
-    const here: SituationBook = { [unitKey(CURRENT.placeId, CURRENT.unit)]: { labels: ["Unoccupied"], by: "Marc T", date: "13 November 2026" } };
-    expect(situationOf(here)?.labels).toEqual(["Unoccupied"]);
-    expect(situationOf({ [unitKey("colmore", "1st Floor")]: { labels: ["Unoccupied"], by: "Marc T", date: "13 November 2026" } })).toBeNull();
-  });
-});
-
-import { portfolioCounts as pc, unitsMatching as um, unitKey as uk, STATUS_PLACES as SP } from "./prototypeStatus";
-describe("filter counts", () => {
-  it("counts a Unit under every label it carries, and once under All", () => {
-    const book = { [uk("wharf", "3rd Floor")]: { labels: ["Unoccupied", "Available"] as any, by: "M", date: "d" } };
-    expect(pc(book).Unoccupied).toBe(1);
-    expect(pc(book).Available).toBe(1);
-    expect(um(book, SP, "All")).toBe(1);
+  it("understands questions about each reason", () => {
+    expect(interpret("Which Units have no papers?")).toEqual({ kind: "filter", filter: "No papers" });
+    expect(interpret("Show me the ended chains")).toEqual({ kind: "filter", filter: "Chain ended" });
+    expect(interpret("What's vacant?")).toEqual({ kind: "filter", filter: "All" });
+    expect(interpret("Tell me about Glasgow")).toEqual({ kind: "place", placeId: "clyde" });
   });
 });

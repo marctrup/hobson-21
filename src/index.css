@@ -136,9 +136,9 @@ All colors MUST be HSL.
     --warning: #8F5A14;
     --warning-bg: #F7EDDC;
     --warning-border: #E6D2AE;
-    /* Prototype Status: user-recorded Unit situations on the map. */
-    --situation-unoccupied: #D9485F;
-    --situation-available: #2F9E6A;
+    /* Prototype Status: why Hobson reads a Unit as Unoccupied. */
+    --unoccupied-no-papers: #C98A1B;
+    --unoccupied-chain-ended: #D9485F;
     --info: var(--ink);
     --info-bg: var(--bone-wash);
     --info-border: var(--bone);
