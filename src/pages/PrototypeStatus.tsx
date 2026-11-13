@@ -97,14 +97,18 @@ function StatusMap({ book, filter, selectedId, bloomId, onPick, onStatusBadge }:
 
   useEffect(() => {
     if (!box.current) return;
-    const m = L.map(box.current, { zoomControl: false, attributionControl: true }).fitBounds(STATUS_PLACES.map((p) => p.coords), { padding: [60, 60] });
+    // The map may mount hidden (zero size on phones), so only fit once it has room.
+    const m = L.map(box.current, { zoomControl: false, attributionControl: true }).setView([54, -3], 5);
+    const fitAll = () => { const s = m.getSize(); if (s.x > 0 && s.y > 0) m.fitBounds(STATUS_PLACES.map((p) => p.coords), { padding: [Math.min(60, s.x / 4), Math.min(60, s.y / 4)] }); };
+    fitAll();
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", { attribution: "&copy; OpenStreetMap contributors", maxZoom: 19 }).addTo(m);
     L.control.zoom({ position: "bottomright" }).addTo(m);
     layer.current = L.layerGroup().addTo(m);
     map.current = m;
     setZoom(m.getZoom());
     m.on("zoomend", () => setZoom(m.getZoom()));
-    const ro = new ResizeObserver(() => m.invalidateSize({ animate: false }));
+    let fitted = m.getSize().x > 0;
+    const ro = new ResizeObserver(() => { m.invalidateSize({ animate: false }); if (!fitted && m.getSize().x > 0) { fitted = true; fitAll(); } });
     ro.observe(box.current);
     return () => { ro.disconnect(); m.remove(); map.current = null; };
   }, []);
@@ -181,10 +185,12 @@ function StatusMap({ book, filter, selectedId, bloomId, onPick, onStatusBadge }:
   useEffect(() => {
     const m = map.current;
     if (!m) return;
+    const sz = m.getSize();
+    if (sz.x <= 0 || sz.y <= 0) return; // hidden map: nothing to fly
     const p = placeById(selectedId);
     if (p) { m.flyTo(p.coords, p.town === "London" ? 14 : 11, { duration: 1.1 }); return; }
     const pts = filter === "All" ? STATUS_PLACES : STATUS_PLACES.filter((x) => placeMatches(book, x, filter));
-    if (pts.length) m.flyToBounds(pts.map((x) => x.coords), { padding: [90, 90], maxZoom: 9, duration: 1.1 });
+    if (pts.length) m.flyToBounds(pts.map((x) => x.coords), { padding: [Math.min(90, sz.x / 4), Math.min(90, sz.y / 4)], maxZoom: 9, duration: 1.1 });
   }, [selectedId, filter, book]);
 
   return <div ref={box} aria-label="Map of your places" className="status-map absolute inset-0 z-0" />;
