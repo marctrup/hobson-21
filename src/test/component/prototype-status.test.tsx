@@ -34,7 +34,7 @@ describe("Prototype Status: Unoccupied read from papers", () => {
     const panel = screen.getByRole("group", { name: "Unoccupied" });
     expect(within(panel).getByRole("button", { name: /All unoccupied\s*17/ })).toBeInTheDocument();
     expect(within(panel).getByRole("button", { name: /^No papers\s*10/ })).toBeInTheDocument();
-    expect(within(panel).getByRole("button", { name: /^Chain ended\s*7/ })).toBeInTheDocument();
+    expect(within(panel).getByRole("button", { name: /^No new occupancy\s*7/ })).toBeInTheDocument();
     expect(within(panel).queryByText("Available")).toBeNull();
   });
 

@@ -3,7 +3,7 @@
 // no papers are assigned to it, or when its current chain has ended. The map turns
 // that into a statistic to investigate — what should remain are genuinely ended chains.
 
-export const REASONS = ["No papers", "Chain ended"] as const;
+export const REASONS = ["No papers", "No new occupancy"] as const;
 export type UnoccupiedReason = (typeof REASONS)[number];
 
 export type StatusPlace = { id: string; name: string; town: string; coords: [number, number]; units: string[] };
@@ -53,7 +53,7 @@ export function unitsMatching(book: FindingBook, places: StatusPlace[], filter: 
 }
 
 export function reasonCounts(book: FindingBook, places: StatusPlace[] = STATUS_PLACES): Record<UnoccupiedReason, number> {
-  return { "No papers": unitsMatching(book, places, "No papers"), "Chain ended": unitsMatching(book, places, "Chain ended") };
+  return { "No papers": unitsMatching(book, places, "No papers"), "No new occupancy": unitsMatching(book, places, "No new occupancy") };
 }
 
 export const placeMatches = (book: FindingBook, place: StatusPlace, filter: Filter) => unitsMatching(book, [place], filter) > 0;
@@ -68,7 +68,7 @@ export type Intent =
 export function interpret(raw: string): Intent {
   const t = raw.toLowerCase();
   if (/no papers|without papers|missing papers|nothing assigned/.test(t)) return { kind: "filter", filter: "No papers" };
-  if (/ended|expired|chain/.test(t)) return { kind: "filter", filter: "Chain ended" };
+  if (/ended|expired|chain/.test(t)) return { kind: "filter", filter: "No new occupancy" };
   if (/unoccupied|vacant|empty/.test(t)) return { kind: "filter", filter: "All" };
   const place = STATUS_PLACES.find((p) => t.includes(p.name.toLowerCase()) || t.includes(p.town.toLowerCase()));
   if (place) return { kind: "place", placeId: place.id };

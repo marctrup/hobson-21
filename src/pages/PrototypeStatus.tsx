@@ -16,7 +16,7 @@ import {
 
 const TONE: Record<UnoccupiedReason, { color: string; Icon: typeof FileX; hint: string }> = {
   "No papers": { color: "var(--unoccupied-no-papers)", Icon: FileQuestion, hint: "No papers are assigned to the Unit" },
-  "Chain ended": { color: "var(--unoccupied-chain-ended)", Icon: FileX, hint: "Its last chain of papers has ended" },
+  "No new occupancy": { color: "var(--unoccupied-chain-ended)", Icon: FileX, hint: "Its last occupancy has ended" },
 };
 
 type Message = { id: number; role: "user" | "hobson"; text: string; choices?: string[]; noteField?: boolean };
@@ -27,7 +27,7 @@ const SEED: Message[] = [{
 }];
 
 // Invented sample findings. Units not listed have a current chain.
-const ended = (who: string, date: string) => ({ reason: "Chain ended" as const, detail: `Lease to ${who} ended ${date}` });
+const ended = (who: string, date: string) => ({ reason: "No new occupancy" as const, detail: `Lease to ${who} ended ${date}` });
 const none = { reason: "No papers" as const };
 const SAMPLE: FindingBook = {
   [unitKey("colmore", "1st Floor")]: ended("Hartwell Partners LLP", "24 June 2025"),
@@ -243,7 +243,7 @@ export default function PrototypeStatus() {
     setFilter(f); setPlaceId(null);
     const rows = STATUS_PLACES.flatMap((p) => placeFindings(book, p).filter((r) => f === "All" || r.reason === f).map((r) => `${r.unit} at ${p.name}`));
     const c = reasonCounts(book);
-    if (f === "All") { say("hobson", `${rows.length} Units read as unoccupied: ${c["No papers"]} with no papers and ${c["Chain ended"]} whose chain has ended.\n\nThe ones with no papers may simply be awaiting their papers — worth checking first.`, { choices: ["Which Units have no papers?", "Show me the ended chains"] }); return; }
+    if (f === "All") { say("hobson", `${rows.length} Units read as unoccupied: ${c["No papers"]} with no papers and ${c["No new occupancy"]} whose chain has ended.\n\nThe ones with no papers may simply be awaiting their papers — worth checking first.`, { choices: ["Which Units have no papers?", "Show me the ended chains"] }); return; }
     say("hobson", f === "No papers"
       ? `${rows.length} Units have no papers assigned to them: ${listWords(rows)}.\n\nIf any of these is let, its papers haven't reached me yet — once they do, I'll read it afresh.`
       : `${rows.length} Units have a chain that has ended: ${listWords(rows)}.\n\nThese are the ones that should genuinely be unoccupied.`,
