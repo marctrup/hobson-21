@@ -11,7 +11,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import owlDefault from "@/assets/prototype/owl-default.png";
 import {
   CURRENT, CURRENT_PLACE, SITUATIONS, STATUS_PLACES, interpret, labelCounts, listWords, placeMatches, portfolioCounts, unitsMatching,
-  placeSituations, situationOf, unitKey,
+  placeSituations, situationOf, unitKey, withoutLabel,
   type Recorded, type SituationBook, type SituationLabel, type StatusPlace,
 } from "./prototypeStatus";
 
@@ -87,8 +87,8 @@ function summaryLine(places: StatusPlace[], book: SituationBook) {
 
 const CLUSTER_PX = 64;
 
-function StatusMap({ book, filter, selectedId, bloomId, onPick, onStatusBadge }: {
-  book: SituationBook; filter: Filter; selectedId: string | null; bloomId: string | null; onPick: (id: string) => void; onStatusBadge: () => void;
+function StatusMap({ book, filter, selectedId, bloomId, onPick, onStatusBadge, onRemoveLabel }: {
+  book: SituationBook; filter: Filter; selectedId: string | null; bloomId: string | null; onPick: (id: string) => void; onStatusBadge: () => void; onRemoveLabel: (label: SituationLabel) => void;
 }) {
   const box = useRef<HTMLDivElement>(null);
   const map = useRef<L.Map | null>(null);
@@ -97,6 +97,8 @@ function StatusMap({ book, filter, selectedId, bloomId, onPick, onStatusBadge }:
   pick.current = onPick;
   const statusBadge = useRef(onStatusBadge);
   statusBadge.current = onStatusBadge;
+  const removeLabel = useRef(onRemoveLabel);
+  removeLabel.current = onRemoveLabel;
   const hasAny = Object.keys(book).length > 0;
   const [zoom, setZoom] = useState(0);
 
@@ -173,10 +175,17 @@ function StatusMap({ book, filter, selectedId, bloomId, onPick, onStatusBadge }:
       const badge = here && book[CURRENT_KEY]
         ? `<span data-status-badge role="button" aria-label="How the ${CURRENT.unit} stands" title="How the ${CURRENT.unit} stands" class="absolute -right-2 -top-2 z-10 grid h-6 w-6 cursor-pointer place-items-center rounded-full border-2 border-background bg-primary text-[11px] font-bold text-primary-foreground shadow-lg transition-transform hover:scale-110">i</span>`
         : "";
-      const html = `<span class="relative block cursor-pointer transition-opacity duration-500 ${dim ? "opacity-30" : ""} ${selected ? "scale-110" : ""}">${bloom}${core}${badge}${label}</span>`;
+      // The current Unit wears its labels beneath the marker; each is remove-only.
+      const hereLabels = here ? book[CURRENT_KEY]?.labels ?? [] : [];
+      const chips = hereLabels.length
+        ? `<span class="absolute left-1/2 top-full mt-1.5 flex -translate-x-1/2 gap-1">${hereLabels.map((l) => `<span data-remove-label="${l}" role="button" aria-label="Remove ${l}" title="Remove ${l}" class="flex cursor-pointer items-center gap-1 whitespace-nowrap rounded-full border bg-background px-2 py-0.5 text-[10px] font-medium shadow-md transition-transform hover:scale-105" style="color:${TONE[l].color};border-color:${TONE[l].color}">${l}<span aria-hidden class="text-[11px] leading-none">×</span></span>`).join("")}</span>`
+        : "";
+      const html = `<span class="relative block cursor-pointer transition-opacity duration-500 ${dim ? "opacity-30" : ""} ${selected ? "scale-110" : ""}">${bloom}${core}${badge}${label}${chips}</span>`;
       L.marker(p.coords, { icon: L.divIcon({ className: "", html, iconSize: [size, size], iconAnchor: [size / 2, size / 2] }), keyboard: true, title: `${p.name}, ${p.town}`, zIndexOffset: selected ? 1000 : 0 })
         .on("click", (e: L.LeafletMouseEvent) => {
           const t = e.originalEvent?.target as HTMLElement | null;
+          const rm = t?.closest?.("[data-remove-label]") as HTMLElement | null;
+          if (rm) { removeLabel.current(rm.dataset.removeLabel as SituationLabel); return; }
           if (t?.closest?.("[data-status-badge]")) { statusBadge.current(); return; }
           pick.current(p.id);
         }).addTo(g);
@@ -290,10 +299,12 @@ export default function PrototypeStatus() {
       return n;
     });
     setAsking(false); setBloomId(CURRENT.placeId);
-    if (!labels.length) { say("hobson", `I've cleared the recorded situation for the ${CURRENT.unit}.`, { choices: ["Record the Unit's current situation"] }); return; }
-    say("hobson", `Noted. The ${CURRENT.unit} is ${lower(labels)} — recorded by you today.${first ? `\n\nYour map now shows how things stand: ${CURRENT_PLACE.name} wears a ring in the colours of its situation, and the small mark on it will tell you how it stands whenever you touch it.` : ""}`,
-      { choices: ["Change the situation"] });
+    if (!labels.length) { say("hobson", `I've cleared the recorded situation for the ${CURRENT.unit}.`); return; }
+    say("hobson", `Noted. The ${CURRENT.unit} is ${lower(labels)} — recorded by you today.${first ? `\n\nIts labels now sit beneath ${CURRENT_PLACE.name} on the map — touch one to remove it.` : ""}`);
   };
+
+  // Labels on the marker are remove-only; adding or changing stays in the + flow.
+  const removeLabel = (label: SituationLabel) => setBook((b) => withoutLabel(b, CURRENT_KEY, label));
 
   const describeCurrent = () => {
     setPlaceId(CURRENT.placeId); setFilter("All");
@@ -425,7 +436,7 @@ export default function PrototypeStatus() {
       </section>
 
       <section aria-label="Map" className="relative min-w-0 flex-1 max-md:hidden">
-        <StatusMap book={book} filter={filter} selectedId={placeId} bloomId={bloomId} onPick={onMapPick} onStatusBadge={() => { setFilter("All"); setPlaceId(CURRENT.placeId); }} />
+        <StatusMap book={book} filter={filter} selectedId={placeId} bloomId={bloomId} onPick={onMapPick} onStatusBadge={() => { setFilter("All"); setPlaceId(CURRENT.placeId); }} onRemoveLabel={removeLabel} />
 
         <div className="pointer-events-none absolute inset-x-4 top-4 z-[500] flex items-start justify-end gap-2">
           <div className="pointer-events-auto flex flex-col items-end gap-2">

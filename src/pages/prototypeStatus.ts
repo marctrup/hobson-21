@@ -46,6 +46,17 @@ export function situationOf(book: SituationBook): Recorded | null {
   return r && r.labels.length ? r : null;
 }
 
+/** Remove one label from a Unit's record; the record itself goes when its last label does. */
+export function withoutLabel(book: SituationBook, key: string, label: SituationLabel): SituationBook {
+  const r = book[key];
+  if (!r) return book;
+  const labels = r.labels.filter((l) => l !== label);
+  const next = { ...book };
+  if (labels.length) next[key] = { ...r, labels };
+  else delete next[key];
+  return next;
+}
+
 export function placeSituations(book: SituationBook, place: StatusPlace) {
   return place.units.flatMap((u) => { const r = book[unitKey(place.id, u)]; return r && r.labels.length ? [{ unit: u, ...r }] : []; });
 }

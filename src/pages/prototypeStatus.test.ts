@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { CURRENT, STATUS_PLACES, interpret, labelCounts, placeMatches, situationOf, unitKey, type SituationBook } from "./prototypeStatus";
+import { CURRENT, STATUS_PLACES, interpret, labelCounts, placeMatches, situationOf, unitKey, withoutLabel, type SituationBook } from "./prototypeStatus";
 
 const colmore = STATUS_PLACES.find((p) => p.id === "colmore")!;
 const book: SituationBook = {
@@ -24,6 +24,17 @@ describe("prototype status", () => {
     expect(interpret("What's the situation here?")).toEqual({ kind: "here" });
     expect(interpret("What's the situation with the 1st Floor?")).toEqual({ kind: "here" });
     expect(interpret("How does this Unit stand?")).toEqual({ kind: "here" });
+  });
+  it("removes one label at a time, and the record goes with its last label", () => {
+    const key = unitKey("colmore", "1st Floor");
+    const one = withoutLabel(book, key, "Vacant");
+    expect(one[key].labels).toEqual(["Available to let"]);
+    expect(one[key].by).toBe("Marc T");
+    const none = withoutLabel(one, key, "Available to let");
+    expect(none[key]).toBeUndefined();
+    // other Units are untouched, and an unknown key changes nothing
+    expect(none[unitKey("colmore", "2nd Floor")].labels).toEqual(["Being refurbished"]);
+    expect(withoutLabel(book, "nowhere::nothing", "Vacant")).toBe(book);
   });
   it("holds one record for the Unit we are standing at", () => {
     expect(situationOf({})).toBeNull();
