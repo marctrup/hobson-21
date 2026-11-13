@@ -10,6 +10,10 @@ export type Recorded = { labels: SituationLabel[]; by: string; date: string };
 /** Keyed `${placeId}::${unit}` */
 export type SituationBook = Record<string, Recorded>;
 
+function floors(n: number) {
+  return Array.from({ length: n }, (_, i) => (i === 0 ? "Ground Floor" : `${i}${["st", "nd", "rd"][i - 1] ?? "th"} Floor`));
+}
+
 export const STATUS_PLACES: StatusPlace[] = [
   { id: "st-pauls", name: "St Pauls House", town: "Leeds", coords: [53.7997, -1.5492], units: ["4th Floor", "5th Floor", "Part 2nd Floor", "Car Park"] },
   { id: "colmore", name: "Colmore Gate", town: "Birmingham", coords: [52.4831, -1.8990], units: ["Ground Floor Shop", "1st Floor", "2nd Floor", "3rd Floor"] },
@@ -18,6 +22,16 @@ export const STATUS_PLACES: StatusPlace[] = [
   { id: "paragon", name: "Paragon Centre", town: "London", coords: [51.5155, -0.0922], units: ["Unit 1", "Unit 2", "Unit 3", "Unit 4", "Unit 5"] },
   { id: "harbour", name: "Harbour House", town: "Southampton", coords: [50.8998, -1.4044], units: ["Ground Floor", "Upper Floor"] },
   { id: "clyde", name: "Clyde Works", town: "Glasgow", coords: [55.8617, -4.2583], units: ["Studio A", "Studio B", "Workshop"] },
+  // London: many Unit Groups close together, so the map must summarise them when zoomed out.
+  { id: "wharf", name: "Wharf Point", town: "London", coords: [51.5054, -0.0235], units: floors(8) },
+  { id: "shoreditch", name: "Tea Yard", town: "London", coords: [51.5262, -0.0786], units: floors(5) },
+  { id: "soho", name: "Dean Street Studios", town: "London", coords: [51.5136, -0.1325], units: floors(4) },
+  { id: "kings-cross", name: "Granary Row", town: "London", coords: [51.5338, -0.1248], units: floors(7) },
+  { id: "southwark", name: "Borough Works", town: "London", coords: [51.5025, -0.0905], units: floors(6) },
+  { id: "kensington", name: "Abingdon Court", town: "London", coords: [51.4988, -0.1949], units: floors(5) },
+  { id: "hammersmith", name: "Riverside Yard", town: "London", coords: [51.4907, -0.2290], units: floors(4) },
+  { id: "camden", name: "Lock House", town: "London", coords: [51.5410, -0.1446], units: floors(5) },
+  { id: "stratford", name: "Carpenters Quay", town: "London", coords: [51.5416, -0.0034], units: floors(6) },
 ];
 
 /** The Unit this demonstration stands at. */
@@ -67,4 +81,16 @@ export function interpret(raw: string): Intent {
   if (/\b(everything|all|whole portfolio|clear)\b/.test(t)) return { kind: "filter", label: "All" };
   if (place) return { kind: "place", placeId: place.id };
   return { kind: "unknown" };
+}
+
+/** Units per label across a set of places (a Unit with two labels counts in both). */
+export function portfolioCounts(book: SituationBook, places: StatusPlace[] = STATUS_PLACES) {
+  const counts = { Vacant: 0, "Available to let": 0, "Being refurbished": 0 } as Record<SituationLabel, number>;
+  places.forEach((p) => SITUATIONS.forEach((l) => { counts[l] += labelCounts(book, p)[l]; }));
+  return counts;
+}
+
+/** Units with any record (filter "All") or carrying the label, across places. */
+export function unitsMatching(book: SituationBook, places: StatusPlace[], filter: SituationLabel | "All") {
+  return places.reduce((n, p) => n + placeSituations(book, p).filter((r) => filter === "All" || r.labels.includes(filter)).length, 0);
 }

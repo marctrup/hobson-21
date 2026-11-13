@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import owlDefault from "@/assets/prototype/owl-default.png";
 import {
-  CURRENT, CURRENT_PLACE, SITUATIONS, STATUS_PLACES, interpret, labelCounts, listWords, placeMatches,
+  CURRENT, CURRENT_PLACE, SITUATIONS, STATUS_PLACES, interpret, labelCounts, listWords, placeMatches, portfolioCounts, unitsMatching,
   placeSituations, situationOf, unitKey,
   type Recorded, type SituationBook, type SituationLabel, type StatusPlace,
 } from "./prototypeStatus";
@@ -43,6 +43,15 @@ const SAMPLE: SituationBook = {
   [unitKey("paragon", "Unit 3")]: { labels: ["Available to let"], by: AUTHOR, date: TODAY },
   [unitKey("paragon", "Unit 4")]: { labels: ["Being refurbished"], by: AUTHOR, date: TODAY },
   [unitKey("clyde", "Workshop")]: { labels: ["Vacant"], by: AUTHOR, date: TODAY },
+  [unitKey("wharf", "3rd Floor")]: { labels: ["Vacant", "Available to let"], by: AUTHOR, date: TODAY },
+  [unitKey("wharf", "4th Floor")]: { labels: ["Vacant", "Available to let"], by: AUTHOR, date: TODAY },
+  [unitKey("wharf", "7th Floor")]: { labels: ["Being refurbished"], by: AUTHOR, date: TODAY },
+  [unitKey("shoreditch", "Ground Floor")]: { labels: ["Available to let"], by: AUTHOR, date: TODAY },
+  [unitKey("kings-cross", "2nd Floor")]: { labels: ["Vacant", "Being refurbished"], by: AUTHOR, date: TODAY },
+  [unitKey("kings-cross", "5th Floor")]: { labels: ["Vacant"], by: AUTHOR, date: TODAY },
+  [unitKey("southwark", "1st Floor")]: { labels: ["Vacant", "Being refurbished", "Available to let"], by: AUTHOR, date: TODAY },
+  [unitKey("camden", "Ground Floor")]: { labels: ["Available to let"], by: AUTHOR, date: TODAY },
+  [unitKey("stratford", "3rd Floor")]: { labels: ["Vacant"], by: AUTHOR, date: TODAY },
 };
 
 const SCENARIOS = [
@@ -53,13 +62,43 @@ const SCENARIOS = [
 const lower = (ls: string[]) => listWords(ls.map((l) => l.toLowerCase()));
 const placeById = (id: string | null) => STATUS_PLACES.find((p) => p.id === id) ?? null;
 
-function ring(book: SituationBook, place: StatusPlace) {
-  const counts = labelCounts(book, place);
-  const total = SITUATIONS.reduce((n, l) => n + counts[l], 0);
-  if (!total) return null;
+/** Split ring: a slice per situation, grey for Units with nothing recorded. */
+function ringFor(places: StatusPlace[], book: SituationBook, filter: Filter) {
+  const counts = portfolioCounts(book, places);
+  const labels = SITUATIONS.filter((l) => counts[l] && (filter === "All" || filter === l));
+  const total = places.reduce((n, p) => n + p.units.length, 0);
+  const recorded = unitsMatching(book, places, filter);
+  const quiet = Math.max(total - recorded, 0);
+  const sum = labels.reduce((n, l) => n + counts[l], 0) + quiet;
+  if (!sum || !labels.length) return null;
   let at = 0;
-  return `conic-gradient(${SITUATIONS.filter((l) => counts[l]).map((l) => { const from = at; at += (counts[l] / total) * 360; return `${TONE[l].color} ${from}deg ${at}deg`; }).join(", ")})`;
+  const parts = labels.map((l) => { const from = at; at += (counts[l] / sum) * 360; return `${TONE[l].color} ${from}deg ${at}deg`; });
+  parts.push(`hsl(var(--border)) ${at}deg 360deg`);
+  return `conic-gradient(${parts.join(", ")})`;
 }
+
+const esc = (t: string) => t.replace(/&/g, "&amp;").replace(/</g, "&lt;");
+
+function summaryLine(places: StatusPlace[], book: SituationBook) {
+  const c = portfolioCounts(book, places);
+  const bits = SITUATIONS.filter((l) => c[l]).map((l) => `<span class="inline-flex items-center gap-1"><span class="h-2 w-2 rounded-full" style="background:${TONE[l].color}"></span>${c[l]} ${l.toLowerCase()}</span>`);
+  return bits.length ? `<div class="mt-1.5 flex flex-wrap gap-x-2.5 gap-y-1 text-[11px]">${bits.join("")}</div>` : `<div class="mt-1 text-[11px] text-muted-foreground">Nothing recorded yet</div>`;
+}
+
+/** A tiny stack of the place's Units, coloured by situation: readable without opening anything. */
+function floorStack(place: StatusPlace, book: SituationBook) {
+  const rows = [...place.units].reverse().map((u) => {
+    const r = book[unitKey(place.id, u)];
+    const ls = r?.labels ?? [];
+    const bar = ls.length
+      ? `linear-gradient(90deg, ${ls.map((l, i) => `${TONE[l].color} ${(i / ls.length) * 100}% ${((i + 1) / ls.length) * 100}%`).join(", ")})`
+      : "hsl(var(--border))";
+    return `<div class="flex items-center gap-2"><span class="h-2.5 w-14 rounded-sm" style="background:${bar}"></span><span class="text-[11px] ${ls.length ? "font-medium" : "text-muted-foreground"}">${esc(u)}</span></div>`;
+  }).join("");
+  return `<div class="min-w-[170px]"><div class="text-xs font-semibold">${esc(place.name)}</div><div class="text-[11px] text-muted-foreground">${place.units.length} Units · ${esc(place.town)}</div><div class="mt-2 flex flex-col gap-1">${rows}</div></div>`;
+}
+
+const CLUSTER_PX = 64;
 
 function StatusMap({ book, filter, selectedId, bloomId, onPick, onStatusBadge }: {
   book: SituationBook; filter: Filter; selectedId: string | null; bloomId: string | null; onPick: (id: string) => void; onStatusBadge: () => void;
@@ -72,6 +111,7 @@ function StatusMap({ book, filter, selectedId, bloomId, onPick, onStatusBadge }:
   const statusBadge = useRef(onStatusBadge);
   statusBadge.current = onStatusBadge;
   const hasAny = Object.keys(book).length > 0;
+  const [zoom, setZoom] = useState(0);
 
   useEffect(() => {
     if (!box.current) return;
@@ -80,6 +120,8 @@ function StatusMap({ book, filter, selectedId, bloomId, onPick, onStatusBadge }:
     L.control.zoom({ position: "bottomright" }).addTo(m);
     layer.current = L.layerGroup().addTo(m);
     map.current = m;
+    setZoom(m.getZoom());
+    m.on("zoomend", () => setZoom(m.getZoom()));
     const ro = new ResizeObserver(() => m.invalidateSize({ animate: false }));
     ro.observe(box.current);
     return () => { ro.disconnect(); m.remove(); map.current = null; };
@@ -87,11 +129,49 @@ function StatusMap({ book, filter, selectedId, bloomId, onPick, onStatusBadge }:
 
   useEffect(() => {
     const g = layer.current;
-    if (!g) return;
+    const m = map.current;
+    if (!g || !m) return;
     g.clearLayers();
+
+    // Group places that would sit on top of each other at this zoom.
+    const groups: { pt: L.Point; places: StatusPlace[] }[] = [];
     STATUS_PLACES.forEach((p) => {
-      const bg = ring(book, p);
-      const recorded = placeSituations(book, p).length;
+      const pt = m.project(p.coords, zoom);
+      const near = groups.find((gr) => gr.pt.distanceTo(pt) < CLUSTER_PX && !gr.places.some((x) => x.id === selectedId) && p.id !== selectedId);
+      if (near) near.places.push(p); else groups.push({ pt, places: [p] });
+    });
+
+    groups.forEach(({ places }) => {
+      if (places.length > 1) {
+        const total = places.reduce((n, p) => n + p.units.length, 0);
+        const matching = unitsMatching(book, places, filter);
+        const bg = ringFor(places, book, filter);
+        const towns = [...new Set(places.map((p) => p.town))];
+        const title = towns.length === 1 ? towns[0] : `${towns.length} towns`;
+        const shown = filter === "All" ? total : matching;
+        const size = 58;
+        const html = `<span class="relative block cursor-pointer transition-opacity duration-500 ${bg ? "" : "opacity-50"}">
+          <span style="background:${bg ?? "hsl(var(--border))"}" class="grid h-[58px] w-[58px] place-items-center rounded-full shadow-lg ${bg ? "status-breathe" : ""}">
+            <span class="grid h-[44px] w-[44px] place-items-center rounded-full bg-background leading-none">
+              <span class="text-base font-semibold text-foreground">${shown}</span>
+              <span class="-mt-2 text-[9px] uppercase tracking-wide text-muted-foreground">${filter === "All" ? "Units" : "match"}</span>
+            </span>
+          </span>
+          ${matching ? `<span class="absolute -right-1 -top-1 grid h-5 min-w-5 place-items-center rounded-full border-2 border-background bg-primary px-1 text-[10px] font-bold text-primary-foreground">${matching}</span>` : ""}
+        </span>`;
+        const tip = `<div class="min-w-[190px]"><div class="text-xs font-semibold">${esc(title)}</div><div class="text-[11px] text-muted-foreground">${total} Units in ${places.length} places</div>${summaryLine(places, book)}<div class="mt-2 text-[11px] font-medium text-primary">Click to zoom in</div></div>`;
+        L.marker(m.unproject(places.reduce((acc, p) => acc.add(m.project(p.coords, zoom)), L.point(0, 0)).divideBy(places.length), zoom), {
+          icon: L.divIcon({ className: "", html, iconSize: [size, size], iconAnchor: [size / 2, size / 2] }), keyboard: true, title: `${title}: ${total} Units`,
+        })
+          .bindTooltip(tip, { direction: "top", offset: [0, -30], className: "status-tip" })
+          .on("click", () => m.flyToBounds(places.map((p) => p.coords), { padding: [80, 80], maxZoom: 15, duration: 0.9 }))
+          .addTo(g);
+        return;
+      }
+
+      const p = places[0];
+      const bg = ringFor([p], book, filter);
+      const recorded = unitsMatching(book, [p], filter);
       const dim = hasAny && filter !== "All" && !placeMatches(book, p, filter);
       const selected = p.id === selectedId;
       const here = p.id === CURRENT.placeId;
@@ -103,31 +183,51 @@ function StatusMap({ book, filter, selectedId, bloomId, onPick, onStatusBadge }:
       const label = selected || here
         ? `<span class="absolute left-full top-1/2 ml-2 -translate-y-1/2 whitespace-nowrap rounded-full ${selected ? "bg-primary text-primary-foreground" : "bg-background text-foreground"} px-2.5 py-0.5 text-xs font-medium shadow">${here ? `You are here · ${p.name}` : p.name}</span>`
         : "";
-      // Once the Unit you're standing at has a record, a small mark on its
-      // marker opens an elegant card saying how it stands — never the chat.
       const badge = here && book[CURRENT_KEY]
         ? `<span data-status-badge role="button" aria-label="How the ${CURRENT.unit} stands" title="How the ${CURRENT.unit} stands" class="absolute -right-2 -top-2 z-10 grid h-6 w-6 cursor-pointer place-items-center rounded-full border-2 border-background bg-primary text-[11px] font-bold text-primary-foreground shadow-lg transition-transform hover:scale-110">i</span>`
         : "";
-      const html = `<span title="${p.name}, ${p.town}" class="relative block cursor-pointer transition-opacity duration-500 ${dim ? "opacity-30" : ""} ${selected ? "scale-110" : ""}">${bloom}${core}${badge}${label}</span>`;
-      L.marker(p.coords, { icon: L.divIcon({ className: "", html, iconSize: [size, size], iconAnchor: [size / 2, size / 2] }), keyboard: true, title: p.name, zIndexOffset: selected ? 1000 : 0 })
+      const html = `<span class="relative block cursor-pointer transition-opacity duration-500 ${dim ? "opacity-30" : ""} ${selected ? "scale-110" : ""}">${bloom}${core}${badge}${label}</span>`;
+      L.marker(p.coords, { icon: L.divIcon({ className: "", html, iconSize: [size, size], iconAnchor: [size / 2, size / 2] }), keyboard: true, title: `${p.name}, ${p.town}`, zIndexOffset: selected ? 1000 : 0 })
+        .bindTooltip(floorStack(p, book), { direction: "top", offset: [0, -size / 2], className: "status-tip" })
         .on("click", (e: L.LeafletMouseEvent) => {
           const t = e.originalEvent?.target as HTMLElement | null;
           if (t?.closest?.("[data-status-badge]")) { statusBadge.current(); return; }
           pick.current(p.id);
         }).addTo(g);
     });
-  }, [book, filter, selectedId, bloomId, hasAny]);
+  }, [book, filter, selectedId, bloomId, hasAny, zoom]);
 
   useEffect(() => {
     const m = map.current;
     if (!m) return;
     const p = placeById(selectedId);
-    if (p) { m.flyTo(p.coords, 9, { duration: 1.1 }); return; }
+    if (p) { m.flyTo(p.coords, p.town === "London" ? 14 : 11, { duration: 1.1 }); return; }
     const pts = filter === "All" ? STATUS_PLACES : STATUS_PLACES.filter((x) => placeMatches(book, x, filter));
     if (pts.length) m.flyToBounds(pts.map((x) => x.coords), { padding: [90, 90], maxZoom: 9, duration: 1.1 });
   }, [selectedId, filter, book]);
 
-  return <div ref={box} aria-label="Map of your places" className="status-map absolute inset-0 z-0" />;
+  // What's in view, always: a quiet line along the bottom.
+  const [inView, setInView] = useState<StatusPlace[]>(STATUS_PLACES);
+  useEffect(() => {
+    const m = map.current;
+    if (!m) return;
+    const upd = () => { const b = m.getBounds(); setInView(STATUS_PLACES.filter((p) => b.contains(p.coords))); };
+    upd();
+    m.on("moveend", upd);
+    return () => { m.off("moveend", upd); };
+  }, []);
+  const viewCount = unitsMatching(book, inView, filter);
+
+  return (
+    <>
+      <div ref={box} aria-label="Map of your places" className="status-map absolute inset-0 z-0" />
+      {hasAny && (
+        <div aria-live="polite" className="pointer-events-none absolute bottom-4 right-16 z-[500] whitespace-nowrap rounded-full border border-bone bg-background/95 px-4 py-1.5 text-xs text-ink-muted shadow-md backdrop-blur">
+          In view: <span className="font-semibold text-foreground">{inView.length}</span> places · <span className="font-semibold text-foreground">{viewCount}</span> {filter === "All" ? "Units with a recorded situation" : `${filter.toLowerCase()}`}
+        </div>
+      )}
+    </>
+  );
 }
 
 function SituationField({ initial, onConfirm }: { initial: SituationLabel[]; onConfirm: (l: SituationLabel[]) => void }) {
@@ -419,12 +519,14 @@ export default function PrototypeStatus() {
               <div role="group" aria-label="Current situation" className="flex flex-wrap items-center justify-end gap-1.5 rounded-full border border-bone bg-background/95 p-1.5 shadow-md backdrop-blur animate-in fade-in slide-in-from-top-2 duration-300">
                 {(["All", ...SITUATIONS] as Filter[]).map((f) => {
                   const on = filter === f;
+                  const n = f === "All" ? unitsMatching(book, STATUS_PLACES, "All") : portfolioCounts(book)[f];
                   const tone = f === "All" ? null : TONE[f];
                   return (
                     <button key={f} type="button" aria-pressed={on} onClick={() => { setPlaceId(null); setFilter(f); setFiltersOpen(false); }}
                       style={on && tone ? { background: tone.color, borderColor: tone.color } : undefined}
                       className={`flex items-center gap-1.5 rounded-full border px-3 py-1 text-sm transition-colors ${on ? "border-primary bg-primary text-primary-foreground" : "border-bone bg-background hover:border-primary/40"}`}>
                       {tone && <tone.Icon className="h-3.5 w-3.5" style={on ? undefined : { color: tone.color }} aria-hidden />}{f}
+                      <span className={`ml-0.5 rounded-full px-1.5 text-xs font-semibold tabular-nums ${on ? "bg-background/25" : "bg-secondary text-foreground"}`}>{n}</span>
                     </button>
                   );
                 })}

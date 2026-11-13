@@ -32,3 +32,13 @@ describe("prototype status", () => {
     expect(situationOf({ [unitKey("colmore", "1st Floor")]: { labels: ["Vacant"], by: "Marc T", date: "13 November 2026" } })).toBeNull();
   });
 });
+
+import { portfolioCounts as pc, unitsMatching as um, unitKey as uk, STATUS_PLACES as SP } from "./prototypeStatus";
+describe("filter counts", () => {
+  it("counts a Unit under every label it carries, and once under All", () => {
+    const book = { [uk("wharf", "3rd Floor")]: { labels: ["Vacant", "Available to let"] as any, by: "M", date: "d" } };
+    expect(pc(book).Vacant).toBe(1);
+    expect(pc(book)["Available to let"]).toBe(1);
+    expect(um(book, SP, "All")).toBe(1);
+  });
+});

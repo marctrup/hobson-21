@@ -526,3 +526,4 @@ html { caret-color: var(--ink); }
 @keyframes status-breathe { 0%,100% { box-shadow: 0 0 0 0 hsl(var(--primary) / 0.35); } 50% { box-shadow: 0 0 0 10px hsl(var(--primary) / 0); } }
 .status-breathe { animation: status-breathe 1.8s ease-in-out infinite; }
 @media (prefers-reduced-motion: reduce) { .status-bloom, .status-breathe { animation: none; } }
+.status-tip.leaflet-tooltip { border: 1px solid hsl(var(--border)); border-radius: 0.75rem; padding: 0.6rem 0.75rem; box-shadow: 0 12px 30px -12px hsl(var(--foreground) / 0.25); color: hsl(var(--foreground)); background: hsl(var(--background)); }
