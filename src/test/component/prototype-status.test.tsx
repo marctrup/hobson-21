@@ -24,7 +24,7 @@ const field = () => screen.getByRole("group", { name: "How the Unit stands today
 function openRecordForm() {
   fireEvent.click(screen.getByRole("button", { name: "Chat actions" }));
   // the menu item shares its words with Hobson's offered answer, so click it inside the menu
-  fireEvent.click(within(screen.getByRole("dialog")).getByRole("button", { name: "Record the Unit's current situation" }));
+  fireEvent.click(within(screen.getByRole("dialog")).getByRole("button", { name: "Update the Unit's current situation" }));
 }
 
 describe("Prototype Status at unit level", () => {

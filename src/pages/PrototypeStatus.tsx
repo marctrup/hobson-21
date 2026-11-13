@@ -281,7 +281,7 @@ export default function PrototypeStatus() {
     say("hobson", situation
       ? `The ${CURRENT.unit} at ${CURRENT_PLACE.name} is recorded as ${lower(situation.labels)}.\n\nRecorded by ${situation.by} on ${situation.date}. This is your own record, not something read from papers.`
       : `Nothing is recorded yet about how the ${CURRENT.unit} stands today. Tell me and I'll put it on the map.`,
-      { choices: [situation ? "Change the situation" : "Record the Unit's current situation"] });
+      { choices: [situation ? "Change the situation" : "Update the Unit's current situation"] });
   };
 
   const showFilter = (label: Filter) => {
@@ -289,7 +289,7 @@ export default function PrototypeStatus() {
     if (label === "All") { say("hobson", hasAny ? "Here is everything you've recorded across your places." : "There's nothing recorded yet."); return; }
     const rows = STATUS_PLACES.flatMap((p) => placeSituations(book, p).filter((r) => r.labels.includes(label)).map((r) => `${r.unit} at ${p.name}`));
     say("hobson", rows.length ? `${rows.length === 1 ? "One Unit is" : `${rows.length} Units are`} recorded as ${label.toLowerCase()}: ${listWords(rows)}.\n\nI've faded the other places on the map.` : `Nothing is recorded as ${label.toLowerCase()} yet.`,
-      rows.length ? { choices: ["Show everything"] } : { choices: ["Record the Unit's current situation"] });
+      rows.length ? { choices: ["Show everything"] } : { choices: ["Update the Unit's current situation"] });
   };
 
   const describePlace = (id: string) => {
@@ -316,7 +316,7 @@ export default function PrototypeStatus() {
     setInput(""); setTryOpen(false);
     say("user", text);
     setAsking(false);
-    if (text === "Record the Unit's current situation" || text === "Change the situation") return startRecord();
+    if (text === "Update the Unit's current situation" || text === "Change the situation") return startRecord();
     if (text === "What's the situation here?") return describeCurrent();
     if (text === "Show everything") return showFilter("All");
     const intent = interpret(text);
@@ -413,7 +413,7 @@ export default function PrototypeStatus() {
                 <Button type="button" variant="ghost" size="icon" aria-label="Chat actions" className="h-8 w-8 shrink-0 rounded-full text-primary hover:bg-primary/5 hover:text-primary"><Plus className="h-5 w-5" aria-hidden /></Button>
               </PopoverTrigger>
               <PopoverContent side="top" align="start" className="w-72 p-1.5" aria-label="Chat actions">
-                <Button type="button" variant="ghost" onClick={() => { say("user", "Record the Unit's current situation"); startRecord(); }} className="w-full justify-start gap-3 px-3 font-normal"><Building2 className="h-4 w-4 text-primary" aria-hidden />Record the Unit's current situation</Button>
+                <Button type="button" variant="ghost" onClick={() => { say("user", "Update the Unit's current situation"); startRecord(); }} className="w-full justify-start gap-3 px-3 font-normal"><Building2 className="h-4 w-4 text-primary" aria-hidden />Update the Unit's current situation</Button>
                 <Button type="button" variant="ghost" disabled className="h-auto w-full items-start justify-start gap-3 px-3 py-2 text-left font-normal opacity-50"><Upload className="mt-0.5 h-4 w-4 shrink-0" aria-hidden /><span><span className="block">Upload papers</span><span className="block text-xs text-muted-foreground">Coming soon</span></span></Button>
               </PopoverContent>
             </Popover>
