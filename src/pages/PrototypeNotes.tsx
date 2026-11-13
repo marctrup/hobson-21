@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
-import { ArrowRight, Building2, ChevronDown, ChevronRight, Clock, FileText, Lightbulb, Loader2, Lock, Mic, Pause, Play, Square, Map as MapIcon, MessageSquare, Pencil, RotateCcw, StickyNote, Trash2, X } from "lucide-react";
+import { ArrowRight, Building2, ChevronDown, ChevronRight, Clock, FileText, Lightbulb, Loader2, Lock, Mic, Pause, Play, Plus, Upload, Square, Map as MapIcon, MessageSquare, Pencil, RotateCcw, StickyNote, Trash2, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import owlDefault from "@/assets/prototype/owl-default.png";
 import {
   byMostRecent,
@@ -158,6 +159,7 @@ export default function PrototypeNotes() {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [input, setInput] = useState("");
   const [tryOpen, setTryOpen] = useState(false);
+  const [actionsOpen, setActionsOpen] = useState(false);
   const [pendingVoice, setPendingVoice] = useState<{ clip: VoiceClip; text: string } | null>(null);
   const [recSeconds, setRecSeconds] = useState<number | null>(null);
   const [levels, setLevels] = useState<number[]>([]);
@@ -208,11 +210,20 @@ export default function PrototypeNotes() {
   };
 
   const startNote = () => {
+    setActionsOpen(false);
     setTryOpen(false);
     if (awaitingContent || draft) return;
     const fresh: NoteDraft = { content: "" };
     setDraft(fresh);
     askNext(fresh);
+  };
+
+  const previewAction = (action: "papers" | "status") => {
+    setActionsOpen(false); setTryOpen(false);
+    setDraft(null); setAwaitingContent(false); setPendingVoice(null); setDeleting(null); setEditingId(null);
+    say("hobson", action === "papers"
+      ? "Paper uploads are not available in this Notes demonstration yet. I have not uploaded or read any new papers."
+      : "Unit status updates are not available in this Notes demonstration yet. The Unit’s status has not been changed.");
   };
 
   const send = (raw: string) => {
@@ -340,7 +351,7 @@ export default function PrototypeNotes() {
 
   const restart = () => {
     cancelVoice(); notes.forEach((n) => n.voice && URL.revokeObjectURL(n.voice.url)); setPendingVoice(null);
-    setNotes([]); setDraft(null); setAwaitingContent(false); setDeleting(null); setEditingId(null); setInput(""); setTryOpen(false);
+    setNotes([]); setDraft(null); setAwaitingContent(false); setDeleting(null); setEditingId(null); setInput(""); setTryOpen(false); setActionsOpen(false);
     nextId.current = 100; nextNoteId.current = 1; setMessages(SEED);
   };
 
@@ -428,9 +439,18 @@ export default function PrototypeNotes() {
             </div>
           ) : (
           <form onSubmit={(e) => { e.preventDefault(); send(input); }} className="flex items-center gap-1 rounded-full border border-input bg-background px-2 py-1.5 focus-within:ring-2 focus-within:ring-ring">
-            <Button type="button" variant="outline" size="sm" aria-label="Add a note" onClick={startNote} className="h-8 shrink-0 gap-1 rounded-full border-primary/40 px-3 text-xs font-medium text-primary hover:bg-primary/5 hover:text-primary">
-              <StickyNote className="h-3.5 w-3.5" aria-hidden />+ Note
-            </Button>
+            <Popover open={actionsOpen} onOpenChange={setActionsOpen}>
+              <PopoverTrigger asChild>
+                <Button type="button" variant="ghost" size="icon" aria-label="Chat actions" title="Chat actions" className="h-8 w-8 shrink-0 rounded-full text-primary hover:bg-primary/5 hover:text-primary">
+                  <Plus className="h-5 w-5" aria-hidden />
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent side="top" align="start" className="w-64 p-1.5" aria-label="Chat actions">
+                <Button type="button" variant="ghost" onClick={startNote} className="w-full justify-start gap-3 px-3 font-normal"><StickyNote className="h-4 w-4 text-primary" aria-hidden />Add a Note</Button>
+                <Button type="button" variant="ghost" onClick={() => previewAction("papers")} className="w-full justify-start gap-3 px-3 font-normal"><Upload className="h-4 w-4 text-muted-foreground" aria-hidden />Upload papers</Button>
+                <Button type="button" variant="ghost" onClick={() => previewAction("status")} className="w-full justify-start gap-3 px-3 font-normal"><Building2 className="h-4 w-4 text-muted-foreground" aria-hidden />Update the unit status</Button>
+              </PopoverContent>
+            </Popover>
             <Button type="button" variant="ghost" size="icon" aria-label="Things you might try" aria-expanded={tryOpen} onClick={() => setTryOpen((o) => !o)} className="h-8 w-8 shrink-0"><Lightbulb className="h-4 w-4" /></Button>
             <input value={input} onChange={(e) => setInput(e.target.value)} aria-label="Ask Hobson" placeholder="Ask me about this unit" className="min-w-0 flex-1 bg-transparent text-sm outline-none placeholder:text-muted-foreground" />
               <Button type="submit" size="icon" variant="ghost" disabled={!input.trim()} aria-label="Send message" className="h-8 w-8 shrink-0"><ArrowRight className="h-5 w-5" /></Button>

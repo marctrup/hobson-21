@@ -6,9 +6,14 @@ import PrototypeNotes from "@/pages/PrototypeNotes";
 
 const placeholder = () => (screen.getByLabelText("Ask Hobson") as HTMLInputElement).placeholder;
 
-/** Press + Note and answer both questions, so Hobson is now asking for the note itself. */
+function startNoteFromMenu() {
+  fireEvent.click(screen.getByRole("button", { name: "Chat actions" }));
+  fireEvent.click(screen.getByRole("button", { name: "Add a Note" }));
+}
+
+/** Choose Add a Note and answer both questions, so Hobson is now asking for the note itself. */
 async function openNoteToTheContentRequest() {
-  fireEvent.click(screen.getByRole("button", { name: "Add a note" }));
+  startNoteFromMenu();
   expect(placeholder()).toBe("Ask me about this unit");
 
   fireEvent.click(screen.getByRole("button", { name: "Shared" }));
@@ -110,7 +115,7 @@ describe("Prototype Notes deleting", () => {
 describe("Prototype Notes previous occupancy", () => {
   it("asks which previous occupancy and records it on the note", async () => {
     render(<PrototypeNotes />);
-    fireEvent.click(screen.getByRole("button", { name: "Add a note" }));
+    startNoteFromMenu();
     fireEvent.click(screen.getByRole("button", { name: "Shared" }));
     fireEvent.click(await screen.findByRole("button", { name: "Previous Occupancies" }));
     const lease = await screen.findByRole("button", { name: "Lease · 4 March 2021 · L’Occitane Limited" });
@@ -120,5 +125,20 @@ describe("Prototype Notes previous occupancy", () => {
     await giveNote("Shop fit-out left in place");
     const card = screen.getByRole("listitem", { name: "Previous occupancy note" });
     expect(within(card).getByText(/L’Occitane Limited/)).toBeInTheDocument();
+  });
+});
+
+describe("Prototype Notes chat actions", () => {
+  it.each(["Upload papers", "Update the unit status"])("keeps %s illustrative and cancels an unfinished note", async (action) => {
+    render(<PrototypeNotes />);
+    await openNoteToTheContentRequest();
+    fireEvent.change(screen.getByLabelText("Your note"), { target: { value: "An unfinished note" } });
+    fireEvent.click(screen.getByRole("button", { name: "Chat actions" }));
+    fireEvent.click(screen.getByRole("button", { name: action }));
+    expect(screen.queryByLabelText("Your note")).toBeNull();
+    expect(screen.queryByRole("region", { name: "Saved Unit notes" })).toBeNull();
+    expect(screen.getByText(/not available in this Notes demonstration yet/)).toBeInTheDocument();
+    startNoteFromMenu();
+    expect(screen.getByRole("button", { name: "Shared" })).toBeInTheDocument();
   });
 });
