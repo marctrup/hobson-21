@@ -46,10 +46,10 @@ describe("Prototype Status at unit level", () => {
   it("records the Unit we are standing at and puts it on the map", () => {
     render(<PrototypeStatus />);
     openRecordForm();
-    fireEvent.click(within(field()).getByRole("button", { name: "Vacant" }));
-    fireEvent.click(within(field()).getByRole("button", { name: "Available to let" }));
+    fireEvent.click(within(field()).getByRole("button", { name: "Unoccupied" }));
+    fireEvent.click(within(field()).getByRole("button", { name: "Available" }));
     fireEvent.click(within(field()).getByRole("button", { name: "Put it on the map" }));
-    expect(screen.getByText(/The 1st Floor is vacant and available to let — recorded by you today/)).toBeInTheDocument();
+    expect(screen.getByText(/The 1st Floor is unoccupied and available — recorded by you today/)).toBeInTheDocument();
     // the filters stay folded behind a small round button until touched
     expect(screen.queryByRole("group", { name: "Current situation" })).toBeNull();
     fireEvent.click(screen.getByRole("button", { name: "Current situation filters" }));
@@ -71,7 +71,7 @@ describe("Prototype Status at unit level", () => {
   it("offers no situation pills after recording — the map marker carries that", () => {
     render(<PrototypeStatus />);
     openRecordForm();
-    fireEvent.click(within(field()).getByRole("button", { name: "Vacant" }));
+    fireEvent.click(within(field()).getByRole("button", { name: "Unoccupied" }));
     fireEvent.click(within(field()).getByRole("button", { name: "Put it on the map" }));
     expect(screen.queryByRole("button", { name: "What's the situation here?" })).toBeNull();
     expect(screen.queryByRole("button", { name: "Show me everything vacant" })).toBeNull();
@@ -89,8 +89,8 @@ describe("Prototype Status at unit level", () => {
       expect(within(card).getByText(unit)).toBeInTheDocument();
     }
     // the 5th Floor carries all three situations inline, with who and when
-    expect(within(card).getByText("Vacant")).toBeInTheDocument();
-    expect(within(card).getByText("Available to let")).toBeInTheDocument();
+    expect(within(card).getByText("Unoccupied")).toBeInTheDocument();
+    expect(within(card).getByText("Available")).toBeInTheDocument();
     expect(within(card).getByText("Being refurbished")).toBeInTheDocument();
     expect(within(card).getByText(/Recorded by Marc T on 13 November 2026/)).toBeInTheDocument();
     // unrecorded Units say so, muted — and the chat gained no summary
@@ -101,10 +101,10 @@ describe("Prototype Status at unit level", () => {
   it("clears the record when every situation is unticked", () => {
     render(<PrototypeStatus />);
     openRecordForm();
-    fireEvent.click(within(field()).getByRole("button", { name: "Vacant" }));
+    fireEvent.click(within(field()).getByRole("button", { name: "Unoccupied" }));
     fireEvent.click(within(field()).getByRole("button", { name: "Put it on the map" }));
     openRecordForm();
-    fireEvent.click(within(field()).getByRole("button", { name: "Vacant" }));
+    fireEvent.click(within(field()).getByRole("button", { name: "Unoccupied" }));
     fireEvent.click(within(field()).getByRole("button", { name: "Clear situation" }));
     expect(screen.getByText(/I've cleared the recorded situation for the 1st Floor/)).toBeInTheDocument();
   });
@@ -113,13 +113,13 @@ describe("Prototype Status at unit level", () => {
     render(<PrototypeStatus />);
     expect(screen.queryByRole("button", { name: "How the 1st Floor stands" })).toBeNull();
     openRecordForm();
-    fireEvent.click(within(field()).getByRole("button", { name: "Vacant" }));
-    fireEvent.click(within(field()).getByRole("button", { name: "Available to let" }));
+    fireEvent.click(within(field()).getByRole("button", { name: "Unoccupied" }));
+    fireEvent.click(within(field()).getByRole("button", { name: "Available" }));
     fireEvent.click(within(field()).getByRole("button", { name: "Put it on the map" }));
     fireEvent.click(screen.getByRole("button", { name: "How the 1st Floor stands" }));
-    fireEvent.click(screen.getByRole("button", { name: "Remove Vacant" }));
-    expect(screen.queryByRole("button", { name: "Remove Vacant" })).toBeNull();
-    fireEvent.click(screen.getByRole("button", { name: "Remove Available to let" }));
+    fireEvent.click(screen.getByRole("button", { name: "Remove Unoccupied" }));
+    expect(screen.queryByRole("button", { name: "Remove Unoccupied" })).toBeNull();
+    fireEvent.click(screen.getByRole("button", { name: "Remove Available" }));
     expect(screen.queryByRole("button", { name: "How the 1st Floor stands" })).toBeNull();
   });
 });
