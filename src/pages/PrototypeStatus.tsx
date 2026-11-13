@@ -5,7 +5,7 @@
 import { useEffect, useRef, useState } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
-import { ArrowRight, Building2, FileText, Home, KeyRound, Layers, Lightbulb, Map as MapIcon, MapPin, MessageSquare, Plus, RotateCcw, Search, SlidersHorizontal, Upload, X } from "lucide-react";
+import { ArrowRight, Building2, FileText, Home, KeyRound, Lightbulb, Map as MapIcon, MapPin, MessageSquare, Plus, RotateCcw, Search, SlidersHorizontal, Upload, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import owlDefault from "@/assets/prototype/owl-default.png";
@@ -509,7 +509,6 @@ export default function PrototypeStatus() {
                   {SITUATIONS.map((l) => { const { Icon, color, hint } = TONE[l]; return (
                     <p key={l} className="flex items-center gap-2 py-0.5 text-xs"><Icon className="h-3.5 w-3.5" style={{ color }} aria-hidden /><span className="font-medium">{l}</span><span className="text-ink-muted">{hint}</span></p>
                   ); })}
-                  <p className="flex items-center gap-2 py-0.5 text-xs"><Layers className="h-3.5 w-3.5 text-primary" aria-hidden /><span className="font-medium">Ring</span><span className="text-ink-muted">shares of each place's situations</span></p>
                 </div>
               </div>
             )}
