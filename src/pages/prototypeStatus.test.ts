@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { STATUS_PLACES, interpret, labelCounts, placeMatches, unitKey, type SituationBook } from "./prototypeStatus";
+import { CURRENT, STATUS_PLACES, interpret, labelCounts, placeMatches, situationOf, unitKey, type SituationBook } from "./prototypeStatus";
 
 const colmore = STATUS_PLACES.find((p) => p.id === "colmore")!;
 const book: SituationBook = {
@@ -19,5 +19,16 @@ describe("prototype status", () => {
     expect(interpret("Which units are vacant?")).toEqual({ kind: "filter", label: "Vacant" });
     expect(interpret("Record a unit's situation")).toEqual({ kind: "record" });
     expect(interpret("What's happening in Birmingham?")).toEqual({ kind: "place", placeId: "colmore" });
+  });
+  it("keeps a situation asked about here with the Unit we are standing at", () => {
+    expect(interpret("What's the situation here?")).toEqual({ kind: "here" });
+    expect(interpret("What's the situation with the 1st Floor?")).toEqual({ kind: "here" });
+    expect(interpret("How does this Unit stand?")).toEqual({ kind: "here" });
+  });
+  it("holds one record for the Unit we are standing at", () => {
+    expect(situationOf({})).toBeNull();
+    const here: SituationBook = { [unitKey(CURRENT.placeId, CURRENT.unit)]: { labels: ["Vacant"], by: "Marc T", date: "13 November 2026" } };
+    expect(situationOf(here)?.labels).toEqual(["Vacant"]);
+    expect(situationOf({ [unitKey("colmore", "1st Floor")]: { labels: ["Vacant"], by: "Marc T", date: "13 November 2026" } })).toBeNull();
   });
 });

@@ -1,3 +1,7 @@
+// Prototype Status: the user records how the Unit they're standing at stands
+// today, and the map comes alive with it. Unit-level: no place list, no Unit
+// list. Local demonstration state only.
+
 import { useEffect, useRef, useState } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
@@ -6,15 +10,14 @@ import { Button } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import owlDefault from "@/assets/prototype/owl-default.png";
 import {
-  SITUATIONS, STATUS_PLACES, interpret, labelCounts, listWords, placeMatches, placeSituations, unitKey,
-  type SituationBook, type SituationLabel, type StatusPlace,
+  CURRENT, CURRENT_PLACE, SITUATIONS, STATUS_PLACES, interpret, labelCounts, listWords, placeMatches,
+  placeSituations, situationOf, unitKey,
+  type Recorded, type SituationBook, type SituationLabel, type StatusPlace,
 } from "./prototypeStatus";
-
-// Prototype Status: the user records each Unit's current situation in the chat
-// and the map comes alive with it. Local demonstration state only.
 
 const AUTHOR = "Marc T";
 const TODAY = "13 November 2026";
+const CURRENT_KEY = unitKey(CURRENT.placeId, CURRENT.unit);
 
 const TONE: Record<SituationLabel, { color: string; Icon: typeof Home; hint: string }> = {
   Vacant: { color: "var(--situation-vacant)", Icon: Home, hint: "No one is in occupation" },
@@ -23,13 +26,12 @@ const TONE: Record<SituationLabel, { color: string; Icon: typeof Home; hint: str
 };
 
 type Message = { id: number; role: "user" | "hobson"; text: string; choices?: string[]; situationField?: boolean };
-type Step = null | "place" | "unit" | "labels";
 type Filter = SituationLabel | "All";
 
 const SEED: Message[] = [{
   id: 0, role: "hobson",
-  text: "Here are your places on the map.\n\nI've nothing recorded yet about how any Unit stands today — whether it's vacant, being let or being refurbished. Tell me, and I'll show it on the map as we go.",
-  choices: ["Record a Unit's current situation"],
+  text: `You're at the ${CURRENT.unit} at ${CURRENT_PLACE.name}, ${CURRENT_PLACE.town}.\n\nI've nothing recorded yet about how it stands today — vacant, being let, or being refurbished. Tell me how it stands and I'll put it on the map.`,
+  choices: ["Record the Unit's current situation"],
 }];
 
 const SAMPLE: SituationBook = {
@@ -44,6 +46,7 @@ const SAMPLE: SituationBook = {
 
 const SCENARIOS = [
   { label: "Fill in a sample portfolio", text: "Fill in a sample portfolio" },
+  { label: "What's the situation here?", text: "What's the situation here?" },
   { label: "Find what's vacant", text: "Which Units are vacant?" },
   { label: "Ask about a place", text: "What's happening in Birmingham?" },
 ];
@@ -59,8 +62,8 @@ function ring(book: SituationBook, place: StatusPlace) {
   return `conic-gradient(${SITUATIONS.filter((l) => counts[l]).map((l) => { const from = at; at += (counts[l] / total) * 360; return `${TONE[l].color} ${from}deg ${at}deg`; }).join(", ")})`;
 }
 
-function StatusMap({ book, filter, selectedId, picking, bloomId, onPick }: {
-  book: SituationBook; filter: Filter; selectedId: string | null; picking: boolean; bloomId: string | null; onPick: (id: string) => void;
+function StatusMap({ book, filter, selectedId, bloomId, onPick }: {
+  book: SituationBook; filter: Filter; selectedId: string | null; bloomId: string | null; onPick: (id: string) => void;
 }) {
   const box = useRef<HTMLDivElement>(null);
   const map = useRef<L.Map | null>(null);
@@ -90,17 +93,20 @@ function StatusMap({ book, filter, selectedId, picking, bloomId, onPick }: {
       const recorded = placeSituations(book, p).length;
       const dim = hasAny && filter !== "All" && !placeMatches(book, p, filter);
       const selected = p.id === selectedId;
+      const here = p.id === CURRENT.placeId;
       const size = bg ? 46 : 32;
       const core = bg
         ? `<span style="background:${bg}" class="relative grid h-[46px] w-[46px] place-items-center rounded-full shadow-lg"><span class="grid h-[34px] w-[34px] place-items-center rounded-full bg-background text-sm font-semibold text-foreground">${recorded}</span></span>`
-        : `<span class="grid h-8 w-8 place-items-center rounded-full border-2 ${selected ? "border-primary text-primary" : "border-background text-muted-foreground"} bg-background text-xs font-semibold shadow-md ${picking ? "status-breathe" : ""}">${p.units.length}</span>`;
+        : `<span class="grid h-8 w-8 place-items-center rounded-full border-2 ${here ? "border-primary text-primary" : "border-background text-muted-foreground"} bg-background text-xs font-semibold shadow-md ${!hasAny && here ? "status-breathe" : ""}">${p.units.length}</span>`;
       const bloom = bloomId === p.id ? `<span class="status-bloom pointer-events-none absolute inset-0 rounded-full border-4 border-primary"></span>` : "";
-      const label = selected || picking ? `<span class="absolute left-full top-1/2 ml-2 -translate-y-1/2 whitespace-nowrap rounded-full ${selected ? "bg-primary text-primary-foreground" : "bg-background text-foreground"} px-2.5 py-0.5 text-xs font-medium shadow">${p.name}</span>` : "";
+      const label = selected || here
+        ? `<span class="absolute left-full top-1/2 ml-2 -translate-y-1/2 whitespace-nowrap rounded-full ${selected ? "bg-primary text-primary-foreground" : "bg-background text-foreground"} px-2.5 py-0.5 text-xs font-medium shadow">${here ? `You are here · ${p.name}` : p.name}</span>`
+        : "";
       const html = `<span title="${p.name}, ${p.town}" class="relative block cursor-pointer transition-opacity duration-500 ${dim ? "opacity-30" : ""} ${selected ? "scale-110" : ""}">${bloom}${core}${label}</span>`;
       L.marker(p.coords, { icon: L.divIcon({ className: "", html, iconSize: [size, size], iconAnchor: [size / 2, size / 2] }), keyboard: true, title: p.name, zIndexOffset: selected ? 1000 : 0 })
         .on("click", () => pick.current(p.id)).addTo(g);
     });
-  }, [book, filter, selectedId, picking, bloomId, hasAny]);
+  }, [book, filter, selectedId, bloomId, hasAny]);
 
   useEffect(() => {
     const m = map.current;
@@ -118,7 +124,7 @@ function SituationField({ initial, onConfirm }: { initial: SituationLabel[]; onC
   const [picked, setPicked] = useState<SituationLabel[]>(initial);
   const toggle = (l: SituationLabel) => setPicked((p) => (p.includes(l) ? p.filter((x) => x !== l) : [...p, l]));
   return (
-    <div role="group" aria-label="Current situation" className="mt-3 grid gap-1.5">
+    <div role="group" aria-label="How the Unit stands today" className="mt-3 grid gap-1.5">
       {SITUATIONS.map((l) => {
         const { Icon, color } = TONE[l];
         const on = picked.includes(l);
@@ -149,9 +155,8 @@ function Chip({ label }: { label: SituationLabel }) {
 export default function PrototypeStatus() {
   const [messages, setMessages] = useState<Message[]>(SEED);
   const [book, setBook] = useState<SituationBook>({});
-  const [step, setStep] = useState<Step>(null);
+  const [asking, setAsking] = useState(false);
   const [placeId, setPlaceId] = useState<string | null>(null);
-  const [unit, setUnit] = useState<string | null>(null);
   const [filter, setFilter] = useState<Filter>("All");
   const [bloomId, setBloomId] = useState<string | null>(null);
   const [input, setInput] = useState("");
@@ -160,6 +165,7 @@ export default function PrototypeStatus() {
   const nextId = useRef(1);
   const logEnd = useRef<HTMLDivElement>(null);
   const hasAny = Object.keys(book).length > 0;
+  const situation = situationOf(book);
   const place = placeById(placeId);
 
   useEffect(() => { logEnd.current?.scrollIntoView({ behavior: "smooth", block: "end" }); }, [messages]);
@@ -168,38 +174,34 @@ export default function PrototypeStatus() {
   const say = (role: Message["role"], text: string, extra: Partial<Message> = {}) =>
     setMessages((ms) => [...ms, { id: nextId.current++, role, text, ...extra }]);
 
-  const startRecord = (at?: string) => {
-    setMenuOpen(false); setFilter("All");
-    if (at) return choosePlace(at);
-    setStep("place"); setPlaceId(null);
-    say("hobson", "Which place is it? Touch it on the map — I've lit them up — or choose one here.", { choices: STATUS_PLACES.map((p) => p.name) });
-  };
-
-  const choosePlace = (id: string) => {
-    const p = placeById(id)!;
-    setPlaceId(id); setStep("unit");
-    say("hobson", `Which Unit at ${p.name}?`, { choices: p.units });
-  };
-
-  const chooseUnit = (u: string) => {
-    setUnit(u); setStep("labels");
-    say("hobson", `How does the ${u} stand today? Choose all that apply.`, { situationField: true });
+  // Unit level: the Unit is already known, so the form opens straight away.
+  const startRecord = () => {
+    setMenuOpen(false); setFilter("All"); setPlaceId(null);
+    setAsking(true);
+    say("hobson", `What is the current situation with the ${CURRENT.unit}?\n\nYou can choose more than one.`, { situationField: true });
   };
 
   const confirm = (labels: SituationLabel[]) => {
-    if (!place || !unit) return;
     const first = !hasAny;
     say("user", labels.length ? labels.join(", ") : "Clear it");
     setBook((b) => {
       const n = { ...b };
-      if (labels.length) n[unitKey(place.id, unit)] = { labels, by: AUTHOR, date: TODAY };
-      else delete n[unitKey(place.id, unit)];
+      if (labels.length) n[CURRENT_KEY] = { labels, by: AUTHOR, date: TODAY };
+      else delete n[CURRENT_KEY];
       return n;
     });
-    setStep(null); setUnit(null); setBloomId(place.id);
-    if (!labels.length) { say("hobson", `I've cleared the situation for the ${unit} at ${place.name}.`, { choices: ["Record another Unit"] }); return; }
-    say("hobson", `Noted. The ${unit} at ${place.name} is ${lower(labels)} — recorded by you today.${first ? "\n\nYour map now shows how things stand. Each place wears a ring in the colours of its Units' situations." : ""}`,
-      { choices: ["Record another Unit", ...labels.slice(0, 1).map((l) => `Show me everything ${l.toLowerCase()}`)] });
+    setAsking(false); setBloomId(CURRENT.placeId);
+    if (!labels.length) { say("hobson", `I've cleared the recorded situation for the ${CURRENT.unit}.`, { choices: ["Record the Unit's current situation"] }); return; }
+    say("hobson", `Noted. The ${CURRENT.unit} is ${lower(labels)} — recorded by you today.${first ? `\n\nYour map now shows how things stand: ${CURRENT_PLACE.name} wears a ring in the colours of its situation.` : ""}`,
+      { choices: ["What's the situation here?", ...labels.slice(0, 1).map((l) => `Show me everything ${l.toLowerCase()}`)] });
+  };
+
+  const describeCurrent = () => {
+    setPlaceId(CURRENT.placeId); setFilter("All");
+    say("hobson", situation
+      ? `The ${CURRENT.unit} at ${CURRENT_PLACE.name} is recorded as ${lower(situation.labels)}.\n\nRecorded by ${situation.by} on ${situation.date}. This is your own record, not something read from papers.`
+      : `Nothing is recorded yet about how the ${CURRENT.unit} stands today. Tell me and I'll put it on the map.`,
+      { choices: [situation ? "Change the situation" : "Record the Unit's current situation"] });
   };
 
   const showFilter = (label: Filter) => {
@@ -207,21 +209,22 @@ export default function PrototypeStatus() {
     if (label === "All") { say("hobson", hasAny ? "Here is everything you've recorded across your places." : "There's nothing recorded yet."); return; }
     const rows = STATUS_PLACES.flatMap((p) => placeSituations(book, p).filter((r) => r.labels.includes(label)).map((r) => `${r.unit} at ${p.name}`));
     say("hobson", rows.length ? `${rows.length === 1 ? "One Unit is" : `${rows.length} Units are`} recorded as ${label.toLowerCase()}: ${listWords(rows)}.\n\nI've faded the other places on the map.` : `Nothing is recorded as ${label.toLowerCase()} yet.`,
-      rows.length ? { choices: ["Show everything"] } : { choices: ["Record a Unit's current situation"] });
+      rows.length ? { choices: ["Show everything"] } : { choices: ["Record the Unit's current situation"] });
   };
 
   const describePlace = (id: string) => {
     const p = placeById(id)!;
+    if (p.id === CURRENT.placeId) return describeCurrent();
     setPlaceId(id); setFilter("All");
     const rows = placeSituations(book, p);
     say("hobson", rows.length
       ? `${p.name}, ${p.town}. ${rows.length} of its ${p.units.length} Units have a situation recorded:\n${rows.map((r) => `• ${r.unit} — ${lower(r.labels)}`).join("\n")}`
       : `${p.name}, ${p.town} — ${p.units.length} Units. Nothing is recorded yet about how they stand today.`,
-      { choices: ["Record a situation here"] });
+      { choices: rows.length ? ["Show everything"] : ["Fill in a sample portfolio"] });
   };
 
   const onMapPick = (id: string) => {
-    if (step === "place") { say("user", placeById(id)!.name); choosePlace(id); return; }
+    if (asking) return;
     describePlace(id);
   };
 
@@ -230,11 +233,9 @@ export default function PrototypeStatus() {
     if (!text) return;
     setInput(""); setTryOpen(false);
     say("user", text);
-    if (step === "place") { const p = STATUS_PLACES.find((x) => x.name === text); if (p) return choosePlace(p.id); }
-    if (step === "unit" && place?.units.includes(text)) return chooseUnit(text);
-    setStep(null);
-    if (text === "Record a Unit's current situation" || text === "Record another Unit") return startRecord();
-    if (text === "Record a situation here" && placeId) return startRecord(placeId);
+    setAsking(false);
+    if (text === "Record the Unit's current situation" || text === "Change the situation") return startRecord();
+    if (text === "What's the situation here?") return describeCurrent();
     if (text === "Show everything") return showFilter("All");
     if (text === "Fill in a sample portfolio") {
       setBook(SAMPLE); setFilter("All"); setPlaceId(null); setBloomId("colmore");
@@ -243,16 +244,19 @@ export default function PrototypeStatus() {
     }
     const intent = interpret(text);
     if (intent.kind === "record") return startRecord();
+    if (intent.kind === "here") return describeCurrent();
     if (intent.kind === "filter") return showFilter(intent.label);
     if (intent.kind === "place") return describePlace(intent.placeId);
-    say("hobson", "In this demonstration I can record how a Unit stands today and show it on the map. Use + to begin, or ask me what's vacant, available to let or being refurbished.");
+    say("hobson", "In this demonstration I can record how the Unit you're at stands today and show it on the map. Use + to begin, or ask me what's vacant, available to let or being refurbished.");
   };
 
   const restart = () => {
-    setMessages(SEED); setBook({}); setStep(null); setPlaceId(null); setUnit(null); setFilter("All"); setInput(""); nextId.current = 1;
+    setMessages(SEED); setBook({}); setAsking(false); setPlaceId(null); setFilter("All"); setInput(""); nextId.current = 1;
   };
 
-  const placeRows = place ? placeSituations(book, place) : [];
+  // Only recorded Units are listed, never the whole floor plan of a place.
+  const cardRows: (Recorded & { unit: string })[] = place ? placeSituations(book, place) : [];
+  if (place && place.id === CURRENT.placeId && !situation) cardRows.unshift({ unit: CURRENT.unit, labels: [], by: "", date: "" });
 
   return (
     <div className="relative flex h-screen w-full overflow-hidden bg-background text-ink">
@@ -266,7 +270,7 @@ export default function PrototypeStatus() {
 
       <section aria-label="Chat with Hobson" className="flex w-[420px] min-w-0 shrink-0 flex-col border-r border-bone bg-background max-lg:w-[360px] max-md:w-full">
         <header className="flex h-14 shrink-0 items-center justify-between gap-2 border-b border-bone px-5">
-          <p className="truncate text-sm"><span className="font-medium text-primary">Portfolio</span><span className="text-ink-muted"> › </span><span className="font-semibold">{place ? place.name : "Current situations"}</span></p>
+          <p className="truncate text-sm"><span className="font-medium text-primary">Portfolio</span><span className="text-ink-muted"> › </span><span className="font-semibold">{CURRENT_PLACE.name}</span><span className="text-ink-muted"> › </span><span className="font-semibold">{CURRENT.unit}</span></p>
           <Button variant="ghost" size="sm" aria-label="Restart demo" onClick={restart}><RotateCcw className="h-3.5 w-3.5 sm:mr-2" /><span className="max-sm:hidden">Restart</span></Button>
         </header>
 
@@ -279,8 +283,8 @@ export default function PrototypeStatus() {
                   {m.role === "hobson" && <img src={owlDefault} alt="Hobson" className="h-9 w-9 shrink-0 object-contain" />}
                   <div className={`min-w-0 rounded-lg px-3.5 py-2.5 ${m.role === "user" ? "bg-primary text-primary-foreground" : "bg-secondary"}`}>
                     <p className="whitespace-pre-line break-words text-sm leading-relaxed">{m.text}</p>
-                    {m.situationField && last && step === "labels" && place && unit && (
-                      <SituationField initial={book[unitKey(place.id, unit)]?.labels ?? []} onConfirm={confirm} />
+                    {m.situationField && last && asking && (
+                      <SituationField initial={situation?.labels ?? []} onConfirm={confirm} />
                     )}
                   </div>
                 </div>
@@ -312,19 +316,19 @@ export default function PrototypeStatus() {
                 <Button type="button" variant="ghost" size="icon" aria-label="Chat actions" className="h-8 w-8 shrink-0 rounded-full text-primary hover:bg-primary/5 hover:text-primary"><Plus className="h-5 w-5" aria-hidden /></Button>
               </PopoverTrigger>
               <PopoverContent side="top" align="start" className="w-72 p-1.5" aria-label="Chat actions">
-                <Button type="button" variant="ghost" onClick={() => { say("user", "Record a Unit's current situation"); startRecord(); }} className="w-full justify-start gap-3 px-3 font-normal"><Building2 className="h-4 w-4 text-primary" aria-hidden />Record a Unit's current situation</Button>
+                <Button type="button" variant="ghost" onClick={() => { say("user", "Record the Unit's current situation"); startRecord(); }} className="w-full justify-start gap-3 px-3 font-normal"><Building2 className="h-4 w-4 text-primary" aria-hidden />Record the Unit's current situation</Button>
                 <Button type="button" variant="ghost" disabled className="h-auto w-full items-start justify-start gap-3 px-3 py-2 text-left font-normal opacity-50"><Upload className="mt-0.5 h-4 w-4 shrink-0" aria-hidden /><span><span className="block">Upload papers</span><span className="block text-xs text-muted-foreground">Coming soon</span></span></Button>
               </PopoverContent>
             </Popover>
             <Button type="button" variant="ghost" size="icon" aria-label="Things you might try" aria-expanded={tryOpen} onClick={() => setTryOpen((o) => !o)} className="h-8 w-8 shrink-0"><Lightbulb className="h-4 w-4" /></Button>
-            <input value={input} onChange={(e) => setInput(e.target.value)} aria-label="Ask Hobson" placeholder="Ask me about your places" className="min-w-0 flex-1 bg-transparent text-sm outline-none placeholder:text-muted-foreground" />
+            <input value={input} onChange={(e) => setInput(e.target.value)} aria-label="Ask Hobson" placeholder={`Ask me about the ${CURRENT.unit}`} className="min-w-0 flex-1 bg-transparent text-sm outline-none placeholder:text-muted-foreground" />
             <Button type="submit" size="icon" variant="ghost" disabled={!input.trim()} aria-label="Send message" className="h-8 w-8 shrink-0"><ArrowRight className="h-5 w-5" /></Button>
           </form>
         </div>
       </section>
 
       <section aria-label="Map" className="relative min-w-0 flex-1 max-md:hidden">
-        <StatusMap book={book} filter={filter} selectedId={placeId} picking={step === "place"} bloomId={bloomId} onPick={onMapPick} />
+        <StatusMap book={book} filter={filter} selectedId={placeId} bloomId={bloomId} onPick={onMapPick} />
 
         <div className="pointer-events-none absolute inset-x-4 top-4 z-[500] flex flex-wrap items-start justify-between gap-3">
           {hasAny ? (
@@ -344,7 +348,7 @@ export default function PrototypeStatus() {
             </div>
           ) : (
             <p className="pointer-events-auto rounded-full border border-bone bg-background/95 px-4 py-2 text-sm text-ink-muted shadow-sm">
-              {step === "place" ? "Touch a place to choose it" : `${STATUS_PLACES.length} places · nothing recorded yet about how they stand today`}
+              {`You're at the ${CURRENT.unit} at ${CURRENT_PLACE.name} · nothing recorded yet about how it stands today`}
             </p>
           )}
           <span className="pointer-events-auto flex items-center gap-1 rounded-full border border-bone bg-background/95 p-1 text-sm shadow-sm">
@@ -357,23 +361,20 @@ export default function PrototypeStatus() {
           <div role="region" aria-label={`${place.name} situations`} className="absolute right-4 top-20 z-[500] w-[340px] rounded-xl border border-bone bg-background p-4 shadow-xl animate-in fade-in slide-in-from-right-2">
             <div className="flex items-start justify-between gap-2">
               <div>
-                <p className="flex items-center gap-1.5 font-semibold"><MapPin className="h-4 w-4 text-primary" aria-hidden />{place.name}</p>
-                <p className="text-xs text-ink-muted">{place.town} · {placeRows.length ? `${placeRows.length} of ${place.units.length} Units recorded` : `${place.units.length} Units`}</p>
+                <p className="flex items-center gap-1.5 font-semibold"><MapPin className="h-4 w-4 text-primary" aria-hidden />{place.name}{place.id === CURRENT.placeId && <span className="text-xs font-normal text-ink-muted">· you are here</span>}</p>
+                <p className="text-xs text-ink-muted">{place.id === CURRENT.placeId ? `${CURRENT.unit} · ${place.town}` : `${place.town} · ${cardRows.length} of ${place.units.length} Units recorded`}</p>
               </div>
               <Button variant="ghost" size="icon" className="h-7 w-7" aria-label="Close place" onClick={() => setPlaceId(null)}><X className="h-4 w-4" /></Button>
             </div>
             <ul className="mt-3 grid gap-1">
-              {place.units.map((u) => {
-                const r = book[unitKey(place.id, u)];
-                return (
-                  <li key={u} className={`flex flex-wrap items-center justify-between gap-2 rounded-md px-2 py-1.5 text-sm ${unit === u ? "bg-secondary" : ""}`}>
-                    <span className={r ? "font-medium" : "text-ink-muted"}>{u}</span>
-                    <span className="flex flex-wrap gap-1">{r ? r.labels.map((l) => <Chip key={l} label={l} />) : <span className="text-xs text-ink-muted">—</span>}</span>
-                  </li>
-                );
-              })}
+              {cardRows.map((r) => (
+                <li key={r.unit} className="flex flex-wrap items-center justify-between gap-2 rounded-md px-2 py-1.5 text-sm">
+                  <span className={r.labels.length ? "font-medium" : "text-ink-muted"}>{r.unit}</span>
+                  <span className="flex flex-wrap gap-1">{r.labels.length ? r.labels.map((l) => <Chip key={l} label={l} />) : <span className="text-xs text-ink-muted">not recorded</span>}</span>
+                </li>
+              ))}
             </ul>
-            {placeRows.length > 0 && <p className="mt-2 border-t border-bone pt-2 text-[11px] text-ink-muted">Recorded by you, not read from papers.</p>}
+            {cardRows.some((r) => r.labels.length > 0) && <p className="mt-2 border-t border-bone pt-2 text-[11px] text-ink-muted">Recorded by you, not read from papers.</p>}
           </div>
         )}
 

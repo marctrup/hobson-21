@@ -1,5 +1,6 @@
 // Prototype Status: pure, local simulation of user-recorded Unit situations
 // shown on a map. Situations are the user's own record — never read from papers.
+// The demonstration stands at one Unit: recording is unit-level, never a list.
 
 export const SITUATIONS = ["Vacant", "Available to let", "Being refurbished"] as const;
 export type SituationLabel = (typeof SITUATIONS)[number];
@@ -19,7 +20,17 @@ export const STATUS_PLACES: StatusPlace[] = [
   { id: "clyde", name: "Clyde Works", town: "Glasgow", coords: [55.8617, -4.2583], units: ["Studio A", "Studio B", "Workshop"] },
 ];
 
+/** The Unit this demonstration stands at. */
+export const CURRENT = { placeId: "linear-park", unit: "1st Floor" } as const;
+export const CURRENT_PLACE = STATUS_PLACES.find((p) => p.id === CURRENT.placeId)!;
+
 export const unitKey = (placeId: string, unit: string) => `${placeId}::${unit}`;
+
+/** The user's own record for the Unit we are standing at, if any. */
+export function situationOf(book: SituationBook): Recorded | null {
+  const r = book[unitKey(CURRENT.placeId, CURRENT.unit)];
+  return r && r.labels.length ? r : null;
+}
 
 export function placeSituations(book: SituationBook, place: StatusPlace) {
   return place.units.flatMap((u) => { const r = book[unitKey(place.id, u)]; return r && r.labels.length ? [{ unit: u, ...r }] : []; });
@@ -41,6 +52,7 @@ export const listWords = (ls: string[]) => ls.length < 2 ? ls.join("") : `${ls.s
 
 export type Intent =
   | { kind: "record" }
+  | { kind: "here" }
   | { kind: "filter"; label: SituationLabel | "All" }
   | { kind: "place"; placeId: string }
   | { kind: "unknown" };
@@ -48,10 +60,11 @@ export type Intent =
 export function interpret(raw: string): Intent {
   const t = raw.toLowerCase();
   if (/\b(record|update|mark|set)\b/.test(t) && /(situation|status|vacant|refurb|let)/.test(t)) return { kind: "record" };
+  const place = STATUS_PLACES.find((p) => t.includes(p.name.toLowerCase()) || t.includes(p.town.toLowerCase()));
+  if (/\b(here|this unit|this floor|the unit|our unit|the 1st floor)\b/.test(t) && /(situation|status|stand|vacant|refurb|let|occupied|recorded)/.test(t)) return { kind: "here" };
   const label: SituationLabel | null = /vacant|empty/.test(t) ? "Vacant" : /available|to let|marketing/.test(t) ? "Available to let" : /refurb|works|fit[- ]?out/.test(t) ? "Being refurbished" : null;
   if (label) return { kind: "filter", label };
   if (/\b(everything|all|whole portfolio|clear)\b/.test(t)) return { kind: "filter", label: "All" };
-  const place = STATUS_PLACES.find((p) => t.includes(p.name.toLowerCase()) || t.includes(p.town.toLowerCase()));
   if (place) return { kind: "place", placeId: place.id };
   return { kind: "unknown" };
 }
