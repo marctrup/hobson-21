@@ -108,4 +108,18 @@ describe("Prototype Status at unit level", () => {
     fireEvent.click(within(field()).getByRole("button", { name: "Clear situation" }));
     expect(screen.getByText(/I've cleared the recorded situation for the 1st Floor/)).toBeInTheDocument();
   });
+
+  it("removes a label only from the chat header's situation pop-up", () => {
+    render(<PrototypeStatus />);
+    expect(screen.queryByRole("button", { name: "How the 1st Floor stands" })).toBeNull();
+    openRecordForm();
+    fireEvent.click(within(field()).getByRole("button", { name: "Vacant" }));
+    fireEvent.click(within(field()).getByRole("button", { name: "Available to let" }));
+    fireEvent.click(within(field()).getByRole("button", { name: "Put it on the map" }));
+    fireEvent.click(screen.getByRole("button", { name: "How the 1st Floor stands" }));
+    fireEvent.click(screen.getByRole("button", { name: "Remove Vacant" }));
+    expect(screen.queryByRole("button", { name: "Remove Vacant" })).toBeNull();
+    fireEvent.click(screen.getByRole("button", { name: "Remove Available to let" }));
+    expect(screen.queryByRole("button", { name: "How the 1st Floor stands" })).toBeNull();
+  });
 });

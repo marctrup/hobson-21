@@ -82,8 +82,8 @@ function summaryLine(places: StatusPlace[], book: SituationBook) {
 
 const CLUSTER_PX = 64;
 
-function StatusMap({ book, filter, selectedId, bloomId, onPick, onStatusBadge, onRemoveLabel }: {
-  book: SituationBook; filter: Filter; selectedId: string | null; bloomId: string | null; onPick: (id: string) => void; onStatusBadge: () => void; onRemoveLabel: (label: SituationLabel) => void;
+function StatusMap({ book, filter, selectedId, bloomId, onPick, onStatusBadge }: {
+  book: SituationBook; filter: Filter; selectedId: string | null; bloomId: string | null; onPick: (id: string) => void; onStatusBadge: () => void;
 }) {
   const box = useRef<HTMLDivElement>(null);
   const map = useRef<L.Map | null>(null);
@@ -92,8 +92,6 @@ function StatusMap({ book, filter, selectedId, bloomId, onPick, onStatusBadge, o
   pick.current = onPick;
   const statusBadge = useRef(onStatusBadge);
   statusBadge.current = onStatusBadge;
-  const removeLabel = useRef(onRemoveLabel);
-  removeLabel.current = onRemoveLabel;
   const hasAny = Object.keys(book).length > 0;
   const [zoom, setZoom] = useState(0);
 
@@ -170,17 +168,10 @@ function StatusMap({ book, filter, selectedId, bloomId, onPick, onStatusBadge, o
       const badge = here && book[CURRENT_KEY]
         ? `<span data-status-badge role="button" aria-label="How the ${CURRENT.unit} stands" title="How the ${CURRENT.unit} stands" class="absolute -right-2 -top-2 z-10 grid h-6 w-6 cursor-pointer place-items-center rounded-full border-2 border-background bg-primary text-[11px] font-bold text-primary-foreground shadow-lg transition-transform hover:scale-110">i</span>`
         : "";
-      // The current Unit wears its labels beneath the marker; each is remove-only.
-      const hereLabels = here ? book[CURRENT_KEY]?.labels ?? [] : [];
-      const chips = hereLabels.length
-        ? `<span class="absolute left-1/2 top-full mt-1.5 flex -translate-x-1/2 gap-1">${hereLabels.map((l) => `<span data-remove-label="${l}" role="button" aria-label="Remove ${l}" title="Remove ${l}" class="flex cursor-pointer items-center gap-1 whitespace-nowrap rounded-full border bg-background px-2 py-0.5 text-[10px] font-medium shadow-md transition-transform hover:scale-105" style="color:${TONE[l].color};border-color:${TONE[l].color}">${l}<span aria-hidden class="text-[11px] leading-none">×</span></span>`).join("")}</span>`
-        : "";
-      const html = `<span class="relative block cursor-pointer transition-opacity duration-500 ${dim ? "opacity-30" : ""} ${selected ? "scale-110" : ""}">${bloom}${core}${badge}${label}${chips}</span>`;
+      const html = `<span class="relative block cursor-pointer transition-opacity duration-500 ${dim ? "opacity-30" : ""} ${selected ? "scale-110" : ""}">${bloom}${core}${badge}${label}</span>`;
       L.marker(p.coords, { icon: L.divIcon({ className: "", html, iconSize: [size, size], iconAnchor: [size / 2, size / 2] }), keyboard: true, title: `${p.name}, ${p.town}`, zIndexOffset: selected ? 1000 : 0 })
         .on("click", (e: L.LeafletMouseEvent) => {
           const t = e.originalEvent?.target as HTMLElement | null;
-          const rm = t?.closest?.("[data-remove-label]") as HTMLElement | null;
-          if (rm) { removeLabel.current(rm.dataset.removeLabel as SituationLabel); return; }
           if (t?.closest?.("[data-status-badge]")) { statusBadge.current(); return; }
           pick.current(p.id);
         }).addTo(g);
@@ -274,10 +265,10 @@ export default function PrototypeStatus() {
     });
     setAsking(false); setBloomId(CURRENT.placeId);
     if (!labels.length) { say("hobson", `I've cleared the recorded situation for the ${CURRENT.unit}.`); return; }
-    say("hobson", `Noted. The ${CURRENT.unit} is ${lower(labels)} — recorded by you today.${first ? `\n\nIts labels now sit beneath ${CURRENT_PLACE.name} on the map — touch one to remove it.` : ""}`);
+    say("hobson", `Noted. The ${CURRENT.unit} is ${lower(labels)} — recorded by you today.${first ? `\n\nA small building mark now sits beside the 1st Floor at the top of our conversation — touch it to see the situation or remove a label.` : ""}`);
   };
 
-  // Labels on the marker are remove-only; adding or changing stays in the + flow.
+  // Labels are removed only from the chat header's situation card; adding or changing stays in the + flow.
   const removeLabel = (label: SituationLabel) => setBook((b) => withoutLabel(b, CURRENT_KEY, label));
 
   const describeCurrent = () => {
@@ -353,6 +344,25 @@ export default function PrototypeStatus() {
       <section aria-label="Chat with Hobson" className="flex w-[420px] min-w-0 shrink-0 flex-col border-r border-bone bg-background max-lg:w-[360px] max-md:w-full">
         <header className="flex h-14 shrink-0 items-center justify-between gap-2 border-b border-bone px-5">
           <p className="truncate text-sm"><span className="font-medium text-primary">Portfolio</span><span className="text-ink-muted"> › </span><span className="font-semibold">{CURRENT_PLACE.name}</span><span className="text-ink-muted"> › </span><span className="font-semibold">{CURRENT.unit}</span></p>
+          {situation && (
+            <Popover>
+              <PopoverTrigger asChild>
+                <button type="button" aria-label={`How the ${CURRENT.unit} stands`} title={`How the ${CURRENT.unit} stands`} className="ml-1 mr-auto grid h-7 w-7 shrink-0 place-items-center rounded-full text-primary transition-colors hover:bg-secondary"><Building2 className="h-4 w-4" aria-hidden /></button>
+              </PopoverTrigger>
+              <PopoverContent align="start" className="w-72 p-4" aria-label={`${CURRENT.unit} situation`}>
+                <p className="text-xs font-medium uppercase tracking-wide text-ink-muted">Current situation</p>
+                <p className="mt-1 text-sm font-semibold">{CURRENT.unit} · {CURRENT_PLACE.name}</p>
+                <ul className="mt-3 flex flex-col gap-1.5">
+                  {situation.labels.map((l) => { const T = TONE[l]; return (
+                    <li key={l} className="flex items-center justify-between gap-2 rounded-md border border-bone px-2.5 py-1.5">
+                      <span className="flex items-center gap-2 text-sm" style={{ color: T.color }}><T.Icon className="h-3.5 w-3.5" aria-hidden />{l}</span>
+                      <button type="button" aria-label={`Remove ${l}`} onClick={() => removeLabel(l)} className="rounded px-1.5 py-0.5 text-xs text-ink-muted hover:bg-secondary hover:text-foreground">Remove</button>
+                    </li>); })}
+                </ul>
+                <p className="mt-3 text-xs text-ink-muted">Recorded by {situation.by} on {situation.date}. Your own record, not read from papers.</p>
+              </PopoverContent>
+            </Popover>
+          )}
           <Button variant="ghost" size="sm" aria-label="Restart demo" onClick={restart}><RotateCcw className="h-3.5 w-3.5 sm:mr-2" /><span className="max-sm:hidden">Restart</span></Button>
         </header>
 
@@ -410,7 +420,7 @@ export default function PrototypeStatus() {
       </section>
 
       <section aria-label="Map" className="relative min-w-0 flex-1 max-md:hidden">
-        <StatusMap book={book} filter={filter} selectedId={placeId} bloomId={bloomId} onPick={onMapPick} onStatusBadge={() => { setFilter("All"); setPlaceId(CURRENT.placeId); }} onRemoveLabel={removeLabel} />
+        <StatusMap book={book} filter={filter} selectedId={placeId} bloomId={bloomId} onPick={onMapPick} onStatusBadge={() => { setFilter("All"); setPlaceId(CURRENT.placeId); }} />
 
         <div className="pointer-events-none absolute inset-x-4 top-4 z-[500] flex items-start justify-end gap-2">
           <div className="pointer-events-auto flex flex-col items-end gap-2">
