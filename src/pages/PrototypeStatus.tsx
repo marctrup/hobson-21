@@ -30,8 +30,7 @@ type Filter = SituationLabel | "All";
 
 const SEED: Message[] = [{
   id: 0, role: "hobson",
-  text: `You're at the ${CURRENT.unit} at ${CURRENT_PLACE.name}, ${CURRENT_PLACE.town}.\n\nI've nothing recorded yet about how it stands today — vacant, being let, or being refurbished. Tell me how it stands and I'll put it on the map.`,
-  choices: ["Record the Unit's current situation"],
+  text: `You're at the ${CURRENT.unit} at ${CURRENT_PLACE.name}, ${CURRENT_PLACE.town}.`,
 }];
 
 const SAMPLE: SituationBook = {
@@ -348,7 +347,7 @@ export default function PrototypeStatus() {
             </div>
           ) : (
             <p className="pointer-events-auto rounded-full border border-bone bg-background/95 px-4 py-2 text-sm text-ink-muted shadow-sm">
-              {`You're at the ${CURRENT.unit} at ${CURRENT_PLACE.name} · nothing recorded yet about how it stands today`}
+              {`You're at the ${CURRENT.unit} at ${CURRENT_PLACE.name}`}
             </p>
           )}
           <span className="pointer-events-auto flex items-center gap-1 rounded-full border border-bone bg-background/95 p-1 text-sm shadow-sm">
