@@ -30,21 +30,22 @@ type Filter = SituationLabel | "All";
 
 const SEED: Message[] = [{
   id: 0, role: "hobson",
-  text: `You're at the ${CURRENT.unit} at ${CURRENT_PLACE.name}, ${CURRENT_PLACE.town}.`,
+  text: `You're at the ${CURRENT.unit} at ${CURRENT_PLACE.name}, ${CURRENT_PLACE.town}.\n\nThe map already shows how a few of your other Units stand — some carry more than one situation at once.`,
 }];
 
+// A few Units open with situations already recorded, showing the combinations
+// real records carry: vacant and to let, vacant and being refurbished, and all three.
 const SAMPLE: SituationBook = {
   [unitKey("colmore", "1st Floor")]: { labels: ["Vacant", "Available to let"], by: AUTHOR, date: TODAY },
-  [unitKey("colmore", "2nd Floor")]: { labels: ["Being refurbished"], by: AUTHOR, date: TODAY },
+  [unitKey("colmore", "2nd Floor")]: { labels: ["Vacant", "Being refurbished"], by: AUTHOR, date: TODAY },
   [unitKey("colmore", "Ground Floor Shop")]: { labels: ["Available to let", "Being refurbished"], by: AUTHOR, date: TODAY },
-  [unitKey("st-pauls", "5th Floor")]: { labels: ["Vacant"], by: AUTHOR, date: TODAY },
+  [unitKey("st-pauls", "5th Floor")]: { labels: ["Vacant", "Available to let", "Being refurbished"], by: AUTHOR, date: TODAY },
   [unitKey("paragon", "Unit 3")]: { labels: ["Available to let"], by: AUTHOR, date: TODAY },
   [unitKey("paragon", "Unit 4")]: { labels: ["Being refurbished"], by: AUTHOR, date: TODAY },
   [unitKey("clyde", "Workshop")]: { labels: ["Vacant"], by: AUTHOR, date: TODAY },
 };
 
 const SCENARIOS = [
-  { label: "Fill in a sample portfolio", text: "Fill in a sample portfolio" },
   { label: "Find what's vacant", text: "Which Units are vacant?" },
   { label: "Ask about a place", text: "What's happening in Birmingham?" },
 ];
@@ -163,7 +164,7 @@ function Chip({ label }: { label: SituationLabel }) {
 
 export default function PrototypeStatus() {
   const [messages, setMessages] = useState<Message[]>(SEED);
-  const [book, setBook] = useState<SituationBook>({});
+  const [book, setBook] = useState<SituationBook>(SAMPLE);
   const [asking, setAsking] = useState(false);
   const [placeId, setPlaceId] = useState<string | null>(null);
   const [filter, setFilter] = useState<Filter>("All");
@@ -193,7 +194,7 @@ export default function PrototypeStatus() {
   };
 
   const confirm = (labels: SituationLabel[]) => {
-    const first = !hasAny;
+    const first = !situation;
     say("user", labels.length ? labels.join(", ") : "Clear it");
     setBook((b) => {
       const n = { ...b };
@@ -231,7 +232,7 @@ export default function PrototypeStatus() {
     say("hobson", rows.length
       ? `${p.name}, ${p.town}. ${rows.length} of its ${p.units.length} Units have a situation recorded:\n${rows.map((r) => `• ${r.unit} — ${lower(r.labels)}`).join("\n")}`
       : `${p.name}, ${p.town} — ${p.units.length} Units. Nothing is recorded yet about how they stand today.`,
-      { choices: rows.length ? ["Show everything"] : ["Fill in a sample portfolio"] });
+      { choices: ["Show everything"] });
   };
 
   const onMapPick = (id: string) => {
@@ -248,11 +249,6 @@ export default function PrototypeStatus() {
     if (text === "Record the Unit's current situation" || text === "Change the situation") return startRecord();
     if (text === "What's the situation here?") return describeCurrent();
     if (text === "Show everything") return showFilter("All");
-    if (text === "Fill in a sample portfolio") {
-      setBook(SAMPLE); setFilter("All"); setPlaceId(null); setBloomId("colmore");
-      say("hobson", "I've filled in seven sample situations across four places, so you can see the map come alive. These are invented for the demonstration.", { choices: ["Which Units are vacant?", "What's happening in Birmingham?"] });
-      return;
-    }
     const intent = interpret(text);
     if (intent.kind === "record") return startRecord();
     if (intent.kind === "here") return describeCurrent();
@@ -262,7 +258,7 @@ export default function PrototypeStatus() {
   };
 
   const restart = () => {
-    setMessages(SEED); setBook({}); setAsking(false); setPlaceId(null); setFilter("All"); setInput(""); setStatusOpen(false); nextId.current = 1;
+    setMessages(SEED); setBook(SAMPLE); setAsking(false); setPlaceId(null); setFilter("All"); setInput(""); setStatusOpen(false); nextId.current = 1;
   };
 
   // Only recorded Units are listed, never the whole floor plan of a place.

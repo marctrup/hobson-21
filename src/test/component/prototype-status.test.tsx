@@ -27,6 +27,12 @@ function openRecordForm() {
 }
 
 describe("Prototype Status at unit level", () => {
+  it("opens with a few Units already showing situations, combinations included", () => {
+    render(<PrototypeStatus />);
+    expect(screen.getByText(/The map already shows how a few of your other Units stand/)).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Current situation filters" })).toBeInTheDocument();
+  });
+
   it("opens the situation form straight away, listing neither places nor Units", () => {
     render(<PrototypeStatus />);
     openRecordForm();
