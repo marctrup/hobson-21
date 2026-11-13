@@ -118,7 +118,7 @@ describe("Prototype Status at unit level", () => {
     fireEvent.click(screen.getByRole("button", { name: "How the 1st Floor stands" }));
     fireEvent.click(screen.getByRole("button", { name: "Remove Unoccupied" }));
     expect(screen.queryByRole("button", { name: "Remove Unoccupied" })).toBeNull();
-    fireEvent.click(screen.getByRole("button", { name: "Remove Available to let" }));
+    fireEvent.click(screen.getByRole("button", { name: "Remove Available" }));
     expect(screen.queryByRole("button", { name: "How the 1st Floor stands" })).toBeNull();
   });
 });
