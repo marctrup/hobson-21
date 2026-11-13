@@ -68,7 +68,7 @@ export type Intent =
 export function interpret(raw: string): Intent {
   const t = raw.toLowerCase();
   if (/no papers|without papers|missing papers|nothing assigned/.test(t)) return { kind: "filter", filter: "No papers" };
-  if (/ended|expired|chain/.test(t)) return { kind: "filter", filter: "No new occupancy" };
+  if (/new occupancy|ended|expired|chain/.test(t)) return { kind: "filter", filter: "No new occupancy" };
   if (/unoccupied|vacant|empty/.test(t)) return { kind: "filter", filter: "All" };
   const place = STATUS_PLACES.find((p) => t.includes(p.name.toLowerCase()) || t.includes(p.town.toLowerCase()));
   if (place) return { kind: "place", placeId: place.id };

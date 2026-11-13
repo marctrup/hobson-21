@@ -23,7 +23,7 @@ type Message = { id: number; role: "user" | "hobson"; text: string; choices?: st
 
 const SEED: Message[] = [{
   id: 0, role: "hobson",
-  text: `You're at the ${CURRENT.unit} at ${CURRENT_PLACE.name}, ${CURRENT_PLACE.town}.\n\nThe map marks every Unit I read as unoccupied — either no papers are assigned to it, or its current chain has ended. Those with no papers are worth checking first; once the papers are in, what remains should be genuinely ended chains.`,
+  text: `You're at the ${CURRENT.unit} at ${CURRENT_PLACE.name}, ${CURRENT_PLACE.town}.\n\nThe map marks every Unit I read as unoccupied — either no papers are assigned to it, or its last occupancy has ended. Those with no papers are worth checking first; once the papers are in, what remains should be Units whose last occupancy has genuinely ended.`,
 }];
 
 // Invented sample findings. Units not listed have a current chain.
@@ -51,7 +51,7 @@ const SAMPLE: FindingBook = {
 
 const SCENARIOS = [
   { label: "Which Units have no papers?", text: "Which Units have no papers?" },
-  { label: "Show ended chains", text: "Show me the ended chains" },
+  { label: "Show where no new occupancy has begun", text: "Which Units have no new occupancy?" },
   { label: "Ask about a place", text: "What's unoccupied in Birmingham?" },
 ];
 
@@ -243,10 +243,10 @@ export default function PrototypeStatus() {
     setFilter(f); setPlaceId(null);
     const rows = STATUS_PLACES.flatMap((p) => placeFindings(book, p).filter((r) => f === "All" || r.reason === f).map((r) => `${r.unit} at ${p.name}`));
     const c = reasonCounts(book);
-    if (f === "All") { say("hobson", `${rows.length} Units read as unoccupied: ${c["No papers"]} with no papers and ${c["No new occupancy"]} whose chain has ended.\n\nThe ones with no papers may simply be awaiting their papers — worth checking first.`, { choices: ["Which Units have no papers?", "Show me the ended chains"] }); return; }
+    if (f === "All") { say("hobson", `${rows.length} Units read as unoccupied: ${c["No papers"]} with no papers and ${c["No new occupancy"]} whose last occupancy has ended.\n\nThe ones with no papers may simply be awaiting their papers — worth checking first.`, { choices: ["Which Units have no papers?", "Which Units have no new occupancy?"] }); return; }
     say("hobson", f === "No papers"
       ? `${rows.length} Units have no papers assigned to them: ${listWords(rows)}.\n\nIf any of these is let, its papers haven't reached me yet — once they do, I'll read it afresh.`
-      : `${rows.length} Units have a chain that has ended: ${listWords(rows)}.\n\nThese are the ones that should genuinely be unoccupied.`,
+      : `${rows.length} Units have no new occupancy — their last occupancy has ended: ${listWords(rows)}.\n\nThese are the ones that should genuinely be unoccupied.`,
       { choices: ["Show everything unoccupied"] });
   };
 
@@ -269,7 +269,7 @@ export default function PrototypeStatus() {
     const intent = interpret(text);
     if (intent.kind === "filter") return showFilter(intent.filter);
     if (intent.kind === "place") return describePlace(intent.placeId);
-    say("hobson", "In this demonstration I show which Units I read as unoccupied — no papers, or an ended chain. Ask me which have no papers, which chains have ended, or about a place.");
+    say("hobson", "In this demonstration I show which Units I read as unoccupied — no papers, or no new occupancy since the last one ended. Ask me which have no papers, which have no new occupancy, or about a place.");
   };
 
   const restart = () => {
