@@ -221,6 +221,11 @@ export default function PrototypeNotes() {
     say("hobson", `I've recorded the 1st Floor as ${listWords(labels.map((l) => l.toLowerCase()))}. I'll keep this separate from its occupation history.`);
   };
 
+  const showSituation = () => {
+    if (!situation) return;
+    say("hobson", `The 1st Floor is currently recorded as ${listWords(situation.labels.map((l) => l.toLowerCase()))}.\n\nRecorded by ${situation.by} on ${situation.date}. This is your own record, kept separate from the occupation history in the papers.`);
+  };
+
   const listNotes = (current: Note[]) => {
     setDraft(null); setAwaitingContent(false);
     if (current.length === 0) { say("hobson", "I've no notes recorded for the 1st Floor yet. Tell me something and I'll keep one."); return; }
@@ -430,9 +435,9 @@ export default function PrototypeNotes() {
             )}
           </p>
           {situation && (
-            <span title={`Recorded by user · ${situation.by} · ${situation.date}`} aria-label={`Current situation: ${situation.labels.join(", ")}. Recorded by user, ${situation.by}, ${situation.date}`} className="flex min-w-0 flex-wrap gap-1">
-              {situation.labels.map((l) => <span key={l} className="rounded-full border border-primary/30 px-2 py-0.5 text-[11px] font-medium text-primary">{l}</span>)}
-            </span>
+            <button type="button" onClick={showSituation} title="Show the recorded situation" aria-label="Show the recorded situation for this Unit" className="flex shrink-0 items-center rounded-md bg-primary/10 p-1.5 text-primary hover:bg-primary/15">
+              <Building2 className="h-3.5 w-3.5" aria-hidden />
+            </button>
           )}
           <Button variant="ghost" size="sm" aria-label="Restart demo" onClick={restart}><RotateCcw className="h-3.5 w-3.5 sm:mr-2" /><span className="max-sm:hidden">Restart</span></Button>
         </header>
@@ -498,7 +503,7 @@ export default function PrototypeNotes() {
               <PopoverContent side="top" align="start" className="w-72 p-1.5" aria-label="Chat actions">
                 <Button type="button" variant="ghost" onClick={startNote} className="w-full justify-start gap-3 px-3 font-normal"><StickyNote className="h-4 w-4 text-primary" aria-hidden />Add a Note</Button>
                 <Button type="button" variant="ghost" onClick={() => previewAction("papers")} className="w-full justify-start gap-3 px-3 font-normal"><Upload className="h-4 w-4 text-muted-foreground" aria-hidden />Upload papers</Button>
-                <Button type="button" variant="ghost" onClick={askSituation} className="h-auto w-full items-start justify-start gap-3 whitespace-normal px-3 py-2 text-left font-normal"><Building2 className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground" aria-hidden /><span><span className="block">Record the Unit's current situation</span><span className="block text-xs text-muted-foreground">Tell Hobson whether a Unit is vacant, available to let or being refurbished.</span></span></Button>
+                <Button type="button" variant="ghost" onClick={askSituation} className="w-full justify-start gap-3 px-3 font-normal"><Building2 className="h-4 w-4 text-muted-foreground" aria-hidden />Record the Unit's current situation</Button>
               </PopoverContent>
             </Popover>
             <Button type="button" variant="ghost" size="icon" aria-label="Things you might try" aria-expanded={tryOpen} onClick={() => setTryOpen((o) => !o)} className="h-8 w-8 shrink-0"><Lightbulb className="h-4 w-4" /></Button>
