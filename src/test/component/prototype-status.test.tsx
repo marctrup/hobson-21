@@ -63,8 +63,9 @@ describe("Prototype Status at unit level", () => {
     fireEvent.click(within(field()).getByRole("button", { name: "Put it on the map" }));
     fireEvent.change(screen.getByLabelText("Ask Hobson"), { target: { value: "What's the situation here?" } });
     fireEvent.click(screen.getByRole("button", { name: "Send message" }));
-    expect(screen.getByText(/Recorded by Marc T on 13 November 2026/)).toBeInTheDocument();
-    expect(screen.getByText(/not something read from papers/)).toBeInTheDocument();
+    const log = within(screen.getByRole("log", { name: "Conversation" }));
+    expect(log.getByText(/Recorded by Marc T on 13 November 2026/)).toBeInTheDocument();
+    expect(log.getByText(/not something read from papers/)).toBeInTheDocument();
   });
 
   it("offers no situation pills after recording — the map marker carries that", () => {
@@ -74,6 +75,27 @@ describe("Prototype Status at unit level", () => {
     fireEvent.click(within(field()).getByRole("button", { name: "Put it on the map" }));
     expect(screen.queryByRole("button", { name: "What's the situation here?" })).toBeNull();
     expect(screen.queryByRole("button", { name: "Show me everything vacant" })).toBeNull();
+  });
+
+  it("opens one combined card for a place — every Unit with its situation inline, nothing in chat", () => {
+    render(<PrototypeStatus />);
+    const before = within(screen.getByRole("log", { name: "Conversation" })).getAllByText(/./).length;
+    fireEvent.click(screen.getByRole("button", { name: "Search your places" }));
+    fireEvent.click(screen.getByRole("button", { name: /St Pauls House/ }));
+    const card = screen.getByRole("region", { name: "St Pauls House situations" });
+    expect(within(card).getByText("Here is what I have here.")).toBeInTheDocument();
+    // every Unit of the place is listed, recorded or not
+    for (const unit of ["5th Floor", "4th Floor", "Part 2nd Floor", "Car Park"]) {
+      expect(within(card).getByText(unit)).toBeInTheDocument();
+    }
+    // the 5th Floor carries all three situations inline, with who and when
+    expect(within(card).getByText("Vacant")).toBeInTheDocument();
+    expect(within(card).getByText("Available to let")).toBeInTheDocument();
+    expect(within(card).getByText("Being refurbished")).toBeInTheDocument();
+    expect(within(card).getByText(/Recorded by Marc T on 13 November 2026/)).toBeInTheDocument();
+    // unrecorded Units say so, muted — and the chat gained no summary
+    expect(within(card).getAllByText("not recorded").length).toBeGreaterThan(0);
+    expect(within(screen.getByRole("log", { name: "Conversation" })).getAllByText(/./).length).toBe(before);
   });
 
   it("clears the record when every situation is unticked", () => {

@@ -85,19 +85,6 @@ function summaryLine(places: StatusPlace[], book: SituationBook) {
   return bits.length ? `<div class="mt-1.5 flex flex-wrap gap-x-2.5 gap-y-1 text-[11px]">${bits.join("")}</div>` : `<div class="mt-1 text-[11px] text-muted-foreground">Nothing recorded yet</div>`;
 }
 
-/** A tiny stack of the place's Units, coloured by situation: readable without opening anything. */
-function floorStack(place: StatusPlace, book: SituationBook) {
-  const rows = [...place.units].reverse().map((u) => {
-    const r = book[unitKey(place.id, u)];
-    const ls = r?.labels ?? [];
-    const bar = ls.length
-      ? `linear-gradient(90deg, ${ls.map((l, i) => `${TONE[l].color} ${(i / ls.length) * 100}% ${((i + 1) / ls.length) * 100}%`).join(", ")})`
-      : "hsl(var(--border))";
-    return `<div class="flex items-center gap-2"><span class="h-2.5 w-14 rounded-sm" style="background:${bar}"></span><span class="text-[11px] ${ls.length ? "font-medium" : "text-muted-foreground"}">${esc(u)}</span></div>`;
-  }).join("");
-  return `<div class="min-w-[170px]"><div class="text-xs font-semibold">${esc(place.name)}</div><div class="text-[11px] text-muted-foreground">${place.units.length} Units · ${esc(place.town)}</div><div class="mt-2 flex flex-col gap-1">${rows}</div></div>`;
-}
-
 const CLUSTER_PX = 64;
 
 function StatusMap({ book, filter, selectedId, bloomId, onPick, onStatusBadge }: {
@@ -188,7 +175,6 @@ function StatusMap({ book, filter, selectedId, bloomId, onPick, onStatusBadge }:
         : "";
       const html = `<span class="relative block cursor-pointer transition-opacity duration-500 ${dim ? "opacity-30" : ""} ${selected ? "scale-110" : ""}">${bloom}${core}${badge}${label}</span>`;
       L.marker(p.coords, { icon: L.divIcon({ className: "", html, iconSize: [size, size], iconAnchor: [size / 2, size / 2] }), keyboard: true, title: `${p.name}, ${p.town}`, zIndexOffset: selected ? 1000 : 0 })
-        .bindTooltip(floorStack(p, book), { direction: "top", offset: [0, -size / 2], className: "status-tip" })
         .on("click", (e: L.LeafletMouseEvent) => {
           const t = e.originalEvent?.target as HTMLElement | null;
           if (t?.closest?.("[data-status-badge]")) { statusBadge.current(); return; }
@@ -272,7 +258,6 @@ export default function PrototypeStatus() {
   const [input, setInput] = useState("");
   const [menuOpen, setMenuOpen] = useState(false);
   const [tryOpen, setTryOpen] = useState(false);
-  const [statusOpen, setStatusOpen] = useState(false);
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchText, setSearchText] = useState("");
@@ -337,9 +322,11 @@ export default function PrototypeStatus() {
       { choices: ["Show everything"] });
   };
 
+  // Clicking a place opens one combined card on the map — never a chat summary.
   const onMapPick = (id: string) => {
     if (asking) return;
-    describePlace(id);
+    setFilter("All");
+    setPlaceId(id);
   };
 
   const send = (raw: string) => {
@@ -360,12 +347,13 @@ export default function PrototypeStatus() {
   };
 
   const restart = () => {
-    setMessages(SEED); setBook(SAMPLE); setAsking(false); setPlaceId(null); setFilter("All"); setInput(""); setStatusOpen(false); nextId.current = 1;
+    setMessages(SEED); setBook(SAMPLE); setAsking(false); setPlaceId(null); setFilter("All"); setInput(""); nextId.current = 1;
   };
 
-  // Only recorded Units are listed, never the whole floor plan of a place.
-  const cardRows: (Recorded & { unit: string })[] = place ? placeSituations(book, place) : [];
-  if (place && place.id === CURRENT.placeId && !situation) cardRows.unshift({ unit: CURRENT.unit, labels: [], by: "", date: "" });
+  // One card per place: every Unit listed with its situation inline, recorded or not.
+  const cardRows: (Recorded & { unit: string })[] = place
+    ? place.units.map((u) => ({ unit: u, ...(book[unitKey(place.id, u)] ?? { labels: [], by: "", date: "" }) }))
+    : [];
 
   return (
     <div className="relative flex h-screen w-full overflow-hidden bg-background text-ink">
@@ -437,22 +425,7 @@ export default function PrototypeStatus() {
       </section>
 
       <section aria-label="Map" className="relative min-w-0 flex-1 max-md:hidden">
-        <StatusMap book={book} filter={filter} selectedId={placeId} bloomId={bloomId} onPick={onMapPick} onStatusBadge={() => { setPlaceId(null); setStatusOpen(true); }} />
-
-        {statusOpen && situation && (
-          <div role="dialog" aria-label={`How the ${CURRENT.unit} stands`} className="absolute left-1/2 top-24 z-[600] w-[320px] -translate-x-1/2 rounded-2xl border border-bone bg-background p-5 shadow-2xl animate-in fade-in zoom-in-95 duration-300">
-            <div className="flex items-start justify-between gap-2">
-              <div>
-                <p className="text-xs uppercase tracking-wide text-ink-muted">{CURRENT_PLACE.name} · {CURRENT_PLACE.town}</p>
-                <p className="mt-0.5 font-semibold">{CURRENT.unit}</p>
-              </div>
-              <Button variant="ghost" size="icon" className="h-7 w-7" aria-label="Close status" onClick={() => setStatusOpen(false)}><X className="h-4 w-4" /></Button>
-            </div>
-            <div className="mt-3 flex flex-wrap gap-1.5">{situation.labels.map((l) => <Chip key={l} label={l} />)}</div>
-            <p className="mt-3 text-xs text-ink-muted">Recorded by {situation.by} on {situation.date}.</p>
-            <p className="mt-2 border-t border-bone pt-2 text-[11px] text-ink-muted">Your own record — not read from papers.</p>
-          </div>
-        )}
+        <StatusMap book={book} filter={filter} selectedId={placeId} bloomId={bloomId} onPick={onMapPick} onStatusBadge={() => { setFilter("All"); setPlaceId(CURRENT.placeId); }} />
 
         <div className="pointer-events-none absolute inset-x-4 top-4 z-[500] flex items-start justify-end gap-2">
           <div className="pointer-events-auto flex flex-col items-end gap-2">
@@ -536,23 +509,30 @@ export default function PrototypeStatus() {
         </div>
 
         {place && (
-          <div role="region" aria-label={`${place.name} situations`} className="absolute right-4 top-20 z-[500] w-[340px] rounded-xl border border-bone bg-background p-4 shadow-xl animate-in fade-in slide-in-from-right-2">
-            <div className="flex items-start justify-between gap-2">
+          <div role="region" aria-label={`${place.name} situations`} className="absolute right-4 top-20 z-[500] flex max-h-[calc(100%-7rem)] w-[340px] flex-col rounded-2xl border border-bone bg-background shadow-xl animate-in fade-in slide-in-from-right-2">
+            <div className="flex items-start justify-between gap-2 p-4 pb-0">
               <div>
                 <p className="flex items-center gap-1.5 font-semibold"><MapPin className="h-4 w-4 text-primary" aria-hidden />{place.name}{place.id === CURRENT.placeId && <span className="text-xs font-normal text-ink-muted">· you are here</span>}</p>
-                <p className="text-xs text-ink-muted">{place.id === CURRENT.placeId ? `${CURRENT.unit} · ${place.town}` : `${place.town} · ${cardRows.length} of ${place.units.length} Units recorded`}</p>
+                <p className="text-xs text-ink-muted">{place.units.length} Units · {place.town}</p>
+                <p className="mt-2 text-sm text-ink-muted">Here is what I have here.</p>
               </div>
               <Button variant="ghost" size="icon" className="h-7 w-7" aria-label="Close place" onClick={() => setPlaceId(null)}><X className="h-4 w-4" /></Button>
             </div>
-            <ul className="mt-3 grid gap-1">
+            <ul className="mt-2 min-h-0 flex-1 overflow-y-auto p-2">
               {cardRows.map((r) => (
-                <li key={r.unit} className="flex flex-wrap items-center justify-between gap-2 rounded-md px-2 py-1.5 text-sm">
-                  <span className={r.labels.length ? "font-medium" : "text-ink-muted"}>{r.unit}</span>
-                  <span className="flex flex-wrap gap-1">{r.labels.length ? r.labels.map((l) => <Chip key={l} label={l} />) : <span className="text-xs text-ink-muted">not recorded</span>}</span>
+                <li key={r.unit} className={`rounded-lg px-2.5 py-2 ${r.labels.length ? "" : "opacity-70"}`}>
+                  <div className="flex flex-wrap items-center justify-between gap-2">
+                    <span className="flex min-w-0 items-center gap-2 text-sm">
+                      <MapPin className={`h-3.5 w-3.5 shrink-0 ${r.labels.length ? "text-primary" : "text-ink-muted"}`} aria-hidden />
+                      <span className={`truncate ${r.labels.length ? "font-medium" : "text-ink-muted"}`}>{r.unit}</span>
+                    </span>
+                    <span className="flex flex-wrap gap-1">{r.labels.length ? r.labels.map((l) => <Chip key={l} label={l} />) : <span className="text-xs text-ink-muted">not recorded</span>}</span>
+                  </div>
+                  {r.labels.length > 0 && <p className="ml-6 mt-1 text-[11px] text-ink-muted">Recorded by {r.by} on {r.date}</p>}
                 </li>
               ))}
             </ul>
-            {cardRows.some((r) => r.labels.length > 0) && <p className="mt-2 border-t border-bone pt-2 text-[11px] text-ink-muted">Recorded by you, not read from papers.</p>}
+            {cardRows.some((r) => r.labels.length > 0) && <p className="border-t border-bone px-4 py-2.5 text-[11px] text-ink-muted">Your own records — not read from papers.</p>}
           </div>
         )}
 
