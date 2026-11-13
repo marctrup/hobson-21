@@ -44,6 +44,16 @@ describe("Prototype Notes composer", () => {
     expect(cards[0]).toHaveTextContent("Car space allocated for free to Mr Mark Jones - no paper work provided");
   });
 
+  it("saves the note when Enter is pressed in the note field, as a phone keyboard sends it", async () => {
+    render(<PrototypeNotes />);
+    await openNoteToTheContentRequest();
+    fireEvent.change(screen.getByLabelText("Your note"), { target: { value: "Spoken into the phone keyboard" } });
+    fireEvent.keyDown(screen.getByLabelText("Your note"), { key: "Enter" });
+    await screen.findByText(/I've added your note/);
+    expect(screen.queryByLabelText("Your note")).toBeNull();
+    expect(screen.getByRole("listitem", { name: /Occupancy note/i })).toHaveTextContent("Spoken into the phone keyboard");
+  });
+
   it("stops asking for the note when the conversation moves on elsewhere", async () => {
     render(<PrototypeNotes />);
     await openNoteToTheContentRequest();

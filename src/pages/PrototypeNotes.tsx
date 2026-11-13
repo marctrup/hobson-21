@@ -121,6 +121,7 @@ function NoteField({ onSave }: { onSave: (text: string) => void }) {
         <StickyNote className="h-3 w-3" aria-hidden />Your note
       </label>
       <textarea id="note-field" aria-label="Your note" value={text} onChange={(e) => setText(e.target.value)} rows={3} autoFocus
+        onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); if (text.trim()) onSave(text.trim()); } }}
         placeholder="Write your note here…" className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-ring" />
       <span className="flex gap-2">
         <Button type="submit" size="sm" disabled={!text.trim()} className="gap-1.5"><StickyNote className="h-3.5 w-3.5" aria-hidden />Save note</Button>
