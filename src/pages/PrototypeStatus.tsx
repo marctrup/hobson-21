@@ -196,28 +196,7 @@ function StatusMap({ book, filter, selectedId, bloomId, onPick, onStatusBadge, o
     if (pts.length) m.flyToBounds(pts.map((x) => x.coords), { padding: [90, 90], maxZoom: 9, duration: 1.1 });
   }, [selectedId, filter, book]);
 
-  // What's in view, always: a quiet line along the bottom.
-  const [inView, setInView] = useState<StatusPlace[]>(STATUS_PLACES);
-  useEffect(() => {
-    const m = map.current;
-    if (!m) return;
-    const upd = () => { const b = m.getBounds(); setInView(STATUS_PLACES.filter((p) => b.contains(p.coords))); };
-    upd();
-    m.on("moveend", upd);
-    return () => { m.off("moveend", upd); };
-  }, []);
-  const viewCount = unitsMatching(book, inView, filter);
-
-  return (
-    <>
-      <div ref={box} aria-label="Map of your places" className="status-map absolute inset-0 z-0" />
-      {hasAny && (
-        <div aria-live="polite" className="pointer-events-none absolute bottom-4 right-16 z-[500] whitespace-nowrap rounded-full border border-bone bg-background/95 px-4 py-1.5 text-xs text-ink-muted shadow-md backdrop-blur">
-          In view: <span className="font-semibold text-foreground">{inView.length}</span> places · <span className="font-semibold text-foreground">{viewCount}</span> {filter === "All" ? "Units with a recorded situation" : `${filter.toLowerCase()}`}
-        </div>
-      )}
-    </>
-  );
+  return <div ref={box} aria-label="Map of your places" className="status-map absolute inset-0 z-0" />;
 }
 
 function SituationField({ initial, onConfirm }: { initial: SituationLabel[]; onConfirm: (l: SituationLabel[]) => void }) {
@@ -495,7 +474,8 @@ export default function PrototypeStatus() {
               </div>
             )}
             {filtersOpen && hasAny && (
-              <div role="group" aria-label="Current situation" className="flex flex-wrap items-center justify-end gap-1.5 rounded-full border border-bone bg-background/95 p-1.5 shadow-md backdrop-blur animate-in fade-in slide-in-from-top-2 duration-300">
+              <div role="group" aria-label="Current situation" className="rounded-2xl border border-bone bg-background/95 p-1.5 shadow-md backdrop-blur animate-in fade-in slide-in-from-top-2 duration-300">
+                <div className="flex flex-wrap items-center justify-end gap-1.5">
                 {(["All", ...SITUATIONS] as Filter[]).map((f) => {
                   const on = filter === f;
                   const n = f === "All" ? unitsMatching(book, STATUS_PLACES, "All") : portfolioCounts(book)[f];
@@ -509,6 +489,13 @@ export default function PrototypeStatus() {
                     </button>
                   );
                 })}
+                </div>
+                <div className="mt-1.5 border-t border-bone px-2 pt-1.5">
+                  {SITUATIONS.map((l) => { const { Icon, color, hint } = TONE[l]; return (
+                    <p key={l} className="flex items-center gap-2 py-0.5 text-xs"><Icon className="h-3.5 w-3.5" style={{ color }} aria-hidden /><span className="font-medium">{l}</span><span className="text-ink-muted">{hint}</span></p>
+                  ); })}
+                  <p className="flex items-center gap-2 py-0.5 text-xs"><Layers className="h-3.5 w-3.5 text-primary" aria-hidden /><span className="font-medium">Ring</span><span className="text-ink-muted">shares of each place's situations</span></p>
+                </div>
               </div>
             )}
           </div>
@@ -542,14 +529,6 @@ export default function PrototypeStatus() {
           </div>
         )}
 
-        {hasAny && (
-          <div aria-label="Legend" className="absolute bottom-4 left-4 z-[500] rounded-xl border border-bone bg-background/95 px-3 py-2.5 shadow-md animate-in fade-in duration-700">
-            {SITUATIONS.map((l) => { const { Icon, color, hint } = TONE[l]; return (
-              <p key={l} className="flex items-center gap-2 py-0.5 text-xs"><Icon className="h-3.5 w-3.5" style={{ color }} aria-hidden /><span className="font-medium">{l}</span><span className="text-ink-muted">{hint}</span></p>
-            ); })}
-            <p className="flex items-center gap-2 py-0.5 text-xs"><Layers className="h-3.5 w-3.5 text-primary" aria-hidden /><span className="font-medium">Ring</span><span className="text-ink-muted">shares of each place's situations</span></p>
-          </div>
-        )}
       </section>
     </div>
   );
