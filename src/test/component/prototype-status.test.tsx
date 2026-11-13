@@ -6,7 +6,7 @@ import PrototypeStatus from "@/pages/PrototypeStatus";
 
 vi.mock("leaflet", () => {
   const layerGroup = { addTo: () => layerGroup, clearLayers: vi.fn() };
-  const map = { fitBounds: () => map, invalidateSize: vi.fn(), remove: vi.fn(), flyTo: vi.fn(), flyToBounds: vi.fn(), getZoom: () => 6, on: vi.fn(), off: vi.fn(), project: (c: number[]) => ({ x: c[1] * 100, y: c[0] * 100, distanceTo() { return 999; }, add() { return this; }, divideBy() { return this; } }), unproject: () => [0, 0], getBounds: () => ({ contains: () => true }) };
+  const map = { fitBounds: () => map, setView: () => map, getSize: () => ({ x: 800, y: 600 }), invalidateSize: vi.fn(), remove: vi.fn(), flyTo: vi.fn(), flyToBounds: vi.fn(), getZoom: () => 6, on: vi.fn(), off: vi.fn(), project: (c: number[]) => ({ x: c[1] * 100, y: c[0] * 100, distanceTo() { return 999; }, add() { return this; }, divideBy() { return this; } }), unproject: () => [0, 0], getBounds: () => ({ contains: () => true }) };
   return { default: {
     map: () => map,
     tileLayer: () => ({ addTo: () => ({}) }),
