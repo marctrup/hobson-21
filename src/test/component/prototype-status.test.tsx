@@ -51,9 +51,19 @@ describe("Prototype Status at unit level", () => {
     openRecordForm();
     fireEvent.click(within(field()).getByRole("button", { name: "Being refurbished" }));
     fireEvent.click(within(field()).getByRole("button", { name: "Put it on the map" }));
-    fireEvent.click(screen.getByRole("button", { name: "What's the situation here?" }));
+    fireEvent.change(screen.getByLabelText("Ask Hobson"), { target: { value: "What's the situation here?" } });
+    fireEvent.click(screen.getByRole("button", { name: "Send message" }));
     expect(screen.getByText(/Recorded by Marc T on 13 November 2026/)).toBeInTheDocument();
     expect(screen.getByText(/not something read from papers/)).toBeInTheDocument();
+  });
+
+  it("offers no situation pills after recording — the map marker carries that", () => {
+    render(<PrototypeStatus />);
+    openRecordForm();
+    fireEvent.click(within(field()).getByRole("button", { name: "Vacant" }));
+    fireEvent.click(within(field()).getByRole("button", { name: "Put it on the map" }));
+    expect(screen.queryByRole("button", { name: "What's the situation here?" })).toBeNull();
+    expect(screen.queryByRole("button", { name: "Show me everything vacant" })).toBeNull();
   });
 
   it("clears the record when every situation is unticked", () => {

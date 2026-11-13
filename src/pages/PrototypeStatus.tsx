@@ -45,7 +45,6 @@ const SAMPLE: SituationBook = {
 
 const SCENARIOS = [
   { label: "Fill in a sample portfolio", text: "Fill in a sample portfolio" },
-  { label: "What's the situation here?", text: "What's the situation here?" },
   { label: "Find what's vacant", text: "Which Units are vacant?" },
   { label: "Ask about a place", text: "What's happening in Birmingham?" },
 ];
@@ -61,14 +60,16 @@ function ring(book: SituationBook, place: StatusPlace) {
   return `conic-gradient(${SITUATIONS.filter((l) => counts[l]).map((l) => { const from = at; at += (counts[l] / total) * 360; return `${TONE[l].color} ${from}deg ${at}deg`; }).join(", ")})`;
 }
 
-function StatusMap({ book, filter, selectedId, bloomId, onPick }: {
-  book: SituationBook; filter: Filter; selectedId: string | null; bloomId: string | null; onPick: (id: string) => void;
+function StatusMap({ book, filter, selectedId, bloomId, onPick, onStatusBadge }: {
+  book: SituationBook; filter: Filter; selectedId: string | null; bloomId: string | null; onPick: (id: string) => void; onStatusBadge: () => void;
 }) {
   const box = useRef<HTMLDivElement>(null);
   const map = useRef<L.Map | null>(null);
   const layer = useRef<L.LayerGroup | null>(null);
   const pick = useRef(onPick);
   pick.current = onPick;
+  const statusBadge = useRef(onStatusBadge);
+  statusBadge.current = onStatusBadge;
   const hasAny = Object.keys(book).length > 0;
 
   useEffect(() => {
@@ -101,9 +102,18 @@ function StatusMap({ book, filter, selectedId, bloomId, onPick }: {
       const label = selected || here
         ? `<span class="absolute left-full top-1/2 ml-2 -translate-y-1/2 whitespace-nowrap rounded-full ${selected ? "bg-primary text-primary-foreground" : "bg-background text-foreground"} px-2.5 py-0.5 text-xs font-medium shadow">${here ? `You are here · ${p.name}` : p.name}</span>`
         : "";
-      const html = `<span title="${p.name}, ${p.town}" class="relative block cursor-pointer transition-opacity duration-500 ${dim ? "opacity-30" : ""} ${selected ? "scale-110" : ""}">${bloom}${core}${label}</span>`;
+      // Once the Unit you're standing at has a record, a small mark on its
+      // marker opens an elegant card saying how it stands — never the chat.
+      const badge = here && book[CURRENT_KEY]
+        ? `<span data-status-badge role="button" aria-label="How the ${CURRENT.unit} stands" title="How the ${CURRENT.unit} stands" class="absolute -right-2 -top-2 z-10 grid h-6 w-6 cursor-pointer place-items-center rounded-full border-2 border-background bg-primary text-[11px] font-bold text-primary-foreground shadow-lg transition-transform hover:scale-110">i</span>`
+        : "";
+      const html = `<span title="${p.name}, ${p.town}" class="relative block cursor-pointer transition-opacity duration-500 ${dim ? "opacity-30" : ""} ${selected ? "scale-110" : ""}">${bloom}${core}${badge}${label}</span>`;
       L.marker(p.coords, { icon: L.divIcon({ className: "", html, iconSize: [size, size], iconAnchor: [size / 2, size / 2] }), keyboard: true, title: p.name, zIndexOffset: selected ? 1000 : 0 })
-        .on("click", () => pick.current(p.id)).addTo(g);
+        .on("click", (e: L.LeafletMouseEvent) => {
+          const t = e.originalEvent?.target as HTMLElement | null;
+          if (t?.closest?.("[data-status-badge]")) { statusBadge.current(); return; }
+          pick.current(p.id);
+        }).addTo(g);
     });
   }, [book, filter, selectedId, bloomId, hasAny]);
 
@@ -161,6 +171,7 @@ export default function PrototypeStatus() {
   const [input, setInput] = useState("");
   const [menuOpen, setMenuOpen] = useState(false);
   const [tryOpen, setTryOpen] = useState(false);
+  const [statusOpen, setStatusOpen] = useState(false);
   const nextId = useRef(1);
   const logEnd = useRef<HTMLDivElement>(null);
   const hasAny = Object.keys(book).length > 0;
@@ -191,8 +202,8 @@ export default function PrototypeStatus() {
     });
     setAsking(false); setBloomId(CURRENT.placeId);
     if (!labels.length) { say("hobson", `I've cleared the recorded situation for the ${CURRENT.unit}.`, { choices: ["Record the Unit's current situation"] }); return; }
-    say("hobson", `Noted. The ${CURRENT.unit} is ${lower(labels)} — recorded by you today.${first ? `\n\nYour map now shows how things stand: ${CURRENT_PLACE.name} wears a ring in the colours of its situation.` : ""}`,
-      { choices: ["What's the situation here?", ...labels.slice(0, 1).map((l) => `Show me everything ${l.toLowerCase()}`)] });
+    say("hobson", `Noted. The ${CURRENT.unit} is ${lower(labels)} — recorded by you today.${first ? `\n\nYour map now shows how things stand: ${CURRENT_PLACE.name} wears a ring in the colours of its situation, and the small mark on it will tell you how it stands whenever you touch it.` : ""}`,
+      { choices: ["Change the situation"] });
   };
 
   const describeCurrent = () => {
@@ -250,7 +261,7 @@ export default function PrototypeStatus() {
   };
 
   const restart = () => {
-    setMessages(SEED); setBook({}); setAsking(false); setPlaceId(null); setFilter("All"); setInput(""); nextId.current = 1;
+    setMessages(SEED); setBook({}); setAsking(false); setPlaceId(null); setFilter("All"); setInput(""); setStatusOpen(false); nextId.current = 1;
   };
 
   // Only recorded Units are listed, never the whole floor plan of a place.
@@ -327,7 +338,22 @@ export default function PrototypeStatus() {
       </section>
 
       <section aria-label="Map" className="relative min-w-0 flex-1 max-md:hidden">
-        <StatusMap book={book} filter={filter} selectedId={placeId} bloomId={bloomId} onPick={onMapPick} />
+        <StatusMap book={book} filter={filter} selectedId={placeId} bloomId={bloomId} onPick={onMapPick} onStatusBadge={() => { setPlaceId(null); setStatusOpen(true); }} />
+
+        {statusOpen && situation && (
+          <div role="dialog" aria-label={`How the ${CURRENT.unit} stands`} className="absolute left-1/2 top-24 z-[600] w-[320px] -translate-x-1/2 rounded-2xl border border-bone bg-background p-5 shadow-2xl animate-in fade-in zoom-in-95 duration-300">
+            <div className="flex items-start justify-between gap-2">
+              <div>
+                <p className="text-xs uppercase tracking-wide text-ink-muted">{CURRENT_PLACE.name} · {CURRENT_PLACE.town}</p>
+                <p className="mt-0.5 font-semibold">{CURRENT.unit}</p>
+              </div>
+              <Button variant="ghost" size="icon" className="h-7 w-7" aria-label="Close status" onClick={() => setStatusOpen(false)}><X className="h-4 w-4" /></Button>
+            </div>
+            <div className="mt-3 flex flex-wrap gap-1.5">{situation.labels.map((l) => <Chip key={l} label={l} />)}</div>
+            <p className="mt-3 text-xs text-ink-muted">Recorded by {situation.by} on {situation.date}.</p>
+            <p className="mt-2 border-t border-bone pt-2 text-[11px] text-ink-muted">Your own record — not read from papers.</p>
+          </div>
+        )}
 
         <div className="pointer-events-none absolute inset-x-4 top-4 z-[500] flex flex-wrap items-start justify-between gap-3">
           {hasAny ? (
