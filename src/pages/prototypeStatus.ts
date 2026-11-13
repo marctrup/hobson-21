@@ -2,7 +2,7 @@
 // shown on a map. Situations are the user's own record — never read from papers.
 // The demonstration stands at one Unit: recording is unit-level, never a list.
 
-export const SITUATIONS = ["Vacant", "Available"] as const;
+export const SITUATIONS = ["Unoccupied", "Available to let"] as const;
 export type SituationLabel = (typeof SITUATIONS)[number];
 
 export type StatusPlace = { id: string; name: string; town: string; coords: [number, number]; units: string[] };
@@ -63,7 +63,7 @@ export function placeSituations(book: SituationBook, place: StatusPlace) {
 
 /** Count of Units per label at a place (a Unit with two labels counts in both). */
 export function labelCounts(book: SituationBook, place: StatusPlace): Record<SituationLabel, number> {
-  const counts = { Vacant: 0, Available: 0 } as Record<SituationLabel, number>;
+  const counts = { Unoccupied: 0, "Available to let": 0 } as Record<SituationLabel, number>;
   placeSituations(book, place).forEach((r) => r.labels.forEach((l) => { counts[l] += 1; }));
   return counts;
 }
@@ -87,7 +87,7 @@ export function interpret(raw: string): Intent {
   if (/\b(record|update|mark|set)\b/.test(t) && /(situation|status|unoccupied|vacant|available|let)/.test(t)) return { kind: "record" };
   const place = STATUS_PLACES.find((p) => t.includes(p.name.toLowerCase()) || t.includes(p.town.toLowerCase()));
   if (/\b(here|this unit|this floor|the unit|our unit|the 1st floor)\b/.test(t) && /(situation|status|stand|unoccupied|vacant|available|let|occupied|recorded)/.test(t)) return { kind: "here" };
-  const label: SituationLabel | null = /vacant|unoccupied|empty/.test(t) ? "Vacant" : /available|to let|marketing/.test(t) ? "Available" : null;
+  const label: SituationLabel | null = /unoccupied|vacant|empty/.test(t) ? "Unoccupied" : /available|to let|marketing/.test(t) ? "Available to let" : null;
   if (label) return { kind: "filter", label };
   if (/\b(everything|all|whole portfolio|clear)\b/.test(t)) return { kind: "filter", label: "All" };
   if (place) return { kind: "place", placeId: place.id };
@@ -96,7 +96,7 @@ export function interpret(raw: string): Intent {
 
 /** Units per label across a set of places (a Unit with two labels counts in both). */
 export function portfolioCounts(book: SituationBook, places: StatusPlace[] = STATUS_PLACES) {
-  const counts = { Vacant: 0, Available: 0 } as Record<SituationLabel, number>;
+  const counts = { Unoccupied: 0, "Available to let": 0 } as Record<SituationLabel, number>;
   places.forEach((p) => SITUATIONS.forEach((l) => { counts[l] += labelCounts(book, p)[l]; }));
   return counts;
 }
