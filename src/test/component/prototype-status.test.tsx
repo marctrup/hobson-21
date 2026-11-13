@@ -43,6 +43,9 @@ describe("Prototype Status at unit level", () => {
     fireEvent.click(within(field()).getByRole("button", { name: "Available to let" }));
     fireEvent.click(within(field()).getByRole("button", { name: "Put it on the map" }));
     expect(screen.getByText(/The 1st Floor is vacant and available to let — recorded by you today/)).toBeInTheDocument();
+    // the filters stay folded behind a small round button until touched
+    expect(screen.queryByRole("group", { name: "Current situation" })).toBeNull();
+    fireEvent.click(screen.getByRole("button", { name: "Current situation filters" }));
     expect(screen.getByRole("group", { name: "Current situation" })).toBeInTheDocument();
   });
 

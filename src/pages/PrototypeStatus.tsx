@@ -5,7 +5,7 @@
 import { useEffect, useRef, useState } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
-import { ArrowRight, Building2, FileText, Hammer, Home, KeyRound, Layers, Lightbulb, Map as MapIcon, MapPin, MessageSquare, Plus, RotateCcw, Upload, X } from "lucide-react";
+import { ArrowRight, Building2, FileText, Hammer, Home, KeyRound, Layers, Lightbulb, Map as MapIcon, MapPin, MessageSquare, Plus, RotateCcw, SlidersHorizontal, Upload, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import owlDefault from "@/assets/prototype/owl-default.png";
@@ -172,6 +172,7 @@ export default function PrototypeStatus() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [tryOpen, setTryOpen] = useState(false);
   const [statusOpen, setStatusOpen] = useState(false);
+  const [filtersOpen, setFiltersOpen] = useState(false);
   const nextId = useRef(1);
   const logEnd = useRef<HTMLDivElement>(null);
   const hasAny = Object.keys(book).length > 0;
@@ -357,19 +358,34 @@ export default function PrototypeStatus() {
 
         <div className="pointer-events-none absolute inset-x-4 top-4 z-[500] flex flex-wrap items-start justify-between gap-3">
           {hasAny ? (
-            <div role="group" aria-label="Current situation" className="pointer-events-auto flex flex-wrap items-center gap-1.5 rounded-full border border-bone bg-background/95 p-1.5 shadow-md backdrop-blur animate-in fade-in slide-in-from-top-2 duration-500">
-              <span className="px-2 text-sm font-semibold">Current situation</span>
-              {(["All", ...SITUATIONS] as Filter[]).map((f) => {
-                const on = filter === f;
-                const tone = f === "All" ? null : TONE[f];
-                return (
-                  <button key={f} type="button" aria-pressed={on} onClick={() => { setPlaceId(null); setFilter(f); }}
-                    style={on && tone ? { background: tone.color, borderColor: tone.color } : undefined}
-                    className={`flex items-center gap-1.5 rounded-full border px-3 py-1 text-sm transition-colors ${on ? "border-primary bg-primary text-primary-foreground" : "border-bone bg-background hover:border-primary/40"}`}>
-                    {tone && <tone.Icon className="h-3.5 w-3.5" style={on ? undefined : { color: tone.color }} aria-hidden />}{f}
-                  </button>
-                );
-              })}
+            <div className="pointer-events-auto flex flex-col items-start gap-2">
+              <button
+                type="button"
+                aria-label="Current situation filters"
+                aria-expanded={filtersOpen}
+                onClick={() => setFiltersOpen((o) => !o)}
+                style={filter !== "All" && !filtersOpen ? { color: TONE[filter].color, borderColor: TONE[filter].color } : undefined}
+                className="grid h-11 w-11 place-items-center rounded-full border border-bone bg-background/95 shadow-md backdrop-blur transition-transform hover:scale-105"
+              >
+                {filter !== "All" && !filtersOpen
+                  ? (() => { const { Icon } = TONE[filter]; return <Icon className="h-5 w-5" aria-hidden />; })()
+                  : <SlidersHorizontal className="h-5 w-5 text-primary" aria-hidden />}
+              </button>
+              {filtersOpen && (
+                <div role="group" aria-label="Current situation" className="flex flex-wrap items-center gap-1.5 rounded-full border border-bone bg-background/95 p-1.5 shadow-md backdrop-blur animate-in fade-in slide-in-from-top-2 duration-300">
+                  {(["All", ...SITUATIONS] as Filter[]).map((f) => {
+                    const on = filter === f;
+                    const tone = f === "All" ? null : TONE[f];
+                    return (
+                      <button key={f} type="button" aria-pressed={on} onClick={() => { setPlaceId(null); setFilter(f); setFiltersOpen(false); }}
+                        style={on && tone ? { background: tone.color, borderColor: tone.color } : undefined}
+                        className={`flex items-center gap-1.5 rounded-full border px-3 py-1 text-sm transition-colors ${on ? "border-primary bg-primary text-primary-foreground" : "border-bone bg-background hover:border-primary/40"}`}>
+                        {tone && <tone.Icon className="h-3.5 w-3.5" style={on ? undefined : { color: tone.color }} aria-hidden />}{f}
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
             </div>
           ) : null}
           <span className="pointer-events-auto flex items-center gap-1 rounded-full border border-bone bg-background/95 p-1 text-sm shadow-sm">
