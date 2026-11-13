@@ -5,7 +5,7 @@
 import { useEffect, useRef, useState } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
-import { ArrowRight, Building2, FileText, Hammer, Home, KeyRound, Layers, Lightbulb, Map as MapIcon, MapPin, MessageSquare, Plus, RotateCcw, SlidersHorizontal, Upload, X } from "lucide-react";
+import { ArrowRight, Building2, FileText, Hammer, Home, KeyRound, Layers, Lightbulb, Map as MapIcon, MapPin, MessageSquare, Plus, RotateCcw, Search, SlidersHorizontal, Upload, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import owlDefault from "@/assets/prototype/owl-default.png";
@@ -174,6 +174,8 @@ export default function PrototypeStatus() {
   const [tryOpen, setTryOpen] = useState(false);
   const [statusOpen, setStatusOpen] = useState(false);
   const [filtersOpen, setFiltersOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [searchText, setSearchText] = useState("");
   const nextId = useRef(1);
   const logEnd = useRef<HTMLDivElement>(null);
   const hasAny = Object.keys(book).length > 0;
@@ -352,42 +354,83 @@ export default function PrototypeStatus() {
           </div>
         )}
 
-        <div className="pointer-events-none absolute inset-x-4 top-4 z-[500] flex flex-wrap items-start justify-between gap-3">
-          {hasAny ? (
-            <div className="pointer-events-auto flex flex-col items-start gap-2">
+        <div className="pointer-events-none absolute inset-x-4 top-4 z-[500] flex items-start justify-end gap-2">
+          <div className="pointer-events-auto flex flex-col items-end gap-2">
+            <div className="flex items-center gap-2">
               <button
                 type="button"
-                aria-label="Current situation filters"
-                aria-expanded={filtersOpen}
-                onClick={() => setFiltersOpen((o) => !o)}
-                style={filter !== "All" && !filtersOpen ? { color: TONE[filter].color, borderColor: TONE[filter].color } : undefined}
+                aria-label="Search your places"
+                aria-expanded={searchOpen}
+                onClick={() => { setSearchOpen((o) => !o); setFiltersOpen(false); }}
                 className="grid h-11 w-11 place-items-center rounded-full border border-bone bg-background/95 shadow-md backdrop-blur transition-transform hover:scale-105"
               >
-                {filter !== "All" && !filtersOpen
-                  ? (() => { const { Icon } = TONE[filter]; return <Icon className="h-5 w-5" aria-hidden />; })()
-                  : <SlidersHorizontal className="h-5 w-5 text-primary" aria-hidden />}
+                <Search className="h-5 w-5 text-primary" aria-hidden />
               </button>
-              {filtersOpen && (
-                <div role="group" aria-label="Current situation" className="flex flex-wrap items-center gap-1.5 rounded-full border border-bone bg-background/95 p-1.5 shadow-md backdrop-blur animate-in fade-in slide-in-from-top-2 duration-300">
-                  {(["All", ...SITUATIONS] as Filter[]).map((f) => {
-                    const on = filter === f;
-                    const tone = f === "All" ? null : TONE[f];
-                    return (
-                      <button key={f} type="button" aria-pressed={on} onClick={() => { setPlaceId(null); setFilter(f); setFiltersOpen(false); }}
-                        style={on && tone ? { background: tone.color, borderColor: tone.color } : undefined}
-                        className={`flex items-center gap-1.5 rounded-full border px-3 py-1 text-sm transition-colors ${on ? "border-primary bg-primary text-primary-foreground" : "border-bone bg-background hover:border-primary/40"}`}>
-                        {tone && <tone.Icon className="h-3.5 w-3.5" style={on ? undefined : { color: tone.color }} aria-hidden />}{f}
-                      </button>
-                    );
-                  })}
-                </div>
+              {hasAny && (
+                <button
+                  type="button"
+                  aria-label="Current situation filters"
+                  aria-expanded={filtersOpen}
+                  onClick={() => { setFiltersOpen((o) => !o); setSearchOpen(false); }}
+                  style={filter !== "All" && !filtersOpen ? { color: TONE[filter].color, borderColor: TONE[filter].color } : undefined}
+                  className="grid h-11 w-11 place-items-center rounded-full border border-bone bg-background/95 shadow-md backdrop-blur transition-transform hover:scale-105"
+                >
+                  {filter !== "All" && !filtersOpen
+                    ? (() => { const { Icon } = TONE[filter]; return <Icon className="h-5 w-5" aria-hidden />; })()
+                    : <SlidersHorizontal className="h-5 w-5 text-primary" aria-hidden />}
+                </button>
               )}
+              <span className="flex items-center gap-1 rounded-full border border-bone bg-background/95 p-1 text-sm shadow-sm">
+                <span className="flex items-center gap-1.5 px-3 py-1 text-ink-muted"><FileText className="h-4 w-4" aria-hidden />Papers</span>
+                <span className="flex items-center gap-1.5 rounded-full bg-secondary px-3 py-1 font-medium text-primary"><MapIcon className="h-4 w-4" aria-hidden />Map</span>
+              </span>
             </div>
-          ) : null}
-          <span className="pointer-events-auto flex items-center gap-1 rounded-full border border-bone bg-background/95 p-1 text-sm shadow-sm">
-            <span className="flex items-center gap-1.5 px-3 py-1 text-ink-muted"><FileText className="h-4 w-4" aria-hidden />Papers</span>
-            <span className="flex items-center gap-1.5 rounded-full bg-secondary px-3 py-1 font-medium text-primary"><MapIcon className="h-4 w-4" aria-hidden />Map</span>
-          </span>
+            {searchOpen && (
+              <div role="search" aria-label="Search your places" className="w-[300px] rounded-2xl border border-bone bg-background/95 p-2 shadow-md backdrop-blur animate-in fade-in slide-in-from-top-2 duration-300">
+                <input
+                  autoFocus
+                  value={searchText}
+                  onChange={(e) => setSearchText(e.target.value)}
+                  aria-label="Search places"
+                  placeholder="Search a place or town…"
+                  className="w-full rounded-full border border-bone bg-background px-3 py-1.5 text-sm outline-none placeholder:text-muted-foreground focus:border-primary/50"
+                />
+                <ul className="mt-1.5 max-h-56 overflow-y-auto">
+                  {STATUS_PLACES.filter((p) => {
+                    const t = searchText.trim().toLowerCase();
+                    return !t || p.name.toLowerCase().includes(t) || p.town.toLowerCase().includes(t);
+                  }).map((p) => (
+                    <li key={p.id}>
+                      <button
+                        type="button"
+                        onClick={() => { setPlaceId(p.id); setSearchOpen(false); setSearchText(""); }}
+                        className="flex w-full items-center gap-2 rounded-lg px-2.5 py-1.5 text-left text-sm hover:bg-secondary"
+                      >
+                        <MapPin className="h-3.5 w-3.5 shrink-0 text-primary" aria-hidden />
+                        <span className="min-w-0 flex-1 truncate font-medium">{p.name}</span>
+                        <span className="shrink-0 text-xs text-ink-muted">{p.town}</span>
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            {filtersOpen && hasAny && (
+              <div role="group" aria-label="Current situation" className="flex flex-wrap items-center justify-end gap-1.5 rounded-full border border-bone bg-background/95 p-1.5 shadow-md backdrop-blur animate-in fade-in slide-in-from-top-2 duration-300">
+                {(["All", ...SITUATIONS] as Filter[]).map((f) => {
+                  const on = filter === f;
+                  const tone = f === "All" ? null : TONE[f];
+                  return (
+                    <button key={f} type="button" aria-pressed={on} onClick={() => { setPlaceId(null); setFilter(f); setFiltersOpen(false); }}
+                      style={on && tone ? { background: tone.color, borderColor: tone.color } : undefined}
+                      className={`flex items-center gap-1.5 rounded-full border px-3 py-1 text-sm transition-colors ${on ? "border-primary bg-primary text-primary-foreground" : "border-bone bg-background hover:border-primary/40"}`}>
+                      {tone && <tone.Icon className="h-3.5 w-3.5" style={on ? undefined : { color: tone.color }} aria-hidden />}{f}
+                    </button>
+                  );
+                })}
+              </div>
+            )}
+          </div>
         </div>
 
         {place && (
