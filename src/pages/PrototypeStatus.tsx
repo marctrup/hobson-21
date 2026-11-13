@@ -345,11 +345,7 @@ export default function PrototypeStatus() {
                 );
               })}
             </div>
-          ) : (
-            <p className="pointer-events-auto rounded-full border border-bone bg-background/95 px-4 py-2 text-sm text-ink-muted shadow-sm">
-              {`You're at the ${CURRENT.unit} at ${CURRENT_PLACE.name}`}
-            </p>
-          )}
+          ) : null}
           <span className="pointer-events-auto flex items-center gap-1 rounded-full border border-bone bg-background/95 p-1 text-sm shadow-sm">
             <span className="flex items-center gap-1.5 px-3 py-1 text-ink-muted"><FileText className="h-4 w-4" aria-hidden />Papers</span>
             <span className="flex items-center gap-1.5 rounded-full bg-secondary px-3 py-1 font-medium text-primary"><MapIcon className="h-4 w-4" aria-hidden />Map</span>
