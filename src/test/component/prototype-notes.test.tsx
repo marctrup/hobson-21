@@ -129,36 +129,15 @@ describe("Prototype Notes previous occupancy", () => {
 });
 
 describe("Prototype Notes chat actions", () => {
-  it.each(["Upload papers"])("keeps %s illustrative and cancels an unfinished note", async (action) => {
+  it("greys out Upload papers and Record the Unit's current situation as coming soon, leaving Add a Note working", () => {
     render(<PrototypeNotes />);
-    await openNoteToTheContentRequest();
-    fireEvent.change(screen.getByLabelText("Your note"), { target: { value: "An unfinished note" } });
     fireEvent.click(screen.getByRole("button", { name: "Chat actions" }));
-    fireEvent.click(screen.getByRole("button", { name: action }));
-    expect(screen.queryByLabelText("Your note")).toBeNull();
-    expect(screen.queryByRole("region", { name: "Saved Unit notes" })).toBeNull();
-    expect(screen.getByText(/not available in this Notes demonstration yet/)).toBeInTheDocument();
-    startNoteFromMenu();
+    for (const action of [/Upload papers/, /Record the Unit's current situation/]) {
+      const item = screen.getByRole("button", { name: action });
+      expect(item).toBeDisabled();
+      expect(within(item).getByText("Coming soon")).toBeInTheDocument();
+    }
+    fireEvent.click(screen.getByRole("button", { name: "Add a Note" }));
     expect(screen.getByRole("button", { name: "Shared" })).toBeInTheDocument();
-  });
-
-  it("records several current situations, kept apart from occupation history, and can clear them", () => {
-    render(<PrototypeNotes />);
-    fireEvent.click(screen.getByRole("button", { name: "Chat actions" }));
-    fireEvent.click(screen.getByRole("button", { name: /Record the Unit's current situation/ }));
-    fireEvent.click(screen.getByRole("checkbox", { name: "Vacant" }));
-    fireEvent.click(screen.getByRole("checkbox", { name: "Available to let" }));
-    fireEvent.click(screen.getByRole("button", { name: "Confirm situation" }));
-    expect(screen.getByText(/recorded the 1st Floor as vacant and available to let/)).toBeInTheDocument();
-    fireEvent.click(screen.getByRole("button", { name: "Show the recorded situation for this Unit" }));
-    expect(screen.getByText(/currently recorded as vacant and available to let/)).toBeInTheDocument();
-    expect(screen.getByText(/Recorded by Marc T on/)).toBeInTheDocument();
-    expect(screen.getByText("Current")).toBeInTheDocument();
-    fireEvent.click(screen.getByRole("button", { name: "Chat actions" }));
-    fireEvent.click(screen.getByRole("button", { name: /Record the Unit's current situation/ }));
-    fireEvent.click(screen.getByRole("checkbox", { name: "Vacant" }));
-    fireEvent.click(screen.getByRole("checkbox", { name: "Available to let" }));
-    fireEvent.click(screen.getByRole("button", { name: "Clear situation" }));
-    expect(screen.queryByRole("button", { name: "Show the recorded situation for this Unit" })).toBeNull();
   });
 });

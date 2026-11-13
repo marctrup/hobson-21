@@ -502,8 +502,8 @@ export default function PrototypeNotes() {
               </PopoverTrigger>
               <PopoverContent side="top" align="start" className="w-72 p-1.5" aria-label="Chat actions">
                 <Button type="button" variant="ghost" onClick={startNote} className="w-full justify-start gap-3 px-3 font-normal"><StickyNote className="h-4 w-4 text-primary" aria-hidden />Add a Note</Button>
-                <Button type="button" variant="ghost" onClick={() => previewAction("papers")} className="w-full justify-start gap-3 px-3 font-normal"><Upload className="h-4 w-4 text-muted-foreground" aria-hidden />Upload papers</Button>
-                <Button type="button" variant="ghost" onClick={askSituation} className="w-full justify-start gap-3 px-3 font-normal"><Building2 className="h-4 w-4 text-muted-foreground" aria-hidden />Record the Unit's current situation</Button>
+                <Button type="button" variant="ghost" disabled onClick={() => previewAction("papers")} className="h-auto w-full items-start justify-start gap-3 whitespace-normal px-3 py-2 text-left font-normal opacity-50"><Upload className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground" aria-hidden /><span><span className="block">Upload papers</span><span className="block text-xs text-muted-foreground">Coming soon</span></span></Button>
+                <Button type="button" variant="ghost" disabled onClick={askSituation} className="h-auto w-full items-start justify-start gap-3 whitespace-normal px-3 py-2 text-left font-normal opacity-50"><Building2 className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground" aria-hidden /><span><span className="block">Record the Unit's current situation</span><span className="block text-xs text-muted-foreground">Coming soon</span></span></Button>
               </PopoverContent>
             </Popover>
             <Button type="button" variant="ghost" size="icon" aria-label="Things you might try" aria-expanded={tryOpen} onClick={() => setTryOpen((o) => !o)} className="h-8 w-8 shrink-0"><Lightbulb className="h-4 w-4" /></Button>
