@@ -47,9 +47,9 @@ describe("Prototype Status at unit level", () => {
     render(<PrototypeStatus />);
     openRecordForm();
     fireEvent.click(within(field()).getByRole("button", { name: "Unoccupied" }));
-    fireEvent.click(within(field()).getByRole("button", { name: "Available to let" }));
+    fireEvent.click(within(field()).getByRole("button", { name: "Available" }));
     fireEvent.click(within(field()).getByRole("button", { name: "Put it on the map" }));
-    expect(screen.getByText(/The 1st Floor is unoccupied and available to let — recorded by you today/)).toBeInTheDocument();
+    expect(screen.getByText(/The 1st Floor is unoccupied and available — recorded by you today/)).toBeInTheDocument();
     // the filters stay folded behind a small round button until touched
     expect(screen.queryByRole("group", { name: "Current situation" })).toBeNull();
     fireEvent.click(screen.getByRole("button", { name: "Current situation filters" }));
@@ -59,7 +59,7 @@ describe("Prototype Status at unit level", () => {
   it("reads the record back with who made it and when, separate from papers", () => {
     render(<PrototypeStatus />);
     openRecordForm();
-    fireEvent.click(within(field()).getByRole("button", { name: "Available to let" }));
+    fireEvent.click(within(field()).getByRole("button", { name: "Available" }));
     fireEvent.click(within(field()).getByRole("button", { name: "Put it on the map" }));
     fireEvent.change(screen.getByLabelText("Ask Hobson"), { target: { value: "What's the situation here?" } });
     fireEvent.click(screen.getByRole("button", { name: "Send message" }));
@@ -90,7 +90,7 @@ describe("Prototype Status at unit level", () => {
     }
     // the 5th Floor carries both situations inline, with who and when
     expect(within(card).getByText("Unoccupied")).toBeInTheDocument();
-    expect(within(card).getByText("Available to let")).toBeInTheDocument();
+    expect(within(card).getByText("Available")).toBeInTheDocument();
     expect(within(card).getByText(/Recorded by Marc T on 13 November 2026/)).toBeInTheDocument();
     // unrecorded Units say so, muted — and the chat gained no summary
     expect(within(card).getAllByText("not recorded").length).toBeGreaterThan(0);
@@ -113,7 +113,7 @@ describe("Prototype Status at unit level", () => {
     expect(screen.queryByRole("button", { name: "How the 1st Floor stands" })).toBeNull();
     openRecordForm();
     fireEvent.click(within(field()).getByRole("button", { name: "Unoccupied" }));
-    fireEvent.click(within(field()).getByRole("button", { name: "Available to let" }));
+    fireEvent.click(within(field()).getByRole("button", { name: "Available" }));
     fireEvent.click(within(field()).getByRole("button", { name: "Put it on the map" }));
     fireEvent.click(screen.getByRole("button", { name: "How the 1st Floor stands" }));
     fireEvent.click(screen.getByRole("button", { name: "Remove Unoccupied" }));

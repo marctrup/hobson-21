@@ -138,7 +138,7 @@ All colors MUST be HSL.
     --warning-border: #E6D2AE;
     /* Prototype Status: user-recorded Unit situations on the map. */
     --situation-unoccupied: #D9485F;
-    --situation-let: #2F9E6A;
+    --situation-available: #2F9E6A;
     --info: var(--ink);
     --info-bg: var(--bone-wash);
     --info-border: var(--bone);
