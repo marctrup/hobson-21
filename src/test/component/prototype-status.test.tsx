@@ -100,6 +100,36 @@ describe("Prototype Status: dynamic portfolio signals", () => {
     expect(within(row).queryByText("No new occupancy")).toBeNull();
   });
 
+  it("switches to Papers Review with four aligned filters and no availability filter", () => {
+    render(<PrototypeStatus />);
+    fireEvent.click(screen.getByRole("button", { name: "Papers" }));
+    const review = screen.getByRole("region", { name: "Papers review" });
+    expect(within(review).getByRole("tab", { name: "Review" })).toHaveAttribute("aria-selected", "true");
+    const filters = within(review).getByRole("group", { name: "Paper review filters" });
+    expect(within(filters).getByRole("button", { name: "All review 23" })).toBeInTheDocument();
+    expect(within(filters).getByRole("button", { name: "No papers 10" })).toBeInTheDocument();
+    expect(within(filters).getByRole("button", { name: "Tenancy ending 2" })).toBeInTheDocument();
+    expect(within(filters).getByRole("button", { name: "No new occupancy 7" })).toBeInTheDocument();
+    expect(within(filters).getByRole("button", { name: "Compliance warning 6" })).toBeInTheDocument();
+    expect(within(filters).queryByRole("button", { name: /Available to let/ })).toBeNull();
+    fireEvent.click(screen.getByRole("button", { name: "Map" }));
+    expect(screen.queryByRole("region", { name: "Papers review" })).toBeNull();
+    expect(screen.getByRole("button", { name: "Map filters" })).toBeInTheDocument();
+  });
+
+  it("filters Review places and expands only the matching Units", () => {
+    render(<PrototypeStatus />);
+    fireEvent.click(screen.getByRole("button", { name: "Papers" }));
+    const review = screen.getByRole("region", { name: "Papers review" });
+    fireEvent.click(within(review).getByRole("button", { name: "No papers 10" }));
+    expect(within(review).getByRole("button", { name: "No papers 10" })).toHaveAttribute("aria-pressed", "true");
+    const place = within(review).getByRole("button", { name: "Colmore Gate, Birmingham: 1 Unit to review" });
+    fireEvent.click(place);
+    expect(within(review).getByText("2nd Floor")).toBeInTheDocument();
+    expect(within(review).getByText("No occupancy papers have been provided")).toBeInTheDocument();
+    expect(within(review).queryByText("1st Floor")).toBeNull();
+  });
+
   it("saves a note from the + menu", () => {
     render(<PrototypeStatus />);
     fireEvent.click(screen.getByRole("button", { name: "Chat actions" }));

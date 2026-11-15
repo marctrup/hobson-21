@@ -4,13 +4,13 @@
 import { useEffect, useRef, useState } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
-import { ArrowRight, CalendarClock, Check, FileQuestion, FileText, FileX, Lightbulb, Map as MapIcon, MapPin, MessageSquare, Plus, RotateCcw, Search, SlidersHorizontal, StickyNote, Tag, TriangleAlert, Upload, X } from "lucide-react";
+import { ArrowRight, Building2, CalendarClock, Check, ChevronDown, ChevronRight, FileQuestion, FileText, FileX, Lightbulb, Map as MapIcon, MapPin, MessageSquare, Plus, RotateCcw, Search, SlidersHorizontal, StickyNote, Tag, TriangleAlert, Upload, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import owlDefault from "@/assets/prototype/owl-default.png";
 import {
   CURRENT, CURRENT_PLACE, STATUS_PLACES, complianceAtPlace, complianceKindCounts, interpret, listWords, parseStatusInstruction, placeMatchesSignals,
-  signalCounts, signalUnitsMatching, unitKey,
+  signalCounts, signalUnitsMatching, unitKey, unitMatchesFilter,
   type AvailabilityBook, type ComplianceBook, type EndingBook, type FindingBook, type MapFilter, type StatusPlace, type StatusInstruction,
 } from "./prototypeStatus";
 
@@ -23,6 +23,8 @@ const TONE: Record<Signal, { color: string; Icon: typeof FileX; hint: string }> 
   "Compliance warning": { color: "var(--warning)", Icon: TriangleAlert, hint: "Expired, missing or expiring documents; ask Hobson for detail" },
 };
 const FILTERS: MapFilter[] = ["All", "No papers", "Tenancy ending", "No new occupancy", "Available to let", "Compliance warning"];
+type PaperFilter = Exclude<MapFilter, "Available to let">;
+const PAPER_FILTERS: PaperFilter[] = ["All", "No papers", "Tenancy ending", "No new occupancy", "Compliance warning"];
 
 type PendingAction = StatusInstruction;
 type RecentChange = { placeId: string; unit: string; kind: "ending" | "available" };
@@ -250,6 +252,114 @@ function Chip({ signal }: { signal: Signal }) {
   );
 }
 
+/** Papers reuses the map's findings, but availability remains a map-only signal. */
+function PapersReview({ book, endings, compliance, filter, onFilter }: {
+  book: FindingBook;
+  endings: EndingBook;
+  compliance: ComplianceBook;
+  filter: PaperFilter;
+  onFilter: (filter: PaperFilter) => void;
+}) {
+  const [expanded, setExpanded] = useState<string | null>(null);
+  const counts = signalCounts(book, endings, {}, STATUS_PLACES, compliance);
+  const rows = STATUS_PLACES.flatMap((place) => {
+    const units = place.units.filter((unit) => unitMatchesFilter(place.id, unit, book, endings, {}, filter, compliance));
+    return units.length ? [{ place, units }] : [];
+  });
+  const summary = filter === "All"
+    ? `${counts.All} Units have something to review across your papers and occupancy records.`
+    : `${counts[filter]} ${counts[filter] === 1 ? "Unit" : "Units"} · ${TONE[filter].hint}`;
+
+  return (
+    <div role="region" aria-label="Papers review" className="absolute inset-0 overflow-y-auto bg-background px-6 pb-8 pt-5">
+      <header className="pr-56">
+        <div className="flex items-center gap-3">
+          <img src={owlDefault} alt="" aria-hidden className="h-10 w-10 object-contain" />
+          <div>
+            <h1 className="text-xl font-semibold text-foreground">Review</h1>
+            <p className="mt-0.5 text-sm text-ink-muted">{summary}</p>
+          </div>
+        </div>
+      </header>
+
+      <div className="mt-5 flex items-center gap-2 border-b border-bone pb-3" role="tablist" aria-label="Papers views">
+        <button type="button" role="tab" aria-selected="false" disabled className="flex items-center gap-2 rounded-full px-3.5 py-2 text-sm text-ink-muted opacity-55">
+          <FileText className="h-4 w-4" aria-hidden />All Papers
+        </button>
+        <button type="button" role="tab" aria-selected="true" className="flex items-center gap-2 rounded-full bg-secondary px-3.5 py-2 text-sm font-medium text-primary">
+          <FileQuestion className="h-4 w-4" aria-hidden />Review
+        </button>
+      </div>
+
+      <div role="group" aria-label="Paper review filters" className="mt-4 flex flex-wrap gap-2 pb-2">
+        {PAPER_FILTERS.map((f) => {
+          const on = filter === f;
+          const n = counts[f];
+          const Icon = f === "All" ? FileText : TONE[f].Icon;
+          return (
+            <button key={f} type="button" aria-label={`${f === "All" ? "All review" : f} ${n}`} aria-pressed={on}
+              onClick={() => { onFilter(f); setExpanded(null); }}
+              className={`flex shrink-0 items-center gap-2 rounded-full border px-3.5 py-2 text-sm transition-colors ${on ? "border-primary/20 bg-secondary font-medium text-primary" : "border-bone bg-background text-foreground hover:bg-secondary/60"}`}>
+              <Icon className="h-4 w-4" style={f === "All" ? undefined : { color: TONE[f].color }} aria-hidden />
+              <span>{f === "All" ? "All review" : f}</span>
+              <span className={`rounded-md px-1.5 py-0.5 text-xs font-semibold tabular-nums ${on ? "bg-background" : "bg-secondary"}`}>{n}</span>
+            </button>
+          );
+        })}
+      </div>
+
+      <div className="mt-4 space-y-2" aria-live="polite">
+        {rows.map(({ place, units }) => {
+          const open = expanded === place.id;
+          return (
+            <section key={place.id} className="overflow-hidden rounded-xl border border-bone bg-background">
+              <button type="button" aria-label={`${place.name}, ${place.town}: ${units.length} ${units.length === 1 ? "Unit" : "Units"} to review`} aria-expanded={open} onClick={() => setExpanded(open ? null : place.id)}
+                className="flex w-full items-center gap-3 px-4 py-3.5 text-left transition-colors hover:bg-secondary/45">
+                <span className="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-secondary text-primary"><Building2 className="h-4 w-4" aria-hidden /></span>
+                <span className="min-w-0 flex-1">
+                  <span className="block truncate text-sm font-semibold text-foreground">{place.name}</span>
+                  <span className="mt-0.5 block text-xs text-ink-muted">{place.town}</span>
+                </span>
+                <span className="shrink-0 text-xs text-ink-muted">{units.length} {units.length === 1 ? "Unit" : "Units"} to review</span>
+                {open ? <ChevronDown className="h-4 w-4 shrink-0 text-primary" aria-hidden /> : <ChevronRight className="h-4 w-4 shrink-0 text-ink-muted" aria-hidden />}
+              </button>
+              {open && (
+                <ul className="border-t border-bone bg-secondary/25 px-4 py-2">
+                  {units.map((unit) => {
+                    const key = unitKey(place.id, unit);
+                    const finding = book[key];
+                    const ending = endings[key];
+                    const issues = compliance[key] ?? [];
+                    const signals: Signal[] = filter === "All" ? [
+                      ...(finding ? [finding.reason] : []),
+                      ...(ending ? ["Tenancy ending" as const] : []),
+                      ...(issues.length ? ["Compliance warning" as const] : []),
+                    ] : [filter];
+                    const details = [
+                      finding && signals.includes(finding.reason) ? (finding.reason === "No papers" ? TONE["No papers"].hint : finding.detail ?? TONE["No new occupancy"].hint) : null,
+                      ending && signals.includes("Tenancy ending") ? ending.detail : null,
+                      issues.length && signals.includes("Compliance warning") ? TONE["Compliance warning"].hint : null,
+                    ].filter(Boolean).join(" ");
+                    return (
+                      <li key={unit} className="border-b border-bone py-3 last:border-b-0">
+                        <div className="flex flex-wrap items-center justify-between gap-2">
+                          <span className="text-sm font-medium text-foreground">{unit}</span>
+                          <span className="flex flex-wrap justify-end gap-1.5">{signals.map((signal) => <Chip key={signal} signal={signal} />)}</span>
+                        </div>
+                        <p className="mt-1.5 text-xs leading-5 text-ink-muted">{details}</p>
+                      </li>
+                    );
+                  })}
+                </ul>
+              )}
+            </section>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
 export default function PrototypeStatus() {
   const [messages, setMessages] = useState<Message[]>(SEED);
   const [book, setBook] = useState<FindingBook>(SAMPLE);
@@ -258,6 +368,8 @@ export default function PrototypeStatus() {
   const [noting, setNoting] = useState(false);
   const [placeId, setPlaceId] = useState<string | null>(null);
   const [filter, setFilter] = useState<MapFilter>("All");
+  const [workspace, setWorkspace] = useState<"map" | "papers">("map");
+  const [paperFilter, setPaperFilter] = useState<PaperFilter>("All");
   const [input, setInput] = useState("");
   const [menuOpen, setMenuOpen] = useState(false);
   const [tryOpen, setTryOpen] = useState(false);
@@ -292,7 +404,9 @@ export default function PrototypeStatus() {
     signalUnitsMatching(book, endings, availability, [{ ...p, units: [u] }], f, SAMPLE_COMPLIANCE) === 1).map((u) => `${u} at ${p.name}`));
 
   const showFilter = (f: MapFilter) => {
-    setFilter(f); setPlaceId(null); setPendingAction(null); setEndingCandidate(null);
+    setFilter(f);
+    if (f === "Available to let") setWorkspace("map"); else setPaperFilter(f);
+    setPlaceId(null); setPendingAction(null); setEndingCandidate(null);
     const rows = matchingRows(f);
     const c = signalCounts(book, endings, availability, STATUS_PLACES, SAMPLE_COMPLIANCE);
     if (f === "All") {
@@ -322,7 +436,7 @@ export default function PrototypeStatus() {
 
   const describePlace = (id: string) => {
     const p = placeById(id)!;
-    setPlaceId(id); setFilter("All"); setPendingAction(null); setEndingCandidate(null);
+    setWorkspace("map"); setPlaceId(id); setFilter("All"); setPendingAction(null); setEndingCandidate(null);
     const rows = p.units.flatMap((u) => {
       const key = unitKey(p.id, u);
       const signals = [
@@ -342,7 +456,7 @@ export default function PrototypeStatus() {
   const describeCompliance = (id: string) => {
     const p = placeById(id)!;
     const rows = complianceAtPlace(SAMPLE_COMPLIANCE, p);
-    setPlaceId(id); setFilter("Compliance warning"); setPendingAction(null); setEndingCandidate(null);
+    setPlaceId(id); setFilter("Compliance warning"); setPaperFilter("Compliance warning"); setPendingAction(null); setEndingCandidate(null);
     if (!rows.length) {
       say("hobson", `${p.name}, ${p.town} — I hold no expired, missing or forthcoming-expiry document warnings in this demonstration.`, { choices: ["Show all signals"] });
       return;
@@ -420,7 +534,7 @@ export default function PrototypeStatus() {
 
   const restart = () => {
     setMessages(SEED); setBook(SAMPLE); setEndings(SAMPLE_ENDINGS); setAvailability(SAMPLE_AVAILABLE);
-    setNoting(false); setPlaceId(null); setFilter("All"); setInput(""); setPendingAction(null); setEndingCandidate(null); setRecentChange(null); nextId.current = 1;
+    setNoting(false); setPlaceId(null); setFilter("All"); setWorkspace("map"); setPaperFilter("All"); setInput(""); setPendingAction(null); setEndingCandidate(null); setRecentChange(null); nextId.current = 1;
   };
 
   const cardRows = place ? place.units.map((u) => {
@@ -502,29 +616,42 @@ export default function PrototypeStatus() {
         </div>
       </section>
 
-      <section aria-label="Map" className="relative min-w-0 flex-1 max-md:hidden">
-        <StatusMap book={book} endings={endings} availability={availability} compliance={SAMPLE_COMPLIANCE} filter={filter} selectedId={placeId} recentChange={recentChange} onPick={(id) => { setFilter("All"); setPlaceId(id); }} />
+      <section aria-label={workspace === "map" ? "Map" : "Papers"} className="relative min-w-0 flex-1 max-md:hidden">
+        <div className={workspace === "map" ? "absolute inset-0" : "hidden"}>
+          <StatusMap book={book} endings={endings} availability={availability} compliance={SAMPLE_COMPLIANCE} filter={filter} selectedId={placeId} recentChange={recentChange} onPick={(id) => { setFilter("All"); setPlaceId(id); }} />
+        </div>
+        {workspace === "papers" && <PapersReview book={book} endings={endings} compliance={SAMPLE_COMPLIANCE} filter={paperFilter} onFilter={setPaperFilter} />}
 
         <div className="pointer-events-none absolute inset-x-4 top-4 z-[500] flex items-start justify-end gap-2">
           <div className="pointer-events-auto flex flex-col items-end gap-2">
             <div className="flex items-center gap-2">
-              <button type="button" aria-label="Search your places" aria-expanded={searchOpen} onClick={() => { setSearchOpen((o) => !o); setFiltersOpen(false); }}
-                className="grid h-11 w-11 place-items-center rounded-full border border-bone bg-background/95 shadow-md backdrop-blur transition-transform hover:scale-105">
-                <Search className="h-5 w-5 text-primary" aria-hidden />
-              </button>
-              <button type="button" aria-label="Map filters" aria-expanded={filtersOpen} onClick={() => { setFiltersOpen((o) => !o); setSearchOpen(false); }}
-                style={filter !== "All" && !filtersOpen ? { color: TONE[filter].color, borderColor: TONE[filter].color } : undefined}
-                className="grid h-11 w-11 place-items-center rounded-full border border-bone bg-background/95 shadow-md backdrop-blur transition-transform hover:scale-105">
-                {filter !== "All" && !filtersOpen
-                  ? (() => { const { Icon } = TONE[filter]; return <Icon className="h-5 w-5" aria-hidden />; })()
-                  : <SlidersHorizontal className="h-5 w-5 text-primary" aria-hidden />}
-              </button>
+              {workspace === "map" && (
+                <>
+                  <button type="button" aria-label="Search your places" aria-expanded={searchOpen} onClick={() => { setSearchOpen((o) => !o); setFiltersOpen(false); }}
+                    className="grid h-11 w-11 place-items-center rounded-full border border-bone bg-background/95 shadow-md backdrop-blur transition-transform hover:scale-105">
+                    <Search className="h-5 w-5 text-primary" aria-hidden />
+                  </button>
+                  <button type="button" aria-label="Map filters" aria-expanded={filtersOpen} onClick={() => { setFiltersOpen((o) => !o); setSearchOpen(false); }}
+                    style={filter !== "All" && !filtersOpen ? { color: TONE[filter].color, borderColor: TONE[filter].color } : undefined}
+                    className="grid h-11 w-11 place-items-center rounded-full border border-bone bg-background/95 shadow-md backdrop-blur transition-transform hover:scale-105">
+                    {filter !== "All" && !filtersOpen
+                      ? (() => { const { Icon } = TONE[filter]; return <Icon className="h-5 w-5" aria-hidden />; })()
+                      : <SlidersHorizontal className="h-5 w-5 text-primary" aria-hidden />}
+                  </button>
+                </>
+              )}
               <span className="flex items-center gap-1 rounded-full border border-bone bg-background/95 p-1 text-sm shadow-sm">
-                <span className="flex items-center gap-1.5 px-3 py-1 text-ink-muted"><FileText className="h-4 w-4" aria-hidden />Papers</span>
-                <span className="flex items-center gap-1.5 rounded-full bg-secondary px-3 py-1 font-medium text-primary"><MapIcon className="h-4 w-4" aria-hidden />Map</span>
+                <button type="button" aria-label="Papers" aria-pressed={workspace === "papers"} onClick={() => { setWorkspace("papers"); setFiltersOpen(false); setSearchOpen(false); }}
+                  className={`flex items-center gap-1.5 rounded-full px-3 py-1 transition-colors ${workspace === "papers" ? "bg-secondary font-medium text-primary" : "text-ink-muted hover:bg-secondary/60"}`}>
+                  <FileText className="h-4 w-4" aria-hidden />Papers
+                </button>
+                <button type="button" aria-label="Map" aria-pressed={workspace === "map"} onClick={() => setWorkspace("map")}
+                  className={`flex items-center gap-1.5 rounded-full px-3 py-1 transition-colors ${workspace === "map" ? "bg-secondary font-medium text-primary" : "text-ink-muted hover:bg-secondary/60"}`}>
+                  <MapIcon className="h-4 w-4" aria-hidden />Map
+                </button>
               </span>
             </div>
-            {searchOpen && (
+            {workspace === "map" && searchOpen && (
               <div role="search" aria-label="Search your places" className="w-[300px] rounded-2xl border border-bone bg-background/95 p-2 shadow-md backdrop-blur animate-in fade-in slide-in-from-top-2 duration-300">
                 <input autoFocus value={searchText} onChange={(e) => setSearchText(e.target.value)} aria-label="Search places" placeholder="Search a place or town…"
                   className="w-full rounded-full border border-bone bg-background px-3 py-1.5 text-sm outline-none placeholder:text-muted-foreground focus:border-primary/50" />
@@ -544,7 +671,7 @@ export default function PrototypeStatus() {
                 </ul>
               </div>
             )}
-            {filtersOpen && (
+            {workspace === "map" && filtersOpen && (
               <div role="group" aria-label="Map signals" className="w-[380px] max-w-[calc(100vw-2rem)] overflow-hidden rounded-2xl border border-bone bg-background/95 shadow-xl backdrop-blur animate-in fade-in slide-in-from-top-2 duration-300">
                 <div className="flex items-start justify-between gap-3 border-b border-bone px-4 py-3.5">
                   <div>
@@ -597,7 +724,7 @@ export default function PrototypeStatus() {
           </div>
         </div>
 
-        {place && placeCounts && (
+        {workspace === "map" && place && placeCounts && (
           <div role="region" aria-label={`${place.name} Unit signals`} className="absolute right-4 top-20 z-[500] flex max-h-[calc(100%-7rem)] w-[360px] flex-col rounded-2xl border border-bone bg-background shadow-xl animate-in fade-in slide-in-from-right-2">
             <div className="flex items-start justify-between gap-2 p-4 pb-0">
               <div>

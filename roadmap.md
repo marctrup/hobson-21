@@ -1,6 +1,9 @@
 # Roadmap
 
 ## Prototype Status — a dynamic portfolio map
+- [x] Add a top-right Papers / Map switch and a Papers Review area based on the supplied reference.
+- [x] Align Review filters and counts with the map for No papers, Tenancy ending, No new occupancy and Compliance warning; keep Available to let map-only.
+- [x] Verify switching, filtering and expandable place rows in focused tests and the live preview: 19 checks pass, all four counts and availability exclusion confirmed, no page errors, build clean. Not published.
 - [x] Change the No papers filter description to “No occupancy papers have been provided”.
 - [x] Redesign the map filter as one calm, scannable list with concise explanations, aligned counts and a clear selected state; all 17 focused checks pass, selection verified live with no page errors. Not published.
 - [x] Distinguish missing papers, confirmed tenancy endings, no new occupancy and availability to let without conflating legal ending, physical departure and marketing availability.
