@@ -33,15 +33,16 @@ describe("Prototype Status: dynamic portfolio signals", () => {
     expect(within(menu).queryByRole("button", { name: /situation|tenancy|available/i })).toBeNull();
   });
 
-  it("shows all four independent signals with counts", () => {
+  it("shows all five independent signals with counts", () => {
     render(<PrototypeStatus />);
     fireEvent.click(screen.getByRole("button", { name: "Map filters" }));
     const panel = screen.getByRole("group", { name: "Map signals" });
-    expect(within(panel).getByRole("button", { name: /All signals\s*20/ })).toBeInTheDocument();
+    expect(within(panel).getByRole("button", { name: /All signals\s*24/ })).toBeInTheDocument();
     expect(within(panel).getByRole("button", { name: /^No papers\s*10/ })).toBeInTheDocument();
     expect(within(panel).getByRole("button", { name: /^Tenancy ending\s*2/ })).toBeInTheDocument();
     expect(within(panel).getByRole("button", { name: /^No new occupancy\s*7/ })).toBeInTheDocument();
     expect(within(panel).getByRole("button", { name: /^Available to let\s*4/ })).toBeInTheDocument();
+    expect(within(panel).getByRole("button", { name: /^Compliance warning\s*6/ })).toBeInTheDocument();
   });
 
   it("answers which Units are available without calling them empty", () => {
@@ -49,6 +50,23 @@ describe("Prototype Status: dynamic portfolio signals", () => {
     ask("Which Units are available to let?");
     expect(screen.getByText(/4 Units are available to let/)).toBeInTheDocument();
     expect(screen.getByText(/does not mean the Unit is necessarily empty/)).toBeInTheDocument();
+  });
+
+  it("separates current compliance attention from forthcoming expiry", () => {
+    render(<PrototypeStatus />);
+    ask("Which Units have compliance warnings?");
+    expect(screen.getByText(/6 Units carry compliance warnings/)).toBeInTheDocument();
+    expect(screen.getByText(/4 documents need attention now/)).toBeInTheDocument();
+    expect(screen.getByText(/2 are expiring soon/)).toBeInTheDocument();
+    expect(screen.getByText(/Forthcoming expiry is advance notice/)).toBeInTheDocument();
+  });
+
+  it("gives document names and dates only when Hobson is asked about a place", () => {
+    render(<PrototypeStatus />);
+    ask("Tell me about compliance at The Exchange");
+    expect(screen.getByText(/Ground Floor — Electrical installation condition report: expired 30 September 2026/)).toBeInTheDocument();
+    expect(screen.getByText(/2nd Floor — Fire alarm test certificate: expires 30 November 2026/)).toBeInTheDocument();
+    expect(screen.getByRole("region", { name: "The Exchange Unit signals" })).toBeInTheDocument();
   });
 
   it("does not record a tenancy ending from contractual term expiry alone", () => {

@@ -4,14 +4,14 @@
 import { useEffect, useRef, useState } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
-import { ArrowRight, CalendarClock, Check, FileQuestion, FileText, FileX, Lightbulb, Map as MapIcon, MapPin, MessageSquare, Plus, RotateCcw, Search, SlidersHorizontal, StickyNote, Tag, Upload, X } from "lucide-react";
+import { ArrowRight, CalendarClock, Check, FileQuestion, FileText, FileX, Lightbulb, Map as MapIcon, MapPin, MessageSquare, Plus, RotateCcw, Search, SlidersHorizontal, StickyNote, Tag, TriangleAlert, Upload, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import owlDefault from "@/assets/prototype/owl-default.png";
 import {
-  CURRENT, CURRENT_PLACE, REASONS, STATUS_PLACES, interpret, listWords, parseStatusInstruction, placeFindings, placeMatchesSignals,
-  reasonCounts, signalCounts, signalUnitsMatching, unitKey,
-  type AvailabilityBook, type EndingBook, type FindingBook, type MapFilter, type StatusPlace, type StatusInstruction,
+  CURRENT, CURRENT_PLACE, STATUS_PLACES, complianceAtPlace, complianceKindCounts, interpret, listWords, parseStatusInstruction, placeMatchesSignals,
+  signalCounts, signalUnitsMatching, unitKey,
+  type AvailabilityBook, type ComplianceBook, type EndingBook, type FindingBook, type MapFilter, type StatusPlace, type StatusInstruction,
 } from "./prototypeStatus";
 
 type Signal = Exclude<MapFilter, "All">;
@@ -20,8 +20,9 @@ const TONE: Record<Signal, { color: string; Icon: typeof FileX; hint: string }> 
   "No new occupancy": { color: "hsl(var(--unoccupied-chain-ended))", Icon: FileX, hint: "Its last occupancy has ended" },
   "Tenancy ending": { color: "hsl(var(--tenancy-ending))", Icon: CalendarClock, hint: "A confirmed legal ending is approaching" },
   "Available to let": { color: "hsl(var(--primary))", Icon: Tag, hint: "Being offered for a new occupier; not necessarily empty" },
+  "Compliance warning": { color: "var(--warning)", Icon: TriangleAlert, hint: "Expired, missing or expiring documents; ask Hobson for detail" },
 };
-const FILTERS: MapFilter[] = ["All", "No papers", "Tenancy ending", "No new occupancy", "Available to let"];
+const FILTERS: MapFilter[] = ["All", "No papers", "Tenancy ending", "No new occupancy", "Available to let", "Compliance warning"];
 
 type PendingAction = StatusInstruction;
 type RecentChange = { placeId: string; unit: string; kind: "ending" | "available" };
@@ -65,8 +66,18 @@ const SAMPLE_AVAILABLE: AvailabilityBook = {
   [unitKey("exchange", "2nd Floor")]: { detail: "Being offered before the confirmed tenancy ending" },
   [unitKey("linear-park", "Ground Floor")]: { detail: "Being offered while the current chain continues" },
 };
+const SAMPLE_COMPLIANCE: ComplianceBook = {
+  [unitKey("colmore", "2nd Floor")]: [{ kind: "Missing document", document: "Fire risk assessment" }],
+  [unitKey("exchange", "Ground Floor")]: [{ kind: "Expired document", document: "Electrical installation condition report", date: "30 September 2026" }],
+  [unitKey("exchange", "2nd Floor")]: [{ kind: "Expiring soon", document: "Fire alarm test certificate", date: "30 November 2026" }],
+  [unitKey("paragon", "Unit 2")]: [{ kind: "Missing document", document: "Asbestos management survey" }],
+  [unitKey("linear-park", "1st Floor")]: [{ kind: "Expiring soon", document: "Fire risk assessment", date: "30 November 2026" }],
+  [unitKey("clyde", "Studio A")]: [{ kind: "Expired document", document: "Electrical installation condition report", date: "1 October 2026" }],
+};
 
 const SCENARIOS = [
+  { label: "Show compliance warnings", text: "Which Units have compliance warnings?" },
+  { label: "Ask about compliance at The Exchange", text: "Tell me about compliance at The Exchange" },
   { label: "Which tenancies are ending?", text: "Which tenancies are ending?" },
   { label: "Show Units available to let", text: "Which Units are available to let?" },
   { label: "Try confirming a tenancy ending", text: "The tenancy on the 1st Floor at The Exchange ends on 30 September 2027." },
@@ -75,9 +86,9 @@ const SCENARIOS = [
 
 const placeById = (id: string | null) => STATUS_PLACES.find((p) => p.id === id) ?? null;
 
-/** Complete ring for data/tenancy facts. Availability stays a separate badge. */
-function ringFor(places: StatusPlace[], book: FindingBook, endings: EndingBook, availability: AvailabilityBook, filter: MapFilter) {
-  const counts = signalCounts(book, endings, availability, places);
+/** Complete ring for data/tenancy facts. Availability and compliance stay separate. */
+function ringFor(places: StatusPlace[], book: FindingBook, endings: EndingBook, availability: AvailabilityBook, compliance: ComplianceBook, filter: MapFilter) {
+  const counts = signalCounts(book, endings, availability, places, compliance);
   const labels = (["No papers", "No new occupancy", "Tenancy ending"] as const).filter((l) => counts[l] && (filter === "All" || filter === l));
   if (!labels.length) return null;
   const step = 360 / labels.length;
@@ -87,17 +98,23 @@ function ringFor(places: StatusPlace[], book: FindingBook, endings: EndingBook, 
 
 const esc = (t: string) => t.replace(/&/g, "&amp;").replace(/</g, "&lt;");
 
-function summaryLine(places: StatusPlace[], book: FindingBook, endings: EndingBook, availability: AvailabilityBook) {
-  const c = signalCounts(book, endings, availability, places);
-  const bits = (["No papers", "Tenancy ending", "No new occupancy", "Available to let"] as Signal[]).filter((l) => c[l]).map((l) =>
+function summaryLine(places: StatusPlace[], book: FindingBook, endings: EndingBook, availability: AvailabilityBook, compliance: ComplianceBook) {
+  const c = signalCounts(book, endings, availability, places, compliance);
+  const bits = (["No papers", "Tenancy ending", "No new occupancy", "Available to let", "Compliance warning"] as Signal[]).filter((l) => c[l]).map((l) =>
     `<span class="inline-flex items-center gap-1"><span class="h-2 w-2 rounded-full" style="background:${TONE[l].color}"></span>${c[l]} ${l.toLowerCase()}</span>`);
   return bits.length ? `<div class="mt-1.5 flex flex-wrap gap-x-2.5 gap-y-1 text-[11px]">${bits.join("")}</div>` : `<div class="mt-1 text-[11px] text-muted-foreground">No map signals</div>`;
 }
 
+/** One quiet aggregate warning; document-level detail belongs in conversation. */
+function complianceBadge(count: number) {
+  if (!count) return "";
+  return `<span class="absolute right-full top-1/2 mr-2 flex -translate-y-1/2 items-center gap-1 whitespace-nowrap rounded-full border bg-background px-1.5 py-1 text-[10px] font-bold shadow-md" style="color:${TONE["Compliance warning"].color};border-color:${TONE["Compliance warning"].color}" title="Compliance warnings — ask Hobson for document details"><span class="grid h-4 w-4 place-items-center rounded-full text-[11px]" style="background:${TONE["Compliance warning"].color};color:hsl(var(--background))">!</span>${count}</span>`;
+}
+
 const CLUSTER_PX = 70;
 
-function StatusMap({ book, endings, availability, filter, selectedId, recentChange, onPick }: {
-  book: FindingBook; endings: EndingBook; availability: AvailabilityBook; filter: MapFilter; selectedId: string | null;
+function StatusMap({ book, endings, availability, compliance, filter, selectedId, recentChange, onPick }: {
+  book: FindingBook; endings: EndingBook; availability: AvailabilityBook; compliance: ComplianceBook; filter: MapFilter; selectedId: string | null;
   recentChange: RecentChange | null; onPick: (id: string) => void;
 }) {
   const box = useRef<HTMLDivElement>(null);
@@ -142,13 +159,14 @@ function StatusMap({ book, endings, availability, filter, selectedId, recentChan
     groups.forEach(({ places }) => {
       if (places.length > 1) {
         const total = places.reduce((n, p) => n + p.units.length, 0);
-        const matching = signalUnitsMatching(book, endings, availability, places, filter);
-        const available = signalUnitsMatching(book, endings, availability, places, "Available to let");
-        const ending = signalUnitsMatching(book, endings, availability, places, "Tenancy ending");
-        const bg = ringFor(places, book, endings, availability, filter);
+        const matching = signalUnitsMatching(book, endings, availability, places, filter, compliance);
+        const available = signalUnitsMatching(book, endings, availability, places, "Available to let", compliance);
+        const ending = signalUnitsMatching(book, endings, availability, places, "Tenancy ending", compliance);
+        const warnings = signalUnitsMatching(book, endings, availability, places, "Compliance warning", compliance);
+        const bg = ringFor(places, book, endings, availability, compliance, filter);
         const towns = [...new Set(places.map((p) => p.town))];
         const title = towns.length === 1 ? towns[0] : `${towns.length} towns`;
-        const html = `<span class="relative block cursor-pointer transition-opacity duration-500 ${bg || available ? "" : "opacity-50"}">
+        const html = `<span class="relative block cursor-pointer transition-opacity duration-500 ${bg || available || warnings ? "" : "opacity-50"}">
           <span style="background:${bg ?? "hsl(var(--border))"}" class="grid h-[58px] w-[58px] place-items-center rounded-full shadow-lg">
             <span class="grid h-[44px] w-[44px] place-items-center rounded-full bg-background leading-none">
               <span class="text-base font-semibold text-foreground">${matching}</span>
@@ -157,8 +175,9 @@ function StatusMap({ book, endings, availability, filter, selectedId, recentChan
           </span>
           ${ending ? `<span class="absolute bottom-full left-1/2 mb-1 -translate-x-1/2 whitespace-nowrap rounded-full border-2 border-background px-2 py-0.5 text-[9px] font-bold tracking-wide text-primary-foreground shadow-md" style="background:${TONE["Tenancy ending"].color}">ENDING · ${ending}</span>` : ""}
           ${available ? `<span class="absolute left-1/2 top-full mt-1 -translate-x-1/2 whitespace-nowrap rounded-full border-2 border-background bg-primary px-2 py-0.5 text-[9px] font-bold tracking-wide text-primary-foreground shadow-md">TO LET · ${available}</span>` : ""}
+          ${complianceBadge(warnings)}
         </span>`;
-        const tip = `<div class="min-w-[200px]"><div class="text-xs font-semibold">${esc(title)}</div><div class="text-[11px] text-muted-foreground">${total} Units in ${places.length} places</div>${summaryLine(places, book, endings, availability)}<div class="mt-2 text-[11px] font-medium text-primary">Click to zoom in</div></div>`;
+        const tip = `<div class="min-w-[200px]"><div class="text-xs font-semibold">${esc(title)}</div><div class="text-[11px] text-muted-foreground">${total} Units in ${places.length} places</div>${summaryLine(places, book, endings, availability, compliance)}<div class="mt-2 text-[11px] font-medium text-primary">Click to zoom in</div></div>`;
         L.marker(m.unproject(places.reduce((acc, p) => acc.add(m.project(p.coords, zoom)), L.point(0, 0)).divideBy(places.length), zoom), {
           icon: L.divIcon({ className: "", html, iconSize: [64, 64], iconAnchor: [32, 32] }), keyboard: true, title: `${title}: ${matching} Units with map signals`,
         })
@@ -169,16 +188,17 @@ function StatusMap({ book, endings, availability, filter, selectedId, recentChan
       }
 
       const p = places[0];
-      const bg = ringFor([p], book, endings, availability, filter);
-      const recorded = signalUnitsMatching(book, endings, availability, [p], filter);
-      const available = signalUnitsMatching(book, endings, availability, [p], "Available to let");
-      const ending = signalUnitsMatching(book, endings, availability, [p], "Tenancy ending");
-      const dim = filter !== "All" && !placeMatchesSignals(book, endings, availability, p, filter);
+      const bg = ringFor([p], book, endings, availability, compliance, filter);
+      const recorded = signalUnitsMatching(book, endings, availability, [p], filter, compliance);
+      const available = signalUnitsMatching(book, endings, availability, [p], "Available to let", compliance);
+      const ending = signalUnitsMatching(book, endings, availability, [p], "Tenancy ending", compliance);
+      const warnings = signalUnitsMatching(book, endings, availability, [p], "Compliance warning", compliance);
+      const dim = filter !== "All" && !placeMatchesSignals(book, endings, availability, p, filter, compliance);
       const selected = p.id === selectedId;
       const here = p.id === CURRENT.placeId;
       const recent = recentChange?.placeId === p.id;
       const size = bg ? 48 : 34;
-      const displayCount = filter === "All" && !bg && !available ? p.units.length : recorded;
+      const displayCount = filter === "All" && !bg && !available && !warnings ? p.units.length : recorded;
       const core = bg
         ? `<span style="background:${bg}" class="relative grid h-12 w-12 place-items-center rounded-full shadow-lg"><span class="grid h-[34px] w-[34px] place-items-center rounded-full bg-background text-sm font-semibold text-foreground">${displayCount}</span></span>`
         : `<span class="grid h-[34px] w-[34px] place-items-center rounded-full border-2 ${available ? "border-primary text-primary" : here ? "border-primary text-primary" : "border-background text-muted-foreground"} bg-background text-xs font-semibold shadow-md">${displayCount}</span>`;
@@ -188,12 +208,12 @@ function StatusMap({ book, endings, availability, filter, selectedId, recentChan
         : "";
       const endingBadge = ending ? `<span class="absolute bottom-full left-1/2 mb-1 -translate-x-1/2 whitespace-nowrap rounded-full border-2 border-background px-2 py-0.5 text-[9px] font-bold tracking-wide text-primary-foreground shadow-md" style="background:${TONE["Tenancy ending"].color}">ENDING${ending > 1 ? ` · ${ending}` : ""}</span>` : "";
       const badge = available ? `<span class="absolute left-1/2 top-full mt-1 -translate-x-1/2 whitespace-nowrap rounded-full border-2 border-background bg-primary px-2 py-0.5 text-[9px] font-bold tracking-wide text-primary-foreground shadow-md">TO LET${available > 1 ? ` · ${available}` : ""}</span>` : "";
-      const html = `<span class="relative block cursor-pointer transition-all duration-500 ${dim ? "opacity-25" : ""} ${selected ? "scale-110" : ""} ${recent ? "status-just-changed" : ""}">${bloom}${core}${endingBadge}${badge}${label}</span>`;
+      const html = `<span class="relative block cursor-pointer transition-all duration-500 ${dim ? "opacity-25" : ""} ${selected ? "scale-110" : ""} ${recent ? "status-just-changed" : ""}">${bloom}${core}${endingBadge}${badge}${complianceBadge(warnings)}${label}</span>`;
       L.marker(p.coords, { icon: L.divIcon({ className: "", html, iconSize: [size, size], iconAnchor: [size / 2, size / 2] }), keyboard: true, title: `${p.name}, ${p.town}`, zIndexOffset: selected ? 1000 : 0 })
         .on("click", () => pick.current(p.id))
         .addTo(g);
     });
-  }, [book, endings, availability, filter, selectedId, recentChange, zoom]);
+  }, [book, endings, availability, compliance, filter, selectedId, recentChange, zoom]);
 
   useEffect(() => {
     const m = map.current;
@@ -202,9 +222,9 @@ function StatusMap({ book, endings, availability, filter, selectedId, recentChan
     if (sz.x <= 0 || sz.y <= 0) return; // hidden map: nothing to fly
     const p = placeById(selectedId);
     if (p) { m.flyTo(p.coords, p.town === "London" ? 14 : 12, { duration: 1.1 }); return; }
-    const pts = filter === "All" ? STATUS_PLACES : STATUS_PLACES.filter((x) => placeMatchesSignals(book, endings, availability, x, filter));
+    const pts = filter === "All" ? STATUS_PLACES : STATUS_PLACES.filter((x) => placeMatchesSignals(book, endings, availability, x, filter, compliance));
     if (pts.length) m.flyToBounds(pts.map((x) => x.coords), { padding: [Math.min(90, sz.x / 4), Math.min(90, sz.y / 4)], maxZoom: 9, duration: 1.1 });
-  }, [selectedId, filter, book, endings, availability]);
+  }, [selectedId, filter, book, endings, availability, compliance]);
 
   return <div ref={box} aria-label="Map of your places" className="status-map absolute inset-0 z-0" />;
 }
@@ -269,14 +289,14 @@ export default function PrototypeStatus() {
   };
 
   const matchingRows = (f: MapFilter) => STATUS_PLACES.flatMap((p) => p.units.filter((u) =>
-    signalUnitsMatching(book, endings, availability, [{ ...p, units: [u] }], f) === 1).map((u) => `${u} at ${p.name}`));
+    signalUnitsMatching(book, endings, availability, [{ ...p, units: [u] }], f, SAMPLE_COMPLIANCE) === 1).map((u) => `${u} at ${p.name}`));
 
   const showFilter = (f: MapFilter) => {
     setFilter(f); setPlaceId(null); setPendingAction(null); setEndingCandidate(null);
     const rows = matchingRows(f);
-    const c = signalCounts(book, endings, availability);
+    const c = signalCounts(book, endings, availability, STATUS_PLACES, SAMPLE_COMPLIANCE);
     if (f === "All") {
-      say("hobson", `${c.All} Units carry a map signal: ${c["No papers"]} with no papers, ${c["Tenancy ending"]} with a confirmed tenancy ending, ${c["No new occupancy"]} with no new occupancy, and ${c["Available to let"]} available to let.\n\nA Unit can carry more than one signal. Available to let is a letting instruction, not a statement that nobody occupies it.`, { choices: ["Which Units have no papers?", "Which tenancies are ending?", "Which Units are available to let?"] });
+      say("hobson", `${c.All} Units carry a map signal: ${c["No papers"]} with no papers, ${c["Tenancy ending"]} with a confirmed tenancy ending, ${c["No new occupancy"]} with no new occupancy, ${c["Available to let"]} available to let, and ${c["Compliance warning"]} with compliance warnings.\n\nA Unit can carry more than one signal. Ask me about compliance at a particular place for document details.`, { choices: ["Which Units have compliance warnings?", "Which tenancies are ending?", "Which Units are available to let?"] });
       return;
     }
     if (f === "No papers") {
@@ -291,6 +311,12 @@ export default function PrototypeStatus() {
       say("hobson", `${rows.length} Units have a confirmed tenancy ending: ${listWords(rows)}.\n\nI show these only when the ending itself is confirmed — never merely because the contractual term end date is approaching.`, { choices: ["Show all signals", "Which Units are available to let?"] });
       return;
     }
+    if (f === "Compliance warning") {
+      const kinds = complianceKindCounts(SAMPLE_COMPLIANCE);
+      const now = kinds["Expired document"] + kinds["Missing document"];
+      say("hobson", `${rows.length} Units carry compliance warnings: ${listWords(rows)}.\n\n${now} documents need attention now because they are expired or missing; ${kinds["Expiring soon"]} are expiring soon. Forthcoming expiry is advance notice, not a statement that compliance has already ended.\n\nAsk me about compliance at a place and I'll give you the document names and dates.`, { choices: ["Tell me about compliance at The Exchange", "Show all signals"] });
+      return;
+    }
     say("hobson", `${rows.length} Units are available to let: ${listWords(rows)}.\n\nThe purple TO LET badge can sit beside a current occupancy or a confirmed ending; it does not mean the Unit is necessarily empty.`, { choices: ["Show all signals", "Which tenancies are ending?"] });
   };
 
@@ -303,6 +329,7 @@ export default function PrototypeStatus() {
         book[key] ? (book[key].reason === "No papers" ? "no papers" : book[key].detail) : null,
         endings[key] ? `tenancy ending ${endings[key].date}` : null,
         availability[key] ? "available to let" : null,
+        SAMPLE_COMPLIANCE[key]?.length ? "compliance warning — ask me for document details" : null,
       ].filter(Boolean);
       return signals.length ? [`• ${u} — ${signals.join("; ")}`] : [];
     });
@@ -310,6 +337,18 @@ export default function PrototypeStatus() {
       ? `${p.name}, ${p.town}:\n${rows.join("\n")}`
       : `${p.name}, ${p.town} — no map signals. Its Units have current chains, with no confirmed endings or letting instructions.`,
       { choices: ["Show all signals"] });
+  };
+
+  const describeCompliance = (id: string) => {
+    const p = placeById(id)!;
+    const rows = complianceAtPlace(SAMPLE_COMPLIANCE, p);
+    setPlaceId(id); setFilter("Compliance warning"); setPendingAction(null); setEndingCandidate(null);
+    if (!rows.length) {
+      say("hobson", `${p.name}, ${p.town} — I hold no expired, missing or forthcoming-expiry document warnings in this demonstration.`, { choices: ["Show all signals"] });
+      return;
+    }
+    const detail = rows.map((issue) => `• ${issue.unit} — ${issue.document}: ${issue.kind === "Missing document" ? "required but missing" : issue.kind === "Expired document" ? `expired ${issue.date}` : `expires ${issue.date}`}`);
+    say("hobson", `${p.name}, ${p.town}:\n${detail.join("\n")}\n\nExpired and missing required documents need attention now. Expiring soon is advance notice so you can act before then.`, { choices: ["Which Units have compliance warnings?", "Show all signals"] });
   };
 
   const confirmAction = () => {
@@ -369,10 +408,14 @@ export default function PrototypeStatus() {
       say("hobson", `Please confirm: mark the ${instruction.unit} at ${p.name} as Available to let. This adds a letting instruction only; it will not end the tenancy or record that anyone has left.`, { action: instruction });
       return;
     }
+    if (/complian|fire risk|electrical installation/i.test(text)) {
+      const p = STATUS_PLACES.find((candidate) => text.toLowerCase().includes(candidate.name.toLowerCase()) || text.toLowerCase().includes(candidate.town.toLowerCase()));
+      if (p) return describeCompliance(p.id);
+    }
     const intent = interpret(text);
     if (intent.kind === "filter") return showFilter(intent.filter);
     if (intent.kind === "place") return describePlace(intent.placeId);
-    say("hobson", "Ask me about missing papers, confirmed tenancy endings, no new occupancy or Units available to let. You can also try one of the two illustrative recording instructions under the lightbulb.");
+    say("hobson", "Ask me about missing papers, confirmed tenancy endings, no new occupancy, Units available to let or compliance warnings. For document names and dates, ask about compliance at a particular place.");
   };
 
   const restart = () => {
@@ -384,7 +427,7 @@ export default function PrototypeStatus() {
     const key = unitKey(place.id, u);
     return { unit: u, finding: book[key] ?? null, ending: endings[key] ?? null, available: availability[key] ?? null };
   }) : [];
-  const placeCounts = place ? signalCounts(book, endings, availability, [place]) : null;
+  const placeCounts = place ? signalCounts(book, endings, availability, [place], SAMPLE_COMPLIANCE) : null;
 
   return (
     <div className="relative flex h-screen w-full overflow-hidden bg-background text-ink">
@@ -460,7 +503,7 @@ export default function PrototypeStatus() {
       </section>
 
       <section aria-label="Map" className="relative min-w-0 flex-1 max-md:hidden">
-        <StatusMap book={book} endings={endings} availability={availability} filter={filter} selectedId={placeId} recentChange={recentChange} onPick={(id) => { setFilter("All"); setPlaceId(id); }} />
+        <StatusMap book={book} endings={endings} availability={availability} compliance={SAMPLE_COMPLIANCE} filter={filter} selectedId={placeId} recentChange={recentChange} onPick={(id) => { setFilter("All"); setPlaceId(id); }} />
 
         <div className="pointer-events-none absolute inset-x-4 top-4 z-[500] flex items-start justify-end gap-2">
           <div className="pointer-events-auto flex flex-col items-end gap-2">
@@ -506,7 +549,7 @@ export default function PrototypeStatus() {
                 <div className="flex flex-wrap items-center justify-end gap-1.5">
                   {FILTERS.map((f) => {
                     const on = filter === f;
-                    const counts = signalCounts(book, endings, availability);
+                    const counts = signalCounts(book, endings, availability, STATUS_PLACES, SAMPLE_COMPLIANCE);
                     const n = counts[f];
                     const tone = f === "All" ? null : TONE[f];
                     return (
@@ -543,6 +586,7 @@ export default function PrototypeStatus() {
               <span><strong className="font-semibold text-foreground">{placeCounts["No new occupancy"]}</strong> no new occupancy</span>
               <span><strong className="font-semibold text-primary">{placeCounts["Available to let"]}</strong> to let</span>
               <span><strong className="font-semibold text-foreground">{placeCounts["No papers"]}</strong> no papers</span>
+              {placeCounts["Compliance warning"] > 0 && <span><strong className="font-semibold" style={{ color: TONE["Compliance warning"].color }}>{placeCounts["Compliance warning"]}</strong> compliance</span>}
             </div>
             <ul className="mt-1 min-h-0 flex-1 overflow-y-auto p-2">
               {cardRows.map(({ unit, finding, ending, available }) => {
@@ -565,7 +609,7 @@ export default function PrototypeStatus() {
                 );
               })}
             </ul>
-            <p className="border-t border-bone px-4 py-2.5 text-[11px] text-ink-muted">Unoccupied findings come from papers. Endings and letting instructions are confirmed in chat.</p>
+            <p className="border-t border-bone px-4 py-2.5 text-[11px] text-ink-muted">Unoccupied findings come from papers. Endings and letting instructions are confirmed in chat.{placeCounts["Compliance warning"] > 0 ? " Ask Hobson for compliance document details." : ""}</p>
           </div>
         )}
       </section>

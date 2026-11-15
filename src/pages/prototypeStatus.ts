@@ -1,9 +1,9 @@
 // Prototype Status: local portfolio signals. Unoccupied findings are derived from
-// papers; confirmed tenancy endings and availability to let are separate facts.
+// papers; tenancy, availability and compliance warnings remain separate facts.
 
 export const REASONS = ["No papers", "No new occupancy"] as const;
 export type UnoccupiedReason = (typeof REASONS)[number];
-export type MapFilter = UnoccupiedReason | "Tenancy ending" | "Available to let" | "All";
+export type MapFilter = UnoccupiedReason | "Tenancy ending" | "Available to let" | "Compliance warning" | "All";
 
 export type StatusPlace = { id: string; name: string; town: string; coords: [number, number]; units: string[] };
 /** Hobson's reading of why a Unit is Unoccupied. `detail` names the ended chain. */
@@ -16,6 +16,13 @@ export type EndingBook = Record<string, TenancyEnding>;
 /** A marketing instruction, independent of occupation and tenancy state. */
 export type Availability = { detail: string };
 export type AvailabilityBook = Record<string, Availability>;
+/** Document-level detail stays in chat; the map aggregates these to one warning. */
+export type ComplianceIssue = {
+  kind: "Expired document" | "Missing document" | "Expiring soon";
+  document: string;
+  date?: string;
+};
+export type ComplianceBook = Record<string, ComplianceIssue[]>;
 
 function floors(n: number) {
   return Array.from({ length: n }, (_, i) => (i === 0 ? "Ground Floor" : `${i}${["st", "nd", "rd"][i - 1] ?? "th"} Floor`));
@@ -66,11 +73,13 @@ export function unitMatchesFilter(
   endings: EndingBook,
   availability: AvailabilityBook,
   filter: MapFilter,
+  compliance: ComplianceBook = {},
 ) {
   const key = unitKey(placeId, unit);
-  if (filter === "All") return Boolean(book[key] || endings[key] || availability[key]);
+  if (filter === "All") return Boolean(book[key] || endings[key] || availability[key] || compliance[key]?.length);
   if (filter === "Tenancy ending") return Boolean(endings[key]);
   if (filter === "Available to let") return Boolean(availability[key]);
+  if (filter === "Compliance warning") return Boolean(compliance[key]?.length);
   return book[key]?.reason === filter;
 }
 
@@ -81,23 +90,35 @@ export function signalUnitsMatching(
   availability: AvailabilityBook,
   places: StatusPlace[] = STATUS_PLACES,
   filter: MapFilter = "All",
+  compliance: ComplianceBook = {},
 ) {
   return places.reduce((total, place) => total + place.units.filter((unit) =>
-    unitMatchesFilter(place.id, unit, book, endings, availability, filter)).length, 0);
+    unitMatchesFilter(place.id, unit, book, endings, availability, filter, compliance)).length, 0);
 }
 
-export function signalCounts(book: FindingBook, endings: EndingBook, availability: AvailabilityBook, places: StatusPlace[] = STATUS_PLACES): Record<MapFilter, number> {
+export function signalCounts(book: FindingBook, endings: EndingBook, availability: AvailabilityBook, places: StatusPlace[] = STATUS_PLACES, compliance: ComplianceBook = {}): Record<MapFilter, number> {
   return {
-    All: signalUnitsMatching(book, endings, availability, places, "All"),
-    "No papers": signalUnitsMatching(book, endings, availability, places, "No papers"),
-    "No new occupancy": signalUnitsMatching(book, endings, availability, places, "No new occupancy"),
-    "Tenancy ending": signalUnitsMatching(book, endings, availability, places, "Tenancy ending"),
-    "Available to let": signalUnitsMatching(book, endings, availability, places, "Available to let"),
+    All: signalUnitsMatching(book, endings, availability, places, "All", compliance),
+    "No papers": signalUnitsMatching(book, endings, availability, places, "No papers", compliance),
+    "No new occupancy": signalUnitsMatching(book, endings, availability, places, "No new occupancy", compliance),
+    "Tenancy ending": signalUnitsMatching(book, endings, availability, places, "Tenancy ending", compliance),
+    "Available to let": signalUnitsMatching(book, endings, availability, places, "Available to let", compliance),
+    "Compliance warning": signalUnitsMatching(book, endings, availability, places, "Compliance warning", compliance),
   };
 }
 
-export const placeMatchesSignals = (book: FindingBook, endings: EndingBook, availability: AvailabilityBook, place: StatusPlace, filter: MapFilter) =>
-  signalUnitsMatching(book, endings, availability, [place], filter) > 0;
+export const placeMatchesSignals = (book: FindingBook, endings: EndingBook, availability: AvailabilityBook, place: StatusPlace, filter: MapFilter, compliance: ComplianceBook = {}) =>
+  signalUnitsMatching(book, endings, availability, [place], filter, compliance) > 0;
+
+export function complianceAtPlace(book: ComplianceBook, place: StatusPlace) {
+  return place.units.flatMap((unit) => (book[unitKey(place.id, unit)] ?? []).map((issue) => ({ unit, ...issue })));
+}
+
+export function complianceKindCounts(book: ComplianceBook, places: StatusPlace[] = STATUS_PLACES): Record<ComplianceIssue["kind"], number> {
+  const counts: Record<ComplianceIssue["kind"], number> = { "Expired document": 0, "Missing document": 0, "Expiring soon": 0 };
+  places.forEach((place) => complianceAtPlace(book, place).forEach((issue) => { counts[issue.kind] += 1; }));
+  return counts;
+}
 
 export const listWords = (ls: string[]) => ls.length < 2 ? ls.join("") : `${ls.slice(0, -1).join(", ")} and ${ls[ls.length - 1]}`;
 
@@ -108,6 +129,7 @@ export type Intent =
 
 export function interpret(raw: string): Intent {
   const t = raw.toLowerCase();
+  if (/complian|fire risk|electrical installation/.test(t)) return { kind: "filter", filter: "Compliance warning" };
   if (/available to let|available for letting|to let/.test(t)) return { kind: "filter", filter: "Available to let" };
   if (/tenanc(?:y|ies).*ending|ending soon|confirmed endings?/.test(t)) return { kind: "filter", filter: "Tenancy ending" };
   if (/no papers|without papers|missing papers|nothing assigned/.test(t)) return { kind: "filter", filter: "No papers" };
