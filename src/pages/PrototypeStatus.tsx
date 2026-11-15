@@ -7,6 +7,7 @@ import "leaflet/dist/leaflet.css";
 import { ArrowRight, Building2, CalendarClock, Check, ChevronDown, ChevronRight, FileQuestion, FileText, FileX, Lightbulb, Map as MapIcon, MapPin, MessageSquare, Plus, RotateCcw, Search, SlidersHorizontal, StickyNote, Tag, TriangleAlert, Upload, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import * as Tooltip from "@radix-ui/react-tooltip";
 import owlDefault from "@/assets/prototype/owl-default.png";
 import {
   CURRENT, CURRENT_PLACE, STATUS_PLACES, complianceAtPlace, complianceKindCounts, interpret, listWords, parseStatusInstruction, placeMatchesSignals,
@@ -292,22 +293,36 @@ function PapersReview({ book, endings, compliance, filter, onFilter }: {
         </button>
       </div>
 
-      <div role="group" aria-label="Paper review filters" className="mt-4 flex flex-wrap gap-2 pb-2">
-        {PAPER_FILTERS.map((f) => {
-          const on = filter === f;
-          const n = counts[f];
-          const Icon = f === "All" ? FileText : TONE[f].Icon;
-          return (
-            <button key={f} type="button" aria-label={`${f === "All" ? "All review" : signalLabel(f)} ${n}`} aria-pressed={on}
-              onClick={() => { onFilter(f); setExpanded(null); }}
-              className={`flex shrink-0 items-center gap-2 rounded-full border px-3.5 py-2 text-sm transition-colors ${on ? "border-primary/20 bg-secondary font-medium text-primary" : "border-bone bg-background text-foreground hover:bg-secondary/60"}`}>
-              <Icon className="h-4 w-4" style={f === "All" ? undefined : { color: TONE[f].color }} aria-hidden />
-              <span>{f === "All" ? "All review" : signalLabel(f)}</span>
-              <span className={`rounded-md px-1.5 py-0.5 text-xs font-semibold tabular-nums ${on ? "bg-background" : "bg-secondary"}`}>{n}</span>
-            </button>
-          );
-        })}
-      </div>
+      <Tooltip.Provider delayDuration={250} skipDelayDuration={100}>
+        <div role="group" aria-label="Paper review filters" className="mt-4 flex flex-wrap gap-2 pb-2">
+          {PAPER_FILTERS.map((f) => {
+            const on = filter === f;
+            const n = counts[f];
+            const Icon = f === "All" ? FileText : TONE[f].Icon;
+            const hint = f === "All" ? "Every Unit with a paper, occupancy or compliance signal to review" : TONE[f].hint;
+            return (
+              <Tooltip.Root key={f}>
+                <Tooltip.Trigger asChild>
+                  <button type="button" aria-label={`${f === "All" ? "All review" : signalLabel(f)} ${n}`} aria-pressed={on}
+                    onClick={() => { onFilter(f); setExpanded(null); }}
+                    className={`flex shrink-0 items-center gap-2 rounded-full border px-3.5 py-2 text-sm transition-colors ${on ? "border-primary/20 bg-secondary font-medium text-primary" : "border-bone bg-background text-foreground hover:bg-secondary/60"}`}>
+                    <Icon className="h-4 w-4" style={f === "All" ? undefined : { color: TONE[f].color }} aria-hidden />
+                    <span>{f === "All" ? "All review" : signalLabel(f)}</span>
+                    <span className={`rounded-md px-1.5 py-0.5 text-xs font-semibold tabular-nums ${on ? "bg-background" : "bg-secondary"}`}>{n}</span>
+                  </button>
+                </Tooltip.Trigger>
+                <Tooltip.Portal>
+                  <Tooltip.Content side="bottom" align="start" sideOffset={8} collisionPadding={12}
+                    className="z-[1000] max-w-[280px] rounded-lg border border-bone bg-background px-3 py-2 text-xs leading-5 text-foreground shadow-xl animate-in fade-in zoom-in-95">
+                    {hint}
+                    <Tooltip.Arrow className="fill-background" />
+                  </Tooltip.Content>
+                </Tooltip.Portal>
+              </Tooltip.Root>
+            );
+          })}
+        </div>
+      </Tooltip.Provider>
 
       <div className="mt-4 space-y-2" aria-live="polite">
         {rows.map(({ place, units }) => {
