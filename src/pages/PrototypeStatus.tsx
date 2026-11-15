@@ -16,7 +16,7 @@ import {
 
 type Signal = Exclude<MapFilter, "All">;
 const TONE: Record<Signal, { color: string; Icon: typeof FileX; hint: string }> = {
-  "No papers": { color: "hsl(var(--unoccupied-no-papers))", Icon: FileQuestion, hint: "No papers are assigned to the Unit" },
+  "No papers": { color: "hsl(var(--unoccupied-no-papers))", Icon: FileQuestion, hint: "No occupancy papers have been provided" },
   "No new occupancy": { color: "hsl(var(--unoccupied-chain-ended))", Icon: FileX, hint: "Its last occupancy has ended" },
   "Tenancy ending": { color: "hsl(var(--tenancy-ending))", Icon: CalendarClock, hint: "A confirmed legal ending is approaching" },
   "Available to let": { color: "hsl(var(--primary))", Icon: Tag, hint: "Being offered for a new occupier; not necessarily empty" },
