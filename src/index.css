@@ -136,9 +136,10 @@ All colors MUST be HSL.
     --warning: #8F5A14;
     --warning-bg: #F7EDDC;
     --warning-border: #E6D2AE;
-    /* Prototype Status: why Hobson reads a Unit as Unoccupied. */
-    --unoccupied-no-papers: #C98A1B;
-    --unoccupied-chain-ended: #D9485F;
+    /* Prototype Status: data/tenancy facts; availability uses the primary badge. */
+    --unoccupied-no-papers: 36 76% 45%;
+    --unoccupied-chain-ended: 350 64% 57%;
+    --tenancy-ending: 204 32% 44%;
     --info: var(--ink);
     --info-bg: var(--bone-wash);
     --info-border: var(--bone);
@@ -518,11 +519,12 @@ html { caret-color: var(--ink); }
   .classroom-teacher { top: 56%; }
 }
 
-/* Prototype Status map: quiet basemap so recorded situations carry the colour. */
+/* Prototype Status map: quiet basemap; motion is reserved for a fresh chat change. */
 .status-map .leaflet-tile-pane { filter: grayscale(1) contrast(0.9) brightness(1.06); }
-@keyframes status-bloom { 0% { transform: scale(0.4); opacity: 0.9; } 100% { transform: scale(2.6); opacity: 0; } }
-.status-bloom { animation: status-bloom 1.6s ease-out 2; }
-@keyframes status-breathe { 0%,100% { box-shadow: 0 0 0 0 hsl(var(--primary) / 0.35); } 50% { box-shadow: 0 0 0 10px hsl(var(--primary) / 0); } }
-.status-breathe { animation: status-breathe 1.8s ease-in-out infinite; }
-@media (prefers-reduced-motion: reduce) { .status-bloom, .status-breathe { animation: none; } }
+.status-map .leaflet-marker-icon { overflow: visible; }
+@keyframes status-change-bloom { 0% { transform: scale(.7); opacity: .75; } 100% { transform: scale(2.5); opacity: 0; } }
+.status-change-bloom { border: 2px solid hsl(var(--primary)); animation: status-change-bloom 1.4s ease-out 3; pointer-events: none; }
+@keyframes status-just-changed { 0%,100% { filter: drop-shadow(0 4px 5px hsl(var(--foreground) / .12)); } 50% { filter: drop-shadow(0 0 10px hsl(var(--primary) / .65)); } }
+.status-just-changed { animation: status-just-changed 1.4s ease-in-out 3; }
+@media (prefers-reduced-motion: reduce) { .status-change-bloom, .status-just-changed { animation: none; } }
 .status-tip.leaflet-tooltip { border: 1px solid hsl(var(--border)); border-radius: 0.75rem; padding: 0.6rem 0.75rem; box-shadow: 0 12px 30px -12px hsl(var(--foreground) / 0.25); color: hsl(var(--foreground)); background: hsl(var(--background)); }

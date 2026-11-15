@@ -1,16 +1,21 @@
-// Prototype Status: pure, local simulation of Units Hobson derives as Unoccupied
-// from their papers. Nobody records a situation by hand: a Unit is Unoccupied when
-// no papers are assigned to it, or when its current chain has ended. The map turns
-// that into a statistic to investigate — what should remain are genuinely ended chains.
+// Prototype Status: local portfolio signals. Unoccupied findings are derived from
+// papers; confirmed tenancy endings and availability to let are separate facts.
 
 export const REASONS = ["No papers", "No new occupancy"] as const;
 export type UnoccupiedReason = (typeof REASONS)[number];
+export type MapFilter = UnoccupiedReason | "Tenancy ending" | "Available to let" | "All";
 
 export type StatusPlace = { id: string; name: string; town: string; coords: [number, number]; units: string[] };
 /** Hobson's reading of why a Unit is Unoccupied. `detail` names the ended chain. */
 export type Finding = { reason: UnoccupiedReason; detail?: string };
-/** Keyed `${placeId}::${unit}`; Units absent from the book are occupied by a current chain. */
+/** Keyed `${placeId}::${unit}`; Units absent from the book have a current chain. */
 export type FindingBook = Record<string, Finding>;
+/** A confirmed future legal ending — never inferred from contractual term expiry. */
+export type TenancyEnding = { date: string; detail: string };
+export type EndingBook = Record<string, TenancyEnding>;
+/** A marketing instruction, independent of occupation and tenancy state. */
+export type Availability = { detail: string };
+export type AvailabilityBook = Record<string, Availability>;
 
 function floors(n: number) {
   return Array.from({ length: n }, (_, i) => (i === 0 ? "Ground Floor" : `${i}${["st", "nd", "rd"][i - 1] ?? "th"} Floor`));
@@ -45,10 +50,8 @@ export function placeFindings(book: FindingBook, place: StatusPlace) {
   return place.units.flatMap((u) => { const f = book[unitKey(place.id, u)]; return f ? [{ unit: u, ...f }] : []; });
 }
 
-export type Filter = UnoccupiedReason | "All";
-
-/** Unoccupied Units across places, overall ("All") or for one reason. */
-export function unitsMatching(book: FindingBook, places: StatusPlace[], filter: Filter) {
+/** Unoccupied Units across places, overall ("All") or for one derived reason. */
+export function unitsMatching(book: FindingBook, places: StatusPlace[], filter: UnoccupiedReason | "All") {
   return places.reduce((n, p) => n + placeFindings(book, p).filter((f) => filter === "All" || f.reason === filter).length, 0);
 }
 
@@ -56,17 +59,57 @@ export function reasonCounts(book: FindingBook, places: StatusPlace[] = STATUS_P
   return { "No papers": unitsMatching(book, places, "No papers"), "No new occupancy": unitsMatching(book, places, "No new occupancy") };
 }
 
-export const placeMatches = (book: FindingBook, place: StatusPlace, filter: Filter) => unitsMatching(book, [place], filter) > 0;
+export function unitMatchesFilter(
+  placeId: string,
+  unit: string,
+  book: FindingBook,
+  endings: EndingBook,
+  availability: AvailabilityBook,
+  filter: MapFilter,
+) {
+  const key = unitKey(placeId, unit);
+  if (filter === "All") return Boolean(book[key] || endings[key] || availability[key]);
+  if (filter === "Tenancy ending") return Boolean(endings[key]);
+  if (filter === "Available to let") return Boolean(availability[key]);
+  return book[key]?.reason === filter;
+}
+
+/** Unique Units matching a map lens; All counts each Unit once even with several signals. */
+export function signalUnitsMatching(
+  book: FindingBook,
+  endings: EndingBook,
+  availability: AvailabilityBook,
+  places: StatusPlace[] = STATUS_PLACES,
+  filter: MapFilter = "All",
+) {
+  return places.reduce((total, place) => total + place.units.filter((unit) =>
+    unitMatchesFilter(place.id, unit, book, endings, availability, filter)).length, 0);
+}
+
+export function signalCounts(book: FindingBook, endings: EndingBook, availability: AvailabilityBook, places: StatusPlace[] = STATUS_PLACES): Record<MapFilter, number> {
+  return {
+    All: signalUnitsMatching(book, endings, availability, places, "All"),
+    "No papers": signalUnitsMatching(book, endings, availability, places, "No papers"),
+    "No new occupancy": signalUnitsMatching(book, endings, availability, places, "No new occupancy"),
+    "Tenancy ending": signalUnitsMatching(book, endings, availability, places, "Tenancy ending"),
+    "Available to let": signalUnitsMatching(book, endings, availability, places, "Available to let"),
+  };
+}
+
+export const placeMatchesSignals = (book: FindingBook, endings: EndingBook, availability: AvailabilityBook, place: StatusPlace, filter: MapFilter) =>
+  signalUnitsMatching(book, endings, availability, [place], filter) > 0;
 
 export const listWords = (ls: string[]) => ls.length < 2 ? ls.join("") : `${ls.slice(0, -1).join(", ")} and ${ls[ls.length - 1]}`;
 
 export type Intent =
-  | { kind: "filter"; filter: Filter }
+  | { kind: "filter"; filter: MapFilter }
   | { kind: "place"; placeId: string }
   | { kind: "unknown" };
 
 export function interpret(raw: string): Intent {
   const t = raw.toLowerCase();
+  if (/available to let|available for letting|to let/.test(t)) return { kind: "filter", filter: "Available to let" };
+  if (/tenanc(?:y|ies).*ending|ending soon|confirmed endings?/.test(t)) return { kind: "filter", filter: "Tenancy ending" };
   if (/no papers|without papers|missing papers|nothing assigned/.test(t)) return { kind: "filter", filter: "No papers" };
   if (/new occupancy|ended|expired|chain/.test(t)) return { kind: "filter", filter: "No new occupancy" };
   if (/unoccupied|vacant|empty/.test(t)) return { kind: "filter", filter: "All" };
@@ -74,4 +117,25 @@ export function interpret(raw: string): Intent {
   if (place) return { kind: "place", placeId: place.id };
   if (/\b(everything|all|whole portfolio)\b/.test(t)) return { kind: "filter", filter: "All" };
   return { kind: "unknown" };
+}
+
+export type StatusInstruction =
+  | { kind: "available"; placeId: string; unit: string }
+  | { kind: "ending"; placeId: string; unit: string; date: string };
+
+/** Parse the two deliberately supported illustrative recording instructions. */
+export function parseStatusInstruction(raw: string): StatusInstruction | null {
+  const t = raw.toLowerCase();
+  const place = STATUS_PLACES.find((p) => t.includes(p.name.toLowerCase()));
+  if (!place) return null;
+  const unit = place.units.find((u) => t.includes(u.toLowerCase()));
+  if (!unit) return null;
+  if (/\b(mark|make|record|put)\b/.test(t) && /available to let/.test(t)) {
+    return { kind: "available", placeId: place.id, unit };
+  }
+  if (/tenancy/.test(t) && /\bends?\b/.test(t)) {
+    const date = raw.match(/\b(\d{1,2}\s+(?:January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{4})\b/i)?.[1];
+    if (date) return { kind: "ending", placeId: place.id, unit, date };
+  }
+  return null;
 }

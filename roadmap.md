@@ -1,5 +1,10 @@
 # Roadmap
 
+## Prototype Status — a dynamic portfolio map
+- [x] Distinguish missing papers, confirmed tenancy endings, no new occupancy and availability to let without conflating legal ending, physical departure and marketing availability.
+- [x] Add chat-confirmed illustrative changes that reveal and briefly highlight the affected place, with filters, counts and place-level detail.
+- [x] Verify the status rules, conversation flow and desktop map in the preview: 14 focused checks pass, both chat changes read back in place cards, no page errors. Not published.
+
 ## Site-wide product colour palette
 - [x] Final contrast refinements: muted navigation captions, clearer neutral borders and quieter decorative labels and quotation marks; desktop/mobile checked, 30 smoke tests pass. Unpublished.
 - [x] Refine palette: white dominant, lighter lavender washes, charcoal headlines and neutral shadows; desktop/mobile preview checked and 30 smoke tests pass. Unpublished.

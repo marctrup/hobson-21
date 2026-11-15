@@ -19,30 +19,67 @@ vi.mock("leaflet", () => {
 });
 vi.stubGlobal("ResizeObserver", class { observe() {} disconnect() {} });
 
-describe("Prototype Status: Unoccupied read from papers", () => {
+const ask = (text: string) => {
+  fireEvent.change(screen.getByRole("textbox", { name: "Ask Hobson" }), { target: { value: text } });
+  fireEvent.click(screen.getByRole("button", { name: "Send message" }));
+};
+
+describe("Prototype Status: dynamic portfolio signals", () => {
   it("offers no way to record or update a situation from +", () => {
     render(<PrototypeStatus />);
     fireEvent.click(screen.getByRole("button", { name: "Chat actions" }));
     const menu = screen.getByRole("dialog");
     expect(within(menu).getByRole("button", { name: "Add a Note" })).toBeEnabled();
-    expect(within(menu).queryByRole("button", { name: /situation/i })).toBeNull();
+    expect(within(menu).queryByRole("button", { name: /situation|tenancy|available/i })).toBeNull();
   });
 
-  it("filters show both reasons with counts and no Available", () => {
+  it("shows all four independent signals with counts", () => {
     render(<PrototypeStatus />);
-    fireEvent.click(screen.getByRole("button", { name: "Unoccupied filters" }));
-    const panel = screen.getByRole("group", { name: "Unoccupied" });
-    expect(within(panel).getByRole("button", { name: /All unoccupied\s*17/ })).toBeInTheDocument();
+    fireEvent.click(screen.getByRole("button", { name: "Map filters" }));
+    const panel = screen.getByRole("group", { name: "Map signals" });
+    expect(within(panel).getByRole("button", { name: /All signals\s*20/ })).toBeInTheDocument();
     expect(within(panel).getByRole("button", { name: /^No papers\s*10/ })).toBeInTheDocument();
+    expect(within(panel).getByRole("button", { name: /^Tenancy ending\s*2/ })).toBeInTheDocument();
     expect(within(panel).getByRole("button", { name: /^No new occupancy\s*7/ })).toBeInTheDocument();
-    expect(within(panel).queryByText("Available")).toBeNull();
+    expect(within(panel).getByRole("button", { name: /^Available to let\s*4/ })).toBeInTheDocument();
   });
 
-  it("answers which Units have no papers", () => {
+  it("answers which Units are available without calling them empty", () => {
     render(<PrototypeStatus />);
-    fireEvent.change(screen.getByRole("textbox", { name: "Ask Hobson" }), { target: { value: "Which Units have no papers?" } });
-    fireEvent.click(screen.getByRole("button", { name: "Send message" }));
-    expect(screen.getByText(/10 Units have no papers assigned to them/)).toBeInTheDocument();
+    ask("Which Units are available to let?");
+    expect(screen.getByText(/4 Units are available to let/)).toBeInTheDocument();
+    expect(screen.getByText(/does not mean the Unit is necessarily empty/)).toBeInTheDocument();
+  });
+
+  it("does not record a tenancy ending from contractual term expiry alone", () => {
+    render(<PrototypeStatus />);
+    ask("The tenancy on the 1st Floor at The Exchange ends on 30 September 2027.");
+    fireEvent.click(screen.getByRole("button", { name: "Only the contractual term end date" }));
+    expect(screen.getByText(/term end date alone does not confirm/)).toBeInTheDocument();
+    expect(screen.queryByText(/Done — the 1st Floor at The Exchange/)).toBeNull();
+  });
+
+  it("confirms a tenancy ending in chat and reveals its place card", () => {
+    render(<PrototypeStatus />);
+    ask("The tenancy on the 1st Floor at The Exchange ends on 30 September 2027.");
+    fireEvent.click(screen.getByRole("button", { name: "Confirmed tenancy ending" }));
+    fireEvent.click(screen.getByRole("button", { name: "Confirm tenancy ending" }));
+    expect(screen.getByText(/Done — the 1st Floor at The Exchange now carries a confirmed tenancy ending/)).toBeInTheDocument();
+    const card = screen.getByRole("region", { name: "The Exchange Unit signals" });
+    const row = within(card).getByText("1st Floor").closest("li")!;
+    expect(within(row).getByText("Tenancy ending")).toBeInTheDocument();
+    expect(within(row).getByText(/No physical departure inferred/)).toBeInTheDocument();
+  });
+
+  it("adds availability without changing tenancy or occupancy facts", () => {
+    render(<PrototypeStatus />);
+    ask("Mark the 2nd Floor at 1 Linear Park as available to let.");
+    fireEvent.click(screen.getByRole("button", { name: "Confirm available to let" }));
+    expect(screen.getByText(/now carries a purple TO LET badge/)).toBeInTheDocument();
+    const card = screen.getByRole("region", { name: "1 Linear Park Unit signals" });
+    const row = within(card).getByText("2nd Floor").closest("li")!;
+    expect(within(row).getByText("Available to let")).toBeInTheDocument();
+    expect(within(row).queryByText("No new occupancy")).toBeNull();
   });
 
   it("saves a note from the + menu", () => {
