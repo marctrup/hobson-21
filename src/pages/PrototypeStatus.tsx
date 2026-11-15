@@ -545,28 +545,53 @@ export default function PrototypeStatus() {
               </div>
             )}
             {filtersOpen && (
-              <div role="group" aria-label="Map signals" className="w-[460px] max-w-[calc(100vw-2rem)] rounded-2xl border border-bone bg-background/95 p-2 shadow-md backdrop-blur animate-in fade-in slide-in-from-top-2 duration-300">
-                <div className="flex flex-wrap items-center justify-end gap-1.5">
-                  {FILTERS.map((f) => {
+              <div role="group" aria-label="Map signals" className="w-[380px] max-w-[calc(100vw-2rem)] overflow-hidden rounded-2xl border border-bone bg-background/95 shadow-xl backdrop-blur animate-in fade-in slide-in-from-top-2 duration-300">
+                <div className="flex items-start justify-between gap-3 border-b border-bone px-4 py-3.5">
+                  <div>
+                    <p className="text-sm font-semibold text-foreground">Filter the map</p>
+                    <p className="mt-0.5 text-xs text-ink-muted">Choose a signal to focus on</p>
+                  </div>
+                  <Button type="button" variant="ghost" size="icon" aria-label="Close map filters" onClick={() => setFiltersOpen(false)} className="-mr-1 -mt-1 h-8 w-8 shrink-0 text-ink-muted">
+                    <X className="h-4 w-4" aria-hidden />
+                  </Button>
+                </div>
+                <div className="p-2">
+                  {FILTERS.slice(0, 1).map((f) => {
                     const on = filter === f;
-                    const counts = signalCounts(book, endings, availability, STATUS_PLACES, SAMPLE_COMPLIANCE);
-                    const n = counts[f];
-                    const tone = f === "All" ? null : TONE[f];
+                    const n = signalCounts(book, endings, availability, STATUS_PLACES, SAMPLE_COMPLIANCE)[f];
                     return (
-                      <button key={f} type="button" aria-pressed={on} onClick={() => { setPlaceId(null); setFilter(f); setFiltersOpen(false); }}
-                        style={on && tone ? { background: tone.color, borderColor: tone.color } : undefined}
-                        className={`flex items-center gap-1.5 rounded-full border px-3 py-1 text-sm transition-colors ${on ? "border-primary bg-primary text-primary-foreground" : "border-bone bg-background hover:border-primary/40"}`}>
-                        {tone && <tone.Icon className="h-3.5 w-3.5" style={on ? undefined : { color: tone.color }} aria-hidden />}{f === "All" ? "All signals" : f}
-                        <span className={`ml-0.5 rounded-full px-1.5 text-xs font-semibold tabular-nums ${on ? "bg-background/25" : "bg-secondary text-foreground"}`}>{n}</span>
+                      <button key={f} type="button" aria-label={`All signals ${n}`} aria-pressed={on} onClick={() => { setPlaceId(null); setFilter(f); setFiltersOpen(false); }}
+                        className={`flex w-full items-center gap-3 rounded-xl border px-3 py-2.5 text-left transition-colors ${on ? "border-primary/20 bg-secondary" : "border-transparent hover:bg-secondary/60"}`}>
+                        <span className="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-secondary text-primary"><MapIcon className="h-4 w-4" aria-hidden /></span>
+                        <span className="flex-1 text-sm font-medium">All signals</span>
+                        <span className="min-w-7 rounded-md bg-secondary px-2 py-0.5 text-center text-xs font-semibold tabular-nums text-foreground">{n}</span>
+                        <span className="grid w-4 place-items-center text-primary">{on && <Check className="h-4 w-4" aria-hidden />}</span>
                       </button>
                     );
                   })}
+                  <p className="px-3 pb-1.5 pt-3 text-[10px] font-semibold uppercase tracking-[0.14em] text-ink-muted">Focus on one signal</p>
+                  <div className="space-y-1">
+                    {FILTERS.slice(1).map((f) => {
+                      const signal = f as Signal;
+                      const on = filter === f;
+                      const n = signalCounts(book, endings, availability, STATUS_PLACES, SAMPLE_COMPLIANCE)[f];
+                      const { Icon, color, hint } = TONE[signal];
+                      return (
+                        <button key={f} type="button" aria-label={`${f} ${n}`} aria-pressed={on} onClick={() => { setPlaceId(null); setFilter(f); setFiltersOpen(false); }}
+                          className={`flex w-full items-center gap-3 rounded-xl border px-3 py-2.5 text-left transition-colors ${on ? "border-primary/20 bg-secondary" : "border-transparent hover:bg-secondary/60"}`}>
+                          <span className="grid h-8 w-8 shrink-0 place-items-center rounded-lg" style={{ color, background: `color-mix(in srgb, ${color} 10%, transparent)` }}><Icon className="h-4 w-4" aria-hidden /></span>
+                          <span className="min-w-0 flex-1">
+                            <span className="block text-sm font-medium text-foreground">{f}</span>
+                            <span className="mt-0.5 block text-[11px] leading-4 text-ink-muted">{hint}</span>
+                          </span>
+                          <span className="min-w-7 rounded-md bg-secondary px-2 py-0.5 text-center text-xs font-semibold tabular-nums text-foreground">{n}</span>
+                          <span className="grid w-4 shrink-0 place-items-center text-primary">{on && <Check className="h-4 w-4" aria-hidden />}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
                 </div>
-                <div className="mt-2 grid gap-1 border-t border-bone px-2 pt-2">
-                  {(Object.keys(TONE) as Signal[]).map((l) => { const { Icon, color, hint } = TONE[l]; return (
-                    <p key={l} className="flex items-start gap-2 text-xs"><Icon className="mt-0.5 h-3.5 w-3.5 shrink-0" style={{ color }} aria-hidden /><span className="font-medium">{l}</span><span className="text-ink-muted">{hint}</span></p>
-                  ); })}
-                </div>
+                <p className="border-t border-bone px-4 py-2.5 text-[11px] text-ink-muted">A Unit can appear in more than one filter.</p>
               </div>
             )}
           </div>

@@ -1,6 +1,7 @@
 # Roadmap
 
 ## Prototype Status — a dynamic portfolio map
+- [x] Redesign the map filter as one calm, scannable list with concise explanations, aligned counts and a clear selected state; all 17 focused checks pass, selection verified live with no page errors. Not published.
 - [x] Distinguish missing papers, confirmed tenancy endings, no new occupancy and availability to let without conflating legal ending, physical departure and marketing availability.
 - [x] Add chat-confirmed illustrative changes that reveal and briefly highlight the affected place, with filters, counts and place-level detail.
 - [x] Verify the status rules, conversation flow and desktop map in the preview: 14 focused checks pass, both chat changes read back in place cards, no page errors. Not published.
