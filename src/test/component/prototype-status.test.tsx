@@ -39,7 +39,7 @@ describe("Prototype Status: dynamic portfolio signals", () => {
     const panel = screen.getByRole("group", { name: "Map signals" });
     expect(within(panel).getByRole("button", { name: /All signals\s*24/ })).toBeInTheDocument();
     expect(within(panel).getByRole("button", { name: /^No papers\s*10/ })).toBeInTheDocument();
-    expect(within(panel).getByRole("button", { name: /^Tenancy ending\s*2/ })).toBeInTheDocument();
+    expect(within(panel).getByRole("button", { name: /^Occupancy ending\s*2/ })).toBeInTheDocument();
     expect(within(panel).getByRole("button", { name: /^No new occupancy\s*7/ })).toBeInTheDocument();
     expect(within(panel).getByRole("button", { name: /^Available to let\s*4/ })).toBeInTheDocument();
     expect(within(panel).getByRole("button", { name: /^Compliance warning\s*6/ })).toBeInTheDocument();
@@ -85,7 +85,7 @@ describe("Prototype Status: dynamic portfolio signals", () => {
     expect(screen.getByText(/Done — the 1st Floor at The Exchange now carries a confirmed tenancy ending/)).toBeInTheDocument();
     const card = screen.getByRole("region", { name: "The Exchange Unit signals" });
     const row = within(card).getByText("1st Floor").closest("li")!;
-    expect(within(row).getByText("Tenancy ending")).toBeInTheDocument();
+    expect(within(row).getByText("Occupancy ending")).toBeInTheDocument();
     expect(within(row).getByText(/No physical departure inferred/)).toBeInTheDocument();
   });
 
@@ -108,7 +108,7 @@ describe("Prototype Status: dynamic portfolio signals", () => {
     const filters = within(review).getByRole("group", { name: "Paper review filters" });
     expect(within(filters).getByRole("button", { name: "All review 23" })).toBeInTheDocument();
     expect(within(filters).getByRole("button", { name: "No papers 10" })).toBeInTheDocument();
-    expect(within(filters).getByRole("button", { name: "Tenancy ending 2" })).toBeInTheDocument();
+    expect(within(filters).getByRole("button", { name: "Occupancy ending 2" })).toBeInTheDocument();
     expect(within(filters).getByRole("button", { name: "No new occupancy 7" })).toBeInTheDocument();
     expect(within(filters).getByRole("button", { name: "Compliance warning 6" })).toBeInTheDocument();
     expect(within(filters).queryByRole("button", { name: /Available to let/ })).toBeNull();

@@ -1,6 +1,7 @@
 # Roadmap
 
 ## Prototype Status — a dynamic portfolio map
+- [x] Rename the visible Tenancy ending signal to Occupancy ending in Map and Papers without changing the underlying confirmation rules; 19 focused checks pass, both live filter panels verified with no page errors, build clean. Not published.
 - [x] Add a top-right Papers / Map switch and a Papers Review area based on the supplied reference.
 - [x] Align Review filters and counts with the map for No papers, Tenancy ending, No new occupancy and Compliance warning; keep Available to let map-only.
 - [x] Verify switching, filtering and expandable place rows in focused tests and the live preview: 19 checks pass, all four counts and availability exclusion confirmed, no page errors, build clean. Not published.

@@ -25,6 +25,7 @@ const TONE: Record<Signal, { color: string; Icon: typeof FileX; hint: string }> 
 const FILTERS: MapFilter[] = ["All", "No papers", "Tenancy ending", "No new occupancy", "Available to let", "Compliance warning"];
 type PaperFilter = Exclude<MapFilter, "Available to let">;
 const PAPER_FILTERS: PaperFilter[] = ["All", "No papers", "Tenancy ending", "No new occupancy", "Compliance warning"];
+const signalLabel = (signal: MapFilter) => signal === "Tenancy ending" ? "Occupancy ending" : signal;
 
 type PendingAction = StatusInstruction;
 type RecentChange = { placeId: string; unit: string; kind: "ending" | "available" };
@@ -103,7 +104,7 @@ const esc = (t: string) => t.replace(/&/g, "&amp;").replace(/</g, "&lt;");
 function summaryLine(places: StatusPlace[], book: FindingBook, endings: EndingBook, availability: AvailabilityBook, compliance: ComplianceBook) {
   const c = signalCounts(book, endings, availability, places, compliance);
   const bits = (["No papers", "Tenancy ending", "No new occupancy", "Available to let", "Compliance warning"] as Signal[]).filter((l) => c[l]).map((l) =>
-    `<span class="inline-flex items-center gap-1"><span class="h-2 w-2 rounded-full" style="background:${TONE[l].color}"></span>${c[l]} ${l.toLowerCase()}</span>`);
+    `<span class="inline-flex items-center gap-1"><span class="h-2 w-2 rounded-full" style="background:${TONE[l].color}"></span>${c[l]} ${signalLabel(l).toLowerCase()}</span>`);
   return bits.length ? `<div class="mt-1.5 flex flex-wrap gap-x-2.5 gap-y-1 text-[11px]">${bits.join("")}</div>` : `<div class="mt-1 text-[11px] text-muted-foreground">No map signals</div>`;
 }
 
@@ -247,7 +248,7 @@ function Chip({ signal }: { signal: Signal }) {
   const { Icon, color } = TONE[signal];
   return (
     <span style={{ color, borderColor: color }} className="inline-flex items-center gap-1 rounded-full border bg-background px-2 py-0.5 text-[11px] font-medium">
-      <Icon className="h-3 w-3" aria-hidden />{signal}
+      <Icon className="h-3 w-3" aria-hidden />{signalLabel(signal)}
     </span>
   );
 }
@@ -297,11 +298,11 @@ function PapersReview({ book, endings, compliance, filter, onFilter }: {
           const n = counts[f];
           const Icon = f === "All" ? FileText : TONE[f].Icon;
           return (
-            <button key={f} type="button" aria-label={`${f === "All" ? "All review" : f} ${n}`} aria-pressed={on}
+            <button key={f} type="button" aria-label={`${f === "All" ? "All review" : signalLabel(f)} ${n}`} aria-pressed={on}
               onClick={() => { onFilter(f); setExpanded(null); }}
               className={`flex shrink-0 items-center gap-2 rounded-full border px-3.5 py-2 text-sm transition-colors ${on ? "border-primary/20 bg-secondary font-medium text-primary" : "border-bone bg-background text-foreground hover:bg-secondary/60"}`}>
               <Icon className="h-4 w-4" style={f === "All" ? undefined : { color: TONE[f].color }} aria-hidden />
-              <span>{f === "All" ? "All review" : f}</span>
+              <span>{f === "All" ? "All review" : signalLabel(f)}</span>
               <span className={`rounded-md px-1.5 py-0.5 text-xs font-semibold tabular-nums ${on ? "bg-background" : "bg-secondary"}`}>{n}</span>
             </button>
           );
@@ -704,11 +705,11 @@ export default function PrototypeStatus() {
                       const n = signalCounts(book, endings, availability, STATUS_PLACES, SAMPLE_COMPLIANCE)[f];
                       const { Icon, color, hint } = TONE[signal];
                       return (
-                        <button key={f} type="button" aria-label={`${f} ${n}`} aria-pressed={on} onClick={() => { setPlaceId(null); setFilter(f); setFiltersOpen(false); }}
+                        <button key={f} type="button" aria-label={`${signalLabel(f)} ${n}`} aria-pressed={on} onClick={() => { setPlaceId(null); setFilter(f); setFiltersOpen(false); }}
                           className={`flex w-full items-center gap-3 rounded-xl border px-3 py-2.5 text-left transition-colors ${on ? "border-primary/20 bg-secondary" : "border-transparent hover:bg-secondary/60"}`}>
                           <span className="grid h-8 w-8 shrink-0 place-items-center rounded-lg" style={{ color, background: `color-mix(in srgb, ${color} 10%, transparent)` }}><Icon className="h-4 w-4" aria-hidden /></span>
                           <span className="min-w-0 flex-1">
-                            <span className="block text-sm font-medium text-foreground">{f}</span>
+                            <span className="block text-sm font-medium text-foreground">{signalLabel(f)}</span>
                             <span className="mt-0.5 block text-[11px] leading-4 text-ink-muted">{hint}</span>
                           </span>
                           <span className="min-w-7 rounded-md bg-secondary px-2 py-0.5 text-center text-xs font-semibold tabular-nums text-foreground">{n}</span>
