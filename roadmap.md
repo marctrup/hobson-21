@@ -280,3 +280,6 @@
 - [x] Each colleague's introduction now opens "Hello, I'm The [Name]. " — on the whiteboard and in their chat — before their own words. Because the greeting names them, the illustrated board writes a colleague's sentence without a separate name line above it (Hobson's standing invitation keeps his title), so the full wording still fits at the larger writing size. Measured live: all five sit inside the board at two workspace sizes with nothing clipped; 14 Back Office checks pass. Not published.
 
 - [x] Notes demo: rebuild on supplied background, note icon after creation, notes list output with edit/delete, run through flow
+
+## Homepage — closing line quieter and opened with "If"
+- [x] The line beneath the two audience groups now reads "If you have a filing cabinet of property-related papers, I'll have it in order, so you can talk to your papers from anywhere." and is set smaller and in the same muted grey as the strapline (18px desktop / 16px phone, weight 400), with the short purple rule above it kept. Checked live at desktop and phone widths with no page errors. Not published.

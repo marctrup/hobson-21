@@ -93,8 +93,8 @@ export const AudienceStrip = () => {
               aria-hidden="true"
               className="mx-auto mb-4 block h-px w-12 bg-primary/50 sm:mb-5"
             />
-            <p className="text-base sm:text-xl md:text-[1.35rem] leading-relaxed font-normal tracking-tight text-foreground">
-              You have a filing&nbsp;cabinet of property-related papers — I'll have it in&nbsp;order,
+            <p className="text-base sm:text-lg leading-relaxed font-normal tracking-tight text-muted-foreground max-w-2xl mx-auto">
+              If you have a filing&nbsp;cabinet of property-related papers, I'll have it in&nbsp;order,
               so you can talk to your papers from anywhere.
             </p>
           </div>
