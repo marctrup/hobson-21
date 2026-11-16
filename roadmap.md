@@ -291,3 +291,4 @@
 
 ## Homepage — closing line quieter and opened with "If"
 - [x] The line beneath the two audience groups now reads "If you have a filing cabinet of property-related papers, I'll have it in order, so you can talk to your papers from anywhere." and is set smaller and in the same muted grey as the strapline (18px desktop / 16px phone, weight 400), with the short purple rule above it kept. Checked live at desktop and phone widths with no page errors. Not published.
+- [x] Re-word the closing line to carry the reading-and-timeline sentiment: "If you have a filing cabinet of property-related papers, I'll read them all, lay them out in a visual timeline, and set you up so you can talk to them from anywhere." Checked live at desktop and phone widths with no page errors. Not published.
