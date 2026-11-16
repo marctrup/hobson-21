@@ -4,8 +4,6 @@ const groups = [
   {
     icon: Building2,
     label: "You own and manage property",
-    framing:
-      "Property is the business. I keep the papers, the dates and the obligations in order across the portfolio.",
     examples: [
       "Asset managers",
       "Institutional owners",
@@ -18,8 +16,6 @@ const groups = [
   {
     icon: KeyRound,
     label: "You occupy property",
-    framing:
-      "Property is a cost centre and a management complexity. I keep leases, rent reviews, break clauses and compliance obligations off your desk.",
     examples: [
       "Retail chains",
       "Hospitality groups",
@@ -63,9 +59,6 @@ export const AudienceStrip = () => {
                   <h3 className="text-xl sm:text-2xl font-semibold text-foreground tracking-tight">
                     {group.label}
                   </h3>
-                  <p className="text-sm sm:text-base text-muted-foreground leading-relaxed mt-2">
-                    {group.framing}
-                  </p>
 
                   <div className="mt-6 pt-5 border-t border-border/60">
                     <div className="flex items-center gap-3 mb-3">
