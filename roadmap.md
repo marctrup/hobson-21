@@ -5,6 +5,7 @@
 - [x] Re-set the example lists: owners/managers list asset managers, institutional owners, managing agents, funds and REITs, individual owners and SMEs; occupiers add charities. Examples now sit under a hairline "For example" rule in two balanced columns, collapsing to one column on phones so nothing wraps; checked at 1280 and 390 with no page errors, build clean. Not published.
 - [x] Remove both descriptive sentences beneath the group names, leaving each card as icon, group name and examples only; checked live at desktop and phone widths with no page errors, build clean. Not published.
 - [x] Rename the groups to "Owners, Managers of a property business" and "Commercial Occupiers"; checked live at desktop and phone widths with no page errors, build clean. Not published.
+- [x] Rename the first group again to "Owners and Managers of property business"; build clean. Not published.
 
 ## Homepage — quotes above the assistant section
 - [x] Move the quote section directly above "Your own assistant" so visitors meet the remarks before the demonstration; order verified live (Who I work for → quotes → assistant), no page errors, build clean. Not published.
