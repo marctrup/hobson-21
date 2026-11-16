@@ -7,6 +7,7 @@
 - [x] Rename the groups to "Owners, Managers of a property business" and "Commercial Occupiers"; checked live at desktop and phone widths with no page errors, build clean. Not published.
 - [x] Rename the first group again to "Owners and Managers of property business"; build clean. Not published.
 - [x] Re-word the closing line to "If your organisation has a filing cabinet of property-related papers, you belong in one of these two groups."; checked live with no page errors. Not published.
+- [x] Rename the first group to "Owners and Managers of a property business"; checked live with no page errors. Not published.
 
 ## Homepage — quotes above the assistant section
 - [x] Move the quote section directly above "Your own assistant" so visitors meet the remarks before the demonstration; order verified live (Who I work for → quotes → assistant), no page errors, build clean. Not published.
