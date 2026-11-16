@@ -7,9 +7,11 @@ const groups = [
     examples: [
       "Asset managers",
       "Institutional owners",
-      "Managing agents",
+      "Family offices",
       "Funds and REITs",
       "Individual owners",
+      "Managing agents",
+      "Architects and surveyors",
       "SMEs",
     ],
   },
