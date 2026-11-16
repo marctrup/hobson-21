@@ -89,8 +89,8 @@ export const AudienceStrip = () => {
           </div>
 
           <p className="text-center text-sm sm:text-base text-muted-foreground mt-8 sm:mt-10 max-w-2xl mx-auto">
-            If your organisation holds a lease, a licence or a filing cabinet of papers, you belong
-            in one of these two groups.
+            If your organisation has a filing cabinet of property-related papers, you belong in one
+            of these two groups.
           </p>
         </div>
       </div>
