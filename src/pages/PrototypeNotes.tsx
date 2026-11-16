@@ -157,54 +157,52 @@ function NoteDialog({ draft, onChange, onCancel, onSave }: {
   onSave: () => void;
 }) {
   const complete = !!(draft.visibility && draft.category && draft.content.trim() && (draft.category !== "previous" || draft.occupancy));
-  const choiceClass = (selected: boolean) => `flex cursor-pointer items-start gap-2.5 rounded-lg border px-3 py-2.5 text-sm transition-colors ${selected ? "border-primary bg-primary/[0.05]" : "border-input bg-background hover:border-primary/40 hover:bg-primary/[0.025]"}`;
+  const choiceClass = (selected: boolean) => `flex cursor-pointer items-center gap-2 rounded-md border px-2.5 py-2 text-[13px] leading-tight transition-colors ${selected ? "border-primary bg-primary/[0.05]" : "border-input bg-background hover:border-primary/40 hover:bg-primary/[0.025]"}`;
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") onCancel(); };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [onCancel]);
   return (
-    <form role="dialog" aria-label="Add a note" onSubmit={(e) => { e.preventDefault(); if (complete) onSave(); }} className="flex h-full w-[340px] min-w-[260px] shrink-0 flex-col border-r border-bone bg-background shadow-lg max-lg:absolute max-lg:inset-y-0 max-lg:right-0 max-lg:z-40 max-lg:w-[min(340px,92vw)] animate-in slide-in-from-right-4">
-      <header className="flex h-14 shrink-0 items-center justify-between gap-2 border-b border-bone px-4">
+    <form role="dialog" aria-modal={false} aria-label="Add a note" onSubmit={(e) => { e.preventDefault(); if (complete) onSave(); }} className="relative z-40 m-3 flex max-h-[calc(100dvh-1.5rem)] w-[300px] min-w-[280px] shrink-0 self-start flex-col overflow-hidden rounded-xl border border-bone bg-background shadow-lg animate-in fade-in-0 slide-in-from-left-2 max-lg:absolute max-lg:left-2 max-lg:top-16 max-lg:m-0 max-lg:max-h-[calc(100dvh-10rem)] max-lg:w-[min(300px,calc(100%-1rem))]">
+      <header className="flex h-11 shrink-0 items-center justify-between gap-2 border-b border-bone px-3">
         <p className="flex min-w-0 items-center gap-2 text-sm"><StickyNote className="h-4 w-4 shrink-0 text-primary" aria-hidden /><span className="font-semibold">Add a note</span></p>
-        <Button type="button" variant="ghost" size="icon" aria-label="Close" onClick={onCancel} className="h-8 w-8 shrink-0"><X className="h-4 w-4" aria-hidden /></Button>
+        <Button type="button" variant="ghost" size="icon" aria-label="Close" onClick={onCancel} className="h-7 w-7 shrink-0"><X className="h-3.5 w-3.5" aria-hidden /></Button>
       </header>
 
-      <div className="grid min-h-0 flex-1 content-start gap-4 overflow-y-auto px-4 py-3.5">
-        <p className="text-xs leading-snug text-ink-muted">Keep something useful with {UNIT_LABEL} at {UNIT_ADDRESS}.</p>
-
+      <div className="grid min-h-0 flex-1 content-start gap-3 overflow-y-auto px-3 py-3">
         <fieldset>
-          <legend className="mb-1.5 text-sm font-semibold">Who can see it?</legend>
-          <div className="grid gap-1.5">
+          <legend className="mb-1 text-xs font-semibold">Who can see it?</legend>
+          <div className="grid grid-cols-2 gap-1.5">
             <label className={choiceClass(draft.visibility === "shared")}>
-              <input type="radio" name="note-visibility" value="shared" checked={draft.visibility === "shared"} onChange={() => onChange({ ...draft, visibility: "shared" })} className="mt-0.5 h-4 w-4 shrink-0 accent-primary" />
-              <span className="min-w-0"><span className="flex items-center gap-1.5 font-medium"><Users className="h-4 w-4 text-primary" aria-hidden />Shared</span><span className="mt-0.5 block text-[11px] leading-snug text-ink-muted">Everyone with access to this Unit</span></span>
+              <input type="radio" name="note-visibility" value="shared" checked={draft.visibility === "shared"} onChange={() => onChange({ ...draft, visibility: "shared" })} className="h-3.5 w-3.5 shrink-0 accent-primary" />
+              <span className="flex items-center gap-1.5 font-medium"><Users className="h-3.5 w-3.5 text-primary" aria-hidden />Shared</span>
             </label>
             <label className={choiceClass(draft.visibility === "private")}>
-              <input type="radio" name="note-visibility" value="private" checked={draft.visibility === "private"} onChange={() => onChange({ ...draft, visibility: "private" })} className="mt-0.5 h-4 w-4 shrink-0 accent-primary" />
-              <span className="min-w-0"><span className="flex items-center gap-1.5 font-medium"><Lock className="h-4 w-4 text-primary" aria-hidden />Private</span><span className="mt-0.5 block text-[11px] leading-snug text-ink-muted">Only you can see it</span></span>
+              <input type="radio" name="note-visibility" value="private" checked={draft.visibility === "private"} onChange={() => onChange({ ...draft, visibility: "private" })} className="h-3.5 w-3.5 shrink-0 accent-primary" />
+              <span className="flex items-center gap-1.5 font-medium"><Lock className="h-3.5 w-3.5 text-primary" aria-hidden />Private</span>
             </label>
           </div>
         </fieldset>
 
         <fieldset>
-          <legend className="mb-1.5 text-sm font-semibold">What is it about?</legend>
-          <div className="grid gap-1.5">
+          <legend className="mb-1 text-xs font-semibold">What is it about?</legend>
+          <div className="grid gap-1">
             {([
-              ["unit", "Unit", `The ${UNIT_LABEL} itself`],
-              ["occupancy", "Current occupancy", "The present occupier and their lease"],
-              ["previous", "Previous occupancy", "An earlier occupancy at this Unit"],
-            ] as const).map(([value, label, hint]) => (
+              ["unit", "Unit"],
+              ["occupancy", "Current occupancy"],
+              ["previous", "Previous occupancy"],
+            ] as const).map(([value, label]) => (
               <label key={value} className={choiceClass(draft.category === value)}>
-                <input type="radio" name="note-category" value={value} checked={draft.category === value} onChange={() => onChange({ ...draft, category: value, ...(value === "previous" ? { occupancy: draft.occupancy } : { occupancy: undefined }) })} className="mt-0.5 h-4 w-4 shrink-0 accent-primary" />
-                <span className="min-w-0"><span className="font-medium">{label}</span><span className="mt-0.5 block text-[11px] leading-snug text-ink-muted">{hint}</span></span>
+                <input type="radio" name="note-category" value={value} checked={draft.category === value} onChange={() => onChange({ ...draft, category: value, ...(value === "previous" ? { occupancy: draft.occupancy } : { occupancy: undefined }) })} className="h-3.5 w-3.5 shrink-0 accent-primary" />
+                <span className="font-medium">{label}</span>
               </label>
             ))}
           </div>
           {draft.category === "previous" && (
-            <div className="mt-2 rounded-lg border border-bone bg-secondary/40 p-2.5">
+            <div className="mt-1.5 rounded-md border border-bone bg-secondary/40 p-2">
               <label htmlFor="previous-occupancy" className="mb-1 block text-xs font-medium">Which previous occupancy?</label>
-              <select id="previous-occupancy" aria-label="Previous occupancy" value={draft.occupancy ?? ""} onChange={(e) => onChange({ ...draft, occupancy: e.target.value || undefined })} className="w-full rounded-md border border-input bg-background px-2.5 py-1.5 text-sm outline-none focus:ring-2 focus:ring-ring">
+              <select id="previous-occupancy" aria-label="Previous occupancy" value={draft.occupancy ?? ""} onChange={(e) => onChange({ ...draft, occupancy: e.target.value || undefined })} className="w-full rounded-md border border-input bg-background px-2 py-1.5 text-xs outline-none focus:ring-2 focus:ring-ring">
                 <option value="">Choose an occupancy</option>
                 {PREVIOUS_OCCUPANCIES.map((occupancy) => <option key={occupancy} value={occupancy}>{occupancy}</option>)}
               </select>
@@ -213,15 +211,14 @@ function NoteDialog({ draft, onChange, onCancel, onSave }: {
         </fieldset>
 
         <div>
-          <label htmlFor="note-field" className="mb-1.5 block text-sm font-semibold">Your note</label>
-          <textarea id="note-field" aria-label="Your note" value={draft.content} onChange={(e) => onChange({ ...draft, content: e.target.value })} rows={5} autoFocus placeholder="Write your note here…" className="w-full resize-y rounded-md border border-input bg-background px-3 py-2.5 text-sm leading-relaxed outline-none focus:ring-2 focus:ring-ring" />
-          <p className="mt-1 text-[11px] text-ink-muted">On a phone, you can use the keyboard microphone to dictate.</p>
+          <label htmlFor="note-field" className="mb-1 block text-xs font-semibold">Your note</label>
+          <textarea id="note-field" aria-label="Your note" value={draft.content} onChange={(e) => onChange({ ...draft, content: e.target.value })} rows={3} autoFocus placeholder="Write your note here…" className="w-full resize-y rounded-md border border-input bg-background px-2.5 py-2 text-sm leading-relaxed outline-none focus:ring-2 focus:ring-ring" />
         </div>
       </div>
 
-      <footer className="flex shrink-0 items-center justify-end gap-2 border-t border-bone bg-secondary/30 px-4 py-2.5">
-        <Button type="button" variant="ghost" size="sm" onClick={onCancel}>Cancel</Button>
-        <Button type="submit" size="sm" disabled={!complete} className="gap-1.5"><StickyNote className="h-4 w-4" aria-hidden />Save note</Button>
+      <footer className="flex shrink-0 items-center justify-end gap-1.5 border-t border-bone bg-secondary/30 px-3 py-2">
+        <Button type="button" variant="ghost" size="sm" onClick={onCancel} className="h-8 px-2.5 text-xs">Cancel</Button>
+        <Button type="submit" size="sm" disabled={!complete} className="h-8 gap-1.5 px-3 text-xs"><StickyNote className="h-3.5 w-3.5" aria-hidden />Save note</Button>
       </footer>
     </form>
   );
@@ -449,6 +446,8 @@ export default function PrototypeNotes() {
         <div className="mt-auto grid h-9 w-9 place-items-center rounded-full bg-bone text-xs font-semibold text-charcoal">MT</div>
       </aside>
 
+      {draft && <NoteDialog draft={draft} onChange={setDraft} onCancel={() => setDraft(null)} onSave={() => saveNote(draft)} />}
+
       <section aria-label="Chat with Hobson" className="flex w-[460px] min-w-0 shrink-0 flex-col border-r border-bone bg-background max-lg:flex-1">
         <header className="flex h-14 shrink-0 items-center justify-between gap-2 border-b border-bone px-5">
           <p className="flex min-w-0 items-center gap-1.5 text-sm">
@@ -535,8 +534,6 @@ export default function PrototypeNotes() {
           )}
         </div>
       </section>
-
-      {draft && <NoteDialog draft={draft} onChange={setDraft} onCancel={() => setDraft(null)} onSave={() => saveNote(draft)} />}
 
       {notesOpen && notes.length > 0 && (
         <section aria-label="Unit notes" className="flex w-[340px] min-w-[240px] flex-col border-r border-bone bg-background shadow-lg max-lg:absolute max-lg:inset-y-0 max-lg:right-0 max-lg:z-30 max-lg:w-[min(340px,92vw)] animate-in slide-in-from-right-4">

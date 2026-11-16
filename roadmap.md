@@ -1,6 +1,7 @@
 # Roadmap
 
 ## Prototype Notes — pop-up creation
+- [x] Make Add a Note a compact 300px non-modal pop-up on the left of the conversation, with shorter choices and note field; chat remains usable and the composer unobstructed. Twenty-four focused checks pass; desktop (1217) and phone (390) verified live, including saving and using chat with the pop-up open, with no page errors or horizontal overflow. Not published.
 - [x] Move the note pop-up to the right of the chat as its own column so the conversation stays visible; the Notes column narrows instead of clipping when both are open, and on phones the panel slides in from the right. Twenty-three focused checks pass; desktop (1217) and phone (390) verified live with no page errors. Not published.
 - [x] Shrink the note pop-up to the chat column only: it now opens below the Unit header inside the conversation area (chat header, Notes and Papers stay visible), with tighter spacing and a wrapping heading; twenty-three focused checks pass and desktop and phone flows verified live with no page errors. Not published.
 - [x] Remove the disabled "Record the Unit's current situation — Coming soon" action from the + menu; retain Add a Note and disabled Upload papers. Twenty-three focused checks pass. Not published.

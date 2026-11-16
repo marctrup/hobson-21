@@ -36,6 +36,19 @@ describe("Prototype Notes pop-up", () => {
     expect(placeholder()).toBe("Ask me about this unit");
   });
 
+  it("keeps the conversation usable while the non-modal pop-up is open", async () => {
+    render(<PrototypeNotes />);
+    const dialog = startNoteFromMenu();
+    expect(dialog).toHaveAttribute("aria-modal", "false");
+
+    fireEvent.change(screen.getByLabelText("Ask Hobson"), { target: { value: "What is the current rent?" } });
+    fireEvent.click(screen.getByRole("button", { name: "Send message" }));
+
+    expect(await screen.findByText(/The current rent is £1,224,882 per annum/)).toBeInTheDocument();
+    expect(screen.getByRole("dialog", { name: "Add a note" })).toBeInTheDocument();
+    expect(screen.getByLabelText("Ask Hobson")).toBeEnabled();
+  });
+
   it("saves a shared current-occupancy note and reveals it in the Notes panel", async () => {
     render(<PrototypeNotes />);
     const dialog = startNoteFromMenu();
@@ -70,7 +83,7 @@ describe("Prototype Notes pop-up", () => {
     fireEvent.change(within(dialog).getByLabelText("Your note"), { target: { value: "Shop fit-out left in place" } });
     expect(within(dialog).getByRole("button", { name: "Save note" })).toBeDisabled();
 
-    fireEvent.change(within(dialog).getByLabelText("Previous occupancy"), { target: { value: "Lease · 4 March 2021 · L’Occitane Limited" } });
+    fireEvent.change(within(dialog).getByRole("combobox", { name: "Previous occupancy" }), { target: { value: "Lease · 4 March 2021 · L’Occitane Limited" } });
     fireEvent.click(within(dialog).getByRole("button", { name: "Save note" }));
 
     const panel = await screen.findByRole("region", { name: "Unit notes" });
