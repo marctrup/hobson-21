@@ -128,14 +128,13 @@ describe("Prototype Notes deleting", () => {
 });
 
 describe("Prototype Notes chat actions", () => {
-  it("greys out Upload papers and Record the Unit's current situation as coming soon, leaving Add a Note working", () => {
+  it("greys out Upload papers as coming soon and removes situation recording, leaving Add a Note working", () => {
     render(<PrototypeNotes />);
     fireEvent.click(screen.getByRole("button", { name: "Chat actions" }));
-    for (const action of [/Upload papers/, /Record the Unit's current situation/]) {
-      const item = screen.getByRole("button", { name: action });
-      expect(item).toBeDisabled();
-      expect(within(item).getByText("Coming soon")).toBeInTheDocument();
-    }
+    const upload = screen.getByRole("button", { name: /Upload papers/ });
+    expect(upload).toBeDisabled();
+    expect(within(upload).getByText("Coming soon")).toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: /Record the Unit's current situation/ })).toBeNull();
     fireEvent.click(screen.getByRole("button", { name: "Add a Note" }));
     expect(screen.getByRole("dialog", { name: "Add a note" })).toBeInTheDocument();
   });
