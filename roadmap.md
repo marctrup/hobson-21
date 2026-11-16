@@ -1,5 +1,8 @@
 # Roadmap
 
+## Homepage — "Who I work for" becomes two groups
+- [x] Replace the four audience cards with two groups so any business fits one: "You own and manage property" (property is the business) and "You occupy property" (property is a cost centre and a management complexity), each with worked examples; section verified live with no page errors, build clean. Not published.
+
 ## Homepage — quotes above the assistant section
 - [x] Move the quote section directly above "Your own assistant" so visitors meet the remarks before the demonstration; order verified live (Who I work for → quotes → assistant), no page errors, build clean. Not published.
 

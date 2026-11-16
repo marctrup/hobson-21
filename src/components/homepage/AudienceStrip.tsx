@@ -1,33 +1,32 @@
-import { Building2, ShoppingBag, UtensilsCrossed, Briefcase } from "lucide-react";
+import { Building2, KeyRound } from "lucide-react";
 
-const audiences = [
+const groups = [
   {
     icon: Building2,
-    label: "Asset managers",
-    description: "I keep portfolios, lease events and compliance in order across residential and commercial property.",
+    label: "You own and manage property",
+    framing:
+      "Property is the business. I keep the papers, the dates and the obligations in order across the portfolio.",
+    examples: [
+      "Asset managers and institutional owners",
+      "Landlords and freeholders",
+      "Managing agents",
+      "Residential portfolios",
+      "Funds and REITs",
+    ],
   },
   {
-    icon: ShoppingBag,
-    label: "Retail operators",
-    description: "I watch over store leases, rent reviews, break clauses and EPC obligations across a multi-site estate.",
+    icon: KeyRound,
+    label: "You occupy property",
+    framing:
+      "Property is a cost centre and a management complexity. I keep leases, rent reviews, break clauses and compliance obligations off your desk.",
+    examples: [
+      "Retail chains",
+      "Hospitality groups",
+      "Corporate offices",
+      "Healthcare and education",
+      "Logistics and distribution",
+    ],
   },
-  {
-    icon: UtensilsCrossed,
-    label: "Hospitality businesses",
-    description: "I keep site leases, compliance certificates and operational obligations in hand across restaurants, pubs and hotels.",
-  },
-  {
-    icon: Briefcase,
-    label: "Corporate occupiers",
-    description: "I manage office, industrial and mixed-use leases where property is a material operating cost, but not the core business.",
-  },
-];
-
-const palette = [
-  { icon: "text-primary", bg: "bg-primary/10", heading: "text-primary" },
-  { icon: "text-accent-teal", bg: "bg-accent-teal/10", heading: "text-accent-teal" },
-  { icon: "text-accent-amber", bg: "bg-accent-amber/15", heading: "text-accent-amber" },
-  { icon: "text-accent-rose", bg: "bg-accent-rose/10", heading: "text-accent-rose" },
 ];
 
 export const AudienceStrip = () => {
@@ -43,28 +42,60 @@ export const AudienceStrip = () => {
               Who I work for
             </h2>
             <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto">
-              I am built for every organisation where property documents matter.
+              Every organisation I work for falls into one of two groups.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
-            {audiences.map((item, i) => {
-              const Icon = item.icon;
-              const tone = palette[i % palette.length];
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
+            {groups.map((group) => {
+              const Icon = group.icon;
               return (
                 <div
-                  key={i}
-                  className="text-center space-y-4 p-6 rounded-xl bg-wash border border-border/50 hover:border-border hover:shadow-md transition-all duration-300"
+                  key={group.label}
+                  className="rounded-xl bg-wash border border-border/50 p-6 sm:p-8 space-y-5 hover:border-border hover:shadow-md transition-all duration-300"
                 >
-                  <div className={`w-14 h-14 mx-auto rounded-xl ${tone.bg} flex items-center justify-center`}>
-                    <Icon className={`w-7 h-7 ${tone.icon}`} />
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 shrink-0 rounded-xl bg-primary/10 flex items-center justify-center">
+                      <Icon className="w-6 h-6 text-primary" />
+                    </div>
+                    <div className="space-y-2">
+                      <h3 className="text-xl sm:text-2xl font-semibold text-foreground tracking-tight">
+                        {group.label}
+                      </h3>
+                      <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                        {group.framing}
+                      </p>
+                    </div>
                   </div>
-                  <h3 className={`text-lg font-semibold ${tone.heading}`}>{item.label}</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">{item.description}</p>
+
+                  <div className="pt-1">
+                    <p className="text-xs font-semibold uppercase tracking-wider text-ink-faint mb-3">
+                      For example
+                    </p>
+                    <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2">
+                      {group.examples.map((example) => (
+                        <li
+                          key={example}
+                          className="flex items-baseline gap-2 text-sm text-foreground leading-snug"
+                        >
+                          <span
+                            aria-hidden="true"
+                            className="mt-[0.45rem] h-1.5 w-1.5 shrink-0 rounded-full bg-primary/60"
+                          />
+                          <span>{example}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
               );
             })}
           </div>
+
+          <p className="text-center text-sm sm:text-base text-muted-foreground mt-8 sm:mt-10 max-w-2xl mx-auto">
+            If your organisation holds a lease, a licence or a filing cabinet of papers, you belong
+            in one of these two groups.
+          </p>
         </div>
       </div>
     </section>
