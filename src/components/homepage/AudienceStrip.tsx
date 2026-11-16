@@ -88,10 +88,18 @@ export const AudienceStrip = () => {
             })}
           </div>
 
-          <p className="text-center text-sm sm:text-base text-muted-foreground mt-8 sm:mt-10 max-w-2xl mx-auto">
-            If your organisation has a filing cabinet of property-related papers, you belong in one
-            of these two groups.
-          </p>
+          <div className="mt-10 sm:mt-14 max-w-3xl mx-auto">
+            <div className="rounded-2xl bg-accent border border-border/50 px-5 py-7 sm:px-12 sm:py-10 text-center">
+              <span
+                aria-hidden="true"
+                className="mx-auto mb-4 block h-px w-12 bg-primary/50 sm:mb-5"
+              />
+              <p className="text-base sm:text-xl md:text-[1.35rem] leading-relaxed font-medium tracking-tight text-foreground">
+                If your organisation has a filing&nbsp;cabinet of property-related papers, you belong
+                in one of these two groups.
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </section>
