@@ -95,8 +95,8 @@ export const AudienceStrip = () => {
                 className="mx-auto mb-4 block h-px w-12 bg-primary/50 sm:mb-5"
               />
               <p className="text-base sm:text-xl md:text-[1.35rem] leading-relaxed font-medium tracking-tight text-foreground">
-                If your organisation has a filing&nbsp;cabinet of property-related papers, you belong
-                in one of these two groups.
+                Hand me the filing&nbsp;cabinet and I'll have it in&nbsp;order — then you can talk to
+                your papers from anywhere.
               </p>
             </div>
           </div>
