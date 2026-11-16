@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { ArrowRight, Building2, ChevronDown, ChevronRight, Clock, FileText, Lightbulb, Loader2, Lock, Mic, Pause, Play, Plus, Upload, Square, Map as MapIcon, MessageSquare, Pencil, RotateCcw, StickyNote, Trash2, Users, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import owlDefault from "@/assets/prototype/owl-default.png";
 import {
@@ -158,70 +157,77 @@ function NoteDialog({ draft, onChange, onCancel, onSave }: {
   onSave: () => void;
 }) {
   const complete = !!(draft.visibility && draft.category && draft.content.trim() && (draft.category !== "previous" || draft.occupancy));
-  const choiceClass = (selected: boolean) => `flex cursor-pointer items-start gap-3 rounded-lg border px-3.5 py-3 text-sm transition-colors ${selected ? "border-primary bg-primary/[0.05]" : "border-input bg-background hover:border-primary/40 hover:bg-primary/[0.025]"}`;
+  const choiceClass = (selected: boolean) => `flex cursor-pointer items-start gap-2.5 rounded-lg border px-3 py-2.5 text-sm transition-colors ${selected ? "border-primary bg-primary/[0.05]" : "border-input bg-background hover:border-primary/40 hover:bg-primary/[0.025]"}`;
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") onCancel(); };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [onCancel]);
   return (
-    <Dialog open onOpenChange={(open) => { if (!open) onCancel(); }}>
-      <DialogContent className="max-h-[calc(100dvh-2rem)] w-[calc(100%-2rem)] max-w-[560px] gap-0 overflow-y-auto rounded-2xl border-bone p-0 sm:max-w-[560px]">
-        <form onSubmit={(e) => { e.preventDefault(); if (complete) onSave(); }}>
-          <DialogHeader className="border-b border-bone px-6 py-5 pr-12 text-left">
-            <DialogTitle className="flex items-center gap-2.5 text-xl"><StickyNote className="h-5 w-5 text-primary" aria-hidden />Add a note</DialogTitle>
-            <DialogDescription className="pt-1 text-ink-muted">Keep something useful with {UNIT_LABEL} at {UNIT_ADDRESS}.</DialogDescription>
-          </DialogHeader>
+    <div role="dialog" aria-label="Add a note" className="absolute inset-x-0 bottom-0 top-14 z-30 bg-background/80 p-2">
+      <form onSubmit={(e) => { e.preventDefault(); if (complete) onSave(); }} className="flex h-full min-h-0 flex-col overflow-hidden rounded-xl border border-bone bg-background shadow-xl">
+        <header className="flex shrink-0 items-start gap-2.5 border-b border-bone px-4 py-3">
+          <StickyNote className="mt-0.5 h-4 w-4 shrink-0 text-primary" aria-hidden />
+          <div className="min-w-0 flex-1">
+            <h2 className="text-base font-semibold leading-tight">Add a note</h2>
+            <p className="mt-0.5 line-clamp-2 text-xs text-ink-muted">Keep something useful with {UNIT_LABEL} at {UNIT_ADDRESS}.</p>
+          </div>
+          <Button type="button" variant="ghost" size="icon" aria-label="Close" onClick={onCancel} className="-mr-1 h-7 w-7 shrink-0"><X className="h-4 w-4" aria-hidden /></Button>
+        </header>
 
-          <div className="grid gap-6 px-6 py-5">
-            <fieldset>
-              <legend className="mb-2.5 text-sm font-semibold">Who can see it?</legend>
-              <div className="grid gap-2 sm:grid-cols-2">
-                <label className={choiceClass(draft.visibility === "shared")}>
-                  <input type="radio" name="note-visibility" value="shared" checked={draft.visibility === "shared"} onChange={() => onChange({ ...draft, visibility: "shared" })} className="mt-0.5 h-4 w-4 shrink-0 accent-primary" />
-                  <span><span className="flex items-center gap-1.5 font-medium"><Users className="h-4 w-4 text-primary" aria-hidden />Shared</span><span className="mt-1 block text-xs leading-relaxed text-ink-muted">Everyone with access to this Unit</span></span>
-                </label>
-                <label className={choiceClass(draft.visibility === "private")}>
-                  <input type="radio" name="note-visibility" value="private" checked={draft.visibility === "private"} onChange={() => onChange({ ...draft, visibility: "private" })} className="mt-0.5 h-4 w-4 shrink-0 accent-primary" />
-                  <span><span className="flex items-center gap-1.5 font-medium"><Lock className="h-4 w-4 text-primary" aria-hidden />Private</span><span className="mt-1 block text-xs leading-relaxed text-ink-muted">Only you can see it</span></span>
-                </label>
-              </div>
-            </fieldset>
-
-            <fieldset>
-              <legend className="mb-2.5 text-sm font-semibold">What is it about?</legend>
-              <div className="grid gap-2">
-                {([
-                  ["unit", "Unit", `The ${UNIT_LABEL} itself`],
-                  ["occupancy", "Current occupancy", "The present occupier and their lease"],
-                  ["previous", "Previous occupancy", "An earlier occupancy at this Unit"],
-                ] as const).map(([value, label, hint]) => (
-                  <label key={value} className={choiceClass(draft.category === value)}>
-                    <input type="radio" name="note-category" value={value} checked={draft.category === value} onChange={() => onChange({ ...draft, category: value, ...(value === "previous" ? { occupancy: draft.occupancy } : { occupancy: undefined }) })} className="mt-0.5 h-4 w-4 shrink-0 accent-primary" />
-                    <span><span className="font-medium">{label}</span><span className="mt-0.5 block text-xs text-ink-muted">{hint}</span></span>
-                  </label>
-                ))}
-              </div>
-              {draft.category === "previous" && (
-                <div className="mt-3 rounded-lg border border-bone bg-secondary/40 p-3">
-                  <label htmlFor="previous-occupancy" className="mb-1.5 block text-xs font-medium">Which previous occupancy?</label>
-                  <select id="previous-occupancy" aria-label="Previous occupancy" value={draft.occupancy ?? ""} onChange={(e) => onChange({ ...draft, occupancy: e.target.value || undefined })} className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-ring">
-                    <option value="">Choose an occupancy</option>
-                    {PREVIOUS_OCCUPANCIES.map((occupancy) => <option key={occupancy} value={occupancy}>{occupancy}</option>)}
-                  </select>
-                </div>
-              )}
-            </fieldset>
-
-            <div>
-              <label htmlFor="note-field" className="mb-2 block text-sm font-semibold">Your note</label>
-              <textarea id="note-field" aria-label="Your note" value={draft.content} onChange={(e) => onChange({ ...draft, content: e.target.value })} rows={5} autoFocus placeholder="Write your note here…" className="w-full resize-y rounded-md border border-input bg-background px-3.5 py-3 text-sm leading-relaxed outline-none focus:ring-2 focus:ring-ring" />
-              <p className="mt-1.5 text-xs text-ink-muted">On a phone, you can use the keyboard microphone to dictate.</p>
+        <div className="grid min-h-0 flex-1 content-start gap-4 overflow-y-auto px-4 py-3.5">
+          <fieldset>
+            <legend className="mb-1.5 text-sm font-semibold">Who can see it?</legend>
+            <div className="grid grid-cols-2 gap-1.5">
+              <label className={choiceClass(draft.visibility === "shared")}>
+                <input type="radio" name="note-visibility" value="shared" checked={draft.visibility === "shared"} onChange={() => onChange({ ...draft, visibility: "shared" })} className="mt-0.5 h-4 w-4 shrink-0 accent-primary" />
+                <span className="min-w-0"><span className="flex items-center gap-1.5 font-medium"><Users className="h-4 w-4 text-primary" aria-hidden />Shared</span><span className="mt-0.5 block text-[11px] leading-snug text-ink-muted">Everyone with access to this Unit</span></span>
+              </label>
+              <label className={choiceClass(draft.visibility === "private")}>
+                <input type="radio" name="note-visibility" value="private" checked={draft.visibility === "private"} onChange={() => onChange({ ...draft, visibility: "private" })} className="mt-0.5 h-4 w-4 shrink-0 accent-primary" />
+                <span className="min-w-0"><span className="flex items-center gap-1.5 font-medium"><Lock className="h-4 w-4 text-primary" aria-hidden />Private</span><span className="mt-0.5 block text-[11px] leading-snug text-ink-muted">Only you can see it</span></span>
+              </label>
             </div>
-          </div>
+          </fieldset>
 
-          <div className="flex items-center justify-end gap-2 border-t border-bone bg-secondary/30 px-6 py-4">
-            <Button type="button" variant="ghost" onClick={onCancel}>Cancel</Button>
-            <Button type="submit" disabled={!complete} className="gap-1.5"><StickyNote className="h-4 w-4" aria-hidden />Save note</Button>
+          <fieldset>
+            <legend className="mb-1.5 text-sm font-semibold">What is it about?</legend>
+            <div className="grid gap-1.5">
+              {([
+                ["unit", "Unit", `The ${UNIT_LABEL} itself`],
+                ["occupancy", "Current occupancy", "The present occupier and their lease"],
+                ["previous", "Previous occupancy", "An earlier occupancy at this Unit"],
+              ] as const).map(([value, label, hint]) => (
+                <label key={value} className={choiceClass(draft.category === value)}>
+                  <input type="radio" name="note-category" value={value} checked={draft.category === value} onChange={() => onChange({ ...draft, category: value, ...(value === "previous" ? { occupancy: draft.occupancy } : { occupancy: undefined }) })} className="mt-0.5 h-4 w-4 shrink-0 accent-primary" />
+                  <span className="min-w-0"><span className="font-medium">{label}</span><span className="mt-0.5 block text-[11px] leading-snug text-ink-muted">{hint}</span></span>
+                </label>
+              ))}
+            </div>
+            {draft.category === "previous" && (
+              <div className="mt-2 rounded-lg border border-bone bg-secondary/40 p-2.5">
+                <label htmlFor="previous-occupancy" className="mb-1 block text-xs font-medium">Which previous occupancy?</label>
+                <select id="previous-occupancy" aria-label="Previous occupancy" value={draft.occupancy ?? ""} onChange={(e) => onChange({ ...draft, occupancy: e.target.value || undefined })} className="w-full rounded-md border border-input bg-background px-2.5 py-1.5 text-sm outline-none focus:ring-2 focus:ring-ring">
+                  <option value="">Choose an occupancy</option>
+                  {PREVIOUS_OCCUPANCIES.map((occupancy) => <option key={occupancy} value={occupancy}>{occupancy}</option>)}
+                </select>
+              </div>
+            )}
+          </fieldset>
+
+          <div>
+            <label htmlFor="note-field" className="mb-1.5 block text-sm font-semibold">Your note</label>
+            <textarea id="note-field" aria-label="Your note" value={draft.content} onChange={(e) => onChange({ ...draft, content: e.target.value })} rows={4} autoFocus placeholder="Write your note here…" className="w-full resize-y rounded-md border border-input bg-background px-3 py-2.5 text-sm leading-relaxed outline-none focus:ring-2 focus:ring-ring" />
+            <p className="mt-1 text-[11px] text-ink-muted">On a phone, you can use the keyboard microphone to dictate.</p>
           </div>
-        </form>
-      </DialogContent>
-    </Dialog>
+        </div>
+
+        <footer className="flex shrink-0 items-center justify-end gap-2 border-t border-bone bg-secondary/30 px-4 py-2.5">
+          <Button type="button" variant="ghost" size="sm" onClick={onCancel}>Cancel</Button>
+          <Button type="submit" size="sm" disabled={!complete} className="gap-1.5"><StickyNote className="h-4 w-4" aria-hidden />Save note</Button>
+        </footer>
+      </form>
+    </div>
   );
 }
 
@@ -439,7 +445,6 @@ export default function PrototypeNotes() {
 
   return (
     <div className="relative flex h-screen w-full overflow-hidden bg-background text-ink">
-      {draft && <NoteDialog draft={draft} onChange={setDraft} onCancel={() => setDraft(null)} onSave={() => saveNote(draft)} />}
       <aside className="flex w-[150px] shrink-0 flex-col gap-1 border-r border-bone bg-background px-3 py-4 max-md:hidden">
         <img src={owlDefault} alt="" aria-hidden className="mb-4 h-9 w-9 object-contain" />
         <span className="flex items-center gap-2 rounded-md px-2 py-1.5 text-sm text-ink-muted"><Building2 className="h-4 w-4" aria-hidden />Portfolio</span>
@@ -448,7 +453,7 @@ export default function PrototypeNotes() {
         <div className="mt-auto grid h-9 w-9 place-items-center rounded-full bg-bone text-xs font-semibold text-charcoal">MT</div>
       </aside>
 
-      <section aria-label="Chat with Hobson" className="flex w-[460px] min-w-0 shrink-0 flex-col border-r border-bone bg-background max-lg:flex-1">
+      <section aria-label="Chat with Hobson" className="relative flex w-[460px] min-w-0 shrink-0 flex-col overflow-hidden border-r border-bone bg-background max-lg:flex-1">
         <header className="flex h-14 shrink-0 items-center justify-between gap-2 border-b border-bone px-5">
           <p className="flex min-w-0 items-center gap-1.5 text-sm">
             <span className="truncate font-medium text-primary">{UNIT_ADDRESS}</span>
@@ -533,6 +538,7 @@ export default function PrototypeNotes() {
           </form>
           )}
         </div>
+        {draft && <NoteDialog draft={draft} onChange={setDraft} onCancel={() => setDraft(null)} onSave={() => saveNote(draft)} />}
       </section>
 
       {notesOpen && notes.length > 0 && (

@@ -1,6 +1,7 @@
 # Roadmap
 
 ## Prototype Notes — pop-up creation
+- [x] Shrink the note pop-up to the chat column only: it now opens below the Unit header inside the conversation area (chat header, Notes and Papers stay visible), with tighter spacing and a wrapping heading; twenty-three focused checks pass and desktop and phone flows verified live with no page errors. Not published.
 - [x] Remove the disabled "Record the Unit's current situation — Coming soon" action from the + menu; retain Add a Note and disabled Upload papers. Twenty-three focused checks pass. Not published.
 - [x] Move note creation out of Hobson's chat questionnaire into one pop-up with Shared/Private, Unit/Current occupancy/Previous occupancy and the note field; saving opens the Notes panel without inserting a note card into chat. Twenty-three focused checks pass; desktop and phone flows verified live with no page errors or horizontal overflow. Private entrance not re-tested; not published.
 
