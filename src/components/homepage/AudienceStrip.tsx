@@ -88,17 +88,15 @@ export const AudienceStrip = () => {
             })}
           </div>
 
-          <div className="mt-10 sm:mt-14 max-w-3xl mx-auto">
-            <div className="rounded-2xl bg-accent border border-border/50 px-5 py-7 sm:px-12 sm:py-10 text-center">
-              <span
-                aria-hidden="true"
-                className="mx-auto mb-4 block h-px w-12 bg-primary/50 sm:mb-5"
-              />
-              <p className="text-base sm:text-xl md:text-[1.35rem] leading-relaxed font-medium tracking-tight text-foreground">
-                Hand me the filing&nbsp;cabinet and I'll have it in&nbsp;order — then you can talk to
-                your papers from anywhere.
-              </p>
-            </div>
+          <div className="mt-10 sm:mt-14 max-w-3xl mx-auto text-center">
+            <span
+              aria-hidden="true"
+              className="mx-auto mb-4 block h-px w-12 bg-primary/50 sm:mb-5"
+            />
+            <p className="text-base sm:text-xl md:text-[1.35rem] leading-relaxed font-normal tracking-tight text-foreground">
+              You have a filing&nbsp;cabinet of property-related papers — I'll have it in&nbsp;order,
+              so you can talk to your papers from anywhere.
+            </p>
           </div>
         </div>
       </div>

@@ -10,6 +10,7 @@
 - [x] Rename the first group to "Owners and Managers of a property business"; checked live with no page errors. Not published.
 - [x] Present the closing line as a centred lavender statement panel with a purple rule and charcoal reading-size type; checked live at desktop and phone widths with no page errors. Not published.
 - [x] Re-word the closing line to "Hand me the filing cabinet and I'll have it in order — then you can talk to your papers from anywhere."; checked live with no page errors. Not published.
+- [x] Re-word the closing line to address the reader ("You have a filing cabinet..."), set it in normal weight, and drop the bordered tinted box; checked live with no page errors. Not published.
 
 ## Homepage — quotes above the assistant section
 - [x] Move the quote section directly above "Your own assistant" so visitors meet the remarks before the demonstration; order verified live (Who I work for → quotes → assistant), no page errors, build clean. Not published.
