@@ -9,7 +9,6 @@ const groups = [
       "Institutional owners",
       "Family offices",
       "Funds and REITs",
-      "Individual owners",
       "Managing agents",
       "Architects and surveyors",
       "SMEs",
