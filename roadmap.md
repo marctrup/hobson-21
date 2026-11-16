@@ -1,5 +1,8 @@
 # Roadmap
 
+## Homepage — quotes above the assistant section
+- [x] Move the quote section directly above "Your own assistant" so visitors meet the remarks before the demonstration; order verified live (Who I work for → quotes → assistant), no page errors, build clean. Not published.
+
 ## Prototype Status — a dynamic portfolio map
 - [x] Rename the visible Tenancy ending signal to Occupancy ending in Map and Papers without changing the underlying confirmation rules; 19 focused checks pass, both live filter panels verified with no page errors, build clean. Not published.
 - [x] Add a top-right Papers / Map switch and a Papers Review area based on the supplied reference.

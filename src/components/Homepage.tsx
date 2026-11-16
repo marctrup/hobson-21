@@ -198,16 +198,14 @@ export const Homepage = () => {
           {/* Audience Strip */}
           <AudienceStrip />
 
+          {/* Remarks from visitors, above the assistant section */}
+          <TestimonialSection />
+
           {/* Talk to your papers */}
           <TalkToYourPapers />
 
           {/* Trust Strip */}
           <TrustStrip />
-
-          {/* Remarks from visitors, before the final invitation */}
-          <TestimonialSection />
-
-
 
           <PilotApplicationForm showForm={showPilotForm} setShowForm={setShowPilotForm} />
 
