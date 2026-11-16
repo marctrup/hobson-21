@@ -9,135 +9,121 @@ const placeholder = () => (screen.getByLabelText("Ask Hobson") as HTMLInputEleme
 function startNoteFromMenu() {
   fireEvent.click(screen.getByRole("button", { name: "Chat actions" }));
   fireEvent.click(screen.getByRole("button", { name: "Add a Note" }));
+  return screen.getByRole("dialog", { name: "Add a note" });
 }
 
-/** Choose Add a Note and answer both questions, so Hobson is now asking for the note itself. */
-async function openNoteToTheContentRequest() {
-  startNoteFromMenu();
-  expect(placeholder()).toBe("Ask me about this unit");
-
-  fireEvent.click(screen.getByRole("button", { name: "Shared" }));
-  await screen.findByRole("button", { name: "Current Occupancy" });
-  expect(placeholder()).toBe("Ask me about this unit");
-
-  fireEvent.click(screen.getByRole("button", { name: "Current Occupancy" }));
-  await screen.findByLabelText("Your note");
-  expect(placeholder()).toBe("Ask me about this unit");
+function choose(dialog: HTMLElement, visibility: "Shared" | "Private", category: "Unit" | "Current occupancy" | "Previous occupancy") {
+  fireEvent.click(within(dialog).getByRole("radio", { name: new RegExp(`^${visibility}`) }));
+  fireEvent.click(within(dialog).getByRole("radio", { name: new RegExp(`^${category}`) }));
 }
 
-/** Give the note through the dedicated field and wait until Hobson has kept it. */
-async function giveNote(text: string) {
-  fireEvent.change(screen.getByLabelText("Your note"), { target: { value: text } });
-  fireEvent.click(screen.getByRole("button", { name: "Save note" }));
-  await screen.findByText(/I've added your note/);
-  expect(screen.queryByLabelText("Your note")).toBeNull();
+function writeAndSave(dialog: HTMLElement, text: string) {
+  fireEvent.change(within(dialog).getByLabelText("Your note"), { target: { value: text } });
+  fireEvent.click(within(dialog).getByRole("button", { name: "Save note" }));
 }
 
-describe("Prototype Notes composer", () => {
-  it("asks for the note only after the last question", async () => {
+describe("Prototype Notes pop-up", () => {
+  it("keeps every creation choice in one pop-up and out of the conversation", () => {
     render(<PrototypeNotes />);
+    const dialog = startNoteFromMenu();
+
+    for (const name of [/^Shared/, /^Private/, /^Unit/, /^Current occupancy/, /^Previous occupancy/]) {
+      expect(within(dialog).getByRole("radio", { name })).toBeInTheDocument();
+    }
+    expect(within(dialog).getByLabelText("Your note")).toBeInTheDocument();
+    expect(within(dialog).getByRole("button", { name: "Save note" })).toBeDisabled();
+    expect(screen.queryByText(/Would you like your note shared/)).toBeNull();
     expect(placeholder()).toBe("Ask me about this unit");
-    await openNoteToTheContentRequest();
-    expect(screen.getByText(/tap the microphone on your phone.s keyboard/)).toBeInTheDocument();
   });
 
-  it("stops asking for the note once it has been given", async () => {
+  it("saves a shared current-occupancy note and reveals it in the Notes panel", async () => {
     render(<PrototypeNotes />);
-    await openNoteToTheContentRequest();
-    await giveNote("Car space allocated for free to Mr Mark Jones - no paper work provided");
-    const cards = screen.getAllByRole("listitem", { name: /Occupancy note/i });
-    expect(cards[0]).toHaveTextContent("Car space allocated for free to Mr Mark Jones - no paper work provided");
-  });
+    const dialog = startNoteFromMenu();
+    choose(dialog, "Shared", "Current occupancy");
+    writeAndSave(dialog, "Car space allocated for free to Mr Mark Jones");
 
-  it("saves the note when Enter is pressed in the note field, as a phone keyboard sends it", async () => {
-    render(<PrototypeNotes />);
-    await openNoteToTheContentRequest();
-    fireEvent.change(screen.getByLabelText("Your note"), { target: { value: "Spoken into the phone keyboard" } });
-    fireEvent.keyDown(screen.getByLabelText("Your note"), { key: "Enter" });
-    await screen.findByText(/I've added your note/);
-    expect(screen.queryByLabelText("Your note")).toBeNull();
-    expect(screen.getByRole("listitem", { name: /Occupancy note/i })).toHaveTextContent("Spoken into the phone keyboard");
-  });
-
-  it("stops asking for the note when the conversation moves on elsewhere", async () => {
-    render(<PrototypeNotes />);
-    await openNoteToTheContentRequest();
-    await giveNote("Car space allocated for free to Mr Mark Jones - no paper work provided");
-
-    // A second note is underway and Hobson has asked for it...
-    await openNoteToTheContentRequest();
-
-    // ...viewing notes opens the side panel without disturbing the pending note.
-    fireEvent.click(screen.getByRole("button", { name: /note.*for this Unit/i }));
     const panel = await screen.findByRole("region", { name: "Unit notes" });
-    expect(within(panel).getByText(/Car space allocated/)).toBeTruthy();
-    expect(screen.getByLabelText("Your note")).toBeTruthy();
-    fireEvent.click(within(panel).getByRole("button", { name: "Close notes" }));
-    expect(screen.queryByRole("region", { name: "Unit notes" })).toBeNull();
+    const card = within(panel).getByRole("listitem", { name: "Occupancy note" });
+    expect(card).toHaveTextContent("Car space allocated for free to Mr Mark Jones");
+    expect(card).toHaveTextContent("Current Occupancy");
+    expect(screen.queryByRole("dialog", { name: "Add a note" })).toBeNull();
+    expect(within(screen.getByRole("log", { name: "Conversation" })).queryByText(/Car space allocated/)).toBeNull();
+    expect(screen.getByRole("button", { name: /2 notes for this Unit/i })).toBeInTheDocument();
   });
-});
 
-describe("Prototype Notes stay in the chat", () => {
-  it("keeps notes out of the Papers panel, which holds only read papers", async () => {
+  it("records a private Unit note", async () => {
     render(<PrototypeNotes />);
-    await openNoteToTheContentRequest();
-    await giveNote("Car space allocated for free to Mr Mark Jones");
+    const dialog = startNoteFromMenu();
+    choose(dialog, "Private", "Unit");
+    writeAndSave(dialog, "The window locks were replaced in March");
 
-    const papers = screen.getByRole("region", { name: "Papers" });
-    expect(within(papers).queryAllByRole("region", { name: "Saved Unit notes" })).toHaveLength(0);
-    expect(within(papers).queryByText(/Car space allocated/)).toBeNull();
-    expect(within(papers).queryAllByRole("button", { name: /^Delete note/ })).toHaveLength(0);
+    const panel = await screen.findByRole("region", { name: "Unit notes" });
+    const card = within(panel).getAllByRole("listitem", { name: "Unit note" })[0];
+    expect(card).toHaveTextContent("Private");
+    expect(card).toHaveTextContent("The window locks were replaced in March");
+  });
 
-    // The note itself is still held in the conversation.
-    expect(screen.getAllByRole("region", { name: "Saved Unit notes" }).length).toBeGreaterThan(0);
+  it("requires and records the selected previous occupancy", async () => {
+    render(<PrototypeNotes />);
+    const dialog = startNoteFromMenu();
+    choose(dialog, "Shared", "Previous occupancy");
+    fireEvent.change(within(dialog).getByLabelText("Your note"), { target: { value: "Shop fit-out left in place" } });
+    expect(within(dialog).getByRole("button", { name: "Save note" })).toBeDisabled();
+
+    fireEvent.change(within(dialog).getByLabelText("Previous occupancy"), { target: { value: "Lease · 4 March 2021 · L’Occitane Limited" } });
+    fireEvent.click(within(dialog).getByRole("button", { name: "Save note" }));
+
+    const panel = await screen.findByRole("region", { name: "Unit notes" });
+    const card = within(panel).getByRole("listitem", { name: "Previous occupancy note" });
+    expect(card).toHaveTextContent("L’Occitane Limited");
+    expect(card).toHaveTextContent("Shop fit-out left in place");
+  });
+
+  it("discards an unfinished note when the pop-up is cancelled", () => {
+    render(<PrototypeNotes />);
+    const dialog = startNoteFromMenu();
+    choose(dialog, "Shared", "Unit");
+    fireEvent.change(within(dialog).getByLabelText("Your note"), { target: { value: "Do not keep this" } });
+    fireEvent.click(within(dialog).getByRole("button", { name: "Cancel" }));
+
+    expect(screen.queryByRole("dialog", { name: "Add a note" })).toBeNull();
+    fireEvent.click(screen.getByRole("button", { name: /1 note for this Unit/i }));
+    expect(screen.queryByText("Do not keep this")).toBeNull();
+  });
+
+  it("opens the pop-up for a typed note request instead of starting a chat questionnaire", async () => {
+    render(<PrototypeNotes />);
+    fireEvent.change(screen.getByLabelText("Ask Hobson"), { target: { value: "Add a private note that the roof key is with the porter" } });
+    fireEvent.click(screen.getByRole("button", { name: "Send message" }));
+
+    const dialog = await screen.findByRole("dialog", { name: "Add a note" });
+    expect(within(dialog).getByRole("radio", { name: /^Private/ })).toBeChecked();
+    expect(within(dialog).getByLabelText("Your note")).toHaveValue("The roof key is with the porter");
+    expect(screen.queryByText(/Would you like your note shared/)).toBeNull();
   });
 });
 
 describe("Prototype Notes deleting", () => {
   it("names the note in words instead of showing it again, and removes the icon with the last note", async () => {
     render(<PrototypeNotes />);
-    // A dummy note is kept from the start, so the icon is already there.
-    expect(screen.getByRole("button", { name: /note.*for this Unit/i })).toHaveTextContent("1");
+    const dialog = startNoteFromMenu();
+    choose(dialog, "Shared", "Current occupancy");
+    writeAndSave(dialog, "Car space allocated for free");
 
-    await openNoteToTheContentRequest();
-    await giveNote("Car space allocated for free");
-
-    expect(screen.getByRole("button", { name: /note.*for this Unit/i })).toHaveTextContent("2");
-    const cardsBefore = screen.getAllByRole("region", { name: "Saved Unit notes" }).length;
-
-    fireEvent.click(screen.getAllByRole("button", { name: "Delete note: Car space allocated for free" })[0]);
+    const panel = await screen.findByRole("region", { name: "Unit notes" });
+    fireEvent.click(within(panel).getByRole("button", { name: "Delete note: Car space allocated for free" }));
     await screen.findByText(/Would you like me to delete this note/);
     expect(screen.getByText(/"Car space allocated for free"/)).toBeInTheDocument();
-    expect(screen.getAllByRole("region", { name: "Saved Unit notes" })).toHaveLength(cardsBefore);
+    expect(within(panel).getByText("Car space allocated for free")).toBeInTheDocument();
 
     fireEvent.click(screen.getByRole("button", { name: "Delete note" }));
     await screen.findByText(/I've deleted that note/);
-    expect(screen.getByRole("button", { name: /note.*for this Unit/i })).toHaveTextContent("1");
+    expect(screen.getByRole("button", { name: /1 note for this Unit/i })).toBeInTheDocument();
 
-    // Deleting the dummy note as well takes the icon away with the last note.
-    fireEvent.click(screen.getByRole("button", { name: /note.*for this Unit/i }));
-    const panel = await screen.findByRole("region", { name: "Unit notes" });
     fireEvent.click(within(panel).getByRole("button", { name: /^Delete note: The porter keeps/ }));
     await screen.findByText(/"The porter keeps/);
     fireEvent.click(screen.getByRole("button", { name: "Delete note" }));
     await waitFor(() => expect(screen.queryByRole("button", { name: /note.*for this Unit/i })).toBeNull());
-    expect(screen.queryAllByRole("region", { name: "Saved Unit notes" })).toHaveLength(0);
-  });
-});
-
-describe("Prototype Notes previous occupancy", () => {
-  it("asks which previous occupancy and records it on the note", async () => {
-    render(<PrototypeNotes />);
-    startNoteFromMenu();
-    fireEvent.click(screen.getByRole("button", { name: "Shared" }));
-    fireEvent.click(await screen.findByRole("button", { name: "Previous Occupancies" }));
-    const lease = await screen.findByRole("button", { name: "Lease · 4 March 2021 · L’Occitane Limited" });
-    expect(screen.getByRole("button", { name: "Lease · 21 May 2012 · Abbey Cross Trading Limited" })).toBeInTheDocument();
-    fireEvent.click(lease);
-    await screen.findByLabelText("Your note");
-    await giveNote("Shop fit-out left in place");
-    const card = screen.getByRole("listitem", { name: "Previous occupancy note" });
-    expect(within(card).getByText(/L’Occitane Limited/)).toBeInTheDocument();
   });
 });
 
@@ -151,6 +137,6 @@ describe("Prototype Notes chat actions", () => {
       expect(within(item).getByText("Coming soon")).toBeInTheDocument();
     }
     fireEvent.click(screen.getByRole("button", { name: "Add a Note" }));
-    expect(screen.getByRole("button", { name: "Shared" })).toBeInTheDocument();
+    expect(screen.getByRole("dialog", { name: "Add a note" })).toBeInTheDocument();
   });
 });

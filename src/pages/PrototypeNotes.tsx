@@ -1,6 +1,7 @@
-import { useEffect, useRef, useState, type ReactNode } from "react";
-import { ArrowRight, Building2, ChevronDown, ChevronRight, Clock, FileText, Lightbulb, Loader2, Lock, Mic, Pause, Play, Plus, Upload, Square, Map as MapIcon, MessageSquare, Pencil, RotateCcw, StickyNote, Trash2, X } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { ArrowRight, Building2, ChevronDown, ChevronRight, Clock, FileText, Lightbulb, Loader2, Lock, Mic, Pause, Play, Plus, Upload, Square, Map as MapIcon, MessageSquare, Pencil, RotateCcw, StickyNote, Trash2, Users, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import owlDefault from "@/assets/prototype/owl-default.png";
 import {
@@ -9,16 +10,13 @@ import {
   voiceCheckText,
   VOICE_CHOICES,
   type VoiceClip,
-  confirmationText,
   deleteQuestion,
   isListRequest,
   makeNote,
-  missingQuestion,
   NOTE_CONTENT_PROMPT,
   NOTE_AUTHOR,
   NOTE_DATE,
   parseNoteRequest,
-  isNoteFieldMessage,
   UNIT_ADDRESS,
   UNIT_LABEL,
   type Note,
@@ -27,10 +25,10 @@ import {
 } from "./prototypeNotes";
 import { startRecording, transcribeVoiceNote, type Recording } from "@/lib/voiceNote";
 
-// Prototype Notes: adding, seeing, editing and deleting Unit notes entirely
-// within Hobson's conversation. Local demonstration state only; nothing is saved.
+// Prototype Notes: a pop-up creates Unit notes; chat remains for conversation.
+// Local demonstration state only; nothing is saved.
 
-type Message = { id: number; role: "user" | "hobson"; text: string; choices?: string[]; noteIds?: string[]; noteField?: boolean; situationField?: boolean };
+type Message = { id: number; role: "user" | "hobson"; text: string; choices?: string[]; situationField?: boolean };
 
 // The Unit's current situation is the user's own record, kept apart from the
 // occupation history read from papers; labels may combine.
@@ -153,34 +151,77 @@ function NoteEntry({ note, editing, onEdit, onDelete, onSaveEdit, onCancelEdit }
   );
 }
 
-/** The dedicated note field, written inside Hobson's request so a note is never mistaken for an ordinary chat message. */
-function NoteField({ onSave }: { onSave: (text: string) => void }) {
-  const [text, setText] = useState("");
+function NoteDialog({ draft, onChange, onCancel, onSave }: {
+  draft: NoteDraft;
+  onChange: (draft: NoteDraft) => void;
+  onCancel: () => void;
+  onSave: () => void;
+}) {
+  const complete = !!(draft.visibility && draft.category && draft.content.trim() && (draft.category !== "previous" || draft.occupancy));
+  const choiceClass = (selected: boolean) => `flex cursor-pointer items-start gap-3 rounded-lg border px-3.5 py-3 text-sm transition-colors ${selected ? "border-primary bg-primary/[0.05]" : "border-input bg-background hover:border-primary/40 hover:bg-primary/[0.025]"}`;
   return (
-    <form className="mt-2.5 grid gap-2 border-t border-primary/15 pt-2.5" onSubmit={(e) => { e.preventDefault(); if (text.trim()) onSave(text.trim()); }}>
-      <label htmlFor="note-field" className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-primary">
-        <StickyNote className="h-3 w-3" aria-hidden />Your note
-      </label>
-      <textarea id="note-field" aria-label="Your note" value={text} onChange={(e) => setText(e.target.value)} rows={3} autoFocus
-        onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); if (text.trim()) onSave(text.trim()); } }}
-        placeholder="Write your note here…" className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-ring" />
-      <span className="flex gap-2">
-        <Button type="submit" size="sm" disabled={!text.trim()} className="gap-1.5"><StickyNote className="h-3.5 w-3.5" aria-hidden />Save note</Button>
-      </span>
-    </form>
-  );
-}
+    <Dialog open onOpenChange={(open) => { if (!open) onCancel(); }}>
+      <DialogContent className="max-h-[calc(100dvh-2rem)] w-[calc(100%-2rem)] max-w-[560px] gap-0 overflow-y-auto rounded-2xl border-bone p-0 sm:max-w-[560px]">
+        <form onSubmit={(e) => { e.preventDefault(); if (complete) onSave(); }}>
+          <DialogHeader className="border-b border-bone px-6 py-5 pr-12 text-left">
+            <DialogTitle className="flex items-center gap-2.5 text-xl"><StickyNote className="h-5 w-5 text-primary" aria-hidden />Add a note</DialogTitle>
+            <DialogDescription className="pt-1 text-ink-muted">Keep something useful with {UNIT_LABEL} at {UNIT_ADDRESS}.</DialogDescription>
+          </DialogHeader>
 
-function SavedNotes({ count, children }: { count: number; children: ReactNode }) {
-  return (
-    <section aria-label="Saved Unit notes" className="w-full max-w-xl rounded-xl border border-primary/15 bg-primary/[0.04] p-3">
-      <p className="mb-2 flex items-center gap-2 px-1 text-sm">
-        <StickyNote className="h-4 w-4 text-primary" aria-hidden />
-        <span className="font-semibold">Saved Unit notes</span>
-        <span className="text-xs text-ink-muted">{count} {count === 1 ? "note" : "notes"}</span>
-      </p>
-      <ul className="grid gap-2">{children}</ul>
-    </section>
+          <div className="grid gap-6 px-6 py-5">
+            <fieldset>
+              <legend className="mb-2.5 text-sm font-semibold">Who can see it?</legend>
+              <div className="grid gap-2 sm:grid-cols-2">
+                <label className={choiceClass(draft.visibility === "shared")}>
+                  <input type="radio" name="note-visibility" value="shared" checked={draft.visibility === "shared"} onChange={() => onChange({ ...draft, visibility: "shared" })} className="mt-0.5 h-4 w-4 shrink-0 accent-primary" />
+                  <span><span className="flex items-center gap-1.5 font-medium"><Users className="h-4 w-4 text-primary" aria-hidden />Shared</span><span className="mt-1 block text-xs leading-relaxed text-ink-muted">Everyone with access to this Unit</span></span>
+                </label>
+                <label className={choiceClass(draft.visibility === "private")}>
+                  <input type="radio" name="note-visibility" value="private" checked={draft.visibility === "private"} onChange={() => onChange({ ...draft, visibility: "private" })} className="mt-0.5 h-4 w-4 shrink-0 accent-primary" />
+                  <span><span className="flex items-center gap-1.5 font-medium"><Lock className="h-4 w-4 text-primary" aria-hidden />Private</span><span className="mt-1 block text-xs leading-relaxed text-ink-muted">Only you can see it</span></span>
+                </label>
+              </div>
+            </fieldset>
+
+            <fieldset>
+              <legend className="mb-2.5 text-sm font-semibold">What is it about?</legend>
+              <div className="grid gap-2">
+                {([
+                  ["unit", "Unit", `The ${UNIT_LABEL} itself`],
+                  ["occupancy", "Current occupancy", "The present occupier and their lease"],
+                  ["previous", "Previous occupancy", "An earlier occupancy at this Unit"],
+                ] as const).map(([value, label, hint]) => (
+                  <label key={value} className={choiceClass(draft.category === value)}>
+                    <input type="radio" name="note-category" value={value} checked={draft.category === value} onChange={() => onChange({ ...draft, category: value, ...(value === "previous" ? { occupancy: draft.occupancy } : { occupancy: undefined }) })} className="mt-0.5 h-4 w-4 shrink-0 accent-primary" />
+                    <span><span className="font-medium">{label}</span><span className="mt-0.5 block text-xs text-ink-muted">{hint}</span></span>
+                  </label>
+                ))}
+              </div>
+              {draft.category === "previous" && (
+                <div className="mt-3 rounded-lg border border-bone bg-secondary/40 p-3">
+                  <label htmlFor="previous-occupancy" className="mb-1.5 block text-xs font-medium">Which previous occupancy?</label>
+                  <select id="previous-occupancy" aria-label="Previous occupancy" value={draft.occupancy ?? ""} onChange={(e) => onChange({ ...draft, occupancy: e.target.value || undefined })} className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-ring">
+                    <option value="">Choose an occupancy</option>
+                    {PREVIOUS_OCCUPANCIES.map((occupancy) => <option key={occupancy} value={occupancy}>{occupancy}</option>)}
+                  </select>
+                </div>
+              )}
+            </fieldset>
+
+            <div>
+              <label htmlFor="note-field" className="mb-2 block text-sm font-semibold">Your note</label>
+              <textarea id="note-field" aria-label="Your note" value={draft.content} onChange={(e) => onChange({ ...draft, content: e.target.value })} rows={5} autoFocus placeholder="Write your note here…" className="w-full resize-y rounded-md border border-input bg-background px-3.5 py-3 text-sm leading-relaxed outline-none focus:ring-2 focus:ring-ring" />
+              <p className="mt-1.5 text-xs text-ink-muted">On a phone, you can use the keyboard microphone to dictate.</p>
+            </div>
+          </div>
+
+          <div className="flex items-center justify-end gap-2 border-t border-bone bg-secondary/30 px-6 py-4">
+            <Button type="button" variant="ghost" onClick={onCancel}>Cancel</Button>
+            <Button type="submit" disabled={!complete} className="gap-1.5"><StickyNote className="h-4 w-4" aria-hidden />Save note</Button>
+          </div>
+        </form>
+      </DialogContent>
+    </Dialog>
   );
 }
 
@@ -216,16 +257,16 @@ export default function PrototypeNotes() {
 
   useEffect(() => { logEnd.current?.scrollIntoView?.({ block: "end" }); }, [messages, editingId]);
 
-  const say = (role: Message["role"], text: string, choices?: string[], noteIds?: string[], noteField?: boolean, situationField?: boolean) => {
+  const say = (role: Message["role"], text: string, choices?: string[], situationField?: boolean) => {
     if (!situationField) setAskingSituation(false);
-    setMessages((m) => [...m.map((x) => ({ ...x, choices: undefined })), { id: nextId.current++, role, text, choices, noteIds, noteField, situationField }]);
+    setMessages((m) => [...m.map((x) => ({ ...x, choices: undefined })), { id: nextId.current++, role, text, choices, situationField }]);
   };
 
   const askSituation = () => {
     setActionsOpen(false); setTryOpen(false);
     setDraft(null); setAwaitingContent(false); setPendingVoice(null); setDeleting(null); setEditingId(null);
     setAskingSituation(true);
-    say("hobson", "What is the current situation with the 1st Floor?\n\nYou can choose more than one.", undefined, undefined, false, true);
+    say("hobson", "What is the current situation with the 1st Floor?\n\nYou can choose more than one.", undefined, true);
   };
 
   const confirmSituation = (labels: string[]) => {
@@ -251,40 +292,27 @@ export default function PrototypeNotes() {
   };
 
   const saveNote = (complete: NoteDraft) => {
-    const note = makeNote(complete, `n${nextNoteId.current++}`);
+    if (!complete.visibility || !complete.category || !complete.content.trim() || (complete.category === "previous" && !complete.occupancy)) return;
+    const body = complete.content.trim().replace(/[.\s]+$/, "");
+    const note = makeNote({ ...complete, content: body.charAt(0).toUpperCase() + body.slice(1) }, `n${nextNoteId.current++}`);
     setNotes((ns) => [...ns, note]);
     setDraft(null);
-    say("hobson", confirmationText(note), undefined, [note.id]);
-  };
-
-  // + Note flow: Hobson asks (1) shared or private, (2) occupant or Unit, (3) the note itself.
-  const askNext = (d: NoteDraft) => {
-    if (!d.visibility) say("hobson", "Would you like your note shared or kept private?", ["Shared", "Kept private"]);
-    else if (!d.category) say("hobson", "Is your note about the Unit, the current occupancy, or a previous occupancy?", ["Unit", "Current Occupancy", "Previous Occupancies"]);
-    else if (d.category === "previous" && !d.occupancy) say("hobson", "Which previous occupancy is your note about? These match the papers marked as “No longer current”.", PREVIOUS_OCCUPANCIES);
-    else if (!d.content) { setAwaitingContent(true); say("hobson", NOTE_CONTENT_PROMPT, undefined, undefined, true); }
-    else saveNote(d);
-  };
-
-  // The note itself arrives through the dedicated field inside Hobson's
-  // request, never through the ordinary composer.
-  const saveNoteContent = (raw: string) => {
-    if (!awaitingContent) return;
     setAwaitingContent(false);
-    const body = raw.replace(/[.\s]+$/, "");
-    const parsed: NoteDraft = { ...(draft ?? {}), content: body.charAt(0).toUpperCase() + body.slice(1), ...(pendingVoice ? { voice: pendingVoice.clip } : {}) };
     setPendingVoice(null);
-    askNext(parsed);
+    setEditingId(null);
+    setNotesOpen(true);
   };
 
-  const startNote = () => {
+  const openNoteDialog = (fresh: NoteDraft = { content: "" }) => {
     setActionsOpen(false);
     setTryOpen(false);
-    if (awaitingContent || draft) return;
-    const fresh: NoteDraft = { content: "" };
+    setAwaitingContent(false);
+    setPendingVoice(null);
+    setEditingId(null);
     setDraft(fresh);
-    askNext(fresh);
   };
+
+  const startNote = () => openNoteDialog();
 
   const previewAction = (action: "papers") => {
     setActionsOpen(false); setTryOpen(false);
@@ -330,32 +358,13 @@ export default function PrototypeNotes() {
         }
         return;
       }
-      // A draft note is awaiting an answer (not its dedicated field).
-      if (draft && !wasAwaitingNote) {
-        const t = text.toLowerCase();
-        let next: NoteDraft | null = null;
-        if (!draft.visibility) {
-          if (/private|just me/.test(t)) next = { ...draft, visibility: "private" };
-          else if (/share|everyone/.test(t)) next = { ...draft, visibility: "shared" };
-        } else if (!draft.category) {
-          if (/previous/.test(t)) next = { ...draft, category: "previous" };
-          else if (/current|occupier|occupant|tenant/.test(t)) next = { ...draft, category: "occupancy" };
-          else if (/unit/.test(t)) next = { ...draft, category: "unit" };
-        } else if (draft.category === "previous" && !draft.occupancy) {
-          const pick = PREVIOUS_OCCUPANCIES.find((o) => o.toLowerCase() === t || o.toLowerCase().includes(t));
-          if (pick) next = { ...draft, occupancy: pick };
-        }
-        if (!next) { askNext(draft); return; }
-        setDraft(next);
-        askNext(next);
-        return;
-      }
-      // A fresh request.
+      // A note request opens the same pop-up as the + menu. Hobson never
+      // collects its sharing, occupancy or wording through the conversation.
       if (isListRequest(text)) { listNotes(notes); return; }
       const parsed = parseNoteRequest(text);
-      if (parsed) { setDraft(parsed); askNext(parsed); return; }
+      if (parsed) { openNoteDialog(parsed); return; }
       if (/rent/.test(text.toLowerCase())) { say("hobson", "The current rent is £1,224,882 per annum.\n\nBased on the Underlease and Rent Review Memorandum."); return; }
-      say("hobson", "I'm afraid this demonstration only covers notes for this Unit. Do ask me to add a note, or to show you the notes I've kept.");
+      say("hobson", "I'm afraid this demonstration only covers notes for this Unit. Use the + menu to add a note, or ask me to show you the notes I've kept.");
     }, 350);
   };
 
@@ -421,8 +430,6 @@ export default function PrototypeNotes() {
     nextId.current = 100; nextNoteId.current = 1; setSituation(null); setAskingSituation(false); setMessages(SEED);
   };
 
-  const noteById = (id: string) => notes.find((n) => n.id === id);
-
   const [openUnit, setOpenUnit] = useState("1st Floor");
   const entry = (where: string) => (n: Note) => (
     <NoteEntry key={n.id} note={n} editing={editingId === `${where}:${n.id}`}
@@ -432,6 +439,7 @@ export default function PrototypeNotes() {
 
   return (
     <div className="relative flex h-screen w-full overflow-hidden bg-background text-ink">
+      {draft && <NoteDialog draft={draft} onChange={setDraft} onCancel={() => setDraft(null)} onSave={() => saveNote(draft)} />}
       <aside className="flex w-[150px] shrink-0 flex-col gap-1 border-r border-bone bg-background px-3 py-4 max-md:hidden">
         <img src={owlDefault} alt="" aria-hidden className="mb-4 h-9 w-9 object-contain" />
         <span className="flex items-center gap-2 rounded-md px-2 py-1.5 text-sm text-ink-muted"><Building2 className="h-4 w-4" aria-hidden />Portfolio</span>
@@ -462,8 +470,6 @@ export default function PrototypeNotes() {
 
         <div role="log" aria-label="Conversation" className="flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto px-5 py-4">
           {messages.map((m, i) => {
-            const shown = (m.noteIds ?? []).map(noteById).filter((n): n is Note => !!n);
-            const fieldOpen = isNoteFieldMessage(m) && awaitingContent && i === messages.length - 1;
             const situationOpen = m.situationField && askingSituation && i === messages.length - 1;
             return (
               <div key={m.id} className={`flex min-w-0 flex-col gap-2 ${m.role === "user" ? "items-end" : "items-start"}`}>
@@ -471,11 +477,9 @@ export default function PrototypeNotes() {
                   {m.role === "hobson" && <img src={owlDefault} alt="Hobson" className="h-9 w-9 shrink-0 object-contain" />}
                   <div className={`min-w-0 rounded-lg px-3.5 py-2.5 ${m.role === "user" ? "bg-primary text-primary-foreground" : "bg-secondary"}`}>
                     <p className="whitespace-pre-line break-words text-sm leading-relaxed">{m.text}</p>
-                    {fieldOpen && <NoteField onSave={saveNoteContent} />}
                     {situationOpen && <SituationField initial={situation?.labels ?? []} onConfirm={confirmSituation} />}
                   </div>
                 </div>
-                {shown.length > 0 && <div className="w-full pl-11"><SavedNotes count={shown.length}>{shown.map(entry(`m${m.id}`))}</SavedNotes></div>}
                 {m.choices && (
                   <div role="group" aria-label="Choose an answer" className="ml-11 grid gap-1.5">
                     {m.choices.map((c) => (

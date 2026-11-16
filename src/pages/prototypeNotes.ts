@@ -1,4 +1,4 @@
-// Prototype Notes: pure logic for the conversation-led Unit notes demonstration.
+// Prototype Notes: pure logic for the pop-up-led Unit notes demonstration.
 // Local illustrative state only — nothing is saved anywhere, and notes stay
 // clearly marked as user-added, never confused with knowledge from papers.
 
@@ -117,13 +117,6 @@ export function deleteQuestion(note: Note | undefined): string {
 
 /** Hobson's final question: the note itself. */
 export const NOTE_CONTENT_PROMPT = "Please provide the note, which I will keep on file for you. Type it, or tap the microphone on your phone's keyboard and simply speak — your phone will write it out for you.";
-
-/**
- * True when Hobson's message carries the dedicated note field, so the note is
- * written inside his request rather than in the ordinary chat composer.
- */
-export const isNoteFieldMessage = (m: { role: "user" | "hobson"; text?: string; noteField?: boolean }) =>
-  m.role === "hobson" && m.noteField === true;
 
 /** Clock-style length of a voice note, e.g. 0:18. */
 export const clipLength = (seconds: number) => `${Math.floor(seconds / 60)}:${String(Math.round(seconds) % 60).padStart(2, "0")}`;

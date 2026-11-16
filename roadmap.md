@@ -1,5 +1,8 @@
 # Roadmap
 
+## Prototype Notes — pop-up creation
+- [x] Move note creation out of Hobson's chat questionnaire into one pop-up with Shared/Private, Unit/Current occupancy/Previous occupancy and the note field; saving opens the Notes panel without inserting a note card into chat. Twenty-three focused checks pass; desktop and phone flows verified live with no page errors or horizontal overflow. Private entrance not re-tested; not published.
+
 ## Homepage — "Who I work for" becomes two groups
 - [x] Replace the four audience cards with two groups so any business fits one: "You own and manage property" (property is the business) and "You occupy property" (property is a cost centre and a management complexity), each with worked examples; section verified live with no page errors, build clean. Not published.
 - [x] Re-set the example lists: owners/managers list asset managers, institutional owners, managing agents, funds and REITs, individual owners and SMEs; occupiers add charities. Examples now sit under a hairline "For example" rule in two balanced columns, collapsing to one column on phones so nothing wraps; checked at 1280 and 390 with no page errors, build clean. Not published.
