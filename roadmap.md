@@ -294,3 +294,4 @@
 - [x] Re-word the closing line to carry the reading-and-timeline sentiment: "If you have a filing cabinet of property-related papers, I'll read them all, lay them out in a visual timeline, and set you up so you can talk to them from anywhere." Checked live at desktop and phone widths with no page errors. Not published.
 - [x] Add family offices and architects and surveyors to the "Owners and Managers of a property business" examples (now eight). Checked live at desktop and phone widths with no page errors. Not published.
 - [x] Remove "Individual owners" from the owners and managers examples (now seven). Checked live at desktop and phone widths with no page errors. Not published.
+- [x] Rename the group label to "Property Businesses". Checked live at desktop and phone widths with no page errors. Not published.

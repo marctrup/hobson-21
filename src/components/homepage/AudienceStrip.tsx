@@ -3,7 +3,7 @@ import { Building2, KeyRound } from "lucide-react";
 const groups = [
   {
     icon: Building2,
-    label: "Owners and Managers of a property business",
+    label: "Property Businesses",
     examples: [
       "Asset managers",
       "Institutional owners",
