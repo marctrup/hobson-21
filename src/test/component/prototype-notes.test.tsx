@@ -13,26 +13,37 @@ function startNoteFromMenu() {
 }
 
 function choose(dialog: HTMLElement, visibility: "Shared" | "Private", category: "Unit" | "Current occupancy" | "Previous occupancy") {
-  fireEvent.click(within(dialog).getByRole("radio", { name: new RegExp(`^${visibility}`) }));
+  fireEvent.click(within(dialog).getByRole("radio", { name: visibility === "Private" ? /^Kept private/ : /^Shared/ }));
+  fireEvent.click(within(dialog).getByRole("button", { name: "Continue" }));
   fireEvent.click(within(dialog).getByRole("radio", { name: new RegExp(`^${category}`) }));
 }
 
 function writeAndSave(dialog: HTMLElement, text: string) {
+  fireEvent.click(within(dialog).getByRole("button", { name: "Continue" }));
   fireEvent.change(within(dialog).getByLabelText("Your note"), { target: { value: text } });
   fireEvent.click(within(dialog).getByRole("button", { name: "Save note" }));
 }
 
 describe("Prototype Notes pop-up", () => {
-  it("keeps every creation choice in one pop-up and out of the conversation", () => {
+  it("guides creation through three steps in one pop-up and out of the conversation", () => {
     render(<PrototypeNotes />);
     const dialog = startNoteFromMenu();
 
-    for (const name of [/^Shared/, /^Private/, /^Unit/, /^Current occupancy/, /^Previous occupancy/]) {
+    expect(within(dialog).getByText("Step 1 of 3")).toBeInTheDocument();
+    expect(within(dialog).getByRole("button", { name: "Continue" })).toBeDisabled();
+    fireEvent.click(within(dialog).getByRole("radio", { name: /^Shared/ }));
+    fireEvent.click(within(dialog).getByRole("button", { name: "Continue" }));
+
+    expect(within(dialog).getByText("Step 2 of 3")).toBeInTheDocument();
+    for (const name of [/^Unit/, /^Current occupancy/, /^Previous occupancy/]) {
       expect(within(dialog).getByRole("radio", { name })).toBeInTheDocument();
     }
+    fireEvent.click(within(dialog).getByRole("radio", { name: /^Unit/ }));
+    fireEvent.click(within(dialog).getByRole("button", { name: "Continue" }));
+
+    expect(within(dialog).getByText("Step 3 of 3")).toBeInTheDocument();
     expect(within(dialog).getByLabelText("Your note")).toBeInTheDocument();
     expect(within(dialog).getByRole("button", { name: "Save note" })).toBeDisabled();
-    expect(screen.queryByText(/Would you like your note shared/)).toBeNull();
     expect(placeholder()).toBe("Ask me about this unit");
   });
 
@@ -80,10 +91,11 @@ describe("Prototype Notes pop-up", () => {
     render(<PrototypeNotes />);
     const dialog = startNoteFromMenu();
     choose(dialog, "Shared", "Previous occupancy");
-    fireEvent.change(within(dialog).getByLabelText("Your note"), { target: { value: "Shop fit-out left in place" } });
-    expect(within(dialog).getByRole("button", { name: "Save note" })).toBeDisabled();
+    expect(within(dialog).getByRole("button", { name: "Continue" })).toBeDisabled();
 
     fireEvent.change(within(dialog).getByRole("combobox", { name: "Previous occupancy" }), { target: { value: "Lease · 4 March 2021 · L’Occitane Limited" } });
+    fireEvent.click(within(dialog).getByRole("button", { name: "Continue" }));
+    fireEvent.change(within(dialog).getByLabelText("Your note"), { target: { value: "Shop fit-out left in place" } });
     fireEvent.click(within(dialog).getByRole("button", { name: "Save note" }));
 
     const panel = await screen.findByRole("region", { name: "Unit notes" });
@@ -96,8 +108,9 @@ describe("Prototype Notes pop-up", () => {
     render(<PrototypeNotes />);
     const dialog = startNoteFromMenu();
     choose(dialog, "Shared", "Unit");
+    fireEvent.click(within(dialog).getByRole("button", { name: "Continue" }));
     fireEvent.change(within(dialog).getByLabelText("Your note"), { target: { value: "Do not keep this" } });
-    fireEvent.click(within(dialog).getByRole("button", { name: "Cancel" }));
+    fireEvent.click(within(dialog).getByRole("button", { name: "Discard note" }));
 
     expect(screen.queryByRole("dialog", { name: "Add a note" })).toBeNull();
     fireEvent.click(screen.getByRole("button", { name: /1 note for this Unit/i }));
@@ -110,9 +123,11 @@ describe("Prototype Notes pop-up", () => {
     fireEvent.click(screen.getByRole("button", { name: "Send message" }));
 
     const dialog = await screen.findByRole("dialog", { name: "Add a note" });
-    expect(within(dialog).getByRole("radio", { name: /^Private/ })).toBeChecked();
+    expect(within(dialog).getByRole("radio", { name: /^Kept private/ })).toBeChecked();
+    fireEvent.click(within(dialog).getByRole("button", { name: "Continue" }));
+    fireEvent.click(within(dialog).getByRole("radio", { name: /^Unit/ }));
+    fireEvent.click(within(dialog).getByRole("button", { name: "Continue" }));
     expect(within(dialog).getByLabelText("Your note")).toHaveValue("The roof key is with the porter");
-    expect(screen.queryByText(/Would you like your note shared/)).toBeNull();
   });
 });
 
