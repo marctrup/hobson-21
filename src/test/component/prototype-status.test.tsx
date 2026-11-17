@@ -1,6 +1,7 @@
 import React from "react";
 import { fireEvent, render, screen, within } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
+import L from "leaflet";
 
 import PrototypeStatus from "@/pages/PrototypeStatus";
 
@@ -37,19 +38,45 @@ describe("Prototype Status: dynamic portfolio signals", () => {
     render(<PrototypeStatus />);
     fireEvent.click(screen.getByRole("button", { name: "Map filters" }));
     const panel = screen.getByRole("group", { name: "Map signals" });
-    expect(within(panel).getByRole("button", { name: /All signals\s*24/ })).toBeInTheDocument();
+    expect(within(panel).getByRole("button", { name: /All signals\s*25/ })).toBeInTheDocument();
     expect(within(panel).getByRole("button", { name: /^No papers\s*10/ })).toBeInTheDocument();
     expect(within(panel).getByRole("button", { name: /^Occupancy ending\s*2/ })).toBeInTheDocument();
     expect(within(panel).getByRole("button", { name: /^No new occupancy\s*7/ })).toBeInTheDocument();
-    expect(within(panel).getByRole("button", { name: /^Available to let\s*4/ })).toBeInTheDocument();
+    expect(within(panel).getByRole("button", { name: /^Available to let\s*5/ })).toBeInTheDocument();
     expect(within(panel).getByRole("button", { name: /^Compliance warning\s*6/ })).toBeInTheDocument();
   });
 
   it("answers which Units are available without calling them empty", () => {
     render(<PrototypeStatus />);
     ask("Which Units are available to let?");
-    expect(screen.getByText(/4 Units are available to let/)).toBeInTheDocument();
+    expect(screen.getByText(/5 Units are available to let/)).toBeInTheDocument();
     expect(screen.getByText(/does not mean the Unit is necessarily empty/)).toBeInTheDocument();
+  });
+
+  it("links the letting to the agent's own listing page in chat", () => {
+    render(<PrototypeStatus />);
+    ask("Which Units are available to let?");
+    const link = screen.getByRole("link", { name: /View details on JLL/ });
+    expect(link).toHaveAttribute("href", "https://property.jll.co.uk/listings/63-temple-row");
+    expect(link).toHaveAttribute("target", "_blank");
+    expect(link).toHaveAttribute("rel", "noopener noreferrer");
+  });
+
+  it("carries the agent listing on the map badge itself", () => {
+    render(<PrototypeStatus />);
+    expect(vi.mocked(L.divIcon).mock.calls.some(([o]) => String(o?.html ?? "").includes('href="https://property.jll.co.uk/listings/63-temple-row"'))).toBe(true);
+  });
+
+  it("offers the listing on the place card and stays silent without one", () => {
+    render(<PrototypeStatus />);
+    ask("Tell me about 63 Temple Row");
+    const card = screen.getByRole("region", { name: "63 Temple Row Unit signals" });
+    const row = within(card).getByText("2nd Floor").closest("li")!;
+    expect(within(row).getByRole("link", { name: /View details on JLL/ })).toHaveAttribute("href", "https://property.jll.co.uk/listings/63-temple-row");
+    fireEvent.click(screen.getByRole("button", { name: "Close place" }));
+    ask("Tell me about Colmore Gate");
+    const colmore = screen.getByRole("region", { name: "Colmore Gate Unit signals" });
+    expect(within(colmore).getByText("1st Floor").closest("li")!.querySelector("a")).toBeNull();
   });
 
   it("separates current compliance attention from forthcoming expiry", () => {

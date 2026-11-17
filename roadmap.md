@@ -295,3 +295,6 @@
 - [x] Add family offices and architects and surveyors to the "Owners and Managers of a property business" examples (now eight). Checked live at desktop and phone widths with no page errors. Not published.
 - [x] Remove "Individual owners" from the owners and managers examples (now seven). Checked live at desktop and phone widths with no page errors. Not published.
 - [x] Rename the group label to "Property Businesses". Checked live at desktop and phone widths with no page errors. Not published.
+
+## Prototype Status — letting links to the agent's listing
+- [x] A Unit available to let can open the agent's own listing page so details are read at source. The purple TO LET badge, the place card and Hobson's chat answer each carry the link (new tab, noopener). 63 Temple Row, Birmingham added to the sample portfolio as the real example, linking to its live JLL listing "63 Temple Row - Office For Rent | JLL - UK"; Units with no listing recorded offer no link, and one shared link is withheld when competing listings exist. Selecting a place now raises the zoom until it sits clear of its neighbours so two badges cannot land on each other. 26 focused checks pass; badge, card and chat links verified live opening the JLL page with no page errors. Not published.

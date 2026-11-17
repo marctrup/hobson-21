@@ -13,8 +13,10 @@ export type FindingBook = Record<string, Finding>;
 /** A confirmed future legal ending — never inferred from contractual term expiry. */
 export type TenancyEnding = { date: string; detail: string };
 export type EndingBook = Record<string, TenancyEnding>;
+/** An agent's own listing page, so a letting can be checked at source. */
+export type Listing = { agency: string; url: string };
 /** A marketing instruction, independent of occupation and tenancy state. */
-export type Availability = { detail: string };
+export type Availability = { detail: string; listing?: Listing };
 export type AvailabilityBook = Record<string, Availability>;
 /** Document-level detail stays in chat; the map aggregates these to one warning. */
 export type ComplianceIssue = {
@@ -31,6 +33,8 @@ function floors(n: number) {
 export const STATUS_PLACES: StatusPlace[] = [
   { id: "st-pauls", name: "St Pauls House", town: "Leeds", coords: [53.7997, -1.5492], units: ["4th Floor", "5th Floor", "Part 2nd Floor", "Car Park"] },
   { id: "colmore", name: "Colmore Gate", town: "Birmingham", coords: [52.4831, -1.8990], units: ["Ground Floor Shop", "1st Floor", "2nd Floor", "3rd Floor"] },
+  // A real building with a live agent listing, so a TO LET link opens genuine details.
+  { id: "temple-row", name: "63 Temple Row", town: "Birmingham", coords: [52.4798, -1.8947], units: ["1st Floor", "2nd Floor", "3rd Floor"] },
   { id: "exchange", name: "The Exchange", town: "Manchester", coords: [53.4808, -2.2426], units: ["Ground Floor", "1st Floor", "2nd Floor"] },
   { id: "linear-park", name: "1 Linear Park", town: "Bristol", coords: [51.4545, -2.5879], units: ["Ground Floor", "1st Floor", "2nd Floor", "3rd Floor"] },
   { id: "paragon", name: "Paragon Centre", town: "London", coords: [51.5155, -0.0922], units: ["Unit 1", "Unit 2", "Unit 3", "Unit 4", "Unit 5"] },
@@ -52,6 +56,39 @@ export const CURRENT = { placeId: "linear-park", unit: "1st Floor" } as const;
 export const CURRENT_PLACE = STATUS_PLACES.find((p) => p.id === CURRENT.placeId)!;
 
 export const unitKey = (placeId: string, unit: string) => `${placeId}::${unit}`;
+
+export const unitListing = (placeId: string, unit: string, availability: AvailabilityBook): Listing | null =>
+  availability[unitKey(placeId, unit)]?.listing ?? null;
+
+/** Distinct agent listings for the given Units, in first-seen order. */
+export function listingsForUnits(pairs: { placeId: string; unit: string }[], availability: AvailabilityBook): Listing[] {
+  const seen = new Map<string, Listing>();
+  pairs.forEach(({ placeId, unit }) => {
+    const listing = unitListing(placeId, unit, availability);
+    if (listing && !seen.has(listing.url)) seen.set(listing.url, listing);
+  });
+  return [...seen.values()];
+}
+
+/** One agent listing a place's available Units share; null when none, or when several compete. */
+export function placeListing(place: StatusPlace, availability: AvailabilityBook): Listing | null {
+  const found = listingsForUnits(place.units.map((unit) => ({ placeId: place.id, unit })), availability);
+  return found.length === 1 ? found[0] : null;
+}
+
+/** Units matching a map lens, as place/unit pairs. */
+export function matchingUnits(
+  book: FindingBook,
+  endings: EndingBook,
+  availability: AvailabilityBook,
+  places: StatusPlace[] = STATUS_PLACES,
+  filter: MapFilter = "All",
+  compliance: ComplianceBook = {},
+): { placeId: string; unit: string }[] {
+  return places.flatMap((p) => p.units
+    .filter((u) => unitMatchesFilter(p.id, u, book, endings, availability, filter, compliance))
+    .map((u) => ({ placeId: p.id, unit: u })));
+}
 
 export function placeFindings(book: FindingBook, place: StatusPlace) {
   return place.units.flatMap((u) => { const f = book[unitKey(place.id, u)]; return f ? [{ unit: u, ...f }] : []; });

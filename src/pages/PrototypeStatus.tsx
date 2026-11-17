@@ -4,15 +4,15 @@
 import { useEffect, useRef, useState } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
-import { ArrowRight, Building2, CalendarClock, Check, ChevronDown, ChevronRight, FileQuestion, FileText, FileX, Lightbulb, Map as MapIcon, MapPin, MessageSquare, Plus, RotateCcw, Search, SlidersHorizontal, StickyNote, Tag, TriangleAlert, Upload, X } from "lucide-react";
+import { ArrowRight, Building2, CalendarClock, Check, ChevronDown, ChevronRight, ExternalLink, FileQuestion, FileText, FileX, Lightbulb, Map as MapIcon, MapPin, MessageSquare, Plus, RotateCcw, Search, SlidersHorizontal, StickyNote, Tag, TriangleAlert, Upload, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import * as Tooltip from "@radix-ui/react-tooltip";
 import owlDefault from "@/assets/prototype/owl-default.png";
 import {
-  CURRENT, CURRENT_PLACE, STATUS_PLACES, complianceAtPlace, complianceKindCounts, interpret, listWords, parseStatusInstruction, placeMatchesSignals,
+  CURRENT, CURRENT_PLACE, STATUS_PLACES, complianceAtPlace, complianceKindCounts, interpret, listWords, listingsForUnits, matchingUnits, parseStatusInstruction, placeListing, placeMatchesSignals,
   signalCounts, signalUnitsMatching, unitKey, unitMatchesFilter,
-  type AvailabilityBook, type ComplianceBook, type EndingBook, type FindingBook, type MapFilter, type StatusPlace, type StatusInstruction,
+  type AvailabilityBook, type ComplianceBook, type EndingBook, type FindingBook, type Listing, type MapFilter, type StatusPlace, type StatusInstruction,
 } from "./prototypeStatus";
 
 type Signal = Exclude<MapFilter, "All">;
@@ -30,7 +30,7 @@ const signalLabel = (signal: MapFilter) => signal === "Tenancy ending" ? "Occupa
 
 type PendingAction = StatusInstruction;
 type RecentChange = { placeId: string; unit: string; kind: "ending" | "available" };
-type Message = { id: number; role: "user" | "hobson"; text: string; choices?: string[]; noteField?: boolean; action?: PendingAction };
+type Message = { id: number; role: "user" | "hobson"; text: string; choices?: string[]; noteField?: boolean; action?: PendingAction; links?: Listing[] };
 
 const SEED: Message[] = [{
   id: 0, role: "hobson",
@@ -69,6 +69,7 @@ const SAMPLE_AVAILABLE: AvailabilityBook = {
   [unitKey("paragon", "Unit 3")]: { detail: "Being offered for a new occupier" },
   [unitKey("exchange", "2nd Floor")]: { detail: "Being offered before the confirmed tenancy ending" },
   [unitKey("linear-park", "Ground Floor")]: { detail: "Being offered while the current chain continues" },
+  [unitKey("temple-row", "2nd Floor")]: { detail: "Being offered for a new occupier", listing: { agency: "JLL", url: "https://property.jll.co.uk/listings/63-temple-row" } },
 };
 const SAMPLE_COMPLIANCE: ComplianceBook = {
   [unitKey("colmore", "2nd Floor")]: [{ kind: "Missing document", document: "Fire risk assessment" }],
@@ -101,6 +102,7 @@ function ringFor(places: StatusPlace[], book: FindingBook, endings: EndingBook, 
 }
 
 const esc = (t: string) => t.replace(/&/g, "&amp;").replace(/</g, "&lt;");
+const escAttr = (t: string) => t.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 
 function summaryLine(places: StatusPlace[], book: FindingBook, endings: EndingBook, availability: AvailabilityBook, compliance: ComplianceBook) {
   const c = signalCounts(book, endings, availability, places, compliance);
@@ -211,10 +213,23 @@ function StatusMap({ book, endings, availability, compliance, filter, selectedId
         ? `<span class="absolute left-full top-1/2 ml-2 -translate-y-1/2 whitespace-nowrap rounded-full ${selected ? "bg-primary text-primary-foreground" : "bg-background text-foreground"} px-2.5 py-0.5 text-xs font-medium shadow">${here ? `You are here · ${p.name}` : p.name}</span>`
         : "";
       const endingBadge = ending ? `<span class="absolute bottom-full left-1/2 mb-1 -translate-x-1/2 whitespace-nowrap rounded-full border-2 border-background px-2 py-0.5 text-[9px] font-bold tracking-wide text-primary-foreground shadow-md" style="background:${TONE["Tenancy ending"].color}">ENDING${ending > 1 ? ` · ${ending}` : ""}</span>` : "";
-      const badge = available ? `<span class="absolute left-1/2 top-full mt-1 -translate-x-1/2 whitespace-nowrap rounded-full border-2 border-background bg-primary px-2 py-0.5 text-[9px] font-bold tracking-wide text-primary-foreground shadow-md">TO LET${available > 1 ? ` · ${available}` : ""}</span>` : "";
+      const listing = placeListing(p, availability);
+      const badgeClass = "absolute left-1/2 top-full mt-1 -translate-x-1/2 whitespace-nowrap rounded-full border-2 border-background bg-primary px-2 py-0.5 text-[9px] font-bold tracking-wide text-primary-foreground shadow-md";
+      const badge = available ? (listing
+        ? `<a href="${escAttr(listing.url)}" target="_blank" rel="noopener noreferrer" data-listing class="${badgeClass} underline decoration-white/60 decoration-dotted underline-offset-2">TO LET${available > 1 ? ` · ${available}` : ""} ↗</a>`
+        : `<span class="${badgeClass}">TO LET${available > 1 ? ` · ${available}` : ""}</span>`) : "";
       const html = `<span class="relative block cursor-pointer transition-all duration-500 ${dim ? "opacity-25" : ""} ${selected ? "scale-110" : ""} ${recent ? "status-just-changed" : ""}">${bloom}${core}${endingBadge}${badge}${complianceBadge(warnings)}${label}</span>`;
-      L.marker(p.coords, { icon: L.divIcon({ className: "", html, iconSize: [size, size], iconAnchor: [size / 2, size / 2] }), keyboard: true, title: `${p.name}, ${p.town}`, zIndexOffset: selected ? 1000 : 0 })
-        .on("click", () => pick.current(p.id))
+      L.marker(p.coords, { icon: L.divIcon({ className: "", html, iconSize: [size, size], iconAnchor: [size / 2, size / 2] }), keyboard: true, title: `${p.name}, ${p.town}${listing ? ` · TO LET on ${listing.agency}` : ""}`, zIndexOffset: selected ? 1000 : 0 })
+        .on("click", (e) => {
+          const hit = (e.originalEvent.target as Element | null)?.closest?.("a[data-listing]");
+          if (hit) {
+            // The agent's own listing page opens instead of the place card.
+            L.DomEvent.stop(e.originalEvent);
+            window.open(hit.getAttribute("href") ?? "", "_blank", "noopener,noreferrer");
+            return;
+          }
+          pick.current(p.id);
+        })
         .addTo(g);
     });
   }, [book, endings, availability, compliance, filter, selectedId, recentChange, zoom]);
@@ -225,7 +240,14 @@ function StatusMap({ book, endings, availability, compliance, filter, selectedId
     const sz = m.getSize();
     if (sz.x <= 0 || sz.y <= 0) return; // hidden map: nothing to fly
     const p = placeById(selectedId);
-    if (p) { m.flyTo(p.coords, p.town === "London" ? 14 : 12, { duration: 1.1 }); return; }
+    if (p) {
+      // Raise the zoom until the selected place sits clear of its neighbours,
+      // otherwise its badge lands on top of the place beside it.
+      let z = Math.round(m.getZoom());
+      while (z < 17 && STATUS_PLACES.some((o) => o.id !== p.id && m.project(p.coords, z).distanceTo(m.project(o.coords, z)) < CLUSTER_PX + 24)) z += 1;
+      m.flyTo(p.coords, Math.max(z, p.town === "London" ? 14 : 12), { duration: 1.1 });
+      return;
+    }
     const pts = filter === "All" ? STATUS_PLACES : STATUS_PLACES.filter((x) => placeMatchesSignals(book, endings, availability, x, filter, compliance));
     if (pts.length) m.flyToBounds(pts.map((x) => x.coords), { padding: [Math.min(90, sz.x / 4), Math.min(90, sz.y / 4)], maxZoom: 9, duration: 1.1 });
   }, [selectedId, filter, book, endings, availability, compliance]);
@@ -416,8 +438,8 @@ export default function PrototypeStatus() {
     say("hobson", `Noted. I've kept that on file for the ${CURRENT.unit}.`);
   };
 
-  const matchingRows = (f: MapFilter) => STATUS_PLACES.flatMap((p) => p.units.filter((u) =>
-    signalUnitsMatching(book, endings, availability, [{ ...p, units: [u] }], f, SAMPLE_COMPLIANCE) === 1).map((u) => `${u} at ${p.name}`));
+  const matchingRows = (f: MapFilter) => matchingUnits(book, endings, availability, STATUS_PLACES, f, SAMPLE_COMPLIANCE)
+    .map(({ placeId: id, unit }) => `${unit} at ${placeById(id)!.name}`);
 
   const showFilter = (f: MapFilter) => {
     setFilter(f);
@@ -447,7 +469,9 @@ export default function PrototypeStatus() {
       say("hobson", `${rows.length} Units carry compliance warnings: ${listWords(rows)}.\n\n${now} documents need attention now because they are expired or missing; ${kinds["Expiring soon"]} are expiring soon. Forthcoming expiry is advance notice, not a statement that compliance has already ended.\n\nAsk me about compliance at a place and I'll give you the document names and dates.`, { choices: ["Tell me about compliance at The Exchange", "Show all signals"] });
       return;
     }
-    say("hobson", `${rows.length} Units are available to let: ${listWords(rows)}.\n\nThe purple TO LET badge can sit beside a current occupancy or a confirmed ending; it does not mean the Unit is necessarily empty.`, { choices: ["Show all signals", "Which tenancies are ending?"] });
+    const listings = listingsForUnits(matchingUnits(book, endings, availability, STATUS_PLACES, "Available to let", SAMPLE_COMPLIANCE), availability);
+    say("hobson", `${rows.length} Units are available to let: ${listWords(rows)}.\n\nThe purple TO LET badge can sit beside a current occupancy or a confirmed ending; it does not mean the Unit is necessarily empty.${listings.length ? "\n\nWhere an agent has published a listing, I've linked it below so you can read the details at source." : ""}`,
+      { choices: ["Show all signals", "Which tenancies are ending?"], links: listings });
   };
 
   const describePlace = (id: string) => {
@@ -466,7 +490,7 @@ export default function PrototypeStatus() {
     say("hobson", rows.length
       ? `${p.name}, ${p.town}:\n${rows.join("\n")}`
       : `${p.name}, ${p.town} — no map signals. Its Units have current chains, with no confirmed endings or letting instructions.`,
-      { choices: ["Show all signals"] });
+      { choices: ["Show all signals"], links: listingsForUnits(p.units.map((u) => ({ placeId: p.id, unit: u })), availability) });
   };
 
   const describeCompliance = (id: string) => {
@@ -584,6 +608,16 @@ export default function PrototypeStatus() {
                   {m.role === "hobson" && <img src={owlDefault} alt="Hobson" className="h-9 w-9 shrink-0 object-contain" />}
                   <div className={`min-w-0 rounded-lg px-3.5 py-2.5 ${m.role === "user" ? "bg-primary text-primary-foreground" : "bg-secondary"}`}>
                     <p className="whitespace-pre-line break-words text-sm leading-relaxed">{m.text}</p>
+                    {m.links?.length ? (
+                      <div className="mt-2 flex flex-wrap gap-2">
+                        {m.links.map((l) => (
+                          <a key={l.url} href={l.url} target="_blank" rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1.5 rounded-full border border-primary/25 bg-background px-3 py-1 text-xs font-medium text-primary transition-colors hover:border-primary hover:bg-primary/5">
+                            View details on {l.agency}<ExternalLink className="h-3 w-3" aria-hidden />
+                          </a>
+                        ))}
+                      </div>
+                    ) : null}
                     {m.noteField && last && noting && <NoteField onSave={saveNote} />}
                     {m.action && last && pendingAction && (
                       <div className="mt-3 flex flex-wrap gap-2 border-t border-primary/10 pt-3">
@@ -773,6 +807,12 @@ export default function PrototypeStatus() {
                     {finding && <p className="mt-1.5 text-[11px] text-ink-muted">{finding.detail ?? "Nothing assigned yet — worth checking whether papers are missing."}</p>}
                     {ending && <p className="mt-1.5 text-[11px] text-ink-muted">{ending.detail}. No physical departure inferred.</p>}
                     {available && <p className="mt-1.5 text-[11px] text-ink-muted">{available.detail}.</p>}
+                    {available?.listing && (
+                      <a href={available.listing.url} target="_blank" rel="noopener noreferrer"
+                        className="mt-1.5 inline-flex items-center gap-1 text-[11px] font-medium text-primary hover:underline">
+                        View details on {available.listing.agency}<ExternalLink className="h-3 w-3" aria-hidden />
+                      </a>
+                    )}
                   </li>
                 );
               })}

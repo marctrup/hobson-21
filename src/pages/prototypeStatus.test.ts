@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
-  STATUS_PLACES, complianceKindCounts, interpret, parseStatusInstruction, placeFindings, reasonCounts, signalCounts, signalUnitsMatching, unitKey, unitsMatching,
+  STATUS_PLACES, complianceKindCounts, interpret, listingsForUnits, matchingUnits, parseStatusInstruction, placeFindings, placeListing, reasonCounts, signalCounts, signalUnitsMatching, unitKey, unitsMatching,
   type AvailabilityBook, type ComplianceBook, type EndingBook, type FindingBook,
 } from "./prototypeStatus";
 
@@ -56,6 +56,34 @@ describe("Independent map signals", () => {
     expect(complianceKindCounts(compliance)).toEqual({ "Expired document": 1, "Missing document": 1, "Expiring soon": 1 });
     expect(signalUnitsMatching(book, endings, availability, STATUS_PLACES, "Compliance warning", compliance)).toBe(3);
     expect(unitsMatching(book, STATUS_PLACES, "All")).toBe(3);
+  });
+});
+
+describe("Agent listings for Units available to let", () => {
+  const listed: AvailabilityBook = {
+    [unitKey("temple-row", "2nd Floor")]: { detail: "Being offered", listing: { agency: "JLL", url: "https://property.jll.co.uk/listings/63-temple-row" } },
+  };
+  const place = STATUS_PLACES.find((p) => p.id === "temple-row")!;
+
+  it("links a letting to the agent's own listing page", () => {
+    expect(placeListing(place, listed)).toEqual({ agency: "JLL", url: "https://property.jll.co.uk/listings/63-temple-row" });
+    expect(listingsForUnits([{ placeId: "temple-row", unit: "2nd Floor" }], listed)).toHaveLength(1);
+  });
+  it("offers no link when a Unit has no listing recorded", () => {
+    expect(placeListing(STATUS_PLACES.find((p) => p.id === "colmore")!, availability)).toBeNull();
+    expect(listingsForUnits(matchingUnits(book, endings, availability, STATUS_PLACES, "Available to let", compliance), availability)).toEqual([]);
+  });
+  it("withholds a single link while two listings compete", () => {
+    const two: AvailabilityBook = {
+      [unitKey("temple-row", "1st Floor")]: { detail: "Being offered", listing: { agency: "JLL", url: "https://property.jll.co.uk/listings/63-temple-row" } },
+      [unitKey("temple-row", "3rd Floor")]: { detail: "Being offered", listing: { agency: "LSH", url: "https://www.lsh.co.uk/find/properties/west-mids-birmingham/birmingham/2051197" } },
+    };
+    expect(placeListing(place, two)).toBeNull();
+    expect(listingsForUnits(place.units.map((unit) => ({ placeId: place.id, unit })), two)).toHaveLength(2);
+  });
+  it("collects listings only from Units matching the lens", () => {
+    expect(matchingUnits(book, endings, availability, STATUS_PLACES, "Available to let", compliance))
+      .toEqual([{ placeId: "colmore", unit: "1st Floor" }, { placeId: "exchange", unit: "2nd Floor" }]);
   });
 });
 
