@@ -24,7 +24,7 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
     term: "ACD",
     fullName: "Asset and Compliance Documents",
     definition:
-      "Documents relating to the property or its compliance obligations that are not part of a specific tenancy chain.",
+      "Documents relating to the Unit or Unit Group that are not part of a specific occupancy chain.",
   },
   {
     term: "AMD",
