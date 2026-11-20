@@ -105,11 +105,6 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
   },
 
   {
-    term: "Lease",
-    definition:
-      "An agreement that gives a tenant the right to occupy premises for a defined period on agreed terms, usually in return for rent.",
-  },
-  {
     term: "Licence",
     definition:
       "A document giving permission or consent for a particular act or activity.",
