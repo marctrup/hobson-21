@@ -180,7 +180,7 @@ const LearnGlossary = () => {
               defined in plain English — from the five document families I sort every
               document into (RTO, AMD, ACD, ORD and TPA) to my own hierarchy of Portfolio,
               Unit Group and Unit. Each entry is a short, standalone definition written for
-              UK property businesses and commercial occupiers.
+              UK property businesses.
             </AnswerFirst>
             <div
               className="mx-auto mt-10 h-px w-24"
