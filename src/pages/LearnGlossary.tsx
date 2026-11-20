@@ -30,7 +30,7 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
     term: "AMD",
     fullName: "Accompanying and Modification Documents",
     definition:
-      "Documents linked to a tenancy that accompany or change its terms over time.",
+      "Documents linked to an occupancy that cover its entire history.",
   },
   {
     term: "Chain",
