@@ -298,3 +298,6 @@
 
 ## Prototype Status — letting links to the agent's listing
 - [x] A Unit available to let can open the agent's own listing page so details are read at source. The purple TO LET badge, the place card and Hobson's chat answer each carry the link (new tab, noopener). 63 Temple Row, Birmingham added to the sample portfolio as the real example, linking to its live JLL listing "63 Temple Row - Office For Rent | JLL - UK"; Units with no listing recorded offer no link, and one shared link is withheld when competing listings exist. Selecting a place now raises the zoom until it sits clear of its neighbours so two badges cannot land on each other. 26 focused checks pass; badge, card and chat links verified live opening the JLL page with no page errors. Not published.
+
+## Glossary — Lease entry removed
+- [x] Removed the "Lease" entry from /learn/glossary (51 entries remain; the L group is now Licence alone). The page's structured data is built from the same list, so no Lease term remains there either. Checked live with no page errors. The user confirmed only Lease should go — Licence through Write tool stay. Snapshot refresh and publish still owed.
