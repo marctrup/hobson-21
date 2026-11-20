@@ -75,6 +75,11 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
       "Property information that Hobson has taken from documents and organised into defined, consistent records that can be used across the platform.",
   },
   {
+    term: "Terminate an Occupancy",
+    definition:
+      "Ending an occupancy chain so that a new one can begin. Hobson sets out the evidence and records the ending only once you have confirmed what happened; a term end date on its own never terminates an occupancy.",
+  },
+  {
     term: "TPA",
     fullName: "Third Party Arrangement Documents",
     definition:
