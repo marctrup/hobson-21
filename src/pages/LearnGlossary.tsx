@@ -48,6 +48,11 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
       "The geographic location assigned to a unit, expressed as longitude and latitude.",
   },
   {
+    term: "No papers",
+    definition:
+      "A filter on the map and in Papers Review showing Units where Hobson has no occupational documents in its knowledge base. It marks a gap in what has been provided rather than a finding about the Unit itself.",
+  },
+  {
     term: "ORD",
     fullName: "Operational & Reference Documents",
     definition:
