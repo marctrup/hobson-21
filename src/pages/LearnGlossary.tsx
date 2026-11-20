@@ -27,20 +27,10 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
       "Documents relating to the property or its compliance obligations that are not part of a specific tenancy chain.",
   },
   {
-    term: "Agreement",
-    definition:
-      "A document that records terms agreed between two or more parties and creates or changes contractual rights or obligations.",
-  },
-  {
     term: "AMD",
     fullName: "Accompanying and Modification Documents",
     definition:
       "Documents linked to a tenancy that accompany or change its terms over time.",
-  },
-  {
-    term: "Agent",
-    definition:
-      "A Hobson component that can research, assess information and make recommendations, but does not change the property record itself.",
   },
   {
     term: "Chain",
@@ -48,102 +38,14 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
       "The connected sequence of documents and facts relating to the same occupational relationship over time.",
   },
   {
-    term: "Confirmed Surrender",
-    definition:
-      "A surrender that has been completed and is effective, rather than merely proposed or notified.",
-  },
-  {
-    term: "Consideration",
-    definition:
-      "A one-off payment or other value exchanged as part of entering into or ending a transaction, rather than for the ongoing right to occupy.",
-  },
-  {
-    term: "Contingent Consideration",
-    definition:
-      "A one-off payment that becomes due only if a specified future event happens, and may therefore never become payable.",
-  },
-  {
-    term: "Deed",
-    definition:
-      "A formally executed document used to create, transfer, vary, release or confirm legal rights.",
-  },
-  {
     term: "Document Family",
     definition:
       "The classification Hobson gives every document: RTO, AMD or ACD. It determines whether the document starts a tenancy chain, forms part of that chain, or sits separately from it.",
   },
   {
-    term: "Effective Date",
-    definition:
-      "The date on which a document itself takes effect.",
-  },
-  {
-    term: "Evidence Pack",
-    definition:
-      "The collection of results returned by Hobson's tools for a question, which provides the evidence used to produce the answer.",
-  },
-
-  {
-    term: "Extraction",
-    definition:
-      "The process Hobson uses to identify a particular type of information in a document and store it in a defined structure.",
-  },
-  {
-    term: "Extraction Prompt",
-    definition:
-      "The instructions that tell Hobson what information to capture from a document, what to exclude and how to classify it.",
-  },
-  {
     term: "Geolocation",
     definition:
       "The geographic location assigned to a unit, expressed as longitude and latitude.",
-  },
-  {
-    term: "Get-tool",
-    definition:
-      "A tool that reads information already recorded in Hobson and applies fixed rules to answer a question.",
-  },
-
-  {
-    term: "Licence",
-    definition:
-      "A document giving permission or consent for a particular act or activity.",
-  },
-  {
-    term: "Memorandum",
-    definition:
-      "A document that records or confirms an event, decision, agreement or outcome.",
-  },
-  {
-    term: "Notice",
-    definition:
-      "A formal communication used to give information, make a demand or proposal, exercise a right, or start or end a process.",
-  },
-  {
-    term: "Operational Record",
-    definition:
-      "A record of something that has actually happened, such as a notice being served, an approval being given or an action being completed.",
-  },
-  {
-    term: "Occupation Payment",
-    aliases: ["occupancy payment"],
-    definition:
-      "The recurring amount paid for the right to occupy or use premises, such as rent or a licence fee.",
-  },
-  {
-    term: "Occupation Status",
-    definition:
-      "The current status of a Unit based on whether it is covered by an applicable occupational relationship, such as a direct lease, a shared lease through a Unit Set, or occupation at Unit Group level.",
-  },
-  {
-    term: "Occupation Payment Mechanism",
-    definition:
-      "The rule that determines how an occupation payment is set or changed, and when that change applies. It is a rule, not a payment itself.",
-  },
-  {
-    term: "Operational Payment",
-    definition:
-      "A payment towards the costs of operating or maintaining a property, such as service charge or insurance, rather than payment for the right to occupy.",
   },
   {
     term: "ORD",
@@ -157,55 +59,10 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
       "Reporting boundary across everything.",
   },
   {
-    term: "Property Concept",
-    definition:
-      "A type of property information that Hobson records consistently across different documents, such as parties, units, payments, termination, or obligations.",
-  },
-  {
-    term: "Pre-occupational",
-    definition:
-      "A fact or document that belongs to the period before occupation begins within the relevant chain, such as an Agreement for Lease or Heads of Terms agreed before the lease or licence takes effect.",
-  },
-  {
-    term: "Prompt",
-    definition:
-      "A set of instructions that tells an AI what task to perform, what rules to follow and how to produce its response.",
-  },
-  {
     term: "RTO",
     fullName: "Right to Occupy",
     definition:
       "The document that creates the right to occupy a property, such as a lease, licence to occupy or tenancy agreement. It forms the starting point of the tenancy chain.",
-  },
-  {
-    term: "Operative Date",
-    definition:
-      "The date from which a particular fact applies, changes or ends. It may be different from the Effective Date of the document.",
-  },
-  {
-    term: "Reversionary Lease",
-    definition:
-      "A lease that has been granted but is due to begin at a future date, usually after an existing lease or tenancy comes to an end.",
-  },
-  {
-    term: "Statutory Continuation",
-    definition:
-      "Where a tenancy continues after the contractual term because the law allows or requires it to continue.",
-  },
-  {
-    term: "Schema",
-    definition:
-      "The defined structure and fields used to store information extracted from a document.",
-  },
-  {
-    term: "Shared Lease",
-    definition:
-      "A lease or other occupational arrangement that applies to specifically identified Units through a Unit Set, rather than to the Unit Group as a whole.",
-  },
-  {
-    term: "Side Letter",
-    definition:
-      "A document that sits alongside another agreement and supplements, qualifies or modifies how it operates between particular parties.",
   },
   {
     term: "Standalone Unit",
@@ -213,24 +70,9 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
       "A Unit that exists independently of a Unit Group and has its own geolocation.",
   },
   {
-    term: "Statutory Declaration",
-    definition:
-      "A formal statement in which a person declares specified facts or circumstances to be true.",
-  },
-  {
     term: "Structured Property Knowledge",
     definition:
       "Property information that Hobson has taken from documents and organised into defined, consistent records that can be used across the platform.",
-  },
-  {
-    term: "Superseded",
-    definition:
-      "A fact that applied previously within its chain but has since been replaced by a later position.",
-  },
-  {
-    term: "Term End Date",
-    definition:
-      "The date on which the contractual term expires. It does not by itself mean the tenancy has ended or the occupier has left.",
   },
   {
     term: "TPA",
@@ -238,27 +80,6 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
     definition:
       "Documents that create a standalone arrangement with an outside party that burdens, protects, finances or manages the property or ownership structure.",
   },
-  {
-    term: "Time-Bound",
-    definition:
-      "A document or requirement whose validity or compliance status can run out simply because time passes.",
-  },
-  {
-    term: "Time Classification",
-    definition:
-      "The classification that records whether a document or compliance requirement is Time-Bound or Time-Unbound.",
-  },
-  {
-    term: "Time-Unbound",
-    definition:
-      "A document or requirement that does not become invalid or non-compliant simply because time passes.",
-  },
-  {
-    term: "Transfer Document",
-    definition:
-      "A document that transfers legal ownership of land or an interest in land from one party to another.",
-  },
-
   {
     term: "Unit",
     definition:
@@ -273,16 +94,6 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
     term: "Unit Set",
     definition:
       "A collection of existing Units linked for a particular purpose, such as sharing a lease or other document.",
-  },
-  {
-    term: "Vacate Date",
-    definition:
-      "The date an occupier is expected or planned to leave. It does not by itself confirm that they actually left.",
-  },
-  {
-    term: "Write tool",
-    definition:
-      "A tool that records an approved change to information held in Hobson.",
   },
 ];
 
