@@ -40,7 +40,7 @@ const TERMS: { term: string; fullName?: string; definition: string; aliases?: st
   {
     term: "Document Family",
     definition:
-      "The classification Hobson gives every document: RTO, AMD or ACD. It determines whether the document starts a tenancy chain, forms part of that chain, or sits separately from it.",
+      "The classification Hobson gives every document: is it an RTO, AMD, ACD, ORD or TPA. It pre-classifies a document into a family.",
   },
   {
     term: "Geolocation",
