@@ -212,14 +212,7 @@ Hobson also separates "nothing to report" from "I couldn't check". A green light
 **Unit group** — a set of units in the same place. Location is the only thing that makes them one group, not a shared lease, landlord or tenant.
 
 **Portfolio** — the whole estate. Not somewhere you can stand, but a reporting view: how many units are vacant, which leases expire this year, what the total contracted rent is.
-
-You can ask at any level. A unit gives you the tenancy detail, a group gives you the place, the portfolio gives you the estate view — built from the records beneath it, so the headline reconciles with the detail.
-
-Hobson avoids the word "property" underneath, because it can mean either a single occupiable space or a whole building. You can still speak naturally; the precision matters in the data, not in how you ask.
-
-Two groups can also sit at the same address and stay entirely separate records — one group's fire risk assessment says nothing about another's.
-
-**Documents attach to the structure; they don't create it.** You define the real-world structure and it changes when the property changes — not because a PDF arrived. One lease covering units at three addresses doesn't fuse them into one place.`,
+`,
       },
     ],
   },
