@@ -209,7 +209,7 @@ Hobson also separates "nothing to report" from "I couldn't check". A green light
 
 **Unit** — the smallest occupiable space: an office suite, a shop, a warehouse, a flat, a parking space.
 
-**Unit group** — a set of units in the same place. Location is the only thing that makes them one group, not a shared lease, landlord or tenant.
+**Unit group** — a set of units in the same place. Location is the only thing that makes them one group, not a shared lease, landlord or tenant. The unit group adds an additional unit that represents the unit group, into which documents can be assigned.
 
 **Portfolio** — the whole estate. Not somewhere you can stand, but a reporting view: how many units are vacant, which leases expire this year, what the total contracted rent is.
 `,
