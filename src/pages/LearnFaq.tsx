@@ -107,12 +107,6 @@ You also don't need to know which document holds the answer. A finance analyst c
 It tells you plainly where things stand — including when something is uncertain or missing — and takes responsibility for its answers rather than hedging.`,
       },
       {
-        q: "Am I dealing with one assistant, or a team?",
-        a: `One assistant: Hobson. Different specialist capabilities work behind the scenes, and you may see which kind is helping while work is underway, but every answer comes back as one considered response.
-
-You never have to coordinate separate tools, repeat yourself, or work out who's responsible for what.`,
-      },
-      {
         q: "Will Hobson tell me things I didn't think to ask?",
         a: `Where it genuinely helps, yes. If a deadline is approaching or a consequence follows from your answer, Hobson mentions it briefly.
 
