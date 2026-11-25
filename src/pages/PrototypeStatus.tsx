@@ -693,7 +693,7 @@ export default function PrototypeStatus({ extension }: { extension?: StatusExten
         </div>
       </section>
 
-      <section aria-label={workspace === "map" ? "Map" : workspace === "papers" ? "Papers" : "Agents workspace"} className={`relative min-h-0 min-w-0 flex-1 ${extension ? "" : "max-md:hidden"}`}>
+      <section aria-label={workspace === "map" ? "Map" : workspace === "papers" ? "Papers" : "Responsibilities workspace"} className={`relative min-h-0 min-w-0 flex-1 ${extension ? "" : "max-md:hidden"}`}>
         <div className={workspace === "map" ? `absolute inset-0 ${extension ? "isolate z-0" : ""}` : "hidden"}>
           <StatusMap book={book} endings={endings} availability={availability} compliance={SAMPLE_COMPLIANCE} filter={filter} selectedId={placeId} recentChange={recentChange} onPick={(id) => { setFilter("All"); setPlaceId(id); }} />
         </div>
@@ -728,7 +728,7 @@ export default function PrototypeStatus({ extension }: { extension?: StatusExten
                   className={`flex items-center gap-1.5 rounded-full px-3 py-1 transition-colors ${workspace === "map" ? "bg-secondary font-medium text-primary" : "text-ink-muted hover:bg-secondary/60"}`}>
                   <MapIcon className="h-4 w-4" aria-hidden />Map
                 </button>}
-                {extension && <Button type="button" title="Agents" size="sm" variant="ghost" aria-label="Agents" aria-pressed={workspace === "agents"} onClick={() => setWorkspace("agents")} className={`h-7 gap-1.5 rounded-full px-2 font-normal ${workspace === "agents" ? "bg-secondary text-primary" : "text-ink-muted"}`}><Lightbulb className="h-4 w-4" aria-hidden /><span className="max-sm:sr-only">Agents</span></Button>}
+                {extension && <Button type="button" title="Responsibilities" size="sm" variant="ghost" aria-label="Responsibilities" aria-pressed={workspace === "agents"} onClick={() => setWorkspace("agents")} className={`h-7 gap-1.5 rounded-full px-2 font-normal ${workspace === "agents" ? "bg-secondary text-primary" : "text-ink-muted"}`}><Lightbulb className="h-4 w-4" aria-hidden /><span className="max-sm:sr-only">Responsibilities</span></Button>}
               </span>
             </div>
             {workspace === "map" && searchOpen && (

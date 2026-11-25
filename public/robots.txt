@@ -76,5 +76,6 @@ Disallow: /prototype-work
 Disallow: /prototype-unit
 Disallow: /prototype-documents
 Disallow: /prototype-agents
+Disallow: /prototype-responsibilities
 
 Sitemap: https://hobsonschoice.ai/sitemap.xml
