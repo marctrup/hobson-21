@@ -82,7 +82,6 @@ describe("Agents conversation and workspace", () => {
     start(); openCompliance();
     fireEvent.click(screen.getByRole("button", { name: /^See what I’m up to$/ }));
     fireEvent.click(screen.getByRole("button", { name: "Approve an electrical inspection quotation of £180" }));
-    fireEvent.click(screen.getByRole("button", { name: "Review decision" }));
     fireEvent.click(screen.getByRole("button", { name: "Confirm £180 approval" }));
     expect(screen.getByRole("button", { name: "Electrical inspection quotation approved — not yet instructed" })).toBeInTheDocument();
     const work = screen.getByRole("region", { name: "Delegated responsibilities" });

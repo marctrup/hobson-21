@@ -35,7 +35,7 @@ describe("Large agent directory", () => {
   });
   it("excludes missing responsibilities from the work summary", () => {
     render(<AgentsCollection state={initialAgentsState(true)} actions={actions} approvedJobs={[]} />);
-    expect(screen.getByRole("button", { name: /^What I’m Up To/ })).toHaveTextContent("0 ongoing");
+    expect(screen.getByRole("button", { name: /^What I’m Up To/ })).toHaveTextContent("No decisions waiting for you");
     expect(screen.getByRole("status")).toHaveTextContent("0 agents");
     expect(AGENT_JOBS.length).toBeGreaterThan(100);
   });

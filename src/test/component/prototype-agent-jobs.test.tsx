@@ -10,6 +10,28 @@ const openCompleted = () => fireEvent.mouseDown(screen.getByRole("tab", { name: 
 const list = () => within(screen.getByRole("list", { name: "Matching jobs" }));
 
 describe("Large Agents job collections", () => {
+  it("shows quotation confirmation directly but never approves on inspection or Not now", () => {
+    const approveJob = vi.fn();
+    render(<AgentsJobs state={initialAgentsState()} actions={{ ...actions, approveJob }} approvedJobs={[]} />);
+    fireEvent.click(screen.getByRole("button", { name: "Approve an electrical inspection quotation of £180" }));
+    expect(screen.getByRole("button", { name: "Confirm £180 approval" })).toBeInTheDocument();
+    expect(approveJob).not.toHaveBeenCalled();
+    fireEvent.click(screen.getByRole("button", { name: "Not now" }));
+    expect(approveJob).not.toHaveBeenCalled();
+    fireEvent.click(screen.getByRole("button", { name: "Approve an electrical inspection quotation of £180" }));
+    fireEvent.click(screen.getByRole("button", { name: "Confirm £180 approval" }));
+    expect(approveJob).toHaveBeenCalledExactlyOnceWith("quotation");
+  });
+  it("carries an unresolved decision into chat without confirming it", () => {
+    const fillInput = vi.fn();
+    const confirm = vi.fn();
+    const pending: AgentJob = { id: "scope", agentId: "compliance", category: "Needs you", title: "Confirm handover scope", detail: "Place list requires your guidance." };
+    render(<AgentsJobs state={initialAgentsState()} actions={{ ...actions, fillInput, confirm }} approvedJobs={[]} jobs={[pending]} />);
+    fireEvent.click(screen.getByRole("button", { name: "Confirm handover scope" }));
+    fireEvent.click(screen.getByRole("button", { name: "Discuss with Hobson" }));
+    expect(fillInput).toHaveBeenCalledWith("Regarding Confirm handover scope (Compliance Management): ");
+    expect(confirm).not.toHaveBeenCalled();
+  });
   it("keeps a long accomplishment history bounded and reaches the last record through pages", () => {
     render(<AgentsJobs state={initialAgentsState()} actions={actions} approvedJobs={[]} jobs={history} />);
     openCompleted();
