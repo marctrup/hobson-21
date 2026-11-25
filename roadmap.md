@@ -1,6 +1,7 @@
 # Roadmap
 
 ## Prototype Agents — delegated responsibilities
+- [x] Keep chat visible on the left at every width; Map/Papers/Agents change only the right, including the narrow Lovable preview. Twenty-one focused checks pass; real entrance, toggling and agent creation verified at 412, 609 and 1280 widths with unchanged chat dimensions, no page errors and no horizontal overflow.
 - [x] Add independent /prototype-agents with the existing Map, Papers and conversation, plus an Agents workspace behind the existing Unit entrance.
 - [x] Build personal/shared responsibilities, details, structured workflows, scope, activity and a conversational empty collection.
 - [x] Implement confirmed chat creation and instruction changes, pause/resume, illustrative access and overlap handling, linked jobs and action-specific £180 quotation approval.

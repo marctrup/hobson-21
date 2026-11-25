@@ -10,6 +10,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import * as Tooltip from "@radix-ui/react-tooltip";
 import owlDefault from "@/assets/prototype/owl-default.png";
 import { useAutoFollowScroll } from "./prototype/useAutoFollowScroll";
+import "./prototypeAgentsLayout.css";
 import {
   CURRENT, CURRENT_PLACE, STATUS_PLACES, complianceAtPlace, complianceKindCounts, interpret, listWords, listingsForUnits, matchingUnits, parseStatusInstruction, placeListing, placeMatchesSignals,
   signalCounts, signalUnitsMatching, unitKey, unitMatchesFilter,
@@ -422,7 +423,6 @@ export default function PrototypeStatus({ extension }: { extension?: StatusExten
   const [placeId, setPlaceId] = useState<string | null>(null);
   const [filter, setFilter] = useState<MapFilter>("All");
   const [workspace, setWorkspace] = useState<"map" | "papers" | "agents">(extension ? "agents" : "map");
-  const [mobileSurface, setMobileSurface] = useState<"chat" | "workspace">("workspace");
   const [paperFilter, setPaperFilter] = useState<PaperFilter>("All");
   const [input, setInput] = useState("");
   const [menuOpen, setMenuOpen] = useState(false);
@@ -445,7 +445,7 @@ export default function PrototypeStatus({ extension }: { extension?: StatusExten
 
   const extensionContext: StatusExtensionContext = {
     reply: (text, choices) => say("hobson", text, { choices }),
-    fillInput: (text) => { setInput(text); setMobileSurface("chat"); },
+    fillInput: (text) => { setInput(text); },
     open: () => { setWorkspace("agents"); },
   };
 
@@ -609,14 +609,7 @@ export default function PrototypeStatus({ extension }: { extension?: StatusExten
   const placeCounts = place ? signalCounts(book, endings, availability, [place], SAMPLE_COMPLIANCE) : null;
 
   return (
-    <div className={`relative flex h-screen w-full overflow-hidden bg-background text-ink ${extension ? "max-md:flex-col" : ""}`}>
-      {extension && <div className="flex h-12 shrink-0 items-center justify-between border-b border-border px-4 md:hidden">
-        <span className="text-sm font-semibold">Hobson</span>
-        <div className="flex gap-1">
-          <Button size="sm" variant={mobileSurface === "chat" ? "secondary" : "ghost"} onClick={() => setMobileSurface("chat")}>Chat</Button>
-          <Button size="sm" variant={mobileSurface === "workspace" ? "secondary" : "ghost"} onClick={() => setMobileSurface("workspace")}>Workspace</Button>
-        </div>
-      </div>}
+    <div className={`relative flex h-screen w-full overflow-hidden bg-background text-ink ${extension ? "agents-split" : ""}`}>
       <aside className="flex w-[150px] shrink-0 flex-col gap-1 border-r border-bone bg-background px-3 py-4 max-md:hidden">
         <img src={owlDefault} alt="" aria-hidden className="mb-4 h-9 w-9 object-contain" />
         <span className="flex items-center gap-2 rounded-md bg-secondary px-2 py-1.5 text-sm font-medium"><MapPin className="h-4 w-4" aria-hidden />Portfolio</span>
@@ -626,7 +619,7 @@ export default function PrototypeStatus({ extension }: { extension?: StatusExten
         <div className="mt-auto grid h-9 w-9 place-items-center rounded-full bg-bone text-xs font-semibold text-charcoal">MT</div>
       </aside>
 
-      <section aria-label="Chat with Hobson" className={`flex w-[420px] min-w-0 shrink-0 flex-col border-r border-bone bg-background max-lg:w-[360px] max-md:w-full ${extension ? `max-md:min-h-0 max-md:flex-1 ${mobileSurface !== "chat" ? "max-md:hidden" : ""}` : ""}`}>
+      <section aria-label="Chat with Hobson" className={`flex min-w-0 shrink-0 flex-col border-r border-bone bg-background ${extension ? "" : "w-[420px] max-lg:w-[360px] max-md:w-full"}`}>
         <header className="flex h-14 shrink-0 items-center justify-between gap-2 border-b border-bone px-5">
           <p className="truncate text-sm"><span className="font-medium text-primary">Portfolio</span><span className="text-ink-muted"> › </span><span className="font-semibold">{CURRENT_PLACE.name}</span><span className="text-ink-muted"> › </span><span className="font-semibold">{CURRENT.unit}</span></p>
           <Button variant="ghost" size="sm" aria-label="Restart demo" onClick={restart}><RotateCcw className="h-3.5 w-3.5 sm:mr-2" /><span className="max-sm:hidden">Restart</span></Button>
@@ -700,7 +693,7 @@ export default function PrototypeStatus({ extension }: { extension?: StatusExten
         </div>
       </section>
 
-      <section aria-label={workspace === "map" ? "Map" : workspace === "papers" ? "Papers" : "Agents workspace"} className={`relative min-h-0 min-w-0 flex-1 ${extension ? mobileSurface !== "workspace" ? "max-md:hidden" : "" : "max-md:hidden"}`}>
+      <section aria-label={workspace === "map" ? "Map" : workspace === "papers" ? "Papers" : "Agents workspace"} className={`relative min-h-0 min-w-0 flex-1 ${extension ? "" : "max-md:hidden"}`}>
         <div className={workspace === "map" ? `absolute inset-0 ${extension ? "isolate z-0" : ""}` : "hidden"}>
           <StatusMap book={book} endings={endings} availability={availability} compliance={SAMPLE_COMPLIANCE} filter={filter} selectedId={placeId} recentChange={recentChange} onPick={(id) => { setFilter("All"); setPlaceId(id); }} />
         </div>
@@ -726,16 +719,16 @@ export default function PrototypeStatus({ extension }: { extension?: StatusExten
                 </>
               )}
               <span className="flex items-center gap-1 rounded-full border border-bone bg-background/95 p-1 text-sm shadow-sm">
-                {extension && <Button type="button" size="sm" variant="ghost" aria-label="Map" aria-pressed={workspace === "map"} onClick={() => setWorkspace("map")} className={`h-7 gap-1.5 rounded-full px-3 font-normal ${workspace === "map" ? "bg-secondary text-primary" : "text-ink-muted"}`}><MapIcon className="h-4 w-4" aria-hidden />Map</Button>}
+                {extension && <Button type="button" title="Map" size="sm" variant="ghost" aria-label="Map" aria-pressed={workspace === "map"} onClick={() => setWorkspace("map")} className={`h-7 gap-1.5 rounded-full px-2 font-normal ${workspace === "map" ? "bg-secondary text-primary" : "text-ink-muted"}`}><MapIcon className="h-4 w-4" aria-hidden /><span className="max-sm:sr-only">Map</span></Button>}
                 <button type="button" aria-label="Papers" aria-pressed={workspace === "papers"} onClick={() => { setWorkspace("papers"); setFiltersOpen(false); setSearchOpen(false); }}
                   className={`flex items-center gap-1.5 rounded-full px-3 py-1 transition-colors ${workspace === "papers" ? "bg-secondary font-medium text-primary" : "text-ink-muted hover:bg-secondary/60"}`}>
-                  <FileText className="h-4 w-4" aria-hidden />Papers
+                  <FileText className="h-4 w-4" aria-hidden /><span className={extension ? "max-sm:sr-only" : ""}>Papers</span>
                 </button>
                 {!extension && <button type="button" aria-label="Map" aria-pressed={workspace === "map"} onClick={() => setWorkspace("map")}
                   className={`flex items-center gap-1.5 rounded-full px-3 py-1 transition-colors ${workspace === "map" ? "bg-secondary font-medium text-primary" : "text-ink-muted hover:bg-secondary/60"}`}>
                   <MapIcon className="h-4 w-4" aria-hidden />Map
                 </button>}
-                {extension && <Button type="button" size="sm" variant="ghost" aria-label="Agents" aria-pressed={workspace === "agents"} onClick={() => setWorkspace("agents")} className={`h-7 gap-1.5 rounded-full px-3 font-normal ${workspace === "agents" ? "bg-secondary text-primary" : "text-ink-muted"}`}><Lightbulb className="h-4 w-4" aria-hidden />Agents</Button>}
+                {extension && <Button type="button" title="Agents" size="sm" variant="ghost" aria-label="Agents" aria-pressed={workspace === "agents"} onClick={() => setWorkspace("agents")} className={`h-7 gap-1.5 rounded-full px-2 font-normal ${workspace === "agents" ? "bg-secondary text-primary" : "text-ink-muted"}`}><Lightbulb className="h-4 w-4" aria-hidden /><span className="max-sm:sr-only">Agents</span></Button>}
               </span>
             </div>
             {workspace === "map" && searchOpen && (

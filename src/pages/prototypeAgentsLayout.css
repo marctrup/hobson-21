@@ -1,0 +1,40 @@
+.agents-split > [aria-label="Chat with Hobson"] {
+  width: clamp(164px, 38%, 420px);
+  min-height: 0;
+}
+.agents-split > section:last-child { container-type: inline-size; }
+@media (max-width: 767px) {
+  .agents-split > [aria-label="Chat with Hobson"] { width: 40%; min-width: 150px; }
+  .agents-split [aria-label="Chat with Hobson"] > header { padding-inline: 8px; gap: 4px; }
+  .agents-split [aria-label="Chat with Hobson"] > header > p { font-size: 12px; }
+  .agents-split [aria-label="Conversation"] { padding-inline: 8px; }
+  .agents-split [aria-label="Conversation"] img { width: 24px; height: 24px; }
+  .agents-split [aria-label="Conversation"] p { font-size: 12px; }
+  .agents-split [aria-label="Conversation"] .rounded-lg { padding-inline: 8px; }
+  .agents-split [aria-label="Choose an answer"] { margin-left: 0; }
+  .agents-split [aria-label="Choose an answer"] button { font-size: 12px; padding-inline: 8px; }
+  .agents-split [aria-label="Chat with Hobson"] > div:last-child { padding-inline: 6px; }
+  .agents-split [aria-label="Chat with Hobson"] form { flex-wrap: wrap; border-radius: 8px; gap: 0; }
+  .agents-split [aria-label="Chat with Hobson"] form input { order: -1; flex-basis: 100%; padding: 8px 4px; }
+  .agents-split [aria-label="Send message"] { margin-left: auto; }
+}
+@container (max-width: 380px) {
+  .agents-split [aria-label="Delegated responsibilities"] { padding-inline: 12px; }
+  .agents-split [aria-label="Delegated responsibilities"] h1 { font-size: 18px; line-height: 26px; }
+  .agents-split [aria-label="Delegated responsibilities"] button { white-space: normal; height: auto; }
+  .agents-split [aria-label="Delegated responsibilities"] [role="tablist"] { display: flex; flex-wrap: wrap; gap: 8px; }
+  .agents-split [aria-label="Delegated responsibilities"] [role="tab"] { padding-inline: 4px; font-size: 12px; }
+  .agents-split [aria-label="Delegated responsibilities"] [role="tablist"][aria-label="Agent collections"] { flex-direction: column; align-items: stretch; gap: 2px; }
+  .agents-split [aria-label="Delegated responsibilities"] [role="tablist"][aria-label="Agent collections"] [role="tab"] { padding: 8px; }
+  .agents-split [aria-label="Delegated responsibilities"] .gap-4 { gap: 8px; }
+  .agents-split [aria-label="Delegated responsibilities"] .text-base { font-size: 14px; }
+  .agents-split [aria-label="Delegated responsibilities"] dl { grid-template-columns: minmax(0, 1fr); }
+  .agents-split [aria-label="Delegated responsibilities"] .sm\:grid-cols-2 { grid-template-columns: minmax(0, 1fr); }
+  .agents-split [aria-label="Delegated responsibilities"] .sm\:grid-cols-2 > * { min-width: 0; }
+  .agents-split [aria-label="Papers review"] { padding-inline: 10px; }
+  .agents-split [aria-label="Papers review"] header { padding-top: 64px; }
+  .agents-split [aria-label="Papers review"] button { white-space: normal; }
+  .agents-split [aria-label="Papers review"] section button { flex-wrap: wrap; }
+  .agents-split [aria-label="Papers review"] section button > .shrink-0 { flex-shrink: 1; }
+  .agents-split [aria-label="Map signals"], .agents-split [role="search"] { width: calc(100cqw - 16px); max-height: calc(100dvh - 150px); overflow-y: auto; }
+}
