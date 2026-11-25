@@ -1,7 +1,7 @@
 // Prototype Status: derived Unoccupied findings, confirmed tenancy endings and
 // availability to let remain separate facts. Illustrative changes happen in chat.
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { ArrowRight, Building2, CalendarClock, Check, ChevronDown, ChevronRight, ExternalLink, FileQuestion, FileText, FileX, Lightbulb, Map as MapIcon, MapPin, MessageSquare, Plus, RotateCcw, Search, SlidersHorizontal, StickyNote, Tag, TriangleAlert, Upload, X } from "lucide-react";
@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import * as Tooltip from "@radix-ui/react-tooltip";
 import owlDefault from "@/assets/prototype/owl-default.png";
+import { useAutoFollowScroll } from "./prototype/useAutoFollowScroll";
 import {
   CURRENT, CURRENT_PLACE, STATUS_PLACES, complianceAtPlace, complianceKindCounts, interpret, listWords, listingsForUnits, matchingUnits, parseStatusInstruction, placeListing, placeMatchesSignals,
   signalCounts, signalUnitsMatching, unitKey, unitMatchesFilter,
@@ -277,12 +278,13 @@ function Chip({ signal }: { signal: Signal }) {
 }
 
 /** Papers reuses the map's findings, but availability remains a map-only signal. */
-function PapersReview({ book, endings, compliance, filter, onFilter }: {
+function PapersReview({ book, endings, compliance, filter, onFilter, extended = false }: {
   book: FindingBook;
   endings: EndingBook;
   compliance: ComplianceBook;
   filter: PaperFilter;
   onFilter: (filter: PaperFilter) => void;
+  extended?: boolean;
 }) {
   const [expanded, setExpanded] = useState<string | null>(null);
   const counts = signalCounts(book, endings, {}, STATUS_PLACES, compliance);
@@ -296,7 +298,7 @@ function PapersReview({ book, endings, compliance, filter, onFilter }: {
 
   return (
     <div role="region" aria-label="Papers review" className="absolute inset-0 overflow-y-auto bg-background px-6 pb-8 pt-5">
-      <header className="pr-56">
+      <header className={extended ? "pt-14" : "pr-56"}>
         <div className="flex items-center gap-3">
           <img src={owlDefault} alt="" aria-hidden className="h-10 w-10 object-contain" />
           <div>
@@ -398,7 +400,20 @@ function PapersReview({ book, endings, compliance, filter, onFilter }: {
   );
 }
 
-export default function PrototypeStatus() {
+export type StatusExtensionContext = {
+  reply: (text: string, choices?: string[]) => void;
+  fillInput: (text: string) => void;
+  open: () => void;
+};
+export type StatusExtension = {
+  render: (context: StatusExtensionContext) => ReactNode;
+  onMessage: (text: string, context: StatusExtensionContext) => boolean;
+  onRestart: () => void;
+  onWork: () => void;
+  suggestions: { label: string; text: string }[];
+};
+
+export default function PrototypeStatus({ extension }: { extension?: StatusExtension } = {}) {
   const [messages, setMessages] = useState<Message[]>(SEED);
   const [book, setBook] = useState<FindingBook>(SAMPLE);
   const [endings, setEndings] = useState<EndingBook>(SAMPLE_ENDINGS);
@@ -406,7 +421,8 @@ export default function PrototypeStatus() {
   const [noting, setNoting] = useState(false);
   const [placeId, setPlaceId] = useState<string | null>(null);
   const [filter, setFilter] = useState<MapFilter>("All");
-  const [workspace, setWorkspace] = useState<"map" | "papers">("map");
+  const [workspace, setWorkspace] = useState<"map" | "papers" | "agents">(extension ? "agents" : "map");
+  const [mobileSurface, setMobileSurface] = useState<"chat" | "workspace">("workspace");
   const [paperFilter, setPaperFilter] = useState<PaperFilter>("All");
   const [input, setInput] = useState("");
   const [menuOpen, setMenuOpen] = useState(false);
@@ -419,12 +435,19 @@ export default function PrototypeStatus() {
   const [recentChange, setRecentChange] = useState<RecentChange | null>(null);
   const nextId = useRef(1);
   const logEnd = useRef<HTMLDivElement>(null);
+  const follow = useAutoFollowScroll([messages]);
   const place = placeById(placeId);
 
-  useEffect(() => { logEnd.current?.scrollIntoView({ behavior: "smooth", block: "end" }); }, [messages]);
+  useEffect(() => { if (!extension) logEnd.current?.scrollIntoView({ behavior: "smooth", block: "end" }); }, [messages, extension]);
 
   const say = (role: Message["role"], text: string, extra: Partial<Message> = {}) =>
     setMessages((ms) => [...ms, { id: nextId.current++, role, text, ...extra }]);
+
+  const extensionContext: StatusExtensionContext = {
+    reply: (text, choices) => say("hobson", text, { choices }),
+    fillInput: (text) => { setInput(text); setMobileSurface("chat"); },
+    open: () => { setWorkspace("agents"); },
+  };
 
   const startNote = () => {
     setMenuOpen(false); setNoting(true); setPendingAction(null); setEndingCandidate(null);
@@ -536,6 +559,7 @@ export default function PrototypeStatus() {
     if (!text) return;
     setInput(""); setTryOpen(false); setNoting(false);
     say("user", text);
+    if (extension?.onMessage(text, extensionContext)) { setWorkspace("agents"); return; }
     if (text === "Show all signals" || text === "Show everything unoccupied") return showFilter("All");
     if (text === "Confirmed tenancy ending" && endingCandidate) {
       const candidate = endingCandidate;
@@ -575,6 +599,7 @@ export default function PrototypeStatus() {
   const restart = () => {
     setMessages(SEED); setBook(SAMPLE); setEndings(SAMPLE_ENDINGS); setAvailability(SAMPLE_AVAILABLE);
     setNoting(false); setPlaceId(null); setFilter("All"); setWorkspace("map"); setPaperFilter("All"); setInput(""); setPendingAction(null); setEndingCandidate(null); setRecentChange(null); nextId.current = 1;
+    if (extension) { extension.onRestart(); setWorkspace("agents"); }
   };
 
   const cardRows = place ? place.units.map((u) => {
@@ -584,22 +609,30 @@ export default function PrototypeStatus() {
   const placeCounts = place ? signalCounts(book, endings, availability, [place], SAMPLE_COMPLIANCE) : null;
 
   return (
-    <div className="relative flex h-screen w-full overflow-hidden bg-background text-ink">
+    <div className={`relative flex h-screen w-full overflow-hidden bg-background text-ink ${extension ? "max-md:flex-col" : ""}`}>
+      {extension && <div className="flex h-12 shrink-0 items-center justify-between border-b border-border px-4 md:hidden">
+        <span className="text-sm font-semibold">Hobson</span>
+        <div className="flex gap-1">
+          <Button size="sm" variant={mobileSurface === "chat" ? "secondary" : "ghost"} onClick={() => setMobileSurface("chat")}>Chat</Button>
+          <Button size="sm" variant={mobileSurface === "workspace" ? "secondary" : "ghost"} onClick={() => setMobileSurface("workspace")}>Workspace</Button>
+        </div>
+      </div>}
       <aside className="flex w-[150px] shrink-0 flex-col gap-1 border-r border-bone bg-background px-3 py-4 max-md:hidden">
         <img src={owlDefault} alt="" aria-hidden className="mb-4 h-9 w-9 object-contain" />
         <span className="flex items-center gap-2 rounded-md bg-secondary px-2 py-1.5 text-sm font-medium"><MapPin className="h-4 w-4" aria-hidden />Portfolio</span>
         <span className="flex items-center gap-2 rounded-md px-2 py-1.5 text-sm text-ink-muted"><FileText className="h-4 w-4" aria-hidden />Papers</span>
         <span className="flex items-center gap-2 rounded-md px-2 py-1.5 text-sm text-ink-muted"><MessageSquare className="h-4 w-4" aria-hidden />Conversations</span>
+        {extension && <Button variant="ghost" className="h-auto justify-start whitespace-normal px-2 py-2 text-left text-sm font-normal" onClick={() => { extension.onWork(); setWorkspace("agents"); }}>What I’m Up To</Button>}
         <div className="mt-auto grid h-9 w-9 place-items-center rounded-full bg-bone text-xs font-semibold text-charcoal">MT</div>
       </aside>
 
-      <section aria-label="Chat with Hobson" className="flex w-[420px] min-w-0 shrink-0 flex-col border-r border-bone bg-background max-lg:w-[360px] max-md:w-full">
+      <section aria-label="Chat with Hobson" className={`flex w-[420px] min-w-0 shrink-0 flex-col border-r border-bone bg-background max-lg:w-[360px] max-md:w-full ${extension ? `max-md:min-h-0 max-md:flex-1 ${mobileSurface !== "chat" ? "max-md:hidden" : ""}` : ""}`}>
         <header className="flex h-14 shrink-0 items-center justify-between gap-2 border-b border-bone px-5">
           <p className="truncate text-sm"><span className="font-medium text-primary">Portfolio</span><span className="text-ink-muted"> › </span><span className="font-semibold">{CURRENT_PLACE.name}</span><span className="text-ink-muted"> › </span><span className="font-semibold">{CURRENT.unit}</span></p>
           <Button variant="ghost" size="sm" aria-label="Restart demo" onClick={restart}><RotateCcw className="h-3.5 w-3.5 sm:mr-2" /><span className="max-sm:hidden">Restart</span></Button>
         </header>
 
-        <div role="log" aria-label="Conversation" className="flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto px-5 py-4">
+        <div ref={extension ? follow.ref : undefined} role="log" aria-label="Conversation" className="flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto px-5 py-4">
           {messages.map((m, i) => {
             const last = i === messages.length - 1;
             return (
@@ -641,12 +674,13 @@ export default function PrototypeStatus() {
           })}
           <div ref={logEnd} />
         </div>
+        {extension && follow.paused && <Button variant="ghost" size="sm" onClick={() => follow.scrollToBottom()}>Jump to latest</Button>}
 
         <div className="border-t border-faint-rule px-4 pb-4 pt-2">
           {tryOpen && (
             <div role="group" aria-label="Things you might try" className="mb-3 border-b border-bone pb-3">
               <div className="flex items-center justify-between"><span className="text-xs text-ink-muted">Things you might try</span><Button variant="ghost" size="icon" aria-label="Close suggestions" onClick={() => setTryOpen(false)}><X className="h-4 w-4" /></Button></div>
-              {SCENARIOS.map((s) => <button key={s.label} type="button" onClick={() => send(s.text)} className="block w-full rounded-md px-2 py-1.5 text-left text-sm hover:bg-paper">{s.label}</button>)}
+              {(extension ? extension.suggestions : SCENARIOS).map((s) => <Button variant="ghost" key={s.label} type="button" onClick={() => extension ? extensionContext.fillInput(s.text) : send(s.text)} className="h-auto w-full justify-start whitespace-normal px-2 py-1.5 text-left text-sm font-normal">{s.label}</Button>)}
             </div>
           )}
           <form onSubmit={(e) => { e.preventDefault(); send(input); }} className="flex items-center gap-1 rounded-full border border-input bg-background px-2 py-1.5 focus-within:ring-2 focus-within:ring-ring">
@@ -666,15 +700,16 @@ export default function PrototypeStatus() {
         </div>
       </section>
 
-      <section aria-label={workspace === "map" ? "Map" : "Papers"} className="relative min-w-0 flex-1 max-md:hidden">
-        <div className={workspace === "map" ? "absolute inset-0" : "hidden"}>
+      <section aria-label={workspace === "map" ? "Map" : workspace === "papers" ? "Papers" : "Agents workspace"} className={`relative min-h-0 min-w-0 flex-1 ${extension ? mobileSurface !== "workspace" ? "max-md:hidden" : "" : "max-md:hidden"}`}>
+        <div className={workspace === "map" ? `absolute inset-0 ${extension ? "isolate z-0" : ""}` : "hidden"}>
           <StatusMap book={book} endings={endings} availability={availability} compliance={SAMPLE_COMPLIANCE} filter={filter} selectedId={placeId} recentChange={recentChange} onPick={(id) => { setFilter("All"); setPlaceId(id); }} />
         </div>
-        {workspace === "papers" && <PapersReview book={book} endings={endings} compliance={SAMPLE_COMPLIANCE} filter={paperFilter} onFilter={setPaperFilter} />}
+        {workspace === "papers" && <PapersReview book={book} endings={endings} compliance={SAMPLE_COMPLIANCE} filter={paperFilter} onFilter={setPaperFilter} extended={!!extension} />}
+        {workspace === "agents" && extension?.render(extensionContext)}
 
         <div className="pointer-events-none absolute inset-x-4 top-4 z-[500] flex items-start justify-end gap-2">
           <div className="pointer-events-auto flex flex-col items-end gap-2">
-            <div className="flex items-center gap-2">
+            <div className={`flex items-center gap-2 ${extension ? "flex-wrap justify-end" : ""}`}>
               {workspace === "map" && (
                 <>
                   <button type="button" aria-label="Search your places" aria-expanded={searchOpen} onClick={() => { setSearchOpen((o) => !o); setFiltersOpen(false); }}
@@ -691,14 +726,16 @@ export default function PrototypeStatus() {
                 </>
               )}
               <span className="flex items-center gap-1 rounded-full border border-bone bg-background/95 p-1 text-sm shadow-sm">
+                {extension && <Button type="button" size="sm" variant="ghost" aria-label="Map" aria-pressed={workspace === "map"} onClick={() => setWorkspace("map")} className={`h-7 gap-1.5 rounded-full px-3 font-normal ${workspace === "map" ? "bg-secondary text-primary" : "text-ink-muted"}`}><MapIcon className="h-4 w-4" aria-hidden />Map</Button>}
                 <button type="button" aria-label="Papers" aria-pressed={workspace === "papers"} onClick={() => { setWorkspace("papers"); setFiltersOpen(false); setSearchOpen(false); }}
                   className={`flex items-center gap-1.5 rounded-full px-3 py-1 transition-colors ${workspace === "papers" ? "bg-secondary font-medium text-primary" : "text-ink-muted hover:bg-secondary/60"}`}>
                   <FileText className="h-4 w-4" aria-hidden />Papers
                 </button>
-                <button type="button" aria-label="Map" aria-pressed={workspace === "map"} onClick={() => setWorkspace("map")}
+                {!extension && <button type="button" aria-label="Map" aria-pressed={workspace === "map"} onClick={() => setWorkspace("map")}
                   className={`flex items-center gap-1.5 rounded-full px-3 py-1 transition-colors ${workspace === "map" ? "bg-secondary font-medium text-primary" : "text-ink-muted hover:bg-secondary/60"}`}>
                   <MapIcon className="h-4 w-4" aria-hidden />Map
-                </button>
+                </button>}
+                {extension && <Button type="button" size="sm" variant="ghost" aria-label="Agents" aria-pressed={workspace === "agents"} onClick={() => setWorkspace("agents")} className={`h-7 gap-1.5 rounded-full px-3 font-normal ${workspace === "agents" ? "bg-secondary text-primary" : "text-ink-muted"}`}><Lightbulb className="h-4 w-4" aria-hidden />Agents</Button>}
               </span>
             </div>
             {workspace === "map" && searchOpen && (
@@ -775,7 +812,7 @@ export default function PrototypeStatus() {
         </div>
 
         {workspace === "map" && place && placeCounts && (
-          <div role="region" aria-label={`${place.name} Unit signals`} className="absolute right-4 top-20 z-[500] flex max-h-[calc(100%-7rem)] w-[360px] flex-col rounded-2xl border border-bone bg-background shadow-xl animate-in fade-in slide-in-from-right-2">
+          <div role="region" aria-label={`${place.name} Unit signals`} className="absolute right-4 top-20 z-[500] flex max-h-[calc(100%-7rem)] w-[360px] max-w-[calc(100%-2rem)] flex-col rounded-2xl border border-bone bg-background shadow-xl animate-in fade-in slide-in-from-right-2">
             <div className="flex items-start justify-between gap-2 p-4 pb-0">
               <div>
                 <p className="flex items-center gap-1.5 font-semibold"><MapPin className="h-4 w-4 text-primary" aria-hidden />{place.name}{place.id === CURRENT.placeId && <span className="text-xs font-normal text-ink-muted">· you are here</span>}</p>

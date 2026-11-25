@@ -31,3 +31,5 @@
 - Contact directory rows inspect place relationships through a separate read-only expansion grouped by Unit Group; this keeps long scope lists compact without opening or changing the contact.
 
 - Prototype Notes uses the shared popover and Button controls for its composer action menu; unimplemented destinations remain local acknowledgements, preventing menu choices from implying uploads or status changes.
+- Prototype Agents is an independent local simulation using Prototype Status's optional workspace extension, so Map, Papers and the existing conversation are reused without sharing records across routes; typed responsibility records and a pure reducer drive confirmed changes, workflows, illustrative access and job links.
+- Shared tab and overflow-menu controls wrap Radix primitives in semantic theme tokens, preserving keyboard access and consistent presentation without feature-specific menu styling.

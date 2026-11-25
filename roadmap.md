@@ -1,5 +1,11 @@
 # Roadmap
 
+## Prototype Agents — delegated responsibilities
+- [x] Add independent /prototype-agents with the existing Map, Papers and conversation, plus an Agents workspace behind the existing Unit entrance.
+- [x] Build personal/shared responsibilities, details, structured workflows, scope, activity and a conversational empty collection.
+- [x] Implement confirmed chat creation and instruction changes, pause/resume, illustrative access and overlap handling, linked jobs and action-specific £180 quotation approval.
+- [x] Fifty-one focused checks pass. Real entrance and full desktop/phone journeys verified; additional layout checks at 390, 505, 768 and 1280 widths found no horizontal overflow. Preview build clean. No live execution or publication.
+
 ## Prototype Notes — pop-up creation
 - [x] Change Add a Note to the supplied three-step card above the chat composer: Shared/Kept private, occupancy, then note, with Back/Continue and Discard. It stays within the chat width and never covers the message box. Twenty-four focused checks pass; every step plus saving and chat use verified live at desktop (1217) and phone (390) sizes with no page errors or horizontal overflow. Not published.
 - [x] Make Add a Note a compact 300px non-modal pop-up on the left of the conversation, with shorter choices and note field; chat remains usable and the composer unobstructed. Twenty-four focused checks pass; desktop (1217) and phone (390) verified live, including saving and using chat with the pop-up open, with no page errors or horizontal overflow. Not published.
