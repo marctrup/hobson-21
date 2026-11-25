@@ -38,3 +38,11 @@
   .agents-split [aria-label="Papers review"] section button > .shrink-0 { flex-shrink: 1; }
   .agents-split [aria-label="Map signals"], .agents-split [role="search"] { width: calc(100cqw - 16px); max-height: calc(100dvh - 150px); overflow-y: auto; }
 }
+
+@container (max-width: 480px) {
+  .agents-split .agents-jobs .job-finders { grid-template-columns: minmax(0, 1fr); }
+  .agents-split .agents-jobs [aria-label="Job views"] { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; }
+  .agents-split .agents-jobs [aria-label="Job views"] .job-view { padding: 10px 2px; font-size: 11px; }
+  .agents-split .agents-jobs .job-view-icon { display: none; }
+  .agents-split .agents-jobs li > button { font-size: 12px; line-height: 20px; }
+}

@@ -3,7 +3,9 @@ import { ArrowLeft, ArrowRight, Building2, CalendarClock, Check, ChevronDown, Ch
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { AGENT_JOBS, AGENT_SCOPE_GROUPS, DEMO_TIME, agentOverview, agentWorkflow, canManage, pounds, type Agent, type AgentKind, type AgentsState } from "@/pages/prototypeAgents";
+import { AGENT_SCOPE_GROUPS, DEMO_TIME, agentOverview, agentWorkflow, canManage, pounds, type Agent, type AgentKind, type AgentsState } from "@/pages/prototypeAgents";
+
+import { AgentsJobs } from "./AgentsJobs";
 
 export type AgentsView = { kind: "list" } | { kind: "detail"; id: string } | { kind: "work"; agentId?: string };
 export type WorkspaceActions = {
@@ -84,17 +86,6 @@ function Proposal({ state, actions }: { state: AgentsState; actions: WorkspaceAc
   return <section aria-label={`${p.kind === "pause" ? "Pause" : "Resume"} responsibility`} className="mb-7 border-y border-border py-6"><h2 className="font-semibold">{p.kind === "pause" ? "Pause" : "Resume"} {a.name}?</h2><p className="mt-3 text-sm leading-7 text-muted-foreground">{p.kind === "pause" ? "Pausing this responsibility will stop new scheduled reviews. Existing outstanding work will remain visible." : `I shall restore scheduled reviews. The next review is ${a.next}.`}</p><p className="mt-2 text-xs text-muted-foreground">The monthly subscription remains {pounds(a.cost)}.</p><div className="mt-4 flex gap-2"><Button onClick={actions.confirm}>Confirm {p.kind}</Button><Button variant="secondary" onClick={actions.discard}>Cancel</Button></div></section>;
 }
 
-function Work({ state, actions, approvedJobs, agentId }: { state: AgentsState; actions: WorkspaceActions; approvedJobs: string[]; agentId?: string }) {
-  const [job, setJob] = useState<string | null>(null);
-  const [approval, setApproval] = useState(false);
-  const jobs = AGENT_JOBS.filter((j) => !agentId || j.agentId === agentId);
-  return <><Button variant="ghost" onClick={actions.openList} className="mb-5 h-auto gap-2 px-0 text-muted-foreground"><ArrowLeft className="h-4 w-4" />Agents</Button><h1 className="text-2xl font-semibold">What I’m Up To</h1><p className="mt-2 text-sm text-muted-foreground">{agentId ? state.agents.find((a) => a.id === agentId)?.name : "The individual jobs behind your responsibilities."}</p>{!jobs.length && <p className="mt-8 text-sm text-muted-foreground">No jobs have arisen from this responsibility yet.</p>}{["Needs you", "What I’m looking after", "What I’ve accomplished"].map((category) => {
-    const rows = jobs.filter((j) => (approvedJobs.includes(j.id) ? "What I’m looking after" : j.category) === category);
-    if (!rows.length) return null;
-    return <section key={category} className="mt-8"><Heading>{category}</Heading><div className="divide-y divide-border">{rows.map((j) => <div key={j.id} className="py-4"><Button variant="ghost" className="h-auto w-full justify-between gap-3 whitespace-normal px-0 text-left text-sm font-normal hover:bg-transparent" aria-expanded={job === j.id} onClick={() => { setJob(job === j.id ? null : j.id); setApproval(false); }}>{approvedJobs.includes(j.id) ? "Electrical inspection quotation approved — not yet instructed" : j.title}<ChevronRight className={`h-4 w-4 shrink-0 text-muted-foreground ${job === j.id ? "rotate-90" : ""}`} /></Button><Button variant="link" className="mt-1 h-auto p-0 text-xs font-normal" onClick={() => actions.openAgent(j.agentId)}>{state.agents.find((a) => a.id === j.agentId)?.name}<ArrowRight className="ml-1 h-3 w-3" /></Button>{job === j.id && <div className="mt-3"><p className="text-sm leading-7 text-muted-foreground">{j.detail}</p>{j.amount && !approvedJobs.includes(j.id) && (approval ? <div className="mt-4 border-l-2 border-primary/25 pl-4"><p className="text-sm">Approve this £180 inspection quotation only?</p><p className="mt-1 text-xs text-muted-foreground">This records your decision; nothing will be sent or instructed.</p><div className="mt-3 flex flex-wrap gap-2"><Button size="sm" onClick={() => { actions.approveJob(j.id); setApproval(false); }}>Confirm £180 approval</Button><Button size="sm" variant="ghost" onClick={() => setApproval(false)}>Not now</Button></div></div> : <Button variant="secondary" size="sm" className="mt-3" onClick={() => setApproval(true)}>Review decision</Button>)}{approvedJobs.includes(j.id) && <p className="mt-2 text-xs text-muted-foreground">Approval recorded for this quotation only. No contractor instruction has been issued.</p>}</div>}</div>)}</div></section>;
-  })}</>;
-}
-
 export function AgentsWorkspace({ state, view, actions, approvedJobs }: { state: AgentsState; view: AgentsView; actions: WorkspaceActions; approvedJobs: string[] }) {
   const [collection, setCollection] = useState("mine");
   const a = view.kind === "detail" ? state.agents.find((item) => item.id === view.id) : null;
@@ -103,7 +94,7 @@ export function AgentsWorkspace({ state, view, actions, approvedJobs }: { state:
     <div className="mx-auto max-w-3xl">
       <p className="mb-5 text-[10px] text-muted-foreground">Illustrative · {DEMO_TIME.replace("12:00", `12:${String(state.serial).padStart(2, "0")}`)}</p>
       <Proposal state={state} actions={actions} />
-      {view.kind === "work" ? <Work state={state} actions={actions} approvedJobs={approvedJobs} agentId={view.agentId} /> : a ? <>
+      {view.kind === "work" ? <AgentsJobs key={view.agentId ?? "all"} state={state} actions={actions} approvedJobs={approvedJobs} agentId={view.agentId} /> : a ? <>
         <Button variant="ghost" onClick={actions.openList} className="mb-5 h-auto gap-2 px-0 text-muted-foreground"><ArrowLeft className="h-4 w-4" />Agents</Button>
         <div className="flex flex-wrap items-start justify-between gap-4"><div className="flex min-w-0 items-start gap-3">{(() => { const Icon = ICONS[a.kind]; return <Icon className="mt-1 h-6 w-6 shrink-0 text-muted-foreground" aria-hidden />; })()}<div className="min-w-0"><h1 className="break-words text-2xl font-semibold leading-8">{a.name}</h1><div className="mt-2 flex items-center gap-3"><Status agent={a} />{a.shared && <span className="flex items-center gap-1.5 text-xs text-muted-foreground"><Users className="h-3.5 w-3.5" />{a.access}</span>}</div></div></div><div className="flex items-center gap-1">{canManage(a) && <Button variant="secondary" size="sm" onClick={() => actions.pause(a)}>{a.status === "Active" ? <Pause className="mr-1.5 h-3.5 w-3.5" /> : <Play className="mr-1.5 h-3.5 w-3.5" />}{a.status === "Active" ? "Pause" : "Resume"}</Button>}<DropdownMenu><DropdownMenuTrigger asChild><Button variant="ghost" size="icon" aria-label="Responsibility options"><MoreHorizontal className="h-4 w-4" /></Button></DropdownMenuTrigger><DropdownMenuContent align="end"><DropdownMenuItem onSelect={() => actions.fillInput(`Tell me about ${a.name}`)}>Discuss this responsibility</DropdownMenuItem><DropdownMenuItem onSelect={() => actions.openWork(a.id)}>See what I’m up to</DropdownMenuItem></DropdownMenuContent></DropdownMenu></div></div>
         {a.status === "Paused" && <p className="mt-5 border-l-2 border-border pl-3 text-xs leading-6 text-muted-foreground">Scheduled reviews are paused. Outstanding work remains visible; the subscription continues.</p>}

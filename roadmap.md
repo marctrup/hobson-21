@@ -1,6 +1,7 @@
 # Roadmap
 
 ## Prototype Agents — delegated responsibilities
+- [x] Make large job and accomplishment collections clean to scan with separate counted views, search, responsibility filtering, bounded pages and one detail expansion. Forty-three focused checks pass, including a 73-job history; approval, search, filters and the permanent chat split verified at 412, 505 and 1280 widths without page errors or overflow. Real entrance re-check was rate-limited, so screen checks used an admitted test session; entrance unchanged. Not published.
 - [x] Keep chat visible on the left at every width; Map/Papers/Agents change only the right, including the narrow Lovable preview. Twenty-one focused checks pass; real entrance, toggling and agent creation verified at 412, 609 and 1280 widths with unchanged chat dimensions, no page errors and no horizontal overflow.
 - [x] Add independent /prototype-agents with the existing Map, Papers and conversation, plus an Agents workspace behind the existing Unit entrance.
 - [x] Build personal/shared responsibilities, details, structured workflows, scope, activity and a conversational empty collection.
