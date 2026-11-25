@@ -19,7 +19,10 @@ const ask = (text: string) => {
   fireEvent.change(screen.getByRole("textbox", { name: "Ask Hobson" }), { target: { value: text } });
   fireEvent.click(screen.getByRole("button", { name: "Send message" }));
 };
-const openCompliance = () => fireEvent.click(screen.getByRole("button", { name: /^Compliance Management\s*Active/ }));
+const openCompliance = () => {
+  fireEvent.click(screen.getByRole("button", { name: "Compliance11" }));
+  fireEvent.click(screen.getByRole("button", { name: /^Compliance Management/ }));
+};
 const tab = (name: string) => fireEvent.mouseDown(screen.getByRole("tab", { name }), { button: 0, ctrlKey: false });
 
 describe("Agents conversation and workspace", () => {
@@ -61,7 +64,8 @@ describe("Agents conversation and workspace", () => {
   });
   it("cannot materially change a view-and-instruct shared responsibility through chat", () => {
     start();
-    tab("Shared with me");
+    tab("Shared with me22");
+    fireEvent.click(screen.getByRole("button", { name: "Renewals11" }));
     fireEvent.click(screen.getByRole("button", { name: /^Tenancy Renewal Management/ }));
     ask("Pause this agent");
     expect(screen.queryByRole("button", { name: "Confirm pause" })).toBeNull();

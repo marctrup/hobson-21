@@ -34,7 +34,7 @@ export const SAMPLE_AGENTS: Agent[] = [
   { ...base, id: "renewal", kind: "renewal", name: "Tenancy Renewal Management", description: "Keeping upcoming residential renewals in hand.", creator: "Sarah Jones", owner: "Property Management Team", shared: true, access: "View and instruct", scope: "85 residential Units", frequency: "Weekly", next: "30 November at 09:00", cost: 75, activity: [activity("Responsibility commissioned by Sarah Jones")] },
   { ...base, id: "maintenance", kind: "maintenance", name: "Maintenance Coordination", description: "Coordinating repairs and keeping the team informed.", creator: "Alex Williams", owner: "Property Management Team", shared: true, access: "Full management", scope: "48 Units", frequency: "When required", next: "When required", cost: 100, activity: [activity("Responsibility commissioned by Alex Williams")] },
 ];
-export const initialAgentsState = (empty = false): AgentsState => ({ agents: empty ? [] : structuredClone(SAMPLE_AGENTS), proposal: null, serial: 0 });
+export const initialAgentsState = (empty = false, large = false): AgentsState => ({ agents: empty ? [] : structuredClone(large ? LARGE_SAMPLE_AGENTS : SAMPLE_AGENTS), proposal: null, serial: 0 });
 export const canManage = (agent: Agent) => !agent.shared || agent.access === "Full management";
 export const pounds = (value: number) => `£${value.toFixed(2)}`;
 export function agentOverview(agent: Agent): string {
@@ -54,9 +54,9 @@ export type AgentAction =
   | { type: "propose"; proposal: AgentProposal }
   | { type: "discard" }
   | { type: "confirm" }
-  | { type: "reset"; empty?: boolean };
+  | { type: "reset"; empty?: boolean; large?: boolean };
 export function agentsReducer(state: AgentsState, action: AgentAction): AgentsState {
-  if (action.type === "reset") return initialAgentsState(action.empty);
+  if (action.type === "reset") return initialAgentsState(action.empty, action.large);
   if (action.type === "discard") return { ...state, proposal: null };
   if (action.type === "propose") {
     const p = action.proposal;
@@ -126,6 +126,19 @@ export const AGENT_SCOPE_GROUPS = [
   { name: "Paragon Court", units: ["Flat 1", "Flat 2", "Flat 3", "Flat 4"], total: 48 },
 ];
 export type AgentJob = { id: string; agentId: string; category: "Needs you" | "What I’m looking after" | "What I’ve accomplished"; title: string; detail: string; amount?: number };
+const SAMPLE_PLACES = ["Alder Court", "Beacon House", "Cedar Park", "Dale Street", "Elm Court", "Finch House", "Grove Square", "Harbour Place", "Ivy Court", "Juniper House"];
+export const LARGE_SAMPLE_AGENTS: Agent[] = [...SAMPLE_AGENTS, ...SAMPLE_PLACES.flatMap((place, index) => SAMPLE_AGENTS.map((template) => ({
+  ...structuredClone(template), id: `large-${index}-${template.kind}`, name: `${place} · ${template.name}`,
+  scope: `${place} · ${index + 8} ${template.kind === "compliance" || template.kind === "renewal" ? "residential" : "commercial"} Units`,
+  description: `${template.description} Illustrative ${place} responsibility.`,
+  status: index % 4 === 0 && template.kind === "report" ? "Paused" as const : "Active" as const,
+})))];
+const LARGE_SAMPLE_JOBS: AgentJob[] = LARGE_SAMPLE_AGENTS.filter((agent) => agent.id.startsWith("large-")).flatMap((agent, index) => [
+  { id: `${agent.id}-ongoing`, agentId: agent.id, category: "What I’m looking after", title: `${agent.scope.split(" · ")[0]} · Awaiting handover information`, detail: "Illustrative handover: supporting information is outstanding. No scheduled review, communication or external work has run in this prototype." },
+  { id: `${agent.id}-history-1`, agentId: agent.id, category: "What I’ve accomplished", title: `${agent.scope.split(" · ")[0]} · Previous review recorded`, detail: "23 November · 09:00. Historical review from the preceding arrangement, supplied with the handover. This is not a review performed by the newly commissioned responsibility." },
+  { id: `${agent.id}-history-2`, agentId: agent.id, category: "What I’ve accomplished", title: `${agent.scope.split(" · ")[0]} · Supporting documents received`, detail: "22 November · 11:00. Historical document receipt from the preceding arrangement. No documents have been uploaded or received by this prototype." },
+  ...(index % 3 === 0 ? [{ id: `${agent.id}-decision`, agentId: agent.id, category: "Needs you" as const, title: `${agent.scope.split(" · ")[0]} · Confirm the handover scope`, detail: "The predecessor’s place list needs checking against the agreed responsibility. This illustrative job is awaiting guidance; viewing it neither confirms the scope nor grants authority." }] : []),
+] as AgentJob[]);
 export const AGENT_JOBS: AgentJob[] = [
   { id: "quotation", agentId: "compliance", category: "Needs you", title: "Approve an electrical inspection quotation of £180", amount: 180, detail: "Stanley House · Flat 3. An illustrative quotation from the preferred contractor is ready for your decision. Approval covers this £180 inspection only; it does not instruct remedial works." },
   { id: "gas", agentId: "compliance", category: "What I’m looking after", title: "Arranging gas safety inspections across six Units", detail: "Six inspections identified during the initial handover. Proposed appointments remain outstanding; no inspection is recorded as completed." },
@@ -133,4 +146,5 @@ export const AGENT_JOBS: AgentJob[] = [
   { id: "access", agentId: "compliance", category: "What I’m looking after", title: "Coordinating access with occupants", detail: "Three occupants have been notified in the illustrative handover record. Their access arrangements still need confirmation." },
   { id: "review", agentId: "compliance", category: "What I’ve accomplished", title: "Completed the monthly compliance review", detail: "23 November · 09:00. Historical handover from the preceding arrangement, before this responsibility was commissioned. The new agent’s first scheduled review is 1 December." },
   { id: "certificates", agentId: "compliance", category: "What I’ve accomplished", title: "Received four replacement certificates", detail: "23 November · 11:00. Four certificates received in the preceding arrangement and included in the handover. No new certificates have been received by this prototype." },
+  ...LARGE_SAMPLE_JOBS,
 ];

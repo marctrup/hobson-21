@@ -19,7 +19,7 @@ export function AgentsJobs({ state, actions, approvedJobs, agentId, jobs = AGENT
   state: AgentsState; actions: WorkspaceActions; approvedJobs: string[]; agentId?: string; jobs?: AgentJob[];
 }) {
   const categoryOf = (item: AgentJob): Category => approvedJobs.includes(item.id) ? "What I’m looking after" : item.category;
-  const scoped = jobs.filter((item) => !agentId || item.agentId === agentId);
+  const scoped = jobs.filter((item) => state.agents.some((agent) => agent.id === item.agentId) && (!agentId || item.agentId === agentId));
   const [category, setCategory] = useState<Category>(() => scoped.some((item) => categoryOf(item) === "Needs you") ? "Needs you" : "What I’m looking after");
   const [query, setQuery] = useState("");
   const [responsibility, setResponsibility] = useState("all");

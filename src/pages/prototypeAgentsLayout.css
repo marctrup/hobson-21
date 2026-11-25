@@ -40,6 +40,12 @@
 }
 
 @container (max-width: 480px) {
+  .agents-split .agent-finders { grid-template-columns: minmax(0, 1fr); }
+  .agents-split .agent-directory-row { align-items: flex-start; }
+  .agents-split .agent-directory-row > button:first-child { font-size: 12px; }
+  .agents-split [aria-label="Delegated responsibilities"] [aria-label="Agent collections"] { flex-direction: row; gap: 8px; }
+  .agents-split [aria-label="Delegated responsibilities"] [aria-label="Agent collections"] [role="tab"] { padding: 10px 0; font-size: 11px; }
+  .agents-split [aria-label="Agent collections"] svg { display: none; }
   .agents-split .agents-jobs .job-finders { grid-template-columns: minmax(0, 1fr); }
   .agents-split .agents-jobs [aria-label="Job views"] { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; }
   .agents-split .agents-jobs [aria-label="Job views"] .job-view { padding: 10px 2px; font-size: 11px; }

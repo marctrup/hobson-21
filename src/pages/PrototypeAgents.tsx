@@ -11,7 +11,7 @@ const EXAMPLES = [
 ];
 
 export default function PrototypeAgents() {
-  const [state, dispatch] = useReducer(agentsReducer, undefined, () => initialAgentsState());
+  const [state, dispatch] = useReducer(agentsReducer, undefined, () => initialAgentsState(false, true));
   const [view, setView] = useState<AgentsView>({ kind: "list" });
   const [clarifying, setClarifying] = useState<AgentKind | null>(null);
   const [approvedJobs, setApprovedJobs] = useState<string[]>([]);
@@ -146,7 +146,7 @@ export default function PrototypeAgents() {
   return <><Helmet><title>Agents prototype | Hobson</title><meta name="description" content="A private illustrative experience of delegating property responsibilities to Hobson." /><meta name="robots" content="noindex, nofollow" /></Helmet><PrototypeStatus extension={{
     render: (context) => <AgentsWorkspace state={state} view={view} actions={actions(context)} approvedJobs={approvedJobs} />,
     onMessage, suggestions: EXAMPLES,
-    onRestart: () => { dispatch({ type: "reset" }); setView({ kind: "list" }); setClarifying(null); setApprovedJobs([]); },
+    onRestart: () => { dispatch({ type: "reset", large: true }); setView({ kind: "list" }); setClarifying(null); setApprovedJobs([]); },
     onWork: () => setView({ kind: "work" }),
   }} /></>;
 }
